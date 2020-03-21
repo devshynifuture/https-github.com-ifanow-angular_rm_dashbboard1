@@ -138,12 +138,12 @@ export class RecuringDepositComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
     }));
-    if (!data || this.getCoOwner.value.length < 1) {
-      for (let e in this.getCoOwner.controls) {
-        this.getCoOwner.controls[e].get('share').setValue('');
-      }
+    if (data) {
+      setTimeout(() => {
+       this.disabledMember(null,null);
+      }, 1300);
     }
 
     if(this.getCoOwner.value.length > 1 && !data){
@@ -157,9 +157,7 @@ export class RecuringDepositComponent implements OnInit {
       }
      }
     }
-    else{
-      this.disabledMember(null, null)
-    }
+    
   }
 
   removeCoOwner(item) {
@@ -202,14 +200,13 @@ export class RecuringDepositComponent implements OnInit {
         }
       }
     }
-    this.disabledMember(null, null);
   }
 
 
   
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+      name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -228,9 +225,7 @@ export class RecuringDepositComponent implements OnInit {
         }
       }
      }
-     else{
-      this.disabledMember(null, null)
-    }
+    
     
   }
   /***nominee***/ 
@@ -394,14 +389,12 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.recuringDeposi
         id: this.recuringDeposit.value.id
       }
 
-      obj.nomineeList.forEach(element => {
+      obj.nomineeList.forEach((element, index) => {
         if(element.name == ''){
-          obj.nomineeList= [];
-        }
-        else{
-          obj.nomineeList= this.recuringDeposit.value.getNomineeName;
+          this.removeNewNominee(index);
         }
       });
+      obj.nomineeList= this.recuringDeposit.value.getNomineeName;
       console.log('recuringDeposit', obj)
       this.dataSource = obj;
       let adviceObj = {

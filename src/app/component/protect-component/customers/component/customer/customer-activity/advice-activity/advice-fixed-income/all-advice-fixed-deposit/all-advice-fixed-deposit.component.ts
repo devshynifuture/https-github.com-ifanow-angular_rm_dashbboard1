@@ -22,7 +22,7 @@ export class AllAdviceFixedDepositComponent implements OnInit {
   clientId: any;
   isLoading: any;
   fixedDataSource: any;
-  recurringDataSource:any;
+  recurringDataSource: any;
   bondDataSource: any;
   selectedAssetId: any = [];
   fixedCount: any;
@@ -30,7 +30,7 @@ export class AllAdviceFixedDepositComponent implements OnInit {
   bondCount: any;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private utilService: UtilService,private activityService:ActiityService) { }
+  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private utilService: UtilService, private activityService: ActiityService) { }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -46,25 +46,31 @@ export class AllAdviceFixedDepositComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId,
       assetCategory: 7,
-      adviceStatusId:0
+      adviceStatusId: 0
     }
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
+        this.fixedDataSource = [];
+        this.recurringDataSource = [];
+        this.bondDataSource = [];
+        this.fixedDataSource['tableFlag'] = (this.fixedDataSource.length == 0) ? false : true;
+        this.recurringDataSource['tableFlag'] = (this.recurringDataSource.length == 0) ? false : true;
+        this.bondDataSource['tableFlag'] = (this.bondDataSource.length == 0) ? false : true;
       }
     );
   }
-  filterForAsset(data){//filter data to for showing in the table
-    let filterdData=[];
+  filterForAsset(data) {//filter data to for showing in the table
+    let filterdData = [];
     data.forEach(element => {
-      var asset=element.AssetDetails;
-      if(element.AdviceList.length>0){
+      var asset = element.AssetDetails;
+      if (element.AdviceList.length > 0) {
         element.AdviceList.forEach(obj => {
-          obj.assetDetails=asset;
+          obj.assetDetails = asset;
           filterdData.push(obj);
         });
-      }else{
-        const obj={
-          assetDetails:asset
+      } else {
+        const obj = {
+          assetDetails: asset
         }
         filterdData.push(obj);
       }
@@ -72,19 +78,18 @@ export class AllAdviceFixedDepositComponent implements OnInit {
     });
     return filterdData;
   }
-  getAllSchemeResponse(data){
+  getAllSchemeResponse(data) {
     this.isLoading = false;
-
     console.log(data);
-    let fixedData=this.filterForAsset(data.FIXED_DEPOSIT)
+    let fixedData = this.filterForAsset(data.FIXED_DEPOSIT)
     this.fixedDataSource = new MatTableDataSource(fixedData);
-    console.log('fddata',fixedData);
+    console.log('fddata', fixedData);
     this.fixedDataSource.sort = this.sort
-    let rdDAta=this.filterForAsset(data.RECURRING_DEPOSIT)
+    let rdDAta = this.filterForAsset(data.RECURRING_DEPOSIT)
     this.recurringDataSource = new MatTableDataSource(rdDAta);
-    console.log('rdData',rdDAta)
+    console.log('rdData', rdDAta)
     this.recurringDataSource.sort = this.sort
-    let bondData=this.filterForAsset(data.BONDS)
+    let bondData = this.filterForAsset(data.BONDS)
     this.bondDataSource = new MatTableDataSource(bondData);
 
     this.fixedDataSource['tableFlag'] = (data.FIXED_DEPOSIT.length == 0) ? false : true;
@@ -141,7 +146,7 @@ export class AllAdviceFixedDepositComponent implements OnInit {
       }
     );
   }
-  
+
   openFixedDeposit(value, data) {
     const fragmentData = {
       flag: value,

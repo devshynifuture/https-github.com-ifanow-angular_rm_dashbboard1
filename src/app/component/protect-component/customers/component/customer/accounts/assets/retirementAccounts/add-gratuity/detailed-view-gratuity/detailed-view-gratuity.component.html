@@ -14,12 +14,12 @@
     <div class="row pt-40">
         <div class="col-md-12 p-0">
             <div class="insurance-ui bt">
-                <div class="row bb p-8 b-l br">
+                <div class="row bb p-8 b-l br" *ngFor="let obj of gratuity.ownerList; let i = index">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Owner Name
+                        {{i != 0?'Co-o' : 'O'}}wner{{i != 0?i:''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{gratuity.ownerName?gratuity.ownerName:'-'}}
+                        {{obj.name}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -76,6 +76,22 @@
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{gratuity.description?gratuity.description:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br" *ngIf="!gratuity.nomineeList">
+                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                        Nominee
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        -
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br" *ngFor="let obj of gratuity.nomineeList; let i = index">
+                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                        Nominee {{i + 1}}
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{obj.name}}
                     </div>
                 </div>
             </div>

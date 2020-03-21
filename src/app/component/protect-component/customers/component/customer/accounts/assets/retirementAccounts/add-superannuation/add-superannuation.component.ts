@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
-import { Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -36,9 +36,10 @@ export class AddSuperannuationComponent implements OnInit {
   isAssumedRateReturn = false
   isFirstDateContry = false
   clientId: any;
-  nomineesListFM: any;
+  nomineesListFM: any = [];
   flag: any;
   adviceShowHeaderAndFooter: boolean = true;
+  callMethod:any;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
 
@@ -63,18 +64,148 @@ export class AddSuperannuationComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
   }
-  display(value) {
-    console.log('value selected', value)
-    this.ownerName = value.userName;
-    this.familyMemberId = value.id
-  }
-  lisNominee(value) {
-    console.log(value)
-    this.nomineesListFM = Object.assign([], value.familyMembersList);
-  }
+  
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
   }
+
+  // ===================owner-nominee directive=====================//
+ display(value) {
+  console.log('value selected', value)
+  this.ownerName = value.userName;
+  this.familyMemberId = value.id
+}
+
+lisNominee(value) {
+  this.ownerData.Fmember = value;
+  this.nomineesListFM = Object.assign([], value);
+}
+
+disabledMember(value, type) {
+  this.callMethod = {
+    methodName : "disabledMember",
+    ParamValue : value,
+    disControl : type
+  }
+}
+
+displayControler(con) {
+  console.log('value selected', con);
+  if(con.owner != null && con.owner){
+    this.superannuation.controls.getCoOwnerName = con.owner;
+  }
+  if(con.nominee != null && con.nominee){
+    this.superannuation.controls.getNomineeName = con.nominee;
+  }
+}
+
+onChangeJointOwnership(data) {
+  this.callMethod = {
+    methodName : "onChangeJointOwnership",
+    ParamValue : data
+  }
+}
+
+/***owner***/ 
+
+get getCoOwner() {
+  return this.superannuation.get('getCoOwnerName') as FormArray;
+}
+
+addNewCoOwner(data) {
+  this.getCoOwner.push(this.fb.group({
+    name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+  }));
+  if (data) {
+    setTimeout(() => {
+     this.disabledMember(null,null);
+    }, 1300);
+  }
+
+  if(this.getCoOwner.value.length > 1 && !data){
+   let share = 100/this.getCoOwner.value.length;
+   for (let e in this.getCoOwner.controls) {
+    if(!Number.isInteger(share) && e == "0"){
+      this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+    }
+    else{
+      this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+    }
+   }
+  }
+  
+}
+
+removeCoOwner(item) {
+  this.getCoOwner.removeAt(item);
+  if (this.superannuation.value.getCoOwnerName.length == 1) {
+    this.getCoOwner.controls['0'].get('share').setValue('100');
+  } else {
+    let share = 100/this.getCoOwner.value.length;
+    for (let e in this.getCoOwner.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+      }
+    }
+  }
+  this.disabledMember(null, null);
+}
+/***owner***/ 
+
+/***nominee***/ 
+
+get getNominee() {
+  return this.superannuation.get('getNomineeName') as FormArray;
+}
+
+removeNewNominee(item) {
+  this.getNominee.removeAt(item);
+  if (this.superannuation.value.getNomineeName.length == 1) {
+    this.getNominee.controls['0'].get('sharePercentage').setValue('100');
+  } else {
+    let share = 100/this.getNominee.value.length;
+    for (let e in this.getNominee.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+      }
+    }
+  }
+}
+
+
+
+addNewNominee(data) {
+  this.getNominee.push(this.fb.group({
+    name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+  }));
+  if (!data || this.getNominee.value.length < 1) {
+    for (let e in this.getNominee.controls) {
+      this.getNominee.controls[e].get('sharePercentage').setValue(0);
+    }
+  }
+
+  if(this.getNominee.value.length > 1 && !data){
+    let share = 100/this.getNominee.value.length;
+    for (let e in this.getNominee.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+      }
+    }
+   }
+   
+  
+}
+/***nominee***/ 
+// ===================owner-nominee directive=====================//
   showLess(value) {
     if (value == true) {
       this.showHide = false;
@@ -100,7 +231,13 @@ export class AddSuperannuationComponent implements OnInit {
       data = {}
     }
     this.superannuation = this.fb.group({
-      ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
+      getCoOwnerName: this.fb.array([this.fb.group({
+        name: ['',[Validators.required]],
+        share: ['',[Validators.required]],
+        familyMemberId: 0,
+        id:0
+      })]),
+      // ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       employeeContry: [(data == undefined) ? '' : data.annualEmployeeContribution, [Validators.required]],
       employerContry: [(data == undefined) ? '' : data.annualEmployerContribution, [Validators.required]],
       growthEmployer: [(data == undefined) ? '' : data.growthRateEmployerContribution, [Validators.required]],
@@ -109,12 +246,44 @@ export class AddSuperannuationComponent implements OnInit {
       assumedRateReturn: [(data == undefined) ? '' : (data.assumedRateOfReturn), [Validators.required]],
       linkBankAc: [(data == undefined) ? '' : data.bankAccountNumber,],
       description: [(data == undefined) ? '' : data.description,],
+      getNomineeName: this.fb.array([this.fb.group({
+        name: [''],
+        sharePercentage: [0],
+        familyMemberId: [0],
+        id:[0]
+      })]),
       id: [(data == undefined) ? '' : data.id,],
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],]
     });
-    this.ownerData = this.superannuation.controls;
-    this.familyMemberId = this.superannuation.controls.familyMemberId.value
-    this.familyMemberId = this.familyMemberId[0]
+     // ==============owner-nominee Data ========================\\
+  /***owner***/ 
+  if(this.superannuation.value.getCoOwnerName.length == 1){
+    this.getCoOwner.controls['0'].get('share').setValue('100');
+  }
+
+  if (data.ownerList) {
+    this.getCoOwner.removeAt(0);
+    data.ownerList.forEach(element => {
+      this.addNewCoOwner(element);
+    });
+  }
+  
+/***owner***/ 
+
+/***nominee***/ 
+if(data.nomineeList){
+  this.getNominee.removeAt(0);
+  data.nomineeList.forEach(element => {
+    this.addNewNominee(element);
+  });
+}
+/***nominee***/ 
+
+this.ownerData = {Fmember: this.nomineesListFM, controleData:this.superannuation}
+// ==============owner-nominee Data ========================\\ 
+    // this.ownerData = this.superannuation.controls;
+    // this.familyMemberId = this.superannuation.controls.familyMemberId.value
+    // this.familyMemberId = this.familyMemberId[0]
     // this.superannuation.controls.maturityDate.setValue(new Date(data.maturityDate));
   }
   getFormControl(): any {
@@ -130,8 +299,9 @@ export class AddSuperannuationComponent implements OnInit {
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
-        familyMemberId: this.familyMemberId,
-        ownerName: (this.ownerName == undefined) ? this.superannuation.controls.ownerName.value : this.ownerName,
+        ownerList: this.superannuation.value.getCoOwnerName,
+        // familyMemberId: this.familyMemberId,
+        // ownerName: (this.ownerName == undefined) ? this.superannuation.controls.ownerName.value : this.ownerName,
         annualEmployeeContribution: this.superannuation.controls.employeeContry.value,
         annualEmployerContribution: this.superannuation.controls.employerContry.value,
         growthRateEmployeeContribution: this.superannuation.controls.growthEmployee.value,
@@ -140,8 +310,16 @@ export class AddSuperannuationComponent implements OnInit {
         assumedRateOfReturn: this.superannuation.controls.assumedRateReturn.value,
         bankAccountNumber: this.superannuation.controls.linkBankAc.value,
         description: this.superannuation.controls.description.value,
+        nomineeList: this.superannuation.value.getNomineeName,
         id: this.superannuation.controls.id.value
       }
+      obj.nomineeList.forEach((element, index) => {
+        if(element.name == ''){
+          this.removeNewNominee(index);
+        }
+      });
+      obj.nomineeList= this.superannuation.value.getNomineeName;
+
       let adviceObj = {
         advice_id: this.advisorId,
         adviceStatusId: 5,

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { ScenariosPlanComponent } from './scenarios-plan/scenarios-plan.component';
 import { CashflowsPlanComponent } from './cashflows-plan/cashflows-plan.component';
 import { ProfilePlanComponent } from './profile-plan/profile-plan.component';
-import { DeploymentsPlanComponent } from './deployments-plan/deployments-plan.component';
 import { GoalsPlanComponent } from './goals-plan/goals-plan.component';
 import { SummaryPlanComponent } from './summary-plan/summary-plan.component';
 import { InsurancePlanComponent } from './insurance-plan/insurance-plan.component';
@@ -19,8 +18,6 @@ import { HistoryRiskProfileComponent } from './profile-plan/history-risk-profile
 // import {BrowserModule} from '@angular/platform-browser';
 import { PlanRoutingModule } from "./plan-routing.module";
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
-import { ManageDeploymentComponent } from './deployments-plan/manage-deployment/manage-deployment.component';
-import { ManageExclusionsComponent } from './deployments-plan/manage-exclusions/manage-exclusions.component';
 import { SelectAssetClassComponent } from './deployments-plan/select-asset-class/select-asset-class.component';
 import { DeploymentDetailsComponent } from './deployments-plan/deployment-details/deployment-details.component';
 import { CashflowPlanIncomeComponent } from './cashflows-plan/cashflow-plan-income/cashflow-plan-income.component';
@@ -62,12 +59,9 @@ import { HelthInsurancePolicyComponent } from './insurance-plan/add-insurance-pl
     InsurancePlanComponent,
     // GoalsPlanComponent,
     CashflowsPlanComponent,
-    DeploymentsPlanComponent,
     ScenariosPlanComponent,
     TexesPlanComponent,
     AddInvestmentPlanComponent,
-    ManageDeploymentComponent,
-    ManageExclusionsComponent,
     CashflowPlanIncomeComponent,
     CashflowPlanExpenseComponent,
     CashflowPlanLiabilitiesComponent,
@@ -98,7 +92,7 @@ import { HelthInsurancePolicyComponent } from './insurance-plan/add-insurance-pl
   ],
   // exports: [PlanComponent, AddScenariosComponent, AddInvestmentPlanComponent,
   //   AddProfilePlanComponent, HistoryRiskProfileComponent, RiskProfileComponent],
-  entryComponents: [ManageDeploymentComponent, ManageExclusionsComponent]
+  entryComponents: []
 })
 export class PlanModule {
 }

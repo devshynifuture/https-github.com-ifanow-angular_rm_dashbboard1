@@ -1,3 +1,4 @@
+import { AuthService } from './../../../../../auth-service/authService';
 import { EventService } from './../../../../../Data-service/event.service';
 import { SupportService } from './../../support.service';
 import { SubscriptionInject } from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
@@ -24,11 +25,13 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   tableEntriesType: number;
   isKeepOrRemoveTransactions: any[] = [];
   tableData1: any[] = [];
-  isFreeze: boolean = false;
+  enableFreezeBtn: boolean = false;
   selection = new SelectionModel<PeriodicElement1>(true, []);
   shouldDeleteMultiple: boolean = false;
   deleteMultipleTransactionArray: any[] = []
   upperTableArr: PeriodicElement[];
+  advisorId = AuthService.getAdvisorId();
+  selectedFolioUnits: number = 0;
 
   constructor(
     private subscriptionInject: SubscriptionInject,
@@ -37,25 +40,53 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     private supportService: SupportService
   ) { }
 
+
+  ngOnInit() {
+    console.log(this.data);
+
+    if (this.data && this.data.tableType == 'all-folios') {
+      this.tableEntriesType = 1;
+    } else if (this.data && this.data.tableType == 'duplicate-folios') {
+      this.tableEntriesType = 2;
+    }
+
+    const tableArr: PeriodicElement[] = [{
+      unitsRta: this.data.unitsRta ? this.data.unitsRta : '',
+      unitOne: this.data.unitsIfnow ? this.data.unitsIfnow : '',
+      difference: this.data.difference ? this.data.difference : ''
+    }]
+
+    this.dataSource.data = tableArr;
+    this.upperTableArr = tableArr;
+    this.allFolioTransactionTableDataBinding();
+  }
+
   singleSelectionSelect(element) {
     this.selection.toggle(element);
     if (this.selection.isSelected(element)) {
       this.shouldDeleteMultiple = true;
+      this.selectedFolioUnits = this.selectedFolioUnits + parseInt(element.units.toFixed(3));
       this.deleteMultipleTransactionArray.push(element.id);
     } else {
-      this.shouldDeleteMultiple = false;
+      // this.selectedFolioUnits = 0;
       let index = this.deleteMultipleTransactionArray.indexOf(element);
       this.deleteMultipleTransactionArray.splice(index, 1);
+      this.selectedFolioUnits = this.selectedFolioUnits - parseInt(element.units.toFixed(3));
+      if (this.selectedFolioUnits < 0) {
+        this.selectedFolioUnits = 0;
+      }
+      if (this.deleteMultipleTransactionArray.length === 0) {
+        this.shouldDeleteMultiple = false;
+      }
     }
     console.log(this.deleteMultipleTransactionArray);
   }
 
-
   masterToggle() {
     if (this.isAllSelected()) {
       this.selection.clear();
-      this.shouldDeleteMultiple = false;
       this.deleteMultipleTransactionArray = [];
+      this.shouldDeleteMultiple = false;
     } else {
       this.shouldDeleteMultiple = true;
       this.dataSource1.data.forEach(row => {
@@ -83,7 +114,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     return numSelected === numRows;
   }
 
-  deleteSingleOrMultipleTransaction(element) {
+  deleteSingleOrMultipleTransaction() {
     console.log(this.deleteMultipleTransactionArray);
     if (this.deleteMultipleTransactionArray.length > 0) {
       this.deleteTransactionApi(this.deleteMultipleTransactionArray);
@@ -91,6 +122,33 @@ export class ReconciliationDetailsViewComponent implements OnInit {
       this.eventService.openSnackBar("Please select atleast one transaction", "DISMISS")
     }
   }
+
+  freezeFolioData() {
+    if (this.data.mutualFundId) {
+      this.reconService.putFreezeFolioData(this.data.mutualFundId)
+        .subscribe(res => {
+          console.log(res);
+        }, err => {
+          console.error(err)
+        })
+    }
+  }
+
+  unfreezeFolioData() {
+    const data = {
+      brokerId: this.data.brokerId,
+      advisorId: this.advisorId,
+      rt: this.data.rtId
+    }
+
+    this.reconService.putUnfreezeFolio(data)
+      .subscribe(res => {
+        console.log(res);
+      }, err => {
+        console.error(err);
+      })
+  }
+
 
   deleteTransactionApi(value) {
     this.reconService.deleteAumTransaction(value)
@@ -102,6 +160,11 @@ export class ReconciliationDetailsViewComponent implements OnInit {
         this.dataSource.data.map(item => {
           item['unitOne'] = String((res.units).toFixed(3));
           item['difference'] = String((parseInt(item['unitOne']) - parseInt(item['unitsRta'])).toFixed(3));
+          if (item['difference'] === '0.0') {
+            this.enableFreezeBtn = true
+          } else {
+            this.enableFreezeBtn = false;
+          }
         });
         // this.dataSource.data['unitOne'] = this.dataSource.data['unitOne'] - res.units;
         // this.dataSource.data['difference'] = this.dataSource.data['unitOne'] - this.dataSource.data['unitsRta'];
@@ -113,25 +176,6 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     this.deleteTransactionApi([element['id']]);
   }
 
-  ngOnInit() {
-    console.log(this.data);
-
-    if (this.data && this.data.tableType == 'all-folios') {
-      this.tableEntriesType = 1;
-    } else if (this.data && this.data.tableType == 'duplicate-folios') {
-      this.tableEntriesType = 2;
-    }
-
-    const tableArr: PeriodicElement[] = [{
-      unitsRta: this.data.unitsRta ? (this.data.unitsRta).toFixed(3) : '',
-      unitOne: this.data.unitsIfnow ? (this.data.unitsIfnow).toFixed(3) : '',
-      difference: this.data.difference ? (this.data.difference).toFixed(3) : ''
-    }]
-
-    this.dataSource.data = tableArr;
-    this.upperTableArr = tableArr;
-    this.allFolioTransactionTableDataBinding();
-  }
 
   allFolioTransactionTableDataBinding() {
     if (this.data.tableData.length !== 0) {

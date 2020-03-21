@@ -10,13 +10,13 @@ import {UtilService} from 'src/app/services/util.service';
 export class DetaildedViewSuperannuationComponent implements OnInit {
 
   inputData: any;
-  superannnuation: any;
+  superannuation: any;
 
   constructor(public utils: UtilService, private subInjectService: SubscriptionInject) {
   }
 
   ngOnInit() {
-    this.superannnuation = this.inputData
+    this.superannuation = this.inputData
   }
   @Input()
   set data(data) {

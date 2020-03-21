@@ -45,7 +45,7 @@ export class AdviceFixedIncomeComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId,
       assetCategory: 7,
-      adviceStatusId:1
+      adviceStatusId: 1
     }
     this.isLoading = true;
     this.fixedDataSource = [{}, {}, {}];
@@ -53,21 +53,27 @@ export class AdviceFixedIncomeComponent implements OnInit {
     this.bondDataSource = [{}, {}, {}];
     this.activityService.getAllAsset(obj).subscribe(
       data => this.getAllSchemeResponse(data), (error) => {
+        this.fixedDataSource = [];
+        this.recurringDataSource = [];
+        this.bondDataSource = [];
+        this.fixedDataSource['tableFlag'] = (this.fixedDataSource.length == 0) ? false : true;
+        this.recurringDataSource['tableFlag'] = (this.recurringDataSource.length == 0) ? false : true;
+        this.bondDataSource['tableFlag'] = (this.bondDataSource.length == 0) ? false : true;
       }
     );
   }
-  filterForAsset(data){//filter data to for showing in the table
-    let filterdData=[];
+  filterForAsset(data) {//filter data to for showing in the table
+    let filterdData = [];
     data.forEach(element => {
-      var asset=element.AssetDetails;
-      if(element.AdviceList.length>0){
+      var asset = element.AssetDetails;
+      if (element.AdviceList.length > 0) {
         element.AdviceList.forEach(obj => {
-          obj.assetDetails=asset;
+          obj.assetDetails = asset;
           filterdData.push(obj);
         });
-      }else{
-        const obj={
-          assetDetails:asset
+      } else {
+        const obj = {
+          assetDetails: asset
         }
         filterdData.push(obj);
       }
@@ -79,17 +85,17 @@ export class AdviceFixedIncomeComponent implements OnInit {
     this.isLoading = false;
     console.log('data', data)
     this.dataSource = data;
-    let fixedData=this.filterForAsset(data.FIXED_DEPOSIT)
+    let fixedData = this.filterForAsset(data.FIXED_DEPOSIT)
     this.fixedDataSource = new MatTableDataSource(fixedData);
-    console.log('fddata',fixedData);
+    console.log('fddata', fixedData);
     // this.fixedDataSource.sort = this.sort
-    let rdDAta=this.filterForAsset(data.RECURRING_DEPOSIT)
+    let rdDAta = this.filterForAsset(data.RECURRING_DEPOSIT)
     this.recurringDataSource = new MatTableDataSource(rdDAta);
-    console.log('rdData',rdDAta)
+    console.log('rdData', rdDAta)
     // this.recurringDataSource.sort = this.sort
-    let bondData=this.filterForAsset(data.BONDS)
+    let bondData = this.filterForAsset(data.BONDS)
     this.bondDataSource = new MatTableDataSource(bondData);
-    console.log('bondData',bondData)
+    console.log('bondData', bondData)
 
     // this.bondDataSource.sort = this.sort
     this.fixedDataSource['tableFlag'] = (data.FIXED_DEPOSIT.length == 0) ? false : true;
@@ -119,11 +125,11 @@ export class AdviceFixedIncomeComponent implements OnInit {
   checkSingle(flag, selectedData, tableData, tableFlag) {
     if (flag.checked) {
       selectedData.selected = true;
-      this.selectedAssetId.push(selectedData.assetDetails.id)
+      this.selectedAssetId.push(selectedData.id)
     }
     else {
       selectedData.selected = false
-      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.assetDetails.id), 1)
+      this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.id), 1)
     }
     let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
     this.getFlagCount(tableFlag, countValue);

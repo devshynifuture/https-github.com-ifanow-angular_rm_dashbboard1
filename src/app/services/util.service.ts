@@ -248,7 +248,7 @@ export class ValidatorType {
   // static TEXT_ONLY = new RegExp(/^[a-zA-Z ]/);
   static TEXT_ONLY = new RegExp(/^[a-zA-Z ]*$/);
   static TEXT_WITH_SPACE = new RegExp(/^[a-zA-Z ]/gi);
-  static PASS_REGEX = new RegExp(/(((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])))/);
+  static LOGIN_PASS_REGEX = new RegExp(/(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%])(?=.{8,})/);
   static ALPHA_NUMERIC = new RegExp(/^[a-zA-Z0-9/-]*$/);
   static COMPULSORY_ALPHA_NUMERIC = new RegExp(/^[a-zA-Z]+[a-zA-Z0-9/-]*$/);
   static ALPHA_NUMERIC_WITH_SPACE = new RegExp(/^[a-zA-Z0-9 /-]*$/);

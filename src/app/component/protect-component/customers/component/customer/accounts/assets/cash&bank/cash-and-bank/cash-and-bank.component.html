@@ -57,7 +57,10 @@
                 <ng-container matColumnDef="owner">
                     <th mat-sort-header="ownerName" *matHeaderCellDef class="br t-18" mat-header-cell> Owner</th>
                     <td *matCellDef="let element" class="br t-18" mat-cell>
-                        <div class="bar"> {{element.ownerName}} </div>
+                        <div class="bar"></div>
+                        <div *ngFor="let owner of element.ownerList; let i = index">
+                            <span *ngIf="i == 0">{{owner.name}}</span>
+                        </div>
                     </td>
                     <td *matFooterCellDef class="br f-600 pr-20 text-right" mat-footer-cell>
                         {{isLoading ? '' : 'Total' }}
@@ -203,7 +206,10 @@
                 <ng-container matColumnDef="owner">
                     <th mat-sort-header="ownerName" *matHeaderCellDef class="br" mat-header-cell> Owner</th>
                     <td *matCellDef="let element" class="br" mat-cell>
-                        <div class="bar">{{element.ownerName}} </div>
+                        <div class="bar"></div>
+                        <div *ngFor="let owner of element.ownerList; let i = index">
+                            <span *ngIf="i == 0">{{owner.name}}</span>
+                        </div>
                     </td>
                     <td *matFooterCellDef class="br f-600 pr-20 text-right" mat-footer-cell>
                         {{isLoading ? '' : 'Total' }}

@@ -126,12 +126,12 @@ get getCoOwner() {
 
 addNewCoOwner(data) {
   this.getCoOwner.push(this.fb.group({
-    name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+    name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
   }));
-  if (!data || this.getCoOwner.value.length < 1) {
-    for (let e in this.getCoOwner.controls) {
-      this.getCoOwner.controls[e].get('share').setValue('');
-    }
+  if (data) {
+    setTimeout(() => {
+     this.disabledMember(null,null);
+    }, 1300);
   }
 
   if(this.getCoOwner.value.length > 1 && !data){
@@ -145,9 +145,7 @@ addNewCoOwner(data) {
     }
    }
   }
-  else{
-    this.disabledMember(null, null)
-  }
+ 
 }
 
 removeCoOwner(item) {
@@ -172,12 +170,12 @@ removeCoOwner(item) {
 /***nominee***/ 
 
 get getNominee() {
-  return this.ppfSchemeForm.get('getNomineeName') as FormArray;
+  return this.optionalppfSchemeForm.get('getNomineeName') as FormArray;
 }
 
 removeNewNominee(item) {
   this.getNominee.removeAt(item);
-  if (this.ppfSchemeForm.value.getNomineeName.length == 1) {
+  if (this.optionalppfSchemeForm.value.getNomineeName.length == 1) {
     this.getNominee.controls['0'].get('sharePercentage').setValue('100');
   } else {
     let share = 100/this.getNominee.value.length;
@@ -190,14 +188,13 @@ removeNewNominee(item) {
       }
     }
   }
-  this.disabledMember(null, null);
 }
 
 
 
 addNewNominee(data) {
   this.getNominee.push(this.fb.group({
-    name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+    name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
   }));
   if (!data || this.getNominee.value.length < 1) {
     for (let e in this.getNominee.controls) {
@@ -216,9 +213,7 @@ addNewNominee(data) {
       }
     }
    }
-   else{
-    this.disabledMember(null, null)
-  }
+  
   
 }
 /***nominee***/ 
@@ -250,7 +245,7 @@ addNewNominee(data) {
         familyMemberId: 0,
         id:0
       })]),
-      ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
+      // ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
       accountBalance: [data.accountBalance, [Validators.required, Validators.min(500), Validators.max(150000)]],
       balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],
       commencementDate: [new Date(data.commencementDate), [Validators.required]],
@@ -320,7 +315,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ppfSchemeForm}
           let obj = {
             "date": element.controls.date.value._d,
             "amount": element.controls.amount.value,
-            "type": element.controls.type.value
+            "paymentType": element.controls.type.value
           }
           finalTransctList.push(obj)
         }
@@ -357,7 +352,8 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ppfSchemeForm}
       let obj = {
         "advisorId": this.advisorId,
         "clientId": this.clientId,
-        "ownerName": (this.ownerName == undefined) ? this.ppfSchemeForm.get('ownerName').value : this.ownerName.userName,
+        'ownerList': this.ppfSchemeForm.value.getCoOwnerName,
+        // "ownerName": (this.ownerName == undefined) ? this.ppfSchemeForm.get('ownerName').value : this.ownerName.userName,
         "familyMemberId": this.familyMemberId,
         "accountBalance": this.ppfSchemeForm.get('accountBalance').value,
         "balanceAsOn": this.ppfSchemeForm.get('balanceAsOn').value,
@@ -368,9 +364,17 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ppfSchemeForm}
         "nominees": this.nominees,
         "frequency": this.ppfSchemeForm.get('frquency').value,
         "futureApproxcontribution": this.ppfSchemeForm.get('futureContribution').value,
+        'nomineeList': this.optionalppfSchemeForm.value.getNomineeName,
         "publicprovidendfundtransactionlist": finalTransctList,
       }
-      this.dataSource = obj;
+
+      obj.nomineeList.forEach((element, index) => {
+        if(element.name == ''){
+          this.removeNewNominee(index);
+        }
+      });
+      obj.nomineeList= this.ppfSchemeForm.value.getNomineeName;
+      // this.dataSource = obj;
       let adviceObj = {
         advice_id: this.advisorId,
         adviceStatusId: 5,

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LeadsClientsComponent } from './leads-clients/leads-clients.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { AddClientComponent } from '../people-clients/add-client/add-client.component';
 
 @Component({
   selector: 'app-people-leads',
@@ -18,8 +19,9 @@ export class PeopleLeadsComponent implements OnInit {
   }
 
   leadsConvert(data) {
+    (data == null) ? data = { flag: 'Add lead' } : '';
     const fragmentData = {
-      flag: 'detailedViewCashInHand',
+      flag: 'convert Lead',
       id: 1,
       data,
       state: 'open50',
@@ -36,7 +38,26 @@ export class PeopleLeadsComponent implements OnInit {
       }
     );
   }
+  addLead(data) {
+    (data == null) ? data = { flag: 'Add lead', fieldFlag: 'lead' } : '';
+    const fragmentData = {
+      flag: 'detailedViewCashInHand',
+      id: 1,
+      data,
+      state: 'open50',
+      componentName: AddClientComponent,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
 
+        }
+      }
+    );
+  }
 
 }
 export interface PeriodicElement {

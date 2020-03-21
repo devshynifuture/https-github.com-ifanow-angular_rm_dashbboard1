@@ -6,7 +6,6 @@ import { MaterialModule } from '../../../../../../material/material';
 import { AddProfileSummaryComponent } from '../../common-component/add-profile-summary/add-profile-summary.component';
 import { BottomSheetComponent } from '../../common-component/bottom-sheet/bottom-sheet.component';
 import { DetailedViewComponent } from '../../common-component/detailed-view/detailed-view.component';
-import { DocumentNewFolderComponent } from '../../common-component/document-new-folder/document-new-folder.component';
 import { IncomeDetailComponent } from '../../common-component/income-detail/income-detail.component';
 import { SchemeLevelTransactionComponent } from '../../common-component/scheme-level-transaction/scheme-level-transaction.component';
 import { AccountRoutingModule } from './account-routing.module';
@@ -23,7 +22,6 @@ import { AddNomineeComponent } from './assets/smallSavingScheme/common-component
     LibilitiesRightComponent,
     IncomeDetailComponent,
     DetailedViewComponent,
-    DocumentNewFolderComponent,
   ],
   imports: [
     AccountRoutingModule,
@@ -35,7 +33,7 @@ import { AddNomineeComponent } from './assets/smallSavingScheme/common-component
     // CustomDirectiveModule
   ],
   exports: [],
-  entryComponents: [BottomSheetComponent, DocumentNewFolderComponent]
+  entryComponents: [BottomSheetComponent]
 })
 export class AccountModule {
 }
