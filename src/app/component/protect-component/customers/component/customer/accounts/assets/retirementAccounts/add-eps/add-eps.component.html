@@ -63,8 +63,9 @@
         </div>
         <div class="col-md-3">
             <mat-form-field class="ba-date">
-                <input (click)="picker.open()" (focus)="picker.open()" autocomplete="off" matInput formControlName="commencementDate" [max]="maxDate"
-                    class="form-control br-0 b-0" [matDatepicker]="picker" readonly>
+                <input (click)="picker.open()" (focus)="picker.open()" autocomplete="off" matInput
+                    formControlName="commencementDate" [max]="maxDate" class="form-control br-0 b-0"
+                    [matDatepicker]="picker" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12"
@@ -161,13 +162,12 @@
             </div>
         </div>
         <div formArrayName="getNomineeName">
-            <div class="row pt-36"
-                *ngFor="let obj of eps.controls['getNomineeName'].controls; let pointIndex=index"
+            <div class="row pt-36" *ngFor="let obj of eps.controls['getNomineeName'].controls; let pointIndex=index"
                 [formGroupName]="pointIndex">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
                 </div>
-                <div class="pr-0" [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
+                <div [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
@@ -200,10 +200,12 @@
                     </div>
                 </div>
                 <div class="col-md-2 p-0 d-flex align-items-center">
-                    <i *ngIf="eps.value.getNomineeName.length < 3" class="material-icons text-primitive f-20 c-p float-left"
-                    (click)="addNewNominee(undefined)">add</i>
-                <i *ngIf="eps.value.getNomineeName.length > 1" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
-                    (click)="removeNewNominee(pointIndex)">remove</i>
+                    <i *ngIf="eps.value.getNomineeName.length < 3"
+                        class="material-icons text-primitive f-20 c-p float-left"
+                        (click)="addNewNominee(undefined)">add</i>
+                    <i *ngIf="eps.value.getNomineeName.length > 1"
+                        class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                        (click)="removeNewNominee(pointIndex)">remove</i>
                 </div>
 
             </div>

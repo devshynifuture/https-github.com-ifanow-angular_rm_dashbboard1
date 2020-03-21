@@ -12,7 +12,8 @@
 </div>
 <div [formGroup]="gratuity" class="pb-44 mb-48 pt-100">
     <div formArrayName="getCoOwnerName">
-        <div class="row" *ngFor="let obj of gratuity.controls['getCoOwnerName'].controls; let pointIndex=index"
+        <div [ngClass]="{'pt-36': pointIndex>0}" class="row"
+            *ngFor="let obj of gratuity.controls['getCoOwnerName'].controls; let pointIndex=index"
             [formGroupName]="pointIndex">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8 ">{{pointIndex != 0?'Co-o' : 'O'}}wner{{pointIndex != 0?pointIndex:''}}</h5>
@@ -194,7 +195,7 @@
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
                 </div>
-                <div class="pr-0" [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
+                <div [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
@@ -227,10 +228,12 @@
                     </div>
                 </div>
                 <div class="col-md-2 p-0 d-flex align-items-center">
-                    <i *ngIf="gratuity.value.getNomineeName.length < 3" class="material-icons text-primitive f-20 c-p float-left"
-                    (click)="addNewNominee(undefined)">add</i>
-                <i *ngIf="gratuity.value.getNomineeName.length > 1" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
-                    (click)="removeNewNominee(pointIndex)">remove</i>
+                    <i *ngIf="gratuity.value.getNomineeName.length < 3"
+                        class="material-icons text-primitive f-20 c-p float-left"
+                        (click)="addNewNominee(undefined)">add</i>
+                    <i *ngIf="gratuity.value.getNomineeName.length > 1"
+                        class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                        (click)="removeNewNominee(pointIndex)">remove</i>
                 </div>
 
             </div>

@@ -55,6 +55,27 @@
     </div>
     <div class="row pt-48">
         <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Form of gold</h5>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select matInput formControlName="formOfGold" class="form-control br-0">
+                        <mat-option value="" disabled>Select option</mat-option>
+                        <mat-option value="1">Bars</mat-option>
+                        <mat-option value="2">Coins</mat-option>
+                        <mat-option value="3">Jewelry</mat-option>
+                    </mat-select>
+                    <mat-error class="f-12"
+                        [ngClass]="{'v-h':!(isFormOfGold && getFormControl().formOfGold.invalid || getFormControl().formOfGold.touched && getFormControl().formOfGold.invalid)}">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-48">
+        <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Tolas/grams</h5>
         </div>
         <div class="col-md-3">
@@ -62,8 +83,8 @@
                 <mat-form-field>
                     <mat-select matInput formControlName="totalsGrams" class="form-control br-0">
                         <mat-option value="" disabled>Select option</mat-option>
-                        <mat-option value="1">Entry in tolas</mat-option>
-                        <mat-option value="2">Entry in grams</mat-option>
+                        <mat-option value="1">Tolas</mat-option>
+                        <mat-option value="2">Grams</mat-option>
                     </mat-select>
                     <mat-error class="f-12"
                         [ngClass]="{'v-h':!(isTotalsGrams && getFormControl().totalsGrams.invalid || getFormControl().totalsGrams.touched && getFormControl().totalsGrams.invalid)}">
@@ -92,22 +113,7 @@
             </div>
         </div>
     </div>
-    <!-- <div class="row pt-40">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Balance as on</h5>
-        </div>
-        <div class="col-md-3">
-            <mat-form-field>
-                <input matInput (click)="picker.open()" formControlName="balanceAsOn" [max]='maxDate' class="form-control br-0" [matDatepicker]="picker" readonly>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-                <mat-error class="f-12" [ngClass]="{'v-h':!(isBalanceAsOn && getFormControl().balanceAsOn.invalid || getFormControl().balanceAsOn.touched && getFormControl().balanceAsOn.invalid)}">
-                    This field is required
-                </mat-error>
-            </mat-form-field>
 
-        </div>
-    </div> -->
     <div class="row pt-36">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Approx. purchase value</h5>
