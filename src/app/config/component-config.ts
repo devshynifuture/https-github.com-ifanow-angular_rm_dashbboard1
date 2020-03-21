@@ -445,6 +445,7 @@ export const appConfig = {
   BACKOFFICE_FOLIOWISE_LIST_GET: 'backoffice/aum/transaction/foliowise/list/get',
   BACKOFFICE_PUT_UNMAP_FOLIO: 'backoffice/unmap/folio',
   BACKOFFICE_GET_FOLIO_MASTER_DETAIL: 'backoffice/mutual-fund/folio-master/get',
+  BACKOFFICE_GET_DUPLICATE_DATA_LIST: 'backoffice/duplicate-data/get',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',

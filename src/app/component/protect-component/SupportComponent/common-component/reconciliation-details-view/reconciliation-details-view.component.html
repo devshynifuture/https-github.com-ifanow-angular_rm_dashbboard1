@@ -74,14 +74,21 @@
         <mat-checkbox>Show All Transactions</mat-checkbox>
     </div>
     <div class="col-lg-4 text-right">
-        <button class="ba-black" mat-button (click)="unfreezeFolioData()">
-            Unfreeze
-        </button>
+        <div matTooltip="You cannot Unfreeze Folio" [matTooltipDisabled]="enableFreezeBtn">
+            <button [ngClass]="enableFreezeBtn ? '':'disableClass'" [disabled]="!enableFreezeBtn" class="ba-black"
+                mat-button (click)="unfreezeFolioData()">
+                Unfreeze
+            </button>
+        </div>
+
     </div>
     <div class="col-lg-2 text-right">
-        <button class="ba-black" mat-button *ngIf="enableFreezeBtn" (click)="freezeFolioData()">
-            Freeze
-        </button>
+        <div matTooltip="You cannot freeze Folio" [matTooltipDisabled]="!enableFreezeBtn">
+            <button class="ba-black" mat-button [disabled]="enableFreezeBtn"
+                [ngClass]="enableFreezeBtn ? 'disableClass':''" (click)="freezeFolioData()">
+                Freeze
+            </button>
+        </div>
     </div>
 </div>
 
@@ -144,10 +151,14 @@
                     <th class="b-a" mat-header-cell *matHeaderCellDef> Action </th>
                     <td class="b-a" mat-cell *matCellDef="let element">
                         <div class="bar">
-                            <button mat-stroked-button class="bg-primary text-white mr-12 h-22 btn-xs"
-                                (click)="deleteSingleTransaction(element)">
-                                Delete
-                            </button>
+                            <div matTooltip="Kindly unfreeze folio, to delete transaction" [matTooltipPosition]="below"
+                                [matTooltipDisabled]="canDeleteTransaction">
+                                <button mat-stroked-button [disabled]="!canDeleteTransaction"
+                                    class="bg-primary text-white mr-12 h-22 btn-xs"
+                                    (click)="deleteSingleTransaction(element)">
+                                    Delete
+                                </button>
+                            </div>
                         </div>
                     </td>
                 </ng-container>

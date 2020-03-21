@@ -32,6 +32,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   upperTableArr: PeriodicElement[];
   advisorId = AuthService.getAdvisorId();
   selectedFolioUnits: number = 0;
+  canDeleteTransaction: boolean = false;
 
   constructor(
     private subscriptionInject: SubscriptionInject,
@@ -163,7 +164,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
         this.dataSource.data.map(item => {
           item['unitOne'] = String((res.units).toFixed(3));
           item['difference'] = String((parseInt(item['unitOne']) - parseInt(item['unitsRta'])).toFixed(3));
-          if (item['difference'] === '0.0') {
+          if (this.data && this.data.freezeDate && item['difference'] === '0.000') {
             this.enableFreezeBtn = true
           } else {
             this.enableFreezeBtn = false;
@@ -197,6 +198,8 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
   allFolioTransactionTableDataBinding() {
     if (this.data.tableData.length !== 0) {
+      this.canDeleteTransaction = this.data.canDeleteTransaction;
+
       this.data.tableData.forEach(element => {
         this.tableData1.push({
           id: element.id,

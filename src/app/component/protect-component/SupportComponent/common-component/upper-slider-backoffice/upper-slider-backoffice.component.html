@@ -44,6 +44,7 @@
 
                 <div class="row">
                     <div class="col-md-12 p-0 overflow-hidden back-office-table">
+                        <!-- summary table -->
                         <table mat-table [dataSource]="dataSource" id="table-low" class="" appSkeletonLoading
                             [appSkeletonLoading]="isLoading">
 
@@ -108,7 +109,7 @@
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                         </table>
                     </div>
-                    <div class="col-md-12 p-0" *ngIf="dataSource.data === undefined">
+                    <div class="col-md-12 p-0" *ngIf="dataSource.data === null">
                         <h4 class="d-flex justify-content-center p-44 b-a">
                             No Data Found
                         </h4>
@@ -151,6 +152,7 @@
                     </div>
 
                     <div class="col-md-12 p-0 overflow-hidden back-office-table">
+                        <!-- manual recon all folio -->
                         <table *ngIf="subTabState == 1" mat-table [dataSource]="dataSource1" id="table-low" class=" ">
 
                             <ng-container matColumnDef="name">
@@ -203,7 +205,12 @@
                             <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
                         </table>
-
+                        <div class="col-md-12 p-0" *ngIf="dataSource1.data === null">
+                            <h4 class="d-flex justify-content-center p-44 b-a">
+                                No Data Found
+                            </h4>
+                        </div>
+                        <!-- manual recon duplicate folio -->
                         <table *ngIf="subTabState == 2" mat-table [dataSource]="dataSource2" id="table-low" class=" ">
 
                             <ng-container matColumnDef="name">
@@ -256,17 +263,14 @@
                             <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
                         </table>
-                        <div *ngIf="dataSource1.data === undefined">
-                            <h4 class="d-flex justify-content-center b-a p-44">
+                        <div class="col-md-12 p-0" *ngIf="dataSource2.data === null">
+                            <h4 class="d-flex justify-content-center p-44 b-a">
                                 No Data Found
                             </h4>
                         </div>
                     </div>
-
                 </div>
-
             </mat-tab>
-
 
             <mat-tab [disabled]="isTabDisabled">
                 <ng-template mat-tab-label>
@@ -398,7 +402,7 @@
                             <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
                         </table>
-                        <div *ngIf="dataSource3 === undefined">
+                        <div *ngIf="dataSource3.data === null">
                             <h4 class="b-a p-44 d-flex justify-content-center">
                                 No Data Found
                             </h4>

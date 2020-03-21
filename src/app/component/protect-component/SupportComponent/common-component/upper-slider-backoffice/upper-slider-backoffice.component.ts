@@ -24,7 +24,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   displayedColumns1: string[] = ['name', 'folioNumber', 'unitsIfnow', 'unitsRta', 'difference', 'transactions'];
   dataSource1 = new MatTableDataSource(ELEMENT_DATA1);
-  dataSource2 = ELEMENT_DATA2;
+  dataSource2 = new MatTableDataSource(ELEMENT_DATA2);
 
   displayedColumns3: string[] = ['folios', 'fileOrderDateTime', 'status', 'referenceId', 'transactionAddedInFiles', 'transactionAdded', 'fileName', 'fileUrl'];
   dataSource3 = new MatTableDataSource<PeriodicElement3>(ELEMENT_DATA3);
@@ -63,7 +63,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
     } else if (this.data.startRecon === false) {
       console.log('start recon is false::::');
-      this.dataSource1 = undefined;
+      this.dataSource.data = null;
+      this.dataSource1.data = null;
       this.getBackofficeAumFileOrderListDeleteReorder();
 
     }
@@ -95,7 +96,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       .subscribe(res => {
         this.isLoading = false;
         let objArr = [];
-        // console.log("this is some table values::::", res);
+        console.log("this is some table values::::", res);
         if (res && res['aumList']) {
           this.aumList = res['aumList'];
           let arrayValue = [];
@@ -104,6 +105,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
             return element.isMapped === -1;
           });
           filteredAumListWithIsMappedToMinusOne.forEach(element => {
+            // check  and compare date object and can delete value
             arrayValue.push({
               name: element.shemeName,
               folioNumber: element.folioNumber,
@@ -111,11 +113,13 @@ export class UpperSliderBackofficeComponent implements OnInit {
               unitsRta: (element.aumUnits).toFixed(3),
               difference: (element.calculatedUnits - element.aumUnits).toFixed(3),
               transaction: '',
-              mutualFundId: element.mutualFundId
+              mutualFundId: element.mutualFundId,
+              canDeleteTransaction: new Date(res.transactionDate).getTime() > new Date(element.freezeDate).getTime()
             });
           });
           this.dataSource1.data = arrayValue;
-          console.log("datas available till now:::::", this.data, res);
+
+          // console.log("datas available till now:::::", this.data, res);
           const data = {
             advisorId: this.advisorId,
             brokerId: this.brokerId,
@@ -151,8 +155,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
             this.mutualFundIds.push(element.mutualFundId);
           });
         } else {
-          this.dataSource1.data = undefined;
-          objArr = undefined;
+          this.dataSource1.data = null;
+          objArr = null;
         }
         this.dataSource.data = objArr;
       });
@@ -167,6 +171,15 @@ export class UpperSliderBackofficeComponent implements OnInit {
     this.reconService.getDuplicateFolioDataValues(data)
       .subscribe(res => {
         console.log("this is some duplicate values:::::::::", res);
+        let arrValue = [];
+        res.forEach(element => {
+          arrValue = this.aumList.filter(item => {
+            return item.mutualFundId === element.id ? item : null;
+          });
+        });
+        console.log(this.aumList, arrValue);
+
+        this.dataSource2.data = arrValue;
       }, err => {
         console.error(err);
       })
@@ -223,7 +236,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           });
           this.dataSource3.data = res;
         } else {
-          this.dataSource3 = undefined;
+          this.dataSource3.data = null;
         }
       });
   }

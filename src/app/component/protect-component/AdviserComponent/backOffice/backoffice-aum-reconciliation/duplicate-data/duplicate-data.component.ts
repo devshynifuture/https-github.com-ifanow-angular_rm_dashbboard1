@@ -1,8 +1,10 @@
+import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionInject } from './../../../Subscriptions/subscription-inject.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { ReconciliationDetailsViewComponent } from 'src/app/component/protect-component/SupportComponent/common-component/reconciliation-details-view/reconciliation-details-view.component';
 import { UtilService } from 'src/app/services/util.service';
+import { ReconciliationService } from '../reconciliation/reconciliation.service';
 
 @Component({
   selector: 'app-duplicate-data',
@@ -12,8 +14,11 @@ import { UtilService } from 'src/app/services/util.service';
 export class DuplicateDataComponent implements OnInit {
 
   constructor(
-    private subInjectService: SubscriptionInject
+    private subInjectService: SubscriptionInject,
+    private reconService: ReconciliationService
   ) { }
+
+  advisorId = AuthService.getAdvisorId();
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -23,6 +28,8 @@ export class DuplicateDataComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new MatTableDataSource<DuplicateI>(ELEMENT_DATA);
     this.dataSource.sort = this.sort;
+
+    this.duplicateFolioData()
   }
 
   openReconciliationDetails(value, data, tableType) {
@@ -46,6 +53,20 @@ export class DuplicateDataComponent implements OnInit {
 
       }
     );
+  }
+
+  duplicateFolioData() {
+    const data = {
+      advisorId: this.advisorId,
+    }
+    this.reconService.getDuplicateDataValues(data)
+      .subscribe(res => {
+        if (res) {
+          console.log("this is duplicate data values::;:::::", res);
+        } else {
+          this.dataSource.data = null;
+        }
+      })
   }
 
 }
