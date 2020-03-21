@@ -5,263 +5,163 @@
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle"> clear</i>
+                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
             </div>
         </div>
     </div>
 </div>
 
 <div class="pt-80 pb-90 pl-20">
-
-
     <!-- add family member -->
-    <!-- <h5 class=" roboto">How would you like to add the family member? </h5> -->
+    <div *ngIf="step==1">
+        <h5 class=" roboto">How would you like to add the family member? </h5>
 
-    <!-- <div class="row pt-20">
-        <div class="col-md-3 pr-0 ">
-            <div class="manuallyBox">
-                <mat-radio-group aria-label="Select an option">
-                    <mat-radio-button class="f-14 text-light" value="1">Manually</mat-radio-button>
-                </mat-radio-group>
+        <div class="row pt-20 c-p">
+            <div class="col-md-3 pr-0 ">
+                <div class="manuallyBox" (click)="addFamilyType('1')">
+                    <mat-radio-group [(ngModel)]="typeOfFamilyMemberAdd" aria-label="Select an option">
+                        <mat-radio-button class="f-14 text-light" value="1">Manually</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+            <div class="col-md-8 pl-0 " (click)="addFamilyType('1')">
+                <div class="contentHeight">
+                    <p class="text-light f-14 m-0">Chose this option if the family member hasn’t invested through you
+                        before
+                        and so the member’s data isn’t currently present in the system.</p>
+                </div>
+
             </div>
         </div>
-        <div class="col-md-8 pl-0 ">
-            <div class="contentHeight">
-                <p class="text-light f-14 m-0">Chose this option if the family member hasn’t invested through you before and so the member’s data isn’t currently present in the system.</p>
-            </div>
 
+        <div class="row pt-20 c-p">
+            <div class="col-md-3 pr-0">
+                <div class="manuallyBox" (click)="addFamilyType('2')">
+                    <mat-radio-group [(ngModel)]="typeOfFamilyMemberAdd" aria-label="Select an option">
+                        <mat-radio-button class="f-14 text-light l-18" value="2">Merge from <br> existing
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+            </div>
+            <div class="col-md-8 pl-0 " (click)="addFamilyType('2')">
+                <div class="contentHeight">
+                    <p class="text-light f-14 m-0">
+                        If the family member has previously invested through you then the member is likely to be already
+                        present in the system as a client. You can merge the member into this group.
+                    </p>
+                </div>
+
+            </div>
         </div>
     </div>
 
-    <div class="row pt-20">
-        <div class="col-md-3 pr-0">
-            <div class="manuallyBox">
-                <mat-radio-group aria-label="Select an option">
-                    <mat-radio-button class="f-14 text-light l-18" value="1">Merge from <br> existing
-                    </mat-radio-button>
-                </mat-radio-group>
-            </div>
-
-        </div>
-        <div class="col-md-8 pl-0 ">
-            <div class="contentHeight">
-                <p class="text-light f-14 m-0">
-                    If the family member has previously invested through you then the member is likely to be already present in the system as a client. You can merge the member into this group.
-                </p>
-            </div>
-
-        </div>
-    </div> -->
-
-
     <!-- family list -->
-
-    <!-- <h5 class="mb-44 roboto">Great! Who’s in your family, Rahul?</h5>
-
-    <div class="photoFamily">
-
-        <div class="row justify-content-center">
-            <div class="col-md-4">
-                <div class="profilePhoto text-center">
-                    <div class="borderPhoto">
-                        <mat-checkbox class="posCheckBox"></mat-checkbox>
-                        <img src="/assets/images/svg/man-profile.svg">
+    <div *ngIf="step==2">
+        <h5 class="mb-44 roboto">Great! Who’s in your family, Rahul?</h5>
+        <div class="photoFamily">
+            <div class="row justify-content-center">
+                <div *ngFor="let singleMember of familyMemberList.firstRow" (click)="selectFamilyMembers(singleMember)"
+                    class="col-md-4">
+                    <div class="profilePhoto text-center">
+                        <div class="borderPhoto">
+                            <mat-checkbox [checked]="singleMember.selected" class="posCheckBox"></mat-checkbox>
+                            <img src={{singleMember.imgUrl}}>
+                        </div>
+                        <p class="f-14 roboto">{{singleMember.name}}</p>
                     </div>
-                    <p class="f-14 roboto">You</p>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="profilePhoto text-center">
-                    <div class="borderPhoto">
-                        <mat-checkbox class="posCheckBox"></mat-checkbox>
-                        <img src="/assets/images/svg/wife-profile.svg">
+
+            <div class="row justify-content-center">
+                <div *ngFor="let singleMember of familyMemberList.secondRow" (click)="selectFamilyMembers(singleMember)"
+                    class="col-md-4">
+                    <div class="profilePhoto text-center">
+                        <div class="borderPhoto">
+                            <mat-checkbox [checked]="singleMember.selected" class="posCheckBox"></mat-checkbox>
+                            <img src={{singleMember.imgUrl}}>
+                        </div>
+                        <p class="f-14 roboto">{{singleMember.name}}</p>
                     </div>
-                    <p class="f-14 roboto">Wife</p>
                 </div>
             </div>
+
+
+
+            <div class="row justify-content-center">
+                <div *ngFor="let singleMember of familyMemberList.thirdRow" class="col-md-4">
+                    <div (click)="selectFamilyMembers(singleMember)" class="profilePhoto text-center">
+                        <div class="borderPhoto">
+                            <mat-checkbox [checked]="singleMember.selected" class="posCheckBox"></mat-checkbox>
+                            <img src={{singleMember.imgUrl}}>
+                        </div>
+                        <p class="f-14 roboto">{{singleMember.name}}</p>
+                    </div>
+                    <div *ngIf="singleMember.name!='Son'">
+                        <div>
+                            <button [disabled]="!singleMember.selected" mat-button (click)="remove(singleMember)">
+                                <i class="material-icons">remove</i>
+                            </button>
+                            <p>{{singleMember.count}}</p>
+                            <button [disabled]="!singleMember.selected" mat-button (click)="add(singleMember)">
+                                <i class="material-icons">add</i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
 
-
-        <div class="row justify-content-center">
-            <div class="col-md-4">
-                <div class="profilePhoto text-center">
-                    <div class="borderPhoto">
-                        <mat-checkbox class="posCheckBox"></mat-checkbox>
-                        <img src="/assets/images/svg/father-profile.svg">
-                    </div>
-                    <p class="f-14 roboto">Father</p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="profilePhoto text-center">
-                    <div class="borderPhoto">
-                        <mat-checkbox class="posCheckBox"></mat-checkbox>
-                        <img src="/assets/images/svg/mother-profile.svg">
-                    </div>
-                    <p class="f-14 roboto">Mother</p>
-                </div>
-            </div>
-        </div>
-
-
-
-        <div class="row justify-content-center">
-            <div class="col-md-4">
-                <div class="profilePhoto text-center">
-                    <div class="borderPhoto">
-                        <mat-checkbox class="posCheckBox"></mat-checkbox>
-                        <img src="/assets/images/svg/son-profile.svg">
-                    </div>
-                    <p class="f-14 roboto">Son</p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="profilePhoto text-center">
-                    <div class="borderPhoto">
-                        <mat-checkbox class="posCheckBox"></mat-checkbox>
-                        <img src="/assets/images/svg/daughter-profile.svg">
-                    </div>
-                    <p class="f-14 roboto">Daughter</p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="profilePhoto text-center">
-                    <div class="borderPhoto">
-                        <mat-checkbox class="posCheckBox"></mat-checkbox>
-                        <img src="/assets/images/svg/man-profile.svg">
-                    </div>
-                    <p class="f-14 roboto">Others</p>
-                </div>
-            </div>
-        </div>
-
-
-    </div> -->
-
-
+    </div>
     <!-- family list name -->
-    <!-- <h5 class="mb-44 roboto">Thanks, just a bit more info and we’re done.</h5>
+    <div *ngIf="step==3">
+        <h5 class="mb-44 roboto">Thanks, just a bit more info and we’re done.</h5>
 
-    <div class="dateFamilyMember">
+        <div class="dateFamilyMember">
 
-        <div class="row ">
-            <div class="col-md-2"></div>
-            <div class="col-md-5">
-                <h6 class="f-16 mb-4">Full name</h6>
+            <div class="row ">
+                <div class="col-md-2"></div>
+                <div class="col-md-5">
+                    <h6 class="f-16 mb-4">Full name</h6>
+                </div>
+                <div class="col-md-3">
+                    <h6 class="f-16 mb-4">Date of birth</h6>
+                </div>
             </div>
-            <div class="col-md-3">
-                <h6 class="f-16 mb-4">Date of birth</h6>
+
+            <div class="row mbottom-30">
+                <div class="col-md-2 pr-0 d-flex align-items-center justify-content-end">
+                    <h5 class="m-0 text-right">You</h5>
+                </div>
+                <div class="col-md-5">
+                    <mat-form-field>
+                        <input matInput class="form-control">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field class="ba-date">
+                        <input matInput class="form-control" [matDatepicker]="picker">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
             </div>
+
         </div>
 
-        <div class="row mbottom-30">
-            <div class="col-md-2 pr-0 d-flex align-items-center justify-content-end">
-                <h5 class="m-0 text-right">You</h5>
-            </div>
-            <div class="col-md-5">
-                <mat-form-field>
-                    <input matInput class="form-control">
-                </mat-form-field>
-            </div>
-            <div class="col-md-3">
-                <mat-form-field>
-                    <input matInput class="form-control" [matDatepicker]="picker">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-            </div>
-        </div>
-
-        <div class="row mbottom-30">
-            <div class="col-md-2 pr-0 d-flex align-items-center justify-content-end">
-                <h5 class="m-0 text-right">Wife</h5>
-            </div>
-            <div class="col-md-5">
-                <mat-form-field>
-                    <input matInput class="form-control">
-                </mat-form-field>
-            </div>
-            <div class="col-md-3">
-                <mat-form-field>
-                    <input matInput class="form-control" [matDatepicker]="picker1">
-                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-            </div>
-        </div>
-
-        <div class="row mbottom-30">
-            <div class="col-md-2 pr-0 d-flex align-items-center justify-content-end">
-                <h5 class="m-0 text-right">Father</h5>
-            </div>
-            <div class="col-md-5">
-                <mat-form-field>
-                    <input matInput class="form-control">
-                </mat-form-field>
-            </div>
-            <div class="col-md-3">
-                <mat-form-field>
-                    <input matInput class="form-control" [matDatepicker]="picker2">
-                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-            </div>
-        </div>
-
-        <div class="row mbottom-30">
-            <div class="col-md-2 pr-0 d-flex align-items-center justify-content-end">
-                <h5 class="m-0 text-right">Mother</h5>
-            </div>
-            <div class="col-md-5">
-                <mat-form-field>
-                    <input matInput class="form-control">
-                </mat-form-field>
-            </div>
-            <div class="col-md-3">
-                <mat-form-field>
-                    <input matInput class="form-control" [matDatepicker]="picker2">
-                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-            </div>
-        </div>
-
-        <div class="row mbottom-30">
-            <div class="col-md-2 pr-0 d-flex align-items-center justify-content-end">
-                <h5 class="m-0 text-right">Daughter</h5>
-            </div>
-            <div class="col-md-5">
-                <mat-form-field>
-                    <input matInput class="form-control">
-                </mat-form-field>
-            </div>
-            <div class="col-md-3">
-                <mat-form-field>
-                    <input matInput class="form-control" [matDatepicker]="picker2">
-                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-            </div>
-        </div>
-
-
-    </div> -->
-
-
+    </div>
     <!-- family list table -->
 
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-md-8 p-0">
             <h5 class=" roboto">How would you like to add the family member? </h5>
             <mat-form-field>
                 <input type="text" class="form-control" matInput>
             </mat-form-field>
         </div>
-    </div>
+    </div> -->
 
 
     <!-- <p class="f-16 mt-120 text-primitive">
@@ -324,7 +224,7 @@
 
     <!-- family member family details -->
 
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-md-8 pl-0">
             <p class="f-500 mt-40 mb-4 f-16 roboto">Following are the details of Aditya Rahul Jain</p>
 
@@ -395,10 +295,10 @@
             </ul>
 
         </div>
-    </div>
+    </div> -->
 
 
-    <p class="text-danger f-16 mt-20">
+    <!-- <p class="text-danger f-16 mt-20">
         What is Aditya’s relationship with Rahul Jain?
     </p>
 
@@ -430,16 +330,24 @@
 
 </div>
 
+ -->
 
-
-<div class="bottom-fixed-50 wrapper-12">
-    <div class="row">
-        <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
-        </div>
-        <div class="col-md-8 right text-right">
-            <button class="btn-bottom br-0 text-inherit" mat-button>Save
-            </button>
+    <div class="bottom-fixed-50 wrapper-12">
+        <div class="row">
+            <div class="col-md-4">
+                <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
+            </div>
+            <div class="col-md-8 right text-right">
+                <button class="btn-bottom br-0 text-inherit" *ngIf="step==1 && typeOfFamilyMemberAdd=='1'"
+                    (click)="selectFamilyMembersCount()" mat-button>Proceed
+                </button>
+                <button class="btn-bottom br-0 text-inherit" *ngIf="step==1 && typeOfFamilyMemberAdd=='2'"
+                    (click)="next()" mat-button>Proceed
+                </button>
+                <button class="btn-bottom br-0 text-inherit" *ngIf="step==2" (click)="next()" mat-button>Next
+                </button>
+                <button class="btn-bottom br-0 text-inherit" *ngIf="step==3" (click)="save()" mat-button>Save
+                </button>
+            </div>
         </div>
     </div>
-</div>
