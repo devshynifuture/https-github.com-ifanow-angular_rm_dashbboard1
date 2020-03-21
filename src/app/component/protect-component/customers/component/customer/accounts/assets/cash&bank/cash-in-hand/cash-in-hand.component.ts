@@ -284,7 +284,7 @@ export class CashInHandComponent implements OnInit {
         advisorId: this.advisorId,
         clientId: this.clientId,
         familyMemberId: this.familyMemberId,
-        ownerName: (this.ownerName == undefined) ? this.cashInHand.controls.ownerName.value : this.ownerName,
+        ownerList: this.cashInHand.value.getCoOwnerName,
         balanceAsOn: this.datePipe.transform(this.cashInHand.controls.balanceAsOn.value, 'yyyy-MM-dd'),
         cashValue: this.cashInHand.controls.cashBalance.value,
         // bankAccountNumber: this.cashInHand.controls.bankAcNo.value,

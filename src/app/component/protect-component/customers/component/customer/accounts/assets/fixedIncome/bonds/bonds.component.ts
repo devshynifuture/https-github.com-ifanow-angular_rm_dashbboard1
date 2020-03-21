@@ -350,8 +350,6 @@ export class BondsComponent implements OnInit {
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
-        // familyMemberId: this.familyMemberId,
-        // ownerName: this.bonds.getCoOwnerName.value,
         ownerList: this.bonds.value.getCoOwnerName,
         amountInvested: this.bonds.controls.amountInvest.value,
         bondName: this.bonds.controls.bondName.value,
@@ -362,8 +360,6 @@ export class BondsComponent implements OnInit {
         rateOfReturn: this.bonds.controls.rateReturns.value,
         linkedBankAccount: this.bonds.controls.linkBankAc.value,
         description: this.bonds.controls.description.value,
-        // maturityDate: this.datePipe.transform(this.maturityDate, 'yyyy-MM-dd'),
-        // bankName: this.bonds.controls.bankName.value,
         nomineeList: this.bonds.value.getNomineeName,
 
         tenure: this.bonds.controls.tenure.value,
