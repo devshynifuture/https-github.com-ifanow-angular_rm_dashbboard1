@@ -63,7 +63,7 @@
         <div [ngClass]="{'table-scroll':isLoading==false }" class=" col-md-12 overflow-hidden p-0 mt-8 real-estate"
             id="epf" #EPF #epf>
             <table *ngIf="dataSource.filteredData.length > 0" matSort #epfListTable="matSort" mat-table
-                [dataSource]="dataSource" matSort id="table-low" class="skeletonAnimation" appSkeletonLoading
+                [dataSource]="dataSource" matSort id="tbs" class="skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading">
 
                 <ng-container matColumnDef="no" sticky>

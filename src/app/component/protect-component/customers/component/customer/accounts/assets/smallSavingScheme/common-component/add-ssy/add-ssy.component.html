@@ -24,8 +24,7 @@
                             (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
                             class="form-control br-0" [callMethod]='callMethod'>
                             <mat-option value='' disabled>Select family members</mat-option>
-                            <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
-                                [value]="f.userName">
+                            <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                 <span>{{f.userName}}</span>
                             </mat-option>
                         </mat-select>
@@ -57,121 +56,121 @@
 
         </div>
     </div>
-    
-        <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Guardian</h5>
-            </div>
-            <div class="col-md-5">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input autocomplete="off" matInput #guradian class="form-control br-0"
-                            formControlName="guardian" matInput maxlength="20" type="text">
-                        <mat-error class="f-12"> This field is required</mat-error>
 
-                    </mat-form-field>
-                </div>
+    <div class="row pt-40">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Guardian</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input autocomplete="off" matInput #guradian class="form-control br-0" formControlName="guardian"
+                        matInput maxlength="20" type="text">
+                    <mat-error class="f-12"> This field is required</mat-error>
+
+                </mat-form-field>
             </div>
         </div>
-        <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-4">Account balance</h5>
-                <p class="m-0 f-12 text-custom">Leave blank if you want to enter</p>
-                <p class="m-0 f-12 text-custom">complete transaction history</p>
-            </div>
-            <div class="col-md-3 iconRupess">
-                <div class="form-group mb-0">
-                    <mat-form-field><input autocomplete="off" matInput #accountBalance class="form-control rupess br-0"
-                            appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                            formControlName="accBalance" matInput maxlength="10" type="text">
-                        <mat-error class="f-12" *ngIf="(ssySchemeForm.get('accBalance').errors?.required)"> This field
-                            is required</mat-error>
-                        <mat-hint align="end" class="f-12">{{accountBalance.value.length}}/10</mat-hint>
-                        <mat-error *ngIf="(ssySchemeForm.get('accBalance').errors?.min)" class="f-12">
-                            Should be greater than or equal to 250
-                        </mat-error>
-                        <mat-error *ngIf="(ssySchemeForm.get('accBalance').errors?.max)" class="f-12">
-                            Should be less than 150000
-                        </mat-error>
-                    </mat-form-field>
-                </div>
+    </div>
+    <div class="row pt-40">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-4">Account balance</h5>
+            <p class="m-0 f-12 text-custom">Leave blank if you want to enter</p>
+            <p class="m-0 f-12 text-custom">complete transaction history</p>
+        </div>
+        <div class="col-md-3 iconRupess">
+            <div class="form-group mb-0">
+                <mat-form-field><input autocomplete="off" matInput #accountBalance class="form-control rupess br-0"
+                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        formControlName="accBalance" matInput maxlength="10" type="text">
+                    <mat-error class="f-12" *ngIf="(ssySchemeForm.get('accBalance').errors?.required)"> This field
+                        is required</mat-error>
+                    <mat-hint align="end" class="f-12">{{accountBalance.value.length}}/10</mat-hint>
+                    <mat-error *ngIf="(ssySchemeForm.get('accBalance').errors?.min)" class="f-12">
+                        Should be greater than or equal to 250
+                    </mat-error>
+                    <mat-error *ngIf="(ssySchemeForm.get('accBalance').errors?.max)" class="f-12">
+                        Should be less than 150000
+                    </mat-error>
+                </mat-form-field>
             </div>
         </div>
-        <div class="row pt-28">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Commencement date</h5>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group mb-0">
-                    <mat-form-field class="ba-date">
-                        <input autocomplete="off" matInput (click)="SSYpicker.open()" [matDatepicker]="SSYpicker"
-                            [max]="maxDate" class="form-control br-0 b-0"
-                            (dateChange)="setCommencementDate($event.target.value)" formControlName="commDate" matInput
-                            readonly>
-                        <mat-datepicker-toggle matSuffix [for]="SSYpicker"></mat-datepicker-toggle>
-                        <mat-datepicker #SSYpicker></mat-datepicker>
-                        <mat-error class="f-12">
-                            This field is required
-                        </mat-error>
-                    </mat-form-field>
-                </div>
+    </div>
+    <div class="row pt-28">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Commencement date</h5>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                    <input autocomplete="off" matInput (click)="SSYpicker.open()" [matDatepicker]="SSYpicker"
+                        [max]="maxDate" class="form-control br-0 b-0"
+                        (dateChange)="setCommencementDate($event.target.value)" formControlName="commDate" matInput
+                        readonly>
+                    <mat-datepicker-toggle matSuffix [for]="SSYpicker"></mat-datepicker-toggle>
+                    <mat-datepicker #SSYpicker></mat-datepicker>
+                    <mat-error class="f-12">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
             </div>
         </div>
-        <div class="row pt-48">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-4">Balance as on</h5>
-                <p class="m-0 f-12 text-custom">Leave blank if you want to enter</p>
-                <p class="m-0 f-12 text-custom">complete transaction history</p>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group mb-0">
-                    <mat-form-field class="ba-date"><input autocomplete="off" matInput (click)="balanceAsOn.open()"
-                            [min]="ssySchemeForm.get('commDate').value" [matDatepicker]="balanceAsOn" [max]="maxDate"
-                            class="form-control br-0 b-0" formControlName="balanceAsOn" matInput readonly>
-                        <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
-                        <mat-datepicker #balanceAsOn></mat-datepicker>
-                        <mat-error class="f-12">This field is required </mat-error>
-                    </mat-form-field>
-                </div>
+    </div>
+    <div class="row pt-48">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-4">Balance as on</h5>
+            <p class="m-0 f-12 text-custom">Leave blank if you want to enter</p>
+            <p class="m-0 f-12 text-custom">complete transaction history</p>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group mb-0">
+                <mat-form-field class="ba-date"><input autocomplete="off" matInput (click)="balanceAsOn.open()"
+                        [min]="ssySchemeForm.get('commDate').value" [matDatepicker]="balanceAsOn" [max]="maxDate"
+                        class="form-control br-0 b-0" formControlName="balanceAsOn" matInput readonly>
+                    <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
+                    <mat-datepicker #balanceAsOn></mat-datepicker>
+                    <mat-error class="f-12">This field is required </mat-error>
+                </mat-form-field>
             </div>
         </div>
-        <div class="row pt-28">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Future approx contribution</h5>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group mb-0 iconRupess">
-                    <mat-form-field>
-                        <input autocomplete="off" matInput #futureContribution class="form-control rupess br-0"
-                            appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                            formControlName="futureAppx" matInput maxlength="10" type="text">
-                        <mat-error class="f-12">
-                            This field is required
-                        </mat-error>
-                        <mat-hint align="end" class="f-12">{{futureContribution.value.length}}/10</mat-hint>
-                    </mat-form-field>
-                </div>
+    </div>
+    <div class="row pt-28">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Future approx contribution</h5>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group mb-0 iconRupess">
+                <mat-form-field>
+                    <input autocomplete="off" matInput #futureContribution class="form-control rupess br-0"
+                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        formControlName="futureAppx" matInput maxlength="10" type="text">
+                    <mat-error class="f-12">
+                        This field is required
+                    </mat-error>
+                    <mat-hint align="end" class="f-12">{{futureContribution.value.length}}/10</mat-hint>
+                </mat-form-field>
             </div>
         </div>
-        <div class="row pt-48">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Frequency</h5>
-            </div>
-            <div class="col-md-5">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select matInput formControlName="frquency" class="form-control br-0">
-                            <mat-option value="1">Monthly</mat-option>
-                            <mat-option value="4">Quarterly</mat-option>
-                            <mat-option value="6">Half yearly</mat-option>
-                            <mat-option value="12">Yearly</mat-option>
-                        </mat-select>
-                        <mat-error class="f-12"> This field is required </mat-error>
-                    </mat-form-field>
-                </div>
+    </div>
+    <div class="row pt-48">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Frequency</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select matInput formControlName="frquency" class="form-control br-0">
+                        <mat-option value="1">Monthly</mat-option>
+                        <mat-option value="4">Quarterly</mat-option>
+                        <mat-option value="6">Half yearly</mat-option>
+                        <mat-option value="12">Yearly</mat-option>
+                    </mat-select>
+                    <mat-error class="f-12"> This field is required </mat-error>
+                </mat-form-field>
             </div>
         </div>
-    
+    </div>
+
     <div class="row pt-40">
         <div *ngIf="isOptionalField==false" (click)="moreFields()" class="col-md-5 text-right">
             <h5 class="m-0 pt-8 text-custom c-p">Show less</h5>
@@ -182,7 +181,7 @@
         <div class="col-md-5">
         </div>
     </div>
-    <div *ngIf="isOptionalField==false" >
+    <div *ngIf="isOptionalField==false">
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Description</h5>
@@ -233,7 +232,7 @@
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
                 </div>
-                <div class="pr-0" [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
+                <div [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
@@ -266,10 +265,12 @@
                     </div>
                 </div>
                 <div class="col-md-2 p-0 d-flex align-items-center">
-                    <i *ngIf="ssySchemeForm.value.getNomineeName.length < 3" class="material-icons text-primitive f-20 c-p float-left"
-                    (click)="addNewNominee(undefined)">add</i>
-                <i *ngIf="ssySchemeForm.value.getNomineeName.length > 1" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
-                    (click)="removeNewNominee(pointIndex)">remove</i>
+                    <i *ngIf="ssySchemeForm.value.getNomineeName.length < 3"
+                        class="material-icons text-primitive f-20 c-p float-left"
+                        (click)="addNewNominee(undefined)">add</i>
+                    <i *ngIf="ssySchemeForm.value.getNomineeName.length > 1"
+                        class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                        (click)="removeNewNominee(pointIndex)">remove</i>
                 </div>
 
             </div>

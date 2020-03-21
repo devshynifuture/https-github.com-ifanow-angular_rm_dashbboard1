@@ -11,7 +11,8 @@
 </div>
 <div class="pt-100 pl-24 pr-24 pb-48 mb-48" [formGroup]="PORDForm">
     <div formArrayName="getCoOwnerName">
-        <div class="row pt-36" *ngFor="let obj of PORDForm.controls['getCoOwnerName'].controls; let pointIndex=index"
+        <div class="row" [ngClass]="{'pt-36': pointIndex>0}"
+            *ngFor="let obj of PORDForm.controls['getCoOwnerName'].controls; let pointIndex=index"
             [formGroupName]="pointIndex">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8 ">{{pointIndex != 0?'Co-o' : 'O'}}wner{{pointIndex != 0?pointIndex:''}}</h5>
@@ -110,7 +111,8 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput class="form-control br-0 " type="number" formControlName="tenure" (focusout)="checkValue()">
+                        <input matInput class="form-control br-0 " type="number" formControlName="tenure"
+                            (focusout)="checkValue()">
                         <!-- <mat-select matInput formControlName="tenure" class="form-control br-0">
                             <mat-option value="" disabled>Select tenure</mat-option>
                             <mat-option value="5">5 Years</mat-option>
@@ -118,7 +120,8 @@
                         <mat-error class="f-12" *ngIf="PORDForm.get('tenure').hasError('required')">
                             This field is required
                         </mat-error>
-                        <mat-error class="f-12" *ngIf="PORDForm.get('tenure').hasError('incorrect') && !PORDForm.get('tenure').hasError('required')">
+                        <mat-error class="f-12"
+                            *ngIf="PORDForm.get('tenure').hasError('incorrect') && !PORDForm.get('tenure').hasError('required')">
                             Years must be multiple of 5
                         </mat-error>
                     </mat-form-field>
@@ -185,7 +188,7 @@
         <div class="col-md-5">
         </div>
     </div>
-    <div  *ngIf="isOptionalField==false">
+    <div *ngIf="isOptionalField==false">
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">RD number</h5>

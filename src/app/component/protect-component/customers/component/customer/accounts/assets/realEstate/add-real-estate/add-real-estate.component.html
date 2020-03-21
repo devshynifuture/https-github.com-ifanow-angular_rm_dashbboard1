@@ -12,7 +12,8 @@
 </div>
 <div class="pt-100 pb-48 mb-44" [formGroup]="addrealEstateForm">
     <div formArrayName="getCoOwnerName">
-        <div class="row pt-36" *ngFor="let obj of addrealEstateForm.controls['getCoOwnerName'].controls; let pointIndex=index"
+        <div class="row" [ngClass]="{'pt-36': pointIndex>0}"
+            *ngFor="let obj of addrealEstateForm.controls['getCoOwnerName'].controls; let pointIndex=index"
             [formGroupName]="pointIndex">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8 ">{{pointIndex != 0?'Co-o' : 'O'}}wner{{pointIndex != 0?pointIndex:''}}</h5>
@@ -53,8 +54,7 @@
                 <i *ngIf="addrealEstateForm.value.getCoOwnerName.length < 3"
                     class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i>
                 <i *ngIf="addrealEstateForm.value.getCoOwnerName.length > 1"
-                    class="material-icons text-primitive f-20 c-p pl-10 pt-8"
-                    (click)="removeCoOwner(pointIndex)">remove</i>
+                    class="material-icons text-primitive f-20 c-p pl-10" (click)="removeCoOwner(pointIndex)">remove</i>
             </div>
 
         </div>

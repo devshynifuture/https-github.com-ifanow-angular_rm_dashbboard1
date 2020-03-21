@@ -96,7 +96,7 @@
 
 
     <div class="row pt-40">
-        <div class="col-md-5 pr-0 text-right">
+        <div class="col-md-5 p-0 text-right">
             <p class="m-0"> I want to enter principal outstanding </p>
         </div>
         <div class="col-md-3 pr-0">
@@ -112,20 +112,22 @@
         <div class="col-md-3 pr-0">
             <div class="form-group mb-0">
                 <label class="f-14">Outstanding as on</label>
-                <mat-form-field>
-                    <input class="form-control br-0" matInput (focus)="picker.open()" [max]="maxDate"
-                        (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="poDate" readonly>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                    <mat-error class="f-12 pt-4">
-                        This field is required
-                    </mat-error>
-                </mat-form-field>
+                <div class="form-group  mb-0">
+                    <mat-form-field class="ba-date">
+                        <input class="form-control br-0 b-0" matInput (focus)="picker.open()" [max]="maxDate"
+                            (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="poDate" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error class="f-12 pt-4">
+                            This field is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 pr-0">
             <div class="form-group mb-0 iconRupess">
-                <label class="f-14">Outstanding amount</label>
+                <label class="f-14 ws-nowrap">Outstanding amount</label>
                 <mat-form-field>
                     <input type="text" matInput #loanTenure class="form-control rupess br-0" appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" formControlName="outstandingAmt"
