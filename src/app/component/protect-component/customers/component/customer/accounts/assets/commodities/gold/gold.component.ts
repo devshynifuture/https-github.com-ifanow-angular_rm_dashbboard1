@@ -31,6 +31,7 @@ export class GoldComponent implements OnInit {
   isBalanceAsOn = false
   isNoTolasGramsPur = false
   isPurchaseYear = false
+  isFormOfGold = false
   isCarats = false
   showHide = false;
   advisorId: any;
@@ -243,6 +244,7 @@ export class GoldComponent implements OnInit {
       })]),
       appPurValue: [data.approximatePurchaseValue, [Validators.required]],
       totalsGrams: [(data.gramsOrTola == undefined) ? '' : (data.gramsOrTola) + "", [Validators.required]],
+      formOfGold :  [(data.formOfGold == undefined) ? '' : (data.formOfGold) + "", [Validators.required]],
       noTolasGramsPur: [(data.purchasedGramsOrTola == undefined) ? '' : (data.purchasedGramsOrTola), [Validators.required]],
       tenure: [(data.purchaseYear == undefined) ? '' : (data.purchaseYear), [Validators.required, Validators.minLength(4), Validators.min(1900), Validators.max(this.currentYear)]],
       carats: [(data.carat == undefined) ? '' : (data.carat) + "", [Validators.required]],
@@ -312,6 +314,7 @@ export class GoldComponent implements OnInit {
         purchasedGramsOrTola: this.gold.controls.noTolasGramsPur.value,
         totalsGrams: this.gold.controls.totalsGrams.value,
         purchaseYear: this.gold.controls.tenure.value,
+        formOfGold:this.gold.controls.formOfGold.value,
         carat: this.gold.controls.carats.value,
         nomineeList:this.gold.value.getNomineeName,
         description: (this.gold.controls.description.value == '') ? null : this.gold.controls.description.value,
