@@ -13,7 +13,8 @@
 </div>
 <div [formGroup]="fixedDeposit" class="pt-100 pb-48 mb-44">
     <div formArrayName="getCoOwnerName">
-        <div class="row" *ngFor="let obj of fixedDeposit.controls['getCoOwnerName'].controls; let pointIndex=index"
+        <div [ngClass]="{'pt-36': pointIndex>0}" class="row"
+            *ngFor="let obj of fixedDeposit.controls['getCoOwnerName'].controls; let pointIndex=index"
             [formGroupName]="pointIndex">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8 ">{{pointIndex != 0?'Co-o' : 'O'}}wner{{pointIndex != 0?pointIndex:''}}</h5>

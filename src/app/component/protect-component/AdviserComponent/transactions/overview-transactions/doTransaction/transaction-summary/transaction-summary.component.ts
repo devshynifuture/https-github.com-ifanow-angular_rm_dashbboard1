@@ -79,7 +79,7 @@ export class TransactionSummaryComponent implements OnInit {
     console.log('iinList == ', this.investorList)
     this.transactionSummary = this.inputData
     console.log('transactionSummary', this.transactionSummary)
-    this.getDefaultDetails(null);
+    //this.getDefaultDetails(null);
   }
   openDialog(): void {
     const dialogRef = this.dialog.open(PopUpComponent, {
