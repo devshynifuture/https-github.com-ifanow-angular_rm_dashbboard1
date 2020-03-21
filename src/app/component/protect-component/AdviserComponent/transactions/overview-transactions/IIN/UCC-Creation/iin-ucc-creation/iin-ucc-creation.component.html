@@ -1,8 +1,7 @@
 <div class="dialogclose">
     <div class="row popup-header-fix-100">
         <div class="col-md-2 border-right-1 p-0">
-            <img class="imgAdLogo"
-                src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+            <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
         </div>
         <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
             <p class="f-16 mb-0">
@@ -28,30 +27,36 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-3 pr-0">
-            <h5 class="m-0 text-right pt-8">Enter name</h5>
-        </div>
-        <div class="col-md-8 text-center">
-            <mat-form-field floatLabel="never" appearance="standard">
-                <input appClientSearch [data]='searchClient.value' formControlName="ownerName" placeholder="Start typing to see investor names"
-                    (keyup)="ownerList($event.target.value)" (valueChange1)='lisNominee($event)' #searchClient
-                    [matAutocomplete]="auto1" aria-label="client" class="form-control pl-8" matInput>
-                <mat-autocomplete #auto1="matAutocomplete">
-                    <mat-option (onSelectionChange)="ownerDetails(f)" *ngFor="let f of nomineesListFM" [value]="f.name">
-                        <span>{{f.name}}</span>
-                    </mat-option>
-                </mat-autocomplete>
-                <mat-error class="f-12 pt-4">
-                    This field is required
-                </mat-error>
-                <mat-error class="f-12">
-                    This family member does not exist
-                </mat-error>
-            </mat-form-field>
+
+    <div class="centerBox">
+        <div class="row">
+            <div class="col-md-3 pr-0">
+                <h5 class="m-0 text-right pt-8">Enter name</h5>
+            </div>
+            <div class="col-md-8 text-center">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input appClientSearch [data]='searchClient.value' formControlName="ownerName" placeholder="Start typing to see investor names" (keyup)="ownerList($event.target.value)" (valueChange1)='lisNominee($event)' #searchClient [matAutocomplete]="auto1" aria-label="client"
+                        class="form-control pl-8" matInput>
+                    <mat-autocomplete #auto1="matAutocomplete">
+                        <mat-option (onSelectionChange)="ownerDetails(f)" *ngFor="let f of nomineesListFM" [value]="f.name">
+                            <span>{{f.name}}</span>
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                    <mat-error class="f-12">
+                        This family member does not exist
+                    </mat-error>
+                </mat-form-field>
+            </div>
         </div>
 
+
     </div>
+
+
+
     <div class="row pt-32">
         <div class="col-md-4 text-right pr-0">
             <h3 class="f-16 pt-8 m-0">Holding nature</h3>
