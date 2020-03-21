@@ -164,7 +164,6 @@ export class PayeeSettingsComponent implements OnInit {
       this.showGstin = true;
     }
     else {
-      // this.getFormControl().gstIn.clearValidators();
       this.getFormControl().gstIn.clearValidators();
       this.getFormControl().gstIn.updateValueAndValidity();
       // this.getFormControl().gstIn.setValidators();
