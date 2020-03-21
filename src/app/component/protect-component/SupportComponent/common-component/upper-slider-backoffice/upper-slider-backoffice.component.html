@@ -58,7 +58,10 @@
                             <ng-container matColumnDef="totalfolios">
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> Total folios </th>
                                 <td class="b-a" mat-cell *matCellDef="let element">
-                                    <div class="bar" appFormatNumber> {{element.totalfolios}} </div>
+                                    <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>
+                                        {{element.totalfolios}} 
+                                    </span>
+                                </div>
                                 </td>
                             </ng-container>
 

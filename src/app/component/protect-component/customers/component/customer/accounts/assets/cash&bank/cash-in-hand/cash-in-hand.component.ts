@@ -299,7 +299,7 @@ export class CashInHandComponent implements OnInit {
       });
       obj.nomineeList= this.cashInHand.value.getNomineeName;
       let adviceObj = {
-        advice_id: this.advisorId,
+        // advice_id: this.advisorId,
         adviceStatusId: 5,
         stringObject: obj,
         adviceDescription: "manualAssetDescription"

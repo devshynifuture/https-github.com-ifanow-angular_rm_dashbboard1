@@ -327,7 +327,7 @@ export class OthersComponent implements OnInit {
       });
       obj.nomineeList= this.others.value.getNomineeName;
       let adviceObj = {
-        advice_id: this.advisorId,
+        // advice_id: this.advisorId,
         adviceStatusId: 5,
         stringObject: obj,
         adviceDescription: "manualAssetDescription"

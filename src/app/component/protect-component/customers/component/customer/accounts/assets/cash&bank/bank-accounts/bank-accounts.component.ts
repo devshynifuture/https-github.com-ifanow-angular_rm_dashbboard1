@@ -340,7 +340,7 @@ export class BankAccountsComponent implements OnInit {
       });
       obj.nomineeList= this.bankAccounts.value.getNomineeName;
       let adviceObj = {
-        advice_id: this.advisorId,
+        // advice_id: this.advisorId,
         adviceStatusId: 5,
         stringObject: obj,
         adviceDescription: "manualAssetDescription"
