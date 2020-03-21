@@ -417,9 +417,6 @@ export class SipTransactionComponent implements OnInit {
     } else if (this.sipTransaction.get('frequency').invalid) {
       this.sipTransaction.get('frequency').markAsTouched();
       return;
-    } else if (this.sipTransaction.get('installment').invalid) {
-      this.sipTransaction.get('installment').markAsTouched();
-      return;
     } else {
       this.endDate = new Date()
       this.endDate.setDate(31);

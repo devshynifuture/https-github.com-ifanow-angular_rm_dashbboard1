@@ -13,6 +13,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ProcessTransactionService } from '../process-transaction.service';
 import { Router } from '@angular/router';
+import { IinUccCreationComponent } from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
 
 @Component({
   selector: 'app-online-trasaction',
@@ -44,7 +45,7 @@ export class OnlineTrasactionComponent implements OnInit {
   selectedDiv: string = 'div1';
   familyMemberId: any;
   ownerName: any;
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   ownerData: any;
   dataSource: any;
   inputData: any;
@@ -300,7 +301,32 @@ export class OnlineTrasactionComponent implements OnInit {
     this.formStep=data;
     this.transactionType=undefined;
   }
+  openNewCustomerIIN() {
+    this.close()
+    const fragmentData = {
+      flag: 'addNewCustomer',
+      id: 1,
+      direction: 'top',
+      componentName: IinUccCreationComponent,
+      state: 'open'
+    };
+    // this.router.navigate(['/subscription-upper'])
+    AuthService.setSubscriptionUpperSliderData(fragmentData);
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+        }
+      }
+    );
+
+  }
+
   saveAndNext() {
+    if(!this.clientCodeData){
+      return;
+    }
     console.log(this.formStep);
     if (this.nomineesListFM && this.transactionAddForm.get('ownerName').valid) {
       this.nomineesListFM.forEach(element => {

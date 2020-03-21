@@ -238,8 +238,8 @@ export class CashAndBankComponent implements OnInit {
       this.noData = 'No Cash in hand found';
       this.cashInHandList.data = [];
     }
-    else if (data.cashInHands.length != 0) {
-      this.cashInHandList.data = data.cashInHands;
+    else if (data.assetList.length != 0) {
+      this.cashInHandList.data = data.assetList;
       this.cashInHandList.sort = this.cashInHandListTableSort;
       this.sumOfCashValue = data.sumOfCashValue;
     } else {

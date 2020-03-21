@@ -14,7 +14,7 @@ import { ProcessTransactionService } from '../../../doTransaction/process-transa
   styleUrls: ['./iin-ucc-creation.component.scss']
 })
 export class IinUccCreationComponent implements OnInit {
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   showSpinnerOwner = false;
   familyMemberData: any;
   familyMemberId: any;

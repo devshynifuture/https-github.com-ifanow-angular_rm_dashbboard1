@@ -26,7 +26,7 @@ export class MFSchemeLevelTransactionsComponent implements OnInit {
   portfolioData: any;
   scriptForm: any;
   portfolioFieldData: { familyMemberId: any; };
-  nomineesListFM: any;
+    nomineesListFM: any = [];
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   @Input() set data(data) {

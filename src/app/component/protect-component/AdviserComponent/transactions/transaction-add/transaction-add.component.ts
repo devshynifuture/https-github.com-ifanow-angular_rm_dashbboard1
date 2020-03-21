@@ -40,7 +40,7 @@ export class TransactionAddComponent implements OnInit {
   selectedDiv: string = 'div1';
   familyMemberId: any;
   ownerName: any;
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   ownerData: any;
   dataSource: any;
   inputData: any;

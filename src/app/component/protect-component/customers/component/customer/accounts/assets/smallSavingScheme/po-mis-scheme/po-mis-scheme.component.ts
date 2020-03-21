@@ -39,7 +39,7 @@ export class PoMisSchemeComponent implements OnInit {
     public util: UtilService) {
   }
 
-  displayedColumns = ['no', 'owner', 'cvalue', 'mpayout', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
+  displayedColumns = ['no', 'owner', 'cvalue', 'payoutTill', 'mpayout', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
 
 
   ngOnInit() {

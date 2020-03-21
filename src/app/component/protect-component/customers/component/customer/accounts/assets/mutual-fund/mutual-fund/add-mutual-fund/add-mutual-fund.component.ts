@@ -12,7 +12,7 @@ export class AddMutualFundComponent implements OnInit {
   MfData: any;
   MfForm: any;
   ownerData: any;
-  nomineesListFM: any;
+    nomineesListFM: any = [];
   _data: any;
   ownerName: any;
   selectedFamilyData: any;
