@@ -58,7 +58,7 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-            <div *ngIf="dataSource.EQUITY == 0" class="d-flex flex-column align-items-center">
+            <div *ngIf="dataSource.EQUITY.length == 0" class="d-flex flex-column align-items-center">
                 <h4 class="text-center pt-12">No Data found</h4>
             </div>
             <table mat-table *ngIf="dataSource" [dataSource]="dataSource.DEBT" id="table-low"
@@ -103,7 +103,7 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
             </table>
-            <div *ngIf="dataSource.DEBT == 0" class="d-flex flex-column align-items-center">
+            <div *ngIf="dataSource.DEBT.length == 0" class="d-flex flex-column align-items-center">
                 <h4 class="text-center pt-12">No Data found</h4>
             </div>
         </div>
@@ -226,7 +226,7 @@
                     </div>
 
                 </div>
-                <div *ngIf="schemeData  && schemeData.EQUITY.length == 0"
+                <div *ngIf="!schemeData || schemeData.EQUITY.length==0"
                     class="d-flex flex-column align-items-center pt-20">
                     <h4 class="text-center pt-12">No scheme found</h4>
                 </div>
@@ -250,7 +250,7 @@
 
 
                 </div>
-                <div *ngIf="schemeData && schemeData.DEBT.length == 0 "
+                <div *ngIf="!schemeData || schemeData.DEBT"
                     class="d-flex flex-column align-items-center pt-20">
                     <h4 class="text-center pt-12">No scheme found</h4>
                 </div>
@@ -304,7 +304,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
     </table>
-    <div *ngIf="dataSource.equity_investment == 0" class="d-flex flex-column align-items-center">
+    <div *ngIf="dataSource.equity_investment.length == 0" class="d-flex flex-column align-items-center">
         <h4 class="text-center pt-12">No Data found</h4>
     </div>
     <p class="roboto m-0 f-500 text-black pt-20">DEBT</p>
@@ -354,7 +354,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
     </table>
-    <div *ngIf="dataSource.debt_investment == 0" class="d-flex flex-column align-items-center">
+    <div *ngIf="dataSource.debt_investment.length == 0" class="d-flex flex-column align-items-center">
         <h4 class="text-center pt-12">No Data found</h4>
     </div>
 </div>

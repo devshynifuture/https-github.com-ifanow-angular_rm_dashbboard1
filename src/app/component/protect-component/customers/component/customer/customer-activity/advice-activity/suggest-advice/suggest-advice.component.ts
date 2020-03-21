@@ -85,12 +85,6 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
 
   }
   addOrNextStep() {
-    if (this.stepper) {
-      this.stepper.next();
-    }
-    if (this.stepper == undefined) {
-      return;
-    }
     let componentRefFormValues;
     let componentRefComponentValues = this.componentRef._component;
     // proceed on creating new suggest
@@ -101,7 +95,9 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
           this.adviceForm.controls[element].markAsTouched();
         }
       }
+      
     } else {
+      this.stepper.next();
       console.log("this is what i need:::::::::::::::", componentRefComponentValues)
 
       switch (true) {
@@ -123,19 +119,20 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
           );
           break;
         case this.childComponentFlag === 'adviceOTHERS' && componentRefComponentValues.others.valid:
-          componentRefFormValues = componentRefComponentValues.others.value;
-          const OthersObj = { //for non duplicate data
-            commodityTypeId: componentRefFormValues.typeOfCommodity,
-            marketValue: componentRefFormValues.marketValue,
-            purchaseValue: componentRefFormValues.purchaseValue,
-            growthRate: componentRefFormValues.growthRate,
-            dateOfPurchase: (componentRefFormValues.dateOfPurchase) ? this.datePipe.transform(componentRefFormValues.dateOfPurchase, 'yyyy-MM-dd') : null,
-          }
-          this.stringObj = this.filterForObj(componentRefFormValues, OthersObj)//for common data and merge non duplicate data
-          this.custumService.getAdviceOthers(this.objTopass).subscribe(
-            data => this.getAdviceRes(data),
-            err => this.event.openSnackBar(err, "Dismiss")
-          );
+              componentRefFormValues = componentRefComponentValues.others.value;
+              const OthersObj = { //for non duplicate data
+                commodityTypeId: componentRefFormValues.typeOfCommodity,
+                marketValue: componentRefFormValues.marketValue,
+                purchaseValue: componentRefFormValues.purchaseValue,
+                growthRate: componentRefFormValues.growthRate,
+                dateOfPurchase: (componentRefFormValues.dateOfPurchase) ? this.datePipe.transform(componentRefFormValues.dateOfPurchase, 'yyyy-MM-dd') : null,
+              }
+              this.stringObj = this.filterForObj(componentRefFormValues, OthersObj)//for common data and merge non duplicate data
+              this.custumService.getAdviceOthers(this.objTopass).subscribe(
+                data => this.getAdviceRes(data),
+                err => this.event.openSnackBar(err, "Dismiss")
+              );
+
           break;
         case this.childComponentFlag === 'adviceCashInHand' && componentRefComponentValues.cashInHand.valid:
           componentRefFormValues = componentRefComponentValues.cashInHand.value;
@@ -243,8 +240,8 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
           );
           break;
         case this.childComponentFlag === 'adviceNSC' && componentRefComponentValues.isFormValuesForAdviceValid():
-          componentRefFormValues = componentRefComponentValues.nscFormOptionalField.value;
-          let nscOptionalFormCopy = Object.assign({}, componentRefComponentValues.nscFormOptionalField.value);
+          componentRefFormValues = componentRefComponentValues.nscFormField.value;
+          let nscOptionalFormCopy = Object.assign({}, componentRefComponentValues.nscFormField.value);
           let nomineeListCopyNsc = componentRefComponentValues.nomineesList.slice();
 
           Object.keys(nscOptionalFormCopy).map(function (key) {

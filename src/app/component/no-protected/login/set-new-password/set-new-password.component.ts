@@ -22,7 +22,7 @@ export class SetNewPasswordComponent implements OnInit {
   validatorType = ValidatorType
   ngOnInit() {
     this.setNewPasswordForm = this.fb.group({
-      newPassword: [, [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX), this.checkUpperCase(), this.checkLowerCase()]],
+      newPassword: [, [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX), this.checkUpperCase(), this.checkLowerCase(), this.checkSpecialCharacter()]],
       confirmPassword: [, [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX)]]
     });
   }
@@ -50,25 +50,17 @@ export class SetNewPasswordComponent implements OnInit {
     }
   }
 
-  // checkSpecialCharacter() {
-  //   return (control: AbstractControl): ValidationErrors | null => {
-  //     if (new RegExp(/(?=.*[@#$%])/).test(control.value) && control.value != null) {
-  //       return { isSpeCharCaseFlag: true };
-  //     }
-  //     return null;
-  //   }
-  // }
-  // checkPasswordStrength(event) {
-  //   switch (true) {
-  //     case (new RegExp(/(?=.*[A-Z])/).test(event.value) && event.value != null):
-  //       this.passwordStregth.upperCase = true;
-  //       break;
-  //       case (new RegExp(/(?=.*[a-z])/).test(control.value) && control.value != null):
-  //         this.passwordStregth.lowerCase
-  //     default:
-  //       this.upperCaseFlag
-  //   }
-  // }
+  checkSpecialCharacter() {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (new RegExp(/(?=.*[@#$%])/).test(control.value) && control.value != null) {
+        this.passwordStregth.specialCharacter = true;
+        return;
+      }
+      this.passwordStregth.specialCharacter = false;
+      return;
+    }
+  }
+
   checkPassword() {
     const password = this.setNewPasswordForm.get('newPassword').value;
     const confirm_new_password = this.setNewPasswordForm.get('confirmPassword').value;

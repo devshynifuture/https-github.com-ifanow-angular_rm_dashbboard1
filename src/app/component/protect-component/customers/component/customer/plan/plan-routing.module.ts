@@ -40,10 +40,10 @@ const routes: Routes = [{
       path: 'cash-flow',
       component: CashflowsPlanComponent
     },
-    {
-      path: 'investments',
-      component: DeploymentsPlanComponent
-    },
+    // {
+    //   path: 'investments',
+    //   component: DeploymentsPlanComponent
+    // },
     {
       path: 'scenarios',
       component: ScenariosPlanComponent
