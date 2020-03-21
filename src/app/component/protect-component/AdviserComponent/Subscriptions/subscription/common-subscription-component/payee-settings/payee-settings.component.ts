@@ -164,7 +164,10 @@ export class PayeeSettingsComponent implements OnInit {
       this.showGstin = true;
     }
     else {
-      this.getFormControl().gstIn.setValidators(null);
+      // this.getFormControl().gstIn.clearValidators();
+      this.getFormControl().gstIn.clearValidators();
+      this.getFormControl().gstIn.updateValueAndValidity();
+      // this.getFormControl().gstIn.setValidators();
       this.showGstin = false;
     }
   }
@@ -190,11 +193,11 @@ export class PayeeSettingsComponent implements OnInit {
       customerName: [data.name, [Validators.required]],
       displayName: [data.companyDisplayName, [Validators.required]],
       customerType: [data.customerTypeId],
-      companyName: [data.companyName, [Validators.required]],
+      companyName: [data.companyName],
       emailId: [data.email, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
       primaryContact: [data.primaryContact, [Validators.required]],
       pan: [data.pan, [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-z]{1}")]],
-      gstTreatment: [(data.gstTreatmentId == 1) ? 'Registered Business - Regular' : (data.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business'],
+      gstTreatment: data.gstTreatmentId,
       gstIn: [data.gstin],
       billingAddress: [data.billerAddress, [Validators.required]],
       city: [data.city],
@@ -266,9 +269,9 @@ export class PayeeSettingsComponent implements OnInit {
           companyName: this.payeeSettingsForm.controls.companyName.value,
           country: this.payeeSettingsForm.controls.country.value,
           currency: 'string',
-          customerTypeId: (this.payeeSettingsForm.controls.customerType.value == 'Business') ? 1 : 2,
+          customerTypeId:this.payeeSettingsForm.controls.customerType.value,
           email: this.payeeSettingsForm.controls.emailId.value,
-          gstTreatmentId: (this.payeeSettingsForm.controls.gstTreatment.value == 'Registered Business - Regular') ? 1 : (this.payeeSettingsForm.controls.gstTreatment.value == 'Registered Business - Composition') ? 2 : 3,
+          gstTreatmentId: this.payeeSettingsForm.controls.gstTreatment.value,
           gstin: (this.payeeSettingsForm.controls.gstIn.value == null) ? 0 : this.payeeSettingsForm.controls.gstIn.value,
           payeeTypeId: 1,
           paymentTermsId: 1,
@@ -296,9 +299,10 @@ export class PayeeSettingsComponent implements OnInit {
           customerName: this.getFormControl().customerName.value,
           gstin: (this.getFormControl().gstIn.value == null) ? 0 : this.payeeSettingsForm.controls.gstIn.value,
           familyMemberId: this.familyMemberId,
-          gstTreatmentId: (this.getFormControl().gstTreatment.value == 'Registered Business - Regular') ? 1 : (this.payeeSettingsForm.controls.gstTreatment.value == 'Registered Business - Composition') ? 2 : 3,
+          gstTreatmentId: this.payeeSettingsForm.controls.gstTreatment.value,
           email: this.getFormControl().emailId.value,
-          customerTypeId: (this.getFormControl().customerType.value == 'Business') ? '1' : '2',
+          // customerTypeId: (this.getFormControl().customerType.value == 'Business') ? '1' : '2',
+          customerTypeId:this.getFormControl().customerType.value,
           primaryContact: this.getFormControl().primaryContact.value,
           companyName: this.getFormControl().companyName.value,
           companyDisplayName: this.getFormControl().displayName.value,

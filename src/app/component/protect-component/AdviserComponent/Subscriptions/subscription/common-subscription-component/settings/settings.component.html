@@ -56,7 +56,7 @@
                                             <p>CUSTOMER TYPE</p>
                                             <div class="relClass">
                                                 <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                    <h5> {{ isLoading ? ' ' : (profileData.customerTypeId == 1) ? 'Bussiness' : 'Individual'}}
+                                                    <h5> {{ isLoading ? ' ' : (profileData.customerTypeId == 1) ? 'Individual' : (profileData.customerTypeId == 2)?'Corporate':(profileData.customerTypeId == 3)?'LLP':(profileData.customerTypeId == 4)?'Proprietary':(profileData.customerTypeId == 5)?'Partnership':'Others'}}
                                                     </h5>
                                                 </div>
                                             </div>
@@ -73,7 +73,7 @@
                                             <p>GST TREATMENT</p>
                                             <div class="relClass">
                                                 <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                    <h5> {{isLoading ? ' ' : (profileData.gstTreatmentId == 1) ? 'Registered Business - Regular' : (profileData.gstTreatmentId == 2) ? 'Registered Business - Composition' : 'Unregistered Business'}}
+                                                    <h5>{{isLoading ? ' ' : (profileData.gstTreatmentId == 1) ? 'Consumer' : (profileData.gstTreatmentId == 2) ? 'Not registered business' : (profileData.gstTreatmentId == 3) ? 'Overseas' : (profileData.gstTreatmentId == 4) ? 'Registered Business' : '-'}}
                                                     </h5>
                                                 </div>
                                             </div>
