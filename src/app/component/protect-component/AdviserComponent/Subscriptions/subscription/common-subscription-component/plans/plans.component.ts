@@ -223,7 +223,7 @@ export class PlansComponent implements OnInit {
 
   mapPlanToServiceRes(data) {
     // this.dialogClose()
-    this.changePlanData.emit(true);
+    this.changePlanData.emit(this.upperData);
     console.log(data)
     this.eventService.openSnackBar('Plans is mapped', 'OK');
     this.router.navigate(['/admin/subscription/settings','documents']);
@@ -308,6 +308,6 @@ export class PlansComponent implements OnInit {
     } else {
       this.eventService.openSnackBar('Plan is mapped', 'OK');
     }
-    this.changePlanData.emit(true);
+    this.changePlanData.emit(this.upperData);
   }
 }

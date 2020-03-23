@@ -82,7 +82,7 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
   State;
   rightSliderFlag;
   upperDataSubsUpper;
-
+  sendAddedData: any;
   flag = 'planOverview';
   plan = 'planServices';
   documents = 'plansDocuments';
@@ -142,6 +142,7 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
   addedData:any;
   getData(event) {
     // this.addedData = event
+    this.sendAddedData = event;
     this.addedData=this.fragmentDataSubsUpper.data;
     console.log(event, this.fragmentDataSubsUpper.data, "data overview 123");
     // this.fragmentDataSubsUpper.data = this.addedData ;
