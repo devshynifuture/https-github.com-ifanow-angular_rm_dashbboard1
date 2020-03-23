@@ -141,42 +141,57 @@
             </table>
         </div>
     </div>
-    <div class="col-md-3 bg-grey lter h-100vh">
+    <div [formGroup]="teamInviteForm" class="col-md-3 bg-grey lter h-100vh">
         <h5 class="m-0 f-500 text-black pt-28">Create team member</h5>
         <h5 class="m-0 pt-20 pb-8">Full name</h5>
         <div class="form-group mb-0">
             <mat-form-field>
-                <input matInput class="form-control">
+                <input matInput class="form-control" formControlName="name">
+                <mat-error>This field is required</mat-error>
             </mat-form-field>
         </div>
         <h5 class="m-0 pt-20 pb-8">Email</h5>
         <div class="form-group mb-0">
             <mat-form-field>
-                <input matInput class="form-control">
+                <input matInput class="form-control" formControlName="email">
+                <mat-error *ngIf="!teamInviteForm.controls['email'].hasError('pattern')">This field is required</mat-error>
+                <mat-error *ngIf="teamInviteForm.controls['email'].hasError('pattern') && !teamInviteForm.controls['email'].hasError('required')">Please enter valid email</mat-error>
             </mat-form-field>
         </div>
         <h5 class="m-0 pt-20 pb-8">Mobile</h5>
         <div class="form-group mb-0">
             <mat-form-field>
-                <input matInput class="form-control">
+                <input matInput appInputValueValidation
+                [inputValidator]="validatorType.NUMBER_ONLY" type="text" maxlength="10" class="form-control" formControlName="mobile">
+                <mat-error>This field is required</mat-error>
             </mat-form-field>
         </div>
         <h5 class="m-0 pt-20 pb-8">Role</h5>
         <div class="form-group mb-0">
             <mat-form-field>
-                <mat-select class="form-control">
+                <mat-select class="form-control" formControlName="role">
                     <mat-option value="option">Select a role</mat-option>
                 </mat-select>
+                <mat-error>This field is required</mat-error>
+            </mat-form-field>
+        </div>
+        <h5 class="m-0 pt-20 pb-8">Leader</h5>
+        <div class="form-group mb-0">
+            <mat-form-field>
+                <mat-select class="form-control" formControlName="lead">
+                    <mat-option value="option">Select leader</mat-option>
+                </mat-select>
+                <mat-error>This field is required</mat-error>
             </mat-form-field>
         </div>
         <h5 class="m-0 pt-20 pb-8">EUIN</h5>
         <div class="form-group mb-0">
             <mat-form-field>
-                <input matInput class="form-control">
+                <input matInput class="form-control" formControlName="euin">
                 <mat-hint>Optional</mat-hint>
             </mat-form-field>
         </div>
-        <button mat-stroked-button class="btn-primary w-100 mt-44 h-40 br-2">Send invite</button>
+        <button mat-stroked-button class="btn-primary w-100 mt-44 h-40 br-2" (click)="sendInvitation()" >Send invite</button>
     </div>
 
 </div>

@@ -3,7 +3,7 @@
         <div class="col-md-4 p-0">
             <h4 class="m-0 pt-12">Sub broker/Team member</h4>
         </div>
-        <div class="col-md-4 text-right p-0" *ngIf="dataSource.filteredData.length > 0">
+        <!-- <div class="col-md-4 text-right p-0" *ngIf="dataSource.filteredData.length > 0">
 
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
@@ -11,17 +11,15 @@
                         class="form-control br-0">
                 </mat-form-field>
             </div>
-        </div>
+        </div> -->
         <div class="col-md-4 text-right  pr-0" *ngIf="dataSource.filteredData.length > 0">
-            <button mat-stroked-button class="btn-primary pl-8"
-            (click)="addSubBroker(null)"
-            ><i class="material-icons text-white pr-8">
+            <button mat-stroked-button class="btn-primary pl-8" (click)="addSubBroker(null)"><i
+                    class="material-icons text-white pr-8">
                     add
                 </i>ADD NEW</button>
         </div>
     </div>
-    <table mat-table matSort [dataSource]="dataSource" class="mt-8 skeletonAnimation" id="table-low" appSkeletonLoading
-        *ngIf="dataSource.filteredData.length > 0" [appSkeletonLoading]="isLoading">
+    <table mat-table matSort [dataSource]="dataSource" class="mt-8 skeletonAnimation" id="table-low" appSkeletonLoading *ngIf="dataSource.filteredData.length > 0" [appSkeletonLoading]="isLoading">
         <ng-container matColumnDef="position">
             <th mat-sort-header="aggregatorType" mat-header-cell *matHeaderCellDef class="br"> Platform </th>
             <td mat-cell *matCellDef="let element" class="br">
@@ -81,12 +79,11 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="dataSource.filteredData.length==0 && isLoading==false"
-        class="d-flex flex-column align-items-center pt-44">{{dataSource.filteredData}}
+    <div *ngIf="dataSource.filteredData.length==0 && isLoading==false" class="d-flex flex-column align-items-center pt-44">{{dataSource.filteredData}}
         <img class="width300" src="assets/images/svg/noDataFound.svg">
         <h4 class="pt-12">No sub-broker credentials found</h4>
         <button mat-stroked-button class="btn-primary pl-8"><i class="material-icons text-white pr-8"
-            (click)="addSubBroker(null)">
+                (click)="addSubBroker(null)">
                 add
             </i>ADD NEW</button>
     </div>

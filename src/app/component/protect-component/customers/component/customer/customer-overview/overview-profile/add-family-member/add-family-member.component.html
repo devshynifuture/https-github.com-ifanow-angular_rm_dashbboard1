@@ -11,24 +11,25 @@
     </div>
 </div>
 
-<div class="pt-80 pb-90 pl-20">
+<div class="pt-80 pb-90 ">
     <!-- add family member -->
-    <div *ngIf="step==1">
+    <div class="pl-20" *ngIf="step==1">
         <h5 class=" roboto">How would you like to add the family member? </h5>
 
         <div class="row pt-20 c-p">
             <div class="col-md-3 pr-0 ">
-                <div class="manuallyBox" (click)="addFamilyType('1')">
+                <div [ngClass]="{'profileBorder-primary': typeOfFamilyMemberAdd=='1','profileBorder': typeOfFamilyMemberAdd=='2' || typeOfFamilyMemberAdd==null}"
+                    class="manuallyBox profileBorder" (click)="addFamilyType('1')">
                     <mat-radio-group [(ngModel)]="typeOfFamilyMemberAdd" aria-label="Select an option">
-                        <mat-radio-button class="f-14 text-light" value="1">Manually</mat-radio-button>
+                        <mat-radio-button class="f-14 text-light " value="1">Manually</mat-radio-button>
                     </mat-radio-group>
                 </div>
             </div>
             <div class="col-md-8 pl-0 " (click)="addFamilyType('1')">
-                <div class="contentHeight">
+                <div [ngClass]="{'profileBorder-primary': typeOfFamilyMemberAdd=='1','profileBorder': typeOfFamilyMemberAdd=='2' || typeOfFamilyMemberAdd==null}"
+                    class="contentHeight profileBorder">
                     <p class="text-light f-14 m-0">Chose this option if the family member hasn’t invested through you
-                        before
-                        and so the member’s data isn’t currently present in the system.</p>
+                        before and so the member’s data isn’t currently present in the system.</p>
                 </div>
 
             </div>
@@ -36,7 +37,9 @@
 
         <div class="row pt-20 c-p">
             <div class="col-md-3 pr-0">
-                <div class="manuallyBox" (click)="addFamilyType('2')">
+                <div class="manuallyBox profileBorder"
+                    [ngClass]="{'profileBorder-primary': typeOfFamilyMemberAdd=='2','profileBorder': typeOfFamilyMemberAdd=='1' || typeOfFamilyMemberAdd==null }"
+                    (click)="addFamilyType('2')">
                     <mat-radio-group [(ngModel)]="typeOfFamilyMemberAdd" aria-label="Select an option">
                         <mat-radio-button class="f-14 text-light l-18" value="2">Merge from <br> existing
                         </mat-radio-button>
@@ -45,7 +48,8 @@
 
             </div>
             <div class="col-md-8 pl-0 " (click)="addFamilyType('2')">
-                <div class="contentHeight">
+                <div class="contentHeight profileBorder"
+                    [ngClass]="{'profileBorder-primary': typeOfFamilyMemberAdd=='2','profileBorder': typeOfFamilyMemberAdd=='1' || typeOfFamilyMemberAdd==null}">
                     <p class="text-light f-14 m-0">
                         If the family member has previously invested through you then the member is likely to be already
                         present in the system as a client. You can merge the member into this group.
@@ -57,14 +61,14 @@
     </div>
 
     <!-- family list -->
-    <div *ngIf="typeOfFamilyMemberAdd=='1' && step==2">
+    <div class="pl-20" *ngIf="typeOfFamilyMemberAdd=='1' && step==2">
         <h5 class="mb-44 roboto">Great! Who’s in your family, Rahul?</h5>
         <div class="photoFamily">
             <div class="row justify-content-center">
                 <div *ngFor="let singleMember of familyMemberList.firstRow" (click)="selectFamilyMembers(singleMember)"
                     class="col-md-4">
                     <div class="profilePhoto text-center">
-                        <div class="borderPhoto">
+                        <div [ngClass]="{'profileBorder-primary':singleMember.selected}" class="borderPhoto ">
                             <mat-checkbox [checked]="singleMember.selected" class="posCheckBox"></mat-checkbox>
                             <img src={{singleMember.imgUrl}}>
                         </div>
@@ -78,7 +82,7 @@
                 <div *ngFor="let singleMember of familyMemberList.secondRow" (click)="selectFamilyMembers(singleMember)"
                     class="col-md-4">
                     <div class="profilePhoto text-center">
-                        <div class="borderPhoto">
+                        <div [ngClass]="{'profileBorder-primary':singleMember.selected}" class="borderPhoto">
                             <mat-checkbox [checked]="singleMember.selected" class="posCheckBox"></mat-checkbox>
                             <img src={{singleMember.imgUrl}}>
                         </div>
@@ -92,20 +96,22 @@
             <div class="row justify-content-center">
                 <div *ngFor="let singleMember of familyMemberList.thirdRow" class="col-md-4">
                     <div (click)="selectFamilyMembers(singleMember)" class="profilePhoto text-center">
-                        <div class="borderPhoto">
+                        <div [ngClass]="{'profileBorder-primary':singleMember.selected}" class="borderPhoto">
                             <mat-checkbox [checked]="singleMember.selected" class="posCheckBox"></mat-checkbox>
                             <img src={{singleMember.imgUrl}}>
                         </div>
-                        <p class="f-14 roboto">{{singleMember.name}}</p>
+                        <p class="f-14 m-0 roboto">{{singleMember.name}}</p>
                     </div>
                     <div *ngIf="singleMember.name!='Son'">
-                        <div>
-                            <button [disabled]="!singleMember.selected" mat-button (click)="remove(singleMember)">
-                                <i class="material-icons">remove</i>
+                        <div class="d-flex mt-8 align-items-center justify-content-center">
+                            <button class="btn24 mr-4 c-p" [disabled]="!singleMember.selected" mat-button
+                                (click)="remove(singleMember)">
+                                <i class="material-icons text-black f-20">remove</i>
                             </button>
-                            <p>{{singleMember.count}}</p>
-                            <button [disabled]="!singleMember.selected" mat-button (click)="add(singleMember)">
-                                <i class="material-icons">add</i></button>
+                            <p class="mb-0 ml-8 mr-8  ">{{singleMember.count}}</p>
+                            <button class="btn24 ml-4 c-p" [disabled]="!singleMember.selected" mat-button
+                                (click)="add(singleMember)">
+                                <i class="material-icons f-20 text-black">add</i></button>
                         </div>
                     </div>
                 </div>
@@ -116,7 +122,7 @@
 
     </div>
     <!-- family list name -->
-    <div *ngIf="typeOfFamilyMemberAdd=='1' && step==3">
+    <div class="pl-20" *ngIf="typeOfFamilyMemberAdd=='1' && step==3">
         <h5 class="mb-44 roboto">Thanks, just a bit more info and we’re done.</h5>
 
         <div class="dateFamilyMember">
@@ -143,13 +149,15 @@
                         </mat-form-field>
                     </div>
                     <div class="col-md-3">
-                        <mat-form-field class="ba-date">
-                            <input matInput formControlName="date" (click)="picker.open" class="form-control"
-                                [matDatepicker]="picker">
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                            <mat-error>This field is required</mat-error>
-                        </mat-form-field>
+                        <div class="form-group">
+                            <mat-form-field class="ba-date">
+                                <input matInput formControlName="date" (click)="picker.open" class="form-control b-0"
+                                    [matDatepicker]="picker">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                                <mat-error>This field is required</mat-error>
+                            </mat-form-field>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -157,7 +165,7 @@
 
     </div>
     <!-- family list table -->
-    <div *ngIf="typeOfFamilyMemberAdd=='2' && step==2">
+    <div class="pl-20" *ngIf="typeOfFamilyMemberAdd=='2' && step==2">
         <div class="row">
             <div class="col-md-8 p-0">
                 <h5 class=" roboto">How would you like to add the family member? </h5>

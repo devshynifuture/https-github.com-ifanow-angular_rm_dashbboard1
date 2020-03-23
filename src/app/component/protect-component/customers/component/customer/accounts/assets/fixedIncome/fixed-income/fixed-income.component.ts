@@ -281,8 +281,9 @@ totalSum:any
     );
   }
 
-
+  reTotalSum:any
   getRecurringDepositRes(data) {
+    this.reTotalSum = data;
     this.isLoading = false;
     if (data == undefined) {
       this.noData = 'No scheme found';
@@ -319,7 +320,9 @@ totalSum:any
     );
   }
 
+  bondTotalSum:any;
   getBondsRes(data) {
+    this.bondTotalSum = data;
     this.isLoading = false;
     if (data == undefined) {
       this.noData = 'No scheme found';
