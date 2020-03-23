@@ -16,8 +16,9 @@
         <div class="row">
             <div class="col-md-12 p-0">
                 <!-- (click)="backToTransact('back',null)" removed for prod build -->
-                <img src="/assets/images/svg/back-arrow.svg" (click)="backToTransact()">
-                <h5 class="m-0 text-black"> <img class="v-initial pr-12">Investor name: {{selectedFamilyMember}}
+
+                <h5 class="m-0 text-black"> <img src="/assets/images/svg/back-arrow.svg" (click)="backToTransact()">
+                    Investor name: {{selectedFamilyMember}}
                 </h5>
             </div>
         </div>
@@ -150,14 +151,14 @@
                 </div>
                 <div class="row pt-28">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 text-black pb-12">Select folio</h5>
+                        <h5 class="m-0 text-black pb-12">Select folio </h5>
                     </div>
                     <div>
-                        <mat-radio-group aria-label="Select an option" formControlName="folioSelection"
-                            (ngModelChange)="selectExistingOrNew($event)">
+                        <mat-radio-group class="smallRadio" aria-label="Select an option"
+                            formControlName="folioSelection" (ngModelChange)="selectExistingOrNew($event)">
                             <mat-radio-button value="1"
                                 [ngClass]="{'b-a-custom': purchaseTransaction.get('folioSelection').value==1,'text-primary':purchaseTransaction.get('folioSelection').value==1,'radio-border':purchaseTransaction.get('folioSelection').value==2}"
-                                class="b-a-custom radioBtn text-primary bor_top_tb_left custom-radio">
+                                class="b-a-custom radioBtn text-primary custom-radio bor_top_tb_left ">
                                 Existing
                             </mat-radio-button>
                             <mat-radio-button value="2"
@@ -226,8 +227,8 @@
                         <h5 class="m-0 pt-40 text-black pb-12">Select mode of payment</h5>
                     </div>
                     <div class="col-md-12 p-0">
-                        <mat-radio-group aria-label="Select an option" formControlName="modeOfPaymentSelection"
-                            (ngModelChange)="selectPaymentMode($event)">
+                        <mat-radio-group class="mediumRadio" aria-label="Select an option"
+                            formControlName="modeOfPaymentSelection" (ngModelChange)="selectPaymentMode($event)">
                             <mat-radio-button value="1" checked="true"
                                 [ngClass]="{'b-a-custom': purchaseTransaction.get('modeOfPaymentSelection').value==1,'text-primary':purchaseTransaction.get('modeOfPaymentSelection').value==1,'b-a':purchaseTransaction.get('modeOfPaymentSelection').value==2}"
                                 class="b-a-custom radioBtn text-primary custom-radio bor_top_tb_left">

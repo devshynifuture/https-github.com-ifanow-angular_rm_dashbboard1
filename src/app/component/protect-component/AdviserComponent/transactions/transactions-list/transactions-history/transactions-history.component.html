@@ -50,8 +50,7 @@
         </div>
         <div class="col-md-6 pr-0 pt-20">
             <p class="m-0 f-12 text-uppercase text-primitive">Bank A/c details</p>
-            <p class="m-0 text-black roboto" *ngIf="transactionDetailData">{{transactionDetailData.bankName}}
-                {{transactionDetailData.bankAccountType}} A/c {{transactionDetailData.bankAccountNumber}}</p>
+            <p class="m-0 text-black roboto" *ngIf="transactionDetailData">{{transactionDetailData.bankName}} {{transactionDetailData.bankAccountType}} A/c {{transactionDetailData.bankAccountNumber}}</p>
         </div>
         <div class="col-md-6 pl-0 pt-20">
             <p class="m-0 f-12 text-uppercase text-primitive">TRANSACTION ID</p>
@@ -62,6 +61,89 @@
 </div>
 
 <div class="p-28 pb-100">
+
+    <div class="row">
+        <div class="col-md-6 p-0">
+            <h5 class="m-0 f-500 text-black">Status</h5>
+        </div>
+        <div class="col-md-6 p-0 text-right right">
+            <button mat-stroked-button class="primary-sm">REFRESH</button>
+        </div>
+    </div>
+
+    <div class="circleGreen">
+        <div class="d-flex">
+            <div class="circle1">
+                <i class="material-icons text-success">
+                    check_circle_outline
+                </i>
+            </div>
+            <div class="circleDetails">
+                <p class="m-0 f-16 l-18">Pending authorization</p>
+                <p class="m-0 f-12 text-danger l-18">Pending authorization</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="circle">
+        <div class="d-flex">
+            <div class="circle1">
+                <i class="material-icons text-primary">
+                    query_builder
+                </i>
+            </div>
+            <div class="circleDetails">
+                <p class="m-0 f-16 l-18"> Payment successful </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="circle">
+        <div class="d-flex">
+            <div class="circle1"></div>
+            <div class="circleDetails">
+                <p class="m-0 f-16 l-18"> Order submitted to AMC </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="circle">
+        <div class="d-flex">
+            <div class="circle1"></div>
+            <div class="circleDetails">
+                <p class="m-0 f-16 l-18"> Order processed </p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="circle">
+        <div class="d-flex">
+            <div class="circle1"></div>
+            <div class="circleDetails">
+                <p class="m-0 f-16 l-18"> Units allotted </p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="circle noneBefore">
+        <div class="d-flex">
+            <div class="circle1"></div>
+            <div class="circleDetails">
+                <p class="m-0 f-16 l-18"> Transaction reflecting in portfolio </p>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
     <div *ngIf="!(transactionData.status==0 || transactionData.status==1)">
         <div class="row">
             <div class="col-md-6 p-0">
@@ -81,15 +163,20 @@
             </div>
         </div>
     </div>
+
     <div *ngIf="transactionData.status==0 || transactionData.status==1">
         <div class="row">
-            <div class="col-md-1 pl-0">
+            <div class="col-md-1 rejectedRadio text-center p-0">
                 <mat-radio-group aria-label="Select an option">
                     <mat-radio-button value="1"></mat-radio-button>
                 </mat-radio-group>
             </div>
-            <div class="col-md-11">
-                <h5 class="m-0 text-black">Rejected</h5>
+            <div class="col-md-11 pl-0">
+                <h5 class="m-0 text-danger">Rejected</h5>
+                <div class="bg-danger mt-4">
+                    <p class="p-9 text-white">The failed reason will come here from BSE/NSE. It can be a long form text like this or something short.
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -119,6 +206,22 @@
             this or something short.</p>
     </div>
 </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="bottom-fixed wrapper-12 w-35">
     <div class="row">
         <div class="col-md-4">

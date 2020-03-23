@@ -53,8 +53,7 @@
                 <i *ngIf="pomisForm.value.getCoOwnerName.length < 3"
                     class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i>
                 <i *ngIf="pomisForm.value.getCoOwnerName.length > 1"
-                    class="material-icons text-primitive f-20 c-p pl-10 pt-8"
-                    (click)="removeCoOwner(pointIndex)">remove</i>
+                    class="material-icons text-primitive f-20 c-p pl-10" (click)="removeCoOwner(pointIndex)">remove</i>
             </div>
         </div>
     </div>
@@ -234,7 +233,7 @@
                         class="material-icons text-primitive f-20 c-p float-left"
                         (click)="addNewNominee(undefined)">add</i>
                     <i *ngIf="pomisForm.value.getNomineeName.length > 1"
-                        class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                        class="material-icons text-primitive f-20 c-p pl-10"
                         (click)="removeNewNominee(pointIndex)">remove</i>
                 </div>
 
