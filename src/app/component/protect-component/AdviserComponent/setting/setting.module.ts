@@ -19,6 +19,8 @@ import { ModelPortfolioComponent } from './setting-backup/setting-backup/model-p
 import { SettingBackupModule } from './setting-backup/setting-backup/setting-backup.module';
 import { SettingPreferenceComponent } from './setting-preference/setting-preference.component';
 import { SettingActivityComponent } from './setting-activity/setting-activity.component';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { OrgProfileComponent } from './setting-org-profile/add-personal-profile/org-profile/org-profile.component';
 
 
 @NgModule({
@@ -27,13 +29,15 @@ import { SettingActivityComponent } from './setting-activity/setting-activity.co
     HierachyComponent, ArnRiaDetailsComponent, MfRtaDetailsComponent, SchemeBasketComponent,
     ModelPortfolioComponent,
     SettingPreferenceComponent,
-    SettingActivityComponent],
+    SettingActivityComponent,
+    OrgProfileComponent],
   imports: [
     CommonModule,
     SettingRoutingModule,
     MaterialModule,
     SettingEntryModule,
-    SettingBackupModule
+    SettingBackupModule,
+    CustomDirectiveModule
 
   ]
 })
