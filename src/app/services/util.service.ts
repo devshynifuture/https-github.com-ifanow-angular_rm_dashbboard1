@@ -235,6 +235,33 @@ export class UtilService {
       }
     );
   }
+
+  /**
+   * Convert base64 image string to proper image file
+   * @param dataURI - Base 64 string of image file
+   * @returns - png formatted image file with randomized name
+   */
+  convertB64toImageFile(dataURI) {
+    // Naming the image
+    const date = new Date().valueOf();
+    let text = '';
+    const possibleText = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (let i = 0; i < 5; i++) {
+      text += possibleText.charAt(Math.floor(Math.random() * possibleText.length));
+    }
+    // Replace extension according to your media type
+    const imageName = date + '.' + text + '.png';
+    // call method that creates a blob from dataUri
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const imageBlob = new Blob([int8Array], { type: 'image/png' });
+    const imageFile = new File([imageBlob], imageName, { type: 'image/png' });
+    return imageFile;
+  }
 }
 
 export class ValidatorType {

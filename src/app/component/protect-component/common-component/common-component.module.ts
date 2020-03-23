@@ -15,8 +15,8 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
   declarations: [
-    FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, ImageCropperComponent /*PhotoUploadComponent*/],
-  exports: [FroalaComponent, ConfirmDialogComponent, ImageCropperComponent, /*PhotoUploadComponent*/],
+    FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, ImageCropperComponent],
+  exports: [FroalaComponent, ConfirmDialogComponent, ImageCropperComponent],
   imports: [
     MaterialModule,
     CommonModule,
@@ -28,7 +28,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     FileUploadModule
     // AppModule
   ],
-  entryComponents: [ConfirmDialogComponent]
+  entryComponents: [ConfirmDialogComponent, ImageCropperComponent]
 })
 export class CommonComponentModule {
 }
