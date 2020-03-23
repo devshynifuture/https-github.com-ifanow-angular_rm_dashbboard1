@@ -24,11 +24,11 @@
             <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
                 class="skeletonAnimation" id="tbs" mat-table matSort>
                 <ng-container matColumnDef="client" sticky>
-                    <th *matHeaderCellDef class="f-18 t-20" mat-header-cell mat-sort-header="planName"> Client & plan
+                    <th *matHeaderCellDef class="f-18 t-19" mat-header-cell mat-sort-header="planName"> Client & plan
                         details
                     </th>
                     <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)"
-                        *matCellDef="let element; let i = index;" class="c-p t-20" mat-cell>
+                        *matCellDef="let element; let i = index;" class="c-p t-19" mat-cell>
                         <div class="bar">
                             {{element.clientName}} <br>
                             <small class="text-custom roboto">{{element.planName}}</small>
@@ -37,17 +37,17 @@
                 </ng-container>
 
                 <ng-container matColumnDef="service">
-                    <th *matHeaderCellDef class="f-18 t-20" mat-header-cell mat-sort-header="serviceName">
+                    <th *matHeaderCellDef class="f-18 t-18" mat-header-cell mat-sort-header="serviceName">
                         Service name
                     </th>
-                    <td *matCellDef="let element" class="c-p t-20" mat-cell>
+                    <td *matCellDef="let element" class="c-p t-18" mat-cell>
                         <div class="bar"> {{element.serviceName}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="amt">
-                    <th *matHeaderCellDef class="f-18 t-18 text-right" mat-header-cell> Fee amount</th>
+                    <th *matHeaderCellDef class="f-18 t-12 text-right" mat-header-cell> Fee amount</th>
 
-                    <td *matCellDef="let element" class="c-p t-18 text-right" mat-cell>
+                    <td *matCellDef="let element" class="c-p t-12 text-right" mat-cell>
                         <div (click)="openFeeEditor(element)" *ngIf="element.startsOn==undefined"
                             class="bar text-primary text-underline">
                             {{isLoading ? ' ' : 'View details'}} </div>
@@ -64,28 +64,28 @@
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="sub">
-                    <th *matHeaderCellDef class="f-18 t-10" mat-header-cell mat-sort-header="subscriptionNumber">
+                    <th *matHeaderCellDef class="f-18 t-14" mat-header-cell mat-sort-header="subscriptionNumber">
                         Subs #
                     </th>
                     <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" *matCellDef="let element"
-                        class="t-10 c-p" mat-cell>
+                        class="t-14 c-p" mat-cell>
                         <div class="bar"> {{element.subscriptionNumber}} </div>
                     </td>
                 </ng-container>
                 <!-- Weight Column -->
                 <ng-container matColumnDef="status">
-                    <th *matHeaderCellDef class=" t-10" mat-header-cell mat-sort-header="status"> Status</th>
+                    <th *matHeaderCellDef class=" t-12" mat-header-cell mat-sort-header="status"> Status</th>
                     <td *matCellDef="let element" mat-cell>
                         <div class="bar">
-                            <span *ngIf="element.status==1" class="text-success t-10 ">NOT STARTED</span>
-                            <span *ngIf="element.status==2" class="text-primary t-10 ">LIVE</span>
-                            <span *ngIf="element.status==3" class="text-custom t-10 ">FUTURE</span>
-                            <span *ngIf="element.status==4" class="text-danger t-10 ">CANCELLED</span>
+                            <span *ngIf="element.status==1" class="text-success t-12 ">NOT STARTED</span>
+                            <span *ngIf="element.status==2" class="text-primary t-12 ">LIVE</span>
+                            <span *ngIf="element.status==3" class="text-custom t-12 ">FUTURE</span>
+                            <span *ngIf="element.status==4" class="text-danger t-12 ">CANCELLED</span>
                         </div>
                     </td>
                 </ng-container>
                 <!-- Weight Column -->
-                <ng-container matColumnDef="activation" >
+                <ng-container matColumnDef="activation">
                     <th *matHeaderCellDef class="f-18 t-6" mat-header-cell mat-sort-header="startsOn">
                         Activation date
                     </th>
@@ -104,7 +104,7 @@
                 </ng-container>
 
                 <!-- Symbol Column -->
-                <ng-container matColumnDef="lastbilling" >
+                <ng-container matColumnDef="lastbilling">
                     <th *matHeaderCellDef class="f-18 t-10" mat-header-cell mat-sort-header="prevBillingDate">
                         Last billing date
                     </th>
@@ -112,21 +112,23 @@
                         <div class="bar"> {{element.prevBillingDate | date:'dd/MM/yyyy'}} </div>
                     </td>
                 </ng-container>
-                <ng-container matColumnDef="nextbilling" >
-                    <th *matHeaderCellDef class="f-18 text-right pr-24 t-15"  mat-header-cell 
+                <ng-container matColumnDef="nextbilling">
+                    <th *matHeaderCellDef class="f-18 text-right pr-24 t-15" mat-header-cell
                         mat-sort-header="nextBillingDate">
                         Next billing date
                     </th>
-                    <td *matCellDef="let element" class="text-left pr-8 t-15"  mat-cell>
+                    <td *matCellDef="let element" class="text-left pr-8 t-15" mat-cell>
                         <div class="bar text-left"> {{element.nextBillingDate | date:'dd/MM/yyyy'}} </div>
                     </td>
                 </ng-container>
-                <ng-container matColumnDef="feemode" >
+                <ng-container matColumnDef="feemode">
                     <th *matHeaderCellDef class="f-18 text-left pr-24 t-12" mat-header-cell
-                        mat-sort-header="subscriptionPricing.feeTypeId" matTooltip="Fee collection mode" 
-                        aria-label="Button that displays a tooltip when focused or hovered over" [ngStyle]="{'display':isLoading?'none':''}"> Fee coll...
+                        mat-sort-header="subscriptionPricing.feeTypeId" matTooltip="Fee collection mode"
+                        aria-label="Button that displays a tooltip when focused or hovered over"
+                        [ngStyle]="{'display':isLoading?'none':''}"> Fee coll...
                     </th>
-                    <td *matCellDef="let element" class="text-left pr-8 t-12" mat-cell [ngStyle]="{'display':isLoading?'none':''}">
+                    <td *matCellDef="let element" class="text-left pr-8 t-12" mat-cell
+                        [ngStyle]="{'display':isLoading?'none':''}">
                         <div class="bar">
                             <span class="t-10" *ngIf="element.subscriptionPricing">
 
@@ -137,8 +139,9 @@
                         </div>
                     </td>
                 </ng-container>
-                <ng-container matColumnDef="icons" stickyEnd >
-                    <th *matHeaderCellDef class="f-18 t-2" mat-header-cell [ngStyle]="{'display':isLoading?'none':''}"></th>
+                <ng-container matColumnDef="icons" stickyEnd>
+                    <th *matHeaderCellDef class="f-18 t-2" mat-header-cell [ngStyle]="{'display':isLoading?'none':''}">
+                    </th>
                     <td *matCellDef="let element" class="t-2" mat-cell [ngStyle]="{'display':isLoading?'none':''}">
                         <div *ngIf="!isLoading">
                             <i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
