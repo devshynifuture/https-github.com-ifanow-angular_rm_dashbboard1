@@ -8,7 +8,8 @@
             <div class="col-md-6 p-0">
                 <div class="form-group">
                     <mat-form-field>
-                        <input autocomplete="off" formControlName="displayName" matInput class="form-control">
+                        <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
+                            formControlName="displayName" matInput class="form-control">
                         <mat-hint>Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -50,7 +51,8 @@
             <div class="col-md-7 p-0">
                 <div class="form-group">
                     <mat-form-field>
-                        <input autocomplete="off" matInput formControlName="occupation" class="form-control">
+                        <input autocomplete="off" matInput formControlName="occupation" appInputValueValidation
+                            [inputValidator]="validatorType.TEXT_ONLY" class="form-control">
                         <mat-hint>Optional</mat-hint>
                     </mat-form-field>
                 </div>
