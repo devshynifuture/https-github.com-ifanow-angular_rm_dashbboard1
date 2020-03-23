@@ -345,8 +345,8 @@
                 <button class="btn-bottom br-0 text-inherit" *ngIf="step==1 && typeOfFamilyMemberAdd=='1'"
                     (click)="selectFamilyMembersCount()" mat-button>Proceed
                 </button>
-                <button class="btn-bottom br-0 text-inherit" *ngIf="step==1 && typeOfFamilyMemberAdd=='2'"
-                    (click)="next()" mat-button>Proceed
+                <button [disabled]="selectedCount==0" class="btn-bottom br-0 text-inherit"
+                    *ngIf="step==1 && typeOfFamilyMemberAdd=='2'" (click)="next()" mat-button>Proceed
                 </button>
                 <button class="btn-bottom br-0 text-inherit" *ngIf="step==2" (click)="createFamilyMember()"
                     mat-button>Next

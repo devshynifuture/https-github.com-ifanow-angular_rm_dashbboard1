@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ValidatorType } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
@@ -26,7 +26,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       invTaxStatus: [, [Validators.required]],
       fullName: [, [Validators.required]],
       email: [],
-      mobileNo: [],
+      mobileNo: new FormArray([]),
       pan: [],
       username: [, [Validators.required]],
       dobAsPerRecord: [],
@@ -39,9 +39,24 @@ export class ClientBasicDetailsComponent implements OnInit {
       clientOwner: [, [Validators.required]],
       role: [, [Validators.required]],
     })
+    this.addNumber();
+  }
+  get getBasicDetails() { return this.basicDetails.controls; }
+  get getMobileNumList() { return this.getBasicDetails.mobileNo as FormArray; }
+  removeNumber(index) {
+    (index == 0) ? '' : this.basicDetails.controls.mobileNo.removeAt(index)
+  }
+  addNumber() {
+    this.getMobileNumList.push(this.fb.group({
+      code: [, [Validators.required]],
+      number: [, [Validators.required]]
+    }))
   }
   saveNext() {
     this.tabChange.emit(1);
+  }
+  saveClose() {
+    this.close();
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });

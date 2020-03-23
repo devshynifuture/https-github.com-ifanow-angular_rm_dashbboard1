@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-client-address',
@@ -8,7 +9,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class ClientAddressComponent implements OnInit {
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject) { }
   addressForm;
   @Output() tabChange = new EventEmitter();
   ngOnInit() {
@@ -24,5 +25,13 @@ export class ClientAddressComponent implements OnInit {
       country: [, [Validators.required]]
     })
   }
-
+  saveNext() {
+    this.tabChange.emit(1);
+  }
+  saveClose() {
+    this.close();
+  }
+  close() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
 }
