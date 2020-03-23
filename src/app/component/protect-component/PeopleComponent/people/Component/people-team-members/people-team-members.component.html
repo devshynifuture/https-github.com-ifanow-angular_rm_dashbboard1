@@ -1,25 +1,25 @@
 <div class="row pt-120">
     <div class="col-md-9 pt-28">
-        <h3 class="m-0">Team members</h3>
-        <div class="row pt-10">
-            <div class="col-md-4 pl-0">
-                <mat-card class="b-a p-9 br-4">
+        <h3 class="m-0 pb-2">Team members</h3>
+        <div class="row ">
+            <div class="col-md-4 pl-0 pt-8 pb-8" *ngFor="let member of teamList">
+                <mat-card class="b-a p-9 br-4" (click)="viewEditMember(member)">
                     <div class="row">
                         <div class="col-md-4 p-0">
                             <div class="imgDiv">
-                                <img class="c-p"  src="/assets/images/svg/chotu-avtar.svg">
+                                <img class="c-p"  [src]="member.img">
                             </div>
                         </div>
                         <div class="col-md-8 pr-0">
-                            <h5 class="m-0 f-15 text-black">Archit Gupta</h5>
-                            <p class="text-custom roboto m-0">Admin</p>
-                            <h3 class="m-0 f-500 text-primary pt-16">118 clients</h3>
+                            <h5 class="m-0 f-15 text-black">{{member.name}}</h5>
+                            <p class="text-custom roboto m-0">{{member.roleTypeName}}</p>
+                            <h3 class="m-0 f-500 text-primary pt-16">{{member.clients}} clients</h3>
                         </div>
                     </div>
                 </mat-card>
             </div>
 
-            <div class="col-md-4 pl-0">
+            <!-- <div class="col-md-4 pl-0">
                 <mat-card class="b-a p-9 br-4">
                     <div class="row">
                         <div class="col-md-4 p-0">
@@ -50,10 +50,10 @@
                         </div>
                     </div>
                 </mat-card>
-            </div>
+            </div> -->
         </div>
 
-        <div class="row pt-16">
+        <!-- <div class="row pt-16">
             <div class="col-md-4 pl-0">
                 <mat-card class="b-a p-9 br-4">
                     <div class="row">
@@ -88,7 +88,7 @@
                 </mat-card>
             </div>
 
-        </div>
+        </div> -->
 
         <h5 class="m-0 pt-28 text-black">Map clients & leads to team members</h5>
         <div class="people-team-member">
@@ -141,42 +141,59 @@
             </table>
         </div>
     </div>
-    <div class="col-md-3 bg-grey lter h-100vh">
+    <div [formGroup]="teamInviteForm" class="col-md-3 bg-grey lter h-100vh">
         <h5 class="m-0 f-500 text-black pt-28">Create team member</h5>
         <h5 class="m-0 pt-20 pb-8">Full name</h5>
         <div class="form-group mb-0">
             <mat-form-field>
-                <input matInput class="form-control">
+                <input matInput class="form-control" formControlName="name">
+                <mat-error>This field is required</mat-error>
             </mat-form-field>
         </div>
         <h5 class="m-0 pt-20 pb-8">Email</h5>
         <div class="form-group mb-0">
             <mat-form-field>
-                <input matInput class="form-control">
+                <input matInput class="form-control" formControlName="email">
+                <mat-error *ngIf="!teamInviteForm.controls['email'].hasError('pattern')">This field is required</mat-error>
+                <mat-error *ngIf="teamInviteForm.controls['email'].hasError('pattern') && !teamInviteForm.controls['email'].hasError('required')">Please enter valid email</mat-error>
             </mat-form-field>
         </div>
         <h5 class="m-0 pt-20 pb-8">Mobile</h5>
         <div class="form-group mb-0">
             <mat-form-field>
-                <input matInput class="form-control">
+                <input matInput appInputValueValidation
+                [inputValidator]="validatorType.NUMBER_ONLY" type="text" maxlength="10" class="form-control" formControlName="mobile">
+                <mat-error>This field is required</mat-error>
             </mat-form-field>
         </div>
         <h5 class="m-0 pt-20 pb-8">Role</h5>
         <div class="form-group mb-0">
             <mat-form-field>
-                <mat-select class="form-control">
-                    <mat-option value="option">Select a role</mat-option>
+                <mat-select class="form-control" formControlName="role">
+                    <mat-option value="">Select a role</mat-option>
+                    <mat-option [value]="role.roleTypeId" *ngFor="let role of roleList">{{role.roleTypeName}}</mat-option>
                 </mat-select>
+                <mat-error>This field is required</mat-error>
+            </mat-form-field>
+        </div>
+        <h5 class="m-0 pt-20 pb-8">Leader</h5>
+        <div class="form-group mb-0">
+            <mat-form-field>
+                <mat-select class="form-control" formControlName="lead">
+                    <mat-option value="">Select leader</mat-option>
+                    <mat-option [value]="lead.id" *ngFor="let lead of leadList">{{lead.name}}</mat-option>
+                </mat-select>
+                <mat-error>This field is required</mat-error>
             </mat-form-field>
         </div>
         <h5 class="m-0 pt-20 pb-8">EUIN</h5>
         <div class="form-group mb-0">
             <mat-form-field>
-                <input matInput class="form-control">
+                <input matInput class="form-control" formControlName="euin">
                 <mat-hint>Optional</mat-hint>
             </mat-form-field>
         </div>
-        <button mat-stroked-button class="btn-primary w-100 mt-44 h-40 br-2">Send invite</button>
+        <button mat-stroked-button class="btn-primary w-100 mt-44 h-40 br-2" (click)="sendInvitation()" >Send invite</button>
     </div>
 
 </div>

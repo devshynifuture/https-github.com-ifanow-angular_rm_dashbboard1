@@ -4,14 +4,17 @@ import {Injectable} from '@angular/core';
   providedIn: 'root'
 })
 export class EnumServiceService {
-
+  roleList:any = [];
   constructor() {
   }
 
   private globalEnumData = {
     otherAssetTypes: [],
-    feeCollectionMode: []
+    feeCollectionMode: [],
+    
   };
+
+ 
 
   public addToGlobalEnumData(data) {
     // obj.forEach(element =>
@@ -33,5 +36,13 @@ export class EnumServiceService {
 
   getFeeCollectionModeData() {
     return this.globalEnumData.feeCollectionMode;
+  }
+
+  public addRoles(data){
+    this.roleList = data;
+  }
+
+  public getRoles(){
+    return this.roleList;
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-client-more-info',
@@ -8,7 +9,7 @@ import { FormBuilder } from '@angular/forms';
 })
 export class ClientMoreInfoComponent implements OnInit {
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject) { }
   moreInfoForm;
   @Input() fieldFlag;
   @Output() tabChange = new EventEmitter();
@@ -23,6 +24,15 @@ export class ClientMoreInfoComponent implements OnInit {
       bio: [],
       myNotes: []
     })
+  }
+  saveNext() {
+    this.tabChange.emit(1);
+  }
+  saveClose() {
+    this.close();
+  }
+  close() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
 }

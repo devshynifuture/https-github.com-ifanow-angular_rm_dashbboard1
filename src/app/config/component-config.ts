@@ -464,7 +464,13 @@ EDIT_PERSONAL_PROFILE:'',
   GET_MESSAGE_DETAIL: 'user/message/details',
   SEND_EMAIL: 'gmail/email/send',
   GET_ATTACHMENTS: 'gmail/attachment/get',
-
+  //////////////////////////people/////////////////////////////////////
+  ADD_CLIENT_ADDRESS: '',
+  ADD_CLIENT_BANK: '',
+  ADD_CLIENT_BASIC_DETAILS: '',
+  ADD_CLIENT_DEMAT: '',
+  ADD_CLIENT_MORE_INFO: '',
+  ADD_CLIENT_UPLOAD: '',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_UPDATE: 'calendar/event/update',
