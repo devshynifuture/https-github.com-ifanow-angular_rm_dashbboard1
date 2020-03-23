@@ -1,10 +1,10 @@
 <!-- ADD INSURANCE -->
 <div class="popup-header-fix-60">
     <div class="row bb-1">
-        <div class="col-md-7 p-0">
-            <h4 class="mb-0 wrapper-20"> Add Life insurance</h4>
+        <div class="col-md-6 p-0">
+            <h4 class="mb-0 wrapper-20 pr-0"> Add Life insurance</h4>
         </div>
-        <div class="col-md-5 text-right">
+        <div class="col-md-6 text-right">
             <div class="wrapper-12">
                 <button matTooltip="Have lots of policies?You can bulk upload these policies using excel import option"
                     mat-button class="btn-dark-black addon mr-8 ">
@@ -278,7 +278,7 @@
         <div class="col-md-3">
         </div>
     </div>
-    <div *ngIf="addMoreFlag" class="row pt-40">
+    <div *ngIf="addMoreFlag" class="row pt-40 h-500">
         <div class="col-md-12 tabView">
             <mat-tab-group mat-align-tabs="center" animationDuration="0ms">
                 <mat-tab label="Key details">
@@ -293,14 +293,14 @@
                                         <input type="number" [inputValidator]="validatorType.NUMBER_ONLY"
                                             appInputValueValidation formControlName="riskCover" [maxLength]="10"
                                             matInput autocomplete="off" #riskCover class="rupess form-control br-0">
+                                        <mat-hint align="end" class="f-12">{{riskCover.value.length}}/10</mat-hint>
                                     </mat-form-field>
-                                    <mat-hint align="end" class="f-12">{{riskCover.value.length}}/10</mat-hint>
                                 </div>
                             </div>
                         </div>
                         <div class="row pt-40">
                             <div class="col-md-5 pr-0 text-right">
-                                <h5 class="m-0pt-8">Surrender Value</h5>
+                                <h5 class="m-0 pt-8">Surrender Value</h5>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group mb-0">
@@ -390,7 +390,7 @@
                             <h5 class="m-0 pb-8">Approx amount</h5>
                         </div>
                         <div formArrayName="cashFlow">
-                            <div class="row pt-4 justify-content-center"
+                            <div [ngClass]="{'pt-36': pointIndex > 0}" class="row pt-4 justify-content-center"
                                 *ngFor="let obj of cashFlowEntries.controls; let pointIndex=index"
                                 [formGroupName]="pointIndex">
                                 <div class="col-md-3">
@@ -428,7 +428,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-1 p-0 pt-8">
+                                <div class="col-md-1 p-0 pt-8 d-flex">
                                     <i class="material-icons text-primitive c-p float-left"
                                         (click)="addTransaction()">add</i>
                                     <i class="material-icons text-primitive c-p float-right"
@@ -562,7 +562,7 @@
                 <mat-tab label="Miscellaneous">
                     <div [formGroup]="Miscellaneous">
                         <div class="row pt-40">
-                            <div class="col-md-5 text-right">
+                            <div class="col-md-5 text-right pr-0">
                                 <h5 class="m-0 pt-40"> Permium payment mode </h5>
                             </div>
                             <div class="col-md-3">
@@ -588,7 +588,7 @@
                         </div>
 
                         <div class="row pt-40">
-                            <div class="col-md-5 text-right">
+                            <div class="col-md-5 text-right pr-0">
                                 <h5 class="m-0 pt-8"> Advisor name </h5>
                             </div>
                             <div class="col-md-3">
@@ -604,7 +604,7 @@
                         </div>
 
                         <div class="row pt-40 pb-48">
-                            <div class="col-md-5 text-right">
+                            <div class="col-md-5 text-right pr-0">
                                 <h5 class="m-0 pt-8"> Service branch </h5>
                             </div>
                             <div class="col-md-3">

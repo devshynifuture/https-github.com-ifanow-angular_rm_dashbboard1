@@ -1,9 +1,15 @@
+.fddate {
+  .radioBtn .mat-radio-label {
+    padding-left: 8px !important;
+    height: 40px !important;
+  }
+}
+
 @media(max-width:1224px) {}
 
 @media(max-width:1200px) {
 
-  #ui-assets-account,
-  #ui-insurance {
+  #ui-assets-account {
     li {
       padding: 0 0px 24px 13px !important;
     }
@@ -19,6 +25,9 @@
 
   #ui-insurance {
     li {
+      padding: 13px !important;
+
+
       .f-700 {
         font-size: 12px;
       }
@@ -57,6 +66,12 @@
   //   width: 165px;
   // }
 
+  #ui-insurance {
+    li {
+      padding: 10px !important;
+    }
+  }
+
   .future-contribution {
     .f-14 {
       font-size: 13px !important;
@@ -66,13 +81,15 @@
       font-size: 14px !important;
     }
   }
-  .tabView{
-  .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination{
-  display:none !important;
-  }
-  .mat-tab-label{
-  padding:0 16px !important;
-  }
+
+  .tabView {
+    .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
+      display: none !important;
+    }
+
+    .mat-tab-label {
+      padding: 0 16px !important;
+    }
   }
 }
 
@@ -140,5 +157,14 @@
   #ui-assets-account li,
   #ui-liabilities li {
     font-size: 13px !important;
+  }
+
+  .tabView {
+
+    .f-16,
+    h5 {
+      font-size: 14px !important;
+    }
+
   }
 }
