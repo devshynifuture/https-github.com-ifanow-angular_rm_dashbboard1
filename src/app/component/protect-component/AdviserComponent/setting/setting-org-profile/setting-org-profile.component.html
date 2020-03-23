@@ -66,12 +66,12 @@
 
 <div class="row pt-40 pb-20" id="ui-setting-profile" *ngIf="orgProfile == true" >
     <div class="col-xl-2"></div>
-    <div class="col-xl-8 p-0">
+    <div class="col-xl-8 p-0" *ngIf="orgDetails">
         <mat-card class="b-a p-0 br-4">
             <mat-card-header class="bg-grey lter p-24">
                 <div class="row w-100">
                     <div class="col-md-9 pl-0">
-                        <h2 class="m-0">Acme Financial Advisors</h2>
+                        <h2 class="m-0">{{orgDetails.companyName}}</h2>
                     </div>
                     <div class="col-md-3 p-0 text-right">
                         <button mat-stroked-button class="text-primary">ADMIN</button>
@@ -89,25 +89,21 @@
                 <div class="row">
                     <div class="col-md-6 pb-28">
                         <p class="f-12 m-0 text-custom pt-28"> EMAIL</p>
-                        <p class="m-0">archit.gupta@acmefinancial.com</p>
+                        <p class="m-0">{{orgDetails.email}}</p>
                         <p class="f-12 m-0 text-custom pt-28"> MOBILE</p>
-                        <p class="m-0">+91 99874 12342</p>
+                        <p class="m-0">{{orgDetails.mobileNo}}</p>
                         <p class="f-12 m-0 text-custom pt-28"> WEBSITE</p>
-                        <p class="m-0">www.acmefinancial.com</p>
+                        <p class="m-0">{{orgDetails.website}}</p>
                         <p class="f-12 m-0 text-custom pt-28"> ADDRESS</p>
-                        <p class="m-0">203-A,”A” Wing, Suashish IT Park,
-                            Off. Dattapada Road,
-                            Borivali East
-                            Mumbai 400 066
-                            Maharashtra, India</p>
+                        <p class="m-0">{{orgDetails.billerAddress}}</p>
                         <div class="row pt-36">
                             <div class="col-md-6 pl-0">
                                 <p class="m-0 f-12 text-custom">GST TREATMENT</p>
-                                <p class="m-0">Applicable</p>
+                                <p class="m-0">{{orgDetails.gstTreatmentId}}</p>
                             </div>
                             <div class="col-md-6 pr-0">
                                 <p class="m-0 f-12 text-custom">GST</p>
-                                <p class="m-0">27AABCF7680A1Z7</p>
+                                <p class="m-0">{{orgDetails.gstin}}</p>
                             </div>
                         </div>
                     </div>

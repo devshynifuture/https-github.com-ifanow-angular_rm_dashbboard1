@@ -31,20 +31,22 @@ export class AddPersonalProfileComponent implements OnInit {
     this.personalProfile = this.fb.group({
      
    
-      companyName: [(!data.fdType) ? '' : (data.companyName), [Validators.required]],
-      emailId: [(!data) ? '' : data.emailId, [Validators.required]],
+      name: [(!data.fdType) ? '' : (data.name), [Validators.required]],
+      emailId: [(!data) ? '' : data.email, [Validators.required]],
       mobileNo: [(!data) ? '' : data.mobileNo, [Validators.required]],
-      website: [(!data) ? '' : data.website, [Validators.required]],
-      address: [(!data) ? '' : data.address, [Validators.required]],
-      gstTreatment:  [(!data) ? '' : data.gstTreatment, [Validators.required]],
-      gstNumber: [(!data) ? '' : data.gstNumber, [Validators.required]],
+      userName: [(!data) ? '' : data.userName, [Validators.required]],
     });
   }
   getFormControl(): any {
     return this.personalProfile.controls;
   }
 updatePersonalProfile(){
-  let obj = {}
+  let obj = {
+    name: this.personalProfile.controls.name.value,
+      email:this.personalProfile.controls.emailId.value ,
+      userName:this.personalProfile.controls.userName.value ,
+      mobileNo:this.personalProfile.controls.mobileNo.value ,
+  }
   this.orgSetting.editPersonalProfile(obj).subscribe(
     data => this.editPersonalProfileRes(data),
     err => this.event.openSnackBar(err, "Dismiss")

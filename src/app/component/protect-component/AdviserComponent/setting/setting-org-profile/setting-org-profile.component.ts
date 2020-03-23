@@ -16,6 +16,7 @@ export class SettingOrgProfileComponent implements OnInit {
   advisorId: any;
   orgProfile=false;
   userList: any;
+  orgDetails: any;
 
   constructor(private eventService: EventService,
     private utilService: UtilService, private subInjectService: SubscriptionInject, private orgSetting: OrgSettingServiceService, ) { }
@@ -34,9 +35,23 @@ export class SettingOrgProfileComponent implements OnInit {
       err => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
-  getPersonalProfileRes(data) {
-    console.log('getPersonalProfileRes', data)
+  getPersonalProfileRes(data){
+    console.log('this.getPersonalProfileRes',data)
     this.userList = data
+  }
+  getOrgProfiles() {
+    let obj = {
+      advisorId:414
+    }
+    this.orgSetting.getOrgProfile(obj).subscribe(
+      data => this.getOrgProfileRes(data),
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    );
+  }
+  getOrgProfileRes(data) {
+    console.log('getOrgProfileRes', data)
+    this.orgDetails = data
+    
   }
   OpenpersonalProfile(data, flag) {
     const fragmentData = {
@@ -64,6 +79,7 @@ export class SettingOrgProfileComponent implements OnInit {
   openOrg(flag){
     if(flag == true){
       this.orgProfile = true
+      this.getOrgProfiles()
     }else{
       this.orgProfile = false
     }
