@@ -233,10 +233,10 @@ export class FixedIncomeComponent implements OnInit {
       }
     );
   }
-
+totalSum:any
   getFixedDepositRes(data) {
     this.isLoading = false;
-
+    this.totalSum = data;
     console.log('getFixedDepositRes ********** ', data);
     if (data == undefined) {
       this.noData = "No scheme found";

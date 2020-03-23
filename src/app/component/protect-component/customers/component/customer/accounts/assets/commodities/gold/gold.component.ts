@@ -327,7 +327,7 @@ export class GoldComponent implements OnInit {
       });
       obj.nomineeList= this.gold.value.getNomineeName;
       let adviceObj = {
-        advice_id: this.advisorId,
+        // advice_id: this.advisorId,
         adviceStatusId: 5,
         stringObject: obj,
         adviceDescription: "manualAssetDescription"

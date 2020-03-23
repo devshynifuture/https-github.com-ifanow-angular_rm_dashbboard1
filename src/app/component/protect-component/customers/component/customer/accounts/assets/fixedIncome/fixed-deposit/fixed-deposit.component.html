@@ -214,7 +214,7 @@
             <div class="form-group mb-0 d-flex">
                 <mat-form-field>
                     <input (focus)="picker1.open()" (click)="picker1.open()" (dateChange)="checkDate()" matInput
-                        formControlName="maturityDate" [min]="maxDate" [matDatepicker]="picker1" readonly>
+                        formControlName="maturityDate" [min]="this.fixedDeposit.get('commencementDate').value" [matDatepicker]="picker1" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                     <mat-error class="f-12 pt-4 w-s">
@@ -242,13 +242,13 @@
 
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-12">Interest Payout option</h5>
+            <h5 class="m-0 pt-12">Interest option</h5>
         </div>
         <div class="col-md-3 pr-0">
             <mat-form-field>
                 <mat-select #payOpt formControlName="payOpt" class="form-control br-0" (change)="getIntPayout()">
                     <mat-option value="" disabled> Select option</mat-option>
-                    <mat-option [value]="1"> Cumulative payout</mat-option>
+                    <mat-option [value]="1"> Cumulative</mat-option>
                     <mat-option [value]="2">Interest payout</mat-option>
                 </mat-select>
                 <mat-error class="f-12 pt-4">
@@ -280,7 +280,7 @@
     </div>
     <div class="row pt-24" *ngIf="fixedDeposit.value.payOpt == 2">
         <div class="col-md-5 text-right p-0">
-            <h5 class="m-0 pt-12">Frequency of payout per year</h5>
+            <h5 class="m-0 pt-12">Frequency of payout</h5>
         </div>
         <div class="col-md-3 pr-0">
             <mat-form-field>
