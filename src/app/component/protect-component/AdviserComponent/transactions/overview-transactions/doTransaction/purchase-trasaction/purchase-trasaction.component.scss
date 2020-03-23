@@ -76,3 +76,32 @@
 .mat-spinner circle {
   stroke: #008FFF;
 }
+
+
+::ng-deep .smallRadio .mat-radio-button {
+  min-width: 120px !important;
+}
+
+::ng-deep .smallRadio .radioBtn .mat-radio-label {
+  min-width: 120px !important;
+  height: 45px !important;
+  display: flex !important;
+  justify-content: left;
+  align-items: center;
+  padding-left: 10px !important;
+}
+
+
+
+::ng-deep .mediumRadio .mat-radio-button {
+  min-width: 180px !important;
+}
+
+::ng-deep .mediumRadio .radioBtn .mat-radio-label {
+  min-width: 180px !important;
+  height: 45px !important;
+  display: flex !important;
+  justify-content: left;
+  align-items: center;
+  padding-left: 10px !important;
+}
