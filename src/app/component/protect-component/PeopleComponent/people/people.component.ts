@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-people',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PeopleComponent implements OnInit {
 
-  constructor() { }
+  constructor(private enumDataService: EnumDataService) { }
   value = 1;
   ngOnInit() {
+    this.enumDataService.getRoles();
   }
 
 }

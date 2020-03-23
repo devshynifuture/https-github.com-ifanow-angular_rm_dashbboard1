@@ -1,25 +1,25 @@
 <div class="row pt-120">
     <div class="col-md-9 pt-28">
-        <h3 class="m-0">Team members</h3>
-        <div class="row pt-10">
-            <div class="col-md-4 pl-0">
-                <mat-card class="b-a p-9 br-4">
+        <h3 class="m-0 pb-2">Team members</h3>
+        <div class="row ">
+            <div class="col-md-4 pl-0 pt-8 pb-8" *ngFor="let member of teamList">
+                <mat-card class="b-a p-9 br-4" (click)="viewEditMember(member)">
                     <div class="row">
                         <div class="col-md-4 p-0">
                             <div class="imgDiv">
-                                <img class="c-p"  src="/assets/images/svg/chotu-avtar.svg">
+                                <img class="c-p"  [src]="member.img">
                             </div>
                         </div>
                         <div class="col-md-8 pr-0">
-                            <h5 class="m-0 f-15 text-black">Archit Gupta</h5>
-                            <p class="text-custom roboto m-0">Admin</p>
-                            <h3 class="m-0 f-500 text-primary pt-16">118 clients</h3>
+                            <h5 class="m-0 f-15 text-black">{{member.name}}</h5>
+                            <p class="text-custom roboto m-0">{{member.roleTypeName}}</p>
+                            <h3 class="m-0 f-500 text-primary pt-16">{{member.clients}} clients</h3>
                         </div>
                     </div>
                 </mat-card>
             </div>
 
-            <div class="col-md-4 pl-0">
+            <!-- <div class="col-md-4 pl-0">
                 <mat-card class="b-a p-9 br-4">
                     <div class="row">
                         <div class="col-md-4 p-0">
@@ -50,10 +50,10 @@
                         </div>
                     </div>
                 </mat-card>
-            </div>
+            </div> -->
         </div>
 
-        <div class="row pt-16">
+        <!-- <div class="row pt-16">
             <div class="col-md-4 pl-0">
                 <mat-card class="b-a p-9 br-4">
                     <div class="row">
@@ -88,7 +88,7 @@
                 </mat-card>
             </div>
 
-        </div>
+        </div> -->
 
         <h5 class="m-0 pt-28 text-black">Map clients & leads to team members</h5>
         <div class="people-team-member">
@@ -170,7 +170,8 @@
         <div class="form-group mb-0">
             <mat-form-field>
                 <mat-select class="form-control" formControlName="role">
-                    <mat-option value="option">Select a role</mat-option>
+                    <mat-option value="">Select a role</mat-option>
+                    <mat-option [value]="role.roleTypeId" *ngFor="let role of roleList">{{role.roleTypeName}}</mat-option>
                 </mat-select>
                 <mat-error>This field is required</mat-error>
             </mat-form-field>
@@ -179,7 +180,8 @@
         <div class="form-group mb-0">
             <mat-form-field>
                 <mat-select class="form-control" formControlName="lead">
-                    <mat-option value="option">Select leader</mat-option>
+                    <mat-option value="">Select leader</mat-option>
+                    <mat-option [value]="lead.id" *ngFor="let lead of leadList">{{lead.name}}</mat-option>
                 </mat-select>
                 <mat-error>This field is required</mat-error>
             </mat-form-field>
