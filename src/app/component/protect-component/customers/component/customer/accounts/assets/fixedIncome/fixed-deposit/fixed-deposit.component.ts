@@ -25,7 +25,7 @@ import { ActiityService } from '../../../../customer-activity/actiity.service';
 })
 export class FixedDepositComponent implements OnInit {
   validatorType = ValidatorType
-  maxDate = new Date();
+  maxDate:any;
   showHide = false;
   isownerName = false;
   showTenure = true;
@@ -441,7 +441,7 @@ export class FixedDepositComponent implements OnInit {
     if (this.tenureFlag) {
       return;
     }
-    if (this.fixedDeposit.invalid || !this.tenureValid) {
+    if (this.fixedDeposit.invalid || (!this.tenureValid && this.fixedDeposit.value.maturity != "2")) {
       // this.reqError = true;
       this.inputs.find(input => !input.ngControl.valid).focus();
       for (let element in this.fixedDeposit.controls) {
@@ -495,7 +495,7 @@ export class FixedDepositComponent implements OnInit {
       console.log('fixedDeposit', obj);
       this.dataSource = obj;
       let adviceObj = {
-        advice_id: this.advisorId,
+        // advice_id: this.advisorId,
         adviceStatusId: 5,
         stringObject: obj,
         adviceDescription: "manualAssetDescription"

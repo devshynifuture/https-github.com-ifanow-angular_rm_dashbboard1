@@ -60,9 +60,9 @@
                     <td (click)="Open('open',element)" *matCellDef="let element" class="c-p" mat-cell>
                         <div class="bar text-primary text-underline" (click)="Open('open',element)"
                             *ngIf="element.startsOn==undefined"> {{isLoading ? ' ' : 'View details'}} </div>
-                        <div *ngIf="element.startsOn && element.subscriptionPricing.feeTypeId==1">
+                        <div appFormatNumber *ngIf="element.startsOn && element.subscriptionPricing.feeTypeId==1">
                             {{element.subscriptionPricing.subscriptionAssetPricingList[0].pricing}}</div>
-                        <div *ngIf="element.startsOn && element.subscriptionPricing.feeTypeId==2">
+                        <div appFormatNumber *ngIf="element.startsOn && element.subscriptionPricing.feeTypeId==2">
                             {{element.subscriptionPricing.subscriptionAssetPricingList[2].pricing}}</div>
                     </td>
                 </ng-container>

@@ -1,29 +1,19 @@
 ::ng-deep .mat-sort-header-button {
-    height: auto;
-    letter-spacing: normal;
+  height: auto;
+  letter-spacing: normal;
 }
 
 #table-low th {
-    padding: 7px 8px !important;
-    font-weight: 600;
-    font-size: 13px !important;
+  padding: 7px 8px !important;
+  font-weight: 600;
+  font-size: 13px !important;
 }
 
 ::ng-deep .rightText .mat-sort-header-button {
-    text-align: right;
-    float: right;
+  text-align: right;
+  float: right;
 }
 
 .width300 {
-    width: 300px;
-}
-
-::ng-deep .tableHeightClass #table-low tbody td {
-    padding-top: 7px !important;
-    padding-bottom: 8px !important;
-}
-
-::ng-deep .tableHeightClass #table-low tr.mat-footer-row,
-tr.mat-row {
-    height: 40px !important;
+  width: 300px;
 }

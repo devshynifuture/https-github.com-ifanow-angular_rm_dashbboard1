@@ -233,10 +233,10 @@ export class FixedIncomeComponent implements OnInit {
       }
     );
   }
-
+totalSum:any
   getFixedDepositRes(data) {
     this.isLoading = false;
-
+    this.totalSum = data;
     console.log('getFixedDepositRes ********** ', data);
     if (data == undefined) {
       this.noData = "No scheme found";
@@ -281,8 +281,9 @@ export class FixedIncomeComponent implements OnInit {
     );
   }
 
-
+  reTotalSum:any
   getRecurringDepositRes(data) {
+    this.reTotalSum = data;
     this.isLoading = false;
     if (data == undefined) {
       this.noData = 'No scheme found';
@@ -319,7 +320,9 @@ export class FixedIncomeComponent implements OnInit {
     );
   }
 
+  bondTotalSum:any;
   getBondsRes(data) {
+    this.bondTotalSum = data;
     this.isLoading = false;
     if (data == undefined) {
       this.noData = 'No scheme found';

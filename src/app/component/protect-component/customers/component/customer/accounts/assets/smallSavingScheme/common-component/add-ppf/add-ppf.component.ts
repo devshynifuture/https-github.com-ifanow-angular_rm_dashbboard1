@@ -376,7 +376,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ppfSchemeForm}
       obj.nomineeList= this.ppfSchemeForm.value.getNomineeName;
       // this.dataSource = obj;
       let adviceObj = {
-        advice_id: this.advisorId,
+        // advice_id: this.advisorId,
         adviceStatusId: 5,
         stringObject: obj,
         adviceDescription: "manualAssetDescription"

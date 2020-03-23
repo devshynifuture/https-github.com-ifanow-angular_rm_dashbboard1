@@ -26,6 +26,7 @@ export class AddEPFComponent implements OnInit {
   isAnnualSalGrowth = false;
   isCurrentEPFBal = false;
   isEmployerContry = false;
+  isVoluntaryContribution = false;
   isEmployeeContry = false;
   inputData: any;
   ownerName: any;
@@ -256,6 +257,7 @@ addNewNominee(data) {
       currentEPFBal: [(data == undefined) ? '' : data.currentEpfBalance, [Validators.required]],
       maturityYear: [(data == undefined) ? '' : (data.maturityYear),],
       balanceAsOn: [(data == undefined) ? '' : new Date(data.balanceAsOnDate), [Validators.required]],
+      voluntaryContribution : [(data == undefined) ? '' : data.voluntaryContribution, [Validators.required]],
       EPFNo: [(data == undefined) ? '' : (data.epfNo),],
       bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber,],
       description: [(data == undefined) ? '' : data.description,],
@@ -321,7 +323,9 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.epf}
         epfNo: this.epf.controls.EPFNo.value,
         bankAccountNumber: this.epf.controls.bankAcNo.value,
         description: this.epf.controls.description.value,
+        voluntaryContribution:this.epf.controls.voluntaryContribution.value,
         nomineeList: this.epf.value.getNomineeName,
+
         id: this.epf.controls.id.value
       }
 
@@ -333,7 +337,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.epf}
       obj.nomineeList= this.epf.value.getNomineeName;
 
       let adviceObj = {
-        advice_id: this.advisorId,
+        // advice_id: this.advisorId,
         adviceStatusId: 5,
         stringObject: obj,
         adviceDescription: "manualAssetDescription"

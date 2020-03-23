@@ -191,7 +191,7 @@ export class RetirementAccountComponent implements OnInit {
   constructor(private excel: ExcelService, private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) {
   }
 
-  displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'employer', 'rate', 'bal', 'bacla', 'year', 'desc', 'status', 'icons'];
+  displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'employer','vol', 'rate', 'bal', 'bacla', 'year', 'desc', 'status', 'icons'];
   datasource11;
   displayedColumns12 = ['no', 'owner', 'cvalue', 'total', 'scheme', 'pran', 'desc', 'status', 'icons'];
   datasource12;
@@ -445,6 +445,10 @@ export class RetirementAccountComponent implements OnInit {
     }
     else if (data.listOfEpf) {
       console.log('getEPFRes =', data);
+      this.sumOfcurrentEpfBalance = data.sumOfcurrentEpfBalance;
+      this.sumOfcurrentValue = data.sumOfcurrentValue;
+      this.sumOfemployeesMonthlyContribution = data.sumOfemployeesMonthlyContribution;
+      this.sumOfemployersMonthlyContribution = data.sumOfemployersMonthlyContribution;
       this.dataSource.data = data.listOfEpf;
       this.dataSource.sort = this.epfListTableSort;
       var d = new Date();
@@ -456,10 +460,6 @@ export class RetirementAccountComponent implements OnInit {
           element.statusId = 'LIVE';
         }
       });
-      this.sumOfcurrentEpfBalance = data.sumOfcurrentEpfBalance;
-      this.sumOfcurrentValue = data.sumOfcurrentValue;
-      this.sumOfemployeesMonthlyContribution = data.sumOfemployeesMonthlyContribution;
-      this.sumOfemployersMonthlyContribution = data.sumOfemployersMonthlyContribution;
     }
     else {
       this.noData = "No scheme found";
@@ -482,6 +482,7 @@ export class RetirementAccountComponent implements OnInit {
   }
   getGrauityRes(data) {
     this.isLoading = false;
+    this.sumOfAmountReceived = data.sumOfAmountReceived;
     if (data == undefined) {
       this.noData = 'No gratuity found';
       this.dataSource.data = []
@@ -491,7 +492,6 @@ export class RetirementAccountComponent implements OnInit {
       this.dataSource.data = data.gratuityList;
       this.dataSource.sort = this.gratuityListTableSort;
       UtilService.checkStatusId(this.dataSource.filteredData);
-      this.sumOfAmountReceived = data.sumOfAmountReceived;
     }
     else {
       this.noData = "No gratuity found";
@@ -513,6 +513,8 @@ export class RetirementAccountComponent implements OnInit {
   }
   getNPSRes(data) {
     this.isLoading = false;
+    this.totalContribution = data.totalContribution;
+    this.totalCurrentValue = data.totalCurrentValue;
     if (data == undefined) {
       this.noData = 'No NPS found';
       this.dataSource.data = []
@@ -521,8 +523,6 @@ export class RetirementAccountComponent implements OnInit {
       this.dataSource.data = data.npsList;
       this.dataSource.sort = this.npsListTableSort;
       UtilService.checkStatusId(this.dataSource.filteredData);
-      this.totalContribution = data.totalContribution;
-      this.totalCurrentValue = data.totalCurrentValue;
     }
     else {
       this.noData = "No NPS found";
@@ -544,6 +544,8 @@ export class RetirementAccountComponent implements OnInit {
   }
   getSuperannuationRes(data) {
     this.isLoading = false;
+    this.sumOfAnnualEmployeeContribution = data.sumOfAnnualEmployeeContribution;
+    this.sumOfAnnualEmployerContribution = data.sumOfAnnualEmployerContribution;
     if (data == undefined) {
       this.noData = 'No superannuation found';
       this.dataSource.data = []
@@ -552,8 +554,6 @@ export class RetirementAccountComponent implements OnInit {
       this.dataSource.data = data.superannuationList;
       this.dataSource.sort = this.superAnnuationListTableSort;
       UtilService.checkStatusId(this.dataSource.filteredData);
-      this.sumOfAnnualEmployeeContribution = data.sumOfAnnualEmployeeContribution;
-      this.sumOfAnnualEmployerContribution = data.sumOfAnnualEmployerContribution;
     }
     else {
       this.noData = "No superannuation found";
@@ -575,6 +575,8 @@ export class RetirementAccountComponent implements OnInit {
   }
   getEPSRes(data) {
     this.isLoading = false;
+    this.totalNotionalValue = data.totalNotionalValue;
+    this.totalPensionAmount = data.totalPensionAmount;
     if (data == undefined) {
       this.noData = 'No EPS found';
       this.dataSource.data = []
@@ -583,8 +585,6 @@ export class RetirementAccountComponent implements OnInit {
       this.dataSource.data = data.epsList;
       this.dataSource.sort = this.epsListTableSort;
       UtilService.checkStatusId(this.dataSource.filteredData);
-      this.totalNotionalValue = data.totalNotionalValue;
-      this.totalPensionAmount = data.totalPensionAmount;
     }
     else {
       this.noData = "No EPS found";

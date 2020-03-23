@@ -128,8 +128,7 @@
                             <mat-option *ngFor="let s of schemeList" [value]="s.id">{{s.name}}
                             </mat-option>
                         </mat-autocomplete> -->
-                        <mat-select  matInput
-                        formControlName="schemeName"  class="form-control br-0" >
+                        <mat-select matInput formControlName="schemeName" class="form-control br-0">
                             <mat-option [value]='0' disabled>Select scheme</mat-option>
                             <mat-option *ngFor="let s of schemeList" [value]="s.id">{{s.name}}
                             </mat-option>
@@ -161,8 +160,9 @@
                     <div class="col-md-4 pl-0">
                         <div class="form-group mb-0">
                             <mat-form-field class="ba-date">
-                                <input (click)="picker.open()" (focus)="picker.open()" autocomplete="off" matInput formControlName="holdingAsOn"
-                                    [matDatepicker]="picker" class="form-control br-0" readonly>
+                                <input (click)="picker.open()" (focus)="picker.open()" autocomplete="off" matInput
+                                    formControlName="holdingAsOn" [matDatepicker]="picker" class="form-control br-0 b-0"
+                                    readonly>
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
                                 <mat-error class="f-12">
@@ -330,10 +330,11 @@
                 </div>
             </div>
             <div class="col-md-2 p-0 d-flex align-items-center">
-                <i *ngIf="schemeHoldingsNPS.value.getNomineeName.length < 3" class="material-icons text-primitive f-20 c-p float-left"
-                (click)="addNewNominee(undefined)">add</i>
-                <i *ngIf="schemeHoldingsNPS.value.getNomineeName.length > 1" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
-                (click)="removeNewNominee(pointIndex)">remove</i>
+                <i *ngIf="schemeHoldingsNPS.value.getNomineeName.length < 3"
+                    class="material-icons text-primitive f-20 c-p float-left" (click)="addNewNominee(undefined)">add</i>
+                <i *ngIf="schemeHoldingsNPS.value.getNomineeName.length > 1"
+                    class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                    (click)="removeNewNominee(pointIndex)">remove</i>
             </div>
 
         </div>
