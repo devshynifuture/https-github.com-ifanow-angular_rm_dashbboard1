@@ -57,7 +57,7 @@
     </div>
 
     <!-- family list -->
-    <div *ngIf="step==2">
+    <div *ngIf="typeOfFamilyMemberAdd=='1' && step==2">
         <h5 class="mb-44 roboto">Great! Who’s in your family, Rahul?</h5>
         <div class="photoFamily">
             <div class="row justify-content-center">
@@ -116,7 +116,7 @@
 
     </div>
     <!-- family list name -->
-    <div *ngIf="step==3">
+    <div *ngIf="typeOfFamilyMemberAdd=='1' && step==3">
         <h5 class="mb-44 roboto">Thanks, just a bit more info and we’re done.</h5>
 
         <div class="dateFamilyMember">
@@ -130,97 +130,101 @@
                     <h6 class="f-16 mb-4">Date of birth</h6>
                 </div>
             </div>
-
-            <div class="row mbottom-30">
-                <div class="col-md-2 pr-0 d-flex align-items-center justify-content-end">
-                    <h5 class="m-0 text-right">You</h5>
-                </div>
-                <div class="col-md-5">
-                    <mat-form-field>
-                        <input matInput class="form-control">
-                    </mat-form-field>
-                </div>
-                <div class="col-md-3">
-                    <mat-form-field class="ba-date">
-                        <input matInput class="form-control" [matDatepicker]="picker">
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
+            <div [formGroup]="createFamily">
+                <div [formGroup]="singleMember" *ngFor="let singleMember of getFamilyListList.controls;index as i"
+                    class="row mbottom-30">
+                    <div class="col-md-2 pr-0 d-flex align-items-center justify-content-end">
+                        <h5 class="m-0 text-right">{{familyMemberNameList[i]}}</h5>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <input formControlName="name" matInput class="form-control">
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field class="ba-date">
+                            <input matInput formControlName="date" (click)="picker.open" class="form-control"
+                                [matDatepicker]="picker">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
                 </div>
             </div>
-
         </div>
 
     </div>
     <!-- family list table -->
-
-    <!-- <div class="row">
-        <div class="col-md-8 p-0">
-            <h5 class=" roboto">How would you like to add the family member? </h5>
-            <mat-form-field>
-                <input type="text" class="form-control" matInput>
-            </mat-form-field>
+    <div *ngIf="typeOfFamilyMemberAdd=='2' && step==2">
+        <div class="row">
+            <div class="col-md-8 p-0">
+                <h5 class=" roboto">How would you like to add the family member? </h5>
+                <mat-form-field>
+                    <input type="text" class="form-control" matInput>
+                </mat-form-field>
+            </div>
         </div>
-    </div> -->
 
 
-    <!-- <p class="f-16 mt-120 text-primitive">
-        Based on your profile, we believe, the following members could be part of your family...
-    </p> -->
+        <p class="f-16 mt-120 text-primitive">
+            Based on your profile, we believe, the following members could be part of your family...
+        </p>
 
 
-    <!-- <div class="row">
-        <div class="col-md-12 mamberDetailsTable pl-0">
-            <table mat-table [dataSource]="dataSource" id="table-low" class=" ">
+        <div class="row">
+            <div class="col-md-12 mamberDetailsTable pl-0">
+                <table mat-table [dataSource]="dataSource" id="table-low" class=" ">
 
-                <ng-container matColumnDef="details">
-                    <th mat-header-cell class="br" *matHeaderCellDef> Member details </th>
-                    <td mat-cell class="br" *matCellDef="let element"> {{element.details}} </td>
-                </ng-container>
-
-                 
-                <ng-container matColumnDef="status">
-                    <th mat-header-cell class="br" *matHeaderCellDef> Tax status </th>
-                    <td mat-cell class="br" *matCellDef="let element"> {{element.status}} </td>
-                </ng-container>
-
-             
-                <ng-container matColumnDef="pan">
-                    <th mat-header-cell class="br" *matHeaderCellDef> PAN </th>
-                    <td mat-cell class="br" *matCellDef="let element"> {{element.pan}} </td>
-                </ng-container>
-
-                 
-                <ng-container matColumnDef="relation">
-                    <th mat-header-cell class="br" *matHeaderCellDef> Relation </th>
-                    <td mat-cell class="br" *matCellDef="let element"> {{element.relation}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="gender">
-                    <th mat-header-cell class="br" *matHeaderCellDef> Gender </th>
-                    <td mat-cell class="br" *matCellDef="let element"> {{element.gender}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="add">
-                    <th mat-header-cell class="br" *matHeaderCellDef> Add </th>
-                    <td mat-cell class="text-primary br" *matCellDef="let element"> {{element.add}} </td>
-                </ng-container>
+                    <ng-container matColumnDef="details">
+                        <th mat-header-cell class="br" *matHeaderCellDef> Member details </th>
+                        <td mat-cell class="br" *matCellDef="let element"> {{element.details}} </td>
+                    </ng-container>
 
 
-                <ng-container matColumnDef="remove">
-                    <th mat-header-cell class="br" *matHeaderCellDef> Remove </th>
-                    <td mat-cell class="br text-center" *matCellDef="let element">
-                        <img src="/assets/images/svg/cancel-icon.svg">
-                    </td>
-                </ng-container>
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell class="br" *matHeaderCellDef> Tax status </th>
+                        <td mat-cell class="br" *matCellDef="let element"> {{element.status}} </td>
+                    </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
 
+                    <ng-container matColumnDef="pan">
+                        <th mat-header-cell class="br" *matHeaderCellDef> PAN </th>
+                        <td mat-cell class="br" *matCellDef="let element"> {{element.pan}} </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="relation">
+                        <th mat-header-cell class="br" *matHeaderCellDef> Relation </th>
+                        <td mat-cell class="br" *matCellDef="let element"> {{element.relation}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="gender">
+                        <th mat-header-cell class="br" *matHeaderCellDef> Gender </th>
+                        <td mat-cell class="br" *matCellDef="let element"> {{element.gender}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="add">
+                        <th mat-header-cell class="br" *matHeaderCellDef> Add </th>
+                        <td mat-cell class="text-primary br" *matCellDef="let element"> {{element.add}} </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="remove">
+                        <th mat-header-cell class="br" *matHeaderCellDef> Remove </th>
+                        <td mat-cell class="br text-center" *matCellDef="let element">
+                            <img src="/assets/images/svg/cancel-icon.svg">
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+            </div>
         </div>
-    </div> -->
-
+    </div>
 
     <!-- family member family details -->
 
@@ -344,9 +348,11 @@
                 <button class="btn-bottom br-0 text-inherit" *ngIf="step==1 && typeOfFamilyMemberAdd=='2'"
                     (click)="next()" mat-button>Proceed
                 </button>
-                <button class="btn-bottom br-0 text-inherit" *ngIf="step==2" (click)="next()" mat-button>Next
+                <button class="btn-bottom br-0 text-inherit" *ngIf="step==2" (click)="createFamilyMember()"
+                    mat-button>Next
                 </button>
-                <button class="btn-bottom br-0 text-inherit" *ngIf="step==3" (click)="save()" mat-button>Save
+                <button class="btn-bottom br-0 text-inherit" *ngIf="step==3" (click)="saveFamilyMembers()"
+                    mat-button>Save
                 </button>
             </div>
         </div>

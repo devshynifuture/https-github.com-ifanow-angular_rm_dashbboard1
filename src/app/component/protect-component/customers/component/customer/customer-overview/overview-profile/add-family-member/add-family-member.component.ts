@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormBuilder, FormArray, Validators } from '@angular/forms';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-add-family-member',
@@ -11,34 +13,7 @@ export class AddFamilyMemberComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   typeOfFamilyMemberAdd;
   step = 1;
-  constructor(private subInjectService: SubscriptionInject) { }
-
-  ngOnInit() {
-  }
-  addFamilyType(value) {
-    this.typeOfFamilyMemberAdd = value;
-  }
-  close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
-  }
-  next() {
-    this.step++;
-  }
-  save() {
-    this.close();
-  }
-  selectFamilyMembers(selectedFamilyMember) {
-    (selectedFamilyMember.selected) ? selectedFamilyMember.selected = false : selectedFamilyMember.selected = true;
-  }
-  remove(selectedMember) {
-    (selectedMember.count > 0) ? selectedMember.count-- : '';
-  }
-  add(selectedMember) {
-    selectedMember.count++;
-  }
-  selectFamilyMembersCount() {
-    this.next();
-  }
+  createFamily: any;
   familyMemberList = {
     'firstRow': [
       { name: 'You', imgUrl: '/assets/images/svg/man-profile.svg', selected: false },
@@ -53,6 +28,76 @@ export class AddFamilyMemberComponent implements OnInit {
       { name: 'Daughter', imgUrl: '/assets/images/svg/daughter-profile.svg', selected: false, count: 0 },
       { name: 'Others', imgUrl: '/assets/images/svg/man-profile.svg', selected: false, count: 0 }
     ]
+  }
+  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder) { }
+
+  ngOnInit() {
+    this.createFamily = this.fb.group({
+      familyMemberList: new FormArray([])
+    })
+  }
+  get getFamilyForm() { return this.createFamily.controls; }
+  get getFamilyListList() { return this.getFamilyForm.familyMemberList as FormArray; }
+  addFamilyType(value) {
+    this.typeOfFamilyMemberAdd = value;
+  }
+  close() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
+  next() {
+    this.step++;
+  }
+  saveFamilyMembers() {
+    if (this.createFamily.invalid) {
+      this.createFamily.markAllAsTouched();
+    }
+    else {
+      this.close();
+    }
+  }
+  selectFamilyMembers(selectedFamilyMember) {
+    (selectedFamilyMember.selected) ? selectedFamilyMember.selected = false : selectedFamilyMember.selected = true;
+  }
+  remove(selectedMember) {
+    (selectedMember.count > 0) ? selectedMember.count-- : '';
+  }
+  add(selectedMember) {
+    selectedMember.count++;
+  }
+  selectFamilyMembersCount() {
+    this.next();
+  }
+  familyMemberNameList = [];
+  createFamilyMember() {
+    this.familyMemberList.firstRow.forEach(element => {
+      if (element.selected) {
+        this.getFamilyListList.push(
+          this.fb.group({
+            name: [, [Validators.required]],
+            date: [, [Validators.required]]
+          }))
+        this.familyMemberNameList.push(element.name)
+      }
+    })
+    this.familyMemberList.secondRow.forEach(element => {
+      if (element.selected) {
+        this.getFamilyListList.push(this.fb.group({
+          name: [, [Validators.required]],
+          date: [, [Validators.required]]
+        }))
+        this.familyMemberNameList.push(element.name)
+      }
+    })
+    this.familyMemberList.thirdRow.forEach(element => {
+      if (element.selected) {
+        this.getFamilyListList.push(this.fb.group({
+          name: [, [Validators.required]],
+          date: [, [Validators.required]]
+        }))
+        this.familyMemberNameList.push(element.name)
+      }
+    })
+    this.step++;
   }
 }
 
