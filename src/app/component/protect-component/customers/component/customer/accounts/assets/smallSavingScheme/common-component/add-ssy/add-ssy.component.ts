@@ -354,7 +354,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ssySchemeForm}
         }
 
         let adviceObj = {
-          advice_id: this.advisorId,
+          // advice_id: this.advisorId,
           adviceStatusId: 5,
           stringObject: obj,
           adviceDescription: "manualAssetDescription"

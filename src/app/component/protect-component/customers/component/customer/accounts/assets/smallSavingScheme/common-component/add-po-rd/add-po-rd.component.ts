@@ -355,7 +355,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.PORDForm}
       } else {
         if (this.flag == 'advicePORD') {
           let adviceObj = {
-            advice_id: this.advisorId,
+            // advice_id: this.advisorId,
             adviceStatusId: 5,
             stringObject: obj,
             adviceDescription: "manualAssetDescription"

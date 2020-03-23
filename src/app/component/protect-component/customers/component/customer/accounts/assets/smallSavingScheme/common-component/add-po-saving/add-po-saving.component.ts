@@ -338,7 +338,7 @@ addNewNominee(data) {
         });
         obj.nomineeList= this.poSavingForm.value.getNomineeName;
         let adviceObj = {
-          advice_id: this.advisorId,
+          // advice_id: this.advisorId,
           adviceStatusId: 5,
           stringObject: obj,
           adviceDescription: "manualAssetDescription"

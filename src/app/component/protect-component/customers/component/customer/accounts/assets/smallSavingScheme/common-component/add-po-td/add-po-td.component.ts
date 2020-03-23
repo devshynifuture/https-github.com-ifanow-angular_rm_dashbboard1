@@ -308,7 +308,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.POTDForm}
     }
     else {
         let obj = {
-          "advice_id": this.advisorId,
+          "advisorId": this.advisorId,
           "clientId": this.clientId,
           "familyMemberId": this.familyMemberId,
           "ownerList": this.POTDForm.value.getCoOwnerName,
@@ -334,7 +334,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.POTDForm}
         obj.nomineeList= this.POTDForm.value.getNomineeName;
 
         let adviceObj = {
-          advice_id: this.advisorId,
+          // advice_id: this.advisorId,
           adviceStatusId: 5,
           stringObject: obj,
           adviceDescription: "manualAssetDescription"

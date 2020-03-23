@@ -72,7 +72,7 @@
                     </th>
                     <td mat-cell *matCellDef="let element" class="br w-15 ">
                         <div class="bar">
-                            {{(element.typeId == 0)?'Land':(element.typeId == 1)?'Residential':(element.typeId == 2)?'Secondary':(element.typeId == 3)?'Commercial':''}}
+                            {{(element.typeId == 0)?'Self Occupied property':(element.typeId == 1)?'Let out property':(element.typeId == 2)?'Commercial, Agricultural land':(element.typeId == 3)?'Non agricultural land':''}}
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br text-right w-15 "> </td>

@@ -98,8 +98,27 @@
         </div>
     </div>
     <div class="row pt-40">
+        <div class="col-md-5 p-0 text-right">
+            <h5 class="m-0 pt-8">Voluntary Contribution</h5>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group mb-0 iconRupess">
+                <mat-form-field>
+                    <input autocomplete="off" matInput #voluntaryContribution type="text" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess"
+                        formControlName="voluntaryContribution">
+                    <mat-error class="f-12"
+                        [ngClass]="{'v-h':!(isVoluntaryContribution && getFormControl().voluntaryContribution.invalid || getFormControl().voluntaryContribution.touched && getFormControl().voluntaryContribution.invalid)}">
+                        This field is required
+                    </mat-error>
+                    <mat-hint align="end" class="f-12">{{employerContry.value.length}}/10</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Current EPF balance</h5>
+            <h5 class="m-0 pt-8">EPF balance</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
@@ -167,7 +186,7 @@
     <div *ngIf="showHide == true">
         <div class="row pt-40">
             <div class="col-md-5 justify-content-end d-flex align-items-end pr-0 text-right">
-                <h5 class="m-0 ">Maturity year</h5>
+                <h5 class="m-0 ">Retirement year</h5>
             </div>
             <div class="col-md-3">
                 <div class="form-group mb-0">
@@ -182,7 +201,7 @@
         </div>
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">EPF number</h5>
+                <h5 class="m-0 pt-8">Member Id</h5>
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
@@ -198,7 +217,7 @@
         </div>
         <div class="row pt-36">
             <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Bank account number</h5>
+                <h5 class="m-0 pt-8">Linked bank account</h5>
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">

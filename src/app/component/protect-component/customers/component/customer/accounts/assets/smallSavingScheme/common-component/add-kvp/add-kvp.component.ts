@@ -313,7 +313,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.KVPFormScheme}
       obj.nomineeList= this.KVPFormScheme.value.getNomineeName;
       
       let adviceObj = {
-        advice_id: this.advisorId,
+        // advice_id: this.advisorId,
         adviceStatusId: 5,
         stringObject: obj,
         adviceDescription: "manualAssetDescription"

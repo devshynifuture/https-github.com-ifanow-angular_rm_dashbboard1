@@ -219,7 +219,7 @@
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
                 </div>
-                <div class="pr-0" [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
+                <div [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
@@ -252,10 +252,12 @@
                     </div>
                 </div>
                 <div class="col-md-2 p-0 d-flex align-items-center">
-                    <i *ngIf="superannuation.value.getNomineeName.length < 3" class="material-icons text-primitive f-20 c-p float-left"
-                    (click)="addNewNominee(undefined)">add</i>
-                <i *ngIf="superannuation.value.getNomineeName.length > 1" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
-                    (click)="removeNewNominee(pointIndex)">remove</i>
+                    <i *ngIf="superannuation.value.getNomineeName.length < 3"
+                        class="material-icons text-primitive f-20 c-p float-left"
+                        (click)="addNewNominee(undefined)">add</i>
+                    <i *ngIf="superannuation.value.getNomineeName.length > 1"
+                        class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                        (click)="removeNewNominee(pointIndex)">remove</i>
                 </div>
 
             </div>
