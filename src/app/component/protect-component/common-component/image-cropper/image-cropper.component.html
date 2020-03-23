@@ -1,0 +1,18 @@
+<image-cropper
+    [imageChangedEvent]="imageChangedEvent"
+    [maintainAspectRatio]="false"
+    [containWithinAspectRatio]="containWithinAspectRatio"
+    [aspectRatio]="4 / 3"
+    [resizeToWidth]="256"
+    [cropperMinWidth]="128"
+    [cropperMinHeight]="64"
+    [onlyScaleDown]="true"
+    [roundCropper]="false"
+    [canvasRotation]="canvasRotation"
+    [transform]="transform"
+    [alignImage]="'left'"
+    format="png"
+    (imageCropped)="imageCropped($event)"
+    (imageLoaded)="imageLoaded()"
+    (loadImageFailed)="loadImageFailed()"
+></image-cropper>

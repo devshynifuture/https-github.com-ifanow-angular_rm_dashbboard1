@@ -19,6 +19,7 @@ import { ModelPortfolioComponent } from './setting-backup/setting-backup/model-p
 import { SettingBackupModule } from './setting-backup/setting-backup/setting-backup.module';
 import { SettingPreferenceComponent } from './setting-preference/setting-preference.component';
 import { SettingActivityComponent } from './setting-activity/setting-activity.component';
+import { CommonComponentModule } from '../../common-component/common-component.module';
 
 
 @NgModule({
@@ -33,8 +34,8 @@ import { SettingActivityComponent } from './setting-activity/setting-activity.co
     SettingRoutingModule,
     MaterialModule,
     SettingEntryModule,
-    SettingBackupModule
-
+    SettingBackupModule,
+    CommonComponentModule,
   ]
 })
 export class SettingModule { }
