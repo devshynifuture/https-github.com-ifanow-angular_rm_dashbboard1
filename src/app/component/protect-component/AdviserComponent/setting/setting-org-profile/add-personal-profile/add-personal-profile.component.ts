@@ -101,10 +101,14 @@ export class AddPersonalProfileComponent implements OnInit {
   }
 updatePersonalProfile(){
   let obj = {
-    name: this.personalProfile.controls.name.value,
-      email:this.personalProfile.controls.emailId.value ,
+    advisorId:this.advisorId,
+      name: this.personalProfile.controls.name.value,
+      emailId:this.personalProfile.controls.emailId.value ,
       userName:this.personalProfile.controls.userName.value ,
       mobileNo:this.personalProfile.controls.mobileNo.value ,
+      roleId : 0,                                                                               
+      profilePic :null
+
   }
   this.orgSetting.editPersonalProfile(obj).subscribe(
     data => this.editPersonalProfileRes(data),

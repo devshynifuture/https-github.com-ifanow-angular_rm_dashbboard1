@@ -30,8 +30,7 @@ import { OrgProfileComponent } from './setting-org-profile/add-personal-profile/
     HierachyComponent, ArnRiaDetailsComponent, MfRtaDetailsComponent, SchemeBasketComponent,
     ModelPortfolioComponent,
     SettingPreferenceComponent,
-    SettingActivityComponent,
-    OrgProfileComponent],
+    SettingActivityComponent,],
   imports: [
     CommonModule,
     SettingRoutingModule,
