@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { OrgSettingServiceService } from '../../../org-setting-service.service';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-upload.service';
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
@@ -32,7 +31,6 @@ export class OrgProfileComponent implements OnInit {
     public utils: UtilService, 
     private event: EventService,
     private fb: FormBuilder, 
-    private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject,
     private settingsService: SettingsService,
   ) {
@@ -40,11 +38,25 @@ export class OrgProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getOrgProfiles();
     this.getdataForm('');
   }
 
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+  }
+
+  getOrgProfiles() {
+    let obj = {
+      advisorId:this.advisorId
+    }
+    this.settingsService.getOrgProfile(obj).subscribe(
+      data => {
+        this.profileImg = data.logoUrl;
+        this.reportImg = data.reportLogoUrl;
+      },
+      err => this.event.openSnackBar(err, "Dismiss")
+    );
   }
 
   getdataForm(data) {
@@ -78,13 +90,13 @@ export class OrgProfileComponent implements OnInit {
       // zipCode:this.orgProfile.controls.value ,
       gstTreatmentId:this.orgProfile.controls.gstTreatment.value ,
       gstin: this.orgProfile.controls.gstNumber.value,
-      logoUrl: null,
-      cloudinary_json: null,
-      reportLogoUrl: this.orgProfile.controls.value,
-      report_cloudinary_json: null
     }
-    this.orgSetting.editPersonalProfile(obj).subscribe(
-      data => this.editOrgProfileRes(data),
+    this.settingsService.editPersonalProfile(obj).subscribe(
+      data => {
+        this.editOrgProfileRes(data)
+        this.anyDetailsChanged = true;
+        this.switchToTab(++this.selectedTab);
+      },
       err => this.event.openSnackBar(err, "Dismiss")
     );
   }
@@ -132,22 +144,25 @@ export class OrgProfileComponent implements OnInit {
     if(web_or_report == 'web') {
       const jsonDataObj = {
         id: this.advisorId,
-        profilePic: cloudinaryResponseJson.url
+        logoUrl: cloudinaryResponseJson.url,
+        cloudinary_json: cloudinaryResponseJson
       }
       this.settingsService.uploadProfilePhoto(jsonDataObj).subscribe((res) => {
         this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
         this.anyDetailsChanged = true;
-        this.profileImg = jsonDataObj.profilePic;
+        this.profileImg = jsonDataObj.logoUrl;
+        this.switchToTab(++this.selectedTab);
       });
     } else {
         const jsonDataObj = {
           id: this.advisorId,
-          profilePic: cloudinaryResponseJson.url
+          reportLogoUrl: cloudinaryResponseJson.url,
+          report_cloudinary_json: cloudinaryResponseJson
         }
         this.settingsService.uploadProfilePhoto(jsonDataObj).subscribe((res) => {
           this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
-          this.reportImg = jsonDataObj.profilePic;
-          this.Close(true); // close the sidebar since it's the last tab
+          this.reportImg = jsonDataObj.reportLogoUrl;
+          this.switchToTab(++this.selectedTab);
         });
     }
   }
@@ -160,7 +175,7 @@ export class OrgProfileComponent implements OnInit {
   saveCurrentPage(){
     switch (this.selectedTab) {
       case 0: // Organizational profile details
-        
+        this.updateOrgProfile();
         break;
       case 1: // Organizational profile logo
         this.saveImageInCloud('organizational_profile_logo');
@@ -180,5 +195,4 @@ export class OrgProfileComponent implements OnInit {
     this.imageUploadEvent = '';
     this.finalImage = '';
   }
-
 }
