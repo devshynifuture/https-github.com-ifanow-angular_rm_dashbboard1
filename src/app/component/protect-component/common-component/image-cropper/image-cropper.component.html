@@ -1,0 +1,16 @@
+<div class="cropper-model">
+    <image-cropper
+        [imageChangedEvent]="imageChangedEvent"
+        [maintainAspectRatio]="maintainAspectRatio"
+        [aspectRatio]="aspectRatio"
+        [resizeToWidth]="256"
+        [cropperMinWidth]="128"
+        [imageURL]="imageURL"
+        [onlyScaleDown]="true"
+        [roundCropper]="false"
+        [transform]="transform"
+        [alignImage]="'center'"
+        format="png"
+        (imageCropped)="imageCropped($event)"
+    ></image-cropper>
+</div>

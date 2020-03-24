@@ -9,7 +9,7 @@
     </div>
 </div>
 
-<div class="pt-90 pl-40 pr-40" id="ui-add-personal-profile">
+<div [formGroup]="personalProfile"  class="pt-90 pl-40 pr-40" id="ui-add-personal-profile">
     <mat-tab-group animationDuration="0ms">
         <mat-tab label="Profile">
             <div class="row pt-40">
@@ -19,7 +19,10 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput class="form-control">
+                            <input matInput formControlName="name" class="form-control">
+                            <mat-error class="f-12 pt-4">
+                                This field is required
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -31,7 +34,10 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput class="form-control">
+                            <input matInput formControlName="emailId" class="form-control">
+                            <mat-error class="f-12 pt-4">
+                                This field is required
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -43,7 +49,10 @@
                 <div class="col-md-3">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput class="form-control">
+                            <input matInput formControlName="mobileNo" class="form-control">
+                            <mat-error class="f-12 pt-4">
+                                This field is required
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -55,7 +64,7 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput class="form-control">
+                            <input matInput formControlName="userName" class="form-control">
                         </mat-form-field>
                     </div>
                 </div>
@@ -68,12 +77,23 @@
                     <h5 class="m-0 pt-8">Your profile pic</h5>
                 </div>
                 <div class="col-md-5">
+                    <div class="image-cropper">
+                        <app-image-cropper [imageURL]="imgURL" [imageChangedEvent]="imageUploadEvent" (croppedImage)="showCroppedImage($event)"></app-image-cropper>
+                    </div>
+                    <div class="final-image">
+                    </div>
                     <div class="profile-img">
-                        <img src="/assets/images/icons.png" class="w-100">
+                        <img [src]="finalImage" alt="cropped Image" class="w-100">
                     </div>
                     <div class="row pt-24">
                         <div class="col-md-5 pl-0">
-                            <button mat-stroked-button class="btn-primary">UPLOAD LOGO</button>
+                            <button mat-stroked-button class="btn-primary" (click)="chooseImage.click()">CHOOSE ANOTHER PHOTO</button>
+                            <input type="file" #chooseImage (change)="uploadImageForCorping($event)" hidden>
+                        </div>
+                    </div>
+                    <div class="row pt-24">
+                        <div class="col-md-5 pl-0">
+                            <button mat-stroked-button class="btn-primary" (click)="saveImage()">UPLOAD LOGO</button>
                         </div>
                         <div class="col-md-4">
                             <button mat-stroked-button class="text-primary">CANCEL</button>

@@ -10,10 +10,13 @@ import { ValidatorType } from 'src/app/services/util.service';
 })
 export class ClientBankComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject) { }
+  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject) {
+  }
+
   bankForm;
   validatorType = ValidatorType;
   @Output() tabChange = new EventEmitter();
+
   ngOnInit() {
     this.bankForm = this.fb.group({
       ifscCode: [, [Validators.required]],
