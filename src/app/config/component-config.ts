@@ -442,11 +442,6 @@ export const appConfig = {
   BACKOFFICE_PUT_FREEZE_FOLIO_DATA: 'backoffice/aum/freeze/folio',
   BACKOFFICE_PUT_UNFREEZE_FOLIO_DATA: 'backoffice/aum/unfreeze/folio',
   BACKOFFICE_GET_DUPLICATE_FOLIO_DATA: 'backoffice/duplicate/transaction/list/get',
-  ///org setting ////
-  GET_PERSONAL_PROFILE: 'setting/profile/personal/details/get',
-  GET_ORG_PROFILE: 'setting/profile/organisation/details/get',
-  EDIT_PERSONAL_PROFILE: 'setting/profile/personal/profile-photo/update',
-  EDIT_ORG_PROFILE: 'etting/profile/organisation/update',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
@@ -486,6 +481,11 @@ export const appConfig = {
   ////////////////////////////// settings////////////////////////////////////////////
   GET_PERSONAL_PROFILE_DETAILS: 'setting/profile/personal/details/get',
   UPLOAD_PERSONAL_PROFILE_PHOTO: 'setting/profile/personal/profile-photo/update',
+  ///org setting ////
+  GET_PERSONAL_PROFILE: 'setting/profile/personal/details/get',
+  GET_ORG_PROFILE: 'setting/profile/organisation/details/get',
+  EDIT_PERSONAL_PROFILE: 'setting/profile/personal/profile-photo/update',
+  EDIT_ORG_PROFILE: 'etting/profile/organisation/update',
   ////////////////////////////// settings////////////////////////////////////////////
 
 };

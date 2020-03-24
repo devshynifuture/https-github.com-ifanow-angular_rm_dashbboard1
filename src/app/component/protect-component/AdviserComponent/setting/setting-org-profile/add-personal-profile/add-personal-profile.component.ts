@@ -8,7 +8,6 @@ import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { EventService } from 'src/app/Data-service/event.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
-import { OrgSettingServiceService } from '../../org-setting-service.service';
 
 @Component({
   selector: 'app-add-personal-profile',
@@ -19,14 +18,11 @@ export class AddPersonalProfileComponent implements OnInit {
   imgURL: string = ''
   finalImage: any;
   advisorId: any;
-  uploadedImageURL: any;
-  uploadedImage: string;
-  selected: number;
-  barButtonOptions: any;
   imageUploadEvent: any;
   showCropper: boolean = false;
   cropImage: boolean = false;
   selectedTab:number = 0;
+  anyDetailsChanged:boolean; // check if any details have been updated
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -34,7 +30,6 @@ export class AddPersonalProfileComponent implements OnInit {
     private settingsService: SettingsService,
     private event: EventService,
     private fb: FormBuilder,
-    private orgSetting: OrgSettingServiceService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -72,13 +67,15 @@ export class AddPersonalProfileComponent implements OnInit {
               profilePic: responseObject.url
             }
             this.settingsService.uploadProfilePhoto(jsonDataObj).subscribe((res) => {
+              this.anyDetailsChanged = true;
+              this.imgURL = jsonDataObj.profilePic;
               this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
-              this.Close(true);
+              this.Close(this.anyDetailsChanged);
             });
           }
         });
     } else {
-      this.Close(false);
+      this.Close(this.anyDetailsChanged);
     }
   }
 
@@ -93,20 +90,16 @@ export class AddPersonalProfileComponent implements OnInit {
   // save the changes of current page only
   saveCurrentPage(){
     // selected tab 1 - profile image
+    // 2 - profile details
     if (this.selectedTab == 1) {
       this.saveImage();
     } else {
-      
+      this.updatePersonalProfile();
     }
   }
 
-  // record the tab he's currently present in
-  tabChange(event) {
-    this.resetPageVariables();
-    this.selectedTab = event.index;
-  }
-
   // reset the variables when user changes tabs
+  // make sure to reset to latest updates
   resetPageVariables(){
     this.showCropper = false;
     this.cropImage = false;
@@ -127,15 +120,21 @@ export class AddPersonalProfileComponent implements OnInit {
     return this.personalProfile.controls;
   }
 
+
   updatePersonalProfile() {
     let obj = {
-      name: this.personalProfile.controls.name.value,
-      email: this.personalProfile.controls.emailId.value,
-      userName: this.personalProfile.controls.userName.value,
-      mobileNo: this.personalProfile.controls.mobileNo.value,
+      advisorId:this.advisorId,
+        name: this.personalProfile.controls.name.value,
+        emailId:this.personalProfile.controls.emailId.value ,
+        userName:this.personalProfile.controls.userName.value ,
+        mobileNo:this.personalProfile.controls.mobileNo.value ,
+        roleId : 0,                                                                               
     }
-    this.orgSetting.editPersonalProfile(obj).subscribe(
-      data => this.editPersonalProfileRes(data),
+    this.settingsService.editPersonalProfile(obj).subscribe(
+      data => {
+        this.editPersonalProfileRes(data)
+        this.anyDetailsChanged = true;
+      },
       err => this.event.openSnackBar(err, "Dismiss")
     );
   }

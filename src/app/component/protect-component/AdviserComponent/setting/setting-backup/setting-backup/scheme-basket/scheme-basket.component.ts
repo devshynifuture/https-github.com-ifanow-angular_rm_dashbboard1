@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { SettingSchemeDetailsComponent } from '../../../setting-entry/setting-scheme-details/setting-scheme-details.component';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-scheme-basket',
@@ -8,9 +11,37 @@ import { Component, OnInit } from '@angular/core';
 export class SchemeBasketComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'ldate', 'rdate', 'status', 'icons'];
   dataSource = ELEMENT_DATA;
-  constructor() { }
+  constructor(private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
+  }
+
+
+
+  openSchemeDetails(value, data) {
+    let popupHeaderText = !!data ? 'Edit Fixed deposit' : 'Add Fixed deposit';
+    const fragmentData = {
+      flag: value,
+      data,
+      id: 1,
+      state: 'open50',
+      componentName: SettingSchemeDetailsComponent,
+      popupHeaderText: popupHeaderText,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            // this.getFixedDepositList();
+            // console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
+          rightSideDataSub.unsubscribe();
+        }
+
+      }
+    );
   }
 
 }
