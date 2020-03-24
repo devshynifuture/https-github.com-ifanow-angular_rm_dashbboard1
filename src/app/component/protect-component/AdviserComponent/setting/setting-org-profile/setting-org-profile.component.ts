@@ -3,9 +3,9 @@ import { AddPersonalProfileComponent } from './add-personal-profile/add-personal
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
-import { OrgSettingServiceService } from '../org-setting-service.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { OrgProfileComponent } from './add-personal-profile/org-profile/org-profile.component';
+import { SettingsService } from '../settings.service';
 
 @Component({
   selector: 'app-setting-org-profile',
@@ -18,19 +18,23 @@ export class SettingOrgProfileComponent implements OnInit {
   userList: any;
   orgDetails: any;
 
-  constructor(private eventService: EventService,
-    private utilService: UtilService, private subInjectService: SubscriptionInject, private orgSetting: OrgSettingServiceService, ) { }
+  constructor(
+    private eventService: EventService,
+    private subInjectService: SubscriptionInject, 
+    private settingsService: SettingsService, 
+  ) {
+    this.advisorId = AuthService.getAdvisorId()
+  }
 
   ngOnInit() {
     this.getPersonalProfiles()
     this.orgProfile =false
-    this.advisorId = AuthService.getAdvisorId()
   }
   getPersonalProfiles() {
     let obj = {
-      id:414
+      id:this.advisorId
     }
-    this.orgSetting.getPersonalProfile(obj).subscribe(
+    this.settingsService.getPersonalProfile(obj).subscribe(
       data => this.getPersonalProfileRes(data),
       err => this.eventService.openSnackBar(err, "Dismiss")
     );
@@ -41,9 +45,9 @@ export class SettingOrgProfileComponent implements OnInit {
   }
   getOrgProfiles() {
     let obj = {
-      advisorId:414
+      advisorId:this.advisorId
     }
-    this.orgSetting.getOrgProfile(obj).subscribe(
+    this.settingsService.getOrgProfile(obj).subscribe(
       data => this.getOrgProfileRes(data),
       err => this.eventService.openSnackBar(err, "Dismiss")
     );

@@ -9,6 +9,8 @@
     </div>
 </div>
 
+
+
 <div class="row pt-125">
     <div class="col-md-4 pr-0">
         <h5 class="m-0 text-right pt-8">ARN/RIA type</h5>
@@ -63,16 +65,34 @@
     <div class="col-md-4 pr-0">
         <h5 class="m-0 text-right pt-8">Commencement date</h5>
     </div>
-    <div class="col-md-3">
-
+    <div class="col-md-3 pr-0">
+        <div class="form-group mb-0">
+            <mat-form-field class="ba-date">
+                <input class="form-control br-0 b-0" matInput [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error class="f-12 pt-4">
+                    This field is required
+                </mat-error>
+            </mat-form-field>
+        </div>
     </div>
 </div>
 <div class="row pt-40">
     <div class="col-md-4 pr-0">
         <h5 class="m-0 text-right pt-8">Renewal date</h5>
     </div>
-    <div class="col-md-3">
-
+    <div class="col-md-3 pr-0">
+        <div class="form-group mb-0">
+            <mat-form-field class="ba-date">
+                <input class="form-control br-0 b-0" matInput [matDatepicker]="picker1">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+                <mat-error class="f-12 pt-4">
+                    This field is required
+                </mat-error>
+            </mat-form-field>
+        </div>
     </div>
 </div>
 <div class="row pt-40">
@@ -151,7 +171,7 @@
         </div>
     </div>
 </div>
-<div class="bottom-fixed wrapper-12">
+<div class="bottom-fixed-50 wrapper-12">
     <div class="row">
         <div class="col-md-12 right text-right">
             <button class="btn-bottom br-0 text-inherit" mat-button>Save</button>

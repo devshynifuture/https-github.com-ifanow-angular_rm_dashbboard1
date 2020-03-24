@@ -25,7 +25,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       invCategory: [, [Validators.required]],
       invTaxStatus: [, [Validators.required]],
       fullName: [, [Validators.required]],
-      email: [],
+      email: [, [Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
       mobileNo: new FormArray([]),
       pan: [],
       username: [, [Validators.required]],
