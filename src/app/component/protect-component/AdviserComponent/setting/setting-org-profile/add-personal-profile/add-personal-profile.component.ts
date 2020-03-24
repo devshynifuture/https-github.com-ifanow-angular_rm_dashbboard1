@@ -17,13 +17,13 @@ import { OrgSettingServiceService } from '../../org-setting-service.service';
 })
 export class AddPersonalProfileComponent implements OnInit {
   imgURL: string = ''
-  imageUploadEvent: any = '';
   finalImage: any;
   advisorId: any;
   uploadedImageURL: any;
   uploadedImage: string;
   selected: number;
   barButtonOptions: any;
+  imageUploadEvent: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -42,33 +42,34 @@ export class AddPersonalProfileComponent implements OnInit {
 
   ngOnInit() {
     this.getdataForm("")
+    this.getPersonalInfo();
   }
 
-  getProfileImage() {
-    this.settingsService.getProfilePhoto({});
+  getPersonalInfo() {
+    this.settingsService.getProfileDetails({id: this.advisorId}).subscribe((res)=>{
+      console.log('sagar', res);
+    });
   }
 
-  uploadImageForCorping() {
-    // const files = [this.imageData];
-    const tags = this.advisorId + ',biller_profile_logo,';
-    const file = this.utilService.convertB64toImageFile(this.finalImage);
-    PhotoCloudinaryUploadService.uploadFileToCloudinary([file], 'biller_profile_logo', tags,
-      (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
-        if (status == 200) {
-          const responseObject = JSON.parse(response);
-          this.uploadedImageURL = responseObject.url;
-          this.uploadedImage = JSON.stringify(responseObject);
-          this.saveImage();
-        }
-      });
-
-    this.imageUploadEvent = event;
+  uploadImageForCorping(event) {
+    this.imageUploadEvent = event
   }
 
   saveImage() {
-    this.settingsService.uploadProfilePhoto(this.uploadedImage).subscribe((res)=>{
-      this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
-      this.Close(true);
+    const tags = this.advisorId + ',advisor_profile_logo,';
+    const file = this.utilService.convertB64toImageFile(this.finalImage);
+    PhotoCloudinaryUploadService.uploadFileToCloudinary([file], 'advisor_profile_logo', tags,
+      (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+      if (status == 200) {
+        const responseObject = JSON.parse(response);
+        const jsonDataObj =  {
+          id:this.advisorId, 
+          profilePic : responseObject.url
+        }
+        this.settingsService.uploadProfilePhoto(jsonDataObj).subscribe((res)=>{
+          this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
+        });
+      }
     });
   }
 

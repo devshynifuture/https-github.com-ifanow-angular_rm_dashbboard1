@@ -480,8 +480,8 @@ EDIT_PERSONAL_PROFILE:'',
   ///////////////////////////////Postal////////////////////////////////
 
   ////////////////////////////// settings////////////////////////////////////////////
-  GET_PERSONAL_PROFILE_PHOTO: 'setting/profile/personal/profile-photo/update',
-  UPLOAD_PERSONAL_PROFILE_PHOTO: 'setting/profile/personal/update',
+  GET_PERSONAL_PROFILE_DETAILS: 'setting/profile/personal/details/get',
+  UPLOAD_PERSONAL_PROFILE_PHOTO: 'setting/profile/personal/profile-photo/update',
   ////////////////////////////// settings////////////////////////////////////////////
 
 };

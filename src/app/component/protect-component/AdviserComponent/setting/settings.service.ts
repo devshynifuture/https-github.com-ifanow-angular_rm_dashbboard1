@@ -11,9 +11,9 @@ export class SettingsService {
 
   constructor(private http: HttpService) { }
 
-  getProfilePhoto(data){
-    let httpParams = new HttpParams().set('advisorId', data.advisorId)
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PERSONAL_PROFILE_PHOTO, httpParams)
+  getProfileDetails(data){
+    let httpParams = new HttpParams().set('id', data.id)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PERSONAL_PROFILE_DETAILS, httpParams)
   }
 
   uploadProfilePhoto(data){
