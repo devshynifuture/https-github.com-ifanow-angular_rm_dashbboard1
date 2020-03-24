@@ -1001,7 +1001,7 @@
 
                 #ui-profile-plan {
                   .vertical-menu {
-                    height: 100vh;
+                    height: calc(100vh - 148px);
                     display: block !important;
                     width: 100%;
                     text-align: left;
