@@ -448,6 +448,7 @@ export const appConfig = {
   BACKOFFICE_GET_DUPLICATE_DATA_LIST: 'backoffice/duplicate-data/get',
   BACKOFFICE_POST_UNMATCHED_FOLIOS_ADD: 'backoffice/aum/recon/unmatched/folios/add',
   BACKOFFICE_GET_AUM_REPORT_LIST: 'backoffice/aum/reconciliation/report/get',
+  BACKOFFICE_GET_FOLIO_BASED_SEARCH_LIST: 'backoffice/folio/based/on/search/list/get',
 
   ///org setting ////
   GET_PERSONAL_PROFILE: 'setting/profile/personal/details/get',

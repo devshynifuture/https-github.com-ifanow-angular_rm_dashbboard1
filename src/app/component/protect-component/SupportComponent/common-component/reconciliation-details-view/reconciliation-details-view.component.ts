@@ -208,20 +208,28 @@ export class ReconciliationDetailsViewComponent implements OnInit {
           amount: element.amount,
           units: element.unit,
           balanceUnits: element.balanceUnits,
-          actions: ''
-        })
+          actions: '',
+          keep: element.keep,
+          nav: element.nav ? element.nav : null
+        });
       });
       console.log(this.tableData1);
-      this.dataSource1.data = this.tableData1;
+      if (this.data.tableType == 'all-folios') {
+        this.dataSource1.data = this.tableData1;
+      }
+
+      if (this.data.tableType === 'duplicate-folios') {
+        this.dataSource2.data = this.tableData1;
+      }
     }
   }
 
   putAumTransactionKeepOrRemove() {
     let isKeepArray = [];
-    ELEMENT_DATA2.forEach((item, index) => {
+    this.dataSource2.data.forEach((item, index) => {
       isKeepArray.push({
         id: index,
-        isKeep: item.isKeep
+        isKeep: item['keep']
       })
     });
     this.isKeepOrRemoveTransactions = isKeepArray;
@@ -233,8 +241,8 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   }
 
   shouldKeepOrRemove(value, element) {
-    let id = ELEMENT_DATA2.indexOf(element);
-    ELEMENT_DATA2[id].isKeep = (value === 1 ? true : false);
+    let id = this.dataSource2.data.indexOf(element);
+    this.dataSource2.data[id]['keep'] = (value === 1 ? true : false);
   }
 
   dialogClose() {
@@ -270,7 +278,7 @@ interface PeriodicElement2 {
   nav: string;
   units: string;
   action: string;
-  isKeep: boolean;
+  keep: boolean;
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
@@ -279,6 +287,6 @@ const ELEMENT_DATA1: PeriodicElement1[] = [
 ];
 
 const ELEMENT_DATA2: PeriodicElement2[] = [
-  { transactionType: 'SIP', date: '07/01/2019', amount: '5,000.00', nav: '298.43', units: '156.23', action: ' ', isKeep: false },
-  { transactionType: 'Transfer Out Change of Broker', date: '07/01/2019', amount: '5,000.00', nav: '348.34', units: '156.23', action: ' ', isKeep: true },
+  { transactionType: 'SIP', date: '07/01/2019', amount: '5,000.00', nav: '298.43', units: '156.23', action: ' ', keep: false },
+  { transactionType: 'Transfer Out Change of Broker', date: '07/01/2019', amount: '5,000.00', nav: '348.34', units: '156.23', action: ' ', keep: true },
 ];

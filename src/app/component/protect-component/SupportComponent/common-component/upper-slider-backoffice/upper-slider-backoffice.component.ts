@@ -203,7 +203,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
         this.dataSource2.data = arrValue;
       }, err => {
         console.error(err);
-      })
+      });
   }
 
   retryFileOrder() {

@@ -32,6 +32,7 @@ export class FolioQueryComponent implements OnInit {
     // search query logic
     // on hold
     // const data = '';
+
     // cannot get folio id 
     // this.reconService.getFoliowiseTransactionList(data)
     //   .subscribe(res => {

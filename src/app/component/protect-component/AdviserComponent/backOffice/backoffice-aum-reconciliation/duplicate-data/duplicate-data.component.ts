@@ -41,6 +41,8 @@ export class DuplicateDataComponent implements OnInit {
     let tableData = [];
     if (this.mutualFundTransactions) {
       tableData = this.mutualFundTransactions;
+
+      console.log("this is what i am sending", this.mutualFundTransactions);
     }
     const fragmentData = {
       flag: value,
@@ -71,7 +73,7 @@ export class DuplicateDataComponent implements OnInit {
     this.reconService.getDuplicateDataValues(data)
       .subscribe(res => {
         if (res) {
-          console.log("this is duplicate data values::;:::::", res);
+          console.log("this is duplicate data values:::::::", res);
 
           res.forEach(item => {
             this.brokerId = item.brokerId;
@@ -83,7 +85,8 @@ export class DuplicateDataComponent implements OnInit {
               unitsIfanow: item.balanceUnit,
               unitsRta: item.aumUnits,
               difference: String(parseInt(item.balanceUnit.toFixed(3)) - parseInt(item.aumUnits.toFixed(3))),
-              transactions: ''
+              transactions: '',
+              date: item.aumDate,
             })
           });
           console.log(this.duplicateDataList);
@@ -105,10 +108,11 @@ export interface DuplicateI {
   unitsRta: string;
   difference: string;
   transactions: string;
+  date: string;
 }
 
 export const ELEMENT_DATA: DuplicateI[] = [
-  { arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', },
-  { arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', },
-  { arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', },
+  { arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', date: '' },
+  { arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', date: '' },
+  { arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', date: '' },
 ] 

@@ -210,13 +210,13 @@
                     <th class="b-a" mat-header-cell *matHeaderCellDef> Action </th>
                     <td class="b-a" mat-cell *matCellDef="let element; index as i">
                         <div class="bar">
-                            <button mat-stroked-button [ngClass]="element.isKeep ? 'disableClass': ''"
-                                [disabled]="element.isKeep" (click)="shouldKeepOrRemove(1, element)"
+                            <button mat-stroked-button [ngClass]="element.keep ? 'disableClass': ''"
+                                [disabled]="element.keep" (click)="shouldKeepOrRemove(1, element)"
                                 class="btn-primary mr-12 text-white btn-xs h-22">
                                 Keep
                             </button>
-                            <button mat-stroked-button [ngClass]="element.isKeep ? '' : 'disableClass'"
-                                [disabled]="!element.isKeep" (click)="shouldKeepOrRemove(0, element)"
+                            <button mat-stroked-button [ngClass]="element.keep ? '' : 'disableClass'"
+                                [disabled]="!element.keep" (click)="shouldKeepOrRemove(0, element)"
                                 class="btn-danger text-white btn-xs h-22">
                                 Remove
                             </button>
