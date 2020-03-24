@@ -373,7 +373,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
       {
         advisorId: this.advisorId,
         aumReconId: this.aumReconId,
-        mutualFundId: this.mutualFundIds
+        mutualFundId: this.mutualFundIds,
+
       }
     ];
 
