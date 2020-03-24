@@ -21,7 +21,7 @@ export class ClientMoreInfoComponent implements OnInit {
       adhaarNo: [],
       taxStatus: [],
       occupation: [],
-      maritalStatus: [],
+      maritalStatus: ['1'],
       anniversaryStatus: [],
       bio: [],
       myNotes: []
