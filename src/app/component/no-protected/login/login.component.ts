@@ -7,6 +7,7 @@ import { BackOfficeService } from '../../protect-component/AdviserComponent/back
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatProgressButtonOptions } from "../../../common/progress-button/progress-button.component";
 import { ValidatorType } from 'src/app/services/util.service';
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'app-login',
@@ -52,14 +53,15 @@ export class LoginComponent implements OnInit {
   errorRequired: boolean = false;
   errorMsg: boolean = false;
   errorStyle = {};
-  userName = new FormControl();
+  userName;
   getOtpFlag = false;
   otpData = [];
+  otpResponse: any;
   constructor(
     private formBuilder: FormBuilder, private eventService: EventService,
     public backOfficeService: BackOfficeService,
     public router: Router,
-    private authService: AuthService, private eleRef: ElementRef) {
+    private authService: AuthService, private eleRef: ElementRef, private loginService: LoginService) {
   }
 
   @ViewChild('animationSpan', {
@@ -77,6 +79,7 @@ export class LoginComponent implements OnInit {
   isLoading = false;
 
   ngOnInit() {
+    this.userName = new FormControl('', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]);
     // if (this.authService.isLoggedIn()) {
     //   this.router.navigate(['admin', 'subscription', 'dashboard']);
     // } else {
@@ -85,7 +88,24 @@ export class LoginComponent implements OnInit {
     this.btnProgressData = "state1";
   }
   getOtp() {
-    (this.getOtpFlag) ? this.getOtpFlag = false : this.getOtpFlag = true;
+    if (this.userName.invalid) {
+      this.userName.markAsTouched();
+      return;
+    }
+    else {
+      let obj =
+      {
+        "forEmail": this.userName.value
+      }
+      this.loginService.generateOtp(obj).subscribe(
+        data => {
+          console.log(data);
+          this.otpResponse = data;
+          (data == undefined) ? this.eventService.openSnackBar("error found", 'Dismiss') : (this.getOtpFlag) ? this.getOtpFlag = false : this.getOtpFlag = true;
+        },
+        err => this.eventService.openSnackBar(err, "Dismiss")
+      )
+    }
   }
   otpClick() {
     (this.otpNumber) ? this.otpNumber = false : this.otpNumber = true;

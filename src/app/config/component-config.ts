@@ -473,6 +473,8 @@ export const appConfig = {
   ADD_CLIENT_DEMAT: '',
   ADD_CLIENT_MORE_INFO: '',
   ADD_CLIENT_UPLOAD: '',
+  //////////////////////////////Login///////////////////////////////////
+  GENERATE_OTP: '/user/generate/otp',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_UPDATE: 'calendar/event/update',
