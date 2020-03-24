@@ -220,7 +220,7 @@ export class ServicesComponent implements OnInit {
 
   mapPlanToServiceRes(data) {
     console.log(data)
-    this.changeServiceData.emit(true);
+    this.changeServiceData.emit(this.planData);
     this.eventService.openSnackBar('Service is mapped', 'OK');
     this.barButtonOptions.active = false;
     this.router.navigate(['/admin/subscription/settings','documents']);
@@ -237,7 +237,7 @@ export class ServicesComponent implements OnInit {
       this.eventService.openSnackBar('Service is mapped', 'OK');
 
     }
-    this.changeServiceData.emit(true);
+    this.changeServiceData.emit(this.planData);
     this.barButtonOptions.active = false;
 
   }
