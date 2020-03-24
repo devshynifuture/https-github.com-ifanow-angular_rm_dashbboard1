@@ -13,6 +13,7 @@ export class ImageCropperComponent {
     @Input() imageURL: string = '';
     @Input() maintainAspectRatio: boolean = true;
     @Input() aspectRatio: number = 1/1;
+    @Input() showCropper: boolean = true;
     @Input() options: any = {
         outputCroppedWidth: 64,
         outputCroppedHeight: 64
@@ -20,9 +21,6 @@ export class ImageCropperComponent {
     @Output() croppedImage: EventEmitter<any> = new EventEmitter();
 
     containWithinAspectRatio = false
-    constructor() {
-
-    }
 
     canvasRotation = 0;
     rotation = 0;
@@ -33,27 +31,4 @@ export class ImageCropperComponent {
         this.croppedImage.emit(event.base64)
     }
 
-
-    resetImage() {
-        this.scale = 1;
-        this.rotation = 0;
-        this.canvasRotation = 0;
-        this.transform = {};
-    }
-
-    zoomOut() {
-        this.scale -= .1;
-        this.transform = {
-            ...this.transform,
-            scale: this.scale
-        };
-    }
-
-    zoomIn() {
-        this.scale += .1;
-        this.transform = {
-            ...this.transform,
-            scale: this.scale
-        };
-    }
 }
