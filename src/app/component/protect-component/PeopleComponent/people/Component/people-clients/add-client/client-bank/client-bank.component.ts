@@ -1,6 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {ValidatorType} from "../../../../../../../../services/util.service";
 
 @Component({
   selector: 'app-client-bank',
@@ -9,9 +10,14 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 })
 export class ClientBankComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject) { }
+  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject) {
+  }
+
   bankForm;
+  validatorType = ValidatorType;
+
   @Output() tabChange = new EventEmitter();
+
   ngOnInit() {
     this.bankForm = this.fb.group({
       ifscCode: [, [Validators.required]],

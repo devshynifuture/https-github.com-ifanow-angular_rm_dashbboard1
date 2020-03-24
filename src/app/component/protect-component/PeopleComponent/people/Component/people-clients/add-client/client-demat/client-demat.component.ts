@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-client-demat',
@@ -11,6 +12,7 @@ export class ClientDematComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject) { }
   dematForm;
+  validatorType = ValidatorType;
   @Output() tabChange = new EventEmitter();
   ngOnInit() {
     this.dematForm = this.fb.group({

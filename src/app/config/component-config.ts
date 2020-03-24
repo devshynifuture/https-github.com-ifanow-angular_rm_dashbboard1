@@ -442,7 +442,9 @@ export const appConfig = {
   BACKOFFICE_PUT_FREEZE_FOLIO_DATA: 'backoffice/aum/freeze/folio',
   BACKOFFICE_PUT_UNFREEZE_FOLIO_DATA: 'backoffice/aum/unfreeze/folio',
   BACKOFFICE_GET_DUPLICATE_FOLIO_DATA: 'backoffice/duplicate/transaction/list/get',
-
+///org setting ////
+GET_PERSONAL_PROFILE:'setting/profile/personal/details/get',
+EDIT_PERSONAL_PROFILE:'',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',

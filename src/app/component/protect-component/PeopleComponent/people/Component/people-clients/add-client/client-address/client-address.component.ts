@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-client-address',
@@ -11,6 +12,7 @@ export class ClientAddressComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject) { }
   addressForm;
+  validatorType = ValidatorType;
   @Output() tabChange = new EventEmitter();
   ngOnInit() {
     this.addressForm = this.fb.group({

@@ -38,8 +38,8 @@
             <div class="col-md-6 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field floatLabel="never" appearance="standard">
-                        <input autocomplete="off" formControlName="fullName" matInput placeholder="Enter Name"
-                            class="form-control">
+                        <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
+                            formControlName="fullName" matInput placeholder="Enter Name" class="form-control">
                     </mat-form-field>
                 </div>
             </div>
@@ -121,7 +121,8 @@
             <div class="col-md-6 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" formControlName="username" matInput class="form-control">
+                        <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
+                            formControlName="username" matInput class="form-control">
                     </mat-form-field>
                 </div>
             </div>

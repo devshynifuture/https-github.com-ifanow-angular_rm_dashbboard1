@@ -12,11 +12,11 @@ export class SettingsService {
   constructor(private http: HttpService) { }
 
   getProfilePhoto(data){
-    return this.http.get(apiConfig.MAIN_URL + appConfig.ADD_HOUSE_GOAL, data)
+    let httpParams = new HttpParams().set('advisorId', data.advisorId)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PERSONAL_PROFILE_PHOTO, httpParams)
   }
 
   uploadProfilePhoto(data){
-    // let httpParams = new HttpParams().set('advisorId', data.advisorId)
-    return this.http.put(apiConfig.MAIN_URL + appConfig.ADD_HOUSE_GOAL, data)
+    return this.http.put(apiConfig.MAIN_URL + appConfig.UPLOAD_PERSONAL_PROFILE_PHOTO, data)
   }
 }

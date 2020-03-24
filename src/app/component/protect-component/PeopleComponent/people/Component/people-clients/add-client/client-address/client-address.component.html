@@ -71,7 +71,8 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" matInput formControlName="pinCode" class="form-control">
+                    <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        matInput formControlName="pinCode" class="form-control">
                 </mat-form-field>
             </div>
         </div>

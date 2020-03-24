@@ -56,7 +56,8 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="clientId" matInput class="form-control">
+                    <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        formControlName="clientId" matInput class="form-control">
                 </mat-form-field>
             </div>
         </div>
@@ -103,7 +104,8 @@
         <div class="col-md-3 pr-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="brokerPhone" matInput class="form-control">
+                    <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        formControlName="brokerPhone" matInput class="form-control">
                     <mat-hint>Optional</mat-hint>
                 </mat-form-field>
             </div>
