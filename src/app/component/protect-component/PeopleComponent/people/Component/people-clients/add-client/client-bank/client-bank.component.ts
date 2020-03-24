@@ -1,7 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {ValidatorType} from "../../../../../../../../services/util.service";
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-client-bank',
@@ -15,7 +15,6 @@ export class ClientBankComponent implements OnInit {
 
   bankForm;
   validatorType = ValidatorType;
-
   @Output() tabChange = new EventEmitter();
 
   ngOnInit() {
@@ -24,7 +23,7 @@ export class ClientBankComponent implements OnInit {
       bankName: [, [Validators.required]],
       micrName: [, [Validators.required]],
       accNumber: [, [Validators.required]],
-      accType: [, [Validators.required]],
+      accType: ['1', [Validators.required]],
       branchName: [, [Validators.required]],
       branchCountry: [, [Validators.required]],
       branchPinCode: [, [Validators.required]],

@@ -24,6 +24,9 @@ export class AddPersonalProfileComponent implements OnInit {
   selected: number;
   barButtonOptions: any;
   imageUploadEvent: any;
+  showCropper: boolean = false;
+  cropImage: boolean = false;
+  selectedTab:number = 0;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -46,31 +49,37 @@ export class AddPersonalProfileComponent implements OnInit {
   }
 
   getPersonalInfo() {
-    this.settingsService.getProfileDetails({id: this.advisorId}).subscribe((res)=>{
-      console.log('sagar', res);
+    this.settingsService.getProfileDetails({ id: this.advisorId }).subscribe((res) => {
+      this.imgURL = res.profilePic;
     });
   }
 
   uploadImageForCorping(event) {
-    this.imageUploadEvent = event
+    this.imageUploadEvent = event;
+    this.showCropper = true;
   }
 
   saveImage() {
-    const tags = this.advisorId + ',advisor_profile_logo,';
-    const file = this.utilService.convertB64toImageFile(this.finalImage);
-    PhotoCloudinaryUploadService.uploadFileToCloudinary([file], 'advisor_profile_logo', tags,
-      (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
-      if (status == 200) {
-        const responseObject = JSON.parse(response);
-        const jsonDataObj =  {
-          id:this.advisorId, 
-          profilePic : responseObject.url
-        }
-        this.settingsService.uploadProfilePhoto(jsonDataObj).subscribe((res)=>{
-          this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
+    if (this.showCropper) {
+      const tags = this.advisorId + ',advisor_profile_logo,';
+      const file = this.utilService.convertB64toImageFile(this.finalImage);
+      PhotoCloudinaryUploadService.uploadFileToCloudinary([file], 'advisor_profile_logo', tags,
+        (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+          if (status == 200) {
+            const responseObject = JSON.parse(response);
+            const jsonDataObj = {
+              id: this.advisorId,
+              profilePic: responseObject.url
+            }
+            this.settingsService.uploadProfilePhoto(jsonDataObj).subscribe((res) => {
+              this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
+              this.Close(true);
+            });
+          }
         });
-      }
-    });
+    } else {
+      this.Close(false);
+    }
   }
 
   addEditBillerForm() {
@@ -81,41 +90,65 @@ export class AddPersonalProfileComponent implements OnInit {
     this.finalImage = imageAsBase64;
   }
 
-  Close(flag:boolean) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+  // save the changes of current page only
+  saveCurrentPage(){
+    // selected tab 1 - profile image
+    if (this.selectedTab == 1) {
+      this.saveImage();
+    } else {
+      
+    }
+  }
+
+  // record the tab he's currently present in
+  tabChange(event) {
+    this.resetPageVariables();
+    this.selectedTab = event.index;
+  }
+
+  // reset the variables when user changes tabs
+  resetPageVariables(){
+    this.showCropper = false;
+    this.cropImage = false;
+    this.imageUploadEvent = '';
+    this.finalImage = '';
   }
 
   getdataForm(data) {
-
     this.personalProfile = this.fb.group({
-     
-   
       name: [(!data.fdType) ? '' : (data.name), [Validators.required]],
       emailId: [(!data) ? '' : data.email, [Validators.required]],
       mobileNo: [(!data) ? '' : data.mobileNo, [Validators.required]],
       userName: [(!data) ? '' : data.userName, [Validators.required]],
     });
   }
+
   getFormControl(): any {
     return this.personalProfile.controls;
   }
-updatePersonalProfile(){
-  let obj = {
-    advisorId:this.advisorId,
-      name: this.personalProfile.controls.name.value,
-      emailId:this.personalProfile.controls.emailId.value ,
-      userName:this.personalProfile.controls.userName.value ,
-      mobileNo:this.personalProfile.controls.mobileNo.value ,
-      roleId : 0,                                                                               
-      profilePic :null
 
+
+  updatePersonalProfile() {
+    let obj = {
+      advisorId:this.advisorId,
+        name: this.personalProfile.controls.name.value,
+        emailId:this.personalProfile.controls.emailId.value ,
+        userName:this.personalProfile.controls.userName.value ,
+        mobileNo:this.personalProfile.controls.mobileNo.value ,
+        roleId : 0,                                                                               
+        profilePic :null
+    }
+    this.orgSetting.editPersonalProfile(obj).subscribe(
+      data => this.editPersonalProfileRes(data),
+      err => this.event.openSnackBar(err, "Dismiss")
+    );
   }
-  this.orgSetting.editPersonalProfile(obj).subscribe(
-    data => this.editPersonalProfileRes(data),
-    err => this.event.openSnackBar(err, "Dismiss")
-  );
-}
-editPersonalProfileRes(data){
-console.log('editPersonalProfileRes',data)
-}
+
+  editPersonalProfileRes(data) {
+    console.log('editPersonalProfileRes', data)
+  }
+
+  Close(flag: boolean) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+  }
 }
