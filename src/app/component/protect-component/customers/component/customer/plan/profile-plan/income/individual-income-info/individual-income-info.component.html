@@ -56,9 +56,9 @@
                     <div class="col-md-7 pr-0">
                         <mat-radio-group (change)="chngIncomeOption($event)" formControlName="incomeOption"
                             class="d-flex " aria-label="Select an option">
-                            <mat-radio-button color="primary" class="b-ua p-8 " value="1">With breakup
+                            <mat-radio-button class="b-ua  f-14 text-custom" value="1">With breakup
                             </mat-radio-button>
-                            <mat-radio-button color="primary" class="b-ua p-8 ml-8 b-a-custom" value="2">
+                            <mat-radio-button class="b-ua ml-8 b-a-custom f-14 text-custom" value="2">
                                 Net (In hand)
                             </mat-radio-button>
                         </mat-radio-group>
@@ -174,7 +174,7 @@
                     </div>
                     <div class="col-md-7">
                         <div class="row">
-                            <div class="col-md-6 pl-0 pr-4">
+                            <div class="col-md-7 pl-0 pr-4">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
                                         <mat-select matInput formControlName="continousTill" class="form-control  br-0">
@@ -225,9 +225,9 @@
                         <div class="row">
                             <div class="col-md-6 pl-0 pr-4">
                                 <div class="form-group mb-0">
-                                    <mat-form-field>
+                                    <mat-form-field class="ba-date">
                                         <input (dateChange)="checkDateDiff($event)" matInput autocomplete="off"
-                                            formControlName="incomeStartDate" class="form-control br-0"
+                                            formControlName="incomeStartDate" class="form-control br-0 b-0"
                                             [matDatepicker]="incomeStartdate">
                                         <mat-datepicker-toggle matSuffix [for]="incomeStartdate">
                                         </mat-datepicker-toggle>
@@ -239,9 +239,9 @@
                             </div>
                             <div class="col-md-6 pl-4 pr-0">
                                 <div class="form-group mb-0">
-                                    <mat-form-field>
+                                    <mat-form-field class="ba-date">
                                         <input (dateChange)="checkDateDiff($event)" matInput autocomplete="off"
-                                            formControlName="incomeEndDate" class="form-control br-0"
+                                            formControlName="incomeEndDate" class="form-control br-0 b-0"
                                             [matDatepicker]="incomeEndDate">
                                         <mat-datepicker-toggle matSuffix [for]="incomeEndDate"></mat-datepicker-toggle>
                                         <mat-datepicker #incomeEndDate></mat-datepicker>
@@ -258,11 +258,11 @@
                 </div>
 
                 <div class="row pt-40">
-                    <div *ngIf="addMoreFlag" (click)="showOptional()" class="col-md-5 pr-0 text-right">
+                    <div *ngIf="addMoreFlag" (click)="showOptional()" class="col-md-5 p-0 text-right">
                         <h5 class="m-0 pt-8 text-custom c-p"> Show Less </h5>
                     </div>
 
-                    <div *ngIf="addMoreFlag==false" (click)="showOptional()" class="col-md-5 pr-0 text-right">
+                    <div *ngIf="addMoreFlag==false" (click)="showOptional()" class="col-md-5 p-0 text-right">
                         <h5 class="m-0 pt-8 text-custom c-p">+ Add more [optional data] </h5>
                     </div>
 
@@ -277,11 +277,11 @@
                             <h5 class="m-0 pt-8">Next appraisal in</h5>
                             <p class="m-0 f-12 text-custom">Enter next appriasal date. Approx year & month should do</p>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-4">
                             <div class="form-group mb-0">
-                                <mat-form-field>
+                                <mat-form-field class="ba-date">
                                     <input matInput autocomplete="off" formControlName="nextAppraisal"
-                                        class="form-control br-0" [matDatepicker]="nextAppraisalIN">
+                                        class="form-control br-0 b-0" [matDatepicker]="nextAppraisalIN">
                                     <mat-datepicker-toggle matSuffix [for]="nextAppraisalIN"></mat-datepicker-toggle>
                                     <mat-datepicker #nextAppraisalIN></mat-datepicker>
                                     <mat-error class="f-12">This field is required
@@ -291,17 +291,17 @@
                         </div>
                     </div>
                     <div class="row pt-40">
-                        <div class="col-md-5 pr-0 text-right">
-                            <h5 class="m-0 pt-8">I'm expecting a bonus/inflow</h5>
+                        <div class="col-md-5 p-0 text-right">
+                            <h5 class="m-0 pt-8 ws-nowrap">I'm expecting a bonus/inflow</h5>
                         </div>
                         <div class="col-md-7" [formGroup]="expectedBonusForm">
                             <div *ngFor="let singleBonusForm of getBonusList.controls;index as i"
                                 [formGroup]="singleBonusForm" class="row">
                                 <div class="col-md-5 pl-0 pr-4">
                                     <div class="form-group mb-0">
-                                        <mat-form-field>
+                                        <mat-form-field class="ba-date">
                                             <input matInput formControlName="receivingDate" autocomplete="off"
-                                                class="form-control br-0" [matDatepicker]="expectedBonus">
+                                                class="form-control br-0 b-0" [matDatepicker]="expectedBonus">
                                             <mat-datepicker-toggle matSuffix [for]="expectedBonus">
                                             </mat-datepicker-toggle>
                                             <mat-datepicker #expectedBonus></mat-datepicker>
@@ -319,13 +319,13 @@
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <i class="material-icons c-p" *ngIf="i==getBonusList.controls.length-1"
+                                <div class="col-md-2 pt-8">
+                                    <i class="material-icons c-p text-custom" *ngIf="i==getBonusList.controls.length-1"
                                         (click)="addExpectedBonus()">add</i>
-                                    <i class="material-icons c-p" *ngIf="i<getBonusList.controls.length-1"
+                                    <i class="material-icons c-p text-custom" *ngIf="i<getBonusList.controls.length-1"
                                         (click)="removeExpectedBonus(i)">remove</i>
                                 </div>
-                                optional
+                                <mat-hint align="start" class="f-12 pb-16">Optional</mat-hint>
                             </div>
 
                         </div>
@@ -351,7 +351,7 @@
         </div>
     </div>
 </div>
-<div class="bottom-fixed wrapper-16 pb-12">
+<div class="bottom-fixed wrapper-16 pb-12 w-65">
     <div class="row">
         <div *ngIf="editApiData==undefined" class="col-md-4 p-0">
             <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="cancel()">Previous</h5>
