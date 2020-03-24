@@ -963,7 +963,6 @@
 
                 #ui-assets-account,
                 #ui-texes,
-                #ui-insurance,
                 #ui-liabilities {
                   .vertical-menu {
                     // height: 100vh;
@@ -988,6 +987,14 @@
                   .vertical-menu {
 
                     height: calc(100vh - 126px);
+
+                  }
+                }
+
+                #ui-insurance {
+                  .vertical-menu {
+
+                    height: calc(100vh - 119px);
 
                   }
                 }
