@@ -447,6 +447,10 @@ export const appConfig = {
   GET_ORG_PROFILE: 'setting/profile/organisation/details/get',
   EDIT_PERSONAL_PROFILE: 'setting/profile/personal/profile-photo/update',
   EDIT_ORG_PROFILE: 'etting/profile/organisation/update',
+  GET_PORTFOLIO :'setting/preferences/portfolio/get',
+  GET_PLANS:'setting/preferences/plan/get',
+  PROTFOLIO_UPDATE:'setting/preferences/portfolio/update',
+  PLAN_SECTION_UPDATE:'setting/preferences/plan/update',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
