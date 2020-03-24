@@ -178,7 +178,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
           if (this.tableData.length <= 0) {
             this.tableData = data;
           } else {
-            this.tableData = this.tableData.concat(data);
+            this.tableData = data;
+            /*this.tableData = this.tableData.concat(data);*/
             console.log(this.tableData, 'this.tableData 123');
           }
         } else {
