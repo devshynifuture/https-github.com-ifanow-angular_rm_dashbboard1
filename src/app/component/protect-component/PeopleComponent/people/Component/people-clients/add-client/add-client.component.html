@@ -15,8 +15,52 @@
                 <mat-tab label="Basic details">
                     <app-client-basic-details [fieldFlag]="headingData.fieldFlag" (tabChange)="changeTab($event)">
                     </app-client-basic-details>
-
-                    <!-- <div class="minorBox" style="display: none;">
+                </mat-tab>
+                <mat-tab label="More info">
+                    <app-client-more-info></app-client-more-info>
+                </mat-tab>
+                <mat-tab label="Address">
+                    <app-client-address></app-client-address>
+                </mat-tab>
+                <mat-tab label="Bank">
+                    <app-client-bank></app-client-bank>
+                </mat-tab>
+                <mat-tab label="Demat">
+                    <app-client-demat></app-client-demat>
+                </mat-tab>
+                <mat-tab label="Upload">
+                    <app-client-upload></app-client-upload>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</div>
+<div *ngIf="headingData.fieldFlag=='lead' || headingData.fieldFlag=='familyMember'" class="pt-90 pl-28 pr-28 pb-100 ">
+    <div class="row">
+        <div class="col-md-12 p-0">
+            <mat-tab-group [(selectedIndex)]="selected" animationDuration="0ms" id="ui-add-client">
+                <mat-tab label="Basic details">
+                    <app-client-basic-details [fieldFlag]="headingData.fieldFlag" (tabChange)="changeTab($event)">
+                    </app-client-basic-details>
+                </mat-tab>
+                <mat-tab label="More info">
+                    <app-client-more-info [fieldFlag]="headingData.fieldFlag" (tabChange)="changeTab($event)">
+                    </app-client-more-info>
+                </mat-tab>
+                <mat-tab label="Bank">
+                    <app-client-bank (tabChange)="changeTab($event)"></app-client-bank>
+                </mat-tab>
+                <mat-tab label="Demat">
+                    <app-client-demat (tabChange)="changeTab($event)"></app-client-demat>
+                </mat-tab>
+                <mat-tab label="Upload">
+                    <app-client-upload (tabChange)="changeTab($event)"></app-client-upload>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</div>
+<!-- <div class="minorBox" style="display: none;">
                         <div class="row pt-20">
                             <div class="col-md-4 text-right">
                                 <h5 class="m-0 pt-20">Minor’s full name</h5>
@@ -445,50 +489,6 @@
 
 
                     </div> -->
-                </mat-tab>
-                <mat-tab label="More info">
-                    <app-client-more-info></app-client-more-info>
-                </mat-tab>
-                <mat-tab label="Address">
-                    <app-client-address></app-client-address>
-                </mat-tab>
-                <mat-tab label="Bank">
-                    <app-client-bank></app-client-bank>
-                </mat-tab>
-                <mat-tab label="Demat">
-                    <app-client-demat></app-client-demat>
-                </mat-tab>
-                <mat-tab label="Upload">
-                    <app-client-upload></app-client-upload>
-                </mat-tab>
-            </mat-tab-group>
-        </div>
-    </div>
-</div>
-<div *ngIf="headingData.fieldFlag=='lead'" class="pt-90 pl-28 pr-28 pb-100 ">
-    <div class="row">
-        <div class="col-md-12 p-0">
-            <mat-tab-group [(selectedIndex)]="selected" animationDuration="0ms" id="ui-add-client">
-                <mat-tab label="Basic details">
-                    <app-client-basic-details [fieldFlag]="headingData.fieldFlag" (tabChange)="changeTab($event)">
-                    </app-client-basic-details>
-                </mat-tab>
-                <mat-tab label="More info">
-                    <app-client-more-info [fieldFlag]="headingData.fieldFlag"></app-client-more-info>
-                </mat-tab>
-                <mat-tab label="Bank">
-                    <app-client-bank></app-client-bank>
-                </mat-tab>
-                <mat-tab label="Demat">
-                    <app-client-demat></app-client-demat>
-                </mat-tab>
-                <mat-tab label="Upload">
-                    <app-client-upload></app-client-upload>
-                </mat-tab>
-            </mat-tab-group>
-        </div>
-    </div>
-</div>
 <!-- <div class="bottom-fixed wrapper-12 w-50">
     <div class="row">
         <div class="col-md-4">

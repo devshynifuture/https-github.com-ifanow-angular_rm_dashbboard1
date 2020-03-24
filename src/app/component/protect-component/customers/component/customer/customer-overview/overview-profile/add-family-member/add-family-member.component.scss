@@ -6,105 +6,108 @@
 //   align-items: center;
 //   padding-left: 10px !important;
 // }
-
 ::ng-deep .familyGroup .mat-radio-button {
-  min-width: 143px;
+    min-width: 143px;
 }
 
 .contentHeight {
-  height: 80px;
-  display: flex;
-  align-items: center;
-  border: 1px solid #757575;
-  border-left: transparent;
-  padding-left: 15px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    // border: 1px solid #757575;
+    border-left: transparent !important;
+    padding-left: 15px;
 }
 
 ::ng-deep .manuallyBox {
-  height: 80px;
-  display: flex;
-  border: 1px solid #757575;
-  align-items: center;
-
-  mat-radio-group {
-    margin: 0px auto;
-    width: 100px;
-  }
+    height: 80px;
+    display: flex;
+    // border: 1px solid #757575;
+    align-items: center;
+    mat-radio-group {
+        margin: 0px auto;
+        width: 100px;
+    }
 }
 
 .photoFamily {
-  width: 80%;
-  margin: 0px auto;
-
-  .row {
-    margin-bottom: 24px !important;
-  }
-
-  .profilePhoto {
-    width: 113px;
-
-    .borderPhoto {
-      border: 2px solid #83959D;
-      width: 110px;
-      height: 110px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-
-      .posCheckBox {
-        position: absolute;
-        top: -7px;
-        right: 0px;
-      }
+    width: 80%;
+    margin: 0px auto;
+    .row {
+        margin-bottom: 24px !important;
     }
-  }
+    .profilePhoto {
+        width: 113px;
+        margin: 0px auto;
+        .borderPhoto {
+            border: 2px solid #83959D;
+            width: 110px;
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            .posCheckBox {
+                position: absolute;
+                top: -7px;
+                right: 0px;
+            }
+        }
+    }
 }
 
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
-  width: 1.5em !important;
+    width: 1.5em !important;
 }
 
-
 ::ng-deep .mat-form-field {
-  width: 100%;
+    width: 100%;
 }
 
 ::ng-deep .mat-form-field-suffix {
-  position: inherit !important;
+    position: inherit !important;
 }
 
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
-  padding: 0px !important;
+    padding: 0px !important;
 }
 
 ::ng-deep .mat-form-field-infix {
-  padding: 0px !important;
+    padding: 0px !important;
 }
 
 .dateFamilyMember {
-  .mbottom-30 {
-    margin-bottom: 30px !important;
-  }
+    .mbottom-30 {
+        margin-bottom: 30px !important;
+    }
 }
 
 ::ng-deep .mamberDetailsTable {
-  tr.mat-header-row {
-    height: 44px;
-  }
+    tr.mat-header-row {
+        height: 44px;
+    }
 }
 
 .detalisUl {
-  margin: 0px;
-  padding: 0px 0px;
-  border: 1px solid #DADCE0;
-  list-style-type: none;
-  border-bottom: transparent;
-  display: block;
+    margin: 0px;
+    padding: 0px 0px;
+    border: 1px solid #DADCE0;
+    list-style-type: none;
+    border-bottom: transparent;
+    display: block;
+    li {
+        padding: 0px 8px;
+        height: 34px;
+        align-items: center;
+    }
+}
 
-  li {
-    padding: 0px 8px;
-    height: 34px;
-    align-items: center;
-  }
+.btn24 {
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+    padding: 0px !important;
+    border: 1px solid #000;
+    line-height: 20px !important;
+    border-radius: 2px !important;
 }

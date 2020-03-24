@@ -11,6 +11,16 @@ export class EnumDataService {
   constructor(private enumService: EnumServiceService, private subService: SubscriptionService) {
   }
 
+  roleList = [
+    {roleTypeId:1, roleTypeName:"Admin"},
+    {roleTypeId:2, roleTypeName:"Para planner"},
+    {roleTypeId:3, roleTypeName:"Relationship manager"},
+    {roleTypeId:4, roleTypeName:"Operations"},
+  ]
+  public getRoles(){
+    this.enumService.addRoles(this.roleList);
+  }
+
   public getDataForSubscriptionEnumService() {
     const obj = {};
     console.log('getOtherAssetData EnumDataService getDataForSubscriptionEnumService ', this.enumService.getOtherAssetData());
@@ -23,7 +33,7 @@ export class EnumDataService {
           feeTypes: [],
           billingNature: [],
           otherAssetTypes: [],
-          feeCollectionMode: []
+          feeCollectionMode: [],
         };
         newJsonForConsumption.billingNature = UtilService.convertObjectToArray(data.billingNature);
         newJsonForConsumption.otherAssetTypes = UtilService.convertObjectToCustomArray(data.otherAssetTypes,

@@ -20,14 +20,14 @@ import { ReconciliationService } from '../../../AdviserComponent/backOffice/back
 export class UpperSliderBackofficeComponent implements OnInit {
 
   displayedColumns: string[] = ['doneOne', 'totalfolios', 'before_recon', 'after_recon', 'aum_balance', 'transaction', 'export_folios'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
-
-  displayedColumns1: string[] = ['name', 'folioNumber', 'unitsIfnow', 'unitsRta', 'difference', 'transactions'];
-  dataSource1 = new MatTableDataSource(ELEMENT_DATA1);
-  dataSource2 = new MatTableDataSource(ELEMENT_DATA2);
-
+  displayedColumns1: string[] = ['name', 'folioNumber', 'unitsIfanow', 'unitsRta', 'difference', 'transactions'];
   displayedColumns3: string[] = ['folios', 'fileOrderDateTime', 'status', 'referenceId', 'transactionAddedInFiles', 'transactionAdded', 'fileName', 'fileUrl'];
-  dataSource3 = new MatTableDataSource<PeriodicElement3>(ELEMENT_DATA3);
+
+  dataSource = new MatTableDataSource(ELEMENT_DATA); // summary table
+  dataSource1 = new MatTableDataSource(ELEMENT_DATA1); // manual recon all folio table
+  dataSource2 = new MatTableDataSource(ELEMENT_DATA2); // manual recon duplicate folio table
+  dataSource3 = new MatTableDataSource<PeriodicElement3>(ELEMENT_DATA3); // delete and reorder table
+
   isTabDisabled: boolean = true;
 
   data;
@@ -79,8 +79,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
         // update units ifanow
         console.log("this is response that im getting::::", res);
         this.dataSource1.data.map(item => {
-          item['unitsIfnow'] = String((res.units).toFixed(3));
-          item['difference'] = String((parseInt(item['unitsIfnow']) - parseInt(item['unitsRta'])).toFixed(3))
+          item['unitsIfanow'] = String((res.units).toFixed(3));
+          item['difference'] = String((parseInt(item['unitsaIfnow']) - parseInt(item['unitsRta'])).toFixed(3))
         })
       }
     })
@@ -92,6 +92,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       brokerId: this.brokerId,
       rt: this.data.rtId
     }
+    // 
     this.supportService.getAumReconListGetValues(data)
       .subscribe(res => {
         this.isLoading = false;
@@ -109,7 +110,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
             arrayValue.push({
               name: element.shemeName,
               folioNumber: element.folioNumber,
-              unitsIfnow: element.calculatedUnits.toFixed(3),
+              unitsIfanow: element.calculatedUnits.toFixed(3),
               unitsRta: (element.aumUnits).toFixed(3),
               difference: (element.calculatedUnits - element.aumUnits).toFixed(3),
               transaction: '',
@@ -167,18 +168,38 @@ export class UpperSliderBackofficeComponent implements OnInit {
       advisorId: this.advisorId,
       folio: this.mutualFundIds
     }
-    console.log("this is some duplicate data values::::::::", data);
     this.reconService.getDuplicateFolioDataValues(data)
       .subscribe(res => {
-        console.log("this is some duplicate values:::::::::", res);
+        console.log("this is some duplicate values:::::::::", res, this.aumList);
+        let filteredArrValue = [];
         let arrValue = [];
+
         res.forEach(element => {
-          arrValue = this.aumList.filter(item => {
+          filteredArrValue = this.aumList.filter(item => {
             return item.mutualFundId === element.id ? item : null;
           });
         });
-        console.log(this.aumList, arrValue);
-
+        console.log("htis is filered value::::", filteredArrValue);
+        filteredArrValue.forEach(item => {
+          arrValue.push({
+            id: item.id,
+            name: item.shemeName,
+            folioNumber: item.folioNumber,
+            mutualFundId: item.mutualFundId,
+            advisorId: item.advisorId,
+            brokerId: item.broker_id,
+            unitsRta: (item.aumUnits).toFixed(3),
+            unitsIfanow: (item.calculatedUnits).toFixed(3),
+            difference: (item.calculatedUnits - item.aumUnits).toFixed(3),
+            freezeDate: item.freezeDate,
+            isMapped: item.isMapped,
+            aumDate: item.aumDate,
+            brokerCode: item.brokerCode,
+            schemeCode: item.schemeCode,
+            mutualFundTransaction: item.mutualFundTransaction,
+            transactions: ''
+          })
+        })
         this.dataSource2.data = arrValue;
       }, err => {
         console.error(err);
@@ -307,6 +328,9 @@ export class UpperSliderBackofficeComponent implements OnInit {
     if (tableType === 'all-folios') {
       tableData = this.aumList[index]['mutualFundTransaction'];
     }
+    if (tableType === 'duplicate-folios') {
+      tableData = data.mutualFundTransaction
+    }
     const fragmentData = {
       flag: value,
       data: { ...data, tableType, tableData, brokerId: this.brokerId, rtId: this.rtId },
@@ -332,8 +356,42 @@ export class UpperSliderBackofficeComponent implements OnInit {
     );
   }
 
+  getAumReportList() {
+    let data = {
+      aumReconId: this.data.id
+    };
+    this.reconService.getAumReportListValues(data)
+      .subscribe(res => {
+        console.log("this is aum report list get:::", res);
+      }, err => {
+        console.error(err)
+      })
+  }
+
+  postReqForBackOfficeUnmatchedFolios() {
+    const data = [
+      {
+        advisorId: this.advisorId,
+        aumReconId: this.aumReconId,
+        mutualFundId: this.mutualFundIds
+      }
+    ];
+
+    // need to discuss with ajay
+
+    // this.reconService.postBackOfficeUnmatchedFoliosData(data)
+    //   .subscribe(res => {
+    //     console.log(" backoffice unmateched Folio, post ", res);
+    //   }, err => {
+    //     console.error(err);
+    //   })
+  }
+
   dialogClose() {
     console.log('this is clicked');
+    // post call
+    this.postReqForBackOfficeUnmatchedFolios();
+
     this.eventService.changeUpperSliderState({ state: 'close' });
   }
 

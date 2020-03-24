@@ -56,7 +56,8 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="clientId" matInput class="form-control">
+                    <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        formControlName="clientId" matInput class="form-control">
                 </mat-form-field>
             </div>
         </div>
@@ -103,7 +104,8 @@
         <div class="col-md-3 pr-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="brokerPhone" matInput class="form-control">
+                    <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        formControlName="brokerPhone" matInput class="form-control">
                     <mat-hint>Optional</mat-hint>
                 </mat-form-field>
             </div>
@@ -185,9 +187,9 @@
             <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-raised-button class="br-0 text-inherit mr-12">SAVE & NEXT
+            <button mat-raised-button (click)="saveNext()" class="br-0 text-inherit mr-12">SAVE & NEXT
             </button>
-            <button mat-stroked-button class="btn-bottom br-0 text-inherit">SAVE & CLOSE
+            <button mat-stroked-button (click)="saveClose()" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
             </button>
         </div>
     </div>

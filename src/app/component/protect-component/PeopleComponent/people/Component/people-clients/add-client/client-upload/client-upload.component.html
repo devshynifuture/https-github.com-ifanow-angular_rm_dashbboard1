@@ -3,7 +3,6 @@
         <h5 class="m-0 text-black pb-10">Company PAN</h5>
         <mat-card class="upload-card">
             <p class="m-0 roboto text-black">Drag & drop file here or Browse
-
             </p>
         </mat-card>
         <div class="col-md-12 upload-actions pr-0">
@@ -93,9 +92,7 @@
             <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-raised-button class="br-0 text-inherit mr-12">SAVE & NEXT
-            </button>
-            <button mat-stroked-button class="btn-bottom br-0 text-inherit">SAVE & CLOSE
+            <button mat-stroked-button (click)="saveClose()" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
             </button>
         </div>
     </div>

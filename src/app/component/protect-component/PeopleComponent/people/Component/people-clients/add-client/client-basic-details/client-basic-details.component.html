@@ -38,8 +38,8 @@
             <div class="col-md-6 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field floatLabel="never" appearance="standard">
-                        <input autocomplete="off" formControlName="fullName" matInput placeholder="Enter Name"
-                            class="form-control">
+                        <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
+                            formControlName="fullName" matInput placeholder="Enter Name" class="form-control">
                     </mat-form-field>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-44">
+        <div *ngFor="let number of getMobileNumList.controls;index as i" [formGroup]="number" class="row pt-44">
             <div class="col-md-4 text-right">
                 <h5 class="m-0 pt-12">Mobile number</h5>
             </div>
@@ -67,7 +67,7 @@
             <div class="col-md-2 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select class="form-control">
+                        <mat-select formControlName="code" class="form-control">
                             <mat-option selected value="Resident">+91</mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -77,7 +77,8 @@
             <div class="col-md-4 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" autocomplete="off"
+                        <input appInputValueValidation formControlName="number"
+                            [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" autocomplete="off"
                             formControlName="mobileNo" matInput class="form-control">
                         <mat-hint>Optional</mat-hint>
                     </mat-form-field>
@@ -85,8 +86,11 @@
             </div>
 
             <div class="col-md-1 d-flex align-items-center">
-                <i class="material-icons c-p f-20">
+                <i (click)="addNumber()" class="material-icons c-p f-20">
                     add
+                </i>
+                <i (click)="removeNumber(i)" class="material-icons c-p f-20">
+                    remove
                 </i>
             </div>
         </div>
@@ -97,7 +101,7 @@
             <div class="col-md-3 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" formControlName="pan" matInput class="form-control">
+                        <input autocomplete="off" formControlName="pan" maxlength="10" matInput class="form-control">
                         <mat-hint>Optional</mat-hint>
                         <mat-hint align="end">0 / 10</mat-hint>
                     </mat-form-field>
@@ -117,7 +121,8 @@
             <div class="col-md-6 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" formControlName="username" matInput class="form-control">
+                        <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
+                            formControlName="username" matInput class="form-control">
                     </mat-form-field>
                 </div>
             </div>
@@ -269,9 +274,9 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-raised-button class="br-0 text-inherit mr-12">SAVE & NEXT
+            <button mat-raised-button (click)="saveNext()" class="br-0 text-inherit mr-12">SAVE & NEXT
             </button>
-            <button mat-stroked-button class="btn-bottom br-0 text-inherit">SAVE & CLOSE
+            <button mat-stroked-button (click)="saveClose()" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
             </button>
         </div>
     </div>

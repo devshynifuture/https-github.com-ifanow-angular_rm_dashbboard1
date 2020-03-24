@@ -1,23 +1,23 @@
 <div class="row pt-130">
     <div class="col-md-12 text-right">
-        <button mat-stroked-button class="text-primary">Personal profile</button>
-        <button mat-button>Organization profile</button>
+        <button mat-stroked-button class="text-primary" (click)="openOrg(false)"> Personal profile</button>
+        <button mat-button (click)="openOrg(true)">Organization profile</button>
     </div>
 </div>
-<div class="row pt-28">
+<div class="row pt-28" *ngIf="orgProfile == false">
     <div class="col-md-12">
         <h4 class="m-0">Personal profile</h4>
     </div>
 </div>
 
-<div class="row pt-40 pb-20" id="ui-setting-profile">
+<div class="row pt-40 pb-20" id="ui-setting-profile" *ngIf="orgProfile == false">
     <div class="col-xl-2"></div>
-    <div class="col-xl-8">
+    <div class="col-xl-8" *ngIf="userList">
         <mat-card class="b-a p-0 br-4">
             <mat-card-header class="bg-grey lter wrapper-18 ">
                 <div class="row w-100">
                     <div class="col-md-9 pl-0">
-                        <h2 class="m-0">Archit Gupta</h2>
+                        <h2 class="m-0">{{userList.name}}</h2>
                     </div>
                     <div class="col-md-3 p-0 text-right">
                         <button mat-stroked-button class="text-primary">ADMIN</button>
@@ -35,11 +35,11 @@
                 <div class="row">
                     <div class="col-md-6 pb-28">
                         <p class="f-12 mb-0 text-custom mt-28"> EMAIL</p>
-                        <p class="m-0">archit.gupta@acmefinancial.com</p>
+                        <p class="m-0">{{userList.emailId}}</p>
                         <p class="f-12 mb-0 text-custom mt-28"> MOBILE</p>
-                        <p class="m-0">+91 99874 12342</p>
+                        <p class="m-0">{{userList.mobileNo}}</p>
                         <p class="f-12 mb-0 text-custom mt-28"> USERNAME</p>
-                        <p class="m-0">archit.gupta@acmefinancial.com</p>
+                        <p class="m-0">{{userList.userName}}</p>
                     </div>
 
                     <div class="col-md-6 bl-1 pb-28">
@@ -56,14 +56,15 @@
     </div>
     <div class="col-xl-2"></div>
 </div>
+
 <!-- Organization profile -->
-<!-- <div class="row pt-28">
+<div class="row pt-28"  *ngIf="orgProfile == true"> 
     <div class="col-md-12">
         <h4 class="m-0">Organization profile</h4>
     </div>
 </div>
 
-<div class="row pt-40 pb-20" id="ui-setting-profile">
+<div class="row pt-40 pb-20" id="ui-setting-profile" *ngIf="orgProfile == true" >
     <div class="col-xl-2"></div>
     <div class="col-xl-8 p-0">
         <mat-card class="b-a p-0 br-4">
@@ -78,7 +79,7 @@
                             <mat-icon class="text-custom">more_vert</mat-icon>
                         </button>
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item>Edit</button>
+                            <button mat-menu-item (click)="OpenOrgProfile('','')">Edit</button>
                             <button mat-menu-item>Delete</button>
                         </mat-menu>
                     </div>
@@ -138,4 +139,4 @@
         </mat-card>
     </div>
     <div class="col-xl-2"></div>
-</div> -->
+</div>

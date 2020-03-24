@@ -59,7 +59,15 @@ export class ReconciliationService {
         return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_FOLIO_MASTER_DETAIL, data)
     }
 
+    getAumReportListValues(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_AUM_REPORT_LIST, data);
+    }
+
     // post functions
+
+    postBackOfficeUnmatchedFoliosData(data) {
+        return this.http.post(apiConfig.MAIN_URL + appConfig.BACKOFFICE_POST_UNMATCHED_FOLIOS_ADD, data);
+    }
 
     // put functions
     putBackofficeReconAdd(data) {

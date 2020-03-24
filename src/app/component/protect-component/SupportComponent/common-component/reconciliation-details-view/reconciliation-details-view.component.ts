@@ -54,7 +54,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
     const tableArr: PeriodicElement[] = [{
       unitsRta: this.data.unitsRta ? this.data.unitsRta : '',
-      unitOne: this.data.unitsIfnow ? this.data.unitsIfnow : '',
+      unitOne: this.data.unitsIfanow ? this.data.unitsIfanow : '',
       difference: this.data.difference ? this.data.difference : ''
     }]
 
@@ -198,7 +198,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
   allFolioTransactionTableDataBinding() {
     if (this.data.tableData.length !== 0) {
-      this.canDeleteTransaction = this.data.canDeleteTransaction;
+      this.canDeleteTransaction = this.data.canDeleteTransaction ? this.data.canDeleteTransaction : false;
 
       this.data.tableData.forEach(element => {
         this.tableData1.push({
@@ -211,6 +211,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
           actions: ''
         })
       });
+      console.log(this.tableData1);
       this.dataSource1.data = this.tableData1;
     }
   }

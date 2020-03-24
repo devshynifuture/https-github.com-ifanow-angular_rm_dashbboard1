@@ -6,7 +6,8 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="ifscCode" matInput class="form-control">
+                    <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        formControlName="ifscCode" matInput class="form-control">
                     <mat-hint>0 / 11</mat-hint>
                 </mat-form-field>
             </div>
@@ -19,7 +20,8 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="bankName" matInput class="form-control">
+                    <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
+                        formControlName="bankName" matInput class="form-control">
                 </mat-form-field>
             </div>
         </div>
@@ -44,7 +46,8 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="accNumber" matInput class="form-control">
+                    <input autocomplete="off" formControlName="accNumber" matInput appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" class="form-control">
                 </mat-form-field>
             </div>
         </div>
@@ -107,7 +110,8 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="branchPinCode" matInput class="form-control">
+                    <input autocomplete="off" formControlName="branchPinCode" matInput appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" class="form-control">
                 </mat-form-field>
             </div>
         </div>
@@ -167,9 +171,9 @@
             <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-raised-button class="br-0 text-inherit mr-12">SAVE & NEXT
+            <button mat-raised-button (click)="saveNext()" class="br-0 text-inherit mr-12">SAVE & NEXT
             </button>
-            <button mat-stroked-button class="btn-bottom br-0 text-inherit">SAVE & CLOSE
+            <button mat-stroked-button (click)="saveClose()" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
             </button>
         </div>
     </div>
