@@ -104,7 +104,8 @@
                         <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span> </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
-                        <div *ngIf="bondTotalSum">{{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{sumOfcurrentValue}}</span></div>
+                        <!-- *ngIf="bondTotalSum" for prod build -->
+                        <div >{{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{sumOfcurrentValue}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="emp">
