@@ -442,9 +442,6 @@ export const appConfig = {
   BACKOFFICE_PUT_FREEZE_FOLIO_DATA: 'backoffice/aum/freeze/folio',
   BACKOFFICE_PUT_UNFREEZE_FOLIO_DATA: 'backoffice/aum/unfreeze/folio',
   BACKOFFICE_GET_DUPLICATE_FOLIO_DATA: 'backoffice/duplicate/transaction/list/get',
-///org setting ////
-GET_PERSONAL_PROFILE:'setting/profile/personal/details/get',
-EDIT_PERSONAL_PROFILE:'',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
@@ -471,6 +468,8 @@ EDIT_PERSONAL_PROFILE:'',
   ADD_CLIENT_DEMAT: '',
   ADD_CLIENT_MORE_INFO: '',
   ADD_CLIENT_UPLOAD: '',
+  //////////////////////////////Login///////////////////////////////////
+  GENERATE_OTP: '/user/generate/otp',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_UPDATE: 'calendar/event/update',
@@ -478,5 +477,15 @@ EDIT_PERSONAL_PROFILE:'',
   GET_DELETE: 'calendar/event/detele',
   ////////////////////////////// calendar////////////////////////////////////////////
   ///////////////////////////////Postal////////////////////////////////
+
+  ////////////////////////////// settings////////////////////////////////////////////
+  GET_PERSONAL_PROFILE_DETAILS: 'setting/profile/personal/details/get',
+  UPLOAD_PERSONAL_PROFILE_PHOTO: 'setting/profile/personal/profile-photo/update',
+  ///org setting ////
+  GET_PERSONAL_PROFILE: 'setting/profile/personal/details/get',
+  GET_ORG_PROFILE: 'setting/profile/organisation/details/get',
+  EDIT_PERSONAL_PROFILE: 'setting/profile/personal/profile-photo/update',
+  EDIT_ORG_PROFILE: 'etting/profile/organisation/update',
+  ////////////////////////////// settings////////////////////////////////////////////
 
 };

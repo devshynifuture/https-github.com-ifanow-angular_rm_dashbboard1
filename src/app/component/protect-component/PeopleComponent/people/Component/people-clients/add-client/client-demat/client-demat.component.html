@@ -5,24 +5,28 @@
         </div>
         <div class="col-md-7 p-0 mode-holding">
             <mat-radio-group formControlName="modeOfHolding" aria-label="Select an option">
-                <mat-radio-button value="1" class="bu-primary">Single</mat-radio-button>
-                <mat-radio-button value="2" class="borderRadio">Joint</mat-radio-button>
+                <mat-radio-button value="1" [ngClass]="{'bu-primary': dematForm.get('modeOfHolding').value=='1'}"
+                    class="borderRadio">Single</mat-radio-button>
+                <mat-radio-button value="2" [ngClass]="{'bu-primary': dematForm.get('modeOfHolding').value=='2'}"
+                    class="borderRadio">Joint</mat-radio-button>
             </mat-radio-group>
         </div>
     </div>
-    <div class="row pt-44">
+    <div *ngFor="let holderName of holderNameList.controls;index as i" class="row pt-44">
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">First Holder Name</h5>
+            <h5 class="m-0 pt-8">{{i+1}} Holder Name</h5>
         </div>
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" matInput class="form-control">
+                    <input autocomplete="off" formControlName="holderName" matInput class="form-control">
                 </mat-form-field>
             </div>
         </div>
         <div class="col-md-2">
-            <p class="m-0 text-custom roboto pt-8">+ Add more</p>
+            <p class="m-0 text-custom roboto pt-8" (click)="addHolders()">+</p>
+            <p class="m-0 text-custom roboto pt-8" *ngIf="expression" (click)="removeHolders(i)">-
+            </p>
         </div>
     </div>
     <div class="row pt-44">

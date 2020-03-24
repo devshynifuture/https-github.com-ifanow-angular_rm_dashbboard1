@@ -7,7 +7,7 @@
                     <div class="row">
                         <div class="col-md-4 p-0">
                             <div class="imgDiv">
-                                <img class="c-p"  [src]="member.img">
+                                <img class="c-p" [src]="member.img">
                             </div>
                         </div>
                         <div class="col-md-8 pr-0">
@@ -125,7 +125,7 @@
                 <ng-container matColumnDef="action">
                     <th mat-header-cell *matHeaderCellDef> </th>
                     <td mat-cell class="text-center" *matCellDef="let element">
-                        <img class="c-p"  src="/assets/images/svg/dot-menu.svg">
+                        <img class="c-p" src="/assets/images/svg/dot-menu.svg">
                         <mat-menu #menu="matMenu">
                             <button mat-menu-item>
                                 <span>Edit</span>
@@ -146,24 +146,30 @@
         <h5 class="m-0 pt-20 pb-8">Full name</h5>
         <div class="form-group mb-0">
             <mat-form-field>
-                <input matInput class="form-control" formControlName="name">
+                <input matInput #fullName [maxLength]="50" appInputValueValidation
+                    [inputValidator]="validatorType.TEXT_ONLY" class="form-control" formControlName="name">
                 <mat-error>This field is required</mat-error>
+                <mat-hint align="end">{{fullName.value.length}}/50</mat-hint>
             </mat-form-field>
         </div>
         <h5 class="m-0 pt-20 pb-8">Email</h5>
         <div class="form-group mb-0">
             <mat-form-field>
                 <input matInput class="form-control" formControlName="email">
-                <mat-error *ngIf="!teamInviteForm.controls['email'].hasError('pattern')">This field is required</mat-error>
-                <mat-error *ngIf="teamInviteForm.controls['email'].hasError('pattern') && !teamInviteForm.controls['email'].hasError('required')">Please enter valid email</mat-error>
+                <mat-error *ngIf="!teamInviteForm.controls['email'].hasError('pattern')">This field is required
+                </mat-error>
+                <mat-error
+                    *ngIf="teamInviteForm.controls['email'].hasError('pattern') && !teamInviteForm.controls['email'].hasError('required')">
+                    Please enter valid email</mat-error>
             </mat-form-field>
         </div>
         <h5 class="m-0 pt-20 pb-8">Mobile</h5>
         <div class="form-group mb-0">
             <mat-form-field>
-                <input matInput appInputValueValidation
-                [inputValidator]="validatorType.NUMBER_ONLY" type="text" maxlength="10" class="form-control" formControlName="mobile">
+                <input matInput appInputValueValidation #num [inputValidator]="validatorType.NUMBER_ONLY" type="text"
+                    maxlength="10" class="form-control" formControlName="mobile">
                 <mat-error>This field is required</mat-error>
+                <mat-hint align="end">{{num.value.length}}/10</mat-hint>
             </mat-form-field>
         </div>
         <h5 class="m-0 pt-20 pb-8">Role</h5>
@@ -171,7 +177,8 @@
             <mat-form-field>
                 <mat-select class="form-control" formControlName="role">
                     <mat-option value="">Select a role</mat-option>
-                    <mat-option [value]="role.roleTypeId" *ngFor="let role of roleList">{{role.roleTypeName}}</mat-option>
+                    <mat-option [value]="role.roleTypeId" *ngFor="let role of roleList">{{role.roleTypeName}}
+                    </mat-option>
                 </mat-select>
                 <mat-error>This field is required</mat-error>
             </mat-form-field>
@@ -189,11 +196,13 @@
         <h5 class="m-0 pt-20 pb-8">EUIN</h5>
         <div class="form-group mb-0">
             <mat-form-field>
-                <input matInput class="form-control" formControlName="euin">
+                <input #euin matInput class="form-control" formControlName="euin">
                 <mat-hint>Optional</mat-hint>
+                <mat-hint align="end">{{euin.value.length}}/7</mat-hint>
             </mat-form-field>
         </div>
-        <button mat-stroked-button class="btn-primary w-100 mt-44 h-40 br-2" (click)="sendInvitation()" >Send invite</button>
+        <button mat-stroked-button class="btn-primary w-100 mt-44 h-40 br-2" (click)="sendInvitation()">Send
+            invite</button>
     </div>
 
 </div>
