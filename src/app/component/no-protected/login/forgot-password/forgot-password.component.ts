@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatInput } from '@angular/material';
 import { ValidatorType } from 'src/app/services/util.service';
 import { FormControl, Validators } from '@angular/forms';
+import { LoginService } from '../login.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -13,9 +15,11 @@ export class ForgotPasswordComponent implements OnInit {
   otp: any;
   validatorType = ValidatorType;
   otpData = [];
-  userName = new FormControl('', [Validators.required]);
-  constructor() { }
+  userName;
+  otpResponse: any;
+  constructor(private loginService: LoginService, private eventService: EventService) { }
   ngOnInit() {
+    this.userName = new FormControl('', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]);
   }
   config = {
     allowNumbersOnly: false,
@@ -49,10 +53,22 @@ export class ForgotPasswordComponent implements OnInit {
   }
   verify() {
     if (this.userName.invalid) {
+      this.userName.markAsTouched();
       return;
     }
     else {
-      (this.isVerify) ? this.isVerify = false : this.isVerify = true;
+      let obj =
+      {
+        "forEmail": this.userName.value
+      }
+      this.loginService.generateOtp(obj).subscribe(
+        data => {
+          console.log(data);
+          this.otpResponse = data;
+          (data == undefined) ? this.eventService.openSnackBar("error found", 'Dismiss') : (this.isVerify) ? this.isVerify = false : this.isVerify = true;
+        },
+        err => this.eventService.openSnackBar(err, "Dismiss")
+      )
     }
   }
 

@@ -8,7 +8,6 @@ import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { EventService } from 'src/app/Data-service/event.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
-import { OrgSettingServiceService } from '../../org-setting-service.service';
 
 @Component({
   selector: 'app-add-personal-profile',
@@ -31,7 +30,6 @@ export class AddPersonalProfileComponent implements OnInit {
     private settingsService: SettingsService,
     private event: EventService,
     private fb: FormBuilder,
-    private orgSetting: OrgSettingServiceService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -132,7 +130,7 @@ export class AddPersonalProfileComponent implements OnInit {
         mobileNo:this.personalProfile.controls.mobileNo.value ,
         roleId : 0,                                                                               
     }
-    this.orgSetting.editPersonalProfile(obj).subscribe(
+    this.settingsService.editPersonalProfile(obj).subscribe(
       data => {
         this.editPersonalProfileRes(data)
         this.anyDetailsChanged = true;

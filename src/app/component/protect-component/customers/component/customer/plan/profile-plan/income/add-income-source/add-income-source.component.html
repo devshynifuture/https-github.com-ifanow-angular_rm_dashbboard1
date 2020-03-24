@@ -22,7 +22,7 @@
             <div *ngFor="let singleIncome of singleIncomeSource.incomeTypeList">
                 <div class="incomeSourcesBox d-flex">
                     <div class="ml-12">
-                        <div (click)="select(singleIncome)" class="memberBorderBox"
+                        <div (click)="select(singleIncome)" class="memberBorderBox c-p"
                             [ngClass]="{'activeMemberBox': singleIncome.checked}">
                             <mat-checkbox class="checkPosition" *ngIf="singleIncome.checked" checked="true">
                             </mat-checkbox>
@@ -40,7 +40,7 @@
     </div>
 </div>
 
-<div class="bottom-fixed wrapper-16 pb-12">
+<div class="bottom-fixed wrapper-16 pb-12 w-65">
     <div class="row">
         <div class="col-md-4 p-0">
             <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="cancel()">Previous</h5>

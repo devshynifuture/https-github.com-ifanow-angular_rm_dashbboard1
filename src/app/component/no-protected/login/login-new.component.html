@@ -83,7 +83,8 @@
                             <mat-form-field floatLabel="never" appearance="standard">
                                 <input autocomplete="off" placeholder="Enter username" [formControl]="userName"
                                     tabindex="1" class="form-control br-0" matInput>
-                                <mat-error>Username required</mat-error>
+                                <mat-error *ngIf="userName.hasError('required')">Username required</mat-error>
+                                <mat-error *ngIf="userName.hasError('pattern')">Invalid username</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
