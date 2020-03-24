@@ -7,6 +7,7 @@ import { SubscriptionInject } from '../../../../Subscriptions/subscription-injec
 import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-upload.service';
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { SettingsService } from '../../../settings.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-org-profile',
@@ -15,11 +16,11 @@ import { SettingsService } from '../../../settings.service';
 })
 export class OrgProfileComponent implements OnInit {
   orgProfile: any;
+  advisorId: any;
 
   profileImg: string = ''
   reportImg: string = ''
   finalImage: any;
-  advisorId: any;
   imageUploadEvent: any;
   showCropper: boolean = false;
   cropImage: boolean = false;
@@ -34,10 +35,12 @@ export class OrgProfileComponent implements OnInit {
     private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject,
     private settingsService: SettingsService,
-  ) { }
+  ) {
+    this.advisorId = AuthService.getAdvisorId();
+  }
 
   ngOnInit() {
-    this.getdataForm('')
+    this.getdataForm('');
   }
 
   Close(flag) {
@@ -64,18 +67,18 @@ export class OrgProfileComponent implements OnInit {
 
   updateOrgProfile(){
     let obj = {
-      advisorId:this.orgProfile.controls.value,
-      companyName: this.orgProfile.controls.value,
-      email:this.orgProfile.controls.value ,
-      website:this.orgProfile.controls.value ,
-      billerAddress:this.orgProfile.controls.value ,
-      city: this.orgProfile.controls.value,
-      state:this.orgProfile.controls.value ,
-      country: this.orgProfile.controls.value,
-      zipCode:this.orgProfile.controls.value ,
-      gstTreatmentId:this.orgProfile.controls.value ,
-      gstin: this.orgProfile.controls.value,
-      logoUrl: this.orgProfile.controls.value,
+      advisorId:this.advisorId,
+      companyName: this.orgProfile.controls.companyName.value,
+      email:this.orgProfile.controls.emailId.value ,
+      website:this.orgProfile.controls.website.value ,
+      billerAddress:this.orgProfile.controls.address.value ,
+      // city: this.orgProfile.controls.value,
+      // state:this.orgProfile.controls.value ,
+      // country: this.orgProfile.controls.value,
+      // zipCode:this.orgProfile.controls.value ,
+      gstTreatmentId:this.orgProfile.controls.gstTreatment.value ,
+      gstin: this.orgProfile.controls.gstNumber.value,
+      logoUrl: null,
       cloudinary_json: null,
       reportLogoUrl: this.orgProfile.controls.value,
       report_cloudinary_json: null

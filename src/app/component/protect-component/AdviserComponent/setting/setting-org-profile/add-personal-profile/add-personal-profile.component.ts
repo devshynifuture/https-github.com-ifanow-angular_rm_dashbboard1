@@ -92,10 +92,11 @@ export class AddPersonalProfileComponent implements OnInit {
   // save the changes of current page only
   saveCurrentPage(){
     // selected tab 1 - profile image
+    // 2 - profile details
     if (this.selectedTab == 1) {
       this.saveImage();
     } else {
-      
+      this.updatePersonalProfile();
     }
   }
 
@@ -121,15 +122,21 @@ export class AddPersonalProfileComponent implements OnInit {
     return this.personalProfile.controls;
   }
 
+
   updatePersonalProfile() {
     let obj = {
-      name: this.personalProfile.controls.name.value,
-      email: this.personalProfile.controls.emailId.value,
-      userName: this.personalProfile.controls.userName.value,
-      mobileNo: this.personalProfile.controls.mobileNo.value,
+      advisorId:this.advisorId,
+        name: this.personalProfile.controls.name.value,
+        emailId:this.personalProfile.controls.emailId.value ,
+        userName:this.personalProfile.controls.userName.value ,
+        mobileNo:this.personalProfile.controls.mobileNo.value ,
+        roleId : 0,                                                                               
     }
     this.orgSetting.editPersonalProfile(obj).subscribe(
-      data => this.editPersonalProfileRes(data),
+      data => {
+        this.editPersonalProfileRes(data)
+        this.anyDetailsChanged = true;
+      },
       err => this.event.openSnackBar(err, "Dismiss")
     );
   }

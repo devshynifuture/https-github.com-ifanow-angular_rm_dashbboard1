@@ -18,17 +18,21 @@ export class SettingOrgProfileComponent implements OnInit {
   userList: any;
   orgDetails: any;
 
-  constructor(private eventService: EventService,
-    private utilService: UtilService, private subInjectService: SubscriptionInject, private orgSetting: OrgSettingServiceService, ) { }
+  constructor(
+    private eventService: EventService,
+    private subInjectService: SubscriptionInject, 
+    private orgSetting: OrgSettingServiceService, 
+  ) {
+    this.advisorId = AuthService.getAdvisorId()
+  }
 
   ngOnInit() {
     this.getPersonalProfiles()
     this.orgProfile =false
-    this.advisorId = AuthService.getAdvisorId()
   }
   getPersonalProfiles() {
     let obj = {
-      id:414
+      id:this.advisorId
     }
     this.orgSetting.getPersonalProfile(obj).subscribe(
       data => this.getPersonalProfileRes(data),
