@@ -5,8 +5,10 @@
         </div>
         <div class="col-md-7 p-0 mode-holding">
             <mat-radio-group formControlName="modeOfHolding" aria-label="Select an option">
-                <mat-radio-button value="1" class="bu-primary">Single</mat-radio-button>
-                <mat-radio-button value="2" class="borderRadio">Joint</mat-radio-button>
+                <mat-radio-button value="1" [ngClass]="{'bu-primary': dematForm.get('modeOfHolding').value=='1'}"
+                    class="borderRadio">Single</mat-radio-button>
+                <mat-radio-button value="2" [ngClass]="{'bu-primary': dematForm.get('modeOfHolding').value=='2'}"
+                    class="borderRadio">Joint</mat-radio-button>
             </mat-radio-group>
         </div>
     </div>

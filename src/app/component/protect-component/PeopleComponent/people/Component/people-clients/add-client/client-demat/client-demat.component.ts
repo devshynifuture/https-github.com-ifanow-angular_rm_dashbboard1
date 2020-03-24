@@ -16,7 +16,7 @@ export class ClientDematComponent implements OnInit {
   @Output() tabChange = new EventEmitter();
   ngOnInit() {
     this.dematForm = this.fb.group({
-      modeOfHolding: [],
+      modeOfHolding: ['1'],
       depositoryPartName: [],
       depositoryPartId: [],
       clientId: [],

@@ -8,8 +8,10 @@
             <div class="col-md-6 p-0">
                 <div class="form-group">
                     <mat-form-field>
-                        <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
-                            formControlName="displayName" matInput class="form-control">
+                        <input autocomplete="off" #displayName appInputValueValidation
+                            [inputValidator]="validatorType.TEXT_ONLY" formControlName="displayName" matInput
+                            [maxLength]="50" class="form-control">
+                        <mat-hint align="end">{{displayName.value.length}}/50</mat-hint>
                         <mat-hint>Optional</mat-hint>
                     </mat-form-field>
                 </div>
@@ -22,9 +24,10 @@
             <div class="col-md-4 p-0">
                 <div class="form-group">
                     <mat-form-field>
-                        <input autocomplete="off" formControlName="adhaarNo" matInput class="form-control">
+                        <input autocomplete="off" [maxLength]="12" #adharNum formControlName="adhaarNo" matInput
+                            class="form-control">
                         <mat-hint>Optional</mat-hint>
-                        <mat-hint align="end">0 / 12</mat-hint>
+                        <mat-hint align="end">{{adharNum.value.length}} / 12</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -51,9 +54,10 @@
             <div class="col-md-7 p-0">
                 <div class="form-group">
                     <mat-form-field>
-                        <input autocomplete="off" matInput formControlName="occupation" appInputValueValidation
-                            [inputValidator]="validatorType.TEXT_ONLY" class="form-control">
+                        <input autocomplete="off" #occupation matInput [maxLength]="30" formControlName="occupation"
+                            appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" class="form-control">
                         <mat-hint>Optional</mat-hint>
+                        <mat-hint align="end">{{occupation.value.length}}/30</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -64,11 +68,17 @@
             </div>
             <div class="col-md-7 p-0 marital-status">
                 <mat-radio-group formControlName="maritalStatus" aria-label="Select an option">
-                    <mat-radio-button value="1" class="text-primary bu-primary">Married
+                    <mat-radio-button value="1" class="borderRadio"
+                        [ngClass]="{'bu-primary': moreInfoForm.get('maritalStatus').value=='1'}">
+                        Married
                     </mat-radio-button>
-                    <mat-radio-button value="2" class="text-custom borderRadio">Unmarried
+                    <mat-radio-button value="2" class="borderRadio"
+                        [ngClass]="{'bu-primary': moreInfoForm.get('maritalStatus').value=='2'}">
+                        Unmarried
                     </mat-radio-button>
-                    <mat-radio-button value="3" class="text-custom borderRadio">Other</mat-radio-button>
+                    <mat-radio-button value="3" class="borderRadio"
+                        [ngClass]="{'bu-primary': moreInfoForm.get('maritalStatus').value=='3'}">
+                        Other</mat-radio-button>
                 </mat-radio-group>
             </div>
         </div>
@@ -98,10 +108,10 @@
             <div class="col-md-5 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <textarea autocomplete="off" formControlName="bio" matInput class="form-control"
-                            rows="5"></textarea>
+                        <textarea autocomplete="off" maxlength="200" #bio formControlName="bio" matInput
+                            class="form-control" rows="5"></textarea>
                         <mat-hint>optional</mat-hint>
-                        <mat-hint align="end">0/200</mat-hint>
+                        <mat-hint align="end">{{bio.value.length}}/200</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -114,10 +124,10 @@
             <div class="col-md-5 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <textarea autocomplete="off" formControlName="myNotes" matInput class="form-control"
+                        <textarea #myNotes autocomplete="off" formControlName="myNotes" matInput class="form-control"
                             rows="5"></textarea>
                         <mat-hint>optional</mat-hint>
-                        <mat-hint align="end">0/200</mat-hint>
+                        <mat-hint align="end">{{myNotes.value.length}}/200</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
