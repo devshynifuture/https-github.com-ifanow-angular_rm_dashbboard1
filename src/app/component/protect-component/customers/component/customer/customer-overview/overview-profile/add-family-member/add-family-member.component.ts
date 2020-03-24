@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { element } from 'protractor';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-add-family-member',
@@ -12,6 +13,7 @@ export class AddFamilyMemberComponent implements OnInit {
   displayedColumns: string[] = ['details', 'status', 'pan', 'relation', 'gender', 'add', 'remove'];
   dataSource = ELEMENT_DATA;
   typeOfFamilyMemberAdd;
+  selectedCount = 0;
   step = 1;
   createFamily: any;
   familyMemberList = {
@@ -29,7 +31,7 @@ export class AddFamilyMemberComponent implements OnInit {
       { name: 'Others', imgUrl: '/assets/images/svg/man-profile.svg', selected: false, count: 0 }
     ]
   }
-  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder) { }
+  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService) { }
 
   ngOnInit() {
     this.createFamily = this.fb.group({
@@ -56,7 +58,14 @@ export class AddFamilyMemberComponent implements OnInit {
     }
   }
   selectFamilyMembers(selectedFamilyMember) {
-    (selectedFamilyMember.selected) ? selectedFamilyMember.selected = false : selectedFamilyMember.selected = true;
+    if (selectedFamilyMember.selected) {
+      selectedFamilyMember.selected = false;
+      this.selectedCount--;
+    }
+    else {
+      selectedFamilyMember.selected = true;
+      this.selectedCount++;
+    }
   }
   remove(selectedMember) {
     (selectedMember.count > 0) ? selectedMember.count-- : '';
@@ -69,6 +78,10 @@ export class AddFamilyMemberComponent implements OnInit {
   }
   familyMemberNameList = [];
   createFamilyMember() {
+    if (this.selectedCount == 0) {
+      this.eventService.openSnackBar("Please select member", "dismiss")
+      return;
+    }
     this.familyMemberList.firstRow.forEach(element => {
       if (element.selected) {
         this.getFamilyListList.push(
@@ -95,7 +108,14 @@ export class AddFamilyMemberComponent implements OnInit {
           date: [, [Validators.required]]
         }))
         this.familyMemberNameList.push(element.name)
+        element.count--;
       }
+      // else {
+      //   this.getFamilyListList.push(this.fb.group({
+      //     name: [, [Validators.required]],
+      //     date: [, [Validators.required]]
+      //   }))
+      // }
     })
     this.step++;
   }

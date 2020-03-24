@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-client-more-info',
@@ -8,8 +10,9 @@ import { FormBuilder } from '@angular/forms';
 })
 export class ClientMoreInfoComponent implements OnInit {
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject) { }
   moreInfoForm;
+  validatorType = ValidatorType
   @Input() fieldFlag;
   @Output() tabChange = new EventEmitter();
   ngOnInit() {
@@ -18,11 +21,20 @@ export class ClientMoreInfoComponent implements OnInit {
       adhaarNo: [],
       taxStatus: [],
       occupation: [],
-      maritalStatus: [],
+      maritalStatus: ['1'],
       anniversaryStatus: [],
       bio: [],
       myNotes: []
     })
+  }
+  saveNext() {
+    this.tabChange.emit(1);
+  }
+  saveClose() {
+    this.close();
+  }
+  close() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
 }

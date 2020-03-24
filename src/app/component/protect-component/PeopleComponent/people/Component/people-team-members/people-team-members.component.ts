@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup,FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ValidatorType } from 'src/app/services/util.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 
 @Component({
@@ -12,7 +13,71 @@ export class PeopleTeamMembersComponent implements OnInit {
   displayedColumns: string[] = ['name', 'mobile', 'email', 'type', 'map', 'action'];
   dataSource = ELEMENT_DATA;
   validatorType = ValidatorType;
-  constructor(private fb: FormBuilder) { }
+  roleList:any= [];
+  teamList = [{
+    name: "Archit Gupta",
+    email: "abc@gmail.com",
+    mobile: "9088888800",
+    role: 1,
+    lead: 4,
+    euin: 1289777,
+    roleTypeName:"Admin",
+    clients: 32,
+    img:"/assets/images/svg/chotu-avtar.svg"
+  },
+  {
+    name: "Nita Shinde",
+    email: "abc@gmail.com",
+    mobile: "9088888800",
+    role: 2,
+    lead: 4,
+    euin: 1289777,
+    roleTypeName:"Para planner",
+    clients: 12,
+    img:"/assets/images/svg/nita-avtar.svg"
+  },
+  {
+    name: "Khushboo Sidapara",
+    email: "abc@gmail.com",
+    mobile: "9088888800",
+    role: 3,
+    lead: 4,
+    euin: 1289777,
+    roleTypeName:"Relationship manager",
+    clients: 76,
+    img:"/assets/images/svg/khushboo-avtar.svg"
+  },
+  {
+    name: "Archit Gupta",
+    email: "abc@gmail.com",
+    mobile: "9088888800",
+    role: 2,
+    lead: 4,
+    euin: 1289777,
+    roleTypeName:"Operations",
+    clients: 78,
+    img:"/assets/images/svg/chotu-avtar.svg"
+  },
+  {
+  name: "Sajith Thilakan",
+    email: "abc@gmail.com",
+    mobile: "9088888800",
+    role: 2,
+    lead: 4,
+    euin: 1289777,
+    clients: 123,
+    roleTypeName:"Para planner",
+    img:"/assets/images/svg/chotu-avtar.svg"
+  }
+]
+
+leadList = [
+  {id:1, name:"Nitin Birde"},
+  {id:2, name:"Rajesh Shah"},
+  {id:3, name:"Devid Bekam"},
+  {id:4, name:"Dinesh Bhogale"},
+]
+  constructor(private fb: FormBuilder, private enumService: EnumServiceService) { }
 teamInviteForm:FormGroup;
   ngOnInit() {
     this.teamInviteForm = this.fb.group({
@@ -21,8 +86,16 @@ teamInviteForm:FormGroup;
       mobile:['',[Validators.required]],
       role:['',[Validators.required]],
       lead:['',[Validators.required]],
-      euin:['',[Validators.required]]
+      euin:[''],
+      clients:[''],
+      roleTypeName:[''],
+      img:['']
     })
+    this.roleList = this.enumService.getRoles();
+  }
+
+  viewEditMember(member){
+    this.teamInviteForm.setValue(member);
   }
 
   sendInvitation(){

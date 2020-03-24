@@ -822,7 +822,7 @@ export class DocumentComponent implements OnInit {
   saveMappingDocumentToPlansResponse(data) {
     console.log("response status:::::::::::::::", data);
     
-    this.changeServiceData.emit(true);
+    this.changeServiceData.emit(this.upperData);
     // this.eventService.changeUpperSliderState({ state: 'close' });
     if (this.mappedData.length == 0) {
       this.eventService.openSnackBar('No document mapped', 'Dismiss');
@@ -908,7 +908,7 @@ export class DocumentComponent implements OnInit {
     } else {
       this.eventService.openSnackBar('Documents mapped', 'OK');
     }
-    this.changeServiceData.emit(true);
+    this.changeServiceData.emit(this.upperData);
     this.router.navigate(['/admin/subscription/settings','services']);
     this.location.replaceState('/admin/subscription/settings/services');
 

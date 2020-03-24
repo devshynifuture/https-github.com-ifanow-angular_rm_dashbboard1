@@ -9,15 +9,18 @@ import {ErrorPageComponent} from './error-page/error-page.component';
 import {DataNotFoundComponent} from './data-not-found/data-not-found.component';
 // import {PhotoUploadComponent} from './photo-upload/photo-upload.component';
 import {FileUploadModule} from 'ng2-file-upload';
+import { ImageCropperComponent } from './image-cropper/image-cropper.component';
 // import { OwnerNomineeComponent } from './owner-nominee/owner-nominee.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
   declarations: [
-    FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent /*PhotoUploadComponent*/],
-  exports: [FroalaComponent, ConfirmDialogComponent, /*PhotoUploadComponent*/],
+    FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, ImageCropperComponent],
+  exports: [FroalaComponent, ConfirmDialogComponent, ImageCropperComponent],
   imports: [
     MaterialModule,
     CommonModule,
+    ImageCropperModule,
     FormsModule,
     ReactiveFormsModule,
     FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),
@@ -25,7 +28,7 @@ import {FileUploadModule} from 'ng2-file-upload';
     FileUploadModule
     // AppModule
   ],
-  entryComponents: [ConfirmDialogComponent]
+  entryComponents: [ConfirmDialogComponent, ImageCropperComponent]
 })
 export class CommonComponentModule {
 }

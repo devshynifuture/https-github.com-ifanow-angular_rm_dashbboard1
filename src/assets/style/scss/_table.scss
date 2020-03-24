@@ -107,6 +107,7 @@ table {
     letter-spacing: normal;
     text-transform: initial !important;
     // white-space: normal !important;
+        white-space: initial;
   }
 
   tr {
@@ -163,9 +164,11 @@ table {
 }
 
 @media(min-width:1250px) {
+
   #tbs th {
     z-index: 100 !important;
   }
+
 }
 
 @media(max-width:1250px) {
@@ -208,6 +211,15 @@ table {
       right: -3px !important;
     }
   }
+    #tbs {
+
+
+  .mat-sort-header-button {
+
+  
+        white-space: nowrap;
+  }
+}
 }
 
 tr.mat-row:hover>td.mat-table-sticky {

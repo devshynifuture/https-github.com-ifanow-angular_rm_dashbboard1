@@ -61,82 +61,18 @@
                             <p class="memberName">Family members</p>
 
                             <div class="memberSlider">
-
-                                <div class="memberList primary-border">
+                                <div (click)="open('edit',null)" *ngFor="let singleMembers of familyMemberList"
+                                    class="memberList primary-border c-p">
                                     <img src="/assets/images/svg/women-profile-icon.svg">
                                     <div class="familyList">
-                                        <h4 class="f-12 m-0">Harish</h4>
-                                        <p class="f-12 m-0 text-primitive">Spouse </p>
-                                        <p class="f-12 m-0 text-primitive">35 Years</p>
+                                        <h4 class="f-12 m-0">{{singleMembers.name}}</h4>
+                                        <p class="f-12 m-0 text-primitive">{{singleMembers.type}} </p>
+                                        <p class="f-12 m-0 text-primitive">{{singleMembers.age}}</p>
                                     </div>
                                 </div>
-
-                                <div class="memberList primary-border">
-                                    <img src="/assets/images/svg/women-profile-icon.svg">
-                                    <div class="familyList">
-                                        <h4 class="f-12 m-0">Shilpa</h4>
-                                        <p class="f-12 m-0 text-primitive">Spouse </p>
-                                        <p class="f-12 m-0 text-primitive">35 Years</p>
-                                    </div>
-                                </div>
-
-                                <div class="memberList primary-border">
-                                    <img src="/assets/images/svg/women-profile-icon.svg">
-                                    <div class="familyList">
-                                        <h4 class="f-12 m-0">Shilpa</h4>
-                                        <p class="f-12 m-0 text-primitive">Spouse </p>
-                                        <p class="f-12 m-0 text-primitive">35 Years</p>
-                                    </div>
-                                </div>
-
-                                <div class="memberList primary-border">
-                                    <img src="/assets/images/svg/father-profile-icon.svg">
-                                    <div class="familyList">
-                                        <h4 class="f-12 m-0">Harish</h4>
-                                        <p class="f-12 m-0 text-primitive">Father </p>
-                                        <p class="f-12 m-0 text-primitive">65 Years</p>
-                                    </div>
-                                </div>
-
-                                <div class="memberList primary-border">
-                                    <img src="/assets/images/svg/mother-profile-icon.svg">
-                                    <div class="familyList">
-                                        <h4 class="f-12 m-0">Rita</h4>
-                                        <p class="f-12 m-0 text-primitive">Mother </p>
-                                        <p class="f-12 m-0 text-primitive">62 Years</p>
-                                    </div>
-                                </div>
-
-                                <div class="memberList primary-border">
-                                    <img src="/assets/images/svg/women-profile-icon.svg">
-                                    <div class="familyList">
-                                        <h4 class="f-12 m-0">Shreya</h4>
-                                        <p class="f-12 m-0 text-primitive">Daughter </p>
-                                        <p class="f-12 m-0 text-primitive">8 Years</p>
-                                    </div>
-                                </div>
-
-                                <div class="memberList primary-border">
-                                    <img src="/assets/images/svg/women-profile-icon.svg">
-                                    <div class="familyList">
-                                        <h4 class="f-12 m-0">Rhea</h4>
-                                        <p class="f-12 m-0 text-primitive">Daughter </p>
-                                        <p class="f-12 m-0 text-primitive">6 Years</p>
-                                    </div>
-                                </div>
-
-                                <div class="memberList primary-border">
-                                    <img src="/assets/images/svg/women-profile-icon.svg">
-                                    <div class="familyList">
-                                        <h4 class="f-12 m-0">Rhea</h4>
-                                        <p class="f-12 m-0 text-primitive">Daughter </p>
-                                        <p class="f-12 m-0 text-primitive">6 Years</p>
-                                    </div>
-                                </div>
-
                             </div>
 
-                            <div (click)="open(null)" class="addFamilyMember c-p primary-border-dash">
+                            <div (click)="open('add',null)" class="addFamilyMember c-p primary-border-dash">
                                 <i class=" material-icons text-primary ">
                                     add
                                 </i>

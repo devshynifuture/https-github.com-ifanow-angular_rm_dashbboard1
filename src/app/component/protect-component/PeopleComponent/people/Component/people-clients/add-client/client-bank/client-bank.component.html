@@ -6,8 +6,9 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="ifscCode" matInput class="form-control">
-                    <mat-hint>0 / 11</mat-hint>
+                    <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC"
+                        formControlName="ifscCode" #ifcCode [maxLength]="12" matInput class="form-control">
+                    <mat-hint align="end" class="f-12">{{ifcCode.value.length}}/12</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -19,7 +20,10 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="bankName" matInput class="form-control">
+                    <input autocomplete="off" [maxLength]="50" #bankName appInputValueValidation
+                        [inputValidator]="validatorType.TEXT_ONLY" formControlName="bankName" matInput
+                        class="form-control">
+                    <mat-hint align="end">{{bankName.value.length}}/50</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -31,8 +35,9 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="micrName" matInput class="form-control">
-                    <mat-hint>0 / 9</mat-hint>
+                    <input #micr autocomplete="off" [maxLength]="9" formControlName="micrName" matInput
+                        class="form-control">
+                    <mat-hint align="end">{{micr.value.length}} / 9</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -44,7 +49,9 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="accNumber" matInput class="form-control">
+                    <input autocomplete="off" #accNum [maxLength]="16" formControlName="accNumber" matInput
+                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control">
+                    <mat-hint align="end">{{accNum.value.length}} / 16</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -55,9 +62,12 @@
         </div>
         <div class="col-md-8 p-0 account-type">
             <mat-radio-group formControlName="accType" aria-label="Select an option">
-                <mat-radio-button value="1" class="bu-primary">Savings</mat-radio-button>
-                <mat-radio-button value="2" class="borderRadio">Current</mat-radio-button>
-                <mat-radio-button value="3" class="borderRadio">Cash credit</mat-radio-button>
+                <mat-radio-button value="1" [ngClass]="{'bu-primary': bankForm.get('accType').value==1}"
+                    class="borderRadio">Savings</mat-radio-button>
+                <mat-radio-button value="2" [ngClass]="{'bu-primary': bankForm.get('accType').value==2}"
+                    class="borderRadio">Current</mat-radio-button>
+                <mat-radio-button value="3" [ngClass]="{'bu-primary': bankForm.get('accType').value==3}"
+                    class="borderRadio">Cash credit</mat-radio-button>
             </mat-radio-group>
         </div>
     </div>
@@ -83,7 +93,9 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="branchName" matInput class="form-control">
+                    <input #branchName autocomplete="off" formControlName="branchName" appInputValueValidation
+                        [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" matInput class="form-control">
+                    <mat-hint align="end">{{branchName.value.length}}/50</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -107,7 +119,10 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="branchPinCode" matInput class="form-control">
+                    <input autocomplete="off" [maxLength]="7" formControlName="branchPinCode" #branchCode matInput
+                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control">
+                    <mat-hint align="end" class="f-12">{{branchCode.value.length}}/7</mat-hint>
+
                 </mat-form-field>
             </div>
         </div>
@@ -167,9 +182,9 @@
             <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-raised-button class="br-0 text-inherit mr-12">SAVE & NEXT
+            <button mat-raised-button (click)="saveNext()" class="br-0 text-inherit mr-12">SAVE & NEXT
             </button>
-            <button mat-stroked-button class="btn-bottom br-0 text-inherit">SAVE & CLOSE
+            <button mat-stroked-button (click)="saveClose()" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
             </button>
         </div>
     </div>

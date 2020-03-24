@@ -7,9 +7,10 @@ import { AddFamilyMemberComponent } from './overview-profile/add-family-member/a
 import { HistoryViewComponent } from './overview-profile/history-view/history-view.component';
 import { ViewActivityComponent } from './overview-documents/view-activity/view-activity.component';
 import { DocumentNewFolderComponent } from '../../common-component/document-new-folder/document-new-folder.component';
+import { PeopleEntryModule } from 'src/app/component/protect-component/PeopleComponent/people/people-entry-module';
 
 
-export const componentList = [AddFamilyMemberComponent, HistoryViewComponent, ViewActivityComponent,DocumentNewFolderComponent];
+export const componentList = [AddFamilyMemberComponent, HistoryViewComponent, ViewActivityComponent, DocumentNewFolderComponent];
 @NgModule({
     declarations: [componentList],
     imports: [
@@ -18,6 +19,7 @@ export const componentList = [AddFamilyMemberComponent, HistoryViewComponent, Vi
         ChartModule,
         FormsModule,
         ReactiveFormsModule,
+        PeopleEntryModule
     ],
     entryComponents: [componentList]
 })
