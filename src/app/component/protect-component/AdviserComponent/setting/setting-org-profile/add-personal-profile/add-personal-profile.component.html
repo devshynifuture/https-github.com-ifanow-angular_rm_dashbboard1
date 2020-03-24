@@ -10,7 +10,7 @@
 </div>
 
 <div [formGroup]="personalProfile"  class="pt-90 pl-40 pr-40" id="ui-add-personal-profile">
-    <mat-tab-group animationDuration="0ms" (selectedTabChange)="tabChange($event)">
+    <mat-tab-group animationDuration="0ms" (selectedTabChange)="resetPageVariables()" [(selectedIndex)]="selectedTab">
         <mat-tab label="Profile">
             <div class="row pt-40">
                 <div class="col-md-4 text-right pr-0">
@@ -80,8 +80,6 @@
                     <div *ngIf="!showCropper"><h5 class="m-0 pt-8">Upload a photo to edit and upload.</h5></div>
                     <div class="image-cropper">
                         <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)"></app-image-cropper>
-                    </div>
-                    <div class="final-image">
                     </div>
                     <div class="profile-img" [hidden]="!showCropper">
                         <img [src]="finalImage" alt="cropped Image" class="w-100">

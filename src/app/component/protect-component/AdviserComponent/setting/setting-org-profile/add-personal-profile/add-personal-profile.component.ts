@@ -19,14 +19,11 @@ export class AddPersonalProfileComponent implements OnInit {
   imgURL: string = ''
   finalImage: any;
   advisorId: any;
-  uploadedImageURL: any;
-  uploadedImage: string;
-  selected: number;
-  barButtonOptions: any;
   imageUploadEvent: any;
   showCropper: boolean = false;
   cropImage: boolean = false;
   selectedTab:number = 0;
+  anyDetailsChanged:boolean; // check if any details have been updated
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -72,13 +69,15 @@ export class AddPersonalProfileComponent implements OnInit {
               profilePic: responseObject.url
             }
             this.settingsService.uploadProfilePhoto(jsonDataObj).subscribe((res) => {
+              this.anyDetailsChanged = true;
+              this.imgURL = jsonDataObj.profilePic;
               this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
-              this.Close(true);
+              this.Close(this.anyDetailsChanged);
             });
           }
         });
     } else {
-      this.Close(false);
+      this.Close(this.anyDetailsChanged);
     }
   }
 
@@ -100,13 +99,8 @@ export class AddPersonalProfileComponent implements OnInit {
     }
   }
 
-  // record the tab he's currently present in
-  tabChange(event) {
-    this.resetPageVariables();
-    this.selectedTab = event.index;
-  }
-
   // reset the variables when user changes tabs
+  // make sure to reset to latest updates
   resetPageVariables(){
     this.showCropper = false;
     this.cropImage = false;

@@ -10,7 +10,7 @@
 </div>
 
 <div class="pt-90 pl-40 pr-40 h-100" id="ui-organization-profile">
-    <mat-tab-group animationDuration="0ms">
+    <mat-tab-group animationDuration="0ms" (selectedTabChange)="resetPageVariables()" [(selectedIndex)]="selectedTab">
         <mat-tab label="Profile">
             <div class="row pt-40">
                 <div class="col-md-4 text-right pr-0">
@@ -129,16 +129,27 @@
                 <div class="col-md-4 p-0 text-right">
                     <h5 class="m-0">Your logo</h5>
                 </div>
-                <div class="col-md-5">
-                    <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png"
-                        class="w-100">
-                    <div class="row pt-20">
-                        <div class="col-md-6">
-                            <button mat-stroked-button class="btn-primary">UPLOAD LOGO</button>
-                        </div>
-                        <div class="col-md-6">
-                            <button mat-stroked-button class="text-primary">Basic</button>
-                        </div>
+                <div class="col-md-5" *ngIf="cropImage">
+                    <div *ngIf="!showCropper"><h5 class="m-0 pt-8">Upload a photo to edit and upload.</h5></div>
+                    <div class="image-cropper">
+                        <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)"></app-image-cropper>
+                    </div>
+                    <div class="profile-img" [hidden]="!showCropper">
+                        <img [src]="finalImage" alt="cropped Image" class="w-100">
+                    </div>
+                    <div class="row pt-24">
+                    </div>
+                </div>
+                <div class="col-md-4 pl-0" *ngIf="cropImage">
+                    <button mat-stroked-button class="btn-primary" (click)="chooseImage.click()">CHOOSE IMAGE</button>
+                    <input type="file" #chooseImage (change)="uploadImageForCorping($event)" hidden>
+                </div>
+                <div class="col-md-5" *ngIf="!cropImage">
+                    <div class="profile-img">
+                        <img [src]="profileImg" alt="cropped Image" class="w-100">
+                    </div>
+                    <div class="row pt-24">
+                        <button mat-stroked-button class="btn-primary" (click)="cropImage = true">EDIT IMAGE</button>
                     </div>
                 </div>
             </div>
@@ -148,20 +159,41 @@
                 <div class="col-md-4 p-0 text-right">
                     <h5 class="m-0">Your logo</h5>
                 </div>
-                <div class="col-md-5">
-                    <img src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png"
-                        class="ba-2x">
-                    <div class="row pt-20">
-                        <div class="col-md-6 p-0">
-                            <button mat-stroked-button class="btn-primary">UPLOAD LOGO</button>
-                        </div>
-                        <div class="col-md-6 p-0">
-                            <button mat-stroked-button class="text-primary">CANCEL</button>
-                        </div>
+                <div class="col-md-5" *ngIf="cropImage">
+                    <div *ngIf="!showCropper"><h5 class="m-0 pt-8">Upload a photo to edit and upload.</h5></div>
+                    <div class="image-cropper">
+                        <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)"></app-image-cropper>
+                    </div>
+                    <div class="profile-img" [hidden]="!showCropper">
+                        <img [src]="finalImage" alt="cropped Image" class="w-100">
+                    </div>
+                    <div class="row pt-24">
+                    </div>
+                </div>
+                <div class="col-md-4 pl-0" *ngIf="cropImage">
+                    <button mat-stroked-button class="btn-primary" (click)="chooseImage.click()">CHOOSE IMAGE</button>
+                    <input type="file" #chooseImage (change)="uploadImageForCorping($event)" hidden>
+                </div>
+                <div class="col-md-5" *ngIf="!cropImage">
+                    <div class="profile-img">
+                        <img [src]="reportImg" alt="cropped Image" class="w-100">
+                    </div>
+                    <div class="row pt-24">
+                        <button mat-stroked-button class="btn-primary" (click)="cropImage = true">EDIT IMAGE</button>
                     </div>
                 </div>
             </div>
         </mat-tab>
     </mat-tab-group>
-
+</div>
+<div class="bottom-fixed wrapper-12 w-70">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveCurrentPage()">SAVE & NEXT
+            </button>
+        </div>
+    </div>
 </div>
