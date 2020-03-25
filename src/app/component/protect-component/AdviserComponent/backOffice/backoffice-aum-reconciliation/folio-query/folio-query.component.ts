@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { ReconciliationService } from '../reconciliation/reconciliation.service';
 import { FolioMasterDetailViewComponent } from '../folio-master-detail-view/folio-master-detail-view.component';
+import { AuthService } from '../../../../../../auth-service/authService';
 
 @Component({
   selector: 'app-folio-query',
@@ -12,6 +13,7 @@ import { FolioMasterDetailViewComponent } from '../folio-master-detail-view/foli
   styleUrls: ['./folio-query.component.scss']
 })
 export class FolioQueryComponent implements OnInit {
+  advisorId = AuthService.getAdvisorId();
 
   constructor(
     private reconService: ReconciliationService,
@@ -28,21 +30,22 @@ export class FolioQueryComponent implements OnInit {
     this.dataSource.data = ELEMENT_DATA;
   }
 
-  search() {
+  search(flag, value) {
     // search query logic
     // on hold
-    // const data = '';
+    console.log(typeof value);
+    const data = {
+      flag_search: flag,
+      advisorId: this.advisorId,
+      key: value
+    };
 
-    // cannot get folio id 
-    // this.reconService.getFoliowiseTransactionList(data)
-    //   .subscribe(res => {
-    //     console.log(res);
-    //   }, err => {
-    //     console.error(err);
-    //   })
-
-    // toggling view
-    this.isSearchDone = !this.isSearchDone;
+    this.reconService.getFolioQueryDataListValues(data)
+      .subscribe(res => {
+        console.log(res);
+        // toggling view
+        this.isSearchDone = !this.isSearchDone;
+      })
 
   }
 

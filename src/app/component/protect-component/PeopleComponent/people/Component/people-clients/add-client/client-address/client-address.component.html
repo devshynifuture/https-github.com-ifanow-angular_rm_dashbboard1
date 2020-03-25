@@ -7,9 +7,13 @@
         <div class="col-md-6 p-0">
             <div class="form-group m-0 p-address">
                 <mat-radio-group formControlName="proofType" aria-label="Select an option">
-                    <mat-radio-button value="1" class="bu-primary text-primary">Residential
+                    <mat-radio-button value="1"
+                        [ngClass]="{'bu-primary':addressForm.get('proofType').value=='1','text-primary':addressForm.get('proofType').value=='1'}"
+                        class="borderRadio text-custom">Residential
                     </mat-radio-button>
-                    <mat-radio-button value="2" class="borderRadio">Business</mat-radio-button>
+                    <mat-radio-button value="2"
+                        [ngClass]="{'bu-primary':addressForm.get('proofType').value=='2','text-primary':addressForm.get('proofType').value=='2'}"
+                        class="borderRadio text-custom">Business</mat-radio-button>
                 </mat-radio-group>
             </div>
         </div>
@@ -71,8 +75,10 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                        matInput formControlName="pinCode" class="form-control">
+                    <input autocomplete="off" [maxLength]="6" #pinCode (focusout)="getPostalPin($event.target.value)"
+                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" matInput
+                        formControlName="pinCode" class="form-control">
+                    <mat-hint align="end" class="f-12">{{pinCode.value.length}}/6</mat-hint>
                 </mat-form-field>
             </div>
         </div>

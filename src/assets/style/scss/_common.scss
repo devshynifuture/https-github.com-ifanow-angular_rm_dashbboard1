@@ -330,8 +330,12 @@ ul {
 
 .mat-radio-button {
   min-width: 152px;
+  padding-left: 8px;
+ 
 }
-
+.mat-radio-label{
+  height: 40px;
+}
 .head-common {
   font-family: "Playfair Display";
   font-style: normal;

@@ -19,6 +19,7 @@ import { ModelPortfolioComponent } from './setting-backup/setting-backup/model-p
 import { SettingBackupModule } from './setting-backup/setting-backup/setting-backup.module';
 import { SettingPreferenceComponent } from './setting-preference/setting-preference.component';
 import { SettingActivityComponent } from './setting-activity/setting-activity.component';
+import { CommonComponentModule } from '../../common-component/common-component.module';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { OrgProfileComponent } from './setting-org-profile/add-personal-profile/org-profile/org-profile.component';
 
@@ -29,14 +30,14 @@ import { OrgProfileComponent } from './setting-org-profile/add-personal-profile/
     HierachyComponent, ArnRiaDetailsComponent, MfRtaDetailsComponent, SchemeBasketComponent,
     ModelPortfolioComponent,
     SettingPreferenceComponent,
-    SettingActivityComponent,
-    OrgProfileComponent],
+    SettingActivityComponent,],
   imports: [
     CommonModule,
     SettingRoutingModule,
     MaterialModule,
     SettingEntryModule,
     SettingBackupModule,
+    CommonComponentModule,
     CustomDirectiveModule
 
   ]

@@ -129,6 +129,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
   freezeFolioData() {
     if (this.data.mutualFundId) {
+      console.log(typeof this.data.mutualFundId);
       this.reconService.putFreezeFolioData(this.data.mutualFundId)
         .subscribe(res => {
           console.log(res);
@@ -210,7 +211,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
           balanceUnits: element.balanceUnits,
           actions: '',
           keep: element.keep,
-          nav: element.nav ? element.nav : null
+          nav: element.purchasePrice ? element.purchasePrice : null
         });
       });
       console.log(this.tableData1);
