@@ -14,14 +14,20 @@ export class SipComponent implements OnInit {
   sipcomponentWise;
   sipshow: boolean = false;
   showMainWrapperFlag: boolean = true;
-  constructor(private backioffice:BackOfficeService,private dataService:EventService) { }
+  constructor(private backoffice:BackOfficeService,private dataService:EventService) { }
  
   ngOnInit() {
    this.sipCountGet();
+   this.getAllSip();
+   this.expiredGet();
+   this.expiringGet();
+   this.sipRejectionGet();
+   this.schemeSearchGet();
+   this.clientSearchGet();
   }
   sipCountGet()
   {
-    this.backioffice.getSipcountGet(this.teamMemberId).subscribe(
+    this.backoffice.getSipcountGet(this.teamMemberId).subscribe(
       data =>this.getsipCountGet(data)
     )
   }
@@ -36,6 +42,82 @@ export class SipComponent implements OnInit {
    showMainWrapper() {
     this.sipshow = false;
     this.showMainWrapperFlag = true;
+  }
+  getAllSip()
+  {
+    const obj={
+      limit:10,
+      offset:0,
+      teamMemberId:this.teamMemberId
+    }
+    this.backoffice.allSipGet(obj).subscribe(
+      data =>{
+        console.log(data);
+      }
+    )
+  }
+  expiredGet()
+  {
+    const obj={
+      limit:10,
+      offset:0,
+      teamMemberId:this.teamMemberId
+    }
+    this.backoffice.GET_expired(obj).subscribe(
+      data =>{
+        console.log(data);
+      }
+    )
+  }
+  expiringGet()
+  {
+    const obj={
+      limit:10,
+      offset:0,
+      teamMemberId:this.teamMemberId
+    }
+    this.backoffice.GET_EXPIRING(obj).subscribe(
+      data =>{
+        console.log(data);
+      }
+    )
+  }
+  sipRejectionGet()
+  {
+    const obj={
+      limit:10,
+      offset:0,
+      teamMemberId:this.teamMemberId
+    }
+    this.backoffice.GET_SIP_REJECTION(obj).subscribe(
+      data =>{
+        console.log(data);
+      }
+    )
+  }
+  schemeSearchGet()
+  {
+    const obj={
+      schemeName:'Aditya Birla',
+      teamMemberId:this.teamMemberId
+    }
+    this.backoffice.GET_SIP_SCHEME_SEARCH(obj).subscribe(
+      data =>{
+        console.log(data);
+      }
+    )
+  }
+  clientSearchGet()
+  {
+    const obj={
+      clientName:'Ronak Hindocha',
+      teamMemberId:this.teamMemberId
+    }
+    this.backoffice.GET_SIP_REJECTION(obj).subscribe(
+      data =>{
+        console.log(data);
+      }
+    )
   }
   amcwise() {
     this.sipshow = true;

@@ -9,14 +9,14 @@
   min-width: 0 !important;
 }
 
-::ng-deep .mat-radio-group {
-  color: #83959D;
-  font-size: 14px;
-}
+// ::ng-deep .mat-radio-group {
+//   color: #83959D;
+//   font-size: 14px;
+// }
 
-::ng-deep .mat-radio-outer-circle {
-  border-color: #DADADA !important;
-}
+// ::ng-deep .mat-radio-outer-circle {
+//   border-color: #DADADA !important;
+// }
 
 ::ng-deep .mat-expansion-panel:not([class*=mat-elevation-z]) {
   box-shadow: none !important;

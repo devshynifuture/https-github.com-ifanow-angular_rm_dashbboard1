@@ -1,6 +1,5 @@
-<div>
-    <div class="row h-100vh">
-        <div [ngSwitch]="viewMode" class="col-md-12 b-a p-0">
+
+        <div [ngSwitch]="viewMode" class="">
             <div *ngSwitchCase="'tab1'">
                 <div class="wrapper-8 pt-20">
                     <div class="row">
@@ -15,7 +14,7 @@
                             </mat-menu>
                         </div>
                     </div>
-                    <div class="row pt-28">
+                    <div class="row pt-28 pb-8">
                         <div class="col-md-4 p-0">
                             <h4 class="m-0 text-black roboto pt-8">Income</h4>
                         </div>
@@ -32,8 +31,8 @@
                             </button>
                         </div>
                     </div>
-                </div>
-                <div class="liabilities wrapper-8">
+              
+                <div class="liabilities">
                     <table *ngIf="dataSource.data.length > 0" [dataSource]="dataSource" id="table-low" mat-table matSort
                         appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="no">
@@ -139,7 +138,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
-    </div>
-</div>
+        </div>
+    

@@ -70,7 +70,7 @@ export class IncomeComponent implements OnInit {
     const fragmentData = {
       flag: flagValue,
       data,
-      state: 'open',
+      state: 'open65',
       componentName: AddIncomeComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
