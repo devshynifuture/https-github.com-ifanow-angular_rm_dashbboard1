@@ -64,7 +64,7 @@ export class UsersComponent implements OnInit{
   }
   
   newTeamMember() {
-    if(this.roles.length > 0) {
+    if(this.roles && this.roles.length > 0) {
       const fragmentData = {
         flag: 'add-ARI-RIA-details',
         data: this.roles,

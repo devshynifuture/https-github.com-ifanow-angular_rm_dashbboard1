@@ -42,17 +42,15 @@ export class RolesComponent implements OnInit {
     const fragmentData = {
       flag: 'app-upper-setting',
       id: 1,
-      data,
+      data: data || {},
       direction: 'top',
       componentName: AddNewRoleComponent,
       state: 'open'
     };
     const rightSideDataSub = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
           }
           rightSideDataSub.unsubscribe();
         }

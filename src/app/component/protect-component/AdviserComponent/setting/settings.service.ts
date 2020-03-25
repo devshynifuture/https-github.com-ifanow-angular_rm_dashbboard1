@@ -33,6 +33,12 @@ export class SettingsService {
   editOrgProfile(data){
     return this.http.post(apiConfig.MAIN_URL + appConfig.EDIT_ORG_PROFILE, data);
   }
+  editOrgProfileLogo(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_ORG_PROFILE_LOGO, data)
+  }
+  editOrgProfileReportLogo(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_ORG_PROFILE_REPORT_LOGO, data)
+  }
 
 
   // users and roles

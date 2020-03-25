@@ -145,9 +145,9 @@ export class OrgProfileComponent implements OnInit {
       const jsonDataObj = {
         id: this.advisorId,
         logoUrl: cloudinaryResponseJson.url,
-        cloudinary_json: cloudinaryResponseJson
+        cloudinary_json: JSON.stringify(cloudinaryResponseJson)
       }
-      this.settingsService.uploadProfilePhoto(jsonDataObj).subscribe((res) => {
+      this.settingsService.editOrgProfileLogo(jsonDataObj).subscribe((res) => {
         this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
         this.anyDetailsChanged = true;
         this.profileImg = jsonDataObj.logoUrl;
@@ -157,9 +157,9 @@ export class OrgProfileComponent implements OnInit {
         const jsonDataObj = {
           id: this.advisorId,
           reportLogoUrl: cloudinaryResponseJson.url,
-          report_cloudinary_json: cloudinaryResponseJson
+          report_cloudinary_json: JSON.stringify(cloudinaryResponseJson)
         }
-        this.settingsService.uploadProfilePhoto(jsonDataObj).subscribe((res) => {
+        this.settingsService.editOrgProfileReportLogo(jsonDataObj).subscribe((res) => {
           this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
           this.reportImg = jsonDataObj.reportLogoUrl;
           this.switchToTab(++this.selectedTab);

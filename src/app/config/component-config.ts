@@ -458,6 +458,8 @@ export const appConfig = {
   GET_ORG_PROFILE: 'setting/profile/organisation/details/get',
   EDIT_PERSONAL_PROFILE: 'setting/profile/personal/profile-photo/update',
   EDIT_ORG_PROFILE: 'etting/profile/organisation/update',
+  EDIT_ORG_PROFILE_LOGO: 'setting/profile/organisation/logo/update',
+  EDIT_ORG_PROFILE_REPORT_LOGO: 'setting/profile/organisation/report/logo/update',
   GET_PORTFOLIO :'setting/preferences/portfolio/get',
   GET_PLANS:'setting/preferences/plan/get',
   PROTFOLIO_UPDATE:'setting/preferences/portfolio/update',
