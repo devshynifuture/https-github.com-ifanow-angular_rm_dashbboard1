@@ -151,6 +151,10 @@ export const rightSliderAnimation = trigger('openClose', [
   transition('close => open45', [animate('0.3s')]),
   transition('open45 => close', [animate('0.1s')]),
 
+
+  transition('close => open40', [animate('0.3s')]),
+  transition('open40 => close', [animate('0.1s')]),
+
   transition('close => open50', [animate('0.3s')]),
   transition('open50 => close', [animate('0.1s')]),
 

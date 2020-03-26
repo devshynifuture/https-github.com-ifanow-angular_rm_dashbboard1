@@ -8,7 +8,9 @@ import { MaterialModule } from 'src/app/material/material';
 
 
 @NgModule({
-  declarations: [BackofficeAumReconciliationComponent],
+  declarations: [
+    BackofficeAumReconciliationComponent,
+  ],
   imports: [
     CommonModule,
     BackofficeAumReconciliationRoutingModule,
