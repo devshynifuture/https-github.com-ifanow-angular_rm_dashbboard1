@@ -19,17 +19,17 @@ export class CategoryWiseComponent implements OnInit {
 
   selectedCategory;
   ngOnInit() {
-    this.getSubCatSchemeName();
+    // this.getSubCatSchemeName();
     this.clientFolioWise();
     // this.getSubCatAum();
   }
 
-  getSubCatSchemeName() {
-    this.backoffice.getSubCatSchemeName(this.teamMemberId).subscribe(
-      data => this.getFileResponseDataForSubSchemeName(data),
-      err => this.getFilerrorResponse(err)
-    )
-  }
+  // getSubCatSchemeName() {
+  //   this.backoffice.getSubCatSchemeName(this.teamMemberId).subscribe(
+  //     data => this.getFileResponseDataForSubSchemeName(data),
+  //     err => this.getFilerrorResponse(err)
+  //   )
+  // }
   clientFolioWise(){
     const obj={
       amcName:'Aditya Birla',
