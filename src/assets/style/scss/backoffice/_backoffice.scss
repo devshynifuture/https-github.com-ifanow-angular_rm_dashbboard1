@@ -15,7 +15,7 @@
     justify-content: flex-end;
     padding-right: 20px;
   }
-  #mistabs1,#mistabs2{
+  #mistabs1,#mistabs2,#siptabs1,#siptabs2{
   .mat-tab-group {
   padding-top:0px !important;
   }
@@ -33,5 +33,13 @@
   margin:0px !important;
   min-width: 125px !important;
   
+  }
+  }
+  .foliodetails{
+  #table-low{
+  tr.mat-header-row{height:40px !improtant;}
+  tr.mat-row{
+  height:38px !improtant;
+  }
   }
   }
