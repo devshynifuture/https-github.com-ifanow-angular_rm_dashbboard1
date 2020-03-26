@@ -461,6 +461,10 @@ export const appConfig = {
   BACKOFFICE_GET_AUM_REPORT_LIST: 'backoffice/aum/reconciliation/report/get',
   BACKOFFICE_GET_FOLIO_BASED_SEARCH_LIST: 'backoffice/folio/based/on/search/list/get',
 
+  BACKOFFICE_FILE_UPLOAD_TYPE: 'backoffice/file-upload/types/get',
+  BACKOFFICE_FILE_TO_UPLOAD: 'backoffice/file-upload/url/get',
+  BACKOFFICE_SUCCESS_FILE_UPLOAD: 'web/backoffice/file-upload/success',
+
   ///org setting ////
   GET_PERSONAL_PROFILE: 'setting/profile/personal/details/get',
   GET_ORG_PROFILE: 'setting/profile/organisation/details/get',
