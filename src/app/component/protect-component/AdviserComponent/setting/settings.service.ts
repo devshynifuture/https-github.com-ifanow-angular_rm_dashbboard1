@@ -11,6 +11,7 @@ export class SettingsService {
 
   constructor(private http: HttpService) { }
 
+  // user and org profile
   getProfileDetails(data){
     let httpParams = new HttpParams().set('id', data.id)
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PERSONAL_PROFILE_DETAILS, httpParams)
@@ -31,5 +32,42 @@ export class SettingsService {
   }
   editOrgProfile(data){
     return this.http.post(apiConfig.MAIN_URL + appConfig.EDIT_ORG_PROFILE, data);
+  }
+  editOrgProfileLogo(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_ORG_PROFILE_LOGO, data)
+  }
+  editOrgProfileReportLogo(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_ORG_PROFILE_REPORT_LOGO, data)
+  }
+
+
+  // users and roles
+  sendInvitationToMember(data){
+    return this.http.post(apiConfig.MAIN_URL, data);
+  }
+  getTeamMembers(data) {
+    let httpParams = new HttpParams().set('id', data.id)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PERSONAL_PROFILE_DETAILS, httpParams)
+  }
+  getRoles(data) {
+    let httpParams = new HttpParams().set('id', data.id)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PERSONAL_PROFILE_DETAILS, httpParams)
+  }
+  addRole(data) {
+    return this.http.post(apiConfig.MAIN_URL, data);
+  }
+  deleteRole(data) {
+    return this.http.put(apiConfig.MAIN_URL, data);
+  }
+  getDetailedRole(data) {
+    let httpParams = new HttpParams().set('id', data.id)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PERSONAL_PROFILE_DETAILS, httpParams)
+  }
+  getAccessRightsList(data) {
+    let httpParams = new HttpParams().set('id', data.id)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PERSONAL_PROFILE_DETAILS, httpParams)
+  }
+  editAccessRightOfUser(data) {
+    return this.http.put(apiConfig.MAIN_URL, data);
   }
 }

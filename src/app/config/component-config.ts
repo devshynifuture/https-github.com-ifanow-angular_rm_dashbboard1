@@ -2,6 +2,9 @@ export const appConfig = {
   LOGIN: 'secure/login',
   FILE_GET: '/file/list/get',
   RT_FILE_GET: 'file/rt/list/get',
+
+
+  ///////////////////////////MIS///////////////////////////
   TOTAL_GET_AUM: 'asset/clientTotalAum/get',
   GET_MIS_DATA: 'asset/mis/get',
   GET_SUBCAT_AUM: 'asset/cat/subcat/get',
@@ -17,6 +20,11 @@ export const appConfig = {
   GET_AUM_APPLICANT_SCHEME: 'asset/aum/applicantWise/totalaum/applicantSchemes/get',
   GET_AUM_CLIENT_TOTALAUM: 'asset/aum/client/totalaum/get',
   GET_AUM_CLIENT_SCHEME: 'asset/aum/client/schemes',
+  GET_CLIENT_FOLIO_WISE: 'asset/cat/subcat/schemeName/clientFolioWise',
+  GET_AMC_WISE: 'asset/mis/aum/amcWise/get',
+  GET_APPLICANT_NAME: '/mis/aum/amcWise/applicantName/get',
+  ADVISOR_TAG_GET: '/advisor/tag/get',
+
 
 
   /////////////////////// sip api call//////////////////////////////////
@@ -34,6 +42,9 @@ export const appConfig = {
   Sip_Schemewise_Get: 'asset/sip/schemewise/get',
   Scheme_Wise_Investor_Get: 'asset/sip/schemewiseInvestor/get',
   scheme_wise_Applicants_Get: 'asset/sip/schemewiseApplicants/get',
+  ALL_SIP_GET: 'asset/sip/allSip/get',
+  CLIENT_WISE_CLIENTNAME_GET: 'asset/sip/ClientWiseClientsName/get',
+  CLIENT_WISE_APPLICANT_GET: 'asset/sip/ClientWiseApplicants/get',
 
   ///////////////////////////// back office/////////////////////////////////////////////
 
@@ -450,6 +461,17 @@ export const appConfig = {
   BACKOFFICE_GET_AUM_REPORT_LIST: 'backoffice/aum/reconciliation/report/get',
   BACKOFFICE_GET_FOLIO_BASED_SEARCH_LIST: 'backoffice/folio/based/on/search/list/get',
 
+  ///org setting ////
+  GET_PERSONAL_PROFILE: 'setting/profile/personal/details/get',
+  GET_ORG_PROFILE: 'setting/profile/organisation/details/get',
+  EDIT_PERSONAL_PROFILE: 'setting/profile/personal/profile-photo/update',
+  EDIT_ORG_PROFILE: 'etting/profile/organisation/update',
+  EDIT_ORG_PROFILE_LOGO: 'setting/profile/organisation/logo/update',
+  EDIT_ORG_PROFILE_REPORT_LOGO: 'setting/profile/organisation/report/logo/update',
+  GET_PORTFOLIO: 'setting/preferences/portfolio/get',
+  GET_PLANS: 'setting/preferences/plan/get',
+  PROTFOLIO_UPDATE: 'setting/preferences/portfolio/update',
+  PLAN_SECTION_UPDATE: 'setting/preferences/plan/update',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
@@ -490,10 +512,6 @@ export const appConfig = {
   GET_PERSONAL_PROFILE_DETAILS: 'setting/profile/personal/details/get',
   UPLOAD_PERSONAL_PROFILE_PHOTO: 'setting/profile/personal/profile-photo/update',
   ///org setting ////
-  GET_PERSONAL_PROFILE: 'setting/profile/personal/details/get',
-  GET_ORG_PROFILE: 'setting/profile/organisation/details/get',
-  EDIT_PERSONAL_PROFILE: 'setting/profile/personal/profile-photo/update',
-  EDIT_ORG_PROFILE: 'etting/profile/organisation/update',
   ////////////////////////////// settings////////////////////////////////////////////
 
 };
