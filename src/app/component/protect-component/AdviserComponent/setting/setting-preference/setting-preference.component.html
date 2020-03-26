@@ -9,11 +9,11 @@
         <div class="row">
             <div class="col-md-2 p-0 pt-1 settingPreference">
                 <ul class="vertical-menu">
-                    <li (click)="viewMode ='tab1'" [ngClass]="{'b-outline':viewMode =='tab1','':viewMode =='tab1'}" class="c-p">
+                    <li (click)="viewMode ='tab1';getPortfolio()" [ngClass]="{'b-outline':viewMode =='tab1','':viewMode =='tab1'}" class="c-p">
                         Portfolio section
                     </li>
 
-                    <li (click)="viewMode ='tab2';" [ngClass]="{'b-outline':viewMode =='tab2','':viewMode =='tab2'}" class="c-p">
+                    <li (click)="viewMode ='tab2';getPlan()" [ngClass]="{'b-outline':viewMode =='tab2','':viewMode =='tab2'}" class="c-p">
                         Plan section
                     </li>
                     <li (click)="viewMode ='tab3';" [ngClass]="{'b-outline':viewMode =='tab3','':viewMode =='tab3'}" class="c-p">
@@ -28,7 +28,7 @@
                     <li (click)="viewMode ='tab6'" [ngClass]="{'b-outline':viewMode =='tab6','':viewMode =='tab6'}" class=" c-p">
                         Color theme
                     </li>
-                    <li (click)="viewMode ='tab7'" [ngClass]="{'b-outline':viewMode =='tab7','':viewMode =='tab7'}" class=" c-p">
+                    <li (click)="viewMode ='tab7';getDomain()" [ngClass]="{'b-outline':viewMode =='tab7','':viewMode =='tab7'}" class=" c-p">
                         Domain settings
                     </li>
                     <li (click)="viewMode ='tab8'" [ngClass]="{'b-outline':viewMode =='tab8','':viewMode =='tab8'}" class=" c-p">

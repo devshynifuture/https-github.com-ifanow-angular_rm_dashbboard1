@@ -21,14 +21,40 @@ export class SettingPreferenceComponent implements OnInit {
   factSheet: any;
   planSec1: any;
   planSection: any;
+  domainSetting: any;
+  updateDomain: any;
   constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()
     this.getPortfolio()
-    this.getPlan()
   }
+  getDomain(){
+    let obj = {
+      advisorId: 4443
+    }
+    this.orgSetting.getDomainSetting(obj).subscribe(
+      data => this.getDomainSettingRes(data),
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    );
+  }
+  getDomainSettingRes(data){
+    console.log(data)
+    this.domainSetting = data
+  }
+  updateDomainSetting(){
+    let obj  = {
 
+    }
+    this.orgSetting.updateDomainSetting(obj).subscribe(
+      data => this.updateDomainSettingRes(data),
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    );
+  }
+  updateDomainSettingRes(data){
+    console.log(data)
+    this.updateDomain = data
+  }
   getPortfolio() {
     let obj = {
       advisorId: 4443
@@ -61,7 +87,7 @@ export class SettingPreferenceComponent implements OnInit {
   selectMutualFund(event, value) {
 
     this.portfolio.forEach(element => {
-      if (element.portfolioOptionId == value.portfolioOptionId) {
+      if (element.planOptionId == value.planOptionId) {
         element.selectedOrDeselected = (event.checked == true) ? 1 : 0;
       }
     });
@@ -94,7 +120,7 @@ export class SettingPreferenceComponent implements OnInit {
   getPlanRes(data) {
     console.log('getPortfolioRes == ', data)
     this.planSection = data
-    this.planSec1 = this.portfolio.filter(element => element.planOptionId == 1)
+    this.planSec1 = this.planSection.filter(element => element.planOptionId == 1)
     console.log('planSec1 ', this.planSec1)
   }
 }

@@ -18,10 +18,10 @@ export class OrgSettingServiceService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ORG_PROFILE, httpParams);
   }
   editPersonalProfile(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.EDIT_PERSONAL_PROFILE, data);
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_PERSONAL_PROFILE, data);
   }
   editOrgProfile(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.EDIT_ORG_PROFILE, data);
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_ORG_PROFILE, data);
   }
   getPortfolio(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PORTFOLIO, data);
@@ -30,10 +30,16 @@ export class OrgSettingServiceService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PLANS, data);
   }
   updatePortFolio(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.PROTFOLIO_UPDATE, data);
+    return this.http.put(apiConfig.MAIN_URL + appConfig.PROTFOLIO_UPDATE, data);
   }
   updatePlanSection(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.PLAN_SECTION_UPDATE, data);
+    return this.http.put(apiConfig.MAIN_URL + appConfig.PLAN_SECTION_UPDATE, data);
+  }
+  getDomainSetting(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.DOMAIN_GET, data);
+  }
+  updateDomainSetting(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_DOMAIN, data);
   }
 
 }
