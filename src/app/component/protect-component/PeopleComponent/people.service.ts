@@ -28,4 +28,7 @@ export class PeopleService {
   addClientUpload(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_CLIENT_UPLOAD, data)
   }
+  getClientList(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_PEOPLE_CLIENT_LIST, data, 1)
+  }
 }

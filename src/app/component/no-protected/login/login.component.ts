@@ -113,6 +113,7 @@ export class LoginComponent implements OnInit {
   enterOtp(value) {
     if (value.code.substring(0, value.code.length - 1) == 'Key' || value.code == "Backspace") {
       if (value.srcElement.previousElementSibling == undefined) {
+        this.otpData.pop();
         return;
       }
       value.srcElement.previousElementSibling.focus();
@@ -120,10 +121,21 @@ export class LoginComponent implements OnInit {
     }
     else {
       if (value.srcElement.nextElementSibling == undefined) {
+        this.otpData.push(value.key);
         return;
       }
       this.otpData.push(value.key);
       value.srcElement.nextElementSibling.focus();
+    }
+  }
+  verifyWithOtpResponse() {
+    let otpString = this.otpData.toString().replace(/,/g, "");
+    if (this.otpData.length == 6 && this.otpResponse == otpString) {
+      this.eventService.openSnackBar("Otp matches sucessfully", "Dismiss");
+      this.router.navigate(['/admin/subscription/dashboard']);
+    }
+    else {
+      this.eventService.openSnackBar("Wrong OTP");
     }
   }
   private createForm() {

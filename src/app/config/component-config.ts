@@ -498,8 +498,11 @@ export const appConfig = {
   ADD_CLIENT_DEMAT: '',
   ADD_CLIENT_MORE_INFO: '',
   ADD_CLIENT_UPLOAD: '',
+  GET_PEOPLE_CLIENT_LIST: '/user/client/all/get',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: '/user/generate/otp',
+  GET_FAMILY_MEMBERS: 'user/family-member/get',
+  DELETE_FAMILY_MEMBER: 'user/family-member/delete',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_UPDATE: 'calendar/event/update',
@@ -513,5 +516,5 @@ export const appConfig = {
   UPLOAD_PERSONAL_PROFILE_PHOTO: 'setting/profile/personal/profile-photo/update',
   ///org setting ////
   ////////////////////////////// settings////////////////////////////////////////////
-
+  //////////////////////////////////customer-overview-profile//////////////////////
 };
