@@ -1,0 +1,45 @@
+#ui-settingsHeaders .mat-tab-header {
+    background: transparent !important;
+    box-shadow: none;
+    position: inherit;
+    z-index: 0;
+  }
+  
+#ui-settingsHeaders .mat-tab-group {
+   
+    padding-top: 60px !important;
+  }
+  
+#ui-settingsHeaders .mat-tab-labels {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 20px;
+  }
+  #mistabs1,#mistabs2,#siptabs1,#siptabs2{
+  .mat-tab-group {
+  padding-top:0px !important;
+  }
+  .mat-tab-header{
+  margin-right:0px !important;
+  }
+  .mat-tab-labels{
+     justify-content: flex-start;
+     padding-right:0px !important;
+  }
+  .mat-tab-label.mat-tab-label-active{
+  outline:none !important;
+  }
+  .mat-tab-label{
+  margin:0px !important;
+  min-width: 125px !important;
+  
+  }
+  }
+  .foliodetails{
+  #table-low{
+  tr.mat-header-row{height:40px !important;}
+  tr.mat-row{
+  height:38px !important;
+  }
+  }
+  }

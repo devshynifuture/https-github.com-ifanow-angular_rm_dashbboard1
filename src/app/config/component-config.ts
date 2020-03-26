@@ -516,7 +516,17 @@ export const appConfig = {
   ////////////////////////////// settings////////////////////////////////////////////
   GET_PERSONAL_PROFILE_DETAILS: 'setting/profile/personal/details/get',
   UPLOAD_PERSONAL_PROFILE_PHOTO: 'setting/profile/personal/profile-photo/update',
-  ///org setting ////
+  
+  GET_ARN_RIA_GLOBAL_LIST: '/setting/arn-ria/global/data/get',
+
+  GET_ARN_RIA_LIST: 'setting/arn-ria/list/get',
+  ADD_ARN_RIA: 'setting/back-office/arn-ria/add',
+  EDIT_ARN_RIA: 'setting/back-office/arn-ria/edit',
+
+  GET_MF_RTA_LIST: 'setting/arn-ria/rta/list/get',
+  ADD_MF_RTA: 'setting/arn-ria/rta/add',
+  EDIT_MF_RTA: 'setting/arn-ria/rta/edit',
+  DELETE_MF_RTA: 'setting/arn-ria/rta/delete',
   ////////////////////////////// settings////////////////////////////////////////////
 
 };

@@ -12,10 +12,11 @@ import {FileUploadModule} from 'ng2-file-upload';
 import { ImageCropperComponent } from './image-cropper/image-cropper.component';
 // import { OwnerNomineeComponent } from './owner-nominee/owner-nominee.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 
 @NgModule({
   declarations: [
-    FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, ImageCropperComponent],
+    FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, ImageCropperComponent, WelcomePageComponent],
   exports: [FroalaComponent, ConfirmDialogComponent, ImageCropperComponent],
   imports: [
     MaterialModule,

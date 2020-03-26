@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './component/no-protected/login/login.component';
 import { SelectivePreloadingStrategyService } from './services/selective-preloading-strategy.service';
 import { ErrorPageComponent } from './component/protect-component/common-component/error-page/error-page.component';
+import { WelcomePageComponent } from './component/protect-component/common-component/welcome-page/welcome-page.component';
 import { DataNotFoundComponent } from './component/protect-component/common-component/data-not-found/data-not-found.component';
 import { AuthGuard } from './guards/auth.guard';
 import { FormTestComponent } from './test/form-test/form-test.component';
@@ -93,7 +94,10 @@ const routes: Routes = [
     path: 'error-page',
     component: ErrorPageComponent
   },
-
+  {
+    path: 'welcome-page',
+    component: WelcomePageComponent
+  },
   {
     path: 'data-not-found',
     component: DataNotFoundComponent

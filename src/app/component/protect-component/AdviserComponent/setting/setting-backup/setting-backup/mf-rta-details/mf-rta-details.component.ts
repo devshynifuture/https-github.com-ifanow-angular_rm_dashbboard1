@@ -27,7 +27,7 @@ export class MfRtaDetailsComponent implements OnInit {
   openAddcamsDetails(data, flag) {
     const fragmentData = {
       flag: flag,
-      data,
+      data: data || {},
       id: 1,
       state: (flag == 'detailedNsc') ? 'open50' : 'open50',
       componentName: AddCamsDetailsComponent
@@ -50,7 +50,7 @@ export class MfRtaDetailsComponent implements OnInit {
   openAddKarvyDetails(data, flag) {
     const fragmentData = {
       flag: flag,
-      data,
+      data: data || {},
       id: 1,
       state: (flag == 'detailedNsc') ? 'open50' : 'open50',
       componentName: AddKarvyDetailsComponent
@@ -73,7 +73,7 @@ export class MfRtaDetailsComponent implements OnInit {
   openAddFranklintempletionDetails(data, flag) {
     const fragmentData = {
       flag: flag,
-      data,
+      data: data || {},
       id: 1,
       state: (flag == 'detailedNsc') ? 'open50' : 'open50',
       componentName: AddFranklinTempletionDetailsComponent
@@ -96,7 +96,7 @@ export class MfRtaDetailsComponent implements OnInit {
   openAddCamsfundsent(data, flag) {
     const fragmentData = {
       flag: flag,
-      data,
+      data: data || {},
       id: 1,
       state: (flag == 'detailedNsc') ? 'open50' : 'open50',
       componentName: AddCamsFundsnetComponent
