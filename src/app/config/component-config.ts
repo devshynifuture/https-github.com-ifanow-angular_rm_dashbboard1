@@ -8,7 +8,6 @@ export const appConfig = {
   TOTAL_GET_AUM: 'backoffice/clientTotalAum/get',
   GET_MIS_DATA: 'backoffice/mis/get',
   GET_SUBCAT_AUM: 'asset/cat/subcat/get',
-  GET_SUBCAT_SCHEME: 'backoffice/cat/subcat/scheme',
   GET_SUBCAT_SCHEMENAME: 'backoffice/cat/subcat/scheme',
   GET_TOTAL_SCHEME_AUM: 'asset/schemeTotalAum/get',
   GET_TOTAL_AUM_BY_SCHEME: 'asset/schemeTotalAum/get',

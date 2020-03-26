@@ -57,16 +57,9 @@ export class BackOfficeService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_AUM, httpParams);
   }
 
-  getSubCatScheme(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_SCHEME, data);
-  }
-
-  getSubCatSchemeName(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_SCHEMENAME + '?teamMemberId=' + data, null);
-  }
-
   getTotalByAumScheme(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_SCHEMENAME + '?teamMemberId=' + data, null);
+    const httpParams = new HttpParams().set('advisorId', data);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_SCHEMENAME,httpParams);
   }
 
   getClientWiseTotalAum(data) {

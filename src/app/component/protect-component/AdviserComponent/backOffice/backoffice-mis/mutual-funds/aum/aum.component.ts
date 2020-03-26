@@ -31,6 +31,7 @@ export class AumComponent implements OnInit {
   ngOnInit() {
     this.advisorId=AuthService.getAdvisorId();
     this.getTotalAum();
+    this.getTotalAumByScheme();
     // this.getSubCatScheme();
     this.getSubCatAum()
     this.getMisData();
@@ -76,24 +77,18 @@ export class AumComponent implements OnInit {
      )
    }
    getSubCatAum(){
-     this.backoffice.getSubCatAum(this.teamMemberId).subscribe(
+     this.backoffice.getSubCatAum(this.advisorId).subscribe(
       data => this.getFileResponseDataForSub(data),
       err => this.getFilerrorResponse(err)
     )
    }
    getTotalAumByScheme()
    {
-    this.backoffice.getTotalByAumScheme(this.teamMemberId).subscribe(
+    this.backoffice.getTotalByAumScheme(this.advisorId).subscribe(
       data => this.getFileResponseAumByScheme(data),
       err=> this.getFilerrorResponse(err)
     )
    } 
-   getSubCatScheme(){
-    this.backoffice.getSubCatScheme(this.advisorId).subscribe(
-      data => this.getSubCatSchemeRes(data),
-      err => this.getFilerrorResponse(err)
-    )
-  }
   getSubCatSchemeRes(data){
     console.log(data);
   }
