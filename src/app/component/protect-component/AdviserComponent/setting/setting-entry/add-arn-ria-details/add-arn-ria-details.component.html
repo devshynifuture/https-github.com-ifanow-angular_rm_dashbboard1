@@ -10,171 +10,186 @@
 </div>
 
 
-
-<div class="row pt-125">
-    <div class="col-md-4 pr-0">
-        <h5 class="m-0 text-right pt-8">ARN/RIA type</h5>
-    </div>
-    <div class="col-md-5">
-        <div class="form-control mb-0">
-            <mat-form-field>
-                <mat-select class="form-group b-0">
-                    <mat-option value="Break up">Break up</mat-option>
-                </mat-select>
-            </mat-form-field>
+<div [formGroup]="arnRiaFG">
+    <div class="row pt-125">
+        <div class="col-md-4 pr-0">
+            <h5 class="m-0 text-right pt-8">ARN/RIA type</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="form-control mb-0">
+                <mat-form-field>
+                    <mat-select class="form-group b-0" formControlName="arn_type">
+                        <mat-option value="{{option.id}}" *ngFor="let option of arnTypeOptions">{{option.type}}</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required</mat-error>
+                </mat-form-field>
+            </div>
         </div>
     </div>
-</div>
-<div class="row pt-40">
-    <div class="col-md-4 pr-0">
-        <h5 class="m-0 text-right pt-8">ARN/RIA number</h5>
-    </div>
-    <div class="col-md-3">
-        <div class="form-control p-0">
-            <mat-form-field>
-                <input matInput type="text" class="form-group">
-            </mat-form-field>
+    <div class="row pt-40">
+        <div class="col-md-4 pr-0">
+            <h5 class="m-0 text-right pt-8">ARN/RIA number</h5>
+        </div>
+        <div class="col-md-3">
+            <div class="form-control p-0">
+                <mat-form-field>
+                    <input matInput type="text" formControlName="arn_number" class="form-group">
+                    <mat-error *ngIf="arnRiaFG.controls.arn_number.invalid && arnRiaFG.controls.arn_number.errors.required">This field is required</mat-error>
+                    <mat-error *ngIf="arnRiaFG.controls.arn_number.invalid && arnRiaFG.controls.arn_number.errors.pattern">Numbers only</mat-error>
+                </mat-form-field>
+            </div>
         </div>
     </div>
-</div>
-<div class="row pt-40">
-    <div class="col-md-4 pr-0">
-        <h5 class="m-0 text-right pt-8">Name of ARN/RIA holder</h5>
-    </div>
-    <div class="col-md-5">
-        <div class="form-control p-0">
-            <mat-form-field>
-                <input matInput type="text" class="form-group">
-            </mat-form-field>
+    <div class="row pt-40">
+        <div class="col-md-4 pr-0">
+            <h5 class="m-0 text-right pt-8">Name of ARN/RIA holder</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="form-control p-0">
+                <mat-form-field>
+                    <input matInput type="text" formControlName="arn_holder" class="form-group">
+                    <mat-error>This field is required</mat-error>
+                </mat-form-field>
+            </div>
         </div>
     </div>
-</div>
-<div class="row pt-40">
-    <div class="col-md-4 pr-0">
-        <h5 class="m-0 text-right pt-8">EUIN</h5>
-    </div>
-    <div class="col-md-3">
-        <div class="form-control p-0">
-            <mat-form-field>
-                <input matInput type="text" class="form-group">
-            </mat-form-field>
+    <div class="row pt-40">
+        <div class="col-md-4 pr-0">
+            <h5 class="m-0 text-right pt-8">EUIN</h5>
+        </div>
+        <div class="col-md-3">
+            <div class="form-control p-0">
+                <mat-form-field>
+                    <input matInput type="text" formControlName="arn_euin" class="form-group">
+                    <mat-error *ngIf="arnRiaFG.controls.arn_euin.invalid && arnRiaFG.controls.arn_euin.errors.required">This field is required</mat-error>
+                    <mat-error *ngIf="arnRiaFG.controls.arn_euin.invalid && arnRiaFG.controls.arn_euin.errors.pattern">Valid EUIN required</mat-error>
+                </mat-form-field>
+            </div>
         </div>
     </div>
-</div>
-<div class="row pt-40">
-    <div class="col-md-4 pr-0">
-        <h5 class="m-0 text-right pt-8">Commencement date</h5>
-    </div>
-    <div class="col-md-3 pr-0">
-        <div class="form-group mb-0">
-            <mat-form-field class="ba-date">
-                <input class="form-control br-0 b-0" matInput [matDatepicker]="picker">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-                <mat-error class="f-12 pt-4">
-                    This field is required
-                </mat-error>
-            </mat-form-field>
+    <div class="row pt-40">
+        <div class="col-md-4 pr-0">
+            <h5 class="m-0 text-right pt-8">Commencement date</h5>
+        </div>
+        <div class="col-md-3 pr-0">
+            <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                    <input class="form-control br-0 b-0" formControlName="arn_commencement_date" (focus)="picker.open()" matInput [matDatepicker]="picker" [max]="yesterdaysDate" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error>This field is required</mat-error>
+                </mat-form-field>
+            </div>
         </div>
     </div>
-</div>
-<div class="row pt-40">
-    <div class="col-md-4 pr-0">
-        <h5 class="m-0 text-right pt-8">Renewal date</h5>
-    </div>
-    <div class="col-md-3 pr-0">
-        <div class="form-group mb-0">
-            <mat-form-field class="ba-date">
-                <input class="form-control br-0 b-0" matInput [matDatepicker]="picker1">
-                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                <mat-datepicker #picker1></mat-datepicker>
-                <mat-error class="f-12 pt-4">
-                    This field is required
-                </mat-error>
-            </mat-form-field>
+    <div class="row pt-40">
+        <div class="col-md-4 pr-0">
+            <h5 class="m-0 text-right pt-8">Renewal date</h5>
+        </div>
+        <div class="col-md-3 pr-0">
+            <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                    <input class="form-control br-0 b-0" formControlName="arn_renewal_date" matInput (focus)="picker1.open()" [matDatepicker]="picker1" [min]="tomrrowsDate" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1 ></mat-datepicker>
+                    <mat-error>This field is required</mat-error>
+                </mat-form-field>
+            </div>
         </div>
     </div>
-</div>
-<div class="row pt-40">
-    <div class="col-md-4 pr-0">
-        <h5 class="m-0 text-right pt-8">Registered email</h5>
-    </div>
-    <div class="col-md-5">
-        <div class="form-control p-0">
-            <mat-form-field>
-                <input matInput type="text" class="form-group">
-            </mat-form-field>
+    <div class="row pt-40">
+        <div class="col-md-4 pr-0">
+            <h5 class="m-0 text-right pt-8">Registered email</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="form-control p-0">
+                <mat-form-field>
+                    <input matInput type="text" formControlName="arn_email" class="form-group">
+                    <mat-error *ngIf="arnRiaFG.controls.arn_email.invalid && arnRiaFG.controls.arn_email.errors.required">This field is required</mat-error>
+                    <mat-error *ngIf="arnRiaFG.controls.arn_email.invalid && arnRiaFG.controls.arn_email.errors.email">Valid Email required</mat-error>
+                </mat-form-field>
+            </div>
         </div>
     </div>
-</div>
-<div class="row pt-40">
-    <div class="col-md-4 pr-0">
-        <h5 class="m-0 text-right pt-8">Registered PAN</h5>
-    </div>
-    <div class="col-md-3">
-        <div class="form-control p-0">
-            <mat-form-field>
-                <input matInput type="text" class="form-group">
-            </mat-form-field>
+    <div class="row pt-40">
+        <div class="col-md-4 pr-0">
+            <h5 class="m-0 text-right pt-8">Registered PAN</h5>
+        </div>
+        <div class="col-md-3">
+            <div class="form-control p-0">
+                <mat-form-field>
+                    <input matInput type="text" formControlName="arn_pan" class="form-group">
+                    <mat-error *ngIf="arnRiaFG.controls.arn_pan.invalid && arnRiaFG.controls.arn_pan.errors.required">This field is required</mat-error>
+                    <mat-error *ngIf="(arnRiaFG.controls.arn_pan.invalid && arnRiaFG.controls.arn_pan.errors.minlength) || (arnRiaFG.controls.arn_pan.invalid && arnRiaFG.controls.arn_pan.errors.minlength) ">Valid PAN required</mat-error>
+                </mat-form-field>
+            </div>
         </div>
     </div>
-</div>
-<div class="row pt-40 pb-44">
-    <div class="col-md-4 pr-0">
-        <h5 class="m-0 text-right pt-8">Registered address</h5>
-    </div>
-    <div class="col-md-5">
-        <div class="form-group p-0">
-            <mat-form-field>
-                <textarea matInput class="form-control" rows="5"></textarea>
-            </mat-form-field>
+    <div class="row pt-40 pb-44">
+        <div class="col-md-4 pr-0">
+            <h5 class="m-0 text-right pt-8">Registered address</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group p-0">
+                <mat-form-field>
+                    <textarea matInput formControlName="arn_address" class="form-control" rows="5"></textarea>
+                    <mat-error *ngIf="arnRiaFG.controls.arn_address.invalid && arnRiaFG.controls.arn_address.errors.required">This field is required</mat-error>
+                    <mat-error *ngIf="arnRiaFG.controls.arn_address.invalid && arnRiaFG.controls.arn_address.errors.maxlength">Text exceeds 150 characters</mat-error>
+                </mat-form-field>
+            </div>
         </div>
     </div>
-</div>
-<div class="row pt-60">
-    <div class="col-md-4 pr-0">
-        <h5 class="m-0 text-right pt-8">GST Treatment</h5>
-    </div>
-    <div class="col-md-3">
-        <div class="form-control mb-0">
-            <mat-form-field>
-                <mat-select class="form-group b-0">
-                    <mat-option value="Break up">Break up</mat-option>
-                </mat-select>
-            </mat-form-field>
+    <div class="row pt-60">
+        <div class="col-md-4 pr-0">
+            <h5 class="m-0 text-right pt-8">GST Treatment</h5>
+        </div>
+        <div class="col-md-3">
+            <div class="form-control mb-0">
+                <mat-form-field>
+                    <mat-select class="form-group b-0" formControlName="arn_treatment">
+                        <mat-option value="applicable">applicable</mat-option>
+                        <mat-option value="not applicable">not applicable</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required</mat-error>
+                </mat-form-field>
+            </div>
         </div>
     </div>
-</div>
-<div class="row pt-40">
-    <div class="col-md-4 pr-0">
-        <h5 class="m-0 text-right pt-8">GST Number</h5>
-    </div>
-    <div class="col-md-3">
-        <div class="form-control mb-0">
-            <mat-form-field>
-                <input matInput type="text" class="form-group">
-            </mat-form-field>
+    <div class="row pt-40" [hidden]="arnRiaFG.get('arn_treatment').value == 'not applicable'">
+        <div class="col-md-4 pr-0">
+            <h5 class="m-0 text-right pt-8">GST Number</h5>
+        </div>
+        <div class="col-md-3">
+            <div class="form-control mb-0">
+                <mat-form-field>
+                    <input matInput type="text" formControlName="arn_gst" class="form-group">
+                    <mat-error *ngIf="arnRiaFG.controls.arn_gst.invalid && arnRiaFG.controls.arn_gst.errors.required">This field is required</mat-error>
+                    <mat-error *ngIf="(arnRiaFG.controls.arn_gst.invalid && arnRiaFG.controls.arn_gst.errors.minlength) || (arnRiaFG.controls.arn_gst.invalid && arnRiaFG.controls.arn_gst.errors.minlength) ">Valid PAN required</mat-error>
+                </mat-form-field>
+            </div>
         </div>
     </div>
-</div>
-<div class="row pt-40 pb-90">
-    <div class="col-md-4 pr-0">
-        <h5 class="m-0 text-right pt-8">Data upload</h5>
-    </div>
-    <div class="col-md-3">
-        <div class="form-control mb-0">
-            <mat-form-field>
-                <mat-select class="form-group b-0">
-                    <mat-option value="Break up">Break up</mat-option>
-                </mat-select>
-            </mat-form-field>
+    <div class="row pt-40 pb-90">
+        <div class="col-md-4 pr-0">
+            <h5 class="m-0 text-right pt-8">Data upload</h5>
+        </div>
+        <div class="col-md-3">
+            <div class="form-control mb-0">
+                <mat-form-field>
+                    <mat-select class="form-group b-0" formControlName="arn_data_upload">
+                        <mat-option value="auto">auto</mat-option>
+                        <mat-option value="manual">manual</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required</mat-error>
+                </mat-form-field>
+            </div>
         </div>
     </div>
-</div>
-<div class="bottom-fixed-50 wrapper-12">
-    <div class="row">
-        <div class="col-md-12 right text-right">
-            <button class="btn-bottom br-0 text-inherit" mat-button>Save</button>
+    <div class="bottom-fixed-50 wrapper-12">
+        <div class="row">
+            <div class="col-md-12 right text-right">
+                <button class="btn-bottom br-0 text-inherit" mat-button (click)="save()">Save</button>
+            </div>
         </div>
     </div>
 </div>

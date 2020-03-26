@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-upload.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
@@ -23,6 +23,7 @@ export class AddPersonalProfileComponent implements OnInit {
   cropImage: boolean = false;
   selectedTab:number = 0;
   anyDetailsChanged:boolean; // check if any details have been updated
+  inputData: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -36,10 +37,19 @@ export class AddPersonalProfileComponent implements OnInit {
 
   personalProfile: any;
   validatorType = ValidatorType
-
+  @Input()
+  set data(data) {
+    this.inputData = data;
+   
+    console.log('This is Input data', data);
+      this.getdataForm(data);
+  }
+  get data() {
+    return this.inputData;
+  }
 
   ngOnInit() {
-    this.getdataForm("")
+    this.getdataForm(this.inputData)
     this.getPersonalInfo();
   }
 
@@ -110,7 +120,7 @@ export class AddPersonalProfileComponent implements OnInit {
   getdataForm(data) {
     this.personalProfile = this.fb.group({
       name: [(!data.fdType) ? '' : (data.name), [Validators.required]],
-      emailId: [(!data) ? '' : data.email, [Validators.required]],
+      emailId: [(!data) ? '' : data.emailId, [Validators.required]],
       mobileNo: [(!data) ? '' : data.mobileNo, [Validators.required]],
       userName: [(!data) ? '' : data.userName, [Validators.required]],
     });
@@ -119,8 +129,6 @@ export class AddPersonalProfileComponent implements OnInit {
   getFormControl(): any {
     return this.personalProfile.controls;
   }
-
-
   updatePersonalProfile() {
     let obj = {
       advisorId:this.advisorId,

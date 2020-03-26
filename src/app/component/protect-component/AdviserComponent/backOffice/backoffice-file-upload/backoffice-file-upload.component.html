@@ -48,12 +48,13 @@
     <div class="col-md-3 p-0 br upload-box">
       <div class="row">
         <div class="col-md-12 pr-0">
-          <h5 class="m-0 pt-12">Linked bank account </h5>
+          <h5 class="m-0 pt-12">Please Select File Type</h5>
         </div>
         <div class="col-md-12 pt-8">
           <mat-form-field>
-           <mat-select class="form-control" >  <!-- formControlName="lead" -->
+           <mat-select class="form-control" [(ngModel)]="selectedFileType" >  <!-- formControlName="lead" -->
                 <mat-option value="">Select option</mat-option>
+                <mat-option [value]="type.id" *ngFor="let type of fileType">{{type.name}}</mat-option>
                 <!-- <mat-option [value]="lead.id" *ngFor="let lead of leadList">{{lead.name}}</mat-option> -->
             </mat-select>
             <mat-error>This field is required</mat-error>
@@ -65,8 +66,8 @@
           <h5 class="m-0 pt-12">Please Select a File...</h5>
         </div>
         <div class="col-md-12 pt-8">
-          <button (click)="file.click()" class="br-0" mat-stroked-button>Choose file</button>
-          <input #file (change)="onChange($event)" [ngClass]="{'v-h': true}" accept='image/*' type="file">
+          <button [disabled]="selectedFileType == ''" (click)="file.click()" class="br-0" mat-stroked-button>Choose file</button>
+          <input #file (change)="getFile(file)" [ngClass]="{'v-h': true}" accept='image/*' type="file">
         </div>
       </div>
       <div class="row">

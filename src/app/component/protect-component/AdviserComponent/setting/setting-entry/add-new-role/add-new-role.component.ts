@@ -15,6 +15,7 @@ export class AddNewRoleComponent implements OnInit {
   displayedColumns1: string[] = ['position', 'adv'];
   dataSource1 = ELEMENT_DATA1;
   @Input() data: any = {};
+  is_add:boolean = true;
 
   rolesFG: FormGroup;
 
@@ -112,6 +113,7 @@ export class AddNewRoleComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.is_add = this.data.type ? true : false;
     this.createFormGroup();
     this.constructAdminDataSource();
   }

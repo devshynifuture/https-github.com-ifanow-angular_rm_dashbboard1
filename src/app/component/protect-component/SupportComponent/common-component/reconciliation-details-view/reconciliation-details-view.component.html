@@ -151,7 +151,8 @@
                     <th class="b-a" mat-header-cell *matHeaderCellDef> Action </th>
                     <td class="b-a" mat-cell *matCellDef="let element">
                         <div class="bar">
-                            <div matTooltip="Kindly unfreeze folio, to delete transaction" [matTooltipPosition]="below"
+                            <!-- [matTooltipPosition]="below" -->
+                            <div matTooltip="Kindly unfreeze folio, to delete transaction" 
                                 [matTooltipDisabled]="canDeleteTransaction">
                                 <button mat-stroked-button [disabled]="!canDeleteTransaction"
                                     class="bg-primary text-white mr-12 h-22 btn-xs"
