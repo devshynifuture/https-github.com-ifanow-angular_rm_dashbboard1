@@ -259,7 +259,7 @@ export class SwitchTransactionComponent implements OnInit {
         searchQuery: value,
         bseOrderType: 'SWITCH',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-        advisorId: 414,
+        advisorId: this.advisorId,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
         familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
         clientId: this.getDataSummary.defaultClient.clientId,

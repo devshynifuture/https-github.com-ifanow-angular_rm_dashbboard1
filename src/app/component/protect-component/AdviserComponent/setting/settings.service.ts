@@ -70,4 +70,35 @@ export class SettingsService {
   editAccessRightOfUser(data) {
     return this.http.put(apiConfig.MAIN_URL, data);
   }
+
+
+  // backoffice
+  getArnGlobalData(data) {
+    let httpParams = new HttpParams().set('id', data.id)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ARN_RIA_GLOBAL_LIST, httpParams)
+  }
+  getArnlist(data) {
+    let httpParams = new HttpParams().set('id', data.id)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ARN_RIA_LIST, httpParams)
+  }
+  addArn(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.GET_ARN_RIA_LIST, data);
+  }
+  editArn(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.GET_ARN_RIA_LIST, data);
+  }
+
+  getMFRTAList(data) {
+    let httpParams = new HttpParams().set('id', data.id)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PERSONAL_PROFILE_DETAILS, httpParams)
+  }
+  addMFRTA(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.GET_ARN_RIA_LIST, data);
+  }
+  editMFRTA(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.GET_ARN_RIA_LIST, data);
+  }
+  deleteMFRTA(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.GET_ARN_RIA_LIST, data);
+  }
 }

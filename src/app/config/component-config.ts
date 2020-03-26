@@ -461,17 +461,26 @@ export const appConfig = {
   BACKOFFICE_GET_AUM_REPORT_LIST: 'backoffice/aum/reconciliation/report/get',
   BACKOFFICE_GET_FOLIO_BASED_SEARCH_LIST: 'backoffice/folio/based/on/search/list/get',
 
+  BACKOFFICE_FILE_UPLOAD_TYPE: 'backoffice/file-upload/types/get',
+  BACKOFFICE_FILE_TO_UPLOAD: 'backoffice/file-upload/url/get',
+  BACKOFFICE_SUCCESS_FILE_UPLOAD: 'web/backoffice/file-upload/success',
+
   ///org setting ////
   GET_PERSONAL_PROFILE: 'setting/profile/personal/details/get',
   GET_ORG_PROFILE: 'setting/profile/organisation/details/get',
   EDIT_PERSONAL_PROFILE: 'setting/profile/personal/profile-photo/update',
-  EDIT_ORG_PROFILE: 'etting/profile/organisation/update',
+  EDIT_ORG_PROFILE: 'setting/profile/organisation/update',
+  GET_PORTFOLIO :'setting/preferences/portfolio/get',
+  GET_PLANS:'setting/preferences/plan/get',
+  PROTFOLIO_UPDATE:'setting/preferences/portfolio/update',
+  PLAN_SECTION_UPDATE:'setting/preferences/plan/update',
+  DOMAIN_GET:'setting/preferences/domain/get',
+  UPDATE_DOMAIN:'setting/preferences/domain/update',
   EDIT_ORG_PROFILE_LOGO: 'setting/profile/organisation/logo/update',
   EDIT_ORG_PROFILE_REPORT_LOGO: 'setting/profile/organisation/report/logo/update',
-  GET_PORTFOLIO: 'setting/preferences/portfolio/get',
-  GET_PLANS: 'setting/preferences/plan/get',
-  PROTFOLIO_UPDATE: 'setting/preferences/portfolio/update',
-  PLAN_SECTION_UPDATE: 'setting/preferences/plan/update',
+  GET_EMAIL_VERIFICATION:'setting/preference/email/get',
+  GET_EMAIL_TEMPLATES:'setting/preference/email/template/get',
+  ADD_EMAIL_VERIFY:'setting/preferences/email/post',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
@@ -514,7 +523,17 @@ export const appConfig = {
   ////////////////////////////// settings////////////////////////////////////////////
   GET_PERSONAL_PROFILE_DETAILS: 'setting/profile/personal/details/get',
   UPLOAD_PERSONAL_PROFILE_PHOTO: 'setting/profile/personal/profile-photo/update',
-  ///org setting ////
+  
+  GET_ARN_RIA_GLOBAL_LIST: '/setting/arn-ria/global/data/get',
+
+  GET_ARN_RIA_LIST: 'setting/arn-ria/list/get',
+  ADD_ARN_RIA: 'setting/back-office/arn-ria/add',
+  EDIT_ARN_RIA: 'setting/back-office/arn-ria/edit',
+
+  GET_MF_RTA_LIST: 'setting/arn-ria/rta/list/get',
+  ADD_MF_RTA: 'setting/arn-ria/rta/add',
+  EDIT_MF_RTA: 'setting/arn-ria/rta/edit',
+  DELETE_MF_RTA: 'setting/arn-ria/rta/delete',
   ////////////////////////////// settings////////////////////////////////////////////
   //////////////////////////////////customer-overview-profile//////////////////////
 };
