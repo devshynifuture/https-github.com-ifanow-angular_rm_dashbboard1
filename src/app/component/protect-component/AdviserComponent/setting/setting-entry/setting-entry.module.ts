@@ -18,9 +18,10 @@ import { NewTeamMemberComponent } from '../setting-user-roles/setting-users-role
 import { EntryComponentsModule } from 'src/app/entry.components.module';
 import { OrgProfileComponent } from '../setting-org-profile/add-personal-profile/org-profile/org-profile.component';
 import { OpenEmailVerificationComponent } from '../setting-preference/open-email-verification/open-email-verification.component';
+import { SettingPreferenceComponent } from '../setting-preference/setting-preference.component';
 
 export const componentList = [AddReportingManagerComponent, AddNewRoleComponent, AddArnRiaDetailsComponent, AddCamsDetailsComponent, AddKarvyDetailsComponent, AddFranklinTempletionDetailsComponent, AddCamsFundsnetComponent, SettingSchemeDetailsComponent, AddModelPortfolioComponent,
-  AddPersonalProfileComponent, AddTaskTemplateComponent, NewTeamMemberComponent,OpenEmailVerificationComponent,OrgProfileComponent]
+  AddPersonalProfileComponent, AddTaskTemplateComponent, SettingPreferenceComponent,NewTeamMemberComponent,OpenEmailVerificationComponent,OrgProfileComponent]
 
 @NgModule({
   declarations: [componentList],
