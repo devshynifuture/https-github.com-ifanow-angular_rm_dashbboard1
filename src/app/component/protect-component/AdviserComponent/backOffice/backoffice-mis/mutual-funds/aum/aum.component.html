@@ -10,6 +10,16 @@
                 <div class="col-md-12">
                     <h3 class="pt-36">Mutual Fund - AUM Report1</h3>
                 </div>
+                <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
+                    <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
+                        Select option
+                        <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item>All</button>
+                        <button mat-menu-item>Broker code</button>
+                    </mat-menu>
+                </div>
                 <div class="pt-20 pr-20">
                     <div class="row ">
                         <div class="col-md-9 pl-0">
@@ -85,7 +95,7 @@
                                     <div class="col-md-3 pl-0 p-0 ">
                                         <div class="mr-8 bg-white b-a">
                                             <div class="row ">
-                                               <div class="col-md-3 pt-12 pl-8 ">
+                                                <div class="col-md-3 pt-12 pl-8 ">
                                                     <img src="/assets/images/svg/cal.svg">
                                                 </div>
                                                 <div class="col-sm-9 p-0" (click)="categoryWise('amc')">
@@ -97,7 +107,7 @@
                                     <div class="col-md-3 pl-0 p-0 ">
                                         <div class="mr-8 bg-white b-a">
                                             <div class="row ">
-                                               <div class="col-md-3 pt-12 pl-8 ">
+                                                <div class="col-md-3 pt-12 pl-8 ">
                                                     <img src="/assets/images/svg/cal.svg">
                                                 </div>
                                                 <div class="col-md-9 p-0 " (click)="categoryWise('client')">
@@ -121,8 +131,7 @@
                                 </div>
                             </div>
                             <div class="row p-12">
-                                <img src="/assets/images/grap.png"
-                                    class="w-100 h-365">
+                                <img src="/assets/images/grap.png" class="w-100 h-365">
                             </div>
                         </div>
                         <div class="col-md-3 p-0">
