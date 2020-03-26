@@ -30,7 +30,6 @@ import { OpenEmailVerificationComponent } from './setting-preference/open-email-
     SettingUserRolesComponent, SettingBackofficeComponent, UsersComponent, RolesComponent,
     HierachyComponent, ArnRiaDetailsComponent, MfRtaDetailsComponent, SchemeBasketComponent,
     ModelPortfolioComponent,
-    SettingPreferenceComponent,
     SettingActivityComponent,],
   imports: [
     CommonModule,
