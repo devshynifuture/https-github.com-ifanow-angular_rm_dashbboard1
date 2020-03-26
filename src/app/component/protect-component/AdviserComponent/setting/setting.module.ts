@@ -22,6 +22,7 @@ import { SettingActivityComponent } from './setting-activity/setting-activity.co
 import { CommonComponentModule } from '../../common-component/common-component.module';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { OrgProfileComponent } from './setting-org-profile/add-personal-profile/org-profile/org-profile.component';
+import { OpenEmailVerificationComponent } from './setting-preference/open-email-verification/open-email-verification.component';
 
 
 @NgModule({

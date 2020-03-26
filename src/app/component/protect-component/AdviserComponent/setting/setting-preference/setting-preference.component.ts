@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { OrgSettingServiceService } from '../org-setting-service.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { OpenEmailVerificationComponent } from './open-email-verification/open-email-verification.component';
+import { MatDialog } from '@angular/material';
+import { CommonFroalaComponent } from '../../Subscriptions/subscription/common-subscription-component/common-froala/common-froala.component';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-setting-preference',
@@ -21,14 +26,55 @@ export class SettingPreferenceComponent implements OnInit {
   factSheet: any;
   planSec1: any;
   planSection: any;
-  constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) { }
+  domainSetting: any;
+  updateDomain: any;
+  emailDetails: any;
+  element: any;
+  emailList: any;
+  normalDomain: any;
+  whiteLabledDomain: any;
+  isLoading: any;
+  emailTemplateList: any;
+  constructor(private orgSetting: OrgSettingServiceService,
+    public subInjectService: SubscriptionInject, private eventService: EventService,public dialog: MatDialog,) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()
     this.getPortfolio()
-    this.getPlan()
   }
-
+  getDomain(){
+    let obj = {
+      advisorId: 4443
+    }
+    this.orgSetting.getDomainSetting(obj).subscribe(
+      data => this.getDomainSettingRes(data),
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    );
+  }
+  getDomainSettingRes(data){
+    console.log(data)
+    this.domainSetting = data
+    this.normalDomain = this.domainSetting.filter(element => element.domainOptionId == 1)
+    this.whiteLabledDomain = this.domainSetting.filter(element => element.domainlioOptionId == 2)
+    console.log('normalDomain',this.normalDomain)
+    console.log('whiteLabled',this.whiteLabledDomain)
+  }
+  updateDomainSetting(event, value){
+    console.log(event)
+    this.domainSetting.forEach(element => {
+      if (element.domainOptionId == value.domainOptionId) {
+        element.selectedOrDeselected = (event.checked == true) ? 1 : 0;
+      }
+    });
+    this.orgSetting.updateDomainSetting(this.domainSetting).subscribe(
+      data => this.updateDomainSettingRes(data),
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    );
+  }
+  updateDomainSettingRes(data){
+    console.log(data)
+    this.updateDomain = data
+  }
   getPortfolio() {
     let obj = {
       advisorId: 4443
@@ -44,8 +90,6 @@ export class SettingPreferenceComponent implements OnInit {
     this.mutualFund = this.portfolio.filter(element => element.portfolioOptionId == 1)
     this.mutualFund2 = this.portfolio.filter(element => element.portfolioOptionId == 2)
     this.factSheet = this.portfolio.filter(element => element.portfolioOptionId == 3)
-    console.log('mutualfund ', this.mutualFund)
-    console.log('mutualfund 2 ', this.mutualFund2)
   }
 
   getPlan() {
@@ -61,7 +105,7 @@ export class SettingPreferenceComponent implements OnInit {
   selectMutualFund(event, value) {
 
     this.portfolio.forEach(element => {
-      if (element.portfolioOptionId == value.portfolioOptionId) {
+      if (element.planOptionId == value.planOptionId) {
         element.selectedOrDeselected = (event.checked == true) ? 1 : 0;
       }
     });
@@ -91,11 +135,94 @@ export class SettingPreferenceComponent implements OnInit {
   updatePlanSectionRes(data) {
     console.log('updatePlanSectionRes ==', data)
   }
+  verifyEmail(){
+    const dialogRef = this.dialog.open(OpenEmailVerificationComponent, {
+      width: '470px',
+      data: { bank: this.emailDetails, animal: this.element }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == undefined) {
+        return
+      }
+      console.log('The dialog was closed');
+      this.element = result;
+      console.log('result -==',this.element)
+      let obj = {
+        emailAddress:this.element,
+        userId:12249
+      }
+      this.orgSetting.addEmailVerfify(obj).subscribe(
+        data => this.addEmailVerfifyRes(data),
+        err => this.eventService.openSnackBar(err, "Dismiss")
+      );
+    //  this.bankDetailsSend.emit(result);
+    });
+  }
+  addEmailVerfifyRes(data){
+    console.log(data)
+    this.getEmailVerification()
+  }
   getPlanRes(data) {
     console.log('getPortfolioRes == ', data)
     this.planSection = data
-    this.planSec1 = this.portfolio.filter(element => element.planOptionId == 1)
+    this.planSec1 = this.planSection.filter(element => element.planOptionId == 1)
     console.log('planSec1 ', this.planSec1)
+  }
+  getEmailVerification(){
+    let obj = {
+      userId: 12249,
+      advisorId: 414
+    }
+    this.orgSetting.getEmailVerification(obj).subscribe(
+      data => this.getEmailVerificationRes(data),
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    );
+  }
+  getEmailVerificationRes(data){
+    console.log('email verify == get',data)
+    this.emailDetails = data
+    this.emailList = data.listItems
+  }
+  getEmailTemplate(){
+    let obj = {
+      advisorId: 4443
+    }
+    this.orgSetting.getEmailTempalate(obj).subscribe(
+      data => this.getEmailTempalatRes(data),
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    );
+  }
+  getEmailTempalatRes(data){
+    console.log('emailTemplate',data)
+    this.emailTemplateList = data
+  }
+  OpenEmail(value, data) {
+    if (this.isLoading) {
+      return;
+    }
+    let obj = {
+      documentText :data.body
+    }
+    const fragmentData = {
+      flag: value,
+      data :obj,
+      id: 1,
+      state: 'open',
+      componentName: CommonFroalaComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getEmailTemplate();
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
   }
 }
 export interface PeriodicElement {
