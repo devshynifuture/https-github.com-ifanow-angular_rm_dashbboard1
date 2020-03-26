@@ -1,0 +1,20 @@
+.main-header{
+    box-shadow: 5px 1px 10px rgba(0, 0, 0, 0.2), 3px 4px 5px rgba(0, 0, 0, 0.12), 2px 2px 4px rgba(0, 0, 0, 0.14);
+    
+}
+.wrapper{
+    height: 100% !important;
+    .upload-box{
+        height: 100% !important;
+        margin-top: -66px;
+    }
+
+    .history-box{
+        height: 100%;
+    }
+    
+    .mat-button-toggle-label-content {
+        line-height: 36px !important;
+        padding: 0 12px;
+    }
+}
