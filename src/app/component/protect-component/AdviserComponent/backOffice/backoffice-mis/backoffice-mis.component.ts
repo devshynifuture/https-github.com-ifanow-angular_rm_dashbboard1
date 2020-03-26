@@ -13,4 +13,8 @@ export class BackofficeMisComponent implements OnInit {
     console.log("backoffice ")
   }
 
+  tabClick(event) {
+
+  }
+
 }

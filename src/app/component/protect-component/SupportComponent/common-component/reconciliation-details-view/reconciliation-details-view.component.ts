@@ -32,6 +32,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   upperTableArr: PeriodicElement[];
   advisorId = AuthService.getAdvisorId();
   selectedFolioUnits: number = 0;
+  canDeleteTransaction: boolean = false;
 
   constructor(
     private subscriptionInject: SubscriptionInject,
@@ -43,6 +44,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.data);
+    this.unmapFolioTransaction();
 
     if (this.data && this.data.tableType == 'all-folios') {
       this.tableEntriesType = 1;
@@ -52,7 +54,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
     const tableArr: PeriodicElement[] = [{
       unitsRta: this.data.unitsRta ? this.data.unitsRta : '',
-      unitOne: this.data.unitsIfnow ? this.data.unitsIfnow : '',
+      unitOne: this.data.unitsIfanow ? this.data.unitsIfanow : '',
       difference: this.data.difference ? this.data.difference : ''
     }]
 
@@ -87,6 +89,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
       this.selection.clear();
       this.deleteMultipleTransactionArray = [];
       this.shouldDeleteMultiple = false;
+      this.selectedFolioUnits = 0;
     } else {
       this.shouldDeleteMultiple = true;
       this.dataSource1.data.forEach(row => {
@@ -94,6 +97,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
         if (this.deleteMultipleTransactionArray.includes(row['id'])) {
           return;
         }
+        this.selectedFolioUnits = this.selectedFolioUnits + parseInt(row.units);
         this.deleteMultipleTransactionArray.push(row['id']);
       });
     }
@@ -125,6 +129,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
   freezeFolioData() {
     if (this.data.mutualFundId) {
+      console.log(typeof this.data.mutualFundId);
       this.reconService.putFreezeFolioData(this.data.mutualFundId)
         .subscribe(res => {
           console.log(res);
@@ -160,7 +165,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
         this.dataSource.data.map(item => {
           item['unitOne'] = String((res.units).toFixed(3));
           item['difference'] = String((parseInt(item['unitOne']) - parseInt(item['unitsRta'])).toFixed(3));
-          if (item['difference'] === '0.0') {
+          if (this.data && this.data.freezeDate && item['difference'] === '0.000') {
             this.enableFreezeBtn = true
           } else {
             this.enableFreezeBtn = false;
@@ -176,9 +181,26 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     this.deleteTransactionApi([element['id']]);
   }
 
+  unmapFolioTransaction() {
+    const data = {
+      id: this.data.mutualFundId
+    };
+
+    console.log(data);
+
+    // this.reconService.putUnmapFolioTransaction(data)
+    //   .subscribe(res => {
+    //     console.log(res);
+    //   }, err => {
+    //     console.error(err);
+    //   })
+  }
+
 
   allFolioTransactionTableDataBinding() {
     if (this.data.tableData.length !== 0) {
+      this.canDeleteTransaction = this.data.canDeleteTransaction ? this.data.canDeleteTransaction : false;
+
       this.data.tableData.forEach(element => {
         this.tableData1.push({
           id: element.id,
@@ -187,32 +209,41 @@ export class ReconciliationDetailsViewComponent implements OnInit {
           amount: element.amount,
           units: element.unit,
           balanceUnits: element.balanceUnits,
-          actions: ''
-        })
+          actions: '',
+          keep: element.keep,
+          nav: element.purchasePrice ? element.purchasePrice : null
+        });
       });
-      this.dataSource1.data = this.tableData1;
+      console.log(this.tableData1);
+      if (this.data.tableType == 'all-folios') {
+        this.dataSource1.data = this.tableData1;
+      }
+
+      if (this.data.tableType === 'duplicate-folios') {
+        this.dataSource2.data = this.tableData1;
+      }
     }
   }
 
   putAumTransactionKeepOrRemove() {
     let isKeepArray = [];
-    ELEMENT_DATA2.forEach((item, index) => {
+    this.dataSource2.data.forEach((item, index) => {
       isKeepArray.push({
         id: index,
-        isKeep: item.isKeep
+        isKeep: item['keep']
       })
     });
     this.isKeepOrRemoveTransactions = isKeepArray;
     console.log(this.isKeepOrRemoveTransactions);
-    // this.supportService.putAumTransactionKeepOrRemove(this.isKeepOrRemoveTransactions)
-    //   .subscribe(res => {
-    //     console.log(res);
-    //   });
+    this.supportService.putAumTransactionKeepOrRemove(this.isKeepOrRemoveTransactions)
+      .subscribe(res => {
+        console.log(res);
+      });
   }
 
   shouldKeepOrRemove(value, element) {
-    let id = ELEMENT_DATA2.indexOf(element);
-    ELEMENT_DATA2[id].isKeep = (value === 1 ? true : false);
+    let id = this.dataSource2.data.indexOf(element);
+    this.dataSource2.data[id]['keep'] = (value === 1 ? true : false);
   }
 
   dialogClose() {
@@ -248,7 +279,7 @@ interface PeriodicElement2 {
   nav: string;
   units: string;
   action: string;
-  isKeep: boolean;
+  keep: boolean;
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
@@ -257,6 +288,6 @@ const ELEMENT_DATA1: PeriodicElement1[] = [
 ];
 
 const ELEMENT_DATA2: PeriodicElement2[] = [
-  { transactionType: 'SIP', date: '07/01/2019', amount: '5,000.00', nav: '298.43', units: '156.23', action: ' ', isKeep: false },
-  { transactionType: 'Transfer Out Change of Broker', date: '07/01/2019', amount: '5,000.00', nav: '348.34', units: '156.23', action: ' ', isKeep: true },
+  { transactionType: 'SIP', date: '07/01/2019', amount: '5,000.00', nav: '298.43', units: '156.23', action: ' ', keep: false },
+  { transactionType: 'Transfer Out Change of Broker', date: '07/01/2019', amount: '5,000.00', nav: '348.34', units: '156.23', action: ' ', keep: true },
 ];
