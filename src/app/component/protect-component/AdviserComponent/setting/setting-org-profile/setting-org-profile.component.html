@@ -25,7 +25,7 @@
                         </mat-icon>
                         <mat-menu #menu="matMenu">
                             <!-- ng build prod issue expected 2 args given empty string -->
-                            <button mat-menu-item (click)="OpenpersonalProfile('', '')">Edit</button>
+                            <button mat-menu-item (click)="OpenpersonalProfile(userList, '')">Edit</button>
                             <button mat-menu-item>Delete</button>
                         </mat-menu>
                     </div>
@@ -78,7 +78,7 @@
                             <mat-icon class="text-custom">more_vert</mat-icon>
                         </button>
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="OpenOrgProfile('','')">Edit</button>
+                            <button mat-menu-item (click)="OpenOrgProfile(orgDetails,'')">Edit</button>
                             <button mat-menu-item>Delete</button>
                         </mat-menu>
                     </div>

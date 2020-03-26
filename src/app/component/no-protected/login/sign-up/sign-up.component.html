@@ -17,8 +17,9 @@
                             <h5 class="pt-12 mb-4">Full name</h5>
                             <mat-form-field floatLabel="never" appearance="standard">
                                 <input placeholder="Enter your name" appInputValueValidation
-                                    [inputValidator]="validatorType.PERSON_NAME" formControlName="fullName" tabindex="1"
-                                    class="form-control" matInput>
+                                    [inputValidator]="validatorType.PERSON_NAME" #fullName [maxLength]="20"
+                                    formControlName="fullName" tabindex="1" class="form-control" matInput>
+                                <mat-hint align="end" class="f-12">{{fullName.value.length}}/20</mat-hint>
                                 <mat-error>Username required</mat-error>
                             </mat-form-field>
                         </div>
@@ -28,22 +29,23 @@
                         <div class="col-md-12 form-group p-0">
                             <h5 class="pt-12 mb-4">Email</h5>
                             <mat-form-field floatLabel="never" appearance="standard">
-                                <input placeholder="Enter email" appInputValueValidation
-                                    [inputValidator]="validatorType.EMAIL" formControlName="email" tabindex="1"
+                                <input placeholder="Enter email" formControlName="email" tabindex="1"
                                     class="form-control" matInput>
-                                <mat-error>Email required</mat-error>
+                                <mat-error *ngIf="signUpForm.get('email').errors?.pattern">Email Invalid</mat-error>
+                                <mat-error *ngIf="signUpForm.get('email').errors?.required">Email required</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class=" row">
                         <div class="col-md-12 form-group p-0">
                             <h5 class="pt-12 mb-4">Mobile</h5>
                             <mat-form-field floatLabel="never" appearance="standard">
-                                <input placeholder="Enter mobile" autocomplete="off" appInputValueValidation
+                                <input placeholder="Enter mobile" #mobNo autocomplete="off" appInputValueValidation
                                     [inputValidator]="validatorType.NUMBER_ONLY" formControlName="mobile" tabindex="1"
                                     class="form-control" matInput maxlength="10">
                                 <mat-error>Mobile required</mat-error>
+                                <mat-hint align="end" class="f-12">{{mobNo.value.length}}/10</mat-hint>
                             </mat-form-field>
                         </div>
                     </div>
@@ -73,7 +75,8 @@
                 </div>
             </div>
 
-            <p class="f-12 l-18 ml-24 text-primitive">Before logging in, please ensure that the URL on the address bar
+            <p class="f-12 l-18 ml-24 text-primitive">Before logging in, please ensure that the URL on the address
+                bar
                 starts with “https” or has a padlock icon. The communication of your private information from any
                 address beginning with "https" is encrypted and secured using SSL.</p>
         </div>
