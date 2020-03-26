@@ -3,7 +3,7 @@
         <h4 class="mb-0 l-22 wrapper-20">ORGANIZATION PROFILE</h4>
     </div>
     <div class="col-md-2 text-right">
-        <i class="material-icons pt-20 c-p pr-16" (click)="Close()">
+        <i class="material-icons pt-20 c-p pr-16" (click)="Close(null)">
             clear
         </i>
     </div>
@@ -94,7 +94,8 @@
                 <div class="col-md-5">
                     <div class="form-group">
                         <mat-form-field>
-                            <mat-select formControlName="gstTreatment" (ngModelChange)="gstTreatmentRemove($event)"
+                            <!-- (ngModelChange)="gstTreatmentRemove($event)" prod build -->
+                            <mat-select formControlName="gstTreatment" 
                                 class="form-control br-0" id="sel1">
                                 <mat-option [value]=1>Consumer</mat-option>
                                 <mat-option [value]=2>Not registered business</mat-option>
@@ -189,7 +190,7 @@
 <div class="bottom-fixed wrapper-12 w-70">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(null)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveCurrentPage()">SAVE & NEXT

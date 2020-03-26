@@ -50,7 +50,7 @@
                             <mat-checkbox class="text-black" (change)="selectMutualFund($event,mutualFund2[0])" [checked]="mutualFund2[0].selectedOrDeselected">Show mutual fund fact sheet</mat-checkbox>
                             <p class="m-0 text-custom pl-24">Mutual fund fact sheets are shown when clicked on the mutual fund schemes from the portfolio MF reports section.</p>
                             <div class="bb-1 pl-24 pt-12 pb-20">
-                                <mat-checkbox class="text-black" (change)="selectMutualFund($event)">Show investor returns vs scheme returns widget in fact sheet
+                                <mat-checkbox class="text-black" (change)="selectMutualFund($event, null)">Show investor returns vs scheme returns widget in fact sheet
                                 </mat-checkbox>
                             </div>
                         </div>
