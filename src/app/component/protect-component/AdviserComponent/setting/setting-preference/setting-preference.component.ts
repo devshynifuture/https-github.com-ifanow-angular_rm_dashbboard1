@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { OrgSettingServiceService } from '../org-setting-service.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { OpenEmailVerificationComponent } from './open-email-verification/open-email-verification.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-setting-preference',
@@ -23,7 +25,10 @@ export class SettingPreferenceComponent implements OnInit {
   planSection: any;
   domainSetting: any;
   updateDomain: any;
-  constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) { }
+  emailDetails: any;
+  element: any;
+  emailList: any;
+  constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService,public dialog: MatDialog,) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()
@@ -117,11 +122,65 @@ export class SettingPreferenceComponent implements OnInit {
   updatePlanSectionRes(data) {
     console.log('updatePlanSectionRes ==', data)
   }
+  verifyEmail(){
+    const dialogRef = this.dialog.open(OpenEmailVerificationComponent, {
+      width: '470px',
+      data: { bank: this.emailDetails, animal: this.element }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == undefined) {
+        return
+      }
+      console.log('The dialog was closed');
+      this.element = result;
+      console.log('result -==',this.element)
+      let obj = {
+        emailAddress:this.element,
+        userId:12249
+      }
+      this.orgSetting.addEmailVerfify(obj).subscribe(
+        data => this.addEmailVerfifyRes(data),
+        err => this.eventService.openSnackBar(err, "Dismiss")
+      );
+    //  this.bankDetailsSend.emit(result);
+    });
+  }
+  addEmailVerfifyRes(data){
+    console.log(data)
+    this.getEmailVerification()
+  }
   getPlanRes(data) {
     console.log('getPortfolioRes == ', data)
     this.planSection = data
     this.planSec1 = this.planSection.filter(element => element.planOptionId == 1)
     console.log('planSec1 ', this.planSec1)
+  }
+  getEmailVerification(){
+    let obj = {
+      userId: 12249,
+      advisorId: 414
+    }
+    this.orgSetting.getEmailVerification(obj).subscribe(
+      data => this.getEmailVerificationRes(data),
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    );
+  }
+  getEmailVerificationRes(data){
+    console.log('email verify == get',data)
+    this.emailDetails = data
+    this.emailList = data.listItems
+  }
+  getEmailTemplate(){
+    let obj = {
+      advisorId: 4443
+    }
+    this.orgSetting.getEmailTempalate(obj).subscribe(
+      data => this.getEmailTempalatRes(data),
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    );
+  }
+  getEmailTempalatRes(data){
+    console.log('emailTemplate',data)
   }
 }
 export interface PeriodicElement {

@@ -474,6 +474,9 @@ export const appConfig = {
   UPDATE_DOMAIN:'setting/preferences/domain/update',
   EDIT_ORG_PROFILE_LOGO: 'setting/profile/organisation/logo/update',
   EDIT_ORG_PROFILE_REPORT_LOGO: 'setting/profile/organisation/report/logo/update',
+  GET_EMAIL_VERIFICATION:'setting/preference/email/get',
+  GET_EMAIL_TEMPLATES:'setting/preference/email/template/get',
+  ADD_EMAIL_VERIFY:'setting/preferences/email/post',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',

@@ -35,11 +35,19 @@ export class OrgSettingServiceService {
   updatePlanSection(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.PLAN_SECTION_UPDATE, data);
   }
-  getDomainSetting(data){
+  getDomainSetting(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.DOMAIN_GET, data);
   }
-  updateDomainSetting(data){
+  updateDomainSetting(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_DOMAIN, data);
   }
-
+  getEmailVerification(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EMAIL_VERIFICATION, data);
+  }
+  getEmailTempalate(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EMAIL_TEMPLATES, data);
+  }
+  addEmailVerfify(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_EMAIL_VERIFY, data);
+  }
 }
