@@ -23,6 +23,7 @@
                 @import'./assets/style/scss/Transactions/transactions';
                 @import'./assets/style/scss/setting/setting';
                 @import'./assets/style/scss/people/people';
+                @import'./assets/style/scss/backoffice/backoffice';
                 // responsive style
                 @import'./assets/style/scss/responsive/subscriptions';
                 @import'./assets/style/scss/responsive/transaction-media';
@@ -275,7 +276,7 @@
                 }
 
                 #ui-misreport {
-                  margin-top: 65px;
+                  // margin-top: 65px;
 
                   h3.top-head {
                     @include heading;
@@ -1001,7 +1002,7 @@
 
                 #ui-profile-plan {
                   .vertical-menu {
-                    height: 100vh;
+                    height: calc(100vh - 148px);
                     display: block !important;
                     width: 100%;
                     text-align: left;

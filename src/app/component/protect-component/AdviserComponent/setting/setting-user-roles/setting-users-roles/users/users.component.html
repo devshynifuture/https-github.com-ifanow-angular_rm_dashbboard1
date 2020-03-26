@@ -3,69 +3,22 @@
         <h4 class="m-0 text-black">Team members</h4>
     </div>
     <div class="col-md-6 text-right">
-        <!-- <button (click)="addARNRIADetails(null)" mat-stroked-button class="btn-primary pl-8"><i
-                class="material-icons pr-8 text-white">
-                add
-            </i>ADD NEW</button> -->
-        <button (click)="newTeamMember(null)" mat-stroked-button class="btn-primary pl-8"><i
-                class="material-icons pr-8 text-white">
-                add
-            </i>ADD NEW</button>
+        <button (click)="newTeamMember()" mat-stroked-button class="btn-primary pl-8">
+            <i class="material-icons pr-8 text-white">add</i>ADD NEW
+        </button>
     </div>
 </div>
 <div class="row pt-20">
-    <div class="col-md-3 pl-0">
+    <div class="col-md-3 pl-0" *ngFor="let user of userList">
         <mat-card class="b-a p-9 br-4">
             <div class="row">
                 <div class="col-md-4 p-0">
-                    <img src="https://ifanow.com/images/team/avinash.jpeg" class="w-100 h-80">
+                    <img [src]="user.img" class="w-100 h-80">
                 </div>
                 <div class="col-md-8 pr-0">
-                    <h5 class="m-0 text-black">Archit Gupta</h5>
-                    <p class="text-custom roboto m-0">Admin</p>
-                    <h3 class="m-0 f-500 text-primary pt-16">118 clients</h3>
-                </div>
-            </div>
-        </mat-card>
-    </div>
-    <div class="col-md-3 pl-0">
-        <mat-card class="b-a p-9">
-            <div class="row">
-                <div class="col-md-4 p-0">
-                    <img src="https://ifanow.com/images/team/avinash.jpeg" class="w-100 h-80">
-                </div>
-                <div class="col-md-8 pr-0">
-                    <h5 class="m-0 text-black">Khushboo Sidapara</h5>
-                    <p class="text-custom roboto m-0">Relationship manager</p>
-                    <h3 class="m-0 f-500 text-primary pt-16">103 clients</h3>
-                </div>
-            </div>
-        </mat-card>
-    </div>
-    <div class="col-md-3 pl-0">
-        <mat-card class="b-a p-9">
-            <div class="row">
-                <div class="col-md-4 p-0">
-                    <img src="https://ifanow.com/images/team/avinash.jpeg" class="w-100 h-80">
-                </div>
-                <div class="col-md-8 pr-0">
-                    <h5 class="m-0 text-black">Nita Shinde</h5>
-                    <p class="text-custom roboto m-0">Para planner</p>
-                    <h3 class="m-0 f-500 text-primary pt-16">12 clients</h3>
-                </div>
-            </div>
-        </mat-card>
-    </div>
-    <div class="col-md-3 pl-0">
-        <mat-card class="b-a p-9">
-            <div class="row">
-                <div class="col-md-4 p-0">
-                    <img src="https://ifanow.com/images/team/avinash.jpeg" class="w-100 h-80">
-                </div>
-                <div class="col-md-8 pr-0">
-                    <h5 class="m-0 text-black">Satish Patel</h5>
-                    <p class="text-custom roboto m-0">Para planner</p>
-                    <h3 class="m-0 f-500 text-primary pt-16">2 clients</h3>
+                    <h5 class="m-0 text-black">{{user.name}}</h5>
+                    <p class="text-custom roboto m-0">{{user.roleName}}</p>
+                    <h3 class="m-0 f-500 text-primary pt-16">{{user.clientCount}} client(s)</h3>
                 </div>
             </div>
         </mat-card>

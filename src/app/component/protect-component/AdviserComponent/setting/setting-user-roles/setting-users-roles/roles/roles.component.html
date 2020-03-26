@@ -3,7 +3,7 @@
         <h4 class="m-0 text-black">Roles</h4>
     </div>
     <div class="col-md-6 text-right p-0">
-        <button (click)="addNewRoles(null)" mat-stroked-button class="btn-primary addBtnclass">
+        <button (click)="addEditNewRoles(null)" mat-stroked-button class="btn-primary addBtnclass">
             <i class="material-icons text-white"> add </i>ADD NEW</button>
     </div>
 </div>
@@ -26,7 +26,7 @@
             <ng-container matColumnDef="weight">
                 <th mat-header-cell *matHeaderCellDef class="br"> Edit </th>
                 <td mat-cell *matCellDef="let element" class="br text-center">
-                    <button mat-stroked-button class="btn-primary-outline classEditBtn btn-sm">EDIT</button>
+                    <button mat-stroked-button class="btn-primary-outline classEditBtn btn-sm" (click)="addEditNewRoles(element)" *ngIf="element.is_editable">EDIT</button>
                 </td>
             </ng-container>
 
@@ -34,13 +34,13 @@
             <ng-container matColumnDef="symbol">
                 <th mat-header-cell *matHeaderCellDef class="br"> Clone </th>
                 <td mat-cell *matCellDef="let element" class="br text-center">
-                    <button mat-stroked-button class="btn-success-outline  cloneBtn btn-sm">CLONE</button>
+                    <button mat-stroked-button class="btn-success-outline  cloneBtn btn-sm" (click)="cloneRole(element)">CLONE</button>
                 </td>
             </ng-container>
             <ng-container matColumnDef="del">
                 <th mat-header-cell *matHeaderCellDef> Delete </th>
                 <td mat-cell *matCellDef="let element" class="text-center">
-                    <button mat-stroked-button class="btn-danger-outline deleteBtn btn-sm">DELETE</button>
+                    <button mat-stroked-button class="btn-danger-outline deleteBtn btn-sm" (click)="deleteRole(element)" *ngIf="element.is_deletable">DELETE</button>
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

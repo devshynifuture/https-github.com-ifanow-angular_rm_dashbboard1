@@ -1,5 +1,5 @@
-.min-height162 {
-    min-height: 162px !important;
+.height180 {
+    height: 180px !important;
     padding-top: 20px !important;
 }
 
@@ -12,16 +12,16 @@
     box-shadow: inset 0px 4px 5px rgba(0, 0, 0, 0.2);
 }
 .bg-aum{
-    background-color: #FF7272 !important;
+    background: linear-gradient(90deg, #004680 0%, #4484BA 100%) !important;
     border: 1px solid #BCC6CA;
 }
 .bg-foliocount {
-    background-color: #5DC644;
+    background: linear-gradient(90deg, #FF0099 0%, #493240 100%) !important;
     border: 1px solid #BCC6CA;
 }
 
 .bg-goal {
-    background: #5562B2;
+    background: linear-gradient(90deg, #00B4DB 0%, #0083B0 100%) !important;
     border: 1px solid #BCC6CA;
 }
 

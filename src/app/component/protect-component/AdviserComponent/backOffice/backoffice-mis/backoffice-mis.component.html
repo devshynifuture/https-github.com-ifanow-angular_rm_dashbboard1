@@ -1,4 +1,4 @@
-<div id="ui-subscriptions">
+<!-- <div id="ui-subscriptions">
     <div class="sub-header-fix">
         <div class="bg-white">
             <h1 class="custom-heading-main">Backoffice-MIS</h1>
@@ -14,5 +14,39 @@
             </nav>
             <router-outlet></router-outlet>
         </div>
+    </div>
+</div> -->
+
+
+<div id="ui-subscriptions">
+    <div class="row">
+        <div class="col-md-2">
+            <h3 class="m-0 pt-16">Backoffice-MIS</h3>
+        </div>
+        <div class="col-md-10 p-0">
+            <div class="subnav-fixed">
+                <nav (selectedTabChange)="tabClick($event)" mat-tab-nav-bar>
+                    <a [routerLink]="['/admin/backoffice-mis/mutual-funds']" routerLinkActive="active" class="mx-2"
+                        mat-tab-link>
+                        MUTUTAL FUNDS
+                    </a>
+                    <a [routerLink]="['/admin/backoffice-mis/life-insurance']" routerLinkActive="active" class="mx-2"
+                        mat-tab-link>
+                        LIFE INSURANCE
+                    </a>
+                    <a [routerLink]="['/admin/backoffice-mis/general-insurance']" routerLinkActive="active"
+                        mat-tab-link>
+                        GENERAL INSURANCE
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12 p-0">
+        <router-outlet></router-outlet>
     </div>
 </div>

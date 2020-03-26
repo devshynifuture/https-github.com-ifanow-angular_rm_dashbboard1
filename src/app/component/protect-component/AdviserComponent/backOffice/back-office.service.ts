@@ -74,6 +74,16 @@ export class BackOfficeService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_WISE_TOTALAUM, httpParams);
   }
 
+  getClientFolioWiseInCategory(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_FOLIO_WISE, data);
+  }
+
+  amcWiseGet(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AMC_WISE, data);
+  }
+  amcWiseApplicantGet(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_APPLICANT_NAME, data);
+  }
   getSipcountGet(data) {
     const httpParams = new HttpParams().set('teamMemberId', data);
 
@@ -123,48 +133,57 @@ export class BackOfficeService {
 
 // Date - 10 dec 2019
 
-  GET_EXPIRING() {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EXPIRING, null);
+  GET_EXPIRING(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EXPIRING, data);
   }
 
-  GET_expired() {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_expired, null);
+  GET_expired(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_expired, data);
   }
 
-  GET_SIP_REJECTION() {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_REJECTION, null);
+  GET_SIP_REJECTION(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_REJECTION, data);
   }
 
-  GET_SIP_SCHEME_SEARCH() {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_SCHEME_SEARCH, null);
+  GET_SIP_SCHEME_SEARCH(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_SCHEME_SEARCH, data);
   }
 
-  GET_SIP_AMC() {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_AMC, null);
+  GET_SIP_CLIENT_SEARCH(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_client_SEARCH, data);
   }
 
-  GET_SIP_AMC_SCHEME() {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_AMC_SCHEME, null);
+  GET_SIP_AMC(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_AMC, data);
   }
 
-  GET_SIP_INVERSTORS() {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_INVERSTORS, null);
+  GET_SIP_AMC_SCHEME(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_AMC_SCHEME, data);
   }
-
-  Scheme_Investors_Applicants() {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.Scheme_Investors_Applicants, null);
+  allSipGet(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.ALL_SIP_GET, data);
   }
-
-  Sip_Schemewise_Get() {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.Sip_Schemewise_Get, null);
+  GET_SIP_INVERSTORS(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_INVERSTORS, data);
   }
-
+  Sip_Schemewise_Get(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.Sip_Schemewise_Get, data);
+  }
+  Sip_Investors_Applicant_Get(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.Scheme_Investors_Applicants, data);
+  }
+  sipClientWiseApplicant(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.CLIENT_WISE_APPLICANT_GET, data);
+  }
+  sipClientWiseClientName(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.CLIENT_WISE_CLIENTNAME_GET, data);
+  }
   Scheme_Wise_Investor_Get() {
     return this.http.get(apiConfig.MAIN_URL + appConfig.Scheme_Wise_Investor_Get, null);
   }
 
-  scheme_wise_Applicants_Get() {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.scheme_wise_Applicants_Get, null);
+  scheme_wise_Applicants_Get(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.scheme_wise_Applicants_Get, data);
   }
 
 // ---------------------------------------- sip data call--------------------------------------
