@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -26,6 +26,7 @@ export class OrgProfileComponent implements OnInit {
   selectedTab:number = 0;
 
   anyDetailsChanged:boolean;
+  inputData: any;
 
   constructor(
     public utils: UtilService, 
@@ -36,10 +37,19 @@ export class OrgProfileComponent implements OnInit {
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
-
+  @Input()
+  set data(data) {
+    this.inputData = data;
+   
+    console.log('This is Input data', data);
+      this.getdataForm(data);
+  }
+  get data() {
+    return this.inputData;
+  }
   ngOnInit() {
     this.getOrgProfiles();
-    this.getdataForm('');
+    this.getdataForm(this.inputData);
   }
 
   Close(flag) {
@@ -145,9 +155,9 @@ export class OrgProfileComponent implements OnInit {
       const jsonDataObj = {
         id: this.advisorId,
         logoUrl: cloudinaryResponseJson.url,
-        cloudinary_json: cloudinaryResponseJson
+        cloudinary_json: JSON.stringify(cloudinaryResponseJson)
       }
-      this.settingsService.uploadProfilePhoto(jsonDataObj).subscribe((res) => {
+      this.settingsService.editOrgProfileLogo(jsonDataObj).subscribe((res) => {
         this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
         this.anyDetailsChanged = true;
         this.profileImg = jsonDataObj.logoUrl;
@@ -157,9 +167,9 @@ export class OrgProfileComponent implements OnInit {
         const jsonDataObj = {
           id: this.advisorId,
           reportLogoUrl: cloudinaryResponseJson.url,
-          report_cloudinary_json: cloudinaryResponseJson
+          report_cloudinary_json: JSON.stringify(cloudinaryResponseJson)
         }
-        this.settingsService.uploadProfilePhoto(jsonDataObj).subscribe((res) => {
+        this.settingsService.editOrgProfileReportLogo(jsonDataObj).subscribe((res) => {
           this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
           this.reportImg = jsonDataObj.reportLogoUrl;
           this.switchToTab(++this.selectedTab);

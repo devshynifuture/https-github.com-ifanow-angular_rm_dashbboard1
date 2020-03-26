@@ -11,6 +11,6 @@ export class LoginService {
   constructor(private http: HttpService) { }
 
   generateOtp(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.GENERATE_OTP, data);
+    return this.http.postEncoded(apiConfig.USER + appConfig.GENERATE_OTP, data);
   }
 }

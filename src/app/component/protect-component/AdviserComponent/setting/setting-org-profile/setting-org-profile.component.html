@@ -25,7 +25,7 @@
                         </mat-icon>
                         <mat-menu #menu="matMenu">
                             <!-- ng build prod issue expected 2 args given empty string -->
-                            <button mat-menu-item (click)="OpenpersonalProfile('', '')">Edit</button>
+                            <button mat-menu-item (click)="OpenpersonalProfile(userList, '')">Edit</button>
                             <button mat-menu-item>Delete</button>
                         </mat-menu>
                     </div>
@@ -78,7 +78,7 @@
                             <mat-icon class="text-custom">more_vert</mat-icon>
                         </button>
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="OpenOrgProfile('','')">Edit</button>
+                            <button mat-menu-item (click)="OpenOrgProfile(orgDetails,'')">Edit</button>
                             <button mat-menu-item>Delete</button>
                         </mat-menu>
                     </div>
@@ -108,7 +108,7 @@
                     </div>
                     <div class="col-md-6 bl-1 pb-28">
                         <p class="f-12 m-0 text-custom pt-28 pb-16"> WEB APP LOGO</p>
-                        <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png"
+                        <img [src]="orgDetails.logoUrl"
                             class="w-65">
                         <p class="m-0 text-black pt-16">This logo is visible on top left of web login, About section in
                             mobile
@@ -118,7 +118,7 @@
 
                         <div class="row">
                             <div class="col-md-4 pl-0">
-                                <img src="/assets/images/svg/l-icon.svg" class="w-100">
+                                <img [src]="orgDetails.reportLogoUrl" class="w-100">
                             </div>
                             <div class="col-md-8 pl-0">
                                 <p class="m-0 text-black pt-16">This logo is visible on various reports (MF, Financial

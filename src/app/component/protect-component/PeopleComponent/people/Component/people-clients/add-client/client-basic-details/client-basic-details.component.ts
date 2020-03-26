@@ -9,21 +9,23 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
   styleUrls: ['./client-basic-details.component.scss']
 })
 export class ClientBasicDetailsComponent implements OnInit {
+  minorForm: any;
+  nonIndividualForm: any;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject) { }
   basicDetails;
   @Input() fieldFlag;
   @Output() tabChange = new EventEmitter();
-  validatorType = ValidatorType
+  validatorType = ValidatorType;
+  invTypeCategory = '1';
+  invTaxStatus = '1';
   ngOnInit() {
-    this.createForm();
+    this.createIndividualForm();
   }
   @Input() set data(data) {
   }
-  createForm() {
+  createIndividualForm() {
     this.basicDetails = this.fb.group({
-      invCategory: [, [Validators.required]],
-      invTaxStatus: [, [Validators.required]],
       fullName: [, [Validators.required]],
       email: [, [Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
       mobileNo: new FormArray([]),
@@ -41,8 +43,42 @@ export class ClientBasicDetailsComponent implements OnInit {
     })
     this.addNumber();
   }
+  createMinorForm() {
+    this.minorForm = this.fb.group({
+      minorFullName: [],
+      dobAsPerRecord: [],
+      dobActual: [],
+      gender: ['1'],
+      gFullName: [],
+      gDobAsPerRecord: [],
+      gDobActual: [],
+      gGender: ['1'],
+      relationWithMinor: [],
+      gEmail: [, [Validators.pattern(this.validatorType.EMAIL)]],
+      mobileNo: [],
+      pan: [],
+      username: [],
+      leadOwner: [],
+      role: []
+    })
+  }
+  createNonIndividualForm() {
+    this.nonIndividualForm = this.fb.group({
+      comName: [],
+      dateOfIncorporation: [],
+      comStatus: [],
+      comEmail: [[Validators.pattern(this.validatorType.EMAIL)]],
+      comPhone: [],
+      comPan: [],
+      comOccupation: [],
+      username: [],
+      leadOwner: [],
+      role: []
+    })
+  }
   get getBasicDetails() { return this.basicDetails.controls; }
   get getMobileNumList() { return this.getBasicDetails.mobileNo as FormArray; }
+  create
   removeNumber(index) {
     (index == 0) ? '' : this.basicDetails.controls.mobileNo.removeAt(index)
   }
@@ -51,6 +87,13 @@ export class ClientBasicDetailsComponent implements OnInit {
       code: [, [Validators.required]],
       number: [, [Validators.required]]
     }))
+  }
+  changeInvestorType(event) {
+    this.invTypeCategory = event.value;
+    (event.value == '1') ? this.createIndividualForm() : (event.value == '2') ? this.createMinorForm() : this.createNonIndividualForm();
+  }
+  changeTaxStatus(event) {
+    this.invTaxStatus = event.value;
   }
   saveNext() {
     this.tabChange.emit(1);

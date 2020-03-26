@@ -5,8 +5,7 @@ import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {HttpService} from 'src/app/http-service/http-service';
 import {apiConfig} from 'src/app/config/main-config';
-import {appConfig} from 'src/app/config/component-config';
-
+import {appConfig} from 'src/app/config/component-config'
 class CacheItem<T> {
   url: string;
   timestampCached: number;
@@ -44,28 +43,23 @@ export class BackOfficeService {
 
   getClientTotalAUM(data) {
     console.log(data);
-    const httpParams = new HttpParams().set('teamMemberId', data);
+    const httpParams = new HttpParams().set('advisorId', data);
     return this.http.get(apiConfig.MAIN_URL + appConfig.TOTAL_GET_AUM, httpParams);
   }
 
   getMisData(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MIS_DATA + '?teamMemberId=' + data, null);
+    const httpParams = new HttpParams().set('advisorId', data);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MIS_DATA,httpParams);
   }
 
   getSubCatAum(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_AUM + '?teamMemberId=' + data, null);
-  }
-
-  getSubCatScheme(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_SCHEME + '?teamMemberId=' + data, null);
-  }
-
-  getSubCatSchemeName(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_SCHEMENAME + '?teamMemberId=' + data, null);
+    const httpParams = new HttpParams().set('advisorId', data);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_AUM, httpParams);
   }
 
   getTotalByAumScheme(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_SCHEMENAME + '?teamMemberId=' + data, null);
+    const httpParams = new HttpParams().set('advisorId', data);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_SCHEMENAME,httpParams);
   }
 
   getClientWiseTotalAum(data) {

@@ -4,12 +4,11 @@ export const appConfig = {
   RT_FILE_GET: 'file/rt/list/get',
 
 
-///////////////////////////MIS///////////////////////////
-  TOTAL_GET_AUM: 'asset/clientTotalAum/get',
-  GET_MIS_DATA: 'asset/mis/get',
+  ////////////////////////////get///////////////////////////
+  TOTAL_GET_AUM: 'backoffice/clientTotalAum/get',
+  GET_MIS_DATA: 'backoffice/mis/get',
   GET_SUBCAT_AUM: 'asset/cat/subcat/get',
-  GET_SUBCAT_SCHEME: 'asset/cat/subcat/scheme',
-  GET_SUBCAT_SCHEMENAME: 'asset/cat/subcat/scheme',
+  GET_SUBCAT_SCHEMENAME: 'backoffice/cat/subcat/scheme',
   GET_TOTAL_SCHEME_AUM: 'asset/schemeTotalAum/get',
   GET_TOTAL_AUM_BY_SCHEME: 'asset/schemeTotalAum/get',
   GET_CLIENT_WISE_TOTALAUM: 'asset/report/client/totalaum/get',
@@ -20,12 +19,12 @@ export const appConfig = {
   GET_AUM_APPLICANT_SCHEME: 'asset/aum/applicantWise/totalaum/applicantSchemes/get',
   GET_AUM_CLIENT_TOTALAUM: 'asset/aum/client/totalaum/get',
   GET_AUM_CLIENT_SCHEME: 'asset/aum/client/schemes',
-  GET_CLIENT_FOLIO_WISE:'asset/cat/subcat/schemeName/clientFolioWise',
-  GET_AMC_WISE:'asset/mis/aum/amcWise/get',
-  GET_APPLICANT_NAME:'/mis/aum/amcWise/applicantName/get',
-  ADVISOR_TAG_GET:'/advisor/tag/get',
+  GET_CLIENT_FOLIO_WISE: 'asset/cat/subcat/schemeName/clientFolioWise',
+  GET_AMC_WISE: 'asset/mis/aum/amcWise/get',
+  GET_APPLICANT_NAME: '/mis/aum/amcWise/applicantName/get',
+  ADVISOR_TAG_GET: '/advisor/tag/get',
 
-  
+
 
   /////////////////////// sip api call//////////////////////////////////
 
@@ -42,9 +41,9 @@ export const appConfig = {
   Sip_Schemewise_Get: 'asset/sip/schemewise/get',
   Scheme_Wise_Investor_Get: 'asset/sip/schemewiseInvestor/get',
   scheme_wise_Applicants_Get: 'asset/sip/schemewiseApplicants/get',
-  ALL_SIP_GET:'asset/sip/allSip/get',
-  CLIENT_WISE_CLIENTNAME_GET:'asset/sip/ClientWiseClientsName/get',
-  CLIENT_WISE_APPLICANT_GET:'asset/sip/ClientWiseApplicants/get',
+  ALL_SIP_GET: 'asset/sip/allSip/get',
+  CLIENT_WISE_CLIENTNAME_GET: 'asset/sip/ClientWiseClientsName/get',
+  CLIENT_WISE_APPLICANT_GET: 'asset/sip/ClientWiseApplicants/get',
 
   ///////////////////////////// back office/////////////////////////////////////////////
 
@@ -453,6 +452,34 @@ export const appConfig = {
   BACKOFFICE_PUT_FREEZE_FOLIO_DATA: 'backoffice/aum/freeze/folio',
   BACKOFFICE_PUT_UNFREEZE_FOLIO_DATA: 'backoffice/aum/unfreeze/folio',
   BACKOFFICE_GET_DUPLICATE_FOLIO_DATA: 'backoffice/duplicate/transaction/list/get',
+  BACKOFFICE_FOLIOWISE_LIST_GET: 'backoffice/aum/transaction/foliowise/list/get',
+  BACKOFFICE_PUT_UNMAP_FOLIO: 'backoffice/unmap/folio',
+  BACKOFFICE_GET_FOLIO_MASTER_DETAIL: 'backoffice/mutual-fund/folio-master/get',
+  BACKOFFICE_GET_DUPLICATE_DATA_LIST: 'backoffice/duplicate-data/get',
+  BACKOFFICE_POST_UNMATCHED_FOLIOS_ADD: 'backoffice/aum/recon/unmatched/folios/add',
+  BACKOFFICE_GET_AUM_REPORT_LIST: 'backoffice/aum/reconciliation/report/get',
+  BACKOFFICE_GET_FOLIO_BASED_SEARCH_LIST: 'backoffice/folio/based/on/search/list/get',
+
+  BACKOFFICE_FILE_UPLOAD_TYPE: 'backoffice/file-upload/types/get',
+  BACKOFFICE_FILE_TO_UPLOAD: 'backoffice/file-upload/url/get',
+  BACKOFFICE_SUCCESS_FILE_UPLOAD: 'web/backoffice/file-upload/success',
+
+  ///org setting ////
+  GET_PERSONAL_PROFILE: 'setting/profile/personal/details/get',
+  GET_ORG_PROFILE: 'setting/profile/organisation/details/get',
+  EDIT_PERSONAL_PROFILE: 'setting/profile/personal/profile-photo/update',
+  EDIT_ORG_PROFILE: 'setting/profile/organisation/update',
+  GET_PORTFOLIO :'setting/preferences/portfolio/get',
+  GET_PLANS:'setting/preferences/plan/get',
+  PROTFOLIO_UPDATE:'setting/preferences/portfolio/update',
+  PLAN_SECTION_UPDATE:'setting/preferences/plan/update',
+  DOMAIN_GET:'setting/preferences/domain/get',
+  UPDATE_DOMAIN:'setting/preferences/domain/update',
+  EDIT_ORG_PROFILE_LOGO: 'setting/profile/organisation/logo/update',
+  EDIT_ORG_PROFILE_REPORT_LOGO: 'setting/profile/organisation/report/logo/update',
+  GET_EMAIL_VERIFICATION:'setting/preference/email/get',
+  GET_EMAIL_TEMPLATES:'setting/preference/email/template/get',
+  ADD_EMAIL_VERIFY:'setting/preferences/email/post',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
@@ -479,8 +506,11 @@ export const appConfig = {
   ADD_CLIENT_DEMAT: '',
   ADD_CLIENT_MORE_INFO: '',
   ADD_CLIENT_UPLOAD: '',
+  GET_PEOPLE_CLIENT_LIST: '/user/client/all/get',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: '/user/generate/otp',
+  GET_FAMILY_MEMBERS: 'user/family-member/get',
+  DELETE_FAMILY_MEMBER: 'user/family-member/delete',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_UPDATE: 'calendar/event/update',
@@ -492,11 +522,17 @@ export const appConfig = {
   ////////////////////////////// settings////////////////////////////////////////////
   GET_PERSONAL_PROFILE_DETAILS: 'setting/profile/personal/details/get',
   UPLOAD_PERSONAL_PROFILE_PHOTO: 'setting/profile/personal/profile-photo/update',
-  ///org setting ////
-  GET_PERSONAL_PROFILE: 'setting/profile/personal/details/get',
-  GET_ORG_PROFILE: 'setting/profile/organisation/details/get',
-  EDIT_PERSONAL_PROFILE: 'setting/profile/personal/profile-photo/update',
-  EDIT_ORG_PROFILE: 'etting/profile/organisation/update',
-  ////////////////////////////// settings////////////////////////////////////////////
+  
+  GET_ARN_RIA_GLOBAL_LIST: '/setting/arn-ria/global/data/get',
 
+  GET_ARN_RIA_LIST: 'setting/arn-ria/list/get',
+  ADD_ARN_RIA: 'setting/back-office/arn-ria/add',
+  EDIT_ARN_RIA: 'setting/back-office/arn-ria/edit',
+
+  GET_MF_RTA_LIST: 'setting/arn-ria/rta/list/get',
+  ADD_MF_RTA: 'setting/arn-ria/rta/add',
+  EDIT_MF_RTA: 'setting/arn-ria/rta/edit',
+  DELETE_MF_RTA: 'setting/arn-ria/rta/delete',
+  ////////////////////////////// settings////////////////////////////////////////////
+  //////////////////////////////////customer-overview-profile//////////////////////
 };

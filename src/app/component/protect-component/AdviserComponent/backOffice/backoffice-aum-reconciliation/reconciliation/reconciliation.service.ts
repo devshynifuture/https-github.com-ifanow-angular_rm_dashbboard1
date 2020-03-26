@@ -47,11 +47,47 @@ export class ReconciliationService {
         return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_DUPLICATE_FOLIO_DATA, data);
     }
 
+    getDuplicateDataValues(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_DUPLICATE_DATA_LIST, data);
+    }
+
+    getFoliowiseTransactionList(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_FOLIOWISE_LIST_GET, data)
+    }
+
+    getMutualFundFolioMasterValues(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_FOLIO_MASTER_DETAIL, data)
+    }
+
+    getAumReportListValues(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_AUM_REPORT_LIST, data);
+    }
+
+    getFolioQueryDataListValues(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_FOLIO_BASED_SEARCH_LIST, data);
+    }
+
     // post functions
+
+    postBackOfficeUnmatchedFoliosData(data) {
+        return this.http.post(apiConfig.MAIN_URL + appConfig.BACKOFFICE_POST_UNMATCHED_FOLIOS_ADD, data);
+    }
 
     // put functions
     putBackofficeReconAdd(data) {
         return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_PUT_AUM_RECON_ADD, data);
+    }
+
+    getBackOfficeFileUploadFileType(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_FILE_UPLOAD_TYPE, data);
+    }
+
+    getBackOfficeFileToUpload(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_FILE_TO_UPLOAD, data);
+    }
+
+    successBackOfficeFileToUpload(data){
+        return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_SUCCESS_FILE_UPLOAD, data)
     }
 
     putFileOrderRetry(data) {
@@ -64,6 +100,10 @@ export class ReconciliationService {
 
     putUnfreezeFolio(data) {
         return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_PUT_UNFREEZE_FOLIO_DATA, data)
+    }
+
+    putUnmapFolioTransaction(data) {
+        return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_PUT_UNMAP_FOLIO, data);
     }
 
     // delete functions

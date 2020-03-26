@@ -4,6 +4,7 @@ import { ValidatorType } from 'src/app/services/util.service';
 import { FormControl, Validators } from '@angular/forms';
 import { LoginService } from '../login.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password',
@@ -17,8 +18,20 @@ export class ForgotPasswordComponent implements OnInit {
   otpData = [];
   userName;
   otpResponse: any;
-  constructor(private loginService: LoginService, private eventService: EventService) { }
+  verifyData: any;
+  constructor(private loginService: LoginService, private eventService: EventService, private router: Router) { }
   ngOnInit() {
+    this.verifyData = window.history.state;
+    if (this.verifyData.flag) {
+      this.isVerify = true;
+      this.verifyData.mobileNo = this.verifyData.mobileNo.substr(0, 2) + 'XXXXX' + this.verifyData.mobileNo.substr(7, 9);
+      this.verifyData.emailId = this.verifyData.emailId = this.verifyData.emailId.substr(2, this.verifyData.emailId.indexOf('@') - 2) + 'XXXXX' + this.verifyData.emailId.substr(7, 9)
+      console.log(this.verifyData.mobileNo)
+    }
+    else {
+      this.isVerify = false;
+    };
+
     this.userName = new FormControl('', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]);
   }
   config = {
@@ -45,9 +58,10 @@ export class ForgotPasswordComponent implements OnInit {
     }
     else {
       if (value.srcElement.nextElementSibling == undefined) {
+        this.otpData.push(parseInt(value.key));
         return;
       }
-      this.otpData.push(value.key);
+      this.otpData.push(parseInt(value.key));
       value.srcElement.nextElementSibling.focus();
     }
   }
@@ -71,5 +85,11 @@ export class ForgotPasswordComponent implements OnInit {
       )
     }
   }
-
+  verifyWithOtpResponse() {
+    let otpString = this.otpData.toString().replace(/,/g, "");
+    if (this.otpData.length == 6 && this.otpResponse == otpString) {
+      this.eventService.openSnackBar("Otp matches sucessfully", "Dismiss");
+      this.router.navigate(['/login/setpassword'])
+    }
+  }
 }

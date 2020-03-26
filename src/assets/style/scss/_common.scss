@@ -712,3 +712,25 @@ button.primary-sm {
 .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
   color: $primary !important;
 }
+
+
+.welcome-page{
+  h1 {
+  font-size: 280px;
+  color: #D9DEE1;
+  font-weight: 700;
+  font-family: "proxima-nova", sans-serif;
+}
+
+
+.main-content {
+  padding-top: 90px;
+
+  h2 {
+    padding-top: 60px;
+    font-size: 40px;
+    font-family: "proxima-nova", sans-serif;
+  }
+}
+
+}

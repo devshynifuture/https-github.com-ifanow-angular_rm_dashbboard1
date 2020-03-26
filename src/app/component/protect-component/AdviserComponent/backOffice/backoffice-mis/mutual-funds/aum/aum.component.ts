@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
 import { BackOfficeService } from '../../../back-office.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-aum',
@@ -21,13 +22,17 @@ export class AumComponent implements OnInit {
   MiscData1;
   aumComponent=true;
   componentWise;
+  advisorId: any;
   
 
   constructor(private backoffice: BackOfficeService,private dataService: EventService) { }
   
   teamMemberId=2929;
   ngOnInit() {
+    this.advisorId=AuthService.getAdvisorId();
     this.getTotalAum();
+    this.getTotalAumByScheme();
+    // this.getSubCatScheme();
     this.getSubCatAum()
     this.getMisData();
   }
@@ -60,32 +65,33 @@ export class AumComponent implements OnInit {
   
   getTotalAum(){
 
-    this.backoffice.getClientTotalAUM(this.teamMemberId).subscribe(
-      
+    this.backoffice.getClientTotalAUM(this.advisorId).subscribe(
      data => this.getFileResponseDataAum(data),
      err => this.getFilerrorResponse(err)
     )
    }
    getMisData(){
-     this.backoffice.getMisData(this.teamMemberId).subscribe(
+     this.backoffice.getMisData(this.advisorId).subscribe(
        data => this.getFileResponseDataForMis(data),
        err => this.getFilerrorResponse(err)
      )
    }
    getSubCatAum(){
-     this.backoffice.getSubCatAum(this.teamMemberId).subscribe(
+     this.backoffice.getSubCatAum(this.advisorId).subscribe(
       data => this.getFileResponseDataForSub(data),
       err => this.getFilerrorResponse(err)
     )
    }
    getTotalAumByScheme()
    {
-    this.backoffice.getTotalByAumScheme(this.teamMemberId).subscribe(
+    this.backoffice.getTotalByAumScheme(this.advisorId).subscribe(
       data => this.getFileResponseAumByScheme(data),
       err=> this.getFilerrorResponse(err)
     )
    } 
-
+  getSubCatSchemeRes(data){
+    console.log(data);
+  }
    getFileResponseDataAum(data) {
    
      console.log("top clients",data)

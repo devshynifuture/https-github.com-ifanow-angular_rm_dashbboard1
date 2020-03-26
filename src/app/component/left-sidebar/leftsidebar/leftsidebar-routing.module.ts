@@ -36,11 +36,11 @@ const routes: Routes = [
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/Activities/activies.module').then(m => m.ActiviesModule),
         data: { animation: 'Tab1', preload: true }
       },
-      {
-        path: 'calendar',
-        loadChildren: () => import('src/app/component/protect-component/AdviserComponent/Activities/calendar/calendar.module').then(m => m.CalendarModule),
-        data: { animation: 'Tab1', preload: true }
-      },
+      // {
+      //   path: 'calendar',
+      //   loadChildren: () => import('src/app/component/protect-component/AdviserComponent/Activities/calendar/calendar.module').then(m => m.CalendarModule),
+      //   data: { animation: 'Tab1', preload: true }
+      // },
       {
         path: 'transactions',
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/transactions/transactions.module').then(m => m.TransactionsModule),
@@ -54,6 +54,10 @@ const routes: Routes = [
       {
         path: 'backoffice-aum-reconciliation',
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/backOffice/backoffice-aum-reconciliation/backoffice-aum-reconciliation.module').then(m => m.BackofficeAumReconciliationModule)
+      },
+      {
+        path: 'backoffice-file-upload',
+        loadChildren: () => import('src/app/component/protect-component/AdviserComponent/backOffice/backoffice-file-upload/backoffice-file-upload.module').then(m => m.BackofficeFileUploadModule)
       },
       {
         path: 'setting',
