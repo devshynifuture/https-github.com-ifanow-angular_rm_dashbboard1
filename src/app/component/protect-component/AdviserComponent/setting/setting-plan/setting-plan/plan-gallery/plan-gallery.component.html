@@ -4,18 +4,18 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3" *ngFor = "let gallery of defaultGallery">
         <mat-card>
-            <img src="/assets/images/svg/pencil-action.svg" class="plan-action">
+            <img src="/assets/images/svg/pencil-action.svg" class="plan-action" (click)="openGallery()">
             <mat-card-content>
-                <img mat-card-image src="/assets/images/svg/retierment.svg">
+                <img mat-card-image src="{{gallery.imageUrl}}">
             </mat-card-content>
             <mat-card-actions>
-                <h5 class="m-0 text-black text-center">Retirement</h5>
+                <h5 class="m-0 text-black text-center">{{gallery.name}}</h5>
             </mat-card-actions>
         </mat-card>
     </div>
-    <div class="col-md-3">
+    <!-- <div class="col-md-3">
         <mat-card>
             <img src="/assets/images/svg/pencil-action.svg" class="plan-action">
             <mat-card-content>
@@ -113,5 +113,5 @@
                 <h5 class="m-0 text-black text-center">Others</h5>
             </mat-card-actions>
         </mat-card>
-    </div>
+    </div> -->
 </div>

@@ -9,6 +9,7 @@ import { PlanTemplatesComponent } from './plan-templates/plan-templates.componen
 import { PlanGalleryComponent } from './plan-gallery/plan-gallery.component';
 import { SettingPlanComponent } from '../setting-plan.component';
 import { MaterialModule } from 'src/app/material/material';
+import { OpenGalleryPlanComponent } from './plan-gallery/open-gallery-plan/open-gallery-plan.component';
 
 
 @NgModule({
