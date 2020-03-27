@@ -305,7 +305,7 @@ img.header-img {
     background: #555;
 }
 
-.width40 {
+.widthSerachBox {
     width: 40% !important;
 }
 
@@ -347,6 +347,10 @@ img.header-img {
     display: none;
 }
 
+.menuMobile {
+    display: none;
+}
+
 @media screen and (max-width: 767px) {
     .desKBTN {
         display: none;
@@ -356,5 +360,14 @@ img.header-img {
     }
     .smallNav {
         margin-left: 0px !important;
+    }
+    .mobileMargin {
+        display: none !important;
+    }
+    .menuMobile {
+        display: block;
+    }
+    .widthSerachBox {
+        width: 75% !important;
     }
 }

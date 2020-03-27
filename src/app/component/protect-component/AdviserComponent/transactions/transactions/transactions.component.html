@@ -7,20 +7,19 @@
             <div class="subnav-fixed">
                 <nav (selectedTabChange)="tabClick($event)" mat-align-tabs="end" mat-tab-nav-bar>
                     <a routerLink="/admin/transactions/overview" mat-tab-link routerLinkActive="active">OVERVIEW</a>
-                    <a class="transactionsWidth" routerLink="/admin/transactions/transactions" mat-tab-link
-                        routerLinkActive="active">TRANSACTIONS</a>
+                    <a class="transactionsWidth" routerLink="/admin/transactions/transactions" mat-tab-link routerLinkActive="active">TRANSACTIONS</a>
                     <a routerLink="/admin/transactions/investors" mat-tab-link routerLinkActive="active">INVESTORS</a>
                     <a routerLink="/admin/transactions/mandates" mat-tab-link routerLinkActive="active">MANDATES</a>
                     <!-- <a mat-tab-link routerLink="'expenses'">EXPENSES</a> -->
-                    <a class="kycWidth" routerLink="/admin/transactions/kyc" mat-tab-link
-                        routerLinkActive="active">KYC</a>
-                    <a routerLink="/admin/transactions/settings" [state]="{ example: 0 }" mat-tab-link
-                        routerLinkActive="active">SETTINGS</a>
+                    <a class="kycWidth" routerLink="/admin/transactions/kyc" mat-tab-link routerLinkActive="active">KYC</a>
+                    <a routerLink="/admin/transactions/settings" [state]="{ example: 0 }" mat-tab-link routerLinkActive="active">SETTINGS</a>
                 </nav>
             </div>
         </div>
     </div>
 </div>
+
+
 
 <div class="row">
     <div class="col-md-12 p-0">
