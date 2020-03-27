@@ -507,6 +507,8 @@ export const appConfig = {
   ADD_CLIENT_MORE_INFO: '',
   ADD_CLIENT_UPLOAD: '',
   GET_PEOPLE_CLIENT_LIST: '/user/client/all/get',
+  ADD_CLIENT: 'user/client/add',
+  EDIT_CLIENT: 'user/client/edit',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: '/user/generate/otp',
   GET_FAMILY_MEMBERS: 'user/family-member/get',

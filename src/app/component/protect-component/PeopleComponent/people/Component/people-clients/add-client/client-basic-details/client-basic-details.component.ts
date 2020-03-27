@@ -2,6 +2,9 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ValidatorType } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-client-basic-details',
@@ -11,8 +14,10 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 export class ClientBasicDetailsComponent implements OnInit {
   minorForm: any;
   nonIndividualForm: any;
+  advisorId: typeof AuthService;
+  basicDetailsData: any;
 
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject) { }
+  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService) { }
   basicDetails;
   @Input() fieldFlag;
   @Output() tabChange = new EventEmitter();
@@ -23,6 +28,9 @@ export class ClientBasicDetailsComponent implements OnInit {
     this.createIndividualForm();
   }
   @Input() set data(data) {
+    this.advisorId = AuthService.getAdvisorId();
+    this.basicDetailsData = data.data;
+    console.log(data)
   }
   createIndividualForm() {
     this.basicDetails = this.fb.group({
@@ -137,7 +145,73 @@ export class ClientBasicDetailsComponent implements OnInit {
     //   role: this.minorForm.controls.role.value
     // }
     // console.log(obj);
-    this.close();
+    let obj =
+    {
+      "advisorId": this.advisorId,
+      "taxStatusId": this.invTaxStatus,
+      "emailList": [
+        {
+          "verificationStatus": 0,
+          "id": 0,
+          "userType": 0,
+          "isActive": 1,
+          "userId": 0,
+          "email": this.basicDetails.controls.email.value
+        }
+      ],
+      "displayName": null,
+      "bio": null,
+      "martialStatusId": 0,
+      "password": null,
+      "clientType": 0,
+      "occupationId": 0,
+      "id": null,
+
+      "pan": this.basicDetails.controls.pan.value,
+      "clientId": null,
+      "kycComplaint": 0,
+      "roleId": 0,
+      "genderId": this.basicDetails.controls.gender.value,
+      "companyStatus": 0,
+      "aadharCard": null,
+      "dateOfBirth": this.basicDetails.controls.dobAsPerRecord.value,
+      "userName": this.basicDetails.controls.username.value,
+      "userId": null,
+      "mobileList": [
+        {
+          "verificationStatus": 0,
+          "id": 0,
+          "userType": 0,
+          "mobileNo": 0,
+          "isActive": 1,
+          "userId": 0
+        }
+      ],
+      "referredBy": 0,
+      "name": this.basicDetails.controls.fullName.value,
+      "bioRemarkId": 0,
+      "userType": 0,
+      "remarks": null,
+      "status": 0
+    }
+    if (this.basicDetailsData == null) {
+      this.peopleService.addClient(obj).subscribe(
+        data => {
+          console.log(data);
+          this.close();
+        },
+        err => this.eventService.openSnackBar(err, "Dismiss")
+      )
+    }
+    else {
+      this.peopleService.editClient(obj).subscribe(
+        data => {
+          console.log(data);
+          this.close();
+        },
+        err => this.eventService.openSnackBar(err, "Dismiss")
+      )
+    }
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });

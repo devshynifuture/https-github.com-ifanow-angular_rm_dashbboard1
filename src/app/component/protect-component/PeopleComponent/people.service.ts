@@ -31,4 +31,10 @@ export class PeopleService {
   getClientList(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_PEOPLE_CLIENT_LIST, data, 1)
   }
+  addClient(data) {
+    return this.http.postEncoded(apiConfig.USER + appConfig.ADD_CLIENT, data)
+  }
+  editClient(data) {
+    return this.http.putEncoded(apiConfig.USER + appConfig.EDIT_CLIENT, data);
+  }
 }

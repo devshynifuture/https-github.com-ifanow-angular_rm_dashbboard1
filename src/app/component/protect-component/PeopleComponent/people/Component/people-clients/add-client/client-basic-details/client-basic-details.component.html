@@ -300,20 +300,26 @@
         <div class="col-md-3 p-0">
             <p class="m-0 roboto">As per records</p>
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input formControlName="dobAsPerRecord" matInput class="form-control">
-                    <mat-hint>Optional</mat-hint>
-
+                <mat-form-field class="ba-date">
+                    <input [matDatepicker]="dobAsPerRecord" (click)="dobAsPerRecord.open()"
+                        class="form-control br-0 b-0" formControlName="dobAsPerRecord" matInput readonly>
+                    <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord"></mat-datepicker-toggle>
+                    <mat-datepicker #dobAsPerRecord></mat-datepicker>
+                    <mat-error class="f-12">This field is required
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>
         <div class="col-md-4">
             <p class="m-0 roboto">Actual</p>
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input formControlName="dobActual" matInput class="form-control">
-                    <mat-hint>Optional</mat-hint>
-
+                <mat-form-field class="ba-date">
+                    <input formControlName="dobActual" (click)="dobActual.open()" class="form-control br-0 b-0"
+                        formControlName="dobActual" matInput readonly>
+                    <mat-datepicker-toggle matSuffix [for]="dobActual"></mat-datepicker-toggle>
+                    <mat-datepicker #dobActual></mat-datepicker>
+                    <mat-error class="f-12">This field is required
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -357,10 +363,13 @@
         <div class="col-md-3 p-0">
             <p class="m-0 roboto">As per records</p>
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input matInput formControlName="gDobAsPerRecord" class="form-control">
-                    <mat-hint>Optional</mat-hint>
-
+                <mat-form-field class="ba-date">
+                    <input formControlName="gDobAsPerRecord" (click)="gDobAsPerRecord.open()"
+                        class="form-control br-0 b-0" matInput readonly>
+                    <mat-datepicker-toggle matSuffix [for]="gDobAsPerRecord"></mat-datepicker-toggle>
+                    <mat-datepicker #gDobAsPerRecord></mat-datepicker>
+                    <mat-error class="f-12">This field is required
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -372,6 +381,15 @@
                     <mat-hint>Optional</mat-hint>
 
                 </mat-form-field>
+                <mat-form-field class="ba-date">
+                    <input formControlName="gDobActual" (click)="gDobActual.open()" class="form-control br-0 b-0"
+                        matInput readonly>
+                    <mat-datepicker-toggle matSuffix [for]="gDobActual"></mat-datepicker-toggle>
+                    <mat-datepicker #gDobActual></mat-datepicker>
+                    <mat-error class="f-12">This field is required
+                    </mat-error>
+                </mat-form-field>
+
             </div>
         </div>
     </div>
@@ -461,7 +479,7 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input formControlName="pan" #pan matInput class="form-control">
+                    <input [maxLength]="10" formControlName="pan" #pan matInput class="form-control">
                     <mat-hint>Optional</mat-hint>
                     <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
                 </mat-form-field>
