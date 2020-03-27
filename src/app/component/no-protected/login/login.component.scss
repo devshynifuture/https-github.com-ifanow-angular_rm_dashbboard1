@@ -1,86 +1,86 @@
 .login_window_wrapper {
-  float: left;
-  width: 100%;
-  background-color: #cccccc;
-  height: 100vh;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+    float: left;
+    width: 100%;
+    background-color: #cccccc;
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .login_window_container {
-  width: 25%;
-  display: block;
-  margin: 40px auto;
-  padding: 30px;
-  height: 320px;
-  background-color: #fff;
+    width: 25%;
+    display: block;
+    margin: 40px auto;
+    padding: 30px;
+    height: 320px;
+    background-color: #fff;
 }
 
 .errorM {
-  color: red;
-  font-size: 14px;
-  display: block;
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s, opacity 0.5s linear;
+    color: red;
+    font-size: 14px;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
 }
 
 h3 {
-  text-align: center;
-  margin-bottom: 15px;
+    text-align: center;
+    margin-bottom: 15px;
 }
 
 .m-b-xs {
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .form_container_btn_wrapper {
-  float: right;
-  text-align: right;
-  margin-top: 5px;
+    float: right;
+    text-align: right;
+    margin-top: 5px;
 }
 
 .width_100 {
-  width: 100%;
+    width: 100%;
 }
 
 .register_text {
-  text-align: center;
-  text-decoration: none;
-  margin-top: 15px;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 15px;
 }
 
 input.mat-input-element {
-  line-height: 1.2;
+    line-height: 1.2;
 }
 
 .register_text:focus {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 @media(max-width:1062px) {
-  .login_window_container {
-    width: 30%;
-  }
+    .login_window_container {
+        width: 30%;
+    }
 }
 
 @media(max-width:862px) {
-  .login_window_container {
-    width: 40%;
-  }
+    .login_window_container {
+        width: 40%;
+    }
 }
 
 @media(max-width:672px) {
-  .login_window_container {
-    width: 50%;
-  }
+    .login_window_container {
+        width: 50%;
+    }
 }
 
 @media(max-width:490px) {
-  .login_window_container {
-    width: 60%;
-  }
+    .login_window_container {
+        width: 60%;
+    }
 }
 
 // .login_window_wrapper .mat-form-field {
@@ -90,99 +90,115 @@ input.mat-input-element {
 //     padding-bottom: 0px !important;
 // }
 .animationBox {
-  display: block;
-  background-color: lightskyblue;
-  width: 0%;
+    display: block;
+    background-color: lightskyblue;
+    width: 0%;
 }
 
 // .animationBox:hover {
 // }
 // ------------------------------ new design --------------------
 .loginBox {
-  width: 60%;
-  margin-top: 45px;
-  //height: 515px;
+    width: 60%;
+    margin-top: 45px;
+    //height: 515px;
 }
 
 .loginBoxverifyOtp {
-  width: 60%;
-  margin-top: 45px;
+    width: 60%;
+    margin-top: 45px;
 }
 
 .advisorLogo {
-  width: 60px;
+    width: 60px;
 }
 
 .form_container_new_wrapper {
-  width: 80%;
-
-  .form-group {
-    margin-bottom: 22px !important;
-  }
+    width: 80%;
+    .form-group {
+        margin-bottom: 22px !important;
+    }
 }
 
 .namebtn {
-  button.mainloginBtn {
-    width: 100% !important;
-  }
+    button.mainloginBtn {
+        width: 100% !important;
+    }
 }
 
 .imgBoxlogin {
-  // height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    // height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .flexLogin {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 ::ng-deep .mat-form-field-appearance-standard .mat-form-field-flex {
-  padding-top: 0px !important;
+    padding-top: 0px !important;
 }
 
 .eyesPassword {
-  position: absolute;
-  top: 8px;
-  right: 8px;
+    position: absolute;
+    top: 8px;
+    right: 8px;
 }
 
 .otpBox {
-  background: #FF7272;
-  width: 176px;
-  height: 40px;
-  border-radius: 4px;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  font-weight: 500;
-  margin-bottom: 87px;
+    background: #FF7272;
+    width: 176px;
+    height: 40px;
+    border-radius: 4px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-weight: 500;
+    margin-bottom: 87px;
 }
 
 .lightRead {
-  color: #FF7272;
+    color: #FF7272;
 }
 
 .verifyDiv {
-  width: 35px;
-  text-align: center;
-  margin-right: 10px;
+    width: 35px;
+    text-align: center;
+    margin-right: 10px;
 }
 
 .iconPosition {
-  position: absolute;
-  top: 8px;
-  left: 8px;
+    position: absolute;
+    top: 8px;
+    left: 8px;
 }
 
 // --------------------forgot-password ----------------------
 .verifyBtn {
-  width: 120px;
-  height: 40px;
-  font-size: 16px;
+    width: 120px;
+    height: 40px;
+    font-size: 16px;
+}
+
+@media screen and (max-width: 767px) {
+    .mobileView {
+        .imgBoxlogin {
+            display: none;
+        }
+        .flexLogin {
+            .loginBox {
+                width: 90%;
+                margin-top: 0px;
+                .form_container_new_wrapper {
+                    width: 100%;
+                }
+            }
+        }
+    }
 }

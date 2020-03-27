@@ -36,6 +36,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   advisorName;
   loginType = 1;
   showDefaultDropDownOnSearch: boolean;
+  isOpen: boolean;
 
   logoText = 'Your Logo here';
 
