@@ -100,7 +100,8 @@
         <div *ngIf="clientDatasource==undefined" class="d-flex flex-column align-items-center">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
             <h4 class="pt-12">No Clients found</h4>
-            <button mat-stroked-button class="btn-primary addon v-middle  " (click)="openAddPPF(null)">
+            <!-- (click)="openAddPPF(null)" prod build -->
+            <button mat-stroked-button class="btn-primary addon v-middle  " >
                 ADD NEW</button>
         </div>
     </div>
