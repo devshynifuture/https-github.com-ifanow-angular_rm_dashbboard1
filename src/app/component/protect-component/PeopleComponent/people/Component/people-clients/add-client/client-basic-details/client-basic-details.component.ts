@@ -99,6 +99,44 @@ export class ClientBasicDetailsComponent implements OnInit {
     this.tabChange.emit(1);
   }
   saveClose() {
+    // individual form
+    // let obj =
+    // {
+    //   fullName: this.basicDetails.controls.fullName.value,
+    //   email: this.basicDetails.controls.email.value,
+    //   mobileNo: this.basicDetails.controls.mobileNo.value,
+    //   pan: this.basicDetails.controls.pan.value,
+    //   username: this.basicDetails.controls.username.value,
+    //   dobAsPerRecord: this.basicDetails.controls.dobAsPerRecord.value,
+    //   dobActual: this.basicDetails.controls.dobActual.value,
+    //   gender: this.basicDetails.controls.gender.value,
+    //   leadSource: this.basicDetails.controls.leadSource.value,
+    //   leaadStatus: this.basicDetails.controls.leaadStatus.value,
+    //   leadRating: this.basicDetails.controls.leadRating.value,
+    //   leadOwner: this.basicDetails.controls.leadOwner.value,
+    //   clientOwner: this.basicDetails.controls.clientOwners.value,
+    //   role: this.basicDetails.controls.role.value,
+    // }
+    // minor form
+    // let obj =
+    // {
+    //   minorFullName: this.minorForm.controls.minorFullName.value,
+    //   dobAsPerRecord: this.minorForm.controls.dobAsPerRecord.value,
+    //   dobActual: this.minorForm.controls.dobActual.value,
+    //   gender: this.minorForm.controls.gender.value,
+    //   gFullName: this.minorForm.controls.gFullName.value,
+    //   gDobAsPerRecord: this.minorForm.controls.gDobAsPerRecord.value,
+    //   gDobActual: this.minorForm.controls.gDobActual.gDobActual.value,
+    //   gGender: this.minorForm.controls.gGender.value,
+    //   relationWithMinor: this.minorForm.controls.relationWithMinor.value,
+    //   gEmail: this.minorForm.controls.gEmail.value,
+    //   mobileNo: this.minorForm.controls.mobileNo.value,
+    //   pan: this.minorForm.controls.pan.value,
+    //   username: this.minorForm.controls.username.value,
+    //   leadOwner: this.minorForm.controls.leadOwner.value,
+    //   role: this.minorForm.controls.role.value
+    // }
+    // console.log(obj);
     this.close();
   }
   close() {

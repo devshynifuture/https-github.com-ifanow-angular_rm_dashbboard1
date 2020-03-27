@@ -469,17 +469,17 @@ export const appConfig = {
   GET_ORG_PROFILE: 'setting/profile/organisation/details/get',
   EDIT_PERSONAL_PROFILE: 'setting/profile/personal/profile-photo/update',
   EDIT_ORG_PROFILE: 'setting/profile/organisation/update',
-  GET_PORTFOLIO :'setting/preferences/portfolio/get',
-  GET_PLANS:'setting/preferences/plan/get',
-  PROTFOLIO_UPDATE:'setting/preferences/portfolio/update',
-  PLAN_SECTION_UPDATE:'setting/preferences/plan/update',
-  DOMAIN_GET:'setting/preferences/domain/get',
-  UPDATE_DOMAIN:'setting/preferences/domain/update',
+  GET_PORTFOLIO: 'setting/preferences/portfolio/get',
+  GET_PLANS: 'setting/preferences/plan/get',
+  PROTFOLIO_UPDATE: 'setting/preferences/portfolio/update',
+  PLAN_SECTION_UPDATE: 'setting/preferences/plan/update',
+  DOMAIN_GET: 'setting/preferences/domain/get',
+  UPDATE_DOMAIN: 'setting/preferences/domain/update',
   EDIT_ORG_PROFILE_LOGO: 'setting/profile/organisation/logo/update',
   EDIT_ORG_PROFILE_REPORT_LOGO: 'setting/profile/organisation/report/logo/update',
-  GET_EMAIL_VERIFICATION:'setting/preference/email/get',
-  GET_EMAIL_TEMPLATES:'setting/preference/email/template/get',
-  ADD_EMAIL_VERIFY:'setting/preferences/email/post',
+  GET_EMAIL_VERIFICATION: 'setting/preference/email/get',
+  GET_EMAIL_TEMPLATES: 'setting/preference/email/template/get',
+  ADD_EMAIL_VERIFY: 'setting/preferences/email/post',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
@@ -511,6 +511,7 @@ export const appConfig = {
   GENERATE_OTP: '/user/generate/otp',
   GET_FAMILY_MEMBERS: 'user/family-member/get',
   DELETE_FAMILY_MEMBER: 'user/family-member/delete',
+  SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_UPDATE: 'calendar/event/update',
@@ -522,7 +523,7 @@ export const appConfig = {
   ////////////////////////////// settings////////////////////////////////////////////
   GET_PERSONAL_PROFILE_DETAILS: 'setting/profile/personal/details/get',
   UPLOAD_PERSONAL_PROFILE_PHOTO: 'setting/profile/personal/profile-photo/update',
-  
+
   GET_ARN_RIA_GLOBAL_LIST: '/setting/arn-ria/global/data/get',
 
   GET_ARN_RIA_LIST: 'setting/arn-ria/list/get',
