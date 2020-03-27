@@ -1018,7 +1018,7 @@
                   }
                 }
 
-                #ui-biller-tabs {
+                #ui-biller-tabs,#ui-fp-planmodule {
                   margin-top: 40px;
                   margin-bottom: 40px;
 
@@ -1233,6 +1233,7 @@
                 .deployment,
                 .lumpsumtables,
                 .taxplanning,
+                .scss-scheme,
                 .insurance-planning-rightside {
                   tr.mat-header-row {
                     height: 40px;
@@ -1248,7 +1249,11 @@
                     padding: 6px 8px !important;
                   }
                 }
-
+.scss-scheme{
+  #tbs .mat-sort-header-button{
+    white-space: nowrap;
+  }
+}
                 .cashflow #table-low {
                   .mat-row:last-child {
                     font-weight: normal !important;
@@ -1311,7 +1316,7 @@
 
                 .liabilities #table-low {
                   th {
-                    padding: 10px 6px !important;
+                    padding: 6px !important;
                   }
 
                   //.mat-row:last-child {
@@ -2063,3 +2068,16 @@
                     }
                   }
                 }
+.budget,
+.other-commitments,
+.transactions-table{
+  tr.mat-header-row{
+    height: 48px !important;
+  }
+  #table-low tbody td{
+       padding: 6px 8px !important;
+  }
+  tr.mat-row{
+    height: 40px !important;
+  }
+}
