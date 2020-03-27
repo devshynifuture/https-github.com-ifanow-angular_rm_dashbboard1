@@ -24,8 +24,9 @@ export class BackofficeFileUploadComponent implements OnInit {
     })
   }
 
-  getFile(file){
-    console.log(file);
+  myFiles:any;
+  getFile(e){
+    console.log(e);
     let obj={
       fileType:this.selectedFileType,
       advisorId: this.advisorId
@@ -33,9 +34,18 @@ export class BackofficeFileUploadComponent implements OnInit {
     this.reconService.getBackOfficeFileToUpload(obj).subscribe((data)=>{
       // this.fileType = data;
       if(data){
-        this.uploadFileRes(data, file)
+        this.uploadFileRes(data, e.target.files[0]);
       }
     });
+    // this.myFiles = [];
+    // for (let i = 0; i < e.target.files.length; i++) {
+    //   this.myFiles.push(e.target.files[i]);
+    // }
+    // this.myFiles.forEach(fileName => {
+    //   this.filenm = fileName;
+    //   // this.parentId = (this.parentId == undefined) ? 0 : this.parentId;
+    //   this.uploadFile(this.parentId, this.filenm);
+    // });
   }
 
   uploadFileRes(data, file){
@@ -43,9 +53,9 @@ export class BackofficeFileUploadComponent implements OnInit {
       headers: new HttpHeaders()
         .set('Content-Type', '')
     };
-    this.http.put(data.presignedUrl, file.files[0], httpOptions).subscribe((responseData) => {
+    this.http.put(data.presignedUrl, file, httpOptions).subscribe((responseData) => {
       console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
-      this.successFileUpload(this.selectedFileType, data.fileName)
+      // this.successFileUpload(this.selectedFileType, data.fileName)
     });
   }
 

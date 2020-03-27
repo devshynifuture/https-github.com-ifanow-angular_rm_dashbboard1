@@ -2,8 +2,10 @@
     box-shadow: 5px 1px 10px rgba(0, 0, 0, 0.2), 3px 4px 5px rgba(0, 0, 0, 0.12), 2px 2px 4px rgba(0, 0, 0, 0.14);
     
 }
+// #ui-wrap{max-height: 100%; background: red;}
 .wrapper{
-    height: 100% !important;
+   max-height: 100hv !important;
+   
     .upload-box{
         height: 100% !important;
         margin-top: -66px;
