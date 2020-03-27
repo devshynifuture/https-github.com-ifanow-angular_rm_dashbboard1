@@ -82,3 +82,20 @@
     height: 40px;
     font-size: 16px;
 }
+
+@media screen and (max-width: 767px) {
+    .mobileView {
+        .imgBoxlogin {
+            display: none;
+        }
+        .flexLogin {
+            .loginBoxverifyOtp {
+                width: 90%;
+                margin-top: 0px;
+                .form_container_new_wrapper {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

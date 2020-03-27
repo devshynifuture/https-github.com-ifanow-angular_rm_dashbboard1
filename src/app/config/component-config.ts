@@ -462,6 +462,9 @@ export const appConfig = {
 
   BACKOFFICE_FILE_UPLOAD_TYPE: 'backoffice/file-upload/types/get',
   BACKOFFICE_FILE_TO_UPLOAD: 'backoffice/file-upload/url/get',
+  BACKOFFICE_TRANSACTIONS: 'backoffice/file-upload/uploaded/transaction/list/get',
+  BACKOFFICE_SIP_STP: 'backoffice/file-upload/uploaded/sip/list/get',
+  BACKOFFICE_FOLIO: 'backoffice/file-upload/uploaded/folio-master/list/get',
   BACKOFFICE_SUCCESS_FILE_UPLOAD: 'web/backoffice/file-upload/success',
 
   ///org setting ////

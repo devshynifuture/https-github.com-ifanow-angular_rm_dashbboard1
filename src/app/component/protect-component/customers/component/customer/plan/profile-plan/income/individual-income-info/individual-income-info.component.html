@@ -1,4 +1,4 @@
-<div class="pl-24 pt-72 pr-24 pb-44 mb-44">
+<div class="pl-24 pt-72 pr-24 pb-44 mb-44 individual-income">
     <div class="row pt-24">
         <div class="col-md-8 pl-0">
             <p class="f-14 roboto">Now entering {{singleIndividualIncome.userName}} income</p>
@@ -11,12 +11,12 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4 d-flex pl-0">
+        <div class="col-md-3 d-flex pl-0">
             <div class="mr-28">
                 <div class="memberBorderBox">
                     <img src="assets/images/svg/income-man.svg">
                 </div>
-                <p class="f-14 m-0 f-bold text-center" *ngIf="singleIndividualIncome">
+                <p class="f-14 m-0 f-bold text-center pb-20" *ngIf="singleIndividualIncome">
                     {{singleIndividualIncome.userName}}</p>
             </div>
 
@@ -34,20 +34,20 @@
                         <img src="assets/images/svg/pensionIcon.svg"
                             *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==5">
                     </div>
-                    <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==1">
+                    <p class="f-14 m-0 text-primitive text-center" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==1">
                         Salaried</p>
-                    <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==2">
+                    <p class="f-14 m-0 text-primitive text-center" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==2">
                         Buisness</p>
-                    <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==3">
+                    <p class="f-14 m-0 text-primitive text-center" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==3">
                         Profession</p>
-                    <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==4">
+                    <p class="f-14 m-0 text-primitive text-center" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==4">
                         Rental</p>
-                    <p class="f-14 m-0 text-primitive" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==5">
+                    <p class="f-14 m-0 text-primitive text-center" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==5">
                         Others</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9 pl-0">
             <div [formGroup]="incomeNetForm">
                 <div *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==1" class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
@@ -294,7 +294,7 @@
                         <div class="col-md-5 p-0 text-right">
                             <h5 class="m-0 pt-8 ws-nowrap">I'm expecting a bonus/inflow</h5>
                         </div>
-                        <div class="col-md-7" [formGroup]="expectedBonusForm">
+                        <div class="col-md-7 pr-0" [formGroup]="expectedBonusForm">
                             <div *ngFor="let singleBonusForm of getBonusList.controls;index as i"
                                 [formGroup]="singleBonusForm" class="row">
                                 <div class="col-md-5 pl-0 pr-4">
@@ -331,7 +331,7 @@
                         </div>
                     </div>
                     <div class="row pt-40">
-                        <div class="col-md-5 pr-0 text-right">
+                        <div class="col-md-5 p-0 text-right">
                             <h5 class="m-0 pt-8">Description</h5>
                             <p class="m-0 f-12 text-custom">Enter next appriasal date. Approx year & month should do</p>
                         </div>
