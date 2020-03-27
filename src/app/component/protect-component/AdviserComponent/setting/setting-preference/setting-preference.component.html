@@ -55,12 +55,20 @@
                             </div>
                         </div>
                     </div>
+                    <div *ngIf="portfolio == undefined" class="d-flex flex-column align-items-center">
+                        <img class="width300" src="assets/images/svg/noDataFound.svg">
+                        <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
+                    </div>
                 </div>
                 <div *ngSwitchCase="'tab2'">
                     <div class="p-20" *ngIf="planSection">
                         <h5 class="mb-8  text-black">Insurance planning</h5>
                         <mat-checkbox class="text-black" (change)="selectPlan($event,planSec1[0])" [checked]="planSec1[0].selectedOrDeselected">Show XIRR returns for insurance policies</mat-checkbox>
                         <p class="m-0 text-custom pb-20 bb-1 pl-24">These returns are displayed when giving recommendations on current policies.</p>
+                    </div>
+                    <div *ngIf="planSection == undefined" class="d-flex flex-column align-items-center">
+                        <img class="width300" src="assets/images/svg/noDataFound.svg">
+                        <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
                     </div>
                 </div>
                 <div *ngSwitchCase="'tab3'">
@@ -117,6 +125,10 @@
                             </div>
                         </div>
                     </div>
+                    <div *ngIf="emailList == undefined" class="d-flex flex-column align-items-center">
+                        <img class="width300" src="assets/images/svg/noDataFound.svg">
+                        <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
+                    </div>
                 </div>
                 <div *ngSwitchCase="'tab5'">
                     <div class="p-20">
@@ -162,6 +174,10 @@
                         </div>
 
 
+                    </div>
+                    <div *ngIf="emailTemplateList == undefined" class="d-flex flex-column align-items-center">
+                        <img class="width300" src="assets/images/svg/noDataFound.svg">
+                        <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
                     </div>
                 </div>
                 <div *ngSwitchCase="'tab6'">
