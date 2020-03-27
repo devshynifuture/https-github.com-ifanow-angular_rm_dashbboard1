@@ -44,12 +44,12 @@ export class SettingPreferenceComponent implements OnInit {
   clientData
   userId: any;
   constructor(private orgSetting: OrgSettingServiceService,
-    public subInjectService: SubscriptionInject, private eventService: EventService,public dialog: MatDialog,private fb: FormBuilder,) { }
+    public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, ) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()
     this.userId = AuthService.getUserId()
-    console.log('3456893469 ===',this.userId)
+    console.log('3456893469 ===', this.userId)
     this.getPortfolio()
     this.getdataForm('')
   }
@@ -63,7 +63,7 @@ export class SettingPreferenceComponent implements OnInit {
   getFormControl(): any {
     return this.domainS.controls;
   }
-  getDomain(){
+  getDomain() {
     let obj = {
       advisorId: this.advisorId
     }
@@ -72,7 +72,7 @@ export class SettingPreferenceComponent implements OnInit {
       err => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
-  getDomainSettingRes(data){
+  getDomainSettingRes(data) {
     console.log(data)
     this.domainSetting = data
     this.normalDomain = this.domainSetting.filter(element => element.domainOptionId == 1)
@@ -81,19 +81,19 @@ export class SettingPreferenceComponent implements OnInit {
     this.whiteLable = this.whiteLabledDomain[0].optionValue
     this.domainS.controls.normalLable.setValue(this.normalLable)
     this.domainS.controls.whiteLable.setValue(this.whiteLable)
-    console.log('normalDomain',this.normalDomain)
-    console.log('whiteLabled',this.whiteLabledDomain)
+    console.log('normalDomain', this.normalDomain)
+    console.log('whiteLabled', this.whiteLabledDomain)
   }
-  updateDomainSetting(event, value){
+  updateDomainSetting(event, value) {
     console.log(event)
     this.domainSetting.forEach(element => {
       if (element.domainOptionId == value.domainOptionId) {
-        if(value.domainOptionId == 1){
+        if (value.domainOptionId == 1) {
           element.optionValue = this.domainS.controls.normalLable.value;
-        }else{
+        } else {
           element.optionValue = this.domainS.controls.whiteLable.value;
         }
-       
+
       }
     });
     this.orgSetting.updateDomainSetting(this.domainSetting).subscribe(
@@ -101,17 +101,17 @@ export class SettingPreferenceComponent implements OnInit {
       err => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
-  updateDomainSettingRes(data){
+  updateDomainSettingRes(data) {
     console.log(data)
     this.updateDomain = data
     this.getDomain()
   }
-  editDomain(flag,event,value){
-    if(flag == true){
+  editDomain(flag, event, value) {
+    if (flag == true) {
       this.showUpdate = true
-    }else{
+    } else {
       this.showUpdate = false
-      this.updateDomainSetting(event,value)
+      this.updateDomainSetting(event, value)
     }
   }
   getPortfolio() {
@@ -174,9 +174,9 @@ export class SettingPreferenceComponent implements OnInit {
   updatePlanSectionRes(data) {
     console.log('updatePlanSectionRes ==', data)
   }
-  verifyEmail(){
+  verifyEmail() {
     const dialogRef = this.dialog.open(OpenEmailVerificationComponent, {
-      width: '470px',
+      width: '400px',
       data: { bank: this.emailDetails, animal: this.element }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -185,19 +185,19 @@ export class SettingPreferenceComponent implements OnInit {
       }
       console.log('The dialog was closed');
       this.element = result;
-      console.log('result -==',this.element)
+      console.log('result -==', this.element)
       let obj = {
-        emailAddress:this.element,
-        userId:12249
+        emailAddress: this.element,
+        userId: 12249
       }
       this.orgSetting.addEmailVerfify(obj).subscribe(
         data => this.addEmailVerfifyRes(data),
         err => this.eventService.openSnackBar(err, "Dismiss")
       );
-    //  this.bankDetailsSend.emit(result);
+      //  this.bankDetailsSend.emit(result);
     });
   }
-  addEmailVerfifyRes(data){
+  addEmailVerfifyRes(data) {
     console.log(data)
     this.getEmailVerification()
   }
@@ -207,7 +207,7 @@ export class SettingPreferenceComponent implements OnInit {
     this.planSec1 = this.planSection.filter(element => element.planOptionId == 1)
     console.log('planSec1 ', this.planSec1)
   }
-  getEmailVerification(){
+  getEmailVerification() {
     let obj = {
       userId: 12249,
       advisorId: 414
@@ -217,12 +217,12 @@ export class SettingPreferenceComponent implements OnInit {
       err => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
-  getEmailVerificationRes(data){
-    console.log('email verify == get',data)
+  getEmailVerificationRes(data) {
+    console.log('email verify == get', data)
     this.emailDetails = data
     this.emailList = data.listItems
   }
-  getEmailTemplate(){
+  getEmailTemplate() {
     let obj = {
       advisorId: 4443
     }
@@ -231,8 +231,8 @@ export class SettingPreferenceComponent implements OnInit {
       err => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
-  getEmailTempalatRes(data){
-    console.log('emailTemplate',data)
+  getEmailTempalatRes(data) {
+    console.log('emailTemplate', data)
     this.emailTemplateList = data
   }
   OpenEmail(value, data) {
@@ -240,11 +240,11 @@ export class SettingPreferenceComponent implements OnInit {
       return;
     }
     let obj = {
-      documentText :data.body
+      documentText: data.body
     }
     const fragmentData = {
       flag: value,
-      data :obj,
+      data: obj,
       id: 1,
       state: 'open',
       componentName: CommonFroalaComponent

@@ -462,6 +462,9 @@ export const appConfig = {
 
   BACKOFFICE_FILE_UPLOAD_TYPE: 'backoffice/file-upload/types/get',
   BACKOFFICE_FILE_TO_UPLOAD: 'backoffice/file-upload/url/get',
+  BACKOFFICE_TRANSACTIONS: 'backoffice/file-upload/uploaded/transaction/list/get',
+  BACKOFFICE_SIP_STP: 'backoffice/file-upload/uploaded/sip/list/get',
+  BACKOFFICE_FOLIO: 'backoffice/file-upload/uploaded/folio-master/list/get',
   BACKOFFICE_SUCCESS_FILE_UPLOAD: 'web/backoffice/file-upload/success',
 
   ///org setting ////
@@ -480,6 +483,8 @@ export const appConfig = {
   GET_EMAIL_VERIFICATION:'setting/preference/email/get',
   GET_EMAIL_TEMPLATES:'setting/preference/email/template/get',
   ADD_EMAIL_VERIFY:'setting/preferences/email/post',
+  GET_ASSET_ALLOCATION:'goal-planning/static-allocation/get',
+  GET_RETURNS:'plan/config/return-inflation/get',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
