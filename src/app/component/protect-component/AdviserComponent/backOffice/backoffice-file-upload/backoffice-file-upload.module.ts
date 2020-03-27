@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { BackofficeFileUploadRoutingModule, adminRoutingComponents } from './backoffice-file-upload-routing.module';
 import { MaterialModule } from 'src/app/material/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 
 @NgModule({
   declarations: [adminRoutingComponents],
@@ -12,7 +13,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BackofficeFileUploadRoutingModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CustomDirectiveModule
   ]
 })
 export class BackofficeFileUploadModule { }
