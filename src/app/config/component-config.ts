@@ -483,6 +483,8 @@ export const appConfig = {
   GET_EMAIL_VERIFICATION:'setting/preference/email/get',
   GET_EMAIL_TEMPLATES:'setting/preference/email/template/get',
   ADD_EMAIL_VERIFY:'setting/preferences/email/post',
+  GET_ASSET_ALLOCATION:'goal-planning/static-allocation/get',
+  GET_RETURNS:'plan/config/return-inflation/get',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',

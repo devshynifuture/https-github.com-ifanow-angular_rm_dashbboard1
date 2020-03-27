@@ -50,4 +50,10 @@ export class OrgSettingServiceService {
   addEmailVerfify(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_EMAIL_VERIFY, data);
   }
+  getAssetAllocation(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_ALLOCATION, data);
+  }
+  getRetuns(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_RETURNS, data);
+  }
 }
