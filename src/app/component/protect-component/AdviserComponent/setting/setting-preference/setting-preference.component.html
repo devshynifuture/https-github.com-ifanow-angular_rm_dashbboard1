@@ -126,18 +126,18 @@
                                 <table mat-table [dataSource]="emailTemplateList" class="mt-8" id="table-low">
                                     <ng-container matColumnDef="position">
                                         <th mat-header-cell class="br w-23" *matHeaderCellDef> Type </th>
-                                        <td mat-cell class="br w-23" *matCellDef="let element"> {{element.position}}
+                                        <td mat-cell class="br w-23" *matCellDef="let element"> {{element.emailTemplateId}}
                                         </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="name">
                                         <th mat-header-cell class="br" *matHeaderCellDef> Description </th>
-                                        <td mat-cell class="br" *matCellDef="let element"> {{element.name}} </td>
+                                        <td mat-cell class="br" *matCellDef="let element"> {{element.subject}} </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="weight">
                                         <th mat-header-cell class="br" *matHeaderCellDef> From email </th>
-                                        <td mat-cell class="br" *matCellDef="let element"> {{element.weight}} </td>
+                                        <td mat-cell class="br" *matCellDef="let element"> {{element.fromEmail}} </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="symbol">
@@ -204,14 +204,17 @@
                             <h5 class="m-0">Domain settings</h5>
                             <p class="text-custom m-0 roboto pt-6">Domain settings gives you an option to customize the link with which IFANOW is accessed by you, your team and your clients. You have an option to either Partially or Completely white label the URL. <span class="text-primary text-underline c-p">Read more</span></p>
                         </div>
-                        <div class="row pt-28">
+                        <div class="row pt-28" [formGroup]="domainS">
                             <div class="col-md-7 pl-0">
-                                <div class="row">
+                                <div class="row" *ngIf="normalDomain">
                                     <div class="col-md-10 p-0">
                                         <p class="m-0 text-black roboto f-500">Option 1: Partial white label</p>
                                     </div>
-                                    <div class="col-md-1 p-0 text-right">
-                                        <button mat-stroked-button class="btn-dark-outline xs">Edit</button>
+                                    <div class="col-md-1 p-0 text-right" *ngIf="showUpdate == false">
+                                        <button mat-stroked-button class="btn-dark-outline xs"(click)="editDomain(true,'test',normalDomain[0])">Edit</button>
+                                    </div>
+                                    <div class="col-md-1 p-0 text-right" *ngIf="showUpdate == true">
+                                        <button mat-stroked-button class="btn-dark-outline xs"(click)="editDomain(false,'test',normalDomain[0])" >Update</button>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -219,20 +222,23 @@
                                         <div class="form-group b-a">
                                             <mat-form-field class="url">
                                                 <button mat-stroked-button class="b-0 h-40 bg-grey lter min-80 text-custom">https://</button>
-                                                <input matInput type="number" class="form-control b-0 w-60" value="enter your subdomain here">
+                                                <input matInput type="text" class="form-control b-0 w-60" formControlName="normalLable" >
                                                 <button mat-stroked-button class="right b-0 h-40 bg-grey lter min-80 pl-8 text-custom">.myplanner.in</button>
                                             </mat-form-field>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="row pt-60">
+                                <div class="row pt-60"  *ngIf="whiteLabledDomain">
                                     <div class="col-md-10 p-0">
                                         <p class="m-0 text-black roboto f-500">Option 2: Complete white label<span class="text-warning ba-warning f-12 p-2 ml-12 ba-warning br-2 c-p">Premium</span>
                                         </p>
                                     </div>
-                                    <div class="col-md-1 p-0 text-right">
-                                        <button mat-stroked-button class="btn-dark-outline xs">Edit</button>
+                                    <div class="col-md-1 p-0 text-right" *ngIf="showUpdate == false">
+                                        <button mat-stroked-button class="btn-dark-outline xs"(click)="editDomain(true,'test',normalDomain[0])">Edit</button>
+                                    </div>
+                                    <div class="col-md-1 p-0 text-right" *ngIf="showUpdate == true">
+                                        <button mat-stroked-button class="btn-dark-outline xs"(click)="editDomain(false,'test',normalDomain[0])" >Update</button>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -240,7 +246,7 @@
                                         <div class="form-group b-a">
                                             <mat-form-field class="url">
                                                 <button mat-stroked-button class="b-0 h-40 bg-grey lter min-80 text-custom">https://</button>
-                                                <input matInput type="number" class="form-control b-0 w-60" value="enter your subdomain here">
+                                                <input matInput type="text" class="form-control b-0 w-60" formControlName="whiteLable">
 
                                             </mat-form-field>
                                         </div>

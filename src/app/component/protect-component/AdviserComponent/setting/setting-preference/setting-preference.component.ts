@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { OrgSettingServiceService } from '../org-setting-service.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -35,16 +36,36 @@ export class SettingPreferenceComponent implements OnInit {
   whiteLabledDomain: any;
   isLoading: any;
   emailTemplateList: any;
+  showUpdate = false;
+  normalLable;
+  whiteLable;
+  domain: any;
+  domainS: any;
+  clientData
+  userId: any;
   constructor(private orgSetting: OrgSettingServiceService,
-    public subInjectService: SubscriptionInject, private eventService: EventService,public dialog: MatDialog,) { }
+    public subInjectService: SubscriptionInject, private eventService: EventService,public dialog: MatDialog,private fb: FormBuilder,) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()
+    this.userId = AuthService.getUserId()
+    console.log('3456893469 ===',this.userId)
     this.getPortfolio()
+    this.getdataForm('')
+  }
+  getdataForm(data) {
+    this.domainS = this.fb.group({
+      normalLable: [(!data) ? '' : data.emailId, [Validators.required]],
+      whiteLable: [(!data) ? '' : data.emailId, [Validators.required]],
+    });
+  }
+
+  getFormControl(): any {
+    return this.domainS.controls;
   }
   getDomain(){
     let obj = {
-      advisorId: 4443
+      advisorId: this.advisorId
     }
     this.orgSetting.getDomainSetting(obj).subscribe(
       data => this.getDomainSettingRes(data),
@@ -55,7 +76,11 @@ export class SettingPreferenceComponent implements OnInit {
     console.log(data)
     this.domainSetting = data
     this.normalDomain = this.domainSetting.filter(element => element.domainOptionId == 1)
-    this.whiteLabledDomain = this.domainSetting.filter(element => element.domainlioOptionId == 2)
+    this.whiteLabledDomain = this.domainSetting.filter(element => element.domainOptionId == 2)
+    this.normalLable = this.normalDomain[0].optionValue
+    this.whiteLable = this.whiteLabledDomain[0].optionValue
+    this.domainS.controls.normalLable.setValue(this.normalLable)
+    this.domainS.controls.whiteLable.setValue(this.whiteLable)
     console.log('normalDomain',this.normalDomain)
     console.log('whiteLabled',this.whiteLabledDomain)
   }
@@ -63,7 +88,12 @@ export class SettingPreferenceComponent implements OnInit {
     console.log(event)
     this.domainSetting.forEach(element => {
       if (element.domainOptionId == value.domainOptionId) {
-        element.selectedOrDeselected = (event.checked == true) ? 1 : 0;
+        if(value.domainOptionId == 1){
+          element.optionValue = this.domainS.controls.normalLable.value;
+        }else{
+          element.optionValue = this.domainS.controls.whiteLable.value;
+        }
+       
       }
     });
     this.orgSetting.updateDomainSetting(this.domainSetting).subscribe(
@@ -74,6 +104,15 @@ export class SettingPreferenceComponent implements OnInit {
   updateDomainSettingRes(data){
     console.log(data)
     this.updateDomain = data
+    this.getDomain()
+  }
+  editDomain(flag,event,value){
+    if(flag == true){
+      this.showUpdate = true
+    }else{
+      this.showUpdate = false
+      this.updateDomainSetting(event,value)
+    }
   }
   getPortfolio() {
     let obj = {

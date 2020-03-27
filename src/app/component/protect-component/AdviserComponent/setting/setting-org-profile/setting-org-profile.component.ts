@@ -45,7 +45,7 @@ export class SettingOrgProfileComponent implements OnInit {
   }
   getOrgProfiles() {
     let obj = {
-      advisorId:this.advisorId
+      advisorId: 4443,
     }
     this.settingsService.getOrgProfile(obj).subscribe(
       data => this.getOrgProfileRes(data),

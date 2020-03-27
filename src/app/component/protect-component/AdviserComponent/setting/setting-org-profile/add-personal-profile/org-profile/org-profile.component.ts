@@ -71,7 +71,7 @@ export class OrgProfileComponent implements OnInit {
 
   getdataForm(data) {
     this.orgProfile = this.fb.group({
-      companyName: [(!data.fdType) ? '' : (data.companyName), [Validators.required]],
+      companyName: [(!data) ? '' : (data.companyName), [Validators.required]],
       emailId: [(!data) ? '' : data.email, [Validators.required]],
       mobileNo: [(!data) ? '' : data.mobileNo, [Validators.required]],
       website: [(!data) ? '' : data.website, [Validators.required]],
