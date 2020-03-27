@@ -20,6 +20,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService) { }
   basicDetails;
   @Input() fieldFlag;
+  @Output() clientData = new EventEmitter();
   @Output() tabChange = new EventEmitter();
   validatorType = ValidatorType;
   invTypeCategory = '1';
@@ -103,10 +104,11 @@ export class ClientBasicDetailsComponent implements OnInit {
   changeTaxStatus(event) {
     this.invTaxStatus = event.value;
   }
-  saveNext() {
-    this.tabChange.emit(1);
-  }
+
   saveClose() {
+
+  }
+  saveNext() {
     // individual form
     // let obj =
     // {
@@ -198,7 +200,9 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.peopleService.addClient(obj).subscribe(
         data => {
           console.log(data);
-          this.close();
+          // this.close();
+          this.clientData.emit(data);
+          this.tabChange.emit(1);
         },
         err => this.eventService.openSnackBar(err, "Dismiss")
       )
@@ -207,7 +211,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.peopleService.editClient(obj).subscribe(
         data => {
           console.log(data);
-          this.close();
+          // this.close();
         },
         err => this.eventService.openSnackBar(err, "Dismiss")
       )

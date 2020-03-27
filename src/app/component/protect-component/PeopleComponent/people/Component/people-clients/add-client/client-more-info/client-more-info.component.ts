@@ -34,7 +34,7 @@ export class ClientMoreInfoComponent implements OnInit {
   }
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
-    this.moreInfoData = data.data;
+    this.moreInfoData = data;
     console.log(data)
   }
   saveNext() {
@@ -57,7 +57,7 @@ export class ClientMoreInfoComponent implements OnInit {
       "password": null,
       "clientType": 0,
       "occupationId": this.moreInfoForm.controls,
-      "id": null,
+      "id": this.moreInfoData.id,
       "pan": null,
       "clientId": null,
       "kycComplaint": 0,
@@ -85,25 +85,14 @@ export class ClientMoreInfoComponent implements OnInit {
       "remarks": null,
       "status": 0
     }
-    if (this.moreInfoData == null) {
-      this.peopleService.addClient(obj).subscribe(
-        data => {
-          console.log(data);
-          this.close();
-        },
-        err => this.eventService.openSnackBar(err, "Dismiss")
-      )
-    }
-    else {
-      this.peopleService.editClient(obj).subscribe(
-        data => {
-          console.log(data);
-          this.close();
-        },
-        err => this.eventService.openSnackBar(err, "Dismiss")
-      )
-    }
-    this.tabChange.emit(1);
+    this.peopleService.editClient(obj).subscribe(
+      data => {
+        console.log(data);
+        this.tabChange.emit(1);
+        this.close();
+      },
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    )
   }
   saveClose() {
     this.close();
