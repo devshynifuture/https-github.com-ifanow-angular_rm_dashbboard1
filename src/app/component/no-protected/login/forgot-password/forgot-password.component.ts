@@ -46,7 +46,7 @@ export class ForgotPasswordComponent implements OnInit {
   }
   hideNumEmailFromUser(verifyData) {
     this.verifyData.mobileNo = verifyData.mobileNo.substr(0, 2) + 'XXXXX' + verifyData.mobileNo.substr(7, 9);
-    this.verifyData.emailId = this.verifyData.emailId.substr(2, themailId.indexOf('@') - 2) + 'XXXXX' + this.verifyData.emailId.substr(7, 9)
+    this.verifyData.emailId = verifyData.emailId.substr(2, verifyData.emailId.indexOf('@') - 2) + 'XXXXX' + verifyData.emailId.substr(7, 9)
   }
   enterOtp(value) {
     if (value.code.substring(0, value.code.length - 1) == 'Key' || value.code == "Backspace") {
