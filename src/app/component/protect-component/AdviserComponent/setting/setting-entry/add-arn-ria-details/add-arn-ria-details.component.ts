@@ -87,15 +87,14 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
       jsonObj.commencementDate = this.datePipe.transform(jsonObj.commencementDate.toDate(), 'yyyy-MM-dd');
       jsonObj.renewalDate = this.datePipe.transform(jsonObj.renewalDate.toDate(), 'yyyy-MM-dd');
 
-      const arnRiaDetailsJson = {arnRiaDetailsJson: jsonObj};
       // edit action
       if(this.data.mainData.typeId) {
-        this.settingService.editArn(arnRiaDetailsJson).subscribe((res)=> {
+        this.settingService.editArn(jsonObj).subscribe((res)=> {
           this.eventService.openSnackBar("ARN-RIA Added successfully");
           this.Close(true);
         })
       } else {
-        this.settingService.addArn(arnRiaDetailsJson).subscribe((res)=> {
+        this.settingService.addArn(jsonObj).subscribe((res)=> {
           this.eventService.openSnackBar("ARN-RIA Modified successfully");
           this.Close(true);
         })
