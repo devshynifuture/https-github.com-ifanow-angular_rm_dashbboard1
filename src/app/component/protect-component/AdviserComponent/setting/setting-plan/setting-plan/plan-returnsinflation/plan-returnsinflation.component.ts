@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { OrgSettingServiceService } from '../../../org-setting-service.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-plan-returnsinflation',
@@ -14,9 +17,28 @@ export class PlanReturnsinflationComponent implements OnInit {
   dataSource3 = ELEMENT_DATA3;
   displayedColumns4: string[] = ['position', 'name'];
   dataSource4 = ELEMENT_DATA4;
-  constructor() { }
+  advisorId: any;
+  shortTerm;
+  longTerm: any;
+  constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) { }
 
   ngOnInit() {
+    this.getAssetAllocationReturns()
+    this.advisorId = AuthService.getAdvisorId()
+  }
+  getAssetAllocationReturns() {
+    let obj = {
+      advisorId: 414
+    }
+    this.orgSetting.getRetuns(obj).subscribe(
+      data => this.getReturnsRes(data),
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    );
+  }
+  getReturnsRes(data){
+    console.log('getReturnsRes',data)
+    this.shortTerm = data.short_term
+    this.longTerm =data.long_term
   }
 
 }

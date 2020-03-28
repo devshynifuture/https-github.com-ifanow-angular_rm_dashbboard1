@@ -13,4 +13,13 @@ export class LoginService {
   generateOtp(data) {
     return this.http.postEncoded(apiConfig.USER + appConfig.GENERATE_OTP, data);
   }
+  saveAfterVerification(data) {
+    return this.http.postEncoded(apiConfig.USER + appConfig.SAVE_AFTER_VERIFICATION, data);
+  }
+  register(data) {
+    return this.http.postEncoded(apiConfig.USER + appConfig.REGISTER, data);
+  }
+  getUsernameData(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.SEARCH_USERNAME, data, 1);
+  }
 }

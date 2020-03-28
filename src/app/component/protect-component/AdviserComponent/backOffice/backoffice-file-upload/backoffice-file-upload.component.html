@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div class="wrapper" id="ui-wrap">
   <div>
     <div class="row main-header pt-60">
       <div class="col-md-3 p-0 br">
@@ -67,7 +67,7 @@
         </div>
         <div class="col-md-12 pt-8">
           <button [disabled]="selectedFileType == ''" (click)="file.click()" class="br-0" mat-stroked-button>Choose file</button>
-          <input #file (change)="getFile(file)" [ngClass]="{'v-h': true}" accept='image/*' type="file">
+          <input #file (change)="getFile($event)" [ngClass]="{'v-h': true}" accept='image/*' type="file">
         </div>
       </div>
       <div class="row">

@@ -36,6 +36,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   advisorName;
   loginType = 1;
   showDefaultDropDownOnSearch: boolean;
+  isOpen: boolean;
 
   logoText = 'Your Logo here';
 
@@ -186,6 +187,8 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   //   return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   // }
 }
+
+
 
 export interface Client {
   name: string;

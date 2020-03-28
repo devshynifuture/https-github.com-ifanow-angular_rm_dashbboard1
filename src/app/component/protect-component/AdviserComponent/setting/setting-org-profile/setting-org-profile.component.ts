@@ -70,7 +70,7 @@ export class SettingOrgProfileComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getNscSchemedata();
+             this.getPersonalProfiles();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -102,7 +102,7 @@ export class SettingOrgProfileComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getNscSchemedata();
+            this.getOrgProfiles();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }

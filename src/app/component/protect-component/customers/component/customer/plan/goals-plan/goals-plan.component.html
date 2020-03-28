@@ -18,7 +18,7 @@
             </div>
 
             <div class="mt-8" *ngFor="let goal of allGoals" (click)="loadSelectedGoalData(goal)">
-                <div class="row bg-grey lter p-8 c-p br-2" [ngClass]="{'b-primitive': goal.id == selectedGoal.id}">
+                <div class="row bg-grey lter p-8 c-p br-2" [ngClass]="{'bu-primitive': goal.id == selectedGoal.id}">
                     <div class="col-md-3 p-0">
                         <img class="maxWidth100" [src]="goal.img">
                     </div>
@@ -30,7 +30,7 @@
                                 <h5 class="f-14 m-0"><span class="bar">₹<span appFormatNumber>{{goal.gv}}</span></span>
                                 </h5>
                             </div>
-                            <div class="col-md-6 pr-0 pl-10">
+                            <div class="col-md-6 pr-0 pl-4">
                                 <h5 class="m-0 l-18 f-12 text-primitive"> Year</h5>
                                 <h5 class="f-14 m-0"><span class="bar">{{goal.year}}</span></h5>
                             </div>
