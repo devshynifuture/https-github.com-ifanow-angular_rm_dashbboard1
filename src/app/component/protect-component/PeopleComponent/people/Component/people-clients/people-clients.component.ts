@@ -42,7 +42,7 @@ export class PeopleClientsComponent implements OnInit {
     )
   }
   Addclient(data) {
-    (data == null) ? data = { flag: 'Add client', fieldFlag: 'client' } : '';
+    (data == null) ? data = { flag: 'Add client', fieldFlag: 'client', data: null } : '';
     const fragmentData = {
       flag: 'Add client',
       id: 1,

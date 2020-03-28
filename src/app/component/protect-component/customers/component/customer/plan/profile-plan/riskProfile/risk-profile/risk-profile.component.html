@@ -3,7 +3,7 @@
 </div>
 <div class="wrapper-28" *ngIf="showRisk == false">
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-9 pl-0">
             <h3 class="m-0 f-500">Your risk profile helps us understand how much investment risk you can
                 take.</h3>
             <div class="pt-20" *ngFor="let item of riskAssessmentQuestionList">
@@ -39,7 +39,7 @@
     </div>
 </div>
 <div class="pt-44 pb-44" *ngIf="showRisk == true">
-    <button mat-raised-button color="primary" (click)="open('riskProfile', null)">History</button>
+  <!--   <button mat-raised-button color="primary" (click)="open('riskProfile', null)">History</button> -->
     <div class="row">
         <div class="col-md-6">
             <div class="row">

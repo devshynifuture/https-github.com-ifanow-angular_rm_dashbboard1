@@ -25,3 +25,20 @@
 #uiTransactions .mat-tab-link.transactionsWidth {
     width: 150px !important;
 }
+
+@media screen and (max-width: 767px) {
+    .mobuiTransactions {
+        .mob50 {
+            width: 50%;
+            padding-right: 15px !important;
+            .mobile_traMenu {
+                display: flex;
+                justify-content: flex-end;
+                margin-top: 7px;
+                .mat-tab-links {
+                    display: block !important;
+                }
+            }
+        }
+    }
+}
