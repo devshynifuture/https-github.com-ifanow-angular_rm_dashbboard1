@@ -73,7 +73,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select formControlName="code" class="form-control">
-                            <mat-option selected value="Resident">+91</mat-option>
+                            <mat-option selected value="+91">+91</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -84,7 +84,7 @@
                     <mat-form-field>
                         <input #num appInputValueValidation formControlName="number"
                             [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" autocomplete="off"
-                            formControlName="mobileNo" matInput class="form-control">
+                            formControlName="number" matInput class="form-control">
                         <mat-hint>Optional</mat-hint>
                         <mat-hint align="end">{{num.value.length}}/10</mat-hint>
                     </mat-form-field>

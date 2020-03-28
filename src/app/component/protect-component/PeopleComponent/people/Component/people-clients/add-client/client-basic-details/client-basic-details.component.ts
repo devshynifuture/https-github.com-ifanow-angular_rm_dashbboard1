@@ -89,7 +89,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   get getMobileNumList() { return this.getBasicDetails.mobileNo as FormArray; }
   create
   removeNumber(index) {
-    (index == 0) ? '' : this.basicDetails.controls.mobileNo.removeAt(index)
+    (this.basicDetails.controls.mobileNo.length == 1) ? '' : this.basicDetails.controls.mobileNo.removeAt(index)
   }
   addNumber() {
     this.getMobileNumList.push(this.fb.group({
@@ -147,6 +147,21 @@ export class ClientBasicDetailsComponent implements OnInit {
     //   role: this.minorForm.controls.role.value
     // }
     // console.log(obj);
+    let mobileList = [];
+    if (this.basicDetails.controls.mobileNo.valid) {
+      this.basicDetails.controls.mobileNo.value.forEach(element => {
+        mobileList.push(
+          {
+            "verificationStatus": 0,
+            "id": 0,
+            "userType": 0,
+            "mobileNo": element.number,
+            "isActive": 1,
+            "userId": 0
+          }
+        )
+      });
+    }
     let obj =
     {
       "advisorId": this.advisorId,
@@ -168,7 +183,6 @@ export class ClientBasicDetailsComponent implements OnInit {
       "clientType": 0,
       "occupationId": 0,
       "id": null,
-
       "pan": this.basicDetails.controls.pan.value,
       "clientId": null,
       "kycComplaint": 0,
@@ -179,16 +193,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       "dateOfBirth": this.basicDetails.controls.dobAsPerRecord.value,
       "userName": this.basicDetails.controls.username.value,
       "userId": null,
-      "mobileList": [
-        {
-          "verificationStatus": 0,
-          "id": 0,
-          "userType": 0,
-          "mobileNo": 0,
-          "isActive": 1,
-          "userId": 0
-        }
-      ],
+      "mobileList": mobileList,
       "referredBy": 0,
       "name": this.basicDetails.controls.fullName.value,
       "bioRemarkId": 0,

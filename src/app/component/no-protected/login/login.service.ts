@@ -19,4 +19,7 @@ export class LoginService {
   register(data) {
     return this.http.postEncoded(apiConfig.USER + appConfig.REGISTER, data);
   }
+  getUsernameData(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.SEARCH_USERNAME, data, 1);
+  }
 }

@@ -42,7 +42,7 @@ export class ForgotPasswordComponent implements OnInit {
     else {
       this.isVerify = false;
     };
-    this.userName = new FormControl('', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]);
+    this.userName = new FormControl('', [Validators.required]);
   }
   enterOtp(value) {
     if (value.code.substring(0, value.code.length - 1) == 'Key' || value.code == "Backspace") {
@@ -63,10 +63,10 @@ export class ForgotPasswordComponent implements OnInit {
   }
   verifyUsername() {
     let obj = {
-      "forEmail": this.userName.value
+      userName: this.userName.value
     }
-    this.loginService.generateOtp(obj).subscribe(
-      data => { console.log(data) },
+    this.loginService.getUsernameData(obj).subscribe(
+      data => { console.log(data); },
       err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }

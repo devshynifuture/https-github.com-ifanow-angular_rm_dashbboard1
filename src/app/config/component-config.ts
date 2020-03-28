@@ -520,6 +520,7 @@ export const appConfig = {
   DELETE_FAMILY_MEMBER: 'user/family-member/delete',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
   REGISTER: 'user/advisor/add',
+  SEARCH_USERNAME: 'user/search/username',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_UPDATE: 'calendar/event/update',
