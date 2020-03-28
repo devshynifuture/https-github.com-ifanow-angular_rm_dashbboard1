@@ -165,7 +165,7 @@ export class OrgProfileComponent implements OnInit {
       });
     } else {
         const jsonDataObj = {
-          id: this.advisorId,
+          advisorId: this.advisorId,
           reportLogoUrl: cloudinaryResponseJson.url,
           report_cloudinary_json: JSON.stringify(cloudinaryResponseJson)
         }

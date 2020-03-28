@@ -523,16 +523,25 @@ export const appConfig = {
   GET_PERSONAL_PROFILE_DETAILS: 'setting/profile/personal/details/get',
   UPLOAD_PERSONAL_PROFILE_PHOTO: 'setting/profile/personal/profile-photo/update',
   
-  GET_ARN_RIA_GLOBAL_LIST: '/setting/arn-ria/global/data/get',
+  GET_ARN_RIA_GLOBAL_LIST: 'setting/arn-ria/global/data/get',
 
   GET_ARN_RIA_LIST: 'setting/arn-ria/list/get',
   ADD_ARN_RIA: 'setting/back-office/arn-ria/add',
   EDIT_ARN_RIA: 'setting/back-office/arn-ria/edit',
-
   GET_MF_RTA_LIST: 'setting/arn-ria/rta/list/get',
   ADD_MF_RTA: 'setting/arn-ria/rta/add',
   EDIT_MF_RTA: 'setting/arn-ria/rta/edit',
   DELETE_MF_RTA: 'setting/arn-ria/rta/delete',
+
+  GET_USER_ROLE_LIST: 'setting/users-roles/role/get',
+  GET_DETIALED_USER_ROLE: 'setting/users-roles/role/detail/get',
+  GET_ALL_FEATURES: 'setting/users-roles/feature-capabilities/all/get',
+  EDIT_USER_ROLE: 'setting/users-roles/role/edit',
+  DELETE_USER_ROLE: 'setting/users-roles/role/delete',
+  CLONE_USER_ROLE: 'setting/users-roles/role/clone/add',
+  ADD_USER_ROLE: 'setting/users-roles/role/add',
+  
+
   ////////////////////////////// settings////////////////////////////////////////////
   //////////////////////////////////customer-overview-profile//////////////////////
 };

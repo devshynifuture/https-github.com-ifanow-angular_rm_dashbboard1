@@ -5,6 +5,7 @@ import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.s
 import { EventService } from 'src/app/Data-service/event.service';
 import { SettingsService } from '../../settings.service';
 import { ValidatorType } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-add-karvy-details',
@@ -16,13 +17,16 @@ export class AddKarvyDetailsComponent implements OnInit {
   @Input() data:any;
 
   karvyFG:FormGroup;
+  advisorId: any;
 
   constructor(
     private subInjectService: SubscriptionInject, 
     private eventService: EventService,
     private settingService: SettingsService,
     private fb: FormBuilder
-  ) { }
+  ) {
+    this.advisorId = AuthService.getAdvisorId();
+  }
 
   ngOnInit() {
     this.createForm();
@@ -30,9 +34,12 @@ export class AddKarvyDetailsComponent implements OnInit {
 
   createForm() {
     this.karvyFG = this.fb.group({
-      number: [this.data.number, [Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY)]],
+      advisorId: [this.advisorId],
+      arnRiaDetailsId: [this.data.mainData.arnRiaDetailsId, [Validators.required]],
+      rtTypeMasterid: [this.data.rtType],
       login_id: [this.data.number, [Validators.required]],
       password: [this.data.type, [Validators.required]],
+      rtExtTypeId: [2], // dbf file extension
       mail_password: [this.data.type, [Validators.required]],
       email: [this.data.email, [Validators.required, Validators.email]],
       file_ordering: [this.data.type, [Validators.required]],
@@ -50,12 +57,12 @@ export class AddKarvyDetailsComponent implements OnInit {
         this.settingService.addMFRTA(jsonObj).subscribe((res)=> {
           this.eventService.openSnackBar("Karvy details Added successfully");
           this.Close(true);
-        })
+        }, (err) => this.eventService.openSnackBar("Some error occured. Please try again."))
       } else {
         this.settingService.editMFRTA(jsonObj).subscribe((res)=> {
           this.eventService.openSnackBar("Karvy details Modified successfully");
           this.Close(true);
-        })
+        }, (err) => this.eventService.openSnackBar("Some error occured. Please try again."))
       }
     }
   }
