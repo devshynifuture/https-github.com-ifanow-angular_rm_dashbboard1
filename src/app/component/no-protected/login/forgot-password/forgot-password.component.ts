@@ -37,13 +37,16 @@ export class ForgotPasswordComponent implements OnInit {
       this.isVerify = true;
       this.verify('Email');
       this.verifyFlag = 'Email';
-      this.verifyData.mobileNo = this.verifyData.mobileNo.substr(0, 2) + 'XXXXX' + this.verifyData.mobileNo.substr(7, 9);
-      this.verifyData.emailId = this.verifyData.emailId = this.verifyData.emailId.substr(2, this.verifyData.emailId.indexOf('@') - 2) + 'XXXXX' + this.verifyData.emailId.substr(7, 9)
+      this.hideNumEmailFromUser(this.verifyData);
     }
     else {
       this.isVerify = false;
     };
     this.userName = new FormControl('', [Validators.required]);
+  }
+  hideNumEmailFromUser(verifyData) {
+    this.verifyData.mobileNo = verifyData.mobileNo.substr(0, 2) + 'XXXXX' + verifyData.mobileNo.substr(7, 9);
+    this.verifyData.emailId = this.verifyData.emailId.substr(2, themailId.indexOf('@') - 2) + 'XXXXX' + this.verifyData.emailId.substr(7, 9)
   }
   enterOtp(value) {
     if (value.code.substring(0, value.code.length - 1) == 'Key' || value.code == "Backspace") {
@@ -71,7 +74,8 @@ export class ForgotPasswordComponent implements OnInit {
         console.log(data);
         this.userNameVerifyResponse = data;
         this.saveVerifyData.emailId = data.emailList[0].email;
-        this.saveVerifyData.mobileNo = data.mobileList[0].mobileNo
+        this.saveVerifyData.mobileNo = data.mobileList[0].mobileNo;
+        this.hideNumEmailFromUser(this.saveVerifyData);
         this.isVerify = true;
         if (this.saveVerifyData.emailId) {
           this.verifyFlag = "Email"
@@ -126,10 +130,13 @@ export class ForgotPasswordComponent implements OnInit {
     if (flag == 'Email' && this.otpData.length == 6 && this.otpResponse == otpString) {
       this.verifyForm.reset();
       this.otpData = []
-      this.eventService.openSnackBar("Otp matches sucessfully", "Dismiss");
-      (this.userNameVerifyResponse != undefined) ? this.router.navigate(['/login/setpassword']) : '';    /////// check wheather user came from forgot password or sign-up Process
-      this.verify('Mobile');
       this.saveAfterVerifyCredential(obj);
+      this.eventService.openSnackBar("Otp matches sucessfully", "Dismiss");
+      if (this.userNameVerifyResponse != undefined) {
+        this.router.navigate(['/login/setpassword']);                      /////// check wheather user came from forgot password or sign-up Process
+        return;
+      }
+      this.verify('Mobile');
       this.verifyFlag = 'Mobile'
     }
     else if (flag == 'Mobile' && this.otpData.length == 6 && this.otpResponse == otpString) {
