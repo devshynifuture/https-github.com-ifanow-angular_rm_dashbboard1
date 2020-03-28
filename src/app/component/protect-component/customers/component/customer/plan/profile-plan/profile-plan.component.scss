@@ -60,31 +60,31 @@
   }
 }
 
-::ng-deep {
-  #ui-fp-planmodule {
-    margin-top: 12px;
+// ::ng-deep {
+//   #ui-fp-planmodule {
+//     margin-top: 12px;
 
 
-    .mat-tab-label-active {
-      border-top: 1px solid #e0e0e0;
-      border-right: 1px solid #e0e0e0;
-      border-left: 1px solid #e0e0e0;
-    }
+//     .mat-tab-label-active {
+//       border-top: 1px solid #e0e0e0;
+//       border-right: 1px solid #e0e0e0;
+//       border-left: 1px solid #e0e0e0;
+//     }
 
-    .mat-ink-bar {
-      display: none;
-    }
+//     .mat-ink-bar {
+//       display: none;
+//     }
 
-    .mat-tab-label {
-      height: 40px !important;
-    }
+//     .mat-tab-label {
+//       height: 40px !important;
+//     }
 
-    .mat-tab-body-wrapper {
-      border: 1px solid #e0e0e0;
-      border-top: 0px !important;
-    }
-  }
-}
+//     .mat-tab-body-wrapper {
+//       border: 1px solid #e0e0e0;
+//       border-top: 0px !important;
+//     }
+//   }
+// }
 
 ::ng-deep {
   #ui-profileplan-card {

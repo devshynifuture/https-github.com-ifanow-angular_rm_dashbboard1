@@ -519,6 +519,7 @@ export const appConfig = {
   GET_FAMILY_MEMBERS: 'user/family-member/get',
   DELETE_FAMILY_MEMBER: 'user/family-member/delete',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
+  REGISTER: 'user/advisor/add',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_UPDATE: 'calendar/event/update',

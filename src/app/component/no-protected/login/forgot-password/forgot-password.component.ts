@@ -100,8 +100,8 @@ export class ForgotPasswordComponent implements OnInit {
     let obj =
     {
       email: (this.verifyFlag == 'Email') ? this.saveVerifyData.emailId : null,
-      userId: 1,
-      userType: 1,
+      userId: this.saveVerifyData.userId,
+      userType: this.saveVerifyData.userType,
       mobileNo: (this.verifyFlag == 'Mobile') ? this.saveVerifyData.mobileNo : null
     }
     if (flag == 'Email' && this.otpData.length == 6 && this.otpResponse == otpString) {

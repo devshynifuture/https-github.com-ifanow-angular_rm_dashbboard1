@@ -16,4 +16,7 @@ export class LoginService {
   saveAfterVerification(data) {
     return this.http.postEncoded(apiConfig.USER + appConfig.SAVE_AFTER_VERIFICATION, data);
   }
+  register(data) {
+    return this.http.postEncoded(apiConfig.USER + appConfig.REGISTER, data);
+  }
 }
