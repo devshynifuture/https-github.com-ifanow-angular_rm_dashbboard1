@@ -73,7 +73,7 @@ export class SignUpComponent implements OnInit {
         "referredBy": 0,
         "name": this.signUpForm.get('fullName').value,
         "bioRemarkId": 0,
-        "userType": 1,
+        "userType": 2,
         "remarks": null,
         "status": 0
       }

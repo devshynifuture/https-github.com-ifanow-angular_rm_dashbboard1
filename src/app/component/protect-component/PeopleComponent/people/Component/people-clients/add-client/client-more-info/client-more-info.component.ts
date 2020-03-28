@@ -40,17 +40,8 @@ export class ClientMoreInfoComponent implements OnInit {
   saveNext() {
     let obj =
     {
-      "advisorId": this.advisorId,
-      "emailList": [
-        {
-          "verificationStatus": 0,
-          "id": 0,
-          "userType": 0,
-          "isActive": 1,
-          "userId": 0,
-          "email": null
-        }
-      ],
+      "advisorId": this.moreInfoData.advisorId,
+      "emailList": this.moreInfoData.emailList,
       "displayName": this.moreInfoForm.controls,
       "bio": this.moreInfoForm.controls,
       "martialStatusId": this.moreInfoForm.controls,
@@ -58,28 +49,19 @@ export class ClientMoreInfoComponent implements OnInit {
       "clientType": 0,
       "occupationId": this.moreInfoForm.controls,
       "id": this.moreInfoData.id,
-      "pan": null,
-      "clientId": null,
+      "pan": this.moreInfoData.pan,
+      "clientId": this.moreInfoData.clientId,
       "kycComplaint": 0,
       "roleId": 0,
-      "genderId": 0,
+      "genderId": this.moreInfoData.genderId,
       "companyStatus": 0,
       "aadharCard": this.moreInfoForm.controls,
-      "dateOfBirth": null,
-      "userName": null,
+      "dateOfBirth": this.moreInfoData.dateOfBirth,
+      "userName": this.moreInfoData.userName,
       "userId": null,
-      "mobileList": [
-        {
-          "verificationStatus": 0,
-          "id": 0,
-          "userType": 0,
-          "mobileNo": 0,
-          "isActive": 1,
-          "userId": 0
-        }
-      ],
+      "mobileList": this.moreInfoData.mobileList,
       "referredBy": 0,
-      "name": null,
+      "name": this.moreInfoData.name,
       "bioRemarkId": 0,
       "userType": 0,
       "remarks": null,

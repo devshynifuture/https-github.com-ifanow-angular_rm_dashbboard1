@@ -28,6 +28,7 @@ export class ForgotPasswordComponent implements OnInit {
     no5: [],
     no6: []
   })
+  userNameVerifyResponse: any;
   constructor(private loginService: LoginService, private eventService: EventService, private router: Router, private fb: FormBuilder) { }
   ngOnInit() {
     this.verifyData = window.history.state;
@@ -61,12 +62,28 @@ export class ForgotPasswordComponent implements OnInit {
       value.srcElement.nextElementSibling.focus();
     }
   }
-  verifyUsername() {
+  verifyUsername() {   //////////// username///////////////////
     let obj = {
       userName: this.userName.value
     }
     this.loginService.getUsernameData(obj).subscribe(
-      data => { console.log(data); },
+      data => {
+        console.log(data);
+        this.userNameVerifyResponse = data;
+        this.saveVerifyData.emailId = data.emailList[0].email;
+        this.saveVerifyData.mobileNo = data.mobileList[0].mobileNo
+        this.isVerify = true;
+        if (this.saveVerifyData.emailId) {
+          this.verifyFlag = "Email"
+        }
+        else if (this.saveVerifyData.mobileNo != 0) {
+          this.verifyFlag = "Mobile";
+        }
+        else {
+          this.eventService.openSnackBar("Please contact your advisor for more details")
+        }
+      }
+      ,
       err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
@@ -108,6 +125,7 @@ export class ForgotPasswordComponent implements OnInit {
       this.verifyForm.reset();
       this.otpData = []
       this.eventService.openSnackBar("Otp matches sucessfully", "Dismiss");
+      (this.userNameVerifyResponse != undefined) ? this.router.navigate(['/login/setpassword']) : '';    /////// check wheather user came from forgot password or sign-up Process
       this.verify('Mobile');
       this.saveAfterVerifyCredential(obj);
       this.verifyFlag = 'Mobile'
