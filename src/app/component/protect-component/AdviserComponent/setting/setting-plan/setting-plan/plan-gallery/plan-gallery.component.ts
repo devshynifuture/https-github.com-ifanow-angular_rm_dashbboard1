@@ -17,6 +17,7 @@ export class PlanGalleryComponent implements OnInit {
   element: any;
   advisorId: any;
   defaultGallery: any;
+  userId: any;
 
   constructor(private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject, private eventService: EventService,
@@ -25,12 +26,13 @@ export class PlanGalleryComponent implements OnInit {
   ngOnInit() {
     this.getDefault()
     this.advisorId = AuthService.getAdvisorId()
+    this.userId = AuthService.getUserId()
   }
 
 
   getDefault() {
     let advisorObj = {
-      advisorId: 414
+      advisorId: this.advisorId
     }
     this.planService.getGoalGlobalData(advisorObj).subscribe(
       data => this.getGoalGlobalDataRes(data),
@@ -57,7 +59,7 @@ export class PlanGalleryComponent implements OnInit {
       console.log('result -==', this.element)
       let obj = {
         emailAddress: this.element,
-        userId: 12249
+        userId: this.userId
       }
       // this.orgSetting.addEmailVerfify(obj).subscribe(
       //   data => this.addEmailVerfifyRes(data),

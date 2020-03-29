@@ -26,7 +26,7 @@ export class PlanAssetallocationComponent implements OnInit {
   }
   getAssetAllocation() {
     let obj = {
-      advisorId: 414
+      advisorId: this.advisorId
     }
     this.orgSetting.getAssetAllocation(obj).subscribe(
       data => this.getAssetAllocationRes(data),

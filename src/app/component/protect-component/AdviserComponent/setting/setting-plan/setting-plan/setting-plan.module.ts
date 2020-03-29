@@ -10,14 +10,18 @@ import { PlanGalleryComponent } from './plan-gallery/plan-gallery.component';
 import { SettingPlanComponent } from '../setting-plan.component';
 import { MaterialModule } from 'src/app/material/material';
 import { OpenGalleryPlanComponent } from './plan-gallery/open-gallery-plan/open-gallery-plan.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
-  declarations: [PlanAssetallocationComponent, PlanReturnsinflationComponent, PlanKeyParametersComponent, PlanTemplatesComponent, PlanGalleryComponent, SettingPlanComponent],
+  declarations: [PlanAssetallocationComponent, PlanReturnsinflationComponent, PlanTemplatesComponent, PlanGalleryComponent, SettingPlanComponent,
+    PlanKeyParametersComponent],
   imports: [
     CommonModule,
     SettingPlanRoutingModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class SettingPlanModule { }

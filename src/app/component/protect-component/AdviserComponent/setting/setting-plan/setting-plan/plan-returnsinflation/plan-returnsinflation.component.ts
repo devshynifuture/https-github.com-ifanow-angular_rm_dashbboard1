@@ -28,7 +28,7 @@ export class PlanReturnsinflationComponent implements OnInit {
   }
   getAssetAllocationReturns() {
     let obj = {
-      advisorId: 414
+      advisorId: this.advisorId
     }
     this.orgSetting.getRetuns(obj).subscribe(
       data => this.getReturnsRes(data),

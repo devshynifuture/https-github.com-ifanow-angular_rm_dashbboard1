@@ -485,6 +485,9 @@ export const appConfig = {
   ADD_EMAIL_VERIFY:'setting/preferences/email/post',
   GET_ASSET_ALLOCATION:'goal-planning/static-allocation/get',
   GET_RETURNS:'plan/config/return-inflation/get',
+  GET_KEY_PARAMETERS :'goal-planning/key-parameters/get',
+  UPLOAD_PLAN_GALLERY:'goal-planning/goal-gallery/add',
+  UPLOAD_KEY_PARAMETER:'goal-planning/static-allocation/put',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',

@@ -4,13 +4,15 @@
     </div>
 </div>
 
-<div class="row pb-44">
+<div class="row pb-44" *ngIf="allParameters"  [formGroup]="keyParameter">
     <div class="col-md-4 pl-0">
         <h5 class="m-0 pb-12">Saving type</h5>
         <div class="form-control w-80">
             <mat-form-field>
-                <mat-select class="form-group b-0">
-                    <mat-option value="Group all years together">Group all years together</mat-option>
+                <mat-select class="form-group b-0" formControlName="savingType"
+                (selectionChange)="updateKeyParameter($event)">
+                    <mat-option value = "1">Group all years together</mat-option>
+                    <mat-option value = "2">Divide</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
@@ -29,8 +31,10 @@
         <h5 class="m-0 pt-44 pb-12">Savings status</h5>
         <div class="form-control w-50">
             <mat-form-field>
-                <mat-select class="form-group b-0">
-                    <mat-option value="Break up">Break up</mat-option>
+                <mat-select class="form-group b-0" formControlName="savingStatus"
+                (selectionChange)="updateKeyParameter($event)">
+                    <mat-option value="1">Break up</mat-option>
+                    <mat-option value="2">Total</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
@@ -44,8 +48,9 @@
         <h5 class="m-0 pb-12">Retirement age</h5>
         <div class="form-control w-50">
             <mat-form-field>
-                <mat-select class="form-group b-0">
-                    <mat-option value="85 Years">85 Years</mat-option>
+                <mat-select class="form-group b-0" formControlName="retirementAge">
+                    <mat-option [value]="retirement"  (click)="updateKeyParameter($event)"
+                    *ngFor="let retirement of retirementAge">{{retirement}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
@@ -58,8 +63,9 @@
         <h5 class="m-0 pt-44 pb-12">Life expectancy</h5>
         <div class="form-control w-50">
             <mat-form-field>
-                <mat-select class="form-group b-0">
-                    <mat-option value="85 Years">85 Years</mat-option>
+                <mat-select class="form-group b-0" formControlName="lifeExpectancy">
+                    <mat-option [value]="lifeExpect" (click)="updateKeyParameter($event)"
+                    *ngFor="let lifeExpect of lifeExpectancy">{{lifeExpect}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
@@ -74,8 +80,9 @@
         <h5 class="m-0 pb-12">Insurance planning - Asset growth rate</h5>
         <div class="form-control w-50">
             <mat-form-field>
-                <mat-select class="form-group b-0">
-                    <mat-option value="8%">8%</mat-option>
+                <mat-select class="form-group b-0" formControlName="InsurancePlanGrowthRate">
+                    <mat-option [value]="insuranceRate" (click)="updateKeyParameter($event)"
+                     *ngFor ="let insuranceRate of InsurancePlanGrowthRate">{{insuranceRate}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>

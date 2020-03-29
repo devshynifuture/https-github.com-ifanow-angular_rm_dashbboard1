@@ -56,4 +56,13 @@ export class OrgSettingServiceService {
   getRetuns(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_RETURNS, data);
   }
+  getKeyAndParameters(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_KEY_PARAMETERS, data);
+  }
+  uploadPlanPhoto(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.UPLOAD_PLAN_GALLERY, data);
+  }
+  updateKeyParameter(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_DOMAIN, data);
+  }
 }

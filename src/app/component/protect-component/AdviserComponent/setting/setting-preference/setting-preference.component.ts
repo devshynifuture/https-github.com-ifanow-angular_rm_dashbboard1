@@ -116,7 +116,7 @@ export class SettingPreferenceComponent implements OnInit {
   }
   getPortfolio() {
     let obj = {
-      advisorId: 4443
+      advisorId: this.advisorId
     }
     this.orgSetting.getPortfolio(obj).subscribe(
       data => this.getPortfolioRes(data),
@@ -133,7 +133,7 @@ export class SettingPreferenceComponent implements OnInit {
 
   getPlan() {
     let obj = {
-      advisorId: 4443
+      advisorId: this.advisorId
     }
     this.orgSetting.getPlans(obj).subscribe(
       data => this.getPlanRes(data),
@@ -224,7 +224,7 @@ export class SettingPreferenceComponent implements OnInit {
   }
   getEmailTemplate() {
     let obj = {
-      advisorId: 4443
+      advisorId: this.advisorId
     }
     this.orgSetting.getEmailTempalate(obj).subscribe(
       data => this.getEmailTempalatRes(data),

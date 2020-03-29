@@ -4,6 +4,8 @@ import { ParsedResponseHeaders, FileItem } from 'ng2-file-upload';
 import { SettingsService } from '../../../../settings.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { OrgSettingServiceService } from '../../../../org-setting-service.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-open-gallery-plan',
@@ -22,8 +24,9 @@ export class OpenGalleryPlanComponent implements OnInit {
   selectedTab:number = 0;
   anyDetailsChanged:boolean; // check if any details have been updated
   inputData: any;
-  utilService: any;
-  constructor(  private settingsService: SettingsService,private event : EventService,private subInjectService : SubscriptionInject) { }
+  constructor(  private settingsService: SettingsService,private event : EventService,
+    private subInjectService : SubscriptionInject,private orgSetting : OrgSettingServiceService,
+    private utilService: UtilService,) { }
 
   ngOnInit() {
    //this.getdataForm('')
@@ -40,7 +43,7 @@ export class OpenGalleryPlanComponent implements OnInit {
     this.imageUploadEvent = event;
     this.showCropper = true;
   }
-  saveImage() {
+  onNoClick() {
     if (this.showCropper) {
       const tags = this.advisorId + ',advisor_profile_logo,';
       const file = this.utilService.convertB64toImageFile(this.finalImage);
@@ -49,14 +52,14 @@ export class OpenGalleryPlanComponent implements OnInit {
           if (status == 200) {
             const responseObject = JSON.parse(response);
             const jsonDataObj = {
-              advisorId: this.advisorId,
+              advisorId: this.advisorId    ,
               name:'Retirement',
-              imgUrl: responseObject.url,
-              id:1
+              imageUrl: responseObject.url,
+              goalTypeId:1,
             }
-            this.settingsService.uploadProfilePhoto(jsonDataObj).subscribe((res) => {
+            this.orgSetting.uploadPlanPhoto(jsonDataObj).subscribe((res) => {
               this.anyDetailsChanged = true;
-              this.imgURL = jsonDataObj.imgUrl;
+              this.imgURL = jsonDataObj.imageUrl;
               this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
               this.Close(this.anyDetailsChanged);
             });
@@ -74,6 +77,7 @@ export class OpenGalleryPlanComponent implements OnInit {
   }
   showCroppedImage(imageAsBase64) {
     this.finalImage = imageAsBase64;
+    console.log('crop image', this.finalImage)
   }
 
   // save the changes of current page only
@@ -81,7 +85,7 @@ export class OpenGalleryPlanComponent implements OnInit {
     // selected tab 1 - profile image
     // 2 - profile details
     if (this.selectedTab == 1) {
-      this.saveImage();
+     // this.saveImage();
     } else {
       
     }
@@ -96,9 +100,6 @@ export class OpenGalleryPlanComponent implements OnInit {
     this.finalImage = '';
   }
 
-  onNoClick(): void {
-    //this.dialogRef.close(this.emailVierify.controls.emailId.value);
-  }
 }
 
 
