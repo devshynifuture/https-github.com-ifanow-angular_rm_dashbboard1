@@ -43,6 +43,7 @@ export class SettingPreferenceComponent implements OnInit {
   domainS: any;
   clientData
   userId: any;
+  showUpdateWhite = false;
   constructor(private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, ) { }
 
@@ -108,15 +109,24 @@ export class SettingPreferenceComponent implements OnInit {
   }
   editDomain(flag, event, value) {
     if (flag == true) {
-      this.showUpdate = true
+      if(event == 'white'){
+        this.showUpdateWhite = true
+      }else{
+        this.showUpdate = true
+      }
+     
     } else {
-      this.showUpdate = false
+      if(event == 'white'){
+        this.showUpdateWhite = false
+      }else{
+        this.showUpdate = false
+      }
       this.updateDomainSetting(event, value)
     }
   }
   getPortfolio() {
     let obj = {
-      advisorId: 4443
+      advisorId: this.advisorId
     }
     this.orgSetting.getPortfolio(obj).subscribe(
       data => this.getPortfolioRes(data),
@@ -133,7 +143,7 @@ export class SettingPreferenceComponent implements OnInit {
 
   getPlan() {
     let obj = {
-      advisorId: 4443
+      advisorId: this.advisorId
     }
     this.orgSetting.getPlans(obj).subscribe(
       data => this.getPlanRes(data),
@@ -174,10 +184,10 @@ export class SettingPreferenceComponent implements OnInit {
   updatePlanSectionRes(data) {
     console.log('updatePlanSectionRes ==', data)
   }
-  verifyEmail() {
+  verifyEmail(value) {
     const dialogRef = this.dialog.open(OpenEmailVerificationComponent, {
       width: '400px',
-      data: { bank: this.emailDetails, animal: this.element }
+      data: { bank: value, animal: this.element }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
@@ -224,7 +234,7 @@ export class SettingPreferenceComponent implements OnInit {
   }
   getEmailTemplate() {
     let obj = {
-      advisorId: 4443
+      advisorId: this.advisorId
     }
     this.orgSetting.getEmailTempalate(obj).subscribe(
       data => this.getEmailTempalatRes(data),

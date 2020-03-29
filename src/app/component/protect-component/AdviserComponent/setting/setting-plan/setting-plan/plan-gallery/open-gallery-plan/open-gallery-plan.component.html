@@ -1,0 +1,49 @@
+<div class="popup-header-fix-35">
+  <div class="row bb-1">
+      <div class="col-md-8 p-0">
+          <h4 class="mb-0 wrapper-20">CHANGE PICTURE</h4>
+      </div>
+      <div class="col-md-4 text-right">
+          <div class="wrapper-12">
+              <i class="material-icons c-p pt-8 v-middle" (click)="onNoClick()"> clear</i>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="row pt-40">
+  <div class="col-md-3 text-right pr-0">
+      <h5 class="m-0 pt-8" *ngIf="!cropImage">Your pic</h5>
+  </div>
+  <div class="col-md-5" *ngIf="cropImage">
+      <div *ngIf="!showCropper"><h5 class="m-0 pt-8">Upload a photo to edit and upload.</h5></div>
+      <div class="image-cropper">
+          <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)"></app-image-cropper>
+      </div>
+      <div class="profile-img" [hidden]="!showCropper">
+          <img [src]="finalImage" alt="cropped Image" class="w-100">
+      </div>
+      <div class="row pt-24">
+      </div>
+  </div>
+  <div class="col-md-4 pl-0" *ngIf="cropImage">
+      <button mat-stroked-button class="btn-primary" (click)="chooseImage.click()">CHOOSE IMAGE</button>
+      <input type="file" #chooseImage (change)="uploadImageForCorping($event)" hidden>
+  </div>
+  <div class="col-md-5" *ngIf="!cropImage">
+      <div class="profile-img">
+          <img [src]="imgURL" class="w-100">
+      </div>
+      <div class="row pt-24">
+          <button mat-stroked-button class="btn-primary" (click)="cropImage = true">EDIT IMAGE</button>
+      </div>
+  </div>
+</div>
+<div class="row pt-16 pb-16">
+  <div class="col-md-12 text-right">
+      <button class="br-0 text-inherit f-14" mat-button [mat-dialog-close]="data">
+          CANCEL
+      </button>
+      <button class="btn-green text-white f-14 ml-12" (click)="onNoClick()" mat-button mat-raised-button
+          cdkFocusInitial>UPLOAD</button>
+  </div>
+</div>
