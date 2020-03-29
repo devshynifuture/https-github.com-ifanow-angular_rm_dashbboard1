@@ -256,11 +256,13 @@ input.mat-input-element:focus {
 .mat-checkbox-indeterminate .mat-checkbox-background {
   background-color: #008FFF !important;
 }
-
-// overwrite the ripple overlay on hover and click
-.mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+.mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element, .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element{
   background-color: #008FFF !important;
 }
+// overwrite the ripple overlay on hover and click
+// .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+//   background-color: #008FFF !important;
+// }
 
 textarea.mat-input-element {
   resize: none !important;

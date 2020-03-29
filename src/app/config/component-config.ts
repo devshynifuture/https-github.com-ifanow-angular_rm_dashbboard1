@@ -462,6 +462,9 @@ export const appConfig = {
 
   BACKOFFICE_FILE_UPLOAD_TYPE: 'backoffice/file-upload/types/get',
   BACKOFFICE_FILE_TO_UPLOAD: 'backoffice/file-upload/url/get',
+  BACKOFFICE_TRANSACTIONS: 'backoffice/file-upload/uploaded/transaction/list/get',
+  BACKOFFICE_SIP_STP: 'backoffice/file-upload/uploaded/sip/list/get',
+  BACKOFFICE_FOLIO: 'backoffice/file-upload/uploaded/folio-master/list/get',
   BACKOFFICE_SUCCESS_FILE_UPLOAD: 'web/backoffice/file-upload/success',
 
   ///org setting ////
@@ -469,17 +472,19 @@ export const appConfig = {
   GET_ORG_PROFILE: 'setting/profile/organisation/details/get',
   EDIT_PERSONAL_PROFILE: 'setting/profile/personal/profile-photo/update',
   EDIT_ORG_PROFILE: 'setting/profile/organisation/update',
-  GET_PORTFOLIO :'setting/preferences/portfolio/get',
-  GET_PLANS:'setting/preferences/plan/get',
-  PROTFOLIO_UPDATE:'setting/preferences/portfolio/update',
-  PLAN_SECTION_UPDATE:'setting/preferences/plan/update',
-  DOMAIN_GET:'setting/preferences/domain/get',
-  UPDATE_DOMAIN:'setting/preferences/domain/update',
+  GET_PORTFOLIO: 'setting/preferences/portfolio/get',
+  GET_PLANS: 'setting/preferences/plan/get',
+  PROTFOLIO_UPDATE: 'setting/preferences/portfolio/update',
+  PLAN_SECTION_UPDATE: 'setting/preferences/plan/update',
+  DOMAIN_GET: 'setting/preferences/domain/get',
+  UPDATE_DOMAIN: 'setting/preferences/domain/update',
   EDIT_ORG_PROFILE_LOGO: 'setting/profile/organisation/logo/update',
   EDIT_ORG_PROFILE_REPORT_LOGO: 'setting/profile/organisation/report/logo/update',
-  GET_EMAIL_VERIFICATION:'setting/preference/email/get',
-  GET_EMAIL_TEMPLATES:'setting/preference/email/template/get',
-  ADD_EMAIL_VERIFY:'setting/preferences/email/post',
+  GET_EMAIL_VERIFICATION: 'setting/preference/email/get',
+  GET_EMAIL_TEMPLATES: 'setting/preference/email/template/get',
+  ADD_EMAIL_VERIFY: 'setting/preferences/email/post',
+  GET_ASSET_ALLOCATION: 'goal-planning/static-allocation/get',
+  GET_RETURNS: 'plan/config/return-inflation/get',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
@@ -507,10 +512,15 @@ export const appConfig = {
   ADD_CLIENT_MORE_INFO: '',
   ADD_CLIENT_UPLOAD: '',
   GET_PEOPLE_CLIENT_LIST: '/user/client/all/get',
+  ADD_CLIENT: 'user/client/add',
+  EDIT_CLIENT: 'user/client/edit',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: '/user/generate/otp',
   GET_FAMILY_MEMBERS: 'user/family-member/get',
   DELETE_FAMILY_MEMBER: 'user/family-member/delete',
+  SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
+  REGISTER: 'user/advisor/add',
+  SEARCH_USERNAME: 'user/search/username',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_UPDATE: 'calendar/event/update',
@@ -523,16 +533,25 @@ export const appConfig = {
   GET_PERSONAL_PROFILE_DETAILS: 'setting/profile/personal/details/get',
   UPLOAD_PERSONAL_PROFILE_PHOTO: 'setting/profile/personal/profile-photo/update',
   
-  GET_ARN_RIA_GLOBAL_LIST: '/setting/arn-ria/global/data/get',
+  GET_ARN_RIA_GLOBAL_LIST: 'setting/arn-ria/global/data/get',
 
   GET_ARN_RIA_LIST: 'setting/arn-ria/list/get',
   ADD_ARN_RIA: 'setting/back-office/arn-ria/add',
   EDIT_ARN_RIA: 'setting/back-office/arn-ria/edit',
-
   GET_MF_RTA_LIST: 'setting/arn-ria/rta/list/get',
   ADD_MF_RTA: 'setting/arn-ria/rta/add',
   EDIT_MF_RTA: 'setting/arn-ria/rta/edit',
   DELETE_MF_RTA: 'setting/arn-ria/rta/delete',
+
+  GET_USER_ROLE_LIST: 'setting/users-roles/role/get',
+  GET_DETIALED_USER_ROLE: 'setting/users-roles/role/detail/get',
+  GET_ALL_FEATURES: 'setting/users-roles/feature-capabilities/all/get',
+  EDIT_USER_ROLE: 'setting/users-roles/role/edit',
+  DELETE_USER_ROLE: 'setting/users-roles/role/delete',
+  CLONE_USER_ROLE: 'setting/users-roles/role/clone/add',
+  ADD_USER_ROLE: 'setting/users-roles/role/add',
+  
+
   ////////////////////////////// settings////////////////////////////////////////////
   //////////////////////////////////customer-overview-profile//////////////////////
 };
