@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, ValidatorFn, AbstractControl } from '@angular/forms';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SettingsService } from '../../settings.service';
 import { ValidatorType } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-add-cams-fundsnet',
@@ -15,78 +16,59 @@ export class AddCamsFundsnetComponent implements OnInit {
   @Input() data:any;
 
   camsFundFG:FormGroup;
-
-  secretQuestionsSet = [
-    {
-      id: 1,
-      question: 'Which is your place of birth?',
-    },
-    {
-      id: 2,
-      question: 'What was the brand name of your first mobile handset?',
-    },
-    {
-      id: 3,
-      question: 'What was the brand name of your first vehicle?',
-    },
-    {
-      id: 4,
-      question: 'What is your favourite color?',
-    },
-    {
-      id: 5,
-      question: 'What is the brand name of your first watch?',
-    },
-    {
-      id: 6,
-      question: 'In which bank did you open your first savings account?',
-    },
-    {
-      id: 7,
-      question: 'Who was your favourite cartoon character?',
-    },
-    {
-      id: 8,
-      question: 'Name the month in which your birthday falls?',
-    },
-  ];
+  is_add: boolean;
+  advisorId: any;
 
   constructor(
     private subInjectService: SubscriptionInject, 
     private eventService: EventService,
     private settingService: SettingsService,
     private fb: FormBuilder
-  ) { }
+  ) {
+    this.advisorId = AuthService.getAdvisorId();
+  }
 
   ngOnInit() {
     this.createForm();
+    this.is_add = !Object.keys(this.data.mainData).length;
   }
 
   createForm() {
     this.camsFundFG = this.fb.group({
-      number: [this.data.number, [Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY)]],
-      login_id: [this.data.type, [Validators.required]],
-      password: [this.data.type, [Validators.required]],
-      secretQuestions: this.fb.array([
-        this.secretQuestionsFG()
-      ])
+      advisorId: [this.advisorId],
+      arnRiaDetailsId: [this.data.mainData.arnRiaDetailsId, [Validators.required]],
+      arnOrRia: [this.data.mainData.arnOrRia],
+      rtTypeMasterid: [this.data.rtType],
+      rtExtTypeId: [2], // dbf file extension
+      login_id: [this.data.mainData.type, [Validators.required]],
+      password: [this.data.mainData.type, [Validators.required]],
+      rtaCamsFundNetSecurityQuestionsList: this.fb.array([]),
     });
+
+    if(this.data.mainData.rtaCamsFundNetSecurityQuestionsList && this.data.mainData.rtaCamsFundNetSecurityQuestionsList.length > 0) {
+      for (let index = 0; index < this.data.mainData.rtaCamsFundNetSecurityQuestionsList.length; index++) {
+        const secretQuestionsArr = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
+        secretQuestionsArr.push(this.secretQuestionsFG(this.data.mainData.rtaCamsFundNetSecurityQuestionsList[index].id, this.data.mainData.rtaCamsFundNetSecurityQuestionsList[index].answer));
+      }
+    } else {
+      this.addMoreQuestion();
+    }
   }
 
-  secretQuestionsFG(){
+  secretQuestionsFG(questionId = '', answer = ''){
     return this.fb.group({
-      question: [this.data.type, [Validators.required]],
-      answer: [this.data.type, [Validators.required]],
+      id: [questionId, [Validators.required, this.isQuestionDuplicate()]],
+      answer: [answer, [Validators.required]],
     });
   }
 
   addMoreQuestion() {
-    const secretQuestionsArr = this.camsFundFG.controls.secretQuestions as FormArray;
+    const secretQuestionsArr = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
     secretQuestionsArr.push(this.secretQuestionsFG());
   }
 
   removeQuestion(index=1) {
-    const secretQuestionsArr = this.camsFundFG.controls.secretQuestions as FormArray;
+    const secretQuestionsArr = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
     secretQuestionsArr.removeAt(index)
   }
 
@@ -95,23 +77,44 @@ export class AddCamsFundsnetComponent implements OnInit {
       this.camsFundFG.markAllAsTouched();
     } else {
       const jsonObj = this.camsFundFG.getRawValue();
-
+      jsonObj.arnOrRia = this.data.arnData.find((data) => this.camsFundFG.controls.arnRiaDetailsId.value == data.id).arnOrRia;
+    
       // add action
-      if(this.data.pan) {
+      if(this.is_add) {
         this.settingService.addMFRTA(jsonObj).subscribe((res)=> {
-          this.eventService.openSnackBar("CAMS Added successfully");
+          this.eventService.openSnackBar("CAMS Fundsnet Added successfully");
           this.Close(true);
         })
       } else {
         this.settingService.editMFRTA(jsonObj).subscribe((res)=> {
-          this.eventService.openSnackBar("CAMS Modified successfully");
+          this.eventService.openSnackBar("CAMS Fundsnet Modified successfully");
           this.Close(true);
         })
       }
     }
   }
 
+  isQuestionDuplicate(): ValidatorFn {
+    return (c: AbstractControl): { [key: string]: boolean } | null => {
+      const questions = this.camsFundFG.get("rtaCamsFundNetSecurityQuestionsList").value;
+      const questionId = questions.map(item => item.id);
+      const hasDuplicate = questionId.some(
+        (name, index) => questionId.indexOf(name, index + 1) != -1
+      );
+
+      if (hasDuplicate) {
+        return { duplicate: true };
+      }
+
+      return null;
+    }
+  }
+
+
   Close(status) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: status });
+  }
+  trackByFn(index: any, item: any) {
+    return index;
   }
 }

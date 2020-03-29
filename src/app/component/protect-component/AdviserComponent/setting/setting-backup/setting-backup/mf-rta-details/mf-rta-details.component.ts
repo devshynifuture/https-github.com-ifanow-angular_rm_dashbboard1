@@ -6,6 +6,9 @@ import { SubscriptionInject } from '../../../../Subscriptions/subscription-injec
 import { AddKarvyDetailsComponent } from '../../../setting-entry/add-karvy-details/add-karvy-details.component';
 import { AddFranklinTempletionDetailsComponent } from '../../../setting-entry/add-franklin-templetion-details/add-franklin-templetion-details.component';
 import { AddCamsFundsnetComponent } from '../../../setting-entry/add-cams-fundsnet/add-cams-fundsnet.component';
+import { SettingsService } from '../../../settings.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-mf-rta-details',
@@ -14,159 +17,106 @@ import { AddCamsFundsnetComponent } from '../../../setting-entry/add-cams-fundsn
 })
 export class MfRtaDetailsComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
   displayedColumns1: string[] = ['position', 'name', 'weight', 'email', 'mail', 'use', 'icons'];
-  dataSource1 = ELEMENT_DATA1;
   displayedColumns2: string[] = ['position', 'name', 'weight', 'email', 'mail', 'icons'];
-  dataSource2 = ELEMENT_DATA2;
-  constructor(private eventService: EventService,
-    private utilService: UtilService, private subInjectService: SubscriptionInject) { }
+
+  camsDS:MatTableDataSource<any>;
+  karvyDS:MatTableDataSource<any>;
+  frankDS:MatTableDataSource<any>;
+  fundsDS:MatTableDataSource<any>;
+
+  advisorId: any;
+  globalData:any = {};
+  mfRTAlist:any = {};
+  arnList:any[] = [];
+
+  constructor(
+    private eventService: EventService,
+    private utilService: UtilService, 
+    private subInjectService: SubscriptionInject,
+    private settingsService: SettingsService
+  ) {
+    this.advisorId = AuthService.getAdvisorId();
+  }
 
   ngOnInit() {
+    this.initializeData();
   }
-  openAddcamsDetails(data, flag) {
+
+  initializeData(){
+    this.settingsService.getArnGlobalData().subscribe((res)=>{
+      this.globalData = res;
+      console.log(res);
+    });
+    this.getArnDetails();
+    this.loadRTAList();
+  }
+
+  getArnDetails() {
+    this.settingsService.getArnlist({advisorId: this.advisorId}).subscribe((data)=> {
+      this.arnList = data || [];
+    });
+  }
+
+  loadRTAList(){
+    const jsonData = {advisorId: this.advisorId}
+    this.settingsService.getMFRTAList(jsonData).subscribe((res)=> {
+      this.mfRTAlist = res || {};
+      this.createDataSource();
+      console.log(res);
+    })
+  }
+
+  createDataSource(){
+    this.camsDS = new MatTableDataSource(this.mfRTAlist.camsDS);
+    this.karvyDS = new MatTableDataSource(this.mfRTAlist.karvyDS);
+    this.frankDS = new MatTableDataSource(this.mfRTAlist.frankDS);
+    this.fundsDS = new MatTableDataSource(this.mfRTAlist.camsDS);
+  }
+
+  openInSideBar(componentID, data, flag) {
+
+    if(this.arnList.length == 0) {
+      this.eventService.openSnackBar("Kindly add ARN details to proceed");
+      return;
+    }
+
+    let fullData = {
+      globalData: this.globalData,
+      arnData: this.arnList,
+      mainData: data || {},
+      rtType: componentID,
+    }
     const fragmentData = {
       flag: flag,
-      data: data || {},
+      data: fullData,
       id: 1,
       state: (flag == 'detailedNsc') ? 'open50' : 'open50',
-      componentName: AddCamsDetailsComponent
     };
+
+    switch (componentID) {
+      case 1: // CAMS
+        fragmentData['componentName'] = AddCamsDetailsComponent;
+        break;
+      case 2: // Karvy
+        fragmentData['componentName'] = AddKarvyDetailsComponent;
+        break;
+      case 3: // Franklin
+        fragmentData['componentName'] = AddFranklinTempletionDetailsComponent;
+        break;
+      case 4: // fundsnet
+        fragmentData['componentName'] = AddCamsFundsnetComponent;
+        break;
+    }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getNscSchemedata();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
+            this.loadRTAList();
           }
           rightSideDataSub.unsubscribe();
         }
-
-      }
-    );
-  }
-  openAddKarvyDetails(data, flag) {
-    const fragmentData = {
-      flag: flag,
-      data: data || {},
-      id: 1,
-      state: (flag == 'detailedNsc') ? 'open50' : 'open50',
-      componentName: AddKarvyDetailsComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getNscSchemedata();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
-          }
-          rightSideDataSub.unsubscribe();
-        }
-
-      }
-    );
-  }
-  openAddFranklintempletionDetails(data, flag) {
-    const fragmentData = {
-      flag: flag,
-      data: data || {},
-      id: 1,
-      state: (flag == 'detailedNsc') ? 'open50' : 'open50',
-      componentName: AddFranklinTempletionDetailsComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getNscSchemedata();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
-          }
-          rightSideDataSub.unsubscribe();
-        }
-
-      }
-    );
-  }
-  openAddCamsfundsent(data, flag) {
-    const fragmentData = {
-      flag: flag,
-      data: data || {},
-      id: 1,
-      state: (flag == 'detailedNsc') ? 'open50' : 'open50',
-      componentName: AddCamsFundsnetComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getNscSchemedata();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
-          }
-          rightSideDataSub.unsubscribe();
-        }
-
       }
     );
   }
 }
-
-export interface PeriodicElement {
-  name: string;
-  position: string;
-  weight: string;
-
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 'ARN-83866', name: 'firstname.lastname@abcconsultants.com', weight: '* * * * * *' },
-
-];
-
-export interface PeriodicElement1 {
-  name: string;
-  position: string;
-  weight: string;
-  email: string;
-  mail: string;
-  use: string;
-
-}
-
-const ELEMENT_DATA1: PeriodicElement1[] = [
-  {
-    position: 'ARN-83866', name: 'abcconsult', weight: '* * * * * *', email: 'firstname.lastname@abcconsultants.com',
-    mail: '* * * * * *', use: 'Yes'
-  },
-  {
-    position: 'INA000004409', name: 'abcconsult', weight: '* * * * * *', email: 'firstname.lastname@abcconsultants.com',
-    mail: '* * * * * *', use: 'Yes'
-  },
-];
-export interface PeriodicElement2 {
-  name: string;
-  position: string;
-  weight: string;
-  email: string;
-  mail: string;
-
-
-}
-
-const ELEMENT_DATA2: PeriodicElement2[] = [
-  {
-    position: 'ARN-83866', name: 'abcconsult', weight: '* * * * * *', email: 'firstname.lastname@abcconsultants.com',
-    mail: '* * * * * *'
-  },
-  {
-    position: 'INA000004409', name: 'abcconsult', weight: '* * * * * *', email: 'firstname.lastname@abcconsultants.com',
-    mail: '* * * * * *'
-  },
-];

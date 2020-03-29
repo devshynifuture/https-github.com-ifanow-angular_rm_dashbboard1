@@ -1,6 +1,6 @@
 <div class="row bb-1 popup-header-fix-50">
     <div class="col-md-10 p-0">
-        <h4 class="mb-0 l-22 wrapper-20">ADD ARN/RIA DETAILS</h4>
+        <h4 class="mb-0 l-22 wrapper-20">ADD CAMS DETAILS</h4>
     </div>
     <div class="col-md-2 text-right" (click)="Close(false)">
         <i class="material-icons pt-20 c-p pr-16">
@@ -12,12 +12,16 @@
 <div [formGroup]="camsFG">
     <div class="row pt-100">
         <div class="col-md-4 pr-0">
-            <h5 class="m-0 text-right pt-12">ARN/RIA number</h5>
+            <h5 class="m-0 text-right pt-8">ARN/RIA number</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-group mb-0">
+            <div class="form-control mb-0">
                 <mat-form-field>
-                    <input type="text" matInput formControlName="number" class="form-control">
+                    <mat-select class="form-group mb-0" formControlName="arnRiaDetailsId">
+                        <mat-option value="" selected disabled>Select Option</mat-option>
+                        <mat-option [value]="arnData.id" *ngFor="let arnData of data.arnData">{{arnData.nameOfTheHolder}} - {{arnData.number}}</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>

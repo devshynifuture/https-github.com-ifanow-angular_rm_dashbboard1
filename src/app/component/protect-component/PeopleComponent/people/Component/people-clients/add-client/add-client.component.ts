@@ -8,6 +8,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 })
 export class AddClientComponent implements OnInit {
   headingData: any;
+  tabData: any = {};
 
   constructor(private subInjectService: SubscriptionInject) { }
   ngOnInit() {
@@ -18,6 +19,10 @@ export class AddClientComponent implements OnInit {
   selected = 0;
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  }
+  getTabData(data) {
+    console.log(data);
+    (data == undefined) ? this.tabData = { id: undefined } : this.tabData = data;
   }
   changeTab(flag) {
     (flag == 1) ? this.selected++ : '';

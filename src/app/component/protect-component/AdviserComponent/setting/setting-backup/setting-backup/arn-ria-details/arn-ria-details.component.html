@@ -11,67 +11,69 @@
     </div>
 </div>
 
-<div class="row pt-20 arn-ria-deatils" *ngFor="let arn of arnobjs">
-    <div class="col-md-2"></div>
-    <div class="col-md-8 p-0">
-        <mat-card class="b-a-l p-0">
-            <mat-card-header class="bg-grey lter">
-                <div class="row w-100">
-                    <div class="col-md-10 p-0">
-                        <h2 class="m-0">ARN-{{arn.id}}</h2>
-                        <h3 class="m-0 f-500 pt-8">{{arn.name}}</h3>
-                    </div>
-                    <div class="co-md-2 p-0 right pt-12">
-                        <button mat-stroked-button class="text-primary">{{arn.status}}</button>
-                        <i class="material-icons v-middle c-p f-30">
-                            more_vert
-                        </i>
-                    </div>
-                </div>
-            </mat-card-header>
-            <mat-card-content>
-                <div class="row pt-36 bb-1 pb-36">
-                    <div class="col-md-3">
-                        <p class="f-12 m-0 proxima text-primitive">ARN TYPE</p>
-                        <h5 class="m-0">{{arn.type}}</h5>
-                    </div>
-                    <div class="col-md-3 p-0">
-                        <p class="f-12 m-0 proxima text-primitive">COMMENCEMENT DATE</p>
-                        <h5 class="m-0">{{arn.commencement_date | date : 'dd/MM/yyyy'}}</h5>
-                    </div>
-                    <div class="col-md-3 p-0">
-                        <p class="f-12 m-0 proxima text-primitive">RENEWAL DATE</p>
-                        <h5 class="m-0">{{arn.renewal_date | date : 'dd/MM/yyyy'}}</h5>
-                    </div>
-                    <div class="col-md-3 p-0">
-                        <p class="f-12 m-0 proxima text-primitive">PRIMARY EUIN</p>
-                        <h5 class="m-0">{{arn.primary_euin}}</h5>
-                    </div>
-                </div>
-                <div class="row pt-12 pb-28">
-                    <div class="col-md-6">
-                        <p class="f-12 m-0 proxima text-primitive">BILLING ADDRESS</p>
-                        <h5 class="m-0">{{arn.billing_address}}</h5>
-                    </div>
-                    <div class="col-md-3 pl-0">
-                        <p class="f-12 m-0 proxima text-primitive">GST TREATMENT</p>
-                        <h5 class="m-0">{{arn.gst_treatment}}</h5>
-                        <div class="pt-44">
-                            <p class="f-12 m-0 proxima text-primitive">PHONE </p>
-                            <h5 class="m-0">{{arn.phone}}</h5>
+<div *ngIf="globalData">
+    <div class="row pt-20 arn-ria-deatils" *ngFor="let arn of arnobjs">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 p-0">
+            <mat-card class="b-a-l p-0">
+                <mat-card-header class="bg-grey lter">
+                    <div class="row w-100">
+                        <div class="col-md-10 p-0">
+                            <h2 class="m-0">ARN-{{arn.number}}</h2>
+                            <h3 class="m-0 f-500 pt-8">{{arn.nameOfTheHolder}}</h3>
+                        </div>
+                        <div class="co-md-2 p-0 right pt-12">
+                            <button mat-stroked-button class="text-primary">{{arn.status}}</button>
+                            <i class="material-icons v-middle c-p f-30">
+                                more_vert
+                            </i>
                         </div>
                     </div>
-                    <div class="col-md-3 pl-0">
-                        <p class="f-12 m-0 proxima text-primitive">GST</p>
-                        <h5 class="m-0">{{arn.gst_id}}</h5>
-                        <div class="pt-44">
-                            <p class="f-12 m-0 proxima text-primitive">EMAIL </p>
-                            <h5 class="m-0">{{arn.email}}</h5>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="row pt-36 bb-1 pb-36">
+                        <div class="col-md-3">
+                            <p class="f-12 m-0 proxima text-primitive">ARN TYPE</p>
+                            <h5 class="m-0">{{getArnType(arn.typeId)}}</h5>
+                        </div>
+                        <div class="col-md-3 p-0">
+                            <p class="f-12 m-0 proxima text-primitive">COMMENCEMENT DATE</p>
+                            <h5 class="m-0">{{arn.commencementDate | date : 'dd/MM/yyyy'}}</h5>
+                        </div>
+                        <div class="col-md-3 p-0">
+                            <p class="f-12 m-0 proxima text-primitive">RENEWAL DATE</p>
+                            <h5 class="m-0">{{arn.renewalDate | date : 'dd/MM/yyyy'}}</h5>
+                        </div>
+                        <div class="col-md-3 p-0">
+                            <p class="f-12 m-0 proxima text-primitive">PRIMARY EUIN</p>
+                            <h5 class="m-0">{{arn.euin}}</h5>
                         </div>
                     </div>
-                </div>
-            </mat-card-content>
-        </mat-card>
+                    <div class="row pt-12 pb-28">
+                        <div class="col-md-6">
+                            <p class="f-12 m-0 proxima text-primitive">BILLING ADDRESS</p>
+                            <h5 class="m-0">{{arn.registeredAddress}}</h5>
+                        </div>
+                        <div class="col-md-3 pl-0">
+                            <p class="f-12 m-0 proxima text-primitive">GST TREATMENT</p>
+                            <h5 class="m-0">{{getGstApplicale(arn.gstApplicableId)}}</h5>
+                            <div class="pt-44">
+                                <!-- <p class="f-12 m-0 proxima text-primitive">PHONE </p>
+                                <h5 class="m-0">{{arn.phone}}</h5> -->
+                            </div>
+                        </div>
+                        <div class="col-md-3 pl-0">
+                            <p class="f-12 m-0 proxima text-primitive">GST</p>
+                            <h5 class="m-0">{{arn.gstNumber}}</h5>
+                            <div class="pt-44">
+                                <p class="f-12 m-0 proxima text-primitive">EMAIL </p>
+                                <h5 class="m-0">{{arn.registeredEmail}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="col-md-2"></div>
     </div>
-    <div class="col-md-2"></div>
 </div>
