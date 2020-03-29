@@ -73,10 +73,12 @@ export class BackOfficeService {
   }
 
   amcWiseGet(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AMC_WISE, data);
+    const httpParams = new HttpParams().set('advisorId', data);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AMC_WISE, httpParams);
   }
   amcWiseApplicantGet(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_APPLICANT_NAME, data);
+    const httpParams = new HttpParams().set('advisorId', data).set('arnRiaDetailId', data.arnRiaDetailId).set('schemeMasterId', data.schemeMasterId).set('totalAum', data.totalAum);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_APPLICANT_NAME, httpParams);
   }
   getSipcountGet(data) {
     const httpParams = new HttpParams().set('teamMemberId', data);

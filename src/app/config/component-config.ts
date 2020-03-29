@@ -20,7 +20,7 @@ export const appConfig = {
   GET_AUM_CLIENT_TOTALAUM: 'asset/aum/client/totalaum/get',
   GET_AUM_CLIENT_SCHEME: 'asset/aum/client/schemes',
   GET_CLIENT_FOLIO_WISE: 'asset/cat/subcat/schemeName/clientFolioWise',
-  GET_AMC_WISE: 'asset/mis/aum/amcWise/get',
+  GET_AMC_WISE: 'backoffice/mis/aum/amcWise/get',
   GET_APPLICANT_NAME: '/mis/aum/amcWise/applicantName/get',
   ADVISOR_TAG_GET: '/advisor/tag/get',
 
