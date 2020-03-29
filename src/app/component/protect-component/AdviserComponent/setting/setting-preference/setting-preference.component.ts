@@ -43,6 +43,7 @@ export class SettingPreferenceComponent implements OnInit {
   domainS: any;
   clientData
   userId: any;
+  showUpdateWhite = false;
   constructor(private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, ) { }
 
@@ -108,9 +109,18 @@ export class SettingPreferenceComponent implements OnInit {
   }
   editDomain(flag, event, value) {
     if (flag == true) {
-      this.showUpdate = true
+      if(event == 'white'){
+        this.showUpdateWhite = true
+      }else{
+        this.showUpdate = true
+      }
+     
     } else {
-      this.showUpdate = false
+      if(event == 'white'){
+        this.showUpdateWhite = false
+      }else{
+        this.showUpdate = false
+      }
       this.updateDomainSetting(event, value)
     }
   }
@@ -174,10 +184,10 @@ export class SettingPreferenceComponent implements OnInit {
   updatePlanSectionRes(data) {
     console.log('updatePlanSectionRes ==', data)
   }
-  verifyEmail() {
+  verifyEmail(value) {
     const dialogRef = this.dialog.open(OpenEmailVerificationComponent, {
       width: '400px',
-      data: { bank: this.emailDetails, animal: this.element }
+      data: { bank: value, animal: this.element }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {

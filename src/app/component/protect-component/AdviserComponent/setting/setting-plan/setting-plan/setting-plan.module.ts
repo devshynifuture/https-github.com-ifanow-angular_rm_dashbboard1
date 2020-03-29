@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { SettingPlanRoutingModule } from './setting-plan-routing.module';
 import { PlanAssetallocationComponent } from './plan-assetallocation/plan-assetallocation.component';
 import { PlanReturnsinflationComponent } from './plan-returnsinflation/plan-returnsinflation.component';
@@ -9,8 +8,8 @@ import { PlanTemplatesComponent } from './plan-templates/plan-templates.componen
 import { PlanGalleryComponent } from './plan-gallery/plan-gallery.component';
 import { SettingPlanComponent } from '../setting-plan.component';
 import { MaterialModule } from 'src/app/material/material';
-import { OpenGalleryPlanComponent } from './plan-gallery/open-gallery-plan/open-gallery-plan.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 
 
 @NgModule({
@@ -21,6 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SettingPlanRoutingModule,
     MaterialModule,
     FormsModule,
+    CustomDirectiveModule,
     ReactiveFormsModule,
   ]
 })

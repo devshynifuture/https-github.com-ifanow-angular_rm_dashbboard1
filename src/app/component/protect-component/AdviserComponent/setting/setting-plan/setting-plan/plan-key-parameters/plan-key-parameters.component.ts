@@ -52,7 +52,7 @@ getFormControl(): any {
 }
   getKeyParameter(){
     let obj = {
-      advisorId: this.advisorId
+      advisorId: 2808
     }
     this.orgSetting.getKeyAndParameters(obj).subscribe(
       data => this.getKeyAndParametersRes(data),
@@ -68,12 +68,12 @@ getFormControl(): any {
     this.savingStatus=data.savingStatus
     this.InsurancePlanGrowthRate=data.InsurancePlanGrowthRate
   }
-  updateKeyParameter(value){
+  updateKeyParameter(value,id){
     console.log('option',value)
     let obj = {
-      parameter:1,
-      configurationTypeId:1,
-      advisorId:this.advisorId
+      parameter:(value.value == undefined)? value : value.value,
+      configurationTypeId:id,
+      advisorId:2808
 
     }
     this.orgSetting.updateKeyParameter(obj).subscribe(
