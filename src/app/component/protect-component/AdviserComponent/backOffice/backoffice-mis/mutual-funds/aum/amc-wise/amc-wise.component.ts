@@ -33,8 +33,8 @@ export class AmcWiseComponent implements OnInit {
   getApplicantName(){
     const obj={
       advisorId:this.advisorId,
-      arnRiaDetailId:'arn-124',
-      schemeMasterId:'abc-1233',
+      arnRiaDetailId:12345,
+      schemeMasterId:1345,
       totalAum:2000
     }
     this.backoffice.amcWiseApplicantGet(obj).subscribe(

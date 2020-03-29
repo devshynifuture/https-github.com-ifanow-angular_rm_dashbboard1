@@ -87,36 +87,36 @@ export class BackOfficeService {
   }
 
   getAumApplicantWiseTotalaumApplicantName(data) {
-    const httpParams = new HttpParams().set('teamMemberId', data);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_APPLICANT, httpParams);
   }
 
   getAumApplicantCategory(data) {
     const httpParams = new HttpParams().set('clientId', data.clientId).set('clientTotalAum', data.clientTotalAum)
-      .set('teamMemberId', data.teamMemberId);
+      .set('advisorId', data.advisorId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_APPLICANT_CATEGORY, httpParams);
   }
 
   getAumApplicantSubCategory(data) {
     const httpParams = new HttpParams().set('categoryId', data.categoryId).set('categoryTotalAum', data.categoryTotalAum)
-      .set('clientId', data.clientId).set('teamMemberId', data.teamMemberId);
+      .set('clientId', data.clientId).set('advisorId', data.advisorId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_APPLICANT_SUB_CATEGORY, httpParams);
   }
 
   getAumApplicantScheme(data) {
     const httpParams = new HttpParams().set('clientId', data.clientId).set('subCategoryId', data.subCategoryId)
-      .set('subCategoryTotalAum', data.subCategoryTotalAum).set('teamMemberId', data.teamMemberId);
+      .set('subCategoryTotalAum', data.subCategoryTotalAum).set('advisorId', data.advisorId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_APPLICANT_SCHEME, data);
   }
 
   // /Aum-clientWise
   getAumClientTotalAum(data) {
-    const httpParams = new HttpParams().set('limit', data.limit).set('offset', data.offset).set('teamMemberId', data.teamMemberId);
+    const httpParams = new HttpParams().set('limit', data.limit).set('offset', data.offset).set('advisorId', data.advisorId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_CLIENT_TOTALAUM, httpParams);
   }
 
   getAumClientScheme(data) {
-    const httpParams = new HttpParams().set('clientId', data.clientId).set('teamMemberId', data.teamMemberId);
+    const httpParams = new HttpParams().set('clientId', data.clientId).set('advisorId', data.advisorId).set('arnRiaDetailsId',data.arnRiaDetailsId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_CLIENT_SCHEME, httpParams);
   }
 
