@@ -1,72 +1,101 @@
-<div class="container-fluid">
-    <div class="row mobileView">
-        <div class="col-md-6 imgBoxlogin p-0 bg-grey lter">
+<div class="container-fluid p-0">
+    <div class="row mobileLoginUi">
+        <div class="col-md-6 mobileNone imgBoxlogin p-0 bg-grey lter">
             <img src="assets/images/svg/login-img.svg">
         </div>
-        <div class="col-md-6 p-0 bg-white flexLogin">
-            <div class="loginBoxverifyOtp">
-                <p class="f-16 mb-12">
-                    <img class="advisorLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
-                </p>
-                <h1 class="mb-16 f-600">Create an account</h1>
-                <p class="mb-24 f-16">Please provide some basic details to help us create your account.</p>
-                <div [formGroup]="signUpForm" class="form_container_new_wrapper">
-                    <div class="row">
-                        <div class="col-md-12 form-group p-0">
-                            <h5 class="pt-12 mb-4">Full name</h5>
-                            <mat-form-field floatLabel="never" appearance="standard">
-                                <input placeholder="Enter your name" appInputValueValidation [inputValidator]="validatorType.PERSON_NAME" #fullName [maxLength]="20" formControlName="fullName" tabindex="1" class="form-control" matInput>
-                                <mat-hint align="end" class="f-12">{{fullName.value.length}}/20</mat-hint>
-                                <mat-error>Username required</mat-error>
-                            </mat-form-field>
+
+        <div class="col-md-6 p-0 bg-white forgotMobileUi flexLogin">
+            <div class="row ds-none">
+                <div class="col-md-12">
+                    <i [routerLink]="[ '/login']" class="material-icons f-20 mt-20">
+                        arrow_back
+                    </i>
+                </div>
+            </div>
+            <div class="mobileUserBox">
+                <div class="loginBoxverifyOtp">
+
+
+                    <p class="f-16 mb-12 mobileNone">
+                        <img class="advisorLogo " src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                    </p>
+                    <h1 class="mb-16 mobileNone f-600">Create an account</h1>
+                    <p class="mb-24 mobileNone f-16">Please provide some basic details to help us create your account.
+                    </p>
+
+                    <div class="row ds-none">
+                        <div class="col-md-12 mt-70 text-center">
+                            <h4 class="f-18 mb-20">Create an account</h4>
+                            <p class="f-14 mb-16 contentText"> Please provide some basic details to help us create your account.
+                            </p>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-12 form-group p-0">
-                            <h5 class="pt-12 mb-4">Email</h5>
-                            <mat-form-field floatLabel="never" appearance="standard">
-                                <input placeholder="Enter email" formControlName="email" tabindex="1" class="form-control" matInput>
-                                <mat-error *ngIf="signUpForm.get('email').errors?.pattern">Email Invalid</mat-error>
-                                <mat-error *ngIf="signUpForm.get('email').errors?.required">Email required</mat-error>
-                            </mat-form-field>
+                    <div [formGroup]="signUpForm" class="form_container_new_wrapper">
+                        <div class="row">
+                            <div class="col-md-12 form-group p-0">
+                                <h5 class="pt-12 mobileNone mb-4">Full name</h5>
+                                <mat-form-field floatLabel="never" appearance="standard">
+                                    <input placeholder="Enter your name" appInputValueValidation [inputValidator]="validatorType.PERSON_NAME" #fullName [maxLength]="20" formControlName="fullName" tabindex="1" class="form-control" matInput>
+                                    <mat-hint align="end" class="f-12">{{fullName.value.length}}/20</mat-hint>
+                                    <mat-error align="end">Username required</mat-error>
+                                </mat-form-field>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class=" row">
-                        <div class="col-md-12 form-group p-0">
-                            <h5 class="pt-12 mb-4">Mobile</h5>
-                            <mat-form-field floatLabel="never" appearance="standard">
-                                <input placeholder="Enter mobile" #mobNo autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="mobile" tabindex="1" class="form-control" matInput maxlength="10">
-                                <mat-error>Mobile required</mat-error>
-                                <mat-hint align="end" class="f-12">{{mobNo.value.length}}/10</mat-hint>
-                            </mat-form-field>
+                        <div class="row">
+                            <div class="col-md-12 form-group p-0">
+                                <h5 class="pt-12 mobileNone mb-4">Email</h5>
+                                <mat-form-field floatLabel="never" appearance="standard">
+                                    <input placeholder="Enter email" formControlName="email" tabindex="1" class="form-control" matInput>
+                                    <mat-error align="end" *ngIf="signUpForm.get('email').errors?.pattern">Email Invalid
+                                    </mat-error>
+                                    <mat-error align="end" *ngIf="signUpForm.get('email').errors?.required">Email required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-12 mb-16 mt-10 p-0 f-14">
-                            <mat-checkbox formControlName="termsAgreement"> </mat-checkbox> I accept the <span class="text-primary c-p"> terms of service
-                            </span> & <span class="c-p text-primary"> privacy policy </span>
-
+                        <div class=" row">
+                            <div class="col-md-12 form-group p-0">
+                                <h5 class="pt-12 mobileNone mb-4">Mobile</h5>
+                                <mat-form-field floatLabel="never" appearance="standard">
+                                    <input placeholder="Enter mobile" #mobNo autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="mobile" tabindex="1" class="form-control" matInput maxlength="10">
+                                    <mat-error align="end">Mobile required</mat-error>
+                                    <mat-hint align="end" class="f-12">{{mobNo.value.length}}/10</mat-hint>
+                                </mat-form-field>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-12   p-0  ">
-                            <button (click)="createAccount()" mat-button class="  bg-primary f-16  text-white w-100 br-4 ">
-                                <img class="iconPosition" src="assets/images/svg/login-btn-icon.svg">
-                                Create account
-                            </button>
+                        <div class="row">
+                            <div class="col-md-12 mb-16 mt-10 p-0 f-14">
+                                <mat-checkbox formControlName="termsAgreement"> </mat-checkbox> I accept the <span class="text-primary c-p"> terms of service
+                                </span> & <span class="c-p text-primary"> privacy policy </span>
+
+                            </div>
                         </div>
-                    </div>
 
-                    <h5 class="mt-36 mb-36"> Already have an account? <span [routerLink]="[ '/login']" class="text-primary c-p"> Sign in </span>
-                    </h5>
+                        <div class="row">
+                            <div class="col-md-12 p-0">
+                                <button (click)="createAccount()" mat-button class="  bg-primary f-16  text-white w-100 br-4 ">
+                                    <img class="iconPosition mobileNone" src="assets/images/svg/login-btn-icon.svg">
+                                    Create account
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mobileCenter ds-none">
+                            <h5 class="mt-20 mb-10"> Already have an account? <span [routerLink]="[ '/login']" class="text-primary c-p"> Sign in </span>
+                            </h5>
+                        </div>
+
+                        <h5 class="mt-36 mobileNone mb-36"> Already have an account? <span [routerLink]="[ '/login']" class="text-primary c-p"> Sign in </span>
+                        </h5>
+                    </div>
                 </div>
             </div>
 
-            <p class="f-12 l-18 ml-24 text-primitive">Before logging in, please ensure that the URL on the address bar starts with “https” or has a padlock icon. The communication of your private information from any address beginning with "https" is encrypted and secured using SSL.</p>
+            <p class="f-12 mobileNone l-18 ml-24 text-primitive">Before logging in, please ensure that the URL on the address bar starts with “https” or has a padlock icon. The communication of your private information from any address beginning with "https" is encrypted and secured using SSL.</p>
         </div>
     </div>
 </div>

@@ -243,6 +243,10 @@ input.mat-input-element {
                 padding-left: 25px !important;
                 border: transparent !important;
             }
+            .verifyDiv {
+                width: 40px;
+                padding-left: 0px !important;
+            }
             .mobSubmit {
                 font-size: 16px;
                 background: #939393;
@@ -259,6 +263,30 @@ input.mat-input-element {
         }
         .mobilerightText {
             text-align: right;
+        }
+        .otpBox {
+            margin-bottom: 10px;
+        }
+        .contentText {
+            color: #878787;
+            margin-bottom: 25px;
+        }
+        .mobileFlex {
+            display: flex;
+        }
+        .mobileCenter {
+            text-align: center;
+            width: 100%;
+        }
+        .mobilebuttonColor {
+            .bg-primary {
+                font-size: 16px;
+                background: #939393 !important;
+                border-radius: 40px !important;
+                width: 100%;
+                height: 50px;
+                color: #ffffff;
+            }
         }
     }
 }

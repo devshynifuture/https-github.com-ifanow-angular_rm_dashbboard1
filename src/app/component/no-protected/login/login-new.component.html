@@ -97,70 +97,112 @@
                     <img class="advisorLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
                 </p>
                 <h1 class="mb-16 mobileNone f-600">Welcome back!</h1>
-                <p class="mb-24 mobileNone f-16">This is a secure system and you will need to provide your login details to access your account.</p>
+                <p class="mb-24 mobileNone f-16">
+                    This is a secure system and you will need to provide your login details to access your account.
+                </p>
 
-                <div class="imgLogin">
-                    <img src="assets/images/svg/mobile-login-img.svg">
-                    <img class="bitmapImg" src="assets/images/svg/bitmap-img.svg">
-                </div>
-
-                <div class="form_container_new_wrapper">
-                    <div class="row">
-                        <div class="col-md-12 form-group p-0">
-                            <h5 class="pt-12 mobileNone">User Name</h5>
-                            <mat-form-field floatLabel="never" appearance="standard">
-                                <input autocomplete="off" placeholder="Enter username" [formControl]="userName" tabindex="1" class="form-control br-0" matInput>
-                                <mat-error *ngIf="userName.hasError('required')">Username required</mat-error>
-                                <mat-error *ngIf="userName.hasError('pattern')">Invalid username</mat-error>
-                            </mat-form-field>
-                        </div>
-                    </div>
-
-                    <div *ngIf="getOtpFlag==false" class="row">
-                        <div class="col-md-12 p-0">
-                            <div class="otpBox c-p" (click)="getOtp()">
-                                <span>* * * *</span>
-                                <span>GET OTP</span>
-                            </div>
-                        </div>
-                        <h5 class="mt-20 text-primary c-p f-600" (click)="otpClick()">Login with password</h5>
-
-                        <h5 class="mt-32 mb-24">Don’t have an account? <span [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span> </h5>
-                    </div>
-
-                    <div *ngIf="getOtpFlag" class="row">
-                        <p class="text-danger mb-0 f-12">6 digit OTP has been sent to your mobile no. 99XXXXX342</p>
-                        <div class="col-md-12 p-0">
-                            <h5 class="pt-12">Verify OTP</h5>
-                            <div class="form-group d-flex">
-                                <input maxlength="1" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="enterOtp($event)" autocomplete="off" class="form-control verifyDiv br-0" matInput>
-                                <input maxlength="1" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="enterOtp($event)" autocomplete="off" class="form-control verifyDiv br-0" matInput>
-                                <input maxlength="1" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="enterOtp($event)" autocomplete="off" class="form-control verifyDiv br-0" matInput>
-                                <input maxlength="1" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="enterOtp($event)" autocomplete="off" class="form-control verifyDiv br-0" matInput>
-                                <input maxlength="1" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="enterOtp($event)" autocomplete="off" class="form-control verifyDiv br-0" matInput>
-                                <input maxlength="1" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="enterOtp($event)" autocomplete="off" class="form-control verifyDiv br-0" matInput>
-                            </div>
-
-                            <h5 class="mb-0">Didn’t receive? <span class="lightRead c-p" (click)="getOtp()"> Resend
-                                </span></h5>
-
-                        </div>
-                        <button (click)="verifyWithOtpResponse()" mat-button class="mt-20 mb-28 bg-primary f-16  text-white w-100 br-4 ">
-                            <img class="iconPosition" src="assets/images/svg/login-btn-icon.svg"> Login to your
-                            account</button>
-                        <h5 class="mt-20 text-primary c-p f-600" [routerLink]="['/login']">Login with password</h5>
-
-                        <h5 class="mt-32 mb-24">Don’t have an account? <span [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span> </h5>
-                    </div>
-                    <div *ngIf="!otpNumber">
-                        <button mat-button class="mt-20 mb-28 bg-primary f-16  text-white w-100 br-4 ">
-                            <img class="iconPosition" src="assets/images/svg/login-btn-icon.svg"> Login to your
-                            account</button>
-                        <h5 class="mt-20 text-primary c-p f-600" [routerLink]="['/login']">Login with password</h5>
-
-                        <h5 class="mt-32 mb-24">Don’t have an account? <span [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span> </h5>
+                <div class="row ds-none">
+                    <div class="col-md-12">
+                        <i (click)="otpClick()" class="material-icons f-20 mt-20">
+                            arrow_back
+                        </i>
                     </div>
                 </div>
+
+                <div class="row  ds-none">
+                    <div class="col-md-12 mt-70 text-center">
+                        <h4 class="f-18 mb-20"> Welcome back! </h4>
+                        <p class="f-14 contentText">
+                            This is a secure system and you will need to provide your login details to access your account.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mobileUserBox">
+
+                    <div class="form_container_new_wrapper">
+                        <div class="row">
+                            <div class="col-md-12 form-group p-0">
+                                <h5 class="pt-12 mobileNone">User Name</h5>
+                                <mat-form-field floatLabel="never" appearance="standard">
+                                    <input autocomplete="off" placeholder="Enter username" [formControl]="userName" tabindex="1" class="form-control br-0" matInput>
+                                    <mat-error class="mobilerightText" *ngIf="userName.hasError('required')">Username required
+                                    </mat-error>
+                                    <mat-error class="mobilerightText" *ngIf="userName.hasError('pattern')">Invalid username
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div *ngIf="getOtpFlag==false" class="row">
+                            <div class="col-md-12 mobileFlex p-0">
+                                <div class="otpBox c-p" (click)="getOtp()">
+                                    <span>* * * *</span>
+                                    <span>GET OTP</span>
+                                </div>
+
+                                <button class="ds-none" (click)="otpClick()" mat-button>Login with password</button>
+                            </div>
+
+
+                            <div class="mobileCenter ds-none">
+                                <h5 class="mt-12 ">Don’t have an account? <span [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span> </h5>
+                            </div>
+
+
+                            <h5 class="mt-20 mobileNone text-primary c-p f-600" (click)="otpClick()">Login with password
+                            </h5>
+
+                            <h5 class="mt-32 mobileNone mb-24">Don’t have an account? <span [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span> </h5>
+                        </div>
+
+                        <div *ngIf="getOtpFlag" class="row">
+                            <p class="text-danger mb-0 f-12">6 digit OTP has been sent to your mobile no. 99XXXXX342</p>
+                            <div class="col-md-12 p-0">
+                                <h5 class="pt-12">Verify OTP</h5>
+                                <div class="form-group d-flex">
+                                    <input maxlength="1" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="enterOtp($event)" autocomplete="off" class="form-control verifyDiv br-0" matInput>
+                                    <input maxlength="1" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="enterOtp($event)" autocomplete="off" class="form-control verifyDiv br-0" matInput>
+                                    <input maxlength="1" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="enterOtp($event)" autocomplete="off" class="form-control verifyDiv br-0" matInput>
+                                    <input maxlength="1" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="enterOtp($event)" autocomplete="off" class="form-control verifyDiv br-0" matInput>
+                                    <input maxlength="1" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="enterOtp($event)" autocomplete="off" class="form-control verifyDiv br-0" matInput>
+                                    <input maxlength="1" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="enterOtp($event)" autocomplete="off" class="form-control verifyDiv br-0" matInput>
+                                </div>
+
+                                <h5 class="mb-0">Didn’t receive? <span class="lightRead c-p" (click)="getOtp()"> Resend
+                                    </span></h5>
+
+                            </div>
+
+                            <div class="mobilebuttonColor col-md-12 p-0">
+                                <button (click)="verifyWithOtpResponse()" mat-button class="mt-20 mb-28 bg-primary f-16  text-white w-100 br-4 ">
+                                    <img class="iconPosition mobileNone" src="assets/images/svg/login-btn-icon.svg">
+                                    Login to your
+                                    account</button>
+                            </div>
+
+                            <div class="mobileCenter ds-none">
+                                <button [routerLink]="['/login']" mat-button>Login with password</button>
+                                <h5 class="mt-10 mb-10">Don’t have an account? <span [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span> </h5>
+                            </div>
+
+
+                            <h5 class="mt-20 mobileNone text-primary c-p f-600" [routerLink]="['/login']">Login with password
+                            </h5>
+
+                            <h5 class="mt-32 mobileNone mb-24">Don’t have an account? <span [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span> </h5>
+                        </div>
+                        <div *ngIf="!otpNumber">
+                            <button mat-button class="mt-20 mb-28 bg-primary f-16  text-white w-100 br-4 ">
+                                <img class="iconPosition" src="assets/images/svg/login-btn-icon.svg"> Login to your
+                                account</button>
+                            <h5 class="mt-20 text-primary c-p f-600" [routerLink]="['/login']">Login with password</h5>
+
+                            <h5 class="mt-32 mb-24">Don’t have an account? <span [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span> </h5>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <p class="f-12 l-18 ml-24 mb-0 mobileNone text-primitive">Before logging in, please ensure that the URL on the address bar starts with “https” or has a padlock icon. The communication of your private information from any address beginning with "https" is encrypted and secured using SSL.</p>
         </div>
