@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Directive } from '@angular/core';
 import { OrgSettingServiceService } from '../../../org-setting-service.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
+import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-plan-assetallocation',
   templateUrl: './plan-assetallocation.component.html',
   styleUrls: ['./plan-assetallocation.component.scss']
 })
+
 export class PlanAssetallocationComponent implements OnInit {
   displayedColumns: string[] = ['position', 'debt1', 'equity1', 'debt2', 'equity2', 'debt3', 'equity3',
     'debt4', 'equity4', 'debt5', 'equity5'];
@@ -18,11 +20,29 @@ export class PlanAssetallocationComponent implements OnInit {
   mode2: any;
   mode4: any;
   mode5: any;
+  editMode: boolean =false;
+  dataToMap: any = [];
+  onlyNumbers: string;
   constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) { }
-
   ngOnInit() {
     this.getAssetAllocation()
     this.advisorId = AuthService.getAdvisorId()
+    this.editMode=false
+  }
+
+  toggleEditMode() {
+    this.editMode = !this.editMode;
+  }
+  changeTableTdValue(value: string, field: string, index: number) {
+    console.log(value, field, index);
+    if (ValidatorType.NUMBER_ONLY.test(value)) {
+      const updatedTable = this.orgSetting.alterTable(this.dataToMap, field, value, index);
+      console.log("this is updated Table", updatedTable);
+     // this.dataSource.data = updatedTable;
+    } else {
+      this.onlyNumbers = '';
+      this.eventService.openSnackBar("This input only takes numbers", "Dismiss");
+    }
   }
   getAssetAllocation() {
     let obj = {
