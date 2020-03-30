@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { ValidatorType } from 'src/app/services/util.service';
@@ -12,11 +12,15 @@ import { EventService } from 'src/app/Data-service/event.service';
   styleUrls: ['./client-address.component.scss']
 })
 export class ClientAddressComponent implements OnInit {
+  userData: any;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private postalService: PostalService, private peopleService: PeopleService, private eventService: EventService) { }
   addressForm;
   validatorType = ValidatorType;
   @Output() tabChange = new EventEmitter();
+  @Input() set data(data) {
+    this.userData = data;
+  }
   ngOnInit() {
     this.addressForm = this.fb.group({
       proofType: ['1', [Validators.required]],
@@ -72,14 +76,14 @@ export class ClientAddressComponent implements OnInit {
       {
         "address1": this.addressForm.get('addressLine1').value,
         "address2": this.addressForm.get('addressLine2').value,
-        "address3": this.addressForm.get('addressLine3').value,
+        "address3": '',
         "pinCode": this.addressForm.get('pinCode').value,
         "city": this.addressForm.get('city').value,
         "state": this.addressForm.get('state').value,
-        "stateId": this.addressForm.get('').value,
+        "stateId": '',
         "country": this.addressForm.get('country').value,
-        "userId": this.addressForm.get('addressLine1').value,
-        "userType": this.addressForm.get('addressLine1').value,
+        "userId": this.userData.clientId,
+        "userType": 1,
         "addressType": this.addressForm.get('addressLine1').value,
         "proofType": this.addressForm.get('proofType').value,
         "proofIdNumber": this.addressForm.get('proofIdNum').value,
@@ -94,7 +98,6 @@ export class ClientAddressComponent implements OnInit {
         err => this.eventService.openSnackBar(err, "Dismiss")
       )
     }
-    this.tabChange.emit(1);
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });

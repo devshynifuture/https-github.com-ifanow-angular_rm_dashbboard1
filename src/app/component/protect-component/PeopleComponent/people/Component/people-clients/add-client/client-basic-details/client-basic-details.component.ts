@@ -208,7 +208,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       "referredBy": 0,
       "name": this.basicDetails.controls.fullName.value,
       "bioRemarkId": 0,
-      "userType": 0,
+      "userType": 1,
       "remarks": null,
       "status": 0
     }

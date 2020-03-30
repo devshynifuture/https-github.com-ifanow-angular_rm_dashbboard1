@@ -38,6 +38,12 @@ export class PeopleService {
     return this.http.putEncoded(apiConfig.USER + appConfig.EDIT_CLIENT, data);
   }
   addEditClientAddress(data) {
-    return this.http.put(apiConfig.USER + appConfig.ADD_EDIT_CLIENT_ADDRESS, data);
+    return this.http.putEncoded(apiConfig.USER + appConfig.ADD_EDIT_CLIENT_ADDRESS, data);
+  }
+  addEditClientBankDetails(data) {
+    return this.http.putEncoded(apiConfig.USER + appConfig.ADD_EDIT_CLIENT_BANK, data);
+  }
+  addEditClientDemat(data) {
+    return this.http.putEncoded(apiConfig.USER + appConfig.ADD_EDIT_CLIENT_DEMAT, data);
   }
 }

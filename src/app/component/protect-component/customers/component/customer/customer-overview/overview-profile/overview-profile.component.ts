@@ -32,12 +32,14 @@ export class OverviewProfileComponent implements OnInit {
     this.cusService.getFamilyMembers(obj).subscribe(
       data => {
         this.familyMemberList = data;
+        this.selectedFamilyMember = data[0];
         console.log(data)
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
   detailedViewData(data) {
+    console.log(data);
     this.selectedFamilyMember = data;
   }
   deleteModal(value, data) {

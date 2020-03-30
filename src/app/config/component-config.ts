@@ -519,6 +519,8 @@ export const appConfig = {
   ADD_CLIENT: 'user/client/add',
   EDIT_CLIENT: 'user/client/edit',
   ADD_EDIT_CLIENT_ADDRESS: 'user/address/add-edit',
+  ADD_EDIT_CLIENT_BANK: 'user/bank/add-edit',
+  ADD_EDIT_CLIENT_DEMAT: 'user/bank/demat/edit',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: '/user/generate/otp',
   GET_FAMILY_MEMBERS: 'user/family-member/get',

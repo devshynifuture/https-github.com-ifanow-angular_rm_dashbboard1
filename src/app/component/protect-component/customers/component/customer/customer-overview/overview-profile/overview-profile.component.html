@@ -61,7 +61,7 @@
                             <p class="memberName">Family members</p>
 
                             <div class="memberSlider">
-                                <div (click)="familyMemberList(singleMembers)"
+                                <div (click)="detailedViewData(singleMembers)"
                                     *ngFor="let singleMembers of familyMemberList"
                                     class="memberList primary-border c-p">
                                     <img src="/assets/images/svg/women-profile-icon.svg">
@@ -96,11 +96,11 @@
 
                         </div>
 
-                        <div class=" row ">
+                        <div *ngIf="selectedFamilyMember" class=" row ">
                             <div class=" col-md-6 ">
                                 <div class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">DISPLAY NAME</p>
-                                    <!-- <p class=" f-14 roboto f-500 m-0 ">{{selectedFamilyMember.displayName}}</p> -->
+                                    <p class=" f-14 roboto f-500 m-0 ">{{selectedFamilyMember.displayName}}</p>
                                 </div>
 
                                 <div class=" basicDetaisList ">
@@ -110,7 +110,7 @@
 
                                 <div class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">PAN</p>
-                                    <!-- <p class=" f-14 roboto f-500 m-0 "> {{selectedFamilyMember.pan}}</p> -->
+                                    <p class=" f-14 roboto f-500 m-0 "> {{selectedFamilyMember.pan}}</p>
                                 </div>
 
                                 <div class=" basicDetaisList ">
@@ -120,9 +120,12 @@
 
                                 <div class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">GENDER</p>
-                                    <!-- <p class=" f-14 roboto f-500 m-0 " *ngIf="selectedFamilyMember.genderId=='1'">Male</p>
-                                    <p class=" f-14 roboto f-500 m-0 " *ngIf="selectedFamilyMember.genderId=='2'">Female</p>
-                                    <p class=" f-14 roboto f-500 m-0 " *ngIf="selectedFamilyMember.genderId=='3'">Other</p> -->
+                                    <p class=" f-14 roboto f-500 m-0 " *ngIf="selectedFamilyMember.genderId=='1'">Male
+                                    </p>
+                                    <p class=" f-14 roboto f-500 m-0 " *ngIf="selectedFamilyMember.genderId=='2'">Female
+                                    </p>
+                                    <p class=" f-14 roboto f-500 m-0 " *ngIf="selectedFamilyMember.genderId=='3'">Other
+                                    </p>
                                 </div>
                             </div>
 
@@ -134,12 +137,12 @@
 
                                 <div class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">USERNAME</p>
-                                    <!-- <p class=" f-14 roboto f-500 m-0 "> {{selectedFamilyMember.userName}}</p> -->
+                                    <p class=" f-14 roboto f-500 m-0 "> {{selectedFamilyMember.userName}}</p>
                                 </div>
 
                                 <div class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">AADHAAR</p>
-                                    <!-- <p class=" f-14 roboto f-500 m-0 ">{{selectedFamilyMember.aadharCard}}</p> -->
+                                    <p class=" f-14 roboto f-500 m-0 ">{{selectedFamilyMember.aadharCard}}</p>
                                 </div>
 
                                 <div class=" basicDetaisList ">

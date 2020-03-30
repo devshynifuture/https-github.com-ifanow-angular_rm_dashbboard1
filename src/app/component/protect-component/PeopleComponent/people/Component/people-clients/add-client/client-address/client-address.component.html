@@ -101,8 +101,10 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" matInput formControlName="city" class="form-control">
+                    <input autocomplete="off" #city matInput formControlName="city" appInputValueValidation
+                        [inputValidator]="validatorType.TEXT_ONLY" maxlength="30" class="form-control">
                     <mat-error>This field is required</mat-error>
+                    <mat-hint align="end" class="f-12">{{city.value.length}}/6</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -114,8 +116,11 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" matInput formControlName="state" class="form-control">
+                    <input autocomplete="off" #state matInput appInputValueValidation
+                        [inputValidator]="validatorType.TEXT_ONLY" maxlength="30" formControlName="state"
+                        class="form-control">
                     <mat-error>This field is required</mat-error>
+                    <mat-hint align="end" class="f-12">{{state.value.length}}/6</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -127,8 +132,10 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" matInput formControlName="country" class="form-control">
+                    <input autocomplete="off" #country matInput formControlName="country" appInputValueValidation
+                        [inputValidator]="validatorType.TEXT_ONLY" maxlength="30" class="form-control">
                     <mat-error>This field is required</mat-error>
+                    <mat-hint align="end" class="f-12">{{country.value.length}}/30</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -147,7 +154,7 @@
                 <button [matMenuTriggerFor]="menu" mat-raised-button class="br-0 text-inherit mr-12">SAVE & NEXT
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="addMore()">ADD MORE</button>
+                    <button mat-menu-item (click)="saveNext('addMore')">ADD MORE</button>
                     <button mat-menu-item (click)="saveNext('Next')">SAVE & NEXT</button>
                 </mat-menu>
 
