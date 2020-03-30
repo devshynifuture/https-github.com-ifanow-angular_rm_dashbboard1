@@ -54,6 +54,9 @@ export class SettingPreferenceComponent implements OnInit {
     this.getPortfolio()
     this.getdataForm('')
     this.isLoading = false
+    this.emailList =[]
+    this.planSection = []
+    this.emailTemplateList =[]
   }
   getdataForm(data) {
     this.domainS = this.fb.group({

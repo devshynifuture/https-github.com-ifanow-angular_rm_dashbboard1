@@ -3,6 +3,7 @@ import { OrgSettingServiceService } from '../../../org-setting-service.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ValidatorType } from 'src/app/services/util.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-plan-assetallocation',
@@ -11,11 +12,8 @@ import { ValidatorType } from 'src/app/services/util.service';
 })
 
 export class PlanAssetallocationComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'debt1', 'equity1',];
-  displayedColumns1: string[] = ['debt2', 'equity2'];
-  displayedColumns2: string[] = ['debt3', 'equity3',];
-  displayedColumns3: string[] = ['debt4', 'equity4',];
-  displayedColumns4: string[] = ['debt5', 'equity5'];
+  displayedColumns: string[] = ['position', 'debt1', 'equity1', 'debt2', 'equity2', 'debt3', 'equity3',
+    'debt4', 'equity4', 'debt5','equity5'];
   dataSource = ELEMENT_DATA;
   advisorId: any;
   mode1: any;
@@ -23,25 +21,32 @@ export class PlanAssetallocationComponent implements OnInit {
   mode2: any;
   mode4: any;
   mode5: any;
-  editMode: boolean = false;
+  editMode: boolean =false;
   dataToMap: any = [];
   onlyNumbers: string;
+  staticAllocationData: any;
+  secondValue: any;
   constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) { }
   ngOnInit() {
     this.getAssetAllocation()
     this.advisorId = AuthService.getAdvisorId()
-    this.editMode = false
+    this.editMode=false
+    console.log('edit mode',this.editMode)
   }
 
   toggleEditMode() {
     this.editMode = !this.editMode;
+    console.log('hgdsfhg ==',this.editMode)
   }
-  changeTableTdValue(value: string, field: string, index: number) {
+  changeTableTdValue(value, field, field2, ele, index) {
     console.log(value, field, index);
+    this.secondValue = 100 - value
+      ele[field2] = this.secondValue
+
     if (ValidatorType.NUMBER_ONLY.test(value)) {
-      const updatedTable = this.orgSetting.alterTable(this.dataToMap, field, value, index);
-      console.log("this is updated Table", updatedTable);
-      // this.dataSource.data = updatedTable;
+      // const updatedTable = this.orgSetting.alterTable(this.dataToMap, field, value, index);
+      // console.log("this is updated Table", updatedTable);
+     // this.dataSource.data = updatedTable;
     } else {
       this.onlyNumbers = '';
       this.eventService.openSnackBar("This input only takes numbers", "Dismiss");
@@ -58,24 +63,7 @@ export class PlanAssetallocationComponent implements OnInit {
   }
   getAssetAllocationRes(data) {
     console.log('getAssetAllocationRes', data)
-    this.mode1 = data.staticAllocationData.filter(element => element.riskProfileMasterId == 1)
-    this.mode2 = data.staticAllocationData.filter(element => element.riskProfileMasterId == 2)
-    this.mode3 = data.staticAllocationData.filter(element => element.riskProfileMasterId == 3)
-    this.mode4 = data.staticAllocationData.filter(element => element.riskProfileMasterId == 4)
-    this.mode5 = data.staticAllocationData.filter(element => element.riskProfileMasterId == 5)
-    console.log('mode1', this.mode1)
-    console.log('mode2', this.mode2)
-    console.log('mode3', this.mode3)
-    console.log('mode4', this.mode4)
-    console.log('mode5', this.mode5)
-
-
-    //     advisor_id: 0
-    // goal_time_frame_master_id: 1
-    // risk_profile_master_id: 2
-    // equity_allocation: 80
-    // debt_allocation: 20
-    // is_active: true
+   this.staticAllocationData = data.staticAllocationData
   }
 }
 export interface PeriodicElement {

@@ -1,0 +1,5 @@
+
+::ng-deep #table-low.edit-mode-hover tr td:not(:last-child):hover {
+    box-shadow: 0px 0px 10px #ccc;
+    cursor: cell;
+}

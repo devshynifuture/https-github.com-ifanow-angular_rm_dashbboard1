@@ -17,7 +17,7 @@ export class SettingOrgProfileComponent implements OnInit {
   orgProfile = false;
   userList: any;
   orgDetails: any;
-
+  isLoading = true
 
   constructor(
     private eventService: EventService,
@@ -30,8 +30,11 @@ export class SettingOrgProfileComponent implements OnInit {
   ngOnInit() {
     this.getPersonalProfiles()
     this.orgProfile = false
+    this.isLoading = false
+    this.userList = []
   }
   getPersonalProfiles() {
+    this.isLoading = true
     let obj = {
       id: this.advisorId
     }
@@ -41,12 +44,19 @@ export class SettingOrgProfileComponent implements OnInit {
     );
   }
   getPersonalProfileRes(data) {
-    console.log('this.getPersonalProfileRes', data)
-    this.userList = data
+    if (data) {
+      this.isLoading = false
+      console.log('this.getPersonalProfileRes', data)
+      this.userList = data
+    } else {
+      this.isLoading = false
+      this.userList = []
+    }
   }
   getOrgProfiles() {
+    this.isLoading = true
     let obj = {
-      advisorId: this.advisorId,
+      advisorId: 2808,
     }
     this.settingsService.getOrgProfile(obj).subscribe(
       data => this.getOrgProfileRes(data),
@@ -54,8 +64,14 @@ export class SettingOrgProfileComponent implements OnInit {
     );
   }
   getOrgProfileRes(data) {
-    console.log('getOrgProfileRes', data)
-    this.orgDetails = data
+
+    if (data) {
+      this.isLoading = false
+      console.log('getOrgProfileRes', data)
+      this.orgDetails = data
+    } else {
+      this.isLoading = false
+    }
 
   }
   OpenpersonalProfile(data, flag) {
