@@ -10,10 +10,11 @@ import { SettingPlanComponent } from '../setting-plan.component';
 import { MaterialModule } from 'src/app/material/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { CashflowTableEditDirective } from 'src/app/component/protect-component/customers/component/customer/plan/cashflows-plan/cashflow-table-edit.directive';
 
 
 @NgModule({
-  declarations: [PlanAssetallocationComponent, PlanReturnsinflationComponent, PlanTemplatesComponent, PlanGalleryComponent, SettingPlanComponent,
+  declarations: [PlanAssetallocationComponent,CashflowTableEditDirective, PlanReturnsinflationComponent, PlanTemplatesComponent, PlanGalleryComponent, SettingPlanComponent,
     PlanKeyParametersComponent],
   imports: [
     CommonModule,
