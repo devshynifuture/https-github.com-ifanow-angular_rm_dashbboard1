@@ -51,24 +51,24 @@
             </div>
             <div class="col-md-10 b-a p-0 min-height" [ngSwitch]="viewMode">
                 <div *ngSwitchCase="'tab1'">
-                    <div class="p-20 skeletonAnimation"  appSkeletonLoading [appSkeletonLoading]="isLoading">
+                    <div class="p-20 skeletonAnimation relClass" appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <div class="bar">
                             <h5 class="mb-8 text-black">Mutual Fund</h5>
                         </div>
                         <div class="bar">
-                            <mat-checkbox class="text-black" (change)="selectMutualFund($event,mutualFund)"
+                            <!-- <mat-checkbox class="text-black" (change)="selectMutualFund($event,mutualFund)"
                                 [checked]="mutualFund.selectedOrDeselected">Show absolute returns for new clients
                             </mat-checkbox>
                             <p class="m-0 text-custom pb-20 bb-1 pl-24">New client is defined as one whose oldest mutual
-                                fund transaction is less than one year old.</p>
+                                fund transaction is less than one year old.</p> -->
                         </div>
                         <div class="pt-20">
                             <div class="bar">
-                                <mat-checkbox class="text-black" (change)="selectMutualFund($event,mutualFund2)"
+                                <!-- <mat-checkbox class="text-black" (change)="selectMutualFund($event,mutualFund2)"
                                     [checked]="mutualFund2.selectedOrDeselected">Show mutual fund fact sheet
                                 </mat-checkbox>
                                 <p class="m-0 text-custom pl-24">Mutual fund fact sheets are shown when clicked on the
-                                    mutual fund schemes from the portfolio MF reports section.</p>
+                                    mutual fund schemes from the portfolio MF reports section.</p> -->
                             </div>
                             <div class="bb-1 pl-24 pt-12 pb-20">
                                 <div class="bar">

@@ -43,7 +43,7 @@ export class SettingPreferenceComponent implements OnInit {
   clientData
   userId: any;
   showUpdateWhite = false;
-  isLoading = false
+  isLoading = true
   constructor(private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, ) { }
 
@@ -53,7 +53,7 @@ export class SettingPreferenceComponent implements OnInit {
     console.log('3456893469 ===', this.userId)
     this.getPortfolio()
     this.getdataForm('')
-    this.isLoading = false
+    this.isLoading = true
   }
   getdataForm(data) {
     this.domainS = this.fb.group({
@@ -136,7 +136,7 @@ export class SettingPreferenceComponent implements OnInit {
     );
   }
   getPortfolioRes(data) {
-    this.isLoading = false
+    this.isLoading = true
     console.log('getPortfolioReslase == ', data)
     this.portfolio = data
     this.mutualFund = this.portfolio.filter(element => element.portfolioOptionId == 1)
