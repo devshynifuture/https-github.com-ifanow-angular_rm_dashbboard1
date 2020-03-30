@@ -15,20 +15,27 @@ export class BackofficeFileUploadComponent implements OnInit {
   selectedFileType: any = "";
   fileType: any;
   advisorId: any;
-  myFiles: any;
-
-  constructor(private reconService: ReconciliationService, private http: HttpService) {
+  filterList:any;
+  filter:any = {
+    rt:this.filterRTA,
+    status:this.filterStatus
   }
+  constructor(private reconService: ReconciliationService, private http: HttpService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.reconService.getBackOfficeFileUploadFileType({}).subscribe((data) => {
       this.fileType = data;
     })
+    this.reconService.getBackOfficeFilter({}).subscribe((data)=>{
+      this.filterList = data;
+      console.log(this.filterList, "this.filterList 123");
+      
+    })
   }
 
   getFile(e) {
-    console.log(e);
+    // console.log(e);
     let obj = {
       fileType: this.selectedFileType,
       advisorId: this.advisorId
