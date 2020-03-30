@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AumComponent } from '../aum.component';
 import { BackOfficeService } from '../../../../back-office.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-amc-wise',
@@ -9,10 +10,12 @@ import { BackOfficeService } from '../../../../back-office.service';
 })
 export class AmcWiseComponent implements OnInit {
   teamMemberId=2929;
+  advisorId: any;
 
   constructor(public aum:AumComponent,private backoffice:BackOfficeService) { }
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.getAmcWiseData();
     this.getApplicantName();
   }
@@ -21,7 +24,7 @@ export class AmcWiseComponent implements OnInit {
    this.aum.aumComponent=true;
   }
   getAmcWiseData(){
-    this.backoffice.amcWiseGet(this.teamMemberId).subscribe(
+    this.backoffice.amcWiseGet(this.advisorId).subscribe(
       data => {
         console.log(data);
       }
@@ -29,9 +32,9 @@ export class AmcWiseComponent implements OnInit {
   }
   getApplicantName(){
     const obj={
-      amcName:'Aditya birla',
-      schemeCode:'abc-1233',
-      teamMemberId:this.teamMemberId,
+      advisorId:this.advisorId,
+      arnRiaDetailId:12345,
+      schemeMasterId:1345,
       totalAum:2000
     }
     this.backoffice.amcWiseApplicantGet(obj).subscribe(

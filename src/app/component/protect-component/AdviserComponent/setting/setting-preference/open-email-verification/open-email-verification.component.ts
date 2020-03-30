@@ -16,6 +16,7 @@ export class OpenEmailVerificationComponent implements OnInit {
   popUP: any;
   email: any;
   emailVierify: any;
+  emailDetails: any;
   constructor(public dialogRef: MatDialogRef<OpenEmailVerificationComponent>, private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
@@ -26,7 +27,8 @@ export class OpenEmailVerificationComponent implements OnInit {
     this.getdataForm('')
     const ELEMENT_DATA = this.dataS;
     console.log('investorList == ', this.data)
-    this.bankList = this.data.bank;
+    this.emailDetails = this.data.bank;
+    this.emailVierify.controls.emailId.setValue(this.emailDetails.emailAddress)
     ELEMENT_DATA.forEach(item => item.selected = false);
   }
   getdataForm(data) {

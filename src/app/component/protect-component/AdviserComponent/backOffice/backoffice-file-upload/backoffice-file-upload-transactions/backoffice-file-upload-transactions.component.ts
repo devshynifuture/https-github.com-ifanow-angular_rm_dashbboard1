@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReconciliationService } from '../../backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { MatSort, MatTableDataSource } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
 
 export interface PeriodicElement {
   name: string;
@@ -27,8 +28,9 @@ export class BackofficeFileUploadTransactionsComponent implements OnInit {
   isLoading = false;
   listData:any = [];
   dataSource;
+  filterObj:any;
   @ViewChild(MatSort, {static: true}) sortList: MatSort;
-  constructor(private reconService: ReconciliationService) { }
+  constructor(private reconService: ReconciliationService, public router : ActivatedRoute) { }
 
   ngOnInit() {
     this.dataSource = [{}, {}, {}];
@@ -40,5 +42,14 @@ export class BackofficeFileUploadTransactionsComponent implements OnInit {
       this.dataSource.sort = this.sortList;
       this.isLoading = false;
     })
+    
+    // this.router.paramMap.subscribe((paramMap) => {
+    //   if(paramMap.has("fliter")){
+    //     this.filterObj = paramMap.get("fliter");
+    //   }
+    // });
+    this.router.data.subscribe(data => {
+      this.filterObj=data;
+  })
   }
 }

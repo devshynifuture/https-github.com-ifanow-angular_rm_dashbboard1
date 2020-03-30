@@ -34,7 +34,6 @@ export class SettingPreferenceComponent implements OnInit {
   emailList: any;
   normalDomain: any;
   whiteLabledDomain: any;
-  isLoading: any;
   emailTemplateList: any;
   showUpdate = false;
   normalLable;
@@ -43,6 +42,8 @@ export class SettingPreferenceComponent implements OnInit {
   domainS: any;
   clientData
   userId: any;
+  showUpdateWhite = false;
+  isLoading = true
   constructor(private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, ) { }
 
@@ -52,6 +53,7 @@ export class SettingPreferenceComponent implements OnInit {
     console.log('3456893469 ===', this.userId)
     this.getPortfolio()
     this.getdataForm('')
+    this.isLoading = true
   }
   getdataForm(data) {
     this.domainS = this.fb.group({
@@ -108,15 +110,25 @@ export class SettingPreferenceComponent implements OnInit {
   }
   editDomain(flag, event, value) {
     if (flag == true) {
-      this.showUpdate = true
+      if(event == 'white'){
+        this.showUpdateWhite = true
+      }else{
+        this.showUpdate = true
+      }
+     
     } else {
-      this.showUpdate = false
+      if(event == 'white'){
+        this.showUpdateWhite = false
+      }else{
+        this.showUpdate = false
+      }
       this.updateDomainSetting(event, value)
     }
   }
   getPortfolio() {
+    this.isLoading = true
     let obj = {
-      advisorId: 4443
+      advisorId: this.advisorId
     }
     this.orgSetting.getPortfolio(obj).subscribe(
       data => this.getPortfolioRes(data),
@@ -124,16 +136,19 @@ export class SettingPreferenceComponent implements OnInit {
     );
   }
   getPortfolioRes(data) {
-    console.log('getPortfolioRes == ', data)
+    this.isLoading = true
+    console.log('getPortfolioReslase == ', data)
     this.portfolio = data
     this.mutualFund = this.portfolio.filter(element => element.portfolioOptionId == 1)
+    this.mutualFund = this.mutualFund[0]
     this.mutualFund2 = this.portfolio.filter(element => element.portfolioOptionId == 2)
+    this.mutualFund2 = this.mutualFund2[0]
     this.factSheet = this.portfolio.filter(element => element.portfolioOptionId == 3)
   }
 
   getPlan() {
     let obj = {
-      advisorId: 4443
+      advisorId: this.advisorId
     }
     this.orgSetting.getPlans(obj).subscribe(
       data => this.getPlanRes(data),
@@ -174,10 +189,10 @@ export class SettingPreferenceComponent implements OnInit {
   updatePlanSectionRes(data) {
     console.log('updatePlanSectionRes ==', data)
   }
-  verifyEmail() {
+  verifyEmail(value) {
     const dialogRef = this.dialog.open(OpenEmailVerificationComponent, {
       width: '400px',
-      data: { bank: this.emailDetails, animal: this.element }
+      data: { bank: value, animal: this.element }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
@@ -224,7 +239,7 @@ export class SettingPreferenceComponent implements OnInit {
   }
   getEmailTemplate() {
     let obj = {
-      advisorId: 4443
+      advisorId: this.advisorId
     }
     this.orgSetting.getEmailTempalate(obj).subscribe(
       data => this.getEmailTempalatRes(data),
