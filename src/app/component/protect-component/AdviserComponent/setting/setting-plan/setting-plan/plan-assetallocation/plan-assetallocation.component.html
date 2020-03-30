@@ -45,7 +45,7 @@
     <!-- Name Column -->
     <ng-container matColumnDef="debt1">
         <th mat-header-cell class="text-right" *matHeaderCellDef> Debt </th>
-        <td mat-cell class="text-right" *matCellDef="let element; let i = index" appCashflowTableEdit [editModeTable]="editMode">
+        <td mat-cell class="text-right" *matCellDef="let element; let i = index" appCashflowTableEdit>
             {{element.debt1}}
             <span class="inputValue d-none bar">
                 <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'debt1', i)"
@@ -56,7 +56,7 @@
     <!-- Weight Column -->
     <ng-container matColumnDef="equity1">
         <th mat-header-cell *matHeaderCellDef class="br text-right"> Equity </th>
-        <td mat-cell *matCellDef="let element; let i = index" class="br text-right" appCashflowTableEdit [editModeTable]="editMode">
+        <td mat-cell *matCellDef="let element; let i = index" class="br text-right" appCashflowTableEdit >
             {{element.equity1}} 
             <span class="inputValue d-none bar">
                 <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'equity1', i)"
@@ -67,7 +67,7 @@
     <!-- Symbol Column -->
     <ng-container matColumnDef="debt2">
         <th mat-header-cell class="text-right" *matHeaderCellDef> Debt </th>
-        <td mat-cell class="text-right" *matCellDef="let element; let i = index" appCashflowTableEdit [editModeTable]="editMode">
+        <td mat-cell class="text-right" *matCellDef="let element; let i = index" appCashflowTableEdit >
             {{element.debt2}}
             <span class="inputValue d-none bar">
                 <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'debt2', i)"
@@ -76,7 +76,7 @@
     </ng-container>
     <ng-container matColumnDef="equity2">
         <th mat-header-cell *matHeaderCellDef class="br text-right"> Equity </th>
-        <td mat-cell *matCellDef="let element; let i = index" class="br text-right" appCashflowTableEdit [editModeTable]="editMode">
+        <td mat-cell *matCellDef="let element; let i = index" class="br text-right" appCashflowTableEdit >
             {{element.equity2}}
             <span class="inputValue d-none bar">
                 <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'equity2', i)"
@@ -85,7 +85,7 @@
     </ng-container>
     <ng-container matColumnDef="debt3">
         <th mat-header-cell class="text-right" *matHeaderCellDef> Debt </th>
-        <td mat-cell *matCellDef="let element; let i = index" class="text-right" appCashflowTableEdit [editModeTable]="editMode">
+        <td mat-cell *matCellDef="let element; let i = index" class="text-right" appCashflowTableEdit>
             {{element.debt3}}
          <span class="inputValue d-none bar">
                     <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'debt3', i)"
@@ -94,7 +94,7 @@
     </ng-container>
     <ng-container matColumnDef="equity3">
         <th mat-header-cell *matHeaderCellDef class="br text-right"> Equity </th>
-        <td mat-cell *matCellDef="let element; let i = index" class="br text-right" appCashflowTableEdit [editModeTable]="editMode">
+        <td mat-cell *matCellDef="let element; let i = index" class="br text-right" appCashflowTableEdit>
             {{element.equity3}}
          <span class="inputValue d-none bar">
                     <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'equity3', i)"
@@ -103,7 +103,7 @@
     </ng-container>
     <ng-container matColumnDef="debt4">
         <th mat-header-cell class="text-right" *matHeaderCellDef> Debt </th>
-        <td mat-cell class="text-right" *matCellDef="let element; let i = index" appCashflowTableEdit [editModeTable]="editMode">
+        <td mat-cell class="text-right" *matCellDef="let element; let i = index" appCashflowTableEdit>
             {{element.debt4}}
          <span class="inputValue d-none bar">
                     <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'debt4', i)"
@@ -112,7 +112,7 @@
     </ng-container>
     <ng-container matColumnDef="equity4">
         <th mat-header-cell *matHeaderCellDef class="br text-right"> Equity </th>
-        <td mat-cell *matCellDef="let element; let i = index" class="br text-right" appCashflowTableEdit [editModeTable]="editMode">
+        <td mat-cell *matCellDef="let element; let i = index" class="br text-right" appCashflowTableEdit >
             {{element.equity4}}
          <span class="inputValue d-none bar">
                     <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'equity4', i)"
@@ -121,7 +121,7 @@
     </ng-container>
     <ng-container matColumnDef="debt5">
         <th mat-header-cell class="text-right" *matHeaderCellDef> Debt </th>
-        <td mat-cell class="text-right" *matCellDef="let element; let i = index" appCashflowTableEdit [editModeTable]="editMode">
+        <td mat-cell class="text-right" *matCellDef="let element; let i = index" appCashflowTableEdit >
             {{element.debt5}}
          <span class="inputValue d-none bar">
                     <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'debt5', i)"
@@ -130,7 +130,7 @@
     </ng-container>
     <ng-container matColumnDef="equity5">
         <th mat-header-cell class="text-right" *matHeaderCellDef> Equity </th>
-        <td mat-cell class="text-right" *matCellDef="let elemen; let i = indext" appCashflowTableEdit [editModeTable]="editMode">
+        <td mat-cell class="text-right" *matCellDef="let elemen; let i = indext" appCashflowTableEdit  >
             {{element.equity5}}
          <span class="inputValue d-none bar">
                     <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'equity5', i)"

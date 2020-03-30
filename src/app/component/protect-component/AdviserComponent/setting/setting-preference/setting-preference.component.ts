@@ -34,7 +34,6 @@ export class SettingPreferenceComponent implements OnInit {
   emailList: any;
   normalDomain: any;
   whiteLabledDomain: any;
-  isLoading: any;
   emailTemplateList: any;
   showUpdate = false;
   normalLable;
@@ -44,6 +43,7 @@ export class SettingPreferenceComponent implements OnInit {
   clientData
   userId: any;
   showUpdateWhite = false;
+  isLoading = false
   constructor(private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, ) { }
 
@@ -53,6 +53,7 @@ export class SettingPreferenceComponent implements OnInit {
     console.log('3456893469 ===', this.userId)
     this.getPortfolio()
     this.getdataForm('')
+    this.isLoading = false
   }
   getdataForm(data) {
     this.domainS = this.fb.group({
@@ -125,6 +126,7 @@ export class SettingPreferenceComponent implements OnInit {
     }
   }
   getPortfolio() {
+    this.isLoading = true
     let obj = {
       advisorId: this.advisorId
     }
@@ -134,10 +136,13 @@ export class SettingPreferenceComponent implements OnInit {
     );
   }
   getPortfolioRes(data) {
-    console.log('getPortfolioRes == ', data)
+    this.isLoading = false
+    console.log('getPortfolioReslase == ', data)
     this.portfolio = data
     this.mutualFund = this.portfolio.filter(element => element.portfolioOptionId == 1)
+    this.mutualFund = this.mutualFund[0]
     this.mutualFund2 = this.portfolio.filter(element => element.portfolioOptionId == 2)
+    this.mutualFund2 = this.mutualFund2[0]
     this.factSheet = this.portfolio.filter(element => element.portfolioOptionId == 3)
   }
 

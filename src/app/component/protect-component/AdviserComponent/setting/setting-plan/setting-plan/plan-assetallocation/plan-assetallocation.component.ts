@@ -27,6 +27,7 @@ export class PlanAssetallocationComponent implements OnInit {
   ngOnInit() {
     this.getAssetAllocation()
     this.advisorId = AuthService.getAdvisorId()
+    this.editMode=false
   }
 
   toggleEditMode() {

@@ -107,7 +107,7 @@ export const componentList = [
 // ];
 
 @NgModule({
-  declarations: [...componentList,  CancerInsuranceComponent, CriticalInsuranceComponent, FireInsuranceComponent, HouseholdersInsuranceComponent, PersonalInsuranceComponent],
+  declarations: [...componentList,  CancerInsuranceComponent,CashflowTableEditDirective, CriticalInsuranceComponent, FireInsuranceComponent, HouseholdersInsuranceComponent, PersonalInsuranceComponent],
   imports: [
     CommonModule,
     MaterialModule,
