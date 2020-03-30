@@ -1,6 +1,7 @@
 <div class="row pt-130">
     <div class="col-md-12 text-right">
-        <button mat-stroked-button [ngClass]="orgProfile == false ? 'text-primary' : ''"(click)="openOrg(false)"> Personal profile</button>
+        <button mat-stroked-button [ngClass]="orgProfile == false ? 'text-primary' : ''" (click)="openOrg(false)">
+            Personal profile</button>
         <button mat-stroked-button [ngClass]="orgProfile == true ? 'text-primary' : ''" (click)="openOrg(true)">Organization profile</button>
     </div>
 </div>
@@ -33,9 +34,11 @@
             </mat-card-header>
             <mat-card-content class="">
                 <div class="row">
-                    <div class="col-md-6 pb-28">
+                    <div class="col-md-6 pb-28 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <p class="f-12 mb-0 text-custom mt-28"> EMAIL</p>
-                        <p class="m-0">{{userList.emailId}}</p>
+                        <div class="bar" [ngClass]="{'height24': isLoading}">
+                            <p class="m-0">{{userList.emailId}}</p>
+                        </div>
                         <p class="f-12 mb-0 text-custom mt-28"> MOBILE</p>
                         <p class="m-0">{{userList.mobileNo}}</p>
                         <p class="f-12 mb-0 text-custom mt-28"> USERNAME</p>
@@ -57,13 +60,13 @@
 </div>
 
 <!-- Organization profile -->
-<div class="row pt-28"  *ngIf="orgProfile == true"> 
+<div class="row pt-28" *ngIf="orgProfile == true">
     <div class="col-md-12">
         <h4 class="m-0">Organization profile</h4>
     </div>
 </div>
 
-<div class="row pt-40 pb-20" id="ui-setting-profile" *ngIf="orgProfile == true" >
+<div class="row pt-40 pb-20" id="ui-setting-profile" *ngIf="orgProfile == true">
     <div class="col-xl-2"></div>
     <div class="col-xl-8 p-0" *ngIf="orgDetails">
         <mat-card class="b-a p-0 br-4">
@@ -108,11 +111,8 @@
                     </div>
                     <div class="col-md-6 bl-1 pb-28">
                         <p class="f-12 m-0 text-custom pt-28 pb-16"> WEB APP LOGO</p>
-                        <img [src]="orgDetails.logoUrl"
-                            class="w-65">
-                        <p class="m-0 text-black pt-16">This logo is visible on top left of web login, About section in
-                            mobile
-                            app etc.</p>
+                        <img [src]="orgDetails.logoUrl" class="w-65">
+                        <p class="m-0 text-black pt-16">This logo is visible on top left of web login, About section in mobile app etc.</p>
                         <p class="m-0 text-black pt-4 bb-1 pb-16">Image dimension: 50px x 200px</p>
                         <p class="f-12 m-0 text-custom pt-28 pb-16"> LOGO FOR REPORTS</p>
 
@@ -121,10 +121,7 @@
                                 <img [src]="orgDetails.reportLogoUrl" class="w-100">
                             </div>
                             <div class="col-md-8 pl-0">
-                                <p class="m-0 text-black pt-16">This logo is visible on various reports (MF, Financial
-                                    Plan
-                                    etc.). If left blank, we
-                                    will use the Web App Logo to show in reports.</p>
+                                <p class="m-0 text-black pt-16">This logo is visible on various reports (MF, Financial Plan etc.). If left blank, we will use the Web App Logo to show in reports.</p>
                                 <p class="m-0 text-black pt-16">Image dimension: 200px x 200px</p>
                             </div>
                         </div>

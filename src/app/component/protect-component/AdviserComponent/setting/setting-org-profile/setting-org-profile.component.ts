@@ -14,33 +14,34 @@ import { SettingsService } from '../settings.service';
 })
 export class SettingOrgProfileComponent implements OnInit {
   advisorId: any;
-  orgProfile=false;
+  orgProfile = false;
   userList: any;
   orgDetails: any;
 
+
   constructor(
     private eventService: EventService,
-    private subInjectService: SubscriptionInject, 
-    private settingsService: SettingsService, 
+    private subInjectService: SubscriptionInject,
+    private settingsService: SettingsService,
   ) {
     this.advisorId = AuthService.getAdvisorId()
   }
 
   ngOnInit() {
     this.getPersonalProfiles()
-    this.orgProfile =false
+    this.orgProfile = false
   }
   getPersonalProfiles() {
     let obj = {
-      id:this.advisorId
+      id: this.advisorId
     }
     this.settingsService.getPersonalProfile(obj).subscribe(
       data => this.getPersonalProfileRes(data),
       err => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
-  getPersonalProfileRes(data){
-    console.log('this.getPersonalProfileRes',data)
+  getPersonalProfileRes(data) {
+    console.log('this.getPersonalProfileRes', data)
     this.userList = data
   }
   getOrgProfiles() {
@@ -55,7 +56,7 @@ export class SettingOrgProfileComponent implements OnInit {
   getOrgProfileRes(data) {
     console.log('getOrgProfileRes', data)
     this.orgDetails = data
-    
+
   }
   OpenpersonalProfile(data, flag) {
     const fragmentData = {
@@ -70,7 +71,7 @@ export class SettingOrgProfileComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-             this.getPersonalProfiles();
+            this.getPersonalProfiles();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -80,14 +81,14 @@ export class SettingOrgProfileComponent implements OnInit {
       }
     );
   }
-  openOrg(flag){
-    if(flag == true){
+  openOrg(flag) {
+    if (flag == true) {
       this.orgProfile = true
       this.getOrgProfiles()
-    }else{
+    } else {
       this.orgProfile = false
     }
-    
+
   }
   OpenOrgProfile(data, flag) {
     const fragmentData = {

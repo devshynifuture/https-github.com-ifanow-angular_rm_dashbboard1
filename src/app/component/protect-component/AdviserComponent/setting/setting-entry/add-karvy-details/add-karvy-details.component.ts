@@ -37,11 +37,11 @@ export class AddKarvyDetailsComponent implements OnInit {
       advisorId: [this.advisorId],
       arnRiaDetailsId: [this.data.mainData.arnRiaDetailsId, [Validators.required]],
       rtTypeMasterid: [this.data.rtType],
-      login_id: [this.data.number, [Validators.required]],
-      password: [this.data.type, [Validators.required]],
+      loginId: [this.data.number, [Validators.required]],
+      loginPassword: [this.data.type, [Validators.required]],
       rtExtTypeId: [2], // dbf file extension
-      mail_password: [this.data.type, [Validators.required]],
-      email: [this.data.email, [Validators.required, Validators.email]],
+      mailbackPassword: [this.data.type, [Validators.required]],
+      registeredEmail: [this.data.email, [Validators.required, Validators.email]],
       file_ordering: [this.data.type, [Validators.required]],
     });
   }
@@ -53,13 +53,17 @@ export class AddKarvyDetailsComponent implements OnInit {
       const jsonObj = this.karvyFG.getRawValue();
 
       // add action
-      if(this.data.pan) {
+      if(!this.data.mainData.arnRiaDetailsId) {
         this.settingService.addMFRTA(jsonObj).subscribe((res)=> {
           this.eventService.openSnackBar("Karvy details Added successfully");
           this.Close(true);
         }, (err) => this.eventService.openSnackBar("Some error occured. Please try again."))
       } else {
-        this.settingService.editMFRTA(jsonObj).subscribe((res)=> {
+        const editJson = {
+          ...this.data.mainData,
+          ...jsonObj
+        }
+        this.settingService.editMFRTA(editJson).subscribe((res)=> {
           this.eventService.openSnackBar("Karvy details Modified successfully");
           this.Close(true);
         }, (err) => this.eventService.openSnackBar("Some error occured. Please try again."))

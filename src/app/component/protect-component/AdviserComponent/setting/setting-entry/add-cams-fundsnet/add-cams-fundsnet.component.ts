@@ -40,8 +40,8 @@ export class AddCamsFundsnetComponent implements OnInit {
       arnOrRia: [this.data.mainData.arnOrRia],
       rtTypeMasterid: [this.data.rtType],
       rtExtTypeId: [2], // dbf file extension
-      login_id: [this.data.mainData.type, [Validators.required]],
-      password: [this.data.mainData.type, [Validators.required]],
+      loginId: [this.data.mainData.type, [Validators.required]],
+      loginPassword: [this.data.mainData.type, [Validators.required]],
       rtaCamsFundNetSecurityQuestionsList: this.fb.array([]),
     });
 
@@ -86,7 +86,11 @@ export class AddCamsFundsnetComponent implements OnInit {
           this.Close(true);
         })
       } else {
-        this.settingService.editMFRTA(jsonObj).subscribe((res)=> {
+        const editJson = {
+          ...this.data.mainData,
+          ...jsonObj
+        }
+        this.settingService.editMFRTA(editJson).subscribe((res)=> {
           this.eventService.openSnackBar("CAMS Fundsnet Modified successfully");
           this.Close(true);
         })

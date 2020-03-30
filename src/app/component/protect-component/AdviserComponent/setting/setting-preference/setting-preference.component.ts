@@ -110,23 +110,23 @@ export class SettingPreferenceComponent implements OnInit {
   }
   editDomain(flag, event, value) {
     if (flag == true) {
-      if(event == 'white'){
+      if (event == 'white') {
         this.showUpdateWhite = true
-      }else{
+      } else {
         this.showUpdate = true
       }
-     
+
     } else {
-      if(event == 'white'){
+      if (event == 'white') {
         this.showUpdateWhite = false
-      }else{
+      } else {
         this.showUpdate = false
       }
       this.updateDomainSetting(event, value)
     }
   }
   getPortfolio() {
-    this.isLoading = true
+    this.isLoading = true;
     let obj = {
       advisorId: this.advisorId
     }
