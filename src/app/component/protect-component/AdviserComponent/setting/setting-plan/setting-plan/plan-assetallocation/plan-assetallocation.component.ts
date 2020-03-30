@@ -26,11 +26,11 @@ export class PlanAssetallocationComponent implements OnInit {
   onlyNumbers: string;
   staticAllocationData: any;
   secondValue: any;
-  obj: { riskProfileMasterId: any; equity: any; debt: any; };
-  obj1: { riskProfileMasterId: any; equity: any; debt: any; };
-  obj2: { riskProfileMasterId: any; equity: any; debt: any; };
-  obj3: { riskProfileMasterId: any; equity: any; debt: any; };
-  obj4: { riskProfileMasterId: any; equity: any; debt: any; };
+  obj: any;
+  obj1: any;
+  obj2: any;
+  obj3: any;
+  obj4: any;
   staticAllocation: any;
   constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) { }
   ngOnInit() {
@@ -64,41 +64,52 @@ export class PlanAssetallocationComponent implements OnInit {
     this.staticAllocation = []
     this.staticAllocationData.forEach(element => {
       this.obj = {
+        advisorId : this.advisorId,
         riskProfileMasterId: element.riskProfileMasterI1,
-        equity: element.equity1,
-        debt: element.debt1,
+        goalTimeFrameMasterId:element.goalTimeFrameMasterId,
+        equityAllocation: element.equity1,
+        debtAllocation: element.debt1,
       }
       this.obj1 = {
+        advisorId : this.advisorId,
         riskProfileMasterId: element.riskProfileMasterI2,
-        equity: element.equity2,
-        debt: element.debt2,
+        goalTimeFrameMasterId:element.goalTimeFrameMasterId,
+        equityAllocation: element.equity2,
+        debtAllocation: element.debt2,
       }
       this.obj2 = {
+        advisorId : this.advisorId,
         riskProfileMasterId: element.riskProfileMasterI3,
-        equity: element.equity3,
-        debt: element.debt3,
+        goalTimeFrameMasterId:element.goalTimeFrameMasterId,
+        equityAllocation: element.equity3,
+        debtAllocation: element.debt3,
       }
       this.obj3 = {
+        advisorId : this.advisorId,
         riskProfileMasterId: element.riskProfileMasterI4,
-        equity: element.equity4,
-        debt: element.debt4,
+        goalTimeFrameMasterId:element.goalTimeFrameMasterId,
+        equityAllocation: element.equity4,
+        debtAllocation: element.debt4,
       }
       this.obj4 = {
+        advisorId : this.advisorId,
         riskProfileMasterId: element.riskProfileMasterI5,
-        equity: element.equity5,
-        debt: element.debt5,
+        goalTimeFrameMasterId:element.goalTimeFrameMasterId,
+        equityAllocation: element.equity5,
+        debtAllocation: element.debt5,
       }
       this.staticAllocation.push(this.obj)
       this.staticAllocation.push(this.obj1)
       this.staticAllocation.push(this.obj2)
       this.staticAllocation.push(this.obj3)
       this.staticAllocation.push(this.obj4)
-      console.log('sgdfg == ',this.staticAllocation)
-      this.orgSetting.updateAssetAllocation(this.staticAllocation).subscribe(
-        data => this.updateAssetAllocationRes(data),
-        err => this.eventService.openSnackBar(err, "Dismiss")
-      );
+     
     });
+    console.log('sgdfg == ',this.staticAllocation)
+    this.orgSetting.updateAssetAllocation(this.staticAllocation).subscribe(
+      data => this.updateAssetAllocationRes(data),
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    );
   }
   updateAssetAllocationRes(data){
     console.log('updateAssetAllocationRes',data)
