@@ -9,9 +9,7 @@ import { ValidatorType } from 'src/app/services/util.service';
   templateUrl: './plan-assetallocation.component.html',
   styleUrls: ['./plan-assetallocation.component.scss']
 })
-@Directive({
-  selector: '[appCashflowTableEdit]'
-})
+
 export class PlanAssetallocationComponent implements OnInit {
   displayedColumns: string[] = ['position', 'debt1', 'equity1', 'debt2', 'equity2', 'debt3', 'equity3',
     'debt4', 'equity4', 'debt5', 'equity5'];
