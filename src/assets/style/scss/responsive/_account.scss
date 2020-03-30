@@ -4,7 +4,18 @@
     height: 40px !important;
   }
 }
-
+#ui-profile-plan{
+  pointer-events: initial !important;
+}
+@media(max-width:1292px) {
+  .btn140{
+    width: 135px !important;
+    
+}
+.recommendations,.btn140{
+  font-size: 13px;
+}
+}
 @media(max-width:1224px) {}
 
 @media(max-width:1200px) {
