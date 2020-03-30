@@ -1,6 +1,14 @@
 <div class="row">
     <div class="col-md-12 p-0">
         <h4 class="m-0 text-black">Static asset allocation</h4>
+        <button mat-raised-button class="greryColorBg" (click)="toggleEditMode()">
+            <span class="tableValue" *ngIf="!editMode">
+                EDIT MODE
+            </span>
+            <span class="inputValue" *ngIf="editMode">
+                SAVE
+            </span>
+        </button>
     </div>
 </div>
 <div class="row pt-20">
@@ -21,57 +29,113 @@
         <p class="m-0 f-500 roboto  pt-16 pb-16">Conservative</p>
     </div>
 </div>
-<table mat-table [dataSource]="dataSource" class="plan-assetallocation" id="table-low">
+<table mat-table [dataSource]="dataSource" class="plan-assetallocation" id="table-low"
+    [ngClass]="editMode == true ? 'edit-mode-hover': ''">
 
     <ng-container matColumnDef="position">
         <th mat-header-cell *matHeaderCellDef class="br">Goal time frame </th>
-        <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+        <td mat-cell *matCellDef="let element; let i = index" class="br">
+            {{element.position}}
+            <!-- <span class="inputValue d-none bar">
+                <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'position', i)"
+                    [value]="element.description">
+            </span> </td> -->
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="debt1">
         <th mat-header-cell class="text-right" *matHeaderCellDef> Debt </th>
-        <td mat-cell class="text-right" *matCellDef="let element"> {{element.debt1}} </td>
+        <td mat-cell class="text-right" *matCellDef="let element; let i = index" appCashflowTableEdit [editModeTable]="editMode">
+            {{element.debt1}}
+            <span class="inputValue d-none bar">
+                <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'debt1', i)"
+                    [value]="element.debt1">
+            </span> </td>
     </ng-container>
 
     <!-- Weight Column -->
     <ng-container matColumnDef="equity1">
         <th mat-header-cell *matHeaderCellDef class="br text-right"> Equity </th>
-        <td mat-cell *matCellDef="let element" class="br text-right"> {{element.equity1}} </td>
+        <td mat-cell *matCellDef="let element; let i = index" class="br text-right" appCashflowTableEdit [editModeTable]="editMode">
+            {{element.equity1}} 
+            <span class="inputValue d-none bar">
+                <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'equity1', i)"
+                    [value]="element.equity1">
+            </span></td>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="debt2">
         <th mat-header-cell class="text-right" *matHeaderCellDef> Debt </th>
-        <td mat-cell class="text-right" *matCellDef="let element"> {{element.debt2}} </td>
+        <td mat-cell class="text-right" *matCellDef="let element; let i = index" appCashflowTableEdit [editModeTable]="editMode">
+            {{element.debt2}}
+            <span class="inputValue d-none bar">
+                <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'debt2', i)"
+                    [value]="element.debt2">
+            </span></td>
     </ng-container>
     <ng-container matColumnDef="equity2">
         <th mat-header-cell *matHeaderCellDef class="br text-right"> Equity </th>
-        <td mat-cell *matCellDef="let element" class="br text-right"> {{element.equity2}} </td>
+        <td mat-cell *matCellDef="let element; let i = index" class="br text-right" appCashflowTableEdit [editModeTable]="editMode">
+            {{element.equity2}}
+            <span class="inputValue d-none bar">
+                <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'equity2', i)"
+                    [value]="element.equity2">
+            </span></td>
     </ng-container>
     <ng-container matColumnDef="debt3">
         <th mat-header-cell class="text-right" *matHeaderCellDef> Debt </th>
-        <td mat-cell *matCellDef="let element" class="text-right"> {{element.debt3}} </td>
+        <td mat-cell *matCellDef="let element; let i = index" class="text-right" appCashflowTableEdit [editModeTable]="editMode">
+            {{element.debt3}}
+         <span class="inputValue d-none bar">
+                    <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'debt3', i)"
+                        [value]="element.debt3">
+                </span> </td>
     </ng-container>
     <ng-container matColumnDef="equity3">
         <th mat-header-cell *matHeaderCellDef class="br text-right"> Equity </th>
-        <td mat-cell *matCellDef="let element" class="br text-right"> {{element.equity3}} </td>
+        <td mat-cell *matCellDef="let element; let i = index" class="br text-right" appCashflowTableEdit [editModeTable]="editMode">
+            {{element.equity3}}
+         <span class="inputValue d-none bar">
+                    <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'equity3', i)"
+                        [value]="element.equity3">
+                </span> </td>
     </ng-container>
     <ng-container matColumnDef="debt4">
         <th mat-header-cell class="text-right" *matHeaderCellDef> Debt </th>
-        <td mat-cell class="text-right" *matCellDef="let element"> {{element.debt4}} </td>
+        <td mat-cell class="text-right" *matCellDef="let element; let i = index" appCashflowTableEdit [editModeTable]="editMode">
+            {{element.debt4}}
+         <span class="inputValue d-none bar">
+                    <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'debt4', i)"
+                        [value]="element.debt4">
+                </span> </td>
     </ng-container>
     <ng-container matColumnDef="equity4">
         <th mat-header-cell *matHeaderCellDef class="br text-right"> Equity </th>
-        <td mat-cell *matCellDef="let element" class="br text-right"> {{element.equity4}} </td>
+        <td mat-cell *matCellDef="let element; let i = index" class="br text-right" appCashflowTableEdit [editModeTable]="editMode">
+            {{element.equity4}}
+         <span class="inputValue d-none bar">
+                    <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'equity4', i)"
+                        [value]="element.equity4">
+                </span> </td>
     </ng-container>
     <ng-container matColumnDef="debt5">
         <th mat-header-cell class="text-right" *matHeaderCellDef> Debt </th>
-        <td mat-cell class="text-right" *matCellDef="let element"> {{element.debt5}} </td>
+        <td mat-cell class="text-right" *matCellDef="let element; let i = index" appCashflowTableEdit [editModeTable]="editMode">
+            {{element.debt5}}
+         <span class="inputValue d-none bar">
+                    <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'debt5', i)"
+                        [value]="element.debt5">
+                </span> </td>
     </ng-container>
     <ng-container matColumnDef="equity5">
         <th mat-header-cell class="text-right" *matHeaderCellDef> Equity </th>
-        <td mat-cell class="text-right" *matCellDef="let element"> {{element.equity5}} </td>
+        <td mat-cell class="text-right" *matCellDef="let elemen; let i = indext" appCashflowTableEdit [editModeTable]="editMode">
+            {{element.equity5}}
+         <span class="inputValue d-none bar">
+                    <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'equity5', i)"
+                        [value]="element.equity5">
+                </span> </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
