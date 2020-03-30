@@ -21,7 +21,6 @@ import { OpenEmailVerificationComponent } from '../setting-preference/open-email
 import { SettingPreferenceComponent } from '../setting-preference/setting-preference.component';
 import { OpenGalleryPlanComponent } from '../setting-plan/setting-plan/plan-gallery/open-gallery-plan/open-gallery-plan.component';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
-import { CashflowTableEditDirective } from '../../../customers/component/customer/plan/cashflows-plan/cashflow-table-edit.directive';
 
 export const componentList = [AddReportingManagerComponent, AddNewRoleComponent, AddArnRiaDetailsComponent, AddCamsDetailsComponent, AddKarvyDetailsComponent, AddFranklinTempletionDetailsComponent, AddCamsFundsnetComponent, SettingSchemeDetailsComponent, AddModelPortfolioComponent,
   AddPersonalProfileComponent, AddTaskTemplateComponent, SettingPreferenceComponent,NewTeamMemberComponent,OpenEmailVerificationComponent,OrgProfileComponent,OpenGalleryPlanComponent]

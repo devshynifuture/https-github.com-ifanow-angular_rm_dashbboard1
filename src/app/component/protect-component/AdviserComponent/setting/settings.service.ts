@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/http-service/http-service';
 import { appConfig } from 'src/app/config/component-config';
 import { apiConfig } from 'src/app/config/main-config';
-import { HttpParams } from '@angular/common/http';
+import { HttpParams, HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SettingsService {
 
-  constructor(private http: HttpService) { }
+  constructor(private http: HttpService, private httpClient: HttpClient) { }
 
   // user and org profile
   getProfileDetails(data){
@@ -42,27 +42,33 @@ export class SettingsService {
 
 
   // users and roles
+  getUserRolesGlobalData(data){
+    let httpParams = new HttpParams().set('advisorId', data.advisorId)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_USER_ROLES_GLOBAL_DATA, httpParams)
+  }
   sendInvitationToMember(data){
     return this.http.post(apiConfig.MAIN_URL, data);
   }
   getTeamMembers(data) {
     let httpParams = new HttpParams().set('id', data.id)
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PERSONAL_PROFILE_DETAILS, httpParams)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_USER_ROLE_ROLE_LIST, httpParams)
   }
-  getRoles(data) {
-    let httpParams = new HttpParams().set('id', data.id)
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PERSONAL_PROFILE_DETAILS, httpParams)
-  }
-  addRole(data) {
-    return this.http.post(apiConfig.MAIN_URL, data);
-  }
-  deleteRole(data) {
-    return this.http.put(apiConfig.MAIN_URL, data);
+  
+  getAllRoles(data) {
+    let httpParams = new HttpParams().set('advisorId', data.advisorId)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_USER_ROLE_ROLE_LIST, httpParams)
   }
   getDetailedRole(data) {
     let httpParams = new HttpParams().set('id', data.id)
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PERSONAL_PROFILE_DETAILS, httpParams)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DETIALED_USER_ROLE, httpParams)
   }
+  addRole(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_USER_ROLE, data);
+  }
+  deleteRole(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_USER_ROLE, data);
+  }
+
   getAccessRightsList(data) {
     let httpParams = new HttpParams().set('id', data.id)
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PERSONAL_PROFILE_DETAILS, httpParams)
@@ -84,7 +90,7 @@ export class SettingsService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_ARN_RIA, data);
   }
   editArn(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_ARN_RIA, data);
+    return this.httpClient.put(apiConfig.MAIN_URL + appConfig.EDIT_ARN_RIA, data);
   }
 
   getMFRTAList(data) {
@@ -99,5 +105,11 @@ export class SettingsService {
   }
   deleteMFRTA(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_MF_RTA, data);
+  }
+  updateAnswer(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_MF_RTA_QUESTION, data);
+  }
+  deleteQuestion(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_MF_RTA_QUESTION, data);
   }
 }

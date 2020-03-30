@@ -26,6 +26,19 @@ export class RolesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadGlobalData();
+    this.getAllRoles();
+  }
+
+  loadGlobalData(){
+    const obj = {
+      advisorId: this.advisorId
+    }
+
+    this.settingsService.getUserRolesGlobalData(obj).subscribe((res)=>{
+      console.log(res)
+      this.dataSource = new MatTableDataSource(res);
+    })
   }
 
   getAllRoles() {
@@ -33,7 +46,8 @@ export class RolesComponent implements OnInit {
       advisorId: this.advisorId
     }
 
-    this.settingsService.getRoles(obj).subscribe((res)=>{
+    this.settingsService.getAllRoles(obj).subscribe((res)=>{
+      console.log(res)
       this.dataSource = new MatTableDataSource(res);
     })
   }
@@ -70,7 +84,6 @@ export class RolesComponent implements OnInit {
       this.getAllRoles();
     });
   }
-
 }
 
 

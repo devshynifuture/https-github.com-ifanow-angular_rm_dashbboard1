@@ -43,7 +43,7 @@ export class SettingPreferenceComponent implements OnInit {
   clientData
   userId: any;
   showUpdateWhite = false;
-  isLoading = true
+  isLoading = false
   constructor(private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, ) { }
 
@@ -53,7 +53,7 @@ export class SettingPreferenceComponent implements OnInit {
     console.log('3456893469 ===', this.userId)
     this.getPortfolio()
     this.getdataForm('')
-    this.isLoading = true
+    this.isLoading = false
   }
   getdataForm(data) {
     this.domainS = this.fb.group({
@@ -110,23 +110,23 @@ export class SettingPreferenceComponent implements OnInit {
   }
   editDomain(flag, event, value) {
     if (flag == true) {
-      if(event == 'white'){
+      if (event == 'white') {
         this.showUpdateWhite = true
-      }else{
+      } else {
         this.showUpdate = true
       }
-     
+
     } else {
-      if(event == 'white'){
+      if (event == 'white') {
         this.showUpdateWhite = false
-      }else{
+      } else {
         this.showUpdate = false
       }
       this.updateDomainSetting(event, value)
     }
   }
   getPortfolio() {
-    this.isLoading = true
+    this.isLoading = true;
     let obj = {
       advisorId: this.advisorId
     }
@@ -136,7 +136,7 @@ export class SettingPreferenceComponent implements OnInit {
     );
   }
   getPortfolioRes(data) {
-    this.isLoading = true
+    this.isLoading = false
     console.log('getPortfolioReslase == ', data)
     this.portfolio = data
     this.mutualFund = this.portfolio.filter(element => element.portfolioOptionId == 1)
@@ -147,6 +147,7 @@ export class SettingPreferenceComponent implements OnInit {
   }
 
   getPlan() {
+    this.isLoading = true
     let obj = {
       advisorId: this.advisorId
     }
@@ -218,11 +219,18 @@ export class SettingPreferenceComponent implements OnInit {
   }
   getPlanRes(data) {
     console.log('getPortfolioRes == ', data)
-    this.planSection = data
-    this.planSec1 = this.planSection.filter(element => element.planOptionId == 1)
-    console.log('planSec1 ', this.planSec1)
+    if(data){
+      this.planSection = data
+      this.planSec1 = this.planSection.filter(element => element.planOptionId == 1)
+      console.log('planSec1 ', this.planSec1)
+    }else{
+      this.isLoading = false
+      this.planSection = []
+    }
+   
   }
   getEmailVerification() {
+    this.isLoading = true
     let obj = {
       userId: 12249,
       advisorId: 414
@@ -233,11 +241,18 @@ export class SettingPreferenceComponent implements OnInit {
     );
   }
   getEmailVerificationRes(data) {
+    this.isLoading = false
     console.log('email verify == get', data)
-    this.emailDetails = data
-    this.emailList = data.listItems
+    if(data){
+      this.emailDetails = data
+      this.emailList = data.listItems
+    }else{
+      this.emailList = []
+    }
+   
   }
   getEmailTemplate() {
+    this.isLoading = true
     let obj = {
       advisorId: this.advisorId
     }
@@ -247,8 +262,14 @@ export class SettingPreferenceComponent implements OnInit {
     );
   }
   getEmailTempalatRes(data) {
-    console.log('emailTemplate', data)
-    this.emailTemplateList = data
+    this.isLoading = false
+    if(data){
+      console.log('emailTemplate', data)
+      this.emailTemplateList = data
+    }else{
+      this.emailTemplateList = []
+    }
+   
   }
   OpenEmail(value, data) {
     if (this.isLoading) {

@@ -39,10 +39,10 @@ export class AddFranklinTempletionDetailsComponent implements OnInit {
       arnOrRia: [this.data.mainData.arnOrRia],
       rtTypeMasterid: [this.data.rtType],
       rtExtTypeId: [2], // dbf file extension
-      login_id: [this.data.number, [Validators.required]],
-      password: [this.data.type, [Validators.required]],
-      mail_password: [this.data.type, [Validators.required]],
-      email: [this.data.email, [Validators.required, Validators.email]],
+      loginId: [this.data.mainData.loginId, [Validators.required]],
+      loginPassword: [this.data.mainData.loginPassword, [Validators.required]],
+      mailbackPassword: [this.data.mainData.mailbackPassword, [Validators.required]],
+      registeredEmail: [this.data.mainData.registeredEmail, [Validators.required, Validators.email]],
     });
   }
 
@@ -54,13 +54,17 @@ export class AddFranklinTempletionDetailsComponent implements OnInit {
       jsonObj.arnOrRia = this.data.arnData.find((data) => this.franklinFG.controls.arnRiaDetailsId.value == data.id).arnOrRia;
 
       // add action
-      if(this.data.pan) {
+      if(!this.data.mainData.arnRiaDetailsId) {
         this.settingService.addMFRTA(jsonObj).subscribe((res)=> {
           this.eventService.openSnackBar("Karvy details Added successfully");
           this.Close(true);
         })
       } else {
-        this.settingService.editMFRTA(jsonObj).subscribe((res)=> {
+        const editJson = {
+          ...this.data.mainData,
+          ...jsonObj
+        }
+        this.settingService.editMFRTA(editJson).subscribe((res)=> {
           this.eventService.openSnackBar("Karvy details Modified successfully");
           this.Close(true);
         })

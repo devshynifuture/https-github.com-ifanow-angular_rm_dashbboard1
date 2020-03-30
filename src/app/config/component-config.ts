@@ -549,14 +549,22 @@ export const appConfig = {
   ADD_MF_RTA: 'setting/arn-ria/rta/add',
   EDIT_MF_RTA: 'setting/arn-ria/rta/edit',
   DELETE_MF_RTA: 'setting/arn-ria/rta/delete',
+  DELETE_MF_RTA_QUESTION: 'setting/arn-ria/fundnet/answer/delete',
+  UPDATE_MF_RTA_QUESTION: 'setting/arn-ria/fundnet/answer/update',
 
-  GET_USER_ROLE_LIST: 'setting/users-roles/role/get',
-  GET_DETIALED_USER_ROLE: 'setting/users-roles/role/detail/get',
-  GET_ALL_FEATURES: 'setting/users-roles/feature-capabilities/all/get',
+  GET_USER_ROLES_GLOBAL_DATA: 'setting/users/global/roles/get',
+
+  GET_USER_ROLE_ROLE_LIST: 'setting/users-roles/role/get',
   EDIT_USER_ROLE: 'setting/users-roles/role/edit',
   DELETE_USER_ROLE: 'setting/users-roles/role/delete',
   CLONE_USER_ROLE: 'setting/users-roles/role/clone/add',
   ADD_USER_ROLE: 'setting/users-roles/role/add',
+  GET_DETIALED_USER_ROLE: 'setting/users-roles/role/detail/get',
+
+  GET_ALL_FEATURES: 'setting/users-roles/feature-capabilities/all/get',
+
+  GET_USER_ACCESS_RIGHTS_LIST: 'setting/users-roles/access-rights/get',
+  UPDATE_USER_ACCESS_RIGHTS_LIST: 'setting/users-roles/access-rights/update'
 
 
   ////////////////////////////// settings////////////////////////////////////////////
