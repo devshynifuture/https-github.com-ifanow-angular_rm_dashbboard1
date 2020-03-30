@@ -461,6 +461,7 @@ export const appConfig = {
   BACKOFFICE_GET_FOLIO_BASED_SEARCH_LIST: 'backoffice/folio/based/on/search/list/get',
 
   BACKOFFICE_FILE_UPLOAD_TYPE: 'backoffice/file-upload/types/get',
+  BACKOFFICE_FILTER: 'backoffice/file-upload/filter/get',
   BACKOFFICE_FILE_TO_UPLOAD: 'backoffice/file-upload/url/get',
   BACKOFFICE_TRANSACTIONS: 'backoffice/file-upload/uploaded/transaction/list/get',
   BACKOFFICE_SIP_STP: 'backoffice/file-upload/uploaded/sip/list/get',

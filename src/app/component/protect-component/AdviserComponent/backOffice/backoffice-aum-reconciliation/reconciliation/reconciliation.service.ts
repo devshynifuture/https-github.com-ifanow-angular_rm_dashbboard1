@@ -82,6 +82,10 @@ export class ReconciliationService {
         return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_FILE_UPLOAD_TYPE, data);
     }
 
+    getBackOfficeFilter(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_FILTER, data);
+    }
+
     getBackOfficeFileToUpload(data) {
         return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_FILE_TO_UPLOAD, data);
     }
