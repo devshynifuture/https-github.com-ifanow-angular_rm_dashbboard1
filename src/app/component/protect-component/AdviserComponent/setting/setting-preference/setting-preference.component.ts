@@ -43,7 +43,7 @@ export class SettingPreferenceComponent implements OnInit {
   clientData
   userId: any;
   showUpdateWhite = false;
-  isLoading = true
+  isLoading = false;
   constructor(private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, ) { }
 
@@ -110,23 +110,23 @@ export class SettingPreferenceComponent implements OnInit {
   }
   editDomain(flag, event, value) {
     if (flag == true) {
-      if(event == 'white'){
+      if (event == 'white') {
         this.showUpdateWhite = true
-      }else{
+      } else {
         this.showUpdate = true
       }
-     
+
     } else {
-      if(event == 'white'){
+      if (event == 'white') {
         this.showUpdateWhite = false
-      }else{
+      } else {
         this.showUpdate = false
       }
       this.updateDomainSetting(event, value)
     }
   }
   getPortfolio() {
-    this.isLoading = true
+    this.isLoading = true;
     let obj = {
       advisorId: this.advisorId
     }
@@ -136,7 +136,7 @@ export class SettingPreferenceComponent implements OnInit {
     );
   }
   getPortfolioRes(data) {
-    this.isLoading = true
+    this.isLoading = false;
     console.log('getPortfolioReslase == ', data)
     this.portfolio = data
     this.mutualFund = this.portfolio.filter(element => element.portfolioOptionId == 1)
