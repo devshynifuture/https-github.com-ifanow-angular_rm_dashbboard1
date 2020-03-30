@@ -15,9 +15,13 @@
             <h5 class="m-0 text-right pt-12">ARN/RIA number</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-group mb-0">
+            <div class="form-group b-0">
                 <mat-form-field>
-                    <input type="text" matInput formControlName="number" class="form-control">
+                    <mat-select class="form-group b-0" formControlName="arnRiaDetailsId">
+                        <mat-option value="" selected disabled>Select Option</mat-option>
+                        <mat-option [value]="arnData.id" *ngFor="let arnData of data.arnData">{{arnData.nameOfTheHolder}} - {{arnData.number}}</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -46,25 +50,34 @@
             </div>
         </div>
     </div>
-    <div class="row pt-44" formArrayName="secretQuestions">
+    <div class="row pt-44" formArrayName="rtaCamsFundNetSecurityQuestionsList">
         <div class="col-md-4 pr-0">
             <h5 class="m-0 text-right pt-12">Secret question & answer</h5>
         </div>
-        <ng-container [formGroupName]="i" *ngFor="let secretQuestionForm of camsFundFG.controls.secretQuestions.value; let i = index">
+        <ng-container [formGroupName]="i" *ngFor="let secretQuestionForm of camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.value; let i = index; trackBy:trackByFn">
             <div class="col-md-4 pr-0" *ngIf="i > 0"></div>
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <div class="form-group mb-0">
-                    <mat-form-field>
+                    <!-- mat select has issues with formarray -->
+                    <!-- <mat-form-field>
                         <mat-select class="form-control" formControlName="question">
                             <mat-option [value]="questionObj.id" *ngFor="let questionObj of secretQuestionsSet">{{questionObj.question}}</mat-option>
                         </mat-select>
-                    </mat-form-field>
+                    </mat-form-field> -->
+
+                    <select class="form-control" formControlName="id">
+                        <option value="" selected disabled>Select Question</option>
+                        <option [value]="questionObj.id" *ngFor="let questionObj of data.globalData.rta_cams_fund_net_security_questions_list">{{questionObj.question}}</option>
+                    </select>
+                    <mat-error *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.id.invalid && camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.id.errors.required && camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.touched">This field is required</mat-error>
+                    <mat-error *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.id.invalid && camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.id.errors.duplicate">This question already exists</mat-error>
                 </div>
             </div>
             <div class="col-md-2 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input type="text" formControlName="answer" matInput class="form-control">
+                        <mat-error>This field is required</mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -73,7 +86,7 @@
                     add
                 </i>
             </div>
-            <div class="col-md-1 pl-0" *ngIf="i > 0">
+            <div class="col-md-1 pl-0" *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.value.length > 1">
                 <i class="material-icons c-p text-custom pt-8" (click)="removeQuestion(i)">
                     remove
                 </i>

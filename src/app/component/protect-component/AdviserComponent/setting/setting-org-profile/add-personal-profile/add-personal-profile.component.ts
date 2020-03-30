@@ -149,6 +149,8 @@ export class AddPersonalProfileComponent implements OnInit {
 
   editPersonalProfileRes(data) {
     console.log('editPersonalProfileRes', data)
+    this.selectedTab = 2
+
   }
 
   Close(flag: boolean) {

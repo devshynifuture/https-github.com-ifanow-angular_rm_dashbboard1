@@ -55,12 +55,20 @@
                             </div>
                         </div>
                     </div>
+                    <div *ngIf="portfolio == undefined" class="d-flex flex-column align-items-center">
+                        <img class="width300" src="assets/images/svg/noDataFound.svg">
+                        <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
+                    </div>
                 </div>
                 <div *ngSwitchCase="'tab2'">
                     <div class="p-20" *ngIf="planSection">
                         <h5 class="mb-8  text-black">Insurance planning</h5>
                         <mat-checkbox class="text-black" (change)="selectPlan($event,planSec1[0])" [checked]="planSec1[0].selectedOrDeselected">Show XIRR returns for insurance policies</mat-checkbox>
                         <p class="m-0 text-custom pb-20 bb-1 pl-24">These returns are displayed when giving recommendations on current policies.</p>
+                    </div>
+                    <div *ngIf="planSection == undefined" class="d-flex flex-column align-items-center">
+                        <img class="width300" src="assets/images/svg/noDataFound.svg">
+                        <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
                     </div>
                 </div>
                 <div *ngSwitchCase="'tab3'">
@@ -76,7 +84,7 @@
                                 <p class="m-0 text-custom l-18 roboto">When you verify your email, you can send various mails to your clients through the verified email. To verify an emaiil, click the Add now button and follow the procedure explained therein.</p>
                                 <p class="mb-0 text-custom l-18 roboto mt-12">Tip: You can have different email for different purpose. E.g. for welcome email, for sending reports, taking cosent on advice, transaction confirmation etc.</p>
                                 <div class="col-md-12 p-0 mt-24 text-right">
-                                    <button mat-stroked-button class="btn-primary btnNewEmail"  (click)="verifyEmail()">
+                                    <button mat-stroked-button class="btn-primary btnNewEmail"  (click)="verifyEmail('')">
                                         <i class="material-icons text-white"> add</i>
                                         ADD NEW
                                     </button>
@@ -101,8 +109,8 @@
                                         <td mat-cell class="text-center" *matCellDef="let element">
                                             <img class="c-p" [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg">
                                             <mat-menu #menu="matMenu">
-                                                <button mat-menu-item>
-                                                    <span>menu1</span>
+                                                <button mat-menu-item (click)="verifyEmail(element)">
+                                                    <span>Edit</span>
                                                 </button>
                                                 <button mat-menu-item>
                                                     <span>menu2</span>
@@ -116,6 +124,10 @@
                                 </table>
                             </div>
                         </div>
+                    </div>
+                    <div *ngIf="emailList == undefined" class="d-flex flex-column align-items-center">
+                        <img class="width300" src="assets/images/svg/noDataFound.svg">
+                        <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
                     </div>
                 </div>
                 <div *ngSwitchCase="'tab5'">
@@ -162,6 +174,10 @@
                         </div>
 
 
+                    </div>
+                    <div *ngIf="emailTemplateList == undefined" class="d-flex flex-column align-items-center">
+                        <img class="width300" src="assets/images/svg/noDataFound.svg">
+                        <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
                     </div>
                 </div>
                 <div *ngSwitchCase="'tab6'">
@@ -211,10 +227,10 @@
                                         <p class="m-0 text-black roboto f-500">Option 1: Partial white label</p>
                                     </div>
                                     <div class="col-md-1 p-0 text-right" *ngIf="showUpdate == false">
-                                        <button mat-stroked-button class="btn-dark-outline xs"(click)="editDomain(true,'test',normalDomain[0])">Edit</button>
+                                        <button mat-stroked-button class="btn-dark-outline xs"(click)="editDomain(true,'normal',normalDomain[0])">Edit</button>
                                     </div>
                                     <div class="col-md-1 p-0 text-right" *ngIf="showUpdate == true">
-                                        <button mat-stroked-button class="btn-dark-outline xs"(click)="editDomain(false,'test',normalDomain[0])" >Update</button>
+                                        <button mat-stroked-button class="btn-dark-outline xs"(click)="editDomain(false,'normal',normalDomain[0])" >Update</button>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -222,7 +238,7 @@
                                         <div class="form-group b-a">
                                             <mat-form-field class="url">
                                                 <button mat-stroked-button class="b-0 h-40 bg-grey lter min-80 text-custom">https://</button>
-                                                <input matInput type="text" class="form-control b-0 w-60" formControlName="normalLable" >
+                                                <input matInput type="text" [disabled]="!showUpdate" class="form-control b-0 w-60" formControlName="normalLable" >
                                                 <button mat-stroked-button class="right b-0 h-40 bg-grey lter min-80 pl-8 text-custom">.myplanner.in</button>
                                             </mat-form-field>
                                         </div>
@@ -234,11 +250,11 @@
                                         <p class="m-0 text-black roboto f-500">Option 2: Complete white label<span class="text-warning ba-warning f-12 p-2 ml-12 ba-warning br-2 c-p">Premium</span>
                                         </p>
                                     </div>
-                                    <div class="col-md-1 p-0 text-right" *ngIf="showUpdate == false">
-                                        <button mat-stroked-button class="btn-dark-outline xs"(click)="editDomain(true,'test',normalDomain[0])">Edit</button>
+                                    <div class="col-md-1 p-0 text-right" *ngIf="showUpdateWhite == false">
+                                        <button mat-stroked-button class="btn-dark-outline xs"(click)="editDomain(true,'white',whiteLabledDomain[0])">Edit</button>
                                     </div>
-                                    <div class="col-md-1 p-0 text-right" *ngIf="showUpdate == true">
-                                        <button mat-stroked-button class="btn-dark-outline xs"(click)="editDomain(false,'test',normalDomain[0])" >Update</button>
+                                    <div class="col-md-1 p-0 text-right" *ngIf="showUpdateWhite == true">
+                                        <button mat-stroked-button class="btn-dark-outline xs"(click)="editDomain(false,'white',whiteLabledDomain[0])" >Update</button>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -246,7 +262,7 @@
                                         <div class="form-group b-a">
                                             <mat-form-field class="url">
                                                 <button mat-stroked-button class="b-0 h-40 bg-grey lter min-80 text-custom">https://</button>
-                                                <input matInput type="text" class="form-control b-0 w-60" formControlName="whiteLable">
+                                                <input matInput type="text" disabled=true class="form-control b-0 w-60" formControlName="whiteLable">
 
                                             </mat-form-field>
                                         </div>

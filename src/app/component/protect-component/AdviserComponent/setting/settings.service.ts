@@ -73,32 +73,31 @@ export class SettingsService {
 
 
   // backoffice
-  getArnGlobalData(data) {
-    let httpParams = new HttpParams().set('id', data.id)
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ARN_RIA_GLOBAL_LIST, httpParams)
+  getArnGlobalData() {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ARN_RIA_GLOBAL_LIST, {})
   }
   getArnlist(data) {
-    let httpParams = new HttpParams().set('id', data.id)
+    let httpParams = new HttpParams().set('advisorId', data.advisorId)
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ARN_RIA_LIST, httpParams)
   }
   addArn(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.GET_ARN_RIA_LIST, data);
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_ARN_RIA, data);
   }
   editArn(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.GET_ARN_RIA_LIST, data);
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_ARN_RIA, data);
   }
 
   getMFRTAList(data) {
-    let httpParams = new HttpParams().set('id', data.id)
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PERSONAL_PROFILE_DETAILS, httpParams)
+    let httpParams = new HttpParams().set('advisorId', data.advisorId)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MF_RTA_LIST, httpParams)
   }
   addMFRTA(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.GET_ARN_RIA_LIST, data);
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_MF_RTA, data);
   }
   editMFRTA(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.GET_ARN_RIA_LIST, data);
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_MF_RTA, data);
   }
   deleteMFRTA(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.GET_ARN_RIA_LIST, data);
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_MF_RTA, data);
   }
 }

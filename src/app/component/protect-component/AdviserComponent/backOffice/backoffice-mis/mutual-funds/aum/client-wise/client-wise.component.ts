@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AumComponent } from '../aum.component';
 import { BackOfficeService } from '../../../../back-office.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 
 @Component({
@@ -9,6 +10,8 @@ import { BackOfficeService } from '../../../../back-office.service';
   styleUrls: ['./client-wise.component.scss']
 })
 export class ClientWiseComponent implements OnInit {
+  advisorId: any;
+  clientId: any;
 
   constructor(public aum:AumComponent,private backoffice:BackOfficeService) { }
   
@@ -20,15 +23,29 @@ export class ClientWiseComponent implements OnInit {
   selectedInvestor;
   teamMemberId=2929;
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.getClientSchemeName();
     this.getClientTotalAum();
   }
-
+  getClientSchemeName(){
+    let obj={
+    'clientId':this.clientId,
+    'advisorId':this.advisorId,
+    arnRiaDetailsId:123
+    }
+    this.backoffice.getAumClientScheme(obj).subscribe(
+      data =>{
+        console.log('dataofClientWiseAum',data);
+      }
+    )
+  }
   getClientTotalAum()
   {
     let obj={
       'limit':50,
       'offset':1,
-      'teamMemberId':this.teamMemberId
+      'advisorId':this.advisorId
     }
     this.backoffice.getAumClientTotalAum(obj).subscribe(
       data => this.clientTotalAum(data)
@@ -39,8 +56,8 @@ export class ClientWiseComponent implements OnInit {
   {
     let obj=
    {
-    'clientId':clientname.id,
-    'teamMemberId':this.teamMemberId
+    'clientId':this.clientId,
+    'advisorId':this.advisorId
    }
    if(show==true)
    {

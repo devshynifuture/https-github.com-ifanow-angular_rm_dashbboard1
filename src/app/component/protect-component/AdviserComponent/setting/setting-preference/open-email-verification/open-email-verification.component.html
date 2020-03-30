@@ -1,39 +1,35 @@
-<div class="popup-header-fix-35">
-  <div class="row bb-1">
-      <div class="col-md-8 p-0">
-          <h4 class="mb-0 wrapper-20">ADDD EMAIL</h4>
-      </div>
-      <div class="col-md-4 text-right">
-          <div class="wrapper-12">
-              <i class="material-icons c-p pt-8 v-middle" (click)="onNoClick()"> clear</i>
-          </div>
-      </div>
-  </div>
+<div class="popup-header-fix-30">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-0 wrapper-20">ADD EMAIL</h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle" (click)="onNoClick()"> clear</i>
+            </div>
+        </div>
+    </div>
 </div>
-<div [formGroup]="emailVierify" >
-<div class="row pt-40">
-  <div class="col-md-5 pr-0 text-right">
-      <h5 class="m-0 pt-12">Email Id</h5>
-  </div>
-  <div class="col-md-3 iconPetage">
-      <div class="form-group mb-0">
-          <mat-form-field>
-              <input matInput #interestRate matInput type="email" formControlName="emailId"
-                  class="form-control br-0 " >
-              <mat-error class="f-12 pt-4">
-                  This field is required
-              </mat-error>
-          </mat-form-field>
-      </div>
-  </div>
-</div>
+<div [formGroup]="emailVierify">
+    <div class="row pt-12">
+        <div class="col-md-12 iconPetage">
+            <h5 class="mb-8 ">Email Id</h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput #interestRate matInput type="email" formControlName="emailId" class="form-control br-0 ">
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="row pt-16 pb-16">
-  <div class="col-md-12 text-right">
-      <button class="br-0 text-inherit f-14" mat-button [mat-dialog-close]="data.investor">
-          CANCEL
-      </button>
-      <button class="btn-green text-white f-14 ml-12" (click)="onNoClick()" mat-button mat-raised-button
-          cdkFocusInitial>SELECT</button>
-  </div>
+    <div class="col-md-12 text-right">
+        <button class="br-0 text-inherit f-14" mat-button [mat-dialog-close]="data.investor">
+            CANCEL
+        </button>
+        <button class="btn-primary f-14 ml-12" (click)="onNoClick()" mat-button mat-raised-button cdkFocusInitial>SAVE</button>
+    </div>
 </div>

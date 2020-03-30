@@ -5,6 +5,7 @@ import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.s
 import { EventService } from 'src/app/Data-service/event.service';
 import { SettingsService } from '../../settings.service';
 import { ValidatorType } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-add-cams-details',
@@ -14,6 +15,7 @@ import { ValidatorType } from 'src/app/services/util.service';
 export class AddCamsDetailsComponent implements OnInit {
 
   @Input() data:any;
+  advisorId: any;
 
   camsFG:FormGroup;
 
@@ -22,7 +24,9 @@ export class AddCamsDetailsComponent implements OnInit {
     private eventService: EventService,
     private settingService: SettingsService,
     private fb: FormBuilder
-  ) { }
+  ) {
+    this.advisorId = AuthService.getAdvisorId();
+  }
 
   ngOnInit() {
     this.createForm();
@@ -30,9 +34,12 @@ export class AddCamsDetailsComponent implements OnInit {
 
   createForm() {
     this.camsFG = this.fb.group({
-      number: [this.data.number, [Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY)]],
-      email: [this.data.email, [Validators.required, Validators.email]],
-      password: [this.data.type, [Validators.required]],
+      advisorId: [this.advisorId],
+      rtTypeMasterid: [this.data.rtType],
+      arnOrRia: [this.data.mainData.arnOrRia],
+      arnRiaDetailsId: [this.data.mainData.arnRiaDetailsId, [Validators.required]],
+      email: [this.data.mainData.email, [Validators.required, Validators.email]],
+      password: [this.data.mainData.type, [Validators.required]],
     });
   }
 
@@ -40,16 +47,20 @@ export class AddCamsDetailsComponent implements OnInit {
     if(this.camsFG.invalid) {
       this.camsFG.markAllAsTouched();
     } else {
-      const jsonObj = this.camsFG.getRawValue();
+      let jsonObj:any = {
+        ...this.data.mainData,
+        ...this.camsFG.getRawValue()
+      };
 
+      jsonObj.arnOrRia = this.data.arnData.find((data) => this.camsFG.controls.arnRiaDetailsId.value == data.id).arnOrRia;
       // add action
-      if(this.data.pan) {
-        this.settingService.addMFRTA(jsonObj).subscribe((res)=> {
+      if(this.data.mainData.email) {
+        this.settingService.editMFRTA(jsonObj).subscribe((res)=> {
           this.eventService.openSnackBar("CAMS Added successfully");
           this.Close(true);
         })
       } else {
-        this.settingService.editMFRTA(jsonObj).subscribe((res)=> {
+        this.settingService.addMFRTA(jsonObj).subscribe((res)=> {
           this.eventService.openSnackBar("CAMS Modified successfully");
           this.Close(true);
         })

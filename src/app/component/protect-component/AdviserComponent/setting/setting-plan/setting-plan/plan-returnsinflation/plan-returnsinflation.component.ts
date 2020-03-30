@@ -3,6 +3,7 @@ import { OrgSettingServiceService } from '../../../org-setting-service.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 
+
 @Component({
   selector: 'app-plan-returnsinflation',
   templateUrl: './plan-returnsinflation.component.html',
@@ -28,7 +29,7 @@ export class PlanReturnsinflationComponent implements OnInit {
   }
   getAssetAllocationReturns() {
     let obj = {
-      advisorId: 414
+      advisorId: this.advisorId
     }
     this.orgSetting.getRetuns(obj).subscribe(
       data => this.getReturnsRes(data),

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AumComponent } from '../aum.component';
 import { BackOfficeService } from '../../../../back-office.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-applicant-wise',
@@ -8,17 +9,21 @@ import { BackOfficeService } from '../../../../back-office.service';
   styleUrls: ['./applicant-wise.component.scss']
 })
 export class ApplicantWiseComponent implements OnInit {
+  advisorId: any;
+  clientId: any;
 
   constructor(public aum:AumComponent,private backoffice:BackOfficeService) { }
   applicantName;
   showLoader=true;
   teamMemberId=2929;
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this.aumApplicantWiseTotalaumApplicantNameGet();
   }
   aumApplicantWiseTotalaumApplicantNameGet()
   {
-    this.backoffice.getAumApplicantWiseTotalaumApplicantName(this.teamMemberId).subscribe(
+    this.backoffice.getAumApplicantWiseTotalaumApplicantName(this.advisorId).subscribe(
       data => this.applicantNameGet(data)
     )
   }
@@ -34,7 +39,7 @@ export class ApplicantWiseComponent implements OnInit {
     {
       'clientId':applicantData.id,
       'clientTotalAum':applicantData.totalAum,
-      'teamMemberId':this.teamMemberId
+      'advisorId':this.advisorId
     }
     if(applicantData.show==false)
     {
@@ -61,7 +66,7 @@ export class ApplicantWiseComponent implements OnInit {
       'categoryId':category.id,
       'categoryTotalAum':category.totalAum,
       'clientId':id,
-      'teamMemberId':this.teamMemberId
+      'advisorId':this.advisorId
     }
     if(showCategory==false)
     {
@@ -86,7 +91,7 @@ export class ApplicantWiseComponent implements OnInit {
       'clientId':id,
       'subCategoryId':subCat.id,
       'subCategoryTotalAum':subCat.totalAum,
-      'teamMemberId':this.teamMemberId
+      'advisorId':this.advisorId
     }
     if(subCat.showSubCategory==false)
     {

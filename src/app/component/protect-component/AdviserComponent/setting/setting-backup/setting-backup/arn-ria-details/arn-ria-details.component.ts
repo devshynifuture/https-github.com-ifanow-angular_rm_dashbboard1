@@ -13,36 +13,8 @@ import { AuthService } from 'src/app/auth-service/authService';
 export class ArnRiaDetailsComponent implements OnInit {
 
   advisorId:any;
-  arnobjs = [
-    {
-      id: 83866,
-      name: 'ABC Financial Advisors Pvt. Ltd.',
-      status: 'ACTIVE',
-      type: 'Company',
-      commencement_date: '18/10/2018',
-      renewal_date: '17/10/2021',
-      primary_euin: 'Amit Kumar - E209349',
-      billing_address: '203-A,”A” Wing, Suashish IT Park, Off. Dattapada Road, Borivali East, Mumbai 400 066 Maharashtra, India',
-      gst_treatment: 'Applicable',
-      phone: '+91-445-455-5215',
-      gst_id: '27AABCF7680A1Z7',
-      email: 'firstname.lastname@abcconsultants.com',
-    },
-    {
-      id: 83866,
-      name: 'ABC Financial Advisors Pvt. Ltd.',
-      status: 'ACTIVE',
-      type: 'Company',
-      commencement_date: '18/10/2018',
-      renewal_date: '17/10/2021',
-      primary_euin: 'Amit Kumar - E209349',
-      billing_address: '203-A,”A” Wing, Suashish IT Park, Off. Dattapada Road, Borivali East, Mumbai 400 066 Maharashtra, India',
-      gst_treatment: 'Applicable',
-      phone: '+91-445-455-5215',
-      gst_id: '27AABCF7680A1Z7',
-      email: 'firstname.lastname@abcconsultants.com',
-    },
-  ]
+  arnobjs = []
+  globalData: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -52,36 +24,58 @@ export class ArnRiaDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.initializeData();
+  }
+
+  initializeData(){
+    this.settingsService.getArnGlobalData().subscribe((res)=>{
+      this.globalData = res;
+      console.log(res);
+    });
+    this.getArnDetails();
   }
 
   getArnDetails() {
     this.settingsService.getArnlist({advisorId: this.advisorId}).subscribe((data)=> {
-      console.log('sagar', data);
+      this.arnobjs = data || [];
     });
   }
 
-
   openArnDetails(value, data) {
     let popupHeaderText = !!data ? 'Edit Fixed deposit' : 'Add Fixed deposit';
+    let fullData = {
+      globalData: this.globalData,
+      mainData: data || {}
+    }
+
     const fragmentData = {
       flag: value,
-      data: data || {},
+      data: fullData,
       id: 1,
       state: 'open50',
       componentName: AddArnRiaDetailsComponent,
       popupHeaderText: popupHeaderText,
     };
+
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getArnDetails()
           }
           rightSideDataSub.unsubscribe();
         }
-
       }
     );
   }
 
+  getGstApplicale(id) {
+    if(this.globalData.gst_applicable_list)
+      return this.globalData.gst_applicable_list.find((data) => data.id == id).type
+  }
 
+  getArnType(id) {
+    if(this.globalData.arn_type_list)
+      return this.globalData.arn_type_list.find((data) => data.id == id).type
+  }
 }
