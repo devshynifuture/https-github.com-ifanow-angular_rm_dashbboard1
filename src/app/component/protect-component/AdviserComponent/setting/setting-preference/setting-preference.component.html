@@ -50,14 +50,14 @@
                         </div>
 
                         <div class="bar">
-                            <mat-checkbox class="text-black" (change)="selectMutualFund($event,mutualFund)" [checked]="mutualFund.selectedOrDeselected">Show absolute returns for new clients
+                            <mat-checkbox *ngIf="mutualFund" class="text-black" (change)="selectMutualFund($event,mutualFund)" [checked]="mutualFund.selectedOrDeselected">Show absolute returns for new clients
                             </mat-checkbox>
                             <p class="m-0 text-custom pb-20 bb-1 pl-24">New client is defined as one whose oldest mutual fund transaction is less than one year old.</p>
                         </div>
 
                         <div class="pt-20 relClass">
                             <div class="bar">
-                                <mat-checkbox class="text-black" (change)="selectMutualFund($event,mutualFund2)" [checked]="mutualFund2.selectedOrDeselected">Show mutual fund fact sheet
+                                <mat-checkbox class="text-black" *ngIf="mutualFund2" (change)="selectMutualFund($event,mutualFund2)" [checked]="mutualFund2.selectedOrDeselected">Show mutual fund fact sheet
                                 </mat-checkbox>
                                 <p class="m-0 text-custom pl-24">Mutual fund fact sheets are shown when clicked on the mutual fund schemes from the portfolio MF reports section.</p>
                             </div>

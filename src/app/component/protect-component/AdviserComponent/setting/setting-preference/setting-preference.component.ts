@@ -147,6 +147,7 @@ export class SettingPreferenceComponent implements OnInit {
   }
 
   getPlan() {
+    this.isLoading = true
     let obj = {
       advisorId: this.advisorId
     }
@@ -218,9 +219,15 @@ export class SettingPreferenceComponent implements OnInit {
   }
   getPlanRes(data) {
     console.log('getPortfolioRes == ', data)
-    this.planSection = data
-    this.planSec1 = this.planSection.filter(element => element.planOptionId == 1)
-    console.log('planSec1 ', this.planSec1)
+    if(data){
+      this.planSection = data
+      this.planSec1 = this.planSection.filter(element => element.planOptionId == 1)
+      console.log('planSec1 ', this.planSec1)
+    }else{
+      this.isLoading = false
+      this.planSection = []
+    }
+   
   }
   getEmailVerification() {
     this.isLoading = true
