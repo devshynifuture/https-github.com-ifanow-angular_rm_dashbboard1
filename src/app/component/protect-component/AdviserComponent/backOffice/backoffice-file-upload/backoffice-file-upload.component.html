@@ -17,8 +17,9 @@
               <div class="row">
                 <div class="col-md-6 p-0 pr-8 left">
                   <mat-form-field>
-                   <mat-select class="form-control" [(ngModel)]="filterRTA" >  <!-- formControlName="lead" -->
+                   <mat-select class="form-control" [(ngModel)]="filterRTA" (selectionChange)="setFilter()">  <!-- formControlName="lead" -->
                         <mat-option value="">Select RTA</mat-option>
+                        <mat-option [value]="rt.id" *ngFor="let rt of filterList.RT_TYPE">{{rt.name}}</mat-option>
                         <!-- <mat-option [value]="lead.id" *ngFor="let lead of leadList">{{lead.name}}</mat-option> -->
                     </mat-select>
                   </mat-form-field>
@@ -27,6 +28,7 @@
                   <mat-form-field>
                    <mat-select class="form-control" [(ngModel)]="filterStatus">  <!-- formControlName="lead" -->
                         <mat-option value="">Select status</mat-option>
+                        <mat-option [value]="status.id" *ngFor="let status of filterList.status">{{status.name}}</mat-option>
                         <!-- <mat-option [value]="lead.id" *ngFor="let lead of leadList">{{lead.name}}</mat-option> -->
                     </mat-select>
                   </mat-form-field>
@@ -35,9 +37,9 @@
             </div>
             <div class="col-md-6 p-0 right">
               <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="right">
-                  <mat-button-toggle value="bold" routerLink="/admin/backoffice-file-upload/transaction" routerLinkActive="btn-primary">Transactions</mat-button-toggle>
-                  <mat-button-toggle value="italic" routerLink="/admin/backoffice-file-upload/sip-stp" routerLinkActive="btn-primary">SIP/STP</mat-button-toggle>
-                  <mat-button-toggle value="underline" routerLink="/admin/backoffice-file-upload/folio" routerLinkActive="btn-primary">Folio Master</mat-button-toggle>
+                  <mat-button-toggle value="bold" routerLink="/admin/backoffice-file-upload/transaction" [state]="filter" routerLinkActive="btn-primary">Transactions</mat-button-toggle>
+                  <mat-button-toggle value="italic" routerLink="/admin/backoffice-file-upload/sip-stp" [state]="filter" routerLinkActive="btn-primary">SIP/STP</mat-button-toggle>
+                  <mat-button-toggle value="underline" routerLink="/admin/backoffice-file-upload/folio" [state]="filter" routerLinkActive="btn-primary">Folio Master</mat-button-toggle>
               </mat-button-toggle-group>
             </div>
           </div>
@@ -67,14 +69,14 @@
         </div>
         <div class="col-md-12 pt-8">
           <button [disabled]="selectedFileType == ''" (click)="file.click()" class="br-0" mat-stroked-button>Choose file</button>
-          <input #file (change)="getFile($event)" [ngClass]="{'v-h': true}" accept='image/*' type="file">
+          <input #file (change)="getFile($event)" style="display: none;" accept='image/*' type="file">
         </div>
       </div>
-      <div class="row">
+      <div class="row  pt-12">
         <div class="col-md-1 text-left pr-0">
             <img src="/assets/images/svg/info.svg" class="c-p v-baseline">
         </div>
-        <div class="col-md-11 ">
+        <div class="col-md-11">
             <p class="f-16">Supported Formats</p>
         </div>
       </div>
