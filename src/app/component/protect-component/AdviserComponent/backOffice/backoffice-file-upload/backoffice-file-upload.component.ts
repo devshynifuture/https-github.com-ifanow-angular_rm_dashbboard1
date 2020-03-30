@@ -35,7 +35,7 @@ export class BackofficeFileUploadComponent implements OnInit {
   }
 
   getFile(e) {
-    console.log(e);
+    // console.log(e);
     let obj = {
       fileType: this.selectedFileType,
       advisorId: this.advisorId
