@@ -38,8 +38,8 @@ export class AddCamsDetailsComponent implements OnInit {
       rtTypeMasterid: [this.data.rtType],
       arnOrRia: [this.data.mainData.arnOrRia],
       arnRiaDetailsId: [this.data.mainData.arnRiaDetailsId, [Validators.required]],
-      email: [this.data.mainData.email, [Validators.required, Validators.email]],
-      password: [this.data.mainData.type, [Validators.required]],
+      registeredEmail: [this.data.mainData.registeredEmail, [Validators.required, Validators.email]],
+      mailbackPassword: [this.data.mainData.mailbackPassword, [Validators.required]],
     });
   }
 
@@ -54,8 +54,12 @@ export class AddCamsDetailsComponent implements OnInit {
 
       jsonObj.arnOrRia = this.data.arnData.find((data) => this.camsFG.controls.arnRiaDetailsId.value == data.id).arnOrRia;
       // add action
-      if(this.data.mainData.email) {
-        this.settingService.editMFRTA(jsonObj).subscribe((res)=> {
+      if(this.data.mainData.arnRiaDetailsId) {
+        const editJson = {
+          ...this.data.mainData,
+          ...jsonObj
+        }
+        this.settingService.editMFRTA(editJson).subscribe((res)=> {
           this.eventService.openSnackBar("CAMS Added successfully");
           this.Close(true);
         })
