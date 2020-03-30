@@ -63,7 +63,7 @@
 
                         <div class="mobileScreen">
                             <div class="forgotClassMobile ds-none">
-                                <button (click)="otpClick()" mat-button>Login with OTP</button>
+                                <button class="roboto f-15 mt-4" (click)="otpClick()" mat-button>Login with OTP</button>
                             </div>
 
                             <div class="submitBtnMobile">
@@ -78,7 +78,7 @@
 
                         <div class="row ds-none">
                             <div class="col-md-12 text-center">
-                                <h5 class="mt-20">Don’t have an account? <span [routerLink]="[ '/login/signup']" class="text-primary c-p"> Sign up </span>
+                                <h5 class="mt-32">Don’t have an account? <span [routerLink]="[ '/login/signup']" class="text-primary c-p"> Sign up </span>
                                 </h5>
                             </div>
                         </div>
@@ -126,11 +126,12 @@
                         <div *ngIf="getOtpFlag==false" class="row">
                             <div class="col-md-12 mobileFlex p-0">
                                 <div class="otpBox c-p" (click)="getOtp()">
-                                    <span>* * * *</span>
-                                    <span>GET OTP</span>
+                                    <span class="mt-8">* * * *</span>
+                                    <span class="mt-2">GET OTP</span>
                                 </div>
 
-                                <button class="ds-none" (click)="otpClick()" mat-button>Login with password</button>
+                                <button class="ds-none f-15 roboto" (click)="otpClick()" mat-button>Login with
+                                    password</button>
                             </div>
 
 
@@ -171,8 +172,9 @@
                             </div>
 
                             <div class="mobileCenter ds-none">
-                                <button [routerLink]="['/login']" mat-button>Login with password</button>
-                                <h5 class="mt-10 mb-10">Don’t have an account? <span [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span> </h5>
+                                <button class="f-15 mt-8 mb-8" [routerLink]="['/login']" mat-button>Login with
+                                    password</button>
+                                <h5 class="mt-10 mb-16">Don’t have an account? <span [routerLink]="['/login/signup']" class="text-primary c-p"> Sign up </span> </h5>
                             </div>
 
 

@@ -37,7 +37,8 @@
                                 <h5 class="pt-12 mobileNone mb-4">Full name</h5>
                                 <mat-form-field floatLabel="never" appearance="standard">
                                     <input placeholder="Enter your name" appInputValueValidation [inputValidator]="validatorType.PERSON_NAME" #fullName [maxLength]="20" formControlName="fullName" tabindex="1" class="form-control" matInput>
-                                    <mat-hint align="end" class="f-12">{{fullName.value.length}}/20</mat-hint>
+                                    <mat-hint align="end" class="f-12 mobileNone">{{fullName.value.length}}/20
+                                    </mat-hint>
                                     <mat-error align="end">Username required</mat-error>
                                 </mat-form-field>
                             </div>
@@ -62,7 +63,7 @@
                                 <mat-form-field floatLabel="never" appearance="standard">
                                     <input placeholder="Enter mobile" #mobNo autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="mobile" tabindex="1" class="form-control" matInput maxlength="10">
                                     <mat-error align="end">Mobile required</mat-error>
-                                    <mat-hint align="end" class="f-12">{{mobNo.value.length}}/10</mat-hint>
+                                    <mat-hint align="end" class="f-12 mobileNone">{{mobNo.value.length}}/10</mat-hint>
                                 </mat-form-field>
                             </div>
                         </div>
