@@ -67,3 +67,19 @@
     top: 11px;
     left: 11px;
 }
+
+@media screen and (max-width: 767px) {
+    .mobBtnScreen {
+        .btn-primary {
+            font-size: 16px;
+            background: #939393 !important;
+            border-radius: 40px !important;
+            width: 125px;
+            height: 50px;
+            color: #ffffff;
+        }
+    }
+    .mobileNone {
+        display: none;
+    }
+}

@@ -186,14 +186,42 @@ input.mat-input-element {
     font-size: 16px;
 }
 
+.imgLogin {
+    display: none;
+}
+
+.ds-none {
+    display: none;
+}
+
 @media screen and (max-width: 767px) {
+    .mobileNone {
+        display: none;
+    }
+    .ds-none {
+        display: block;
+    }
     .mobileLoginUi {
-        background: #F2F2F2;
+        background: #F2F2F2 !important;
         height: 100vh;
+        display: block;
+        .loginBox {
+            width: 100%;
+            margin-top: 0px;
+            .form_container_new_wrapper {
+                width: 100%;
+                clear: both;
+                .form-group {
+                    margin-bottom: 25px !important;
+                }
+            }
+        }
         .imgLogin {
             // width: 295px;
             position: relative;
             float: right;
+            display: block;
+            margin-bottom: 30px;
             .bitmapImg {
                 position: absolute;
                 left: -15px;
@@ -202,7 +230,6 @@ input.mat-input-element {
         }
         .loginTitleName {
             font-size: 18px;
-            margin-top: 30px;
             margin-left: 55px;
             margin-bottom: 30px;
         }
@@ -224,6 +251,14 @@ input.mat-input-element {
                 height: 50px;
                 color: #ffffff;
             }
+        }
+        .mobileScreen {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .mobilerightText {
+            text-align: right;
         }
     }
 }
