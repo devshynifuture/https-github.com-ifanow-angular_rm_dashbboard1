@@ -481,14 +481,14 @@ export const appConfig = {
   UPDATE_DOMAIN: 'setting/preferences/domain/update',
   EDIT_ORG_PROFILE_LOGO: 'setting/profile/organisation/logo/update',
   EDIT_ORG_PROFILE_REPORT_LOGO: 'setting/profile/organisation/report/logo/update',
-  GET_EMAIL_VERIFICATION:'setting/preference/email/get',
-  GET_EMAIL_TEMPLATES:'setting/preference/email/template/get',
-  ADD_EMAIL_VERIFY:'setting/preferences/email/post',
-  GET_ASSET_ALLOCATION:'goal-planning/static-allocation/get',
-  GET_RETURNS:'plan/config/return-inflation/get',
-  GET_KEY_PARAMETERS :'goal-planning/key-parameters/get',
-  UPLOAD_PLAN_GALLERY:'goal-planning/goal-gallery/add',
-  UPLOAD_KEY_PARAMETER:'goal-planning/static-allocation/put',
+  GET_EMAIL_VERIFICATION: 'setting/preference/email/get',
+  GET_EMAIL_TEMPLATES: 'setting/preference/email/template/get',
+  ADD_EMAIL_VERIFY: 'setting/preferences/email/post',
+  GET_ASSET_ALLOCATION: 'goal-planning/static-allocation/get',
+  GET_RETURNS: 'plan/config/return-inflation/get',
+  GET_KEY_PARAMETERS: 'goal-planning/key-parameters/get',
+  UPLOAD_PLAN_GALLERY: 'goal-planning/goal-gallery/add',
+  UPLOAD_KEY_PARAMETER: 'goal-planning/static-allocation/put',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
@@ -518,6 +518,9 @@ export const appConfig = {
   GET_PEOPLE_CLIENT_LIST: '/user/client/all/get',
   ADD_CLIENT: 'user/client/add',
   EDIT_CLIENT: 'user/client/edit',
+  ADD_EDIT_CLIENT_ADDRESS: 'user/address/add-edit',
+  ADD_EDIT_CLIENT_BANK: 'user/bank/add-edit',
+  ADD_EDIT_CLIENT_DEMAT: 'user/bank/demat/edit',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: '/user/generate/otp',
   GET_FAMILY_MEMBERS: 'user/family-member/get',
@@ -536,7 +539,7 @@ export const appConfig = {
   ////////////////////////////// settings////////////////////////////////////////////
   GET_PERSONAL_PROFILE_DETAILS: 'setting/profile/personal/details/get',
   UPLOAD_PERSONAL_PROFILE_PHOTO: 'setting/profile/personal/profile-photo/update',
-  
+
   GET_ARN_RIA_GLOBAL_LIST: 'setting/arn-ria/global/data/get',
 
   GET_ARN_RIA_LIST: 'setting/arn-ria/list/get',
@@ -562,7 +565,7 @@ export const appConfig = {
 
   GET_USER_ACCESS_RIGHTS_LIST: 'setting/users-roles/access-rights/get',
   UPDATE_USER_ACCESS_RIGHTS_LIST: 'setting/users-roles/access-rights/update'
-  
+
 
   ////////////////////////////// settings////////////////////////////////////////////
   //////////////////////////////////customer-overview-profile//////////////////////

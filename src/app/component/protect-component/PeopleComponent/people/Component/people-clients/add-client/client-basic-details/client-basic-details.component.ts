@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ValidatorType } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -38,10 +38,10 @@ export class ClientBasicDetailsComponent implements OnInit {
       fullName: [, [Validators.required]],
       email: [, [Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
       mobileNo: new FormArray([]),
-      pan: [],
+      pan: [, [Validators.maxLength(10)]],
       username: [, [Validators.required]],
-      dobAsPerRecord: [],
-      dobActual: [],
+      dobAsPerRecord: [, [Validators.required]],
+      dobActual: [, [Validators.required]],
       gender: ['1', [Validators.required]],
       leadSource: [],
       leaadStatus: [],
@@ -93,9 +93,20 @@ export class ClientBasicDetailsComponent implements OnInit {
   }
   addNumber() {
     this.getMobileNumList.push(this.fb.group({
-      code: [, [Validators.required]],
-      number: [, [Validators.required]]
+      code: ['+91'],
+      number: [, Validators.compose([Validators.maxLength(10)])]
     }))
+  }
+  checkMaxLength(value: number) {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (control.value == null) {
+        return;
+      }
+      if (control.value.length < value) {
+        return { isMaxLength: true }
+      }
+      return null;
+    }
   }
   changeInvestorType(event) {
     this.invTypeCategory = event.value;
@@ -104,11 +115,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   changeTaxStatus(event) {
     this.invTaxStatus = event.value;
   }
-
-  saveClose() {
-
-  }
-  saveNext() {
+  saveNext(flag) {
     // individual form
     // let obj =
     // {
@@ -147,6 +154,10 @@ export class ClientBasicDetailsComponent implements OnInit {
     //   role: this.minorForm.controls.role.value
     // }
     // console.log(obj);
+    if (this.basicDetails.invalid) {
+      this.basicDetails.markAllAsTouched();
+      return;
+    }
     let mobileList = [];
     if (this.basicDetails.controls.mobileNo.valid) {
       this.basicDetails.controls.mobileNo.value.forEach(element => {
@@ -184,9 +195,9 @@ export class ClientBasicDetailsComponent implements OnInit {
       "occupationId": 0,
       "id": null,
       "pan": this.basicDetails.controls.pan.value,
-      "clientId": null,
+      "clientId": this.advisorId,
       "kycComplaint": 0,
-      "roleId": 0,
+      "roleId": 1,
       "genderId": this.basicDetails.controls.gender.value,
       "companyStatus": 0,
       "aadharCard": null,
@@ -197,7 +208,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       "referredBy": 0,
       "name": this.basicDetails.controls.fullName.value,
       "bioRemarkId": 0,
-      "userType": 0,
+      "userType": 1,
       "remarks": null,
       "status": 0
     }
@@ -205,9 +216,13 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.peopleService.addClient(obj).subscribe(
         data => {
           console.log(data);
-          // this.close();
-          this.clientData.emit(data);
-          this.tabChange.emit(1);
+          if (flag == "Next") {
+            this.clientData.emit(data);
+            this.tabChange.emit(1);
+          }
+          else {
+            this.close();
+          }
         },
         err => this.eventService.openSnackBar(err, "Dismiss")
       )
@@ -216,7 +231,6 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.peopleService.editClient(obj).subscribe(
         data => {
           console.log(data);
-          // this.close();
         },
         err => this.eventService.openSnackBar(err, "Dismiss")
       )

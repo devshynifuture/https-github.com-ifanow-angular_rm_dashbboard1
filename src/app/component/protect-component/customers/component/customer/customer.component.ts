@@ -10,6 +10,7 @@ import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } fr
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
+  //  templateUrl: './customer.mobile.component.html',
   styleUrls: ['./customer.component.scss'],
   animations: [
     dialogContainerOpacity,
