@@ -43,7 +43,7 @@ export class SettingPreferenceComponent implements OnInit {
   clientData
   userId: any;
   showUpdateWhite = false;
-  isLoading = true
+  isLoading = false
   constructor(private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, ) { }
 
@@ -53,7 +53,7 @@ export class SettingPreferenceComponent implements OnInit {
     console.log('3456893469 ===', this.userId)
     this.getPortfolio()
     this.getdataForm('')
-    this.isLoading = true
+    this.isLoading = false
   }
   getdataForm(data) {
     this.domainS = this.fb.group({
@@ -136,7 +136,7 @@ export class SettingPreferenceComponent implements OnInit {
     );
   }
   getPortfolioRes(data) {
-    this.isLoading = true
+    this.isLoading = false
     console.log('getPortfolioReslase == ', data)
     this.portfolio = data
     this.mutualFund = this.portfolio.filter(element => element.portfolioOptionId == 1)
@@ -223,6 +223,7 @@ export class SettingPreferenceComponent implements OnInit {
     console.log('planSec1 ', this.planSec1)
   }
   getEmailVerification() {
+    this.isLoading = true
     let obj = {
       userId: 12249,
       advisorId: 414
@@ -233,11 +234,18 @@ export class SettingPreferenceComponent implements OnInit {
     );
   }
   getEmailVerificationRes(data) {
+    this.isLoading = false
     console.log('email verify == get', data)
-    this.emailDetails = data
-    this.emailList = data.listItems
+    if(data){
+      this.emailDetails = data
+      this.emailList = data.listItems
+    }else{
+      this.emailList = []
+    }
+   
   }
   getEmailTemplate() {
+    this.isLoading = true
     let obj = {
       advisorId: this.advisorId
     }
@@ -247,8 +255,14 @@ export class SettingPreferenceComponent implements OnInit {
     );
   }
   getEmailTempalatRes(data) {
-    console.log('emailTemplate', data)
-    this.emailTemplateList = data
+    this.isLoading = false
+    if(data){
+      console.log('emailTemplate', data)
+      this.emailTemplateList = data
+    }else{
+      this.emailTemplateList = []
+    }
+   
   }
   OpenEmail(value, data) {
     if (this.isLoading) {

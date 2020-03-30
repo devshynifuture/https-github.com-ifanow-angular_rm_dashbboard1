@@ -12,7 +12,7 @@ import { ValidatorType } from 'src/app/services/util.service';
 
 export class PlanAssetallocationComponent implements OnInit {
   displayedColumns: string[] = ['position', 'debt1', 'equity1', 'debt2', 'equity2', 'debt3', 'equity3',
-    'debt4', 'equity4', 'debt5', 'equity5'];
+    'debt4', 'equity4', 'debt5',];
   dataSource = ELEMENT_DATA;
   advisorId: any;
   mode1: any;
@@ -46,7 +46,7 @@ export class PlanAssetallocationComponent implements OnInit {
   }
   getAssetAllocation() {
     let obj = {
-      advisorId: this.advisorId
+      advisorId: 2808
     }
     this.orgSetting.getAssetAllocation(obj).subscribe(
       data => this.getAssetAllocationRes(data),

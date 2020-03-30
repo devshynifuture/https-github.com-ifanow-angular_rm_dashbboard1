@@ -128,15 +128,12 @@
                         [value]="element.debt5">
                 </span> </td>
     </ng-container>
-    <ng-container matColumnDef="equity5">
+    <!-- <ng-container matColumnDef="equity5">
         <th mat-header-cell class="text-right" *matHeaderCellDef> Equity </th>
-        <td mat-cell class="text-right" *matCellDef="let elemen; let i = indext" appCashflowTableEdit  >
+        <td mat-cell class="text-right" *matCellDef="let elemen; let i = indext" >
             {{element.equity5}}
-         <span class="inputValue d-none bar">
-                    <input type="text" #descRef (input)="changeTableTdValue(descRef.value, 'equity5', i)"
-                        [value]="element.equity5">
-                </span> </td>
-    </ng-container>
+         </td>
+    </ng-container> -->
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
