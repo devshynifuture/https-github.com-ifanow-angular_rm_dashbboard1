@@ -5,7 +5,7 @@
             <span class="tableValue" *ngIf="!editMode">
                 EDIT MODE
             </span>
-            <span class="inputValue" *ngIf="editMode">
+            <span class="inputValue" *ngIf="editMode" (click)="save()">
                 SAVE
             </span>
         </button>

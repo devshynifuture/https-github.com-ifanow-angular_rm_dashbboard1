@@ -55,6 +55,9 @@ export class OrgSettingServiceService {
   getAssetAllocation(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_ALLOCATION, data);
   }
+  updateAssetAllocation(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_ASSET_ALLOCATION, data);
+  }
   getRetuns(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_RETURNS, data);
   }

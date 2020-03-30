@@ -489,6 +489,7 @@ export const appConfig = {
   GET_KEY_PARAMETERS: 'goal-planning/key-parameters/get',
   UPLOAD_PLAN_GALLERY: 'goal-planning/goal-gallery/add',
   UPLOAD_KEY_PARAMETER: 'goal-planning/static-allocation/put',
+  UPDATE_ASSET_ALLOCATION:'',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
