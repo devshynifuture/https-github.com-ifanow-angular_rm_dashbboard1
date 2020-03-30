@@ -33,7 +33,7 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input type="text" matInput formControlName="login_id" class="form-control">
+                    <input type="text" matInput formControlName="loginId" class="form-control">
                 </mat-form-field>
             </div>
         </div>
@@ -45,7 +45,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input type="text" formControlName="password" matInput class="form-control">
+                    <input type="text" formControlName="loginPassword" matInput class="form-control">
                 </mat-form-field>
             </div>
         </div>
@@ -98,7 +98,7 @@
 <div class="bottom-fixed wrapper-12 w-50">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()">Save</button>

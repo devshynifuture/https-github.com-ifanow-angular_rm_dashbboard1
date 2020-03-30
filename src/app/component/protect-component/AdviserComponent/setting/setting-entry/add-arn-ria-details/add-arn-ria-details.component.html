@@ -20,7 +20,7 @@
                 <mat-form-field>
                     <mat-select class="form-group b-0" formControlName="typeId">
                         <mat-option value="" selected disabled>Select Option</mat-option>
-                        <mat-option value="{{option.id}}" *ngFor="let option of data.globalData.arn_type_master_list">{{option.type}}</mat-option>
+                        <mat-option [value]="option.id" *ngFor="let option of data.globalData.arn_type_master_list">{{option.type}}</mat-option>
                     </mat-select>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -78,7 +78,8 @@
                     <input class="form-control br-0 b-0" formControlName="commencementDate" (focus)="picker.open()" matInput [matDatepicker]="picker" [max]="yesterdaysDate" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
-                    <mat-error>This field is required</mat-error>
+                    <mat-error *ngIf="arnRiaFG.controls.commencementDate.invalid && arnRiaFG.controls.commencementDate.errors.required">This field is required</mat-error>
+                    <mat-error *ngIf="arnRiaFG.controls.commencementDate.invalid && arnRiaFG.controls.commencementDate.errors.matDatepickerMax">Please enter valid date</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -93,7 +94,8 @@
                     <input class="form-control br-0 b-0" formControlName="renewalDate" matInput (focus)="picker1.open()" [matDatepicker]="picker1" [min]="tomrrowsDate" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1 ></mat-datepicker>
-                    <mat-error>This field is required</mat-error>
+                    <mat-error *ngIf="arnRiaFG.controls.commencementDate.invalid && arnRiaFG.controls.commencementDate.errors.required">This field is required</mat-error>
+                    <mat-error *ngIf="arnRiaFG.controls.commencementDate.invalid && arnRiaFG.controls.commencementDate.errors.matDatepickerMin">Please enter valid date</mat-error>
                 </mat-form-field>
             </div>
         </div>

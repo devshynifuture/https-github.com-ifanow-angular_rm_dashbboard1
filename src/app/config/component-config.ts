@@ -461,6 +461,7 @@ export const appConfig = {
   BACKOFFICE_GET_FOLIO_BASED_SEARCH_LIST: 'backoffice/folio/based/on/search/list/get',
 
   BACKOFFICE_FILE_UPLOAD_TYPE: 'backoffice/file-upload/types/get',
+  BACKOFFICE_FILTER: 'backoffice/file-upload/filter/get',
   BACKOFFICE_FILE_TO_UPLOAD: 'backoffice/file-upload/url/get',
   BACKOFFICE_TRANSACTIONS: 'backoffice/file-upload/uploaded/transaction/list/get',
   BACKOFFICE_SIP_STP: 'backoffice/file-upload/uploaded/sip/list/get',
@@ -480,14 +481,14 @@ export const appConfig = {
   UPDATE_DOMAIN: 'setting/preferences/domain/update',
   EDIT_ORG_PROFILE_LOGO: 'setting/profile/organisation/logo/update',
   EDIT_ORG_PROFILE_REPORT_LOGO: 'setting/profile/organisation/report/logo/update',
-  GET_EMAIL_VERIFICATION:'setting/preference/email/get',
-  GET_EMAIL_TEMPLATES:'setting/preference/email/template/get',
-  ADD_EMAIL_VERIFY:'setting/preferences/email/post',
-  GET_ASSET_ALLOCATION:'goal-planning/static-allocation/get',
-  GET_RETURNS:'plan/config/return-inflation/get',
-  GET_KEY_PARAMETERS :'goal-planning/key-parameters/get',
-  UPLOAD_PLAN_GALLERY:'goal-planning/goal-gallery/add',
-  UPLOAD_KEY_PARAMETER:'goal-planning/static-allocation/put',
+  GET_EMAIL_VERIFICATION: 'setting/preference/email/get',
+  GET_EMAIL_TEMPLATES: 'setting/preference/email/template/get',
+  ADD_EMAIL_VERIFY: 'setting/preferences/email/post',
+  GET_ASSET_ALLOCATION: 'goal-planning/static-allocation/get',
+  GET_RETURNS: 'plan/config/return-inflation/get',
+  GET_KEY_PARAMETERS: 'goal-planning/key-parameters/get',
+  UPLOAD_PLAN_GALLERY: 'goal-planning/goal-gallery/add',
+  UPLOAD_KEY_PARAMETER: 'goal-planning/static-allocation/put',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
@@ -517,6 +518,9 @@ export const appConfig = {
   GET_PEOPLE_CLIENT_LIST: '/user/client/all/get',
   ADD_CLIENT: 'user/client/add',
   EDIT_CLIENT: 'user/client/edit',
+  ADD_EDIT_CLIENT_ADDRESS: 'user/address/add-edit',
+  ADD_EDIT_CLIENT_BANK: 'user/bank/add-edit',
+  ADD_EDIT_CLIENT_DEMAT: 'user/bank/demat/edit',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: '/user/generate/otp',
   GET_FAMILY_MEMBERS: 'user/family-member/get',
@@ -535,7 +539,7 @@ export const appConfig = {
   ////////////////////////////// settings////////////////////////////////////////////
   GET_PERSONAL_PROFILE_DETAILS: 'setting/profile/personal/details/get',
   UPLOAD_PERSONAL_PROFILE_PHOTO: 'setting/profile/personal/profile-photo/update',
-  
+
   GET_ARN_RIA_GLOBAL_LIST: 'setting/arn-ria/global/data/get',
 
   GET_ARN_RIA_LIST: 'setting/arn-ria/list/get',
@@ -545,15 +549,23 @@ export const appConfig = {
   ADD_MF_RTA: 'setting/arn-ria/rta/add',
   EDIT_MF_RTA: 'setting/arn-ria/rta/edit',
   DELETE_MF_RTA: 'setting/arn-ria/rta/delete',
+  DELETE_MF_RTA_QUESTION: 'setting/arn-ria/fundnet/answer/delete',
+  UPDATE_MF_RTA_QUESTION: 'setting/arn-ria/fundnet/answer/update',
 
-  GET_USER_ROLE_LIST: 'setting/users-roles/role/get',
-  GET_DETIALED_USER_ROLE: 'setting/users-roles/role/detail/get',
-  GET_ALL_FEATURES: 'setting/users-roles/feature-capabilities/all/get',
+  GET_USER_ROLES_GLOBAL_DATA: 'setting/users/global/roles/get',
+
+  GET_USER_ROLE_ROLE_LIST: 'setting/users-roles/role/get',
   EDIT_USER_ROLE: 'setting/users-roles/role/edit',
   DELETE_USER_ROLE: 'setting/users-roles/role/delete',
   CLONE_USER_ROLE: 'setting/users-roles/role/clone/add',
   ADD_USER_ROLE: 'setting/users-roles/role/add',
-  
+  GET_DETIALED_USER_ROLE: 'setting/users-roles/role/detail/get',
+
+  GET_ALL_FEATURES: 'setting/users-roles/feature-capabilities/all/get',
+
+  GET_USER_ACCESS_RIGHTS_LIST: 'setting/users-roles/access-rights/get',
+  UPDATE_USER_ACCESS_RIGHTS_LIST: 'setting/users-roles/access-rights/update'
+
 
   ////////////////////////////// settings////////////////////////////////////////////
   //////////////////////////////////customer-overview-profile//////////////////////
