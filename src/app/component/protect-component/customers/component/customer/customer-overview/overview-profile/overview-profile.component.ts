@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material';
 })
 export class OverviewProfileComponent implements OnInit {
   familyMemberList: any;
+  selectedFamilyMember: any;
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject, private cusService: CustomerService, private eventService: EventService) { }
 
@@ -35,6 +36,9 @@ export class OverviewProfileComponent implements OnInit {
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
     )
+  }
+  detailedViewData(data) {
+    this.selectedFamilyMember = data;
   }
   deleteModal(value, data) {
     const dialogData = {

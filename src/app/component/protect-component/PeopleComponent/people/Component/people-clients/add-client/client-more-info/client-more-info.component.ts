@@ -37,17 +37,17 @@ export class ClientMoreInfoComponent implements OnInit {
     this.moreInfoData = data;
     console.log(data)
   }
-  saveNext() {
+  saveNext(flag) {
     let obj =
     {
       "advisorId": this.moreInfoData.advisorId,
       "emailList": this.moreInfoData.emailList,
-      "displayName": this.moreInfoForm.controls,
-      "bio": this.moreInfoForm.controls,
-      "martialStatusId": this.moreInfoForm.controls,
+      "displayName": this.moreInfoForm.controls.displayName.value,
+      "bio": this.moreInfoForm.controls.bio.value,
+      "martialStatusId": this.moreInfoForm.controls.maritalStatus.value,
       "password": null,
       "clientType": 0,
-      "occupationId": this.moreInfoForm.controls,
+      "occupationId": this.moreInfoForm.controls.occupation.value,
       "id": this.moreInfoData.id,
       "pan": this.moreInfoData.pan,
       "clientId": this.moreInfoData.clientId,
@@ -55,7 +55,7 @@ export class ClientMoreInfoComponent implements OnInit {
       "roleId": 0,
       "genderId": this.moreInfoData.genderId,
       "companyStatus": 0,
-      "aadharCard": this.moreInfoForm.controls,
+      "aadharCard": this.moreInfoForm.controls.adhaarNo.value,
       "dateOfBirth": this.moreInfoData.dateOfBirth,
       "userName": this.moreInfoData.userName,
       "userId": null,
@@ -70,14 +70,10 @@ export class ClientMoreInfoComponent implements OnInit {
     this.peopleService.editClient(obj).subscribe(
       data => {
         console.log(data);
-        this.tabChange.emit(1);
-        this.close();
+        (flag == 'Next') ? this.tabChange.emit(1) : this.close();
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
     )
-  }
-  saveClose() {
-    this.close();
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
