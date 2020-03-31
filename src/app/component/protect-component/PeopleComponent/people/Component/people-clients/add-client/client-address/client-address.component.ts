@@ -1,8 +1,10 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { ValidatorType } from 'src/app/services/util.service';
 import { PostalService } from 'src/app/services/postal.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-client-address',
@@ -10,11 +12,15 @@ import { PostalService } from 'src/app/services/postal.service';
   styleUrls: ['./client-address.component.scss']
 })
 export class ClientAddressComponent implements OnInit {
+  userData: any;
 
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private postalService: PostalService) { }
+  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private postalService: PostalService, private peopleService: PeopleService, private eventService: EventService) { }
   addressForm;
   validatorType = ValidatorType;
   @Output() tabChange = new EventEmitter();
+  @Input() set data(data) {
+    this.userData = data;
+  }
   ngOnInit() {
     this.addressForm = this.fb.group({
       proofType: ['1', [Validators.required]],
@@ -46,11 +52,52 @@ export class ClientAddressComponent implements OnInit {
     this.addressForm.get('state').setValue(pincodeData[0].State);
     this.addressForm.get('country').setValue(pincodeData[0].Country);
   }
-  saveNext() {
-    this.tabChange.emit(1);
+  addMore() {
+    this.addressForm.reset();
   }
-  saveClose() {
-    this.close();
+  saveNext(flag) {
+    if (this.addressForm.invalid) {
+      this.addressForm.markAllAsTouched();
+      return;
+    }
+    else {
+      // let obj =
+      // {
+      //   "address1": this.addressForm.get('addressLine1').value,
+      //   "address2": this.addressForm.get('addressLine2').value,
+      //   "address3": this.addressForm.get('').value,
+      //   "pinCode": this.addressForm.get('pinCode').value,
+      //   "city": this.addressForm.get('city').value,
+      //   "state": this.addressForm.get('state').value,
+      //   "stateId": this.addressForm.get('').value,
+      //   "country": this.addressForm.get('country').value
+      // }
+      let obj =
+      {
+        "address1": this.addressForm.get('addressLine1').value,
+        "address2": this.addressForm.get('addressLine2').value,
+        "address3": '',
+        "pinCode": this.addressForm.get('pinCode').value,
+        "city": this.addressForm.get('city').value,
+        "state": this.addressForm.get('state').value,
+        "stateId": '',
+        "country": this.addressForm.get('country').value,
+        "userId": this.userData.clientId,
+        "userType": 1,
+        "addressType": this.addressForm.get('addressLine1').value,
+        "proofType": this.addressForm.get('proofType').value,
+        "proofIdNumber": this.addressForm.get('proofIdNum').value,
+        "userAddressMappingId": this.addressForm.get('addressLine1').value,
+        "addreesId": this.addressForm.get('addressLine1').value
+      }
+      this.peopleService.addEditClientAddress(obj).subscribe(
+        data => {
+          console.log(data);
+          (flag == 'Next') ? this.tabChange.emit(1) : this.close();
+        },
+        err => this.eventService.openSnackBar(err, "Dismiss")
+      )
+    }
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });

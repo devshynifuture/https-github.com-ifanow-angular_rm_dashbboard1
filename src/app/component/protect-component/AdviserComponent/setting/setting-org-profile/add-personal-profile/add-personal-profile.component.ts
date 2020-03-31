@@ -24,6 +24,7 @@ export class AddPersonalProfileComponent implements OnInit {
   selectedTab:number = 0;
   anyDetailsChanged:boolean; // check if any details have been updated
   inputData: any;
+  isLoading = false
 
   constructor(
     private subInjectService: SubscriptionInject,

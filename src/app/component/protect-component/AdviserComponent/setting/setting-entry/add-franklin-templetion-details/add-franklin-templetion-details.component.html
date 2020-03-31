@@ -33,7 +33,7 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input type="text" matInput formControlName="login_id" class="form-control">
+                    <input type="text" matInput formControlName="loginId" class="form-control">
                 </mat-form-field>
             </div>
         </div>
@@ -45,7 +45,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input type="text" matInput formControlName="password" class="form-control">
+                    <input type="text" matInput formControlName="loginPassword" class="form-control">
                 </mat-form-field>
             </div>
         </div>
@@ -57,7 +57,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input type="text" matInput formControlName="email" class="form-control">
+                    <input type="text" matInput formControlName="registeredEmail" class="form-control">
                 </mat-form-field>
             </div>
         </div>
@@ -69,7 +69,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input type="text" matInput formControlName="mail_password" class="form-control">
+                    <input type="text" matInput formControlName="mailbackPassword" class="form-control">
                 </mat-form-field>
             </div>
         </div>
@@ -79,7 +79,7 @@
 <div class="bottom-fixed wrapper-12 w-50">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()">Save</button>

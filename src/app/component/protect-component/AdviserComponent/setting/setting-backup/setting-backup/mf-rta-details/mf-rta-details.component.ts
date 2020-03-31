@@ -8,7 +8,8 @@ import { AddFranklinTempletionDetailsComponent } from '../../../setting-entry/ad
 import { AddCamsFundsnetComponent } from '../../../setting-entry/add-cams-fundsnet/add-cams-fundsnet.component';
 import { SettingsService } from '../../../settings.service';
 import { AuthService } from 'src/app/auth-service/authService';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-mf-rta-details',
@@ -27,14 +28,15 @@ export class MfRtaDetailsComponent implements OnInit {
 
   advisorId: any;
   globalData:any = {};
-  mfRTAlist:any = {};
-  arnList:any[] = [];
+  mfRTAlist:any[] = [{}];
+  arnList:any[] = [{}];
+  spans:any[] = [];
 
   constructor(
     private eventService: EventService,
-    private utilService: UtilService, 
     private subInjectService: SubscriptionInject,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    public dialog: MatDialog
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -68,10 +70,11 @@ export class MfRtaDetailsComponent implements OnInit {
   }
 
   createDataSource(){
-    this.camsDS = new MatTableDataSource(this.mfRTAlist.camsDS);
-    this.karvyDS = new MatTableDataSource(this.mfRTAlist.karvyDS);
-    this.frankDS = new MatTableDataSource(this.mfRTAlist.frankDS);
-    this.fundsDS = new MatTableDataSource(this.mfRTAlist.camsDS);
+    this.camsDS = new MatTableDataSource(this.mfRTAlist.filter((data) => data.rtTypeMasterid == 1));
+    this.karvyDS = new MatTableDataSource(this.mfRTAlist.filter((data) => data.rtTypeMasterid == 2));
+    this.frankDS = new MatTableDataSource(this.mfRTAlist.filter((data) => data.rtTypeMasterid == 3));
+
+    this.fundsDS = new MatTableDataSource(this.mfRTAlist.filter((data) => data.rtTypeMasterid == 4));
   }
 
   openInSideBar(componentID, data, flag) {
@@ -118,5 +121,46 @@ export class MfRtaDetailsComponent implements OnInit {
         }
       }
     );
+  }
+
+  deleteRTA(data) {
+
+
+    const dialogData = {
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'DELETE',
+      btnNo: 'CANCEL',
+      negativeMethod: () => {
+        this.settingsService.deleteMFRTA({rtaDetailsId: data.id})
+          .subscribe(response => {
+            console.log(response);
+            this.eventService.openSnackBar("Data has been deleted successfully");
+            this.loadRTAList();
+          }, error => console.error(error));
+
+      },
+    }
+
+    this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+    });
+  }
+
+  getARNId(id) {
+    const arn = this.arnList.find((data) => data.id == id);
+    if(arn)
+      return arn.number;  
+    return '';
+  }
+
+  getQuestion(id) {
+    if(this.globalData && this.globalData.rta_cams_fund_net_security_questions_list) {
+      return this.globalData.rta_cams_fund_net_security_questions_list.find((data)=> data.id == id).question
+    }
+    return '';
   }
 }

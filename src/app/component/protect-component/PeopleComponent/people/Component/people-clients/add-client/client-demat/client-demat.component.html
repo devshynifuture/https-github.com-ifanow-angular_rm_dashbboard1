@@ -12,24 +12,25 @@
             </mat-radio-group>
         </div>
     </div>
-    <!-- <div *ngFor="let holderName of holderNameList.controls;index as i" class="row pt-44">
+    <div *ngFor="let holderName of holderNameList.controls;index as i" class="row pt-44">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-8">{{i+1}} Holder Name</h5>
         </div>
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="holderName" matInput class="form-control">
+                    <input autocomplete="off" #name appInputValueValidation [inputValidator]="validatorType.PERSON_NAME"
+                        [maxLength]="50" formControlName="holderName" matInput class="form-control">
+                    <mat-hint align="end" class="f-12">{{name.value.length}}/50</mat-hint>
                 </mat-form-field>
             </div>
         </div>
         <div class="col-md-2">
             <p class="m-0 text-custom roboto pt-8" (click)="addHolders()">+</p>
-            *ngIf="expression" prod build
-            <p class="m-0 text-custom roboto pt-8"  (click)="removeHolders(i)">-
+            <p class="m-0 text-custom roboto pt-8" (click)="removeHolders(i)">-
             </p>
         </div>
-    </div> -->
+    </div>
     <div class="row pt-44">
         <div class="col-md-4 text-right pl-0">
             <h5 class="m-0 pt-8">Depository participant name</h5>
@@ -37,7 +38,9 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="depositoryPartName" matInput class="form-control">
+                    <input autocomplete="off" formControlName="depositoryPartName" #nadNameme appInputValueValidation
+                        [inputValidator]="validatorType.PERSON_NAME" [maxLength]="50" matInput class="form-control">
+                    <mat-hint align="end" class="f-12">{{nadNameme.value.length}}/50</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -74,7 +77,10 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="brekerName" matInput class="form-control">
+                    <input autocomplete="off" #brokerName appInputValueValidation
+                        [inputValidator]="validatorType.PERSON_NAME" formControlName="brekerName" matInput
+                        class="form-control">
+                    <mat-hint align="end" class="f-12">{{brokerName.value.length}}/50</mat-hint>
                     <mat-hint>Optional</mat-hint>
                 </mat-form-field>
             </div>
@@ -87,40 +93,15 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="brokerAddress" matInput class="form-control">
+                    <input autocomplete="off" #bAddres formControlName="brokerAddress" matInput maxlength="200"
+                        class="form-control">
+                    <mat-hint align="end" class="f-12">{{brokerName.value.length}}/20</mat-hint>
                     <mat-hint>Optional</mat-hint>
                 </mat-form-field>
             </div>
         </div>
     </div>
-    <div class="row pt-44">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">Broker phone</h5>
-        </div>
-        <div class="col-md-2 p-0">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <mat-select class="form-control">
-                        <mat-option value="+91">+91</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="col-md-3 pr-0">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                        formControlName="brokerPhone" matInput class="form-control">
-                    <mat-hint>Optional</mat-hint>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="col-md-2 pr-0">
-            <i class="material-icons text-custom c-p pt-12">
-                add
-            </i>
-        </div>
-    </div>
+    <app-add-number [flag]="mobileNumberFlag" (numberArray)="getNumberDetails($event)"></app-add-number>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-8">Nominee</h5>
@@ -153,7 +134,10 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="linkedBankAccount" matInput class="form-control">
+                    <input autocomplete="off" #linkedAccNum [maxLength]="16" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" formControlName="linkedBankAccount" matInput
+                        class="form-control">
+                    <mat-hint align="end" class="f-12">{{linkedAccNum.value.length}}/16</mat-hint>
                     <mat-hint>Optional</mat-hint>
                 </mat-form-field>
             </div>
@@ -166,8 +150,11 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="powerOfAttName" matInput class="form-control">
+                    <input autocomplete="off" #paName appInputValueValidation
+                        [inputValidator]="validatorType.PERSON_NAME" [maxLength]="50" formControlName="powerOfAttName"
+                        matInput class="form-control">
                     <mat-hint>Optional</mat-hint>
+                    <mat-hint align="end" class="f-12">{{paName.value.length}}/50</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -192,9 +179,9 @@
             <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-raised-button (click)="saveNext()" class="br-0 text-inherit mr-12">SAVE & NEXT
+            <button mat-raised-button (click)="saveNext('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
             </button>
-            <button mat-stroked-button (click)="saveClose()" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
+            <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
             </button>
         </div>
     </div>

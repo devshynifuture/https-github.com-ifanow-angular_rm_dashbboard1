@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ValidatorType } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -16,15 +16,18 @@ export class ClientBasicDetailsComponent implements OnInit {
   nonIndividualForm: any;
   advisorId: typeof AuthService;
   basicDetailsData: any;
+  mobileData: any;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService) { }
   basicDetails;
+  date = new Date();
   @Input() fieldFlag;
   @Output() clientData = new EventEmitter();
   @Output() tabChange = new EventEmitter();
   validatorType = ValidatorType;
   invTypeCategory = '1';
   invTaxStatus = '1';
+  mobileNumberFlag = "Mobile number";
   ngOnInit() {
     this.createIndividualForm();
   }
@@ -37,11 +40,10 @@ export class ClientBasicDetailsComponent implements OnInit {
     this.basicDetails = this.fb.group({
       fullName: [, [Validators.required]],
       email: [, [Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
-      mobileNo: new FormArray([]),
-      pan: [],
+      pan: [, [Validators.maxLength(10)]],
       username: [, [Validators.required]],
-      dobAsPerRecord: [],
-      dobActual: [],
+      dobAsPerRecord: [, [Validators.required]],
+      dobActual: [, [Validators.required]],
       gender: ['1', [Validators.required]],
       leadSource: [],
       leaadStatus: [],
@@ -50,7 +52,6 @@ export class ClientBasicDetailsComponent implements OnInit {
       clientOwner: [, [Validators.required]],
       role: [, [Validators.required]],
     })
-    this.addNumber();
   }
   createMinorForm() {
     this.minorForm = this.fb.group({
@@ -85,17 +86,20 @@ export class ClientBasicDetailsComponent implements OnInit {
       role: []
     })
   }
-  get getBasicDetails() { return this.basicDetails.controls; }
-  get getMobileNumList() { return this.getBasicDetails.mobileNo as FormArray; }
-  create
-  removeNumber(index) {
-    (this.basicDetails.controls.mobileNo.length == 1) ? '' : this.basicDetails.controls.mobileNo.removeAt(index)
+  getNumberDetails(data) {
+    console.log(data);
+    this.mobileData = data;
   }
-  addNumber() {
-    this.getMobileNumList.push(this.fb.group({
-      code: [, [Validators.required]],
-      number: [, [Validators.required]]
-    }))
+  checkMaxLength(value: number) {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (control.value == null) {
+        return;
+      }
+      if (control.value.length < value) {
+        return { isMaxLength: true }
+      }
+      return null;
+    }
   }
   changeInvestorType(event) {
     this.invTypeCategory = event.value;
@@ -104,11 +108,8 @@ export class ClientBasicDetailsComponent implements OnInit {
   changeTaxStatus(event) {
     this.invTaxStatus = event.value;
   }
+  saveNext(flag) {
 
-  saveClose() {
-
-  }
-  saveNext() {
     // individual form
     // let obj =
     // {
@@ -147,79 +148,85 @@ export class ClientBasicDetailsComponent implements OnInit {
     //   role: this.minorForm.controls.role.value
     // }
     // console.log(obj);
-    let mobileList = [];
-    if (this.basicDetails.controls.mobileNo.valid) {
-      this.basicDetails.controls.mobileNo.value.forEach(element => {
-        mobileList.push(
+    if (this.basicDetails.invalid) {
+      this.basicDetails.markAllAsTouched();
+      return;
+    }
+    else {
+      let mobileList = [];
+      this.mobileData.controls.forEach(element => {
+        console.log(element);
+        mobileList.push({
+          "verificationStatus": 0,
+          "id": 0,
+          "userType": 0,
+          "mobileNo": element.get('number').value,
+          "isActive": 1,
+          "userId": 0
+        })
+      });
+      let obj =
+      {
+        "advisorId": this.advisorId,
+        "taxStatusId": this.invTaxStatus,
+        "emailList": [
           {
             "verificationStatus": 0,
             "id": 0,
             "userType": 0,
-            "mobileNo": element.number,
             "isActive": 1,
-            "userId": 0
+            "userId": 0,
+            "email": this.basicDetails.controls.email.value
           }
+        ],
+        "displayName": null,
+        "bio": null,
+        "martialStatusId": 0,
+        "password": null,
+        "clientType": 0,
+        "occupationId": 0,
+        "id": null,
+        "pan": this.basicDetails.controls.pan.value,
+        "clientId": this.advisorId,
+        "kycComplaint": 0,
+        "roleId": 1,
+        "genderId": this.basicDetails.controls.gender.value,
+        "companyStatus": 0,
+        "aadharCard": null,
+        "dateOfBirth": this.basicDetails.controls.dobAsPerRecord.value,
+        "userName": this.basicDetails.controls.username.value,
+        "userId": null,
+        "mobileList": mobileList,
+        "referredBy": 0,
+        "name": this.basicDetails.controls.fullName.value,
+        "bioRemarkId": 0,
+        "userType": 1,
+        "remarks": null,
+        "status": 0
+      }
+      if (this.basicDetailsData == null) {
+        this.peopleService.addClient(obj).subscribe(
+          data => {
+            console.log(data);
+            if (flag == "Next") {
+              this.clientData.emit(data);
+              this.tabChange.emit(1);
+            }
+            else {
+              this.close();
+            }
+          },
+          err => this.eventService.openSnackBar(err, "Dismiss")
         )
-      });
-    }
-    let obj =
-    {
-      "advisorId": this.advisorId,
-      "taxStatusId": this.invTaxStatus,
-      "emailList": [
-        {
-          "verificationStatus": 0,
-          "id": 0,
-          "userType": 0,
-          "isActive": 1,
-          "userId": 0,
-          "email": this.basicDetails.controls.email.value
-        }
-      ],
-      "displayName": null,
-      "bio": null,
-      "martialStatusId": 0,
-      "password": null,
-      "clientType": 0,
-      "occupationId": 0,
-      "id": null,
-      "pan": this.basicDetails.controls.pan.value,
-      "clientId": null,
-      "kycComplaint": 0,
-      "roleId": 0,
-      "genderId": this.basicDetails.controls.gender.value,
-      "companyStatus": 0,
-      "aadharCard": null,
-      "dateOfBirth": this.basicDetails.controls.dobAsPerRecord.value,
-      "userName": this.basicDetails.controls.username.value,
-      "userId": null,
-      "mobileList": mobileList,
-      "referredBy": 0,
-      "name": this.basicDetails.controls.fullName.value,
-      "bioRemarkId": 0,
-      "userType": 0,
-      "remarks": null,
-      "status": 0
-    }
-    if (this.basicDetailsData == null) {
-      this.peopleService.addClient(obj).subscribe(
-        data => {
-          console.log(data);
-          // this.close();
-          this.clientData.emit(data);
-          this.tabChange.emit(1);
-        },
-        err => this.eventService.openSnackBar(err, "Dismiss")
-      )
-    }
-    else {
-      this.peopleService.editClient(obj).subscribe(
-        data => {
-          console.log(data);
-          // this.close();
-        },
-        err => this.eventService.openSnackBar(err, "Dismiss")
-      )
+      }
+      else {
+        this.peopleService.editClient(obj).subscribe(
+          data => {
+            console.log(data);
+          },
+          err => this.eventService.openSnackBar(err, "Dismiss")
+        )
+      }
     }
   }
   close() {
