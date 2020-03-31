@@ -489,7 +489,7 @@ export const appConfig = {
   GET_KEY_PARAMETERS: 'goal-planning/key-parameters/get',
   UPLOAD_PLAN_GALLERY: 'goal-planning/goal-gallery/add',
   UPLOAD_KEY_PARAMETER: 'goal-planning/static-allocation/put',
-  UPDATE_ASSET_ALLOCATION:'goal-planning/static-allocation/put',
+  UPDATE_ASSET_ALLOCATION: 'goal-planning/static-allocation/put',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
@@ -522,10 +522,13 @@ export const appConfig = {
   ADD_EDIT_CLIENT_ADDRESS: 'user/address/add-edit',
   ADD_EDIT_CLIENT_BANK: 'user/bank/add-edit',
   ADD_EDIT_CLIENT_DEMAT: 'user/bank/demat/edit',
-  //////////////////////////////Login///////////////////////////////////
-  GENERATE_OTP: '/user/generate/otp',
   GET_FAMILY_MEMBERS: 'user/family-member/get',
   DELETE_FAMILY_MEMBER: 'user/family-member/delete',
+  ADD_FAMILY_MEMBER: 'user/family-member/add',
+  ADD_MULTIPLE_FAMILY_MEMBERS: '/user/family-member/add/multiple',
+  EDIT_FAMILY_MEMBER_BASIC_DETAILS_MORE_INFO: 'user/family-member/edit',
+  //////////////////////////////Login///////////////////////////////////
+  GENERATE_OTP: '/user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
   REGISTER: 'user/advisor/add',
   SEARCH_USERNAME: 'user/search/username',
