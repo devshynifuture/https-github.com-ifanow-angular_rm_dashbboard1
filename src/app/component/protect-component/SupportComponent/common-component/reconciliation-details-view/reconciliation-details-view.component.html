@@ -71,11 +71,11 @@
         </span>
     </div>
     <div class="col-lg-6" *ngIf="tableEntriesType==2">
-        <mat-checkbox>Show All Transactions</mat-checkbox>
+        <!-- <mat-checkbox>Show All Transactions</mat-checkbox> -->
     </div>
     <div class="col-lg-4 text-right">
-        <div matTooltip="You cannot Unfreeze Folio" [matTooltipDisabled]="enableFreezeBtn">
-            <button [ngClass]="enableFreezeBtn ? '':'disableClass'" [disabled]="!enableFreezeBtn" class="ba-black"
+        <div matTooltip="You cannot Unfreeze Folio" [matTooltipDisabled]="!disableUnfreezeBtn">
+            <button [ngClass]="disableUnfreezeBtn ? 'disableClass':''" [disabled]="disableUnfreezeBtn" class="ba-black"
                 mat-button (click)="unfreezeFolioData()">
                 Unfreeze
             </button>
@@ -83,9 +83,9 @@
 
     </div>
     <div class="col-lg-2 text-right">
-        <div matTooltip="You cannot freeze Folio" [matTooltipDisabled]="!enableFreezeBtn">
-            <button class="ba-black" mat-button [disabled]="enableFreezeBtn"
-                [ngClass]="enableFreezeBtn ? 'disableClass':''" (click)="freezeFolioData()">
+        <div matTooltip="You cannot freeze Folio, as difference is not zero" [matTooltipDisabled]="!disableFreezeBtn">
+            <button class="ba-black" mat-button [disabled]="disableFreezeBtn"
+                [ngClass]="disableFreezeBtn ? 'disableClass':''" (click)="freezeFolioData()">
                 Freeze
             </button>
         </div>
@@ -102,6 +102,40 @@
                             [checked]="selection.hasValue() && isAllSelected()"
                             [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
                         </mat-checkbox>
+                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                            <mat-icon>arrow_drop_down</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="filterTableValues('all')">
+                                <span>
+                                    All
+                                </span>
+                            </button>
+                            <button mat-menu-item (click)="filterTableValues('sip')">
+                                <span>SIP</span>
+                            </button>
+                            <button mat-menu-item (click)="filterTableValues('stp')">
+                                <span>STP</span>
+                            </button>
+                            <button mat-menu-item (click)="filterTableValues('swp')">
+                                <span>SWP</span>
+                            </button>
+                            <button mat-menu-item (click)="filterTableValues('sep')">
+                                <span>SEP</span>
+                            </button>
+                            <button mat-menu-item (click)="filterTableValues('transfer-in')">
+                                <span>Transfer in</span>
+                            </button>
+                            <button mat-menu-item (click)="filterTableValues('transfer-out')">
+                                <span>Transfer out</span>
+                            </button>
+                            <button mat-menu-item (click)="filterTableValues('Purchase')">
+                                <span>Purchase</span>
+                            </button>
+                            <button mat-menu-item (click)="filterTableValues('Redemption')">
+                                <span>Redemption</span>
+                            </button>
+                        </mat-menu>
                     </th>
                     <td mat-cell class="b-a" *matCellDef="let row">
                         <mat-checkbox (click)="$event.stopPropagation(); "
@@ -109,6 +143,7 @@
                             [aria-label]="checkboxLabel(row)">
                         </mat-checkbox>
                     </td>
+
                 </ng-container>
 
                 <!-- Symbol Column -->
@@ -151,7 +186,7 @@
                     <th class="b-a" mat-header-cell *matHeaderCellDef> Action </th>
                     <td class="b-a" mat-cell *matCellDef="let element">
                         <div class="bar">
-                            <div matTooltip="Kindly unfreeze folio, to delete transaction" [matTooltipPosition]="below"
+                            <div matTooltip="Kindly unfreeze folio, to delete transaction"
                                 [matTooltipDisabled]="canDeleteTransaction">
                                 <button mat-stroked-button [disabled]="!canDeleteTransaction"
                                     class="bg-primary text-white mr-12 h-22 btn-xs"
@@ -164,12 +199,11 @@
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns1">
-                </tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
             </table>
         </div>
         <div *ngIf="tableEntriesType == 2">
-            <table mat-table [dataSource]="dataSource2" id="table-low" class=" mt-8">
+            <table mat-table [dataSource]="dataSource2" id="table-low" class="mt-8">
                 <!-- transaction Type Column -->
                 <ng-container matColumnDef="transactionType">
                     <th class="b-a" mat-header-cell *matHeaderCellDef> Transaction type </th>
@@ -181,7 +215,7 @@
                 <ng-container matColumnDef="date">
                     <th class="b-a" mat-header-cell *matHeaderCellDef> Date </th>
                     <td class="b-a" mat-cell *matCellDef="let element">
-                        <div class="bar"> {{element.date}} </div>
+                        <div class="bar"> {{element.date | date: 'short'}} </div>
                     </td>
                 </ng-container>
 
@@ -225,8 +259,7 @@
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns2;">
-                </tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
             </table>
             <div class="col-lg-12 text-right">
                 <button class="ba-black" mat-button (click)="putAumTransactionKeepOrRemove()">
@@ -245,9 +278,6 @@
         <div class="col-lg-4">
             <!-- (click)="Close(false)" removed for prod build -->
             <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose()">Cancel</h5>
-        </div>
-        <div class="col-lg-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
         </div>
     </div>
 </div>

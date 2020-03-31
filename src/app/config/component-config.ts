@@ -451,7 +451,7 @@ export const appConfig = {
   BACKOFFICE_DELETE_AUM_TRANSACTION_SINGLE_MULTIPLE: 'backoffice/aum/transaction/multiple/delete',
   BACKOFFICE_DELETE_AND_REORDER: 'backoffice/aum/delete-reorder',
   BACKOFFICE_PUT_FREEZE_FOLIO_DATA: 'backoffice/aum/freeze/folio',
-  BACKOFFICE_PUT_UNFREEZE_FOLIO_DATA: 'backoffice/aum/unfreeze/folio',
+  BACKOFFICE_PUT_UNFREEZE_FOLIO_DATA: 'backoffice/mutual-fund/unfreeze',
   BACKOFFICE_GET_DUPLICATE_FOLIO_DATA: 'backoffice/duplicate/transaction/list/get',
   BACKOFFICE_FOLIOWISE_LIST_GET: 'backoffice/aum/transaction/foliowise/list/get',
   BACKOFFICE_PUT_UNMAP_FOLIO: 'backoffice/unmap/folio',
@@ -460,6 +460,9 @@ export const appConfig = {
   BACKOFFICE_POST_UNMATCHED_FOLIOS_ADD: 'backoffice/aum/recon/unmatched/folios/add',
   BACKOFFICE_GET_AUM_REPORT_LIST: 'backoffice/aum/reconciliation/report/get',
   BACKOFFICE_GET_FOLIO_BASED_SEARCH_LIST: 'backoffice/folio/based/on/search/list/get',
+  BACKOFFICE_GET_GROUP_HEAD_NAME_LIST: 'backoffice/foliowise/groupHead/list/get',
+  BACKOFFICE_GET_INVESTOR_NAME_LIST: 'backoffice/foliowise/applicaName/list/get',
+  BACKOFFICE_PUT_DELETE_UNFREEZE_TRANSACTION: 'backoffice/delete/unfreeze/transaction',
 
   ///org setting ////
   GET_PERSONAL_PROFILE: 'setting/profile/personal/details/get',

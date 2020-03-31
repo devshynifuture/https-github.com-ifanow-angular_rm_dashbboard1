@@ -67,6 +67,14 @@ export class ReconciliationService {
         return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_FOLIO_BASED_SEARCH_LIST, data);
     }
 
+    getGroupHeadNameValues(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_GROUP_HEAD_NAME_LIST, data);
+    }
+
+    getInvestorNameValues(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_INVESTOR_NAME_LIST, data);
+    }
+
     // post functions
 
     postBackOfficeUnmatchedFoliosData(data) {
@@ -95,6 +103,10 @@ export class ReconciliationService {
     }
 
     // delete functions
+
+    deleteUnfreezeTransaction(data) {
+        return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_PUT_DELETE_UNFREEZE_TRANSACTION, data)
+    }
 
     deleteAumTransaction(data) {
         return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_DELETE_AUM_TRANSACTION_SINGLE_MULTIPLE, data);

@@ -6,6 +6,8 @@ import { MatTableDataSource } from '@angular/material';
 import { ReconciliationService } from '../reconciliation/reconciliation.service';
 import { FolioMasterDetailViewComponent } from '../folio-master-detail-view/folio-master-detail-view.component';
 import { AuthService } from '../../../../../../auth-service/authService';
+import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import { FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-folio-query',
@@ -14,26 +16,117 @@ import { AuthService } from '../../../../../../auth-service/authService';
 })
 export class FolioQueryComponent implements OnInit {
   advisorId = AuthService.getAdvisorId();
+  errorMsg: string;
+  isLoadingForDropDownGroupHead: boolean = false;
+  isLoadingForDropDownInvestor: boolean = false;
+  folioQueryGroupHead = new FormControl();
+  folioQueryInvestor = new FormControl();
+  optionList = [
+    { name: 'Investor', value: 1 },
+    { name: 'Group Head', value: 2 },
+    { name: 'PAN', value: 3 },
+    { name: 'Folio Number', value: 4 }
+  ]
+
+  arrayOfGroupHeadName: any[] = [];
+  arrayOfInvestorName: any[] = [];
+  arrayInvestorNameError: boolean;
+  arrayGroupHeadNameError: boolean;
 
   constructor(
     private reconService: ReconciliationService,
-    private subInjectService: SubscriptionInject
+    private subInjectService: SubscriptionInject,
   ) { }
   displayedColumns: string[] = ['folioNumber', 'schemeName', 'investorName', 'arnRiaCode', 'reconStatus', 'transactions', 'folioDetails'];
   isSearchDone: boolean = false;
   isLoading: boolean = false;
   dataSource = new MatTableDataSource<folioQueryI>(ELEMENT_DATA);
 
-  optionList = [];
-
   ngOnInit() {
     this.dataSource.data = ELEMENT_DATA;
+    this.activateValueChanges()
   }
 
-  search(flag, value) {
+  activateValueChanges() {
+    this.folioQueryGroupHead.valueChanges
+      .pipe(
+        debounceTime(500),
+        tap(() => {
+          this.errorMsg = "";
+          this.arrayOfGroupHeadName = [];
+          this.isLoadingForDropDownGroupHead = true;
+        }),
+        switchMap(value => this.getGroupHeadNameList(value)
+          .pipe(
+            finalize(() => {
+              this.isLoadingForDropDownGroupHead = false
+            }),
+          )
+        )
+      )
+      .subscribe(data => {
+        this.arrayOfGroupHeadName = data;
+        console.log("this is group head name::::::::", data);
+        if (data && data.length > 0) {
+          this.arrayGroupHeadNameError = false;
+        } else {
+          this.arrayGroupHeadNameError = true;
+          this.errorMsg = 'No data Found';
+        }
+        console.log("this is some value", this.arrayOfGroupHeadName);
+      });
+
+    this.folioQueryInvestor.valueChanges
+      .pipe(
+        debounceTime(500),
+        tap(() => {
+          this.errorMsg = "";
+          this.arrayOfInvestorName = [];
+          this.isLoadingForDropDownInvestor = true;
+        }),
+        switchMap(value => this.getInvestorNameList(value)
+          .pipe(
+            finalize(() => {
+              this.isLoadingForDropDownInvestor = false
+            }),
+          )
+        )
+      )
+      .subscribe(data => {
+        this.arrayOfInvestorName = data;
+        console.log("this is investor name list::::::::", data);
+        if (data && data.length > 0) {
+          this.arrayInvestorNameError = false;
+        } else {
+          this.arrayInvestorNameError = true;
+          this.errorMsg = 'No data Found';
+        }
+        console.log(this.arrayOfInvestorName);
+      });
+  }
+
+  displayFn(value): string | undefined {
+    return value ? value.name : undefined;
+  }
+
+  getGroupHeadNameList(value) {
+    const data = {
+      clientName: value
+    }
+    return this.reconService.getGroupHeadNameValues(data);
+  }
+
+  getInvestorNameList(value) {
+    const data = {
+      familyMemberName: value
+    }
+    return this.reconService.getInvestorNameValues(data);
+  }
+
+  search(flag, value, searchFrom) {
     // search query logic
     // on hold
-    console.log(typeof value);
+
     const data = {
       flag_search: flag,
       advisorId: this.advisorId,
@@ -43,14 +136,71 @@ export class FolioQueryComponent implements OnInit {
     this.reconService.getFolioQueryDataListValues(data)
       .subscribe(res => {
         console.log(res);
+        if (res && res.length !== 0) {
+          let arrValue = [];
+          res.forEach(element => {
+            arrValue.push({
+              arnRiaCode: element.brokerCode ? element.brokerCode : '-',
+              schemeName: element.shemeName,
+              investorName: element.investorName,
+              folioNumber: element.folioNumber,
+              reconStatus: element.isMapped === -1 ? 'unmapped' : 'mapped',
+              mutualFundTransaction: element.mutualFundTransaction,
+              mutualFundId: element.mutualFundId,
+              unitsRta: element.aumUnits,
+              unitsIfanow: element.calculatedUnits,
+              difference: (element.calculatedUnits - element.aumUnits).toFixed(3),
+              schemeCode: element.schemeCode,
+              aumDate: element.aumDate,
+              id: element.id
+            })
+          });
+          this.dataSource.data = arrValue;
+        }
+        else {
+          this.dataSource.data = null;
+        }
         // toggling view
-        this.isSearchDone = !this.isSearchDone;
+        if (searchFrom !== 'navInputSearch') {
+          this.isSearchDone = !this.isSearchDone;
+        }
       })
 
   }
 
-  openReconDetailView(element) {
+  openReconDetailView(flag, data) {
+    let tableData = data.mutualFundTransaction;
+    let freezeDate = null;
+    const fragmentData = {
+      flag,
+      data: { ...data, tableType: flag, tableData, freezeDate },
+      id: 1,
+      state: 'open',
+      componentName: ReconciliationDetailsViewComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            console.log('this is sidebardata in subs subs 3 ani: is refresh Required??? ', sideBarData);
 
+            if (sideBarData.refreshRequired) {
+              // this.getDataFromObsAfterDeletingTransacn();
+              // this.isSearchDone = !this.isSearchDone;
+            }
+          }
+          rightSideDataSub.unsubscribe();
+        }
+
+      }
+    );
+  }
+
+  toggleFolioDetailList() {
+    if (this.isSearchDone) {
+      this.isSearchDone = false;
+    }
   }
 
   openFolioMasterDetailView(flag, data) {
@@ -89,8 +239,8 @@ interface folioQueryI {
 }
 
 const ELEMENT_DATA: folioQueryI[] = [
-  { folioNumber: '3423', schemeName: 'sdfbhsf', investorName: 'wrgerfgsd', arnRiaCode: 'warsgherfg', reconStatus: 'adgjnadfha', transactions: 'adfhdfhdyh', folioDetails: 'sdthsdfhsd' },
-  { folioNumber: '34234', schemeName: 'sdfsdf', investorName: 'sthaseg', arnRiaCode: 'agfsdag', reconStatus: 'astfhbdf', transactions: 'afgbdgbsdf', folioDetails: 'sdgfhsdfh' },
-  { folioNumber: '5434', schemeName: 'sdgasdrfg', investorName: 'argaweras', arnRiaCode: 'dgnhsdfsd', reconStatus: 'aerhagdsfhsd', transactions: 'sdfhdfgsd', folioDetails: 'eshbdfh' },
+  { folioNumber: '', schemeName: '', investorName: '', arnRiaCode: '', reconStatus: '', transactions: '', folioDetails: '' },
+  { folioNumber: '', schemeName: '', investorName: '', arnRiaCode: '', reconStatus: '', transactions: '', folioDetails: '' },
+  { folioNumber: '', schemeName: '', investorName: '', arnRiaCode: '', reconStatus: '', transactions: '', folioDetails: '' },
 
 ]
