@@ -11,10 +11,12 @@ export class SipApplicantWiseComponent implements OnInit {
   showLoader=true;
   teamMemberId=2929;
   clientId: any;
+  advisorId: any;
   constructor(private backoffice:BackOfficeService,public sip:SipComponent) { }
 
   ngOnInit() {
     this.showLoader = false;
+    this.advisorId=AuthService.getAdvisorId();
     this.clientId=AuthService.getClientId();
     this.schemeWiseApplicantGet()
   }
@@ -24,9 +26,11 @@ export class SipApplicantWiseComponent implements OnInit {
   }  
   schemeWiseApplicantGet(){
     const obj={
+      advisorId:this.advisorId,
+      arnRiaDetailsId:-1,
       clientId:this.clientId,
-      schemeCode:'Abc-210',
-      teamMemberId:this.teamMemberId
+      parentId:-1,
+      schemeId:123
     }
     this.backoffice.scheme_wise_Applicants_Get(obj).subscribe(
       data =>{

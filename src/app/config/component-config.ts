@@ -12,7 +12,7 @@ export const appConfig = {
   GET_TOTAL_SCHEME_AUM: 'asset/schemeTotalAum/get',
   GET_TOTAL_AUM_BY_SCHEME: 'asset/schemeTotalAum/get',
   GET_CLIENT_WISE_TOTALAUM: 'asset/report/client/totalaum/get',
-  GET_SIP_COUNT_GET: 'asset/sip/count/get',
+  GET_SIP_COUNT_GET: 'backoffice/sip/count/get',
   GET_AUM_APPLICANT: 'backoffice/aum/applicantWise/totalaum/applicantName/get',
   GET_AUM_APPLICANT_CATEGORY: 'backoffice/aum/applicantWise/totalaum/applicantsAllCategory/get',
   GET_AUM_APPLICANT_SUB_CATEGORY: 'backoffice/aum/applicantWise/totalaum/applicantSubCategory/get',
@@ -28,22 +28,22 @@ export const appConfig = {
 
   /////////////////////// sip api call//////////////////////////////////
 
-  GET_EXPIRING: 'asset/sip/expiring/get',
-  GET_expired: 'asset/sip/expired/get',
-  GET_SIP_REJECTION: 'asset/sip/sipRejection/get',
-  GET_SIP_client_SEARCH: 'asset/sip/client/search/get',
-  GET_SIP_SCHEME_SEARCH: 'asset/sip/scheme/search/get',
+  GET_EXPIRING: 'backoffice/sip/expiring/get',
+  GET_expired: 'backoffice/sip/expired/get',
+  GET_SIP_REJECTION: 'backoffice/sip/sipRejection/get',
+  GET_SIP_client_SEARCH: 'backoffice/sip/client/search/get',
+  GET_SIP_SCHEME_SEARCH: 'backoffice/sip/scheme/search/get',
 
-  GET_SIP_AMC: 'asset/sip/amc/get',
-  GET_SIP_AMC_SCHEME: 'asset/sip/amc/scheme/get',
-  GET_SIP_INVERSTORS: 'asset/sip/scheme/investors/get',
-  Scheme_Investors_Applicants: 'asset/sip/scheme/investors/applicants/get',
-  Sip_Schemewise_Get: 'asset/sip/schemewise/get',
-  Scheme_Wise_Investor_Get: 'asset/sip/schemewiseInvestor/get',
-  scheme_wise_Applicants_Get: 'asset/sip/schemewiseApplicants/get',
-  ALL_SIP_GET: 'asset/sip/allSip/get',
-  CLIENT_WISE_CLIENTNAME_GET: 'asset/sip/ClientWiseClientsName/get',
-  CLIENT_WISE_APPLICANT_GET: 'asset/sip/ClientWiseApplicants/get',
+  GET_SIP_AMC: 'backoffice/sip/amc/get',
+  GET_SIP_AMC_SCHEME: 'backoffice/sip/amc/scheme/get',
+  GET_SIP_INVERSTORS: 'backoffice/sip/scheme/investors/get',
+  Scheme_Investors_Applicants: 'backoffice/sip/scheme/investors/applicants/get',
+  Sip_Schemewise_Get: 'backoffice/sip/schemewise/get',
+  Scheme_Wise_Investor_Get: 'backoffice/sip/schemewiseInvestor/get',
+  scheme_wise_Applicants_Get: 'backoffice/sip/schemewiseApplicants/get',
+  ALL_SIP_GET: 'backoffice/sip/allSip/get',
+  CLIENT_WISE_CLIENTNAME_GET: 'backoffice/sip/ClientWiseClientsName/get',
+  CLIENT_WISE_APPLICANT_GET: 'backoffice/sip/ClientWiseApplicants/get',
 
   ///////////////////////////// back office/////////////////////////////////////////////
 
