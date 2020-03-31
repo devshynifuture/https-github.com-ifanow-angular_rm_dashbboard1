@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '../../settings.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { OrgSettingServiceService } from '../../org-setting-service.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
@@ -19,20 +19,62 @@ export class AddTaskTemplateComponent implements OnInit {
   advisorId: any;
   category: any;
   editMode: boolean = false;
-  subTaskList =[];
+  subTaskList = [];
+  Tat = [
+    {
+      value: 1, tat: 'T+0 day'
+    }, { value: 2, tat: 'T+1 day' }, { value: 3, tat: 'T+2 day' }, { value: 4, tat: 'T+3 day' },
+    { value: 5, tat: 'T+4 day' }, { value: 6, tat: 'T+5 day' }, { value: 7, tat: 'T+6 day' },
+    { value: 8, tat: 'T+7 day' }, { value: 9, tat: 'T+8 day' }, { value: 10, tat: 'T+9 day' }
+  ]
+  assetList: any;
+  libilitiesList: any;
+  insuranceList: any;
+  assetSubCategoryList: any;
+  listOfSub: any;
+  libilitySubCategoryList: any;
+  insuranceSubCategoryList: any;
+
+
+
   constructor(private subInjectService: SubscriptionInject,
     private utilService: UtilService,
     private orgSetting: OrgSettingServiceService,
     private event: EventService,
     private fb: FormBuilder,
-  ) { }
-
+  ) {
+    this.taskTemplate = this.fb.group({
+      published: true,
+      subTask: this.fb.array([]),
+    });
+  }
   ngOnInit() {
     this.getdataForm('')
     this.advisorId = AuthService.getAdvisorId()
     this.category = 'asset'
     this.editMode = false;
     this.taskTemplate.controls.category.setValue(1)
+    this.getGlobalTaskData()
+  }
+  getGlobalTaskData() {
+    this.orgSetting.getGlobalDataTask().subscribe(
+      data => {
+        this.getGlobalDataTaskRes(data)
+      },
+      err => this.event.openSnackBar(err, "Dismiss")
+    );
+  }
+  getGlobalDataTaskRes(data) {
+    console.log('getGlobalDataTaskRes', data)
+    this.assetList = data.task_template_category_and_subcategory_list[0]
+    this.assetSubCategoryList = this.assetList.taskTempSubCategorytoCategoryList
+    this.libilitiesList = data.task_template_category_and_subcategory_list[1]
+    this.libilitySubCategoryList = this.libilitiesList.taskTempSubCategorytoCategoryList
+    this.insuranceList = data.task_template_category_and_subcategory_list[2]
+    this.insuranceSubCategoryList = this.insuranceList.taskTempSubCategorytoCategoryList
+  }
+  selectedSubcategory(value){
+    this.listOfSub = value.taskTempSubcattoSubCategories
   }
   getSelectedCategory(value, category) {
     this.category = category
@@ -63,17 +105,26 @@ export class AddTaskTemplateComponent implements OnInit {
       })
     }
   }
-  addSubTask(){
-    this.subTaskList.push(this.fb.group({
+  addSubTask() {
+    this.subTask.push(this.fb.group({
       taskNumber: [null, [Validators.required]],
-      description: [null, [Validators.required]], 
+      description: [null, [Validators.required]],
       turtAroundTime: [null, [Validators.required]],
       ownerId: [null, [Validators.required]],
     }));
-
+    let obj = {
+      TaskTemplateId:3,
+      taskNumber:1,
+      description: "Abcd needs to be done today!",
+      turtAroundTime:2,
+      ownerId:2727
+    }
   }
   getFormControl(): any {
     return this.taskTemplate.controls;
+  }
+  get subTask() {
+    return this.taskTemplate.get('subTaskList') as FormArray;
   }
   Close(flag: boolean) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
@@ -93,20 +144,11 @@ export class AddTaskTemplateComponent implements OnInit {
       subcategoryId: 2,
       linkedTemplateId: 2,
       taskDescription: this.taskTemplate.controls.taskTemplate.value,
-      assignedTo: this.taskTemplate.controls.defaultAssign.value,
-      turnAroundTime: this.taskTemplate.turnaroundTime.value,
-      subTaskList: [{
-        taskNumber: 1,
-        description: "Abcd needs to be done today!",
-        turtAroundTime: 2,
-        ownerId: 2727
-      }, {
-        taskNumber: 1,
-        description: "Abcd needs to be done today!",
-        turtAroundTime: 2,
-        ownerId: 2727
-      }]
+      assignedTo: 2727,
+      turnAroundTime: this.taskTemplate.controls.turnaroundTime.value,
+      subTaskList: this.taskTemplate.controls.subTaskList.value,
     }
+    console.log('this what i want', obj)
     this.orgSetting.addTaskTemplate(obj).subscribe(
       data => {
         this.addTaskTemplateRes(data)

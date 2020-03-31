@@ -491,7 +491,7 @@ export const appConfig = {
   UPLOAD_KEY_PARAMETER: 'goal-planning/static-allocation/put',
   UPDATE_ASSET_ALLOCATION:'goal-planning/static-allocation/put',
   ADD_SUB_TASKTEMPLATE : 'setting/task/sub-task/add',
-  
+  TASK_GLOBAL:'setting/task/template/global/data',
   ADD_TAK_TEMPLATE:'setting/task/template/add',
   EDIT_TASK_TEMPLATE:'setting/task/template/edit',
   DELETE_TASK_TEMPLATE:'setting/task/template/delete',

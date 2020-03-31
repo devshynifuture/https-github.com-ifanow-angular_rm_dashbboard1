@@ -91,11 +91,12 @@ export class OrgSettingServiceService {
   }
   updateOwnerTaskTemplate(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.OWNER_TASK_UPDATE, data);
-
   }
   updateOwnerSubtaskTemplate(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.OWNER_SUBTASK_UPDATE, data);
-
+  }
+  getGlobalDataTask(){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.TASK_GLOBAL, '');
   }
 
 
