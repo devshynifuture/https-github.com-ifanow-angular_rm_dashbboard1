@@ -79,6 +79,7 @@ export class AddTaskTemplateComponent implements OnInit {
   getSelectedCategory(value, category) {
     this.category = category
     console.log('getSelectedCategory', value)
+    
   }
   getdataForm(data) {
     this.taskTemplate = this.fb.group({
