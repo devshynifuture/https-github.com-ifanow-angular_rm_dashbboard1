@@ -75,8 +75,9 @@
                                 </div>
                             </div>
 </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12 row">
                                 <p class="pt-12 mb-8 text-muted">Filter Options</p>
+                                <button (click)="amcWise('Allsip')">View all Sip</button>
                             </div>
                        
                       <div class="margin-12 mt-0">
@@ -212,4 +213,7 @@
 </div>
 <div *ngIf="sipcomponentWise=='applicant'">
     <app-sip-applicant-wise></app-sip-applicant-wise>
+</div>
+<div *ngIf="sipcomponentWise=='Allsip'">
+    <app-all-sip></app-all-sip>
 </div>

@@ -26,7 +26,7 @@ export class SipComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
    this.sipCountGet();
-   this.getAllSip();
+  //  this.getAllSip();
    this.expiredGet();
    this.expiringGet();
    this.sipRejectionGet();
