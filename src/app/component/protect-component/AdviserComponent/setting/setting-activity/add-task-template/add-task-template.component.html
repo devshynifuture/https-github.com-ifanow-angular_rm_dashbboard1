@@ -31,7 +31,8 @@
             <div class="form-group">
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="subCategory">
-                        <mat-option value="Health insurance">Health insurance</mat-option>
+                        <mat-option [value]="sub.adviceSubcategoryId" *ngFor="let sub of listOfSub">
+                            {{sub.subcategoryType}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -41,7 +42,9 @@
             <div class="form-group">
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="subCategory">
-                        <mat-option value="Health insurance">Health insurance</mat-option>
+                        <mat-option [value]="subCategory.adviceSubcategoryId" (click)="selectedSubcategory(subCategory)"
+                            *ngFor="let subCategory of assetSubCategoryList">{{subCategory.subcategoryType}}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -73,7 +76,7 @@
                 <div class="form-group">
                     <mat-form-field>
                         <mat-select class="form-control" formControlName="turnaroundTime">
-                            <mat-option value="T + 1 day">T + 1 day</mat-option>
+                            <mat-option [value]="t.value" *ngFor="let t of Tat">{{t.tat}}</mat-option>
                         </mat-select>
                         <mat-hint>Optional</mat-hint>
                     </mat-form-field>
@@ -81,43 +84,44 @@
             </div>
         </div>
         <div formArrayName="subTaskList">
-            <div class="row pt-24 sub-tasks pb-60">
+            <h5 class="m-0 f-500 text-black">Sub-tasks</h5>
+            <div class="row pt-24 sub-tasks pb-60" *ngFor="let creds of subTask.controls; let i = index"
+                [formGroupName]="i">
                 <div class="col-md-12 p-0">
-                    <h5 class="m-0 f-500 text-black">Sub-tasks</h5>
-                    <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
-
-                        <ng-container matColumnDef="position">
-                            <th mat-header-cell *matHeaderCellDef> </th>
-                            <td mat-cell *matCellDef="let element" class="w-70">
-                                {{(editMode == true)? '':element.position}}
-                                <input *ngIf="editMode == true" #position type="text"
-                                    (input)="changeTableTdValue(position.value, element)" [value]="element.position">
-                            </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="name">
-                            <th mat-header-cell *matHeaderCellDef> </th>
-                            <td mat-cell *matCellDef="let element" class="c-p">
-                                <img src="/assets/images/svg/calander.svg">
-                                <input *ngIf="editMode == true" #position type="number"
-                                    (input)="changeTableTdValue(name.value, element)" [value]="element.name">
-                            </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="weight">
-                            <th mat-header-cell *matHeaderCellDef> </th>
-                            <td mat-cell *matCellDef="let element" class="c-p">
-                                <img src="/assets/images/svg/people.svg">
-                                <mat-select class="form-control" *ngIf="editMode == true">
-                                    <mat-option value="Nita Shinde">Nita Shinde</mat-option>
-                                </mat-select>
-                            </td>
-
-                        </ng-container>
-
-                        <ng-container matColumnDef="symbol">
-                            <th mat-header-cell *matHeaderCellDef> </th>
-                            <td mat-cell *matCellDef="let element" class="c-p">
+                    <div class="row pt-24 sub-tasks pb-60">
+                        <div class="col-md-3 pl-0">
+                            <h5 class="m-0 f-500 text-black">Sub-tasks</h5>
+                            <div class="form-group">
+                                <mat-form-field>
+                                    <input matInput #currentValue type="text" maxlength="10"
+                                        class="form-control br-0 rupess" formControlName="description">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3 pr-0">
+                            <img src="/assets/images/svg/calander.svg">
+                            <div class="form-group">
+                                <mat-form-field>
+                                    <mat-select class="form-control" formControlName="turtAroundTime">
+                                        <mat-option [value]="t.value" *ngFor="let t of Tat">{{t.tat}}</mat-option>
+                                    </mat-select>
+                                    <mat-hint>Optional</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3 pr-0">
+                            <img src="/assets/images/svg/people.svg">
+                            <div class="form-group">
+                                <mat-form-field>
+                                    <mat-select class="form-control" formControlName="ownerId">
+                                        <mat-option value=2727>Nita Shinde</mat-option>
+                                    </mat-select>
+                                    <mat-hint>Optional</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-3 pr-0">
+                            <div class="form-group">
                                 <mat-icon [matMenuTriggerFor]="menu" class="c-p">more_vert</mat-icon>
                                 <mat-menu #menu="matMenu">
                                     <button mat-menu-item (click)="toggleEditMode()">
@@ -127,16 +131,15 @@
                                         Delete
                                     </button>
                                 </mat-menu>
-                            </td>
-                        </ng-container>
-
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    </table>
-                    <p class="m-0 roboto text-custom pt-12 pb-44" (click)="addSubTask()">+ Add sub-task</p>
-                    <p class="m-0 roboto text-custom pt-12 pb-44">+ Save sub task</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="col-md-12 p-0">
+            <p class="m-0 roboto text-custom pt-12 pb-44" (click)="addSubTask()">+ Add sub-task</p>
+            <p class="m-0 roboto text-custom pt-12 pb-44">+ Save sub task</p>
         </div>
     </div>
 </div>
@@ -146,7 +149,7 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit">SAVE
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveTaskTemplate()">SAVE
             </button>
         </div>
     </div>
