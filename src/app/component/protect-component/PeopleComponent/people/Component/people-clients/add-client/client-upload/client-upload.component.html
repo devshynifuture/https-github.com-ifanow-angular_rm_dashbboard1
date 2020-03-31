@@ -1,35 +1,40 @@
 <div class="row pt-32">
     <div class="col-md-6">
         <h5 class="m-0 text-black pb-10">Company PAN</h5>
-        <mat-card class="upload-card">
-            <p class="m-0 roboto text-black">Drag & drop file here or Browse
+        <input #fileComPan (change)="getFile($event, 'company-pan')" style="display: none;" accept='image/*' type="file">
+        <mat-card  class="upload-card c-p" (click)="fileComPan.click()">
+            <p *ngIf="!fileComPanImg.view" class="m-0 roboto text-black">Drag & drop file here or Browse
             </p>
+            <img [src]="fileComPanImg.view" [ngStyle]="imgStyleCom" *ngIf="fileComPanImg.view">
         </mat-card>
         <div class="col-md-12 upload-actions pr-0">
-            <button mat-raised-button><i class="material-icons f-12 text-custom">
+            <button mat-raised-button (click)="zoomInOut('zoomIn', 'company-pan')"><i class="material-icons f-12 text-custom">
                     add
                 </i></button>
-            <button mat-raised-button><i class="material-icons f-12 text-custom">
+            <button mat-raised-button (click)="zoomInOut('zoomOut', 'company-pan')"><i class="material-icons f-12 text-custom">
                     remove
                 </i></button>
-            <button mat-raised-button class="mr-0">REMOVE</button>
+            <button mat-raised-button (click)="removeImg('company-pan')"  class="mr-0">REMOVE</button>
+            <button mat-raised-button (click)="uploadFile('company-pan')" class="mr-0">UPLOAD</button>
         </div>
     </div>
     <div class="col-md-6">
         <h5 class="m-0 text-black pb-10">Contact/Authorized person PAN</h5>
-        <mat-card class="upload-card">
-            <p class="m-0 roboto text-black">Drag & drop file here or Browse
-
+        <input #filePerPan (change)="getFile($event, 'personal-pan')" style="display: none;" accept='image/*' type="file">
+        <mat-card class="upload-card c-p" (click)="filePerPan.click()">
+            <p *ngIf="!filePerPanImg.view" class="m-0 roboto text-black">Drag & drop file here or Browse
             </p>
+            <img [src]="filePerPanImg.view" [ngStyle]="imgStylePer" *ngIf="filePerPanImg.view">
         </mat-card>
         <div class="col-md-12 upload-actions pr-0">
-            <button mat-raised-button><i class="material-icons f-12 text-custom">
-                    add
-                </i></button>
-            <button mat-raised-button><i class="material-icons f-12 text-custom">
-                    remove
-                </i></button>
-            <button mat-raised-button class="mr-0">REMOVE</button>
+            <button mat-raised-button (click)="zoomInOut('zoomIn', 'personal-pan')"><i class="material-icons f-12 text-custom">
+                add
+            </i></button>
+        <button mat-raised-button (click)="zoomInOut('zoomOut', 'personal-pan')"><i class="material-icons f-12 text-custom">
+                remove
+            </i></button>
+        <button mat-raised-button (click)="removeImg('personal-pan')"  class="mr-0">REMOVE</button>
+        <button mat-raised-button (click)="uploadFile('personal-pan')" class="mr-0">UPLOAD</button>
         </div>
     </div>
 </div>
@@ -56,7 +61,8 @@
                 </div>
             </div>
         </div>
-        <mat-card class="upload-card h-340">
+        <input #fileProof1 (change)="getFile($event, 'proof-type1')" style="display: none;" accept='image/*' type="file">
+        <mat-card class="upload-card c-p h-340" (click)="fileProof1.click()">
             <p class="m-0 roboto text-black">Drag & drop file here or Browse
 
             </p>
@@ -79,7 +85,8 @@
                 <button mat-button class="p-0 back">Back</button>
             </div>
         </div>
-        <mat-card class="upload-card h-340">
+        <input #fileProof2 (change)="getFile($event, 'proof-type2')" style="display: none;" accept='image/*' type="file">
+        <mat-card class="upload-card c-p h-340" (click)="fileProof2.click()">
             <p class="m-0 roboto text-black">Drag & drop file here or Browse
 
             </p>

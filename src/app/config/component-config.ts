@@ -159,6 +159,7 @@ export const appConfig = {
   DELETE_OTHERS: 'account/asset/commodity/other/delete',
   GLOBAL_LIABILITIES: 'account/liability/global/get',
   UPLOAD_FILE: 'document/account/document/all-file/file/put',
+  CLIENT_UPLOAD_FILE: 'document/upload/pre-signed-url/get',
   NEW_FOLDER: 'document/account/document/all-file/folder/post',
   GET_ASSET_STOCK: 'account/asset/stock/list/get',
   ADD_ASSET_STOCK: 'account/asset/stock/add',
@@ -466,7 +467,7 @@ export const appConfig = {
   BACKOFFICE_TRANSACTIONS: 'backoffice/file-upload/uploaded/transaction/list/get',
   BACKOFFICE_SIP_STP: 'backoffice/file-upload/uploaded/sip/list/get',
   BACKOFFICE_FOLIO: 'backoffice/file-upload/uploaded/folio-master/list/get',
-  BACKOFFICE_SUCCESS_FILE_UPLOAD: 'web/backoffice/file-upload/success',
+  BACKOFFICE_SUCCESS_FILE_UPLOAD: 'backoffice/file-upload/success',
 
   ///org setting ////
   GET_PERSONAL_PROFILE: 'setting/profile/personal/details/get',
