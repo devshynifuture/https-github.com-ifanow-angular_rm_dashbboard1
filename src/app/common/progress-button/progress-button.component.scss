@@ -82,4 +82,12 @@
     .mobileNone {
         display: none;
     }
+    button {
+        .bar {
+            border-radius: 50px;
+        }
+    }
+     ::ng-deep .mat-progress-bar-buffer {
+        border-radius: 50px !important;
+    }
 }
