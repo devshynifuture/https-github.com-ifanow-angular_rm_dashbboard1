@@ -61,8 +61,7 @@
                             <p class="memberName">Family members</p>
 
                             <div class="memberSlider">
-                                <div (click)="detailedViewData(singleMembers)"
-                                    *ngFor="let singleMembers of familyMemberList"
+                                <div (click)="open('edit',singleMembers)" *ngFor="let singleMembers of familyMemberList"
                                     class="memberList primary-border c-p">
                                     <img src="/assets/images/svg/women-profile-icon.svg">
                                     <div class="familyList">

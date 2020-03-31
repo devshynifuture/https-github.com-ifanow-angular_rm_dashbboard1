@@ -16,86 +16,86 @@ export class ClientBasicDetailsComponent implements OnInit {
   nonIndividualForm: any;
   advisorId: typeof AuthService;
   basicDetailsData: any;
+  mobileData: any;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService) { }
   basicDetails;
+  date = new Date();
   @Input() fieldFlag;
   @Output() clientData = new EventEmitter();
   @Output() tabChange = new EventEmitter();
+  @Input() set familyMemberData(data) {
+    if (data == undefined) {
+      return;
+    }
+  };
   validatorType = ValidatorType;
   invTypeCategory = '1';
   invTaxStatus = '1';
+  mobileNumberFlag = "Mobile number";
   ngOnInit() {
-    this.createIndividualForm();
   }
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
-    this.basicDetailsData = data.data;
-    console.log(data)
+    this.basicDetailsData = (data.data == null) ? data : data.data;
+    console.log(data);
+    this.createIndividualForm(this.basicDetailsData);
   }
-  createIndividualForm() {
+  createIndividualForm(data) {
+    (data == undefined) ? data = {} : '';
     this.basicDetails = this.fb.group({
-      fullName: [, [Validators.required]],
+      fullName: [data.displayName, [Validators.required]],
       email: [, [Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
-      mobileNo: new FormArray([]),
-      pan: [, [Validators.maxLength(10)]],
+      pan: [data.pan, [Validators.maxLength(10)]],
       username: [, [Validators.required]],
-      dobAsPerRecord: [, [Validators.required]],
+      dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth), [Validators.required]],
       dobActual: [, [Validators.required]],
       gender: ['1', [Validators.required]],
       leadSource: [],
       leaadStatus: [],
       leadRating: [],
       leadOwner: [],
-      clientOwner: [, [Validators.required]],
+      clientOwner: [],
       role: [, [Validators.required]],
     })
-    this.addNumber();
   }
-  createMinorForm() {
-    this.minorForm = this.fb.group({
-      minorFullName: [],
-      dobAsPerRecord: [],
-      dobActual: [],
-      gender: ['1'],
-      gFullName: [],
-      gDobAsPerRecord: [],
-      gDobActual: [],
-      gGender: ['1'],
-      relationWithMinor: [],
-      gEmail: [, [Validators.pattern(this.validatorType.EMAIL)]],
-      mobileNo: [],
-      pan: [],
-      username: [],
-      leadOwner: [],
-      role: []
-    })
-  }
-  createNonIndividualForm() {
-    this.nonIndividualForm = this.fb.group({
-      comName: [],
-      dateOfIncorporation: [],
-      comStatus: [],
-      comEmail: [[Validators.pattern(this.validatorType.EMAIL)]],
-      comPhone: [],
-      comPan: [],
-      comOccupation: [],
-      username: [],
-      leadOwner: [],
-      role: []
-    })
-  }
-  get getBasicDetails() { return this.basicDetails.controls; }
-  get getMobileNumList() { return this.getBasicDetails.mobileNo as FormArray; }
-  create
-  removeNumber(index) {
-    (this.basicDetails.controls.mobileNo.length == 1) ? '' : this.basicDetails.controls.mobileNo.removeAt(index)
-  }
-  addNumber() {
-    this.getMobileNumList.push(this.fb.group({
-      code: ['+91'],
-      number: [, Validators.compose([Validators.maxLength(10)])]
-    }))
+  // createMinorForm() {
+  //   this.minorForm = this.fb.group({
+  //     minorFullName: [],
+  //     dobAsPerRecord: [],
+  //     dobActual: [],
+  //     gender: ['1'],
+  //     gFullName: [],
+  //     gDobAsPerRecord: [],
+  //     gDobActual: [],
+  //     gGender: ['1'],
+  //     relationWithMinor: [],
+  //     gEmail: [, [Validators.pattern(this.validatorType.EMAIL)]],
+  //     mobileNo: [],
+  //     pan: [],
+  //     username: [],
+  //     leadOwner: [],
+  //     role: []
+  //   })
+  // }
+  // createNonIndividualForm() {
+  //   this.nonIndividualForm = this.fb.group({
+  //     comName: [],
+  //     dateOfIncorporation: [],
+  //     comStatus: [],
+  //     comEmail: [[Validators.pattern(this.validatorType.EMAIL)]],
+  //     comPhone: [],
+  //     comPan: [],
+  //     comOccupation: [],
+  //     username: [],
+  //     leadOwner: [],
+  //     role: []
+  //   })
+  // }
+
+  getNumberDetails(data) {
+    console.log(data);
+    this.mobileData = data;
   }
   checkMaxLength(value: number) {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -110,127 +110,182 @@ export class ClientBasicDetailsComponent implements OnInit {
   }
   changeInvestorType(event) {
     this.invTypeCategory = event.value;
-    (event.value == '1') ? this.createIndividualForm() : (event.value == '2') ? this.createMinorForm() : this.createNonIndividualForm();
+    // (event.value == '1') ? this.createIndividualForm() : (event.value == '2') ? this.createMinorForm() : this.createNonIndividualForm();
   }
   changeTaxStatus(event) {
     this.invTaxStatus = event.value;
   }
-  saveNext(flag) {
-    // individual form
-    // let obj =
-    // {
-    //   fullName: this.basicDetails.controls.fullName.value,
-    //   email: this.basicDetails.controls.email.value,
-    //   mobileNo: this.basicDetails.controls.mobileNo.value,
-    //   pan: this.basicDetails.controls.pan.value,
-    //   username: this.basicDetails.controls.username.value,
-    //   dobAsPerRecord: this.basicDetails.controls.dobAsPerRecord.value,
-    //   dobActual: this.basicDetails.controls.dobActual.value,
-    //   gender: this.basicDetails.controls.gender.value,
-    //   leadSource: this.basicDetails.controls.leadSource.value,
-    //   leaadStatus: this.basicDetails.controls.leaadStatus.value,
-    //   leadRating: this.basicDetails.controls.leadRating.value,
-    //   leadOwner: this.basicDetails.controls.leadOwner.value,
-    //   clientOwner: this.basicDetails.controls.clientOwners.value,
-    //   role: this.basicDetails.controls.role.value,
-    // }
-    // minor form
-    // let obj =
-    // {
-    //   minorFullName: this.minorForm.controls.minorFullName.value,
-    //   dobAsPerRecord: this.minorForm.controls.dobAsPerRecord.value,
-    //   dobActual: this.minorForm.controls.dobActual.value,
-    //   gender: this.minorForm.controls.gender.value,
-    //   gFullName: this.minorForm.controls.gFullName.value,
-    //   gDobAsPerRecord: this.minorForm.controls.gDobAsPerRecord.value,
-    //   gDobActual: this.minorForm.controls.gDobActual.gDobActual.value,
-    //   gGender: this.minorForm.controls.gGender.value,
-    //   relationWithMinor: this.minorForm.controls.relationWithMinor.value,
-    //   gEmail: this.minorForm.controls.gEmail.value,
-    //   mobileNo: this.minorForm.controls.mobileNo.value,
-    //   pan: this.minorForm.controls.pan.value,
-    //   username: this.minorForm.controls.username.value,
-    //   leadOwner: this.minorForm.controls.leadOwner.value,
-    //   role: this.minorForm.controls.role.value
-    // }
-    // console.log(obj);
+  saveNextClient(flag) {
+    this.basicDetails.get('clientOwner').setValidators([Validators.required]);
+    this.basicDetails.get('clientOwner').updateValueAndValidity();
     if (this.basicDetails.invalid) {
       this.basicDetails.markAllAsTouched();
       return;
     }
-    let mobileList = [];
-    if (this.basicDetails.controls.mobileNo.valid) {
-      this.basicDetails.controls.mobileNo.value.forEach(element => {
-        mobileList.push(
+    else {
+      let mobileList = [];
+      this.mobileData.controls.forEach(element => {
+        console.log(element);
+        mobileList.push({
+          "verificationStatus": 0,
+          "id": 0,
+          "userType": 0,
+          "mobileNo": element.get('number').value,
+          "isActive": 1,
+          "userId": 0
+        })
+      });
+      let obj =
+      {
+        "advisorId": this.advisorId,
+        "taxStatusId": this.invTaxStatus,
+        "emailList": [
           {
             "verificationStatus": 0,
             "id": 0,
             "userType": 0,
-            "mobileNo": element.number,
             "isActive": 1,
-            "userId": 0
+            "userId": 0,
+            "email": this.basicDetails.controls.email.value
           }
+        ],
+        "displayName": null,
+        "bio": null,
+        "martialStatusId": 0,
+        "password": null,
+        "clientType": 0,
+        "occupationId": 0,
+        "id": null,
+        "pan": this.basicDetails.controls.pan.value,
+        "clientId": (this.basicDetailsData.clientId == null) ? '' : this.basicDetailsData.clientId,
+        "kycComplaint": 0,
+        "roleId": 1,
+        "genderId": this.basicDetails.controls.gender.value,
+        "companyStatus": 0,
+        "aadharCard": null,
+        "dateOfBirth": this.basicDetails.controls.dobAsPerRecord.value,
+        "userName": this.basicDetails.controls.username.value,
+        "userId": null,
+        "mobileList": mobileList,
+        "referredBy": 0,
+        "name": this.basicDetails.controls.fullName.value,
+        "bioRemarkId": 0,
+        "userType": 1,
+        "remarks": null,
+        "status": 0
+      }
+      if (this.basicDetailsData == null) {
+        this.peopleService.addClient(obj).subscribe(
+          data => {
+            console.log(data);
+            (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
+          },
+          err => this.eventService.openSnackBar(err, "Dismiss")
         )
-      });
+      }
+      else {
+        this.peopleService.editClient(obj).subscribe(
+          data => {
+            console.log(data);
+          },
+          err => this.eventService.openSnackBar(err, "Dismiss")
+        )
+      }
     }
-    let obj =
-    {
-      "advisorId": this.advisorId,
-      "taxStatusId": this.invTaxStatus,
-      "emailList": [
-        {
-          "verificationStatus": 0,
-          "id": 0,
-          "userType": 0,
-          "isActive": 1,
-          "userId": 0,
-          "email": this.basicDetails.controls.email.value
-        }
-      ],
-      "displayName": null,
-      "bio": null,
-      "martialStatusId": 0,
-      "password": null,
-      "clientType": 0,
-      "occupationId": 0,
-      "id": null,
-      "pan": this.basicDetails.controls.pan.value,
-      "clientId": this.advisorId,
-      "kycComplaint": 0,
-      "roleId": 1,
-      "genderId": this.basicDetails.controls.gender.value,
-      "companyStatus": 0,
-      "aadharCard": null,
-      "dateOfBirth": this.basicDetails.controls.dobAsPerRecord.value,
-      "userName": this.basicDetails.controls.username.value,
-      "userId": null,
-      "mobileList": mobileList,
-      "referredBy": 0,
-      "name": this.basicDetails.controls.fullName.value,
-      "bioRemarkId": 0,
-      "userType": 1,
-      "remarks": null,
-      "status": 0
-    }
-    if (this.basicDetailsData == null) {
-      this.peopleService.addClient(obj).subscribe(
-        data => {
-          console.log(data);
-          if (flag == "Next") {
-            this.clientData.emit(data);
-            this.tabChange.emit(1);
-          }
-          else {
-            this.close();
-          }
-        },
-        err => this.eventService.openSnackBar(err, "Dismiss")
-      )
+  }
+  changeTabAndSendData(data) {
+    this.clientData.emit(data);
+    this.tabChange.emit(1);
+  }
+  saveNextFamilyMember(flag) {
+    this.basicDetails.get('clientOwner').setValidators(null);
+    let mobileList = [];
+    this.mobileData.controls.forEach(element => {
+      console.log(element);
+      mobileList.push({
+        "mobileNo": element.get('number').value,
+        "verificationStatus": 0
+      })
+    });
+    if (this.basicDetails.invalid) {
+      this.basicDetails.markAllAsTouched();
+      return;
     }
     else {
-      this.peopleService.editClient(obj).subscribe(
+      let obj =
+      {
+        "id": this.basicDetailsData.id,
+        "clientId": this.basicDetailsData.clientId,
+        "name": this.basicDetails.controls.fullName.value,
+        "displayName": "displayName",
+        "dateOfBirth": this.basicDetails.controls.dobAsPerRecord.value,
+        "martialStatusId": 1,
+        "anniversaryDate": "2000-01-01",
+        "genderId": this.basicDetails.controls.gender.value,
+        "occupationId": 1,
+        "pan": this.basicDetails.controls.pan.value,
+        "taxStatusId": this.invTaxStatus,
+        "relationshipId": 1,
+        "familyMemberType": 1,
+        "isKycCompliant": 1,
+        "aadhaarNumber": "aadhaarNumber",
+        "mobileList": mobileList,
+        "emailList": [
+          {
+            "email": this.basicDetails.controls.email.value,
+            "verificationStatus": 0
+          }
+        ],
+        "bioRemark": {
+          "bio": "bio",
+          "remark": "remark"
+        },
+        "guardianData": {
+          "name": "name",
+          "birthDate": "2000-01-01",
+          "pan": "pan",
+          "genderId": 1,
+          "relationshipId": 1,
+          "aadhaarNumber": "aadhaarNumber",
+          "occupationId": 1,
+          "martialStatusId": 1,
+          "anniversaryDate": "2000-01-01",
+          "mobileList": [
+            {
+              "mobileNo": 9987442988,
+              "verificationStatus": 0
+            },
+            {
+              "mobileNo": 8454816777,
+              "verificationStatus": 0
+            }
+          ],
+          "emailList": [
+            {
+              "email": "c@gmail",
+              "verificationStatus": 0
+            },
+            {
+              "email": "c@gmail",
+              "verificationStatus": 0
+            }
+          ]
+        },
+        "bankDetail": {
+          "addressId": 1,
+          "branchCode": "branchCode",
+          "bankName": "bankName",
+          "branchName": "branchName",
+          "accountType": "accountType",
+          "accountNumber": "accountNumber",
+          "micrNo": "micrNo",
+          "ifscCode": "ifscCode",
+          "defaultFlag": 1
+        }
+      }
+      this.peopleService.editFamilyMemberDetails(obj).subscribe(
         data => {
-          console.log(data);
+          (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
         },
         err => this.eventService.openSnackBar(err, "Dismiss")
       )
@@ -239,4 +294,5 @@ export class ClientBasicDetailsComponent implements OnInit {
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
+
 }

@@ -19,7 +19,6 @@ import { SettingBackupModule } from './setting-backup/setting-backup/setting-bac
 import { SettingActivityComponent } from './setting-activity/setting-activity.component';
 import { CommonComponentModule } from '../../common-component/common-component.module';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
-import { OrgProfileComponent } from './setting-org-profile/add-personal-profile/org-profile/org-profile.component';
 
 
 @NgModule({

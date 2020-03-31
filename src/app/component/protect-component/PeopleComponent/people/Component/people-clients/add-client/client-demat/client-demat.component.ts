@@ -11,10 +11,12 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
   styleUrls: ['./client-demat.component.scss']
 })
 export class ClientDematComponent implements OnInit {
+  mobileData: any;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService) { }
   dematForm;
   userData;
+  mobileNumberFlag = "Broker number"
   validatorType = ValidatorType;
   @Output() tabChange = new EventEmitter();
   @Input() set data(data) {
@@ -35,6 +37,10 @@ export class ClientDematComponent implements OnInit {
       powerOfAttMasId: []
     })
     this.addHolders();
+  }
+  getNumberDetails(data) {
+    console.log(data);
+    this.mobileData = data;
   }
   get getDematForm() { return this.dematForm.controls };
   get holderNameList() { return this.getDematForm.holderNameList as FormArray };

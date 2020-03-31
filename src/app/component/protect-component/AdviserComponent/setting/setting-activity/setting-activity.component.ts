@@ -4,6 +4,7 @@ import { SubscriptionInject } from '../../Subscriptions/subscription-inject.serv
 import { SubscriptionService } from '../../Subscriptions/subscription.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
+import { TaskTemplateTypeComponent } from './add-task-template/task-template-type/task-template-type.component';
 
 @Component({
   selector: 'app-setting-activity',
@@ -20,14 +21,14 @@ export class SettingActivityComponent implements OnInit {
   ngOnInit() {
   }
 
-  addTaskTemplate(singleProfile, value) {
+  openTaskTemplateType(singleProfile, value) {
 
     const fragmentData = {
       flag: value,
       data: singleProfile,
       id: 1,
       state: 'open50',
-      componentName: AddTaskTemplateComponent
+      componentName: TaskTemplateTypeComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -44,6 +45,7 @@ export class SettingActivityComponent implements OnInit {
     );
     // this.billerProfileData = this.dataTOget.data
   }
+  
 }
 export interface PeriodicElement {
   name: string;
