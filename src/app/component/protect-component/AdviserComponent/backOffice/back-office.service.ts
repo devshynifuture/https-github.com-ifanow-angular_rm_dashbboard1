@@ -77,12 +77,11 @@ export class BackOfficeService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AMC_WISE, httpParams);
   }
   amcWiseApplicantGet(data) {
-    const httpParams = new HttpParams().set('advisorId', data).set('arnRiaDetailId', data.arnRiaDetailId).set('schemeMasterId', data.schemeMasterId).set('totalAum', data.totalAum);
+    const httpParams = new HttpParams().set('advisorId', data).set('arnRiaDetailId', data.arnRiaDetailId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_APPLICANT_NAME, httpParams);
   }
   getSipcountGet(data) {
-    const httpParams = new HttpParams().set('teamMemberId', data);
-
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_COUNT_GET, httpParams);
   }
 
@@ -130,15 +129,18 @@ export class BackOfficeService {
 // Date - 10 dec 2019
 
   GET_EXPIRING(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EXPIRING, data);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('limit', data.limit).set('offset', data.offset).set('parentId', data.parentId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EXPIRING, httpParams);
   }
 
   GET_expired(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_expired, data);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('limit', data.limit).set('offset', data.offset).set('parentId', data.parentId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_expired, httpParams);
   }
 
   GET_SIP_REJECTION(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_REJECTION, data);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('limit', data.limit).set('offset', data.offset).set('parentId', data.parentId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_REJECTION, httpParams);
   }
 
   GET_SIP_SCHEME_SEARCH(data) {
@@ -150,36 +152,46 @@ export class BackOfficeService {
   }
 
   GET_SIP_AMC(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_AMC, data);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_AMC, httpParams);
   }
 
-  GET_SIP_AMC_SCHEME(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_AMC_SCHEME, data);
+  GET_SIP_AMC_SCHEME(data){
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('amcId', data.amcId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('sipAmount', data.sipAmount);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_AMC_SCHEME, httpParams);
   }
   allSipGet(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.ALL_SIP_GET, data);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('limit', data.limit).set('offset', data.offset).set('parentId', data.parentId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.ALL_SIP_GET, httpParams);
   }
   GET_SIP_INVERSTORS(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_INVERSTORS, data);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('schemeId', data.schemeId).set('sipAmount', data.sipAmount);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_INVERSTORS, httpParams);
   }
   Sip_Schemewise_Get(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.Sip_Schemewise_Get, data);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.Sip_Schemewise_Get, httpParams);
   }
   Sip_Investors_Applicant_Get(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.Scheme_Investors_Applicants, data);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('clientId', data.clientId).set('parentId', data.parentId).set('schemeId', data.schemeId).set('sipAmount', data.sipAmount);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.Scheme_Investors_Applicants, httpParams);
   }
   sipClientWiseApplicant(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.CLIENT_WISE_APPLICANT_GET, data);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('clientId', data.clientId).set('parentId', data.parentId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.CLIENT_WISE_APPLICANT_GET, httpParams);
   }
   sipClientWiseClientName(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.CLIENT_WISE_CLIENTNAME_GET, data);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.CLIENT_WISE_CLIENTNAME_GET, httpParams);
   }
-  Scheme_Wise_Investor_Get() {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.Scheme_Wise_Investor_Get, null);
+  Scheme_Wise_Investor_Get(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('schemeId', data.schemeId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.Scheme_Wise_Investor_Get, httpParams);
   }
 
   scheme_wise_Applicants_Get(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.scheme_wise_Applicants_Get, data);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('clientId', data.clientId).set('parentId', data.parentId).set('schemeId', data.schemeId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.scheme_wise_Applicants_Get, httpParams);
   }
 
 // ---------------------------------------- sip data call--------------------------------------

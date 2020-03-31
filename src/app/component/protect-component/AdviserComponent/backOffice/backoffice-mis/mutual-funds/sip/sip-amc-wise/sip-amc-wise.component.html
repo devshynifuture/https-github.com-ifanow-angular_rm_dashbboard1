@@ -26,24 +26,25 @@
                         <th class="text-right">% Weight</th>
                     </tr>
                 </thead>
-                <!-- <tbody *ngFor="let category of category; let i = index">
+                <tbody *ngFor="let category of amcList; let i = index">
                     <tr>
                         <td>{{i+1}}</td>
-                        <td (click)="showSubTableList(i,category.showCategory)">{{category.name}} <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="category.showCategory==true"> add  </i>
+                        <td (click)="showSubTableList(i,category.showCategory)">{{category.amcName}} <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="category.showCategory==true"> add  </i>
                         <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="category.showCategory==false"> remove  </i></td>
-                        <td class="text-right">{{category.totalAum}} </td>
+                        <td class="text-right">{{category.sipAmount}} </td>
+                        <td class="text-right">{{category.sipCount}} </td>
                         <td class="text-right">{{category.weightInPercentage}}%</td>
                      </tr>
                      <tr>
                          <tr>
                         <table *ngIf="category.showCategory==false" class="table-low mt-8 " id="table-high">
                                 <thead class="bg-light text-dark">
-                                        <tr>
-                                            <th>Sr No.</th>
-                                            <th>Sub Category Name</th>
-                                            <th class="text-right">Current Value</th>
-                                            <th class="text-right">% Weight</th>
-                    
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Scheme Name</th>
+                                        <th class="text-right">SIP Amount</th>
+                                        <th class="text-right">SIP Count</th>
+                                        <th class="text-right">% Weight</th>
                                         </tr>
                                     </thead>
                                        <tbody *ngFor="let subcategory of category.subCategoryList; let i = index">
@@ -58,8 +59,9 @@
                                                 <thead>
                                                     <tr>
                                                     <th>Sr No.</th>
-                                                    <th>Sub Category Name</th>
-                                                    <th class="text-right">Current Value</th>
+                                                    <th>Investor Name	</th>
+                                                    <th class="text-right">SIP Amount</th>
+                                                    <th class="text-right">SIP Count</th>
                                                     <th class="text-right">% Weight</th>
                                                     </tr>
                                                 </thead>
@@ -79,7 +81,7 @@
                         </table>
 
                     </tr>
-                </tbody> -->
+                </tbody>
             </table>
    
         </div>

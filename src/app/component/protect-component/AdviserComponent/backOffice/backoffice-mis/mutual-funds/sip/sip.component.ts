@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BackOfficeService } from '../../../back-office.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-sip',
@@ -14,9 +15,13 @@ export class SipComponent implements OnInit {
   sipcomponentWise;
   sipshow: boolean = false;
   showMainWrapperFlag: boolean = true;
+  advisorId: any;
+  clientId: any;
   constructor(private backoffice:BackOfficeService,private dataService:EventService) { }
  
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
    this.sipCountGet();
    this.getAllSip();
    this.expiredGet();
@@ -27,7 +32,12 @@ export class SipComponent implements OnInit {
   }
   sipCountGet()
   {
-    this.backoffice.getSipcountGet(this.teamMemberId).subscribe(
+    const obj={
+      advisorId:this.advisorId,
+      arnRiaDetailsId:-1,
+      parentId:-1
+    }
+    this.backoffice.getSipcountGet(obj).subscribe(
       data =>this.getsipCountGet(data)
     )
   }
@@ -46,9 +56,11 @@ export class SipComponent implements OnInit {
   getAllSip()
   {
     const obj={
-      limit:10,
+      limit:20,
       offset:0,
-      teamMemberId:this.teamMemberId
+      advisorId:this.advisorId,
+      arnRiaDetailsId:-1,
+      parentId:-1
     }
     this.backoffice.allSipGet(obj).subscribe(
       data =>{
@@ -59,9 +71,11 @@ export class SipComponent implements OnInit {
   expiredGet()
   {
     const obj={
+      advisorId:this.advisorId,
+      arnRiaDetailsId:-1,
       limit:10,
       offset:0,
-      teamMemberId:this.teamMemberId
+      parentId:-1  
     }
     this.backoffice.GET_expired(obj).subscribe(
       data =>{
@@ -72,9 +86,11 @@ export class SipComponent implements OnInit {
   expiringGet()
   {
     const obj={
+      advisorId:this.advisorId,
+      arnRiaDetailsId:-1,
       limit:10,
       offset:0,
-      teamMemberId:this.teamMemberId
+      parentId:-1 
     }
     this.backoffice.GET_EXPIRING(obj).subscribe(
       data =>{
@@ -85,9 +101,11 @@ export class SipComponent implements OnInit {
   sipRejectionGet()
   {
     const obj={
+      advisorId:this.advisorId,
+      arnRiaDetailsId:-1,
       limit:10,
       offset:0,
-      teamMemberId:this.teamMemberId
+      parentId:-1 
     }
     this.backoffice.GET_SIP_REJECTION(obj).subscribe(
       data =>{

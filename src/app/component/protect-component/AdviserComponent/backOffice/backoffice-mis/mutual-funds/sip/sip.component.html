@@ -87,8 +87,8 @@
                                                 <div class="col-md-3 pt-12 pl-8">
                                                     <img src="/assets/images/svg/cal.svg">
                                                 </div>
-                                                <div class="col-md-9 p-0">
-                                                    <h5 class="mb-0 text-custom pt-16 pb-16 ">Category wise</h5>
+                                                <div class="col-md-9 p-0 c-p" (click)="amcWise('amc')">
+                                                    <h5 class="mb-0 text-custom pt-16 pb-16 ">Amc wise</h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -100,8 +100,8 @@
                                                     <img src="/assets/images/svg/cal.svg">
                                                 </div>
                                                 <!-- (click)="categoryWise('amc')" prod build -->
-                                                <div class="col-sm-9 p-0" >
-                                                    <h5 class="mb-0 text-custom pt-16 pb-16 ">AMC wise</h5>
+                                                <div class="col-sm-9 p-0 c-p" (click)="amcWise('scheme')">
+                                                    <h5 class="mb-0 text-custom pt-16 pb-16 ">Scheme wise</h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -113,7 +113,7 @@
                                                     <img src="/assets/images/svg/cal.svg">
                                                 </div>
                                                 <!-- (click)="categoryWise('client')" prod build -->
-                                                <div class="col-md-9 p-0 " >
+                                                <div class="col-md-9 p-0 c-p" (click)="amcWise('client')">
                                                     <h5 class="mb-0 text-custom pt-16 pb-16 ">Client wise</h5>
                                                 </div>
                                             </div>
@@ -126,7 +126,7 @@
                                                     <img src="/assets/images/svg/cal.svg">
                                                 </div>
                                                 <!-- (click)="categoryWise('applicant')"  prod build -->
-                                                <div class="col-sm-9 p-0" >
+                                                <div class="col-sm-9 p-0 c-p" (click)="amcWise('applicant')">
                                                     <h5 class="mb-0 text-custom pt-16 pb-16 ">Applicant wise</h5>
                                                 </div>
                                             </div>
@@ -178,6 +178,10 @@
                                 </mat-tab-group>
                             </div>
                         </div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div *ngIf="sipcomponentWise=='amc'">
     <app-sip-amc-wise></app-sip-amc-wise>

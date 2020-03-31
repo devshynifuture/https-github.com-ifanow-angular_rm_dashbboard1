@@ -25,9 +25,8 @@
                         <th class="text-right">% Weight</th>
                     </tr>
                 </thead>
-                <!-- <tbody *ngFor="let category of category; let i = index">
+                <tbody *ngFor="let category of clietnList; let i = index">
                     <tr>
-                        <td>{{i+1}}</td>
                         <td (click)="showSubTableList(i,category.showCategory)">{{category.name}} <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="category.showCategory==true"> add  </i>
                         <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="category.showCategory==false"> remove  </i></td>
                         <td class="text-right">{{category.totalAum}} </td>
@@ -38,11 +37,17 @@
                         <table *ngIf="category.showCategory==false" class="table-low mt-8 " id="table-high">
                                 <thead class="bg-light text-dark">
                                         <tr>
-                                            <th>Sr No.</th>
-                                            <th>Sub Category Name</th>
-                                            <th class="text-right">Current Value</th>
+                                            <th>Applicant Name</th>
+                                            <th class="text-right">Scheme Name</th>
+                                            <th class="text-right">Folio</th>
+                                            <th class="text-right">Registered Date</th>
+                                            <th class="text-right">From Date</th>
+                                            <th class="text-right">To Date</th>
+                                            <th class="text-right">Trigger Day</th>
+                                            <th class="text-right">Frequency</th>
+                                            <th class="text-right">Amount</th>
                                             <th class="text-right">% Weight</th>
-                    
+                                            <th class="text-right">Edit/Delete</th>
                                         </tr>
                                     </thead>
                                        <tbody *ngFor="let subcategory of category.subCategoryList; let i = index">
@@ -78,7 +83,7 @@
                         </table>
 
                     </tr>
-                </tbody> -->
+                </tbody>
             </table>
    
         </div>
