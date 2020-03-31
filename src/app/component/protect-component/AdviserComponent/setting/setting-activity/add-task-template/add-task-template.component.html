@@ -133,7 +133,7 @@
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
-                    <p class="m-0 roboto text-custom pt-12 pb-44">+ Add sub-task</p>
+                    <p class="m-0 roboto text-custom pt-12 pb-44" (click)="addSubTask()">+ Add sub-task</p>
                     <p class="m-0 roboto text-custom pt-12 pb-44">+ Save sub task</p>
                 </div>
             </div>

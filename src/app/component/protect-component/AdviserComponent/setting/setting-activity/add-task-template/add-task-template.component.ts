@@ -19,6 +19,7 @@ export class AddTaskTemplateComponent implements OnInit {
   advisorId: any;
   category: any;
   editMode: boolean = false;
+  subTaskList =[];
   constructor(private subInjectService: SubscriptionInject,
     private utilService: UtilService,
     private orgSetting: OrgSettingServiceService,
@@ -62,7 +63,15 @@ export class AddTaskTemplateComponent implements OnInit {
       })
     }
   }
+  addSubTask(){
+    this.subTaskList.push(this.fb.group({
+      taskNumber: [null, [Validators.required]],
+      description: [null, [Validators.required]], 
+      turtAroundTime: [null, [Validators.required]],
+      ownerId: [null, [Validators.required]],
+    }));
 
+  }
   getFormControl(): any {
     return this.taskTemplate.controls;
   }
