@@ -1,0 +1,38 @@
+<div [formGroup]="numberFormGroup">
+    <div *ngFor="let numberForm of getMobileNumList.controls;index as i" [formGroup]="numberForm" class="row pt-44">
+        <div class="col-md-4 text-right">
+            <h5 class="m-0 pt-12">{{flag}}</h5>
+        </div>
+
+        <div class="col-md-2 pl-0">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select formControlName="code" class="form-control">
+                        <mat-option selected value="+91">+91</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="col-md-4 p-0">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input #num formControlName="number" autocomplete="off" formControlName="number" matInput
+                        class="form-control">
+                    <mat-hint>Optional</mat-hint>
+                    <mat-hint align="end">{{num.value.length}}/10</mat-hint>
+                    <mat-error *ngIf="numberForm.get('number').errors?.isMaxLength"></mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="col-md-1 d-flex align-items-center">
+            <i (click)="addNumber()" class="material-icons c-p f-20">
+                add
+            </i>
+            <i (click)="removeNumber(i)" class="material-icons c-p f-20">
+                remove
+            </i>
+        </div>
+    </div>
+</div>
