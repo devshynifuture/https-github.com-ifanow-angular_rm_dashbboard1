@@ -66,42 +66,7 @@
                 </div>
             </div>
         </div>
-        <div *ngFor="let numberForm of getMobileNumList.controls;index as i" [formGroup]="numberForm" class="row pt-44">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-12">Mobile number</h5>
-            </div>
-
-            <div class="col-md-2 pl-0">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select formControlName="code" class="form-control">
-                            <mat-option selected value="+91">+91</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-            </div>
-
-            <div class="col-md-4 p-0">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input #num formControlName="number" autocomplete="off" formControlName="number" matInput
-                            class="form-control">
-                        <mat-hint>Optional</mat-hint>
-                        <mat-hint align="end">{{num.value.length}}/10</mat-hint>
-                        <mat-error *ngIf="numberForm.get('number').errors?.isMaxLength"></mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-
-            <div class="col-md-1 d-flex align-items-center">
-                <i (click)="addNumber()" class="material-icons c-p f-20">
-                    add
-                </i>
-                <i (click)="removeNumber(i)" class="material-icons c-p f-20">
-                    remove
-                </i>
-            </div>
-        </div>
+        <app-add-number [flag]="mobileNumberFlag" (numberArray)="getNumberDetails($event)"></app-add-number>
         <div class="row pt-44">
             <div class="col-md-4 text-right">
                 <h5 class="m-0 pt-12">PAN</h5>
@@ -149,7 +114,8 @@
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
                         <input [matDatepicker]="dobAsPerRecord" (click)="dobAsPerRecord.open()"
-                            class="form-control br-0 b-0" formControlName="dobAsPerRecord" matInput readonly>
+                            class="form-control br-0 b-0" [max]="date" formControlName="dobAsPerRecord" matInput
+                            readonly>
                         <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord"></mat-datepicker-toggle>
                         <mat-datepicker #dobAsPerRecord></mat-datepicker>
                         <mat-error class="f-12">This field is required
@@ -161,8 +127,8 @@
                 <p class="m-0 roboto">Actual</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input [matDatepicker]="dobActual" (click)="dobActual.open()" class="form-control br-0 b-0"
-                            formControlName="dobActual" matInput readonly>
+                        <input [matDatepicker]="dobActual" [max]="date" (click)="dobActual.open()"
+                            class="form-control br-0 b-0" formControlName="dobActual" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="dobActual"></mat-datepicker-toggle>
                         <mat-datepicker #dobActual></mat-datepicker>
                         <mat-error class="f-12">This field is required
