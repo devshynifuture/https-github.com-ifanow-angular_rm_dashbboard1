@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { SettingsService } from '../../settings.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
@@ -6,6 +6,7 @@ import { OrgSettingServiceService } from '../../org-setting-service.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-add-task-template',
@@ -34,7 +35,9 @@ export class AddTaskTemplateComponent implements OnInit {
   listOfSub: any;
   libilitySubCategoryList: any;
   insuranceSubCategoryList: any;
-
+  list: any;
+  hideSubcategory: boolean = false;
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
 
   constructor(private subInjectService: SubscriptionInject,
@@ -72,13 +75,24 @@ export class AddTaskTemplateComponent implements OnInit {
     this.libilitySubCategoryList = this.libilitiesList.taskTempSubCategorytoCategoryList
     this.insuranceList = data.task_template_category_and_subcategory_list[2]
     this.insuranceSubCategoryList = this.insuranceList.taskTempSubCategorytoCategoryList
+    this.getSelectedCategory(1, 'asset')
   }
-  selectedSubcategory(value){
+  selectedSubcategory(value) {
     this.listOfSub = value.taskTempSubcattoSubCategories
+    if (value.taskTempSubcattoSubCategories.length == 0) {
+      this.hideSubcategory = true
+    }
   }
   getSelectedCategory(value, category) {
     this.category = category
     console.log('getSelectedCategory', value)
+    if (value == 1) {
+      this.list = this.assetSubCategoryList
+    } else if (value == 2) {
+      this.list = this.libilitySubCategoryList
+    } else {
+      this.list = this.insuranceSubCategoryList
+    }
   }
   getdataForm(data) {
     this.taskTemplate = this.fb.group({
@@ -105,20 +119,36 @@ export class AddTaskTemplateComponent implements OnInit {
       })
     }
   }
-  addSubTask() {
+  addSubTask(value) {
     this.subTask.push(this.fb.group({
       taskNumber: [null, [Validators.required]],
       description: [null, [Validators.required]],
       turtAroundTime: [null, [Validators.required]],
       ownerId: [null, [Validators.required]],
     }));
-    let obj = {
-      TaskTemplateId:3,
-      taskNumber:1,
-      description: "Abcd needs to be done today!",
-      turtAroundTime:2,
-      ownerId:2727
+    console.log('creds --',value)
+    if (value.invalid) {
+      this.inputs.find(input => !input.ngControl.valid).focus();
+      value.markAllAsTouched();
+    } else{
+      let obj = {
+        TaskTemplateId: 1,
+        taskNumber: value.controls.taskNumber.value,
+        description: value.controls.description.value,
+        turtAroundTime: value.controls.turtAroundTime.value,
+        ownerId: 2727
+      }
+      this.orgSetting.addSubtaskTemplate(obj).subscribe(
+        data => {
+          this.addSubtaskTemplateRes(data)
+        },
+        err => this.event.openSnackBar(err, "Dismiss")
+      );
     }
+  
+  }
+  addSubtaskTemplateRes(data){
+    console.log('addSubtaskTemplateRes',data)
   }
   getFormControl(): any {
     return this.taskTemplate.controls;
