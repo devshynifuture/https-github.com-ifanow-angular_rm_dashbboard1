@@ -102,7 +102,7 @@ export class AddTaskTemplateComponent implements OnInit {
       defaultAssign: [(!data) ? '' : data.defaultAssign],
       turnaroundTime: [(!data) ? '' : data.turnaroundTime],
       subTaskList: this.fb.array([this.fb.group({
-        taskNumber: [null, [Validators.required]],
+        taskNumber: [1, [Validators.required]],
         description: [null, [Validators.required]],
         turtAroundTime: [null, [Validators.required]],
         ownerId: [null, [Validators.required]]
@@ -111,7 +111,7 @@ export class AddTaskTemplateComponent implements OnInit {
     if (data.subTaskList != undefined) {
       data.subTaskList.forEach(element => {
         this.taskTemplate.controls.subTaskList.push(this.fb.group({
-          taskNumber: [(element.taskNumber) + "", [Validators.required]],
+          taskNumber: [(1) + "", [Validators.required]],
           description: [(element.description + ""), Validators.required],
           turtAroundTime: [(element.turtAroundTime), Validators.required],
           ownerId: [element.ownerId, [Validators.required]]
@@ -121,7 +121,7 @@ export class AddTaskTemplateComponent implements OnInit {
   }
   addSubTask(value) {
     this.subTask.push(this.fb.group({
-      taskNumber: [null, [Validators.required]],
+      taskNumber: [1, [Validators.required]],
       description: [null, [Validators.required]],
       turtAroundTime: [null, [Validators.required]],
       ownerId: [null, [Validators.required]],
@@ -133,7 +133,7 @@ export class AddTaskTemplateComponent implements OnInit {
     } else{
       let obj = {
         TaskTemplateId: 1,
-        taskNumber: value.controls.taskNumber.value,
+        taskNumber: 1,
         description: value.controls.description.value,
         turtAroundTime: value.controls.turtAroundTime.value,
         ownerId: 2727
@@ -168,11 +168,12 @@ export class AddTaskTemplateComponent implements OnInit {
   }
   saveTaskTemplate() {
     let obj = {
-
-      advisorId: this.advisorId,
+      advisorId: 414,
       categoryId: 1,
       subcategoryId: 2,
       linkedTemplateId: 2,
+      adviceTypeId:1,
+      subSubCategoryId:13,
       taskDescription: this.taskTemplate.controls.taskTemplate.value,
       assignedTo: 2727,
       turnAroundTime: this.taskTemplate.controls.turnaroundTime.value,

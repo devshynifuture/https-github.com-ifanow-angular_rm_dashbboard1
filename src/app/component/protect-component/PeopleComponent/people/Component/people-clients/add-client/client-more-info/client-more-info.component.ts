@@ -67,13 +67,70 @@ export class ClientMoreInfoComponent implements OnInit {
       "remarks": null,
       "status": 0
     }
-    this.peopleService.editClient(obj).subscribe(
-      data => {
-        console.log(data);
-        (flag == 'Next') ? this.tabChange.emit(1) : this.close();
+    if (this.fieldFlag == 'client') {
+      this.peopleService.editClient(obj).subscribe(
+        data => {
+          console.log(data);
+          (flag == 'Next') ? this.tabChange.emit(1) : this.close();
+        },
+        err => this.eventService.openSnackBar(err, "Dismiss")
+      )
+    }
+    else {
+      this.peopleService.editFamilyMemberDetails(obj).subscribe(
+        data => {
+          (flag == 'Next') ? this.tabChange.emit(1) : this.close();
+        },
+        err => this.eventService.openSnackBar(err, "Dismiss")
+      )
+    }
+  }
+  saveNextFamilyMember(flag) {
+    let obj =
+    {
+      "isKycCompliant": 0,
+      "taxStatusId": 0,
+      "emailList": this.moreInfoData.emailList,
+      "displayName": this.moreInfoForm.controls.displayName.value,
+      "guardianId": 0,
+      "martialStatusId": this.moreInfoForm.controls.maritalStatus.value,
+      "isActive": 0,
+      "addressModelList": null,
+      "occupationId": this.moreInfoForm.controls.occupation.value,
+      "id": 0,
+      "dematList": null,
+      "pan": this.moreInfoData.pan,
+      "familyMemberType": 0,
+      "clientId": this.moreInfoData.clientId,
+      "genderId": this.moreInfoData.genderId,
+      "dateOfBirth": this.moreInfoData.dateOfBirth,
+      "bankDetailList": null,
+      "relationshipId": 0,
+      "mobileList": this.moreInfoData.mobileList,
+      "anniversaryDate": null,
+      "aadhaarNumber": this.moreInfoForm.controls.adhaarNo.value,
+      "name": this.moreInfoData.name,
+      "bioRemarkId": 0,
+      "bioRemark": {
+        "bio": this.moreInfoForm.controls.bio.value,
+        "remark": null,
+        "id": 0
       },
-      err => this.eventService.openSnackBar(err, "Dismiss")
-    )
+      "guardianData": {
+        "mobileList": null,
+        "aadhaarNumber": null,
+        "anniversaryDate": null,
+        "occupationId": 0,
+        "emailList": null,
+        "name": null,
+        "genderId": 0,
+        "martialStatusId": 0,
+        "id": 0,
+        "pan": null,
+        "relationshipId": 0,
+        "birthDate": null
+      }
+    }
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
