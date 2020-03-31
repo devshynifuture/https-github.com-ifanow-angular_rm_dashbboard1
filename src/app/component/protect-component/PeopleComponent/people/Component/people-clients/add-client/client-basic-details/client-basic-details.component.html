@@ -10,9 +10,8 @@
                     <mat-form-field>
                         <mat-select [(ngModel)]="invTypeCategory" (selectionChange)="changeInvestorType($event)"
                             class="form-control">
-                            <mat-option value="1">Individual</mat-option>
-                            <mat-option value="2">Minor</mat-option>
-                            <mat-option value="3">Non Individual</mat-option>
+                            <mat-option *ngFor="let singleCategory of categoryList" value="singleCategory.value">
+                                {{singleCategory.name}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -251,7 +250,7 @@
         </div>
     </div>
 </div>
-<div *ngIf="invTypeCategory=='2'" [formGroup]="minorForm" class="minorBox">
+<div *ngIf="invTypeCategory=='2' && fieldFlag=='familyMember'" [formGroup]="minorForm" class="minorBox">
     <div class=" row pt-20">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-20">Minor’s full name</h5>
@@ -523,8 +522,7 @@
 
 
 </div>
-
-<div *ngIf="invTypeCategory=='3'" [formGroup]="nonIndividualForm" class="non-individualBox">
+<div *ngIf="invTypeCategory=='2' && fieldFlag=='client'" [formGroup]="nonIndividualForm" class="non-individualBox">
     <div class="row pt-40">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-12">Company name</h5>
@@ -645,7 +643,6 @@
                 <mat-form-field>
                     <input matInput #cOccupation formControlName="comOccupation" class="form-control">
                     <mat-hint>Optional</mat-hint>
-                    <!-- <mat-hint align="end">{{comOccupation.value.length}}/ 10</mat-hint>prod build -->
                 </mat-form-field>
             </div>
         </div>
@@ -710,10 +707,18 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right">
-            <button mat-raised-button (click)="saveNext('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
+        <div *ngIf="fieldFlag=='client'" class="col-md-8 right text-right">
+            <button mat-raised-button (click)="saveNextClient('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
             </button>
-            <button mat-stroked-button (click)="saveNext('close')" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
+            <button mat-stroked-button (click)="saveNextClient('close')" class="btn-bottom br-0 text-inherit">SAVE &
+                CLOSE
+            </button>
+        </div>
+        <div *ngIf="fieldFlag=='familyMember'" class="col-md-8 right text-right">
+            <button mat-raised-button (click)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
+            </button>
+            <button mat-stroked-button (click)="saveNextFamilyMember('close')" class="btn-bottom br-0 text-inherit">SAVE
+                & CLOSE
             </button>
         </div>
     </div>

@@ -26,7 +26,7 @@ export class OverviewProfileComponent implements OnInit {
   getFamilyMembersList() {
     let obj =
     {
-      clientId: 2,
+      clientId: 2978,
       id: 0
     }
     this.cusService.getFamilyMembers(obj).subscribe(
@@ -81,10 +81,11 @@ export class OverviewProfileComponent implements OnInit {
     let component;
     if (value == 'add') {
       component = AddFamilyMemberComponent;
-      (data == null) ? data = { flag: 'Add Family Member', fieldFlag: 'familyMember' } : '';
+      data = { flag: 'Add Family Member', fieldFlag: 'familyMember' };
     }
     else {
-      (data == null) ? data = { flag: 'Add Family Member', fieldFlag: 'familyMember' } : '';
+      data['flag'] = "Add Family Member";
+      data['fieldFlag'] = 'familyMember';
       component = AddClientComponent;
     }
     const fragmentData = {
@@ -99,7 +100,7 @@ export class OverviewProfileComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-
+            this.getFamilyMembersList();
           }
           rightSideDataSub.unsubscribe();
         }

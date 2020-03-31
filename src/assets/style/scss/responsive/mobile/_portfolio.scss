@@ -1,8 +1,33 @@
 
 @media(max-width: 767px){
-
-	
-#mob-portfolio{background-color: #f2f2f2;
+	.pt-2{
+		padding-top:2px;
+	}
+	.lh-24{
+		line-height: 24px !important;
+	}
+	.mob-br-1{
+		border-right: 1px solid #ECECEC;
+	}
+	.mob-bb-1{
+		border-bottom: 1px solid #ECECEC;
+	}
+	.mob-br-success-1{
+		border-right: 1px solid #5BCF7F;
+	}
+	.mob-text-success{
+		color: #5BCF7F;
+	}
+	.mob-bg-success{
+		background: rgba(91, 207, 127, 0.1);
+	}
+	.circular-small{
+		height: 24px;
+		width: 24px;
+		background-color:#D8D8D8;
+		border-radius:50%;
+	}
+#mob-portfolio,#mob-mutualfunds,#mob-schemes,#mob-transactiondetails{background-color: #f2f2f2;
 h4{
 		line-height: 20px;
 		font-family: CircularStd;
@@ -11,6 +36,14 @@ h4{
 		line-height: 15px;
 		font-family: CircularStd;
 	}
+	h5{
+		font-family: CircularStd;
+	}
+	.bg-white{
+	box-shadow: 0px 1px 1px rgba(198, 198, 198, 0.2);
+	border-radius: 10px;
+	}
+
 }
 .f-nowrap{
 	flex-wrap: nowrap;
@@ -201,14 +234,42 @@ height: 20px;
 	
 		flex-wrap: nowrap;
 	
-	.bg-white{
-	box-shadow: 0px 1px 1px rgba(198, 198, 198, 0.2);
-	border-radius: 10px;
-	}
-
+	
 	.col-10{
 		padding-left:9px;
 	}
 
 } 
+}
+#mob-mutualfunds,#mob-transactiondetails{
+	h4.f-22{
+		color: #5BCF7F;
+	}
+	.mf{
+		height: 40px;
+		width: 40px;
+		font-size: 14px;
+		padding-top:16px;
+	}
+}
+#mob-schemes{
+	hr{
+		margin: 0 !important;
+		    border-bottom: 1px solid #ECECEC;
+    	width: 90%;
+    	margin: 0 auto !important;
+    	border-top:	0px;
+	}
+	.add{
+		background: linear-gradient(180deg, #36DBFA 0%, #19B5F2 100%);
+box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 2px 1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14);
+height: 40px;
+width: 40px;
+border-radius:50%;
+padding-top: 9px;
+margin: 50px auto;
+text-align: center;
+margin-bottom: 16px;
+cursor: pointer;
+	}
 }
