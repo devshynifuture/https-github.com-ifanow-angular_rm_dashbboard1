@@ -37,15 +37,15 @@
                                     <div class="bg-foliocount br-2 height180 pr-20 pl-12">
 
                                         <div class="row pt-12">
-                                            <div class="col-md-5 text-left p-0" *ngIf="SipData1">
+                                            <div class="col-md-5 text-left p-0" *ngIf="sipCount">
                                                 <div class="pl-12">
-                                                    <h1 class="f-24 text-white mb-0 pb-8">{{SipData1.totalCount}}
+                                                    <h1 class="f-24 text-white mb-0 pb-8">{{sipCount.totalCount}}
                                                     </h1>
                                                     <p class="f-12 text-white mb-0">SIP Count</p>
                                                 </div>
                                             </div>
-                                            <div class="col-md-7 p-0 text-right">
-                                                <h1 class="text-white f-24 mb-0 pb-8"></h1>
+                                            <div class="col-md-7 p-0 text-right" *ngIf="sipCount">
+                                                <h1 class="text-white f-24 mb-0 pb-8">{{sipCount.totalAmount}}</h1>
                                                 <p class="f-12 mb-0 text-white">Average SIP</p>
 
                                             </div>
@@ -137,40 +137,58 @@
                             <div class="row p-12">
                                 <img src="/assets/images/grap.png"
                                     class="w-100 h-365">
+                                    <div class="col-md-3 p-0">
+                                        <div id="mistabs1">
+                                            <mat-tab-group class="h-500 bg-white b-a ">
+                                                <mat-tab label="SIP Rejections/Reversals">
+                                                    <p class="b-a text-center p-8 mb-0 f-12 text-custom">List of SIP expiring in last 90 days </p>
+                                                    <!-- *ngIf="clientTotalAum" prod build -->
+                                                    <div class="b-white" *ngIf="rejectionSip">
+                                                        <div class="row bb-dotted" *ngFor="let item of rejectionSip">
+                                                            <div class="col-md-7 p-0 ">
+                                                                <p class="mb-0 f-bold  p-8 ">{{item.schemeName}}|{{item.folioNumber}}</p>
+                                                                <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
+                                                                    {{item.investorName}}</p>
+                                                                    <p>{{item.amount}}</p>
+                                                            </div>
+                                                            <div class="col-md-5 p-0 ">
+                                                                <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
+                                                                    {{item.transactionDate | date:'dd/MM/yyyy'}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </mat-tab>
+                                            </mat-tab-group>
+                                        </div>
+                                    </div>
                             </div>
     </div>
       <div class="col-md-3 p-0">
                             <div id="mistabs1">
                                 <mat-tab-group class="h-500 bg-white b-a ">
                                     <mat-tab label="Expiring SIP">
-                                        <p class="b-a text-center p-8 mb-0 f-12 text-custom">List of SIP expired in last 90 days </p>
                                         <!-- *ngIf="clientTotalAum" prod build -->
-                                        <div class="b-white" >
-                                            <!-- *ngFor="let item of clientTotalAum" prod build -->
-                                            <div class="row bb-dotted" >
+                                        <div class="b-white" *ngIf="expiringSip">
+                                            <div class="row bb-dotted" *ngFor="let item of expiringSip">
                                                 <div class="col-md-7 p-0 ">
-                                                    <!-- <p class="mb-0 f-bold f-13 p-8 ">{{item.name}}</p> -->
-                                                </div>
-                                                <div class="col-md-5 p-0 ">
-                                                    <!-- <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
-                                                        {{item.totalAum}}</p> -->
+                                                    <p class="mb-0 f-bold  p-8 ">{{item.schemeName}}|{{item.folioNumber}}</p>
+                                                    <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
+                                                        {{item.investorName}}</p>
+                                                        <p>{{item.sipAmount}}</p>
                                                 </div>
                                             </div>
 
                                         </div>
                                     </mat-tab>
-                                    <mat-tab label="Expiring SIP ">
+                                    <mat-tab label="Expired SIP ">
                                         <h6 class="f-bold b-a text-center p-12 mb-0 f-14 ">Top AMC</h6>
-                                        <!-- *ngIf="amcTotalAum" prod build -->
-                                        <div class="b-white ">
-                                            <!-- *ngFor="let item of amcTotalAum" prod build -->
-                                            <div class="row bb-dotted " >
+                                        <div class="b-white " *ngIf="expiringSip">
+                                            <div class="row bb-dotted "  *ngFor="let item of expiredSip">
                                                 <div class="col-md-7 p-0 ">
-                                                    <!-- <p class="mb-0 f-bold f-13 p-8 ">{{item.schemeName}}</p> -->
-                                                </div>
-                                                <div class="col-md-5 p-0 ">
-                                                    <!-- <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
-                                                        {{item.total_aum}}</p> -->
+                                                    <p class="mb-0 f-bold  p-8 ">{{item.schemeName}}|{{item.folioNumber}}</p>
+                                                    <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
+                                                        {{item.investorName}}</p>
+                                                        <p>{{item.sipAmount}}</p>
                                                 </div>
                                             </div>
                                         </div>

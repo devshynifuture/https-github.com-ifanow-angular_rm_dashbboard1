@@ -12,7 +12,7 @@ export class SipClientWiseComponent implements OnInit {
   clientId: any;
   teamMemberId=2929;
   advisorId: any;
-  clietnList: any;
+  clientList: any;
   constructor(private backoffice:BackOfficeService,public sip:SipComponent) { }
 
   ngOnInit() {
@@ -34,13 +34,34 @@ export class SipClientWiseComponent implements OnInit {
     }
     this.backoffice.sipClientWiseClientName(obj).subscribe(
       data =>{
-        this.clietnList=data;
-        this.clietnList.forEach(o => {
+        this.clientList=data;
+        this.clientList.forEach(o => {
           o.showCategory = true;
         });
         console.log(data);
       }
     )
+  }
+    showSubTableList(index, category,applicantData) {
+    applicantData.showCategory=!applicantData.showCategory
+    applicantData.applicantList=[]
+    if(applicantData.showCategory==false){
+      const obj={
+        advisorId:this.advisorId,
+        arnRiaDetailsId:-1,
+        clientId:applicantData.clientId,
+        parentId:-1
+      }
+      this.backoffice.sipClientWiseApplicant(obj).subscribe(
+        data =>{
+          if(data){
+            data[0].showSubCategory=true
+            applicantData.applicantList=data
+            console.log(data)
+          }
+        }
+      )
+    }
   }
   clientWiseApplicantGet(){
     const obj={

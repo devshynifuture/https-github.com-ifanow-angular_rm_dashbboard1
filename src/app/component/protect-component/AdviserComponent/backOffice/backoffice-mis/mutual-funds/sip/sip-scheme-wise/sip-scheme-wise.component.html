@@ -81,8 +81,9 @@
                                                             <i  class="material-icons right b-a f-14 mt-4 c-p" *ngIf="scheme.showSubCategory==true"> remove  </i> </td>
                                                         <td class="text-right">{{scheme.schemeName}} </td>
                                                         <td class="text-right">{{scheme.folioNumber}} </td>
-                                                        <td class="text-right">{{scheme.from_date}} </td>
-                                                        <td class="text-right">{{scheme.to_date}} </td>
+                                                        <td class="text-right">{{scheme.registeredDate | date:'dd/MM/yyyy'}}</td>
+                                                        <td class="text-right">{{scheme.from_date | date:'dd/MM/yyyy'}} </td>
+                                                        <td class="text-right">{{scheme.to_date | date:'dd/MM/yyyy'}} </td>
                                                         <td class="text-right">{{scheme.sipTriggerDay}} </td>
                                                         <td class="text-right">{{scheme.frequency}} </td>
                                                         <td class="text-right">{{scheme.sipAmount}} </td>

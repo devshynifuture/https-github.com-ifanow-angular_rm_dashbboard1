@@ -20,9 +20,6 @@ export class SipAmcWiseComponent implements OnInit {
     this.advisorId=AuthService.getAdvisorId();
     this.clientId=AuthService.getClientId();
     this.amcGet();
-    this.amcSchemeGet();
-    this.schemeInvestorGet();
-    this.investorApplicantGet();
   }
 
   aumReport()
@@ -44,6 +41,75 @@ export class SipAmcWiseComponent implements OnInit {
         console.log(data);
       }
     )
+  }
+  showSubTableList(index, category,schemeData) {
+    schemeData.showCategory=!schemeData.showCategory
+    schemeData.schemeList=[]
+    if(schemeData.showCategory==false){
+      const obj={
+        advisorId:this.advisorId,
+        amcId:schemeData.amcId,
+        arnRiaDetailsId:-1,
+        parentId:-1,
+        sipAmount:schemeData.sipAmount,
+      }
+      this.backoffice.GET_SIP_AMC_SCHEME(obj).subscribe(
+        data =>{
+          if(data){
+            data[0].showSubCategory=true
+            schemeData.schemeList=data
+            console.log(data)
+          }
+        }
+      )
+    }
+  }
+  showSchemeName(index, subcashowSubcat ,investorData) {
+    investorData.showSubCategory=!investorData.showSubCategory
+    investorData.investorList=[];
+    if(investorData.showSubCategory==false){
+      const obj={
+        advisorId:this.advisorId,
+        arnRiaDetailsId:-1,
+        parentId:-1,
+        schemeId:investorData.mutualFundSchemeMasterId,
+        sipAmount:investorData.sipAmount,
+      }
+      this.backoffice.GET_SIP_INVERSTORS(obj).subscribe(
+        data =>{
+          if(data){
+            data[0].showInvestor=true;
+            data[0].mutualFundSchemeMasterId=investorData.mutualFundSchemeMasterId;
+            investorData.investorList=data;
+            console.log(data)
+          }
+        }
+      )
+    }
+  }
+  showApplicantName(index, subcashowSubcat ,applicantData) {
+    applicantData.showInvestor=!applicantData.showInvestor
+    applicantData.applicantList=[];
+    if(applicantData.showInvestor==false){
+      const obj={
+        advisorId:this.advisorId,
+        arnRiaDetailsId:-1,
+        clientId:applicantData.clientId,
+        parentId:-1,
+        schemeId:applicantData.mutualFundSchemeMasterId,
+        sipAmount:applicantData.sipAmount
+      }
+      this.backoffice.Sip_Investors_Applicant_Get(obj).subscribe(
+        data =>{
+          if(data){
+            applicantData.applicantList=data;
+            console.log(data)
+          }
+        }
+      )
+
+
+    }
   }
   schemeInvestorGet(){
     const obj={

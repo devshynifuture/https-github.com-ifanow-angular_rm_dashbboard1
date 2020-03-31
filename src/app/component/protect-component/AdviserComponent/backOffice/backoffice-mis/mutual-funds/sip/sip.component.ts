@@ -10,13 +10,16 @@ import { AuthService } from 'src/app/auth-service/authService';
 })
 export class SipComponent implements OnInit {
   teamMemberId=2929;
-  SipData1;
+  sipCount;
   sipComponent : boolean =true;
   sipcomponentWise;
   sipshow: boolean = false;
   showMainWrapperFlag: boolean = true;
   advisorId: any;
   clientId: any;
+  expiringSip: any;
+  expiredSip:any;
+  rejectionSip: any;
   constructor(private backoffice:BackOfficeService,private dataService:EventService) { }
  
   ngOnInit() {
@@ -44,7 +47,7 @@ export class SipComponent implements OnInit {
   getsipCountGet(data)
   {
     console.log("sip count",data);
-    this.SipData1=data;
+    this.sipCount=data;
   }
   getFilerrorResponse(err) {
     this.dataService.openSnackBar(err, 'Dismiss')
@@ -79,6 +82,7 @@ export class SipComponent implements OnInit {
     }
     this.backoffice.GET_expired(obj).subscribe(
       data =>{
+        this.expiredSip=data;
         console.log(data);
       }
     )
@@ -95,6 +99,7 @@ export class SipComponent implements OnInit {
     this.backoffice.GET_EXPIRING(obj).subscribe(
       data =>{
         console.log(data);
+        this.expiringSip=data;
       }
     )
   }
@@ -109,6 +114,7 @@ export class SipComponent implements OnInit {
     }
     this.backoffice.GET_SIP_REJECTION(obj).subscribe(
       data =>{
+        this.rejectionSip=data;
         console.log(data);
       }
     )
