@@ -17,6 +17,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   advisorId: typeof AuthService;
   basicDetailsData: any;
   mobileData: any;
+  categoryList: any[];
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService) { }
   basicDetails;
@@ -34,6 +35,11 @@ export class ClientBasicDetailsComponent implements OnInit {
   invTaxStatus = '1';
   mobileNumberFlag = "Mobile number";
   ngOnInit() {
+    (this.fieldFlag == 'client') ? this.categoryList = [{ name: 'Individual', value: '1' }, { name: 'Non-individual', value: '2' }] :
+      this.categoryList = [
+        { name: 'Individual', value: '1' },
+        { name: 'Minor', value: '2' }
+      ];
   }
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();

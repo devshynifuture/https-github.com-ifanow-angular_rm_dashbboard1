@@ -10,9 +10,8 @@
                     <mat-form-field>
                         <mat-select [(ngModel)]="invTypeCategory" (selectionChange)="changeInvestorType($event)"
                             class="form-control">
-                            <mat-option value="1">Individual</mat-option>
-                            <mat-option value="2">Minor</mat-option>
-                            <mat-option value="3">Non Individual</mat-option>
+                            <mat-option *ngFor="let singleCategory of categoryList" value="singleCategory.value">
+                                {{singleCategory.name}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -251,7 +250,7 @@
         </div>
     </div>
 </div>
-<!-- <div *ngIf="invTypeCategory=='2'" [formGroup]="minorForm" class="minorBox">
+<div *ngIf="invTypeCategory=='2' && fieldFlag=='familyMember'" [formGroup]="minorForm" class="minorBox">
     <div class=" row pt-20">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-20">Minor’s full name</h5>
@@ -522,9 +521,8 @@
 
 
 
-</div> -->
-
-<!-- <div *ngIf="invTypeCategory=='3'" [formGroup]="nonIndividualForm" class="non-individualBox">
+</div>
+<div *ngIf="invTypeCategory=='2' && fieldFlag=='client'" [formGroup]="nonIndividualForm" class="non-individualBox">
     <div class="row pt-40">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-12">Company name</h5>
@@ -703,7 +701,7 @@
             </div>
         </div>
     </div>
-</div> -->
+</div>
 <div class="bottom-fixed wrapper-12 w-50">
     <div class="row">
         <div class="col-md-4">
