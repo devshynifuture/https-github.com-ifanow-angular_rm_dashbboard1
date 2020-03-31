@@ -58,9 +58,9 @@ export class UsersComponent implements OnInit{
     const dataObj = {
       advisorId: this.advisorId
     }
-    this.settingsService.getRoles(dataObj).subscribe((res)=>{
-      this.roles = res;
-    });
+    // this.settingsService.getRoles(dataObj).subscribe((res)=>{
+    //   this.roles = res;
+    // });
   }
   
   newTeamMember() {

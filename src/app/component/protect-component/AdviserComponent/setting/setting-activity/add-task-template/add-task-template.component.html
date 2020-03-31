@@ -3,7 +3,7 @@
         <h4 class="mb-0 l-22 wrapper-20">Add task template</h4>
     </div>
     <div class="col-md-2 text-right">
-        <i class="material-icons pt-20 c-p pr-16">
+        <i class="material-icons pt-20 c-p pr-16"  (click)="Close()">
             clear
         </i>
     </div>
@@ -48,19 +48,29 @@
 </div> -->
 
 <!-- Adding a linked task template -->
-<div class="row pt-90 pl-28 pr-28">
+<div class="row pt-90 pl-28 pr-28" [formGroup]="taskTemplate">
     <div class="col-md-12 p-0 select-category">
         <h5 class="m-0 pb-12">Select category</h5>
-        <mat-radio-group aria-label="Select an option">
+        <mat-radio-group aria-label="Select an option" formControlName="category">
             <mat-radio-button value="1" class="b-ua text-custom">Asset</mat-radio-button>
             <mat-radio-button value="2" class="bu-primary text-primary">Insurance</mat-radio-button>
-            <mat-radio-button value="2" class="b-ua text-custom">Liability</mat-radio-button>
+            <mat-radio-button value="3" class="b-ua text-custom">Liability</mat-radio-button>
         </mat-radio-group>
         <div class="col-md-6 p-0">
             <h5 class="m-0 pb-12 pt-24">Select sub category</h5>
             <div class="form-group">
                 <mat-form-field>
-                    <mat-select class="form-control">
+                    <mat-select class="form-control" formControlName="subCategory">
+                        <mat-option value="Health insurance">Health insurance</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-6 p-0">
+            <h5 class="m-0 pb-12 pt-24">Select {{''}}</h5>
+            <div class="form-group">
+                <mat-form-field>
+                    <mat-select class="form-control" formControlName="subCategory">
                         <mat-option value="Health insurance">Health insurance</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -70,7 +80,7 @@
             <h5 class="m-0 pb-12 pt-24">Select task template</h5>
             <div class="form-group">
                 <mat-form-field>
-                    <mat-select class="form-control">
+                    <mat-select class="form-control" formControlName="taskTemplate">
                         <mat-option value="Port policy">Port policy</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -81,7 +91,7 @@
                 <h5 class="m-0 pb-12">Default assigned to</h5>
                 <div class="form-group">
                     <mat-form-field>
-                        <mat-select class="form-control">
+                        <mat-select class="form-control" formControlName="defaultAssign">
                             <mat-option value="Nita Shinde">Nita Shinde</mat-option>
                         </mat-select>
                         <mat-hint>Optional</mat-hint>
@@ -92,7 +102,7 @@
                 <h5 class="m-0 pb-12">Turnaround time</h5>
                 <div class="form-group">
                     <mat-form-field>
-                        <mat-select class="form-control">
+                        <mat-select class="form-control" formControlName="turnaroundTime">
                             <mat-option value="T + 1 day">T + 1 day</mat-option>
                         </mat-select>
                         <mat-hint>Optional</mat-hint>
@@ -151,7 +161,7 @@
 <div class="bottom-fixed wrapper-12 w-50">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit">SAVE
