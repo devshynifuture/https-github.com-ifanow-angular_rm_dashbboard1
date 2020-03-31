@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { BackOfficeService } from '../../../../back-office.service';
+import { SipComponent } from '../sip.component';
 
 @Component({
   selector: 'app-all-sip',
@@ -14,7 +15,7 @@ export class AllSipComponent implements OnInit {
     'frequency', 'amount'];
   totalAmount=0;
 
-  constructor(private backoffice:BackOfficeService) { }
+  constructor(private backoffice:BackOfficeService,private sip:SipComponent) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -40,5 +41,9 @@ export class AllSipComponent implements OnInit {
         console.log(data);
       }
     )
+  }
+  aumReport()
+  {
+   this.sip.sipComponent=true;
   }
 }
