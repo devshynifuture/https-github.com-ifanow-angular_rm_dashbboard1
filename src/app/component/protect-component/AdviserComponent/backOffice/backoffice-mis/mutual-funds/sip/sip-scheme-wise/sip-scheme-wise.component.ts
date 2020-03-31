@@ -48,16 +48,12 @@ export class SipSchemeWiseComponent implements OnInit {
     this.category.forEach(o => {
       o.showCategory = true;
       o.InvestorList=[];
-      o.applicantList=[];
     });
     this.showLoader = false;
   }
 
   showSubTableList(index, category,schemeData) {
-    // this.selectedCategory = index
-    schemeData.showCategory!=schemeData.showCategory
-    // this.category[index].showCategory = (category) ? category = false : category = true;
-    // this.category[index].InvestorList=[];
+    schemeData.showCategory=!schemeData.showCategory
     schemeData.InvestorList=[]
     if(schemeData.showCategory==false){
       const obj={
@@ -68,16 +64,12 @@ export class SipSchemeWiseComponent implements OnInit {
       }
       this.backoffice.Scheme_Wise_Investor_Get(obj).subscribe(
         data =>{
-        //  data.forEach(o => {
-        //     o.showSubCategory = true;
-        //   });
-          data[0].showSubCategory=true
-          schemeData.InvestorList=data[0]
-          // this.category[index].InvestorList.push(data[0])
-          // this.category.InvestorList.forEach(o => {
-          //   o.showSubCategory = true;
-          // });
-          console.log(data)
+          if(data){
+            data[0].showSubCategory=true
+            data[0].mutualFundSchemeMasterId=schemeData.mutualFundSchemeMasterId
+            schemeData.InvestorList=data
+            console.log(data)
+          }
         }
       )
     }
@@ -86,22 +78,23 @@ export class SipSchemeWiseComponent implements OnInit {
     console.log(category)
   }
   showSchemeName(index, subcashowSubcat ,ApplicantData) {
-    ApplicantData.showSubCategory!=ApplicantData.showSubCategory
-    // this.category[this.selectedCategory].InvestorList[index].showSubCategory = (subcashowSubcat) ? subcashowSubcat = false : subcashowSubcat = true;
+    ApplicantData.showSubCategory=!ApplicantData.showSubCategory
     ApplicantData.applicantList=[];
-    if(ApplicantData.showSubCategory=false){
+    if(ApplicantData.showSubCategory==false){
       const obj={
         advisorId:this.advisorId,
         arnRiaDetailsId:-1,
         parentId:-1,
+
         schemeId: ApplicantData.mutualFundSchemeMasterId,
         clientId:ApplicantData.clientId
       }
       this.backoffice.scheme_wise_Applicants_Get(obj).subscribe(
         data =>{
-          ApplicantData.applicantList=data[0];
-          // this.category[this.selectedCategory].applicantList.push(data[0])
-          console.log(data)
+          if(data){
+            ApplicantData.applicantList=data;
+            console.log(data)
+          }
         }
       )
     }
