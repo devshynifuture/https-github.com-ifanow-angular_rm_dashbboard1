@@ -17,7 +17,7 @@ export class SettingActivityComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'assign', 'time', 'icons'];
   dataSource = ELEMENT_DATA;
   advisorId: any;
-  taskList: any;
+  taskList:any;
   constructor(private subInjectService: SubscriptionInject,
     public subscription: SubscriptionService,
     public eventService: EventService, private utilService: UtilService,
