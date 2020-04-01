@@ -48,11 +48,11 @@ export class AuthService {
     // this.myRoute.navigate(['login']);
   }
 
-  static setUserInfo(info) {
+  setUserInfo(info) {
     localStorage.setItem('userInfo', JSON.stringify(info));
   }
 
-  static setClientData(clientData) {
+  setClientData(clientData) {
     sessionStorage.setItem('clientData', JSON.stringify(clientData));
     localStorage.setItem('clientData', JSON.stringify(clientData));
 
