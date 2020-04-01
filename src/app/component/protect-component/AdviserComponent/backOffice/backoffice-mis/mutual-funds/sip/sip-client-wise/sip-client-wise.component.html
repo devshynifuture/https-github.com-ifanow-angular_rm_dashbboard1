@@ -16,8 +16,10 @@
                     </div>
                 </div>
             </div>
-    
-            <table class="table-low mt-16" id="table-high" *ngIf="clientList">
+            <div ng-init="clietnFilter=''">
+                <input type="text" placeholder="Search Scheme Name" [(ngModel)]="clientFilter"  (keyup)="filterArray()">
+            </div>
+            <table class="table-low mt-16" id="table-high" *ngIf="filteredArray">
                 <thead class="text-dark">
                     <tr>
                         <th>Client Name</th>
@@ -25,7 +27,7 @@
                         <th class="text-right">% Weight</th>
                     </tr>
                 </thead>
-                <tbody *ngFor="let category of clientList; let i = index">
+                <tbody *ngFor="let category of filteredArray; let i = index">
                     <tr>
                         <td (click)="showSubTableList(i,category.showCategory,category)">{{category.investorName}} <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="category.showCategory==true"> add  </i>
                         <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="category.showCategory==false"> remove  </i></td>
@@ -76,7 +78,7 @@
                     </tr>
                   </tbody>
             </table>
-            <div  *ngIf="!clientList">
+            <div  *ngIf="!filteredArray">
                 <p>No data Found</p>
             </div>
         </div>

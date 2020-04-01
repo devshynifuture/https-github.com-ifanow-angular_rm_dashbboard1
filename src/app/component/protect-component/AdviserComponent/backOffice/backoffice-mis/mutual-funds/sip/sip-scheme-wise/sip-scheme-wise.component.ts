@@ -18,10 +18,12 @@ export class SipSchemeWiseComponent implements OnInit {
   selectedCategory: any;
   InvestorList: any;
   applicantList: any;
+  schemeFilter:any;
   @ViewChildren(FormatNumberDirective) formatNumber;
   totalOfSipAmount=0;
   totalOfSipCount=0;
   totalWeight=0;
+  filteredArray: any[];
 
   constructor(private backoffice:BackOfficeService,public sip:SipComponent) { }
 
@@ -58,9 +60,37 @@ export class SipSchemeWiseComponent implements OnInit {
       this.totalWeight+=o.weightInPercentage;
       o.InvestorList=[];
     });
+    this.filteredArray = [...this.category];
+
     this.showLoader = false;
   }
+   filterArray() {
+    // No users, empty list.
+    if (!this.category.length) {
+      this.filteredArray = [];
+      return;
+    }
 
+    // no search text, all users.
+    if (!this.schemeFilter) {      
+      this.filteredArray = [...this.category]; // keep your usersList immutable
+      return;
+    }
+
+    const users = [...this.category]; // keep your usersList immutable
+    const properties = Object.keys(users[0]); // get user properties
+
+    // check all properties for each user and return user if matching to searchText
+    this.filteredArray =  users.filter((user) => {
+      return properties.find((property) => {
+        const valueString = user[property].toString().toLowerCase();
+        return valueString.includes(this.schemeFilter.toLowerCase());
+      })
+      ? user
+      : null;
+    });
+    
+  }
   showSubTableList(index, category,schemeData) {
     schemeData.showCategory=!schemeData.showCategory
     schemeData.InvestorList=[]
