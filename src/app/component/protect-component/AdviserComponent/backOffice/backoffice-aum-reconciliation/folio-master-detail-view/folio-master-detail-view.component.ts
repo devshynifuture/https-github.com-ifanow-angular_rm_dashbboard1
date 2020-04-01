@@ -8,23 +8,35 @@ import { ReconciliationService } from '../reconciliation/reconciliation.service'
   styleUrls: ['./folio-master-detail-view.component.scss']
 })
 export class FolioMasterDetailViewComponent implements OnInit {
+  folioDetailData: any;
+  folioNomineesPresent: boolean = false;
 
   constructor(
     private subsInjectService: SubscriptionInject,
     private reconService: ReconciliationService
   ) { }
 
+  data;
+  canShowData: boolean = false;
+  isLoading: boolean = false;
+
   ngOnInit() {
     this.getFolioMasterDetailList()
   }
 
+  isFolioNomineesPresent() {
+    this.folioNomineesPresent = this.folioDetailData && this.folioDetailData.nominees.length !== 0
+  }
+
   getFolioMasterDetailList() {
     const data = {
-
+      mutualFundId: this.data.mutualFundId
     };
     this.reconService.getMutualFundFolioMasterValues(data)
       .subscribe(res => {
-        console.log(res)
+        console.log(res);
+        this.folioDetailData = res;
+        this.canShowData = true;
       }, err => {
         console.error(err);
       })

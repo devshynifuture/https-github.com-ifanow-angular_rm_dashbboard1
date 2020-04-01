@@ -72,13 +72,18 @@ export class ClientDematComponent implements OnInit {
         "powerOfAttorneyName": this.dematForm.get('powerOfAttName').value,
         "powerOfAttorneyMasterId": this.dematForm.get('powerOfAttMasId').value
       }
-      this.peopleService.addEditClientDemat(obj).subscribe(
-        data => {
-          console.log(data);
-          (flag == 'Next') ? this.tabChange.emit(1) : this.close();
-        },
-        err => this.eventService.openSnackBar(err, "Dismiss")
-      )
+
+      // commented code which are giving errors ======>>>
+
+      // this.peopleService.addEditClientDemat(obj).subscribe(
+      //   data => {
+      //     console.log(data);
+      //     (flag == 'Next') ? this.tabChange.emit(1) : this.close();
+      //   },
+      //   err => this.eventService.openSnackBar(err, "Dismiss")
+      // )
+
+      // commented code closed which are giving errors ======>>>
     }
   }
   close() {
