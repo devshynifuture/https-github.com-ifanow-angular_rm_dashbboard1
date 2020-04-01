@@ -35,7 +35,7 @@
             <div class="form-group">
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="subCategory">
-                        <mat-option [value]="subCategory.adviceSubcategoryId" (click)="selectedSubcategory(subCategory)" *ngFor="let subCategory of list">
+                        <mat-option [value]="subCategory.subcategoryId" (click)="selectedSubcategory(subCategory)" *ngFor="let subCategory of list">
                             {{subCategory.subcategoryType}}
                         </mat-option>
                     </mat-select>
@@ -50,8 +50,8 @@
             <h5 class="m-0 pb-8 pt-24">Select sub category</h5>
             <div class="form-group">
                 <mat-form-field>
-                    <mat-select class="form-control" formControlName="subCategory">
-                        <mat-option [value]="sub.adviceSubcategoryId" *ngFor="let sub of listOfSub">
+                    <mat-select class="form-control" formControlName="subSubCategory">
+                        <mat-option [value]="sub.subSubCategoryId" *ngFor="let sub of listOfSub">
                             {{sub.subcategoryType}}</mat-option>
                     </mat-select>
                     <mat-error class="f-12">
@@ -78,7 +78,22 @@
             </div>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-md-10 pl-0">
+            <h5 class="m-0 pb-8 pt-24">Select advice type</h5>
+            <div class="form-group">
+                <mat-form-field>
+                    <mat-select class="form-control" formControlName="adviceType">
+                        <mat-option value="1">Withdraw</mat-option>
+                        <mat-option value="2">Continue</mat-option>
+                    </mat-select>
+                    <mat-error class="f-12">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
 
     <div class="row pt-24">
         <div class="col-md-5 pl-0">
@@ -97,7 +112,7 @@
             <div class="form-group">
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="turnaroundTime">
-                        <mat-option [value]="t.value" *ngFor="let t of Tat">{{t.tat}}</mat-option>
+                        <mat-option value="t.value" *ngFor="let t of Tat">{{t.tat}}</mat-option>
                     </mat-select>
                     <mat-hint>Optional</mat-hint>
 
@@ -105,68 +120,78 @@
             </div>
         </div>
     </div>
-    <div formArrayName="subTaskList">
-        <!-- <h5 class="m-0 f-500 text-black">Sub-tasks</h5> -->
-        <div class="row pt-24 sub-tasks pb-60" *ngFor="let creds of subTask.controls; let i = index" [formGroupName]="i">
-            <div class="col-md-12 p-0">
-                <div class="row pt-24 sub-tasks pb-60">
-                    <div class="col-md-3 pl-0">
-                        <h5 class="m-0 f-500 text-black">Sub-tasks</h5>
-                        <div class="form-group">
-                            <mat-form-field>
-                                <input matInput #currentValue type="text" maxlength="10" class="form-control br-0 rupess" formControlName="description">
-                                <mat-error class="f-12">
-                                    This field is required
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="col-md-3 pr-0">
-                        <img src="/assets/images/svg/calander.svg">
-                        <div class="form-group">
-                            <mat-form-field>
-                                <mat-select class="form-control" formControlName="turtAroundTime">
-                                    <mat-option [value]="t.value" *ngFor="let t of Tat">{{t.tat}}</mat-option>
-                                </mat-select>
-                                <mat-error class="f-12">
-                                    This field is required
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="col-md-3 pr-0">
-                        <img src="/assets/images/svg/people.svg">
-                        <div class="form-group">
-                            <mat-form-field>
-                                <mat-select class="form-control" formControlName="ownerId">
-                                    <mat-option value=2727>Nita Shinde</mat-option>
-                                </mat-select>
-                                <mat-error class="f-12">
-                                    This field is required
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="col-md-3 pr-0">
-                        <div class="form-group">
-                            <mat-icon [matMenuTriggerFor]="menu" class="c-p">more_vert</mat-icon>
-                            <mat-menu #menu="matMenu">
-                                <button mat-menu-item (click)="toggleEditMode()">
-                                    Edit
-                                </button>
-                                <button mat-menu-item>
-                                    Delete
-                                </button>
-                            </mat-menu>
-                        </div>
-                    </div>
+    <div class="pt-24 sub-tasks pb-60" formArrayName="subTaskList">
+        <h5 class="mb-10 f-500 text-black">Sub-tasks</h5>
+        <div class="row" *ngFor="let creds of subTask.controls; let i = index" [formGroupName]="i">
+            <div class="col-md-4 pl-0">
+                <div class="form-group">
+                    <mat-form-field>
+                        <input matInput #currentValue type="text" maxlength="10" class="form-control br-0 rupess" formControlName="description">
+                        <mat-error class="f-12">
+                            This field is required
+                        </mat-error>
+                    </mat-form-field>
                 </div>
             </div>
+            <div class="col-md-3 pl-0">
+
+                <div class="form-group">
+                    <mat-form-field class="arrowRemoveBox">
+                        <img class="img-pos" src="/assets/images/svg/calander.svg">
+                        <mat-select class="form-control  " formControlName="turtAroundTime">
+                            <mat-option [value]="t.value" *ngFor="let t of Tat">{{t.tat}}</mat-option>
+                        </mat-select>
+                        <mat-error class="f-12">
+                            This field is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-3 pl-0">
+
+                <div class="form-group">
+                    <mat-form-field class="arrowRemoveBox">
+                        <img class="img-pos" src="/assets/images/svg/people.svg">
+                        <mat-select class="form-control" formControlName="ownerId">
+                            <mat-option value=2727>Nita Shinde</mat-option>
+                        </mat-select>
+                        <mat-error class="f-12">
+                            This field is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-1 p-0">
+
+                <i class="material-icons mt-12 f-20" (click)="addSubTask(creds)">
+                    add
+                </i>
+
+                <i class="material-icons">
+                    remove
+                </i>
+
+                <!-- <div class="form-group">
+                    <mat-icon [matMenuTriggerFor]="menu" class="c-p">more_vert</mat-icon>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="toggleEditMode()">
+                            Edit
+                        </button>
+                        <button mat-menu-item>
+                            Delete
+                        </button>
+                    </mat-menu>
+                </div> -->
+            </div>
+        </div>
+
+        <div class="row">
             <div class="col-md-12 p-0">
-                <p class="m-0 roboto text-custom pt-12 pb-44" (click)="addSubTask(creds)">+ Add sub-task</p>
+                <!-- <p class="m-0 roboto text-custom pt-12 pb-44" (click)="addSubTask(creds)">+ Add sub-task</p> -->
                 <p class="m-0 roboto text-custom pt-12 pb-44">+ Save sub task</p>
             </div>
         </div>
+
     </div>
 
 </div>
