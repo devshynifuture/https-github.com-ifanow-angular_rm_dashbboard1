@@ -132,7 +132,6 @@ export class ClientBankComponent implements OnInit {
         },
         err => this.eventService.openSnackBar(err, 'Dismiss')
       )
-      this.tabChange.emit(1);
     }
   }
 

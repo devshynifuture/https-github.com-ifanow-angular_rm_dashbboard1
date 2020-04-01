@@ -5,6 +5,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { AuthService } from 'src/app/auth-service/authService';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-client-basic-details',
@@ -19,7 +20,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   mobileData: any;
   categoryList: any[];
 
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService) { }
+  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService, private datePipe: DatePipe) { }
   basicDetails;
   date = new Date();
   @Input() fieldFlag;
@@ -148,7 +149,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       let obj =
       {
         "advisorId": this.advisorId,
-        "taxStatusId": this.invTaxStatus,
+        "taxStatusId": parseInt(this.invTaxStatus),
         "emailList": [
           {
             "verificationStatus": 0,
@@ -167,13 +168,13 @@ export class ClientBasicDetailsComponent implements OnInit {
         "occupationId": 0,
         "id": null,
         "pan": this.basicDetails.controls.pan.value,
-        "clientId": (this.basicDetailsData == null) ? '' : this.basicDetailsData.clientId,
+        "clientId": (this.basicDetailsData == null) ? null : this.basicDetailsData.clientId,
         "kycComplaint": 0,
         "roleId": 1,
-        "genderId": this.basicDetails.controls.gender.value,
+        "genderId": parseInt(this.basicDetails.controls.gender.value),
         "companyStatus": 0,
         "aadharCard": null,
-        "dateOfBirth": this.basicDetails.controls.dobAsPerRecord.value,
+        "dateOfBirth": this.datePipe.transform(this.basicDetails.controls.dobAsPerRecord.value, 'dd/MM/yyyy'),
         "userName": this.basicDetails.controls.username.value,
         "userId": null,
         "mobileList": mobileList,
