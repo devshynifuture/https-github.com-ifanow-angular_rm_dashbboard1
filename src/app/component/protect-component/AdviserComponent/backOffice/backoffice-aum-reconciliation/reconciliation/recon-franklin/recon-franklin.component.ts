@@ -66,13 +66,14 @@ export class ReconFranklinComponent implements OnInit {
 
   openAumReconciliation(flag, data) {
     const fragmentData = {
-      flag: 'startAumReconciliation',
+      flag,
       id: 1,
       data: {
         ...data,
         startRecon: flag === 'startReconciliation' ? true : (flag === 'report' ? false : null),
         brokerId: this.selectBrokerForm.get('selectBrokerId').value,
-        rtId: this.rtId
+        rtId: this.rtId,
+        flag
       },
       direction: 'top',
       componentName: UpperSliderBackofficeComponent,

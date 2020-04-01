@@ -32,14 +32,19 @@ export class PeopleClientsComponent implements OnInit {
     {
       advisorId: this.advisorId
     }
-    this.peopleService.getClientList(obj).subscribe(
-      data => {
-        console.log(data);
-        this.isLoading = false;
-        this.clientDatasource = data;
-      },
-      err => this.eventService.openSnackBar(err, "dismiss")
-    )
+
+    // commented code which are giving errors ====>>>>>>>>>>>>>>.
+
+    // this.peopleService.getClientList(obj).subscribe(
+    //   data => {
+    //     console.log(data);
+    //     this.isLoading = false;
+    //     this.clientDatasource = data;
+    //   },
+    //   err => this.eventService.openSnackBar(err, "dismiss")
+    // )
+
+    // commented code closed which are giving errors ====>>>>>>>>>>>>>>.
   }
   Addclient(data) {
     (data == null) ? data = { flag: 'Add client', fieldFlag: 'client', data: null } : '';

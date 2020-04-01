@@ -121,13 +121,19 @@ export class AddFamilyMemberComponent implements OnInit {
           }
         })
       })
-      this.peopleService.addMultipleFamilyMembers(arrayObj).subscribe(
-        data => {
-          console.log(data),
-            this.close();
-        },
-        err => this.eventService.openSnackBar(err, "Dismiss")
-      )
+
+      // commented code which are giving errors ======>>>
+
+      // this.peopleService.addMultipleFamilyMembers(arrayObj).subscribe(
+      //   data => {
+      //     console.log(data),
+      //       this.close();
+      //   },
+      //   err => this.eventService.openSnackBar(err, "Dismiss")
+      // )
+
+      // commented code closed which are giving errors ======>>>
+
       this.close();
     }
   }

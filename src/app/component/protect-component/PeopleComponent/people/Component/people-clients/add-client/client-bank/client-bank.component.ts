@@ -125,13 +125,18 @@ export class ClientBankComponent implements OnInit {
         "addressId": "",
         "name": ""
       }
-      this.peopleService.addEditClientBankDetails(obj).subscribe(
-        data => {
-          console.log(data);
-          (flag == 'Next') ? this.tabChange.emit(1) : this.close();
-        },
-        err => this.eventService.openSnackBar(err, 'Dismiss')
-      )
+
+      // commented code which are giving errors  =>>>>>>>>>>>>>>>>>>>.
+
+      // this.peopleService.addEditClientBankDetails(obj).subscribe(
+      //   data => {
+      //     console.log(data);
+      //     (flag == 'Next') ? this.tabChange.emit(1) : this.close();
+      //   },
+      //   err => this.eventService.openSnackBar(err, 'Dismiss')
+      // )
+
+      // commented Code close which are giving errors =>>>>>>>>>>>>>>>>>>
       this.tabChange.emit(1);
     }
   }

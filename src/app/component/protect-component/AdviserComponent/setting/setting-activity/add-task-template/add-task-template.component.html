@@ -112,7 +112,7 @@
             <div class="form-group">
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="turnaroundTime">
-                        <mat-option [value]="t.value" *ngFor="let t of Tat">{{t.tat}}</mat-option>
+                        <mat-option value="t.value" *ngFor="let t of Tat">{{t.tat}}</mat-option>
                     </mat-select>
                     <mat-hint>Optional</mat-hint>
 

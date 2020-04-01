@@ -27,6 +27,28 @@ export class SettingActivityComponent implements OnInit {
     this.getTaskTemplate();
     this.advisorId = AuthService.getAdvisorId()
     this.getteamMemberList()
+    this.taskList = [{
+      advisorId:2808,
+      categoryId:1,
+      subcategoryId:7,
+      subSubCategoryId:13,
+      adviceTypeId:2,
+      linkedTemplateId:2,
+      taskDescription:"This is task",
+      assignedTo:2727,
+      turnAroundTime:2,
+      subTaskList: [{
+        taskNumber:1,
+        description: "Abcd needs to be done today!",
+        turtAroundTime:2,
+        ownerId:2727
+      },{
+        taskNumber:1,
+        description: "Abcd needs to be done today!",
+        turtAroundTime:2,
+        ownerId:2727
+      }]
+    }]
   }
   getteamMemberList(){
     
@@ -53,7 +75,28 @@ export class SettingActivityComponent implements OnInit {
   getTaskTemplateRes(data){
     console.log('getTaskTemplateRes == ',data)
     if(data){
-      this.taskList = data
+      this.taskList = [{
+        advisorId:2808,
+        categoryId:1,
+        subcategoryId:7,
+        subSubCategoryId:13,
+        adviceTypeId:2,
+        linkedTemplateId:2,
+        taskDescription:"This is task",
+        assignedTo:2727,
+        turnAroundTime:2,
+        subTaskList: [{
+          taskNumber:1,
+          description: "Abcd needs to be done today!",
+          turtAroundTime:2,
+          ownerId:2727
+        },{
+          taskNumber:1,
+          description: "Abcd needs to be done today!",
+          turtAroundTime:2,
+          ownerId:2727
+        }]
+      }]
     }else{
 
     }
