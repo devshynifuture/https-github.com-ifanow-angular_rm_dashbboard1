@@ -53,7 +53,7 @@ export class BackOfficeService {
   }
 
   getSubCatAum(data) {
-    const httpParams = new HttpParams().set('advisorId', data);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailId', data.arnRiaDetailId).set('parentId', data.parentId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_AUM, httpParams);
   }
 

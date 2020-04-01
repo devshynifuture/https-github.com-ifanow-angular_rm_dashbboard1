@@ -78,7 +78,12 @@ export class AumComponent implements OnInit {
     )
   }
   getSubCatAum() {
-    this.backoffice.getSubCatAum(this.advisorId).subscribe(
+    const obj={
+      advisorId:this.advisorId,
+      arnRiaDetailId:-1,
+      parentId:-1
+    }
+    this.backoffice.getSubCatAum(obj).subscribe(
       data => this.getFileResponseDataForSub(data),
       err => this.getFilerrorResponse(err)
     )

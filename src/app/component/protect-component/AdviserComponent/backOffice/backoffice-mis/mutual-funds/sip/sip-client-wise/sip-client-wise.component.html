@@ -17,7 +17,7 @@
                 </div>
             </div>
     
-            <table class="table-low mt-16" id="table-high" >
+            <table class="table-low mt-16" id="table-high" *ngIf="clientList">
                 <thead class="text-dark">
                     <tr>
                         <th>Client Name</th>
@@ -29,7 +29,7 @@
                     <tr>
                         <td (click)="showSubTableList(i,category.showCategory,category)">{{category.investorName}} <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="category.showCategory==true"> add  </i>
                         <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="category.showCategory==false"> remove  </i></td>
-                        <td class="text-right">{{category.sipAmount}} </td>
+                        <td class="text-right"><span appFormatNumber>{{category.sipAmount}}</span> </td>
                         <td class="text-right">{{category.weightInPercentage}}%</td>
                      </tr>
                      <tr>
@@ -60,7 +60,7 @@
                                                 <td>{{subcategory.to_date | date:'dd/MM/yyyy'}}</td>
                                                 <td>{{subcategory.sipTriggerDay}}</td>
                                                 <td>{{subcategory.frequency}}</td>
-                                                <td>{{subcategory.sipAmount}}</td>
+                                                <td><span appFormatNumber>{{subcategory.sipAmount}}</span></td>
                                                 <td class="text-right">{{subcategory.weightInPercentage}}%</td>
                                             </tr>
                                     </tbody>
@@ -68,8 +68,17 @@
 
                     </tr>
                 </tbody>
+                <tbody>
+                    <tr>
+                      <td class="p-table t-35 b-a"><strong>Total</strong></td>
+                      <td class="p-table t-20 b-a text-right" ><strong><span appFormatNumber>{{totalOfSipAmount}}</span></strong></td>
+                      <td class="p-table t-19 b-a text-right"><strong>{{totalWeight}}%</strong></td>
+                    </tr>
+                  </tbody>
             </table>
-   
+            <div  *ngIf="!clientList">
+                <p>No data Found</p>
+            </div>
         </div>
     </div>
 

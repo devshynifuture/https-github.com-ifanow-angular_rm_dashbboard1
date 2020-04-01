@@ -16,8 +16,10 @@
                     </div>
                 </div>
             </div>
-    
-            <table class="table-low mt-16" id="table-high" >
+            <div ng-init="schemeFilter=''">
+                <input type="text" placeholder="Search Scheme Name" [(ngModel)]="schemeFilter">
+      </div>
+            <table class="table-low mt-16" id="table-high" *ngIf="category" >
                 <thead class="text-dark">
                     <tr>
                         <th>Sr No.</th>
@@ -27,12 +29,12 @@
                         <th class="text-right">% Weight</th>
                     </tr>
                 </thead>
-                <tbody *ngFor="let data of category; let i = index">
+                <tbody *ngFor="let data of category; let i = index | filter:{schemeName:schemeFilter}">
                     <tr>
                         <td>{{i+1}}</td>
                         <td (click)="showSubTableList(i,data.showCategory,data)">{{data.schemeName}} <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="data.showCategory==true"> add  </i>
                         <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="data.showCategory==false"> remove  </i></td>
-                        <td class="text-right">{{data.sipAmount}} </td>
+                        <td class="text-right"><span appFormatNumber>{{data.sipAmount}} </span></td>
                         <td class="text-right">{{data.sipCount}} </td>
                         <td class="text-right">{{data.weightInPercentage}}%</td>
                      </tr>
@@ -53,7 +55,7 @@
                                                 <td>{{i+1}}</td>
                                                 <td (click)="showSchemeName(i,subInvList.showSubCategory,subInvList)">{{subInvList.investorName}}<i *ngIf="subInvList.showSubCategory==true" class="material-icons right b-a f-14 mt-4 c-p">add</i>
                                                     <i *ngIf="subInvList.showSubCategory==false" class="material-icons right b-a f-14 mt-4 c-p"> remove  </i> </td>
-                                                <td class="text-right">{{subInvList.sipAmount}} </td>
+                                                <td class="text-right"><span appFormatNumber>{{subInvList.sipAmount}}</span> </td>
                                                 <td class="text-right">{{subInvList.sipCount}} </td>
                                                 <td class="text-right">{{subInvList.weightInPercentage}}%</td>
                                             </tr>
@@ -86,7 +88,7 @@
                                                         <td class="text-right">{{scheme.to_date | date:'dd/MM/yyyy'}} </td>
                                                         <td class="text-right">{{scheme.sipTriggerDay}} </td>
                                                         <td class="text-right">{{scheme.frequency}} </td>
-                                                        <td class="text-right">{{scheme.sipAmount}} </td>
+                                                        <td class="text-right"><span appFormatNumber>{{scheme.sipAmount}} </span></td>
                                                         <td class="text-right">{{scheme.weightInPercentage}}</td>
                                                         <td class="text-right">Add Ceased</td>
 
@@ -95,12 +97,24 @@
                                                 
                                             </table>
                                     </tbody>
+                                
                         </table>
 
                     </tr>
                 </tbody>
+                <tbody>
+                    <tr>
+                      <td class="p-table t-7 b-a">&nbsp;</td>
+                      <td class="p-table t-35 b-a"><strong>Total</strong></td>
+                      <td class="p-table t-20 b-a text-right" ><strong><span appFormatNumber>{{totalOfSipAmount}}</span></strong></td>
+                      <td class="p-table t-19 b-a text-right"><strong>{{totalOfSipCount}}</strong></td>
+                      <td class="p-table t-19 b-a text-right"><strong>{{totalWeight}}%</strong></td>
+                    </tr>
+                  </tbody>
             </table>
-   
+            <div  *ngIf="!category">
+                <p>No data Found</p>
+            </div>
         </div>
     </div>
 

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren } from '@angular/core';
 import { BackOfficeService } from '../../../../back-office.service';
 import {SipComponent} from '../sip.component';
 import { AuthService } from 'src/app/auth-service/authService';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
 @Component({
   selector: 'app-sip-amc-wise',
   templateUrl: './sip-amc-wise.component.html',
@@ -12,8 +13,12 @@ export class SipAmcWiseComponent implements OnInit {
   clientId: any;
   advisorId: any;
   amcList: any;
+  totalOfSipAmount=0;
+  totalOfSipCount=0;
+  totalWeight=0;
   constructor(private backoffice:BackOfficeService,public sip:SipComponent) { }
   teamMemberId=2929;
+  @ViewChildren(FormatNumberDirective) formatNumber;
 
   ngOnInit() {
     this.showLoader = false;
@@ -37,6 +42,9 @@ export class SipAmcWiseComponent implements OnInit {
         this.amcList=data;
         this.amcList.forEach(o => {
           o.showCategory = true;
+          this.totalOfSipAmount+=o.sipAmount;
+          this.totalOfSipCount+=o.sipCount;
+          this.totalWeight+=o.weightInPercentage;
         });
         console.log(data);
       }

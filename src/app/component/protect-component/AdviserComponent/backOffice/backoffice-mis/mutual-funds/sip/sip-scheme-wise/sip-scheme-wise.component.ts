@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,ViewChildren } from '@angular/core';
 import {SipComponent} from '../sip.component';
 import { BackOfficeService } from '../../../../back-office.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
 
 @Component({
   selector: 'app-sip-scheme-wise',
@@ -17,6 +18,11 @@ export class SipSchemeWiseComponent implements OnInit {
   selectedCategory: any;
   InvestorList: any;
   applicantList: any;
+  @ViewChildren(FormatNumberDirective) formatNumber;
+  totalOfSipAmount=0;
+  totalOfSipCount=0;
+  totalWeight=0;
+
   constructor(private backoffice:BackOfficeService,public sip:SipComponent) { }
 
   ngOnInit() {
@@ -47,6 +53,9 @@ export class SipSchemeWiseComponent implements OnInit {
 
     this.category.forEach(o => {
       o.showCategory = true;
+      this.totalOfSipAmount+=o.sipAmount;
+      this.totalOfSipCount+=o.sipCount;
+      this.totalWeight+=o.weightInPercentage;
       o.InvestorList=[];
     });
     this.showLoader = false;

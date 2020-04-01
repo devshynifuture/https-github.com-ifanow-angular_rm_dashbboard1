@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren } from '@angular/core';
 import { BackOfficeService } from '../../../../back-office.service';
 import {SipComponent} from '../sip.component';
 import { AuthService } from 'src/app/auth-service/authService';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
 @Component({
   selector: 'app-sip-client-wise',
   templateUrl: './sip-client-wise.component.html',
@@ -13,6 +14,10 @@ export class SipClientWiseComponent implements OnInit {
   teamMemberId=2929;
   advisorId: any;
   clientList: any;
+  @ViewChildren(FormatNumberDirective) formatNumber;
+  totalOfSipAmount=0;
+  totalOfSipCount=0;
+  totalWeight=0;
   constructor(private backoffice:BackOfficeService,public sip:SipComponent) { }
 
   ngOnInit() {
@@ -37,6 +42,9 @@ export class SipClientWiseComponent implements OnInit {
         this.clientList=data;
         this.clientList.forEach(o => {
           o.showCategory = true;
+          this.totalOfSipAmount+=o.sipAmount;
+          this.totalOfSipCount+=o.sipCount;
+          this.totalWeight+=o.weightInPercentage;
         });
         console.log(data);
       }
