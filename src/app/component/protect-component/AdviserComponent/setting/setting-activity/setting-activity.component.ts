@@ -17,87 +17,76 @@ export class SettingActivityComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'assign', 'time', 'icons'];
   dataSource = ELEMENT_DATA;
   advisorId: any;
-  taskList:any;
+  taskList: any;
+  isLoading = false
   constructor(private subInjectService: SubscriptionInject,
     public subscription: SubscriptionService,
     public eventService: EventService, private utilService: UtilService,
-    private orgSetting :OrgSettingServiceService) { }
+    private orgSetting: OrgSettingServiceService) { }
 
   ngOnInit() {
     this.getTaskTemplate();
     this.advisorId = AuthService.getAdvisorId()
-    this.getteamMemberList()
     this.taskList = [{
-      advisorId:2808,
-      categoryId:1,
-      subcategoryId:7,
-      subSubCategoryId:13,
-      adviceTypeId:2,
-      linkedTemplateId:2,
-      taskDescription:"This is task",
-      assignedTo:2727,
-      turnAroundTime:2,
+      advisorId: 2808,
+      categoryId: 1,
+      subcategoryId: 7,
+      subSubCategoryId: 13,
+      adviceTypeId: 2,
+      linkedTemplateId: 2,
+      taskDescription: "This is task",
+      assignedTo: 2727,
+      turnAroundTime: 2,
       subTaskList: [{
-        taskNumber:1,
+        taskNumber: 1,
         description: "Abcd needs to be done today!",
-        turtAroundTime:2,
-        ownerId:2727
-      },{
-        taskNumber:1,
+        turtAroundTime: 2,
+        ownerId: 2727
+      }, {
+        taskNumber: 1,
         description: "Abcd needs to be done today!",
-        turtAroundTime:2,
-        ownerId:2727
+        turtAroundTime: 2,
+        ownerId: 2727
       }]
     }]
   }
-  getteamMemberList(){
-    
+  getTaskTemplate() {
+    this.isLoading = true
     let obj = {
-      advisorId : 2808
-    }
-    this.orgSetting.getTeamMemberList(obj).subscribe(
-      data => this.getTeamMemberListRes(data),
-      err => this.eventService.openSnackBar(err, "Dismiss")
-    );
-  }
-  getTeamMemberListRes(data){
-    console.log('team member',data)
-  }
-  getTaskTemplate(){
-    let obj = {
-      advisorId : 2808
+      advisorId: 2808
     }
     this.orgSetting.getTaskTemplate(obj).subscribe(
       data => this.getTaskTemplateRes(data),
       err => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
-  getTaskTemplateRes(data){
-    console.log('getTaskTemplateRes == ',data)
-    if(data){
+  getTaskTemplateRes(data) {
+    this.isLoading = false
+    console.log('getTaskTemplateRes == ', data)
+    if (data) {
       this.taskList = [{
-        advisorId:2808,
-        categoryId:1,
-        subcategoryId:7,
-        subSubCategoryId:13,
-        adviceTypeId:2,
-        linkedTemplateId:2,
-        taskDescription:"This is task",
-        assignedTo:2727,
-        turnAroundTime:2,
+        advisorId: 2808,
+        categoryId: 1,
+        subcategoryId: 7,
+        subSubCategoryId: 13,
+        adviceTypeId: 2,
+        linkedTemplateId: 2,
+        taskDescription: "This is task",
+        assignedTo: 2727,
+        turnAroundTime: 2,
         subTaskList: [{
-          taskNumber:1,
+          taskNumber: 1,
           description: "Abcd needs to be done today!",
-          turtAroundTime:2,
-          ownerId:2727
-        },{
-          taskNumber:1,
+          turtAroundTime: 2,
+          ownerId: 2727
+        }, {
+          taskNumber: 1,
           description: "Abcd needs to be done today!",
-          turtAroundTime:2,
-          ownerId:2727
+          turtAroundTime: 2,
+          ownerId: 2727
         }]
       }]
-    }else{
+    } else {
 
     }
   }
@@ -148,7 +137,7 @@ export class SettingActivityComponent implements OnInit {
     );
     // this.billerProfileData = this.dataTOget.data
   }
-  
+
 }
 export interface PeriodicElement {
   name: string;

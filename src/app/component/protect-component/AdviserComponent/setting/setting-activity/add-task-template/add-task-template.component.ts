@@ -71,12 +71,27 @@ export class AddTaskTemplateComponent implements OnInit {
   }
   ngOnInit() {
     this.getGlobalTaskData()
+    this.getteamMemberList()
     this.advisorId = AuthService.getAdvisorId()
     this.category = 'asset'
     this.editMode = false;
     this.taskTemplate.controls.category.setValue(1)
-    this.isEdite = true
+    this.isEdite = false
   }
+  getteamMemberList() {
+
+    let obj = {
+      advisorId: 2808
+    }
+    this.orgSetting.getTeamMemberList(obj).subscribe(
+      data => this.getTeamMemberListRes(data),
+      err => this.event.openSnackBar(err, "Dismiss")
+    );
+  }
+  getTeamMemberListRes(data) {
+    console.log('team member', data)
+  }
+
   getGlobalTaskData() {
     this.orgSetting.getGlobalDataTask().subscribe(
       data => {
@@ -137,7 +152,8 @@ export class AddTaskTemplateComponent implements OnInit {
         taskNumber: [1, [Validators.required]],
         description: [null, [Validators.required]],
         turnAroundTime: [null, [Validators.required]],
-        ownerId: [null, [Validators.required]]
+        ownerId: [null, [Validators.required]],
+        isEdite : false,
       })]),
     });
     if (data.subTaskList != undefined) {
@@ -146,42 +162,59 @@ export class AddTaskTemplateComponent implements OnInit {
           taskNumber: [(1) + "", [Validators.required]],
           description: [(element.description + ""), Validators.required],
           turnAroundTime: [(element.turnAroundTime), Validators.required],
-          ownerId: [element.ownerId, [Validators.required]]
+          ownerId: [element.ownerId, [Validators.required]],
+          isEdite : false
         }))
       })
     }
   }
-  editSubtask(flag){
+  editSubtask(value,flag, index){
+    value.controls.isEdite.setValue(true)
     console.log('flag',flag)
-    this.isEdite = flag
+
   }
-  addSubTask(value) {
-    this.subTask.push(this.fb.group({
-      taskNumber: [1, [Validators.required]],
-      description: [null, [Validators.required]],
-      turnAroundTime: [null, [Validators.required]],
-      ownerId: [null, [Validators.required]],
-    }));
-    console.log('creds --',value)
-    if (value.invalid) {
-      this.inputs.find(input => !input.ngControl.valid).focus();
-      value.markAllAsTouched();
-    } else{
-      let obj = {
-        TaskTemplateId: 1,
-        taskNumber: 1,
-        description: value.controls.description.value,
-        turnAroundTime: value.controls.turnAroundTime.value,
-        ownerId: 2727
+  addSubTask(value,flag) {
+    if(flag == 'add'){
+      this.subTask.push(this.fb.group({
+        taskNumber: [1, [Validators.required]],
+        description: [null, [Validators.required]],
+        turnAroundTime: [null, [Validators.required]],
+        ownerId: [null, [Validators.required]],
+        isEdite : false
+      }));
+    }else{
+      value.controls.isEdite.setValue(false)
+      console.log('creds --',value)
+      if (value.invalid) {
+        this.inputs.find(input => !input.ngControl.valid).focus();
+        value.markAllAsTouched();
+      } else{
+        let obj = {
+          TaskTemplateId: 1,
+          taskNumber: 1,
+          description: value.controls.description.value,
+          turnAroundTime: value.controls.turnAroundTime.value,
+          ownerId: 2727,
+          id:value.controls.id.value,
+        }
+        if(value.controls.id.value){
+          this.orgSetting.editSubTaskTemplate(obj).subscribe(
+            data => {
+              this.editSubTaskTemplateRes(data)
+            },err => this.event.openSnackBar(err, "Dismiss")
+          );
+        }else{
+          this.orgSetting.addSubtaskTemplate(obj).subscribe(
+            data => {
+              this.addSubtaskTemplateRes(data)
+            }, err => this.event.openSnackBar(err, "Dismiss")
+          );
+        }
       }
-      this.orgSetting.addSubtaskTemplate(obj).subscribe(
-        data => {
-          this.addSubtaskTemplateRes(data)
-        },
-        err => this.event.openSnackBar(err, "Dismiss")
-      );
     }
-  
+  }
+  editSubTaskTemplateRes(data){
+    console.log('editSubTaskTemplateRes',data)
   }
   addSubtaskTemplateRes(data){
     console.log('addSubtaskTemplateRes',data)
@@ -195,12 +228,25 @@ export class AddTaskTemplateComponent implements OnInit {
   Close(flag: boolean) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
-  changeTableTdValue(value, ele) {
-
-  }
   toggleEditMode() {
     this.editMode = !this.editMode;
     console.log('hgdsfhg ==', this.editMode)
+  }
+  updateOwner(){
+    if(this.inputData.id){
+      let obj = {
+        ownerId:2227,
+        taskTemplateId:this.taskTemplate.controls.id.value,
+      }
+      this.orgSetting.updateOwnerTaskTemplate(obj).subscribe(
+        data => {
+          this.updateOwnerTaskTemplateRes(data)
+        }, err => this.event.openSnackBar(err, "Dismiss")
+      );
+    }
+  }
+  updateOwnerTaskTemplateRes(data){
+    console.log('updateOwnerTaskTemplateRes',data)
   }
   saveTaskTemplate() {
     let obj = {
