@@ -13,23 +13,26 @@
         <div class="col-md-12 p-0">
             <mat-tab-group [(selectedIndex)]="selected" animationDuration="0ms" id="ui-add-client">
                 <mat-tab label="Basic details">
-                    <app-client-basic-details [fieldFlag]="headingData.fieldFlag" (tabChange)="changeTab($event)">
+                    <app-client-basic-details [data]="headingData" [fieldFlag]="headingData.fieldFlag"
+                        (tabChange)="changeTab($event)" (clientData)="getTabData($event)">
                     </app-client-basic-details>
                 </mat-tab>
-                <mat-tab label="More info">
-                    <app-client-more-info [fieldFlag]="headingData.fieldFlag" (tabChange)="changeTab($event)">
+                <!-- [disabled]="tabData.id==undefined" -->
+                <mat-tab [disabled]="tabData.id==undefined" label=" More info">
+                    <app-client-more-info [data]="tabData" [fieldFlag]="headingData.fieldFlag"
+                        (tabChange)="changeTab($event)">
                     </app-client-more-info>
                 </mat-tab>
-                <mat-tab label="Address">
-                    <app-client-address (tabChange)="changeTab($event)"></app-client-address>
+                <mat-tab [disabled]="tabData.id==undefined" label=" Address">
+                    <app-client-address [data]="tabData" (tabChange)="changeTab($event)"></app-client-address>
                 </mat-tab>
-                <mat-tab label="Bank">
-                    <app-client-bank (tabChange)="changeTab($event)"></app-client-bank>
+                <mat-tab [disabled]="tabData.id==undefined" label=" Bank">
+                    <app-client-bank [data]="tabData" (tabChange)="changeTab($event)"></app-client-bank>
                 </mat-tab>
-                <mat-tab label="Demat">
-                    <app-client-demat (tabChange)="changeTab($event)"></app-client-demat>
+                <mat-tab [disabled]="tabData.id==undefined" label=" Demat">
+                    <app-client-demat [data]="tabData" (tabChange)="changeTab($event)"></app-client-demat>
                 </mat-tab>
-                <mat-tab label="Upload">
+                <mat-tab [disabled]="tabData.id==undefined" label=" Upload">
                     <app-client-upload (tabChange)="changeTab($event)"></app-client-upload>
                 </mat-tab>
             </mat-tab-group>

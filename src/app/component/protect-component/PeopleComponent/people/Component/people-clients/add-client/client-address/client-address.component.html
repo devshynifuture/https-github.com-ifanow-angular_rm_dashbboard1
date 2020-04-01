@@ -27,7 +27,14 @@
                 <mat-form-field>
                     <mat-select formControlName="addProofType" class="form-control">
                         <mat-option value="Select proof type">Select proof type</mat-option>
+                        <mat-option value="1">Passport</mat-option>
+                        <mat-option value="2">Aadhaar</mat-option>
+                        <mat-option value="3">Driving licence</mat-option>
+                        <mat-option value="4">Voter's ID card</mat-option>
+                        <mat-option value="5">NREGA job card</mat-option>
+                        <mat-option value="6">Others</mat-option>
                     </mat-select>
+                    <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -40,6 +47,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input autocomplete="off" matInput formControlName="proofIdNum" class="form-control">
+                    <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -52,6 +60,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input autocomplete="off" matInput formControlName="addressLine1" class="form-control">
+                    <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -64,6 +73,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input autocomplete="off" matInput formControlName="addressLine2" class="form-control">
+                    <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -79,6 +89,7 @@
                         appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" matInput
                         formControlName="pinCode" class="form-control">
                     <mat-hint align="end" class="f-12">{{pinCode.value.length}}/6</mat-hint>
+                    <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -90,7 +101,10 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" matInput formControlName="city" class="form-control">
+                    <input autocomplete="off" #city matInput formControlName="city" appInputValueValidation
+                        [inputValidator]="validatorType.TEXT_ONLY" maxlength="30" class="form-control">
+                    <mat-error>This field is required</mat-error>
+                    <mat-hint align="end" class="f-12">{{city.value.length}}/6</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -102,7 +116,11 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" matInput formControlName="state" class="form-control">
+                    <input autocomplete="off" #state matInput appInputValueValidation
+                        [inputValidator]="validatorType.TEXT_ONLY" maxlength="30" formControlName="state"
+                        class="form-control">
+                    <mat-error>This field is required</mat-error>
+                    <mat-hint align="end" class="f-12">{{state.value.length}}/6</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -114,7 +132,10 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" matInput formControlName="country" class="form-control">
+                    <input autocomplete="off" #country matInput formControlName="country" appInputValueValidation
+                        [inputValidator]="validatorType.TEXT_ONLY" maxlength="30" class="form-control">
+                    <mat-error>This field is required</mat-error>
+                    <mat-hint align="end" class="f-12">{{country.value.length}}/30</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -129,10 +150,19 @@
             <div class="col-md-4">
                 <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
             </div>
-            <div class="col-md-8 right text-right">
-                <button mat-raised-button (click)="saveNext()" class="br-0 text-inherit mr-12">SAVE & NEXT
+            <div *ngIf="fieldFlag=='client'" class="col-md-8 right text-right">
+                <button mat-raised-button (click)="saveNext('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
                 </button>
-                <button mat-stroked-button (click)="saveClose()" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
+                <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
+                </button>
+            </div>
+            <div *ngIf="fieldFlag=='familyMember'" class="col-md-8 right text-right">
+                <button mat-raised-button (click)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12">SAVE &
+                    NEXT
+                </button>
+                <button mat-stroked-button (click)="saveNextFamilyMember('close')"
+                    class="btn-bottom br-0 text-inherit">SAVE
+                    & CLOSE
                 </button>
             </div>
         </div>

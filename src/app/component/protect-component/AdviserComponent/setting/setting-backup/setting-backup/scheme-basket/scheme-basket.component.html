@@ -15,7 +15,7 @@
 
         <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef> Scheme name </th>
-            <td (click)="openSchemeDetails(null)" mat-cell *matCellDef="let element"> {{element.position}} </td>
+            <td (click)="openSchemeDetails(null, null)" mat-cell *matCellDef="let element"> {{element.position}} </td>
         </ng-container>
 
         <ng-container matColumnDef="name">

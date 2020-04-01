@@ -11,6 +11,15 @@ export class LoginService {
   constructor(private http: HttpService) { }
 
   generateOtp(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.GENERATE_OTP, data);
+    return this.http.postEncoded(apiConfig.USER + appConfig.GENERATE_OTP, data);
+  }
+  saveAfterVerification(data) {
+    return this.http.postEncoded(apiConfig.USER + appConfig.SAVE_AFTER_VERIFICATION, data);
+  }
+  register(data) {
+    return this.http.postEncoded(apiConfig.USER + appConfig.REGISTER, data);
+  }
+  getUsernameData(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.SEARCH_USERNAME, data, 1);
   }
 }

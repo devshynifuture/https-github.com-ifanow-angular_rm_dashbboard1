@@ -10,18 +10,15 @@ import { SettingBackofficeComponent } from './setting-backoffice/setting-backoff
 import { UsersComponent } from './setting-user-roles/setting-users-roles/users/users.component';
 import { RolesComponent } from './setting-user-roles/setting-users-roles/roles/roles.component';
 import { HierachyComponent } from './setting-user-roles/setting-users-roles/hierachy/hierachy.component';
-
 import { ArnRiaDetailsComponent } from './setting-backup/setting-backup/arn-ria-details/arn-ria-details.component';
 import { MfRtaDetailsComponent } from './setting-backup/setting-backup/mf-rta-details/mf-rta-details.component';
 import { SettingEntryModule } from './setting-entry/setting-entry.module';
 import { SchemeBasketComponent } from './setting-backup/setting-backup/scheme-basket/scheme-basket.component';
 import { ModelPortfolioComponent } from './setting-backup/setting-backup/model-portfolio/model-portfolio.component';
 import { SettingBackupModule } from './setting-backup/setting-backup/setting-backup.module';
-import { SettingPreferenceComponent } from './setting-preference/setting-preference.component';
 import { SettingActivityComponent } from './setting-activity/setting-activity.component';
 import { CommonComponentModule } from '../../common-component/common-component.module';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
-import { OrgProfileComponent } from './setting-org-profile/add-personal-profile/org-profile/org-profile.component';
 
 
 @NgModule({
@@ -29,7 +26,6 @@ import { OrgProfileComponent } from './setting-org-profile/add-personal-profile/
     SettingUserRolesComponent, SettingBackofficeComponent, UsersComponent, RolesComponent,
     HierachyComponent, ArnRiaDetailsComponent, MfRtaDetailsComponent, SchemeBasketComponent,
     ModelPortfolioComponent,
-    SettingPreferenceComponent,
     SettingActivityComponent,],
   imports: [
     CommonModule,

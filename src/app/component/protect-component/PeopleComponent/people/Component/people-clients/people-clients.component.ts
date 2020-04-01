@@ -3,6 +3,8 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AddClientComponent } from './add-client/add-client.component';
+import { PeopleService } from '../../../people.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-people-clients',
@@ -13,12 +15,39 @@ export class PeopleClientsComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'member', 'owner',
     'login', 'status', 'icons', 'icons1'];
   dataSource = ELEMENT_DATA;
-  constructor(private subInjectService: SubscriptionInject, public eventService: EventService) { }
+  advisorId: any;
+  clientDatasource: any;
+  isLoading: boolean;
+  constructor(private subInjectService: SubscriptionInject, public eventService: EventService, private peopleService: PeopleService) { }
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.getClientList();
+  }
+
+  getClientList() {
+    this.clientDatasource = [{}, {}, {}];
+    this.isLoading = true;
+    let obj =
+    {
+      advisorId: this.advisorId
+    }
+
+    // commented code which are giving errors ====>>>>>>>>>>>>>>.
+
+    // this.peopleService.getClientList(obj).subscribe(
+    //   data => {
+    //     console.log(data);
+    //     this.isLoading = false;
+    //     this.clientDatasource = data;
+    //   },
+    //   err => this.eventService.openSnackBar(err, "dismiss")
+    // )
+
+    // commented code closed which are giving errors ====>>>>>>>>>>>>>>.
   }
   Addclient(data) {
-    (data == null) ? data = { flag: 'Add client', fieldFlag: 'client' } : '';
+    (data == null) ? data = { flag: 'Add client', fieldFlag: 'client', data: null } : '';
     const fragmentData = {
       flag: 'Add client',
       id: 1,

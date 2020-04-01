@@ -10,7 +10,17 @@
                 <div class="col-md-12">
                     <h3 class="pt-36">SIP</h3>
                 </div>
-                <div class="pt-20 pr-20">
+                <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
+                    <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
+                        Select option
+                        <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item>All</button>
+                        <button mat-menu-item>Broker code</button>
+                    </mat-menu>
+                </div>
+                <div class="pt-20 pr-0">
                     <div class="row ">
                         <div class="col-md-9 pl-0">
                             <div class="row">
@@ -89,7 +99,8 @@
                                                <div class="col-md-3 pt-12 pl-8 ">
                                                     <img src="/assets/images/svg/cal.svg">
                                                 </div>
-                                                <div class="col-sm-9 p-0" (click)="categoryWise('amc')">
+                                                <!-- (click)="categoryWise('amc')" prod build -->
+                                                <div class="col-sm-9 p-0" >
                                                     <h5 class="mb-0 text-custom pt-16 pb-16 ">AMC wise</h5>
                                                 </div>
                                             </div>
@@ -101,7 +112,8 @@
                                                <div class="col-md-3 pt-12 pl-8 ">
                                                     <img src="/assets/images/svg/cal.svg">
                                                 </div>
-                                                <div class="col-md-9 p-0 " (click)="categoryWise('client')">
+                                                <!-- (click)="categoryWise('client')" prod build -->
+                                                <div class="col-md-9 p-0 " >
                                                     <h5 class="mb-0 text-custom pt-16 pb-16 ">Client wise</h5>
                                                 </div>
                                             </div>
@@ -113,7 +125,8 @@
                                                 <div class="col-md-3 pt-12 pl-8">
                                                     <img src="/assets/images/svg/cal.svg">
                                                 </div>
-                                                <div class="col-sm-9 p-0" (click)="categoryWise('applicant')">
+                                                <!-- (click)="categoryWise('applicant')"  prod build -->
+                                                <div class="col-sm-9 p-0" >
                                                     <h5 class="mb-0 text-custom pt-16 pb-16 ">Applicant wise</h5>
                                                 </div>
                                             </div>
@@ -131,15 +144,16 @@
                                 <mat-tab-group class="h-500 bg-white b-a ">
                                     <mat-tab label="Expiring SIP">
                                         <p class="b-a text-center p-8 mb-0 f-12 text-custom">List of SIP expired in last 90 days </p>
-
-                                        <div class="b-white" *ngIf="clientTotalAum">
-                                            <div class="row bb-dotted" *ngFor="let item of clientTotalAum">
+                                        <!-- *ngIf="clientTotalAum" prod build -->
+                                        <div class="b-white" >
+                                            <!-- *ngFor="let item of clientTotalAum" prod build -->
+                                            <div class="row bb-dotted" >
                                                 <div class="col-md-7 p-0 ">
-                                                    <p class="mb-0 f-bold f-13 p-8 ">{{item.name}}</p>
+                                                    <!-- <p class="mb-0 f-bold f-13 p-8 ">{{item.name}}</p> -->
                                                 </div>
                                                 <div class="col-md-5 p-0 ">
-                                                    <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
-                                                        {{item.totalAum}}</p>
+                                                    <!-- <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
+                                                        {{item.totalAum}}</p> -->
                                                 </div>
                                             </div>
 
@@ -147,14 +161,16 @@
                                     </mat-tab>
                                     <mat-tab label="Expiring SIP ">
                                         <h6 class="f-bold b-a text-center p-12 mb-0 f-14 ">Top AMC</h6>
-                                        <div class="b-white " *ngIf="amcTotalAum">
-                                            <div class="row bb-dotted " *ngFor="let item of amcTotalAum">
+                                        <!-- *ngIf="amcTotalAum" prod build -->
+                                        <div class="b-white ">
+                                            <!-- *ngFor="let item of amcTotalAum" prod build -->
+                                            <div class="row bb-dotted " >
                                                 <div class="col-md-7 p-0 ">
-                                                    <p class="mb-0 f-bold f-13 p-8 ">{{item.schemeName}}</p>
+                                                    <!-- <p class="mb-0 f-bold f-13 p-8 ">{{item.schemeName}}</p> -->
                                                 </div>
                                                 <div class="col-md-5 p-0 ">
-                                                    <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
-                                                        {{item.total_aum}}</p>
+                                                    <!-- <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
+                                                        {{item.total_aum}}</p> -->
                                                 </div>
                                             </div>
                                         </div>

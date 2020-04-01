@@ -1,7 +1,9 @@
 <div class="row pt-130">
     <div class="col-md-12 text-right">
-        <button mat-stroked-button class="text-primary" (click)="openOrg(false)"> Personal profile</button>
-        <button mat-button (click)="openOrg(true)">Organization profile</button>
+        <button mat-stroked-button [ngClass]="orgProfile == false ? 'text-primary' : ''" (click)="openOrg(false)">
+            Personal profile</button>
+        <button mat-stroked-button [ngClass]="orgProfile == true ? 'text-primary' : ''"
+            (click)="openOrg(true)">Organization profile</button>
     </div>
 </div>
 <div class="row pt-28" *ngIf="orgProfile == false">
@@ -12,10 +14,10 @@
 
 <div class="row pt-40 pb-20" id="ui-setting-profile" *ngIf="orgProfile == false">
     <div class="col-xl-2"></div>
-    <div class="col-xl-8" *ngIf="userList">
+    <div class="col-xl-8">
         <mat-card class="b-a p-0 br-4">
-            <mat-card-header class="bg-grey lter wrapper-18 ">
-                <div class="row w-100">
+            <mat-card-header class="bg-grey lter wrapper-18 relClass">
+                <div class="row w-100" *ngIf="userList">
                     <div class="col-md-9 pl-0">
                         <h2 class="m-0">{{userList.name}}</h2>
                     </div>
@@ -25,7 +27,7 @@
                         </mat-icon>
                         <mat-menu #menu="matMenu">
                             <!-- ng build prod issue expected 2 args given empty string -->
-                            <button mat-menu-item (click)="OpenpersonalProfile('', '')">Edit</button>
+                            <button mat-menu-item (click)="OpenpersonalProfile(userList, '')">Edit</button>
                             <button mat-menu-item>Delete</button>
                         </mat-menu>
                     </div>
@@ -33,13 +35,25 @@
             </mat-card-header>
             <mat-card-content class="">
                 <div class="row">
-                    <div class="col-md-6 pb-28">
-                        <p class="f-12 mb-0 text-custom mt-28"> EMAIL</p>
-                        <p class="m-0">{{userList.emailId}}</p>
-                        <p class="f-12 mb-0 text-custom mt-28"> MOBILE</p>
-                        <p class="m-0">{{userList.mobileNo}}</p>
-                        <p class="f-12 mb-0 text-custom mt-28"> USERNAME</p>
-                        <p class="m-0">{{userList.userName}}</p>
+                    <div class="col-md-6 pb-28 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                        <div class="relClass">
+                            <p class="f-12 mb-0 text-custom mt-28"> EMAIL</p>
+                            <div class="bar" [ngClass]="{'height23': isLoading}">
+                                <p class="m-0">{{userList.emailId}}</p>
+                            </div>
+                        </div>
+                        <div class="relClass">
+                            <p class="f-12 mb-0 text-custom mt-28"> MOBILE</p>
+                            <div class="bar" [ngClass]="{'height23': isLoading}">
+                                <p class="m-0">{{userList.mobileNo}}</p>
+                            </div>
+                        </div>
+                        <div class="relClass">
+                            <p class="f-12 mb-0 text-custom mt-28"> USERNAME</p>
+                            <div class="bar" [ngClass]="{'height23': isLoading}">
+                                <p class="m-0">{{userList.userName}}</p>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-md-6 bl-1 pb-28">
@@ -57,15 +71,15 @@
 </div>
 
 <!-- Organization profile -->
-<div class="row pt-28"  *ngIf="orgProfile == true"> 
+<div class="row pt-28" *ngIf="orgProfile == true">
     <div class="col-md-12">
         <h4 class="m-0">Organization profile</h4>
     </div>
 </div>
 
-<div class="row pt-40 pb-20" id="ui-setting-profile" *ngIf="orgProfile == true" >
+<div class="row pt-40 pb-20" id="ui-setting-profile" *ngIf="orgProfile == true">
     <div class="col-xl-2"></div>
-    <div class="col-xl-8 p-0" *ngIf="orgDetails">
+    <div class="col-xl-8 p-0">
         <mat-card class="b-a p-0 br-4">
             <mat-card-header class="bg-grey lter p-24">
                 <div class="row w-100">
@@ -78,7 +92,7 @@
                             <mat-icon class="text-custom">more_vert</mat-icon>
                         </button>
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="OpenOrgProfile('','')">Edit</button>
+                            <button mat-menu-item (click)="OpenOrgProfile(orgDetails,'')">Edit</button>
                             <button mat-menu-item>Delete</button>
                         </mat-menu>
                     </div>
@@ -86,33 +100,51 @@
             </mat-card-header>
             <mat-card-content class="">
                 <div class="row">
-                    <div class="col-md-6 pb-28">
-                        <p class="f-12 m-0 text-custom pt-28"> EMAIL</p>
-                        <p class="m-0">{{orgDetails.email}}</p>
-                        <p class="f-12 m-0 text-custom pt-28"> MOBILE</p>
-                        <p class="m-0">{{orgDetails.mobileNo}}</p>
-                        <p class="f-12 m-0 text-custom pt-28"> WEBSITE</p>
-                        <p class="m-0">{{orgDetails.website}}</p>
-                        <p class="f-12 m-0 text-custom pt-28"> ADDRESS</p>
-                        <p class="m-0">{{orgDetails.billerAddress}}</p>
+                    <div class="col-md-6 pb-28 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                        <div class="relClass">
+                            <p class="f-12 m-0 text-custom pt-28"> EMAIL</p>
+                            <div class="bar" [ngClass]="{'height23': isLoading}">
+                                <p class="m-0">{{orgDetails.email}}</p>
+                            </div>
+                        </div>
+                        <div class="relClass">
+                            <p class="f-12 m-0 text-custom pt-28"> MOBILE</p>
+                            <div class="bar" [ngClass]="{'height23': isLoading}">
+                                <p class="m-0">{{orgDetails.mobileNo}}</p>
+                            </div>
+                        </div>
+                        <div class="relClass">
+                            <div class="bar" [ngClass]="{'height23': isLoading}">
+                                <p class="f-12 m-0 text-custom pt-28"> WEBSITE</p>
+                                <p class="m-0">{{orgDetails.website}}</p>
+                            </div>
+                        </div>
+                        <div class="relClass">
+                            <p class="f-12 m-0 text-custom pt-28"> ADDRESS</p>
+                            <div class="bar" [ngClass]="{'height23': isLoading}">
+                                <p class="m-0">{{orgDetails.billerAddress}}</p>
+                            </div>
+                        </div>
                         <div class="row pt-36">
                             <div class="col-md-6 pl-0">
-                                <p class="m-0 f-12 text-custom">GST TREATMENT</p>
-                                <p class="m-0">{{orgDetails.gstTreatmentId}}</p>
+                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                                    <p class="m-0 f-12 text-custom">GST TREATMENT</p>
+                                    <p class="m-0">{{orgDetails.gstTreatmentId}}</p>
+                                </div>
                             </div>
                             <div class="col-md-6 pr-0">
-                                <p class="m-0 f-12 text-custom">GST</p>
-                                <p class="m-0">{{orgDetails.gstin}}</p>
+                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                                    <p class="m-0 f-12 text-custom">GST</p>
+                                    <p class="m-0">{{orgDetails.gstin}}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 bl-1 pb-28">
                         <p class="f-12 m-0 text-custom pt-28 pb-16"> WEB APP LOGO</p>
-                        <img [src]="orgDetails.logoUrl"
-                            class="w-65">
+                        <img [src]="orgDetails.logoUrl" class="w-65">
                         <p class="m-0 text-black pt-16">This logo is visible on top left of web login, About section in
-                            mobile
-                            app etc.</p>
+                            mobile app etc.</p>
                         <p class="m-0 text-black pt-4 bb-1 pb-16">Image dimension: 50px x 200px</p>
                         <p class="f-12 m-0 text-custom pt-28 pb-16"> LOGO FOR REPORTS</p>
 
@@ -122,9 +154,7 @@
                             </div>
                             <div class="col-md-8 pl-0">
                                 <p class="m-0 text-black pt-16">This logo is visible on various reports (MF, Financial
-                                    Plan
-                                    etc.). If left blank, we
-                                    will use the Web App Logo to show in reports.</p>
+                                    Plan etc.). If left blank, we will use the Web App Logo to show in reports.</p>
                                 <p class="m-0 text-black pt-16">Image dimension: 200px x 200px</p>
                             </div>
                         </div>
@@ -135,11 +165,11 @@
     </div>
     <div class="col-xl-2"></div>
 </div>
-<div *ngIf="orgDetails == undefined && orgProfile == true" class="d-flex flex-column align-items-center">
+<!-- <div *ngIf="orgDetails == undefined && orgProfile == true" class="d-flex flex-column align-items-center">
     <img class="width300" src="assets/images/svg/noDataFound.svg">
     <h4 class="text-center pt-12">No organization profile found</h4>
 </div>
 <div *ngIf="userList == undefined && orgProfile == false" class="d-flex flex-column align-items-center">
     <img class="width300" src="assets/images/svg/noDataFound.svg">
     <h4 class="text-center pt-12">No personal profile found</h4>
-</div>
+</div> -->

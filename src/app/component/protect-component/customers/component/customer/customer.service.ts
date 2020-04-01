@@ -655,4 +655,14 @@ export class CustomerService {
   giveAdviceOnRealEstate(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.GIVE_ADVICE_ON_REAL_ESTATE, data)
   }
+  addFamilyMembers(data) {
+    return this.http.postEncoded(apiConfig.MAIN_URL + appConfig.ADD_FAMILY_MEMBER, data);
+  }
+  getFamilyMembers(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_FAMILY_MEMBERS, data, 1);
+  }
+  deleteFamilyMember(data) {
+    return this.http.putEncoded(apiConfig.USER + appConfig.DELETE_FAMILY_MEMBER, data);
+  }
 }
+

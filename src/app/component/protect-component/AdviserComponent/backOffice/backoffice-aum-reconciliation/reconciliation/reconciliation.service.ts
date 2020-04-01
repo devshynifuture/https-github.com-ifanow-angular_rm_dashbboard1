@@ -86,6 +86,34 @@ export class ReconciliationService {
         return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_PUT_AUM_RECON_ADD, data);
     }
 
+    getBackOfficeFileUploadFileType(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_FILE_UPLOAD_TYPE, data);
+    }
+
+    getBackOfficeFilter(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_FILTER, data);
+    }
+
+    getBackOfficeFileToUpload(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_FILE_TO_UPLOAD, data);
+    }
+
+    getBackOfficeTransactions(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_TRANSACTIONS, data);
+    }
+
+    getBackOfficeSipStp(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_SIP_STP, data);
+    }
+
+    getBackOfficeFolio(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_FOLIO, data);
+    }
+
+    successBackOfficeFileToUpload(data){
+        return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_SUCCESS_FILE_UPLOAD, data)
+    }
+
     putFileOrderRetry(data) {
         return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_PUT_FILE_ORDER_RETRY, data);
     }

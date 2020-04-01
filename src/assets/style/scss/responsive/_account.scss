@@ -4,12 +4,23 @@
     height: 40px !important;
   }
 }
-
+#ui-profile-plan{
+  pointer-events: initial !important;
+}
+@media(max-width:1292px) {
+  .btn140{
+    width: 135px !important;
+    
+}
+.recommendations,.btn140{
+  font-size: 13px;
+}
+}
 @media(max-width:1224px) {}
 
 @media(max-width:1200px) {
 
-  #ui-assets-account {
+  #ui-assets-account,#ui-profile-plan {
     li {
       padding: 0 0px 24px 13px !important;
     }
@@ -91,12 +102,33 @@
       padding: 0 16px !important;
     }
   }
+  .individual-income{
+    .incomeSourcesBox {
+      display: block !important;
+      margin: 0 auto !important;
+    }
+    .ws-nowrap{
+      white-space: inherit !important;
+    }
+    h5.text-custom{
+      font-size: 14px;
+    }
+    .col-md-3.d-flex{
+      display: block !important;
+      .mr-28{
+        margin-right: 0px !important;
+      }
+      .ml-12{
+        margin-left: 0px !important;
+      }
+    }
+  }
 }
 
 @media(max-width:1092px) {
 
   #ui-assets-account,
-  #ui-liabilities {
+  #ui-liabilities,#ui-profile-plan {
     li {
       padding: 0 0px 0px 8px !important;
       font-size: 13px;
@@ -154,10 +186,12 @@
     }
   }
 
-  #ui-assets-account li,
-  #ui-liabilities li {
+  #ui-assets-account,#ui-profile-plan,
+  #ui-liabilities {
+    li {
     font-size: 13px !important;
   }
+}
 
   .tabView {
 

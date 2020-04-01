@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-upload.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
@@ -21,8 +21,10 @@ export class AddPersonalProfileComponent implements OnInit {
   imageUploadEvent: any;
   showCropper: boolean = false;
   cropImage: boolean = false;
-  selectedTab:number = 0;
-  anyDetailsChanged:boolean; // check if any details have been updated
+  selectedTab: number = 0;
+  anyDetailsChanged: boolean; // check if any details have been updated
+  inputData: any;
+  isLoading = false
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -36,10 +38,19 @@ export class AddPersonalProfileComponent implements OnInit {
 
   personalProfile: any;
   validatorType = ValidatorType
+  @Input()
+  set data(data) {
+    this.inputData = data;
 
+    console.log('This is Input data', data);
+    this.getdataForm(data);
+  }
+  get data() {
+    return this.inputData;
+  }
 
   ngOnInit() {
-    this.getdataForm("")
+    this.getdataForm(this.inputData)
     this.getPersonalInfo();
   }
 
@@ -88,7 +99,7 @@ export class AddPersonalProfileComponent implements OnInit {
   }
 
   // save the changes of current page only
-  saveCurrentPage(){
+  saveCurrentPage() {
     // selected tab 1 - profile image
     // 2 - profile details
     if (this.selectedTab == 1) {
@@ -100,17 +111,16 @@ export class AddPersonalProfileComponent implements OnInit {
 
   // reset the variables when user changes tabs
   // make sure to reset to latest updates
-  resetPageVariables(){
+  resetPageVariables() {
     this.showCropper = false;
     this.cropImage = false;
     this.imageUploadEvent = '';
     this.finalImage = '';
   }
-
   getdataForm(data) {
     this.personalProfile = this.fb.group({
-      name: [(!data.fdType) ? '' : (data.name), [Validators.required]],
-      emailId: [(!data) ? '' : data.email, [Validators.required]],
+      name: [(!data.fdType) ? '' : (data.fullName), [Validators.required]],
+      emailId: [(!data) ? '' : data.emailId, [Validators.required]],
       mobileNo: [(!data) ? '' : data.mobileNo, [Validators.required]],
       userName: [(!data) ? '' : data.userName, [Validators.required]],
     });
@@ -119,16 +129,15 @@ export class AddPersonalProfileComponent implements OnInit {
   getFormControl(): any {
     return this.personalProfile.controls;
   }
-
-
+  
   updatePersonalProfile() {
     let obj = {
-      advisorId:this.advisorId,
-        name: this.personalProfile.controls.name.value,
-        emailId:this.personalProfile.controls.emailId.value ,
-        userName:this.personalProfile.controls.userName.value ,
-        mobileNo:this.personalProfile.controls.mobileNo.value ,
-        roleId : 0,                                                                               
+      adminAdvisorId: this.advisorId,
+      fullName: this.personalProfile.controls.name.value,
+      emailId: this.personalProfile.controls.emailId.value,
+      userName: this.personalProfile.controls.userName.value,
+      mobileNo: this.personalProfile.controls.mobileNo.value,
+      roleId: 0,
     }
     this.settingsService.editPersonalProfile(obj).subscribe(
       data => {
@@ -141,6 +150,8 @@ export class AddPersonalProfileComponent implements OnInit {
 
   editPersonalProfileRes(data) {
     console.log('editPersonalProfileRes', data)
+    this.selectedTab = 2
+
   }
 
   Close(flag: boolean) {

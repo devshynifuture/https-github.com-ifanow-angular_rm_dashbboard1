@@ -9,42 +9,45 @@
             </i> ADD NEW
         </button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="openAddcamsDetails('','')">CAMS</button>
-            <button mat-menu-item (click)="openAddKarvyDetails('', '')">Karvy(KFintech)</button>
-            <button mat-menu-item (click)="openAddFranklintempletionDetails('', '')">Franklin Templeton</button>
-            <button mat-menu-item (click)="openAddCamsfundsent('', '')">CAMS Fundsent</button>
+            <button mat-menu-item *ngFor="let rta_type of globalData.rta_type_master_list" (click)="openInSideBar(rta_type.id,'','')">{{rta_type.type}}</button>
         </mat-menu>
     </div>
 </div>
 <div class="row">
     <div class="col-md-7 p-0">
         <h5 class="m-0 pt-24">CAMS</h5>
-        <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
+        <table mat-table [dataSource]="camsDS" class="mt-8" id="table-low">
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{getARNId(element.arnRiaDetailsId)}} </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef class="br"> Registered email ID </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.email}} </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
                 <th mat-header-cell *matHeaderCellDef class="br"> Mailback password </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.mailbackPassword}} <mat-icon>visibility</mat-icon></td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="symbol">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell *matCellDef="let element">
-                    <i class="material-icons">
-                        more_vert
-                    </i>
+                    <ng-container>
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="openInSideBar(1, element, '')">Edit</button>
+                            <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
+                        </mat-menu>
+                    </ng-container>
                 </td>
             </ng-container>
 
@@ -54,23 +57,23 @@
     </div>
     <div class="col-md-12 p-0">
         <h5 class="m-0 pt-24">Karvy (KFintech)</h5>
-        <table mat-table [dataSource]="dataSource1" class="mt-8" id="table-low">
+        <table mat-table [dataSource]="karvyDS" class="mt-8" id="table-low">
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{getARNId(element.arnRiaDetailsId)}} </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef class="br"> Login ID </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.loginId}} </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
                 <th mat-header-cell *matHeaderCellDef class="br"> Login password </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.loginPassword}} <mat-icon>visibility</mat-icon></td>
             </ng-container>
 
             <!-- Symbol Column -->
@@ -80,18 +83,24 @@
             </ng-container>
             <ng-container matColumnDef="mail">
                 <th mat-header-cell *matHeaderCellDef class="br"> Mailback password</th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.mail}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.mailbackPassword}} <mat-icon>visibility</mat-icon></td>
             </ng-container>
             <ng-container matColumnDef="use">
                 <th mat-header-cell *matHeaderCellDef class="br"> Use for file ordering? </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.use}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.fileOrderingUseabilityStatusId == 1 ? 'Yes' : 'No'}} </td>
             </ng-container>
             <ng-container matColumnDef="icons">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell *matCellDef="let element">
-                    <i class="material-icons">
-                        more_vert
-                    </i>
+                    <ng-container>
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="openInSideBar(2, element, '')">Edit</button>
+                            <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
+                        </mat-menu>
+                    </ng-container>
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
@@ -100,23 +109,23 @@
     </div>
     <div class="col-md-10 p-0">
         <h5 class="m-0 pt-24">Franklin Templeton</h5>
-        <table mat-table [dataSource]="dataSource2" class="mt-8" id="table-low">
+        <table mat-table [dataSource]="frankDS" class="mt-8" id="table-low">
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{getARNId(element.arnRiaDetailsId)}} </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef class="br"> Login ID </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.loginId}} </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
                 <th mat-header-cell *matHeaderCellDef class="br"> Login password </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.loginPassword}} <mat-icon>visibility</mat-icon></td>
             </ng-container>
 
             <!-- Symbol Column -->
@@ -126,15 +135,21 @@
             </ng-container>
             <ng-container matColumnDef="mail">
                 <th mat-header-cell *matHeaderCellDef class="br"> Mailback password</th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.mail}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.mail}} <mat-icon>visibility</mat-icon></td>
             </ng-container>
 
             <ng-container matColumnDef="icons">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell *matCellDef="let element">
-                    <i class="material-icons">
-                        more_vert
-                    </i>
+                    <ng-container>
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="openInSideBar(3, element, '')">Edit</button>
+                            <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
+                        </mat-menu>
+                    </ng-container>
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
@@ -142,42 +157,56 @@
         </table>
     </div>
     <div class="col-md-11 p-0 pb-44">
-        <h5 class="m-0 pt-24">Franklin Templeton</h5>
-        <table mat-table [dataSource]="dataSource2" class="mt-8" id="table-low">
+        <h5 class="m-0 pt-24">CAMS Fundsnet</h5>
+        <table mat-table [dataSource]="fundsDS" class="mt-8" id="table-low">
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{getARNId(element.arnRiaDetailsId)}} </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef class="br"> Login ID </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.loginId}} </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
                 <th mat-header-cell *matHeaderCellDef class="br"> Login password </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.loginPassword}} <mat-icon>visibility</mat-icon></td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="email">
-                <th mat-header-cell *matHeaderCellDef class="br"> Registered email ID </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.email}} </td>
+                <th mat-header-cell *matHeaderCellDef class="br"> Secret Question </th>
+                <td mat-cell *matCellDef="let element" class="br">
+                    <div *ngFor="let questionSet of element.rtaCamsFundNetSecurityQuestionsList">
+                        {{getQuestion(questionSet.id)}}
+                    </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="mail">
-                <th mat-header-cell *matHeaderCellDef class="br"> Mailback password</th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.mail}} </td>
+                <th mat-header-cell *matHeaderCellDef class="br"> Answer </th>
+                <td mat-cell *matCellDef="let element" class="br"> 
+                    <div *ngFor="let questionSet of element.rtaCamsFundNetSecurityQuestionsList">
+                        {{questionSet.answer}}
+                        <mat-icon>visibility</mat-icon> 
+                    </div></td>
             </ng-container>
 
             <ng-container matColumnDef="icons">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell *matCellDef="let element">
-                    <i class="material-icons">
-                        more_vert
-                    </i>
+                    <ng-container>
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="openInSideBar(4, element, '')">Edit</button>
+                            <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
+                        </mat-menu>
+                    </ng-container>
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>

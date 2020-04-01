@@ -10,6 +10,16 @@
                 <div class="col-md-12">
                     <h3 class="pt-36">Mutual Fund - AUM Report1</h3>
                 </div>
+                <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
+                    <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
+                        {{viewMode}}
+                        <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="viewMode='All'">All</button>
+                        <button mat-menu-item (click)="viewMode='Broker code'">Broker code</button>
+                    </mat-menu>
+                </div>
                 <div class="pt-20 pr-20">
                     <div class="row ">
                         <div class="col-md-9 pl-0">
@@ -76,7 +86,7 @@
                                                 <div class="col-md-3 pt-12 pl-8">
                                                     <img src="/assets/images/svg/cal.svg">
                                                 </div>
-                                                <div class="col-md-9 p-0">
+                                                <div class="col-md-9 p-0 c-p" (click)="categoryWise('category')">
                                                     <h5 class="mb-0 text-custom pt-16 pb-16 ">Category wise</h5>
                                                 </div>
                                             </div>
@@ -85,10 +95,10 @@
                                     <div class="col-md-3 pl-0 p-0 ">
                                         <div class="mr-8 bg-white b-a">
                                             <div class="row ">
-                                               <div class="col-md-3 pt-12 pl-8 ">
+                                                <div class="col-md-3 pt-12 pl-8 ">
                                                     <img src="/assets/images/svg/cal.svg">
                                                 </div>
-                                                <div class="col-sm-9 p-0" (click)="categoryWise('amc')">
+                                                <div class="col-sm-9 p-0 c-p" (click)="categoryWise('amc')">
                                                     <h5 class="mb-0 text-custom pt-16 pb-16 ">AMC wise</h5>
                                                 </div>
                                             </div>
@@ -97,10 +107,10 @@
                                     <div class="col-md-3 pl-0 p-0 ">
                                         <div class="mr-8 bg-white b-a">
                                             <div class="row ">
-                                               <div class="col-md-3 pt-12 pl-8 ">
+                                                <div class="col-md-3 pt-12 pl-8 ">
                                                     <img src="/assets/images/svg/cal.svg">
                                                 </div>
-                                                <div class="col-md-9 p-0 " (click)="categoryWise('client')">
+                                                <div class="col-md-9 p-0 c-p" (click)="categoryWise('client')">
                                                     <h5 class="mb-0 text-custom pt-16 pb-16 ">Client wise</h5>
                                                 </div>
                                             </div>
@@ -112,7 +122,7 @@
                                                 <div class="col-md-3 pt-12 pl-8">
                                                     <img src="/assets/images/svg/cal.svg">
                                                 </div>
-                                                <div class="col-sm-9 p-0" (click)="categoryWise('applicant')">
+                                                <div class="col-sm-9 p-0 c-p" (click)="categoryWise('applicant')">
                                                     <h5 class="mb-0 text-custom pt-16 pb-16 ">Applicant wise</h5>
                                                 </div>
                                             </div>
@@ -121,8 +131,7 @@
                                 </div>
                             </div>
                             <div class="row p-12">
-                                <img src="/assets/images/grap.png"
-                                    class="w-100 h-365">
+                                <img src="/assets/images/grap.png" class="w-100 h-365">
                             </div>
                         </div>
                         <div class="col-md-3 p-0">
@@ -134,29 +143,35 @@
                                         <div class="b-white" *ngIf="clientTotalAum">
                                             <div class="row bb-dotted" *ngFor="let item of clientTotalAum">
                                                 <div class="col-md-7 p-0 ">
-                                                    <p class="mb-0 f-bold f-13 p-8 ">{{item.name}}</p>
+                                                    <p class="mb-0 f-bold f-13 p-8 ">{{(item.name)?item.name:'-'}}</p>
                                                 </div>
                                                 <div class="col-md-5 p-0 ">
                                                     <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
-                                                        {{item.totalAum}}</p>
+                                                        {{(item.totalAum)?item.totalAum:'-'}}</p>
                                                 </div>
                                             </div>
 
                                         </div>
+                                        <div *ngIf="!clientTotalAum || clientTotalAum.length==0" class="text-center">
+                                         No Client Found
+                                        </div>    
                                     </mat-tab>
                                     <mat-tab label="AMC " class="min-w140 ">
                                         <h6 class="f-bold b-a text-center p-12 mb-0 f-14 ">Top AMC</h6>
                                         <div class="b-white " *ngIf="amcTotalAum">
                                             <div class="row bb-dotted " *ngFor="let item of amcTotalAum">
                                                 <div class="col-md-7 p-0 ">
-                                                    <p class="mb-0 f-bold f-13 p-8 ">{{item.schemeName}}</p>
+                                                    <p class="mb-0 f-bold f-13 p-8 ">{{(item.schemeName)?item.schemeName:'-'}}</p>
                                                 </div>
                                                 <div class="col-md-5 p-0 ">
                                                     <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
-                                                        {{item.total_aum}}</p>
+                                                        {{(item.totalAum)?item.totalAum:-''}}</p>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div *ngIf="!amcTotalAum || amcTotalAum.length==0" class="text-center">
+                                            No Amc Found
+                                           </div> 
                                     </mat-tab> 
                                 </mat-tab-group>
                             </div>
@@ -175,6 +190,9 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div *ngIf="!category || category.length==0" class="text-center">
+                                            No category Found
+                                           </div>
                                     </mat-tab>
 
                                     <mat-tab label="AMC ">
@@ -189,6 +207,9 @@
                                                         {{item.totalAum}}</p>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div *ngIf="!subcategory || subcategory.length==0" class="text-center">
+                                         No subCategory Found
                                         </div>
                                     </mat-tab>
                                 </mat-tab-group>

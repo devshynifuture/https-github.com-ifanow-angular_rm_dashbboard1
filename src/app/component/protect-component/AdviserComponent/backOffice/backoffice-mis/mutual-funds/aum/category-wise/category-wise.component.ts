@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { BackOfficeService } from '../../../../back-office.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AumComponent } from '../aum.component';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-category-wise',
@@ -15,17 +16,19 @@ export class CategoryWiseComponent implements OnInit {
   subcategory;
   showLoader = true;
   teamMemberId = 2929;
+  advisorId: any;
   constructor(private backoffice: BackOfficeService, private dataService: EventService, public aum: AumComponent) { }
 
   selectedCategory;
   ngOnInit() {
-    this.getSubCatSchemeName();
+    this.advisorId=AuthService.getAdvisorId();
+     this.getSubCatSchemeName();
     this.clientFolioWise();
     // this.getSubCatAum();
   }
 
   getSubCatSchemeName() {
-    this.backoffice.getSubCatSchemeName(this.teamMemberId).subscribe(
+    this.backoffice.getTotalByAumScheme(this.advisorId).subscribe(
       data => this.getFileResponseDataForSubSchemeName(data),
       err => this.getFilerrorResponse(err)
     )

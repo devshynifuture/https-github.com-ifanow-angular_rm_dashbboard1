@@ -3,13 +3,13 @@
         <h4 class="mb-0 l-22 wrapper-20">PERSONAL PROFILE</h4>
     </div>
     <div class="col-md-2 text-right">
-        <i class="material-icons pt-20 c-p pr-16" (click)="Close()">
+        <i class="material-icons pt-20 c-p pr-16" (click)="Close(null)">
             clear
         </i>
     </div>
 </div>
 
-<div [formGroup]="personalProfile"  class="pt-90 pl-40 pr-40" id="ui-add-personal-profile">
+<div [formGroup]="personalProfile"  class="pt-90 pl-40 pr-40 " id="ui-add-personal-profile">
     <mat-tab-group animationDuration="0ms" (selectedTabChange)="resetPageVariables()" [(selectedIndex)]="selectedTab">
         <mat-tab label="Profile">
             <div class="row pt-40">
@@ -106,7 +106,7 @@
 <div class="bottom-fixed wrapper-12 w-70">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close()">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(null)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveCurrentPage()">SAVE & NEXT

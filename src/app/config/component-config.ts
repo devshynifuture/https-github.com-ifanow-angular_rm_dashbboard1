@@ -4,24 +4,23 @@ export const appConfig = {
   RT_FILE_GET: 'file/rt/list/get',
 
 
-  ///////////////////////////MIS///////////////////////////
-  TOTAL_GET_AUM: 'asset/clientTotalAum/get',
-  GET_MIS_DATA: 'asset/mis/get',
+  ////////////////////////////get///////////////////////////
+  TOTAL_GET_AUM: 'backoffice/clientTotalAum/get',
+  GET_MIS_DATA: 'backoffice/mis/get',
   GET_SUBCAT_AUM: 'asset/cat/subcat/get',
-  GET_SUBCAT_SCHEME: 'asset/cat/subcat/scheme',
-  GET_SUBCAT_SCHEMENAME: 'asset/cat/subcat/scheme',
+  GET_SUBCAT_SCHEMENAME: 'backoffice/cat/subcat/scheme',
   GET_TOTAL_SCHEME_AUM: 'asset/schemeTotalAum/get',
   GET_TOTAL_AUM_BY_SCHEME: 'asset/schemeTotalAum/get',
   GET_CLIENT_WISE_TOTALAUM: 'asset/report/client/totalaum/get',
   GET_SIP_COUNT_GET: 'asset/sip/count/get',
-  GET_AUM_APPLICANT: 'asset/aum/applicantWise/totalaum/applicantName/get',
-  GET_AUM_APPLICANT_CATEGORY: 'asset/aum/applicantWise/totalaum/applicantsAllCategory/get',
-  GET_AUM_APPLICANT_SUB_CATEGORY: 'asset/aum/applicantWise/totalaum/applicantSubCategory/get',
-  GET_AUM_APPLICANT_SCHEME: 'asset/aum/applicantWise/totalaum/applicantSchemes/get',
+  GET_AUM_APPLICANT: 'backoffice/aum/applicantWise/totalaum/applicantName/get',
+  GET_AUM_APPLICANT_CATEGORY: 'backoffice/aum/applicantWise/totalaum/applicantsAllCategory/get',
+  GET_AUM_APPLICANT_SUB_CATEGORY: 'backoffice/aum/applicantWise/totalaum/applicantSubCategory/get',
+  GET_AUM_APPLICANT_SCHEME: 'backoffice/aum/applicantWise/totalaum/applicantSchemes/get',
   GET_AUM_CLIENT_TOTALAUM: 'asset/aum/client/totalaum/get',
-  GET_AUM_CLIENT_SCHEME: 'asset/aum/client/schemes',
+  GET_AUM_CLIENT_SCHEME: 'backoffice/aum/client/schemes',
   GET_CLIENT_FOLIO_WISE: 'asset/cat/subcat/schemeName/clientFolioWise',
-  GET_AMC_WISE: 'asset/mis/aum/amcWise/get',
+  GET_AMC_WISE: 'backoffice/mis/aum/amcWise/get',
   GET_APPLICANT_NAME: '/mis/aum/amcWise/applicantName/get',
   ADVISOR_TAG_GET: '/advisor/tag/get',
 
@@ -464,17 +463,45 @@ export const appConfig = {
   BACKOFFICE_GET_INVESTOR_NAME_LIST: 'backoffice/foliowise/applicaName/list/get',
   BACKOFFICE_PUT_DELETE_UNFREEZE_TRANSACTION: 'backoffice/delete/unfreeze/transaction',
 
+  BACKOFFICE_FILE_UPLOAD_TYPE: 'backoffice/file-upload/types/get',
+  BACKOFFICE_FILTER: 'backoffice/file-upload/filter/get',
+  BACKOFFICE_FILE_TO_UPLOAD: 'backoffice/file-upload/url/get',
+  BACKOFFICE_TRANSACTIONS: 'backoffice/file-upload/uploaded/transaction/list/get',
+  BACKOFFICE_SIP_STP: 'backoffice/file-upload/uploaded/sip/list/get',
+  BACKOFFICE_FOLIO: 'backoffice/file-upload/uploaded/folio-master/list/get',
+  BACKOFFICE_SUCCESS_FILE_UPLOAD: 'web/backoffice/file-upload/success',
+
   ///org setting ////
   GET_PERSONAL_PROFILE: 'setting/profile/personal/details/get',
   GET_ORG_PROFILE: 'setting/profile/organisation/details/get',
   EDIT_PERSONAL_PROFILE: 'setting/profile/personal/profile-photo/update',
-  EDIT_ORG_PROFILE: 'etting/profile/organisation/update',
-  EDIT_ORG_PROFILE_LOGO: 'setting/profile/organisation/logo/update',
-  EDIT_ORG_PROFILE_REPORT_LOGO: 'setting/profile/organisation/report/logo/update',
+  EDIT_ORG_PROFILE: 'setting/profile/organisation/update',
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',
   GET_PLANS: 'setting/preferences/plan/get',
   PROTFOLIO_UPDATE: 'setting/preferences/portfolio/update',
   PLAN_SECTION_UPDATE: 'setting/preferences/plan/update',
+  DOMAIN_GET: 'setting/preferences/domain/get',
+  UPDATE_DOMAIN: 'setting/preferences/domain/update',
+  EDIT_ORG_PROFILE_LOGO: 'setting/profile/organisation/logo/update',
+  EDIT_ORG_PROFILE_REPORT_LOGO: 'setting/profile/organisation/report/logo/update',
+  GET_EMAIL_VERIFICATION: 'setting/preference/email/get',
+  GET_EMAIL_TEMPLATES: 'setting/preference/email/template/get',
+  ADD_EMAIL_VERIFY: 'setting/preferences/email/post',
+  GET_ASSET_ALLOCATION: 'goal-planning/static-allocation/get',
+  GET_RETURNS: 'plan/config/return-inflation/get',
+  GET_KEY_PARAMETERS: 'goal-planning/key-parameters/get',
+  UPLOAD_PLAN_GALLERY: 'goal-planning/goal-gallery/add',
+  UPLOAD_KEY_PARAMETER: 'goal-planning/static-allocation/put',
+  UPDATE_ASSET_ALLOCATION: 'goal-planning/static-allocation/put',
+  ADD_SUB_TASKTEMPLATE: 'setting/task/sub-task/add',
+  TASK_GLOBAL: 'setting/task/template/global/data',
+  ADD_TAK_TEMPLATE: 'setting/task/template/add',
+  EDIT_TASK_TEMPLATE: 'setting/task/template/edit',
+  DELETE_TASK_TEMPLATE: 'setting/task/template/delete',
+  DELETE_SUBTASK_TEMPLATE: 'setting/task/sub-task/delete',
+  OWNER_SUBTASK_UPDATE: 'setting/task/template/owner/update',
+  OWNER_TASK_UPDATE: 'setting/task/sub-task/owner/update',
+
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
@@ -501,8 +528,22 @@ export const appConfig = {
   ADD_CLIENT_DEMAT: '',
   ADD_CLIENT_MORE_INFO: '',
   ADD_CLIENT_UPLOAD: '',
+  GET_PEOPLE_CLIENT_LIST: '/user/client/all/get',
+  ADD_CLIENT: 'user/client/add',
+  EDIT_CLIENT: 'user/client/edit',
+  ADD_EDIT_CLIENT_ADDRESS: 'user/address/add-edit',
+  ADD_EDIT_CLIENT_BANK: 'user/bank/add-edit',
+  ADD_EDIT_CLIENT_DEMAT: 'user/bank/demat/edit',
+  GET_FAMILY_MEMBERS: 'user/family-member/get',
+  DELETE_FAMILY_MEMBER: 'user/family-member/delete',
+  ADD_FAMILY_MEMBER: 'user/family-member/add',
+  ADD_MULTIPLE_FAMILY_MEMBERS: '/user/family-member/add/multiple',
+  EDIT_FAMILY_MEMBER_BASIC_DETAILS_MORE_INFO: 'user/family-member/edit',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: '/user/generate/otp',
+  SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
+  REGISTER: 'user/advisor/add',
+  SEARCH_USERNAME: 'user/search/username',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_UPDATE: 'calendar/event/update',
@@ -514,7 +555,34 @@ export const appConfig = {
   ////////////////////////////// settings////////////////////////////////////////////
   GET_PERSONAL_PROFILE_DETAILS: 'setting/profile/personal/details/get',
   UPLOAD_PERSONAL_PROFILE_PHOTO: 'setting/profile/personal/profile-photo/update',
-  ///org setting ////
-  ////////////////////////////// settings////////////////////////////////////////////
 
+  GET_ARN_RIA_GLOBAL_LIST: 'setting/arn-ria/global/data/get',
+
+  GET_ARN_RIA_LIST: 'setting/arn-ria/list/get',
+  ADD_ARN_RIA: 'setting/back-office/arn-ria/add',
+  EDIT_ARN_RIA: 'setting/back-office/arn-ria/edit',
+  GET_MF_RTA_LIST: 'setting/arn-ria/rta/list/get',
+  ADD_MF_RTA: 'setting/arn-ria/rta/add',
+  EDIT_MF_RTA: 'setting/arn-ria/rta/edit',
+  DELETE_MF_RTA: 'setting/arn-ria/rta/delete',
+  DELETE_MF_RTA_QUESTION: 'setting/arn-ria/fundnet/answer/delete',
+  UPDATE_MF_RTA_QUESTION: 'setting/arn-ria/fundnet/answer/update',
+
+  GET_USER_ROLES_GLOBAL_DATA: 'setting/users/global/roles/get',
+
+  GET_USER_ROLE_ROLE_LIST: 'setting/users-roles/role/get',
+  EDIT_USER_ROLE: 'setting/users-roles/role/edit',
+  DELETE_USER_ROLE: 'setting/users-roles/role/delete',
+  CLONE_USER_ROLE: 'setting/users-roles/role/clone/add',
+  ADD_USER_ROLE: 'setting/users-roles/role/add',
+  GET_DETIALED_USER_ROLE: 'setting/users-roles/role/detail/get',
+
+  GET_ALL_FEATURES: 'setting/users-roles/feature-capabilities/all/get',
+
+  GET_USER_ACCESS_RIGHTS_LIST: 'setting/users-roles/access-rights/get',
+  UPDATE_USER_ACCESS_RIGHTS_LIST: 'setting/users-roles/access-rights/update'
+
+
+  ////////////////////////////// settings////////////////////////////////////////////
+  //////////////////////////////////customer-overview-profile//////////////////////
 };

@@ -14,7 +14,9 @@ export class AuthService {
   static getAdvisorId() {
     return this.getUserInfo().advisorId;
   }
-
+  static getUserId() {
+    return this.getUserInfo().userId;
+  }
   static getClientData() {
     let clientDataString = sessionStorage.getItem('clientData');
     return clientDataString ? JSON.parse(clientDataString) : undefined;

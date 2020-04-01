@@ -5,8 +5,7 @@ import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {HttpService} from 'src/app/http-service/http-service';
 import {apiConfig} from 'src/app/config/main-config';
-import {appConfig} from 'src/app/config/component-config';
-
+import {appConfig} from 'src/app/config/component-config'
 class CacheItem<T> {
   url: string;
   timestampCached: number;
@@ -44,28 +43,23 @@ export class BackOfficeService {
 
   getClientTotalAUM(data) {
     console.log(data);
-    const httpParams = new HttpParams().set('teamMemberId', data);
+    const httpParams = new HttpParams().set('advisorId', data);
     return this.http.get(apiConfig.MAIN_URL + appConfig.TOTAL_GET_AUM, httpParams);
   }
 
   getMisData(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MIS_DATA + '?teamMemberId=' + data, null);
+    const httpParams = new HttpParams().set('advisorId', data);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MIS_DATA,httpParams);
   }
 
   getSubCatAum(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_AUM + '?teamMemberId=' + data, null);
-  }
-
-  getSubCatScheme(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_SCHEME + '?teamMemberId=' + data, null);
-  }
-
-  getSubCatSchemeName(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_SCHEMENAME + '?teamMemberId=' + data, null);
+    const httpParams = new HttpParams().set('advisorId', data);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_AUM, httpParams);
   }
 
   getTotalByAumScheme(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_SCHEMENAME + '?teamMemberId=' + data, null);
+    const httpParams = new HttpParams().set('advisorId', data);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_SCHEMENAME,httpParams);
   }
 
   getClientWiseTotalAum(data) {
@@ -79,10 +73,12 @@ export class BackOfficeService {
   }
 
   amcWiseGet(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AMC_WISE, data);
+    const httpParams = new HttpParams().set('advisorId', data);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AMC_WISE, httpParams);
   }
   amcWiseApplicantGet(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_APPLICANT_NAME, data);
+    const httpParams = new HttpParams().set('advisorId', data).set('arnRiaDetailId', data.arnRiaDetailId).set('schemeMasterId', data.schemeMasterId).set('totalAum', data.totalAum);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_APPLICANT_NAME, httpParams);
   }
   getSipcountGet(data) {
     const httpParams = new HttpParams().set('teamMemberId', data);
@@ -91,36 +87,36 @@ export class BackOfficeService {
   }
 
   getAumApplicantWiseTotalaumApplicantName(data) {
-    const httpParams = new HttpParams().set('teamMemberId', data);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_APPLICANT, httpParams);
   }
 
   getAumApplicantCategory(data) {
     const httpParams = new HttpParams().set('clientId', data.clientId).set('clientTotalAum', data.clientTotalAum)
-      .set('teamMemberId', data.teamMemberId);
+      .set('advisorId', data.advisorId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_APPLICANT_CATEGORY, httpParams);
   }
 
   getAumApplicantSubCategory(data) {
     const httpParams = new HttpParams().set('categoryId', data.categoryId).set('categoryTotalAum', data.categoryTotalAum)
-      .set('clientId', data.clientId).set('teamMemberId', data.teamMemberId);
+      .set('clientId', data.clientId).set('advisorId', data.advisorId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_APPLICANT_SUB_CATEGORY, httpParams);
   }
 
   getAumApplicantScheme(data) {
     const httpParams = new HttpParams().set('clientId', data.clientId).set('subCategoryId', data.subCategoryId)
-      .set('subCategoryTotalAum', data.subCategoryTotalAum).set('teamMemberId', data.teamMemberId);
+      .set('subCategoryTotalAum', data.subCategoryTotalAum).set('advisorId', data.advisorId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_APPLICANT_SCHEME, data);
   }
 
   // /Aum-clientWise
   getAumClientTotalAum(data) {
-    const httpParams = new HttpParams().set('limit', data.limit).set('offset', data.offset).set('teamMemberId', data.teamMemberId);
+    const httpParams = new HttpParams().set('limit', data.limit).set('offset', data.offset).set('advisorId', data.advisorId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_CLIENT_TOTALAUM, httpParams);
   }
 
   getAumClientScheme(data) {
-    const httpParams = new HttpParams().set('clientId', data.clientId).set('teamMemberId', data.teamMemberId);
+    const httpParams = new HttpParams().set('clientId', data.clientId).set('advisorId', data.advisorId).set('arnRiaDetailsId',data.arnRiaDetailsId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_CLIENT_SCHEME, httpParams);
   }
 

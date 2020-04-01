@@ -14,38 +14,49 @@ import { SettingsService } from '../settings.service';
 })
 export class SettingOrgProfileComponent implements OnInit {
   advisorId: any;
-  orgProfile=false;
+  orgProfile = false;
   userList: any;
   orgDetails: any;
+  isLoading = true
 
   constructor(
     private eventService: EventService,
-    private subInjectService: SubscriptionInject, 
-    private settingsService: SettingsService, 
+    private subInjectService: SubscriptionInject,
+    private settingsService: SettingsService,
   ) {
     this.advisorId = AuthService.getAdvisorId()
   }
 
   ngOnInit() {
     this.getPersonalProfiles()
-    this.orgProfile =false
+    this.orgProfile = false
+    this.isLoading = false
+    this.userList = []
   }
   getPersonalProfiles() {
+    this.isLoading = true
     let obj = {
-      id:this.advisorId
+      id: this.advisorId
     }
     this.settingsService.getPersonalProfile(obj).subscribe(
       data => this.getPersonalProfileRes(data),
       err => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
-  getPersonalProfileRes(data){
-    console.log('this.getPersonalProfileRes',data)
-    this.userList = data
+  getPersonalProfileRes(data) {
+    if (data) {
+      this.isLoading = false
+      console.log('this.getPersonalProfileRes', data)
+      this.userList = data
+    } else {
+      this.isLoading = false
+      this.userList = []
+    }
   }
   getOrgProfiles() {
+    this.isLoading = true
     let obj = {
-      advisorId:this.advisorId
+      advisorId: this.advisorId,
     }
     this.settingsService.getOrgProfile(obj).subscribe(
       data => this.getOrgProfileRes(data),
@@ -53,9 +64,15 @@ export class SettingOrgProfileComponent implements OnInit {
     );
   }
   getOrgProfileRes(data) {
-    console.log('getOrgProfileRes', data)
-    this.orgDetails = data
-    
+
+    if (data) {
+      this.isLoading = false
+      console.log('getOrgProfileRes', data)
+      this.orgDetails = data
+    } else {
+      this.isLoading = false
+    }
+
   }
   OpenpersonalProfile(data, flag) {
     const fragmentData = {
@@ -70,7 +87,7 @@ export class SettingOrgProfileComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getNscSchemedata();
+            this.getPersonalProfiles();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -80,14 +97,14 @@ export class SettingOrgProfileComponent implements OnInit {
       }
     );
   }
-  openOrg(flag){
-    if(flag == true){
+  openOrg(flag) {
+    if (flag == true) {
       this.orgProfile = true
       this.getOrgProfiles()
-    }else{
+    } else {
       this.orgProfile = false
     }
-    
+
   }
   OpenOrgProfile(data, flag) {
     const fragmentData = {
@@ -102,7 +119,7 @@ export class SettingOrgProfileComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // this.getNscSchemedata();
+            this.getOrgProfiles();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
