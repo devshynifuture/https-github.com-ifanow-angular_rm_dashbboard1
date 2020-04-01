@@ -99,6 +99,7 @@ export class AddTaskTemplateComponent implements OnInit {
       category: [(!data) ? '' : (data.category), [Validators.required]],
       subCategory: [(!data) ? '' : data.subCategory, [Validators.required]],
       taskTemplate: [(!data) ? '' : data.taskTemplate, [Validators.required]],
+      adviceType: [(!data) ? '' : data.adviceTypeId+'', [Validators.required]],
       defaultAssign: [(!data) ? '' : data.defaultAssign],
       turnaroundTime: [(!data) ? '' : data.turnaroundTime],
       subTaskList: this.fb.array([this.fb.group({
