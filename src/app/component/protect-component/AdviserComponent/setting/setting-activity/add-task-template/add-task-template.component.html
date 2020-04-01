@@ -116,7 +116,7 @@
             <div class="form-group">
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="turnAroundTime">
-                        <mat-option value="t.turnAroundTime" *ngFor="let t of Tat">{{t.tat}}</mat-option>
+                        <mat-option value="t.value" *ngFor="let t of Tat">{{t.tat}}</mat-option>
                     </mat-select>
                     <mat-hint>Optional</mat-hint>
 
@@ -144,7 +144,8 @@
                     <mat-form-field class="arrowRemoveBox">
                         <img class="img-pos" src="/assets/images/svg/calander.svg">
                         <mat-select class="form-control  " formControlName="turnAroundTime">
-                            <mat-option [disabled]="creds.get('isEdite').value == false" [value]="t.turnAroundTime" *ngFor="let t of Tat">{{t.tat}}
+                            <mat-option [disabled]="creds.get('isEdite').value == false" [value]="t.value"
+                                *ngFor="let t of Tat">{{t.tat}}
                             </mat-option>
                         </mat-select>
                         <mat-error class="f-12">
@@ -159,7 +160,8 @@
                     <mat-form-field class="arrowRemoveBox">
                         <img class="img-pos-two" src="/assets/images/svg/people.svg">
                         <mat-select class="form-control" formControlName="ownerId">
-                            <mat-option [disabled]="creds.get('isEdite').value == false" value=2727>Nita Shinde</mat-option>
+                            <mat-option [disabled]="creds.get('isEdite').value == false" value=2727>Nita Shinde
+                            </mat-option>
                         </mat-select>
                         <mat-error class="f-12">
                             This field is required
@@ -169,23 +171,20 @@
             </div>
             <div class="col-md-1 p-0">
                 {{creds.isEdite}}
-                <i class="material-icons mt-12 f-20" (click)="addSubTask(creds,'add')"
-                    *ngIf="i==subTask.length-1 && creds.get('isEdite').value == false">
-                    add
-                </i>
-                <p *ngIf="creds.get('isEdite').value == true"  (click)="addSubTask(creds,'edit')"class="m-0 roboto text-custom pt-4 pb-44">+ Save</p>
-                <i class="material-icons">
+                <p *ngIf="creds.get('isEdite').value == true" (click)="addSubTask(creds,'edit')"
+                    class="m-0 roboto text-custom pt-4 pb-44">+ Save</p>
+                <i class="material-icons" (click)="removeSubTask(i)">
                     remove
                 </i>
-                <p *ngIf="creds.get('isEdite').value == false" class="m-0 roboto text-custom pt-4 pb-44" (click)="editSubtask(creds,true,i)"> <img
+                <p *ngIf="creds.get('isEdite').value == false && inputData.categoryId"
+                    class="m-0 roboto text-custom pt-4 pb-44" (click)="editSubtask(creds,true,i)"> <img
                         src="/assets/images/svg/cash-flow-edit-icon.svg"></p>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12 p-0">
-                <!-- <p class="m-0 roboto text-custom pt-12 pb-44" (click)="addSubTask(creds)">+ Add sub-task</p> -->
-                <p class="m-0 roboto text-custom pt-4 pb-44">+ Save</p>
+                <p class="m-0 roboto text-custom pt-4 pb-44" (click)="addSubTask(creds,'add')">+ Add more sub task</p>
             </div>
         </div>
 

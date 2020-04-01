@@ -40,12 +40,12 @@ export class SettingActivityComponent implements OnInit {
       subTaskList: [{
         taskNumber: 1,
         description: "Abcd needs to be done today!",
-        turtAroundTime: 2,
+        turnAroundTime: 2,
         ownerId: 2727
       }, {
         taskNumber: 1,
         description: "Abcd needs to be done today!",
-        turtAroundTime: 2,
+        turnAroundTime: 2,
         ownerId: 2727
       }]
     }]
@@ -87,7 +87,7 @@ export class SettingActivityComponent implements OnInit {
         }]
       }]
     } else {
-
+      this.isLoading = false
     }
   }
   addTaskTemplate(singleProfile, value) {

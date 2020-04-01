@@ -23,10 +23,10 @@ export class AddTaskTemplateComponent implements OnInit {
   subTaskList = [];
   Tat = [
     {
-      turnAroundTime: 1, tat: 'T+0 day'
-    }, { turnAroundTime: 2, tat: 'T+1 day' }, { turnAroundTime: 3, tat: 'T+2 day' }, { turnAroundTime: 4, tat: 'T+3 day' },
-    { turnAroundTime: 5, tat: 'T+4 day' }, { turnAroundTime: 6, tat: 'T+5 day' }, { turnAroundTime: 7, tat: 'T+6 day' },
-    { turnAroundTime: 8, tat: 'T+7 day' }, { turnAroundTime: 9, tat: 'T+8 day' }, { turnAroundTime: 10, tat: 'T+9 day' }
+      value: 1, tat: 'T+0 day'
+    }, { value: 2, tat: 'T+1 day' }, { value: 3, tat: 'T+2 day' }, { value: 4, tat: 'T+3 day' },
+    { value: 5, tat: 'T+4 day' }, { value: 6, tat: 'T+5 day' }, { value: 7, tat: 'T+6 day' },
+    { value: 8, tat: 'T+7 day' }, { value: 9, tat: 'T+8 day' }, { value: 10, tat: 'T+9 day' }
   ]
   assetList: any;
   libilitiesList: any;
@@ -46,11 +46,11 @@ export class AddTaskTemplateComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     console.log('This is Input data ', data)
-    if(data == 1){
+    if (data == 1) {
       this.linkedTemplateId = data
-    }else if(data == 2){
+    } else if (data == 2) {
       this.linkedTemplateId = data
-    }else{
+    } else {
       this.getdataForm(data);
     }
   }
@@ -72,16 +72,17 @@ export class AddTaskTemplateComponent implements OnInit {
   ngOnInit() {
     this.getGlobalTaskData()
     this.getteamMemberList()
+    this.getdataForm(this.inputData)
+    this.taskTemplate.controls.category.setValue(1)
     this.advisorId = AuthService.getAdvisorId()
     this.category = 'asset'
     this.editMode = false;
-    this.taskTemplate.controls.category.setValue(1)
     this.isEdite = false
   }
   getteamMemberList() {
 
     let obj = {
-      advisorId: 2808
+      advisorId: 55
     }
     this.orgSetting.getTeamMemberList(obj).subscribe(
       data => this.getTeamMemberListRes(data),
@@ -114,7 +115,7 @@ export class AddTaskTemplateComponent implements OnInit {
     this.listOfSub = value.taskTempSubcattoSubCategories
     if (value.taskTempSubcattoSubCategories.length == 0) {
       this.hideSubcategory = true
-    }else{
+    } else {
       this.hideSubcategory = false
     }
   }
@@ -123,27 +124,37 @@ export class AddTaskTemplateComponent implements OnInit {
     console.log('getSelectedCategory', value)
     if (value == 1) {
       this.list = this.assetSubCategoryList
-      var subList = this.list.filter(element => element.subcategoryId == this.inputData.subcategoryId)
-      this.listOfSub = subList[0].taskTempSubcattoSubCategories
+      if (this.inputData.subcategoryId) {
+        var subList = this.list.filter(element => element.subcategoryId == this.inputData.subcategoryId)
+        this.listOfSub = subList[0].taskTempSubcattoSubCategories
+      }
     } else if (value == 2) {
       this.list = this.libilitySubCategoryList
-      var subList = this.list.filter(element => element.subcategoryId == this.inputData.subcategoryId)
-      this.listOfSub = subList[0].taskTempSubcattoSubCategories
+      if (this.inputData.subcategoryId) {
+        var subList = this.list.filter(element => element.subcategoryId == this.inputData.subcategoryId)
+        this.listOfSub = subList[0].taskTempSubcattoSubCategories
+      }
     } else {
       this.list = this.insuranceSubCategoryList
-       var subList = this.list.filter(element => element.subcategoryId == this.inputData.subcategoryId)
-      this.listOfSub = subList[0].taskTempSubcattoSubCategories
+      if (this.inputData.subcategoryId) {
+        var subList = this.list.filter(element => element.subcategoryId == this.inputData.subcategoryId)
+        this.listOfSub = subList[0].taskTempSubcattoSubCategories
+      }
     }
     this.getdataForm(this.inputData)
   }
   getdataForm(data) {
-    if(!data){
+    if (!data) {
+      data = {}
+    }else if(data ==1){
+      data = {}
+    }else if(data == 2){
       data = {}
     }
     this.taskTemplate = this.fb.group({
       category: [(!data) ? '' : (data.categoryId), [Validators.required]],
       subCategory: [(!data) ? '' : (data.subcategoryId), [Validators.required]],
-      subSubCategory :[(!data) ? '' : (data.subSubCategoryId), [Validators.required]],
+      subSubCategory: [(!data) ? '' : (data.subSubCategoryId), [Validators.required]],
       taskTemplate: [(!data) ? '' : data.taskDescription, [Validators.required]],
       adviceType: [(!data) ? '' : (data.adviceTypeId) + "", [Validators.required]],
       defaultAssign: [(!data) ? '' : data.ownerName],
@@ -153,7 +164,7 @@ export class AddTaskTemplateComponent implements OnInit {
         description: [null, [Validators.required]],
         turnAroundTime: [null, [Validators.required]],
         ownerId: [null, [Validators.required]],
-        isEdite : false,
+        isEdite: true,
       })]),
     });
     if (data.subTaskList != undefined) {
@@ -163,47 +174,47 @@ export class AddTaskTemplateComponent implements OnInit {
           description: [(element.description + ""), Validators.required],
           turnAroundTime: [(element.turnAroundTime), Validators.required],
           ownerId: [element.ownerId, [Validators.required]],
-          isEdite : false
+          isEdite: false
         }))
       })
     }
   }
-  editSubtask(value,flag, index){
+  editSubtask(value, flag, index) {
     value.controls.isEdite.setValue(true)
-    console.log('flag',flag)
+    console.log('flag', flag)
 
   }
-  addSubTask(value,flag) {
-    if(flag == 'add'){
-      this.subTask.push(this.fb.group({
-        taskNumber: [1, [Validators.required]],
-        description: [null, [Validators.required]],
-        turnAroundTime: [null, [Validators.required]],
-        ownerId: [null, [Validators.required]],
-        isEdite : false
-      }));
-    }else{
-      value.controls.isEdite.setValue(false)
-      console.log('creds --',value)
+  addSubTask(value, flag) {
+    if (flag == 'add') {
+         this.subTask.push(this.fb.group({
+          taskNumber: [1, [Validators.required]],
+          description: [null, [Validators.required]],
+          turnAroundTime: [null, [Validators.required]],
+          ownerId: [null, [Validators.required]],
+          isEdite: false
+        }));
+    } else {
+      console.log('creds --', value)
       if (value.invalid) {
         this.inputs.find(input => !input.ngControl.valid).focus();
         value.markAllAsTouched();
-      } else{
+      } else {
+        value.controls.isEdite.setValue(false)
         let obj = {
           TaskTemplateId: 1,
           taskNumber: 1,
           description: value.controls.description.value,
           turnAroundTime: value.controls.turnAroundTime.value,
           ownerId: 2727,
-          id:value.controls.id.value,
+          id: value.controls.id.value,
         }
-        if(value.controls.id.value){
+        if (value.controls.id.value) {
           this.orgSetting.editSubTaskTemplate(obj).subscribe(
             data => {
               this.editSubTaskTemplateRes(data)
-            },err => this.event.openSnackBar(err, "Dismiss")
+            }, err => this.event.openSnackBar(err, "Dismiss")
           );
-        }else{
+        } else {
           this.orgSetting.addSubtaskTemplate(obj).subscribe(
             data => {
               this.addSubtaskTemplateRes(data)
@@ -213,11 +224,11 @@ export class AddTaskTemplateComponent implements OnInit {
       }
     }
   }
-  editSubTaskTemplateRes(data){
-    console.log('editSubTaskTemplateRes',data)
+  editSubTaskTemplateRes(data) {
+    console.log('editSubTaskTemplateRes', data)
   }
-  addSubtaskTemplateRes(data){
-    console.log('addSubtaskTemplateRes',data)
+  addSubtaskTemplateRes(data) {
+    console.log('addSubtaskTemplateRes', data)
   }
   getFormControl(): any {
     return this.taskTemplate.controls;
@@ -232,11 +243,11 @@ export class AddTaskTemplateComponent implements OnInit {
     this.editMode = !this.editMode;
     console.log('hgdsfhg ==', this.editMode)
   }
-  updateOwner(){
-    if(this.inputData.id){
+  updateOwner() {
+    if (this.inputData.id) {
       let obj = {
-        ownerId:2227,
-        taskTemplateId:this.taskTemplate.controls.id.value,
+        ownerId: 2227,
+        taskTemplateId: this.taskTemplate.controls.id.value,
       }
       this.orgSetting.updateOwnerTaskTemplate(obj).subscribe(
         data => {
@@ -245,8 +256,13 @@ export class AddTaskTemplateComponent implements OnInit {
       );
     }
   }
-  updateOwnerTaskTemplateRes(data){
-    console.log('updateOwnerTaskTemplateRes',data)
+  updateOwnerTaskTemplateRes(data) {
+    console.log('updateOwnerTaskTemplateRes', data)
+  }
+  removeSubTask(item) {
+    if (this.subTask.value.length > 1) {
+      this.subTask.removeAt(item);
+    }
   }
   saveTaskTemplate() {
     let obj = {
@@ -254,8 +270,8 @@ export class AddTaskTemplateComponent implements OnInit {
       categoryId: this.taskTemplate.controls.category.value,
       subcategoryId: this.taskTemplate.controls.subCategory.value,
       linkedTemplateId: this.linkedTemplateId,
-      adviceTypeId:this.taskTemplate.controls.adviceType.value,
-      subSubCategoryId:this.taskTemplate.controls.subSubCategory.value,
+      adviceTypeId: this.taskTemplate.controls.adviceType.value,
+      subSubCategoryId: this.taskTemplate.controls.subSubCategory.value,
       taskDescription: this.taskTemplate.controls.taskTemplate.value,
       assignedTo: 2727,
       turnAroundTime: this.taskTemplate.controls.turnAroundTime.value,
