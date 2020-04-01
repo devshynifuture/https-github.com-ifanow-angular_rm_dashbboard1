@@ -413,7 +413,7 @@ export const appConfig = {
   ADD_MANDATE: 'mandate/add',
   // SIP_BSE:'bse/order/create',
 
-  // cashflow 
+  // cashflow
   CASHFLOW_ADD_INCOME: 'cashflow/income/add',
   CASHFLOW_GET_INCOME: 'cashflow/income/get',
   CASHFLOW_DELETE_INCOME: 'cashflow/income/delete',
@@ -535,6 +535,8 @@ export const appConfig = {
   ADD_FAMILY_MEMBER: 'user/family-member/add',
   ADD_MULTIPLE_FAMILY_MEMBERS: '/user/family-member/add/multiple',
   EDIT_FAMILY_MEMBER_BASIC_DETAILS_MORE_INFO: 'user/family-member/edit',
+  TEAM_MEMBER_WISE_CLIENT_COUNT: 'user/team-member/count/get',
+
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: '/user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
