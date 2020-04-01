@@ -42,8 +42,7 @@ export class BackOfficeService {
 
 
   getClientTotalAUM(data) {
-    console.log(data);
-    const httpParams = new HttpParams().set('advisorId', data);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailId', data.arnRiaDetailId).set('parentId', data.parentId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.TOTAL_GET_AUM, httpParams);
   }
 
@@ -200,6 +199,14 @@ export class BackOfficeService {
   scheme_wise_Applicants_Get(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('clientId', data.clientId).set('parentId', data.parentId).set('schemeId', data.schemeId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.scheme_wise_Applicants_Get, httpParams);
+  }
+  sipSchemePanCount(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_PAN_COUNT, httpParams);
+  }
+  Wbr9anCount(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.WBR_FOLIO_PAN_COUNT, httpParams);
   }
 
 // ---------------------------------------- sip data call--------------------------------------

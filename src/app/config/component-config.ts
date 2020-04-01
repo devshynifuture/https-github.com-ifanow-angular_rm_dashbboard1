@@ -47,6 +47,8 @@ export const appConfig = {
   ALL_SIP_GET: 'backoffice/sip/allSip/get',
   CLIENT_WISE_CLIENTNAME_GET: 'backoffice/sip/ClientWiseClientsName/get',
   CLIENT_WISE_APPLICANT_GET: 'backoffice/sip/ClientWiseApplicants/get',
+  SIP_PAN_COUNT:'backoffice/sip/scheme/pan/count/get',
+  WBR_FOLIO_PAN_COUNT:'backoffice/folio/pan/count/get',
 
   ///////////////////////////// back office/////////////////////////////////////////////
 

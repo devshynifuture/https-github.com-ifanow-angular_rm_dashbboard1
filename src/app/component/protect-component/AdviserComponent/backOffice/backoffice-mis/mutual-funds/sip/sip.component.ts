@@ -26,12 +26,11 @@ export class SipComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
    this.sipCountGet();
-  //  this.getAllSip();
    this.expiredGet();
    this.expiringGet();
    this.sipRejectionGet();
-   this.schemeSearchGet();
-   this.clientSearchGet();
+   this.getSipPanCount();
+   this.getWbrPanCount();
   }
   sipCountGet()
   {
@@ -119,25 +118,27 @@ export class SipComponent implements OnInit {
       }
     )
   }
-  schemeSearchGet()
+  getSipPanCount()
   {
     const obj={
-      schemeName:'Aditya Birla',
-      teamMemberId:this.teamMemberId
+      advisorId:this.advisorId,
+      arnRiaDetailsId:-1,
+      parentId:-1
     }
-    this.backoffice.GET_SIP_SCHEME_SEARCH(obj).subscribe(
+    this.backoffice.sipSchemePanCount(obj).subscribe(
       data =>{
         console.log(data);
       }
     )
   }
-  clientSearchGet()
+  getWbrPanCount()
   {
     const obj={
-      clientName:'Ronak Hindocha',
-      teamMemberId:this.teamMemberId
+      advisorId:this.advisorId,
+      arnRiaDetailsId:-1,
+      parentId:-1
     }
-    this.backoffice.GET_SIP_REJECTION(obj).subscribe(
+    this.backoffice.Wbr9anCount(obj).subscribe(
       data =>{
         console.log(data);
       }

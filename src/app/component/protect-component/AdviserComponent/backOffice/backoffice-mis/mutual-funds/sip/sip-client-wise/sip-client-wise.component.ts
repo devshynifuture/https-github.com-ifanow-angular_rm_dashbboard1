@@ -23,7 +23,7 @@ export class SipClientWiseComponent implements OnInit {
   constructor(private backoffice: BackOfficeService, public sip: SipComponent) { }
 
   ngOnInit() {
-    this.showLoader = false;
+    
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.clientWiseClientName();
@@ -48,6 +48,7 @@ export class SipClientWiseComponent implements OnInit {
         });
         console.log(data);
         this.filteredArray = [...this.clientList];
+        this.showLoader = false;
       }
     )
   }

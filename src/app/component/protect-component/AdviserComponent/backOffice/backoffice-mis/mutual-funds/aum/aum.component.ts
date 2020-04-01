@@ -65,8 +65,12 @@ export class AumComponent implements OnInit {
   }
 
   getTotalAum() {
-
-    this.backoffice.getClientTotalAUM(this.advisorId).subscribe(
+    const obj={
+      advisorId:this.advisorId,
+      arnRiaDetailId:-1,
+      parentId:-1
+    }
+    this.backoffice.getClientTotalAUM(obj).subscribe(
       data => this.getFileResponseDataAum(data),
       err => this.getFilerrorResponse(err)
     )

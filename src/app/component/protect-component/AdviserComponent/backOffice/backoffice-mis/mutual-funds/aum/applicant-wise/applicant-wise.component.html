@@ -83,14 +83,38 @@
                                                                         </tr>
                                                                     </thead>
                                                                     <tr>
-                                                                    <tbody *ngFor="let client of sub.schemes; index as i" >
+                                                                    <tbody *ngFor="let client of sub.schemeList; index as i" >
                                                                         <tr >
                                                                             <td>{{i+1}}</td>
-                                                                            <td >{{client.schemeName}}</td>
+                                                                            <td (click)="getSchemeFolio(client)">{{client.schemeName}}<i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="client.showFolio" >add</i>
+                                                                                <i  class="material-icons right b-a f-14 mt-4 c-p" *ngIf="!client.showFolio"> remove  </i> </td>
                                                                             <td class="text-right">{{client.folioNumber}}</td>
                                                                             <td class="text-right">{{client.totalAum}}</td>
                                                                             <td class="text-right">{{client.weightInPercentage}}</td>
                                                                         </tr>
+                                                                        <table *ngIf="!client.showFolio">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                <th>Sr No.</th>
+                                                                                <th>Scheme Name</th>
+                                                                                <th class="text-right">Current Value</th>
+                                                                                <th class="text-right">Balance unit </th>
+                                                                                <th class="text-right">% Weight</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tr>
+                                                                            <tbody *ngFor="let client of sub.schemeList; index as i" >
+                                                                                <tr >
+                                                                                    <td>{{i+1}}</td>
+                                                                                    <td >{{client.schemeName}}</td>
+                                                                                    <td class="text-right">{{client.folioNumber}}</td>
+                                                                                    <td class="text-right">{{client.totalAum}}</td>
+                                                                                    <td class="text-right">{{client.balanceUnit}}</td>
+                                                                                    <td class="text-right">{{client.weightInPercentage}}</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                            
+                                                                        </table>
                                                                     </tbody>
                                                                     
                                                                 </table>

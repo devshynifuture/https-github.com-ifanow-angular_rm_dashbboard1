@@ -29,7 +29,12 @@ export class AmcWiseComponent implements OnInit {
    this.aum.aumComponent=true;
   }
   getAmcWiseData(){
-    this.backoffice.amcWiseGet(this.advisorId).subscribe(
+    const obj={
+      advisorId: this.advisorId,
+      arnRiaDetailsId: -1,
+      parentId: -1
+    }
+    this.backoffice.amcWiseGet(obj).subscribe(
       data => this.getReponseAmcWiseGet(data),
       err=>this.getFilerrorResponse(err)
     )

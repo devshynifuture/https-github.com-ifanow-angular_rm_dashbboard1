@@ -60,7 +60,8 @@ export class ApplicantWiseComponent implements OnInit {
       this.backoffice.getAumApplicantCategory(obj).subscribe(
         data =>{
           if(data){
-            data[0].showCategory=true
+            data[0].showCategory=true;
+            data[0].familyMemberId=applicantData.id
             applicantData.categoryList=data
             console.log(data)
           }
@@ -84,15 +85,16 @@ export class ApplicantWiseComponent implements OnInit {
         advisorId:this.advisorId,
         arnRiaDetailsId:-1,
         parentId:-1,
-        familyMembertId:catData.familyMembertId,
-        categoryId:catData.categoryId,
-        categoryTotalAum:catData.categoryTotalAum
+        familyMembertId:catData.familyMemberId,
+        categoryId:catData.id,
+        categoryTotalAum:catData.totalAum
       }
       this.backoffice.getAumApplicantSubCategory(obj).subscribe(
         data =>{
           if(data){
-            data[0].showSubCategory=true
-            catData.subCatList=data
+            data[0].showSubCategory=true;
+            data[0].familyMemberId=catData.familyMemberId;
+            catData.subCatList=data;
             console.log(data)
           }
         }
@@ -115,19 +117,24 @@ export class ApplicantWiseComponent implements OnInit {
         advisorId:this.advisorId,
         arnRiaDetailsId:-1,
         parentId:-1,
-        familyMembertId:subCatData.familyMembertId,
-        subCategoryId:subCatData.subCategoryId,
-        subCategoryTotalAum:subCatData.subCategoryTotalAum
+        familyMembertId:subCatData.familyMemberId,
+        subCategoryId:subCatData.id,
+        subCategoryTotalAum:subCatData.totalAum
       }
       this.backoffice.getAumApplicantScheme(obj).subscribe(
         data =>{
           if(data){
+            data[0].showFolio=true
             subCatData.schemeList=data
             console.log(data)
           }
         }
       )
       }
+  }
+  getSchemeFolio(schemeData){
+    schemeData.showFolio=!schemeData.showFolio
+
   }
   getResponseSchemeData(data,subCat)
   {

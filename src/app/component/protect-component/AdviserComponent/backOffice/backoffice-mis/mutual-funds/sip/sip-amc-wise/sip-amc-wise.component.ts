@@ -21,7 +21,6 @@ export class SipAmcWiseComponent implements OnInit {
   @ViewChildren(FormatNumberDirective) formatNumber;
 
   ngOnInit() {
-    this.showLoader = false;
     this.advisorId=AuthService.getAdvisorId();
     this.clientId=AuthService.getClientId();
     this.amcGet();
@@ -39,6 +38,7 @@ export class SipAmcWiseComponent implements OnInit {
     }
     this.backoffice.GET_SIP_AMC(obj).subscribe(
       data =>{
+        this.showLoader = false;
         this.amcList=data;
         this.amcList.forEach(o => {
           o.showCategory = true;
