@@ -16,7 +16,7 @@ export class RolesComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'del'];
   dataSource: any = ELEMENT_DATA;
   advisorId: any;
-  isLoading: true;
+  // isLoading: true;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -32,8 +32,8 @@ export class RolesComponent implements OnInit {
   }
 
   loadGlobalData() {
-    this.isLoading = true;
-    this.dataSource.data = [{}, {}, {}];
+    // this.isLoading = true;
+    // this.dataSource.data = [{}, {}, {}];
     const obj = {
       advisorId: this.advisorId
     }

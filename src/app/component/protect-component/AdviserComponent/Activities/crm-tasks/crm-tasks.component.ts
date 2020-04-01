@@ -17,27 +17,7 @@ export class CrmTasksComponent implements OnInit {
   }
 
 
-  openTask(value, data) {
-    const fragmentData = {
-      flag: value,
-      data,
-      id: 1,
-      state: 'open50',
-      componentName: AddTasksComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
 
-          }
-          rightSideDataSub.unsubscribe();
-        }
-
-      }
-    );
-  }
 
 }
 
