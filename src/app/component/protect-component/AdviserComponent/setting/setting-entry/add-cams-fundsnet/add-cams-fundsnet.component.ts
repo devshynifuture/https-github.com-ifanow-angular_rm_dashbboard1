@@ -78,16 +78,20 @@ export class AddCamsFundsnetComponent implements OnInit {
       const questionExist = questionId.includes(questionSet.controls.questionId.value);
       if(questionExist) {
         const questionToRemove = this.data.mainData.rtaCamsFundNetSecurityQuestionsList.find(data => data.questionId == questionSet.controls.questionId.value).id
-        const removeQuestionObj = {id: questionToRemove};
-        this.settingService.deleteQuestion(removeQuestionObj).subscribe(res => {
+        this.settingService.deleteQuestion(questionToRemove).subscribe(res => {
           this.data.mainData.rtaCamsFundNetSecurityQuestionsList.splice(this.data.mainData.rtaCamsFundNetSecurityQuestionsList.findIndex((data)=> data.id == secretQuestionsArr.controls[index].value.id), 1);
           this.eventService.openSnackBar("Question deleted successfully");
+          secretQuestionsArr.removeAt(index);
         }, err => {
           this.eventService.openSnackBar("Error occured");
         })
+      } else {
+        this.showAddMoreQuestionBtn = !this.showAddMoreQuestionBtn;
+        secretQuestionsArr.removeAt(index);
       }
+    } else {
+      secretQuestionsArr.removeAt(index);
     }
-    secretQuestionsArr.removeAt(index);
   }
 
   save(){
@@ -152,15 +156,21 @@ export class AddCamsFundsnetComponent implements OnInit {
     this.addMoreQuestion();
   }
 
-  saveIndividualQuestion(element){
+  saveIndividualQuestion(index){
+    let questionSet = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
+    let fg = questionSet.controls[index] as FormGroup;
     this.showAddMoreQuestionBtn = !this.showAddMoreQuestionBtn;
     const jsonObj = {
-      "answer": element.answer,
+      "answer": fg.controls.answer.value,
       "arnRtaDetailsId": this.data.mainData.id,
-      "questionId": element.questionId
+      "questionId": parseInt(fg.controls.questionId.value)
     };
     this.settingService.addQuestion(jsonObj).subscribe(res => {
       this.eventService.openSnackBar("Question added successfully");
+      jsonObj['id'] = res;
+      this.data.mainData.rtaCamsFundNetSecurityQuestionsList.push(jsonObj);
+      fg.controls.questionId.disable();
+      fg.updateValueAndValidity();
     }, err => {
       this.eventService.openSnackBar("Error occured");
     })
@@ -170,7 +180,7 @@ export class AddCamsFundsnetComponent implements OnInit {
     let questionSet = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.value;
 
     if (questionSet.length == (index+1) && !this.showAddMoreQuestionBtn) {
-      this.saveIndividualQuestion(questionSet[index]);
+      this.saveIndividualQuestion(index);
     } else {
       this.updateAnswer(index);
     }

@@ -133,7 +133,7 @@ export class MfRtaDetailsComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.settingsService.deleteMFRTA({rtaDetailsId: data.id})
+        this.settingsService.deleteMFRTA(data.id)
           .subscribe(response => {
             console.log(response);
             this.eventService.openSnackBar("Data has been deleted successfully");
