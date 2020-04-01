@@ -133,7 +133,7 @@ export class ForgotPasswordComponent implements OnInit {
       this.saveAfterVerifyCredential(obj);
       this.eventService.openSnackBar("Otp matches sucessfully", "Dismiss");
       if (this.userNameVerifyResponse != undefined) {
-        this.router.navigate(['/login/setpassword']);                      /////// check wheather user came from forgot password or sign-up Process
+        this.router.navigate(['/login/setpassword'], { state: { userData: this.saveVerifyData.userData } });                      /////// check wheather user came from forgot password or sign-up Process
         return;
       }
       this.verify('Mobile');
@@ -142,7 +142,7 @@ export class ForgotPasswordComponent implements OnInit {
     else if (flag == 'Mobile' && this.otpData.length == 6 && this.otpResponse == otpString) {
       this.eventService.openSnackBar("Otp matches sucessfully", "Dismiss");
       this.saveAfterVerifyCredential(obj);
-      this.router.navigate(['/login/setpassword']);
+      this.router.navigate(['/login/setpassword'], { state: { userData: this.saveVerifyData.userData } });
     }
     else {
       this.eventService.openSnackBar("OTP is incorrect", "Dismiss");

@@ -57,6 +57,12 @@ export class LoginComponent implements OnInit {
   getOtpFlag = false;
   otpData = [];
   otpResponse: any;
+  verifyResponseData =
+    {
+      email: '',
+      mobile: ''
+    };
+  verifyFlag: string;
   constructor(
     private formBuilder: FormBuilder, private eventService: EventService,
     public backOfficeService: BackOfficeService,
@@ -79,7 +85,7 @@ export class LoginComponent implements OnInit {
   isLoading = false;
 
   ngOnInit() {
-    this.userName = new FormControl('', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]);
+    this.userName = new FormControl('', [Validators.required]);
     // if (this.authService.isLoggedIn()) {
     //   this.router.navigate(['admin', 'subscription', 'dashboard']);
     // } else {
@@ -93,19 +99,42 @@ export class LoginComponent implements OnInit {
       return;
     }
     else {
-      let obj =
-      {
-        "forEmail": this.userName.value
+      let obj = {
+        userName: this.userName.value
       }
-      this.loginService.generateOtp(obj).subscribe(
+      this.loginService.getUsernameData(obj).subscribe(
         data => {
           console.log(data);
-          this.otpResponse = data;
+          this.getOtpResponse(data);
           (data == undefined) ? this.eventService.openSnackBar("error found", 'Dismiss') : (this.getOtpFlag) ? this.getOtpFlag = false : this.getOtpFlag = true;
         },
         err => this.eventService.openSnackBar(err, "Dismiss")
       )
     }
+  }
+  getOtpResponse(data) {
+    this.verifyResponseData.email = data.emailList[0].email.substr(2, data.emailList[0].email.indexOf('@') - 2) + 'XXXXX' + data.emailList[0].email.substr(7, 9)
+    this.verifyResponseData.mobile = String(data.mobileList[0].mobileNo).substr(0, 2) + 'XXXXX' + String(data.mobileList[0].mobileNo).substr(7, 9);
+    console.log(this.verifyResponseData)
+    if (this.verifyResponseData.email) {
+      this.verifyFlag = 'Email';
+      let obj = { "forEmail": data.email }
+      this.loginUsingCredential(obj);
+    }
+    else {
+      this.verifyFlag = "mobile";
+      let obj = { 'forMobNum': data.mobile }
+      this.loginUsingCredential(obj)
+    }
+  }
+  loginUsingCredential(obj) {
+    this.loginService.generateOtp(obj).subscribe(
+      data => {
+        console.log(data);
+        this.otpResponse = data;
+      },
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    )
   }
   otpClick() {
     (this.otpNumber) ? this.otpNumber = false : this.otpNumber = true;
