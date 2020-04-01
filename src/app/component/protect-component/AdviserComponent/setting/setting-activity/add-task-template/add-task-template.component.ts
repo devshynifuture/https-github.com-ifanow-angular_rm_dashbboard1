@@ -122,16 +122,16 @@ export class AddTaskTemplateComponent implements OnInit {
         ownerId: [null, [Validators.required]]
       })]),
     });
-    if (data.subTaskList != undefined) {
-      data.subTaskList.forEach(element => {
-        this.taskTemplate.controls.subTaskList.push(this.fb.group({
-          taskNumber: [(1) + "", [Validators.required]],
-          description: [(element.description + ""), Validators.required],
-          turtAroundTime: [(element.turtAroundTime), Validators.required],
-          ownerId: [element.ownerId, [Validators.required]]
-        }))
-      })
-    }
+    // if (data.subTaskList != undefined) {
+    //   data.subTaskList.forEach(element => {
+    //     this.taskTemplate.controls.subTaskList.push(this.fb.group({
+    //       taskNumber: [(1) + "", [Validators.required]],
+    //       description: [(element.description + ""), Validators.required],
+    //       turtAroundTime: [(element.turtAroundTime), Validators.required],
+    //       ownerId: [element.ownerId, [Validators.required]]
+    //     }))
+    //   })
+    // }
   }
   addSubTask(value) {
     this.subTask.push(this.fb.group({
