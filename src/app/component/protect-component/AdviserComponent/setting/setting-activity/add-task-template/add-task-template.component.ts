@@ -92,6 +92,8 @@ export class AddTaskTemplateComponent implements OnInit {
     this.listOfSub = value.taskTempSubcattoSubCategories
     if (value.taskTempSubcattoSubCategories.length == 0) {
       this.hideSubcategory = true
+    }else{
+      this.hideSubcategory = false
     }
   }
   getSelectedCategory(value, category) {
@@ -107,12 +109,15 @@ export class AddTaskTemplateComponent implements OnInit {
     this.getdataForm(this.inputData)
   }
   getdataForm(data) {
+    if(!data){
+      data = {}
+    }
     this.taskTemplate = this.fb.group({
-      category: [(!data) ? '' : (data.categoryId+""), [Validators.required]],
-      subCategory: [(!data) ? '' : data.subcategoryId+'', [Validators.required]],
-      subSubCategory :[(!data) ? '' : data.subSubCategoryId+'', [Validators.required]],
-      taskTemplate: [(!data) ? '' : data.taskTemplate, [Validators.required]],
-      adviceType: [(!data) ? '' : data.advice, [Validators.required]],
+      category: [(!data) ? '' : (data.categoryId) + "", [Validators.required]],
+      subCategory: [(!data) ? '' : (data.subcategoryId) + "", [Validators.required]],
+      subSubCategory :[(!data) ? '' : (data.subSubCategoryId) + "", [Validators.required]],
+      taskTemplate: [(!data) ? '' : data.taskDescription, [Validators.required]],
+      adviceType: [(!data) ? '' : (data.adviceTypeId) + "", [Validators.required]],
       defaultAssign: [(!data) ? '' : data.ownerName],
       turnaroundTime: [(!data) ? '' : data.turnaroundTime],
       subTaskList: this.fb.array([this.fb.group({
@@ -122,16 +127,16 @@ export class AddTaskTemplateComponent implements OnInit {
         ownerId: [null, [Validators.required]]
       })]),
     });
-    // if (data.subTaskList != undefined) {
-    //   data.subTaskList.forEach(element => {
-    //     this.taskTemplate.controls.subTaskList.push(this.fb.group({
-    //       taskNumber: [(1) + "", [Validators.required]],
-    //       description: [(element.description + ""), Validators.required],
-    //       turtAroundTime: [(element.turtAroundTime), Validators.required],
-    //       ownerId: [element.ownerId, [Validators.required]]
-    //     }))
-    //   })
-    // }
+    if (data.subTaskList != undefined) {
+      data.subTaskList.forEach(element => {
+        this.taskTemplate.controls.subTaskList.push(this.fb.group({
+          taskNumber: [(1) + "", [Validators.required]],
+          description: [(element.description + ""), Validators.required],
+          turtAroundTime: [(element.turtAroundTime), Validators.required],
+          ownerId: [element.ownerId, [Validators.required]]
+        }))
+      })
+    }
   }
   addSubTask(value) {
     this.subTask.push(this.fb.group({
