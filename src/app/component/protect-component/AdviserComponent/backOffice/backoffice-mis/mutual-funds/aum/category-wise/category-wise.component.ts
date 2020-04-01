@@ -21,23 +21,23 @@ export class CategoryWiseComponent implements OnInit {
 
   selectedCategory;
   ngOnInit() {
-    this.advisorId=AuthService.getAdvisorId();
-     this.getSubCatSchemeName();
+    this.advisorId = AuthService.getAdvisorId();
+    this.getSubCatSchemeName();
     // this.clientFolioWise();
     // this.getSubCatAum();
   }
 
   getSubCatSchemeName() {
-    this.showLoader=true;
+    this.showLoader = true;
     this.backoffice.getTotalByAumScheme(this.advisorId).subscribe(
       data => this.getFileResponseDataForSubSchemeName(data),
       err => this.getFilerrorResponse(err)
     )
   }
-  clientFolioWise(){
-    const obj={
-      amcName:'Aditya Birla',
-      teamMemberId:this.teamMemberId
+  clientFolioWise() {
+    const obj = {
+      amcName: 'Aditya Birla',
+      teamMemberId: this.teamMemberId
     }
     this.backoffice.getClientFolioWiseInCategory(obj).subscribe(
       data => {
@@ -88,5 +88,9 @@ export class CategoryWiseComponent implements OnInit {
   }
   getFilerrorResponse(err) {
     this.dataService.openSnackBar(err, 'Dismiss')
+  }
+
+  exportToExcelReport() {
+
   }
 }
