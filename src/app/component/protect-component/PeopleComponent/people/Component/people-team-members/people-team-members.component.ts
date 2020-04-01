@@ -88,6 +88,7 @@ export class PeopleTeamMembersComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.teamList = [];
     this.advisorId = AuthService.getAdvisorId();
 
     this.teamInviteForm = this.fb.group({
@@ -106,9 +107,12 @@ export class PeopleTeamMembersComponent implements OnInit {
   }
 
   getClientCountWiseData() {
+    this.teamList = [];
+
     // getTeamMemberWiseCount
     const obj = {
       advisorId: this.advisorId
+      // advisorId: 1
     };
     this.peopleService.getTeamMemberWiseCount(obj).subscribe(
       data => {
@@ -116,6 +120,8 @@ export class PeopleTeamMembersComponent implements OnInit {
         this.teamList = data;
       },
       err => {
+        this.teamList = [];
+
         this.eventService.openSnackBar(err, 'Dismiss');
       }
     );
