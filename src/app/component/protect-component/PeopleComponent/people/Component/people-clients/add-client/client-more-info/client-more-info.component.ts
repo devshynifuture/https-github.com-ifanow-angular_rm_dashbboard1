@@ -27,7 +27,7 @@ export class ClientMoreInfoComponent implements OnInit {
       taxStatus: [],
       occupation: [],
       maritalStatus: ['1'],
-      anniversaryStatus: [],
+      anniversaryDate: [],
       bio: [],
       myNotes: []
     })
@@ -64,7 +64,7 @@ export class ClientMoreInfoComponent implements OnInit {
       "name": this.moreInfoData.name,
       "bioRemarkId": 0,
       "userType": 0,
-      "remarks": null,
+      "remarks": this.moreInfoForm.controls.myNotes.value,
       "status": 0
     }
     if (this.fieldFlag == 'client') {
@@ -76,20 +76,12 @@ export class ClientMoreInfoComponent implements OnInit {
         err => this.eventService.openSnackBar(err, "Dismiss")
       )
     }
-    else {
-      this.peopleService.editFamilyMemberDetails(obj).subscribe(
-        data => {
-          (flag == 'Next') ? this.tabChange.emit(1) : this.close();
-        },
-        err => this.eventService.openSnackBar(err, "Dismiss")
-      )
-    }
   }
   saveNextFamilyMember(flag) {
     let obj =
     {
-      "isKycCompliant": 0,
-      "taxStatusId": 0,
+      "isKycCompliant": this.moreInfoData.isKycCompliant,
+      "taxStatusId": this.moreInfoData.taxStatusId,
       "emailList": this.moreInfoData.emailList,
       "displayName": this.moreInfoForm.controls.displayName.value,
       "guardianId": 0,
@@ -97,40 +89,31 @@ export class ClientMoreInfoComponent implements OnInit {
       "isActive": 0,
       "addressModelList": null,
       "occupationId": this.moreInfoForm.controls.occupation.value,
-      "id": 0,
+      "id": this.moreInfoData.id,
       "dematList": null,
       "pan": this.moreInfoData.pan,
       "familyMemberType": 0,
       "clientId": this.moreInfoData.clientId,
       "genderId": this.moreInfoData.genderId,
       "dateOfBirth": this.moreInfoData.dateOfBirth,
-      "bankDetailList": null,
-      "relationshipId": 0,
+      "bankDetailList": this.moreInfoData.bankDetail,
+      "relationshipId": this.moreInfoData.relationshipId,
       "mobileList": this.moreInfoData.mobileList,
-      "anniversaryDate": null,
+      "anniversaryDate": this.moreInfoForm.controls.anniversaryDate.value,
       "aadhaarNumber": this.moreInfoForm.controls.adhaarNo.value,
       "name": this.moreInfoData.name,
       "bioRemarkId": 0,
-      "bioRemark": {
-        "bio": this.moreInfoForm.controls.bio.value,
-        "remark": null,
-        "id": 0
-      },
-      "guardianData": {
-        "mobileList": null,
-        "aadhaarNumber": null,
-        "anniversaryDate": null,
-        "occupationId": 0,
-        "emailList": null,
-        "name": null,
-        "genderId": 0,
-        "martialStatusId": 0,
-        "id": 0,
-        "pan": null,
-        "relationshipId": 0,
-        "birthDate": null
-      }
+      "bio": this.moreInfoForm.controls.bio.value,
+      "remarks": this.moreInfoForm.controls.myNotes.value,
+      "guardianData": this.moreInfoData.guardianData
     }
+    this.peopleService.editFamilyMemberDetails(obj).subscribe(
+      data => {
+        console.log(data);
+        (flag == 'Next') ? this.tabChange.emit(1) : this.close();
+      },
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    )
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
