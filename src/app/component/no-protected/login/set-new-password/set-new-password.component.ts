@@ -22,7 +22,7 @@ export class SetNewPasswordComponent implements OnInit {
   hide1 = true;
   hide2 = true;
   userData: any;
-  constructor(private fb: FormBuilder, private loginService: LoginService, private router: Router, private eventService: EventService) { }
+  constructor(private authService: AuthService, private fb: FormBuilder, private loginService: LoginService, private router: Router, private eventService: EventService) { }
   setNewPasswordForm;
   validatorType = ValidatorType
   ngOnInit() {
@@ -45,8 +45,8 @@ export class SetNewPasswordComponent implements OnInit {
       this.loginService.savePassword(obj).subscribe(
         data => {
           console.log(data);
-          AuthService.setClientData(this.userData);
-          AuthService.setUserInfo(this.userData);
+          this.authService.setClientData(this.userData);
+          this.authService.setUserInfo(this.userData);
           this.router.navigate(['/admin/subscription/dashboard'])
         },
         err => this.eventService.openSnackBar(err, "Dismiss")

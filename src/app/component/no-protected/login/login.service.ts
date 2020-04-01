@@ -25,4 +25,7 @@ export class LoginService {
   savePassword(data) {
     return this.http.putEncoded(apiConfig.USER + appConfig.SAVE_PASSWORD, data);
   }
+  loginWithPassword(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.LOGIN_WITH_PASSWORD, data, 1);
+  }
 }

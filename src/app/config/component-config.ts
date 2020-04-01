@@ -541,6 +541,7 @@ export const appConfig = {
   REGISTER: 'user/advisor/add',
   SEARCH_USERNAME: 'user/search/username',
   SAVE_PASSWORD: 'user/password/update',
+  LOGIN_WITH_PASSWORD: 'user/login/with/password',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_UPDATE: 'calendar/event/update',
