@@ -43,7 +43,14 @@ export class PeopleService {
   editFamilyMemberDetails(data) {
     return this.http.putEncoded(apiConfig.USER + appConfig.EDIT_FAMILY_MEMBER_BASIC_DETAILS_MORE_INFO, data);
   }
-
-
+  getCompanyPersonDetail(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_COMPANY_PERSON_DETAILS, data, 1);
+  }
+  saveCompanyPersonDetail(data) {
+    return this.http.postEncoded(apiConfig.USER + appConfig.SAVE_COMPANY_PERSON_DEATILS, data);
+  }
+  updateCompanyPersonDetail(data) {
+    return this.http.putEncoded(apiConfig.USER + appConfig.UPDATE_COMPANY_PERSON_DETAILS, data);
+  }
   // commented Code closed which are giving error ->>>>>>>>>>>>>
 }
