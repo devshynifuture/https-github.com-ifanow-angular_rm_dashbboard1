@@ -112,4 +112,7 @@ export class SettingsService {
   deleteQuestion(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_MF_RTA_QUESTION, data);
   }
+  addQuestion(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_MF_RTA_QUESTION, data);
+  }
 }

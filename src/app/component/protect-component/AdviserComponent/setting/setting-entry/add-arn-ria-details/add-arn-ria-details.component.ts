@@ -106,8 +106,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
           ...this.data.mainData,
           ...jsonObj
         }
-        const formData = new FormData().append('arnRiaDetailsJson', JSON.stringify(editJson));
-        this.settingService.editArn(formData).subscribe((res)=> {
+        this.settingService.editArn(editJson).subscribe((res)=> {
           this.eventService.openSnackBar("ARN-RIA Added successfully");
           this.Close(true);
         })
