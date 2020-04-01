@@ -146,9 +146,9 @@ export class AddTaskTemplateComponent implements OnInit {
   getdataForm(data) {
     if (!data) {
       data = {}
-    }else if(data ==1){
+    } else if (data == 1) {
       data = {}
-    }else if(data == 2){
+    } else if (data == 2) {
       data = {}
     }
     this.taskTemplate = this.fb.group({
@@ -187,13 +187,13 @@ export class AddTaskTemplateComponent implements OnInit {
   }
   addSubTask(value, flag) {
     if (flag == 'add') {
-         this.subTask.push(this.fb.group({
-          taskNumber: [1, [Validators.required]],
-          description: [null, [Validators.required]],
-          turnAroundTime: [null, [Validators.required]],
-          ownerId: [null, [Validators.required]],
-          isEdite: false
-        }));
+      this.subTask.push(this.fb.group({
+        taskNumber: [1, [Validators.required]],
+        description: [null, [Validators.required]],
+        turnAroundTime: [null, [Validators.required]],
+        ownerId: [null, [Validators.required]],
+        isEdite: false
+      }));
     } else {
       console.log('creds --', value)
       if (value.invalid) {
@@ -266,32 +266,61 @@ export class AddTaskTemplateComponent implements OnInit {
     }
   }
   saveTaskTemplate() {
-    let obj = {
-      advisorId: this.advisorId,
-      categoryId: this.taskTemplate.controls.category.value,
-      subcategoryId: this.taskTemplate.controls.subCategory.value,
-      linkedTemplateId: this.linkedTemplateId,
-      adviceTypeId: this.taskTemplate.controls.adviceType.value,
-      subSubCategoryId: this.taskTemplate.controls.subSubCategory.value,
-      taskDescription: this.taskTemplate.controls.taskTemplate.value,
-      assignedTo: 2727,
-      turnAroundTime: this.taskTemplate.controls.turnAroundTime.value,
-      subTaskList: this.taskTemplate.controls.subTaskList.value,
+    if (this.taskTemplate.invalid) {
+      for (let element in this.taskTemplate.controls) {
+        console.log(element)
+        if (this.taskTemplate.get(element).invalid) {
+          this.inputs.find(input => !input.ngControl.valid).focus();
+          this.taskTemplate.controls[element].markAsTouched();
+          this.taskTemplate.get('subSubCategory').markAsTouched();
+          this.taskTemplate.get('subSubCategory').markAsTouched();
+          this.taskTemplate.get('adviceType').markAsTouched();
+          this.taskTemplate.get('turnAroundTime').markAsTouched();
+        }
+      }
+    } else {
+      let obj = {
+        advisorId: this.advisorId,
+        categoryId: this.taskTemplate.controls.category.value,
+        subcategoryId: this.taskTemplate.controls.subCategory.value,
+        linkedTemplateId: this.linkedTemplateId,
+        adviceTypeId: this.taskTemplate.controls.adviceType.value,
+        subSubCategoryId: this.taskTemplate.controls.subSubCategory.value,
+        taskDescription: this.taskTemplate.controls.taskTemplate.value,
+        assignedTo: 2727,
+        turnAroundTime: this.taskTemplate.controls.turnAroundTime.value,
+        subTaskList: this.taskTemplate.controls.subTaskList.value,
+        id: this.taskTemplate.controls.id.value
+      }
+      if (obj.id) {
+        console.log('this what i want', obj)
+        this.orgSetting.editTaskTemplate(obj).subscribe(
+          data => {
+            this.editTaskTemplateRes(data)
+          },
+          err => this.event.openSnackBar(err, "Dismiss")
+        );
+      } else {
+        console.log('this what i want', obj)
+        this.orgSetting.addTaskTemplate(obj).subscribe(
+          data => {
+            this.addTaskTemplateRes(data)
+          },
+          err => this.event.openSnackBar(err, "Dismiss")
+        );
+      }
     }
-    console.log('this what i want', obj)
-    this.orgSetting.addTaskTemplate(obj).subscribe(
-      data => {
-        this.addTaskTemplateRes(data)
-      },
-      err => this.event.openSnackBar(err, "Dismiss")
-    );
+
   }
   addTaskTemplateRes(data) {
-    if (data) {
-
-    } else {
-
-    }
+    console.log('addTaskTemplateRes', data);
+    this.event.openSnackBar('Added successfully!', 'Dismiss');
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
+  }
+  editTaskTemplateRes(data) {
+    console.log('editTaskTemplateRes', data);
+    this.event.openSnackBar('Updated successfully!', 'Dismiss');
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 
 }
