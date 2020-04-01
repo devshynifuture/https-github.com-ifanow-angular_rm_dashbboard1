@@ -43,7 +43,7 @@ export class AllSipComponent implements OnInit {
       data =>{
         this.dataSource=new MatTableDataSource(data);
         this.dataSource.sort = this.sort;
-        this.dataSource.forEach(element => {
+        this.dataSource.filteredData.forEach(element => {
           this.totalAmount += element.amount;
         });
         console.log(data);

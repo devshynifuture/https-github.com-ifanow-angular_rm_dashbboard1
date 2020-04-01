@@ -210,6 +210,9 @@
 </div>
 </div>
 </div>
+<div *ngIf="sipcomponentWise=='Allsip' && sipComponent==false" >
+    <app-all-sip></app-all-sip>
+</div>
 <div *ngIf="sipcomponentWise=='amc'">
     <app-sip-amc-wise></app-sip-amc-wise>
 </div>
@@ -221,7 +224,4 @@
 </div>
 <div *ngIf="sipcomponentWise=='applicant'">
     <app-sip-applicant-wise></app-sip-applicant-wise>
-</div>
-<div *ngIf="sipcomponentWise=='Allsip'">
-    <app-all-sip></app-all-sip>
 </div>
