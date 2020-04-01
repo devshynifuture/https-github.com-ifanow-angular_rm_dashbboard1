@@ -99,8 +99,8 @@ export class OverviewProfileComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getFamilyMembersList();
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getFamilyMembersList();
           }
           rightSideDataSub.unsubscribe();
         }

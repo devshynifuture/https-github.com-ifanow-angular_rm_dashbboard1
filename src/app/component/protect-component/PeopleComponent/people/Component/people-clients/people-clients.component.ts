@@ -32,6 +32,9 @@ export class PeopleClientsComponent implements OnInit {
     {
       advisorId: this.advisorId
     }
+
+    // commented code which are giving errors ====>>>>>>>>>>>>>>.
+
     this.peopleService.getClientList(obj).subscribe(
       data => {
         console.log(data);
@@ -40,9 +43,11 @@ export class PeopleClientsComponent implements OnInit {
       },
       err => this.eventService.openSnackBar(err, "dismiss")
     )
+
+    // commented code closed which are giving errors ====>>>>>>>>>>>>>>.
   }
   Addclient(data) {
-    (data == null) ? data = { flag: 'Add client', fieldFlag: 'client', data: null } : '';
+    (data == null) ? data = { flag: 'Add client', fieldFlag: 'client', data: null } : data = { flag: 'Edit client', fieldFlag: 'client', data };
     const fragmentData = {
       flag: 'Add client',
       id: 1,

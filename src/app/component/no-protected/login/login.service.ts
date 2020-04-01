@@ -22,4 +22,7 @@ export class LoginService {
   getUsernameData(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.SEARCH_USERNAME, data, 1);
   }
+  savePassword(data) {
+    return this.http.putEncoded(apiConfig.USER + appConfig.SAVE_PASSWORD, data);
+  }
 }

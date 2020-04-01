@@ -89,13 +89,12 @@
             <div class="col-md-3 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input [matDatepicker]="anniversaryStatus" (click)="anniversaryStatus.open()"
-                            class="form-control br-0 b-0" formControlName="anniversaryStatus" matInput readonly>
-                        <mat-datepicker-toggle matSuffix [for]="anniversaryStatus"></mat-datepicker-toggle>
-                        <mat-datepicker #anniversaryStatus></mat-datepicker>
+                        <input [matDatepicker]="anniversaryDate" (click)="anniversaryDate.open()"
+                            class="form-control br-0 b-0" formControlName="anniversaryDate" matInput readonly>
+                        <mat-datepicker-toggle matSuffix [for]="anniversaryDate"></mat-datepicker-toggle>
+                        <mat-datepicker #anniversaryDate></mat-datepicker>
                         <mat-error class="f-12">This field is required
                         </mat-error>
-                        <mat-option value="option">Option</mat-option>
                     </mat-form-field>
                 </div>
             </div>
