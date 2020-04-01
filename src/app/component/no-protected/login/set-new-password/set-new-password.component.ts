@@ -4,6 +4,7 @@ import { ValidatorType } from 'src/app/services/util.service';
 import { LoginService } from '../login.service';
 import { Router } from '@angular/router';
 import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-set-new-password',
@@ -20,12 +21,12 @@ export class SetNewPasswordComponent implements OnInit {
   }
   hide1 = true;
   hide2 = true;
-  userId: any;
+  userData: any;
   constructor(private fb: FormBuilder, private loginService: LoginService, private router: Router, private eventService: EventService) { }
   setNewPasswordForm;
   validatorType = ValidatorType
   ngOnInit() {
-    this.userId = window.history.state.userId;
+    this.userData = window.history.state.userData;
     this.setNewPasswordForm = this.fb.group({
       newPassword: [, [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX), this.checkUpperCase(), this.checkLowerCase(), this.checkSpecialCharacter()]],
       confirmPassword: [, [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX)]]
@@ -39,11 +40,13 @@ export class SetNewPasswordComponent implements OnInit {
       let obj =
       {
         "password": this.setNewPasswordForm.controls.confirmPassword.value,
-        "userId": 2808
+        "userId": this.userData.userId
       }
       this.loginService.savePassword(obj).subscribe(
         data => {
           console.log(data);
+          AuthService.setClientData(this.userData);
+          AuthService.setUserInfo(this.userData);
           this.router.navigate(['/admin/subscription/dashboard'])
         },
         err => this.eventService.openSnackBar(err, "Dismiss")
