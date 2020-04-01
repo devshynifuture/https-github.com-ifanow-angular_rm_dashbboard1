@@ -35,7 +35,7 @@
             <div class="form-group">
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="subCategory">
-                        <mat-option [value]="subCategory.adviceSubcategoryId" (click)="selectedSubcategory(subCategory)" *ngFor="let subCategory of list">
+                        <mat-option [value]="subCategory.subcategoryId" (click)="selectedSubcategory(subCategory)" *ngFor="let subCategory of list">
                             {{subCategory.subcategoryType}}
                         </mat-option>
                     </mat-select>
@@ -50,8 +50,8 @@
             <h5 class="m-0 pb-8 pt-24">Select sub category</h5>
             <div class="form-group">
                 <mat-form-field>
-                    <mat-select class="form-control" formControlName="subCategory">
-                        <mat-option [value]="sub.adviceSubcategoryId" *ngFor="let sub of listOfSub">
+                    <mat-select class="form-control" formControlName="subSubCategory">
+                        <mat-option [value]="sub.subSubCategoryId" *ngFor="let sub of listOfSub">
                             {{sub.subcategoryType}}</mat-option>
                     </mat-select>
                     <mat-error class="f-12">

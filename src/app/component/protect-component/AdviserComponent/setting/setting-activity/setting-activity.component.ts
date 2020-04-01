@@ -31,7 +31,7 @@ export class SettingActivityComponent implements OnInit {
   getteamMemberList(){
     
     let obj = {
-      advisorId : 414
+      advisorId : 2808
     }
     this.orgSetting.getTeamMemberList(obj).subscribe(
       data => this.getTeamMemberListRes(data),
@@ -43,7 +43,7 @@ export class SettingActivityComponent implements OnInit {
   }
   getTaskTemplate(){
     let obj = {
-      advisorId : 414
+      advisorId : 2808
     }
     this.orgSetting.getTaskTemplate(obj).subscribe(
       data => this.getTaskTemplateRes(data),
@@ -57,6 +57,29 @@ export class SettingActivityComponent implements OnInit {
     }else{
 
     }
+  }
+  addTaskTemplate(singleProfile, value) {
+    const fragmentData = {
+      flag: value,
+      data: singleProfile,
+      id: 1,
+      state: 'open50',
+      componentName: AddTaskTemplateComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+
+            console.log('this is sidebardata in subs subs 2: ');
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      }
+
+    );
+    // this.billerProfileData = this.dataTOget.data
   }
   openTaskTemplateType(singleProfile, value) {
 
