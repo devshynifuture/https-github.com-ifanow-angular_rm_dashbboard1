@@ -92,6 +92,18 @@
 }
 
 @media screen and (max-width: 767px) {
+    .imgLogin {
+        // width: 295px;
+        position: relative;
+        float: right;
+        display: block;
+        margin-bottom: 30px;
+        .bitmapImg {
+            position: absolute;
+            left: -15px;
+            top: 235px;
+        }
+    }
     .mobileCenter {
         text-align: center;
         width: 100%;

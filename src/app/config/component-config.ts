@@ -12,7 +12,7 @@ export const appConfig = {
   GET_TOTAL_SCHEME_AUM: 'asset/schemeTotalAum/get',
   GET_TOTAL_AUM_BY_SCHEME: 'asset/schemeTotalAum/get',
   GET_CLIENT_WISE_TOTALAUM: 'asset/report/client/totalaum/get',
-  GET_SIP_COUNT_GET: 'asset/sip/count/get',
+  GET_SIP_COUNT_GET: 'backoffice/sip/count/get',
   GET_AUM_APPLICANT: 'backoffice/aum/applicantWise/totalaum/applicantName/get',
   GET_AUM_APPLICANT_CATEGORY: 'backoffice/aum/applicantWise/totalaum/applicantsAllCategory/get',
   GET_AUM_APPLICANT_SUB_CATEGORY: 'backoffice/aum/applicantWise/totalaum/applicantSubCategory/get',
@@ -28,22 +28,22 @@ export const appConfig = {
 
   /////////////////////// sip api call//////////////////////////////////
 
-  GET_EXPIRING: 'asset/sip/expiring/get',
-  GET_expired: 'asset/sip/expired/get',
-  GET_SIP_REJECTION: 'asset/sip/sipRejection/get',
-  GET_SIP_client_SEARCH: 'asset/sip/client/search/get',
-  GET_SIP_SCHEME_SEARCH: 'asset/sip/scheme/search/get',
+  GET_EXPIRING: 'backoffice/sip/expiring/get',
+  GET_expired: 'backoffice/sip/expired/get',
+  GET_SIP_REJECTION: 'backoffice/sip/sipRejection/get',
+  GET_SIP_client_SEARCH: 'backoffice/sip/client/search/get',
+  GET_SIP_SCHEME_SEARCH: 'backoffice/sip/scheme/search/get',
 
-  GET_SIP_AMC: 'asset/sip/amc/get',
-  GET_SIP_AMC_SCHEME: 'asset/sip/amc/scheme/get',
-  GET_SIP_INVERSTORS: 'asset/sip/scheme/investors/get',
-  Scheme_Investors_Applicants: 'asset/sip/scheme/investors/applicants/get',
-  Sip_Schemewise_Get: 'asset/sip/schemewise/get',
-  Scheme_Wise_Investor_Get: 'asset/sip/schemewiseInvestor/get',
-  scheme_wise_Applicants_Get: 'asset/sip/schemewiseApplicants/get',
-  ALL_SIP_GET: 'asset/sip/allSip/get',
-  CLIENT_WISE_CLIENTNAME_GET: 'asset/sip/ClientWiseClientsName/get',
-  CLIENT_WISE_APPLICANT_GET: 'asset/sip/ClientWiseApplicants/get',
+  GET_SIP_AMC: 'backoffice/sip/amc/get',
+  GET_SIP_AMC_SCHEME: 'backoffice/sip/amc/scheme/get',
+  GET_SIP_INVERSTORS: 'backoffice/sip/scheme/investors/get',
+  Scheme_Investors_Applicants: 'backoffice/sip/scheme/investors/applicants/get',
+  Sip_Schemewise_Get: 'backoffice/sip/schemewise/get',
+  Scheme_Wise_Investor_Get: 'backoffice/sip/schemewiseInvestor/get',
+  scheme_wise_Applicants_Get: 'backoffice/sip/schemewiseApplicants/get',
+  ALL_SIP_GET: 'backoffice/sip/allSip/get',
+  CLIENT_WISE_CLIENTNAME_GET: 'backoffice/sip/ClientWiseClientsName/get',
+  CLIENT_WISE_APPLICANT_GET: 'backoffice/sip/ClientWiseApplicants/get',
 
   ///////////////////////////// back office/////////////////////////////////////////////
 
@@ -481,14 +481,26 @@ export const appConfig = {
   UPDATE_DOMAIN: 'setting/preferences/domain/update',
   EDIT_ORG_PROFILE_LOGO: 'setting/profile/organisation/logo/update',
   EDIT_ORG_PROFILE_REPORT_LOGO: 'setting/profile/organisation/report/logo/update',
-  GET_EMAIL_VERIFICATION:'setting/preference/email/get',
-  GET_EMAIL_TEMPLATES:'setting/preference/email/template/get',
-  ADD_EMAIL_VERIFY:'setting/preferences/email/post',
-  GET_ASSET_ALLOCATION:'goal-planning/static-allocation/get',
-  GET_RETURNS:'plan/config/return-inflation/get',
-  GET_KEY_PARAMETERS :'goal-planning/key-parameters/get',
-  UPLOAD_PLAN_GALLERY:'goal-planning/goal-gallery/add',
-  UPLOAD_KEY_PARAMETER:'goal-planning/static-allocation/put',
+  GET_EMAIL_VERIFICATION: 'setting/preference/email/get',
+  GET_EMAIL_TEMPLATES: 'setting/preference/email/template/get',
+  ADD_EMAIL_VERIFY: 'setting/preferences/email/post',
+  GET_ASSET_ALLOCATION: 'goal-planning/static-allocation/get',
+  GET_RETURNS: 'plan/config/return-inflation/get',
+  GET_KEY_PARAMETERS: 'goal-planning/key-parameters/get',
+  UPLOAD_PLAN_GALLERY: 'goal-planning/goal-gallery/add',
+  UPLOAD_KEY_PARAMETER: 'goal-planning/static-allocation/put',
+  UPDATE_ASSET_ALLOCATION: 'goal-planning/static-allocation/put',
+  GET_TASK_TEMPLATE:'setting/task/template/list/get',
+  GET_TEAM_MEMBER_LIST:'user/client/advisor-wise/get',
+  ADD_SUB_TASKTEMPLATE: 'setting/task/sub-task/add',
+  TASK_GLOBAL: 'setting/task/template/global/data',
+  ADD_TAK_TEMPLATE: 'setting/task/template/add',
+  EDIT_TASK_TEMPLATE: 'setting/task/template/edit',
+  DELETE_TASK_TEMPLATE: 'setting/task/template/delete',
+  DELETE_SUBTASK_TEMPLATE: 'setting/task/sub-task/delete',
+  OWNER_SUBTASK_UPDATE: 'setting/task/template/owner/update',
+  OWNER_TASK_UPDATE: 'setting/task/sub-task/owner/update',
+
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
@@ -518,10 +530,16 @@ export const appConfig = {
   GET_PEOPLE_CLIENT_LIST: '/user/client/all/get',
   ADD_CLIENT: 'user/client/add',
   EDIT_CLIENT: 'user/client/edit',
-  //////////////////////////////Login///////////////////////////////////
-  GENERATE_OTP: '/user/generate/otp',
+  ADD_EDIT_CLIENT_ADDRESS: 'user/address/add-edit',
+  ADD_EDIT_CLIENT_BANK: 'user/bank/add-edit',
+  ADD_EDIT_CLIENT_DEMAT: 'user/bank/demat/edit',
   GET_FAMILY_MEMBERS: 'user/family-member/get',
   DELETE_FAMILY_MEMBER: 'user/family-member/delete',
+  ADD_FAMILY_MEMBER: 'user/family-member/add',
+  ADD_MULTIPLE_FAMILY_MEMBERS: '/user/family-member/add/multiple',
+  EDIT_FAMILY_MEMBER_BASIC_DETAILS_MORE_INFO: 'user/family-member/edit',
+  //////////////////////////////Login///////////////////////////////////
+  GENERATE_OTP: '/user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
   REGISTER: 'user/advisor/add',
   SEARCH_USERNAME: 'user/search/username',
@@ -536,7 +554,7 @@ export const appConfig = {
   ////////////////////////////// settings////////////////////////////////////////////
   GET_PERSONAL_PROFILE_DETAILS: 'setting/profile/personal/details/get',
   UPLOAD_PERSONAL_PROFILE_PHOTO: 'setting/profile/personal/profile-photo/update',
-  
+
   GET_ARN_RIA_GLOBAL_LIST: 'setting/arn-ria/global/data/get',
 
   GET_ARN_RIA_LIST: 'setting/arn-ria/list/get',
@@ -562,7 +580,7 @@ export const appConfig = {
 
   GET_USER_ACCESS_RIGHTS_LIST: 'setting/users-roles/access-rights/get',
   UPDATE_USER_ACCESS_RIGHTS_LIST: 'setting/users-roles/access-rights/update'
-  
+
 
   ////////////////////////////// settings////////////////////////////////////////////
   //////////////////////////////////customer-overview-profile//////////////////////

@@ -102,7 +102,7 @@
                         </div>
                         <p class="f-14 m-0 roboto">{{singleMember.name}}</p>
                     </div>
-                    <div *ngIf="singleMember.name!='Son'">
+                    <div *ngIf="singleMember.selected">
                         <div class="d-flex mt-8 align-items-center justify-content-center">
                             <button class="btn24 mr-4 c-p" [disabled]="!singleMember.selected" mat-button
                                 (click)="remove(singleMember)">
@@ -144,8 +144,9 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input formControlName="name" matInput class="form-control">
+                            <input maxlength="50" #name formControlName="name" matInput class="form-control">
                             <mat-error>This field is required</mat-error>
+                            <mat-hint align="end" class="f-12">{{name.value.length}}/50</mat-hint>
                         </mat-form-field>
                     </div>
                     <div class="col-md-3">

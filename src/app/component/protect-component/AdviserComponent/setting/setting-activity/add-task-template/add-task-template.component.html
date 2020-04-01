@@ -3,158 +3,180 @@
         <h4 class="mb-0 l-22 wrapper-20">Add task template</h4>
     </div>
     <div class="col-md-2 text-right">
-        <i class="material-icons pt-20 c-p pr-16">
+        <i class="material-icons pt-20 c-p pr-16" (click)="Close(false)">
             clear
         </i>
     </div>
 </div>
 <!-- Add task template -->
-<!-- <div class="pt-90 pl-28 pr-28 add-task-template">
-    <div class="row h-350">
-        <div class="col-md-12 p-0">
-            <h5 class="m-0 pb-12">Select an option below to add a task template...</h5>
-            <mat-radio-group>
-                <mat-radio-button value="1" class="b-ua mr-20">Create a linked task</mat-radio-button>
-                <mat-radio-button value="2" class="b-ua">Create a non-linked task</mat-radio-button>
+
+
+<!-- Adding a linked task template -->
+
+<div class="pt-90 pl-28 pr-28" [formGroup]="taskTemplate">
+    <div class="row">
+        <div class="col-md-12 p-0 select-category">
+            <h5 class="m-0 pb-12">Select category</h5>
+            <mat-radio-group class="taskradio" aria-label="Select an option" formControlName="category">
+                <mat-radio-button [value]="1" (click)="getSelectedCategory(1,'asset')" checked [ngClass]="taskTemplate.get('category').value == 1 ? 'text-primary b-a-custom': 'b-a text-primitive'">
+                    Asset</mat-radio-button>
+                <mat-radio-button [value]="2" (click)="getSelectedCategory(2,'insurance')" [ngClass]="taskTemplate.get('category').value == 2 ? 'text-primary b-a-custom': 'b-a text-primitive'">
+                    Insurance</mat-radio-button>
+                <mat-radio-button [value]="3" (click)="getSelectedCategory(3,'liability')" [ngClass]="taskTemplate.get('category').value == 3 ? 'text-primary b-a-custom': 'b-a text-primitive'">
+                    Liability</mat-radio-button>
             </mat-radio-group>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-12 p-0">
-            <h5 class="m-0 roboto">FAQ</h5>
-            <p class="m-0 f-500 roboto pt-10">What is a linked task?</p>
-            <p class="m-0 text-black roboto pt-6">A linked task is one which is linked to an existing
-                asset/insurance/loan.
-                Linked tasks allow
-                you to work seamlessly without having to worry about entering the details of the linked
-                asset/insurance/loan manually. Secondly, you can track the associated advice/action plan immediately.
-            </p>
-            <p class="m-0 f-500 roboto pt-28">What is a linked task?</p>
-            <p class="m-0 roboto text-black">A non-linked task, as the name suggests, is the opposite of a linked task.
-                There are no assets/insurance/loans associated with such tasks. Depending the nature of your work
-                environment, you can create such task templates.
-                E.g. of non-linked tasks: On-board a new cient, fill up form, do a review meeting etc.</p>
-            <p class="m-0 f-500 roboto pt-28">A note on tasks</p>
-            <p class="m-0 roboto text-black">It is worth noting that tasks allows you to cordinate between you and your
-                team only. The task interface is not opened up to your clients.</p>
 
-            <p class="m-0 roboto text-black pb-90">Tasks can also have sub-tasks associated with them. You can assign
-                default
-                owners and turn around times
-                to tasks as well as sub-tasks.</p>
+        <div class="col-md-5 pl-0">
+            <h5 class="m-0 pb-8 pt-24">Select {{category}}</h5>
+            <div class="form-group">
+                <mat-form-field>
+                    <mat-select class="form-control" formControlName="subCategory">
+                        <mat-option [value]="subCategory.adviceSubcategoryId" (click)="selectedSubcategory(subCategory)" *ngFor="let subCategory of list">
+                            {{subCategory.subcategoryType}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error class="f-12">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="col-md-5 pl-0" *ngIf="hideSubcategory == false">
+            <h5 class="m-0 pb-8 pt-24">Select sub category</h5>
+            <div class="form-group">
+                <mat-form-field>
+                    <mat-select class="form-control" formControlName="subCategory">
+                        <mat-option [value]="sub.adviceSubcategoryId" *ngFor="let sub of listOfSub">
+                            {{sub.subcategoryType}}</mat-option>
+                    </mat-select>
+                    <mat-error class="f-12">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
         </div>
     </div>
-</div> -->
 
-<!-- Adding a linked task template -->
-<div class="row pt-90 pl-28 pr-28">
-    <div class="col-md-12 p-0 select-category">
-        <h5 class="m-0 pb-12">Select category</h5>
-        <mat-radio-group aria-label="Select an option">
-            <mat-radio-button value="1" class="b-ua text-custom">Asset</mat-radio-button>
-            <mat-radio-button value="2" class="bu-primary text-primary">Insurance</mat-radio-button>
-            <mat-radio-button value="2" class="b-ua text-custom">Liability</mat-radio-button>
-        </mat-radio-group>
-        <div class="col-md-6 p-0">
-            <h5 class="m-0 pb-12 pt-24">Select sub category</h5>
+
+    <div class="row">
+        <div class="col-md-10 pl-0">
+            <h5 class="m-0 pb-8 pt-24">Select task template</h5>
             <div class="form-group">
                 <mat-form-field>
-                    <mat-select class="form-control">
-                        <mat-option value="Health insurance">Health insurance</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="col-md-10 p-0">
-            <h5 class="m-0 pb-12 pt-24">Select task template</h5>
-            <div class="form-group">
-                <mat-form-field>
-                    <mat-select class="form-control">
+                    <mat-select class="form-control" formControlName="taskTemplate">
                         <mat-option value="Port policy">Port policy</mat-option>
                     </mat-select>
+                    <mat-error class="f-12">
+                        This field is required
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>
-        <div class="row pt-24">
-            <div class="col-md-5 pl-0">
-                <h5 class="m-0 pb-12">Default assigned to</h5>
-                <div class="form-group">
-                    <mat-form-field>
-                        <mat-select class="form-control">
-                            <mat-option value="Nita Shinde">Nita Shinde</mat-option>
-                        </mat-select>
-                        <mat-hint>Optional</mat-hint>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="col-md-5 pr-0">
-                <h5 class="m-0 pb-12">Turnaround time</h5>
-                <div class="form-group">
-                    <mat-form-field>
-                        <mat-select class="form-control">
-                            <mat-option value="T + 1 day">T + 1 day</mat-option>
-                        </mat-select>
-                        <mat-hint>Optional</mat-hint>
-                    </mat-form-field>
-                </div>
+    </div>
+
+
+    <div class="row pt-24">
+        <div class="col-md-5 pl-0">
+            <h5 class="m-0 pb-8">Default assigned to</h5>
+            <div class="form-group">
+                <mat-form-field>
+                    <mat-select class="form-control" formControlName="defaultAssign">
+                        <mat-option value="Nita Shinde">Nita Shinde</mat-option>
+                    </mat-select>
+                    <mat-hint>Optional</mat-hint>
+                </mat-form-field>
             </div>
         </div>
-        <div class="row pt-24 sub-tasks pb-60">
+        <div class="col-md-5 pl-0">
+            <h5 class="m-0 pb-8">Turnaround time</h5>
+            <div class="form-group">
+                <mat-form-field>
+                    <mat-select class="form-control" formControlName="turnaroundTime">
+                        <mat-option [value]="t.value" *ngFor="let t of Tat">{{t.tat}}</mat-option>
+                    </mat-select>
+                    <mat-hint>Optional</mat-hint>
+
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div formArrayName="subTaskList">
+        <!-- <h5 class="m-0 f-500 text-black">Sub-tasks</h5> -->
+        <div class="row pt-24 sub-tasks pb-60" *ngFor="let creds of subTask.controls; let i = index" [formGroupName]="i">
             <div class="col-md-12 p-0">
-                <h5 class="m-0 f-500 text-black">Sub-tasks</h5>
-                <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
-
-                    <ng-container matColumnDef="position">
-                        <th mat-header-cell *matHeaderCellDef> </th>
-                        <td mat-cell *matCellDef="let element" class="w-70"> {{element.position}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef> </th>
-                        <td mat-cell *matCellDef="let element" class="c-p">
-                            <img src="/assets/images/svg/calander.svg">
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="weight">
-                        <th mat-header-cell *matHeaderCellDef> </th>
-                        <td mat-cell *matCellDef="let element" class="c-p">
-
-                            <img src="/assets/images/svg/people.svg">
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="symbol">
-                        <th mat-header-cell *matHeaderCellDef> </th>
-                        <td mat-cell *matCellDef="let element" class="c-p">
+                <div class="row pt-24 sub-tasks pb-60">
+                    <div class="col-md-3 pl-0">
+                        <h5 class="m-0 f-500 text-black">Sub-tasks</h5>
+                        <div class="form-group">
+                            <mat-form-field>
+                                <input matInput #currentValue type="text" maxlength="10" class="form-control br-0 rupess" formControlName="description">
+                                <mat-error class="f-12">
+                                    This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-3 pr-0">
+                        <img src="/assets/images/svg/calander.svg">
+                        <div class="form-group">
+                            <mat-form-field>
+                                <mat-select class="form-control" formControlName="turtAroundTime">
+                                    <mat-option [value]="t.value" *ngFor="let t of Tat">{{t.tat}}</mat-option>
+                                </mat-select>
+                                <mat-error class="f-12">
+                                    This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-3 pr-0">
+                        <img src="/assets/images/svg/people.svg">
+                        <div class="form-group">
+                            <mat-form-field>
+                                <mat-select class="form-control" formControlName="ownerId">
+                                    <mat-option value=2727>Nita Shinde</mat-option>
+                                </mat-select>
+                                <mat-error class="f-12">
+                                    This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-3 pr-0">
+                        <div class="form-group">
                             <mat-icon [matMenuTriggerFor]="menu" class="c-p">more_vert</mat-icon>
                             <mat-menu #menu="matMenu">
-                                <button mat-menu-item>
+                                <button mat-menu-item (click)="toggleEditMode()">
                                     Edit
                                 </button>
                                 <button mat-menu-item>
                                     Delete
                                 </button>
                             </mat-menu>
-                        </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
-                <p class="m-0 roboto text-custom pt-12 pb-44">+ Add sub-task</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 p-0">
+                <p class="m-0 roboto text-custom pt-12 pb-44" (click)="addSubTask(creds)">+ Add sub-task</p>
+                <p class="m-0 roboto text-custom pt-12 pb-44">+ Save sub task</p>
             </div>
         </div>
     </div>
+
 </div>
 <div class="bottom-fixed wrapper-12 w-50">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit">SAVE
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveTaskTemplate()">SAVE
             </button>
         </div>
     </div>

@@ -15,6 +15,8 @@ export class AddClientComponent implements OnInit {
   }
   @Input() set data(data) {
     this.headingData = data;
+    console.log(data);
+    this.tabData = data;
   }
   selected = 0;
   close() {

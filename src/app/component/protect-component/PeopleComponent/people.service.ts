@@ -37,4 +37,22 @@ export class PeopleService {
   editClient(data) {
     return this.http.putEncoded(apiConfig.USER + appConfig.EDIT_CLIENT, data);
   }
+  addEditClientAddress(data) {
+    return this.http.putEncoded(apiConfig.USER + appConfig.ADD_EDIT_CLIENT_ADDRESS, data);
+  }
+  addEditClientBankDetails(data) {
+    return this.http.putEncoded(apiConfig.USER + appConfig.ADD_EDIT_CLIENT_BANK, data);
+  }
+  addEditClientDemat(data) {
+    return this.http.putEncoded(apiConfig.USER + appConfig.ADD_EDIT_CLIENT_DEMAT, data);
+  }
+  addFamilyMember(data) {
+    return this.http.postEncoded(apiConfig.USER + appConfig.ADD_FAMILY_MEMBER, data);
+  }
+  addMultipleFamilyMembers(data) {
+    return this.http.postEncoded(apiConfig.USER + appConfig.ADD_MULTIPLE_FAMILY_MEMBERS, data);
+  }
+  editFamilyMemberDetails(data) {
+    return this.http.putEncoded(apiConfig.USER + appConfig.EDIT_FAMILY_MEMBER_BASIC_DETAILS_MORE_INFO, data);
+  }
 }

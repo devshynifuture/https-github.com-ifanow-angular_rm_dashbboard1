@@ -37,17 +37,17 @@ export class ClientMoreInfoComponent implements OnInit {
     this.moreInfoData = data;
     console.log(data)
   }
-  saveNext() {
+  saveNext(flag) {
     let obj =
     {
       "advisorId": this.moreInfoData.advisorId,
       "emailList": this.moreInfoData.emailList,
-      "displayName": this.moreInfoForm.controls,
-      "bio": this.moreInfoForm.controls,
-      "martialStatusId": this.moreInfoForm.controls,
+      "displayName": this.moreInfoForm.controls.displayName.value,
+      "bio": this.moreInfoForm.controls.bio.value,
+      "martialStatusId": this.moreInfoForm.controls.maritalStatus.value,
       "password": null,
       "clientType": 0,
-      "occupationId": this.moreInfoForm.controls,
+      "occupationId": this.moreInfoForm.controls.occupation.value,
       "id": this.moreInfoData.id,
       "pan": this.moreInfoData.pan,
       "clientId": this.moreInfoData.clientId,
@@ -55,7 +55,7 @@ export class ClientMoreInfoComponent implements OnInit {
       "roleId": 0,
       "genderId": this.moreInfoData.genderId,
       "companyStatus": 0,
-      "aadharCard": this.moreInfoForm.controls,
+      "aadharCard": this.moreInfoForm.controls.adhaarNo.value,
       "dateOfBirth": this.moreInfoData.dateOfBirth,
       "userName": this.moreInfoData.userName,
       "userId": null,
@@ -67,17 +67,70 @@ export class ClientMoreInfoComponent implements OnInit {
       "remarks": null,
       "status": 0
     }
-    this.peopleService.editClient(obj).subscribe(
-      data => {
-        console.log(data);
-        this.tabChange.emit(1);
-        this.close();
-      },
-      err => this.eventService.openSnackBar(err, "Dismiss")
-    )
+    if (this.fieldFlag == 'client') {
+      this.peopleService.editClient(obj).subscribe(
+        data => {
+          console.log(data);
+          (flag == 'Next') ? this.tabChange.emit(1) : this.close();
+        },
+        err => this.eventService.openSnackBar(err, "Dismiss")
+      )
+    }
+    else {
+      this.peopleService.editFamilyMemberDetails(obj).subscribe(
+        data => {
+          (flag == 'Next') ? this.tabChange.emit(1) : this.close();
+        },
+        err => this.eventService.openSnackBar(err, "Dismiss")
+      )
+    }
   }
-  saveClose() {
-    this.close();
+  saveNextFamilyMember(flag) {
+    let obj =
+    {
+      "isKycCompliant": 0,
+      "taxStatusId": 0,
+      "emailList": this.moreInfoData.emailList,
+      "displayName": this.moreInfoForm.controls.displayName.value,
+      "guardianId": 0,
+      "martialStatusId": this.moreInfoForm.controls.maritalStatus.value,
+      "isActive": 0,
+      "addressModelList": null,
+      "occupationId": this.moreInfoForm.controls.occupation.value,
+      "id": 0,
+      "dematList": null,
+      "pan": this.moreInfoData.pan,
+      "familyMemberType": 0,
+      "clientId": this.moreInfoData.clientId,
+      "genderId": this.moreInfoData.genderId,
+      "dateOfBirth": this.moreInfoData.dateOfBirth,
+      "bankDetailList": null,
+      "relationshipId": 0,
+      "mobileList": this.moreInfoData.mobileList,
+      "anniversaryDate": null,
+      "aadhaarNumber": this.moreInfoForm.controls.adhaarNo.value,
+      "name": this.moreInfoData.name,
+      "bioRemarkId": 0,
+      "bioRemark": {
+        "bio": this.moreInfoForm.controls.bio.value,
+        "remark": null,
+        "id": 0
+      },
+      "guardianData": {
+        "mobileList": null,
+        "aadhaarNumber": null,
+        "anniversaryDate": null,
+        "occupationId": 0,
+        "emailList": null,
+        "name": null,
+        "genderId": 0,
+        "martialStatusId": 0,
+        "id": 0,
+        "pan": null,
+        "relationshipId": 0,
+        "birthDate": null
+      }
+    }
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });

@@ -19,13 +19,14 @@ export class PlanKeyParametersComponent implements OnInit {
   lifeExpectancy: any;
   keyParameter: any;
   advisorId: any;
-
+  isLoading = false
   constructor(private orgSetting : OrgSettingServiceService,private eventService :EventService, private fb : FormBuilder) { }
 
   ngOnInit() {
     this.getKeyParameter()
     this.getdataForm('')
     this.advisorId = AuthService.getAdvisorId()
+    this.isLoading = false
   }
 
 //   lifeExpectancy: (11) [50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
@@ -51,6 +52,7 @@ getFormControl(): any {
   return this.keyParameter.controls;
 }
   getKeyParameter(){
+    this.isLoading = true
     let obj = {
       advisorId: 2808
     }
@@ -61,12 +63,17 @@ getFormControl(): any {
   }
   getKeyAndParametersRes(data){
     console.log('key parameters == ', data)
-    this.allParameters = data
+    if(data){
+      this.isLoading = false
+      this.allParameters = data
     this.lifeExpectancy = data.lifeExpectancy
     this.retirementAge=data.retirementAge
     this.savingType = data.savingType
     this.savingStatus=data.savingStatus
     this.InsurancePlanGrowthRate=data.InsurancePlanGrowthRate
+    }else{
+      this.allParameters = []
+    }
   }
   updateKeyParameter(value,id){
     console.log('option',value)

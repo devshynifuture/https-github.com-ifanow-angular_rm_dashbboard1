@@ -12,18 +12,18 @@ import { EventService } from 'src/app/Data-service/event.service';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnInit{
-  advisorId:any;
-  userList:any[];
-  roles:any[];
+export class UsersComponent implements OnInit {
+  advisorId: any;
+  userList: any[];
+  roles: any[];
 
   constructor(
     private subInjectService: SubscriptionInject,
     private settingsService: SettingsService,
     private eventService: EventService,
-  ) { 
+  ) {
     this.advisorId = AuthService.getAdvisorId();
-    
+
     this.userList = [
       {
         name: 'Sagar',
@@ -40,21 +40,21 @@ export class UsersComponent implements OnInit{
     ]
   }
 
-  ngOnInit(){
+  ngOnInit() {
     // this.loadRoles();
     // this.loadUsers();
   }
 
-  loadUsers(){
+  loadUsers() {
     const dataObj = {
       advisorId: this.advisorId
     }
-    this.settingsService.getTeamMembers(dataObj).subscribe((res)=>{
+    this.settingsService.getTeamMembers(dataObj).subscribe((res) => {
       this.userList = res;
     });
   }
 
-  loadRoles(){
+  loadRoles() {
     const dataObj = {
       advisorId: this.advisorId
     }
@@ -62,9 +62,9 @@ export class UsersComponent implements OnInit{
     //   this.roles = res;
     // });
   }
-  
+
   newTeamMember() {
-    if(this.roles && this.roles.length > 0) {
+    if (this.roles && this.roles.length > 0) {
       const fragmentData = {
         flag: 'add-ARI-RIA-details',
         data: this.roles,
@@ -76,7 +76,7 @@ export class UsersComponent implements OnInit{
         sideBarData => {
           if (UtilService.isDialogClose(sideBarData)) {
             if (UtilService.isRefreshRequired(sideBarData)) {
-  
+
             }
           }
         }

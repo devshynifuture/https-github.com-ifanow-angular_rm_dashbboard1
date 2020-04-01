@@ -10,9 +10,8 @@
                     <mat-form-field>
                         <mat-select [(ngModel)]="invTypeCategory" (selectionChange)="changeInvestorType($event)"
                             class="form-control">
-                            <mat-option value="1">Individual</mat-option>
-                            <mat-option value="2">Minor</mat-option>
-                            <mat-option value="3">Non Individual</mat-option>
+                            <mat-option *ngFor="let singleCategory of categoryList" value="singleCategory.value">
+                                {{singleCategory.name}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -24,6 +23,7 @@
                         <mat-select (selectionChange)="changeTaxStatus($event)" [(ngModel)]="invTaxStatus"
                             class="form-control">
                             <mat-option value="1">Resident</mat-option>
+                            <mat-option value="2">Non-resident</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -43,6 +43,7 @@
                         <input autocomplete="off" #fullName appInputValueValidation
                             [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" formControlName="fullName"
                             matInput placeholder="Enter Name" class="form-control">
+                        <mat-error>This field is required</mat-error>
                         <mat-hint align="end">{{fullName.value.length}}/50</mat-hint>
                     </mat-form-field>
                 </div>
@@ -64,42 +65,7 @@
                 </div>
             </div>
         </div>
-        <div *ngFor="let number of getMobileNumList.controls;index as i" [formGroup]="number" class="row pt-44">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-12">Mobile number</h5>
-            </div>
-
-            <div class="col-md-2 pl-0">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select formControlName="code" class="form-control">
-                            <mat-option selected value="+91">+91</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-            </div>
-
-            <div class="col-md-4 p-0">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input #num appInputValueValidation formControlName="number"
-                            [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" autocomplete="off"
-                            formControlName="number" matInput class="form-control">
-                        <mat-hint>Optional</mat-hint>
-                        <mat-hint align="end">{{num.value.length}}/10</mat-hint>
-                    </mat-form-field>
-                </div>
-            </div>
-
-            <div class="col-md-1 d-flex align-items-center">
-                <i (click)="addNumber()" class="material-icons c-p f-20">
-                    add
-                </i>
-                <i (click)="removeNumber(i)" class="material-icons c-p f-20">
-                    remove
-                </i>
-            </div>
-        </div>
+        <app-add-number [flag]="mobileNumberFlag" (numberArray)="getNumberDetails($event)"></app-add-number>
         <div class="row pt-44">
             <div class="col-md-4 text-right">
                 <h5 class="m-0 pt-12">PAN</h5>
@@ -129,8 +95,11 @@
             <div class="col-md-6 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
-                            formControlName="username" matInput class="form-control">
+                        <input autocomplete="off" #username appInputValueValidation
+                            [inputValidator]="validatorType.TEXT_ONLY" formControlName="username" matInput
+                            class="form-control">
+                        <mat-hint align="end">{{username.value.length}}/ 50</mat-hint>
+                        <mat-error>This field is required</mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -144,7 +113,8 @@
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
                         <input [matDatepicker]="dobAsPerRecord" (click)="dobAsPerRecord.open()"
-                            class="form-control br-0 b-0" formControlName="dobAsPerRecord" matInput readonly>
+                            class="form-control br-0 b-0" [max]="date" formControlName="dobAsPerRecord" matInput
+                            readonly>
                         <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord"></mat-datepicker-toggle>
                         <mat-datepicker #dobAsPerRecord></mat-datepicker>
                         <mat-error class="f-12">This field is required
@@ -156,8 +126,8 @@
                 <p class="m-0 roboto">Actual</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input [matDatepicker]="dobActual" (click)="dobActual.open()" class="form-control br-0 b-0"
-                            formControlName="dobActual" matInput readonly>
+                        <input [matDatepicker]="dobActual" [max]="date" (click)="dobActual.open()"
+                            class="form-control br-0 b-0" formControlName="dobActual" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="dobActual"></mat-datepicker-toggle>
                         <mat-datepicker #dobActual></mat-datepicker>
                         <mat-error class="f-12">This field is required
@@ -195,6 +165,8 @@
                         <mat-select formControlName="clientOwner" class="form-control">
                             <mat-option value="1">Option</mat-option>
                         </mat-select>
+                        <mat-error class="f-12">This field is required
+                        </mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -270,13 +242,15 @@
                         <mat-select formControlName="role" class="form-control">
                             <mat-option value="1">Option</mat-option>
                         </mat-select>
+                        <mat-error class="f-12">This field is required
+                        </mat-error>
                     </mat-form-field>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div *ngIf="invTypeCategory=='2'" [formGroup]="minorForm" class="minorBox">
+<div *ngIf="invTypeCategory=='2' && fieldFlag=='familyMember'" [formGroup]="minorForm" class="minorBox">
     <div class=" row pt-20">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-20">Minor’s full name</h5>
@@ -450,7 +424,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select class="form-control">
-                        <mat-option value="Resident">+91</mat-option>
+                        <mat-option value="+91">+91</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -548,8 +522,7 @@
 
 
 </div>
-
-<div *ngIf="invTypeCategory=='3'" [formGroup]="nonIndividualForm" class="non-individualBox">
+<div *ngIf="invTypeCategory=='2' && fieldFlag=='client'" [formGroup]="nonIndividualForm" class="non-individualBox">
     <div class="row pt-40">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-12">Company name</h5>
@@ -670,7 +643,6 @@
                 <mat-form-field>
                     <input matInput #cOccupation formControlName="comOccupation" class="form-control">
                     <mat-hint>Optional</mat-hint>
-                    <!-- <mat-hint align="end">{{comOccupation.value.length}}/ 10</mat-hint>prod build -->
                 </mat-form-field>
             </div>
         </div>
@@ -687,9 +659,9 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput formControlName="username" class="form-control">
+                    <input matInput #username formControlName="username" class="form-control">
                     <mat-hint>Optional</mat-hint>
-
+                    <mat-hint align="end">{{username.value.length}}/ 50</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -735,10 +707,18 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right">
-            <button mat-raised-button (click)="saveNext()" class="br-0 text-inherit mr-12">SAVE & NEXT
+        <div *ngIf="fieldFlag=='client'" class="col-md-8 right text-right">
+            <button mat-raised-button (click)="saveNextClient('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
             </button>
-            <button mat-stroked-button (click)="saveClose()" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
+            <button mat-stroked-button (click)="saveNextClient('close')" class="btn-bottom br-0 text-inherit">SAVE &
+                CLOSE
+            </button>
+        </div>
+        <div *ngIf="fieldFlag=='familyMember'" class="col-md-8 right text-right">
+            <button mat-raised-button (click)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
+            </button>
+            <button mat-stroked-button (click)="saveNextFamilyMember('close')" class="btn-bottom br-0 text-inherit">SAVE
+                & CLOSE
             </button>
         </div>
     </div>

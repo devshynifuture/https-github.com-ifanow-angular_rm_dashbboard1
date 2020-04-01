@@ -10,16 +10,16 @@ import { AuthService } from 'src/app/auth-service/authService';
 export class SipAmcWiseComponent implements OnInit {
   showLoader=true;
   clientId: any;
+  advisorId: any;
+  amcList: any;
   constructor(private backoffice:BackOfficeService,public sip:SipComponent) { }
   teamMemberId=2929;
 
   ngOnInit() {
     this.showLoader = false;
+    this.advisorId=AuthService.getAdvisorId();
     this.clientId=AuthService.getClientId();
     this.amcGet();
-    this.amcSchemeGet();
-    this.schemeInvestorGet();
-    this.investorApplicantGet();
   }
 
   aumReport()
@@ -27,17 +27,97 @@ export class SipAmcWiseComponent implements OnInit {
    this.sip.sipComponent=true;
   }  
   amcGet(){
-    this.backoffice.GET_SIP_AMC(this.teamMemberId).subscribe(
+    const obj={
+      advisorId:this.advisorId,
+      arnRiaDetailsId:-1,
+      parentId:-1
+    }
+    this.backoffice.GET_SIP_AMC(obj).subscribe(
       data =>{
+        this.amcList=data;
+        this.amcList.forEach(o => {
+          o.showCategory = true;
+        });
         console.log(data);
       }
     )
   }
+  showSubTableList(index, category,schemeData) {
+    schemeData.showCategory=!schemeData.showCategory
+    schemeData.schemeList=[]
+    if(schemeData.showCategory==false){
+      const obj={
+        advisorId:this.advisorId,
+        amcId:schemeData.amcId,
+        arnRiaDetailsId:-1,
+        parentId:-1,
+        sipAmount:schemeData.sipAmount,
+      }
+      this.backoffice.GET_SIP_AMC_SCHEME(obj).subscribe(
+        data =>{
+          if(data){
+            data[0].showSubCategory=true
+            schemeData.schemeList=data
+            console.log(data)
+          }
+        }
+      )
+    }
+  }
+  showSchemeName(index, subcashowSubcat ,investorData) {
+    investorData.showSubCategory=!investorData.showSubCategory
+    investorData.investorList=[];
+    if(investorData.showSubCategory==false){
+      const obj={
+        advisorId:this.advisorId,
+        arnRiaDetailsId:-1,
+        parentId:-1,
+        schemeId:investorData.mutualFundSchemeMasterId,
+        sipAmount:investorData.sipAmount,
+      }
+      this.backoffice.GET_SIP_INVERSTORS(obj).subscribe(
+        data =>{
+          if(data){
+            data[0].showInvestor=true;
+            data[0].mutualFundSchemeMasterId=investorData.mutualFundSchemeMasterId;
+            investorData.investorList=data;
+            console.log(data)
+          }
+        }
+      )
+    }
+  }
+  showApplicantName(index, subcashowSubcat ,applicantData) {
+    applicantData.showInvestor=!applicantData.showInvestor
+    applicantData.applicantList=[];
+    if(applicantData.showInvestor==false){
+      const obj={
+        advisorId:this.advisorId,
+        arnRiaDetailsId:-1,
+        clientId:applicantData.clientId,
+        parentId:-1,
+        schemeId:applicantData.mutualFundSchemeMasterId,
+        sipAmount:applicantData.sipAmount
+      }
+      this.backoffice.Sip_Investors_Applicant_Get(obj).subscribe(
+        data =>{
+          if(data){
+            applicantData.applicantList=data;
+            console.log(data)
+          }
+        }
+      )
+
+
+    }
+  }
   schemeInvestorGet(){
     const obj={
-      schemeCode:'abc-123',
+      advisorId:this.advisorId,
+      arnRiaDetailsId:-1,
+      parentId:-1,
+      schemeId:122,
       sipAmount:5000,
-      teamMemberId:this.teamMemberId
     }
     this.backoffice.GET_SIP_INVERSTORS(obj).subscribe(
       data =>{
@@ -47,9 +127,11 @@ export class SipAmcWiseComponent implements OnInit {
   }
   amcSchemeGet(){
     const obj={
-      amcName:'Aditya birla',
+      advisorId:this.advisorId,
+      amcId:123,
+      arnRiaDetailsId:-1,
+      parentId:-1,
       sipAmount:5000,
-      teamMemberId:this.teamMemberId
     }
     this.backoffice.GET_SIP_AMC_SCHEME(obj).subscribe(
       data =>{
@@ -59,10 +141,12 @@ export class SipAmcWiseComponent implements OnInit {
   }
   investorApplicantGet(){
     const obj={
+      advisorId:this.advisorId,
+      arnRiaDetailsId:-1,
       clientId:this.clientId,
-      schemeCode:'abc-123',
-      sipAmount:5000,
-      teamMemberId:this.teamMemberId
+      parentId:-1,
+      schemeId:123,
+      sipAmount:2000
     }
     this.backoffice.Sip_Investors_Applicant_Get(obj).subscribe(
       data =>{
