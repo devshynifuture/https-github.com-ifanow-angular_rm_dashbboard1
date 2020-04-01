@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, Input } from '@angular/core';
 import { SettingsService } from '../../settings.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
@@ -38,8 +38,19 @@ export class AddTaskTemplateComponent implements OnInit {
   list: any;
   hideSubcategory: boolean = false;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  inputData: any;
 
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    console.log('This is Input data ', data)
+    
+      this.getdataForm(data);
+  }
 
+  get data() {
+    return this.inputData;
+  }
   constructor(private subInjectService: SubscriptionInject,
     private utilService: UtilService,
     private orgSetting: OrgSettingServiceService,
@@ -52,12 +63,12 @@ export class AddTaskTemplateComponent implements OnInit {
     });
   }
   ngOnInit() {
-    this.getdataForm('')
+    this.getGlobalTaskData()
     this.advisorId = AuthService.getAdvisorId()
     this.category = 'asset'
     this.editMode = false;
     this.taskTemplate.controls.category.setValue(1)
-    this.getGlobalTaskData()
+    
   }
   getGlobalTaskData() {
     this.orgSetting.getGlobalDataTask().subscribe(
@@ -81,6 +92,8 @@ export class AddTaskTemplateComponent implements OnInit {
     this.listOfSub = value.taskTempSubcattoSubCategories
     if (value.taskTempSubcattoSubCategories.length == 0) {
       this.hideSubcategory = true
+    }else{
+      this.hideSubcategory = false
     }
   }
   getSelectedCategory(value, category) {
@@ -93,16 +106,22 @@ export class AddTaskTemplateComponent implements OnInit {
     } else {
       this.list = this.insuranceSubCategoryList
     }
+    this.getdataForm(this.inputData)
   }
   getdataForm(data) {
+    if(!data){
+      data = {}
+    }
     this.taskTemplate = this.fb.group({
-      category: [(!data) ? '' : (data.category), [Validators.required]],
-      subCategory: [(!data) ? '' : data.subCategory, [Validators.required]],
-      taskTemplate: [(!data) ? '' : data.taskTemplate, [Validators.required]],
-      defaultAssign: [(!data) ? '' : data.defaultAssign],
+      category: [(!data) ? '' : (data.categoryId) + "", [Validators.required]],
+      subCategory: [(!data) ? '' : (data.subcategoryId) + "", [Validators.required]],
+      subSubCategory :[(!data) ? '' : (data.subSubCategoryId) + "", [Validators.required]],
+      taskTemplate: [(!data) ? '' : data.taskDescription, [Validators.required]],
+      adviceType: [(!data) ? '' : (data.adviceTypeId) + "", [Validators.required]],
+      defaultAssign: [(!data) ? '' : data.ownerName],
       turnaroundTime: [(!data) ? '' : data.turnaroundTime],
       subTaskList: this.fb.array([this.fb.group({
-        taskNumber: [null, [Validators.required]],
+        taskNumber: [1, [Validators.required]],
         description: [null, [Validators.required]],
         turtAroundTime: [null, [Validators.required]],
         ownerId: [null, [Validators.required]]
@@ -111,7 +130,7 @@ export class AddTaskTemplateComponent implements OnInit {
     if (data.subTaskList != undefined) {
       data.subTaskList.forEach(element => {
         this.taskTemplate.controls.subTaskList.push(this.fb.group({
-          taskNumber: [(element.taskNumber) + "", [Validators.required]],
+          taskNumber: [(1) + "", [Validators.required]],
           description: [(element.description + ""), Validators.required],
           turtAroundTime: [(element.turtAroundTime), Validators.required],
           ownerId: [element.ownerId, [Validators.required]]
@@ -121,7 +140,7 @@ export class AddTaskTemplateComponent implements OnInit {
   }
   addSubTask(value) {
     this.subTask.push(this.fb.group({
-      taskNumber: [null, [Validators.required]],
+      taskNumber: [1, [Validators.required]],
       description: [null, [Validators.required]],
       turtAroundTime: [null, [Validators.required]],
       ownerId: [null, [Validators.required]],
@@ -133,7 +152,7 @@ export class AddTaskTemplateComponent implements OnInit {
     } else{
       let obj = {
         TaskTemplateId: 1,
-        taskNumber: value.controls.taskNumber.value,
+        taskNumber: 1,
         description: value.controls.description.value,
         turtAroundTime: value.controls.turtAroundTime.value,
         ownerId: 2727
@@ -168,11 +187,12 @@ export class AddTaskTemplateComponent implements OnInit {
   }
   saveTaskTemplate() {
     let obj = {
-
-      advisorId: this.advisorId,
+      advisorId: 414,
       categoryId: 1,
       subcategoryId: 2,
       linkedTemplateId: 2,
+      adviceTypeId:1,
+      subSubCategoryId:13,
       taskDescription: this.taskTemplate.controls.taskTemplate.value,
       assignedTo: 2727,
       turnAroundTime: this.taskTemplate.controls.turnaroundTime.value,

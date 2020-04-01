@@ -18,13 +18,15 @@ import { SipSchemeWiseComponent } from './sip/sip-scheme-wise/sip-scheme-wise.co
 import { SipAmcWiseComponent } from './sip/sip-amc-wise/sip-amc-wise.component';
 import { SipClientWiseComponent } from './sip/sip-client-wise/sip-client-wise.component';
 import { SipApplicantWiseComponent } from './sip/sip-applicant-wise/sip-applicant-wise.component';
+import { AllSipComponent } from './sip/all-sip/all-sip.component';
 
 
 @NgModule({
   declarations: [MutualFundsComponent, AssetAllocationComponent, AumComponent, AmcWiseComponent, ApplicantWiseComponent, CategoryWiseComponent, ClientWiseComponent, FillterSearchComponent, SipComponent, FoliosComponent, SipAmcWiseComponent,
     SipSchemeWiseComponent,
     SipClientWiseComponent,
-    SipApplicantWiseComponent,],
+    SipApplicantWiseComponent,
+    AllSipComponent,],
   imports: [
     CommonModule,
     MutualFundsRoutingModule,

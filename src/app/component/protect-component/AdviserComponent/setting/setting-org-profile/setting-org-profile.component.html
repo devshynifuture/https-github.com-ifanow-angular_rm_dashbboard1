@@ -1,9 +1,9 @@
 <div class="row pt-130">
     <div class="col-md-12 text-right">
-        <button mat-stroked-button [ngClass]="orgProfile == false ? 'text-primary' : ''" (click)="openOrg(false)">
+        <button mat-button [ngClass]="orgProfile == false ? 'active-btn'  : ''" (click)="openOrg(false)">
             Personal profile</button>
-        <button mat-stroked-button [ngClass]="orgProfile == true ? 'text-primary' : ''"
-            (click)="openOrg(true)">Organization profile</button>
+        <button mat-button [ngClass]="orgProfile == true ? 'active-btn'  : ''" (click)="openOrg(true)">Organization
+            profile</button>
     </div>
 </div>
 <div class="row pt-28" *ngIf="orgProfile == false">
@@ -143,8 +143,7 @@
                     <div class="col-md-6 bl-1 pb-28">
                         <p class="f-12 m-0 text-custom pt-28 pb-16"> WEB APP LOGO</p>
                         <img [src]="orgDetails.logoUrl" class="w-65">
-                        <p class="m-0 text-black pt-16">This logo is visible on top left of web login, About section in
-                            mobile app etc.</p>
+                        <p class="m-0 text-black pt-16">This logo is visible on top left of web login, About section in mobile app etc.</p>
                         <p class="m-0 text-black pt-4 bb-1 pb-16">Image dimension: 50px x 200px</p>
                         <p class="f-12 m-0 text-custom pt-28 pb-16"> LOGO FOR REPORTS</p>
 
@@ -153,8 +152,7 @@
                                 <img [src]="orgDetails.reportLogoUrl" class="w-100">
                             </div>
                             <div class="col-md-8 pl-0">
-                                <p class="m-0 text-black pt-16">This logo is visible on various reports (MF, Financial
-                                    Plan etc.). If left blank, we will use the Web App Logo to show in reports.</p>
+                                <p class="m-0 text-black pt-16">This logo is visible on various reports (MF, Financial Plan etc.). If left blank, we will use the Web App Logo to show in reports.</p>
                                 <p class="m-0 text-black pt-16">Image dimension: 200px x 200px</p>
                             </div>
                         </div>
