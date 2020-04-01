@@ -3,25 +3,33 @@
         <div class="col-lg-6">
             <h4 class="mt-20">
                 Folio Query
+                <span class="ml-20">
+                    <button mat-icon-button (click)="toggleFolioDetailList()">
+                        <mat-icon>
+                            arrow_back
+                        </mat-icon>
+                    </button>
+                </span>
             </h4>
         </div>
         <div class="col-lg-6 mt-20" *ngIf="isSearchDone">
             <div class="row">
                 <div class="col-lg-4 pr-0">
-                    <mat-select>
+                    <mat-select #optionVal>
                         <mat-option None>
                             Select Options
                         </mat-option>
-                        <mat-option [value]="option" *ngFor="let option of optionList">
-                            {{ option }}
+                        <mat-option [value]="option.value" *ngFor="let option of optionList">
+                            {{ option.name }}
                         </mat-option>
                     </mat-select>
                 </div>
                 <div class="col-lg-6">
-                    <input type="text" class="form-control" matInput />
+                    <input type="text" class="form-control" matInput #searchInputValue />
                 </div>
                 <div class="col-lg-2 pl-0">
-                    <button mat-button class="bg-grey">
+                    <button mat-button class="bg-grey"
+                        (click)="search(optionVal.value, searchInputValue.value, 'navInputSearch')">
                         Search
                     </button>
                 </div>
@@ -43,7 +51,7 @@
                                 placeholder="Add a folio and hit search button">
                         </div>
                         <div class="col-lg-12">
-                            <button mat-button class="bg-grey" (click)="search(4, folioNumRef.value)">
+                            <button mat-button class="bg-grey" (click)="search(4, folioNumRef.value, 'column')">
                                 Search
                             </button>
                         </div>
@@ -58,11 +66,38 @@
                             Search by Group head
                         </div>
                         <div class="col-lg-12 form-group">
-                            <input type="text" class="form-control mt-12" matInput #groupHeadRef
-                                placeholder="Start typing to get group head names">
+                            <!-- <input type="text" [formControl]="folioQueryGroupHead" class="form-control mt-12" matInput
+                                #groupHeadRef placeholder="Start typing to get group head names"> -->
+                            <mat-form-field>
+                                <input matInput placeholder="Search" aria-label="State" [matAutocomplete]="auto1"
+                                    #groupHeadRef [formControl]="folioQueryGroupHead">
+                                <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn">
+                                    <mat-option *ngIf="isLoadingForDropDownGroupHead" class="is-loading">Loading...
+                                    </mat-option>
+                                    <ng-container *ngIf="!isLoadingForDropDownGroupHead">
+                                        <mat-option *ngFor="let groupHead of arrayOfGroupHeadName"
+                                            (click)="groupHeadRef.value = groupHead.name" [value]="groupHead.name"
+                                            [matTooltip]="groupHead.name" matTooltipPosition="after">
+                                            <span>
+                                                <b>
+                                                    {{groupHead.name}}
+                                                </b>
+                                            </span>
+                                        </mat-option>
+                                    </ng-container>
+                                </mat-autocomplete>
+
+                            </mat-form-field>
+                            <br>
+                            <ng-container *ngIf="arrayGroupHeadNameError">
+                                <span class="f-12">
+                                    {{errorMsg}}
+                                </span>
+                            </ng-container>
+
                         </div>
                         <div class="col-lg-12">
-                            <button mat-button class="bg-grey" (click)="search(2, groupHeadRef.value)">
+                            <button mat-button class="bg-grey" (click)="search(2, groupHeadRef.value, 'column')">
                                 Search
                             </button>
                         </div>
@@ -82,7 +117,7 @@
                                 placeholder="Add a PAN and hit search button">
                         </div>
                         <div class="col-lg-12">
-                            <button mat-button class="bg-grey" (click)="search(3, panRef.value)">
+                            <button mat-button class="bg-grey" (click)="search(3, panRef.value, 'column')">
                                 Search
                             </button>
                         </div>
@@ -96,11 +131,34 @@
                             Search by investor
                         </div>
                         <div class="col-lg-12 form-group">
-                            <input type="text" matInput #investorRef class="form-control mt-12"
-                                placeholder="Start typing to see investor names">
+                            <!-- <input type="text" matInput #investorRef [formControl]="folioQueryInvestor"
+                                class="form-control mt-12" placeholder="Start typing to see investor names"> -->
+
+                            <mat-form-field>
+                                <input matInput placeholder="Search" aria-label="State" [matAutocomplete]="auto2"
+                                    #investorRef [formControl]="folioQueryInvestor">
+                                <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn">
+                                    <mat-option *ngIf="isLoadingForDropDownInvestor" class="is-loading">Loading...
+                                    </mat-option>
+                                    <ng-container *ngIf="!isLoadingForDropDownInvestor">
+                                        <mat-option *ngFor="let investor of arrayOfInvestorName"
+                                            (click)="investorRef.value = investor.name" [value]="investor.name"
+                                            [matTooltip]="investor.name" matTooltipPosition="after">
+                                            <span><b>{{investor.name}}</b> </span>
+                                        </mat-option>
+                                    </ng-container>
+                                </mat-autocomplete>
+
+                            </mat-form-field>
+                            <br>
+                            <ng-container *ngIf="arrayInvestorNameError">
+                                <span class="f-12">
+                                    {{errorMsg}}
+                                </span>
+                            </ng-container>
                         </div>
                         <div class="col-lg-12">
-                            <button mat-button class="bg-grey" (click)="search(1, investorRef.value)">
+                            <button mat-button class="bg-grey" (click)="search(1, investorRef.value, 'column')">
                                 Search
                             </button>
                         </div>
@@ -155,7 +213,8 @@
                 </ng-container>
                 <ng-container matColumnDef="transactions">
                     <th mat-header-cell *matHeaderCellDef> Transactions </th>
-                    <td mat-cell *matCellDef="let element">
+                    <td mat-cell *matCellDef="let element; index as i"
+                        (click)="openReconDetailView('all-folios', element)">
                         <div class="bar">
                             <button mat-button color="primary" class="btn-xs h-22">
                                 view
@@ -178,7 +237,7 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-            <div class="col-lg-12 p-0" *ngIf="dataSource.data === undefined">
+            <div class="col-lg-12 p-0" *ngIf="dataSource.data === null">
                 <h4 class="d-flex justify-content-center b-a p-44">
                     No Data Found
                 </h4>

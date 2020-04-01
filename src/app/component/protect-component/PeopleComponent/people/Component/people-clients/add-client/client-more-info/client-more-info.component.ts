@@ -68,21 +68,34 @@ export class ClientMoreInfoComponent implements OnInit {
       "status": 0
     }
     if (this.fieldFlag == 'client') {
-      this.peopleService.editClient(obj).subscribe(
-        data => {
-          console.log(data);
-          (flag == 'Next') ? this.tabChange.emit(1) : this.close();
-        },
-        err => this.eventService.openSnackBar(err, "Dismiss")
-      )
+
+      // commented code which are giving errors ======>>>
+
+
+      // this.peopleService.editClient(obj).subscribe(
+      //   data => {
+      //     console.log(data);
+      //     (flag == 'Next') ? this.tabChange.emit(1) : this.close();
+      //   },
+      //   err => this.eventService.openSnackBar(err, "Dismiss")
+      // )
+
+      // commented code closed which are giving errors ======>>>
+
     }
     else {
-      this.peopleService.editFamilyMemberDetails(obj).subscribe(
-        data => {
-          (flag == 'Next') ? this.tabChange.emit(1) : this.close();
-        },
-        err => this.eventService.openSnackBar(err, "Dismiss")
-      )
+
+      // commented code which are giving errors ======>>>
+
+      // this.peopleService.editFamilyMemberDetails(obj).subscribe(
+      //   data => {
+      //     (flag == 'Next') ? this.tabChange.emit(1) : this.close();
+      //   },
+      //   err => this.eventService.openSnackBar(err, "Dismiss")
+      // )
+
+      // commented code closed which are giving errors ======>>>
+
     }
   }
   saveNextFamilyMember(flag) {

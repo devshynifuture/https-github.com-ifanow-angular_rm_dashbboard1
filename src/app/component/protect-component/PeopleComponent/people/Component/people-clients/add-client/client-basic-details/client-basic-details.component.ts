@@ -181,21 +181,32 @@ export class ClientBasicDetailsComponent implements OnInit {
         "status": 0
       }
       if (this.basicDetailsData == null) {
-        this.peopleService.addClient(obj).subscribe(
-          data => {
-            console.log(data);
-            (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
-          },
-          err => this.eventService.openSnackBar(err, "Dismiss")
-        )
+
+        // commented code which are giving errors ======>>>
+
+        // this.peopleService.addClient(obj).subscribe(
+        //   data => {
+        //     console.log(data);
+        //     (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
+        //   },
+        //   err => this.eventService.openSnackBar(err, "Dismiss")
+        // )
+
+        // commented code closed which are giving errors ======>>>
+
       }
       else {
-        this.peopleService.editClient(obj).subscribe(
-          data => {
-            console.log(data);
-          },
-          err => this.eventService.openSnackBar(err, "Dismiss")
-        )
+        // commented code which are giving errors ======>>>
+
+        // this.peopleService.editClient(obj).subscribe(
+        //   data => {
+        //     console.log(data);
+        //   },
+        //   err => this.eventService.openSnackBar(err, "Dismiss")
+        // )
+
+        // commented code closed which are giving errors ======>>>
+
       }
     }
   }
@@ -289,12 +300,18 @@ export class ClientBasicDetailsComponent implements OnInit {
           "defaultFlag": 1
         }
       }
-      this.peopleService.editFamilyMemberDetails(obj).subscribe(
-        data => {
-          (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
-        },
-        err => this.eventService.openSnackBar(err, "Dismiss")
-      )
+
+      // commented code which are giving errors ======>>>
+
+      // this.peopleService.editFamilyMemberDetails(obj).subscribe(
+      //   data => {
+      //     (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
+      //   },
+      //   err => this.eventService.openSnackBar(err, "Dismiss")
+      // )
+
+      // commented code closed which are giving errors ======>>>
+
     }
   }
   close() {

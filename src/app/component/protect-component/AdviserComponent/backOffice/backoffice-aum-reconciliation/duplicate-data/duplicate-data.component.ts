@@ -23,7 +23,7 @@ export class DuplicateDataComponent implements OnInit {
 
   advisorId = AuthService.getAdvisorId();
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
 
   displayedColumns: string[] = ['arnRia', 'name', 'folioNumber', 'unitsIfanow', 'unitsRta', 'difference', 'transactions'];
   dataSource;
@@ -32,8 +32,6 @@ export class DuplicateDataComponent implements OnInit {
   duplicateDataList: DuplicateI[] = [];
   ngOnInit() {
     this.dataSource = new MatTableDataSource<DuplicateI>(ELEMENT_DATA);
-    this.dataSource.sort = this.sort;
-
     this.duplicateFolioData();
   }
 
@@ -94,6 +92,7 @@ export class DuplicateDataComponent implements OnInit {
           this.isLoading = false;
         } else {
           this.dataSource.data = null;
+
         }
       })
   }
