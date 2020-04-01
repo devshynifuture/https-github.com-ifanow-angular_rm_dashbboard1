@@ -103,6 +103,9 @@ export class AddCamsFundsnetComponent implements OnInit {
     
       // add action
       if(this.is_add) {
+        jsonObj.rtaCamsFundNetSecurityQuestionsList.forEach(element => {
+          element.questionId = parseInt(element.questionId);
+        });
         this.settingService.addMFRTA(jsonObj).subscribe((res)=> {
           this.eventService.openSnackBar("CAMS Fundsnet Added successfully");
           this.Close(true);

@@ -11,7 +11,7 @@
     </div>
 </div>
 
-<div class="pl-20 pr-20 pb-48">
+<div class="pl-20 pr-20 pb-48" *ngIf="canShowData">
     <div class="row pt-40">
         <div class="col-md-12 p-0 mat-tab-class">
             <mat-tab-group anmimationDuration="0ms" id="ui-add-client">
@@ -22,7 +22,7 @@
                                 Investor Name
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                Akanksha Tanwar
+                                {{ folioDetailData.invName }}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -30,7 +30,7 @@
                                 Investor PAN
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                AZINudi029380249340
+                                {{ folioDetailData.panNumber  }}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -38,7 +38,7 @@
                                 Mode of Holding
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                Single
+                                {{ folioDetailData.modeOfHold === 'SI'? "Single": '' }}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -46,7 +46,7 @@
                                 Scheme Name
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                DSP tax saved Fund- Regular plan - Growth
+                                {{ folioDetailData.schemeName }}
                             </div>
                         </div>
                     </div>
@@ -116,7 +116,7 @@
                                 Bank Name
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                HDFC
+                                {{ folioDetailData.bankName }}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -124,7 +124,7 @@
                                 Branch
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                Belapur Road
+                                {{ folioDetailData.branchName }}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -132,7 +132,7 @@
                                 Account Type
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                Savings
+                                {{ folioDetailData.accountType }}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -140,7 +140,7 @@
                                 Account Number
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                289473849873948
+                                {{ folioDetailData.accountNumber }}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -148,7 +148,7 @@
                                 IFSC Code
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                HDFC73849873948
+                                {{ folioDetailData.ifscCode }}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -156,7 +156,7 @@
                                 Bank City
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                Thane
+                                {{ folioDetailData.bankCity }}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -164,67 +164,27 @@
                                 Bank Pin Code
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                N.A.
+                                {{ folioDetailData.bankPin }}
                             </div>
                         </div>
                     </div>
                 </mat-tab>
-                <mat-tab label="Nominee Details">
-                    <div>
+                <mat-tab label="Nominee Details" *ngIf="folioNomineesPresent">
+                    <div *ngFor="let item of folioDetailData.nominees; index as i">
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
-                                Bank Name
+                                {{ i+1 }} Name
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                HDFC
+                                {{ item.name }}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
-                                Branch
+                                {{i+1}} Percentage Allocation
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                Belapur Road
-                            </div>
-                        </div>
-                        <div class="row bb p-8 b-l br">
-                            <div class="col-md-8 text-left f-14 roboto p-0">
-                                Account Type
-                            </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0">
-                                Savings
-                            </div>
-                        </div>
-                        <div class="row bb p-8 b-l br">
-                            <div class="col-md-8 text-left f-14 roboto p-0">
-                                Account Number
-                            </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0">
-                                289473849873948
-                            </div>
-                        </div>
-                        <div class="row bb p-8 b-l br">
-                            <div class="col-md-8 text-left f-14 roboto p-0">
-                                IFSC Code
-                            </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0">
-                                HDFC73849873948
-                            </div>
-                        </div>
-                        <div class="row bb p-8 b-l br">
-                            <div class="col-md-8 text-left f-14 roboto p-0">
-                                Bank City
-                            </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0">
-                                Thane
-                            </div>
-                        </div>
-                        <div class="row bb p-8 b-l br">
-                            <div class="col-md-8 text-left f-14 roboto p-0">
-                                Bank Pin Code
-                            </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0">
-                                N.A.
+                                {{ item.percentageAllocation }}
                             </div>
                         </div>
                     </div>
@@ -233,58 +193,26 @@
                     <div>
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
-                                Bank Name
+                                Broker Code
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                HDFC
+                                {{ folioDetailData.brokerCode }}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
-                                Branch
+                                Sub Broker Code
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                Belapur Road
+                                {{ folioDetailData.subBrokerCode ? folioDetailData.subBrokerCode: 'N. A.' }}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
-                                Account Type
+                                EIUN
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                Savings
-                            </div>
-                        </div>
-                        <div class="row bb p-8 b-l br">
-                            <div class="col-md-8 text-left f-14 roboto p-0">
-                                Account Number
-                            </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0">
-                                289473849873948
-                            </div>
-                        </div>
-                        <div class="row bb p-8 b-l br">
-                            <div class="col-md-8 text-left f-14 roboto p-0">
-                                IFSC Code
-                            </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0">
-                                HDFC73849873948
-                            </div>
-                        </div>
-                        <div class="row bb p-8 b-l br">
-                            <div class="col-md-8 text-left f-14 roboto p-0">
-                                Bank City
-                            </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0">
-                                Thane
-                            </div>
-                        </div>
-                        <div class="row bb p-8 b-l br">
-                            <div class="col-md-8 text-left f-14 roboto p-0">
-                                Bank Pin Code
-                            </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0">
-                                N.A.
+                                {{ folioDetailData.euin ? folioDetailData.nominees.euin: 'N. A.' }}
                             </div>
                         </div>
                     </div>
@@ -293,58 +221,124 @@
                     <div>
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
-                                Bank Name
+                                Address 1
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                HDFC
+                                {{ folioDetailData.address1 }}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
-                                Branch
+                                Address 2
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                Belapur Road
+                                {{ folioDetailData.address2 ? folioDetailData.address2: '' }}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
-                                Account Type
+                                City
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                Savings
+                                {{ folioDetailData.city }}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
-                                Account Number
+                                Pin
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                289473849873948
+                                {{ folioDetailData.pincode }}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
-                                IFSC Code
+                                Email
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                HDFC73849873948
+                                {{ folioDetailData.email ?folioDetailData.email : 'N. A.'  }}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
-                                Bank City
+                                Date Of Birth
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                Thane
+                                {{ folioDetailData.invDob | date: 'short' }}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
-                                Bank Pin Code
+                                Mobile Number
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                N.A.
+                                {{ folioDetailData.mobileNumber ? folioDetailData.mobileNumber: 'N. A.' }}
+                            </div>
+                        </div>
+
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Aadhar Number
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{ folioDetailData.aadharNumber ? folioDetailData.aadharNumber: 'N. A.' }}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Occupation
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{ folioDetailData.occupation  ? folioDetailData.occupation: 'N. A.' }}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Mobile Number
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{ folioDetailData.mobileNumber ? folioDetailData.mobileNumber: 'N. A.' }}
+                            </div>
+                        </div>
+
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Office Phone
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{ folioDetailData.officePhone ? folioDetailData.officePhone: 'N. A.' }}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Residence Phone
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{ folioDetailData.residencePhone ? folioDetailData.residencePhone: 'N. A.' }}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Tax Status
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{ folioDetailData.taxStatus ? folioDetailData.taxStatus: 'N. A.' }}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                DP ID
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{ folioDetailData.dpId ? folioDetailData.dpId: 'N. A.' }}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Demat
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{ folioDetailData.demat ? folioDetailData.demat: 'N. A.' }}
                             </div>
                         </div>
                     </div>
