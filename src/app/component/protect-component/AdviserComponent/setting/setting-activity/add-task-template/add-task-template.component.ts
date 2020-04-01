@@ -40,6 +40,7 @@ export class AddTaskTemplateComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   inputData: any;
   linkedTemplateId: any;
+  isEdite: boolean;
 
   @Input()
   set data(data) {
@@ -74,7 +75,7 @@ export class AddTaskTemplateComponent implements OnInit {
     this.category = 'asset'
     this.editMode = false;
     this.taskTemplate.controls.category.setValue(1)
-    
+    this.isEdite = true
   }
   getGlobalTaskData() {
     this.orgSetting.getGlobalDataTask().subscribe(
@@ -135,7 +136,7 @@ export class AddTaskTemplateComponent implements OnInit {
       subTaskList: this.fb.array([this.fb.group({
         taskNumber: [1, [Validators.required]],
         description: [null, [Validators.required]],
-        turtAroundTime: [null, [Validators.required]],
+        turnAroundTime: [null, [Validators.required]],
         ownerId: [null, [Validators.required]]
       })]),
     });
@@ -144,17 +145,21 @@ export class AddTaskTemplateComponent implements OnInit {
         this.taskTemplate.controls.subTaskList.push(this.fb.group({
           taskNumber: [(1) + "", [Validators.required]],
           description: [(element.description + ""), Validators.required],
-          turtAroundTime: [(element.turtAroundTime), Validators.required],
+          turnAroundTime: [(element.turnAroundTime), Validators.required],
           ownerId: [element.ownerId, [Validators.required]]
         }))
       })
     }
   }
+  editSubtask(flag){
+    console.log('flag',flag)
+    this.isEdite = flag
+  }
   addSubTask(value) {
     this.subTask.push(this.fb.group({
       taskNumber: [1, [Validators.required]],
       description: [null, [Validators.required]],
-      turtAroundTime: [null, [Validators.required]],
+      turnAroundTime: [null, [Validators.required]],
       ownerId: [null, [Validators.required]],
     }));
     console.log('creds --',value)
@@ -166,7 +171,7 @@ export class AddTaskTemplateComponent implements OnInit {
         TaskTemplateId: 1,
         taskNumber: 1,
         description: value.controls.description.value,
-        turtAroundTime: value.controls.turtAroundTime.value,
+        turnAroundTime: value.controls.turnAroundTime.value,
         ownerId: 2727
       }
       this.orgSetting.addSubtaskTemplate(obj).subscribe(
@@ -204,7 +209,7 @@ export class AddTaskTemplateComponent implements OnInit {
       subcategoryId: this.taskTemplate.controls.subCategory.value,
       linkedTemplateId: this.linkedTemplateId,
       adviceTypeId:this.taskTemplate.controls.adviceType.value,
-      subSubCategoryId:this.taskTemplate.controle.subSubCategory.value,
+      subSubCategoryId:this.taskTemplate.controls.subSubCategory.value,
       taskDescription: this.taskTemplate.controls.taskTemplate.value,
       assignedTo: 2727,
       turnAroundTime: this.taskTemplate.controls.turnAroundTime.value,
