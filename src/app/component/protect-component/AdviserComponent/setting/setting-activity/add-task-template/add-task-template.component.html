@@ -18,11 +18,11 @@
         <div class="col-md-12 p-0 select-category">
             <h5 class="m-0 pb-12">Select category</h5>
             <mat-radio-group class="taskradio" aria-label="Select an option" formControlName="category">
-                <mat-radio-button [value]="1" (click)="getSelectedCategory(1,'asset')" checked [ngClass]="taskTemplate.get('category').value == 1 ? 'text-primary b-a-custom': ' text-primitive'">
+                <mat-radio-button [value]="1" (click)="getSelectedCategory(1,'asset')" checked [ngClass]="taskTemplate.get('category').value == 1 ? 'text-primary b-a-custom': ' b-a text-primitive'">
                     Asset</mat-radio-button>
-                <mat-radio-button [value]="2" (click)="getSelectedCategory(2,'insurance')" [ngClass]="taskTemplate.get('category').value == 2 ? 'text-primary b-a-custom': ' bor-left text-primitive'">
+                <mat-radio-button [value]="2" (click)="getSelectedCategory(2,'insurance')" [ngClass]="taskTemplate.get('category').value == 2 ? 'text-primary b-a-custom': ' b-a text-primitive'">
                     Insurance</mat-radio-button>
-                <mat-radio-button [value]="3" (click)="getSelectedCategory(3,'liability')" [ngClass]="taskTemplate.get('category').value == 3 ? 'text-primary b-a-custom': ' bor-left text-primitive'">
+                <mat-radio-button [value]="3" (click)="getSelectedCategory(3,'liability')" [ngClass]="taskTemplate.get('category').value == 3 ? 'text-primary b-a-custom': ' b-a text-primitive'">
                     Liability</mat-radio-button>
             </mat-radio-group>
         </div>
