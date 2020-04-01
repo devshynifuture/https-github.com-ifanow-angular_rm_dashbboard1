@@ -59,6 +59,7 @@ export class PeopleClientsComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getClientList();
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
 

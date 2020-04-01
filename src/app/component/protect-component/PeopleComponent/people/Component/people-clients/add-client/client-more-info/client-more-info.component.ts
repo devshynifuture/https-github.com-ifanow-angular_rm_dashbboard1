@@ -5,6 +5,7 @@ import { ValidatorType } from 'src/app/services/util.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-client-more-info',
@@ -15,7 +16,7 @@ export class ClientMoreInfoComponent implements OnInit {
   advisorId: any;
   moreInfoData: any;
 
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService) { }
+  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService, private datePipe: DatePipe) { }
   moreInfoForm;
   validatorType = ValidatorType
   @Input() fieldFlag;
@@ -56,7 +57,7 @@ export class ClientMoreInfoComponent implements OnInit {
       "genderId": this.moreInfoData.genderId,
       "companyStatus": 0,
       "aadharCard": this.moreInfoForm.controls.adhaarNo.value,
-      "dateOfBirth": this.moreInfoData.dateOfBirth,
+      "dateOfBirth": this.datePipe.transform(this.moreInfoData.dateOfBirth, 'dd/MM/yyyy'),
       "userName": this.moreInfoData.userName,
       "userId": null,
       "mobileList": this.moreInfoData.mobileList,
@@ -72,13 +73,13 @@ export class ClientMoreInfoComponent implements OnInit {
       // commented code which are giving errors ======>>>
 
 
-      // this.peopleService.editClient(obj).subscribe(
-      //   data => {
-      //     console.log(data);
-      //     (flag == 'Next') ? this.tabChange.emit(1) : this.close();
-      //   },
-      //   err => this.eventService.openSnackBar(err, "Dismiss")
-      // )
+      this.peopleService.editClient(obj).subscribe(
+        data => {
+          console.log(data);
+          (flag == 'Next') ? this.tabChange.emit(1) : this.close();
+        },
+        err => this.eventService.openSnackBar(err, "Dismiss")
+      )
 
       // commented code closed which are giving errors ======>>>
 

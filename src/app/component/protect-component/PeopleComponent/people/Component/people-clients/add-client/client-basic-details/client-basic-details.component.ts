@@ -189,13 +189,13 @@ export class ClientBasicDetailsComponent implements OnInit {
 
         // commented code which are giving errors ======>>>
 
-        // this.peopleService.addClient(obj).subscribe(
-        //   data => {
-        //     console.log(data);
-        //     (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
-        //   },
-        //   err => this.eventService.openSnackBar(err, "Dismiss")
-        // )
+        this.peopleService.addClient(obj).subscribe(
+          data => {
+            console.log(data);
+            (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
+          },
+          err => this.eventService.openSnackBar(err, "Dismiss")
+        )
 
         // commented code closed which are giving errors ======>>>
 

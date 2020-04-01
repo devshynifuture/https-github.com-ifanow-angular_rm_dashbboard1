@@ -72,21 +72,23 @@ export class ForgotPasswordComponent implements OnInit {
     this.loginService.getUsernameData(obj).subscribe(
       data => {
         console.log(data);
-        this.userNameVerifyResponse = data;
-        this.saveVerifyData.emailId = data.emailList[0].email;
-        this.saveVerifyData.mobileNo = data.mobileList[0].mobileNo;
-        this.hideNumEmailFromUser(this.saveVerifyData);
-        this.isVerify = true;
-        if (this.saveVerifyData.emailId) {
-          this.verifyFlag = "Email"
-          this.verify('Email')
-        }
-        else if (this.saveVerifyData.mobileNo != 0) {
-          this.verifyFlag = "Mobile";
-          this.verify("Mobile");
-        }
-        else {
-          this.eventService.openSnackBar("Please contact your advisor for more details")
+        if (data) {
+          this.userNameVerifyResponse = data;
+          this.saveVerifyData.emailId = data.emailList[0].email;
+          this.saveVerifyData.mobileNo = data.mobileList[0].mobileNo;
+          this.hideNumEmailFromUser(this.saveVerifyData);
+          this.isVerify = true;
+          if (this.saveVerifyData.emailId) {
+            this.verifyFlag = "Email"
+            this.verify('Email')
+          }
+          else if (this.saveVerifyData.mobileNo != 0) {
+            this.verifyFlag = "Mobile";
+            this.verify("Mobile");
+          }
+          else {
+            this.eventService.openSnackBar("Please contact your advisor for more details")
+          }
         }
       }
       ,
