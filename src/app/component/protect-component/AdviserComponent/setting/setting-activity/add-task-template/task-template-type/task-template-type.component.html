@@ -8,13 +8,17 @@
         </i>
     </div>
 </div>
-<div class="pt-90 pl-28 pr-28 add-task-template">
+<div class="pt-90 pl-28 pr-28 add-task-template" [formGroup]="taskTemplateType">
     <div class="row h-350">
         <div class="col-md-12 p-0">
             <h5 class="m-0 pb-12">Select an option below to add a task template...</h5>
-            <mat-radio-group>
-                <mat-radio-button value="1" class="b-ua mr-20">Create a linked task</mat-radio-button>
-                <mat-radio-button value="2" class="b-ua">Create a non-linked task</mat-radio-button>
+            <mat-radio-group class="taskradio" formControlName="type">
+                <mat-radio-button [value]="1" checked
+                    [ngClass]="taskTemplateType.get('type').value == 1 ? 'text-primary b-a-custom': 'b-a text-primitive'">
+                    Create a linked task</mat-radio-button>
+                <mat-radio-button [value]="2"
+                    [ngClass]="taskTemplateType.get('type').value == 2 ? 'text-primary b-a-custom': 'b-a text-primitive'">Create a non-linked task
+                </mat-radio-button>
             </mat-radio-group>
         </div>
     </div>

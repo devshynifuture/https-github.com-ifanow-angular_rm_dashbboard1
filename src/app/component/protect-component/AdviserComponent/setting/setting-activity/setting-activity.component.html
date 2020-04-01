@@ -53,7 +53,7 @@
                 <td mat-cell class="text-center" *matCellDef="let element">
                     <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item>
+                        <button mat-menu-item  (click)="addTaskTemplate(element, '')"> 
                             Edit
                         </button>
                         <button mat-menu-item>
