@@ -81,15 +81,38 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-1 pl-0">
-                <i class="material-icons c-p text-custom pt-8" (click)="addMoreQuestion()">
-                    add
-                </i>
+
+            <!-- controls when adding first time -->
+            <div *ngIf="is_add">
+                <div class="col-md-1 pl-0">
+                    <i class="material-icons c-p text-custom pt-8" (click)="addMoreQuestion()" *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.value.length == index-1">
+                        add
+                    </i>
+                </div>
+                <div class="col-md-1 pl-0" *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.value.length > 1">
+                    <i class="material-icons c-p text-custom pt-8" (click)="removeQuestion(i)">
+                        remove
+                    </i>
+                </div>
             </div>
-            <div class="col-md-1 pl-0" *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.value.length > 1">
-                <i class="material-icons c-p text-custom pt-8" (click)="removeQuestion(i)">
-                    remove
-                </i>
+
+            <!-- controls on edit -->
+            <div *ngIf="!is_add">
+                <div class="col-md-1 pl-0" *ngIf="showAddMoreQuestionBtn">
+                    <i class="material-icons c-p text-custom pt-8" (click)="addIndividualQuestion()" *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.value.length == index-1">
+                        add
+                    </i>
+                </div>
+                <div class="col-md-1 pl-0" *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.value.length > 1">
+                    <i class="material-icons c-p text-custom pt-8" (click)="removeQuestion(i)">
+                        remove
+                    </i>
+                </div>
+                <div class="col-md-1 pl-0">
+                    <i class="material-icons c-p text-custom pt-8" (click)="addOrUpdateIndividualQuestion(i)">
+                        save
+                    </i>
+                </div>
             </div>
         </ng-container>
     </div>

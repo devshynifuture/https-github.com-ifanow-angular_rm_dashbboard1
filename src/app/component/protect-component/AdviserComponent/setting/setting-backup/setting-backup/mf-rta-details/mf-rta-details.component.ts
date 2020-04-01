@@ -130,20 +130,21 @@ export class MfRtaDetailsComponent implements OnInit {
       header: 'DELETE',
       body: 'Are you sure you want to delete?',
       body2: 'This cannot be undone.',
-      btnYes: 'DELETE',
-      btnNo: 'CANCEL',
-      negativeMethod: () => {
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
         this.settingsService.deleteMFRTA({rtaDetailsId: data.id})
           .subscribe(response => {
             console.log(response);
             this.eventService.openSnackBar("Data has been deleted successfully");
             this.loadRTAList();
-          }, error => console.error(error));
+            dialogRef.close();
+          }, error => this.eventService.openSnackBar("Error occured"));
 
       },
     }
 
-    this.dialog.open(ConfirmDialogComponent, {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: dialogData,
       autoFocus: false,
@@ -162,5 +163,16 @@ export class MfRtaDetailsComponent implements OnInit {
       return this.globalData.rta_cams_fund_net_security_questions_list.find((data)=> data.id == id).question
     }
     return '';
+  }
+
+  toggleVisibility(data, toggle) {
+    if(data) {
+      if(toggle) {
+        let copy = data.toString();
+        return copy.replace(/./g, '').replace('', '********')
+      } else {
+        return data;
+      }
+    }
   }
 }
