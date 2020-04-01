@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormsModule, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/auth-service/authService';
-import { OrgSettingServiceService } from '../org-setting-service.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { OpenEmailVerificationComponent } from './open-email-verification/open-email-verification.component';
-import { MatDialog } from '@angular/material';
-import { CommonFroalaComponent } from '../../Subscriptions/subscription/common-subscription-component/common-froala/common-froala.component';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {AuthService} from 'src/app/auth-service/authService';
+import {OrgSettingServiceService} from '../org-setting-service.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {OpenEmailVerificationComponent} from './open-email-verification/open-email-verification.component';
+import {MatDialog} from '@angular/material';
+import {CommonFroalaComponent} from '../../Subscriptions/subscription/common-subscription-component/common-froala/common-froala.component';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-setting-preference',
@@ -230,7 +230,7 @@ export class SettingPreferenceComponent implements OnInit {
       this.isLoading = false
       this.planSection = []
     }
-   
+
   }
   getEmailVerification() {
     this.isLoading = true
@@ -252,7 +252,7 @@ export class SettingPreferenceComponent implements OnInit {
     }else{
       this.emailList = []
     }
-   
+
   }
   getEmailTemplate() {
     this.isLoading = true
@@ -272,7 +272,7 @@ export class SettingPreferenceComponent implements OnInit {
     }else{
       this.emailTemplateList = []
     }
-   
+
   }
   OpenEmail(value, data) {
     if (this.isLoading) {

@@ -5,6 +5,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { AuthService } from 'src/app/auth-service/authService';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-client-basic-details',
@@ -19,31 +20,31 @@ export class ClientBasicDetailsComponent implements OnInit {
   mobileData: any;
   categoryList: any[];
 
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService) { }
+  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService, private datePipe: DatePipe) { }
   basicDetails;
   date = new Date();
   @Input() fieldFlag;
   @Output() clientData = new EventEmitter();
   @Output() tabChange = new EventEmitter();
-  @Input() set familyMemberData(data) {
-    if (data == undefined) {
-      return;
-    }
-  };
+
   validatorType = ValidatorType;
-  invTypeCategory = '1';
-  invTaxStatus = '1';
+  invTypeCategory;
+  invTaxStatus;
   mobileNumberFlag = "Mobile number";
   ngOnInit() {
-    (this.fieldFlag == 'client') ? this.categoryList = [{ name: 'Individual', value: '1' }, { name: 'Non-individual', value: '2' }] :
-      this.categoryList = [
-        { name: 'Individual', value: '1' },
-        { name: 'Minor', value: '2' }
-      ];
+    this.invTypeCategory = '1';
+    this.invTaxStatus = '1';
+    this.createMinorForm(null);
   }
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
-    this.basicDetailsData = (data.data == null) ? data : data.data;
+    if (data.fieldFlag == 'familyMember') {
+      // this.createMinorForm(data);
+      this.basicDetailsData = data;
+    }
+    else {
+      this.basicDetailsData = data.data;
+    }
     console.log(data);
     this.createIndividualForm(this.basicDetailsData);
   }
@@ -65,39 +66,40 @@ export class ClientBasicDetailsComponent implements OnInit {
       role: [, [Validators.required]],
     })
   }
-  // createMinorForm() {
-  //   this.minorForm = this.fb.group({
-  //     minorFullName: [],
-  //     dobAsPerRecord: [],
-  //     dobActual: [],
-  //     gender: ['1'],
-  //     gFullName: [],
-  //     gDobAsPerRecord: [],
-  //     gDobActual: [],
-  //     gGender: ['1'],
-  //     relationWithMinor: [],
-  //     gEmail: [, [Validators.pattern(this.validatorType.EMAIL)]],
-  //     mobileNo: [],
-  //     pan: [],
-  //     username: [],
-  //     leadOwner: [],
-  //     role: []
-  //   })
-  // }
-  // createNonIndividualForm() {
-  //   this.nonIndividualForm = this.fb.group({
-  //     comName: [],
-  //     dateOfIncorporation: [],
-  //     comStatus: [],
-  //     comEmail: [[Validators.pattern(this.validatorType.EMAIL)]],
-  //     comPhone: [],
-  //     comPan: [],
-  //     comOccupation: [],
-  //     username: [],
-  //     leadOwner: [],
-  //     role: []
-  //   })
-  // }
+  createMinorForm(data) {
+    (data == undefined) ? data = {} : '';
+    this.minorForm = this.fb.group({
+      minorFullName: [data, name, [Validators.required]],
+      dobAsPerRecord: [new Date(data.dateOfBirth)],
+      dobActual: [],
+      gender: [(String(data.genderId))],
+      gFullName: [(data.guardianData) ? data.guardianData.name : '', [Validators.required]],
+      gDobAsPerRecord: [new Date(data.birthDate)],
+      gDobActual: [],
+      gGender: [String(data.genderId)],
+      relationWithMinor: [],
+      gEmail: [, [Validators.pattern(this.validatorType.EMAIL)]],
+      mobileNo: [],
+      pan: [data.pan],
+      username: [],
+      leadOwner: [],
+      role: []
+    })
+  }
+  createNonIndividualForm() {
+    this.nonIndividualForm = this.fb.group({
+      comName: [],
+      dateOfIncorporation: [],
+      comStatus: [],
+      comEmail: [[Validators.pattern(this.validatorType.EMAIL)]],
+      comPhone: [],
+      comPan: [],
+      comOccupation: [],
+      username: [],
+      leadOwner: [],
+      role: []
+    })
+  }
 
   getNumberDetails(data) {
     console.log(data);
@@ -115,8 +117,8 @@ export class ClientBasicDetailsComponent implements OnInit {
     }
   }
   changeInvestorType(event) {
+    (event.value == '1') ? this.createIndividualForm(this.basicDetailsData) : (event.value == '2' && this.fieldFlag == 'familyMember') ? this.createMinorForm(this.basicDetailsData) : this.createNonIndividualForm();
     this.invTypeCategory = event.value;
-    // (event.value == '1') ? this.createIndividualForm() : (event.value == '2') ? this.createMinorForm() : this.createNonIndividualForm();
   }
   changeTaxStatus(event) {
     this.invTaxStatus = event.value;
@@ -128,6 +130,9 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.basicDetails.markAllAsTouched();
       return;
     }
+    // if (this.nonIndividualForm.invalid && this.invTypeCategory == '2') {
+    //   return
+    // }
     else {
       let mobileList = [];
       this.mobileData.controls.forEach(element => {
@@ -144,7 +149,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       let obj =
       {
         "advisorId": this.advisorId,
-        "taxStatusId": this.invTaxStatus,
+        "taxStatusId": parseInt(this.invTaxStatus),
         "emailList": [
           {
             "verificationStatus": 0,
@@ -163,13 +168,13 @@ export class ClientBasicDetailsComponent implements OnInit {
         "occupationId": 0,
         "id": null,
         "pan": this.basicDetails.controls.pan.value,
-        "clientId": (this.basicDetailsData.clientId == null) ? '' : this.basicDetailsData.clientId,
+        "clientId": (this.basicDetailsData == null) ? null : this.basicDetailsData.clientId,
         "kycComplaint": 0,
         "roleId": 1,
-        "genderId": this.basicDetails.controls.gender.value,
+        "genderId": parseInt(this.basicDetails.controls.gender.value),
         "companyStatus": 0,
         "aadharCard": null,
-        "dateOfBirth": this.basicDetails.controls.dobAsPerRecord.value,
+        "dateOfBirth": this.datePipe.transform(this.basicDetails.controls.dobAsPerRecord.value, 'dd/MM/yyyy'),
         "userName": this.basicDetails.controls.username.value,
         "userId": null,
         "mobileList": mobileList,
@@ -184,13 +189,13 @@ export class ClientBasicDetailsComponent implements OnInit {
 
         // commented code which are giving errors ======>>>
 
-        // this.peopleService.addClient(obj).subscribe(
-        //   data => {
-        //     console.log(data);
-        //     (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
-        //   },
-        //   err => this.eventService.openSnackBar(err, "Dismiss")
-        // )
+        this.peopleService.addClient(obj).subscribe(
+          data => {
+            console.log(data);
+            (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
+          },
+          err => this.eventService.openSnackBar(err, "Dismiss")
+        )
 
         // commented code closed which are giving errors ======>>>
 
@@ -224,10 +229,14 @@ export class ClientBasicDetailsComponent implements OnInit {
         "verificationStatus": 0
       })
     });
-    if (this.basicDetails.invalid) {
+    if (this.basicDetails.invalid && this.invTypeCategory == '1') {
       this.basicDetails.markAllAsTouched();
       return;
     }
+    // if (this.minorForm.invalid && this.invTypeCategory == '2') {
+    //   this.minorForm.markAllAsTouched();
+    //   return;
+    // }
     else {
       let obj =
       {
@@ -247,16 +256,14 @@ export class ClientBasicDetailsComponent implements OnInit {
         "isKycCompliant": 1,
         "aadhaarNumber": "aadhaarNumber",
         "mobileList": mobileList,
+        "bio": null,
+        "remarks": null,
         "emailList": [
           {
             "email": this.basicDetails.controls.email.value,
             "verificationStatus": 0
           }
         ],
-        "bioRemark": {
-          "bio": "bio",
-          "remark": "remark"
-        },
         "guardianData": {
           "name": "name",
           "birthDate": "2000-01-01",
@@ -272,46 +279,21 @@ export class ClientBasicDetailsComponent implements OnInit {
               "mobileNo": 9987442988,
               "verificationStatus": 0
             },
-            {
-              "mobileNo": 8454816777,
-              "verificationStatus": 0
-            }
           ],
           "emailList": [
             {
               "email": "c@gmail",
               "verificationStatus": 0
-            },
-            {
-              "email": "c@gmail",
-              "verificationStatus": 0
             }
           ]
-        },
-        "bankDetail": {
-          "addressId": 1,
-          "branchCode": "branchCode",
-          "bankName": "bankName",
-          "branchName": "branchName",
-          "accountType": "accountType",
-          "accountNumber": "accountNumber",
-          "micrNo": "micrNo",
-          "ifscCode": "ifscCode",
-          "defaultFlag": 1
         }
       }
-
-      // commented code which are giving errors ======>>>
-
-      // this.peopleService.editFamilyMemberDetails(obj).subscribe(
-      //   data => {
-      //     (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
-      //   },
-      //   err => this.eventService.openSnackBar(err, "Dismiss")
-      // )
-
-      // commented code closed which are giving errors ======>>>
-
+      this.peopleService.editFamilyMemberDetails(obj).subscribe(
+        data => {
+          (flag == "Next") ? this.changeTabAndSendData(obj) : this.close();
+        },
+        err => this.eventService.openSnackBar(err, "Dismiss")
+      )
     }
   }
   close() {

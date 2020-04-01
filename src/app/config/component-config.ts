@@ -413,7 +413,7 @@ export const appConfig = {
   ADD_MANDATE: 'mandate/add',
   // SIP_BSE:'bse/order/create',
 
-  // cashflow 
+  // cashflow
   CASHFLOW_ADD_INCOME: 'cashflow/income/add',
   CASHFLOW_GET_INCOME: 'cashflow/income/get',
   CASHFLOW_DELETE_INCOME: 'cashflow/income/delete',
@@ -524,12 +524,6 @@ export const appConfig = {
   SEND_EMAIL: 'gmail/email/send',
   GET_ATTACHMENTS: 'gmail/attachment/get',
   //////////////////////////people/////////////////////////////////////
-  ADD_CLIENT_ADDRESS: '',
-  ADD_CLIENT_BANK: '',
-  ADD_CLIENT_BASIC_DETAILS: '',
-  ADD_CLIENT_DEMAT: '',
-  ADD_CLIENT_MORE_INFO: '',
-  ADD_CLIENT_UPLOAD: '',
   GET_PEOPLE_CLIENT_LIST: '/user/client/all/get',
   ADD_CLIENT: 'user/client/add',
   EDIT_CLIENT: 'user/client/edit',
@@ -541,11 +535,15 @@ export const appConfig = {
   ADD_FAMILY_MEMBER: 'user/family-member/add',
   ADD_MULTIPLE_FAMILY_MEMBERS: '/user/family-member/add/multiple',
   EDIT_FAMILY_MEMBER_BASIC_DETAILS_MORE_INFO: 'user/family-member/edit',
+  TEAM_MEMBER_WISE_CLIENT_COUNT: 'user/team-member/count/get',
+
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: '/user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
   REGISTER: 'user/advisor/add',
   SEARCH_USERNAME: 'user/search/username',
+  SAVE_PASSWORD: 'user/password/update',
+  LOGIN_WITH_PASSWORD: 'user/login/with/password',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_UPDATE: 'calendar/event/update',
