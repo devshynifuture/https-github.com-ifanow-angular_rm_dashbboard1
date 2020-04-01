@@ -49,7 +49,7 @@ export class AddCamsFundsnetComponent implements OnInit {
     if(this.data.mainData.rtaCamsFundNetSecurityQuestionsList && this.data.mainData.rtaCamsFundNetSecurityQuestionsList.length > 0) {
       for (let index = 0; index < this.data.mainData.rtaCamsFundNetSecurityQuestionsList.length; index++) {
         const secretQuestionsArr = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
-        secretQuestionsArr.push(this.secretQuestionsFG(this.data.mainData.rtaCamsFundNetSecurityQuestionsList[index].id, this.data.mainData.rtaCamsFundNetSecurityQuestionsList[index].answer));
+        secretQuestionsArr.push(this.secretQuestionsFG(this.data.mainData.rtaCamsFundNetSecurityQuestionsList[index].questionId, this.data.mainData.rtaCamsFundNetSecurityQuestionsList[index].answer));
       }
     } else {
       this.addMoreQuestion();
@@ -60,7 +60,7 @@ export class AddCamsFundsnetComponent implements OnInit {
     let qObj = {value: questionId, disabled: !!questionId};;
     
     return this.fb.group({
-      id: [qObj, [Validators.required, this.isQuestionDuplicate()]],
+      questionId: [qObj, [Validators.required, this.isQuestionDuplicate()]],
       answer: [answer, [Validators.required]],
     });
   }
@@ -72,11 +72,13 @@ export class AddCamsFundsnetComponent implements OnInit {
 
   removeQuestion(index=1) {
     const secretQuestionsArr = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
+    const questionSet = secretQuestionsArr.controls[index] as FormGroup;
     if(!this.is_add) {
-      const questionId = this.data.mainData.rtaCamsFundNetSecurityQuestionsList.map(data => data.id);
-      const questionExist = questionId.includes(secretQuestionsArr.controls[index].value.id);
+      const questionId = this.data.mainData.rtaCamsFundNetSecurityQuestionsList.map(data => data.questionId);
+      const questionExist = questionId.includes(questionSet.controls.questionId.value);
       if(questionExist) {
-        const removeQuestionObj = {id: secretQuestionsArr.controls[index].value.id, parentId: this.data.mainData.id};
+        const questionToRemove = this.data.mainData.rtaCamsFundNetSecurityQuestionsList.find(data => data.questionId == questionSet.controls.questionId.value).id
+        const removeQuestionObj = {id: questionToRemove};
         this.settingService.deleteQuestion(removeQuestionObj).subscribe(res => {
           this.data.mainData.rtaCamsFundNetSecurityQuestionsList.splice(this.data.mainData.rtaCamsFundNetSecurityQuestionsList.findIndex((data)=> data.id == secretQuestionsArr.controls[index].value.id), 1);
           this.eventService.openSnackBar("Question deleted successfully");
@@ -115,8 +117,11 @@ export class AddCamsFundsnetComponent implements OnInit {
     }
   }
   
-  updateAnswer(element) {
-    const jsonObj = {id: element.id, answer: element.answer, parentId: this.data.mainData.id};
+  updateAnswer(index) {
+    const secretQuestionsArr = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
+    const questionSet = secretQuestionsArr.controls[index] as FormGroup;
+    const questionToUpdate = this.data.mainData.rtaCamsFundNetSecurityQuestionsList.find(data => data.questionId == questionSet.controls.questionId.value).id
+    const jsonObj = {id: questionToUpdate, answer: secretQuestionsArr.controls[index].value.answer};
     this.settingService.updateAnswer(jsonObj).subscribe(res => {
       this.eventService.openSnackBar("Answer updated successfully");
     }, err => {
@@ -127,8 +132,9 @@ export class AddCamsFundsnetComponent implements OnInit {
 
   isQuestionDuplicate(): ValidatorFn {
     return (c: AbstractControl): { [key: string]: boolean } | null => {
-      const questions = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.value;
-      const questionId = questions.map(item => item.id);
+      const questions = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
+      const questionsRaw = questions.getRawValue();
+      const questionId = questionsRaw.map(item => item.questionId);
       const hasDuplicate = questionId.some(
         (name, index) => questionId.indexOf(name, index + 1) != -1
       );
@@ -148,9 +154,13 @@ export class AddCamsFundsnetComponent implements OnInit {
 
   saveIndividualQuestion(element){
     this.showAddMoreQuestionBtn = !this.showAddMoreQuestionBtn;
-    const jsonObj = {id: element.id, answer: element.answer, parentId: this.data.mainData.id};
-    this.settingService.updateAnswer(jsonObj).subscribe(res => {
-      this.eventService.openSnackBar("Answer updated successfully");
+    const jsonObj = {
+      "answer": element.answer,
+      "arnRtaDetailsId": this.data.mainData.id,
+      "questionId": element.questionId
+    };
+    this.settingService.addQuestion(jsonObj).subscribe(res => {
+      this.eventService.openSnackBar("Question added successfully");
     }, err => {
       this.eventService.openSnackBar("Error occured");
     })
@@ -162,7 +172,7 @@ export class AddCamsFundsnetComponent implements OnInit {
     if (questionSet.length == (index+1) && !this.showAddMoreQuestionBtn) {
       this.saveIndividualQuestion(questionSet[index]);
     } else {
-      this.updateAnswer(questionSet[index]);
+      this.updateAnswer(index);
     }
   }
 
