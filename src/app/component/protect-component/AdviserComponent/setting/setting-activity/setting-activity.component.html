@@ -74,3 +74,7 @@
         </table>
     </div>
 </div>
+<div *ngIf="taskList.length == 0" class="d-flex flex-column align-items-center">
+    <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="text-center pt-12">No task template found</h4>
+</div>

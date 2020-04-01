@@ -17,7 +17,7 @@ export class SettingActivityComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'assign', 'time', 'icons'];
   dataSource = ELEMENT_DATA;
   advisorId: any;
-  taskList: any;
+  taskList: Array<any> = [{}, {}, {}];
   isLoading = false
   constructor(private subInjectService: SubscriptionInject,
     public subscription: SubscriptionService,
@@ -88,6 +88,7 @@ export class SettingActivityComponent implements OnInit {
       }]
     } else {
       this.isLoading = false
+      this.taskList = []
     }
   }
   addTaskTemplate(singleProfile, value) {

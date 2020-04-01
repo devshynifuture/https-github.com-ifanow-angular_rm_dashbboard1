@@ -177,6 +177,7 @@ export class AddTaskTemplateComponent implements OnInit {
           isEdite: false
         }))
       })
+      this.subTask.removeAt(0);
     }
   }
   editSubtask(value, flag, index) {
