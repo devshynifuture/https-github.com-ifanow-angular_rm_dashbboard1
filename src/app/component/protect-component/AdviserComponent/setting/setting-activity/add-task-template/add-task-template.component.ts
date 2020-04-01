@@ -23,10 +23,10 @@ export class AddTaskTemplateComponent implements OnInit {
   subTaskList = [];
   Tat = [
     {
-      value: 1, tat: 'T+0 day'
-    }, { value: 2, tat: 'T+1 day' }, { value: 3, tat: 'T+2 day' }, { value: 4, tat: 'T+3 day' },
-    { value: 5, tat: 'T+4 day' }, { value: 6, tat: 'T+5 day' }, { value: 7, tat: 'T+6 day' },
-    { value: 8, tat: 'T+7 day' }, { value: 9, tat: 'T+8 day' }, { value: 10, tat: 'T+9 day' }
+      turnAroundTime: 1, tat: 'T+0 day'
+    }, { turnAroundTime: 2, tat: 'T+1 day' }, { turnAroundTime: 3, tat: 'T+2 day' }, { turnAroundTime: 4, tat: 'T+3 day' },
+    { turnAroundTime: 5, tat: 'T+4 day' }, { turnAroundTime: 6, tat: 'T+5 day' }, { turnAroundTime: 7, tat: 'T+6 day' },
+    { turnAroundTime: 8, tat: 'T+7 day' }, { turnAroundTime: 9, tat: 'T+8 day' }, { turnAroundTime: 10, tat: 'T+9 day' }
   ]
   assetList: any;
   libilitiesList: any;
@@ -39,13 +39,19 @@ export class AddTaskTemplateComponent implements OnInit {
   hideSubcategory: boolean = false;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   inputData: any;
+  linkedTemplateId: any;
 
   @Input()
   set data(data) {
     this.inputData = data;
     console.log('This is Input data ', data)
-    
+    if(data == 1){
+      this.linkedTemplateId = data
+    }else if(data == 2){
+      this.linkedTemplateId = data
+    }else{
       this.getdataForm(data);
+    }
   }
 
   get data() {
@@ -101,10 +107,16 @@ export class AddTaskTemplateComponent implements OnInit {
     console.log('getSelectedCategory', value)
     if (value == 1) {
       this.list = this.assetSubCategoryList
+      var subList = this.list.filter(element => element.subcategoryId == this.inputData.subcategoryId)
+      this.listOfSub = subList[0].taskTempSubcattoSubCategories
     } else if (value == 2) {
       this.list = this.libilitySubCategoryList
+      var subList = this.list.filter(element => element.subcategoryId == this.inputData.subcategoryId)
+      this.listOfSub = subList[0].taskTempSubcattoSubCategories
     } else {
       this.list = this.insuranceSubCategoryList
+       var subList = this.list.filter(element => element.subcategoryId == this.inputData.subcategoryId)
+      this.listOfSub = subList[0].taskTempSubcattoSubCategories
     }
     this.getdataForm(this.inputData)
   }
@@ -113,13 +125,13 @@ export class AddTaskTemplateComponent implements OnInit {
       data = {}
     }
     this.taskTemplate = this.fb.group({
-      category: [(!data) ? '' : (data.categoryId) + "", [Validators.required]],
-      subCategory: [(!data) ? '' : (data.subcategoryId) + "", [Validators.required]],
-      subSubCategory :[(!data) ? '' : (data.subSubCategoryId) + "", [Validators.required]],
+      category: [(!data) ? '' : (data.categoryId), [Validators.required]],
+      subCategory: [(!data) ? '' : (data.subcategoryId), [Validators.required]],
+      subSubCategory :[(!data) ? '' : (data.subSubCategoryId), [Validators.required]],
       taskTemplate: [(!data) ? '' : data.taskDescription, [Validators.required]],
       adviceType: [(!data) ? '' : (data.adviceTypeId) + "", [Validators.required]],
       defaultAssign: [(!data) ? '' : data.ownerName],
-      turnaroundTime: [(!data) ? '' : data.turnaroundTime],
+      turnAroundTime: [(!data) ? '' : (data.turnAroundTime)],
       subTaskList: this.fb.array([this.fb.group({
         taskNumber: [1, [Validators.required]],
         description: [null, [Validators.required]],
@@ -187,15 +199,15 @@ export class AddTaskTemplateComponent implements OnInit {
   }
   saveTaskTemplate() {
     let obj = {
-      advisorId: 414,
-      categoryId: 1,
-      subcategoryId: 2,
-      linkedTemplateId: 2,
-      adviceTypeId:1,
-      subSubCategoryId:13,
+      advisorId: this.advisorId,
+      categoryId: this.taskTemplate.controls.category.value,
+      subcategoryId: this.taskTemplate.controls.subCategory.value,
+      linkedTemplateId: this.linkedTemplateId,
+      adviceTypeId:this.taskTemplate.controls.adviceType.value,
+      subSubCategoryId:this.taskTemplate.controle.subSubCategory.value,
       taskDescription: this.taskTemplate.controls.taskTemplate.value,
       assignedTo: 2727,
-      turnAroundTime: this.taskTemplate.controls.turnaroundTime.value,
+      turnAroundTime: this.taskTemplate.controls.turnAroundTime.value,
       subTaskList: this.taskTemplate.controls.subTaskList.value,
     }
     console.log('this what i want', obj)

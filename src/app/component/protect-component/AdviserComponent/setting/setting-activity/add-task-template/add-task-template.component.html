@@ -69,7 +69,7 @@
             <div class="form-group">
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="taskTemplate">
-                        <mat-option value="Port policy">Port policy</mat-option>
+                        <mat-option value="1">Port policy</mat-option>
                     </mat-select>
                     <mat-error class="f-12">
                         This field is required
@@ -111,8 +111,8 @@
             <h5 class="m-0 pb-8">Turnaround time</h5>
             <div class="form-group">
                 <mat-form-field>
-                    <mat-select class="form-control" formControlName="turnaroundTime">
-                        <mat-option value="t.value" *ngFor="let t of Tat">{{t.tat}}</mat-option>
+                    <mat-select class="form-control" formControlName="turnAroundTime">
+                        <mat-option value="t.turnAroundTime" *ngFor="let t of Tat">{{t.tat}}</mat-option>
                     </mat-select>
                     <mat-hint>Optional</mat-hint>
 
