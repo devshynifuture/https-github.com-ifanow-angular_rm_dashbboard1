@@ -73,11 +73,11 @@ export class BackOfficeService {
   }
 
   amcWiseGet(data) {
-    const httpParams = new HttpParams().set('advisorId', data);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AMC_WISE, httpParams);
   }
   amcWiseApplicantGet(data) {
-    const httpParams = new HttpParams().set('advisorId', data).set('arnRiaDetailId', data.arnRiaDetailId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);
+    const httpParams = new HttpParams().set('advisorId', data).set('arnRiaDetailId', data.arnRiaDetailId).set('parentId', data.parentId).set('schemeMasterId', data.schemeMasterId).set('totalAum', data.totalAum);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_APPLICANT_NAME, httpParams);
   }
   getSipcountGet(data) {
@@ -86,34 +86,42 @@ export class BackOfficeService {
   }
 
   getAumApplicantWiseTotalaumApplicantName(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_APPLICANT, httpParams);
   }
 
   getAumApplicantCategory(data) {
-    const httpParams = new HttpParams().set('clientId', data.clientId).set('clientTotalAum', data.clientTotalAum)
-      .set('advisorId', data.advisorId);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('familyMembertId', data.familyMembertId).set('clientTotalAum', data.clientTotalAum);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_APPLICANT_CATEGORY, httpParams);
   }
 
   getAumApplicantSubCategory(data) {
-    const httpParams = new HttpParams().set('categoryId', data.categoryId).set('categoryTotalAum', data.categoryTotalAum)
-      .set('clientId', data.clientId).set('advisorId', data.advisorId);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('familyMembertId', data.familyMembertId).set('categoryId', data.categoryId).set('categoryTotalAum', data.categoryTotalAum);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_APPLICANT_SUB_CATEGORY, httpParams);
   }
 
   getAumApplicantScheme(data) {
-    const httpParams = new HttpParams().set('clientId', data.clientId).set('subCategoryId', data.subCategoryId)
-      .set('subCategoryTotalAum', data.subCategoryTotalAum).set('advisorId', data.advisorId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_APPLICANT_SCHEME, data);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('familyMembertId', data.familyMembertId).set('subCategoryId', data.subCategoryId).set('subCategoryTotalAum', data.subCategoryTotalAum);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_APPLICANT_SCHEME, httpParams);
   }
 
   // /Aum-clientWise
   getAumClientTotalAum(data) {
-    const httpParams = new HttpParams().set('limit', data.limit).set('offset', data.offset).set('advisorId', data.advisorId);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_CLIENT_TOTALAUM, httpParams);
   }
-
+  getAumFamilyMember(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('totalAum', data.totalAum);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_FAMILY_MEMBER, httpParams);
+  }
+  getAumFamilyMemberScheme(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('familyMemberId', data.familyMemberId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('totalAum', data.totalAum);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_FAMILY_SCHEME, httpParams);
+  }
+  getAumFamilyMemberSchemeFolio(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('familyMemberId', data.familyMemberId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('totalAum', data.totalAum).set('schemeId', data.schemeId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_FAMILY_SCHEME_FOLIO, httpParams);
+  }
   getAumClientScheme(data) {
     const httpParams = new HttpParams().set('clientId', data.clientId).set('advisorId', data.advisorId).set('arnRiaDetailsId',data.arnRiaDetailsId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_CLIENT_SCHEME, httpParams);

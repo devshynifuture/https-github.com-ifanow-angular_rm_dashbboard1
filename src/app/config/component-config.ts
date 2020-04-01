@@ -17,11 +17,14 @@ export const appConfig = {
   GET_AUM_APPLICANT_CATEGORY: 'backoffice/aum/applicantWise/totalaum/applicantsAllCategory/get',
   GET_AUM_APPLICANT_SUB_CATEGORY: 'backoffice/aum/applicantWise/totalaum/applicantSubCategory/get',
   GET_AUM_APPLICANT_SCHEME: 'backoffice/aum/applicantWise/totalaum/applicantSchemes/get',
-  GET_AUM_CLIENT_TOTALAUM: 'asset/aum/client/totalaum/get',
+  GET_AUM_CLIENT_TOTALAUM: 'backoffice/aum/client/totalaum/get',
+  GET_AUM_FAMILY_MEMBER:'backoffice/aum/client/familymember',
+  GET_AUM_FAMILY_SCHEME:'backoffice/aum/client/familymember/scheme',
+  GET_AUM_FAMILY_SCHEME_FOLIO:'backoffice/aum/client/familymember/scheme/folio',
   GET_AUM_CLIENT_SCHEME: 'backoffice/aum/client/schemes',
   GET_CLIENT_FOLIO_WISE: 'asset/cat/subcat/schemeName/clientFolioWise',
   GET_AMC_WISE: 'backoffice/mis/aum/amcWise/get',
-  GET_APPLICANT_NAME: '/mis/aum/amcWise/applicantName/get',
+  GET_APPLICANT_NAME: 'backoffice/mis/aum/amcWise/applicantName/get',
   ADVISOR_TAG_GET: '/advisor/tag/get',
 
 

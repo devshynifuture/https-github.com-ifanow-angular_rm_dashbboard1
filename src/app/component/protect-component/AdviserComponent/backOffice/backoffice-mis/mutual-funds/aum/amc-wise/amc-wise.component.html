@@ -1,3 +1,7 @@
+<div *ngIf="showLoader">
+    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+</div>
+<div *ngIf="showLoader==false">
 <div *ngIf="aum.aumComponent==false">
     <div class="wrapper-20 bg-white">
         <div class="row">
@@ -12,7 +16,7 @@
             </div>
         </div>
 
-        <table class="table-low mt-16" id="table-high">
+        <table class="table-low mt-16" id="table-high" *ngIf="amcList">
             <thead class="text-dark">
                 <tr>
                     <th>Sr No.</th>
@@ -22,19 +26,19 @@
 
                 </tr>
             </thead>
-            <tbody *ngFor="let category of category; let i = index">
+            <tbody *ngFor="let amc of amcList; let i = index">
                 <tr>
                     <td>{{i+1}}</td>
-                    <td (click)="showSubTableList(i,category.showCategory)"> <i
-                            class="material-icons right b-a f-14 mt-4 c-p" *ngIf="category.showCategory==true"> add </i>
-                        <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="category.showCategory==false"> remove
+                    <td (click)="showScheme(amc)"> <i
+                            class="material-icons right b-a f-14 mt-4 c-p" *ngIf="amc.showAmc"> add </i>
+                        <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="!amc.showAmc"> remove
                         </i></td>
-                    <td class="text-right">{{category.totalAum}} </td>
-                    <td class="text-right">{{category.weightInPercentage}}%</td>
+                    <td class="text-right">{{amc.totalAum}} </td>
+                    <td class="text-right">{{amc.weightInPercentage}}%</td>
                 </tr>
                 <tr>
                 <tr>
-                    <table *ngIf="category.showCategory==false" class="table-low mt-8 " id="table-high">
+                    <table *ngIf="!amc.showAmc" class="table-low mt-8 " id="table-high">
                         <thead class="bg-light text-dark">
                             <tr>
                                 <th>Sr No.</th>
@@ -44,18 +48,18 @@
 
                             </tr>
                         </thead>
-                        <tbody *ngFor="let subcategory of category.subCategoryList; let i = index">
+                        <tbody *ngFor="let scheme of amc.schemeList; let i = index">
                             <tr>
                                 <td>{{i+1}}</td>
-                                <td (click)="showSchemeName(i,subcategory.showSubCategory)">{{subcategory.name}}<i
-                                        *ngIf="subcategory.showSubCategory==true"
+                                <td (click)="showApplicant(scheme)">{{scheme.name}}<i
+                                        *ngIf="scheme.showScheme==true"
                                         class="material-icons right b-a f-14 mt-4 c-p">add</i>
-                                    <i *ngIf="subcategory.showSubCategory==false"
+                                    <i *ngIf="scheme.showScheme==false"
                                         class="material-icons right b-a f-14 mt-4 c-p"> remove </i> </td>
-                                <td class="text-right">{{subcategory.totalAum}} </td>
-                                <td class="text-right">{{subcategory.weightInPercentage}}%</td>
+                                <td class="text-right">{{scheme.totalAum}} </td>
+                                <td class="text-right">{{scheme.weightInPercentage}}%</td>
                             </tr>
-                            <table *ngIf="subcategory.showSubCategory==false">
+                            <table *ngIf="!scheme.showScheme">
                                 <thead>
                                     <tr>
                                         <th>Sr No.</th>
@@ -65,13 +69,10 @@
                                     </tr>
                                 </thead>
                                 <tr>
-                                    <tbody *ngFor="let scheme of subcategory.schemes;let i = index">
+                                    <tbody *ngFor="let applicant of scheme.applicantList;let i = index">
                                         <tr>
                                             <td>{{i+1}}</td>
-                                            <td>{{scheme.schemeName}}<i class="material-icons right b-a f-14 mt-4 c-p"
-                                                    *ngIf="subcategory.showSubCategory==false">add</i>
-                                                <i class="material-icons right b-a f-14 mt-4 c-p"
-                                                    *ngIf="subcategory.showSubCategory==true"> remove </i> </td>
+                                            <td>{{scheme.schemeName}}</i> </td>
                                             <td class="text-right">{{scheme.totalAum}} </td>
                                             <td class="text-right">{{scheme.weightInPercentage}}</td>
                                         </tr>
@@ -83,7 +84,18 @@
 
                 </tr>
             </tbody>
+            <tbody>
+                <tr>
+                    <td class="p-table t-35 b-a"><strong>Total</strong></td>
+                    <td class="p-table t-7 b-a">&nbsp;</td>
+                    <td class="p-table t-19 b-a text-right"><strong>{{totalCurrentValue}}</strong></td>
+                    <td class="p-table t-19 b-a text-right"><strong>{{totalWeight}}%</strong></td>
+                </tr>
+            </tbody>
         </table>
-
+        <div *ngIf="!amcList">
+            <p>No data found</p>
+        </div>
     </div>
+</div>
 </div>
