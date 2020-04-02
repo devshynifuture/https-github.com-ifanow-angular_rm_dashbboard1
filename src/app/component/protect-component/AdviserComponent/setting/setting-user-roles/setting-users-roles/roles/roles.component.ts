@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { AddNewRoleComponent } from '../../../setting-entry/add-new-role/add-new-role.component';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SettingsService } from '../../../settings.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { MatTableDataSource } from '@angular/material';
+import {Component, OnInit} from '@angular/core';
+import {AddNewRoleComponent} from '../../../setting-entry/add-new-role/add-new-role.component';
+import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SettingsService} from '../../../settings.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-roles',
@@ -14,13 +14,14 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class RolesComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'del'];
-  dataSource:any = ELEMENT_DATA;
-  advisorId:any;
+  dataSource: any = ELEMENT_DATA;
+  advisorId: any;
+  isLoading: true;
 
   constructor(
-    private subInjectService: SubscriptionInject, 
+    private subInjectService: SubscriptionInject,
     private eventService: EventService,
-    private settingsService:SettingsService,
+    private settingsService: SettingsService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -30,28 +31,32 @@ export class RolesComponent implements OnInit {
     this.getAllRoles();
   }
 
-  loadGlobalData(){
+  loadGlobalData() {
+    // this.isLoading = true;
+    // this.dataSource.data = [{}, {}, {}];
     const obj = {
       advisorId: this.advisorId
     }
 
-    this.settingsService.getUserRolesGlobalData(obj).subscribe((res)=>{
+
+    this.settingsService.getUserRolesGlobalData(obj).subscribe((res) => {
       console.log(res)
       this.dataSource = new MatTableDataSource(res);
     })
   }
 
   getAllRoles() {
+
     const obj = {
       advisorId: this.advisorId
     }
 
-    this.settingsService.getAllRoles(obj).subscribe((res)=>{
+    this.settingsService.getAllRoles(obj).subscribe((res) => {
       console.log(res)
       this.dataSource = new MatTableDataSource(res);
     })
   }
-  
+
   addEditNewRoles(data) {
     const fragmentData = {
       flag: 'app-upper-setting',
@@ -80,7 +85,7 @@ export class RolesComponent implements OnInit {
 
     delete jsonObj.id;
 
-    this.settingsService.addRole(jsonObj).subscribe((res)=>{
+    this.settingsService.addRole(jsonObj).subscribe((res) => {
       this.getAllRoles();
     });
   }
