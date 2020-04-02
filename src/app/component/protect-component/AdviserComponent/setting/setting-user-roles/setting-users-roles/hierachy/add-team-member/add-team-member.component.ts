@@ -33,6 +33,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     if(this.data) {
       this.initializeUserDetails();
     }
+    this.subscribeValueChange();
   }
 
   initializeUserDetails(){
@@ -45,6 +46,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     })
   }
 
+  // mat auto complete search
   subscribeValueChange() {
     this.subscription = this.usersForm
       .get('userInput')
@@ -64,6 +66,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
       .subscribe(users => this.filteredUsers = users.results);
   }
 
+  // when user chooses an option from the auto complete dropdown
   chooseUser(){
     this.selectedUser = this.usersForm.get('userInput').value;
   }
