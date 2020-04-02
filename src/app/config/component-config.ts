@@ -166,6 +166,8 @@ export const appConfig = {
   UPLOAD_FILE: 'document/account/document/all-file/file/put',
   CLIENT_UPLOAD_FILE: 'document/upload/pre-signed-url/get',
   SAVE_CLIENT_UPLOAD_FILE: 'user/document/mapping/save',
+  DELETE_CLIENT_UPLOAD_FILE: 'user/document/mapping/delete',
+  GET_CLIENT_PROOF:'document/download/pre-signed-url/get',
   GET_CLIENT_UPLOAD_FILE: 'user/document/mapping/get',
   NEW_FOLDER: 'document/account/document/all-file/folder/post',
   GET_ASSET_STOCK: 'account/asset/stock/list/get',

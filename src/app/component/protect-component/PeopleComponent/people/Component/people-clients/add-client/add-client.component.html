@@ -32,7 +32,8 @@
                 <mat-tab [disabled]="tabData.id==undefined" label=" Demat">
                     <app-client-demat [data]="tabData" (tabChange)="changeTab($event)"></app-client-demat>
                 </mat-tab>
-                <mat-tab [disabled]="tabData.id==undefined" label=" Upload">
+                <!-- [disabled]="tabData.id==undefined" -->
+                <mat-tab  label=" Upload">
                     <app-client-upload (tabChange)="changeTab($event)"></app-client-upload>
                 </mat-tab>
             </mat-tab-group>
