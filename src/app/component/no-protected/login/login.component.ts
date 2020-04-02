@@ -118,12 +118,12 @@ export class LoginComponent implements OnInit {
     console.log(this.verifyResponseData)
     if (this.verifyResponseData.email) {
       this.verifyFlag = 'Email';
-      let obj = { "forEmail": data.email }
+      let obj = { "email": data.email }
       this.loginUsingCredential(obj);
     }
     else {
       this.verifyFlag = "mobile";
-      let obj = { 'forMobNum': data.mobile }
+      let obj = { 'mobileNo': data.mobile }
       this.loginUsingCredential(obj)
     }
   }

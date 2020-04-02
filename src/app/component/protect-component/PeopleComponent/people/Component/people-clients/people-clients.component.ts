@@ -5,6 +5,8 @@ import { UtilService } from 'src/app/services/util.service';
 import { AddClientComponent } from './add-client/add-client.component';
 import { PeopleService } from '../../../people.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-people-clients',
@@ -14,11 +16,11 @@ import { AuthService } from 'src/app/auth-service/authService';
 export class PeopleClientsComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'member', 'owner',
     'login', 'status', 'icons', 'icons1'];
-  dataSource = ELEMENT_DATA;
+  dataSource;
   advisorId: any;
   clientDatasource: any;
   isLoading: boolean;
-  constructor(private subInjectService: SubscriptionInject, public eventService: EventService, private peopleService: PeopleService) { }
+  constructor(private subInjectService: SubscriptionInject, public eventService: EventService, private peopleService: PeopleService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -30,10 +32,9 @@ export class PeopleClientsComponent implements OnInit {
     this.isLoading = true;
     let obj =
     {
-      advisorId: this.advisorId
+      advisorId: this.advisorId,
+      status: 1
     }
-
-    // commented code which are giving errors ====>>>>>>>>>>>>>>.
 
     this.peopleService.getClientList(obj).subscribe(
       data => {
@@ -43,11 +44,15 @@ export class PeopleClientsComponent implements OnInit {
       },
       err => this.eventService.openSnackBar(err, "dismiss")
     )
-
-    // commented code closed which are giving errors ====>>>>>>>>>>>>>>.
   }
   Addclient(data) {
-    (data == null) ? data = { flag: 'Add client', fieldFlag: 'client', data: null } : data = { flag: 'Edit client', fieldFlag: 'client', data };
+    if (data == null) {
+      data = { flag: 'Add client', fieldFlag: 'client' }
+    }
+    else {
+      data['flag'] = 'Edit client';
+      data['fieldFlag'] = "client";
+    }
     const fragmentData = {
       flag: 'Add client',
       id: 1,
@@ -67,22 +72,43 @@ export class PeopleClientsComponent implements OnInit {
       }
     );
   }
-}
-export interface PeriodicElement {
-  name: string;
-  position: string;
-  weight: string;
-  symbol: string;
-  member: string;
-  owner: string;
-  login: string;
-  status: string;
-}
+  deleteModal(value, data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        let obj =
+        {
+          userId: data.userId
+        }
+        this.peopleService.deleteClient(obj).subscribe(
+          data => {
+            this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
+            dialogRef.close();
+            this.getClientList();
+          },
+          error => this.eventService.showErrorMessage(error)
+        )
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    position: 'Abhishek Jain', name: '+91 9821230123', weight: ' abhishekjain@yahoo.com',
-    symbol: 'AATPJ1239L', member: '3', owner: 'Ankit Mehta', login: '30 min ago', status: 'Active'
-  },
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
 
-];
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+}

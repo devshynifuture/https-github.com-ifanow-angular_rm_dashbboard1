@@ -537,7 +537,7 @@ export const appConfig = {
   EDIT_CLIENT: 'user/client/edit',
   ADD_EDIT_CLIENT_ADDRESS: 'user/address/add-edit',
   ADD_EDIT_CLIENT_BANK: 'user/bank/add-edit',
-  ADD_EDIT_CLIENT_DEMAT: 'user/bank/demat/edit',
+  ADD_EDIT_CLIENT_DEMAT: 'user/bank/demat/add-edit',
   GET_FAMILY_MEMBERS: 'user/family-member/get',
   DELETE_FAMILY_MEMBER: 'user/family-member/delete',
   ADD_FAMILY_MEMBER: 'user/family-member/add',
@@ -548,6 +548,8 @@ export const appConfig = {
   UPDATE_COMPANY_PERSON_DETAILS: 'user/client/company/person/edit',
   TEAM_MEMBER_WISE_CLIENT_COUNT: 'user/advisor/team-member/count/get',
   GET_TEAM_MEMBERS: 'user/advisor/team-members/detail/get',
+  DELETE_CLIENT: 'user/client/delete',
+  GET_CLIENT_OR_lEAD_DATA: 'user/client/advisor-wise/get',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: '/user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
