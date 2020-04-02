@@ -18,9 +18,9 @@ export const appConfig = {
   GET_AUM_APPLICANT_SUB_CATEGORY: 'backoffice/aum/applicantWise/totalaum/applicantSubCategory/get',
   GET_AUM_APPLICANT_SCHEME: 'backoffice/aum/applicantWise/totalaum/applicantSchemes/get',
   GET_AUM_CLIENT_TOTALAUM: 'backoffice/aum/client/totalaum/get',
-  GET_AUM_FAMILY_MEMBER:'backoffice/aum/client/familymember',
-  GET_AUM_FAMILY_SCHEME:'backoffice/aum/client/familymember/scheme',
-  GET_AUM_FAMILY_SCHEME_FOLIO:'backoffice/aum/client/familymember/scheme/folio',
+  GET_AUM_FAMILY_MEMBER: 'backoffice/aum/client/familymember',
+  GET_AUM_FAMILY_SCHEME: 'backoffice/aum/client/familymember/scheme',
+  GET_AUM_FAMILY_SCHEME_FOLIO: 'backoffice/aum/client/familymember/scheme/folio',
   GET_AUM_CLIENT_SCHEME: 'backoffice/aum/client/schemes',
   GET_CLIENT_FOLIO_WISE: 'asset/cat/subcat/schemeName/clientFolioWise',
   GET_AMC_WISE: 'backoffice/mis/aum/amcWise/get',
@@ -47,8 +47,8 @@ export const appConfig = {
   ALL_SIP_GET: 'backoffice/sip/allSip/get',
   CLIENT_WISE_CLIENTNAME_GET: 'backoffice/sip/ClientWiseClientsName/get',
   CLIENT_WISE_APPLICANT_GET: 'backoffice/sip/ClientWiseApplicants/get',
-  SIP_PAN_COUNT:'backoffice/sip/scheme/pan/count/get',
-  WBR_FOLIO_PAN_COUNT:'backoffice/folio/pan/count/get',
+  SIP_PAN_COUNT: 'backoffice/sip/scheme/pan/count/get',
+  WBR_FOLIO_PAN_COUNT: 'backoffice/folio/pan/count/get',
 
   ///////////////////////////// back office/////////////////////////////////////////////
 
@@ -501,7 +501,7 @@ export const appConfig = {
   GET_RETURNS: 'plan/config/return-inflation/get',
   GET_KEY_PARAMETERS: 'goal-planning/key-parameters/get',
   UPLOAD_PLAN_GALLERY: 'goal-planning/goal-gallery/add',
-  UPLOAD_KEY_PARAMETER: 'goal-planning/static-allocation/put',
+  UPLOAD_KEY_PARAMETER: 'goal-planning/advisor-plan-configuration/add',
   UPDATE_ASSET_ALLOCATION: 'goal-planning/static-allocation/put',
   GET_TASK_TEMPLATE: 'setting/task/template/list/get',
   GET_TEAM_MEMBER_LIST: 'user/advisor/team-members/detail/get',
@@ -534,7 +534,7 @@ export const appConfig = {
   SEND_EMAIL: 'gmail/email/send',
   GET_ATTACHMENTS: 'gmail/attachment/get',
   //////////////////////////people/////////////////////////////////////
-  GET_PEOPLE_CLIENT_LIST: '/user/client/all/get',
+  GET_PEOPLE_CLIENT_LIST: 'user/client/all/get',
   ADD_CLIENT: 'user/client/add',
   EDIT_CLIENT: 'user/client/edit',
   ADD_EDIT_CLIENT_ADDRESS: 'user/address/add-edit',
@@ -549,7 +549,7 @@ export const appConfig = {
   SAVE_COMPANY_PERSON_DEATILS: 'user/client/company/person/add',
   UPDATE_COMPANY_PERSON_DETAILS: 'user/client/company/person/edit',
   TEAM_MEMBER_WISE_CLIENT_COUNT: 'user/advisor/team-member/count/get',
-
+  GET_TEAM_MEMBERS: 'user/advisor/team-members/detail/get',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: '/user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
@@ -594,7 +594,13 @@ export const appConfig = {
   GET_ALL_FEATURES: 'setting/users-roles/feature-capabilities/all/get',
 
   GET_USER_ACCESS_RIGHTS_LIST: 'setting/users-roles/access-rights/get',
-  UPDATE_USER_ACCESS_RIGHTS_LIST: 'setting/users-roles/access-rights/update'
+  UPDATE_USER_ACCESS_RIGHTS: 'setting/users-roles/access-rights/update',
+
+  GET_ALL_TEAM_MEMEBERS: 'setting/users/team-members/get',
+  ADD_TEAM_MEMBER: 'setting/users/team-member/add',
+  DELETE_TEAM_MEMBER: 'setting/users/team-member/delete',
+  SUSPEND_TEAM_MEMBER: 'setting/users/team-member/suspend',
+  HAND_OVER_TEAM_MEMBER: 'setting/users/team-member/hand-over/get',
 
 
   ////////////////////////////// settings////////////////////////////////////////////

@@ -78,7 +78,7 @@
                 <div *ngSwitchCase="'tab2'">
                     <div class="p-20" *ngIf="planSection">
                         <h5 class="mb-8  text-black">Insurance planning</h5>
-                        <mat-checkbox class="text-black" (change)="selectPlan($event,planSec1[0])" [checked]="planSec1[0].selectedOrDeselected">Show XIRR returns for insurance policies
+                        <mat-checkbox class="text-black" (change)="selectPlan($event,planSec1)" [checked]="planSec1.selectedOrDeselected">Show XIRR returns for insurance policies
                         </mat-checkbox>
                         <p class="m-0 text-custom pb-20 bb-1 pl-24">These returns are displayed when giving recommendations on current policies.</p>
                     </div>
@@ -132,11 +132,11 @@
                                         <td mat-cell class="text-center" *matCellDef="let element">
                                             <img class="c-p" [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg">
                                             <mat-menu #menu="matMenu">
-                                                <button mat-menu-item (click)="verifyEmail(element)">
+                                                <!-- <button mat-menu-item (click)="verifyEmail(element)">
                                                     <span>Edit</span>
-                                                </button>
+                                                </button> -->
                                                 <button mat-menu-item>
-                                                    <span>menu2</span>
+                                                    <span>Delete</span>
                                                 </button>
                                             </mat-menu>
                                         </td>
@@ -324,14 +324,17 @@
                                     <div class="col-md-10 p-0">
                                         <p class="m-0 text-black roboto f-500">Option 1: Partial white label</p>
                                     </div>
-                                    <div class="col-md-2 p-0 text-right">
-                                        <button mat-stroked-button class="btn-dark-outline xs">Edit</button>
+                                    <div class="col-md-1 p-0 text-right" *ngIf="showUpdateBrand == false">
+                                        <button mat-stroked-button class="btn-dark-outline xs" (click)="editDomain(true,'brand',brandVisibility[0])">Edit</button>
+                                    </div>
+                                    <div class="col-md-1 p-0 text-right" *ngIf="showUpdateBrand == true">
+                                        <button mat-stroked-button class="btn-dark-outline xs" (click)="editDomain(false,'brand',brandVisibility[0])">Update</button>
                                     </div>
                                 </div>
                                 <img src="/assets/images/svg/site-title.svg" class="pt-20">
                                 <div class="form-group mb-0 pt-20">
                                     <mat-form-field>
-                                        <input matInput class="form-control">
+                                        <input matInput class="form-control"formControlName="brandVisibility" brandVisible>
                                     </mat-form-field>
                                 </div>
                                 <p class="pt-20 text-custom roboto m-0"> The site title is visible on the browser bar. You can customize it here. </p>

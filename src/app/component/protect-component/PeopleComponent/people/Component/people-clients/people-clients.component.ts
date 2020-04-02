@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { AddClientComponent } from './add-client/add-client.component';
-import { PeopleService } from '../../../people.service';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, OnInit} from '@angular/core';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {AddClientComponent} from './add-client/add-client.component';
+import {PeopleService} from '../../../people.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-people-clients',
@@ -16,9 +17,11 @@ export class PeopleClientsComponent implements OnInit {
     'login', 'status', 'icons', 'icons1'];
   dataSource = ELEMENT_DATA;
   advisorId: any;
-  clientDatasource: any;
+  clientDatasource = new MatTableDataSource();
   isLoading: boolean;
-  constructor(private subInjectService: SubscriptionInject, public eventService: EventService, private peopleService: PeopleService) { }
+
+  constructor(private subInjectService: SubscriptionInject, public eventService: EventService, private peopleService: PeopleService) {
+  }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -26,12 +29,11 @@ export class PeopleClientsComponent implements OnInit {
   }
 
   getClientList() {
-    this.clientDatasource = [{}, {}, {}];
+    this.clientDatasource.data = [{}, {}, {}];
     this.isLoading = true;
-    let obj =
-    {
+    const obj = {
       advisorId: this.advisorId
-    }
+    };
 
     // commented code which are giving errors ====>>>>>>>>>>>>>>.
 
@@ -39,15 +41,33 @@ export class PeopleClientsComponent implements OnInit {
       data => {
         console.log(data);
         this.isLoading = false;
-        this.clientDatasource = data;
+        if (data && data.length > 0) {
+          data.forEach((singleData) => {
+            if (singleData.mobileList && singleData.mobileList.length > 0) {
+              singleData.mobileNo = singleData.mobileList[0].mobileNo;
+            }
+            if (singleData.emailList && singleData.emailList.length > 0) {
+              singleData.email = singleData.emailList[0].email;
+            }
+          });
+        }
+        this.clientDatasource.data = data;
       },
-      err => this.eventService.openSnackBar(err, "dismiss")
-    )
+      err => {
+        this.eventService.openSnackBar(err, 'dismiss');
+        this.clientDatasource.data = [];
+      }
+    );
 
     // commented code closed which are giving errors ====>>>>>>>>>>>>>>.
   }
+
   Addclient(data) {
-    (data == null) ? data = { flag: 'Add client', fieldFlag: 'client', data: null } : data = { flag: 'Edit client', fieldFlag: 'client', data };
+    (data == null) ? data = {flag: 'Add client', fieldFlag: 'client', data: null} : data = {
+      flag: 'Edit client',
+      fieldFlag: 'client',
+      data
+    };
     const fragmentData = {
       flag: 'Add client',
       id: 1,
@@ -68,6 +88,7 @@ export class PeopleClientsComponent implements OnInit {
     );
   }
 }
+
 export interface PeriodicElement {
   name: string;
   position: string;

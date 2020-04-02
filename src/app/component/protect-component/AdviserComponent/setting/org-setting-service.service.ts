@@ -56,7 +56,7 @@ export class OrgSettingServiceService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_ALLOCATION, data);
   }
   updateAssetAllocation(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_ASSET_ALLOCATION, data);
+    return this.http.post(apiConfig.MAIN_URL + appConfig.UPDATE_ASSET_ALLOCATION, data);
   }
   getRetuns(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_RETURNS, data);
@@ -68,7 +68,7 @@ export class OrgSettingServiceService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.UPLOAD_PLAN_GALLERY, data);
   }
   updateKeyParameter(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_DOMAIN, data);
+    return this.http.post(apiConfig.MAIN_URL + appConfig.UPLOAD_KEY_PARAMETER, data);
   }
 
   addTaskTemplate(data) {

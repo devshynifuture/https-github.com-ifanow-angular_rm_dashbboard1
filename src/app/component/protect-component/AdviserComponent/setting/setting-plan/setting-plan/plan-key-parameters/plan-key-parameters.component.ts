@@ -20,11 +20,17 @@ export class PlanKeyParametersComponent implements OnInit {
   keyParameter: any;
   advisorId: any;
   isLoading = false
+  idWiseData: any;
+  getSavingType: any;
+  getRetirementData: any;
+  getSavingStatus: any;
+  getInsurancePlanningData: any;
+  getLifeExpentancy: any;
   constructor(private orgSetting : OrgSettingServiceService,private eventService :EventService, private fb : FormBuilder) { }
 
   ngOnInit() {
     this.getKeyParameter()
-    this.getdataForm('')
+    this.getdataForm()
     this.advisorId = AuthService.getAdvisorId()
     this.isLoading = false
   }
@@ -38,13 +44,13 @@ export class PlanKeyParametersComponent implements OnInit {
 // configuration_type_id: {1: "SavingsType", 2: "RetirementAge", 3: "InsurancePlanning", 4: "SavingsStatus", 5: "LifeExpectancy"
 
 
-getdataForm(data) {
+getdataForm() {
   this.keyParameter = this.fb.group({
-    lifeExpectancy: [(!data.fdType) ? '' : (data.name), [Validators.required]],
-    retirementAge: [(!data) ? '' : data.emailId, [Validators.required]],
-    savingType: [(!data) ? '' : data.mobileNo, [Validators.required]],
-    savingStatus: [(!data) ? '' : data.userName, [Validators.required]],
-    InsurancePlanGrowthRate: [(!data) ? '' : data.userName, [Validators.required]],
+    lifeExpectancy: [(!this.getLifeExpentancy) ? '': (this.getLifeExpentancy.parameter), [Validators.required]],
+    retirementAge: [(!this.getRetirementData) ? '': this.getRetirementData.parameter, [Validators.required]],
+    savingType: [(!this.getSavingType) ? '': (this.getSavingType.parameter)+"", [Validators.required]],
+    savingStatus: [(!this.getSavingStatus) ? '': (this.getSavingStatus.parameter)+"", [Validators.required]],
+    InsurancePlanGrowthRate: [(!this.getInsurancePlanningData) ? '': this.getInsurancePlanningData.parameter, [Validators.required]],
   });
 }
 
@@ -66,11 +72,25 @@ getFormControl(): any {
     if(data){
       this.isLoading = false
       this.allParameters = data
+      this.idWiseData = data.key_Params;
+    
+     this.getSavingType = this.idWiseData.filter(element => element.configurationTypeId == 1)
+     this.getSavingType = this.getSavingType[0]
+     this.getRetirementData = this.idWiseData.filter(element => element.configurationTypeId == 2)
+     this.getRetirementData = this.getRetirementData[0]
+     this.getInsurancePlanningData = this.idWiseData.filter(element => element.configurationTypeId == 3)
+     this.getInsurancePlanningData = this.getInsurancePlanningData[0]
+     this.getSavingStatus = this.idWiseData.filter(element => element.configurationTypeId == 4)
+     this.getSavingStatus =this.getSavingStatus[0]
+     this.getLifeExpentancy = this.idWiseData.filter(element => element.configurationTypeId == 5)
+     this.getLifeExpentancy =this.getLifeExpentancy[0]
+
     this.lifeExpectancy = data.lifeExpectancy
     this.retirementAge=data.retirementAge
     this.savingType = data.savingType
     this.savingStatus=data.savingStatus
     this.InsurancePlanGrowthRate=data.InsurancePlanGrowthRate
+    this.getdataForm()
     }else{
       this.allParameters = []
     }
