@@ -46,7 +46,16 @@ export class PeopleService {
   addMultipleFamilyMembers(data) {
     return this.http.postEncoded(apiConfig.USER + appConfig.ADD_MULTIPLE_FAMILY_MEMBERS, data);
   }
+  getCompanyPersonDetail(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_COMPANY_PERSON_DETAILS, data, 1);
+  }
+  saveCompanyPersonDetail(data) {
+    return this.http.postEncoded(apiConfig.USER + appConfig.SAVE_COMPANY_PERSON_DEATILS, data);
+  }
+  updateCompanyPersonDetail(data) {
+    return this.http.putEncoded(apiConfig.USER + appConfig.UPDATE_COMPANY_PERSON_DETAILS, data);
 
+  }
   editFamilyMemberDetails(data) {
     return this.http.putEncoded(apiConfig.USER + appConfig.EDIT_FAMILY_MEMBER_BASIC_DETAILS_MORE_INFO, data);
   }
@@ -54,7 +63,14 @@ export class PeopleService {
   getTeamMemberWiseCount(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.TEAM_MEMBER_WISE_CLIENT_COUNT, data, 1);
   }
-
-
+  getTeamMemberList(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_TEAM_MEMBERS, data, 1);
+  }
+  deleteClient(data) {
+    return this.http.putEncoded(apiConfig.USER + appConfig.DELETE_CLIENT, data);
+  }
+  getClientOrLeadData(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_CLIENT_OR_lEAD_DATA, data, 1);
+  }
   // commented Code closed which are giving error ->>>>>>>>>>>>>
 }

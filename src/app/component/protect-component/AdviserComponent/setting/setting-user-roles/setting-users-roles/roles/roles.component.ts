@@ -14,12 +14,13 @@ import {MatTableDataSource} from '@angular/material';
 })
 export class RolesComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'del'];
-  dataSource: any = ELEMENT_DATA;
+  dataSource: any;
   advisorId: any;
-  isLoading: true;
+  isLoading: boolean;
+  globalData:any[] = [];
+  counter = 0;
 
   constructor(
-    private subInjectService: SubscriptionInject,
     private eventService: EventService,
     private settingsService: SettingsService,
   ) {
@@ -32,36 +33,41 @@ export class RolesComponent implements OnInit {
   }
 
   loadGlobalData() {
-    // this.isLoading = true;
-    // this.dataSource.data = [{}, {}, {}];
+    this.loader(1);
     const obj = {
       advisorId: this.advisorId
     }
 
-
     this.settingsService.getUserRolesGlobalData(obj).subscribe((res) => {
+      this.loader(-1);
       console.log(res)
-      this.dataSource = new MatTableDataSource(res);
+      this.globalData = res;
     })
   }
 
   getAllRoles() {
-
+    this.loader(1);
     const obj = {
       advisorId: this.advisorId
     }
 
     this.settingsService.getAllRoles(obj).subscribe((res) => {
       console.log(res)
+      this.loader(-1);
       this.dataSource = new MatTableDataSource(res);
     })
   }
 
-  addEditNewRoles(data) {
+  addEditNewRoles(roleType, is_add_flag, data) {
+    const dataObj = {
+      mainData: data || {},
+      roleType: roleType,
+      is_add_flag: is_add_flag,
+    }
     const fragmentData = {
       flag: 'app-upper-setting',
       id: 1,
-      data: data || {},
+      data: dataObj,
       direction: 'top',
       componentName: AddNewRoleComponent,
       state: 'open'
@@ -69,45 +75,43 @@ export class RolesComponent implements OnInit {
     const rightSideDataSub = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
+          if(UtilService.isRefreshRequired(sideBarData)) {
+            this.getAllRoles();
           }
           rightSideDataSub.unsubscribe();
         }
-
       }
     );
   }
 
   cloneRole(data) {
+    this.loader(1);
     let jsonObj = {
       ...data
     }
 
     delete jsonObj.id;
 
-    this.settingsService.addRole(jsonObj).subscribe((res) => {
+    this.settingsService.cloneRole(jsonObj).subscribe((res) => {
       this.getAllRoles();
+      this.loader(-1);
     });
   }
+
+  deleteRole(data) {
+    this.loader(1);
+    this.settingsService.deleteRole(data.id).subscribe((res) => {
+      this.getAllRoles();
+      this.loader(-1);
+    });
+  }
+
+  loader(countAdder) {
+    this.counter += countAdder;
+    if (this.counter == 0) {
+      this.isLoading = false;
+    } else {
+      this.isLoading = true;
+    }
+  }
 }
-
-
-
-
-
-
-
-
-export interface PeriodicElement {
-  name: string;
-  position: string;
-
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 'Admin', name: 'The admin role has unrestricted access to all modules. This role cannot be edited or deleted.' },
-  { position: 'Admin', name: 'The admin role has unrestricted access to all modules. This role cannot be edited or deleted.' },
-  { position: 'Admin', name: 'The admin role has unrestricted access to all modules. This role cannot be edited or deleted.' },
-  { position: 'Admin', name: 'The admin role has unrestricted access to all modules. This role cannot be edited or deleted.' },
-
-];

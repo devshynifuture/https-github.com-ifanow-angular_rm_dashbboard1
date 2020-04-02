@@ -64,7 +64,7 @@ export class BackofficeFileUploadComponent implements OnInit {
     };
     this.http.putExternal(data.presignedUrl, file, httpOptions).subscribe((responseData) => {
       console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
-      // this.successFileUpload(this.selectedFileType, data.fileName)
+      this.successFileUpload(this.selectedFileType, data.fileName)
     }, error => {
       console.log('DocumentsComponent uploadFileRes error : ', error);
 
@@ -77,7 +77,7 @@ export class BackofficeFileUploadComponent implements OnInit {
       fileName: fileName
     }
     this.reconService.successBackOfficeFileToUpload(obj).subscribe((data) => {
-
+      
     })
   }
 }

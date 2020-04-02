@@ -511,6 +511,28 @@ export class CustomerService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.UPLOAD_FILE, data);
   }
 
+  clientUploadFile(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.CLIENT_UPLOAD_FILE, data);
+  }
+
+  deleteClientProof(data) {
+    return this.http.put(apiConfig.USER + appConfig.DELETE_CLIENT_UPLOAD_FILE, data);
+  }
+
+  getClientProof(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_PROOF, data);
+  }
+
+  saveClientUploadFile(data) {
+    return this.http.postEncoded(apiConfig.USER + appConfig.SAVE_CLIENT_UPLOAD_FILE, data);
+
+  }
+
+  getClientUploadFile(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_CLIENT_UPLOAD_FILE, data, 1);
+
+  }
+
   newFolder(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.NEW_FOLDER, data);
   }
