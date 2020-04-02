@@ -5,6 +5,7 @@ import { BackofficeMisRoutingModule } from './backoffice-mis-routing.module';
 import { BackofficeMisComponent } from './backoffice-mis.component';
 import { MaterialModule } from 'src/app/material/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ChartModule } from 'angular-highcharts';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     BackofficeMisRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    ChartModule
   ]
 })
 export class BackofficeMisModule { }

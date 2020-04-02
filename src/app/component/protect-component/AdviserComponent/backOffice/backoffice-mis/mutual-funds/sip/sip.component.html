@@ -113,6 +113,8 @@
                                                <div class="col-md-3 pt-12 pl-8 ">
                                                     <img src="/assets/images/svg/cal.svg">
                                                 </div>
+                                                
+                                               
                                                 <!-- (click)="categoryWise('client')" prod build -->
                                                 <div class="col-md-9 p-0 c-p" (click)="amcWise('client')">
                                                     <h5 class="mb-0 text-custom pt-16 pb-16 ">Client wise</h5>
@@ -136,8 +138,11 @@
                                 </div>
                             </div>
                             <div class="row p-12">
-                                <img src="/assets/images/grap.png"
-                                    class="w-100 h-365">
+                                <!-- <img src="/assets/images/grap.png"
+                                    class="w-100 h-365"> -->
+                                    <div class="col-md-9 p-0 b-a">
+                                        <div class="highcharts-figure" id="pieChartSip"></div>
+                                      </div>
                                     <div class="col-md-3 p-0">
                                         <div id="mistabs1">
                                             <mat-tab-group class="h-500 bg-white b-a ">
