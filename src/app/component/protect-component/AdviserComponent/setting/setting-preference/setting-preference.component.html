@@ -78,7 +78,7 @@
                 <div *ngSwitchCase="'tab2'">
                     <div class="p-20" *ngIf="planSection">
                         <h5 class="mb-8  text-black">Insurance planning</h5>
-                        <mat-checkbox class="text-black" (change)="selectPlan($event,planSec1[0])" [checked]="planSec1[0].selectedOrDeselected">Show XIRR returns for insurance policies
+                        <mat-checkbox class="text-black" (change)="selectPlan($event,planSec1)" [checked]="planSec1.selectedOrDeselected">Show XIRR returns for insurance policies
                         </mat-checkbox>
                         <p class="m-0 text-custom pb-20 bb-1 pl-24">These returns are displayed when giving recommendations on current policies.</p>
                     </div>

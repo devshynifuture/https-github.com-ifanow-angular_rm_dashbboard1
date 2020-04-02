@@ -275,6 +275,7 @@ export class SettingPreferenceComponent implements OnInit {
     if(data){
       this.planSection = data
       this.planSec1 = this.planSection.filter(element => element.planOptionId == 1)
+      this.planSec1 =this.planSec1[0]
       console.log('planSec1 ', this.planSec1)
     }else{
       this.isLoading = false
