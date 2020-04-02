@@ -18,9 +18,9 @@ export const appConfig = {
   GET_AUM_APPLICANT_SUB_CATEGORY: 'backoffice/aum/applicantWise/totalaum/applicantSubCategory/get',
   GET_AUM_APPLICANT_SCHEME: 'backoffice/aum/applicantWise/totalaum/applicantSchemes/get',
   GET_AUM_CLIENT_TOTALAUM: 'backoffice/aum/client/totalaum/get',
-  GET_AUM_FAMILY_MEMBER:'backoffice/aum/client/familymember',
-  GET_AUM_FAMILY_SCHEME:'backoffice/aum/client/familymember/scheme',
-  GET_AUM_FAMILY_SCHEME_FOLIO:'backoffice/aum/client/familymember/scheme/folio',
+  GET_AUM_FAMILY_MEMBER: 'backoffice/aum/client/familymember',
+  GET_AUM_FAMILY_SCHEME: 'backoffice/aum/client/familymember/scheme',
+  GET_AUM_FAMILY_SCHEME_FOLIO: 'backoffice/aum/client/familymember/scheme/folio',
   GET_AUM_CLIENT_SCHEME: 'backoffice/aum/client/schemes',
   GET_CLIENT_FOLIO_WISE: 'asset/cat/subcat/schemeName/clientFolioWise',
   GET_AMC_WISE: 'backoffice/mis/aum/amcWise/get',
@@ -47,8 +47,8 @@ export const appConfig = {
   ALL_SIP_GET: 'backoffice/sip/allSip/get',
   CLIENT_WISE_CLIENTNAME_GET: 'backoffice/sip/ClientWiseClientsName/get',
   CLIENT_WISE_APPLICANT_GET: 'backoffice/sip/ClientWiseApplicants/get',
-  SIP_PAN_COUNT:'backoffice/sip/scheme/pan/count/get',
-  WBR_FOLIO_PAN_COUNT:'backoffice/folio/pan/count/get',
+  SIP_PAN_COUNT: 'backoffice/sip/scheme/pan/count/get',
+  WBR_FOLIO_PAN_COUNT: 'backoffice/folio/pan/count/get',
 
   ///////////////////////////// back office/////////////////////////////////////////////
 
@@ -547,7 +547,7 @@ export const appConfig = {
   SAVE_COMPANY_PERSON_DEATILS: 'user/client/company/person/add',
   UPDATE_COMPANY_PERSON_DETAILS: 'user/client/company/person/edit',
   TEAM_MEMBER_WISE_CLIENT_COUNT: 'user/advisor/team-member/count/get',
-
+  GET_TEAM_MEMBERS: 'user/advisor/team-members/detail/get',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: '/user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
