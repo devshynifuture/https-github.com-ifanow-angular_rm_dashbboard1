@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { AddNewRoleComponent } from '../../../setting-entry/add-new-role/add-new-role.component';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SettingsService } from '../../../settings.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { MatTableDataSource } from '@angular/material';
+import {Component, OnInit} from '@angular/core';
+import {AddNewRoleComponent} from '../../../setting-entry/add-new-role/add-new-role.component';
+import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SettingsService} from '../../../settings.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-roles',
@@ -16,7 +16,7 @@ export class RolesComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'del'];
   dataSource: any = ELEMENT_DATA;
   advisorId: any;
-  // isLoading: true;
+  isLoading: true;
 
   constructor(
     private subInjectService: SubscriptionInject,

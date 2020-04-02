@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AddTasksComponent } from './add-tasks/add-tasks.component';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
+import {Component, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-crm-tasks',
@@ -11,12 +9,12 @@ import { SubscriptionInject } from '../../Subscriptions/subscription-inject.serv
 export class CrmTasksComponent implements OnInit {
   displayedColumns: string[] = ['client', 'member', 'des', 'cat', 'assigned', 'dueDate', 'status', 'menuList'];
   dataSource = ELEMENT_DATA;
-  constructor(private subInjectService: SubscriptionInject) { }
+
+  constructor(private subInjectService: SubscriptionInject) {
+  }
 
   ngOnInit() {
   }
-
-
 
 
 }
@@ -33,5 +31,14 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { client: 'Rahul Jain', member: 'Shreya Jain', des: 'Extend the account for another 5 year', cat: 'PPF', assigned: 'Rahul Jain', dueDate: '05/09/2019', status: 'Doing', menuList: '' },
+  {
+    client: 'Rahul Jain',
+    member: 'Shreya Jain',
+    des: 'Extend the account for another 5 year',
+    cat: 'PPF',
+    assigned: 'Rahul Jain',
+    dueDate: '05/09/2019',
+    status: 'Doing',
+    menuList: ''
+  },
 ];
