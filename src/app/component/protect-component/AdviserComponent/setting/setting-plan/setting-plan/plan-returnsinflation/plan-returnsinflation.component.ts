@@ -21,15 +21,17 @@ export class PlanReturnsinflationComponent implements OnInit {
   advisorId: any;
   shortTerm;
   longTerm: any;
-  constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) { }
+  constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) { 
+    this.advisorId = AuthService.getAdvisorId()
+  }
 
   ngOnInit() {
     this.getAssetAllocationReturns()
-    this.advisorId = AuthService.getAdvisorId()
+  
   }
   getAssetAllocationReturns() {
     let obj = {
-      advisorId: 2808
+      advisorId: this.advisorId
     }
     this.orgSetting.getRetuns(obj).subscribe(
       data => this.getReturnsRes(data),

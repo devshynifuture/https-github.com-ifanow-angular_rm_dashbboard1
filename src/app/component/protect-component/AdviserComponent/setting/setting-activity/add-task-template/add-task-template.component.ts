@@ -64,7 +64,10 @@ export class AddTaskTemplateComponent implements OnInit {
     private event: EventService,
     private fb: FormBuilder,
   ) {
-    this.taskTemplate = this.fb.group({
+    this.advisorId = AuthService.getAdvisorId()
+
+    this.taskTemplate = 
+    this.fb.group({
       published: true,
       subTask: this.fb.array([]),
     });
@@ -74,7 +77,6 @@ export class AddTaskTemplateComponent implements OnInit {
     this.getteamMemberList()
     this.getdataForm(this.inputData)
     this.taskTemplate.controls.category.setValue(1)
-    this.advisorId = AuthService.getAdvisorId()
     this.category = 'asset'
     this.editMode = false;
     this.isEdite = false
@@ -82,7 +84,7 @@ export class AddTaskTemplateComponent implements OnInit {
   getteamMemberList() {
 
     let obj = {
-      advisorId: 55
+      advisorId: this.advisorId
     }
     this.orgSetting.getTeamMemberList(obj).subscribe(
       data => this.getTeamMemberListRes(data),

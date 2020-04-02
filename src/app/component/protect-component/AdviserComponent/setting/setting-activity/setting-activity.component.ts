@@ -22,11 +22,12 @@ export class SettingActivityComponent implements OnInit {
   constructor(private subInjectService: SubscriptionInject,
     public subscription: SubscriptionService,
     public eventService: EventService, private utilService: UtilService,
-    private orgSetting: OrgSettingServiceService) { }
+    private orgSetting: OrgSettingServiceService) {
+      this.advisorId = AuthService.getAdvisorId()
+     }
 
   ngOnInit() {
     this.getTaskTemplate();
-    this.advisorId = AuthService.getAdvisorId()
     this.taskList = [{
       advisorId: 2808,
       categoryId: 1,
@@ -53,7 +54,7 @@ export class SettingActivityComponent implements OnInit {
   getTaskTemplate() {
     this.isLoading = true
     let obj = {
-      advisorId: 2808
+      advisorId: this.advisorId
     }
     this.orgSetting.getTaskTemplate(obj).subscribe(
       data => this.getTaskTemplateRes(data),
