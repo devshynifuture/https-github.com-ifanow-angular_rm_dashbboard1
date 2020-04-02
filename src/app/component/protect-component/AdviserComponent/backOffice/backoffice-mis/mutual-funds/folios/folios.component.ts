@@ -11,6 +11,11 @@ export class FoliosComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.getFolioDetails();
+  }
+
+  getFolioDetails(){
+    
   }
 
 }

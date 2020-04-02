@@ -67,7 +67,7 @@ export class AumComponent implements OnInit {
   getTotalAum() {
     const obj={
       advisorId:this.advisorId,
-      arnRiaDetailId:-1,
+      arnRiaDetailsId:-1,
       parentId:-1
     }
     this.backoffice.getClientTotalAUM(obj).subscribe(
@@ -120,7 +120,7 @@ export class AumComponent implements OnInit {
     console.log("scheme Name", data)
   }
   getFilerrorResponse(err) {
-    this.dataService.openSnackBar(err, 'Dismiss')
+    this.dataService.openSnackBar('Something went wrong', 'Dismiss')
   }
   categoryWise(value) {
     this.componentWise = value;

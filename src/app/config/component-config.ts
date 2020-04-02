@@ -26,7 +26,13 @@ export const appConfig = {
   GET_AMC_WISE: 'backoffice/mis/aum/amcWise/get',
   GET_APPLICANT_NAME: 'backoffice/mis/aum/amcWise/applicantName/get',
   ADVISOR_TAG_GET: '/advisor/tag/get',
-
+//////////////////Foliodetails////////////////////////////
+  FOLIO_GROUP_HEAD_SEARCH:'backoffice/folio/search/by/groupHead/get',
+  FOLIO_INVESTOR_SEARCH:'backoffice/folio/search/by/investorName/get',
+  FOLIO_PAN_SEARCH:'backoffice/folio/search/by/pan/get',
+  FOLIO_FOLIO_NO__SEARCH:'backoffice/folio/search/by/folioNumber/get',
+  FOLIO_GROUP_HEAD_LIST:'backoffice/foliowise/groupHead/list/get',
+  FOLIO_APPLICANT_NAME_LIST:'backoffice/foliowise/applicaName/list/get',
 
 
   /////////////////////// sip api call//////////////////////////////////
@@ -49,8 +55,12 @@ export const appConfig = {
   CLIENT_WISE_APPLICANT_GET: 'backoffice/sip/ClientWiseApplicants/get',
   SIP_PAN_COUNT:'backoffice/sip/scheme/pan/count/get',
   WBR_FOLIO_PAN_COUNT:'backoffice/folio/pan/count/get',
-
+  SIP_APPLICANT_LIST:'backoffice/sip/applicant/list/get',
+  SIP_FOLIO_LIST:'backoffice/sip/applicant/scheme/folio/list/get',
   ///////////////////////////// back office/////////////////////////////////////////////
+
+
+
 
   AllClient_get: 'asset/allClient/get',
   AllClient_ByName_get: 'asset/allClient/ByName/get',

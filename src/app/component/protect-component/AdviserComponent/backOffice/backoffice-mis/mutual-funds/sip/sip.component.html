@@ -39,13 +39,13 @@
                                         <div class="row pt-12">
                                             <div class="col-md-5 text-left p-0" *ngIf="sipCount">
                                                 <div class="pl-12">
-                                                    <h1 class="f-24 text-white mb-0 pb-8">{{sipCount.totalCount}}
+                                                    <h1 class="f-24 text-white mb-0 pb-8">{{(sipCount.totalCount)?sipCount.totalCount:0}}
                                                     </h1>
                                                     <p class="f-12 text-white mb-0">SIP Count</p>
                                                 </div>
                                             </div>
                                             <div class="col-md-7 p-0 text-right" *ngIf="sipCount">
-                                                <h1 class="text-white f-24 mb-0 pb-8">{{sipCount.totalAmount}}</h1>
+                                                <h1 class="text-white f-24 mb-0 pb-8">{{(sipCount.totalAmount)?sipCount.totalAmount:0}}</h1>
                                                 <p class="f-12 mb-0 text-white">Average SIP</p>
 
                                             </div>
@@ -53,7 +53,7 @@
                                                 <div class="pt-20">
                                                     <mat-progress-bar mode="determinate" value="10" class="text-white">
                                                     </mat-progress-bar>
-                                                    <p class="text-white f-12 pt-4 mb-0 pb-8">10 % Clients without SIP
+                                                    <p class="text-white f-12 pt-4 mb-0 pb-8">{{clientWithoutSip}} % Clients without SIP
                                                     </p>
                                                 </div>
                                             </div>
