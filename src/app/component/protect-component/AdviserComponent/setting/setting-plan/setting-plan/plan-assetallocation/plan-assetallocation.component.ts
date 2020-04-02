@@ -66,35 +66,35 @@ export class PlanAssetallocationComponent implements OnInit {
       this.obj = {
         advisorId : this.advisorId,
         riskProfileMasterId: element.riskProfileMasterI1,
-        goalTimeFrameMasterId:element.goalTimeFrameMasterId,
+        goalTimeFrameMasterId:element.goalTimeFrameMasterId1,
         equityAllocation: element.equity1,
         debtAllocation: element.debt1,
       }
       this.obj1 = {
         advisorId : this.advisorId,
         riskProfileMasterId: element.riskProfileMasterI2,
-        goalTimeFrameMasterId:element.goalTimeFrameMasterId,
+        goalTimeFrameMasterId:element.goalTimeFrameMasterId2,
         equityAllocation: element.equity2,
         debtAllocation: element.debt2,
       }
       this.obj2 = {
         advisorId : this.advisorId,
         riskProfileMasterId: element.riskProfileMasterI3,
-        goalTimeFrameMasterId:element.goalTimeFrameMasterId,
+        goalTimeFrameMasterId:element.goalTimeFrameMasterId3,
         equityAllocation: element.equity3,
         debtAllocation: element.debt3,
       }
       this.obj3 = {
         advisorId : this.advisorId,
         riskProfileMasterId: element.riskProfileMasterI4,
-        goalTimeFrameMasterId:element.goalTimeFrameMasterId,
+        goalTimeFrameMasterId:element.goalTimeFrameMasterId4,
         equityAllocation: element.equity4,
         debtAllocation: element.debt4,
       }
       this.obj4 = {
         advisorId : this.advisorId,
         riskProfileMasterId: element.riskProfileMasterI5,
-        goalTimeFrameMasterId:element.goalTimeFrameMasterId,
+        goalTimeFrameMasterId:element.goalTimeFrameMasterId5,
         equityAllocation: element.equity5,
         debtAllocation: element.debt5,
       }
