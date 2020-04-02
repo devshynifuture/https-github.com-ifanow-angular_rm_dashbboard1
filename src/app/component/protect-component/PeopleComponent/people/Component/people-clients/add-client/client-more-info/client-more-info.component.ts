@@ -33,7 +33,24 @@ export class ClientMoreInfoComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.moreInfoData = data;
     console.log(data);
-    (data.invCategory == '2') ? this.getCompanyDetails(data) : '';
+    if (this.fieldFlag == 'familyMember') {
+      this.createMoreInfoForm(data);
+      (this.moreInfoData.familyMemberType == 0 || this.moreInfoData.familyMemberType == 1) ? this.moreInfoData['categoryTypeflag'] = "Individual" : this.moreInfoData['categoryTypeflag'] = "familyMinor";
+    }
+    else {
+      if (this.moreInfoData.userId == null) {
+        this.createMoreInfoForm(null);
+        return;
+      }
+      else {
+        (this.moreInfoData.clientType == 1) ? this.moreInfoData['categoryTypeflag'] = "Individual" : this.moreInfoData['categoryTypeflag'] = "clientNonIndividual";
+        (this.moreInfoData.clientType == '2') ? this.getCompanyDetails(this.moreInfoData) : '';
+        this.createMoreInfoForm(data);
+      }
+    }
+  }
+  createMoreInfoForm(data) {
+    (data == undefined) ? data = {} : data;
     this.moreInfoForm = this.fb.group({
       displayName: [],
       adhaarNo: [],
@@ -52,8 +69,8 @@ export class ClientMoreInfoComponent implements OnInit {
       adhharGuardian: []
     });
   }
-
   ngOnInit() {
+
   }
 
   getNumberDetails(data) {
@@ -75,17 +92,19 @@ export class ClientMoreInfoComponent implements OnInit {
 
   saveNext(flag) {
     const mobileList = [];
-    this.mobileData.controls.forEach(element => {
-      console.log(element);
-      mobileList.push({
-        verificationStatus: 0,
-        id: 0,
-        userType: 0,
-        mobileNo: element.get('number').value,
-        isActive: 1,
-        userId: 0
+    if (this.mobileData) {
+      this.mobileData.controls.forEach(element => {
+        console.log(element);
+        mobileList.push({
+          verificationStatus: 0,
+          id: 0,
+          userType: 0,
+          mobileNo: element.get('number').value,
+          isActive: 1,
+          userId: 0
+        });
       });
-    });
+    }
     const obj = {
       advisorId: this.moreInfoData.advisorId,
       emailList: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.emailList : this.moreInfoForm.value.email,
@@ -115,7 +134,7 @@ export class ClientMoreInfoComponent implements OnInit {
       status: 0,
       companyPersonDetailId: (this.moreInfoData.invCategory == '1') ? null : this.moreInfoData.companyPersonDetailId
     };
-    if (this.fieldFlag == 'client') {
+    if (this.fieldFlag == 'client' || this.fieldFlag == 'lead') {
       if (this.moreInfoData.invCategory == '1') {
         this.peopleService.editClient(obj).subscribe(
           data => {

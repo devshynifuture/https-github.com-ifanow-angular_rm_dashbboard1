@@ -512,23 +512,23 @@ export class CustomerService {
   }
 
   clientUploadFile(data) {
-    // let httpParams=new HttpParams().set("advisorId",data.advisorId)
-    // .set("clientId",data.clientId).set('folderId',data.folderId).set('fileName',data.fileName)
     return this.http.get(apiConfig.MAIN_URL + appConfig.CLIENT_UPLOAD_FILE, data);
   }
 
+  deleteClientProof(data) {
+    return this.http.put(apiConfig.USER + appConfig.DELETE_CLIENT_UPLOAD_FILE, data);
+  }
+
+  getClientProof(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_PROOF, data);
+  }
+
   saveClientUploadFile(data) {
-    // let httpParams=new HttpParams().set("advisorId",data.advisorId)
-    // .set("clientId",data.clientId).set('folderId',data.folderId).set('fileName',data.fileName)
-    // return this.http.get(apiConfig.USER + appConfig.SAVE_CLIENT_UPLOAD_FILE, data);
     return this.http.postEncoded(apiConfig.USER + appConfig.SAVE_CLIENT_UPLOAD_FILE, data);
 
   }
 
   getClientUploadFile(data) {
-    // let httpParams=new HttpParams().set("advisorId",data.advisorId)
-    // .set("clientId",data.clientId).set('folderId',data.folderId).set('fileName',data.fileName)
-    // return this.http.get(apiConfig.USER + appConfig.GET_CLIENT_UPLOAD_FILE, data);
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_CLIENT_UPLOAD_FILE, data, 1);
 
   }
