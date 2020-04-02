@@ -7,6 +7,8 @@ import { UtilService } from 'src/app/services/util.service';
 import { TaskTemplateTypeComponent } from './add-task-template/task-template-type/task-template-type.component';
 import { OrgSettingServiceService } from '../org-setting-service.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { ConfirmDialogComponent } from '../../../common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-setting-activity',
@@ -22,34 +24,13 @@ export class SettingActivityComponent implements OnInit {
   constructor(private subInjectService: SubscriptionInject,
     public subscription: SubscriptionService,
     public eventService: EventService, private utilService: UtilService,
-    private orgSetting: OrgSettingServiceService) {
+    private orgSetting: OrgSettingServiceService, public dialog: MatDialog,) {
       this.advisorId = AuthService.getAdvisorId()
      }
 
   ngOnInit() {
     this.getTaskTemplate();
-    this.taskList = [{
-      advisorId: 2808,
-      categoryId: 1,
-      subcategoryId: 7,
-      subSubCategoryId: 13,
-      adviceTypeId: 2,
-      linkedTemplateId: 2,
-      taskDescription: "This is task",
-      assignedTo: 2727,
-      turnAroundTime: 2,
-      subTaskList: [{
-        taskNumber: 1,
-        description: "Abcd needs to be done today!",
-        turnAroundTime: 2,
-        ownerId: 2727
-      }, {
-        taskNumber: 1,
-        description: "Abcd needs to be done today!",
-        turnAroundTime: 2,
-        ownerId: 2727
-      }]
-    }]
+    this.taskList = []
   }
   getTaskTemplate() {
     this.isLoading = true
@@ -65,32 +46,47 @@ export class SettingActivityComponent implements OnInit {
     this.isLoading = false
     console.log('getTaskTemplateRes == ', data)
     if (data) {
-      this.taskList = [{
-        advisorId: 2808,
-        categoryId: 1,
-        subcategoryId: 7,
-        subSubCategoryId: 13,
-        adviceTypeId: 2,
-        linkedTemplateId: 2,
-        taskDescription: "This is task",
-        assignedTo: 2727,
-        turnAroundTime: 2,
-        subTaskList: [{
-          taskNumber: 1,
-          description: "Abcd needs to be done today!",
-          turtAroundTime: 2,
-          ownerId: 2727
-        }, {
-          taskNumber: 1,
-          description: "Abcd needs to be done today!",
-          turtAroundTime: 2,
-          ownerId: 2727
-        }]
-      }]
+      this.taskList = data
     } else {
       this.isLoading = false
       this.taskList = []
     }
+  }
+  
+  deleteTask(value, data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+          this.orgSetting.deleteTaskTemplate(data.id).subscribe(
+            data => {
+              dialogRef.close();
+              this.getTaskTemplate();
+            },
+            error => this.eventService.showErrorMessage(error)
+          );
+        this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
   addTaskTemplate(singleProfile, value) {
     const fragmentData = {
