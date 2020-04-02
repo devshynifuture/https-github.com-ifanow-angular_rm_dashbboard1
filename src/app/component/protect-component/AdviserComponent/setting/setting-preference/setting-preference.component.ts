@@ -271,6 +271,7 @@ export class SettingPreferenceComponent implements OnInit {
     });
   }
   getPlanRes(data) {
+    this.isLoading = false
     console.log('getPortfolioRes == ', data)
     if(data){
       this.planSection = data
