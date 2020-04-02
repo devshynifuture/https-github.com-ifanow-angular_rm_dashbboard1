@@ -7,6 +7,7 @@ import { PeopleService } from '../../../people.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-people-clients',
@@ -18,7 +19,7 @@ export class PeopleClientsComponent implements OnInit {
     'login', 'status', 'icons', 'icons1'];
   dataSource;
   advisorId: any;
-  clientDatasource: any;
+  clientDatasource = new MatTableDataSource();
   isLoading: boolean;
   constructor(private subInjectService: SubscriptionInject, public eventService: EventService, private peopleService: PeopleService, public dialog: MatDialog) { }
 
@@ -28,7 +29,7 @@ export class PeopleClientsComponent implements OnInit {
   }
 
   getClientList() {
-    this.clientDatasource = [{}, {}, {}];
+    this.clientDatasource.data = [{}, {}, {}];
     this.isLoading = true;
     let obj =
     {
@@ -40,11 +41,27 @@ export class PeopleClientsComponent implements OnInit {
       data => {
         console.log(data);
         this.isLoading = false;
-        this.clientDatasource = data;
+        if (data && data.length > 0) {
+          data.forEach((singleData) => {
+            if (singleData.mobileList && singleData.mobileList.length > 0) {
+              singleData.mobileNo = singleData.mobileList[0].mobileNo;
+            }
+            if (singleData.emailList && singleData.emailList.length > 0) {
+              singleData.email = singleData.emailList[0].email;
+            }
+          });
+        }
+        this.clientDatasource.data = data;
       },
-      err => this.eventService.openSnackBar(err, "dismiss")
-    )
+      err => {
+        this.eventService.openSnackBar(err, 'dismiss');
+        this.clientDatasource.data = [];
+      }
+    );
+
+    // commented code closed which are giving errors ====>>>>>>>>>>>>>>.
   }
+
   Addclient(data) {
     if (data == null) {
       data = { flag: 'Add client', fieldFlag: 'client' }

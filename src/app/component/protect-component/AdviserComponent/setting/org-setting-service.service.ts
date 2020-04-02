@@ -68,7 +68,7 @@ export class OrgSettingServiceService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.UPLOAD_PLAN_GALLERY, data);
   }
   updateKeyParameter(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.UPDATE_DOMAIN, data);
+    return this.http.post(apiConfig.MAIN_URL + appConfig.UPLOAD_KEY_PARAMETER, data);
   }
 
   addTaskTemplate(data) {

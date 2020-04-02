@@ -2,14 +2,13 @@
     <div class="col-md-10 p-0">
         <h4 class="mb-0 l-22 wrapper-20">Add team member</h4>
     </div>
-    <!-- (click)="close()" prod build -->
-    <div class="col-md-2 text-right" >
+    <div class="col-md-2 text-right" (click)="close()" >
         <i class="material-icons pt-20 c-p pr-16">
             clear
         </i>
     </div>
 </div>
-<div class="pt-90 pl-28 pr-28" [formGroup]="teamMemberFG">
+<div class="pt-90 pl-28 pr-28"  [formGroup]="teamMemberFG">
     <div class="row pt-28">
         <div class="col-md-3 text-right pr-0">
             <h5 class="m-0 pt-12">Full name</h5>
@@ -17,7 +16,7 @@
         <div class="col-md-7 pr-0">
             <div class="form-group">
                 <mat-form-field>
-                    <input matInput formControlName="name" class="form-control">
+                    <input matInput formControlName="fullName" class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
 
@@ -31,7 +30,7 @@
         <div class="col-md-7 pr-0">
             <div class="form-group">
                 <mat-form-field>
-                    <input matInput formControlName="email" class="form-control">
+                    <input matInput formControlName="emailId" class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
 
@@ -45,7 +44,7 @@
         <div class="col-md-7 pr-0">
             <div class="form-group">
                 <mat-form-field>
-                    <input matInput formControlName="mobile" class="form-control">
+                    <input matInput formControlName="mobileNo" class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
 
@@ -59,9 +58,9 @@
         <div class="col-md-7 pr-0">
             <div class="form-group">
                 <mat-form-field>
-                    <mat-select class="form-control" formControlName="role">
+                    <mat-select class="form-control" formControlName="roleId">
                         <mat-option value="">Select Role</mat-option>
-                        <mat-option *ngFor="let role of roles" [value]="role.id">{{role.name}}</mat-option>
+                        <mat-option *ngFor="let role of data.roles" [value]="role.id">{{role.roleName}}</mat-option>
                     </mat-select>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -72,13 +71,10 @@
 <div class="bottom-fixed wrapper-12 w-35">
     <div class="row">
         <div class="col-md-4">
-            <!-- (click)="close()" prod build -->
-            <h5 class="mb-0 pt-8 text-white c-p" >Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <!-- (click)="save()" prod build -->
-            <button mat-button class="btn-bottom br-0 text-inherit" >SEND INVITE
-            </button>
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()">SEND INVITE</button>
         </div>
     </div>
 </div>

@@ -91,7 +91,7 @@
         <td mat-cell class="text-right" *matCellDef="let element; let i = index" appCashflowTableEdit>
             {{(editMode == true)? '':element.debt4}}
 
-            <input class="form-control" type="text" *ngIf="editMode == true" #debt4 (input)="changeTableTdValue(descRef.debt4, 'debt4','equity4',element, i)" [value]="element.debt4">
+            <input class="form-control" type="text" *ngIf="editMode == true" #debt4 (input)="changeTableTdValue(debt4.value, 'debt4','equity4',element, i)" [value]="element.debt4">
         </td>
     </ng-container>
     <ng-container matColumnDef="equity4">

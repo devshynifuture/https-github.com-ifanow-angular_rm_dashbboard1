@@ -166,6 +166,8 @@ export const appConfig = {
   UPLOAD_FILE: 'document/account/document/all-file/file/put',
   CLIENT_UPLOAD_FILE: 'document/upload/pre-signed-url/get',
   SAVE_CLIENT_UPLOAD_FILE: 'user/document/mapping/save',
+  DELETE_CLIENT_UPLOAD_FILE: 'user/document/mapping/delete',
+  GET_CLIENT_PROOF:'document/download/pre-signed-url/get',
   GET_CLIENT_UPLOAD_FILE: 'user/document/mapping/get',
   NEW_FOLDER: 'document/account/document/all-file/folder/post',
   GET_ASSET_STOCK: 'account/asset/stock/list/get',
@@ -489,7 +491,7 @@ export const appConfig = {
   PROTFOLIO_UPDATE: 'setting/preferences/portfolio/update',
   PLAN_SECTION_UPDATE: 'setting/preferences/plan/update',
   DOMAIN_GET: 'setting/preferences/domain/get',
-  UPDATE_DOMAIN: 'goal-planning/advisor-plan-configuration/add',
+  UPDATE_DOMAIN: 'setting/preferences/domain/update',
   EDIT_ORG_PROFILE_LOGO: 'setting/profile/organisation/logo/update',
   EDIT_ORG_PROFILE_REPORT_LOGO: 'setting/profile/organisation/report/logo/update',
   GET_EMAIL_VERIFICATION: 'setting/preference/email/get',
@@ -499,7 +501,7 @@ export const appConfig = {
   GET_RETURNS: 'plan/config/return-inflation/get',
   GET_KEY_PARAMETERS: 'goal-planning/key-parameters/get',
   UPLOAD_PLAN_GALLERY: 'goal-planning/goal-gallery/add',
-  UPLOAD_KEY_PARAMETER: 'goal-planning/static-allocation/put',
+  UPLOAD_KEY_PARAMETER: 'goal-planning/advisor-plan-configuration/add',
   UPDATE_ASSET_ALLOCATION: 'goal-planning/static-allocation/put',
   GET_TASK_TEMPLATE: 'setting/task/template/list/get',
   GET_TEAM_MEMBER_LIST: 'user/advisor/team-members/detail/get',
@@ -532,7 +534,7 @@ export const appConfig = {
   SEND_EMAIL: 'gmail/email/send',
   GET_ATTACHMENTS: 'gmail/attachment/get',
   //////////////////////////people/////////////////////////////////////
-  GET_PEOPLE_CLIENT_LIST: '/user/client/all/get',
+  GET_PEOPLE_CLIENT_LIST: 'user/client/all/get',
   ADD_CLIENT: 'user/client/add',
   EDIT_CLIENT: 'user/client/edit',
   ADD_EDIT_CLIENT_ADDRESS: 'user/address/add-edit',
@@ -594,7 +596,13 @@ export const appConfig = {
   GET_ALL_FEATURES: 'setting/users-roles/feature-capabilities/all/get',
 
   GET_USER_ACCESS_RIGHTS_LIST: 'setting/users-roles/access-rights/get',
-  UPDATE_USER_ACCESS_RIGHTS_LIST: 'setting/users-roles/access-rights/update'
+  UPDATE_USER_ACCESS_RIGHTS: 'setting/users-roles/access-rights/update',
+
+  GET_ALL_TEAM_MEMEBERS: 'setting/users/team-members/get',
+  ADD_TEAM_MEMBER: 'setting/users/team-member/add',
+  DELETE_TEAM_MEMBER: 'setting/users/team-member/delete',
+  SUSPEND_TEAM_MEMBER: 'setting/users/team-member/suspend',
+  HAND_OVER_TEAM_MEMBER: 'setting/users/team-member/hand-over/get',
 
 
   ////////////////////////////// settings////////////////////////////////////////////
