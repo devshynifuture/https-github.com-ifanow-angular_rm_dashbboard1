@@ -486,7 +486,7 @@ export const appConfig = {
   PROTFOLIO_UPDATE: 'setting/preferences/portfolio/update',
   PLAN_SECTION_UPDATE: 'setting/preferences/plan/update',
   DOMAIN_GET: 'setting/preferences/domain/get',
-  UPDATE_DOMAIN: 'setting/preferences/domain/update',
+  UPDATE_DOMAIN: 'goal-planning/advisor-plan-configuration/add',
   EDIT_ORG_PROFILE_LOGO: 'setting/profile/organisation/logo/update',
   EDIT_ORG_PROFILE_REPORT_LOGO: 'setting/profile/organisation/report/logo/update',
   GET_EMAIL_VERIFICATION: 'setting/preference/email/get',
