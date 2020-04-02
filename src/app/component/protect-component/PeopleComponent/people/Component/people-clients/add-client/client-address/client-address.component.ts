@@ -90,13 +90,19 @@ export class ClientAddressComponent implements OnInit {
         "userAddressMappingId": this.addressForm.get('addressLine1').value,
         "addreesId": this.addressForm.get('addressLine1').value
       }
-      this.peopleService.addEditClientAddress(obj).subscribe(
-        data => {
-          console.log(data);
-          (flag == 'Next') ? this.tabChange.emit(1) : this.close();
-        },
-        err => this.eventService.openSnackBar(err, "Dismiss")
-      )
+
+      // commented Code which are giving error +>>>>>>>>>>>>>>>>>>>>>>
+
+      // this.peopleService.addEditClientAddress(obj).subscribe(
+      //   data => {
+      //     console.log(data);
+      //     (flag == 'Next') ? this.tabChange.emit(1) : this.close();
+      //   },
+      //   err => this.eventService.openSnackBar(err, "Dismiss")
+      // )
+
+      // commented Code closed which are giving error +>>>>>>>>>>>>>>>>>>>>>>
+
     }
   }
   close() {

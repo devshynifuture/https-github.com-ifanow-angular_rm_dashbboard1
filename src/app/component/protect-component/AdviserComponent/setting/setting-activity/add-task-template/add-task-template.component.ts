@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, Input } from '@angular/core';
 import { SettingsService } from '../../settings.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
@@ -38,8 +38,26 @@ export class AddTaskTemplateComponent implements OnInit {
   list: any;
   hideSubcategory: boolean = false;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  inputData: any;
+  linkedTemplateId: any;
+  isEdite: boolean;
 
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    console.log('This is Input data ', data)
+    if (data == 1) {
+      this.linkedTemplateId = data
+    } else if (data == 2) {
+      this.linkedTemplateId = data
+    } else {
+      this.getdataForm(data);
+    }
+  }
 
+  get data() {
+    return this.inputData;
+  }
   constructor(private subInjectService: SubscriptionInject,
     private utilService: UtilService,
     private orgSetting: OrgSettingServiceService,
@@ -52,13 +70,29 @@ export class AddTaskTemplateComponent implements OnInit {
     });
   }
   ngOnInit() {
-    this.getdataForm('')
+    this.getGlobalTaskData()
+    this.getteamMemberList()
+    this.getdataForm(this.inputData)
+    this.taskTemplate.controls.category.setValue(1)
     this.advisorId = AuthService.getAdvisorId()
     this.category = 'asset'
     this.editMode = false;
-    this.taskTemplate.controls.category.setValue(1)
-    this.getGlobalTaskData()
+    this.isEdite = false
   }
+  getteamMemberList() {
+
+    let obj = {
+      advisorId: 55
+    }
+    this.orgSetting.getTeamMemberList(obj).subscribe(
+      data => this.getTeamMemberListRes(data),
+      err => this.event.openSnackBar(err, "Dismiss")
+    );
+  }
+  getTeamMemberListRes(data) {
+    console.log('team member', data)
+  }
+
   getGlobalTaskData() {
     this.orgSetting.getGlobalDataTask().subscribe(
       data => {
@@ -81,6 +115,8 @@ export class AddTaskTemplateComponent implements OnInit {
     this.listOfSub = value.taskTempSubcattoSubCategories
     if (value.taskTempSubcattoSubCategories.length == 0) {
       this.hideSubcategory = true
+    } else {
+      this.hideSubcategory = false
     }
   }
   getSelectedCategory(value, category) {
@@ -88,24 +124,47 @@ export class AddTaskTemplateComponent implements OnInit {
     console.log('getSelectedCategory', value)
     if (value == 1) {
       this.list = this.assetSubCategoryList
+      if (this.inputData.subcategoryId) {
+        var subList = this.list.filter(element => element.subcategoryId == this.inputData.subcategoryId)
+        this.listOfSub = subList[0].taskTempSubcattoSubCategories
+      }
     } else if (value == 2) {
       this.list = this.libilitySubCategoryList
+      if (this.inputData.subcategoryId) {
+        var subList = this.list.filter(element => element.subcategoryId == this.inputData.subcategoryId)
+        this.listOfSub = subList[0].taskTempSubcattoSubCategories
+      }
     } else {
       this.list = this.insuranceSubCategoryList
+      if (this.inputData.subcategoryId) {
+        var subList = this.list.filter(element => element.subcategoryId == this.inputData.subcategoryId)
+        this.listOfSub = subList[0].taskTempSubcattoSubCategories
+      }
     }
+    this.getdataForm(this.inputData)
   }
   getdataForm(data) {
+    if (!data) {
+      data = {}
+    } else if (data == 1) {
+      data = {}
+    } else if (data == 2) {
+      data = {}
+    }
     this.taskTemplate = this.fb.group({
-      category: [(!data) ? '' : (data.category), [Validators.required]],
-      subCategory: [(!data) ? '' : data.subCategory, [Validators.required]],
-      taskTemplate: [(!data) ? '' : data.taskTemplate, [Validators.required]],
-      defaultAssign: [(!data) ? '' : data.defaultAssign],
-      turnaroundTime: [(!data) ? '' : data.turnaroundTime],
+      category: [(!data) ? '' : (data.categoryId), [Validators.required]],
+      subCategory: [(!data) ? '' : (data.subcategoryId), [Validators.required]],
+      subSubCategory: [(!data) ? '' : (data.subSubCategoryId), [Validators.required]],
+      taskTemplate: [(!data) ? '' : data.taskDescription, [Validators.required]],
+      adviceType: [(!data) ? '' : (data.adviceTypeId) + "", [Validators.required]],
+      defaultAssign: [(!data) ? '' : data.ownerName],
+      turnAroundTime: [(!data) ? '' : (data.turnAroundTime)],
       subTaskList: this.fb.array([this.fb.group({
         taskNumber: [1, [Validators.required]],
         description: [null, [Validators.required]],
-        turtAroundTime: [null, [Validators.required]],
-        ownerId: [null, [Validators.required]]
+        turnAroundTime: [null, [Validators.required]],
+        ownerId: [null, [Validators.required]],
+        isEdite: true,
       })]),
     });
     if (data.subTaskList != undefined) {
@@ -113,42 +172,64 @@ export class AddTaskTemplateComponent implements OnInit {
         this.taskTemplate.controls.subTaskList.push(this.fb.group({
           taskNumber: [(1) + "", [Validators.required]],
           description: [(element.description + ""), Validators.required],
-          turtAroundTime: [(element.turtAroundTime), Validators.required],
-          ownerId: [element.ownerId, [Validators.required]]
+          turnAroundTime: [(element.turnAroundTime), Validators.required],
+          ownerId: [element.ownerId, [Validators.required]],
+          isEdite: false
         }))
       })
+      this.subTask.removeAt(0);
     }
   }
-  addSubTask(value) {
-    this.subTask.push(this.fb.group({
-      taskNumber: [1, [Validators.required]],
-      description: [null, [Validators.required]],
-      turtAroundTime: [null, [Validators.required]],
-      ownerId: [null, [Validators.required]],
-    }));
-    console.log('creds --',value)
-    if (value.invalid) {
-      this.inputs.find(input => !input.ngControl.valid).focus();
-      value.markAllAsTouched();
-    } else{
-      let obj = {
-        TaskTemplateId: 1,
-        taskNumber: 1,
-        description: value.controls.description.value,
-        turtAroundTime: value.controls.turtAroundTime.value,
-        ownerId: 2727
+  editSubtask(value, flag, index) {
+    value.controls.isEdite.setValue(true)
+    console.log('flag', flag)
+
+  }
+  addSubTask(value, flag) {
+    if (flag == 'add') {
+      this.subTask.push(this.fb.group({
+        taskNumber: [1, [Validators.required]],
+        description: [null, [Validators.required]],
+        turnAroundTime: [null, [Validators.required]],
+        ownerId: [null, [Validators.required]],
+        isEdite: false
+      }));
+    } else {
+      console.log('creds --', value)
+      if (value.invalid) {
+        this.inputs.find(input => !input.ngControl.valid).focus();
+        value.markAllAsTouched();
+      } else {
+        value.controls.isEdite.setValue(false)
+        let obj = {
+          TaskTemplateId: 1,
+          taskNumber: 1,
+          description: value.controls.description.value,
+          turnAroundTime: value.controls.turnAroundTime.value,
+          ownerId: 2727,
+          id: value.controls.id.value,
+        }
+        if (value.controls.id.value) {
+          this.orgSetting.editSubTaskTemplate(obj).subscribe(
+            data => {
+              this.editSubTaskTemplateRes(data)
+            }, err => this.event.openSnackBar(err, "Dismiss")
+          );
+        } else {
+          this.orgSetting.addSubtaskTemplate(obj).subscribe(
+            data => {
+              this.addSubtaskTemplateRes(data)
+            }, err => this.event.openSnackBar(err, "Dismiss")
+          );
+        }
       }
-      this.orgSetting.addSubtaskTemplate(obj).subscribe(
-        data => {
-          this.addSubtaskTemplateRes(data)
-        },
-        err => this.event.openSnackBar(err, "Dismiss")
-      );
     }
-  
   }
-  addSubtaskTemplateRes(data){
-    console.log('addSubtaskTemplateRes',data)
+  editSubTaskTemplateRes(data) {
+    console.log('editSubTaskTemplateRes', data)
+  }
+  addSubtaskTemplateRes(data) {
+    console.log('addSubtaskTemplateRes', data)
   }
   getFormControl(): any {
     return this.taskTemplate.controls;
@@ -159,40 +240,87 @@ export class AddTaskTemplateComponent implements OnInit {
   Close(flag: boolean) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
-  changeTableTdValue(value, ele) {
-
-  }
   toggleEditMode() {
     this.editMode = !this.editMode;
     console.log('hgdsfhg ==', this.editMode)
   }
-  saveTaskTemplate() {
-    let obj = {
-      advisorId: 414,
-      categoryId: 1,
-      subcategoryId: 2,
-      linkedTemplateId: 2,
-      adviceTypeId:1,
-      subSubCategoryId:13,
-      taskDescription: this.taskTemplate.controls.taskTemplate.value,
-      assignedTo: 2727,
-      turnAroundTime: this.taskTemplate.controls.turnaroundTime.value,
-      subTaskList: this.taskTemplate.controls.subTaskList.value,
+  updateOwner() {
+    if (this.inputData.id) {
+      let obj = {
+        ownerId: 2227,
+        taskTemplateId: this.taskTemplate.controls.id.value,
+      }
+      this.orgSetting.updateOwnerTaskTemplate(obj).subscribe(
+        data => {
+          this.updateOwnerTaskTemplateRes(data)
+        }, err => this.event.openSnackBar(err, "Dismiss")
+      );
     }
-    console.log('this what i want', obj)
-    this.orgSetting.addTaskTemplate(obj).subscribe(
-      data => {
-        this.addTaskTemplateRes(data)
-      },
-      err => this.event.openSnackBar(err, "Dismiss")
-    );
+  }
+  updateOwnerTaskTemplateRes(data) {
+    console.log('updateOwnerTaskTemplateRes', data)
+  }
+  removeSubTask(item) {
+    if (this.subTask.value.length > 1) {
+      this.subTask.removeAt(item);
+    }
+  }
+  saveTaskTemplate() {
+    if (this.taskTemplate.invalid) {
+      for (let element in this.taskTemplate.controls) {
+        console.log(element)
+        if (this.taskTemplate.get(element).invalid) {
+          this.inputs.find(input => !input.ngControl.valid).focus();
+          this.taskTemplate.controls[element].markAsTouched();
+          this.taskTemplate.get('subSubCategory').markAsTouched();
+          this.taskTemplate.get('subSubCategory').markAsTouched();
+          this.taskTemplate.get('adviceType').markAsTouched();
+          this.taskTemplate.get('turnAroundTime').markAsTouched();
+        }
+      }
+    } else {
+      let obj = {
+        advisorId: this.advisorId,
+        categoryId: this.taskTemplate.controls.category.value,
+        subcategoryId: this.taskTemplate.controls.subCategory.value,
+        linkedTemplateId: this.linkedTemplateId,
+        adviceTypeId: this.taskTemplate.controls.adviceType.value,
+        subSubCategoryId: this.taskTemplate.controls.subSubCategory.value,
+        taskDescription: this.taskTemplate.controls.taskTemplate.value,
+        assignedTo: 2727,
+        turnAroundTime: this.taskTemplate.controls.turnAroundTime.value,
+        subTaskList: this.taskTemplate.controls.subTaskList.value,
+        id: this.taskTemplate.controls.id.value
+      }
+      if (obj.id) {
+        console.log('this what i want', obj)
+        this.orgSetting.editTaskTemplate(obj).subscribe(
+          data => {
+            this.editTaskTemplateRes(data)
+          },
+          err => this.event.openSnackBar(err, "Dismiss")
+        );
+      } else {
+        console.log('this what i want', obj)
+        this.orgSetting.addTaskTemplate(obj).subscribe(
+          data => {
+            this.addTaskTemplateRes(data)
+          },
+          err => this.event.openSnackBar(err, "Dismiss")
+        );
+      }
+    }
+
   }
   addTaskTemplateRes(data) {
-    if (data) {
-
-    } else {
-
-    }
+    console.log('addTaskTemplateRes', data);
+    this.event.openSnackBar('Added successfully!', 'Dismiss');
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
+  }
+  editTaskTemplateRes(data) {
+    console.log('editTaskTemplateRes', data);
+    this.event.openSnackBar('Updated successfully!', 'Dismiss');
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 
 }

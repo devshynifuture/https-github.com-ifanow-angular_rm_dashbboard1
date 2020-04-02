@@ -6,12 +6,21 @@
         <div class="row">
             <div class="col-md-6 pl-0 pr-8">
                 <p class="m-0 roboto">Category</p>
-                <div class="form-group">
+                <div *ngIf="fieldFlag=='client'" class="form-group">
                     <mat-form-field>
                         <mat-select [(ngModel)]="invTypeCategory" (selectionChange)="changeInvestorType($event)"
                             class="form-control">
-                            <mat-option *ngFor="let singleCategory of categoryList" value="singleCategory.value">
-                                {{singleCategory.name}}</mat-option>
+                            <mat-option value='1'>Individual</mat-option>
+                            <mat-option value='2'>Non-individual</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="form-group" *ngIf="fieldFlag=='familyMember'">
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="invTypeCategory" (selectionChange)="changeInvestorType($event)"
+                            class="form-control">
+                            <mat-option value='1'>Individual</mat-option>
+                            <mat-option value='2'>Minor</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -250,454 +259,432 @@
         </div>
     </div>
 </div>
-<div *ngIf="invTypeCategory=='2' && fieldFlag=='familyMember'" [formGroup]="minorForm" class="minorBox">
-    <div class=" row pt-20">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-20">Minor’s full name</h5>
-        </div>
-        <div class="col-md-5 p-0">
-            <div class="form-group mb-0">
-                <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput appInputValueValidation [maxLength]="50" #mFullName
-                        [inputValidator]="validatorType.PERSON_NAME" formControlName="minorFullName"
-                        placeholder="Enter Name" class="form-control">
-                    <mat-hint align="end" class="f-12">{{mFullName.value.length}}/50</mat-hint>
-                </mat-form-field>
+<div *ngIf="fieldFlag=='familyMember'">
+    <div *ngIf="invTypeCategory=='2'" [formGroup]="minorForm" class="minorBox">
+        <div class=" row pt-20">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-20">Minor’s full name</h5>
+            </div>
+            <div class="col-md-5 p-0">
+                <div class="form-group mb-0">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input matInput appInputValueValidation [maxLength]="50" #mFullName
+                            [inputValidator]="validatorType.PERSON_NAME" formControlName="minorFullName"
+                            placeholder="Enter Name" class="form-control">
+                        <mat-hint align="end" class="f-12">{{mFullName.value.length}}/50</mat-hint>
+                    </mat-form-field>
+                </div>
             </div>
         </div>
+
+        <div class="row pt-32">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-32">Minor’s date of birth</h5>
+            </div>
+            <div class="col-md-3 p-0">
+                <p class="m-0 roboto">As per records</p>
+                <div class="form-group mb-0">
+                    <mat-form-field class="ba-date">
+                        <input [matDatepicker]="dobAsPerRecord" (click)="dobAsPerRecord.open()"
+                            class="form-control br-0 b-0" formControlName="dobAsPerRecord" matInput readonly>
+                        <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord"></mat-datepicker-toggle>
+                        <mat-datepicker #dobAsPerRecord></mat-datepicker>
+                        <mat-error class="f-12">This field is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <p class="m-0 roboto">Actual</p>
+                <div class="form-group mb-0">
+                    <mat-form-field class="ba-date">
+                        <input formControlName="dobActual" (click)="dobActual.open()" class="form-control br-0 b-0"
+                            formControlName="dobActual" matInput readonly>
+                        <mat-datepicker-toggle matSuffix [for]="dobActual"></mat-datepicker-toggle>
+                        <mat-datepicker #dobActual></mat-datepicker>
+                        <mat-error class="f-12">This field is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pt-60">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-8">Gender</h5>
+            </div>
+            <div class="col-md-7 p-0">
+                <mat-radio-group aria-label="Select an option" formControlName="gender" class="d-block">
+                    <mat-radio-button value="1" [ngClass]="{'bu-primary':minorForm.get('gender').value=='1'}"
+                        class="borderRadio">Male</mat-radio-button>
+                    <mat-radio-button value="2" [ngClass]="{'bu-primary':minorForm.get('gender').value=='2'}"
+                        class="borderRadio">Female </mat-radio-button>
+                    <mat-radio-button value="3" [ngClass]="{'bu-primary':minorForm.get('gender').value=='3'}"
+                        class="borderRadio">Other</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+
+        <div class="row pt-44">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-20">Guardian’s full name</h5>
+            </div>
+            <div class="col-md-5 p-0">
+                <div class="form-group mb-0">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input #gFullName matInput placeholder="Enter Name" appInputValueValidation [maxLength]="50"
+                            [inputValidator]="validatorType.PERSON_NAME" formControlName="gFullName"
+                            class="form-control">
+                        <mat-hint align="end" class="f-12">{{gFullName.value.length}}/50</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pt-32">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-32">Guardian’s date of birth</h5>
+            </div>
+            <div class="col-md-3 p-0">
+                <p class="m-0 roboto">As per records</p>
+                <div class="form-group mb-0">
+                    <mat-form-field class="ba-date">
+                        <input formControlName="gDobAsPerRecord" (click)="gDobAsPerRecord.open()"
+                            class="form-control br-0 b-0" matInput readonly>
+                        <mat-datepicker-toggle matSuffix [for]="gDobAsPerRecord"></mat-datepicker-toggle>
+                        <mat-datepicker #gDobAsPerRecord></mat-datepicker>
+                        <mat-error class="f-12">This field is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <p class="m-0 roboto">As per records</p>
+                <div class="form-group mb-0">
+                    <mat-form-field class="ba-date">
+                        <input formControlName="gDobActual" (click)="gDobActual.open()" class="form-control br-0 b-0"
+                            matInput readonly>
+                        <mat-datepicker-toggle matSuffix [for]="gDobActual"></mat-datepicker-toggle>
+                        <mat-datepicker #gDobActual></mat-datepicker>
+                        <mat-error class="f-12">This field is required
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row pt-60">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-8">Guardian’s gender</h5>
+            </div>
+            <div class="col-md-7 p-0">
+                <mat-radio-group formControlName="gGender" aria-label="Select an option" class="d-block">
+                    <mat-radio-button value="1" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='1'}"
+                        class="borderRadio">Male</mat-radio-button>
+                    <mat-radio-button value="2" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='2'}"
+                        class="borderRadio">Female </mat-radio-button>
+                    <mat-radio-button value="3" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='3'}"
+                        class="borderRadio">Other</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+
+
+
+        <div class="row pt-44">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-20"> Relation with minor</h5>
+            </div>
+            <div class="col-md-3 p-0">
+                <div class="form-group mb-0">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input matInput placeholder="Enter Name" formControlName="relationWithMinor"
+                            class="form-control">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pt-44">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-20"> Email</h5>
+                <p class="m-0 f-12 text-custom">Guardian</p>
+            </div>
+            <div class="col-md-3 p-0">
+                <div class="form-group mb-0">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input matInput placeholder="Enter Name" formControlName="gEmail" class="form-control">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row pt-44">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-12">Mobile number</h5>
+            </div>
+
+            <div class="col-md-2 pl-0">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <mat-select class="form-control">
+                            <mat-option value="+91">+91</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="col-md-3 p-0">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput class="form-control">
+                        <mat-hint>Optional</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="col-md-1 d-flex align-items-center">
+                <i class="material-icons c-p f-20">
+                    add
+                </i>
+            </div>
+        </div>
+
+        <div class="row pt-44">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-12">PAN</h5>
+            </div>
+            <div class="col-md-3 p-0">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input [maxLength]="10" formControlName="pan" #pan matInput class="form-control">
+                        <mat-hint>Optional</mat-hint>
+                        <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-4 d-flex align-items-center">
+                <p class="m-0 d-flex roboto text-primary f-400 c-p">
+                    <i class="material-icons mr-4"> check_circle </i> KYC compliant</p>
+            </div>
+        </div>
+
+
+        <div class="row pt-44">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-12">Username</h5>
+                <p class="m-0 f-12 text-custom">This will be the login ID By <br> default.email is username
+                </p>
+            </div>
+            <div class="col-md-5 p-0">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput formControlName="username" #username appInputValueValidation
+                            [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" class="form-control">
+                        <mat-hint>Optional</mat-hint>
+                        <mat-hint align="end">{{username.value.length}}/ 50</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row pt-44">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-12">Lead Owner</h5>
+                <p class="m-0 f-12 text-custom">Team member</p>
+            </div>
+            <div class="col-md-5 p-0">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <mat-select formControlName="leadOwner" class="form-control">
+                            <mat-option value="option">Option</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row pt-44 pb-60">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-4">Role</h5>
+                <p class="m-0 f-12 text-custom">The selected role decides<br> what access the client has
+                </p>
+            </div>
+            <div class="col-md-5 p-0">
+                <div class="form-group m-0">
+                    <mat-form-field>
+                        <mat-select formControlName="role" class="form-control">
+                            <mat-option value="option">Option</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
-
-    <div class="row pt-32">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-32">Minor’s date of birth</h5>
-        </div>
-        <div class="col-md-3 p-0">
-            <p class="m-0 roboto">As per records</p>
-            <div class="form-group mb-0">
-                <mat-form-field class="ba-date">
-                    <input [matDatepicker]="dobAsPerRecord" (click)="dobAsPerRecord.open()"
-                        class="form-control br-0 b-0" formControlName="dobAsPerRecord" matInput readonly>
-                    <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord"></mat-datepicker-toggle>
-                    <mat-datepicker #dobAsPerRecord></mat-datepicker>
-                    <mat-error class="f-12">This field is required
-                    </mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <p class="m-0 roboto">Actual</p>
-            <div class="form-group mb-0">
-                <mat-form-field class="ba-date">
-                    <input formControlName="dobActual" (click)="dobActual.open()" class="form-control br-0 b-0"
-                        formControlName="dobActual" matInput readonly>
-                    <mat-datepicker-toggle matSuffix [for]="dobActual"></mat-datepicker-toggle>
-                    <mat-datepicker #dobActual></mat-datepicker>
-                    <mat-error class="f-12">This field is required
-                    </mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
-
-    <div class="row pt-60">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">Gender</h5>
-        </div>
-        <div class="col-md-7 p-0">
-            <mat-radio-group aria-label="Select an option" formControlName="gender" class="d-block">
-                <mat-radio-button value="1" [ngClass]="{'bu-primary':minorForm.get('gender').value=='1'}"
-                    class="borderRadio">Male</mat-radio-button>
-                <mat-radio-button value="2" [ngClass]="{'bu-primary':minorForm.get('gender').value=='2'}"
-                    class="borderRadio">Female </mat-radio-button>
-                <mat-radio-button value="3" [ngClass]="{'bu-primary':minorForm.get('gender').value=='3'}"
-                    class="borderRadio">Other</mat-radio-button>
-            </mat-radio-group>
-        </div>
-    </div>
-
-    <div class="row pt-44">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-20">Guardian’s full name</h5>
-        </div>
-        <div class="col-md-5 p-0">
-            <div class="form-group mb-0">
-                <mat-form-field floatLabel="never" appearance="standard">
-                    <input #gFullName matInput placeholder="Enter Name" appInputValueValidation [maxLength]="50"
-                        [inputValidator]="validatorType.PERSON_NAME" formControlName="gFullName" class="form-control">
-                    <mat-hint align="end" class="f-12">{{gFullName.value.length}}/50</mat-hint>
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
-
-    <div class="row pt-32">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-32">Guardian’s date of birth</h5>
-        </div>
-        <div class="col-md-3 p-0">
-            <p class="m-0 roboto">As per records</p>
-            <div class="form-group mb-0">
-                <mat-form-field class="ba-date">
-                    <input formControlName="gDobAsPerRecord" (click)="gDobAsPerRecord.open()"
-                        class="form-control br-0 b-0" matInput readonly>
-                    <mat-datepicker-toggle matSuffix [for]="gDobAsPerRecord"></mat-datepicker-toggle>
-                    <mat-datepicker #gDobAsPerRecord></mat-datepicker>
-                    <mat-error class="f-12">This field is required
-                    </mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <p class="m-0 roboto">As per records</p>
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <input matInput formControlName="gDobActual" class="form-control">
-                    <mat-hint>Optional</mat-hint>
-
-                </mat-form-field>
-                <mat-form-field class="ba-date">
-                    <input formControlName="gDobActual" (click)="gDobActual.open()" class="form-control br-0 b-0"
-                        matInput readonly>
-                    <mat-datepicker-toggle matSuffix [for]="gDobActual"></mat-datepicker-toggle>
-                    <mat-datepicker #gDobActual></mat-datepicker>
-                    <mat-error class="f-12">This field is required
-                    </mat-error>
-                </mat-form-field>
-
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row pt-60">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">Guardian’s gender</h5>
-        </div>
-        <div class="col-md-7 p-0">
-            <mat-radio-group formControlName="gGender" aria-label="Select an option" class="d-block">
-                <mat-radio-button value="1" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='1'}"
-                    class="borderRadio">Male</mat-radio-button>
-                <mat-radio-button value="2" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='2'}"
-                    class="borderRadio">Female </mat-radio-button>
-                <mat-radio-button value="3" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='3'}"
-                    class="borderRadio">Other</mat-radio-button>
-            </mat-radio-group>
-        </div>
-    </div>
-
-
-
-    <div class="row pt-44">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-20"> Relation with minor</h5>
-        </div>
-        <div class="col-md-3 p-0">
-            <div class="form-group mb-0">
-                <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput placeholder="Enter Name" formControlName="relationWithMinor" class="form-control">
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
-
-    <div class="row pt-44">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-20"> Email</h5>
-            <p class="m-0 f-12 text-custom">Guardian</p>
-        </div>
-        <div class="col-md-3 p-0">
-            <div class="form-group mb-0">
-                <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput placeholder="Enter Name" formControlName="gEmail" class="form-control">
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row pt-44">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-12">Mobile number</h5>
-        </div>
-
-        <div class="col-md-2 pl-0">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <mat-select class="form-control">
-                        <mat-option value="+91">+91</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-        </div>
-
-        <div class="col-md-3 p-0">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <input matInput class="form-control">
-                    <mat-hint>Optional</mat-hint>
-                </mat-form-field>
-            </div>
-        </div>
-
-        <div class="col-md-1 d-flex align-items-center">
-            <i class="material-icons c-p f-20">
-                add
-            </i>
-        </div>
-    </div>
-
-    <div class="row pt-44">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-12">PAN</h5>
-        </div>
-        <div class="col-md-3 p-0">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <input [maxLength]="10" formControlName="pan" #pan matInput class="form-control">
-                    <mat-hint>Optional</mat-hint>
-                    <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="col-md-4 d-flex align-items-center">
-            <p class="m-0 d-flex roboto text-primary f-400 c-p">
-                <i class="material-icons mr-4"> check_circle </i> KYC compliant</p>
-        </div>
-    </div>
-
-
-    <div class="row pt-44">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-12">Username</h5>
-            <p class="m-0 f-12 text-custom">This will be the login ID By <br> default.email is username
-            </p>
-        </div>
-        <div class="col-md-5 p-0">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <input matInput formControlName="username" #username appInputValueValidation
-                        [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" class="form-control">
-                    <mat-hint>Optional</mat-hint>
-                    <mat-hint align="end">{{username.value.length}}/ 50</mat-hint>
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row pt-44">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-12">Lead Owner</h5>
-            <p class="m-0 f-12 text-custom">Team member</p>
-        </div>
-        <div class="col-md-5 p-0">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <mat-select formControlName="leadOwner" class="form-control">
-                        <mat-option value="option">Option</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row pt-44 pb-60">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-4">Role</h5>
-            <p class="m-0 f-12 text-custom">The selected role decides<br> what access the client has
-            </p>
-        </div>
-        <div class="col-md-5 p-0">
-            <div class="form-group m-0">
-                <mat-form-field>
-                    <mat-select formControlName="role" class="form-control">
-                        <mat-option value="option">Option</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
-
-
-
 </div>
-<div *ngIf="invTypeCategory=='2' && fieldFlag=='client'" [formGroup]="nonIndividualForm" class="non-individualBox">
-    <div class="row pt-40">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-12">Company name</h5>
-        </div>
-        <div class="col-md-5 p-0">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <input formControlName="comName" matInput class="form-control">
-                </mat-form-field>
+<div *ngIf="fieldFlag=='client'">
+    <div *ngIf="invTypeCategory=='2'" [formGroup]="nonIndividualForm" class="non-individualBox">
+        <div class="row pt-40">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-12">Company name</h5>
             </div>
-        </div>
-    </div>
-
-    <div class="row pt-40">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-12">Date of incorporation</h5>
-        </div>
-        <div class="col-md-3 p-0">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <input formControlName="dateOfIncorporation" matInput class="form-control" [matDatepicker]="picker">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                    <mat-hint>Optional</mat-hint>
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row pt-40">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-12">Company status</h5>
-        </div>
-        <div class="col-md-5 p-0">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <mat-select formControlName="comStatus" class="form-control">
-                        <mat-option value="option">Option</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
-
-    <div class="row pt-40">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-12">Company email</h5>
-        </div>
-        <div class="col-md-5 p-0">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <input matInput formControlName="comEmail" class="form-control">
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row pt-44">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-12">Company phone number</h5>
-        </div>
-
-        <div class="col-md-2 pl-0">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <mat-select formControlName="comPhone" class="form-control">
-                        <mat-option value="Resident">+91</mat-option>
-                    </mat-select>
-                </mat-form-field>
+            <div class="col-md-5 p-0">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input formControlName="comName" #cname appInputValueValidation
+                            [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" matInput class="form-control">
+                        <mat-hint align="end">{{cname.value.length}}/50</mat-hint>
+                    </mat-form-field>
+                </div>
             </div>
         </div>
 
-        <div class="col-md-3 p-0">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <input matInput formControlName="" class="form-control">
-                    <mat-hint>Optional</mat-hint>
-                </mat-form-field>
+        <div class="row pt-40">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-12">Date of incorporation</h5>
+            </div>
+            <div class="col-md-3 p-0">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input formControlName="dateOfIncorporation" matInput class="form-control"
+                            [matDatepicker]="picker">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-hint>Optional</mat-hint>
+                    </mat-form-field>
+                </div>
             </div>
         </div>
 
-        <div class="col-md-1 d-flex align-items-center">
-            <i class="material-icons c-p f-20">
-                add
-            </i>
-        </div>
-    </div>
 
-    <div class="row pt-44">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-12">Company PAN</h5>
-        </div>
-        <div class="col-md-3 p-0">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <input formControlName="comPan" matInput class="form-control">
-                    <mat-hint>Optional</mat-hint>
-                    <mat-hint align="end">0 / 10</mat-hint>
-                </mat-form-field>
+        <div class="row pt-40">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-12">Company status</h5>
             </div>
-        </div>
-        <div class="col-md-4 d-flex align-items-center">
-            <p class="m-0 d-flex roboto text-primary f-400 c-p">
-                <i class="material-icons mr-4"> check_circle </i> KYC compliant</p>
-        </div>
-    </div>
-
-
-
-    <div class="row pt-44">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-12">Company Occupation</h5>
-        </div>
-        <div class="col-md-5 p-0">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <input matInput #cOccupation formControlName="comOccupation" class="form-control">
-                    <mat-hint>Optional</mat-hint>
-                </mat-form-field>
+            <div class="col-md-5 p-0">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <mat-select formControlName="comStatus" class="form-control">
+                            <mat-option value="option">Option</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
             </div>
         </div>
 
-    </div>
-
-
-    <div class="row pt-44">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-12">Username</h5>
-            <p class="m-0 f-12 text-custom">This will be the login ID By <br> default.email is username
-            </p>
-        </div>
-        <div class="col-md-5 p-0">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <input matInput #username formControlName="username" class="form-control">
-                    <mat-hint>Optional</mat-hint>
-                    <mat-hint align="end">{{username.value.length}}/ 50</mat-hint>
-                </mat-form-field>
+        <div class="row pt-40">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-12">Company email</h5>
+            </div>
+            <div class="col-md-5 p-0">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput formControlName="comEmail" class="form-control">
+                        <mat-error *ngIf="nonIndividualForm.get('comEmail').errors?.pattern">Email not valid</mat-error>
+                    </mat-form-field>
+                </div>
             </div>
         </div>
-    </div>
 
+        <app-add-number [flag]="mobileNumberFlag" (numberArray)="getNumberDetails($event)"></app-add-number>
 
-    <div class="row pt-44">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-12">Lead Owner</h5>
-            <p class="m-0 f-12 text-custom">Team member</p>
-        </div>
-        <div class="col-md-5 p-0">
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <mat-select formControlName="leadOwner" class="form-control">
-                        <mat-option value="option">Option</mat-option>
-                    </mat-select>
-                </mat-form-field>
+        <div class="row pt-44">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-12">Company PAN</h5>
+            </div>
+            <div class="col-md-3 p-0">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input formControlName="comPan" #cpan appInputValueValidation
+                            [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="9" matInput
+                            class="form-control">
+                        <mat-hint>Optional</mat-hint>
+                        <mat-hint align="end">{{cpan.value.length}} / 10</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-4 d-flex align-items-center">
+                <p class="m-0 d-flex roboto text-primary f-400 c-p">
+                    <i class="material-icons mr-4"> check_circle </i> KYC compliant</p>
             </div>
         </div>
-    </div>
 
 
-    <div class="row pt-44 pb-60">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-4">Role</h5>
-            <p class="m-0 f-12 text-custom">The selected role decides<br> what access the client has
-            </p>
+
+        <div class="row pt-44">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-12">Company Occupation</h5>
+            </div>
+            <div class="col-md-5 p-0">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput #cOccupation formControlName="comOccupation" class="form-control">
+                        <mat-hint>Optional</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+
         </div>
-        <div class="col-md-5 p-0">
-            <div class="form-group m-0">
-                <mat-form-field>
-                    <mat-select formControlName="role" class="form-control">
-                        <mat-option value="option">Option</mat-option>
-                    </mat-select>
-                </mat-form-field>
+
+
+        <div class="row pt-44">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-12">Username</h5>
+                <p class="m-0 f-12 text-custom">This will be the login ID By <br> default.email is username
+                </p>
+            </div>
+            <div class="col-md-5 p-0">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput #username formControlName="username" appInputValueValidation
+                            [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" class="form-control">
+                        <mat-hint>Optional</mat-hint>
+                        <mat-hint align="end">{{username.value.length}}/ 50</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row pt-44">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-12">Lead Owner</h5>
+                <p class="m-0 f-12 text-custom">Team member</p>
+            </div>
+            <div class="col-md-5 p-0">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <mat-select formControlName="leadOwner" class="form-control">
+                            <mat-option value="option">Option</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row pt-44 pb-60">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-4">Role</h5>
+                <p class="m-0 f-12 text-custom">The selected role decides<br> what access the client has
+                </p>
+            </div>
+            <div class="col-md-5 p-0">
+                <div class="form-group m-0">
+                    <mat-form-field>
+                        <mat-select formControlName="role" class="form-control">
+                            <mat-option value="option">Option</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
             </div>
         </div>
     </div>

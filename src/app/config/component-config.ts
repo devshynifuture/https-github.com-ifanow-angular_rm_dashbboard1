@@ -7,7 +7,7 @@ export const appConfig = {
   ////////////////////////////get///////////////////////////
   TOTAL_GET_AUM: 'backoffice/clientTotalAum/get',
   GET_MIS_DATA: 'backoffice/mis/get',
-  GET_SUBCAT_AUM: 'asset/cat/subcat/get',
+  GET_SUBCAT_AUM: 'backoffice/cat/subcat/get',
   GET_SUBCAT_SCHEMENAME: 'backoffice/cat/subcat/scheme',
   GET_TOTAL_SCHEME_AUM: 'asset/schemeTotalAum/get',
   GET_TOTAL_AUM_BY_SCHEME: 'asset/schemeTotalAum/get',
@@ -17,11 +17,14 @@ export const appConfig = {
   GET_AUM_APPLICANT_CATEGORY: 'backoffice/aum/applicantWise/totalaum/applicantsAllCategory/get',
   GET_AUM_APPLICANT_SUB_CATEGORY: 'backoffice/aum/applicantWise/totalaum/applicantSubCategory/get',
   GET_AUM_APPLICANT_SCHEME: 'backoffice/aum/applicantWise/totalaum/applicantSchemes/get',
-  GET_AUM_CLIENT_TOTALAUM: 'asset/aum/client/totalaum/get',
+  GET_AUM_CLIENT_TOTALAUM: 'backoffice/aum/client/totalaum/get',
+  GET_AUM_FAMILY_MEMBER:'backoffice/aum/client/familymember',
+  GET_AUM_FAMILY_SCHEME:'backoffice/aum/client/familymember/scheme',
+  GET_AUM_FAMILY_SCHEME_FOLIO:'backoffice/aum/client/familymember/scheme/folio',
   GET_AUM_CLIENT_SCHEME: 'backoffice/aum/client/schemes',
   GET_CLIENT_FOLIO_WISE: 'asset/cat/subcat/schemeName/clientFolioWise',
   GET_AMC_WISE: 'backoffice/mis/aum/amcWise/get',
-  GET_APPLICANT_NAME: '/mis/aum/amcWise/applicantName/get',
+  GET_APPLICANT_NAME: 'backoffice/mis/aum/amcWise/applicantName/get',
   ADVISOR_TAG_GET: '/advisor/tag/get',
 
 
@@ -44,6 +47,8 @@ export const appConfig = {
   ALL_SIP_GET: 'backoffice/sip/allSip/get',
   CLIENT_WISE_CLIENTNAME_GET: 'backoffice/sip/ClientWiseClientsName/get',
   CLIENT_WISE_APPLICANT_GET: 'backoffice/sip/ClientWiseApplicants/get',
+  SIP_PAN_COUNT:'backoffice/sip/scheme/pan/count/get',
+  WBR_FOLIO_PAN_COUNT:'backoffice/folio/pan/count/get',
 
   ///////////////////////////// back office/////////////////////////////////////////////
 
@@ -413,7 +418,7 @@ export const appConfig = {
   ADD_MANDATE: 'mandate/add',
   // SIP_BSE:'bse/order/create',
 
-  // cashflow 
+  // cashflow
   CASHFLOW_ADD_INCOME: 'cashflow/income/add',
   CASHFLOW_GET_INCOME: 'cashflow/income/get',
   CASHFLOW_DELETE_INCOME: 'cashflow/income/delete',
@@ -450,7 +455,7 @@ export const appConfig = {
   BACKOFFICE_DELETE_AUM_TRANSACTION_SINGLE_MULTIPLE: 'backoffice/aum/transaction/multiple/delete',
   BACKOFFICE_DELETE_AND_REORDER: 'backoffice/aum/delete-reorder',
   BACKOFFICE_PUT_FREEZE_FOLIO_DATA: 'backoffice/aum/freeze/folio',
-  BACKOFFICE_PUT_UNFREEZE_FOLIO_DATA: 'backoffice/aum/unfreeze/folio',
+  BACKOFFICE_PUT_UNFREEZE_FOLIO_DATA: 'backoffice/mutual-fund/unfreeze',
   BACKOFFICE_GET_DUPLICATE_FOLIO_DATA: 'backoffice/duplicate/transaction/list/get',
   BACKOFFICE_FOLIOWISE_LIST_GET: 'backoffice/aum/transaction/foliowise/list/get',
   BACKOFFICE_PUT_UNMAP_FOLIO: 'backoffice/unmap/folio',
@@ -459,6 +464,9 @@ export const appConfig = {
   BACKOFFICE_POST_UNMATCHED_FOLIOS_ADD: 'backoffice/aum/recon/unmatched/folios/add',
   BACKOFFICE_GET_AUM_REPORT_LIST: 'backoffice/aum/reconciliation/report/get',
   BACKOFFICE_GET_FOLIO_BASED_SEARCH_LIST: 'backoffice/folio/based/on/search/list/get',
+  BACKOFFICE_GET_GROUP_HEAD_NAME_LIST: 'backoffice/foliowise/groupHead/list/get',
+  BACKOFFICE_GET_INVESTOR_NAME_LIST: 'backoffice/foliowise/applicaName/list/get',
+  BACKOFFICE_PUT_DELETE_UNFREEZE_TRANSACTION: 'backoffice/delete/unfreeze/transaction',
 
   BACKOFFICE_FILE_UPLOAD_TYPE: 'backoffice/file-upload/types/get',
   BACKOFFICE_FILTER: 'backoffice/file-upload/filter/get',
@@ -490,8 +498,8 @@ export const appConfig = {
   UPLOAD_PLAN_GALLERY: 'goal-planning/goal-gallery/add',
   UPLOAD_KEY_PARAMETER: 'goal-planning/static-allocation/put',
   UPDATE_ASSET_ALLOCATION: 'goal-planning/static-allocation/put',
-  GET_TASK_TEMPLATE:'setting/task/template/list/get',
-  GET_TEAM_MEMBER_LIST:'user/client/advisor-wise/get',
+  GET_TASK_TEMPLATE: 'setting/task/template/list/get',
+  GET_TEAM_MEMBER_LIST: 'user/advisor/team-members/detail/get',
   ADD_SUB_TASKTEMPLATE: 'setting/task/sub-task/add',
   TASK_GLOBAL: 'setting/task/template/global/data',
   ADD_TAK_TEMPLATE: 'setting/task/template/add',
@@ -521,12 +529,6 @@ export const appConfig = {
   SEND_EMAIL: 'gmail/email/send',
   GET_ATTACHMENTS: 'gmail/attachment/get',
   //////////////////////////people/////////////////////////////////////
-  ADD_CLIENT_ADDRESS: '',
-  ADD_CLIENT_BANK: '',
-  ADD_CLIENT_BASIC_DETAILS: '',
-  ADD_CLIENT_DEMAT: '',
-  ADD_CLIENT_MORE_INFO: '',
-  ADD_CLIENT_UPLOAD: '',
   GET_PEOPLE_CLIENT_LIST: '/user/client/all/get',
   ADD_CLIENT: 'user/client/add',
   EDIT_CLIENT: 'user/client/edit',
@@ -538,11 +540,18 @@ export const appConfig = {
   ADD_FAMILY_MEMBER: 'user/family-member/add',
   ADD_MULTIPLE_FAMILY_MEMBERS: '/user/family-member/add/multiple',
   EDIT_FAMILY_MEMBER_BASIC_DETAILS_MORE_INFO: 'user/family-member/edit',
+  GET_COMPANY_PERSON_DETAILS: 'user/client/company/person/get',
+  SAVE_COMPANY_PERSON_DEATILS: 'user/client/company/person/add',
+  UPDATE_COMPANY_PERSON_DETAILS: 'user/client/company/person/edit',
+  TEAM_MEMBER_WISE_CLIENT_COUNT: 'user/advisor/team-member/count/get',
+
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: '/user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
   REGISTER: 'user/advisor/add',
   SEARCH_USERNAME: 'user/search/username',
+  SAVE_PASSWORD: 'user/password/update',
+  LOGIN_WITH_PASSWORD: 'user/login/with/password',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_UPDATE: 'calendar/event/update',
@@ -566,6 +575,7 @@ export const appConfig = {
   DELETE_MF_RTA: 'setting/arn-ria/rta/delete',
   DELETE_MF_RTA_QUESTION: 'setting/arn-ria/fundnet/answer/delete',
   UPDATE_MF_RTA_QUESTION: 'setting/arn-ria/fundnet/answer/update',
+  ADD_MF_RTA_QUESTION: 'setting/arn-ria/rta-sec/answer/add',
 
   GET_USER_ROLES_GLOBAL_DATA: 'setting/users/global/roles/get',
 

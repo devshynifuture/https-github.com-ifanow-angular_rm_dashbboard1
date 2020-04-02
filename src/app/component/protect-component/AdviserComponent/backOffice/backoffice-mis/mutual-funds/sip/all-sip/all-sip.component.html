@@ -9,6 +9,9 @@
         </div>
     </div>
 </div>
+<div>
+    <input type="text" placeholder="Search..." (keyup)="applyFilter($event)">
+</div>
 <table matSort mat-table [dataSource]="dataSource" id="tbs">
     <ng-container matColumnDef="no" sticky>
         <th *matHeaderCellDef class="br" mat-header-cell> Index</th>

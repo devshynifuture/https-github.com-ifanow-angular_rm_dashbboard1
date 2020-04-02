@@ -17,7 +17,7 @@
                     <!-- <button mat-stroked-button class="btn-default br-0 help-btn">ARN-83865</button> -->
                     <mat-select class="b-a" formControlName="selectBrokerId" placeholder="Select broker"
                         (selectionChange)="getAumReconHistoryData($event)">
-                        <mat-option value="">
+                        <mat-option value=None>
                             Select Option
                         </mat-option>
                         <mat-option *ngFor="let broker of brokerList" [value]="broker.id">

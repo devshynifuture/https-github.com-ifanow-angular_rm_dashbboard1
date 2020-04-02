@@ -183,19 +183,12 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
-        <div *ngIf="fieldFlag=='client'" class="col-md-8 right text-right">
+        <div class="col-md-8 right text-right">
             <button mat-raised-button (click)="saveNext('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
             </button>
             <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
             </button>
         </div>
-        <div *ngIf="fieldFlag=='familyMember'" class="col-md-8 right text-right">
-            <button mat-raised-button (click)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12">SAVE &
-                NEXT
-            </button>
-            <button mat-stroked-button (click)="saveNextFamilyMember('close')" class="btn-bottom br-0 text-inherit">SAVE
-                & CLOSE
-            </button>
-        </div>
+
     </div>
 </div>

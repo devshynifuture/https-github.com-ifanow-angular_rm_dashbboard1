@@ -26,7 +26,7 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () => import('./component/left-sidebar/leftsidebar/leftsidebar.module').then(m => m.LeftsidebarModule),
     // outlet: 'mainrouter',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
 
   },
   // {
