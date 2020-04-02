@@ -44,7 +44,11 @@ export class OpenEmailVerificationComponent implements OnInit {
     this.email = email
   }
   onNoClick(): void {
-    this.dialogRef.close(this.emailVierify.controls.emailId.value);
+    let obj = {
+      emailAddress : this.emailVierify.controls.emailId.value,
+      id : this.emailDetails.id
+    }
+    this.dialogRef.close(obj);
   }
 
 }
