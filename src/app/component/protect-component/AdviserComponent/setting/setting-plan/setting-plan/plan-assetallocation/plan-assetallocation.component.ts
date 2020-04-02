@@ -32,10 +32,11 @@ export class PlanAssetallocationComponent implements OnInit {
   obj3: any;
   obj4: any;
   staticAllocation: any;
-  constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) { }
+  constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) {
+    this.advisorId = AuthService.getAdvisorId()
+   }
   ngOnInit() {
     this.getAssetAllocation()
-    this.advisorId = AuthService.getAdvisorId()
     this.editMode = false
     console.log('edit mode', this.editMode)
     this.staticAllocation = []
@@ -116,7 +117,7 @@ export class PlanAssetallocationComponent implements OnInit {
   }
   getAssetAllocation() {
     let obj = {
-      advisorId: 2808
+      advisorId: this.advisorId
     }
     this.orgSetting.getAssetAllocation(obj).subscribe(
       data => this.getAssetAllocationRes(data),
