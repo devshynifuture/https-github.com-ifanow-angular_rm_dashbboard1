@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { AddTeamMemberComponent } from './add-team-member/add-team-member.component';
+import {Component, OnInit} from '@angular/core';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
+import {AddTeamMemberComponent} from './add-team-member/add-team-member.component';
 
 @Component({
   selector: 'app-hierachy',
@@ -11,7 +11,7 @@ import { AddTeamMemberComponent } from './add-team-member/add-team-member.compon
 export class HierachyComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'role', 'report', 'icons'];
   dataSource = ELEMENT_DATA;
-
+  isLoading = false;
   constructor(private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
@@ -47,7 +47,7 @@ export interface PeriodicElement {
   weight: string;
   symbol: string;
   report: string;
-  role: string
+  role: string;
 
 }
 

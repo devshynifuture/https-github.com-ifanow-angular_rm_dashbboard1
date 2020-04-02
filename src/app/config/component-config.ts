@@ -532,7 +532,7 @@ export const appConfig = {
   SEND_EMAIL: 'gmail/email/send',
   GET_ATTACHMENTS: 'gmail/attachment/get',
   //////////////////////////people/////////////////////////////////////
-  GET_PEOPLE_CLIENT_LIST: '/user/client/all/get',
+  GET_PEOPLE_CLIENT_LIST: 'user/client/all/get',
   ADD_CLIENT: 'user/client/add',
   EDIT_CLIENT: 'user/client/edit',
   ADD_EDIT_CLIENT_ADDRESS: 'user/address/add-edit',
