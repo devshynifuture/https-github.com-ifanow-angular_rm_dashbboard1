@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 export class CategoryWiseComponent implements OnInit {
   category;
   subcategory;
-  showLoader = true;
+  showLoader;
   teamMemberId = 2929;
   advisorId: any;
   constructor(private backoffice: BackOfficeService, private dataService: EventService, public aum: AumComponent) { }
@@ -23,11 +23,12 @@ export class CategoryWiseComponent implements OnInit {
   ngOnInit() {
     this.advisorId=AuthService.getAdvisorId();
      this.getSubCatSchemeName();
-    this.clientFolioWise();
+    // this.clientFolioWise();
     // this.getSubCatAum();
   }
 
   getSubCatSchemeName() {
+    this.showLoader=true;
     this.backoffice.getTotalByAumScheme(this.advisorId).subscribe(
       data => this.getFileResponseDataForSubSchemeName(data),
       err => this.getFilerrorResponse(err)

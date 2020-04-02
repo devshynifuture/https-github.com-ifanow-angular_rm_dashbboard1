@@ -1,82 +1,101 @@
+<div *ngIf="showLoader">
+    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+</div>
+<div *ngIf="showLoader==false">
 <div *ngIf="aum.aumComponent==false">
-        <div class="wrapper-20 bg-white">
-                <div class="row">
-                    <div class="col-md-6 pl-0">
-                        <h3 class="pt-8 mb-0">Amc Wise AUM</h3>
-                    </div>
-                    <div class="col-md-6 pr-0">
-                        <div class="right text-right">
-                            <button mat-stroked-button class="btn-default addon"><i class="material-icons">add</i>XLS</button>
-                            <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
-                        </div>
-                    </div>
-                </div>
-        
-                <table class="table-low mt-16" id="table-high" >
-                    <thead class="text-dark">
-                        <tr>
-                            <th>Sr No.</th>
-                            <th>Category Name</th>
-                            <th class="text-right">Current Value</th>
-                            <th class="text-right">% Weight</th>
-        
-                        </tr>
-                    </thead>
-                    <tbody >
-                        <tr>
-                            <td></td>
-                            <td > <i class="material-icons right b-a f-14 mt-4 c-p" > add  </i>
-                            <i class="material-icons right b-a f-14 mt-4 c-p" > remove  </i></td>
-                            <td class="text-right"> </td>
-                            <td class="text-right"></td>
-                         </tr>
-                         <tr>
-                             <tr>
-                            <table  class="table-low mt-8 " id="table-high">
-                                    <thead class="bg-light text-dark">
-                                            <tr>
-                                                <th>Sr No.</th>
-                                                <th>Sub Category Name</th>
-                                                <th class="text-right">Current Value</th>
-                                                <th class="text-right">% Weight</th>
-                        
-                                            </tr>
-                                        </thead>
-                                           <tbody >
-                                                <tr>
-                                                    <td></td>
-                                                    <td ><i  class="material-icons right b-a f-14 mt-4 c-p">add</i>
-                                                        <i class="material-icons right b-a f-14 mt-4 c-p"> remove  </i> </td>
-                                                    <td class="text-right"></td>
-                                                    <td class="text-right">}%</td>
-                                                </tr>
-                                                <table >
-                                                    <thead>
-                                                        <tr>
-                                                        <th>Sr No.</th>
-                                                        <th>Sub Category Name</th>
-                                                        <th class="text-right">Current Value</th>
-                                                        <th class="text-right">% Weight</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tr>
-                                                    <tbody >
-                                                        <tr >
-                                                            <td></td>
-                                                            <td><i class="material-icons right b-a f-14 mt-4 c-p" >add</i>
-                                                                <i  class="material-icons right b-a f-14 mt-4 c-p"> remove  </i> </td>
-                                                            <td class="text-right"> </td>
-                                                            <td class="text-right"></td>
-                                                        </tr>
-                                                    </tbody>
-                                                    
-                                                </table>
-                                        </tbody>
-                            </table>
-    
-                        </tr>
-                    </tbody>
-                </table>
-       
+    <div class="wrapper-20 bg-white">
+        <div class="row">
+            <div class="col-md-6 pl-0">
+                <h3 class="pt-8 mb-0">Amc Wise AUM</h3>
             </div>
+            <div class="col-md-6 pr-0">
+                <div class="right text-right">
+                    <button mat-stroked-button class="btn-default addon"><i class="material-icons">add</i>XLS</button>
+                    <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
+                </div>
+            </div>
+        </div>
+
+        <table class="table-low mt-16" id="table-high" *ngIf="amcList">
+            <thead class="text-dark">
+                <tr>
+                    <th>Sr No.</th>
+                    <th>Category Name</th>
+                    <th class="text-right">Current Value</th>
+                    <th class="text-right">% Weight</th>
+
+                </tr>
+            </thead>
+            <tbody *ngFor="let amc of amcList; let i = index">
+                <tr>
+                    <td>{{i+1}}</td>
+                    <td (click)="showScheme(amc)"> <i
+                            class="material-icons right b-a f-14 mt-4 c-p" *ngIf="amc.showAmc"> add </i>
+                        <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="!amc.showAmc"> remove
+                        </i></td>
+                    <td class="text-right">{{amc.totalAum}} </td>
+                    <td class="text-right">{{amc.weightInPercentage}}%</td>
+                </tr>
+                <tr>
+                <tr>
+                    <table *ngIf="!amc.showAmc" class="table-low mt-8 " id="table-high">
+                        <thead class="bg-light text-dark">
+                            <tr>
+                                <th>Sr No.</th>
+                                <th>Sub Category Name</th>
+                                <th class="text-right">Current Value</th>
+                                <th class="text-right">% Weight</th>
+
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let scheme of amc.schemeList; let i = index">
+                            <tr>
+                                <td>{{i+1}}</td>
+                                <td (click)="showApplicant(scheme)">{{scheme.name}}<i
+                                        *ngIf="scheme.showScheme==true"
+                                        class="material-icons right b-a f-14 mt-4 c-p">add</i>
+                                    <i *ngIf="scheme.showScheme==false"
+                                        class="material-icons right b-a f-14 mt-4 c-p"> remove </i> </td>
+                                <td class="text-right">{{scheme.totalAum}} </td>
+                                <td class="text-right">{{scheme.weightInPercentage}}%</td>
+                            </tr>
+                            <table *ngIf="!scheme.showScheme">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Sub Category Name</th>
+                                        <th class="text-right">Current Value</th>
+                                        <th class="text-right">% Weight</th>
+                                    </tr>
+                                </thead>
+                                <tr>
+                                    <tbody *ngFor="let applicant of scheme.applicantList;let i = index">
+                                        <tr>
+                                            <td>{{i+1}}</td>
+                                            <td>{{scheme.schemeName}}</td>
+                                            <td class="text-right">{{scheme.totalAum}} </td>
+                                            <td class="text-right">{{scheme.weightInPercentage}}</td>
+                                        </tr>
+                                    </tbody>
+
+                            </table>
+                        </tbody>
+                    </table>
+
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td class="p-table t-35 b-a"><strong>Total</strong></td>
+                    <td class="p-table t-7 b-a">&nbsp;</td>
+                    <td class="p-table t-19 b-a text-right"><strong>{{totalCurrentValue}}</strong></td>
+                    <td class="p-table t-19 b-a text-right"><strong>{{totalWeight}}%</strong></td>
+                </tr>
+            </tbody>
+        </table>
+        <div *ngIf="!amcList">
+            <p>No data found</p>
+        </div>
+    </div>
+</div>
 </div>

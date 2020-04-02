@@ -10,50 +10,57 @@
     </div>
     <div class="col-md-3 text-right">
         <!-- ng build prod issue expected argument added empty strings  -->
-        <button mat-stroked-button class="btn-primary pl-8" (click)="addTaskTemplate('', '')"> <i
+        <button mat-stroked-button class="btn-primary pl-8" (click)="openTaskTemplateType('', '')"> <i
                 class="material-icons pr-8 v-middle">
                 add
             </i>ADD NEW</button>
     </div>
     <div class="col-md-12">
-        <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
+        <table mat-table [dataSource]="taskList" class="mt-8 skeletonAnimation" id="table-low" appSkeletonLoading
+            [appSkeletonLoading]="isLoading">
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef class="br"> Type </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                <td mat-cell *matCellDef="let element" class="br">
+                      <div class="bar">{{element.position}} </div></td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef class="br"> Category </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> 
+                     <div class="bar">{{element.categoryName}} </div></td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
                 <th mat-header-cell *matHeaderCellDef class="br"> Sub category </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> 
+                     <div class="bar">{{element.subCategoryName}} </div></td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="symbol">
                 <th mat-header-cell *matHeaderCellDef class="br"> Task template </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> 
+                     <div class="bar">{{element.taskDescription}} </div></td>
             </ng-container>
             <ng-container matColumnDef="assign">
                 <th mat-header-cell *matHeaderCellDef class="br"> Default assigned to </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> 
+                     <div class="bar">{{element.ownerName}} </div></td>
             </ng-container>
             <ng-container matColumnDef="time">
                 <th mat-header-cell *matHeaderCellDef class="br"> Turnaround time </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> 
+                     <div class="bar">{{element.turnAroundTime}} </div></td>
             </ng-container>
             <ng-container matColumnDef="icons">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell class="text-center" *matCellDef="let element">
                     <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item>
+                        <button mat-menu-item (click)="addTaskTemplate(element, '')">
                             Edit
                         </button>
                         <button mat-menu-item>
@@ -66,4 +73,8 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
     </div>
+</div>
+<div *ngIf="taskList.length == 0" class="d-flex flex-column align-items-center">
+    <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="text-center pt-12">No task template found</h4>
 </div>

@@ -15,11 +15,12 @@
             <h5 class="m-0 text-right pt-8">ARN/RIA number</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-control mb-0">
+            <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select class="form-group mb-0" formControlName="arnRiaDetailsId">
+                    <mat-select class="form-control br-0" formControlName="arnRiaDetailsId">
                         <mat-option value="" selected disabled>Select Option</mat-option>
-                        <mat-option [value]="arnData.id" *ngFor="let arnData of data.arnData">{{arnData.nameOfTheHolder}} - {{arnData.number}}</mat-option>
+                        <mat-option [value]="arnData.id" *ngFor="let arnData of data.arnData">
+                            {{arnData.nameOfTheHolder}} - {{arnData.number}}</mat-option>
                     </mat-select>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -33,7 +34,7 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input type="text" matInput formControlName="email" class="form-control">
+                    <input type="text" matInput formControlName="registeredEmail" class="form-control">
                 </mat-form-field>
             </div>
         </div>
@@ -45,7 +46,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input type="text" matInput formControlName="password" class="form-control">
+                    <input type="text" matInput formControlName="mailbackPassword" class="form-control">
                 </mat-form-field>
             </div>
         </div>
@@ -55,7 +56,7 @@
 <div class="bottom-fixed wrapper-12 w-50">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()">Save</button>

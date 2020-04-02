@@ -9,31 +9,33 @@
     </div>
 </div>
 
-<div [formGroup]="camsFundFG">
-    <div class="row pt-100">
+<div class="pt-100" [formGroup]="camsFundFG">
+    <div class="row ">
         <div class="col-md-4 pr-0">
             <h5 class="m-0 text-right pt-12">ARN/RIA number</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group b-0">
                 <mat-form-field>
-                    <mat-select class="form-group b-0" formControlName="arnRiaDetailsId">
+                    <mat-select class="form-control br-0" formControlName="arnRiaDetailsId">
                         <mat-option value="" selected disabled>Select Option</mat-option>
-                        <mat-option [value]="arnData.id" *ngFor="let arnData of data.arnData">{{arnData.nameOfTheHolder}} - {{arnData.number}}</mat-option>
+                        <mat-option [value]="arnData.id" *ngFor="let arnData of data.arnData">
+                            {{arnData.nameOfTheHolder}} - {{arnData.number}}</mat-option>
                     </mat-select>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
     </div>
-    <div class="row pt-44">
+    <div class="row pt-24">
         <div class="col-md-4 pr-0">
             <h5 class="m-0 text-right pt-12">Login ID</h5>
         </div>
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input type="text" matInput formControlName="login_id" class="form-control">
+                    <input type="text" matInput formControlName="loginId" class="form-control">
+                    <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -45,7 +47,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input type="text" formControlName="password" matInput class="form-control">
+                    <input type="text" formControlName="loginPassword" matInput class="form-control">
+                    <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -65,12 +68,16 @@
                         </mat-select>
                     </mat-form-field> -->
 
-                    <select class="form-control" formControlName="id">
+                    <select class="form-control" formControlName="questionId">
                         <option value="" selected disabled>Select Question</option>
-                        <option [value]="questionObj.id" *ngFor="let questionObj of data.globalData.rta_cams_fund_net_security_questions_list">{{questionObj.question}}</option>
+                        <option [value]="questionObj.id"
+                            *ngFor="let questionObj of data.globalData.rta_cams_fund_net_security_questions_list">
+                            {{questionObj.question}}</option>
                     </select>
-                    <mat-error *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.id.invalid && camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.id.errors.required && camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.touched">This field is required</mat-error>
-                    <mat-error *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.id.invalid && camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.id.errors.duplicate">This question already exists</mat-error>
+                    <mat-error *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.questionId.invalid && camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.questionId.errors.required && camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.questionId.touched">
+                        This field is required</mat-error>
+                    <mat-error *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.questionId.invalid && camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.questionId.errors.duplicate">
+                        This question already exists</mat-error>
                 </div>
             </div>
             <div class="col-md-2 pl-0">
@@ -81,15 +88,38 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-1 pl-0">
-                <i class="material-icons c-p text-custom pt-8" (click)="addMoreQuestion()">
-                    add
-                </i>
+
+            <!-- controls when adding first time -->
+            <div *ngIf="is_add">
+                <div class="col-md-1 pl-0" *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.length == (i+1)">
+                    <i class="material-icons c-p text-custom pt-8" (click)="addMoreQuestion()">
+                        add
+                    </i>
+                </div>
+                <div class="col-md-1 pl-0" *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.value.length > 1">
+                    <i class="material-icons c-p text-custom pt-8" (click)="removeQuestion(i)">
+                        remove
+                    </i>
+                </div>
             </div>
-            <div class="col-md-1 pl-0" *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.value.length > 1">
-                <i class="material-icons c-p text-custom pt-8" (click)="removeQuestion(i)">
-                    remove
-                </i>
+
+            <!-- controls on edit -->
+            <div *ngIf="!is_add">
+                <div class="col-md-1 pl-0" *ngIf="showAddMoreQuestionBtn && camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.length == (i+1)">
+                    <i class="material-icons c-p text-custom pt-8" (click)="addIndividualQuestion()">
+                        add
+                    </i>
+                </div>
+                <div class="col-md-1 pl-0" *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.value.length > 1">
+                    <i class="material-icons c-p text-custom pt-8" (click)="removeQuestion(i)">
+                        remove
+                    </i>
+                </div>
+                <div class="col-md-1 pl-0">
+                    <i class="material-icons c-p text-custom pt-8" (click)="addOrUpdateIndividualQuestion(i)">
+                        save
+                    </i>
+                </div>
             </div>
         </ng-container>
     </div>
@@ -98,7 +128,7 @@
 <div class="bottom-fixed wrapper-12 w-50">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()">Save</button>

@@ -1,0 +1,25 @@
+.taskradio {
+    .mat-radio-button {
+        min-width: 130px;
+        // border: 1px solid rgba(25, 25, 25, 0.32);
+    }
+}
+
+// .bor-left {
+//     border-left: transparent;
+// }
+.img-pos {
+    position: absolute;
+    top: 13px;
+    right: 10px;
+}
+
+.img-pos-two {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+}
+
+::ng-deep .arrowRemoveBox .mat-select-arrow {
+    visibility: hidden;
+}

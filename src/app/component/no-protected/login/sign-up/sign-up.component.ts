@@ -86,7 +86,8 @@ export class SignUpComponent implements OnInit {
             emailId: this.signUpForm.get('email').value,
             flag: true,
             userType: data.userType,
-            userId: data.userId
+            userId: data.userId,
+            userData: data
           }
           this.router.navigate(['/login/forgotpassword'], { state: forgotPassObjData });
         },

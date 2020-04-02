@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormsModule, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/auth-service/authService';
-import { OrgSettingServiceService } from '../org-setting-service.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { OpenEmailVerificationComponent } from './open-email-verification/open-email-verification.component';
-import { MatDialog } from '@angular/material';
-import { CommonFroalaComponent } from '../../Subscriptions/subscription/common-subscription-component/common-froala/common-froala.component';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {AuthService} from 'src/app/auth-service/authService';
+import {OrgSettingServiceService} from '../org-setting-service.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {OpenEmailVerificationComponent} from './open-email-verification/open-email-verification.component';
+import {MatDialog} from '@angular/material';
+import {CommonFroalaComponent} from '../../Subscriptions/subscription/common-subscription-component/common-froala/common-froala.component';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-setting-preference',
@@ -34,7 +34,6 @@ export class SettingPreferenceComponent implements OnInit {
   emailList: any;
   normalDomain: any;
   whiteLabledDomain: any;
-  isLoading: any;
   emailTemplateList: any;
   showUpdate = false;
   normalLable;
@@ -44,6 +43,7 @@ export class SettingPreferenceComponent implements OnInit {
   clientData
   userId: any;
   showUpdateWhite = false;
+  isLoading = false
   constructor(private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, ) { }
 
@@ -53,6 +53,10 @@ export class SettingPreferenceComponent implements OnInit {
     console.log('3456893469 ===', this.userId)
     this.getPortfolio()
     this.getdataForm('')
+    this.isLoading = false
+    this.emailList =[]
+    this.planSection = []
+    this.emailTemplateList =[]
   }
   getdataForm(data) {
     this.domainS = this.fb.group({
@@ -109,22 +113,23 @@ export class SettingPreferenceComponent implements OnInit {
   }
   editDomain(flag, event, value) {
     if (flag == true) {
-      if(event == 'white'){
+      if (event == 'white') {
         this.showUpdateWhite = true
-      }else{
+      } else {
         this.showUpdate = true
       }
-     
+
     } else {
-      if(event == 'white'){
+      if (event == 'white') {
         this.showUpdateWhite = false
-      }else{
+      } else {
         this.showUpdate = false
       }
       this.updateDomainSetting(event, value)
     }
   }
   getPortfolio() {
+    this.isLoading = true;
     let obj = {
       advisorId: this.advisorId
     }
@@ -134,14 +139,18 @@ export class SettingPreferenceComponent implements OnInit {
     );
   }
   getPortfolioRes(data) {
-    console.log('getPortfolioRes == ', data)
+    this.isLoading = false
+    console.log('getPortfolioReslase == ', data)
     this.portfolio = data
     this.mutualFund = this.portfolio.filter(element => element.portfolioOptionId == 1)
+    this.mutualFund = this.mutualFund[0]
     this.mutualFund2 = this.portfolio.filter(element => element.portfolioOptionId == 2)
+    this.mutualFund2 = this.mutualFund2[0]
     this.factSheet = this.portfolio.filter(element => element.portfolioOptionId == 3)
   }
 
   getPlan() {
+    this.isLoading = true
     let obj = {
       advisorId: this.advisorId
     }
@@ -213,11 +222,18 @@ export class SettingPreferenceComponent implements OnInit {
   }
   getPlanRes(data) {
     console.log('getPortfolioRes == ', data)
-    this.planSection = data
-    this.planSec1 = this.planSection.filter(element => element.planOptionId == 1)
-    console.log('planSec1 ', this.planSec1)
+    if(data){
+      this.planSection = data
+      this.planSec1 = this.planSection.filter(element => element.planOptionId == 1)
+      console.log('planSec1 ', this.planSec1)
+    }else{
+      this.isLoading = false
+      this.planSection = []
+    }
+
   }
   getEmailVerification() {
+    this.isLoading = true
     let obj = {
       userId: 12249,
       advisorId: 414
@@ -228,11 +244,18 @@ export class SettingPreferenceComponent implements OnInit {
     );
   }
   getEmailVerificationRes(data) {
+    this.isLoading = false
     console.log('email verify == get', data)
-    this.emailDetails = data
-    this.emailList = data.listItems
+    if(data){
+      this.emailDetails = data
+      this.emailList = data.listItems
+    }else{
+      this.emailList = []
+    }
+
   }
   getEmailTemplate() {
+    this.isLoading = true
     let obj = {
       advisorId: this.advisorId
     }
@@ -242,8 +265,14 @@ export class SettingPreferenceComponent implements OnInit {
     );
   }
   getEmailTempalatRes(data) {
-    console.log('emailTemplate', data)
-    this.emailTemplateList = data
+    this.isLoading = false
+    if(data){
+      console.log('emailTemplate', data)
+      this.emailTemplateList = data
+    }else{
+      this.emailTemplateList = []
+    }
+
   }
   OpenEmail(value, data) {
     if (this.isLoading) {

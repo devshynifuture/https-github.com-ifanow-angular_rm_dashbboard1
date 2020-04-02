@@ -15,7 +15,6 @@ export class EnumServiceService {
     feeCollectionMode: [],
   };
 
- 
 
   public addToGlobalEnumData(data) {
     console.log(data, "check data variable fee 2");
@@ -24,8 +23,8 @@ export class EnumServiceService {
   }
 
   getOtherAssetData() {
-    console.log(this.globalEnumData.otherAssetTypes, "check data variable fee 1");
-    
+    console.log(this.globalEnumData.otherAssetTypes, 'check data variable fee 1');
+
     return this.globalEnumData.otherAssetTypes;
   }
 
@@ -33,11 +32,11 @@ export class EnumServiceService {
     return this.globalEnumData.feeCollectionMode;
   }
 
-  public addRoles(data){
+  public addRoles(data) {
     this.roleList = data;
   }
 
-  public getRoles(){
+  public getRoles() {
     return this.roleList;
   }
 

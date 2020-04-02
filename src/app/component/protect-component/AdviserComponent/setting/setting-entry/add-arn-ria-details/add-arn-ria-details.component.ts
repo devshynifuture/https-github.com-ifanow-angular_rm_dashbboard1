@@ -56,8 +56,12 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
       dataUploadTypeId: [this.data.mainData.dataUploadTypeId, [Validators.required]],
     });
 
-    if(this.data.gstApplicableId == 1) {
+    if(this.data.mainData.gstApplicableId == 1) {
       this.arnRiaFG.controls.gstNumber.setValidators([Validators.required, Validators.minLength(15), Validators.maxLength(15)]);
+    }
+    if(this.data.mainData.advisorId) {
+      this.arnRiaFG.controls.commencementDate.setValue(new Date(this.data.mainData.commencementDate));
+      this.arnRiaFG.controls.renewalDate.setValue(new Date(this.data.mainData.renewalDate));
       this.arnRiaFG.updateValueAndValidity();
     }
   }
@@ -84,12 +88,25 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
         ...this.data.mainData,
         ...this.arnRiaFG.getRawValue()
       };
-      jsonObj.commencementDate = this.datePipe.transform(jsonObj.commencementDate.toDate(), 'yyyy-MM-dd');
-      jsonObj.renewalDate = this.datePipe.transform(jsonObj.renewalDate.toDate(), 'yyyy-MM-dd');
+
+      if(jsonObj.commencementDate instanceof Date) {
+        jsonObj.commencementDate = this.datePipe.transform(jsonObj.commencementDate, 'yyyy-MM-dd');
+      } else {
+        jsonObj.commencementDate = this.datePipe.transform(jsonObj.commencementDate.toDate(), 'yyyy-MM-dd');
+      }
+      if(jsonObj.renewalDate instanceof Date) {
+        jsonObj.renewalDate = this.datePipe.transform(jsonObj.renewalDate, 'yyyy-MM-dd');
+      } else {
+        jsonObj.renewalDate = this.datePipe.transform(jsonObj.renewalDate.toDate(), 'yyyy-MM-dd');
+      }
 
       // edit action
       if(this.data.mainData.typeId) {
-        this.settingService.editArn(jsonObj).subscribe((res)=> {
+        const editJson = {
+          ...this.data.mainData,
+          ...jsonObj
+        }
+        this.settingService.editArn(editJson).subscribe((res)=> {
           this.eventService.openSnackBar("ARN-RIA Added successfully");
           this.Close(true);
         })

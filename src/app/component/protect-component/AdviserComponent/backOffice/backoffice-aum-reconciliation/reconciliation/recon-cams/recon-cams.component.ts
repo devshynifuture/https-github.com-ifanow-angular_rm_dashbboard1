@@ -42,8 +42,10 @@ export class ReconCamsComponent implements OnInit {
   getBrokerList() {
     this.reconService.getBrokerListValues({ advisorId: this.advisorId })
       .subscribe(res => {
-        this.brokerList = res;
-        this.isBrokerSelected = true;
+        if (res) {
+          this.brokerList = res;
+          this.isBrokerSelected = true;
+        }
       });
   }
 
@@ -77,7 +79,8 @@ export class ReconCamsComponent implements OnInit {
         ...data,
         startRecon: flag === 'startReconciliation' ? true : (flag === 'report' ? false : null),
         brokerId: this.selectBrokerForm.get('selectBrokerId').value,
-        rtId: this.rtId
+        rtId: this.rtId,
+        flag,
       },
       direction: 'top',
       componentName: UpperSliderBackofficeComponent,

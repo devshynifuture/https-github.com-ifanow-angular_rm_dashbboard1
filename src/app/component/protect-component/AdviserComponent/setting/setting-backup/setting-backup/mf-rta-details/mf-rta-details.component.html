@@ -20,28 +20,38 @@
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{getARNId(element.arnRiaDetailsId)}} </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef class="br"> Registered email ID </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.email}} </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
                 <th mat-header-cell *matHeaderCellDef class="br"> Mailback password </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} <mat-icon>visibility</mat-icon></td>
+                <td mat-cell *matCellDef="let element" class="br">
+                    <ng-container>
+                        <ng-template *ngTemplateOutlet="templateRef; context:{element :element.mailbackPassword, toggle: true}"></ng-template>
+                    </ng-container>
+                </td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="symbol">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell *matCellDef="let element">
-                    <i class="material-icons">
-                        more_vert
-                    </i>
+                    <ng-container>
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="openInSideBar(1, element, '')">Edit</button>
+                            <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
+                        </mat-menu>
+                    </ng-container>
                 </td>
             </ng-container>
 
@@ -55,19 +65,24 @@
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{getARNId(element.arnRiaDetailsId)}} </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef class="br"> Login ID </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.loginId}} </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
                 <th mat-header-cell *matHeaderCellDef class="br"> Login password </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} <mat-icon>visibility</mat-icon></td>
+                <td mat-cell *matCellDef="let element" class="br">
+                    
+                    <ng-container>
+                        <ng-template *ngTemplateOutlet="templateRef; context:{element :element.loginPassword, toggle: true}"></ng-template>
+                    </ng-container>
+                </td>
             </ng-container>
 
             <!-- Symbol Column -->
@@ -77,18 +92,29 @@
             </ng-container>
             <ng-container matColumnDef="mail">
                 <th mat-header-cell *matHeaderCellDef class="br"> Mailback password</th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.mail}} <mat-icon>visibility</mat-icon></td>
+                <td mat-cell *matCellDef="let element" class="br">
+                    
+                    <ng-container>
+                        <ng-template *ngTemplateOutlet="templateRef; context:{element :element.mailbackPassword, toggle: true}"></ng-template>
+                    </ng-container>
+                </td>
             </ng-container>
             <ng-container matColumnDef="use">
                 <th mat-header-cell *matHeaderCellDef class="br"> Use for file ordering? </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.use}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.fileOrderingUseabilityStatusId == 1 ? 'Yes' : 'No'}} </td>
             </ng-container>
             <ng-container matColumnDef="icons">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell *matCellDef="let element">
-                    <i class="material-icons">
-                        more_vert
-                    </i>
+                    <ng-container>
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="openInSideBar(2, element, '')">Edit</button>
+                            <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
+                        </mat-menu>
+                    </ng-container>
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
@@ -101,19 +127,24 @@
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{getARNId(element.arnRiaDetailsId)}} </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef class="br"> Login ID </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.loginId}} </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
                 <th mat-header-cell *matHeaderCellDef class="br"> Login password </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} <mat-icon>visibility</mat-icon></td>
+                <td mat-cell *matCellDef="let element" class="br">
+                    
+                    <ng-container>
+                        <ng-template *ngTemplateOutlet="templateRef; context:{element :element.loginPassword, toggle: true}"></ng-template>
+                    </ng-container>
+                </td>
             </ng-container>
 
             <!-- Symbol Column -->
@@ -129,9 +160,15 @@
             <ng-container matColumnDef="icons">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell *matCellDef="let element">
-                    <i class="material-icons">
-                        more_vert
-                    </i>
+                    <ng-container>
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="openInSideBar(3, element, '')">Edit</button>
+                            <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
+                        </mat-menu>
+                    </ng-container>
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
@@ -144,37 +181,57 @@
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{getARNId(element.arnRiaDetailsId)}} </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef class="br"> Login ID </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.loginId}} </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
                 <th mat-header-cell *matHeaderCellDef class="br"> Login password </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} <mat-icon>visibility</mat-icon></td>
+                <td mat-cell *matCellDef="let element" class="br">
+                    
+                    <ng-container>
+                        <ng-template *ngTemplateOutlet="templateRef; context:{element :element.loginPassword, toggle: true}"></ng-template>
+                    </ng-container>
+                </td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="email">
                 <th mat-header-cell *matHeaderCellDef class="br"> Secret Question </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.email}} </td>
+                <td mat-cell *matCellDef="let element" class="br">
+                    <div *ngFor="let questionSet of element.rtaCamsFundNetSecurityQuestionsList">
+                        {{getQuestion(questionSet.questionId)}}
+                    </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="mail">
                 <th mat-header-cell *matHeaderCellDef class="br"> Answer </th>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.mail}} <mat-icon>visibility</mat-icon> </td>
+                <td mat-cell *matCellDef="let element" class="br"> 
+                    <div *ngFor="let questionSet of element.rtaCamsFundNetSecurityQuestionsList">
+                        <ng-container>
+                            <ng-template *ngTemplateOutlet="templateRef; context:{element :questionSet.answer, toggle: true}"></ng-template>
+                        </ng-container>
+                    </div></td>
             </ng-container>
 
             <ng-container matColumnDef="icons">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell *matCellDef="let element">
-                    <i class="material-icons">
-                        more_vert
-                    </i>
+                    <ng-container>
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="openInSideBar(4, element, '')">Edit</button>
+                            <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
+                        </mat-menu>
+                    </ng-container>
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
@@ -182,3 +239,9 @@
         </table>
     </div>
 </div>
+
+<ng-container>
+    <ng-template #templateRef let-toggle="toggle" let-element="element">
+        {{(toggleVisibility(element, toggle))}} <mat-icon (click)="toggle = !toggle">visibility</mat-icon>
+      </ng-template>
+</ng-container>

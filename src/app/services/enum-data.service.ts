@@ -30,12 +30,13 @@ export class EnumDataService {
   }
 
   roleList = [
-    {roleTypeId:1, roleTypeName:"Admin"},
-    {roleTypeId:2, roleTypeName:"Para planner"},
-    {roleTypeId:3, roleTypeName:"Relationship manager"},
-    {roleTypeId:4, roleTypeName:"Operations"},
+    {roleTypeId: 1, roleTypeName: "Admin"},
+    {roleTypeId: 2, roleTypeName: "Para planner"},
+    {roleTypeId: 3, roleTypeName: "Relationship manager"},
+    {roleTypeId: 4, roleTypeName: "Operations"},
   ]
-  public getRoles(){
+
+  public getRoles() {
     this.enumService.addRoles(this.roleList);
   }
 

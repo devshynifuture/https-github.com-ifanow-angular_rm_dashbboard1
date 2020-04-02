@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material';
 })
 export class OverviewProfileComponent implements OnInit {
   familyMemberList: any;
+  selectedFamilyMember: any;
 
   constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject, private cusService: CustomerService, private eventService: EventService) { }
 
@@ -25,16 +26,21 @@ export class OverviewProfileComponent implements OnInit {
   getFamilyMembersList() {
     let obj =
     {
-      clientId: 2,
+      clientId: 2978,
       id: 0
     }
     this.cusService.getFamilyMembers(obj).subscribe(
       data => {
         this.familyMemberList = data;
+        this.selectedFamilyMember = data[0];
         console.log(data)
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
     )
+  }
+  detailedViewData(data) {
+    console.log(data);
+    this.selectedFamilyMember = data;
   }
   deleteModal(value, data) {
     const dialogData = {
@@ -75,10 +81,11 @@ export class OverviewProfileComponent implements OnInit {
     let component;
     if (value == 'add') {
       component = AddFamilyMemberComponent;
-      (data == null) ? data = { flag: 'Add Family Member', fieldFlag: 'familyMember' } : '';
+      data = { flag: 'Add Family Member', fieldFlag: 'familyMember' };
     }
     else {
-      (data == null) ? data = { flag: 'Add Family Member', fieldFlag: 'familyMember' } : '';
+      data['flag'] = "Add Family Member";
+      data['fieldFlag'] = 'familyMember';
       component = AddClientComponent;
     }
     const fragmentData = {
@@ -92,8 +99,8 @@ export class OverviewProfileComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getFamilyMembersList();
           if (UtilService.isRefreshRequired(sideBarData)) {
-
           }
           rightSideDataSub.unsubscribe();
         }

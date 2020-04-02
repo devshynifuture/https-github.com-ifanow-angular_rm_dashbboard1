@@ -2,7 +2,7 @@
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div>
 <div *ngIf="showLoader==false">
-<div *ngIf="sip.sipComponent==false" id="ui-category">
+    <div *ngIf="sip.sipComponent==false" id="ui-category">
         <div class="wrapper-20 bg-white">
             <div class="row">
                 <div class="col-md-6 pl-0">
@@ -11,78 +11,122 @@
                 </div>
                 <div class="col-md-6 pr-0">
                     <div class="right text-right">
-                        <button mat-stroked-button class="btn-default addon"><i class="material-icons">add</i>XLS</button>
+                        <button mat-stroked-button class="btn-default addon"><i
+                                class="material-icons">add</i>XLS</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                     </div>
                 </div>
             </div>
-    
-            <table class="table-low mt-16" id="table-high" >
+            <div ng-init="schemeFilter=''">
+                <input type="text" placeholder="Search client Name" [(ngModel)]="schemeFilter" (keyup)="filterArray()">
+            </div>
+            <table class="table-low mt-16" id="table-high" *ngIf="filteredArray">
                 <thead class="text-dark">
                     <tr>
                         <th>Sr No.</th>
-                        <th>Amc Name</th>
+                        <th>Scheme Name</th>
                         <th class="text-right">SIP Amount</th>
                         <th class="text-right">SIP Count</th>
                         <th class="text-right">% Weight</th>
                     </tr>
                 </thead>
-                <!-- <tbody *ngFor="let category of category; let i = index">
+                <tbody *ngFor="let data of filteredArray; let i = index">
                     <tr>
                         <td>{{i+1}}</td>
-                        <td (click)="showSubTableList(i,category.showCategory)">{{category.name}} <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="category.showCategory==true"> add  </i>
-                        <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="category.showCategory==false"> remove  </i></td>
-                        <td class="text-right">{{category.totalAum}} </td>
-                        <td class="text-right">{{category.weightInPercentage}}%</td>
-                     </tr>
-                     <tr>
-                         <tr>
-                        <table *ngIf="category.showCategory==false" class="table-low mt-8 " id="table-high">
-                                <thead class="bg-light text-dark">
+                        <td (click)="showSubTableList(i,data.showCategory,data)">{{data.schemeName}} <i
+                                class="material-icons right b-a f-14 mt-4 c-p" *ngIf="data.showCategory==true"> add </i>
+                            <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="data.showCategory==false"> remove
+                            </i></td>
+                        <td class="text-right"><span appFormatNumber>{{data.sipAmount}} </span></td>
+                        <td class="text-right">{{data.sipCount}} </td>
+                        <td class="text-right">{{data.weightInPercentage}}%</td>
+                    </tr>
+                    <tr>
+                    <tr>
+                        <table *ngIf="data.showCategory==false" class="table-low mt-8 " id="table-high">
+                            <thead class="bg-light text-dark">
+                                <tr>
+                                    <th>Sr No.</th>
+                                    <th>Investor Name</th>
+                                    <th class="text-right">SIP Amount</th>
+                                    <th class="text-right">SIP Count</th>
+                                    <th class="text-right">% Weight</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let subInvList of data.InvestorList; let i = index">
+                                <tr>
+                                    <td>{{i+1}}</td>
+                                    <td (click)="showSchemeName(i,subInvList.showSubCategory,subInvList)">
+                                        {{subInvList.investorName}}<i *ngIf="subInvList.showSubCategory==true"
+                                            class="material-icons right b-a f-14 mt-4 c-p">add</i>
+                                        <i *ngIf="subInvList.showSubCategory==false"
+                                            class="material-icons right b-a f-14 mt-4 c-p"> remove </i> </td>
+                                    <td class="text-right"><span appFormatNumber>{{subInvList.sipAmount}}</span> </td>
+                                    <td class="text-right">{{subInvList.sipCount}} </td>
+                                    <td class="text-right">{{subInvList.weightInPercentage}}%</td>
+                                </tr>
+                                <table *ngIf="subInvList.showSubCategory==false">
+                                    <thead>
                                         <tr>
-                                            <th>Sr No.</th>
-                                            <th>Sub Category Name</th>
-                                            <th class="text-right">Current Value</th>
-                                            <th class="text-right">% Weight</th>
-                    
+                                            <th>Applicant Name</th>
+                                            <th>Scheme Name</th>
+                                            <th class="text-right">Folio</th>
+                                            <th class="text-right">Registered Date</th>
+                                            <th class="text-right">From Date</th>
+                                            <th class="text-right">To Date</th>
+                                            <th class="text-right">To Trigger Day</th>
+                                            <th class="text-right">Frequency</th>
+                                            <th class="text-right">Amount</th>
+                                            <th class="text-right">% Weight </th>
+                                            <th class="text-right">Edit/Delete</th>
                                         </tr>
                                     </thead>
-                                       <tbody *ngFor="let subcategory of category.subCategoryList; let i = index">
+                                    <tr>
+                                        <tbody *ngFor="let scheme of subInvList.applicantList;let i = index">
                                             <tr>
                                                 <td>{{i+1}}</td>
-                                                <td (click)="showSchemeName(i,subcategory.showSubCategory)">{{subcategory.name}}<i *ngIf="subcategory.showSubCategory==true" class="material-icons right b-a f-14 mt-4 c-p">add</i>
-                                                    <i *ngIf="subcategory.showSubCategory==false" class="material-icons right b-a f-14 mt-4 c-p"> remove  </i> </td>
-                                                <td class="text-right">{{subcategory.totalAum}} </td>
-                                                <td class="text-right">{{subcategory.weightInPercentage}}%</td>
+                                                <td>{{scheme.investorName}}<i
+                                                        class="material-icons right b-a f-14 mt-4 c-p"
+                                                        *ngIf="scheme.showSubCategory==false">add</i>
+                                                    <i class="material-icons right b-a f-14 mt-4 c-p"
+                                                        *ngIf="scheme.showSubCategory==true"> remove </i> </td>
+                                                <td class="text-right">{{scheme.schemeName}} </td>
+                                                <td class="text-right">{{scheme.folioNumber}} </td>
+                                                <td class="text-right">{{scheme.registeredDate | date:'dd/MM/yyyy'}}
+                                                </td>
+                                                <td class="text-right">{{scheme.from_date | date:'dd/MM/yyyy'}} </td>
+                                                <td class="text-right">{{scheme.to_date | date:'dd/MM/yyyy'}} </td>
+                                                <td class="text-right">{{scheme.sipTriggerDay}} </td>
+                                                <td class="text-right">{{scheme.frequency}} </td>
+                                                <td class="text-right"><span appFormatNumber>{{scheme.sipAmount}}
+                                                    </span></td>
+                                                <td class="text-right">{{scheme.weightInPercentage}}</td>
+                                                <td class="text-right">Add Ceased</td>
+
                                             </tr>
-                                            <table *ngIf="subcategory.showSubCategory==false">
-                                                <thead>
-                                                    <tr>
-                                                    <th>Sr No.</th>
-                                                    <th>Sub Category Name</th>
-                                                    <th class="text-right">Current Value</th>
-                                                    <th class="text-right">% Weight</th>
-                                                    </tr>
-                                                </thead>
-                                                <tr>
-                                                <tbody *ngFor="let scheme of subcategory.schemes;let i = index">
-                                                    <tr >
-                                                        <td>{{i+1}}</td>
-                                                        <td>{{scheme.schemeName}}<i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="subcategory.showSubCategory==false">add</i>
-                                                            <i  class="material-icons right b-a f-14 mt-4 c-p" *ngIf="subcategory.showSubCategory==true"> remove  </i> </td>
-                                                        <td class="text-right">{{scheme.totalAum}} </td>
-                                                        <td class="text-right">{{scheme.weightInPercentage}}</td>
-                                                    </tr>
-                                                </tbody>
-                                                
-                                            </table>
-                                    </tbody>
+                                        </tbody>
+
+                                </table>
+                            </tbody>
+
                         </table>
 
                     </tr>
-                </tbody> -->
+                </tbody>
+                <tbody>
+                    <tr>
+                        <td class="p-table t-7 b-a">&nbsp;</td>
+                        <td class="p-table t-35 b-a"><strong>Total</strong></td>
+                        <td class="p-table t-20 b-a text-right"><strong><span
+                                    appFormatNumber>{{totalOfSipAmount}}</span></strong></td>
+                        <td class="p-table t-19 b-a text-right"><strong>{{totalOfSipCount}}</strong></td>
+                        <td class="p-table t-19 b-a text-right"><strong>{{totalWeight}}%</strong></td>
+                    </tr>
+                </tbody>
             </table>
-   
+            <div *ngIf="!filteredArray">
+                <p>No data Found</p>
+            </div>
         </div>
     </div>
 
@@ -90,4 +134,3 @@
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div> -->
 </div>
-

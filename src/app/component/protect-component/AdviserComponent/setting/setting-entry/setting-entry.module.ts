@@ -21,10 +21,11 @@ import { OpenEmailVerificationComponent } from '../setting-preference/open-email
 import { SettingPreferenceComponent } from '../setting-preference/setting-preference.component';
 import { OpenGalleryPlanComponent } from '../setting-plan/setting-plan/plan-gallery/open-gallery-plan/open-gallery-plan.component';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
-import { CashflowTableEditDirective } from '../../../customers/component/customer/plan/cashflows-plan/cashflow-table-edit.directive';
+import { TaskTemplateTypeComponent } from '../setting-activity/add-task-template/task-template-type/task-template-type.component';
+import { AddTeamMemberComponent } from '../setting-user-roles/setting-users-roles/hierachy/add-team-member/add-team-member.component';
 
 export const componentList = [AddReportingManagerComponent, AddNewRoleComponent, AddArnRiaDetailsComponent, AddCamsDetailsComponent, AddKarvyDetailsComponent, AddFranklinTempletionDetailsComponent, AddCamsFundsnetComponent, SettingSchemeDetailsComponent, AddModelPortfolioComponent,
-  AddPersonalProfileComponent, AddTaskTemplateComponent, SettingPreferenceComponent,NewTeamMemberComponent,OpenEmailVerificationComponent,OrgProfileComponent,OpenGalleryPlanComponent]
+  AddPersonalProfileComponent, AddTaskTemplateComponent, SettingPreferenceComponent, NewTeamMemberComponent, OpenEmailVerificationComponent, OrgProfileComponent, OpenGalleryPlanComponent, TaskTemplateTypeComponent, AddTeamMemberComponent]
 
 @NgModule({
   declarations: [componentList],

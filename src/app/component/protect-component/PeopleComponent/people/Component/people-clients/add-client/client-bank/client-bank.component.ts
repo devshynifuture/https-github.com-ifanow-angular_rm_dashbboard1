@@ -1,9 +1,11 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { ValidatorType } from 'src/app/services/util.service';
 import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
 import { PostalService } from 'src/app/services/postal.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-client-bank',
@@ -11,14 +13,19 @@ import { PostalService } from 'src/app/services/postal.service';
   styleUrls: ['./client-bank.component.scss']
 })
 export class ClientBankComponent implements OnInit {
+  bankDetail: any;
+  userData: any;
 
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private subService: SubscriptionService, private postalService: PostalService) {
+  constructor(private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private subService: SubscriptionService, private postalService: PostalService, private peopleService: PeopleService) {
   }
 
   bankForm;
   validatorType = ValidatorType;
   @Output() tabChange = new EventEmitter();
 
+  @Input() set data(data) {
+    this.userData = data;
+  }
   ngOnInit() {
     this.bankForm = this.fb.group({
       ifscCode: [, [Validators.required]],
@@ -56,7 +63,8 @@ export class ClientBankComponent implements OnInit {
   }
   bankData(data) {
     (data == undefined) ? data = {} : '';
-    console.log(data, "bank data")
+    console.log(data, "bank data");
+    this.bankDetail = data;
     this.bankForm.get('bankName').setValue(data.bank)
     this.bankForm.get('branchCity').setValue(data.city)
     this.bankForm.get('branchState').setValue(data.state);
@@ -83,12 +91,50 @@ export class ClientBankComponent implements OnInit {
     this.bankForm.get('branchState').setValue(pincodeData[0].State);
     this.bankForm.get('branchCountry').setValue(pincodeData[0].Country);
   }
-  saveNext() {
-    this.tabChange.emit(1);
+  saveNext(flag) {
+    if (this.bankForm.invalid) {
+      this.bankForm.markAllAsTouched();
+      return;
+    }
+    else {
+      let obj =
+      {
+        "branchCode": "",
+        "branchName": this.bankForm.get("branchName").value,
+        "bankName": this.bankForm.get("bankName").value,
+        "accountType": this.bankForm.get("accType").value,
+        "accountNumber": this.bankForm.get("accNumber").value,
+        "micrNo": this.bankForm.get("micrName").value,
+        "ifscCode": this.bankForm.get("ifscCode").value,
+        "address": {
+          "address1": this.bankForm.get("branchAddressLine1").value,
+          "address2": this.bankForm.get("branchAddressLine2").value,
+          "address3": '',
+          "pinCode": this.bankForm.get("branchPinCode").value,
+          "city": this.bankForm.get("branchCity").value,
+          "state": this.bankForm.get("branchState").value,
+          "stateId": "27",
+          "country": this.bankForm.get("branchCountry").value
+        },
+        "userId": this.userData.clientId,
+        "userType": 1,
+        "minorAccountHolderName": "sarvesh",
+        "guardianAccountHolderName": "chetan",
+        "userBankMappingId": "",
+        "bankId": "",
+        "addressId": "",
+        "name": ""
+      }
+      this.peopleService.addEditClientBankDetails(obj).subscribe(
+        data => {
+          console.log(data);
+          (flag == 'Next') ? this.tabChange.emit(1) : this.close();
+        },
+        err => this.eventService.openSnackBar(err, 'Dismiss')
+      )
+    }
   }
-  saveClose() {
-    this.close();
-  }
+
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }

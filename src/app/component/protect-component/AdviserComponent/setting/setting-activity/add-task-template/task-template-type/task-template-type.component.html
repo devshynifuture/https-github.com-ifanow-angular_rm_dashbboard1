@@ -1,0 +1,53 @@
+<div class="row bb-1 popup-header-fix-50">
+    <div class="col-md-10 p-0">
+        <h4 class="mb-0 l-22 wrapper-20">Select task template type</h4>
+    </div>
+    <div class="col-md-2 text-right">
+        <i class="material-icons pt-20 c-p pr-16" (click)="Close(false)">
+            clear
+        </i>
+    </div>
+</div>
+<div class="pt-90 pl-28 pr-28 add-task-template" [formGroup]="taskTemplateType">
+    <div class="row h-350">
+        <div class="col-md-12 p-0">
+            <h5 class="m-0 pb-12">Select an option below to add a task template...</h5>
+            <mat-radio-group class="taskradio" formControlName="type">
+                <mat-radio-button [value]="1" checked [ngClass]="taskTemplateType.get('type').value == 1 ? 'text-primary b-a-custom': 'b-a text-primitive'">
+                    Create a linked task</mat-radio-button>
+                <mat-radio-button [value]="2" [ngClass]="taskTemplateType.get('type').value == 2 ? 'text-primary b-a-custom': 'b-a text-primitive'">
+                    Create a non-linked task
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 p-0">
+            <h5 class="m-0 roboto">FAQ</h5>
+            <p class="m-0 f-500 roboto pt-10">What is a linked task?</p>
+            <p class="m-0 text-black roboto pt-6">A linked task is one which is linked to an existing asset/insurance/loan. Linked tasks allow you to work seamlessly without having to worry about entering the details of the linked asset/insurance/loan manually. Secondly, you can track the
+                associated advice/action plan immediately.
+            </p>
+            <p class="m-0 f-500 roboto pt-28">What is a linked task?</p>
+            <p class="m-0 roboto text-black">A non-linked task, as the name suggests, is the opposite of a linked task. There are no assets/insurance/loans associated with such tasks. Depending the nature of your work environment, you can create such task templates. E.g. of non-linked
+                tasks: On-board a new cient, fill up form, do a review meeting etc.</p>
+            <p class="m-0 f-500 roboto pt-28">A note on tasks</p>
+            <p class="m-0 roboto text-black">It is worth noting that tasks allows you to cordinate between you and your team only. The task interface is not opened up to your clients.</p>
+
+            <p class="m-0 roboto text-black pb-90">Tasks can also have sub-tasks associated with them. You can assign default owners and turn around times to tasks as well as sub-tasks.</p>
+        </div>
+    </div>
+</div>
+<div class="bottom-fixed wrapper-12 w-50">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+          <!--          TODO-->
+          <button (click)="addTaskTemplate(null,null)" class="btn-bottom br-0 text-inherit" mat-button>NEXT
+          </button>
+        </div>
+    </div>
+</div>

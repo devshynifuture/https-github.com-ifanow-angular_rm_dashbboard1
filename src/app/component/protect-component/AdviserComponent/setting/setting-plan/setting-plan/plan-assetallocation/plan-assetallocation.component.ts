@@ -3,15 +3,14 @@ import { OrgSettingServiceService } from '../../../org-setting-service.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ValidatorType } from 'src/app/services/util.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-plan-assetallocation',
   templateUrl: './plan-assetallocation.component.html',
   styleUrls: ['./plan-assetallocation.component.scss']
 })
-@Directive({
-  selector: '[appCashflowTableEdit]'
-})
+
 export class PlanAssetallocationComponent implements OnInit {
   displayedColumns: string[] = ['position', 'debt1', 'equity1', 'debt2', 'equity2', 'debt3', 'equity3',
     'debt4', 'equity4', 'debt5', 'equity5'];
@@ -22,32 +21,102 @@ export class PlanAssetallocationComponent implements OnInit {
   mode2: any;
   mode4: any;
   mode5: any;
-  editMode: boolean =false;
+  editMode: boolean = false;
   dataToMap: any = [];
   onlyNumbers: string;
+  staticAllocationData: any;
+  secondValue: any;
+  obj: any;
+  obj1: any;
+  obj2: any;
+  obj3: any;
+  obj4: any;
+  staticAllocation: any;
   constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) { }
   ngOnInit() {
     this.getAssetAllocation()
     this.advisorId = AuthService.getAdvisorId()
+    this.editMode = false
+    console.log('edit mode', this.editMode)
+    this.staticAllocation = []
   }
 
   toggleEditMode() {
     this.editMode = !this.editMode;
+    console.log('hgdsfhg ==', this.editMode)
   }
-  changeTableTdValue(value: string, field: string, index: number) {
+  changeTableTdValue(value, field, field2, ele, index) {
     console.log(value, field, index);
+    this.secondValue = 100 - value
+    ele[field2] = this.secondValue
+    ele[field] = value
+
     if (ValidatorType.NUMBER_ONLY.test(value)) {
-      const updatedTable = this.orgSetting.alterTable(this.dataToMap, field, value, index);
-      console.log("this is updated Table", updatedTable);
-     // this.dataSource.data = updatedTable;
+      // const updatedTable = this.orgSetting.alterTable(this.dataToMap, field, value, index);
+      // console.log("this is updated Table", updatedTable);
+      // this.dataSource.data = updatedTable;
     } else {
       this.onlyNumbers = '';
       this.eventService.openSnackBar("This input only takes numbers", "Dismiss");
     }
   }
+  save() {
+    this.staticAllocation = []
+    this.staticAllocationData.forEach(element => {
+      this.obj = {
+        advisorId : this.advisorId,
+        riskProfileMasterId: element.riskProfileMasterI1,
+        goalTimeFrameMasterId:element.goalTimeFrameMasterId,
+        equityAllocation: element.equity1,
+        debtAllocation: element.debt1,
+      }
+      this.obj1 = {
+        advisorId : this.advisorId,
+        riskProfileMasterId: element.riskProfileMasterI2,
+        goalTimeFrameMasterId:element.goalTimeFrameMasterId,
+        equityAllocation: element.equity2,
+        debtAllocation: element.debt2,
+      }
+      this.obj2 = {
+        advisorId : this.advisorId,
+        riskProfileMasterId: element.riskProfileMasterI3,
+        goalTimeFrameMasterId:element.goalTimeFrameMasterId,
+        equityAllocation: element.equity3,
+        debtAllocation: element.debt3,
+      }
+      this.obj3 = {
+        advisorId : this.advisorId,
+        riskProfileMasterId: element.riskProfileMasterI4,
+        goalTimeFrameMasterId:element.goalTimeFrameMasterId,
+        equityAllocation: element.equity4,
+        debtAllocation: element.debt4,
+      }
+      this.obj4 = {
+        advisorId : this.advisorId,
+        riskProfileMasterId: element.riskProfileMasterI5,
+        goalTimeFrameMasterId:element.goalTimeFrameMasterId,
+        equityAllocation: element.equity5,
+        debtAllocation: element.debt5,
+      }
+      this.staticAllocation.push(this.obj)
+      this.staticAllocation.push(this.obj1)
+      this.staticAllocation.push(this.obj2)
+      this.staticAllocation.push(this.obj3)
+      this.staticAllocation.push(this.obj4)
+     
+    });
+    console.log('sgdfg == ',this.staticAllocation)
+    this.orgSetting.updateAssetAllocation(this.staticAllocation).subscribe(
+      data => this.updateAssetAllocationRes(data),
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    );
+  }
+  updateAssetAllocationRes(data){
+    console.log('updateAssetAllocationRes',data)
+  }
   getAssetAllocation() {
     let obj = {
-      advisorId: this.advisorId
+      advisorId: 2808
     }
     this.orgSetting.getAssetAllocation(obj).subscribe(
       data => this.getAssetAllocationRes(data),
@@ -56,24 +125,7 @@ export class PlanAssetallocationComponent implements OnInit {
   }
   getAssetAllocationRes(data) {
     console.log('getAssetAllocationRes', data)
-    this.mode1 = data.staticAllocationData.filter(element => element.risk_profile_master_id == 1)
-    this.mode2 = data.staticAllocationData.filter(element => element.risk_profile_master_id == 2)
-    this.mode3 = data.staticAllocationData.filter(element => element.risk_profile_master_id == 3)
-    this.mode4 = data.staticAllocationData.filter(element => element.risk_profile_master_id == 4)
-    this.mode5 = data.staticAllocationData.filter(element => element.risk_profile_master_id == 5)
-    console.log('mode1',this.mode1)
-    console.log('mode2',this.mode2)
-    console.log('mode3',this.mode3)
-    console.log('mode4',this.mode4)
-    console.log('mode5',this.mode5)
-
-
-//     advisor_id: 0
-// goal_time_frame_master_id: 1
-// risk_profile_master_id: 2
-// equity_allocation: 80
-// debt_allocation: 20
-// is_active: true
+    this.staticAllocationData = data.staticAllocationData
   }
 }
 export interface PeriodicElement {
