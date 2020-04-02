@@ -177,6 +177,10 @@
                                                         {{item.investorName}}</p>
                                                         <p>{{item.sipAmount}}</p>
                                                 </div>
+                                                <div class="col-md-5 p-0 ">
+                                                    <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
+                                                        {{item.dateDiff}}</p>
+                                                </div>
                                             </div>
 
                                         </div>
@@ -191,6 +195,10 @@
                                                         {{item.investorName}}</p>
                                                         <p>{{item.sipAmount}}</p>
                                                 </div>
+                                                <div class="col-md-5 p-0 ">
+                                                    <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
+                                                        {{item.dateDiff}}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </mat-tab> 
@@ -201,6 +209,9 @@
 </div>
 </div>
 </div>
+</div>
+<div *ngIf="sipcomponentWise=='Allsip' && sipComponent==false" >
+    <app-all-sip></app-all-sip>
 </div>
 <div *ngIf="sipcomponentWise=='amc'">
     <app-sip-amc-wise></app-sip-amc-wise>
@@ -213,7 +224,4 @@
 </div>
 <div *ngIf="sipcomponentWise=='applicant'">
     <app-sip-applicant-wise></app-sip-applicant-wise>
-</div>
-<div *ngIf="sipcomponentWise=='Allsip'">
-    <app-all-sip></app-all-sip>
 </div>

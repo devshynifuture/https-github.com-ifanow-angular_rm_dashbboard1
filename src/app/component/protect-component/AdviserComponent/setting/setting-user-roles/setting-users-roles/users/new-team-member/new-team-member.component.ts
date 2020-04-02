@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { SettingsService } from '../../../../settings.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { ValidatorType } from 'src/app/services/util.service';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {SettingsService} from '../../../../settings.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {ValidatorType} from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {LoginService} from '../../../../../../../no-protected/login/login.service';
 
 @Component({
   selector: 'app-new-team-member',
@@ -11,7 +12,7 @@ import { EventService } from 'src/app/Data-service/event.service';
   styleUrls: ['./new-team-member.component.scss']
 })
 export class NewTeamMemberComponent implements OnInit {
-  @Input() data:any = {};
+  @Input() data: any = {};
   advisorId: any;
   roles: any;
   teamMemberFG: FormGroup;
@@ -20,6 +21,7 @@ export class NewTeamMemberComponent implements OnInit {
     private fb: FormBuilder,
     private settingsService: SettingsService,
     private eventService: EventService,
+    private loginService: LoginService
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -28,7 +30,7 @@ export class NewTeamMemberComponent implements OnInit {
     this.createForm();
   }
 
-  createForm(){
+  createForm() {
     this.teamMemberFG = this.fb.group({
       adminAdvisorId: [this.data.mainData.adminAdvisorId || this.advisorId],
       fullName: [this.data.mainData.fullName, [Validators.required, Validators.maxLength(50), Validators.pattern(ValidatorType.PERSON_NAME)]],

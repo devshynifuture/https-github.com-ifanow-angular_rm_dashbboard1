@@ -15,7 +15,6 @@ export class SipApplicantWiseComponent implements OnInit {
   constructor(private backoffice:BackOfficeService,public sip:SipComponent) { }
 
   ngOnInit() {
-    this.showLoader = false;
     this.advisorId=AuthService.getAdvisorId();
     this.clientId=AuthService.getClientId();
     this.schemeWiseApplicantGet()

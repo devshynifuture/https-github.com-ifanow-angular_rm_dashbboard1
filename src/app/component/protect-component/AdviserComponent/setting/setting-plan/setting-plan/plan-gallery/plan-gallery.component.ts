@@ -32,7 +32,7 @@ export class PlanGalleryComponent implements OnInit {
 
   getDefault() {
     let advisorObj = {
-      advisorId: this.advisorId
+      advisorId: 2808
     }
     this.planService.getGoalGlobalData(advisorObj).subscribe(
       data => this.getGoalGlobalDataRes(data),

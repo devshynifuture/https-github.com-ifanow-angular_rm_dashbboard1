@@ -86,7 +86,7 @@ export interface PeriodicElement {
   weight: string;
   symbol: string;
   report: string;
-  role: string
+  role: string;
 
 }
 

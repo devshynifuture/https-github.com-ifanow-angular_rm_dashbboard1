@@ -84,11 +84,11 @@ export class ClientAddressComponent implements OnInit {
         "country": this.addressForm.get('country').value,
         "userId": this.userData.clientId,
         "userType": 1,
-        "addressType": this.addressForm.get('addressLine1').value,
-        "proofType": this.addressForm.get('proofType').value,
+        "addressType": this.addressForm.get('proofType').value,
+        "proofType": this.addressForm.get('addProofType').value,
         "proofIdNumber": this.addressForm.get('proofIdNum').value,
-        "userAddressMappingId": this.addressForm.get('addressLine1').value,
-        "addreesId": this.addressForm.get('addressLine1').value
+        "userAddressMappingId": null,
+        "addreesId": null
       }
 
       // commented Code which are giving error +>>>>>>>>>>>>>>>>>>>>>>

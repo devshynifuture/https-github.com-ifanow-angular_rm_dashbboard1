@@ -16,7 +16,7 @@
                     </div>
                 </div>
         
-                <table class="table-low mt-16" id="table-high" >
+                <table class="table-low mt-16" id="table-high"  *ngIf="clientList">
                     <thead class="text-dark">
                         <tr>
                             <th>Sr No.</th>
@@ -29,7 +29,7 @@
                     <tbody *ngFor="let name of clientList; index as i" >
                         <tr>
                             <td>{{i+1}}</td>
-                            <td (click)="getClientSCheme(name,name.show,i)">{{name.name}}<i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="name.show" > add  </i>
+                            <td (click)="getInvestorName(name)">{{name.name}}<i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="name.show" > add  </i>
                             <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="name.show==false" > remove  </i></td>
                             <td class="text-right">{{name.totalAum}} </td>
                             <td class="text-right">{{name.weightInPercentage}}</td>
@@ -46,15 +46,15 @@
                         
                                             </tr>
                                         </thead>
-                                           <tbody *ngFor="let investor of name.subList; index as i" >
+                                           <tbody *ngFor="let investor of name.investorList; index as i" >
                                                 <tr>
                                                     <td>{{i+1}}</td>
-                                                    <td (click)="getSchemeName(i,investor.showSubCategory)" >{{investor.name}}<i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="investor.showSubCategory==true">add</i>
-                                                        <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="investor.showSubCategory==false"> remove </i></td>
+                                                    <td (click)="getSchemeName(investor)" >{{investor.name}}<i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="investor.showInvestor">add</i>
+                                                        <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="!investor.showInvestor"> remove </i></td>
                                                     <td class="text-right">{{name.totalAum}}</td>
                                                     <td class="text-right">{{name.weightInPercentage}}%</td>
                                                 </tr>
-                                                <table *ngIf="investor.showSubCategory==false">
+                                                <table *ngIf="!investor.showInvestor">
                                                     <thead>
                                                         <tr>
                                                         <th>Sr No.</th>
@@ -64,10 +64,10 @@
                                                         </tr>
                                                     </thead>
                                                     <tr>
-                                                    <tbody *ngFor="let scheme of investor.schemes; index as i">
+                                                    <tbody *ngFor="let scheme of investor.schemeList; index as i">
                                                         <tr >
                                                             <td>{{i+1}}</td>
-                                                            <td (click)="getSchemeName1(i,scheme.showScheme)">{{scheme.schemeName}}<i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="scheme.showScheme" >add</i>
+                                                            <td (click)="getFolio(scheme)">{{scheme.schemeName}}<i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="scheme.showScheme" >add</i>
                                                                 <i  class="material-icons right b-a f-14 mt-4 c-p" *ngIf="scheme.showScheme==false"> remove  </i> </td>
                                                             <td class="text-right">{{scheme.totalAum}}</td>
                                                             <td class="text-right">{{scheme.weightInPercentage}}</td>
@@ -81,7 +81,7 @@
                                                                 <th class="text-right">% Weight</th>
                                                                 </tr>
                                                             </thead> 
-                                                            <tbody *ngFor="let scheme1 of scheme.schemeList;index as i">
+                                                            <tbody *ngFor="let folio of scheme.folioList;index as i">
                                                                 <tr>
                                                                     <td>{{i+1}}</td>
                                                                     <td>{{scheme1.schemeName}}<td>
@@ -101,8 +101,18 @@
     
                         </tr>
                     </tbody>
+                    <tbody>
+                        <tr>
+                            <td class="p-table t-35 b-a"><strong>Total</strong></td>
+                            <td class="p-table t-7 b-a">&nbsp;</td>
+                            <td class="p-table t-19 b-a text-right"><strong>{{totalCurrentValue}}</strong></td>
+                            <td class="p-table t-19 b-a text-right"><strong>{{totalWeight}}%</strong></td>
+                        </tr>
+                    </tbody>
                 </table>
-       
+                <div *ngIf="!clientList">
+                    <p>No data found</p>
+                </div>
             </div>
      </div>
 </div>
