@@ -584,7 +584,13 @@ export const appConfig = {
   GET_ALL_FEATURES: 'setting/users-roles/feature-capabilities/all/get',
 
   GET_USER_ACCESS_RIGHTS_LIST: 'setting/users-roles/access-rights/get',
-  UPDATE_USER_ACCESS_RIGHTS_LIST: 'setting/users-roles/access-rights/update'
+  UPDATE_USER_ACCESS_RIGHTS: 'setting/users-roles/access-rights/update',
+
+  GET_ALL_TEAM_MEMEBERS: 'setting/users/team-members/get',
+  ADD_TEAM_MEMBER: 'setting/users/team-member/add',
+  DELETE_TEAM_MEMBER: 'setting/users/team-member/delete',
+  SUSPEND_TEAM_MEMBER: 'setting/users/team-member/suspend',
+  HAND_OVER_TEAM_MEMBER: 'setting/users/team-member/hand-over/get',
 
 
   ////////////////////////////// settings////////////////////////////////////////////

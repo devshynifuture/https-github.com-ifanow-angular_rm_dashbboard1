@@ -46,12 +46,21 @@ export class SettingsService {
     let httpParams = new HttpParams().set('advisorId', data.advisorId)
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_USER_ROLES_GLOBAL_DATA, httpParams)
   }
-  sendInvitationToMember(data){
-    return this.http.post(apiConfig.MAIN_URL, data);
-  }
   getTeamMembers(data) {
-    let httpParams = new HttpParams().set('id', data.id)
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_USER_ROLE_ROLE_LIST, httpParams)
+    let httpParams = new HttpParams().set('advisorId', data.advisorId)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ALL_TEAM_MEMEBERS, httpParams)
+  }
+  addTeamMember(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_TEAM_MEMBER, data);
+  }
+  // editTeamMember(data) {
+  //   return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_USER_ROLE, data);
+  // }
+  deleteTeamMember(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_TEAM_MEMBER, data);
+  }
+  suspendMember(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.SUSPEND_TEAM_MEMBER, data);
   }
   
   getAllRoles(data) {
@@ -65,16 +74,23 @@ export class SettingsService {
   addRole(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_USER_ROLE, data);
   }
+  cloneRole(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.CLONE_USER_ROLE, data);
+  }
   deleteRole(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_USER_ROLE, data);
   }
 
   getAccessRightsList(data) {
-    let httpParams = new HttpParams().set('id', data.id)
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PERSONAL_PROFILE_DETAILS, httpParams)
+    let httpParams = new HttpParams().set('advisorId', data.advisorId)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_USER_ACCESS_RIGHTS_LIST, httpParams)
   }
   editAccessRightOfUser(data) {
-    return this.http.put(apiConfig.MAIN_URL, data);
+    return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_USER_ACCESS_RIGHTS, data);
+  }
+  searchTeamMember(data) {
+    let httpParams = new HttpParams().set('advisorId', data.advisorId).set('user', data.user);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PERSONAL_PROFILE_DETAILS, httpParams);
   }
 
 

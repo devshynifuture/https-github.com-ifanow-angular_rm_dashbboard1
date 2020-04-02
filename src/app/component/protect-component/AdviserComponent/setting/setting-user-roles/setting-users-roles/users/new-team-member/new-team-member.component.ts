@@ -25,30 +25,57 @@ export class NewTeamMemberComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.roles = this.data.roles;
+    this.createForm();
   }
 
   createForm(){
     this.teamMemberFG = this.fb.group({
-      name: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(ValidatorType.PERSON_NAME)]],
-      email: ['', [Validators.required, Validators.maxLength(50), Validators.email]],
-      mobile: ['', [Validators.required, Validators.maxLength(50)], Validators.pattern(ValidatorType.NUMBER_ONLY)],
-      role: ['', [Validators.required]],
+      adminAdvisorId: [this.data.mainData.adminAdvisorId || this.advisorId],
+      fullName: [this.data.mainData.fullName, [Validators.required, Validators.maxLength(50), Validators.pattern(ValidatorType.PERSON_NAME)]],
+      emailId: [this.data.mainData.emailId, [Validators.required, Validators.maxLength(50), Validators.pattern(ValidatorType.EMAIL)]],
+      mobileNo: [this.data.mainData.mobileNo, [Validators.required, Validators.maxLength(50), Validators.pattern(ValidatorType.NUMBER_ONLY)]],
+      roleId: [this.data.mainData.roleId, [Validators.required]],
     });
   }
 
-  sendInvitation(){
+  save() {
     if(this.teamMemberFG.invalid) {
       this.teamMemberFG.markAllAsTouched();
     } else {
-      let dataObj = {
-        advisorId: this.advisorId,
-        ...this.teamMemberFG.getRawValue()
-      };
-
-      this.settingsService.sendInvitationToMember(dataObj).subscribe((res)=>{
-        this.eventService.openSnackBar("Invitation sent successfully");
-      });
+      if(this.data.is_add_call) {
+        this.addTeamMember();
+      } else {
+        this.editTeamMember();
+      }
     }
+  }
+
+  addTeamMember() {
+    let dataObj = this.teamMemberFG.value;
+    this.settingsService.addTeamMember(dataObj).subscribe((res)=>{
+      this.close(true);
+      this.eventService.openSnackBar("Invitation sent successfully");
+    }, (err) => {
+      console.error(err);
+      this.eventService.openSnackBar("Error occured.");
+    });
+  }
+
+  editTeamMember() {
+    let dataObj = {
+      ...this.data.mainData,
+      ...this.teamMemberFG.value,
+    };
+    this.settingsService.addTeamMember(dataObj).subscribe((res)=>{
+      this.close(true);
+      this.eventService.openSnackBar("Invitation sent successfully");
+    }, (err) => {
+      console.error(err);
+      this.eventService.openSnackBar("Error occured.");
+    });
+  }
+
+  close(status = false){
+    this.eventService.changeUpperSliderState({state: 'close', refreshRequired: status});
   }
 }
