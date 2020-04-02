@@ -11,6 +11,24 @@ export class EnumDataService {
   constructor(private enumService: EnumServiceService, private subService: SubscriptionService) {
   }
 
+  proofType = [
+    {proofId:1, proofType:"Personal Pan"},
+    {proofId:2, proofType:"Company Pan"},
+    {proofId:3, proofType:"Passport"},
+    {proofId:4, proofType:"Aadhaar"},
+    {proofId:5, proofType:"Driving licence"},
+    {proofId:6, proofType:"Voter's ID card"},
+    {proofId:7, proofType:"NREGA job card"},
+    {proofId:8, proofType:"Bank passbook"},
+    {proofId:9, proofType:"Bank Statement"},
+    {proofId:10, proofType:"cancel cheque"},
+    {proofId:11, proofType:"others"},
+  ]
+
+  public getProofType(){
+    this.enumService.proofType(this.proofType);
+  }
+
   roleList = [
     {roleTypeId:1, roleTypeName:"Admin"},
     {roleTypeId:2, roleTypeName:"Para planner"},
@@ -20,6 +38,16 @@ export class EnumDataService {
   public getRoles(){
     this.enumService.addRoles(this.roleList);
   }
+
+  bankList = [
+    {bankId:1, bankName:"HDFC"},
+    {bankId:2, bankName:"SBI"},
+  ]
+  public getBank(){
+    this.enumService.addBank(this.bankList);
+  }
+
+  
 
   public getDataForSubscriptionEnumService() {
     const obj = {};

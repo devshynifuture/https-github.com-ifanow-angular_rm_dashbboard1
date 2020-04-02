@@ -160,6 +160,8 @@ export const appConfig = {
   GLOBAL_LIABILITIES: 'account/liability/global/get',
   UPLOAD_FILE: 'document/account/document/all-file/file/put',
   CLIENT_UPLOAD_FILE: 'document/upload/pre-signed-url/get',
+  SAVE_CLIENT_UPLOAD_FILE: 'user/document/mapping/save',
+  GET_CLIENT_UPLOAD_FILE: 'user/document/mapping/get',
   NEW_FOLDER: 'document/account/document/all-file/folder/post',
   GET_ASSET_STOCK: 'account/asset/stock/list/get',
   ADD_ASSET_STOCK: 'account/asset/stock/add',

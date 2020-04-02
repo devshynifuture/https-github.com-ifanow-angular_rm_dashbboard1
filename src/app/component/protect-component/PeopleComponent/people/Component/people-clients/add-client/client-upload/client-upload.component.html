@@ -15,7 +15,7 @@
                     remove
                 </i></button>
             <button mat-raised-button (click)="removeImg('company-pan')"  class="mr-0">REMOVE</button>
-            <button mat-raised-button (click)="uploadFile('company-pan')" class="mr-0">UPLOAD</button>
+            <!-- <button mat-raised-button (click)="uploadFile('company-pan')" class="mr-0">UPLOAD</button> -->
         </div>
     </div>
     <div class="col-md-6">
@@ -34,7 +34,7 @@
                 remove
             </i></button>
         <button mat-raised-button (click)="removeImg('personal-pan')"  class="mr-0">REMOVE</button>
-        <button mat-raised-button (click)="uploadFile('personal-pan')" class="mr-0">UPLOAD</button>
+        <!-- <button mat-raised-button (click)="uploadFile('personal-pan')" class="mr-0">UPLOAD</button> -->
         </div>
     </div>
 </div>
@@ -45,8 +45,9 @@
             <div class="col-md-6 pr-8 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select class="form-control">
-                            <mat-option value="Select bank">Select bank</mat-option>
+                        <mat-select class="form-control" [(ngModel)]="selectedBank" (selectionChange)="checkSelected('proof-type1', false)">
+                            <mat-option disabled value="">Select bank</mat-option>
+                            <mat-option [value]="bank.bankId" *ngFor="let bank of bankLIst">{{bank.bankName}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -54,18 +55,24 @@
             <div class="col-md-6 pr-0 pl-8">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select class="form-control">
-                            <mat-option value="Proof type">Proof type</mat-option>
+                        <mat-select class="form-control" [(ngModel)]="bankProof" (selectionChange)="checkSelected('proof-type1' , false)">
+                            <mat-option disabled value="">Proof type</mat-option>
+                            <mat-option [value]="proof.proofId" *ngFor="let proof of proofTypes">{{proof.proofType}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
             </div>
         </div>
         <input #fileProof1 (change)="getFile($event, 'proof-type1')" style="display: none;" accept='image/*' type="file">
-        <mat-card class="upload-card c-p h-340" (click)="fileProof1.click()">
-            <p class="m-0 roboto text-black">Drag & drop file here or Browse
-
-            </p>
+        <mat-card class="upload-card c-p h-340" >
+            <div *ngIf="errProof1" (click)="checkSelected('proof-type1' , true)" class="errDiv">
+                <p class="m-0 roboto text-black"><span *ngIf="showErr1" style="color: red;">please select Bank and Proof type first</span><span *ngIf="!showErr1">Drag & drop file here or Browse</span></p>
+            </div>
+            <div *ngIf="!errProof1" class="imgDiv" (click)="fileProof1.click()">
+                <p *ngIf="!fileProof1Img.view" class="m-0 roboto text-black">Drag & drop file here or Browse
+                </p>
+                <img [src]="fileProof1Img.view" class="img" *ngIf="fileProof1Img.view">
+            </div>
         </mat-card>
     </div>
     <div class="col-md-6">
@@ -74,22 +81,31 @@
             <div class="col-md-6 pr-8 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select class="form-control">
-                            <mat-option value="Proof type">Proof type</mat-option>
+                        <mat-select class="form-control" (selectionChange)="checkSelected('proof-type2', false)" [(ngModel)]="addressProof">
+                            <mat-option value="" >Proof type</mat-option>
+                            <mat-option [value]="proof.proofId" *ngFor="let proof of proofTypes">{{proof.proofType}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
             </div>
             <div class="col-md-6 pr-0 pt-4">
-                <button mat-raised-button class="text-primary font">Front</button>
-                <button mat-button class="p-0 back">Back</button>
+                <button mat-raised-button *ngIf="proofSubType == 1" class="text-primary font" (click)="getSubType(1)">Front</button>
+                <button mat-button class="p-0 back" *ngIf="proofSubType == 2" (click)="getSubType(1)">Front</button>
+                <button mat-raised-button *ngIf="proofSubType == 2" class="text-primary font" (click)="getSubType(2)">Back</button>
+                <button mat-button class="p-0 back" *ngIf="proofSubType == 1" (click)="getSubType(2)">Back</button>
             </div>
         </div>
         <input #fileProof2 (change)="getFile($event, 'proof-type2')" style="display: none;" accept='image/*' type="file">
-        <mat-card class="upload-card c-p h-340" (click)="fileProof2.click()">
-            <p class="m-0 roboto text-black">Drag & drop file here or Browse
-
-            </p>
+        <mat-card class="upload-card c-p h-340" >
+            <div *ngIf="errProof2" (click)="checkSelected('proof-type2' , true)" class="errDiv">
+                <p class="m-0 roboto text-black"><span *ngIf="showErr2" style="color: red;">please select Bank and Proof type first</span><span *ngIf="!showErr2">Drag & drop file here or Browse</span></p>
+            </div>
+            <div *ngIf="!errProof2" class="imgDiv" (click)="fileProof1.click()">
+                <p *ngIf="!fileProof2Img.view" class="m-0 roboto text-black">Drag & drop file here or Browse
+                </p>
+                <img [src]="fileProof2Img.view" class="img" *ngIf="fileProof2Img.view">
+            </div>
+            
         </mat-card>
     </div>
 </div>
