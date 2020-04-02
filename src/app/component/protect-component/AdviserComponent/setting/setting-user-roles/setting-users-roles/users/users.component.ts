@@ -6,6 +6,8 @@ import { NewTeamMemberComponent } from './new-team-member/new-team-member.compon
 import { SettingsService } from '../../../settings.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
+import { MatDialog } from '@angular/material';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-users',
@@ -16,73 +18,136 @@ export class UsersComponent implements OnInit {
   advisorId: any;
   userList: any[];
   roles: any[];
+  isLoading: boolean;
+  counter = 0;
 
   constructor(
     private subInjectService: SubscriptionInject,
     private settingsService: SettingsService,
     private eventService: EventService,
+    private dialog:MatDialog,
   ) {
     this.advisorId = AuthService.getAdvisorId();
-
-    this.userList = [
-      {
-        name: 'Sagar',
-        roleName: 'Admin',
-        clientCount: 343,
-        img: 'https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg',
-      },
-      {
-        name: 'Vaibhav',
-        roleName: 'Para Planner',
-        clientCount: 123,
-        img: 'https://scontent.fbom20-1.fna.fbcdn.net/v/t1.0-9/79682252_100342641466351_8876269414400393216_n.jpg?_nc_cat=109&_nc_sid=dd9801&_nc_ohc=z22kOWOIwhkAX9H6H3B&_nc_ht=scontent.fbom20-1.fna&oh=5ac8145b6e06768047698a9a4a844d5c&oe=5E9FCDB9',
-      },
-    ]
   }
 
   ngOnInit() {
-    // this.loadRoles();
-    // this.loadUsers();
+    this.loadRoles();
+    this.loadUsers();
   }
 
   loadUsers() {
+    this.loader(1);
     const dataObj = {
       advisorId: this.advisorId
     }
     this.settingsService.getTeamMembers(dataObj).subscribe((res) => {
+      this.loader(-1);
       this.userList = res;
     });
   }
 
   loadRoles() {
-    const dataObj = {
+    this.loader(1);
+    const obj = {
       advisorId: this.advisorId
     }
-    // this.settingsService.getRoles(dataObj).subscribe((res)=>{
-    //   this.roles = res;
-    // });
+
+    this.settingsService.getAllRoles(obj).subscribe((res) => {
+      this.loader(-1);
+      this.roles = res;
+    })
   }
 
-  newTeamMember() {
+  addEditTeamMember(data, add_flag) {
     if (this.roles && this.roles.length > 0) {
+      let dataObj = {
+        mainData: data || {},
+        is_add_call: add_flag,
+        roles: this.roles
+      }
       const fragmentData = {
         flag: 'add-ARI-RIA-details',
-        data: this.roles,
+        data: dataObj,
         id: 1,
         state: 'open35',
         componentName: NewTeamMemberComponent
       };
       this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
         sideBarData => {
-          if (UtilService.isDialogClose(sideBarData)) {
-            if (UtilService.isRefreshRequired(sideBarData)) {
-
-            }
+          if (UtilService.isDialogClose(sideBarData) && UtilService.isRefreshRequired(sideBarData)) {
+            this.loadUsers();
           }
         }
       );
     } else {
       this.eventService.openSnackBar("You need to define roles before you could add members");
+    }
+  }
+
+  deleteUser(user) {
+    const dialogData = {
+      header: 'DELETE',
+      body: 'Are you sure you want to delete this user?',
+      body2: 'This cannot be undone.',
+      btnNo: 'DELETE',
+      btnYes: 'CANCEL',
+      positiveMethod: () => {
+        console.log('aborted');
+      },
+      negativeMethod: () => {
+        const deleteFromTrashSubscription = this.settingsService.deleteTeamMember(user.id)
+          .subscribe(response => {
+            console.log(response);
+            deleteFromTrashSubscription.unsubscribe();
+            this.loadUsers();
+          }, error => {
+            console.error(error)
+            this.eventService.openSnackBar("Error occured");
+          });
+      }
+    }
+    this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+    });
+  }
+
+  suspendUser(user) {
+    const dialogData = {
+      header: 'SUSPEND',
+      body: 'Are you sure you want to suspend this user?',
+      body2: 'This cannot be undone.',
+      btnNo: 'DELETE',
+      btnYes: 'CANCEL',
+      positiveMethod: () => {
+        console.log('aborted');
+      },
+      negativeMethod: () => {
+        const deleteFromTrashSubscription = this.settingsService.suspendMember(user.id)
+          .subscribe(response => {
+            console.log(response);
+            deleteFromTrashSubscription.unsubscribe();
+            this.loadUsers();
+          }, error => {
+            console.error(error)
+            this.eventService.openSnackBar("Error occured");
+          });
+      }
+    }
+    this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+    });
+  }
+
+  loader(countAdder) {
+    this.counter += countAdder;
+    if (this.counter == 0) {
+      this.isLoading = false;
+    } else {
+      this.isLoading = true;
     }
   }
 }

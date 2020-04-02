@@ -85,7 +85,7 @@
                         <input autocomplete="off" #pan appInputValueValidation
                             [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="pan" maxlength="10" matInput
                             class="form-control">
-                        <mat-hint>Optional</mat-hint>
+                        <mat-error>This Field is required</mat-error>
                         <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
                     </mat-form-field>
                 </div>
@@ -126,6 +126,7 @@
                             readonly>
                         <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord"></mat-datepicker-toggle>
                         <mat-datepicker #dobAsPerRecord></mat-datepicker>
+                        <mat-hint>Optiona</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -137,6 +138,7 @@
                             class="form-control br-0 b-0" formControlName="dobActual" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="dobActual"></mat-datepicker-toggle>
                         <mat-datepicker #dobActual></mat-datepicker>
+                        <mat-hint>Optiona</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -168,7 +170,10 @@
                 <div class="form-group m-0">
                     <mat-form-field>
                         <mat-select formControlName="clientOwner" class="form-control">
-                            <mat-option value="1">Option</mat-option>
+                            <!-- <mat-option *ngFor="let singleClient of clientOwnerList" value="1">{{singleClient}}
+                            </mat-option> -->
+                            <mat-option value="1">Test
+                            </mat-option>
                         </mat-select>
                         <mat-error class="f-12">This field is required
                         </mat-error>
@@ -574,7 +579,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input formControlName="comPan" #cpan maxlength="10" matInput class="form-control">
-                        <mat-hint>Optional</mat-hint>
+                        <mat-error>This Field is required</mat-error>
                         <mat-hint align="end">{{cpan.value.length}} / 10</mat-hint>
                     </mat-form-field>
                 </div>

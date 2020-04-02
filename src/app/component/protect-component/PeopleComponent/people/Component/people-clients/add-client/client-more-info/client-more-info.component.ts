@@ -43,18 +43,13 @@ export class ClientMoreInfoComponent implements OnInit {
       anniversaryDate: [],
       bio: [],
       myNotes: [],
-    });
-    this.nonindividualForm = this.fb.group({
       name: [],
       email: [, [Validators.pattern('')]],
       pan: [],
-      adhaarNo: [],
       designation: [],
       gender: ['1'],
-      maritalStatus: [],
-      anniversaryDate: [],
-      bio: [],
-      myNotes: []
+      adhaarMinor: [],
+      adhharGuardian: []
     });
   }
 
@@ -93,22 +88,21 @@ export class ClientMoreInfoComponent implements OnInit {
     });
     const obj = {
       advisorId: this.moreInfoData.advisorId,
-      emailList: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.emailList : this.nonindividualForm.value.email,
-      displayName: (this.moreInfoData.invCategory == '1') ? this.moreInfoForm.controls.displayName.value : null,
-      bio: (this.moreInfoData.invCategory == '1') ? this.moreInfoForm.controls.bio.value : this.nonindividualForm.value.bio,
-      martialStatusId: (this.moreInfoData.invCategory == '1') ? this.moreInfoForm.controls.maritalStatus.value : this.nonindividualForm.value.maritalStatus,
+      emailList: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.emailList : this.moreInfoForm.value.email,
+      displayName: (this.moreInfoData.invCategory == '1' || this.moreInfoData.invCategory == '2') ? this.moreInfoForm.controls.displayName.value : null,
+      bio: this.moreInfoForm.controls.bio.value,
+      martialStatusId: this.moreInfoForm.controls.maritalStatus.value,
       password: null,
       clientType: 0,
       occupationId: (this.moreInfoData.invCategory == '1') ? this.moreInfoForm.controls.occupation.value : null,
       id: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.id : null,
-      pan: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.pan : this.nonindividualForm.value.pan,
+      pan: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.pan : this.moreInfoForm.value.pan,
       clientId: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.clientId : null,
       kycComplaint: 0,
       roleId: 0,
-      genderId: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.genderId : this.nonindividualForm.value.genderId,
+      genderId: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.genderId : this.moreInfoForm.value.genderId,
       companyStatus: 0,
-      aadharCard: (this.moreInfoData.invCategory == '1') ?
-        this.moreInfoForm.controls.adhaarNo.value : this.nonindividualForm.value.aadhaarNumber,
+      aadharCard: this.moreInfoForm.controls.adhaarNo.value,
       dateOfBirth: this.datePipe.transform(this.moreInfoData.dateOfBirth, 'dd/MM/yyyy'),
       userName: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.userName : null,
       userId: (this.moreInfoData.invCategory == '1') ? null : this.moreInfoData.userId,
@@ -117,7 +111,7 @@ export class ClientMoreInfoComponent implements OnInit {
       name: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.name : this.moreInfoForm.value.name,
       bioRemarkId: 0,
       userType: 0,
-      remarks: (this.moreInfoData.invCategory == '1') ? this.moreInfoForm.controls.myNotes.value : this.nonindividualForm.value.myNotes,
+      remarks: (this.moreInfoData.invCategory == '1') ? this.moreInfoForm.controls.myNotes.value : this.moreInfoForm.value.myNotes,
       status: 0,
       companyPersonDetailId: (this.moreInfoData.invCategory == '1') ? null : this.moreInfoData.companyPersonDetailId
     };

@@ -19,6 +19,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   basicDetailsData: any;
   mobileData: any;
   categoryList: any[];
+  clientOwnerList: any;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService, private datePipe: DatePipe) { }
   basicDetails;
@@ -35,6 +36,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     this.invTypeCategory = '1';
     this.invTaxStatus = '1';
     this.createMinorForm(null);
+    this.getClientList();
   }
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
@@ -52,7 +54,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     this.basicDetails = this.fb.group({
       fullName: [data.displayName, [Validators.required]],
       email: [, [Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
-      pan: [data.pan, [Validators.maxLength(10)]],
+      pan: [data.pan, [Validators.required]],
       username: [, [Validators.required]],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       dobActual: [],
@@ -92,7 +94,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       comStatus: [, [Validators.required]],
       comEmail: [, [Validators.pattern(this.validatorType.EMAIL)]],
       comPhone: [],
-      comPan: [],
+      comPan: [, [Validators.required]],
       comOccupation: [],
       username: [, [Validators.required]],
       leadOwner: [, [Validators.required]],
@@ -199,6 +201,7 @@ export class ClientBasicDetailsComponent implements OnInit {
             data => {
               console.log(data);
               data['invCategory'] = this.invTypeCategory;
+              data['flag'] = "Individual";
               (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
             },
             err => this.eventService.openSnackBar(err, "Dismiss")
@@ -209,7 +212,7 @@ export class ClientBasicDetailsComponent implements OnInit {
             data => {
               console.log(data);
               data['invCategory'] = this.invTypeCategory;
-              data['id'] = data.companyPersonDetailId;
+              data['flag'] = "clientNonIndividual";
               (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
             },
             err => err => this.eventService.openSnackBar(err, "Dismiss")
@@ -222,6 +225,7 @@ export class ClientBasicDetailsComponent implements OnInit {
             data => {
               console.log(data);
               data['invCategory'] = this.invTypeCategory;
+              data['flag'] = "clientNonIndividual";
               (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
             },
             err => this.eventService.openSnackBar(err, "Dismiss")
@@ -232,6 +236,19 @@ export class ClientBasicDetailsComponent implements OnInit {
         }
       }
     }
+  }
+  getClientList() {
+    let obj =
+    {
+      advisorId: 1
+    }
+    this.peopleService.getTeamMemberList(obj).subscribe(
+      data => {
+        console.log(data);
+        this.clientOwnerList = data;
+      },
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    )
   }
   changeTabAndSendData(data) {
     this.clientData.emit(data);
@@ -309,6 +326,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.peopleService.editFamilyMemberDetails(obj).subscribe(
         data => {
           obj['invTypeCategory'] = this.invTypeCategory;
+          obj['flag'] = "familyMinor";
           (flag == "Next") ? this.changeTabAndSendData(obj) : this.close();
         },
         err => this.eventService.openSnackBar(err, "Dismiss")

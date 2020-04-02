@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { AddTeamMemberComponent } from './add-team-member/add-team-member.component';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SettingsService } from '../../../settings.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-hierachy',
@@ -10,17 +14,43 @@ import { AddTeamMemberComponent } from './add-team-member/add-team-member.compon
 })
 export class HierachyComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'role', 'report', 'icons'];
-  dataSource = ELEMENT_DATA;
+  dataSource:MatTableDataSource<any>;
+  advisorId:any;
+  counter: any;
+  isLoading: boolean;
 
-  constructor(private subInjectService: SubscriptionInject) { }
+  constructor(
+    private subInjectService: SubscriptionInject,
+    private eventService: EventService,
+    private settingsService: SettingsService,
+  ) {
+    this.advisorId = AuthService.getAdvisorId();
+  }
 
   ngOnInit() {
+    this.getAccessRightsList();
+  }
+
+  getAccessRightsList() {
+    this.loader(1);
+    const dataObj = {
+      advisorId: this.advisorId
+    }
+    this.settingsService.getAccessRightsList(dataObj).subscribe((res) => {
+      this.loader(-1);
+      console.log(res);
+      this.dataSource = new MatTableDataSource(res);
+    }, err => {
+      console.error(err);
+      this.loader(-1);
+      this.eventService.openSnackBar("Error occured");
+    })
   }
 
   openTask(value, data) {
     const fragmentData = {
       flag: value,
-      data,
+      data: data,
       id: 1,
       state: 'open45',
       componentName: AddTeamMemberComponent
@@ -30,13 +60,22 @@ export class HierachyComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-
+            this.getAccessRightsList();
           }
           rightSideDataSub.unsubscribe();
         }
 
       }
     );
+  }
+
+  loader(countAdder) {
+    this.counter += countAdder;
+    if (this.counter == 0) {
+      this.isLoading = false;
+    } else {
+      this.isLoading = true;
+    }
   }
 
 }
@@ -47,7 +86,7 @@ export interface PeriodicElement {
   weight: string;
   symbol: string;
   report: string;
-  role: string
+  role: string;
 
 }
 

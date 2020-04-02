@@ -17,9 +17,20 @@
         <div class="col-md-12 p-0">
             <h5>Select a team member from the search box below...</h5>
             <div class="from-group">
-                <mat-form-field>
-                    <input matInput class="form-control" value="Rupa Hindocha ">
+                <mat-form-field class="example-full-width">
+                    <input matInput class="form-control" placeholder="Choose a user" [matAutocomplete]="auto"
+                        formControlName='userInput'>
                 </mat-form-field>
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="chooseMember()">
+                    <mat-option *ngIf="isLoading" class="is-loading">
+                        <mat-spinner diameter="50"></mat-spinner>
+                    </mat-option>
+                    <ng-container *ngIf="!isLoading">
+                        <mat-option *ngFor="let user of filteredUsers" [value]="user">
+                            <span>{{ user.name }}</span>
+                        </mat-option>
+                    </ng-container>
+                </mat-autocomplete>
             </div>
 
         </div>
