@@ -8,6 +8,7 @@ import {MatDialog} from '@angular/material';
 import {CommonFroalaComponent} from '../../Subscriptions/subscription/common-subscription-component/common-froala/common-froala.component';
 import {UtilService} from 'src/app/services/util.service';
 import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
+import { ConfirmDialogComponent } from '../../../common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-setting-preference',
@@ -44,6 +45,9 @@ export class SettingPreferenceComponent implements OnInit {
   userId: any;
   showUpdateWhite = false;
   isLoading = false
+  brandVisibility: any;
+  showUpdateBrand: boolean = false;
+  brandVisible: any;
   constructor(private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, ) { }
 
@@ -62,6 +66,7 @@ export class SettingPreferenceComponent implements OnInit {
     this.domainS = this.fb.group({
       normalLable: [(!data) ? '' : data.emailId, [Validators.required]],
       whiteLable: [(!data) ? '' : data.emailId, [Validators.required]],
+      brandVisible:[(!data) ? '' : data.emailId, [Validators.required]]
     });
   }
 
@@ -82,10 +87,13 @@ export class SettingPreferenceComponent implements OnInit {
     this.domainSetting = data
     this.normalDomain = this.domainSetting.filter(element => element.domainOptionId == 1)
     this.whiteLabledDomain = this.domainSetting.filter(element => element.domainOptionId == 2)
+    this.brandVisibility = this.domainSetting.filter(element => element.domainOptionId == 3)
     this.normalLable = this.normalDomain[0].optionValue
     this.whiteLable = this.whiteLabledDomain[0].optionValue
+    this.brandVisible = (this.brandVisibility[0].optionValue == null)?'':this.brandVisibility[0].optionValue
     this.domainS.controls.normalLable.setValue(this.normalLable)
     this.domainS.controls.whiteLable.setValue(this.whiteLable)
+    this.domainS.controls.brandVisible.setValue(this.brandVisible)
     console.log('normalDomain', this.normalDomain)
     console.log('whiteLabled', this.whiteLabledDomain)
   }
@@ -95,8 +103,10 @@ export class SettingPreferenceComponent implements OnInit {
       if (element.domainOptionId == value.domainOptionId) {
         if (value.domainOptionId == 1) {
           element.optionValue = this.domainS.controls.normalLable.value;
-        } else {
+        } else if(value.domainOptionId == 2) {
           element.optionValue = this.domainS.controls.whiteLable.value;
+        }else{
+          element.optionValue = this.domainS.controls.brandVisible.value;
         }
 
       }
@@ -115,15 +125,19 @@ export class SettingPreferenceComponent implements OnInit {
     if (flag == true) {
       if (event == 'white') {
         this.showUpdateWhite = true
-      } else {
+      } else if(event == 'normal') {
         this.showUpdate = true
+      }else{
+        this.showUpdateBrand =true
       }
 
     } else {
       if (event == 'white') {
         this.showUpdateWhite = false
-      } else {
+      } else if(event == 'normal') {
         this.showUpdate = false
+      }else{
+        this.showUpdateBrand =false
       }
       this.updateDomainSetting(event, value)
     }
@@ -206,7 +220,8 @@ export class SettingPreferenceComponent implements OnInit {
       this.element = result;
       console.log('result -==', this.element)
       let obj = {
-        emailAddress: this.element,
+        id:this.element.id,
+        emailAddress: this.element.emailAddress,
         userId: 12249
       }
       this.orgSetting.addEmailVerfify(obj).subscribe(
@@ -220,11 +235,47 @@ export class SettingPreferenceComponent implements OnInit {
     console.log(data)
     this.getEmailVerification()
   }
+  deleteModal(value, data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+          // this.customerService.deleteFixedDeposite(data.id).subscribe(
+          //   data => {
+          //     dialogRef.close();
+          //     this.getFixedDepositList();
+          //   },
+          //   error => this.eventService.showErrorMessage(error)
+          // );
+        this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
   getPlanRes(data) {
     console.log('getPortfolioRes == ', data)
     if(data){
       this.planSection = data
       this.planSec1 = this.planSection.filter(element => element.planOptionId == 1)
+      this.planSec1 =this.planSec1[0]
       console.log('planSec1 ', this.planSec1)
     }else{
       this.isLoading = false
