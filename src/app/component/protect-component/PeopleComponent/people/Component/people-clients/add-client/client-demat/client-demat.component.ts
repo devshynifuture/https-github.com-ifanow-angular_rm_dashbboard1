@@ -26,9 +26,9 @@ export class ClientDematComponent implements OnInit {
     this.dematForm = this.fb.group({
       modeOfHolding: ['1'],
       holderNameList: new FormArray([]),
-      depositoryPartName: [],
-      depositoryPartId: [],
-      clientId: [],
+      depositoryPartName: [, [Validators.required]],
+      depositoryPartId: [, [Validators.required]],
+      clientId: [, [Validators.required]],
       brekerName: [],
       brokerAddress: [],
       brokerPhone: [],
@@ -73,17 +73,14 @@ export class ClientDematComponent implements OnInit {
         "powerOfAttorneyMasterId": this.dematForm.get('powerOfAttMasId').value
       }
 
-      // commented code which are giving errors ======>>>
+      this.peopleService.addEditClientDemat(obj).subscribe(
+        data => {
+          console.log(data);
+          (flag == 'Next') ? this.tabChange.emit(1) : this.close();
+        },
+        err => this.eventService.openSnackBar(err, "Dismiss")
+      )
 
-      // this.peopleService.addEditClientDemat(obj).subscribe(
-      //   data => {
-      //     console.log(data);
-      //     (flag == 'Next') ? this.tabChange.emit(1) : this.close();
-      //   },
-      //   err => this.eventService.openSnackBar(err, "Dismiss")
-      // )
-
-      // commented code closed which are giving errors ======>>>
     }
   }
   close() {

@@ -54,9 +54,9 @@ export class ClientBasicDetailsComponent implements OnInit {
       email: [, [Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
       pan: [data.pan, [Validators.maxLength(10)]],
       username: [, [Validators.required]],
-      dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth), [Validators.required]],
-      dobActual: [, [Validators.required]],
-      gender: ['1', [Validators.required]],
+      dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
+      dobActual: [],
+      gender: ['1'],
       leadSource: [],
       leaadStatus: [],
       leadRating: [],
@@ -78,26 +78,25 @@ export class ClientBasicDetailsComponent implements OnInit {
       gGender: [(data.guardianData) ? String(data.genderId) : ''],
       relationWithMinor: [],
       gEmail: [, [Validators.pattern(this.validatorType.EMAIL)]],
-      mobileNo: [],
       pan: [data.pan],
-      username: [],
-      leadOwner: [],
-      role: []
+      username: [, [Validators.required]],
+      clientOwner: [, [Validators.required]],
+      role: [, [Validators.required]]
     })
   }
   createNonIndividualForm(data) {
     (data == undefined) ? data = {} : ''
     this.nonIndividualForm = this.fb.group({
-      comName: [],
+      comName: [, [Validators.required]],
       dateOfIncorporation: [],
-      comStatus: [],
+      comStatus: [, [Validators.required]],
       comEmail: [, [Validators.pattern(this.validatorType.EMAIL)]],
       comPhone: [],
       comPan: [],
       comOccupation: [],
-      username: [],
-      leadOwner: [],
-      role: []
+      username: [, [Validators.required]],
+      leadOwner: [, [Validators.required]],
+      role: [, [Validators.required]]
     })
   }
 
@@ -138,9 +137,10 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.basicDetails.markAllAsTouched();
       return;
     }
-    // if (this.nonIndividualForm.invalid && this.invTypeCategory == '2') {
-    //   return
-    // }
+    if (this.invTypeCategory == '2' && this.nonIndividualForm.invalid) {
+      this.nonIndividualForm.markAllAsTouched();
+      return
+    }
     else {
       let mobileList = [];
       this.mobileData.controls.forEach(element => {
@@ -221,6 +221,8 @@ export class ClientBasicDetailsComponent implements OnInit {
           this.peopleService.editClient(obj).subscribe(
             data => {
               console.log(data);
+              data['invCategory'] = this.invTypeCategory;
+              (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
             },
             err => this.eventService.openSnackBar(err, "Dismiss")
           )
@@ -245,27 +247,27 @@ export class ClientBasicDetailsComponent implements OnInit {
         "verificationStatus": 0
       })
     });
-    if (this.basicDetails.invalid && this.invTypeCategory == '1') {
+    if (this.invTypeCategory == '1' && this.basicDetails.invalid) {
       this.basicDetails.markAllAsTouched();
       return;
     }
-    // if (this.minorForm.invalid && this.invTypeCategory == '2') {
-    //   this.minorForm.markAllAsTouched();
-    //   return;
-    // }
+    if (this.invTypeCategory == '2' && this.minorForm.invalid) {
+      this.minorForm.markAllAsTouched();
+      return;
+    }
     else {
       let obj =
       {
         "id": this.basicDetailsData.id,
         "clientId": this.basicDetailsData.clientId,
-        "name": this.basicDetails.controls.fullName.value,
+        "name": (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : this.minorForm.value.minorFullName,
         "displayName": "displayName",
-        "dateOfBirth": this.basicDetails.controls.dobAsPerRecord.value,
+        "dateOfBirth": (this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value : this.minorForm.value.dobAsPerRecord,
         "martialStatusId": 1,
-        "anniversaryDate": "2000-01-01",
-        "genderId": this.basicDetails.controls.gender.value,
+        "anniversaryDate": "",
+        "genderId": (this.invTypeCategory == '1') ? this.basicDetails.controls.gender.value : this.minorForm.value.gender,
         "occupationId": 1,
-        "pan": this.basicDetails.controls.pan.value,
+        "pan": (this.invTypeCategory == '1') ? this.basicDetails.controls.pan.value : this.minorForm.value.pan,
         "taxStatusId": this.invTaxStatus,
         "relationshipId": 1,
         "familyMemberType": parseInt(this.invTypeCategory),
@@ -276,13 +278,13 @@ export class ClientBasicDetailsComponent implements OnInit {
         "remarks": null,
         "emailList": [
           {
-            "email": this.basicDetails.controls.email.value,
+            "email": (this.invTypeCategory == '1') ? this.basicDetails.controls.email.value : null,
             "verificationStatus": 0
           }
         ],
         "guardianData": {
-          "name": (this.invTypeCategory == '2') ? this.minorForm.value.minorFullName : null,
-          "birthDate": (this.invTypeCategory == '2') ? this.datePipe.transform(this.minorForm.value.dobAsPerRecord, 'dd/MM/yyyy') : null,
+          "name": (this.invTypeCategory == '2') ? this.minorForm.value.gFullName : null,
+          "birthDate": (this.invTypeCategory == '2') ? this.datePipe.transform(this.minorForm.value.gDobAsPerRecord, 'dd/MM/yyyy') : null,
           "pan": "pan",
           "genderId": (this.invTypeCategory == '2') ? this.minorForm.value.gGender : null,
           "relationshipId": 1,
@@ -306,7 +308,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       }
       this.peopleService.editFamilyMemberDetails(obj).subscribe(
         data => {
-          obj['invTypeCategory'] = String(obj.familyMemberType);
+          obj['invTypeCategory'] = this.invTypeCategory;
           (flag == "Next") ? this.changeTabAndSendData(obj) : this.close();
         },
         err => this.eventService.openSnackBar(err, "Dismiss")
