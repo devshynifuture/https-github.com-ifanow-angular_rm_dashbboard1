@@ -5,6 +5,7 @@ import { BackOfficeService } from '../../../../back-office.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AumComponent } from '../aum.component';
 import { AuthService } from 'src/app/auth-service/authService';
+import { ExcelMisService } from '../excel-mis.service';
 
 @Component({
   selector: 'app-category-wise',
@@ -16,12 +17,16 @@ export class CategoryWiseComponent implements OnInit {
   subcategory;
   showLoader;
   teamMemberId = 2929;
-  advisorId: any;
-  constructor(private backoffice: BackOfficeService, private dataService: EventService, public aum: AumComponent) { }
+  advisorId = AuthService.getAdvisorId();
+  subCategoryList: any[] = [];
+  constructor(
+    private backoffice: BackOfficeService, private dataService: EventService, public aum: AumComponent,
+    private excelMis: ExcelMisService
+  ) { }
 
   selectedCategory;
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId();
+
     this.getSubCatSchemeName();
     // this.clientFolioWise();
     // this.getSubCatAum();
@@ -29,7 +34,13 @@ export class CategoryWiseComponent implements OnInit {
 
   getSubCatSchemeName() {
     this.showLoader = true;
-    this.backoffice.getTotalByAumScheme(this.advisorId).subscribe(
+    const data = {
+      advisorId: this.advisorId,
+      arnRiaDetailsId: -1,
+      parentId: -1
+    }
+
+    this.backoffice.getTotalByAumScheme(data).subscribe(
       data => this.getFileResponseDataForSubSchemeName(data),
       err => this.getFilerrorResponse(err)
     )
@@ -68,11 +79,13 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   getFileResponseDataForSubSchemeName(data) {
-    console.log("scheme Name", data)
-    this.category = data.categories;
+    console.log("scheme Name:::", data);
 
+    this.category = data.categories;
+    this.exportToExcelReport('category');
     this.category.forEach(o => {
       o.showCategory = true;
+      this.subCategoryList.push(o.subCategoryList);
 
       o.subCategoryList.forEach(sub => {
         sub.showSubCategory = true;
@@ -90,7 +103,46 @@ export class CategoryWiseComponent implements OnInit {
     this.dataService.openSnackBar(err, 'Dismiss')
   }
 
-  exportToExcelReport() {
+  categoryWiseExcelSheet() {
+    let headerData = [
+      { width: 20, key: 'Sr.No.' },
+      { width: 50, key: 'Sub Category Name' },
+      { width: 30, key: 'Current Value' },
+      { width: 30, key: '% Weight' }
+    ];
+    let header = [
+      'Sr.No.',
+      'Sub Category Name',
+      'Current Value',
+      '% Weight',
+    ];
+    let dataValue;
+    let excelData = [];
+    this.category.forEach((element, index) => {
+      dataValue = [
+        index + 1,
+        element.subCategoryList[index].name,
+        element.totalAum,
+        element.weightInPercentage
+      ];
+      excelData.push(Object.assign(dataValue));
+    });
 
+    ExcelMisService.exportExcel(headerData, header, excelData, [], 'category-wise-excel');
+    // excelData: any, footer: any[], metaData: any
+
+  }
+
+  subCategoryWiseExcelSheet() {
+
+  }
+
+  exportToExcelReport(choice) {
+    switch (choice) {
+      case 'category':
+        this.categoryWiseExcelSheet();
+      case 'sub-category':
+        this.subCategoryWiseExcelSheet();
+    }
   }
 }

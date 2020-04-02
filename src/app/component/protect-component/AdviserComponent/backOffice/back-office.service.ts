@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams, HttpResponse, HttpRequest} from '@angular/common/http';
-import {MatSnackBar} from '@angular/material';
-import {Observable, of} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {HttpService} from 'src/app/http-service/http-service';
-import {apiConfig} from 'src/app/config/main-config';
-import {appConfig} from 'src/app/config/component-config'
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams, HttpResponse, HttpRequest } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { HttpService } from 'src/app/http-service/http-service';
+import { apiConfig } from 'src/app/config/main-config';
+import { appConfig } from 'src/app/config/component-config'
 class CacheItem<T> {
   url: string;
   timestampCached: number;
@@ -49,7 +49,7 @@ export class BackOfficeService {
 
   getMisData(data) {
     const httpParams = new HttpParams().set('advisorId', data);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MIS_DATA,httpParams);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MIS_DATA, httpParams);
   }
 
   getSubCatAum(data) {
@@ -58,8 +58,7 @@ export class BackOfficeService {
   }
 
   getTotalByAumScheme(data) {
-    const httpParams = new HttpParams().set('advisorId', data);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_SCHEMENAME,httpParams);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_SCHEMENAME, data);
   }
 
   getClientWiseTotalAum(data) {
@@ -115,7 +114,7 @@ export class BackOfficeService {
   }
 
   getAumClientScheme(data) {
-    const httpParams = new HttpParams().set('clientId', data.clientId).set('advisorId', data.advisorId).set('arnRiaDetailsId',data.arnRiaDetailsId);
+    const httpParams = new HttpParams().set('clientId', data.clientId).set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_CLIENT_SCHEME, httpParams);
   }
 
@@ -124,9 +123,9 @@ export class BackOfficeService {
   }
 
 
-// ---------------------------------------- sip data call--------------------------------------
+  // ---------------------------------------- sip data call--------------------------------------
 
-// Date - 10 dec 2019
+  // Date - 10 dec 2019
 
   GET_EXPIRING(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('limit', data.limit).set('offset', data.offset).set('parentId', data.parentId);
@@ -156,7 +155,7 @@ export class BackOfficeService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_AMC, httpParams);
   }
 
-  GET_SIP_AMC_SCHEME(data){
+  GET_SIP_AMC_SCHEME(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('amcId', data.amcId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('sipAmount', data.sipAmount);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_AMC_SCHEME, httpParams);
   }
@@ -194,10 +193,10 @@ export class BackOfficeService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.scheme_wise_Applicants_Get, httpParams);
   }
 
-// ---------------------------------------- sip data call--------------------------------------
+  // ---------------------------------------- sip data call--------------------------------------
 
 
-// ------------------------------------back office api call ------------------------------------
+  // ------------------------------------back office api call ------------------------------------
   AllClient_get() {
     return this.http.get(apiConfig.MAIN_URL + appConfig.AllClient_get, null);
   }
