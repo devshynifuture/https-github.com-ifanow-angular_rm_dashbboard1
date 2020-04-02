@@ -558,3 +558,8 @@ button:focus {
 .profileBorder-primary {
     border: 2px solid $primary !important;
 }
+
+.green-border-btn {
+    border: 1px solid $greenColor !important;
+    color: $greenColor;
+}

@@ -15,11 +15,12 @@
             <h5 class="m-0 text-right pt-8">ARN/RIA number</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-control mb-0">
+            <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select class="form-group mb-0" formControlName="arnRiaDetailsId">
+                    <mat-select class="form-control br-0" formControlName="arnRiaDetailsId">
                         <mat-option value="" selected disabled>Select Option</mat-option>
-                        <mat-option [value]="arnData.id" *ngFor="let arnData of data.arnData">{{arnData.nameOfTheHolder}} - {{arnData.number}}</mat-option>
+                        <mat-option [value]="arnData.id" *ngFor="let arnData of data.arnData">
+                            {{arnData.nameOfTheHolder}} - {{arnData.number}}</mat-option>
                     </mat-select>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
