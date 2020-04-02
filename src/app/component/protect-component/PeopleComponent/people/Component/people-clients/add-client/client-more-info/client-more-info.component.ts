@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {ValidatorType} from 'src/app/services/util.service';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {DatePipe} from '@angular/common';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { ValidatorType } from 'src/app/services/util.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-client-more-info',
@@ -71,11 +71,11 @@ export class ClientMoreInfoComponent implements OnInit {
       userId: data.userId,
       userType: data.userType
     };
-    // this.peopleService.getCompanyPersonDetail(obj).subscribe(
-    //   data => {
-    //     console.log(data)
-    //   }, err => this.eventService.openSnackBar(err, "Dismiss")
-    // )
+    this.peopleService.getCompanyPersonDetail(obj).subscribe(
+      data => {
+        console.log(data)
+      }, err => this.eventService.openSnackBar(err, "Dismiss")
+    )
   }
 
   saveNext(flag) {
@@ -131,13 +131,13 @@ export class ClientMoreInfoComponent implements OnInit {
           err => this.eventService.openSnackBar(err, 'Dismiss')
         );
       } else {
-        // this.peopleService.updateCompanyPersonDetail(obj).subscribe(
-        //   data => {
-        //     console.log(data);
-        //     (flag == 'Next') ? this.tabChange.emit(1) : this.close();
-        //   },
-        //   err => this.eventService.openSnackBar(err, "Dismiss")
-        // )
+        this.peopleService.updateCompanyPersonDetail(obj).subscribe(
+          data => {
+            console.log(data);
+            (flag == 'Next') ? this.tabChange.emit(1) : this.close();
+          },
+          err => this.eventService.openSnackBar(err, "Dismiss")
+        )
       }
     }
   }
@@ -181,7 +181,7 @@ export class ClientMoreInfoComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
 }

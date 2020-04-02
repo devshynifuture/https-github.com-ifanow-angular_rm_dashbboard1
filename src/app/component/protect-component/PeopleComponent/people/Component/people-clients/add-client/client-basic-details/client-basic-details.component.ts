@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AbstractControl, FormBuilder, ValidationErrors, Validators} from '@angular/forms';
-import {ValidatorType} from 'src/app/services/util.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {DatePipe} from '@angular/common';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AbstractControl, FormBuilder, ValidationErrors, Validators } from '@angular/forms';
+import { ValidatorType } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-client-basic-details',
@@ -205,7 +205,7 @@ export class ClientBasicDetailsComponent implements OnInit {
           )
         }
         else {
-          /*this.peopleService.saveCompanyPersonDetail(obj).subscribe(
+          this.peopleService.saveCompanyPersonDetail(obj).subscribe(
             data => {
               console.log(data);
               data['invCategory'] = this.invTypeCategory;
@@ -213,7 +213,7 @@ export class ClientBasicDetailsComponent implements OnInit {
               (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
             },
             err => err => this.eventService.openSnackBar(err, "Dismiss")
-          )*/
+          )
         }
       }
       else {
