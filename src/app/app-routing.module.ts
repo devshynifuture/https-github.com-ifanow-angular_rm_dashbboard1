@@ -16,6 +16,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     // outlet: 'mainrouter'
   },
+  // TODO remove for old login
+
   {
     path: 'admin',
     loadChildren: () => import('./component/left-sidebar/leftsidebar/leftsidebar.module').then(m => m.LeftsidebarModule),
