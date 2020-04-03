@@ -14,7 +14,11 @@ export class FoliosComponent implements OnInit {
   folioDetails: any;
   dataList: any;
   advisorId: any;
-  dataSource:any;
+  data:[any];
+  dataSource=new MatTableDataSource(this.data);
+  groupHeadList: any;
+  folioList: any;
+  
 
   constructor( private fb: FormBuilder,private backoffice:BackOfficeService) { }
   isLoading = false;
@@ -55,7 +59,7 @@ export class FoliosComponent implements OnInit {
       }
       this.backoffice.folioApplicantList(obj).subscribe(
         data =>{
-            this.dataList=data;
+            this.folioList=data;
         }
       )
     }

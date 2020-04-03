@@ -178,9 +178,17 @@ export class SipComponent implements OnInit {
     this.backoffice.newSipGet(obj).subscribe(
       data =>{
        this.newSipObj=data;
+       this.newSipObj.forEach(o => {
+          o[0]=30;
+          o[1]=60;
+          o[2]=90;
+          o[3]=120
+          o[4]=150;
+          o[5]=180;
+        })
+      });
       }
-    )
-  }
+    
   ceaseSip(){
     const obj={
       advisorId:this.advisorId,
@@ -190,7 +198,14 @@ export class SipComponent implements OnInit {
     this.backoffice.ceaseSipGet(obj).subscribe(
       data =>{
         this.ceaseSipObj=data;
-        console.log(data);
+        this.ceaseSipObj.forEach(o => {
+          o[0]=30;
+          o[1]=60;
+          o[2]=90;
+          o[3]=120
+          o[4]=150;
+          o[5]=180;
+        })
       }
     )
   }
@@ -201,9 +216,13 @@ export class SipComponent implements OnInit {
     ceaseSipAmount:null,
     net:null
    };
-   obj.newSipAmount= this.newSipObj.filter(element => element.days ==days)
-  obj.ceaseSipAmount=this.ceaseSipObj.filter(element => element.days ==days)
-  obj.net=obj.newSipAmount - obj.ceaseSipAmount
+   obj.newSipAmount= this.newSipObj.filter(element => element.days ==days);
+   obj.newSipAmount = (obj.newSipAmount[0].totalAmount)?obj.newSipAmount[0].totalAmount:0
+
+    obj.ceaseSipAmount=this.ceaseSipObj.filter(element => element.days ==days);
+    obj.ceaseSipAmount = (obj.ceaseSipAmount[0].totalAmount)?obj.ceaseSipAmount[0].totalAmount:0
+
+    obj.net=obj.newSipAmount - obj.ceaseSipAmount
   return obj;
   }
   pieChart(id){
