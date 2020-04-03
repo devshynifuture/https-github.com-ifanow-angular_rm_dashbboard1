@@ -198,10 +198,11 @@ export class AddTaskTemplateComponent implements OnInit {
       this.subTask.push(this.fb.group({
         taskNumber: [1, [Validators.required]],
         description: [null, [Validators.required]],
-        turtAroundTime: [null, [Validators.required]],
+        turnAroundTime: [null, [Validators.required]],
         ownerId: [null, [Validators.required]],
-        isEdite: false
+        isEdite: true
       }));
+      //value.controls.isEdite.setValue(true)
     } else {
       console.log('creds --', value)
       if (value.invalid) {
@@ -215,9 +216,9 @@ export class AddTaskTemplateComponent implements OnInit {
           description: value.controls.description.value,
           turtAroundTime: value.controls.turnAroundTime.value,
           ownerId: 2727,
-          id: value.controls.id.value,
+          id: null,
         }
-        if (value.controls.id.value) {
+        if (value.controls.id) {
           this.orgSetting.editSubTaskTemplate(obj).subscribe(
             data => {
               this.editSubTaskTemplateRes(data)

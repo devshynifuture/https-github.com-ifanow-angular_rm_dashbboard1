@@ -6,7 +6,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {BackOfficeService} from '../../protect-component/AdviserComponent/backOffice/back-office.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatProgressButtonOptions} from '../../../common/progress-button/progress-button.component';
-import {ValidatorType} from 'src/app/services/util.service';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
 import {LoginService} from './login.service';
 import {PeopleService} from '../../protect-component/PeopleComponent/people.service';
 
@@ -57,13 +57,14 @@ export class LoginComponent implements OnInit {
   passEvent: any;
   errorStyle = {};
   userName;
+  userData;
   getOtpFlag = false;
   otpData = [];
   otpResponse: any;
   verifyResponseData =
     {
       email: '',
-      mobile: ''
+      mobileNo: ''
     };
   verifyFlag: string;
 
@@ -109,9 +110,14 @@ export class LoginComponent implements OnInit {
       };
       this.loginService.getUsernameData(obj).subscribe(
         data => {
-          console.log(data);
-          this.getOtpResponse(data);
-          (data == undefined) ? this.eventService.openSnackBar('error found', 'Dismiss') : (this.getOtpFlag) ? this.getOtpFlag = false : this.getOtpFlag = true;
+          if (data) {
+            console.log(data);
+            this.userData = data;
+            this.getOtpResponse(data);
+            (this.getOtpFlag) ? this.getOtpFlag = false : this.getOtpFlag = true;
+          } else {
+            this.eventService.openSnackBar('error found', 'Dismiss');
+          }
         },
         err => this.eventService.openSnackBar(err, 'Dismiss')
       );
@@ -119,8 +125,14 @@ export class LoginComponent implements OnInit {
   }
 
   getOtpResponse(data) {
-    this.verifyResponseData.email = data.emailList[0].email.substr(2, data.emailList[0].email.indexOf('@') - 2) + 'XXXXX' + data.emailList[0].email.substr(7, 9);
-    this.verifyResponseData.mobile = String(data.mobileList[0].mobileNo).substr(0, 2) + 'XXXXX' + String(data.mobileList[0].mobileNo).substr(7, 9);
+    if (data.emailList && data.emailList.length > 0) {
+      data.email = data.emailList[0].email;
+      this.verifyResponseData.email = UtilService.obfuscateEmail(data.email);
+    }
+    if (data.mobileList && data.mobileList.length > 0) {
+      data.mobileNo = data.mobileList[0].mobileNo;
+      this.verifyResponseData.mobileNo = UtilService.obfuscateEmail(String(data.mobileNo));
+    }
     console.log(this.verifyResponseData);
     if (this.verifyResponseData.email) {
       this.verifyFlag = 'Email';
@@ -128,7 +140,7 @@ export class LoginComponent implements OnInit {
       this.loginUsingCredential(obj);
     } else {
       this.verifyFlag = 'mobile';
-      const obj = {mobileNo: data.mobile};
+      const obj = {mobileNo: data.mobileNo};
       this.loginUsingCredential(obj);
     }
   }
@@ -216,6 +228,7 @@ export class LoginComponent implements OnInit {
         roleId: 1
       };
       this.isLoading = true;
+      // TODO comment for old login
     /*  this.peopleService.loginWithPassword(loginData).subscribe(data => {
         console.log('data: ', data);
         if (data) {
@@ -226,6 +239,8 @@ export class LoginComponent implements OnInit {
             this.authService.setUserInfo(data);
             this.router.navigate(['admin', 'subscription', 'dashboard']);
           } else {
+            this.authService.setToken('authTokenInLoginComponnennt');
+
             data.id = data.clientId;
             this.authService.setClientData(data);
             this.authService.setUserInfo(data);
