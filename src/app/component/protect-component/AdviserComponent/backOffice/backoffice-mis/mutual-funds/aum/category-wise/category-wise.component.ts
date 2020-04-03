@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 export class CategoryWiseComponent implements OnInit {
   category;
   subcategory;
-  showLoader;
+  showLoader=true;
   teamMemberId = 2929;
   advisorId: any;
   constructor(private backoffice: BackOfficeService, private dataService: EventService, public aum: AumComponent) { }
@@ -28,7 +28,6 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   getSubCatSchemeName() {
-    this.showLoader=true;
     const obj={
       advisorId:this.advisorId,
       arnRiaDetailsId:-1,
@@ -73,6 +72,7 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   getFileResponseDataForSubSchemeName(data) {
+    this.showLoader = false;
     console.log("scheme Name", data)
     this.category = data.categories;
 
@@ -83,7 +83,6 @@ export class CategoryWiseComponent implements OnInit {
         sub.showSubCategory = true;
       })
     });
-    this.showLoader = false;
   }
   showSchemeName(index, subcashowSubcat) {
     this.category[this.selectedCategory].subCategoryList[index].showSubCategory = (subcashowSubcat) ? subcashowSubcat = false : subcashowSubcat = true;

@@ -21,6 +21,7 @@ import { SipApplicantWiseComponent } from './sip/sip-applicant-wise/sip-applican
 import { AllSipComponent } from './sip/all-sip/all-sip.component';
 import { MisMfTransactionsComponent } from './mis-mf-transactions/mis-mf-transactions.component';
 import { MisMfSchemesComponent } from './mis-mf-schemes/mis-mf-schemes.component';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { MisMfSchemesComponent } from './mis-mf-schemes/mis-mf-schemes.component
     MutualFundsRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    CustomDirectiveModule
   ]
 })
 export class MutualFundsModule { }

@@ -62,19 +62,22 @@
                             <table *ngIf="!scheme.showScheme">
                                 <thead>
                                     <tr>
-                                        <th>Sr No.</th>
-                                        <th>Scheme Name</th>
-                                        <th class="text-right">Current Value</th>
+                                        <th>Applicant Name</th>
+                                        <th class="text-right">Balance Unit</th>
+                                        <th class="text-right">Folio</th>
+                                        <th class="text-right">Current Amount</th>
                                         <th class="text-right">% Weight</th>
                                     </tr>
                                 </thead>
                                 <tr>
                                     <tbody *ngFor="let applicant of scheme.applicantList;let i = index">
                                         <tr>
-                                            <td>{{i+1}}</td>
-                                            <td>{{scheme.schemeName}}</td>
-                                            <td class="text-right">{{scheme.totalAum}} </td>
-                                            <td class="text-right">{{scheme.weightInPercentage}}</td>
+                                            
+                                            <td>{{applicant.schemeName}}</td>
+                                            <td class="text-right">{{applicant.balanceUit}} </td>
+                                            <td class="text-right">{{applicant.folioNumber}} </td>
+                                            <td class="text-right">{{applicant.totalAum}} </td>
+                                            <td class="text-right">{{applicant.weightInPercentage}}</td>
                                         </tr>
                                     </tbody>
 

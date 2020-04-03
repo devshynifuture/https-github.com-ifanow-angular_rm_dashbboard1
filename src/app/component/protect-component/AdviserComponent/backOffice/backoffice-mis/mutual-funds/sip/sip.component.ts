@@ -25,14 +25,13 @@ export class SipComponent implements OnInit {
   sipPanCount: any;
   wbrCount: any;
   clientWithoutSip=0;
+  newSipObj: any;
+  ceaseSipObj: any;
   constructor(private backoffice:BackOfficeService,private dataService:EventService) { }
  
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    setTimeout(() => {
-      this.pieChart('pieChartSip');
-    }, 1000);
     this.newSip();
     this.ceaseSip();
    this.sipCountGet();
@@ -40,6 +39,9 @@ export class SipComponent implements OnInit {
    this.expiringGet();
    this.sipRejectionGet();
    this.getSipPanCount();
+   setTimeout(() => {
+    this.pieChart('pieChartSip');
+  }, 1000);
 
   }
   sipCountGet()
@@ -175,8 +177,7 @@ export class SipComponent implements OnInit {
     }
     this.backoffice.newSipGet(obj).subscribe(
       data =>{
-       
-        console.log(data);
+       this.newSipObj=data;
       }
     )
   }
@@ -188,11 +189,30 @@ export class SipComponent implements OnInit {
     }
     this.backoffice.ceaseSipGet(obj).subscribe(
       data =>{
+        this.ceaseSipObj=data;
         console.log(data);
       }
     )
   }
+  
+  getValuesForGraph(days) {
+   var obj={
+    newSipAmount:null,
+    ceaseSipAmount:null,
+    net:null
+   };
+   obj.newSipAmount= this.newSipObj.filter(element => element.days ==days)
+  obj.ceaseSipAmount=this.ceaseSipObj.filter(element => element.days ==days)
+  obj.net=obj.newSipAmount - obj.ceaseSipAmount
+  return obj;
+  }
   pieChart(id){
+      var obj30 =this.getValuesForGraph(30)
+      var obj60 =this.getValuesForGraph(60)
+      var obj90 =this.getValuesForGraph(90)
+      var obj120 =this.getValuesForGraph(120)
+      var obj150 =this.getValuesForGraph(150)
+      var obj180 =this.getValuesForGraph(180)
     Highcharts.chart('pieChartSip', {
     chart: {
         type: 'column'
@@ -210,17 +230,17 @@ export class SipComponent implements OnInit {
       type: undefined ,
       name: 'New',
       color: '#70ca86',
-      data: [5, 3, 4, 7, 2]
+      data: [obj30.newSipAmount,obj60.newSipAmount,obj90.newSipAmount,obj120.newSipAmount,obj150.newSipAmount,obj180.newSipAmount]
     }, {
       type: undefined,
         name: 'cease',
         color: '#f05050',
-        data: [2, -2, -3, 2, 1]
+        data: [obj30.ceaseSipAmount,obj60.ceaseSipAmount,obj90.ceaseSipAmount,obj120.ceaseSipAmount,obj150.ceaseSipAmount,obj180.ceaseSipAmount]
     }, {
       type: undefined,
         name: 'net',
         color:'#55c3e6',
-        data: [3, 4, 4, -2, 5]
+        data: [obj30.net,obj60.net,obj90.net,obj120.net,obj150.net,obj180.net]
     }]
 });
   }

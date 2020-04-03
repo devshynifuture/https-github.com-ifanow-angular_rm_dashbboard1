@@ -221,7 +221,7 @@ export class BackOfficeService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_GROUP_HEAD_SEARCH, httpParams);
   }
   folioSearchByInvestor(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('clientName', data.clientName);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('familyMemberName', data.familyMemberName);
     return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_INVESTOR_SEARCH, httpParams);
   }
   folioSearchByPan(data) {

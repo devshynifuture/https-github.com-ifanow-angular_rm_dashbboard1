@@ -33,9 +33,7 @@ export class AumComponent implements OnInit {
   ngOnInit() {
     this.viewMode = 'Select option';
     this.advisorId = AuthService.getAdvisorId();
-    setTimeout(() => {
-      this.pieChart('pieChartAum');
-    }, 1000);
+  
     this.getGraphData();
     this.getTotalAum();
     // this.getSubCatScheme();
@@ -134,16 +132,24 @@ export class AumComponent implements OnInit {
   getGraphData(){
     const obj={
       advisorId:this.advisorId,
-      arnRiaDetailId:-1,
+      arnRiaDetailsId:-1,
       parentId:-1
     }
     this.backoffice.aumGraphGet(obj).subscribe(
       data => {
+        setTimeout(() => {
+          this.pieChart('pieChartAum',data);
+        }, 1000);
         console.log(data)
       }
     )
   }
-  pieChart(id){
+  pieChart(id,obj){
+    var obj1 = obj[obj.length - 1]
+    var obj2 = obj[obj.length - 2]
+    var obj3 = obj[obj.length - 3]
+    var obj4 = obj[obj.length - 4]
+    var months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     Highcharts.chart('pieChartAum', {
       chart: {
           type: 'column'
@@ -152,7 +158,7 @@ export class AumComponent implements OnInit {
         text: ''
       },    
       xAxis: {
-          categories: ['0-30days', '31-60days ', '61-90days', '91-120days', '121-150days','151-180days']
+          categories: [months[obj1.Month]+'-'+obj1.Year,months[obj2.Month]+'-'+obj2.Year,months[obj3.Month]+'-'+obj3.Year,months[obj4.Month]+'-'+obj4.Year]
       },
       credits: {
           enabled: false
@@ -161,17 +167,17 @@ export class AumComponent implements OnInit {
         type: undefined ,
         name: 'Purchase',
         color: '#70ca86',
-        data: [5, 3, 4, 7, 2]
+        data: [obj1.GrossSale,obj2.GrossSale,obj3.GrossSale,obj4.GrossSale]
       }, {
         type: undefined,
           name: 'Redemption',
           color: '#f05050',
-          data: [2, -2, -3, 2, 1]
+          data: [obj1.Redemption,obj2.Redemption,obj3.Redemption,obj4.Redemption]
       }, {
         type: undefined,
           name: 'Net Sales',
           color:'#55c3e6',
-          data: [3, 4, 4, -2, 5]
+          data: [obj1.GrossSale + obj1.Redemption,obj2.GrossSale + obj2.Redemption,obj3.GrossSale + obj3.Redemption,obj4.GrossSale + obj4.Redemption]
       }]
   });
 }
