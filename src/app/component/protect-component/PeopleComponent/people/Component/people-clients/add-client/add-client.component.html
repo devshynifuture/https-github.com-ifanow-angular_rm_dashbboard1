@@ -33,7 +33,7 @@
                     <app-client-demat [data]="tabData" (tabChange)="changeTab($event)"></app-client-demat>
                 </mat-tab>
                 <mat-tab [disabled]="tabData.userId==undefined" label=" Upload">
-                    <app-client-upload (tabChange)="changeTab($event)"></app-client-upload>
+                    <app-client-upload [data]="tabData" (tabChange)="changeTab($event)"></app-client-upload>
                 </mat-tab>
             </mat-tab-group>
         </div>
