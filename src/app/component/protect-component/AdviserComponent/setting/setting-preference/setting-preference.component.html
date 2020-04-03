@@ -164,7 +164,7 @@
                                                 <!-- <button mat-menu-item (click)="verifyEmail(element)">
                                                     <span>Edit</span>
                                                 </button> -->
-                                                <button mat-menu-item>
+                                                <button mat-menu-item (click)="deleteModal'('emailVerify',element)">
                                                     <span>Delete</span>
                                                 </button>
                                             </mat-menu>
@@ -219,8 +219,8 @@
                                                 <button mat-menu-item (click)="OpenEmail('emailTemp',element)">
                                                     <span>Edit</span>
                                                 </button>
-                                                <button mat-menu-item>
-                                                    <span>menu2</span>
+                                                <button mat-menu-item (click)="deleteModal'('template',element)">
+                                                    <span>Delete</span>
                                                 </button>
                                             </mat-menu>
                                         </td>

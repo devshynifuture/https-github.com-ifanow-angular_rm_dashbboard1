@@ -82,7 +82,7 @@
     <div class="col-xl-8 p-0">
         <mat-card class="b-a p-0 br-4">
             <mat-card-header class="bg-grey lter p-24">
-                <div class="row w-100">
+                <div class="row w-100" *ngIf="orgDetails">
                     <div class="col-md-9 pl-0">
                         <h2 class="m-0">{{orgDetails.companyName}}</h2>
                     </div>
