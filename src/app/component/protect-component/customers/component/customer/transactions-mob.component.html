@@ -1,0 +1,344 @@
+<link href="https://cdn.jsdelivr.net/npm/@css-pkg/circular-std@2.0.0/dist/woff.min.css" rel="stylesheet">
+
+<!-- transactions search -->
+<!-- <div id="mob-transactions-search" class="h-100vh mob-transaction-search">
+  <div class="row bg-white br-0">
+    <div class="col-12">
+      <div class="form-group mb-0">
+        <mat-form-field floatLabel="never">
+          <input type="text"
+          value="Search Funds"
+          aria-label="Number"
+          matInput
+          [formControl]="myControl"
+          [matAutocomplete]="auto">
+          <span class="material-icons" matPrefix>keyboard_backspace</span>
+          <mat-icon matSuffix>clear</mat-icon>
+          <mat-autocomplete #auto="matAutocomplete" class="w-100">
+            <mat-option [value]="option" class="p-0">
+              <div class="row">
+                <div class="col-2">
+                  <mat-icon matSuffix class="text-custom">search</mat-icon>
+                </div>
+                <div class="col-10 pl-0">
+                  <p class="m-0 pt-20 text-custom">Reliance</p>
+                </div>
+              </div>
+            </mat-option>
+            <mat-option [value]="option" class="p-0">
+              <div class="row">
+                <div class="col-2">
+                  <mat-icon matSuffix class="text-custom">search</mat-icon>
+                </div>
+                <div class="col-10 pl-0">
+                  <p class="m-0 pt-20 text-custom">Reliance Equity Large cap fund - Growth</p>
+                </div>
+              </div>
+            </mat-option>
+            <mat-option [value]="option" class="p-0">
+              <div class="row">
+                <div class="col-2">
+                  <mat-icon matSuffix class="text-custom">search</mat-icon>
+                </div>
+                <div class="col-10 pl-0">
+                  <p class="m-0 pt-20 text-custom">Reliance Liquid Debt fund - Regular plan</p>
+                </div>
+              </div>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-20">
+  	<div class="col-12">
+  		<p class="m-0 lh-22">Quick Search</p>
+  	</div>
+  	<div class="col-12">
+  		<p class="m-0 pt-24 pb-10 lh-22">Category</p>
+  		<div class="quick-search-button">
+  			 <button mat-stroked-button class="mr-12 mb-12 mob-btn-selected">Equity</button>
+  			 <button mat-stroked-button class="mr-12 mb-12">Debt</button>
+  			 <button mat-stroked-button class="mr-12 mb-12">Taxsaving</button>
+  		</div>
+  	</div>
+  </div>
+   <div class="row">
+  	<div class="col-12">
+  		<p class="m-0 pt-24 pb-10 lh-22">Sub Category</p>
+  		<div class="quick-search-button">
+  			 <button mat-stroked-button class="mr-12 mb-12 mob-btn-selected">Growth</button>
+  			 <button mat-stroked-button class="mr-12 mb-12">Dividend</button>
+  		</div>
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="col-12">
+  		<p class="m-0 pt-24 pb-10 lh-22">Fund House</p>
+  		<div class="quick-search-button">
+  			 <button mat-stroked-button class="mr-12 mb-12">ICICI Pru</button>
+  			 <button mat-stroked-button class="mr-12 mb-12">DSP Blackrock</button>
+  			 <button mat-stroked-button class="mr-12 mb-12 mob-btn-selected">Reliance</button>
+  			 <button mat-stroked-button class="mr-12 mb-12">Sundaram</button>
+  			  <button mat-stroked-button class="mr-12 mb-12">Birla Sunlife</button>
+  			 <button mat-stroked-button class="mr-12 mb-12">Pramerica</button>
+  		</div>
+  	</div>
+  </div>
+  <div class="row mob-bottom-search">
+  	<div class="col-12">
+  		<mat-form-field floatLabel="never">
+    <mat-label>Clear All</mat-label>
+    <input matInput placeholder="Placeholder">
+     <button mat-stroked-button class="btn-search" matSuffix>Search</button>
+  </mat-form-field>
+  	</div>
+  </div>
+</div> -->
+
+
+<!-- serach result -->
+
+<!-- <div id="transactions-searchresult" class="mob-transaction-search">
+	 <div class="row bg-white br-0">
+    <div class="col-12">
+      <div class="form-group mb-0">
+        <mat-form-field floatLabel="never">
+          <input type="text"
+          value="Search Funds"
+          aria-label="Number"
+          matInput
+          [formControl]="myControl"
+          [matAutocomplete]="auto">
+          <span class="material-icons" matPrefix>keyboard_backspace</span>
+          <mat-icon matSuffix>clear</mat-icon>
+          <mat-autocomplete #auto="matAutocomplete" class="w-100">
+            <mat-option [value]="option" class="p-0">
+              <div class="row">
+                <div class="col-2">
+                  <mat-icon matSuffix class="text-custom">search</mat-icon>
+                </div>
+                <div class="col-10 pl-0">
+                  <p class="m-0 pt-20 text-custom">Reliance</p>
+                </div>
+              </div>
+            </mat-option>
+            <mat-option [value]="option" class="p-0">
+              <div class="row">
+                <div class="col-2">
+                  <mat-icon matSuffix class="text-custom">search</mat-icon>
+                </div>
+                <div class="col-10 pl-0">
+                  <p class="m-0 pt-20 text-custom">Reliance Equity Large cap fund - Growth</p>
+                </div>
+              </div>
+            </mat-option>
+            <mat-option [value]="option" class="p-0">
+              <div class="row">
+                <div class="col-2">
+                  <mat-icon matSuffix class="text-custom">search</mat-icon>
+                </div>
+                <div class="col-10 pl-0">
+                  <p class="m-0 pt-20 text-custom">Reliance Liquid Debt fund - Regular plan</p>
+                </div>
+              </div>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-20 pb-16">
+  	<div class="col-8 pl-8">
+  		<p class="m-0 pt-4">Equity Funds</p>
+  	</div>
+  	<div class="col-4 text-right">
+  		 <button mat-stroked-button class="view-all">View All</button>
+  	</div>
+  </div>
+  <div class="mt-16">
+  	<div class="p-8">
+  	<div class="row pt-16 pb-16 bg-white">
+  		<div class="col-2 pt-4">
+  			<div class="circular-small"></div>
+  		</div>
+  		<div class="col-7 pl-0">
+  			<p class="m-0 f-11 pb-6">Reliance Equity Fund</p>
+  			<button mat-stroked-button class="eql-btn" matSuffix>Equity - Largecap</button>
+  		</div>
+  		<div class="col-3 pl-0 text-right">
+  			<p class="mob-text-xs">% XIRR (Yly)</p>
+  			<p class="m-0 text-success pt-12">9.25%</p>
+  		</div>
+  	</div>
+ 
+    <div class="mt-8">
+  	<div class="row pt-16 pb-16 bg-white">
+  		<div class="col-2 pt-4">
+  			<div class="circular-small"></div>
+  		</div>
+  		<div class="col-7 pl-0">
+  			<p class="m-0 f-11 pb-6">Reliance Quantum Fund</p>
+  			<button mat-stroked-button class="eql-btn" matSuffix>Equity - Largecap</button>
+  		</div>
+  		<div class="col-3 pl-0 text-right">
+  			<p class="mob-text-xs">% XIRR (Yly)</p>
+  			<p class="m-0 text-success pt-12">9.25%</p>
+  		</div>
+  	</div>
+  </div>
+    <div class="mt-8">
+  	<div class="row pt-16 pb-16 bg-white">
+  		<div class="col-2 pt-4">
+  			<div class="circular-small"></div>
+  		</div>
+  		<div class="col-7 pl-0">
+  			<p class="m-0 f-11 pb-6">Reliance Top 100 Fund</p>
+  			<button mat-stroked-button class="eql-btn" matSuffix>Equity - Largecap</button>
+  		</div>
+  		<div class="col-3 pl-0 text-right">
+  			<p class="mob-text-xs">% XIRR (Yly)</p>
+  			<p class="m-0 text-success pt-12">9.25%</p>
+  		</div>
+  	</div>
+  </div>
+    <div class="row pt-36 pb-16">
+  	<div class="col-8 pl-8">
+  		<p class="m-0 pt-4">Debt Funds</p>
+  	</div>
+  	<div class="col-4 text-right">
+  		 <button mat-stroked-button class="view-all">View All</button>
+  	</div>
+  </div>
+      <div class="mt-16">
+  	<div class="row pt-16 pb-16 bg-white">
+  		<div class="col-2 pt-4">
+  			<div class="circular-small"></div>
+  		</div>
+  		<div class="col-7 pl-0">
+  			<p class="m-0 f-11 pb-6">Reliance Top 100 Fund</p>
+  			<button mat-stroked-button class="debt-btn" matSuffix>Debt</button>
+  		</div>
+  		<div class="col-3 pl-0 text-right">
+  			<p class="mob-text-xs">% XIRR (Yly)</p>
+  			<p class="m-0 text-success pt-12">9.25%</p>
+  		</div>
+  	</div>
+  </div>
+     <div class="mt-8">
+    <div class="row pt-16 pb-16 bg-white">
+      <div class="col-2 pt-4">
+        <div class="circular-small"></div>
+      </div>
+      <div class="col-7 pl-0">
+        <p class="m-0 f-11 pb-6">Reliance Top 100 Fund</p>
+        <button mat-stroked-button class="debt-btn" matSuffix>Debt</button>
+      </div>
+      <div class="col-3 pl-0 text-right">
+        <p class="mob-text-xs">% XIRR (Yly)</p>
+        <p class="m-0 text-success pt-12">9.25%</p>
+      </div>
+    </div>
+  </div>
+     <div class="mt-8">
+    <div class="row pt-16 pb-16 bg-white">
+      <div class="col-2 pt-4">
+        <div class="circular-small"></div>
+      </div>
+      <div class="col-7 pl-0">
+        <p class="m-0 f-11 pb-6">Reliance Top 100 Fund</p>
+        <button mat-stroked-button class="debt-btn" matSuffix>Debt</button>
+      </div>
+      <div class="col-3 pl-0 text-right">
+        <p class="mob-text-xs">% XIRR (Yly)</p>
+        <p class="m-0 text-success pt-12">9.25%</p>
+      </div>
+    </div>
+  </div>
+   <div class="row pt-36 pb-16">
+    <div class="col-8 pl-8">
+      <p class="m-0 pt-4">Balanced Funds</p>
+    </div>
+    <div class="col-4 text-right">
+       <button mat-stroked-button class="view-all">View All</button>
+    </div>
+  </div>
+   <div class="mt-16">
+    <div class="row pt-16 pb-16 bg-white">
+      <div class="col-2 pt-4">
+        <div class="circular-small"></div>
+      </div>
+      <div class="col-7 pl-0">
+        <p class="m-0 f-11 pb-6">Reliance Top 100 Fund</p>
+        <button mat-stroked-button class="balanced-btn" matSuffix>Balanced</button>
+      </div>
+      <div class="col-3 pl-0 text-right">
+        <p class="mob-text-xs">% XIRR (Yly)</p>
+        <p class="m-0 text-success pt-12">9.25%</p>
+      </div>
+    </div>
+  </div>
+     <div class="mt-8">
+    <div class="row pt-16 pb-16 bg-white">
+      <div class="col-2 pt-4">
+        <div class="circular-small"></div>
+      </div>
+      <div class="col-7 pl-0">
+        <p class="m-0 f-11 pb-6">Reliance Top 100 Fund</p>
+        <button mat-stroked-button class="balanced-btn" matSuffix>Balanced</button>
+      </div>
+      <div class="col-3 pl-0 text-right">
+        <p class="mob-text-xs">% XIRR (Yly)</p>
+        <p class="m-0 text-success pt-12">9.25%</p>
+      </div>
+    </div>
+  </div>
+     <div class="mt-8 mb-28">
+    <div class="row pt-16 pb-16 bg-white">
+      <div class="col-2 pt-4">
+        <div class="circular-small"></div>
+      </div>
+      <div class="col-7 pl-0">
+        <p class="m-0 f-11 pb-6">Reliance Top 100 Fund</p>
+        <button mat-stroked-button class="balanced-btn" matSuffix>Balanced</button>
+      </div>
+      <div class="col-3 pl-0 text-right">
+        <p class="mob-text-xs">% XIRR (Yly)</p>
+        <p class="m-0 text-success pt-12">9.25%</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div> -->
+
+
+<div id="mob-transaction-profile">
+  <div class="bg-white">
+  <div class="row pt-20">
+    <div class="col-6">
+      <span class="material-icons">
+keyboard_backspace
+</span>
+    </div>
+     <div class="col-6">
+     <img src="/assets/images/svg/mob-cart.svg" class="right">
+     </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <img src="/assets/images/svg/realinace.svg">
+  </div>
+  <div class="col-12 pt-16">
+    <p class="m-0 f-16">Reliance Quant Fund</p>
+  </div>
+  </div>
+  <div class="row pt-12 mob-realinace">
+    <div class="col-3">
+      <button mat-stroked-button>Direct</button>
+    </div>
+      <div class="col-8">
+        <button mat-stroked-button >Equity - Largecap</button>
+      </div>
+  </div>
+</div>
+</div>
