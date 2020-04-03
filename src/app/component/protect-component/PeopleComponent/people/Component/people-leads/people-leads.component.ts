@@ -3,6 +3,9 @@ import { LeadsClientsComponent } from './leads-clients/leads-clients.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AddClientComponent } from '../people-clients/add-client/add-client.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PeopleService } from '../../../people.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-people-leads',
@@ -12,14 +15,34 @@ import { AddClientComponent } from '../people-clients/add-client/add-client.comp
 export class PeopleLeadsComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'lsource', 'status', 'rating', 'lead',
     'icon', 'icons'];
-  dataSource = ELEMENT_DATA;
-  constructor(private subInjectService: SubscriptionInject) { }
+  leadDataSource: {}[];
+  isLoading: boolean;
+  advisorId: any;
+  constructor(public eventService: EventService, private subInjectService: SubscriptionInject, private peopleService: PeopleService) { }
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.getLeadList();
   }
-
+  getLeadList() {
+    this.leadDataSource = [{}, {}, {}];
+    this.isLoading = true;
+    let obj =
+    {
+      advisorId: this.advisorId,
+      status: 2
+    }
+    this.peopleService.getClientList(obj).subscribe(
+      data => {
+        console.log(data);
+        this.isLoading = false;
+        this.leadDataSource = data;
+      },
+      err => this.eventService.openSnackBar(err, "dismiss")
+    )
+  }
   leadsConvert(data) {
-    (data == null) ? data = { flag: 'Add lead' } : '';
+    (data == null) ? data = { flag: 'Add lead', fieldFlag: 'lead' } : '';
     const fragmentData = {
       flag: 'convert Lead',
       id: 1,
@@ -60,22 +83,3 @@ export class PeopleLeadsComponent implements OnInit {
   }
 
 }
-export interface PeriodicElement {
-  name: string;
-  position: string;
-  weight: string;
-  lsource: string;
-  status: string;
-  rating: string;
-  lead: string;
-
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    position: 'Rahul Jain', name: '+91 9821230123', weight: 'rahul.jain01@gmail.com',
-    lsource: 'Website',
-    status: 'Attempted to contact', rating: 'Hot', lead: 'Aniket Vichare'
-  },
-
-];

@@ -15,6 +15,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 export class ClientBankComponent implements OnInit {
   bankDetail: any;
   userData: any;
+  holderList: any;
 
   constructor(private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private subService: SubscriptionService, private postalService: PostalService, private peopleService: PeopleService) {
   }
@@ -91,12 +92,27 @@ export class ClientBankComponent implements OnInit {
     this.bankForm.get('branchState').setValue(pincodeData[0].State);
     this.bankForm.get('branchCountry').setValue(pincodeData[0].Country);
   }
+  getHolderList(data) {
+    console.log(data)
+    this.holderList = data;
+  }
   saveNext(flag) {
     if (this.bankForm.invalid) {
       this.bankForm.markAllAsTouched();
       return;
     }
     else {
+      let holderList = [];
+      if (this.holderList) {
+        this.holderList.controls.forEach(element => {
+          holderList.push({
+            "fMDetailTypeId": 1,
+            "name": element.get('name').value,
+            "id": 1,
+            "dematId": 1
+          })
+        })
+      }
       let obj =
       {
         "branchCode": "",
