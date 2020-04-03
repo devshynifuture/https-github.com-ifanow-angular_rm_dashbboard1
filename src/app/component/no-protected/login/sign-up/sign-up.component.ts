@@ -4,6 +4,7 @@ import {ValidatorType} from 'src/app/services/util.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {LoginService} from '../login.service';
 import {EventService} from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-sign-up',
@@ -11,7 +12,7 @@ import {EventService} from 'src/app/Data-service/event.service';
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit {
-      constructor(private fb: FormBuilder, public routerActive : ActivatedRoute, private router: Router, private loginService: LoginService, private eventService: EventService) {
+      constructor(private fb: FormBuilder, private authService: AuthService, public routerActive : ActivatedRoute, private router: Router, private loginService: LoginService, private eventService: EventService) {
   }
   clientSignUp:boolean = false;
   signUpForm;
@@ -94,7 +95,26 @@ export class SignUpComponent implements OnInit {
             userId: data.userId,
             userData: data
           };
-          this.router.navigate(['/login/forgotpassword'], {state: forgotPassObjData});
+          if(this.clientSignUp){
+            const jsonData = {
+              advisorId: 2808,
+              clientId: 2978,
+              emailId: 'gaurav@futurewise.co.in',
+              authToken: 'data',
+              imgUrl: 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'
+            };
+        
+            this.authService.setToken('data');
+        
+            this.authService.setUserInfo(jsonData);
+            this.authService.setClientData({
+              id: 2978, name: 'Aryendra Kumar Saxena'
+            });
+            this.router.navigate(['customer', 'detail', 'overview', 'myfeed']);
+          }
+          else{
+            this.router.navigate(['/login/forgotpassword'], {state: forgotPassObjData});
+          }
         },
         err => this.eventService.openSnackBar(err, 'Dismiss')
       );
