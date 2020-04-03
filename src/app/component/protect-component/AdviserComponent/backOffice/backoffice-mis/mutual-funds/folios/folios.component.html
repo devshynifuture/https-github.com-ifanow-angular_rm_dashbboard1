@@ -11,7 +11,7 @@
     <div class="form-group b-a mb-0">
       <mat-form-field floatLabel="never" appearance="standard">
         <input type="text" aria-label="Number" formControlName="searchGroupHead"
-            class="form-control" #groupHeadRef matInput (keyup)="getList($event.target.value,groupyHead)"
+            class="form-control" #groupHeadRef matInput (keyup)="getList($event.target.value,'groupyHead')"
             [matAutocomplete]="auto" placeholder="Search by group head">
         <mat-autocomplete #auto="matAutocomplete">
             <mat-option 
@@ -19,7 +19,7 @@
                 {{data.investorName}}
             </mat-option>
         </mat-autocomplete>
-        <mat-icon matSuffix (click)="selectedData(groupHeadRef.value,groupyHead)">search</mat-icon>
+        <mat-icon matSuffix (click)="selectedData(groupHeadRef.value,'groupyHead')">search</mat-icon>
     </mat-form-field>
     </div>
   </div>
@@ -27,7 +27,7 @@
     <div class="form-group b-a mb-0">
       <mat-form-field floatLabel="never" appearance="standard">
         <input type="text" aria-label="Number" formControlName="searchInvestorName"
-            class="form-control" #investorRef matInput (keyup)="getList($event.target.value,investor)"
+            class="form-control" #investorRef matInput (keyup)="getList($event.target.value,'investor')"
             [matAutocomplete]="auto" placeholder="Search by investor Name">
         <mat-autocomplete #auto="matAutocomplete">
             <mat-option
@@ -35,7 +35,7 @@
                 {{data.investorName}}
             </mat-option>
         </mat-autocomplete>
-        <mat-icon matSuffix (click)="selectedData(investorRef.value,investor)">search</mat-icon>
+        <mat-icon matSuffix (click)="selectedData(investorRef.value,'investor')">search</mat-icon>
     </mat-form-field>
     </div>
   </div>
@@ -43,7 +43,7 @@
     <div class="form-group b-a mb-0">
       <mat-form-field floatLabel="never" appearance="standard">
         <input matInput #panRef placeholder="Enter PAN">
-        <mat-icon matSuffix (click)="getData(panRef.value,pan)">check</mat-icon>
+        <mat-icon matSuffix (click)="getData(panRef.value,'pan')">check</mat-icon>
       </mat-form-field>
     </div>
   </div>
@@ -51,7 +51,7 @@
     <div class="form-group b-a mb-0">
       <mat-form-field floatLabel="never" appearance="standard">
         <input matInput #folioRef placeholder="Enter folio number">
-        <mat-icon matSuffix (click)="getData(folioRef.value,folio)">check</mat-icon>
+        <mat-icon matSuffix (click)="getData(folioRef.value,'folio')">check</mat-icon>
       </mat-form-field>
     </div>
   </div>

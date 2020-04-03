@@ -97,7 +97,7 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <div *ngIf="clientDatasource.length==0" class="d-flex flex-column align-items-center">
+        <div *ngIf="clientDatasource.data.length==0" class="d-flex flex-column align-items-center">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
             <h4 class="pt-12">No Clients found</h4>
             <button mat-stroked-button class="btn-primary addon v-middle  " (click)="Addclient(null)">
