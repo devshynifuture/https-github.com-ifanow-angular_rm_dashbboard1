@@ -173,6 +173,7 @@ export class EmailOnlyComponent implements OnInit {
   }
   editEmailTempalatRes(data) {
     console.log(data)
+    this.close(true);
   }
   getEmailTemplateFilterData(invoiceData) {
 
