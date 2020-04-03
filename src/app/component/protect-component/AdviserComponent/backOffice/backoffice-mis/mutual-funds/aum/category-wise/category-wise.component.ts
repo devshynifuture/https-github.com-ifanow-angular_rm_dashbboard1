@@ -19,9 +19,9 @@ export class CategoryWiseComponent implements OnInit {
   teamMemberId = 2929;
   advisorId = AuthService.getAdvisorId();
   subCategoryList: any[] = [];
+  totalAumForSubSchemeName: any;
   constructor(
-    private backoffice: BackOfficeService, private dataService: EventService, public aum: AumComponent,
-    private excelMis: ExcelMisService
+    private backoffice: BackOfficeService, private dataService: EventService, public aum: AumComponent
   ) { }
 
   selectedCategory;
@@ -45,6 +45,7 @@ export class CategoryWiseComponent implements OnInit {
       err => this.getFilerrorResponse(err)
     )
   }
+
   clientFolioWise() {
     const obj = {
       amcName: 'Aditya Birla',
@@ -80,6 +81,9 @@ export class CategoryWiseComponent implements OnInit {
 
   getFileResponseDataForSubSchemeName(data) {
     console.log("scheme Name:::", data);
+    if (data) {
+      this.totalAumForSubSchemeName = data.totalAum;
+    }
 
     this.category = data.categories;
     this.exportToExcelReport('category');
@@ -103,7 +107,7 @@ export class CategoryWiseComponent implements OnInit {
     this.dataService.openSnackBar(err, 'Dismiss')
   }
 
-  categoryWiseExcelSheet() {
+  subCategoryWiseExcelSheet() {
     let headerData = [
       { width: 20, key: 'Sr.No.' },
       { width: 50, key: 'Sub Category Name' },
@@ -118,6 +122,9 @@ export class CategoryWiseComponent implements OnInit {
     ];
     let dataValue;
     let excelData = [];
+    let footer = [];
+    let footerValue = [];
+
     this.category.forEach((element, index) => {
       dataValue = [
         index + 1,
@@ -128,13 +135,96 @@ export class CategoryWiseComponent implements OnInit {
       excelData.push(Object.assign(dataValue));
     });
 
-    ExcelMisService.exportExcel(headerData, header, excelData, [], 'category-wise-excel');
+    footer = ['', 'Total', this.totalAumForSubSchemeName, ''];
+    footerValue.push(Object.assign(footer));
+    ExcelMisService.exportExcel(headerData, header, excelData, footerValue, 'category-wise-excel');
     // excelData: any, footer: any[], metaData: any
 
   }
 
-  subCategoryWiseExcelSheet() {
+  categoryWiseExcelSheet() {
+    let arrayOfHeader = [
+      [
+        'Sr. No.',
+        'Category Name',
+        'Current Value',
+        '% Weight'
+      ],
+      [
+        'Sr. No.',
+        'Sub Category Name',
+        'Current Name',
+        '% Weight'
+      ],
+      [
+        'Sr. No.',
+        'Scheme Name',
+        'Current Value',
+        '% Weight'
+      ]
+    ];
 
+    let arrayOfHeaderStyles = [
+      [
+        { width: 5, key: 'Sr. No.' },
+        { width: 10, key: 'Category Name' },
+        { width: 8, key: 'Current Value' },
+        { width: 8, key: '% Weight' }
+      ],
+      [
+        { width: 5, key: 'Sr. No.' },
+        { width: 10, key: 'Sub Category Name' },
+        { width: 8, key: 'Current Name' },
+        { width: 8, key: '% Weight' }
+      ],
+      [
+        { width: 5, key: 'Sr. No.' },
+        { width: 10, key: 'Scheme Name' },
+        { width: 8, key: 'Current Name' },
+        { width: 8, key: '% Weight' }
+      ]
+    ];
+
+    let dataValue = [];
+    let arrayOfExcelData = [];
+    this.category.forEach((element, index1) => {
+      dataValue = [
+        index1 + 1,
+        element.name,
+        element.totalAum,
+        element.weightInPercentage
+      ];
+      arrayOfExcelData[0] = [];
+      arrayOfExcelData[0].push(Object.assign(dataValue));
+      console.log(element.subCategoryList);
+      if (element.hasOwnProperty('subCategoryList') && element.subCategoryList.length !== 0) {
+        console.log("this is something i need 2");
+        element.subCategoryList.forEach((element, index2) => {
+          dataValue = [
+            index2 + 1,
+            element.name,
+            element.totalAum,
+            element.weightInPercentage
+          ];
+          arrayOfExcelData[1] = [];
+          arrayOfExcelData[1].push(Object.assign(dataValue));
+
+          if (element.hasOwnProperty('schemes') && element.schemes.length !== 0) {
+            element.schemes.forEach((element, index3) => {
+              dataValue = [
+                index3 + 1,
+                element.name,
+                element.totalAum,
+                element.weightInPercentage
+              ];
+            });
+            arrayOfExcelData[2] = [];
+            arrayOfExcelData[2].push(Object.assign(dataValue));
+          }
+        });
+      }
+    });
+    ExcelMisService.exportExcel2(arrayOfHeader, arrayOfHeaderStyles, arrayOfExcelData, 'selectedScheme', 'Category Wise MIS Report');
   }
 
   exportToExcelReport(choice) {

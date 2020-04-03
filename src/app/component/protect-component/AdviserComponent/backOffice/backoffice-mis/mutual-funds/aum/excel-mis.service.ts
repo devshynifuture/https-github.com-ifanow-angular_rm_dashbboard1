@@ -47,12 +47,38 @@ export class ExcelMisService {
         saveAs(new Blob([buf]), userData.fullName + '-' + metaData + '-' + new Date() + '.xlsx');
     }
 
-    static exportExcel2(arrayOfHeaders, arrayOfExcelData, selectedSchemeName, ) {
-        // create workbook,
-        // create sheet
+    static async exportExcel2(arrayOfHeaders, arrayOfHeaderStyle, arrayOfExcelData, selectedSchemeName, metaData) {
+        const wb = new Excel.Workbook();
+        const ws = wb.addWorksheet();
+        const meta1 = ws.getCell('A1');
+        const meta2 = ws.getCell('A2');
+        const meta3 = ws.getCell('A3');
+        meta1.font = { bold: true };
+        meta2.font = { bold: true };
+        meta3.font = { bold: true };
+
+        let userData = AuthService.getUserInfo();
+
+        ws.getCell('A1').value = 'Type of report - ' + metaData;
+        ws.getCell('A2').value = `Client name - ` + userData.fullName;
+        ws.getCell('A3').value = 'Report as on - ' + new Date();
+
+        const head = ws.getRow(5);
+        head.font = { bold: true };
+
         // get a1
-        // insert header data
-        // headerStyles styles
+
+        ws.getRow(5).values = arrayOfHeaders[1];
+        ws.columns = arrayOfHeaderStyle[1];
+
+        if (arrayOfExcelData) {
+            arrayOfExcelData.forEach(element => {
+                element.forEach(element => {
+                    ws.addRow(element);
+                });
+            });
+        }
+
         // values forloop
 
         // insert another header1 data
@@ -74,6 +100,9 @@ export class ExcelMisService {
         // values for schemeName
         // else 
         // continue
+        const buf = await wb.xlsx.writeBuffer();
+        saveAs(new Blob([buf]), userData.fullName + '-' + metaData + '-' + new Date() + '.xlsx');
+
     }
 
 
