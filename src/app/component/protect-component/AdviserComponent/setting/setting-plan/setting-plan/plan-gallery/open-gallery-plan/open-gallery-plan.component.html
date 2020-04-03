@@ -16,7 +16,7 @@
 <div class="mt-80">
     <div class="row d-flex justify-content-center" *ngIf="!cropImage">
         <div class="col-md-3 text-right pr-0">
-            <h5 class="m-0 pt-8">Your pic</h5>
+            <h5 class="mb-0 mt-40">Your pic</h5>
         </div>
         <div class="col-md-5">
             <i class="material-icons c-p" (click)="cropImage = true" style="font-size: 100px;">
@@ -30,36 +30,37 @@
 
 
     <div class="row ">
-        <div class="col-md-12 d-flex" *ngIf="cropImage">
-            <div class="text-center" *ngIf="!showCropper">
-                <h5 class="m-0 pt-8">Upload a photo to edit and upload.</h5>
+        <div class="col-md-12  " *ngIf="cropImage">
+            <div class="text-center mt-20" *ngIf="!showCropper">
+                <h5 class="m-0  ">Upload a photo to edit and upload.</h5>
             </div>
 
-            <div class="image-cropper" style="width: 50%;">
-                <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)"></app-image-cropper>
-            </div>
-            <div class="profile-img" [hidden]="!showCropper" style="width: 50%;">
-                <img [src]="finalImage" alt="cropped Image" class="w-100">
+            <div class="d-flex">
+                <div class="image-cropper" style="width: 50%;">
+                    <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)"></app-image-cropper>
+                </div>
+                <div class="profile-img" [hidden]="!showCropper" style="width: 50%;">
+                    <img [src]="finalImage" alt="cropped Image" class="w-100">
+                </div>
             </div>
 
         </div>
-        <div class="col-md-12 pl-0 text-center" *ngIf="cropImage">
+        <div class="col-md-12 mt-24 mb-20 text-center" *ngIf="cropImage">
             <button mat-stroked-button class="btn-primary" (click)="chooseImage.click()">CHOOSE IMAGE</button>
             <input type="file" #chooseImage (change)="uploadImageForCorping($event)" hidden>
         </div>
 
     </div>
 
+</div>
 
-    <div class="row pt-16 pb-16">
-        <div class="col-md-12 text-right">
-            <!--    // TODo [mat-dialog-close]="data"-->
-            <button class="br-0 text-inherit f-14" mat-button>
-                CANCEL
-            </button>
-            <button class="btn-green text-white f-14 ml-12" (click)="onNoClick()" mat-button mat-raised-button cdkFocusInitial>UPLOAD
-            </button>
-        </div>
+<div class="row pt-16 pb-16">
+    <div class="col-md-12 text-right">
+        <!--    // TODo [mat-dialog-close]="data"-->
+        <button class="br-0 text-inherit f-14" mat-button>
+            CANCEL
+        </button>
+        <button class="btn-green text-white f-14 ml-12" (click)="onNoClick()" mat-button mat-raised-button cdkFocusInitial>UPLOAD
+        </button>
     </div>
-
 </div>
