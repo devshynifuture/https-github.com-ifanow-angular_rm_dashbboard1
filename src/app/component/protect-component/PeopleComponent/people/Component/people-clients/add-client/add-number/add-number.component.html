@@ -22,7 +22,7 @@
                         matInput class="form-control">
                     <mat-hint>Optional</mat-hint>
                     <mat-hint align="end">{{num.value.length}}/10</mat-hint>
-                    <mat-error *ngIf="numberForm.get('number').errors?.pattern"></mat-error>
+                    <mat-error *ngIf="numberForm.get('number').errors?.pattern">Number must be 10 digits</mat-error>
                 </mat-form-field>
             </div>
         </div>

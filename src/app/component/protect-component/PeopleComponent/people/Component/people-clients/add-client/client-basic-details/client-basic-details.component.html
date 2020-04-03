@@ -85,7 +85,8 @@
                         <input autocomplete="off" #pan appInputValueValidation
                             [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="pan" maxlength="10" matInput
                             class="form-control">
-                        <mat-error>This Field is required</mat-error>
+                        <mat-error *ngIf="basicDetails.get('pan').errors?.required">This Field is required</mat-error>
+                        <mat-error *ngIf="basicDetails.get('pan').errors?.pattern">Pan must be 10 digits</mat-error>
                         <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
                     </mat-form-field>
                 </div>
@@ -439,6 +440,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input [maxLength]="10" formControlName="pan" #pan matInput class="form-control">
+                        <mat-error *ngIf="minorForm.get('pan').errors?.required">This Field is required</mat-error>
                         <mat-hint>Optional</mat-hint>
                         <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
                     </mat-form-field>
@@ -588,6 +590,8 @@
                     <mat-form-field>
                         <input formControlName="comPan" #cpan maxlength="10" matInput class="form-control">
                         <mat-error>This Field is required</mat-error>
+                        <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.required">This Field is required
+                        </mat-error>
                         <mat-hint align="end">{{cpan.value.length}} / 10</mat-hint>
                     </mat-form-field>
                 </div>
