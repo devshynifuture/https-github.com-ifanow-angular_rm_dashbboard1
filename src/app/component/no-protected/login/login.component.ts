@@ -229,7 +229,7 @@ export class LoginComponent implements OnInit {
       };
       this.isLoading = true;
       // TODO comment for old login
-      this.peopleService.loginWithPassword(loginData).subscribe(data => {
+    /*  this.peopleService.loginWithPassword(loginData).subscribe(data => {
         console.log('data: ', data);
         if (data) {
           // this.authService.setToken(data.token);
@@ -239,6 +239,8 @@ export class LoginComponent implements OnInit {
             this.authService.setUserInfo(data);
             this.router.navigate(['admin', 'subscription', 'dashboard']);
           } else {
+            this.authService.setToken('authTokenInLoginComponnennt');
+
             data.id = data.clientId;
             this.authService.setClientData(data);
             this.authService.setUserInfo(data);
@@ -258,8 +260,8 @@ export class LoginComponent implements OnInit {
         this.barButtonOptions.active = false;
         console.log('error on login: ', err);
         this.eventService.openSnackBar(err, 'Dismiss');
-      });
-      /*this.backOfficeService.loginApi(loginData).subscribe(
+      });*/
+      this.backOfficeService.loginApi(loginData).subscribe(
         data => {
 
           if (data) {
@@ -290,7 +292,7 @@ export class LoginComponent implements OnInit {
           console.log('error on login: ', err);
           this.eventService.openSnackBar(err, 'Dismiss');
         }
-      );*/
+      );
     }
   }
 
