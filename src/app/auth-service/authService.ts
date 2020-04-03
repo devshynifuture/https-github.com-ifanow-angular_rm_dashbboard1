@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 // import {Router} from '@angular/router';
 
@@ -14,9 +14,11 @@ export class AuthService {
   static getAdvisorId() {
     return this.getUserInfo().advisorId;
   }
+
   static getUserId() {
     return this.getUserInfo().userId;
   }
+
   static getClientData() {
     let clientDataString = sessionStorage.getItem('clientData');
     return clientDataString ? JSON.parse(clientDataString) : undefined;
@@ -39,6 +41,11 @@ export class AuthService {
     return this.getToken() !== null;
   }
 
+  isAdvisor() {
+    console.log('Authservice isAdvisor userType: ', AuthService.getUserInfo().userType);
+    return AuthService.getUserInfo().userType ? AuthService.getUserInfo().userType === 1 : false;
+  }
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('userInfo');
@@ -58,11 +65,14 @@ export class AuthService {
 
     console.log('setClientData : ', clientData);
   }
+
   static setSubscriptionUpperSliderData(data) {
     sessionStorage.setItem("subUpperData", JSON.stringify(data))
   }
+
   static getSubscriptionUpperSliderData() {
     return JSON.parse(sessionStorage.getItem('subUpperData'))
   }
+
   // static get
 }

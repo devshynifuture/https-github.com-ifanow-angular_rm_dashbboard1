@@ -26,12 +26,13 @@ export class PlanKeyParametersComponent implements OnInit {
   getSavingStatus: any;
   getInsurancePlanningData: any;
   getLifeExpentancy: any;
-  constructor(private orgSetting : OrgSettingServiceService,private eventService :EventService, private fb : FormBuilder) { }
+  constructor(private orgSetting : OrgSettingServiceService,private eventService :EventService, private fb : FormBuilder) {
+    this.advisorId = AuthService.getAdvisorId()
+   }
 
   ngOnInit() {
     this.getKeyParameter()
     this.getdataForm()
-    this.advisorId = AuthService.getAdvisorId()
     this.isLoading = false
   }
 
@@ -60,7 +61,7 @@ getFormControl(): any {
   getKeyParameter(){
     this.isLoading = true
     let obj = {
-      advisorId: 2808
+      advisorId: this.advisorId
     }
     this.orgSetting.getKeyAndParameters(obj).subscribe(
       data => this.getKeyAndParametersRes(data),
@@ -100,7 +101,7 @@ getFormControl(): any {
     let obj = {
       parameter:(value.value == undefined)? value : value.value,
       configurationTypeId:id,
-      advisorId:2808
+      advisorId:this.advisorId
 
     }
     this.orgSetting.updateKeyParameter(obj).subscribe(

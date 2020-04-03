@@ -13,6 +13,7 @@
                     <mat-form-field>
                         <mat-select class="form-group b-0" formControlName="savingType"
                             (selectionChange)="updateKeyParameter($event,1)">
+                            <mat-option value="" disabled>Select saving type</mat-option>
                             <mat-option value="1">Group all years together</mat-option>
                             <mat-option value="2">Divide</mat-option>
                         </mat-select>
@@ -37,6 +38,7 @@
             <mat-form-field *ngIf="allParameters">
                 <mat-select class="form-group b-0" formControlName="savingStatus"
                     (selectionChange)="updateKeyParameter($event,4)">
+                    <mat-option value="" disabled>Select savings status</mat-option>
                     <mat-option value="1">Break up</mat-option>
                     <mat-option value="2">Total</mat-option>
                 </mat-select>
@@ -53,6 +55,7 @@
         <div class="form-control w-50" *ngIf="allParameters">
             <mat-form-field>
                 <mat-select class="form-group b-0" formControlName="retirementAge">
+                    <mat-option value="" disabled>Select retirement age</mat-option>
                     <mat-option [value]="retirement" (click)="updateKeyParameter(retirement,2)"
                         *ngFor="let retirement of retirementAge">{{retirement}}</mat-option>
                 </mat-select>
@@ -68,6 +71,7 @@
         <div class="form-control w-50" *ngIf="allParameters">
             <mat-form-field>
                 <mat-select class="form-group b-0" formControlName="lifeExpectancy">
+                    <mat-option value="" disabled>Select life expectancySelect</mat-option>
                     <mat-option [value]="lifeExpect" (click)="updateKeyParameter(lifeExpect,5)"
                         *ngFor="let lifeExpect of lifeExpectancy">{{lifeExpect}}</mat-option>
                 </mat-select>
@@ -85,6 +89,7 @@
         <div class="form-control w-50" *ngIf="allParameters">
             <mat-form-field>
                 <mat-select class="form-group b-0" formControlName="InsurancePlanGrowthRate">
+                    <mat-option value="" disabled>Select asset growth rate</mat-option>
                     <mat-option [value]="insuranceRate" (click)="updateKeyParameter(insuranceRate,3)"
                         *ngFor="let insuranceRate of InsurancePlanGrowthRate">{{insuranceRate}}%</mat-option>
                 </mat-select>

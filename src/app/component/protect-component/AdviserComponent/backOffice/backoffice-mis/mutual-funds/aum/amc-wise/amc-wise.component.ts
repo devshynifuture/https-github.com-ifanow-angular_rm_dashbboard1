@@ -12,11 +12,11 @@ import { EventService } from 'src/app/Data-service/event.service';
 export class AmcWiseComponent implements OnInit {
   teamMemberId=2929;
   advisorId: any;
-  showLoader: boolean;
+  showLoader=true;
   selectedCategory: any;
   amcList: any;
-  totalCurrentValue: any;
-  totalWeight: any;
+  totalCurrentValue=0;
+  totalWeight=0;
 
   constructor(public aum:AumComponent,private backoffice:BackOfficeService,private dataService:EventService) { }
 
@@ -40,9 +40,7 @@ export class AmcWiseComponent implements OnInit {
     )
   }
   getReponseAmcWiseGet(data) {
-    this.showLoader = true;
-    this.amcList = data.categories;
-
+    this.amcList=data;
     this.amcList.forEach(o => {
       o.showAmc = true;
       this.totalCurrentValue+=o.totalAum;
@@ -52,25 +50,11 @@ export class AmcWiseComponent implements OnInit {
   }
   showScheme(amcData) {
     amcData.showAmc=!amcData.showAmc
-    amcData.schemeList=[]
-    if(amcData.showAmc==false){
-      const obj={
-        advisorId:this.advisorId,
-        arnRiaDetailsId:-1,
-        parentId:-1,
-        familyMembertId:amcData.id,
-        clientTotalAum:amcData.totalAum
-      }
-      this.backoffice.getAumApplicantCategory(obj).subscribe(
-        data =>{
-          if(data){
-            data[0].showScheme=true
-            amcData.schemeList=data
-            console.log(data)
-          }
-        }
-      )
-      }
+    amcData.schemes.forEach(o => {
+      o.mutualFundSchemeMasterId=amcData.id;
+      o.showScheme = true;
+    });
+    
   }
   showApplicant(schemeData) {
     schemeData.showScheme=!schemeData.showScheme
@@ -107,6 +91,7 @@ export class AmcWiseComponent implements OnInit {
     )
   }
   getFilerrorResponse(err) {
+    this.showLoader = false;
     this.dataService.openSnackBar(err, 'Dismiss')
   }
 }

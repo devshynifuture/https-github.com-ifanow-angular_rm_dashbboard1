@@ -30,7 +30,7 @@
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef class="br"> Registered mobile </th>
                 <td mat-cell *matCellDef="let element" class="br">
-                  <div class="bar"> {{element.mobileNo}}</div>
+                    <div class="bar"> {{element.mobileNo}}</div>
                 </td>
             </ng-container>
 
@@ -38,7 +38,7 @@
             <ng-container matColumnDef="weight">
                 <th mat-header-cell *matHeaderCellDef class="br"> Registered email </th>
                 <td mat-cell *matCellDef="let element" class="br">
-                  <div class="bar"> {{element.email}}</div>
+                    <div class="bar"> {{element.email}}</div>
                 </td>
             </ng-container>
 
@@ -46,7 +46,7 @@
             <ng-container matColumnDef="symbol">
                 <th mat-header-cell *matHeaderCellDef class="br"> PAN </th>
                 <td mat-cell *matCellDef="let element" class="br">
-                  <div class="bar"> {{element.pan}}</div>
+                    <div class="bar"> {{element.pan}}</div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="member">
@@ -85,10 +85,10 @@
                     <img *ngIf="isLoading==false" class="c-p" [matMenuTriggerFor]="menu"
                         src="/assets/images/svg/dot-menu.svg">
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item>
+                        <button (click)="Addclient(element)" mat-menu-item>
                             <span>Edit</span>
                         </button>
-                        <button mat-menu-item>
+                        <button (click)="deleteModal('CLIENT',element)" mat-menu-item>
                             <span>Delete</span>
                         </button>
                     </mat-menu>
@@ -97,7 +97,7 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <div *ngIf="clientDatasource==undefined" class="d-flex flex-column align-items-center">
+        <div *ngIf="clientDatasource.length==0" class="d-flex flex-column align-items-center">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
             <h4 class="pt-12">No Clients found</h4>
             <button mat-stroked-button class="btn-primary addon v-middle  " (click)="Addclient(null)">

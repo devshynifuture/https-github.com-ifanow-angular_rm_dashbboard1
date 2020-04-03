@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BackOfficeService } from '../../../back-office.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import * as Highcharts from 'highcharts';
+
 
 @Component({
   selector: 'app-sip',
@@ -20,17 +22,23 @@ export class SipComponent implements OnInit {
   expiringSip: any;
   expiredSip:any;
   rejectionSip: any;
+  sipPanCount: any;
+  wbrCount: any;
+  clientWithoutSip=0;
   constructor(private backoffice:BackOfficeService,private dataService:EventService) { }
  
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    setTimeout(() => {
+      this.pieChart('pieChartSip');
+    }, 1000);
    this.sipCountGet();
    this.expiredGet();
    this.expiringGet();
    this.sipRejectionGet();
    this.getSipPanCount();
-   this.getWbrPanCount();
+
   }
   sipCountGet()
   {
@@ -127,6 +135,8 @@ export class SipComponent implements OnInit {
     }
     this.backoffice.sipSchemePanCount(obj).subscribe(
       data =>{
+        this.sipPanCount=data.sipCount;
+        this.getWbrPanCount();
         console.log(data);
       }
     )
@@ -140,6 +150,9 @@ export class SipComponent implements OnInit {
     }
     this.backoffice.Wbr9anCount(obj).subscribe(
       data =>{
+        this.wbrCount=data.folioCount;
+        this.clientWithoutSip=((this.sipPanCount)?this.sipPanCount:0/(this.wbrCount)?this.wbrCount:0)*100;
+        this.clientWithoutSip=(this.clientWithoutSip)?this.clientWithoutSip:0
         console.log(data);
       }
     )
@@ -152,6 +165,36 @@ export class SipComponent implements OnInit {
       this.sipcomponentWise=value;
       this.sipComponent=false; 
   }
+  pieChart(id){
+    Highcharts.chart('pieChartSip', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Column chart with negative values'
+    },
+    xAxis: {
+        categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+    },
+    credits: {
+        enabled: false
+    },
+    series: [{
+      type: undefined ,
+      name: 'John',
+      data: [5, 3, 4, 7, 2]
+    }, {
+      type: undefined,
+        name: 'Jane',
+        data: [2, -2, -3, 2, 1]
+    }, {
+      type: undefined,
+        name: 'Joe',
+        data: [3, 4, 4, -2, 5]
+    }]
+});
+  }
+ 
 
 
 }

@@ -6,40 +6,56 @@
     <button mat-stroked-button class="btn-primary">Export folio</button>
   </div>
 </div>
-<div class="row pt-24 icons-set">
+<div class="row pt-24 icons-set" [formGroup]="folioDetails">
   <div class="col-md-3">
     <div class="form-group b-a mb-0">
-      <mat-form-field >
-        <input matInput>
-        <mat-icon matSuffix>search</mat-icon>
+      <mat-form-field floatLabel="never" appearance="standard">
+        <input type="text" aria-label="Number" formControlName="searchGroupHead"
+            class="form-control" #groupHeadRef matInput (keyup)="getList($event.target.value,groupyHead)"
+            [matAutocomplete]="auto" placeholder="Search by group head">
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option 
+                *ngFor="let data of dataList" [value]="data.investorName" (click)="groupHeadRef.value = data.investorName">
+                {{data.investorName}}
+            </mat-option>
+        </mat-autocomplete>
+        <mat-icon matSuffix (click)="selectedData(groupHeadRef.value,groupyHead)">search</mat-icon>
+    </mat-form-field>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="form-group b-a mb-0">
+      <mat-form-field floatLabel="never" appearance="standard">
+        <input type="text" aria-label="Number" formControlName="searchInvestorName"
+            class="form-control" #investorRef matInput (keyup)="getList($event.target.value,investor)"
+            [matAutocomplete]="auto" placeholder="Search by investor Name">
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option
+                *ngFor="let data of dataList" [value]="data.investorName"  (click)="investorRef.value = data.investorName">
+                {{data.investorName}}
+            </mat-option>
+        </mat-autocomplete>
+        <mat-icon matSuffix (click)="selectedData(investorRef.value,investor)">search</mat-icon>
+    </mat-form-field>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="form-group b-a mb-0">
+      <mat-form-field floatLabel="never" appearance="standard">
+        <input matInput #panRef placeholder="Enter PAN">
+        <mat-icon matSuffix (click)="getData(panRef.value,pan)">check</mat-icon>
       </mat-form-field>
     </div>
   </div>
   <div class="col-md-3">
     <div class="form-group b-a mb-0">
-      <mat-form-field >
-        <input matInput>
-        <mat-icon matSuffix>search</mat-icon>
+      <mat-form-field floatLabel="never" appearance="standard">
+        <input matInput #folioRef placeholder="Enter folio number">
+        <mat-icon matSuffix (click)="getData(folioRef.value,folio)">check</mat-icon>
       </mat-form-field>
     </div>
   </div>
-  <div class="col-md-3">
-    <div class="form-group b-a mb-0">
-      <mat-form-field >
-        <input matInput>
-        <mat-icon matSuffix>check</mat-icon>
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="form-group b-a mb-0">
-      <mat-form-field >
-        <input matInput>
-        <mat-icon matSuffix>check</mat-icon>
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="col-md-12 foliodetails">
+  <div class="col-md-12 folioDetails">
     <table mat-table [dataSource]="dataSource" class="mt-28" id="table-low">
       <ng-container matColumnDef="position">
         <th mat-header-cell *matHeaderCellDef> Folio Number	</th>

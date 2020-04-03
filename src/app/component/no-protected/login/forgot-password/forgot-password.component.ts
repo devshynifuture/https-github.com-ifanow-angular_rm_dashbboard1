@@ -98,7 +98,7 @@ export class ForgotPasswordComponent implements OnInit {
   ///////////////////////////////////// signup process///////////////////////////////
   verify(flag) {
     let verifyObj;
-    (flag == 'Email') ? verifyObj = { "forEmail": this.saveVerifyData.emailId } : verifyObj = { 'forMobNum': this.saveVerifyData.mobileNo };
+    (flag == 'Email') ? verifyObj = { "email": this.saveVerifyData.emailId } : verifyObj = { 'mobileNo': this.saveVerifyData.mobileNo };
     this.verifyWithCredential(verifyObj)   ////verify Email Address
   }
   verifyWithCredential(obj) {    //// verify email or mobile with credentials

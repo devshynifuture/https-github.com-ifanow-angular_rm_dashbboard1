@@ -20,7 +20,7 @@
             <thead class="text-dark">
                 <tr>
                     <th>Sr No.</th>
-                    <th>Category Name</th>
+                    <th>Amc Name</th>
                     <th class="text-right">Current Value</th>
                     <th class="text-right">% Weight</th>
 
@@ -29,7 +29,7 @@
             <tbody *ngFor="let amc of amcList; let i = index">
                 <tr>
                     <td>{{i+1}}</td>
-                    <td (click)="showScheme(amc)"> <i
+                    <td (click)="showScheme(amc)">{{amc.name}} <i
                             class="material-icons right b-a f-14 mt-4 c-p" *ngIf="amc.showAmc"> add </i>
                         <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="!amc.showAmc"> remove
                         </i></td>
@@ -42,16 +42,16 @@
                         <thead class="bg-light text-dark">
                             <tr>
                                 <th>Sr No.</th>
-                                <th>Sub Category Name</th>
+                                <th>Scheme Name</th>
                                 <th class="text-right">Current Value</th>
                                 <th class="text-right">% Weight</th>
 
                             </tr>
                         </thead>
-                        <tbody *ngFor="let scheme of amc.schemeList; let i = index">
+                        <tbody *ngFor="let scheme of amc.schemes; let i = index">
                             <tr>
                                 <td>{{i+1}}</td>
-                                <td (click)="showApplicant(scheme)">{{scheme.name}}<i
+                                <td (click)="showApplicant(scheme)">{{scheme.schemeName}}<i
                                         *ngIf="scheme.showScheme==true"
                                         class="material-icons right b-a f-14 mt-4 c-p">add</i>
                                     <i *ngIf="scheme.showScheme==false"
@@ -63,7 +63,7 @@
                                 <thead>
                                     <tr>
                                         <th>Sr No.</th>
-                                        <th>Sub Category Name</th>
+                                        <th>Scheme Name</th>
                                         <th class="text-right">Current Value</th>
                                         <th class="text-right">% Weight</th>
                                     </tr>

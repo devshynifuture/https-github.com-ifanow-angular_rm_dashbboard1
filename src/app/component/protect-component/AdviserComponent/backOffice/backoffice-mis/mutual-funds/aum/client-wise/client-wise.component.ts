@@ -48,7 +48,10 @@ export class ClientWiseComponent implements OnInit {
       parentId:-1
     }
     this.backoffice.getAumClientTotalAum(obj).subscribe(
-      data => this.clientTotalAum(data)
+      data => this.clientTotalAum(data),
+      err=>{
+        this.showLoader=false;
+      }
     )
    
   }
@@ -61,7 +64,7 @@ export class ClientWiseComponent implements OnInit {
         advisorId:this.advisorId,
         arnRiaDetailsId:-1,
         parentId:-1,
-        clientId:clientData.clientId,
+        clientId:clientData.id,
         totalAum:clientData.totalAum
       }
       this.backoffice.getAumFamilyMember(obj).subscribe(
@@ -96,19 +99,20 @@ export class ClientWiseComponent implements OnInit {
   {
     investorData.showInvestor=!investorData.showInvestor
     investorData.schemeList=[]
-    if(investorData.show==false){
+    if(investorData.showInvestor==false){
       const obj={
         advisorId:this.advisorId,
         arnRiaDetailsId:-1,
         parentId:-1,
-        familyMemberId:investorData.clientId,
+        familyMemberId:investorData.familyMemberId,
         totalAum:investorData.totalAum
       }
       this.backoffice.getAumFamilyMemberScheme(obj).subscribe(
         data =>{
           if(data){
-            data[0].showScheme=true
-            investorData.schemeList=data
+            data[0].showScheme=true;
+            data[0].familyMemberId=investorData.familyMemberId;
+            investorData.schemeList=data;
             console.log(data)
           }
         }
@@ -120,14 +124,14 @@ export class ClientWiseComponent implements OnInit {
   {
     schemeData.showScheme=!schemeData.showScheme
     schemeData.folioList=[]
-    if(schemeData.show==false){
+    if(schemeData.showScheme==false){
       const obj={
         advisorId:this.advisorId,
         arnRiaDetailsId:-1,
         parentId:-1,
         familyMemberId:schemeData.familyMemberId,
         totalAum:schemeData.totalAum,
-        schemeId:schemeData.schemeId
+        schemeId:schemeData.mutualFundSchemeMasterId
       }
       this.backoffice.getAumFamilyMemberSchemeFolio(obj).subscribe(
         data =>{

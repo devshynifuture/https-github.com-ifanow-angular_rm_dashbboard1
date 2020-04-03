@@ -17,8 +17,9 @@
         <div class="col-md-4 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input #num formControlName="number" autocomplete="off" formControlName="number" matInput
-                        class="form-control">
+                    <input #num formControlName="number" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" autocomplete="off" formControlName="number"
+                        matInput class="form-control">
                     <mat-hint>Optional</mat-hint>
                     <mat-hint align="end">{{num.value.length}}/10</mat-hint>
                     <mat-error *ngIf="numberForm.get('number').errors?.isMaxLength"></mat-error>
