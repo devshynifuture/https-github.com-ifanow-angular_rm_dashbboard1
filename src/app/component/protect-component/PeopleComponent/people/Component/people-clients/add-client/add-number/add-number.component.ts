@@ -28,7 +28,7 @@ export class AddNumberComponent implements OnInit {
   addNumber() {
     this.getMobileNumList.push(this.fb.group({
       code: ['+91'],
-      number: [, Validators.compose([Validators.maxLength(10)])]
+      number: [, Validators.pattern(this.validatorType.TEN_DIGITS)]
     }))
     this.numberArray.emit(this.getMobileNumList);
   }

@@ -20,6 +20,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   mobileData: any;
   categoryList: any[];
   clientOwnerList: any;
+  selectedClientOwner: any;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService, private datePipe: DatePipe) { }
   basicDetails;
@@ -34,15 +35,14 @@ export class ClientBasicDetailsComponent implements OnInit {
   mobileNumberFlag = "Mobile number";
   ngOnInit() {
     this.createMinorForm(null);
-    this.getClientList();
   }
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     if (data.fieldFlag == 'familyMember') {
       this.basicDetailsData = data;
-      this.invTaxStatus = String(this.basicDetailsData.taxStatusId);
-      this.invTypeCategory = String(this.basicDetailsData.familyMemberType);
-      (this.basicDetailsData.familyMemberType == 1) ? this.createIndividualForm(this.basicDetailsData) : this.createMinorForm(this.basicDetailsData)
+      this.invTaxStatus = (this.basicDetailsData.familyMemberType == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
+      this.invTypeCategory = (this.basicDetailsData.familyMemberType == 0) ? '1' : String(this.basicDetailsData.familyMemberType);
+      (this.basicDetailsData.familyMemberType == 1 || this.basicDetailsData.familyMemberType == 0) ? this.createIndividualForm(this.basicDetailsData) : this.createMinorForm(this.basicDetailsData)
     }
     else {
       this.basicDetailsData = data;
@@ -54,11 +54,13 @@ export class ClientBasicDetailsComponent implements OnInit {
       else {
         this.invTypeCategory = String(this.basicDetailsData.clientType);
         this.invTaxStatus = String(this.basicDetailsData.taxStatusId);
-        (this.basicDetailsData.clientType == 1) ? this.createIndividualForm(this.basicDetailsData) : this.createNonIndividualForm(this.basicDetailsData)
+        (this.basicDetailsData.clientType == 1 || this.basicDetailsData.clientType == 0) ? this.createIndividualForm(this.basicDetailsData) : this.createNonIndividualForm(this.basicDetailsData)
       }
+      this.getClientOrLeadData();
+      this.getClientList();
     }
+
     console.log(data);
-    this.getClientOrLeadData();
   }
   createIndividualForm(data) {
     (data == undefined) ? data = {} : '';
@@ -117,7 +119,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     }
     this.peopleService.getClientOrLeadData(obj).subscribe(
       data => {
-        console.log(data)
+        console.log(data);
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
     )
@@ -169,7 +171,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       });
       let obj =
       {
-        "advisorId": this.advisorId,
+        "advisorId": (this.selectedClientOwner) ? this.selectedClientOwner.advisorId : null,
         "taxStatusId": parseInt(this.invTaxStatus),
         "emailList": [
           {
@@ -205,9 +207,9 @@ export class ClientBasicDetailsComponent implements OnInit {
         "userType": 1,
         "remarks": null,
         "status": (this.fieldFlag == 'client') ? 1 : 2,
-        "leadSource": (this.fieldFlag == 'lead') ? this.basicDetails.value.leadSource : '',
-        "leadRating": (this.fieldFlag == 'lead') ? this.basicDetails.value.leadRating : '',
-        "leadStatus": (this.fieldFlag == 'lead') ? this.basicDetails.value.leaadStatus : ''
+        "leadSource": (this.fieldFlag == 'lead') ? this.basicDetails.value.leadSource : null,
+        "leadRating": (this.fieldFlag == 'lead') ? this.basicDetails.value.leadRating : null,
+        "leadStatus": (this.fieldFlag == 'lead') ? this.basicDetails.value.leaadStatus : null
       }
       if (this.basicDetailsData.userId == null) {
         if (this.invTypeCategory == '1') {
@@ -278,19 +280,14 @@ export class ClientBasicDetailsComponent implements OnInit {
         "verificationStatus": 0
       })
     });
-    // if (this.invTypeCategory == '1' && this.basicDetails.invalid) {
-    //   this.basicDetails.markAllAsTouched();
-    //   return;
-    // }
-    // if (this.invTypeCategory == '2' && this.minorForm.invalid) {
-    //   this.minorForm.markAllAsTouched();
-    //   return;
-    // }
-    // if()
-    // {
-
-    // }
-    // else {
+    if (this.invTypeCategory == '1' && this.basicDetails.invalid) {
+      this.basicDetails.markAllAsTouched();
+      return;
+    }
+    if (this.invTypeCategory == '2' && this.minorForm.invalid) {
+      this.minorForm.markAllAsTouched();
+      return;
+    }
     let obj =
     {
       "id": this.basicDetailsData.id,

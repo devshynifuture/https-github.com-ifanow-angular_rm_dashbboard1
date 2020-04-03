@@ -2,7 +2,7 @@
     <div class="col-md-4">
         <h3 class="m-0">Leads</h3>
     </div>
-    <div class="col-md-8">
+    <div *ngIf="leadDataSource.data.length>0" class="col-md-8">
         <div class="col-md-8 p-0 right text-right">
             <img src="assets/images/svg/download-bordered.svg" class="c-p">
             <img src="assets/images/svg/up-down.svg" class="">
@@ -10,14 +10,14 @@
 
             <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                     class="material-icons">filter_list</i>FILTERS</button>
-            <button (click)="addLead(null)" mat-stroked-button class="btn-primary pl-8"> <i
+            <button (click)="open(null,'lead')" mat-stroked-button class="btn-primary pl-8"> <i
                     class="material-icons pr-8 v-middle">
                     add
                 </i>ADD NEW</button>
         </div>
     </div>
     <div class="col-md-12 people-leads">
-        <table mat-table *ngIf="leadDataSource" [dataSource]="leadDataSource" appSkeletonLoading
+        <table mat-table *ngIf="leadDataSource.data.length>0" [dataSource]="leadDataSource" appSkeletonLoading
             [appSkeletonLoading]="isLoading" class="skeletonAnimation" class="mt-8" id="table-low">
 
             <ng-container matColumnDef="position">
@@ -80,10 +80,10 @@
                     <img class="c-p" *ngIf="isLoading==false" [matMenuTriggerFor]="menu"
                         src="/assets/images/svg/dot-menu.svg">
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item>
+                        <button (click)="open(element,'lead')" mat-menu-item>
                             <span>Edit</span>
                         </button>
-                        <button (click)="leadsConvert(null)" mat-menu-item>
+                        <button (click)="open(element,'convertLead')" mat-menu-item>
                             <span>Convert to client</span>
                         </button>
                         <button mat-menu-item>
@@ -95,10 +95,10 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <div *ngIf="leadDataSource.length==0" class="d-flex flex-column align-items-center">
+        <div *ngIf="leadDataSource.data.length==0" class="d-flex flex-column align-items-center">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
             <h4 class="pt-12">No Leads found</h4>
-            <button mat-stroked-button class="btn-primary addon v-middle  " (click)="Addclient(null)">
+            <button mat-stroked-button class="btn-primary addon v-middle  " (click)="open(null,'lead')">
                 ADD NEW</button>
         </div>
     </div>

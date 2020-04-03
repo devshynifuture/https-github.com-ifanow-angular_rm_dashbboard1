@@ -508,6 +508,9 @@ export const appConfig = {
   EDIT_ORG_PROFILE_REPORT_LOGO: 'setting/profile/organisation/report/logo/update',
   GET_EMAIL_VERIFICATION: 'setting/preference/email/get',
   GET_EMAIL_TEMPLATES: 'setting/preference/email/template/get',
+  EDIT_PREF_EMAIL_TEMPLATE:'setting/preference/email/template/update',
+  DELETE_PREF_EMAIL_TEMPLATE:'setting/preference/email/template/delete',
+  DELETE_EMAIL_VERIFY:'setting/preference/email/delete',
   ADD_EMAIL_VERIFY: 'setting/preferences/email/post',
   GET_ASSET_ALLOCATION: 'goal-planning/static-allocation/get',
   GET_RETURNS: 'plan/config/return-inflation/get',
@@ -564,6 +567,8 @@ export const appConfig = {
   GET_TEAM_MEMBERS: 'user/advisor/team-members/detail/get',
   DELETE_CLIENT: 'user/client/delete',
   GET_CLIENT_OR_lEAD_DATA: 'user/client/advisor-wise/get',
+  // LOGIN_WITH_PASSWORD: 'user/login/with/password',
+
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: '/user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
