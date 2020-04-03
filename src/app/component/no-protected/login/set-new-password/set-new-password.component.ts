@@ -45,12 +45,32 @@ export class SetNewPasswordComponent implements OnInit {
       this.loginService.savePassword(obj).subscribe(
         data => {
           console.log(data);
-          this.authService.setClientData(this.userData);
-          this.authService.setUserInfo(this.userData);
-          this.router.navigate(['/admin/subscription/dashboard'])
-        },
-        err => this.eventService.openSnackBar(err, "Dismiss")
-      )
+          if (data == 1) {
+            data = this.userData
+            // this.authService.setToken(data.token);
+            this.authService.setToken('authTokenInLoginComponnennt');
+            if (data.userType == 1) {
+              // data.advisorId = data.userId;
+              this.authService.setUserInfo(data);
+              this.router.navigate(['admin', 'subscription', 'dashboard']);
+            } else {
+              this.authService.setToken('authTokenInLoginComponnennt');
+
+              data.id = data.clientId;
+              this.authService.setClientData(data);
+              this.authService.setUserInfo(data);
+              this.router.navigate(['customer', 'detail', 'overview', 'myfeed']);
+            }
+          } else {
+            // this.passEvent = '';
+            // this.errorMsg = true;
+            // this.errorStyle = {
+            //   visibility: this.errorMsg ? 'visible' : 'hidden',
+            //   opacity: this.errorMsg ? '1' : '0',
+            // };
+            // this.barButtonOptions.active = false;
+          }
+        })
     }
   }
   checkUpperCase() {
