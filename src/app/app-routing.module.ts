@@ -1,19 +1,12 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './component/no-protected/login/login.component';
-import { SelectivePreloadingStrategyService } from './services/selective-preloading-strategy.service';
-import { ErrorPageComponent } from './component/protect-component/common-component/error-page/error-page.component';
-import { WelcomePageComponent } from './component/protect-component/common-component/welcome-page/welcome-page.component';
-import { DataNotFoundComponent } from './component/protect-component/common-component/data-not-found/data-not-found.component';
-import { AuthGuard } from './guards/auth.guard';
-import { FormTestComponent } from './test/form-test/form-test.component';
-import { SubscriptionUpperSliderComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/upper-slider/subscription-upper-slider.component';
-import { BackofficeDashboardComponent } from './component/protect-component/AdviserComponent/backOffice/backoffice-dashboard/backoffice-dashboard.component';
-import { TransactionsComponent } from './component/protect-component/customers/component/common-component/transactions/transactions.component';
-import { ForgotPasswordComponent } from './component/no-protected/login/forgot-password/forgot-password.component';
-import { SignUpComponent } from './component/no-protected/login/sign-up/sign-up.component';
-import { SetNewPasswordComponent } from './component/no-protected/login/set-new-password/set-new-password.component';
-import { VerifyOtpComponent } from './component/no-protected/login/verify-otp/verify-otp.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {SelectivePreloadingStrategyService} from './services/selective-preloading-strategy.service';
+import {ErrorPageComponent} from './component/protect-component/common-component/error-page/error-page.component';
+import {WelcomePageComponent} from './component/protect-component/common-component/welcome-page/welcome-page.component';
+import {DataNotFoundComponent} from './component/protect-component/common-component/data-not-found/data-not-found.component';
+import {AuthGuard} from './guards/auth.guard';
+import {FormTestComponent} from './test/form-test/form-test.component';
+import {BackofficeDashboardComponent} from './component/protect-component/AdviserComponent/backOffice/backoffice-dashboard/backoffice-dashboard.component';
 
 const routes: Routes = [
   {
@@ -26,7 +19,7 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () => import('./component/left-sidebar/leftsidebar/leftsidebar.module').then(m => m.LeftsidebarModule),
     // outlet: 'mainrouter',
-    // canActivate: [AuthGuard],
+    // canActivate: [AuthGuard, AdvisorGuard],
 
   },
   // {
@@ -41,7 +34,7 @@ const routes: Routes = [
         path: '',
         loadChildren: () => import('./component/protect-component/customers/customers.module')
           .then(m => m.CustomersModule),
-        data: { animation: 'Tab1', preload: true },
+        data: {animation: 'Tab1', preload: true},
 
 
         // data: {preload: true}
@@ -92,6 +85,10 @@ const routes: Routes = [
   },
   {
     path: 'error-page',
+    component: ErrorPageComponent
+  },
+  {
+    path: 'unauthorized',
     component: ErrorPageComponent
   },
   {
