@@ -12,6 +12,8 @@ import { AuthService } from 'src/app/auth-service/authService';
 export class ClientWiseComponent implements OnInit {
   advisorId: any;
   clientId: any;
+  totalCurrentValue=0;
+  totalWeight=0;
 
   constructor(public aum:AumComponent,private backoffice:BackOfficeService) { }
   
@@ -23,9 +25,7 @@ export class ClientWiseComponent implements OnInit {
   selectedInvestor;
   teamMemberId=2929;
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
-    this.getClientSchemeName();
+    this.advisorId = AuthService.getAdvisorId()
     this.getClientTotalAum();
   }
   getClientSchemeName(){
@@ -43,36 +43,49 @@ export class ClientWiseComponent implements OnInit {
   getClientTotalAum()
   {
     let obj={
-      'limit':50,
-      'offset':1,
-      'advisorId':this.advisorId
+      advisorId:this.advisorId,
+      arnRiaDetailsId:-1,
+      parentId:-1
     }
     this.backoffice.getAumClientTotalAum(obj).subscribe(
-      data => this.clientTotalAum(data)
+      data => this.clientTotalAum(data),
+      err=>{
+        this.showLoader=false;
+      }
     )
    
   }
-  getClientSCheme(clientname,show,index)
+  getInvestorName(clientData)
   {
-    let obj=
-   {
-    'clientId':this.clientId,
-    'advisorId':this.advisorId
-   }
-   if(show==true)
-   {
-    this.backoffice.getAumClientScheme(obj).subscribe(
-      data =>this.clientScheme(data,show,index)
-    )
-   }
-   else{
-    this.clientList[index].show=(show)?show=false:show=true;
-    return;
-   }
+    clientData.show=!clientData.show
+    clientData.investorList=[]
+    if(clientData.show==false){
+      const obj={
+        advisorId:this.advisorId,
+        arnRiaDetailsId:-1,
+        parentId:-1,
+        clientId:clientData.id,
+        totalAum:clientData.totalAum
+      }
+      this.backoffice.getAumFamilyMember(obj).subscribe(
+        data =>{
+          if(data){
+            data[0].showInvestor=true
+            clientData.investorList=data
+            console.log(data)
+          }
+        }
+      )
+      }
   }
   clientTotalAum(data)
   {
     this.clientList=data
+     this.clientList.forEach(o => {
+      o.show = true;
+      this.totalCurrentValue+=o.totalAum;
+      this.totalWeight+=o.weightInPercentage;
+    });
     this.showLoader=false;
   }
   clientScheme(data,show,index)
@@ -82,12 +95,55 @@ export class ClientWiseComponent implements OnInit {
    this.clientList[index].subList=this.subList;
    this.clientList[index].show=(show)?show=false:show=true;
   }
-  getSchemeName(index,show)
+  getSchemeName(investorData)
   {
-   this.clientList[this.selectedClient].subList[index].showSubCategory=(show)?show=false:show=true;
-   this.selectedInvestor=index;
+    investorData.showInvestor=!investorData.showInvestor
+    investorData.schemeList=[]
+    if(investorData.showInvestor==false){
+      const obj={
+        advisorId:this.advisorId,
+        arnRiaDetailsId:-1,
+        parentId:-1,
+        familyMemberId:investorData.familyMemberId,
+        totalAum:investorData.totalAum
+      }
+      this.backoffice.getAumFamilyMemberScheme(obj).subscribe(
+        data =>{
+          if(data){
+            data[0].showScheme=true;
+            data[0].familyMemberId=investorData.familyMemberId;
+            investorData.schemeList=data;
+            console.log(data)
+          }
+        }
+      )
+    }
+    
   }
-
+  getFolio(schemeData)
+  {
+    schemeData.showScheme=!schemeData.showScheme
+    schemeData.folioList=[]
+    if(schemeData.showScheme==false){
+      const obj={
+        advisorId:this.advisorId,
+        arnRiaDetailsId:-1,
+        parentId:-1,
+        familyMemberId:schemeData.familyMemberId,
+        totalAum:schemeData.totalAum,
+        schemeId:schemeData.mutualFundSchemeMasterId
+      }
+      this.backoffice.getAumFamilyMemberSchemeFolio(obj).subscribe(
+        data =>{
+          if(data){
+            schemeData.folioList=data
+            console.log(data)
+          }
+        }
+      )
+    }
+    
+  }
   getSchemeName1(index,show)
   {
     this.clientList[this.selectedClient].subList[this.selectedInvestor].schemes[index].showScheme=(show)?show=false:show=true;

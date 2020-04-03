@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
 import { BackOfficeService } from '../../../back-office.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import * as Highcharts from 'highcharts';
 
 @Component({
   selector: 'app-aum',
@@ -32,6 +33,9 @@ export class AumComponent implements OnInit {
   ngOnInit() {
     this.viewMode = 'Select option';
     this.advisorId = AuthService.getAdvisorId();
+    setTimeout(() => {
+      this.pieChart('pieChartAum');
+    }, 1000);
     this.getTotalAum();
     // this.getSubCatScheme();
     this.getSubCatAum()
@@ -65,8 +69,12 @@ export class AumComponent implements OnInit {
   }
 
   getTotalAum() {
-
-    this.backoffice.getClientTotalAUM(this.advisorId).subscribe(
+    const obj={
+      advisorId:this.advisorId,
+      arnRiaDetailsId:-1,
+      parentId:-1
+    }
+    this.backoffice.getClientTotalAUM(obj).subscribe(
       data => this.getFileResponseDataAum(data),
       err => this.getFilerrorResponse(err)
     )
@@ -78,7 +86,12 @@ export class AumComponent implements OnInit {
     )
   }
   getSubCatAum() {
-    this.backoffice.getSubCatAum(this.advisorId).subscribe(
+    const obj={
+      advisorId:this.advisorId,
+      arnRiaDetailId:-1,
+      parentId:-1
+    }
+    this.backoffice.getSubCatAum(obj).subscribe(
       data => this.getFileResponseDataForSub(data),
       err => this.getFilerrorResponse(err)
     )
@@ -111,12 +124,40 @@ export class AumComponent implements OnInit {
     console.log("scheme Name", data)
   }
   getFilerrorResponse(err) {
-    this.dataService.openSnackBar(err, 'Dismiss')
+    this.dataService.openSnackBar('Something went wrong', 'Dismiss')
   }
   categoryWise(value) {
     this.componentWise = value;
     this.aumComponent = false;
   }
-
+  pieChart(id){
+    Highcharts.chart('pieChartAum', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Column chart with negative values'
+    },
+    xAxis: {
+        categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+    },
+    credits: {
+        enabled: false
+    },
+    series: [{
+      type: undefined ,
+      name: 'John',
+      data: [5, 3, 4, 7, 2]
+    }, {
+      type: undefined,
+        name: 'Jane',
+        data: [2, -2, -3, 2, 1]
+    }, {
+      type: undefined,
+        name: 'Joe',
+        data: [3, 4, 4, -2, 5]
+    }]
+});
+  }
 }
 

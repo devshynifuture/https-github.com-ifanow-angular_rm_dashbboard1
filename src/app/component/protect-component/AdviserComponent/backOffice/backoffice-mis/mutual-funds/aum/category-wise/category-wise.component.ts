@@ -34,13 +34,12 @@ export class CategoryWiseComponent implements OnInit {
 
   getSubCatSchemeName() {
     this.showLoader = true;
-    const data = {
+    const obj = {
       advisorId: this.advisorId,
       arnRiaDetailsId: -1,
       parentId: -1
     }
-
-    this.backoffice.getTotalByAumScheme(data).subscribe(
+    this.backoffice.getTotalByAumScheme(obj).subscribe(
       data => this.getFileResponseDataForSubSchemeName(data),
       err => this.getFilerrorResponse(err)
     )

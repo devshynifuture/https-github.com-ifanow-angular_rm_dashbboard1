@@ -12,10 +12,15 @@ export class SipApplicantWiseComponent implements OnInit {
   teamMemberId=2929;
   clientId: any;
   advisorId: any;
+  applicantList: any;
+  totalOfSipAmount=0;
+  totalOfSipCount=0;
+  totalWeight =0;
+  filteredArray: any[];
+  applicantFilter: any;
   constructor(private backoffice:BackOfficeService,public sip:SipComponent) { }
 
   ngOnInit() {
-    this.showLoader = false;
     this.advisorId=AuthService.getAdvisorId();
     this.clientId=AuthService.getClientId();
     this.schemeWiseApplicantGet()
@@ -28,14 +33,75 @@ export class SipApplicantWiseComponent implements OnInit {
     const obj={
       advisorId:this.advisorId,
       arnRiaDetailsId:-1,
-      clientId:this.clientId,
       parentId:-1,
-      schemeId:123
     }
-    this.backoffice.scheme_wise_Applicants_Get(obj).subscribe(
+    this.backoffice.sipApplicantList(obj).subscribe(
       data =>{
-        console.log(data);
+        console.log("scheme Name", data)
+        this.applicantList = data;
+    
+        this.applicantList.forEach(o => {
+          o.showScheme = true;
+          this.totalOfSipAmount+=o.totalAum;
+          this.totalOfSipCount+=o.count;
+          this.totalWeight+=o.weightInPercentage;
+          o.InvestorList=[];
+        });
+        this.filteredArray = [...this.applicantList];
+    
+        this.showLoader = false;
+      },
+      err=>{
+        this.showLoader = false;
       }
     )
+  }
+  showSubTableList(applicantData) {
+    applicantData.showScheme=!applicantData.showScheme
+    applicantData.schemeList=[];
+    if(applicantData.showScheme==false){
+      const obj={
+        advisorId:this.advisorId,
+        arnRiaDetailsId:-1,
+        parentId:-1,
+        familyMemberId:applicantData.id,
+        totalAum:applicantData.totalAum
+      }
+      this.backoffice.sipApplicantFolioList(obj).subscribe(
+        data =>{
+          if(data){
+            applicantData.schemeList=data
+            console.log(data)
+          }
+        }
+      )
+    }
+  }
+  filterArray() {
+    // No users, empty list.
+    if (!this.applicantList.length) {
+      this.filteredArray = [];
+      return;
+    }
+
+    // no search text, all users.
+    if (!this.applicantFilter) {      
+      this.filteredArray = [...this.applicantList]; // keep your usersList immutable
+      return;
+    }
+
+    const users = [...this.applicantList]; // keep your usersList immutable
+    const properties = Object.keys(users[0]); // get user properties
+
+    // check all properties for each user and return user if matching to searchText
+    this.filteredArray =  users.filter((user) => {
+      return properties.find((property) => {
+        const valueString = user[property].toString().toLowerCase();
+        return valueString.includes(this.applicantFilter.toLowerCase());
+      })
+      ? user
+      : null;
+    });
+    
   }
 }

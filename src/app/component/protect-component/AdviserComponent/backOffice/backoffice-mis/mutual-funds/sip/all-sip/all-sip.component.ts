@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { BackOfficeService } from '../../../../back-office.service';
 import { SipComponent } from '../sip.component';
+import { MatSort, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-all-sip',
@@ -11,9 +12,12 @@ import { SipComponent } from '../sip.component';
 export class AllSipComponent implements OnInit {
   advisorId: any;
   dataSource: any;
+  showLoader=true;
   displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate',
     'frequency', 'amount'];
   totalAmount=0;
+  
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(private backoffice:BackOfficeService,private sip:SipComponent) { }
 
@@ -22,7 +26,11 @@ export class AllSipComponent implements OnInit {
     this.getAllSip();
 
   }
-
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.sort = this.sort;
+  }
   getAllSip()
   {
     const obj={
@@ -34,11 +42,16 @@ export class AllSipComponent implements OnInit {
     }
     this.backoffice.allSipGet(obj).subscribe(
       data =>{
-        this.dataSource=data;
-        this.dataSource.forEach(element => {
+        this.dataSource=new MatTableDataSource(data);
+        this.dataSource.sort = this.sort;
+        this.dataSource.filteredData.forEach(element => {
           this.totalAmount += element.amount;
         });
+        this.showLoader=false;
         console.log(data);
+      },
+      err=>{
+        this.showLoader=false;
       }
     )
   }

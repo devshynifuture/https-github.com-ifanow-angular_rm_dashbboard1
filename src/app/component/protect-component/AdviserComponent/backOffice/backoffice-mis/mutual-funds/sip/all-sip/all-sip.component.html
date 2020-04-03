@@ -1,3 +1,7 @@
+<div *ngIf="showLoader">
+    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+</div>
+<div *ngIf="showLoader==false">
 <div class="row">
     <div class="col-md-6 pl-0">
         <h3 class="pt-8 mb-0">ALL SIP</h3>
@@ -8,6 +12,9 @@
             <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
         </div>
     </div>
+</div>
+<div>
+    <input type="text" placeholder="Search..." (keyup)="applyFilter($event)">
 </div>
 <table matSort mat-table [dataSource]="dataSource" id="tbs">
     <ng-container matColumnDef="no" sticky>
@@ -74,3 +81,4 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
 </table>
+</div>

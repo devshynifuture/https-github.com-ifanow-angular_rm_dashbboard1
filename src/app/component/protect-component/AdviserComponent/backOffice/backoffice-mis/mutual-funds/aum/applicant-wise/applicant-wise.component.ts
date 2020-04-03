@@ -11,6 +11,8 @@ import { AuthService } from 'src/app/auth-service/authService';
 export class ApplicantWiseComponent implements OnInit {
   advisorId: any;
   clientId: any;
+  totalCurrentValue=0;
+  totalWeight=0;
 
   constructor(public aum:AumComponent,private backoffice:BackOfficeService) { }
   applicantName;
@@ -23,34 +25,52 @@ export class ApplicantWiseComponent implements OnInit {
   }
   aumApplicantWiseTotalaumApplicantNameGet()
   {
-    this.backoffice.getAumApplicantWiseTotalaumApplicantName(this.advisorId).subscribe(
-      data => this.applicantNameGet(data)
+    const obj={
+      advisorId:this.advisorId,
+      arnRiaDetailsId:-1,
+      parentId:-1
+    }
+    this.backoffice.getAumApplicantWiseTotalaumApplicantName(obj).subscribe(
+      data => this.applicantNameGet(data),
+      err=>{
+        this.showLoader=false;
+      }
     )
   }
   applicantNameGet(data)
   {
     this.applicantName=data;
+    this.applicantName.forEach(o => {
+      o.show = true;
+      this.totalCurrentValue+=o.totalAum;
+      this.totalWeight+=o.weightInPercentage;
+    });
     this.showLoader=false;
   }
   
   category(applicantData)
   {
-    let obj=
-    {
-      'clientId':applicantData.id,
-      'clientTotalAum':applicantData.totalAum,
-      'advisorId':this.advisorId
-    }
-    if(applicantData.show==false)
-    {
-    this.backoffice.getAumApplicantCategory(obj).subscribe(
-      data => this.sortCategoryApplicant(data,applicantData.show,applicantData)
-    )
-    }
-    else
-    {
-      applicantData.show=false;
-    }
+    applicantData.show=!applicantData.show
+    applicantData.categoryList=[]
+    if(applicantData.show==false){
+      const obj={
+        advisorId:this.advisorId,
+        arnRiaDetailsId:-1,
+        parentId:-1,
+        familyMembertId:applicantData.id,
+        clientTotalAum:applicantData.totalAum
+      }
+      this.backoffice.getAumApplicantCategory(obj).subscribe(
+        data =>{
+          if(data){
+            data[0].showCategory=true;
+            data[0].familyMemberId=applicantData.id
+            applicantData.categoryList=data
+            console.log(data)
+          }
+        }
+      )
+      }
   }
   sortCategoryApplicant(data,show,applicantData)
   {
@@ -59,49 +79,65 @@ export class ApplicantWiseComponent implements OnInit {
     applicantData.show=(show)?show=false:show=true;
 
   }
-  subCategory(category,showCategory,id)
+  subCategory(catData)
   {
-    let obj=
-    {
-      'categoryId':category.id,
-      'categoryTotalAum':category.totalAum,
-      'clientId':id,
-      'advisorId':this.advisorId
-    }
-    if(showCategory==false)
-    {
+    catData.showCategory=!catData.showCategory
+    catData.subCatList=[]
+    if(catData.showCategory==false){
+      const obj={
+        advisorId:this.advisorId,
+        arnRiaDetailsId:-1,
+        parentId:-1,
+        familyMembertId:catData.familyMemberId,
+        categoryId:catData.id,
+        categoryTotalAum:catData.totalAum
+      }
       this.backoffice.getAumApplicantSubCategory(obj).subscribe(
-        data =>this.getResponseSubCategoryData(data,category,showCategory)
+        data =>{
+          if(data){
+            data[0].showSubCategory=true;
+            data[0].familyMemberId=catData.familyMemberId;
+            catData.subCatList=data;
+            console.log(data)
+          }
+        }
       )
+      }
     }
-    else{
-      category.showCategory=false;
-    }
-  }
+
   getResponseSubCategoryData(data,category,showCategory)
   {  
     console.log(data);
     category.showCategory=(showCategory)?showCategory=false:showCategory=true;
     category.subCategoryList=data;  
   }
-  getScheme(subCat,id)
+  getScheme(subCatData)
   {
-    let obj=
-    {
-      'clientId':id,
-      'subCategoryId':subCat.id,
-      'subCategoryTotalAum':subCat.totalAum,
-      'advisorId':this.advisorId
-    }
-    if(subCat.showSubCategory==false)
-    {
+    subCatData.showSubCategory=!subCatData.showSubCategory
+    subCatData.schemeList=[]
+    if(subCatData.showSubCategory==false){
+      const obj={
+        advisorId:this.advisorId,
+        arnRiaDetailsId:-1,
+        parentId:-1,
+        familyMembertId:subCatData.familyMemberId,
+        subCategoryId:subCatData.id,
+        subCategoryTotalAum:subCatData.totalAum
+      }
       this.backoffice.getAumApplicantScheme(obj).subscribe(
-        data => this.getResponseSchemeData(data,subCat)
+        data =>{
+          if(data){
+            data[0].showFolio=true
+            subCatData.schemeList=data
+            console.log(data)
+          }
+        }
       )
-    }
-    else{
-      subCat.showSubCategory=false;
-    }
+      }
+  }
+  getSchemeFolio(schemeData){
+    schemeData.showFolio=!schemeData.showFolio
+
   }
   getResponseSchemeData(data,subCat)
   {

@@ -12,49 +12,70 @@ import { EventService } from 'src/app/Data-service/event.service';
 export class AmcWiseComponent implements OnInit {
   teamMemberId=2929;
   advisorId: any;
-  category: any;
-  showLoader: boolean;
+  showLoader=true;
   selectedCategory: any;
+  amcList: any;
+  totalCurrentValue=0;
+  totalWeight=0;
 
   constructor(public aum:AumComponent,private backoffice:BackOfficeService,private dataService:EventService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.getAmcWiseData();
-    this.getApplicantName();
   }
   aumReport()
   {
    this.aum.aumComponent=true;
   }
   getAmcWiseData(){
-    this.backoffice.amcWiseGet(this.advisorId).subscribe(
+    const obj={
+      advisorId: this.advisorId,
+      arnRiaDetailsId: -1,
+      parentId: -1
+    }
+    this.backoffice.amcWiseGet(obj).subscribe(
       data => this.getReponseAmcWiseGet(data),
       err=>this.getFilerrorResponse(err)
     )
   }
   getReponseAmcWiseGet(data) {
-    this.showLoader = true;
-    console.log("scheme Name", data)
-    this.category = data.categories;
-
-    this.category.forEach(o => {
-      o.showCategory = true;
-
-      o.subCategoryList.forEach(sub => {
-        sub.showSubCategory = true;
-      })
+    this.amcList=data;
+    this.amcList.forEach(o => {
+      o.showAmc = true;
+      this.totalCurrentValue+=o.totalAum;
+      this.totalWeight+=o.weightInPercentage;
     });
     this.showLoader = false;
   }
-  showSubTableList(index, category) {
-    this.selectedCategory = index
-    this.category[index].showCategory = (category) ? category = false : category = true;
-    console.log(this.category[index])
-    console.log(category)
+  showScheme(amcData) {
+    amcData.showAmc=!amcData.showAmc
+    amcData.schemes.forEach(o => {
+      o.mutualFundSchemeMasterId=amcData.id;
+      o.showScheme = true;
+    });
+    
   }
-  showSchemeName(index, subcashowSubcat) {
-    this.category[this.selectedCategory].subCategoryList[index].showSubCategory = (subcashowSubcat) ? subcashowSubcat = false : subcashowSubcat = true;
+  showApplicant(schemeData) {
+    schemeData.showScheme=!schemeData.showScheme
+    schemeData.applicantList=[]
+    if(schemeData.showScheme==false){
+      const obj={
+        advisorId:this.advisorId,
+        arnRiaDetailsId:-1,
+        parentId:-1,
+        schemeMasterId:schemeData.mutualFundSchemeMasterId,
+        totalAum:schemeData.totalAum
+      }
+      this.backoffice.amcWiseApplicantGet(obj).subscribe(
+        data =>{
+          if(data){
+            schemeData.applicantList=data
+            console.log(data)
+          }
+        }
+      )
+      }
   }
   getApplicantName(){
     const obj={
@@ -70,6 +91,7 @@ export class AmcWiseComponent implements OnInit {
     )
   }
   getFilerrorResponse(err) {
+    this.showLoader = false;
     this.dataService.openSnackBar(err, 'Dismiss')
   }
 }

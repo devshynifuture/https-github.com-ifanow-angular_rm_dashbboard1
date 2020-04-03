@@ -21,18 +21,20 @@ export class PlanGalleryComponent implements OnInit {
 
   constructor(private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject, private eventService: EventService,
-    public dialog: MatDialog, private fb: FormBuilder, private planService: PlanService) { }
+    public dialog: MatDialog, private fb: FormBuilder, private planService: PlanService) {
+      this.advisorId = AuthService.getAdvisorId()
+      this.userId = AuthService.getUserId()
+     }
 
   ngOnInit() {
     this.getDefault()
-    this.advisorId = AuthService.getAdvisorId()
-    this.userId = AuthService.getUserId()
+   
   }
 
 
   getDefault() {
     let advisorObj = {
-      advisorId: this.advisorId
+      advisorId: this.advisorId 
     }
     this.planService.getGoalGlobalData(advisorObj).subscribe(
       data => this.getGoalGlobalDataRes(data),

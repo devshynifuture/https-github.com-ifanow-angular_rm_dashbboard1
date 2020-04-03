@@ -39,13 +39,13 @@
                                         <div class="row pt-12">
                                             <div class="col-md-5 text-left p-0" *ngIf="sipCount">
                                                 <div class="pl-12">
-                                                    <h1 class="f-24 text-white mb-0 pb-8">{{sipCount.totalCount}}
+                                                    <h1 class="f-24 text-white mb-0 pb-8">{{(sipCount.totalCount)?sipCount.totalCount:0}}
                                                     </h1>
                                                     <p class="f-12 text-white mb-0">SIP Count</p>
                                                 </div>
                                             </div>
                                             <div class="col-md-7 p-0 text-right" *ngIf="sipCount">
-                                                <h1 class="text-white f-24 mb-0 pb-8">{{sipCount.totalAmount}}</h1>
+                                                <h1 class="text-white f-24 mb-0 pb-8">{{(sipCount.totalAmount)?sipCount.totalAmount:0}}</h1>
                                                 <p class="f-12 mb-0 text-white">Average SIP</p>
 
                                             </div>
@@ -53,7 +53,7 @@
                                                 <div class="pt-20">
                                                     <mat-progress-bar mode="determinate" value="10" class="text-white">
                                                     </mat-progress-bar>
-                                                    <p class="text-white f-12 pt-4 mb-0 pb-8">10 % Clients without SIP
+                                                    <p class="text-white f-12 pt-4 mb-0 pb-8">{{clientWithoutSip}} % Clients without SIP
                                                     </p>
                                                 </div>
                                             </div>
@@ -113,6 +113,8 @@
                                                <div class="col-md-3 pt-12 pl-8 ">
                                                     <img src="/assets/images/svg/cal.svg">
                                                 </div>
+                                                
+                                               
                                                 <!-- (click)="categoryWise('client')" prod build -->
                                                 <div class="col-md-9 p-0 c-p" (click)="amcWise('client')">
                                                     <h5 class="mb-0 text-custom pt-16 pb-16 ">Client wise</h5>
@@ -136,8 +138,11 @@
                                 </div>
                             </div>
                             <div class="row p-12">
-                                <img src="/assets/images/grap.png"
-                                    class="w-100 h-365">
+                                <!-- <img src="/assets/images/grap.png"
+                                    class="w-100 h-365"> -->
+                                    <div class="col-md-9 p-0 b-a">
+                                        <div class="highcharts-figure" id="pieChartSip"></div>
+                                      </div>
                                     <div class="col-md-3 p-0">
                                         <div id="mistabs1">
                                             <mat-tab-group class="h-500 bg-white b-a ">
@@ -177,6 +182,10 @@
                                                         {{item.investorName}}</p>
                                                         <p>{{item.sipAmount}}</p>
                                                 </div>
+                                                <div class="col-md-5 p-0 ">
+                                                    <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
+                                                        {{item.dateDiff}}</p>
+                                                </div>
                                             </div>
 
                                         </div>
@@ -191,6 +200,10 @@
                                                         {{item.investorName}}</p>
                                                         <p>{{item.sipAmount}}</p>
                                                 </div>
+                                                <div class="col-md-5 p-0 ">
+                                                    <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
+                                                        {{item.dateDiff}}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </mat-tab> 
@@ -201,6 +214,9 @@
 </div>
 </div>
 </div>
+</div>
+<div *ngIf="sipcomponentWise=='Allsip' && sipComponent==false" >
+    <app-all-sip></app-all-sip>
 </div>
 <div *ngIf="sipcomponentWise=='amc'">
     <app-sip-amc-wise></app-sip-amc-wise>
@@ -213,7 +229,4 @@
 </div>
 <div *ngIf="sipcomponentWise=='applicant'">
     <app-sip-applicant-wise></app-sip-applicant-wise>
-</div>
-<div *ngIf="sipcomponentWise=='Allsip'">
-    <app-all-sip></app-all-sip>
 </div>

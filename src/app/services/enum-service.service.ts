@@ -4,26 +4,20 @@ import {Injectable} from '@angular/core';
   providedIn: 'root'
 })
 export class EnumServiceService {
-  roleList: any = [];
-
+  roleList:any = [];
+  bankList:any = [];
+  proofTypeList:any = [];
   constructor() {
   }
 
   private globalEnumData = {
     otherAssetTypes: [],
     feeCollectionMode: [],
-
   };
 
 
   public addToGlobalEnumData(data) {
-    // obj.forEach(element =>
-    //   {
-    //     element.selected=false;
-    //   })
-    // _.merge(this.globalEnumData, data);
-    /*this.globalEnumData =*/
-    console.log(data, 'check data variable fee 2');
+    console.log(data, "check data variable fee 2");
 
     Object.assign(this.globalEnumData, data);
   }
@@ -44,5 +38,20 @@ export class EnumServiceService {
 
   public getRoles() {
     return this.roleList;
+  }
+
+  public proofType(data){
+    this.proofTypeList = data;
+  }
+
+  public getProofType(){
+    return this.proofTypeList;
+  }
+  public addBank(data){
+    this.bankList = data;
+  }
+
+  public getBank(){
+    return this.bankList;
   }
 }
