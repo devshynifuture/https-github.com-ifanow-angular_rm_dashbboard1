@@ -77,7 +77,7 @@ export class PeopleService {
   }
 
   loginWithPassword(data) {
-    return this.http.getEncoded(apiConfig.USER + appConfig.LOGIN_WITH_PASSWORD, data, 1);
+    return this.http.postEncoded(apiConfig.USER + appConfig.LOGIN_WITH_PASSWORD, data);
   }
 
 

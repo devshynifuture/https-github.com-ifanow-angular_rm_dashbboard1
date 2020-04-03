@@ -1,21 +1,21 @@
-import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core/src/metadata/*';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {AuthService} from '../auth-service/authService';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AdvisorGuard implements CanActivate {
   constructor(private myRoute: Router, private authService: AuthService) {
   }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (this.authService.isLoggedIn()) {
+    if (this.authService.isAdvisor()) {
       console.log('AuthGuard : ', next, state);
-     /* if (state && state.url === '/login') {
+      if (state && state.url === '/login') {
         this.myRoute.navigate(['admin', 'subscription', 'dashboard']);
         return false;
-      }*/
+      }
       // const user = this.authService.decode();
       //
       // if (user.Role === next.data.role) {
@@ -28,10 +28,12 @@ export class AuthGuard implements CanActivate {
       return true;
     } else {
       if (state && state.url === '/login') {
-        return true;
+        this.myRoute.navigate(['customer', 'detail', 'overview', 'myfeed']);
+      } else {
+        this.myRoute.navigate(['unauthorized']);
       }
-      this.myRoute.navigate(['/login']);
       return false;
+
     }
   }
 
