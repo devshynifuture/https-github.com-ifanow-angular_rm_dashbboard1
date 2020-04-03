@@ -49,7 +49,7 @@
                                            <tbody *ngFor="let investor of name.investorList; index as i" >
                                                 <tr>
                                                     <td>{{i+1}}</td>
-                                                    <td (click)="getSchemeName(investor)" >{{investor.name}}<i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="investor.showInvestor">add</i>
+                                                    <td (click)="getSchemeName(investor)" >{{investor.investorName}}<i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="investor.showInvestor">add</i>
                                                         <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="!investor.showInvestor"> remove </i></td>
                                                     <td class="text-right">{{name.totalAum}}</td>
                                                     <td class="text-right">{{name.weightInPercentage}}%</td>
@@ -84,11 +84,11 @@
                                                             <tbody *ngFor="let folio of scheme.folioList;index as i">
                                                                 <tr>
                                                                     <td>{{i+1}}</td>
-                                                                    <td>{{scheme1.schemeName}}<td>
-                                                                    <td class="text-right">{{scheme1.folioNumber}}</td>
-                                                                    <td class="text-right">{{scheme1.totalAum}}</td>
-                                                                    <td class="text-right">{{scheme1.balanceUnit}}</td>
-                                                                    <td class="text-right">{{scheme1.weightInPercentage}}</td>
+                                                                    <td>{{folio.schemeName}}<td>
+                                                                    <td class="text-right">{{folio.folioNumber}}</td>
+                                                                    <td class="text-right">{{folio.totalAum}}</td>
+                                                                    <td class="text-right">{{folio.balanceUnit}}</td>
+                                                                    <td class="text-right">{{folio.weightInPercentage}}</td>
                                                                 </tr>
                                                             </tbody>
                                                             

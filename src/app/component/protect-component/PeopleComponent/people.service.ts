@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpService } from 'src/app/http-service/http-service';
-import { apiConfig } from 'src/app/config/main-config';
-import { appConfig } from 'src/app/config/component-config';
+import {Injectable} from '@angular/core';
+import {HttpService} from 'src/app/http-service/http-service';
+import {apiConfig} from 'src/app/config/main-config';
+import {appConfig} from 'src/app/config/component-config';
 
 @Injectable({
   providedIn: 'root'
@@ -63,14 +63,23 @@ export class PeopleService {
   getTeamMemberWiseCount(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.TEAM_MEMBER_WISE_CLIENT_COUNT, data, 1);
   }
+
   getTeamMemberList(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_TEAM_MEMBERS, data, 1);
   }
+
   deleteClient(data) {
     return this.http.putEncoded(apiConfig.USER + appConfig.DELETE_CLIENT, data);
   }
+
   getClientOrLeadData(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_CLIENT_OR_lEAD_DATA, data, 1);
   }
+
+  loginWithPassword(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.LOGIN_WITH_PASSWORD, data, 1);
+  }
+
+
   // commented Code closed which are giving error ->>>>>>>>>>>>>
 }

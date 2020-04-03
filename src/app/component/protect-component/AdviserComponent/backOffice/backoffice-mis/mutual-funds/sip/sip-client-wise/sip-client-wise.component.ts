@@ -49,6 +49,9 @@ export class SipClientWiseComponent implements OnInit {
         console.log(data);
         this.filteredArray = [...this.clientList];
         this.showLoader = false;
+      },
+      err=>{
+        this.showLoader = false;
       }
     )
   }

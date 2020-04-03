@@ -47,6 +47,9 @@ export class SipAmcWiseComponent implements OnInit {
           this.totalWeight+=o.weightInPercentage;
         });
         console.log(data);
+      },
+      err=>{
+        this.showLoader = false;
       }
     )
   }
