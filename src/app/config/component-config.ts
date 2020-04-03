@@ -26,6 +26,7 @@ export const appConfig = {
   GET_AMC_WISE: 'backoffice/mis/aum/amcWise/get',
   GET_APPLICANT_NAME: 'backoffice/mis/aum/amcWise/applicantName/get',
   ADVISOR_TAG_GET: '/advisor/tag/get',
+  AUM_GRAPH_GET:'backoffice/aum/graph/details/get',
 //////////////////Foliodetails////////////////////////////
   FOLIO_GROUP_HEAD_SEARCH:'backoffice/folio/search/by/groupHead/get',
   FOLIO_INVESTOR_SEARCH:'backoffice/folio/search/by/investorName/get',
@@ -36,7 +37,8 @@ export const appConfig = {
 
 
   /////////////////////// sip api call//////////////////////////////////
-
+  GET_NEW_SIP:'backoffice/sip/new/sip/get',
+  GET_CEASE_SIP:'backoffice/sip/ceased/sip/get',
   GET_EXPIRING: 'backoffice/sip/expiring/get',
   GET_expired: 'backoffice/sip/expired/get',
   GET_SIP_REJECTION: 'backoffice/sip/sipRejection/get',

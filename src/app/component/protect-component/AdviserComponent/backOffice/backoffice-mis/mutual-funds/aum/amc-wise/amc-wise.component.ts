@@ -41,11 +41,13 @@ export class AmcWiseComponent implements OnInit {
   }
   getReponseAmcWiseGet(data) {
     this.amcList=data;
-    this.amcList.forEach(o => {
-      o.showAmc = true;
-      this.totalCurrentValue+=o.totalAum;
-      this.totalWeight+=o.weightInPercentage;
-    });
+    if(this.amcList){
+      this.amcList.forEach(o => {
+        o.showAmc = true;
+        this.totalCurrentValue+=o.totalAum;
+        this.totalWeight+=o.weightInPercentage;
+      });
+    }
     this.showLoader = false;
   }
   showScheme(amcData) {

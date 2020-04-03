@@ -19,6 +19,8 @@ import { SipAmcWiseComponent } from './sip/sip-amc-wise/sip-amc-wise.component';
 import { SipClientWiseComponent } from './sip/sip-client-wise/sip-client-wise.component';
 import { SipApplicantWiseComponent } from './sip/sip-applicant-wise/sip-applicant-wise.component';
 import { AllSipComponent } from './sip/all-sip/all-sip.component';
+import { MisMfTransactionsComponent } from './mis-mf-transactions/mis-mf-transactions.component';
+import { MisMfSchemesComponent } from './mis-mf-schemes/mis-mf-schemes.component';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import { AllSipComponent } from './sip/all-sip/all-sip.component';
     SipSchemeWiseComponent,
     SipClientWiseComponent,
     SipApplicantWiseComponent,
-    AllSipComponent,],
+    AllSipComponent,
+    MisMfTransactionsComponent,
+    MisMfSchemesComponent,],
   imports: [
     CommonModule,
     MutualFundsRoutingModule,

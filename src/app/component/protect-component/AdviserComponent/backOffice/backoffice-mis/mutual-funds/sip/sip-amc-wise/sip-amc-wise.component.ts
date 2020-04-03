@@ -40,13 +40,14 @@ export class SipAmcWiseComponent implements OnInit {
       data =>{
         this.showLoader = false;
         this.amcList=data;
-        this.amcList.forEach(o => {
-          o.showCategory = true;
-          this.totalOfSipAmount+=o.sipAmount;
-          this.totalOfSipCount+=o.sipCount;
-          this.totalWeight+=o.weightInPercentage;
-        });
-        console.log(data);
+        if(this.amcList){
+          this.amcList.forEach(o => {
+            o.showCategory = true;
+            this.totalOfSipAmount+=o.sipAmount;
+            this.totalOfSipCount+=o.sipCount;
+            this.totalWeight+=o.weightInPercentage;
+          });
+        }
       },
       err=>{
         this.showLoader = false;

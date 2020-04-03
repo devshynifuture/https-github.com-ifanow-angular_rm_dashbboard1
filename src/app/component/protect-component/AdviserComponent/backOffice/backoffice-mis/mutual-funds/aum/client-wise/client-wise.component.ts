@@ -81,11 +81,13 @@ export class ClientWiseComponent implements OnInit {
   clientTotalAum(data)
   {
     this.clientList=data
-     this.clientList.forEach(o => {
-      o.show = true;
-      this.totalCurrentValue+=o.totalAum;
-      this.totalWeight+=o.weightInPercentage;
-    });
+    if(this.clientList){
+      this.clientList.forEach(o => {
+        o.show = true;
+        this.totalCurrentValue+=o.totalAum;
+        this.totalWeight+=o.weightInPercentage;
+      });
+    }
     this.showLoader=false;
   }
   clientScheme(data,show,index)

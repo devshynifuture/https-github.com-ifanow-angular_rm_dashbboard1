@@ -39,16 +39,17 @@ export class SipClientWiseComponent implements OnInit {
     }
     this.backoffice.sipClientWiseClientName(obj).subscribe(
       data => {
-        this.clientList = data;
-        this.clientList.forEach(o => {
-          o.showCategory = true;
-          this.totalOfSipAmount += o.sipAmount;
-          this.totalOfSipCount += o.sipCount;
-          this.totalWeight += o.weightInPercentage;
-        });
-        console.log(data);
-        this.filteredArray = [...this.clientList];
         this.showLoader = false;
+        this.clientList = data;
+        if(this.clientList){
+          this.clientList.forEach(o => {
+            o.showCategory = true;
+            this.totalOfSipAmount += o.sipAmount;
+            this.totalOfSipCount += o.sipCount;
+            this.totalWeight += o.weightInPercentage;
+          });
+        }
+        this.filteredArray = [...this.clientList];
       },
       err=>{
         this.showLoader = false;

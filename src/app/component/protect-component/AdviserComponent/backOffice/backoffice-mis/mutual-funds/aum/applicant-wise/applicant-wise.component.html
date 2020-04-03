@@ -30,7 +30,7 @@
                             <tbody *ngFor="let name of applicantName; index as i">
                                 <tr>
                                     <td>{{i+1}}</td>
-                                    <td (click)="category(name)" >{{(name.investorName)?name.investorName:'-'}}<i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="name.show==true"> add  </i>
+                                    <td (click)="category(name)" >{{(name.name)?name.name:'-'}}<i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="name.show==true"> add  </i>
                                     <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="name.show==false" > remove  </i></td>
                                     <td class="text-right">{{name.totalAum}}</td>
                                     <td class="text-right">{{name.weightInPercentage}}</td>

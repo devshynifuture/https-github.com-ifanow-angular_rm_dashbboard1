@@ -40,11 +40,13 @@ export class ApplicantWiseComponent implements OnInit {
   applicantNameGet(data)
   {
     this.applicantName=data;
-    this.applicantName.forEach(o => {
-      o.show = true;
-      this.totalCurrentValue+=o.totalAum;
-      this.totalWeight+=o.weightInPercentage;
-    });
+    if(this.applicantName){
+      this.applicantName.forEach(o => {
+        o.show = true;
+        this.totalCurrentValue+=o.totalAum;
+        this.totalWeight+=o.weightInPercentage;
+      });
+    }
     this.showLoader=false;
   }
   

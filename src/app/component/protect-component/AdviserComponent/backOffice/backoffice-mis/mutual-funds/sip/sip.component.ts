@@ -33,6 +33,8 @@ export class SipComponent implements OnInit {
     setTimeout(() => {
       this.pieChart('pieChartSip');
     }, 1000);
+    this.newSip();
+    this.ceaseSip();
    this.sipCountGet();
    this.expiredGet();
    this.expiringGet();
@@ -165,31 +167,59 @@ export class SipComponent implements OnInit {
       this.sipcomponentWise=value;
       this.sipComponent=false; 
   }
+  newSip(){
+    const obj={
+      advisorId:this.advisorId,
+      arnRiaDetailsId:-1,
+      parentId:-1
+    }
+    this.backoffice.newSipGet(obj).subscribe(
+      data =>{
+       
+        console.log(data);
+      }
+    )
+  }
+  ceaseSip(){
+    const obj={
+      advisorId:this.advisorId,
+      arnRiaDetailsId:-1,
+      parentId:-1
+    }
+    this.backoffice.ceaseSipGet(obj).subscribe(
+      data =>{
+        console.log(data);
+      }
+    )
+  }
   pieChart(id){
     Highcharts.chart('pieChartSip', {
     chart: {
         type: 'column'
     },
     title: {
-        text: 'Column chart with negative values'
+      text: ''
     },
     xAxis: {
-        categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+        categories: ['0-30days', '31-60days ', '61-90days', '91-120days', '121-150days','151-180days']
     },
     credits: {
         enabled: false
     },
     series: [{
       type: undefined ,
-      name: 'John',
+      name: 'New',
+      color: '#70ca86',
       data: [5, 3, 4, 7, 2]
     }, {
       type: undefined,
-        name: 'Jane',
+        name: 'cease',
+        color: '#f05050',
         data: [2, -2, -3, 2, 1]
     }, {
       type: undefined,
-        name: 'Joe',
+        name: 'net',
+        color:'#55c3e6',
         data: [3, 4, 4, -2, 5]
     }]
 });

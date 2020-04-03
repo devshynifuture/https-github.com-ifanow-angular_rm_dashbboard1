@@ -55,14 +55,15 @@ export class SipSchemeWiseComponent implements OnInit {
   getSchemeWiseRes(data) {
     console.log("scheme Name", data)
     this.category = data;
-
-    this.category.forEach(o => {
-      o.showCategory = true;
-      this.totalOfSipAmount+=o.sipAmount;
-      this.totalOfSipCount+=o.sipCount;
-      this.totalWeight+=o.weightInPercentage;
-      o.InvestorList=[];
-    });
+    if(this.category){
+      this.category.forEach(o => {
+        o.showCategory = true;
+        this.totalOfSipAmount+=o.sipAmount;
+        this.totalOfSipCount+=o.sipCount;
+        this.totalWeight+=o.weightInPercentage;
+        o.InvestorList=[];
+      });
+    }
     this.filteredArray = [...this.category];
 
     this.showLoader = false;

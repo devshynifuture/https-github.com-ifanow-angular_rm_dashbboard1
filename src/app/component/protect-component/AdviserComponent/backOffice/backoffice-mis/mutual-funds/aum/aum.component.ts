@@ -36,6 +36,7 @@ export class AumComponent implements OnInit {
     setTimeout(() => {
       this.pieChart('pieChartAum');
     }, 1000);
+    this.getGraphData();
     this.getTotalAum();
     // this.getSubCatScheme();
     this.getSubCatAum()
@@ -130,34 +131,49 @@ export class AumComponent implements OnInit {
     this.componentWise = value;
     this.aumComponent = false;
   }
+  getGraphData(){
+    const obj={
+      advisorId:this.advisorId,
+      arnRiaDetailId:-1,
+      parentId:-1
+    }
+    this.backoffice.aumGraphGet(obj).subscribe(
+      data => {
+        console.log(data)
+      }
+    )
+  }
   pieChart(id){
     Highcharts.chart('pieChartAum', {
-    chart: {
-        type: 'column'
-    },
-    title: {
-        text: 'Column chart with negative values'
-    },
-    xAxis: {
-        categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
-    },
-    credits: {
-        enabled: false
-    },
-    series: [{
-      type: undefined ,
-      name: 'John',
-      data: [5, 3, 4, 7, 2]
-    }, {
-      type: undefined,
-        name: 'Jane',
-        data: [2, -2, -3, 2, 1]
-    }, {
-      type: undefined,
-        name: 'Joe',
-        data: [3, 4, 4, -2, 5]
-    }]
-});
-  }
+      chart: {
+          type: 'column'
+      },
+      title: {
+        text: ''
+      },    
+      xAxis: {
+          categories: ['0-30days', '31-60days ', '61-90days', '91-120days', '121-150days','151-180days']
+      },
+      credits: {
+          enabled: false
+      },
+      series: [{
+        type: undefined ,
+        name: 'Purchase',
+        color: '#70ca86',
+        data: [5, 3, 4, 7, 2]
+      }, {
+        type: undefined,
+          name: 'Redemption',
+          color: '#f05050',
+          data: [2, -2, -3, 2, 1]
+      }, {
+        type: undefined,
+          name: 'Net Sales',
+          color:'#55c3e6',
+          data: [3, 4, 4, -2, 5]
+      }]
+  });
+}
 }
 

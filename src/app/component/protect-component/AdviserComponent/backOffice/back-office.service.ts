@@ -218,27 +218,39 @@ export class BackOfficeService {
   }
   folioSearchByGroupHead(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('clientName', data.clientName);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_FOLIO_LIST, httpParams);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_GROUP_HEAD_SEARCH, httpParams);
   }
   folioSearchByInvestor(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('clientName', data.clientName);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_FOLIO_LIST, httpParams);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_INVESTOR_SEARCH, httpParams);
   }
   folioSearchByPan(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('pan', data.pan);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_FOLIO_LIST, httpParams);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_PAN_SEARCH, httpParams);
   }
   folioSearchByfolio(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('folioNumber', data.folioNumber);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_FOLIO_LIST, httpParams);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_FOLIO_NO__SEARCH, httpParams);
   }
   folioGroupHeadList(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('clientName', data.clientName);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_FOLIO_LIST, httpParams);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_GROUP_HEAD_LIST, httpParams);
   }
     folioApplicantList(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('familyMemberName', data.familyMemberName);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_FOLIO_LIST, httpParams);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_APPLICANT_NAME_LIST, httpParams);
+  }
+  newSipGet(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_NEW_SIP, httpParams);
+  }
+  ceaseSipGet(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CEASE_SIP, httpParams);
+  }
+  aumGraphGet(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.AUM_GRAPH_GET, httpParams);
   }
 // ---------------------------------------- sip data call--------------------------------------
 

@@ -39,14 +39,15 @@ export class SipApplicantWiseComponent implements OnInit {
       data =>{
         console.log("scheme Name", data)
         this.applicantList = data;
-    
-        this.applicantList.forEach(o => {
-          o.showScheme = true;
-          this.totalOfSipAmount+=o.totalAum;
-          this.totalOfSipCount+=o.count;
-          this.totalWeight+=o.weightInPercentage;
-          o.InvestorList=[];
-        });
+        if(this.applicantList){
+          this.applicantList.forEach(o => {
+            o.showScheme = true;
+            this.totalOfSipAmount+=o.totalAum;
+            this.totalOfSipCount+=o.count;
+            this.totalWeight+=o.weightInPercentage;
+            o.InvestorList=[];
+          });
+        }
         this.filteredArray = [...this.applicantList];
     
         this.showLoader = false;
