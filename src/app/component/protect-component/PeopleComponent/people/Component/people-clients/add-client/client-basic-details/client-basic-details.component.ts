@@ -61,7 +61,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     this.basicDetails = this.fb.group({
       fullName: [data.name, [Validators.required]],
       email: [data.email, [Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
-      pan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
+      pan: [data.pan, [Validators.required,]],
       username: [data.userName, [Validators.required]],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       dobActual: [],
@@ -87,7 +87,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       gGender: [(data.guardianData) ? String(data.genderId) : ''],
       relationWithMinor: [],
       gEmail: [, [Validators.pattern(this.validatorType.EMAIL)]],
-      pan: [data.pan, [Validators.pattern(this.validatorType.TEN_DIGITS)]]
+      pan: [data.pan]
     })
   }
   createNonIndividualForm(data) {
@@ -97,8 +97,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       dateOfIncorporation: [data.dateOfBirth],
       comStatus: [, [Validators.required]],
       comEmail: [data.email, [Validators.pattern(this.validatorType.EMAIL)]],
-      comPhone: [, Validators.pattern(this.validatorType.TEN_DIGITS)],
-      comPan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
+      comPan: [data.pan, [Validators.required]],
       comOccupation: [],
       username: [data.username, [Validators.required]],
       leadOwner: [, [Validators.required]],
