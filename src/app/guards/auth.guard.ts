@@ -14,8 +14,16 @@ export class AuthGuard implements CanActivate {
       console.log('AuthGuard : ', next, state);
       if (state && state.url === '/login') {
         this.myRoute.navigate(['admin', 'subscription', 'dashboard']);
-        return false;
       }
+      /*if (state && state.url === '/login') {
+        // TODO comment for old login
+        if (this.authService.isAdvisor()) {
+          this.myRoute.navigate(['admin', 'subscription', 'dashboard']);
+        } else {
+          this.myRoute.navigate(['customer', 'detail', 'overview', 'myfeed']);
+        }
+        return false;
+      }*/
       // const user = this.authService.decode();
       //
       // if (user.Role === next.data.role) {
@@ -27,6 +35,8 @@ export class AuthGuard implements CanActivate {
 
       return true;
     } else {
+      console.log('AuthGuard failed: ', next, state);
+
       if (state && state.url === '/login') {
         return true;
       }
@@ -34,4 +44,6 @@ export class AuthGuard implements CanActivate {
       return false;
     }
   }
+
+  // advisorGuard()
 }

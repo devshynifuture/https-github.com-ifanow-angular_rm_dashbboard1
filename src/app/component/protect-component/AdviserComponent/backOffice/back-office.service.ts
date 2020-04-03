@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams, HttpResponse, HttpRequest} from '@angular/common/http';
-import {MatSnackBar} from '@angular/material';
-import {Observable, of} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {HttpService} from 'src/app/http-service/http-service';
-import {apiConfig} from 'src/app/config/main-config';
-import {appConfig} from 'src/app/config/component-config'
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams, HttpResponse, HttpRequest } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { HttpService } from 'src/app/http-service/http-service';
+import { apiConfig } from 'src/app/config/main-config';
+import { appConfig } from 'src/app/config/component-config'
 class CacheItem<T> {
   url: string;
   timestampCached: number;
@@ -42,13 +42,13 @@ export class BackOfficeService {
 
 
   getClientTotalAUM(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailId', data.arnRiaDetailId).set('parentId', data.parentId);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.TOTAL_GET_AUM, httpParams);
   }
 
   getMisData(data) {
     const httpParams = new HttpParams().set('advisorId', data);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MIS_DATA,httpParams);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MIS_DATA, httpParams);
   }
 
   getSubCatAum(data) {
@@ -57,8 +57,8 @@ export class BackOfficeService {
   }
 
   getTotalByAumScheme(data) {
-    const httpParams = new HttpParams().set('advisorId', data);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_SCHEMENAME,httpParams);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUBCAT_SCHEMENAME, httpParams);
   }
 
   getClientWiseTotalAum(data) {
@@ -76,7 +76,7 @@ export class BackOfficeService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AMC_WISE, httpParams);
   }
   amcWiseApplicantGet(data) {
-    const httpParams = new HttpParams().set('advisorId', data).set('arnRiaDetailId', data.arnRiaDetailId).set('parentId', data.parentId).set('schemeMasterId', data.schemeMasterId).set('totalAum', data.totalAum);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('schemeMasterId', data.schemeMasterId).set('totalAum', data.totalAum);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_APPLICANT_NAME, httpParams);
   }
   getSipcountGet(data) {
@@ -122,7 +122,7 @@ export class BackOfficeService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_FAMILY_SCHEME_FOLIO, httpParams);
   }
   getAumClientScheme(data) {
-    const httpParams = new HttpParams().set('clientId', data.clientId).set('advisorId', data.advisorId).set('arnRiaDetailsId',data.arnRiaDetailsId);
+    const httpParams = new HttpParams().set('clientId', data.clientId).set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_CLIENT_SCHEME, httpParams);
   }
 
@@ -131,9 +131,9 @@ export class BackOfficeService {
   }
 
 
-// ---------------------------------------- sip data call--------------------------------------
+  // ---------------------------------------- sip data call--------------------------------------
 
-// Date - 10 dec 2019
+  // Date - 10 dec 2019
 
   GET_EXPIRING(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('limit', data.limit).set('offset', data.offset).set('parentId', data.parentId);
@@ -163,7 +163,7 @@ export class BackOfficeService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_AMC, httpParams);
   }
 
-  GET_SIP_AMC_SCHEME(data){
+  GET_SIP_AMC_SCHEME(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('amcId', data.amcId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('sipAmount', data.sipAmount);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_AMC_SCHEME, httpParams);
   }
@@ -208,11 +208,42 @@ export class BackOfficeService {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.WBR_FOLIO_PAN_COUNT, httpParams);
   }
+  sipApplicantList(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_APPLICANT_LIST, httpParams);
+  }
+  sipApplicantFolioList(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('familyMemberId', data.familyMemberId).set('totalAum', data.totalAum);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_FOLIO_LIST, httpParams);
+  }
+  folioSearchByGroupHead(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('clientName', data.clientName);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_FOLIO_LIST, httpParams);
+  }
+  folioSearchByInvestor(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('clientName', data.clientName);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_FOLIO_LIST, httpParams);
+  }
+  folioSearchByPan(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('pan', data.pan);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_FOLIO_LIST, httpParams);
+  }
+  folioSearchByfolio(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('folioNumber', data.folioNumber);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_FOLIO_LIST, httpParams);
+  }
+  folioGroupHeadList(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('clientName', data.clientName);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_FOLIO_LIST, httpParams);
+  }
+  folioApplicantList(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('familyMemberName', data.familyMemberName);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_FOLIO_LIST, httpParams);
+  }
+  // ---------------------------------------- sip data call--------------------------------------
 
-// ---------------------------------------- sip data call--------------------------------------
 
-
-// ------------------------------------back office api call ------------------------------------
+  // ------------------------------------back office api call ------------------------------------
   AllClient_get() {
     return this.http.get(apiConfig.MAIN_URL + appConfig.AllClient_get, null);
   }

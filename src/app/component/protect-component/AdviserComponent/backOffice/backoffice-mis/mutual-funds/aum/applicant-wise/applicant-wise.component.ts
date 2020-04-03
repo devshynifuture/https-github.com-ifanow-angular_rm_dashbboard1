@@ -31,7 +31,10 @@ export class ApplicantWiseComponent implements OnInit {
       parentId:-1
     }
     this.backoffice.getAumApplicantWiseTotalaumApplicantName(obj).subscribe(
-      data => this.applicantNameGet(data)
+      data => this.applicantNameGet(data),
+      err=>{
+        this.showLoader=false;
+      }
     )
   }
   applicantNameGet(data)

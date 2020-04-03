@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../../../../../../auth-service/authService';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-customer-overview',
@@ -7,10 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CustomerOverviewComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit() {
-    console.log("overview is called");
+  constructor(private authService: AuthService, private router: Router) {
   }
 
+  ngOnInit() {
+    console.log('overview is called');
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 }

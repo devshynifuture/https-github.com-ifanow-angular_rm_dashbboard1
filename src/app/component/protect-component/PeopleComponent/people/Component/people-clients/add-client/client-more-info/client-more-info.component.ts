@@ -61,7 +61,7 @@ export class ClientMoreInfoComponent implements OnInit {
       bio: [],
       myNotes: [],
       name: [],
-      email: [, [Validators.pattern('')]],
+      email: [, [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [],
       designation: [],
       gender: ['1'],
