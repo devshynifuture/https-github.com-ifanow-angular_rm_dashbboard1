@@ -8,7 +8,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatProgressButtonOptions} from '../../../common/progress-button/progress-button.component';
 import {ValidatorType} from 'src/app/services/util.service';
 import {LoginService} from './login.service';
-import {PeopleService} from "../../protect-component/PeopleComponent/people.service";
+import {PeopleService} from '../../protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-login',
@@ -218,9 +218,28 @@ export class LoginComponent implements OnInit {
       this.isLoading = true;
       this.peopleService.loginWithPassword(loginData).subscribe(data => {
         console.log('data: ', data);
-
-        this.isLoading = false;
-        this.barButtonOptions.active = false;
+        if (data) {
+          // this.authService.setToken(data.token);
+          this.authService.setToken('authTokenInLoginComponnennt');
+          if (data.userType == 1) {
+            // data.advisorId = data.userId;
+            this.authService.setUserInfo(data);
+            this.router.navigate(['admin', 'subscription', 'dashboard']);
+          } else {
+            data.id = data.clientId;
+            this.authService.setClientData(data);
+            this.authService.setUserInfo(data);
+            this.router.navigate(['customer', 'detail', 'overview', 'myfeed']);
+          }
+        } else {
+          this.passEvent = '';
+          this.errorMsg = true;
+          this.errorStyle = {
+            visibility: this.errorMsg ? 'visible' : 'hidden',
+            opacity: this.errorMsg ? '1' : '0',
+          };
+          this.barButtonOptions.active = false;
+        }
       }, err => {
         this.isLoading = false;
         this.barButtonOptions.active = false;
