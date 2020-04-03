@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {ValidatorType} from 'src/app/services/util.service';
-import {Router} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 import {LoginService} from '../login.service';
 import {EventService} from 'src/app/Data-service/event.service';
 
@@ -11,14 +11,17 @@ import {EventService} from 'src/app/Data-service/event.service';
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit {
-
-  constructor(private fb: FormBuilder, private router: Router, private loginService: LoginService, private eventService: EventService) {
+      constructor(private fb: FormBuilder, public routerActive : ActivatedRoute, private router: Router, private loginService: LoginService, private eventService: EventService) {
   }
-
+  clientSignUp:boolean = false;
   signUpForm;
   validatorType = ValidatorType;
 
   ngOnInit() {
+    this.routerActive.queryParamMap.subscribe((queryParamMap) => {
+      if(queryParamMap.has("advisorId")){
+        this.clientSignUp = true;
+      }});
     this.signUpForm = this.fb.group({
       fullName: [, [Validators.required]],
       email: [, [Validators.required,
@@ -80,7 +83,7 @@ export class SignUpComponent implements OnInit {
         remarks: null,
         status: 0
       };
-      this.loginService.register(obj).subscribe(
+      this.loginService.register(obj, this.clientSignUp).subscribe(
         data => {
           console.log(data);
           const forgotPassObjData = {
