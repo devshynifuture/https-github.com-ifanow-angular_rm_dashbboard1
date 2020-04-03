@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {AuthService} from 'src/app/auth-service/authService';
-import {OrgSettingServiceService} from '../org-setting-service.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {OpenEmailVerificationComponent} from './open-email-verification/open-email-verification.component';
-import {MatDialog} from '@angular/material';
-import {CommonFroalaComponent} from '../../Subscriptions/subscription/common-subscription-component/common-froala/common-froala.component';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { OrgSettingServiceService } from '../org-setting-service.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { OpenEmailVerificationComponent } from './open-email-verification/open-email-verification.component';
+import { MatDialog } from '@angular/material';
+import { CommonFroalaComponent } from '../../Subscriptions/subscription/common-subscription-component/common-froala/common-froala.component';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
 import { ConfirmDialogComponent } from '../../../common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -58,15 +58,15 @@ export class SettingPreferenceComponent implements OnInit {
     this.getPortfolio()
     this.getdataForm('')
     this.isLoading = false
-    this.emailList =[]
+    this.emailList = []
     this.planSection = []
-    this.emailTemplateList =[]
+    this.emailTemplateList = []
   }
   getdataForm(data) {
     this.domainS = this.fb.group({
       normalLable: [(!data) ? '' : data.emailId, [Validators.required]],
       whiteLable: [(!data) ? '' : data.emailId, [Validators.required]],
-      brandVisible:[(!data) ? '' : data.emailId, [Validators.required]]
+      brandVisible: [(!data) ? '' : data.emailId, [Validators.required]]
     });
   }
 
@@ -90,7 +90,7 @@ export class SettingPreferenceComponent implements OnInit {
     this.brandVisibility = this.domainSetting.filter(element => element.domainOptionId == 3)
     this.normalLable = this.normalDomain[0].optionValue
     this.whiteLable = this.whiteLabledDomain[0].optionValue
-    this.brandVisible = (this.brandVisibility[0].optionValue == null)?'':this.brandVisibility[0].optionValue
+    this.brandVisible = (this.brandVisibility[0].optionValue == null) ? '' : this.brandVisibility[0].optionValue
     this.domainS.controls.normalLable.setValue(this.normalLable)
     this.domainS.controls.whiteLable.setValue(this.whiteLable)
     this.domainS.controls.brandVisible.setValue(this.brandVisible)
@@ -103,9 +103,9 @@ export class SettingPreferenceComponent implements OnInit {
       if (element.domainOptionId == value.domainOptionId) {
         if (value.domainOptionId == 1) {
           element.optionValue = this.domainS.controls.normalLable.value;
-        } else if(value.domainOptionId == 2) {
+        } else if (value.domainOptionId == 2) {
           element.optionValue = this.domainS.controls.whiteLable.value;
-        }else{
+        } else {
           element.optionValue = this.domainS.controls.brandVisible.value;
         }
 
@@ -125,19 +125,19 @@ export class SettingPreferenceComponent implements OnInit {
     if (flag == true) {
       if (event == 'white') {
         this.showUpdateWhite = true
-      } else if(event == 'normal') {
+      } else if (event == 'normal') {
         this.showUpdate = true
-      }else{
-        this.showUpdateBrand =true
+      } else {
+        this.showUpdateBrand = true
       }
 
     } else {
       if (event == 'white') {
         this.showUpdateWhite = false
-      } else if(event == 'normal') {
+      } else if (event == 'normal') {
         this.showUpdate = false
-      }else{
-        this.showUpdateBrand =false
+      } else {
+        this.showUpdateBrand = false
       }
       this.updateDomainSetting(event, value)
     }
@@ -220,7 +220,7 @@ export class SettingPreferenceComponent implements OnInit {
       this.element = result;
       console.log('result -==', this.element)
       let obj = {
-        id:this.element.id,
+        id: this.element.id,
         emailAddress: this.element.emailAddress,
         userId: 12249
       }
@@ -244,13 +244,23 @@ export class SettingPreferenceComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-          // this.customerService.deleteFixedDeposite(data.id).subscribe(
-          //   data => {
-          //     dialogRef.close();
-          //     this.getFixedDepositList();
-          //   },
-          //   error => this.eventService.showErrorMessage(error)
-          // );
+        if (value == 'template') {
+          this.orgSetting.deleteEmailVerify(data.id).subscribe(
+            data => {
+              dialogRef.close();
+              this.getEmailVerification();
+            },
+            error => this.eventService.showErrorMessage(error)
+          );
+        } else if (value == 'emailVerify') {
+          this.orgSetting.deletePrefEmailTemplate(data.id).subscribe(
+            data => {
+              dialogRef.close();
+              this.getEmailTemplate();
+            },
+            error => this.eventService.showErrorMessage(error)
+          );
+        }
         this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
       },
       negativeMethod: () => {
@@ -271,13 +281,14 @@ export class SettingPreferenceComponent implements OnInit {
     });
   }
   getPlanRes(data) {
+    this.isLoading = false
     console.log('getPortfolioRes == ', data)
-    if(data){
+    if (data) {
       this.planSection = data
       this.planSec1 = this.planSection.filter(element => element.planOptionId == 1)
-      this.planSec1 =this.planSec1[0]
+      this.planSec1 = this.planSec1[0]
       console.log('planSec1 ', this.planSec1)
-    }else{
+    } else {
       this.isLoading = false
       this.planSection = []
     }
@@ -297,10 +308,10 @@ export class SettingPreferenceComponent implements OnInit {
   getEmailVerificationRes(data) {
     this.isLoading = false
     console.log('email verify == get', data)
-    if(data){
+    if (data) {
       this.emailDetails = data
       this.emailList = data.listItems
-    }else{
+    } else {
       this.emailList = []
     }
 
@@ -317,10 +328,10 @@ export class SettingPreferenceComponent implements OnInit {
   }
   getEmailTempalatRes(data) {
     this.isLoading = false
-    if(data){
+    if (data) {
       console.log('emailTemplate', data)
       this.emailTemplateList = data
-    }else{
+    } else {
       this.emailTemplateList = []
     }
 
@@ -330,7 +341,12 @@ export class SettingPreferenceComponent implements OnInit {
       return;
     }
     let obj = {
-      documentText: data.body
+      documentText: data.body,
+      showfromEmail: true,
+      fromEmailId: data.fromEmail,
+      id: data.id,
+      subject: data.subject,
+      emailTemplateTypeId: data.emailTemplateTypeId
     }
     const fragmentData = {
       flag: value,
@@ -346,7 +362,7 @@ export class SettingPreferenceComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getEmailTemplate();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
+            this.getEmailTemplate()
           }
           rightSideDataSub.unsubscribe();
         }

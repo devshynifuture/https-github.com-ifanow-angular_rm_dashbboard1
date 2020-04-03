@@ -1,5 +1,5 @@
 <div class="pb-100" [formGroup]="moreInfoForm">
-    <div *ngIf="moreInfoData.flag=='clientNonIndividual'" class="row pt-44">
+    <div *ngIf="moreInfoData.categoryTypeflag=='clientNonIndividual'" class="row pt-44">
         <div class="col-md-4 text-right">
             <h5 class="m-0">Name</h5>
             <p class="m-0 f-12 text-custom">This will display everwhere</p>
@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="moreInfoData.flag=='clientNonIndividual'" class="row pt-44">
+    <div *ngIf="moreInfoData.categoryTypeflag=='clientNonIndividual'" class="row pt-44">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-20">Email</h5>
         </div>
@@ -30,9 +30,9 @@
             </div>
         </div>
     </div>
-    <app-add-number *ngIf="moreInfoData.flag=='clientNonIndividual'" [flag]="mobileNumberFlag"
+    <app-add-number *ngIf="moreInfoData.categoryTypeflag=='clientNonIndividual'" [flag]="mobileNumberFlag"
         (numberArray)="getNumberDetails($event)"></app-add-number>
-    <div *ngIf="moreInfoData.flag=='clientNonIndividual'" class="row pt-44">
+    <div *ngIf="moreInfoData.categoryTypeflag=='clientNonIndividual'" class="row pt-44">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-12">PAN</h5>
         </div>
@@ -51,7 +51,7 @@
                 <i class="material-icons mr-4"> check_circle </i> KYC compliant</p>
         </div>
     </div>
-    <div *ngIf="moreInfoData.flag=='clientNonIndividual'" class="row pt-32">
+    <div *ngIf="moreInfoData.categoryTypeflag=='clientNonIndividual'" class="row pt-32">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-8">Aadhaar number</h5>
         </div>
@@ -66,7 +66,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="moreInfoData.flag=='clientNonIndividual'" class="row pt-44">
+    <div *ngIf="moreInfoData.categoryTypeflag=='clientNonIndividual'" class="row pt-44">
         <div class="col-md-4 text-right">
             <h5 class="m-0">Designation</h5>
             <p class="m-0 f-12 text-custom">This will display everwhere</p>
@@ -82,7 +82,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="moreInfoData.flag=='clientNonIndividual'" class="row pt-44">
+    <div *ngIf="moreInfoData.categoryTypeflag=='clientNonIndividual'" class="row pt-44">
         <div class="col-md-4 text-right">
             <h5 class="m-0">Designation</h5>
             <p class="m-0 f-12 text-custom">This will display everwhere</p>
@@ -98,7 +98,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="moreInfoData.flag=='clientNonIndividual'" class="row pt-60">
+    <div *ngIf="moreInfoData.categoryTypeflag=='clientNonIndividual'" class="row pt-60">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-8">Gender</h5>
         </div>
@@ -113,7 +113,8 @@
             </mat-radio-group>
         </div>
     </div>
-    <div *ngIf="moreInfoData.flag=='Individual' || moreInfoData.flag=='familyMinor'" class="row pt-44">
+    <div *ngIf="moreInfoData.categoryTypeflag=='Individual' || moreInfoData.categoryTypeflag=='familyMinor'"
+        class="row pt-44">
         <div class="col-md-4 text-right">
             <h5 class="m-0">Display name</h5>
             <p class="m-0 f-12 text-custom">This will display everwhere</p>
@@ -130,7 +131,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="moreInfoData.flag=='familyMinor'" class="row pt-32">
+    <div *ngIf="moreInfoData.categoryTypeflag=='familyMinor'" class="row pt-32">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-32">Adhaar Number</h5>
         </div>
@@ -153,7 +154,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="moreInfoData.flag=='Individual'" class="row pt-32">
+    <div *ngIf="moreInfoData.categoryTypeflag=='Individual'" class="row pt-32">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-8">Aadhaar number</h5>
         </div>
@@ -183,7 +184,8 @@
             </div>
         </div>
     </div>
-    <div *ngIf="moreInfoData.flag=='Individual' || moreInfoData.flag=='familyMinor'" class=" row pt-32">
+    <div *ngIf="moreInfoData.categoryTypeflag=='Individual' || moreInfoData.categoryTypeflag=='familyMinor'"
+        class=" row pt-32">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-8">Occupation</h5>
         </div>
@@ -223,16 +225,16 @@
             <h5 class="m-0 pt-8">Anniversary date</h5>
         </div>
         <div class="col-md-3 p-0">
-            <div class="form-group mb-0">
+            <!-- <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
-                    <input [matDatepicker]="anniversaryDate" formControlName="anniversaryDate1"
+                    <input [matDatepicker]="anniversaryDate1" formControlName="anniversaryDate"
                         (click)="anniversaryDate1.open()" class="form-control br-0 b-0" matInput readonly>
                     <mat-datepicker-toggle matSuffix [for]="anniversaryDate1"></mat-datepicker-toggle>
                     <mat-datepicker #anniversaryDate></mat-datepicker>
                     <mat-error class="f-12">This field is required
                     </mat-error>
                 </mat-form-field>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="row pt-44">
@@ -274,7 +276,7 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
-        <div *ngIf="fieldFlag=='client'" class="col-md-8 right text-right">
+        <div *ngIf="fieldFlag=='client' || fieldFlag=='lead'" class="col-md-8 right text-right">
             <button mat-raised-button (click)="saveNext('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
             </button>
             <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE &

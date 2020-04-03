@@ -10,6 +10,7 @@ import { SettingPlanComponent } from '../setting-plan.component';
 import { MaterialModule } from 'src/app/material/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { CommonComponentModule } from 'src/app/component/protect-component/common-component/common-component.module';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
     FormsModule,
     CustomDirectiveModule,
     ReactiveFormsModule,
+    CommonComponentModule,
   ]
 })
 export class SettingPlanModule { }

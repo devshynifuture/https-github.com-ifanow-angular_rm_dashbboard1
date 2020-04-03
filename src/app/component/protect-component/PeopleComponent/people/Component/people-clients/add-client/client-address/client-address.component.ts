@@ -61,17 +61,7 @@ export class ClientAddressComponent implements OnInit {
       return;
     }
     else {
-      // let obj =
-      // {
-      //   "address1": this.addressForm.get('addressLine1').value,
-      //   "address2": this.addressForm.get('addressLine2').value,
-      //   "address3": this.addressForm.get('').value,
-      //   "pinCode": this.addressForm.get('pinCode').value,
-      //   "city": this.addressForm.get('city').value,
-      //   "state": this.addressForm.get('state').value,
-      //   "stateId": this.addressForm.get('').value,
-      //   "country": this.addressForm.get('country').value
-      // }
+
       let obj =
       {
         "address1": this.addressForm.get('addressLine1').value,
@@ -91,18 +81,13 @@ export class ClientAddressComponent implements OnInit {
         "addreesId": null
       }
 
-      // commented Code which are giving error +>>>>>>>>>>>>>>>>>>>>>>
-
-      // this.peopleService.addEditClientAddress(obj).subscribe(
-      //   data => {
-      //     console.log(data);
-      //     (flag == 'Next') ? this.tabChange.emit(1) : this.close();
-      //   },
-      //   err => this.eventService.openSnackBar(err, "Dismiss")
-      // )
-
-      // commented Code closed which are giving error +>>>>>>>>>>>>>>>>>>>>>>
-
+      this.peopleService.addEditClientAddress(obj).subscribe(
+        data => {
+          console.log(data);
+          (flag == 'Next') ? this.tabChange.emit(1) : this.close();
+        },
+        err => this.eventService.openSnackBar(err, "Dismiss")
+      )
     }
   }
   close() {

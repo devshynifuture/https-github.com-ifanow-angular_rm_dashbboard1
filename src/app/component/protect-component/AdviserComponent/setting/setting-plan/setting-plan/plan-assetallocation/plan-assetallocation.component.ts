@@ -31,11 +31,13 @@ export class PlanAssetallocationComponent implements OnInit {
   obj2: any;
   obj3: any;
   obj4: any;
+  isLoading = false
   staticAllocation: any;
-  constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) { }
+  constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) {
+    this.advisorId = AuthService.getAdvisorId()
+   }
   ngOnInit() {
     this.getAssetAllocation()
-    this.advisorId = AuthService.getAdvisorId()
     this.editMode = false
     console.log('edit mode', this.editMode)
     this.staticAllocation = []
@@ -115,8 +117,9 @@ export class PlanAssetallocationComponent implements OnInit {
     console.log('updateAssetAllocationRes',data)
   }
   getAssetAllocation() {
+    this.isLoading = true
     let obj = {
-      advisorId: 2808
+      advisorId: this.advisorId
     }
     this.orgSetting.getAssetAllocation(obj).subscribe(
       data => this.getAssetAllocationRes(data),
@@ -124,6 +127,7 @@ export class PlanAssetallocationComponent implements OnInit {
     );
   }
   getAssetAllocationRes(data) {
+    this.isLoading = false
     console.log('getAssetAllocationRes', data)
     this.staticAllocationData = data.staticAllocationData
   }

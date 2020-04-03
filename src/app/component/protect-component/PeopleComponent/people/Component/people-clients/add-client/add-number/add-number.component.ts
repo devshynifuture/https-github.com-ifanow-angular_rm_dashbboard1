@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Validators, FormBuilder, FormArray } from '@angular/forms';
+import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-number',
@@ -7,7 +8,8 @@ import { Validators, FormBuilder, FormArray } from '@angular/forms';
   styleUrls: ['./add-number.component.scss']
 })
 export class AddNumberComponent implements OnInit {
-  numberFormGroup
+  numberFormGroup;
+  validatorType = ValidatorType;
   constructor(private fb: FormBuilder) { }
   @Input() flag;
   @Output() numberArray = new EventEmitter();
@@ -26,7 +28,7 @@ export class AddNumberComponent implements OnInit {
   addNumber() {
     this.getMobileNumList.push(this.fb.group({
       code: ['+91'],
-      number: [, Validators.compose([Validators.maxLength(10)])]
+      number: [, Validators.pattern(this.validatorType.TEN_DIGITS)]
     }))
     this.numberArray.emit(this.getMobileNumList);
   }
