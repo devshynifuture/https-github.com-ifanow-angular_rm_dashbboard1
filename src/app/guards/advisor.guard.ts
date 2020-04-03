@@ -12,10 +12,6 @@ export class AdvisorGuard implements CanActivate {
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (this.authService.isAdvisor()) {
       console.log('AuthGuard : ', next, state);
-      if (state && state.url === '/login') {
-        this.myRoute.navigate(['admin', 'subscription', 'dashboard']);
-        return false;
-      }
       // const user = this.authService.decode();
       //
       // if (user.Role === next.data.role) {

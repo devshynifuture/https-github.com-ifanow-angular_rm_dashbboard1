@@ -7,7 +7,6 @@ import {DataNotFoundComponent} from './component/protect-component/common-compon
 import {AuthGuard} from './guards/auth.guard';
 import {FormTestComponent} from './test/form-test/form-test.component';
 import {BackofficeDashboardComponent} from './component/protect-component/AdviserComponent/backOffice/backoffice-dashboard/backoffice-dashboard.component';
-import {AdvisorGuard} from "./guards/advisor.guard";
 
 const routes: Routes = [
   {
@@ -20,7 +19,7 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () => import('./component/left-sidebar/leftsidebar/leftsidebar.module').then(m => m.LeftsidebarModule),
     // outlet: 'mainrouter',
-    canActivate: [AuthGuard, AdvisorGuard],
+    // canActivate: [AuthGuard, AdvisorGuard],
 
   },
   // {
