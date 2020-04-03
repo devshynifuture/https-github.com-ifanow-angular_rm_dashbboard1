@@ -21,7 +21,8 @@
                     <input matInput class="form-control" placeholder="Choose a user" [matAutocomplete]="auto"
                         formControlName='userInput'>
                 </mat-form-field>
-                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="chooseMember()">
+                <!-- (optionSelected)="chooseMember()" prod build -->
+                <mat-autocomplete #auto="matAutocomplete" >
                     <mat-option *ngIf="isLoading" class="is-loading">
                         <mat-spinner diameter="50"></mat-spinner>
                     </mat-option>
