@@ -169,10 +169,10 @@
             <div class="col-md-5 p-0">
                 <div class="form-group m-0">
                     <mat-form-field>
-                        <mat-select formControlName="clientOwner" class="form-control">
-                            <!-- <mat-option *ngFor="let singleClient of clientOwnerList" value="1">{{singleClient}}
-                            </mat-option> -->
-                            <mat-option value="1">Test
+                        <mat-select [(ngModel)]="selectedClientOwner" formControlName="clientOwner"
+                            class="form-control">
+                            <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
+                                {{singleClient.name}}
                             </mat-option>
                         </mat-select>
                         <mat-error class="f-12">This field is required
