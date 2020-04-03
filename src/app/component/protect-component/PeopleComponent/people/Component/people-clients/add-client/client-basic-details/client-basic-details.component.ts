@@ -61,7 +61,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     this.basicDetails = this.fb.group({
       fullName: [data.name, [Validators.required]],
       email: [data.email, [Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
-      pan: [data.pan, [Validators.required]],
+      pan: [data.pan, [Validators.required,]],
       username: [data.userName, [Validators.required]],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       dobActual: [],
@@ -97,7 +97,6 @@ export class ClientBasicDetailsComponent implements OnInit {
       dateOfIncorporation: [data.dateOfBirth],
       comStatus: [, [Validators.required]],
       comEmail: [data.email, [Validators.pattern(this.validatorType.EMAIL)]],
-      comPhone: [],
       comPan: [data.pan, [Validators.required]],
       comOccupation: [],
       username: [data.username, [Validators.required]],
@@ -253,7 +252,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   getClientList() {
     let obj =
     {
-      advisorId: 1
+      advisorId: this.advisorId
     }
     this.peopleService.getTeamMemberList(obj).subscribe(
       data => {
