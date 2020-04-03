@@ -31,6 +31,7 @@ export class PlanAssetallocationComponent implements OnInit {
   obj2: any;
   obj3: any;
   obj4: any;
+  isLoading = false
   staticAllocation: any;
   constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) {
     this.advisorId = AuthService.getAdvisorId()
@@ -116,6 +117,7 @@ export class PlanAssetallocationComponent implements OnInit {
     console.log('updateAssetAllocationRes',data)
   }
   getAssetAllocation() {
+    this.isLoading = true
     let obj = {
       advisorId: this.advisorId
     }
@@ -125,6 +127,7 @@ export class PlanAssetallocationComponent implements OnInit {
     );
   }
   getAssetAllocationRes(data) {
+    this.isLoading = false
     console.log('getAssetAllocationRes', data)
     this.staticAllocationData = data.staticAllocationData
   }

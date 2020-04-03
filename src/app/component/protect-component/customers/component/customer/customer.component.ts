@@ -11,6 +11,8 @@ import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } fr
   selector: 'app-customer',
   templateUrl: './customer.component.html',
   // templateUrl: './customer.mobile.component.html',
+  //  templateUrl: './goal.mobile.component.html',
+
   styleUrls: ['./customer.component.scss'],
   animations: [
     dialogContainerOpacity,

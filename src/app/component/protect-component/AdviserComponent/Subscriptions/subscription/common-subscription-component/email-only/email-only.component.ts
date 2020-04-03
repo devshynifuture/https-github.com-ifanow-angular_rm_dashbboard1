@@ -1,12 +1,13 @@
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {ValidatorType} from '../../../../../../../services/util.service';
-import {MatChipInputEvent} from '@angular/material';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { ValidatorType } from '../../../../../../../services/util.service';
+import { MatChipInputEvent } from '@angular/material';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { OrgSettingServiceService } from '../../../../setting/org-setting-service.service';
 
 @Component({
   selector: 'app-email-only',
@@ -25,6 +26,7 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 export class EmailOnlyComponent implements OnInit {
 
   model: any;
+  showfromEmail: any;
 
   // @Input()
   // set data(data) {
@@ -46,6 +48,8 @@ export class EmailOnlyComponent implements OnInit {
   @Input() set data(inputData) {
     const obj = [];
     this.doc = inputData.documentList;
+    this.showfromEmail = inputData.showfromEmail
+    console.log('check flag *******', this.showfromEmail)
     if (inputData.isInv) {
       this.doc.forEach(element => {
         if (element) {
@@ -82,7 +86,11 @@ export class EmailOnlyComponent implements OnInit {
     // };
     console.log('dsfgsdggggggggg', this.docObj);
     console.log('EmailOnlyComponent inputData : ', inputData);
-    this.getEmailTemplateFilterData(inputData);
+    if (this.showfromEmail == false) {
+      this.getEmailTemplateFilterData(inputData);
+    } else {
+      this.emailBody = inputData.clientData.documentText;
+    }
   }
 
   get data() {
@@ -117,7 +125,7 @@ export class EmailOnlyComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
-              public subscription: SubscriptionService) {
+    public subscription: SubscriptionService, private orgSetting: OrgSettingServiceService) {
     this.advisorId = AuthService.getAdvisorId();
 
     // this.dataSub = this.subInjectService.singleProfileData.subscribe(
@@ -148,7 +156,25 @@ export class EmailOnlyComponent implements OnInit {
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
+  saveEmailTemplate() {
+    let obj = {
+      id: this._inputData.id,
+      fromEmail: this._inputData.fromEmail,
+      body: this.emailBody,
+      subject: this._inputData.subject,
+      emailTemplateTypeId: this._inputData.emailTemplateTypeId
+    }
+    console.log('send email obj =',obj)
+    this.orgSetting.editPreEmailTemplate(obj).subscribe(
+      data => this.editEmailTempalatRes(data),
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    );
 
+  }
+  editEmailTempalatRes(data) {
+    console.log(data)
+    this.close(true);
+  }
   getEmailTemplateFilterData(invoiceData) {
 
     const data = {
@@ -188,8 +214,8 @@ export class EmailOnlyComponent implements OnInit {
   //   });
   // }
   close(flag) {
-    this.subInjectService.changeUpperRightSliderState({state: 'close',refreshRequired:flag});
-    this.subInjectService.changeNewRightSliderState({state: 'close',refreshRequired:flag});
+    this.subInjectService.changeUpperRightSliderState({ state: 'close', refreshRequired: flag });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
 
     // this.valueChange.emit(this.emailSend);
   }
@@ -333,7 +359,7 @@ export class EmailOnlyComponent implements OnInit {
     if (inputChar == ',') {
       event.preventDefault();
       const emailId = this._inputData.clientData.userEmailId;
-      this.emailIdList.push({emailAddress: emailId});
+      this.emailIdList.push({ emailAddress: emailId });
       this._inputData.clientData.userEmailId = '';
     }
   }
@@ -343,7 +369,7 @@ export class EmailOnlyComponent implements OnInit {
     const value = event.value.trim();
     if (value && value.length > 0) {
       if (this.validatorType.EMAIL.test(value)) {
-        this.emailIdList.push({emailAddress: value});
+        this.emailIdList.push({ emailAddress: value });
       } else {
         this.eventService.openSnackBar('Enter valid email address');
       }
