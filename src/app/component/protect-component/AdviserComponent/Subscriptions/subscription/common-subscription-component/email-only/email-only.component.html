@@ -19,10 +19,11 @@
             <div class="col-md-9">
                 <p *ngIf="this.emailData" class="m-0 text-black">
                     {{(this.emailData) ? this.emailData.fromEmail : 'support@futurewise.co.in'}}</p>
+                    <input class="form-control" *ngIf="showfromEmail == true" [(ngModel)] ="_inputData.fromEmail" type="text" >
             </div>
         </div>
     </div>
-    <div class="wrapper-8 pt-0">
+    <div class="wrapper-8 pt-0" *ngIf="showfromEmail == false">
         <div class="row">
             <div class="col-md-1">
                 <p class="m-0 text-custom pt-12">To</p>
@@ -42,7 +43,7 @@
         </div>
     </div>
     <div class="wrapper-16 pt-0 pb-0">
-        <div class="row">
+        <div class="row" *ngIf="showfromEmail == false">
             <div class="col-md-1 pl-0">
                 <p class="m-0 text-custom pt-8 pb-8 pl-8">Subject</p>
             </div>
@@ -58,7 +59,7 @@
 
     <div class="row">
 
-        <div class="col-md-10">
+        <div class="col-md-10" *ngIf="showfromEmail == false">
             <div class="row">
                 <div class="col-md-12 ">
                     <p class="mb-10 text-custom pt-12">Attachment</p>
@@ -73,8 +74,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2 mb-10 text-right">
+        <div class="col-md-2 mb-10 text-right" *ngIf="showfromEmail == false">
             <button (click)="sendEmail()" class="btn-primary br-0" mat-stroked-button>Send</button>
+        </div>
+        <div class="col-md-12 mb-10 text-right" *ngIf="showfromEmail == true">
+            <button (click)="saveEmailTemplate()" class="btn-primary br-0" mat-stroked-button>Save template</button>
         </div>
     </div>
 
