@@ -25,7 +25,7 @@
                     <input autocomplete="off" formControlName="email" matInput placeholder="Enter Email"
                         class="form-control">
                     <mat-hint>Optional</mat-hint>
-                    <!-- <mat-error *ngIf="basicDetails.get('email').errors?.pattern">Email is not valid</mat-error> -->
+                    <mat-error *ngIf="moreInfoForm.get('email').errors?.pattern">Email is not valid</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -225,7 +225,7 @@
             <h5 class="m-0 pt-8">Anniversary date</h5>
         </div>
         <div class="col-md-3 p-0">
-            <div class="form-group mb-0">
+            <!-- <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
                     <input [matDatepicker]="anniversaryDate1" formControlName="anniversaryDate1"
                         (click)="anniversaryDate1.open()" class="form-control br-0 b-0" matInput readonly>
@@ -234,7 +234,7 @@
                     <mat-error class="f-12">This field is required
                     </mat-error>
                 </mat-form-field>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="row pt-44">

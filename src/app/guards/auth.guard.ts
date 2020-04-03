@@ -12,8 +12,16 @@ export class AuthGuard implements CanActivate {
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (this.authService.isLoggedIn()) {
       console.log('AuthGuard : ', next, state);
-     /* if (state && state.url === '/login') {
+      if (state && state.url === '/login') {
         this.myRoute.navigate(['admin', 'subscription', 'dashboard']);
+      }
+      /*if (state && state.url === '/login') {
+        // TODO comment for old login
+        if (this.authService.isAdvisor()) {
+          this.myRoute.navigate(['admin', 'subscription', 'dashboard']);
+        } else {
+          this.myRoute.navigate(['customer', 'detail', 'overview', 'myfeed']);
+        }
         return false;
       }*/
       // const user = this.authService.decode();
@@ -27,6 +35,8 @@ export class AuthGuard implements CanActivate {
 
       return true;
     } else {
+      console.log('AuthGuard failed: ', next, state);
+
       if (state && state.url === '/login') {
         return true;
       }

@@ -20,6 +20,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   mobileData: any;
   categoryList: any[];
   clientOwnerList: any;
+  selectedClientOwner: any;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService, private datePipe: DatePipe) { }
   basicDetails;
@@ -33,40 +34,35 @@ export class ClientBasicDetailsComponent implements OnInit {
   invTaxStatus;
   mobileNumberFlag = "Mobile number";
   ngOnInit() {
-    this.createMinorForm(null);
-    this.getClientList();
   }
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     if (data.fieldFlag == 'familyMember') {
       this.basicDetailsData = data;
-      this.invTaxStatus = String(this.basicDetailsData.taxStatusId);
-      this.invTypeCategory = String(this.basicDetailsData.familyMemberType);
-      (this.basicDetailsData.familyMemberType == 1) ? this.createIndividualForm(this.basicDetailsData) : this.createMinorForm(this.basicDetailsData)
+      this.invTaxStatus = (this.basicDetailsData.familyMemberType == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
+      this.invTypeCategory = (this.basicDetailsData.familyMemberType == 0) ? '1' : String(this.basicDetailsData.familyMemberType);
+      (this.basicDetailsData.familyMemberType == 1 || this.basicDetailsData.familyMemberType == 0) ? this.createIndividualForm(this.basicDetailsData) : this.createMinorForm(this.basicDetailsData)
     }
     else {
+      this.getClientList();
       this.basicDetailsData = data;
       if (this.basicDetailsData.userId == null) {
         this.invTypeCategory = '1';
         this.invTaxStatus = '1';
         this.createIndividualForm(null);
+        return;
       }
-      else {
-        this.invTypeCategory = String(this.basicDetailsData.clientType);
-        this.invTaxStatus = String(this.basicDetailsData.taxStatusId);
-        (this.basicDetailsData.clientType == 1) ? this.createIndividualForm(this.basicDetailsData) : this.createNonIndividualForm(this.basicDetailsData)
-      }
+      this.getClientOrLeadData(this.basicDetailsData);
     }
     console.log(data);
-    this.getClientOrLeadData();
   }
   createIndividualForm(data) {
     (data == undefined) ? data = {} : '';
     this.basicDetails = this.fb.group({
       fullName: [data.name, [Validators.required]],
-      email: [, [Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
+      email: [data.email, [Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
       pan: [data.pan, [Validators.required]],
-      username: [, [Validators.required]],
+      username: [data.userName, [Validators.required]],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       dobActual: [],
       gender: ['1'],
@@ -100,7 +96,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       comName: [data.name, [Validators.required]],
       dateOfIncorporation: [data.dateOfBirth],
       comStatus: [, [Validators.required]],
-      comEmail: [, [Validators.pattern(this.validatorType.EMAIL)]],
+      comEmail: [data.email, [Validators.pattern(this.validatorType.EMAIL)]],
       comPhone: [],
       comPan: [data.pan, [Validators.required]],
       comOccupation: [],
@@ -109,15 +105,23 @@ export class ClientBasicDetailsComponent implements OnInit {
       role: [, [Validators.required]]
     })
   }
-  getClientOrLeadData() {
+  getClientOrLeadData(data) {
     let obj =
     {
-      "advisorId": this.advisorId,
-      "status": (this.fieldFlag == 'client') ? 1 : 2
+      "id": data.clientId
     }
     this.peopleService.getClientOrLeadData(obj).subscribe(
       data => {
-        console.log(data)
+        console.log(data);
+        this.basicDetailsData = data;
+        if (data == undefined) {
+          return;
+        }
+        else {
+          this.invTypeCategory = (data.clientType == 0) ? '1' : String(data.clientType);
+          this.invTaxStatus = (data.clientType == 0) ? '1' : String(data.taxStatusId);
+          (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data)
+        }
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
     )
@@ -142,7 +146,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     this.invTaxStatus = event.value;
   }
   saveNextClient(flag) {
-    if (this.fieldFlag == 'client') {
+    if (this.fieldFlag == 'client' && this.basicDetailsData.userId == null) {
       this.basicDetails.get('clientOwner').setValidators([Validators.required]);
       this.basicDetails.get('clientOwner').updateValueAndValidity();
     }
@@ -169,7 +173,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       });
       let obj =
       {
-        "advisorId": this.advisorId,
+        "advisorId": (this.selectedClientOwner) ? this.selectedClientOwner.advisorId : this.basicDetailsData.advisorId,
         "taxStatusId": parseInt(this.invTaxStatus),
         "emailList": [
           {
@@ -205,9 +209,9 @@ export class ClientBasicDetailsComponent implements OnInit {
         "userType": 1,
         "remarks": null,
         "status": (this.fieldFlag == 'client') ? 1 : 2,
-        "leadSource": (this.fieldFlag == 'lead') ? this.basicDetails.value.leadSource : '',
-        "leadRating": (this.fieldFlag == 'lead') ? this.basicDetails.value.leadRating : '',
-        "leadStatus": (this.fieldFlag == 'lead') ? this.basicDetails.value.leaadStatus : ''
+        "leadSource": (this.fieldFlag == 'lead') ? this.basicDetails.value.leadSource : null,
+        "leadRating": (this.fieldFlag == 'lead') ? this.basicDetails.value.leadRating : null,
+        "leadStatus": (this.fieldFlag == 'lead') ? this.basicDetails.value.leaadStatus : null
       }
       if (this.basicDetailsData.userId == null) {
         if (this.invTypeCategory == '1') {
@@ -234,20 +238,15 @@ export class ClientBasicDetailsComponent implements OnInit {
         }
       }
       else {
-        if (this.invTypeCategory == '1') {
-          this.peopleService.editClient(obj).subscribe(
-            data => {
-              console.log(data);
-              data['invCategory'] = this.invTypeCategory;
-              data['categoryTypeflag'] = "clientNonIndividual";
-              (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
-            },
-            err => this.eventService.openSnackBar(err, "Dismiss")
-          )
-        }
-        else {
-
-        }
+        this.peopleService.editClient(obj).subscribe(
+          data => {
+            console.log(data);
+            data['invCategory'] = this.invTypeCategory;
+            data['categoryTypeflag'] = (this.invTypeCategory == '1') ? "Individual" : "clientNonIndividual";
+            (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
+          },
+          err => this.eventService.openSnackBar(err, "Dismiss")
+        )
       }
     }
   }
@@ -278,19 +277,14 @@ export class ClientBasicDetailsComponent implements OnInit {
         "verificationStatus": 0
       })
     });
-    // if (this.invTypeCategory == '1' && this.basicDetails.invalid) {
-    //   this.basicDetails.markAllAsTouched();
-    //   return;
-    // }
-    // if (this.invTypeCategory == '2' && this.minorForm.invalid) {
-    //   this.minorForm.markAllAsTouched();
-    //   return;
-    // }
-    // if()
-    // {
-
-    // }
-    // else {
+    if (this.invTypeCategory == '1' && this.basicDetails.invalid) {
+      this.basicDetails.markAllAsTouched();
+      return;
+    }
+    if (this.invTypeCategory == '2' && this.minorForm.invalid) {
+      this.minorForm.markAllAsTouched();
+      return;
+    }
     let obj =
     {
       "id": this.basicDetailsData.id,
