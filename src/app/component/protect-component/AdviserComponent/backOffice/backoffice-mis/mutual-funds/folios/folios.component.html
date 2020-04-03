@@ -31,7 +31,7 @@
             [matAutocomplete]="auto" placeholder="Search by investor Name">
         <mat-autocomplete #auto="matAutocomplete">
             <mat-option
-                *ngFor="let data of folioList" [value]="data.name"  (click)="investorRef.value = data.name">
+                *ngFor="let data of dataList" [value]="data.name"  (click)="investorRef.value = data.name">
                 {{data.name}}
             </mat-option>
         </mat-autocomplete>
