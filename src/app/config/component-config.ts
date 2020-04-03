@@ -562,6 +562,8 @@ export const appConfig = {
   GET_TEAM_MEMBERS: 'user/advisor/team-members/detail/get',
   DELETE_CLIENT: 'user/client/delete',
   GET_CLIENT_OR_lEAD_DATA: 'user/client/advisor-wise/get',
+  // LOGIN_WITH_PASSWORD: 'user/login/with/password',
+
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: '/user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
