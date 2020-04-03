@@ -47,7 +47,7 @@ export class PlanGalleryComponent implements OnInit {
   openGallery() {
     const dialogRef = this.dialog.open(OpenGalleryPlanComponent, {
       width: '500px',
-      height: '450px',
+      height: '300px',
       data: { bank: '', animal: '' }
     });
     dialogRef.afterClosed().subscribe(result => {
