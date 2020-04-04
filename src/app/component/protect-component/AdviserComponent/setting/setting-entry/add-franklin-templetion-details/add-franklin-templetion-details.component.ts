@@ -42,7 +42,7 @@ export class AddFranklinTempletionDetailsComponent implements OnInit {
       loginId: [this.data.mainData.loginId, [Validators.required]],
       loginPassword: [this.data.mainData.loginPassword, [Validators.required]],
       mailbackPassword: [this.data.mainData.mailbackPassword, [Validators.required]],
-      registeredEmail: [this.data.mainData.registeredEmail, [Validators.required, Validators.email]],
+      registeredEmail: [this.data.mainData.registeredEmail, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
     });
   }
 

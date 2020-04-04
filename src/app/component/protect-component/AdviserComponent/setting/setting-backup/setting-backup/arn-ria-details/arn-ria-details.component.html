@@ -23,7 +23,7 @@
                     </div>
 
                     <div class="col-md-3 p-0 d-flex align-items-center justify-content-end">
-                        <button mat-stroked-button class="text-primary mr-12">{{arn.status}}</button>
+                        <button mat-stroked-button class="text-primary mr-12">{{arn.status || 'NA'}}</button>
                         <ng-container>
                             <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
 
@@ -68,7 +68,7 @@
                         </div>
                         <div class="col-md-3 pl-0">
                             <p class="f-12 m-0 proxima text-primitive">GST</p>
-                            <h5 class="m-0">{{arn.gstNumber}}</h5>
+                            <h5 class="m-0">{{arn.gstNumber || 'NA'}}</h5>
                             <div class="pt-44">
                                 <p class="f-12 m-0 proxima text-primitive">EMAIL </p>
                                 <h5 class="m-0">{{arn.registeredEmail}}</h5>
