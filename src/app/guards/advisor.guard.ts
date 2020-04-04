@@ -10,9 +10,9 @@ export class AdvisorGuard implements CanActivate {
   }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    // if (true) {
-    // return true;
-    // }
+    if (true) {
+    return true;
+    }
     if (this.authService.isAdvisor()) {
       console.log('AuthGuard : ', next, state);
       // const user = this.authService.decode();
