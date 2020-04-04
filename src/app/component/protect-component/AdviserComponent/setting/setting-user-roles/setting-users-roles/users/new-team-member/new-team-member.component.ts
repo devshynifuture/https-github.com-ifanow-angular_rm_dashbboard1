@@ -5,6 +5,7 @@ import {AuthService} from 'src/app/auth-service/authService';
 import {ValidatorType} from 'src/app/services/util.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {LoginService} from '../../../../../../../no-protected/login/login.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-new-team-member',
@@ -21,7 +22,7 @@ export class NewTeamMemberComponent implements OnInit {
     private fb: FormBuilder,
     private settingsService: SettingsService,
     private eventService: EventService,
-    private loginService: LoginService
+    private subInjectService: SubscriptionInject,
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -33,7 +34,7 @@ export class NewTeamMemberComponent implements OnInit {
   createForm() {
     this.teamMemberFG = this.fb.group({
       adminAdvisorId: [this.data.mainData.adminAdvisorId || this.advisorId],
-      fullName: [this.data.mainData.fullName, [Validators.required, Validators.maxLength(50), Validators.pattern(ValidatorType.PERSON_NAME)]],
+      fullName: [this.data.mainData.name, [Validators.required, Validators.maxLength(50), Validators.pattern(ValidatorType.PERSON_NAME)]],
       emailId: [this.data.mainData.emailId, [Validators.required, Validators.maxLength(50), Validators.pattern(ValidatorType.EMAIL)]],
       mobileNo: [this.data.mainData.mobileNo, [Validators.required, Validators.maxLength(50), Validators.pattern(ValidatorType.NUMBER_ONLY)]],
       roleId: [this.data.mainData.roleId, [Validators.required]],
@@ -78,6 +79,6 @@ export class NewTeamMemberComponent implements OnInit {
   }
 
   close(status = false){
-    this.eventService.changeUpperSliderState({state: 'close', refreshRequired: status});
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: status});
   }
 }
