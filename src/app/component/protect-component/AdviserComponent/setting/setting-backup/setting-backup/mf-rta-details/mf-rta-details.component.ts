@@ -21,16 +21,17 @@ export class MfRtaDetailsComponent implements OnInit {
   displayedColumns1: string[] = ['position', 'name', 'weight', 'email', 'mail', 'use', 'icons'];
   displayedColumns2: string[] = ['position', 'name', 'weight', 'email', 'mail', 'icons'];
 
-  camsDS:MatTableDataSource<any>;
-  karvyDS:MatTableDataSource<any>;
-  frankDS:MatTableDataSource<any>;
-  fundsDS:MatTableDataSource<any>;
+  camsDS: MatTableDataSource<any>;
+  karvyDS: MatTableDataSource<any>;
+  frankDS: MatTableDataSource<any>;
+  fundsDS: MatTableDataSource<any>;
 
   advisorId: any;
-  globalData:any = {};
-  mfRTAlist:any[] = [{}];
-  arnList:any[] = [{}];
-  spans:any[] = [];
+  globalData: any = {};
+  mfRTAlist: any[] = [{}];
+  arnList: any[] = [{}];
+  spans: any[] = [];
+  isLoading = false;
 
   constructor(
     private eventService: EventService,
@@ -45,8 +46,8 @@ export class MfRtaDetailsComponent implements OnInit {
     this.initializeData();
   }
 
-  initializeData(){
-    this.settingsService.getArnGlobalData().subscribe((res)=>{
+  initializeData() {
+    this.settingsService.getArnGlobalData().subscribe((res) => {
       this.globalData = res;
       console.log(res);
     });
@@ -55,21 +56,21 @@ export class MfRtaDetailsComponent implements OnInit {
   }
 
   getArnDetails() {
-    this.settingsService.getArnlist({advisorId: this.advisorId}).subscribe((data)=> {
+    this.settingsService.getArnlist({ advisorId: this.advisorId }).subscribe((data) => {
       this.arnList = data || [];
     });
   }
 
-  loadRTAList(){
-    const jsonData = {advisorId: this.advisorId}
-    this.settingsService.getMFRTAList(jsonData).subscribe((res)=> {
+  loadRTAList() {
+    const jsonData = { advisorId: this.advisorId }
+    this.settingsService.getMFRTAList(jsonData).subscribe((res) => {
       this.mfRTAlist = res || {};
       this.createDataSource();
       console.log(res);
     })
   }
 
-  createDataSource(){
+  createDataSource() {
     this.camsDS = new MatTableDataSource(this.mfRTAlist.filter((data) => data.rtTypeMasterid == 1));
     this.karvyDS = new MatTableDataSource(this.mfRTAlist.filter((data) => data.rtTypeMasterid == 2));
     this.frankDS = new MatTableDataSource(this.mfRTAlist.filter((data) => data.rtTypeMasterid == 3));
@@ -79,7 +80,7 @@ export class MfRtaDetailsComponent implements OnInit {
 
   openInSideBar(componentID, data, flag) {
 
-    if(this.arnList.length == 0) {
+    if (this.arnList.length == 0) {
       this.eventService.openSnackBar("Kindly add ARN details to proceed");
       return;
     }
@@ -153,21 +154,21 @@ export class MfRtaDetailsComponent implements OnInit {
 
   getARNId(id) {
     const arn = this.arnList.find((data) => data.id == id);
-    if(arn)
-      return arn.number;  
+    if (arn)
+      return arn.number;
     return '';
   }
 
   getQuestion(id) {
-    if(this.globalData && this.globalData.rta_cams_fund_net_security_questions_list) {
-      return this.globalData.rta_cams_fund_net_security_questions_list.find((data)=> data.id == id).question
+    if (this.globalData && this.globalData.rta_cams_fund_net_security_questions_list) {
+      return this.globalData.rta_cams_fund_net_security_questions_list.find((data) => data.id == id).question
     }
     return '';
   }
 
   toggleVisibility(data, toggle) {
-    if(data) {
-      if(toggle) {
+    if (data) {
+      if (toggle) {
         let copy = data.toString();
         return copy.replace(/./g, '').replace('', '********')
       } else {
