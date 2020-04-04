@@ -36,7 +36,7 @@ export class ClientUploadComponent implements OnInit {
   }
 
   @Input() set data(data) {
-    console.log(data)    //////////user data////////////////////
+    console.log(data, "user data")    //////////user data////////////////////
   }
 
   saveClose() {
@@ -51,7 +51,7 @@ export class ClientUploadComponent implements OnInit {
   addressProof: any = "";
   bankProof: any = "";
   selectedBank: any = "";
-  proofSubType: any = 0;
+  proofSubType: any = 1;
   fileComPanImg: any = { view: '', store: '' };
   filePerPanImg: any = { view: '', store: '' };
   fileProof1Img: any = { view: '', store: '' };
@@ -81,23 +81,23 @@ export class ClientUploadComponent implements OnInit {
       this.custumService.getClientProof(obj).subscribe(
         (data) => {
           if (imgData.proofType == 2 && imgData.documentId == 0) {
-            this.fileComPanImg.view = data;
+            this.fileComPanImg.view = data.preSignedUrl;
             this.fileComPanImg.store = imgData;
           }
           else if (imgData.proofType == 1 && imgData.documentId == 0) {
-            this.filePerPanImg.view = data;
+            this.filePerPanImg.view = data.preSignedUrl;
             this.filePerPanImg.store = imgData;
           }
           else if (imgData.documentId == 1) {
-            this.fileProof1Img.view = data;
+            this.fileProof1Img.view = data.preSignedUrl;
             this.fileProof1Img.store = imgData;
           }
           else if (imgData.documentId == 2 && imgData.proofSubType == 1) {
-            this.fileProof2Img.view = data;
+            this.fileProof2Img.view = data.preSignedUrl;
             this.fileProof2Img.store = imgData;
           }
           else if (imgData.documentId == 2 && imgData.proofSubType == 2) {
-            this.fileProof2BackImg.view = data;
+            this.fileProof2BackImg.view = data.preSignedUrl;
             this.fileProof2BackImg.store = imgData;
           }
           console.log(data, "imge");
@@ -106,19 +106,20 @@ export class ClientUploadComponent implements OnInit {
     });
   }
 
-  addDocObj = {
-    advisorId: this.advisorId,
-    clientId: 0,
-    userId: 2,
-    userType: 2,
-    documentId: 0,
-    documentType: 0,
-    proofType: 0,
-    proofSubType: 1,
-    fileName: ''
-  }
+  addDocObj:any;
 
   getFile(e, type) {
+    this.addDocObj = {
+      advisorId: this.advisorId,
+      clientId: 0,
+      userId: 2,
+      userType: 2,
+      documentId: 0,
+      documentType: 0,
+      proofType: 0,
+      proofSubType: 0,
+      fileName: ''
+    }
     this.myFiles = [];
     const file = (e.target as HTMLInputElement).files[0];
     const reader = new FileReader();
