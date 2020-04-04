@@ -67,6 +67,7 @@ export class SipComponent implements OnInit {
   }
   display(value){
     this.sipComponent=true;
+    this.pieChart('pieChartSip');
   }
   getAllSip()
   {
@@ -156,8 +157,8 @@ export class SipComponent implements OnInit {
     this.backoffice.Wbr9anCount(obj).subscribe(
       data =>{
         this.wbrCount=data.folioCount;
-        this.clientWithoutSip=((this.sipPanCount)?this.sipPanCount:0/(this.wbrCount)?this.wbrCount:0)*100;
-        this.clientWithoutSip=(this.clientWithoutSip)?this.clientWithoutSip:0
+        this.clientWithoutSip=(this.sipPanCount/data.folioCount)*100;
+        this.clientWithoutSip=(!this.clientWithoutSip || this.clientWithoutSip==Infinity)?0:this.clientWithoutSip;
         console.log(data);
       }
     )

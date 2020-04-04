@@ -27,7 +27,7 @@
                                 <div class="col-md-4">
                                     <div class="bg-aum pt-24 pb-24 text-center br-2 height180">
 
-                                        <h1 class="text-white f-44 f-300 pt-32">Cr
+                                        <h1 class="text-white f-44 f-300 pt-32" *ngIf="sipCount">{{(sipCount.totalAmountInWords)?sipCount.totalAmountInWords:0}}
                                         </h1>
                                         <p class="f-16 pt-4 text-white">TOTAL SIP BOOK</p>
 

@@ -71,6 +71,9 @@ export class SipApplicantWiseComponent implements OnInit {
       this.backoffice.sipApplicantFolioList(obj).subscribe(
         data =>{
           if(data){
+            data.forEach(element => {
+              element.name=applicantData.name
+            });
             applicantData.schemeList=data
             console.log(data)
           }
