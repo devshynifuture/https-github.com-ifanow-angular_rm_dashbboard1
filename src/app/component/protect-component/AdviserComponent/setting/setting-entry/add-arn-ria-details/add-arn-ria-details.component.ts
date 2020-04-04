@@ -33,7 +33,6 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log(this.data);
     this.createForm();
     this.subscriberToFormChanges();
   }
@@ -41,7 +40,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
   createForm() {
     this.arnRiaFG = this.fb.group({
       advisorId: [this.advisorId,[]],
-      arnOrRia: [this.data.mainData.arnOrRia, , [Validators.required]],
+      arnOrRia: [this.data.mainData.arnOrRia, [Validators.required]],
       typeId: [this.data.mainData.typeId, [Validators.required]],
       number: [this.data.mainData.number, [Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY)]],
       nameOfTheHolder: [this.data.mainData.nameOfTheHolder, [Validators.required]],
