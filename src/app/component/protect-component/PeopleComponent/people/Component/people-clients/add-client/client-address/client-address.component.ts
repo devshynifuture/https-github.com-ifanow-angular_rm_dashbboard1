@@ -19,29 +19,13 @@ export class ClientAddressComponent implements OnInit {
   addressForm;
   validatorType = ValidatorType;
   @Output() tabChange = new EventEmitter();
+  @Input() fieldFlag;
   @Input() set data(data) {
     this.userData = data;
     this.proofType = '1';
-    if (data) {
-      this.getAddressList(data);
-    }
-  }
-  getAddressList(data) {
-    let obj =
-    {
-      "userId": data.userId,
-      "userType": data.userType
-    }
-    this.cusService.getAddressList(obj).subscribe(
-      data => {
-        console.log(data);
-        this.createAddressForm(data)
-      },
-      err => this.eventService.openSnackBar(err, "Dismiss")
-    )
+    this.createAddressForm(data);
   }
   ngOnInit() {
-    this.createAddressForm(null);
   }
   createAddressForm(data) {
     (data == undefined) ? data = {} : data;
@@ -95,7 +79,7 @@ export class ClientAddressComponent implements OnInit {
         "state": this.addressForm.get('state').value,
         "stateId": '',
         "country": this.addressForm.get('country').value,
-        "userId": this.userData.clientId,
+        "userId": (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? this.userData.clientId : this.userData.id,
         "userType": 1,
         "addressType": this.addressForm.get('proofType').value,
         "proofType": this.addressForm.get('addProofType').value,

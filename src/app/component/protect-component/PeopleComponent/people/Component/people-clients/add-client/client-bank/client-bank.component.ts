@@ -25,24 +25,10 @@ export class ClientBankComponent implements OnInit {
   bankForm;
   validatorType = ValidatorType;
   @Output() tabChange = new EventEmitter();
-
+  @Input() fieldFlag;
   @Input() set data(data) {
     this.userData = data;
-    this.getBankList(data)
-  }
-  getBankList(data) {
-    let obj =
-    {
-      "userId": data.userId,
-      "userType": data.userType
-    }
-    this.cusService.getDematList(obj).subscribe(
-      data => {
-        console.log(data);
-        this.bankList = data;
-        this.createBankForm(data);
-      }, err => this.eventService.openSnackBar(err, "Dismiss")
-    )
+    this.createBankForm(data)
   }
   createBankForm(data) {
     (data == undefined) ? data = {} : data;
@@ -154,7 +140,7 @@ export class ClientBankComponent implements OnInit {
           "stateId": "27",
           "country": this.bankForm.get("branchCountry").value
         },
-        "userId": this.userData.clientId,
+        "userId": (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? this.userData.clientId : this.userData.id,
         "userType": 1,
         "minorAccountHolderName": "sarvesh",
         "guardianAccountHolderName": "chetan",

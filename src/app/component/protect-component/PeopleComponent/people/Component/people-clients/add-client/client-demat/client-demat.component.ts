@@ -22,22 +22,10 @@ export class ClientDematComponent implements OnInit {
   mobileNumberFlag = "Broker number"
   validatorType = ValidatorType;
   @Output() tabChange = new EventEmitter();
+  @Input() fieldFlag;
   @Input() set data(data) {
     this.userData = data;
-    this.getDematList(data);
-  }
-  getDematList(data) {
-    let obj =
-    {
-      "userId": data.userId,
-      "userType": data.userType
-    }
-    this.cusService.getDematList(obj).subscribe(
-      data => {
-        console.log(data);
-        this.createDematForm(data)
-      }, err => this.eventService.openSnackBar(err, "Dismiss")
-    )
+    this.createDematForm(data);
   }
   createDematForm(data) {
     (data == undefined) ? data = {} : data;
