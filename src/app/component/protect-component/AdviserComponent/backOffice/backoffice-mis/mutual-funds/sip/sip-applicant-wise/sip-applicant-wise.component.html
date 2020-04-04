@@ -55,15 +55,16 @@
                                        <tbody *ngFor="let scheme of data.schemeList; let i = index">
                                             <tr>
                                                 <td>{{scheme.name}}</td>
-                                                <td class="text-right">{{scheme.totalAum}} </td>                                                <td class="text-right">{{scheme.totalAum}} </td>
-                                                <td class="text-right">{{scheme.totalAum}} </td>
-                                                <td class="text-right">{{scheme.totalAum}} </td>
-                                                <td class="text-right">{{scheme.totalAum}} </td>
-                                                <td class="text-right">{{scheme.totalAum}} </td>
-                                                <td class="text-right">{{scheme.totalAum}} </td>
-                                                <td class="text-right">{{scheme.totalAum}} </td>
-                                                <td class="text-right">{{scheme.totalAum}} </td>
+                                                <td class="text-right">{{scheme.schemeName}} </td>                                                <td class="text-right">{{scheme.totalAum}} </td>
+                                                <td class="text-right">{{scheme.folioNumber}} </td>
+                                                <td class="text-right">{{scheme.registeredDate}} </td>
+                                                <td class="text-right">{{scheme.to_date}} </td>
+                                                <td class="text-right">{{scheme.sipTriggerDay}} </td>
+                                                <td class="text-right">{{scheme.frequency}} </td>
+                                                <td class="text-right">{{scheme.amount}} </td>
                                                 <td class="text-right">{{scheme.weightInPercentage}}%</td>
+                                                <td class="text-right">add cease date </td>
+
                                             </tr>
                                     </tbody>
                         </table>

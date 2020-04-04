@@ -53,7 +53,6 @@ export class AmcWiseComponent implements OnInit {
   showScheme(amcData) {
     amcData.showAmc=!amcData.showAmc
     amcData.schemes.forEach(o => {
-      o.mutualFundSchemeMasterId=amcData.id;
       o.showScheme = true;
     });
     
@@ -66,7 +65,7 @@ export class AmcWiseComponent implements OnInit {
         advisorId:this.advisorId,
         arnRiaDetailsId:-1,
         parentId:-1,
-        schemeMasterId:schemeData.mutualFundSchemeMasterId,
+        schemeMasterId:schemeData.id,
         totalAum:schemeData.totalAum
       }
       this.backoffice.amcWiseApplicantGet(obj).subscribe(
@@ -82,7 +81,7 @@ export class AmcWiseComponent implements OnInit {
   getApplicantName(){
     const obj={
       advisorId:this.advisorId,
-      arnRiaDetailId:12345,
+      arnRiaDetailId:-1,
       schemeMasterId:1345,
       totalAum:2000
     }

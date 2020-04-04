@@ -219,7 +219,7 @@
     <app-all-sip></app-all-sip>
 </div>
 <div *ngIf="sipcomponentWise=='amc'">
-    <app-sip-amc-wise></app-sip-amc-wise>
+    <app-sip-amc-wise  (changedValue)="display($event)" ></app-sip-amc-wise>
 </div>
 <div *ngIf="sipcomponentWise=='scheme'">
     <app-sip-scheme-wise></app-sip-scheme-wise>
@@ -228,5 +228,5 @@
     <app-sip-client-wise></app-sip-client-wise>
 </div>
 <div *ngIf="sipcomponentWise=='applicant'">
-    <app-sip-applicant-wise></app-sip-applicant-wise>
+    <app-sip-applicant-wise ></app-sip-applicant-wise>
 </div>

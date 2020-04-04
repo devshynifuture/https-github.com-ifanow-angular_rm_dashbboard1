@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChildren, Output, EventEmitter } from '@angular/core';
 import { BackOfficeService } from '../../../../back-office.service';
 import {SipComponent} from '../sip.component';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -18,6 +18,8 @@ export class SipAmcWiseComponent implements OnInit {
   totalWeight=0;
   constructor(private backoffice:BackOfficeService,public sip:SipComponent) { }
   teamMemberId=2929;
+  @Output() changedValue = new EventEmitter();
+
   @ViewChildren(FormatNumberDirective) formatNumber;
 
   ngOnInit() {
@@ -28,7 +30,8 @@ export class SipAmcWiseComponent implements OnInit {
 
   aumReport()
   {
-   this.sip.sipComponent=true;
+    this.changedValue.emit(true);
+  //  this.sip.sipComponent=true;
   }  
   amcGet(){
     const obj={

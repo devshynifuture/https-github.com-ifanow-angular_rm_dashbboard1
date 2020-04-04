@@ -27,7 +27,8 @@ export const appConfig = {
   GET_APPLICANT_NAME: 'backoffice/mis/aum/amcWise/applicantName/get',
   ADVISOR_TAG_GET: '/advisor/tag/get',
   AUM_GRAPH_GET:'backoffice/aum/graph/details/get',
-//////////////////Foliodetails////////////////////////////
+  ARN_RIA_LIST:'backoffice/arn/ria/list/get',
+///////////////////foliodetails///////////////////////////
   FOLIO_GROUP_HEAD_SEARCH:'backoffice/folio/search/by/groupHead/get',
   FOLIO_INVESTOR_SEARCH:'backoffice/folio/search/by/investorName/get',
   FOLIO_PAN_SEARCH:'backoffice/folio/search/by/pan/get',

@@ -25,15 +25,17 @@ export class AumComponent implements OnInit {
   aumComponent = true;
   componentWise;
   advisorId: any;
+  arnRiaList: any;
 
 
   constructor(private backoffice: BackOfficeService, private dataService: EventService) { }
 
   teamMemberId = 2929;
   ngOnInit() {
-    this.viewMode = 'Select option';
     this.advisorId = AuthService.getAdvisorId();
-  
+
+    this.viewMode = 'Select option';
+    this.getArnRiaList();
     this.getGraphData();
     this.getTotalAum();
     // this.getSubCatScheme();
@@ -51,7 +53,18 @@ export class AumComponent implements OnInit {
     this.categoryshow = true;
     this.showMainWrapperFlag = false;
   }
+  getArnRiaList(){
+    this.backoffice.getArnRiaList(this.advisorId).subscribe(
+      data =>{
 
+        this.arnRiaList=data;
+        const obj = {
+          number: 'All'
+        }
+        this.arnRiaList.push(obj);
+    },
+    )
+  }
   showSubTableList() {
     this.showMainWrapperFlag = false;
     this.showSubTable = true;

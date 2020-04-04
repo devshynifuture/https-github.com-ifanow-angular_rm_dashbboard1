@@ -39,9 +39,7 @@ export class SipComponent implements OnInit {
    this.expiringGet();
    this.sipRejectionGet();
    this.getSipPanCount();
-   setTimeout(() => {
-    this.pieChart('pieChartSip');
-  }, 1000);
+
 
   }
   sipCountGet()
@@ -66,6 +64,9 @@ export class SipComponent implements OnInit {
    showMainWrapper() {
     this.sipshow = false;
     this.showMainWrapperFlag = true;
+  }
+  display(value){
+    this.sipComponent=true;
   }
   getAllSip()
   {
@@ -178,14 +179,16 @@ export class SipComponent implements OnInit {
     this.backoffice.newSipGet(obj).subscribe(
       data =>{
        this.newSipObj=data;
-       this.newSipObj.forEach(o => {
-          o[0]=30;
-          o[1]=60;
-          o[2]=90;
-          o[3]=120
-          o[4]=150;
-          o[5]=180;
-        })
+
+      
+          this.newSipObj[0].dateDiff=30;
+          this.newSipObj[1].dateDiff=60;
+          this.newSipObj[2].dateDiff=90;
+          this.newSipObj[3].dateDiff=120
+          this.newSipObj[4].dateDiff=150;
+          this.newSipObj[5].dateDiff=180;
+          this.newSipObj[6].dateDiff=360;
+
       });
       }
     
@@ -198,14 +201,15 @@ export class SipComponent implements OnInit {
     this.backoffice.ceaseSipGet(obj).subscribe(
       data =>{
         this.ceaseSipObj=data;
-        this.ceaseSipObj.forEach(o => {
-          o[0]=30;
-          o[1]=60;
-          o[2]=90;
-          o[3]=120
-          o[4]=150;
-          o[5]=180;
-        })
+          
+          this.ceaseSipObj[0].dateDiff=30;
+          this.ceaseSipObj[1].dateDiff=60;
+          this.ceaseSipObj[2].dateDiff=90;
+          this.ceaseSipObj[3].dateDiff=120
+          this.ceaseSipObj[4].dateDiff=150;
+          this.ceaseSipObj[5].dateDiff=180;
+          this.ceaseSipObj[6].dateDiff=360;
+    this.pieChart('pieChartSip');
       }
     )
   }
@@ -216,11 +220,11 @@ export class SipComponent implements OnInit {
     ceaseSipAmount:null,
     net:null
    };
-   obj.newSipAmount= this.newSipObj.filter(element => element.days ==days);
-   obj.newSipAmount = (obj.newSipAmount[0].totalAmount)?obj.newSipAmount[0].totalAmount:0
+   obj.newSipAmount= this.newSipObj.filter(element => element.dateDiff ==days);
+   obj.newSipAmount = (obj.newSipAmount[0].sipAmount)?obj.newSipAmount[0].sipAmount:0
 
-    obj.ceaseSipAmount=this.ceaseSipObj.filter(element => element.days ==days);
-    obj.ceaseSipAmount = (obj.ceaseSipAmount[0].totalAmount)?obj.ceaseSipAmount[0].totalAmount:0
+    obj.ceaseSipAmount=this.ceaseSipObj.filter(element => element.dateDiff ==days);
+    obj.ceaseSipAmount = (obj.ceaseSipAmount[0].sipAmount)?obj.ceaseSipAmount[0].sipAmount:0
 
     obj.net=obj.newSipAmount - obj.ceaseSipAmount
   return obj;

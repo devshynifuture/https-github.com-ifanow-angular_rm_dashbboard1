@@ -252,6 +252,10 @@ export class BackOfficeService {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.AUM_GRAPH_GET, httpParams);
   }
+  getArnRiaList(data) {
+    const httpParams = new HttpParams().set('advisorId', data);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.ARN_RIA_LIST, httpParams);
+  }
   // ---------------------------------------- sip data call--------------------------------------
 
 
