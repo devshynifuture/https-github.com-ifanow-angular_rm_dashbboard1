@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder, FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { BackOfficeService } from '../../../back-office.service';
 import { MatTableDataSource } from '@angular/material';
@@ -15,21 +15,27 @@ export class FoliosComponent implements OnInit {
   dataList: any;
   advisorId: any;
   dataSource:any;
-
+  folioList:any;
   constructor( private fb: FormBuilder,private backoffice:BackOfficeService) { }
   isLoading = false;
- 
+  searchGroupHead = new FormControl();
+  searchInvestorName = new FormControl();
+
+
   ngOnInit() {
-    this.getFolioDetails();
+    // this.getFolioDetails();
     this.advisorId = AuthService.getAdvisorId();
 
   }
 
-  getFolioDetails(){
-    this.folioDetails = this.fb.group({
-      searchGroupHead: [],
-      searchInvestorName:[]
-    });
+  // getFolioDetails(){
+  //   this.folioDetails = this.fb.group({
+  //     searchGroupHead: [],
+  //     searchInvestorName:[]
+  //   });
+  // }
+  displayFn(value): string | undefined {
+    return value ? value.name : undefined;
   }
 
   getList(data,value){//for seraching and dropdown of pan and folio
@@ -55,7 +61,7 @@ export class FoliosComponent implements OnInit {
       }
       this.backoffice.folioApplicantList(obj).subscribe(
         data =>{
-            this.dataList=data;
+            this.folioList=data;
         }
       )
     }
