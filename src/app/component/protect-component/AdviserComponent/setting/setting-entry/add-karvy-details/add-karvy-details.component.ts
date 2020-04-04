@@ -41,7 +41,7 @@ export class AddKarvyDetailsComponent implements OnInit {
       loginPassword: [this.data.mainData.loginPassword, [Validators.required]],
       rtExtTypeId: [2], // dbf file extension
       mailbackPassword: [this.data.mainData.mailbackPassword, [Validators.required]],
-      registeredEmail: [this.data.mainData.registeredEmail, [Validators.required, Validators.email]],
+      registeredEmail: [this.data.mainData.registeredEmail, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
       fileOrderingUseabilityStatusId: [this.data.mainData.fileOrderingUseabilityStatusId, [Validators.required]],
     });
   }

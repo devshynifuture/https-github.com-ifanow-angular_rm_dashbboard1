@@ -48,7 +48,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
       euin: [this.data.mainData.euin, [Validators.required, Validators.pattern(/[eE]\d{6}/)]],
       commencementDate: [this.data.mainData.commencementDate, [Validators.required]],
       renewalDate: [this.data.mainData.renewalDate, [Validators.required]],
-      registeredEmail: [this.data.mainData.registeredEmail, [Validators.required, Validators.email]],
+      registeredEmail: [this.data.mainData.registeredEmail, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
       registeredPan: [this.data.mainData.registeredPan, [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       registeredAddress: [this.data.mainData.registeredAddress, [Validators.required, Validators.maxLength(150)]],
       gstApplicableId: [this.data.mainData.gstApplicableId, [Validators.required]],
