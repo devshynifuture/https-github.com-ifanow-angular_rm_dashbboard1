@@ -19,9 +19,8 @@ export class ClientUploadComponent implements OnInit {
   bankLIst: any = [];
   constructor(private subInjectService: SubscriptionInject, private http: HttpService, private custumService: CustomerService, private enumService: EnumServiceService) { }
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId();
+    this.advisorId = AuthService.getUserInfo().advisorId;
     // this.clientId = AuthService.getClientId();
-    this.addDocObj.advisorId = this.advisorId;
     // this.addDocObj.clientId = this.clientId;
     this.proofTypes = this.enumService.getProofType();
     this.bankLIst = this.enumService.getBank();
@@ -36,7 +35,7 @@ export class ClientUploadComponent implements OnInit {
   }
 
   @Input() set data(data) {
-    console.log(data, "user data")    //////////user data////////////////////
+    console.log(data, "user data1")    //////////user data////////////////////
   }
 
   saveClose() {
@@ -91,14 +90,20 @@ export class ClientUploadComponent implements OnInit {
           else if (imgData.documentId == 1) {
             this.fileProof1Img.view = data.preSignedUrl;
             this.fileProof1Img.store = imgData;
+            this.selectedBank = imgData.documentId;
+            this.bankProof = imgData.proofType;
           }
           else if (imgData.documentId == 2 && imgData.proofSubType == 1) {
             this.fileProof2Img.view = data.preSignedUrl;
             this.fileProof2Img.store = imgData;
+            this.addressProof = imgData.proofType;
+            this.proofSubType = imgData.proofSubType;
           }
           else if (imgData.documentId == 2 && imgData.proofSubType == 2) {
             this.fileProof2BackImg.view = data.preSignedUrl;
             this.fileProof2BackImg.store = imgData;
+            this.addressProof = imgData.proofType;
+            this.proofSubType = imgData.proofSubType;
           }
           console.log(data, "imge");
         }
