@@ -28,6 +28,7 @@ export class ClientBankComponent implements OnInit {
   @Input() fieldFlag;
   @Input() set data(data) {
     this.userData = data;
+    this.fieldFlag;
     this.createBankForm(data)
   }
   createBankForm(data) {
