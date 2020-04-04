@@ -9,7 +9,7 @@
     </div>
 </div>
 
-<div class="pt-90 pl-28 pr-28 pb-100">
+<div [formGroup]="convertClientForm" class="pt-90 pl-28 pr-28 pb-100">
     <h5 class="m-0 roboto">You are about to convert the prospect <strong> Rahul Jain </strong> into a client. <br>
         Before we do that, let’s confirm a few things...
     </h5>
@@ -19,8 +19,8 @@
             <h5>Confirm client owner (team member)</h5>
             <div class="form-group m-0">
                 <mat-form-field>
-                    <mat-select [(ngModel)]="selectedClient" class="form-control">
-                        <mat-option *ngFor="let client of clientOwnerList" value="client">{{client.name}}</mat-option>
+                    <mat-select formControlName="clientRole" class="form-control">
+                        <mat-option *ngFor="let client of clientOwnerList" [value]="client">{{client.name}}</mat-option>
                     </mat-select>
                     <mat-error>This Field is required</mat-error>
                 </mat-form-field>
@@ -42,8 +42,8 @@
             <h5>Confirm role</h5>
             <div class="form-group m-0">
                 <mat-form-field>
-                    <mat-select class="form-control">
-                        <mat-option value="Resident">Client - Standard plan</mat-option>
+                    <mat-select formControlName="confirmRole" class="form-control">
+                        <mat-option value="1">Client - Standard plan</mat-option>
                     </mat-select>
                     <mat-error>This Field is required</mat-error>
                 </mat-form-field>
@@ -57,19 +57,6 @@
                 You have to assign a role to the client. This decides what access rights this client will have. You can
                 create multiple roles and have different levels of access accordingly. You can add roles from here.
             </p>
-        </div>
-    </div>
-
-    <div class="row pt-28">
-        <div class="col-md-6 p-0">
-            <h5>Username</h5>
-            <div class="form-group mb-4 ">
-                <mat-form-field>
-                    <input matInput #userName maxlength="50" class="form-control">
-                    <mat-error>This Field is required</mat-error>
-                    <mat-hint>{{userName.value.length}}/50</mat-hint>
-                </mat-form-field>
-            </div>
         </div>
     </div>
     <div class="row">
@@ -101,7 +88,8 @@
         </div>
         <div class="col-md-8 right text-right">
 
-            <button mat-stroked-button class="btn-bottom br-0 text-inherit">CONVERT
+            <button *ngIf="convertClientForm.valid" mat-stroked-button class="btn-bottom br-0 text-inherit"
+                (click)="convertIntoLead()">CONVERT
             </button>
         </div>
     </div>

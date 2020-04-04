@@ -52,6 +52,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.createIndividualForm(null);
         return;
       }
+      (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data)
       this.getClientOrLeadData(this.basicDetailsData);
     }
     console.log(data);
@@ -61,7 +62,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     this.basicDetails = this.fb.group({
       fullName: [data.name, [Validators.required]],
       email: [data.email, [Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
-      pan: [data.pan, [Validators.required,]],
+      pan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       username: [data.userName, [Validators.required]],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       dobActual: [],
@@ -87,7 +88,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       gGender: [(data.guardianData) ? String(data.genderId) : ''],
       relationWithMinor: [],
       gEmail: [, [Validators.pattern(this.validatorType.EMAIL)]],
-      pan: [data.pan]
+      pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]]
     })
   }
   createNonIndividualForm(data) {
@@ -97,7 +98,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       dateOfIncorporation: [data.dateOfBirth],
       comStatus: [, [Validators.required]],
       comEmail: [data.email, [Validators.pattern(this.validatorType.EMAIL)]],
-      comPan: [data.pan, [Validators.required]],
+      comPan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       comOccupation: [],
       username: [data.username, [Validators.required]],
       leadOwner: [, [Validators.required]],
@@ -159,17 +160,19 @@ export class ClientBasicDetailsComponent implements OnInit {
     }
     else {
       let mobileList = [];
-      this.mobileData.controls.forEach(element => {
-        console.log(element);
-        mobileList.push({
-          "verificationStatus": 0,
-          "id": 0,
-          "userType": 0,
-          "mobileNo": element.get('number').value,
-          "isActive": 1,
-          "userId": 0
-        })
-      });
+      if (this.mobileData) {
+        this.mobileData.controls.forEach(element => {
+          console.log(element);
+          mobileList.push({
+            "verificationStatus": 0,
+            "id": 0,
+            "userType": 0,
+            "mobileNo": element.get('number').value,
+            "isActive": 1,
+            "userId": 0
+          })
+        });
+      }
       let obj =
       {
         "advisorId": (this.selectedClientOwner) ? this.selectedClientOwner.advisorId : this.basicDetailsData.advisorId,
@@ -219,7 +222,7 @@ export class ClientBasicDetailsComponent implements OnInit {
               console.log(data);
               data['invCategory'] = this.invTypeCategory;
               data['categoryTypeflag'] = "Individual";
-              (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
+              (flag == "Next") ? this.changeTabAndSendData(data) : this.close(obj);
             },
             err => this.eventService.openSnackBar(err, "Dismiss")
           )
@@ -230,7 +233,7 @@ export class ClientBasicDetailsComponent implements OnInit {
               console.log(data);
               data['invCategory'] = this.invTypeCategory;
               data['categoryTypeflag'] = "clientNonIndividual";
-              (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
+              (flag == "Next") ? this.changeTabAndSendData(data) : this.close(obj);
             },
             err => err => this.eventService.openSnackBar(err, "Dismiss")
           )
@@ -242,7 +245,7 @@ export class ClientBasicDetailsComponent implements OnInit {
             console.log(data);
             data['invCategory'] = this.invTypeCategory;
             data['categoryTypeflag'] = (this.invTypeCategory == '1') ? "Individual" : "clientNonIndividual";
-            (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
+            (flag == "Next") ? this.changeTabAndSendData(data) : this.close(obj);
           },
           err => this.eventService.openSnackBar(err, "Dismiss")
         )
@@ -254,7 +257,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     {
       advisorId: this.advisorId
     }
-    this.peopleService.getTeamMemberList(obj).subscribe(
+    this.peopleService.getAllCLients(obj).subscribe(
       data => {
         console.log(data);
         this.clientOwnerList = data;
@@ -338,14 +341,14 @@ export class ClientBasicDetailsComponent implements OnInit {
       data => {
         obj['invTypeCategory'] = this.invTypeCategory;
         obj['categoryTypeflag'] = "familyMinor";
-        (flag == "Next") ? this.changeTabAndSendData(obj) : this.close();
+        (flag == "Next") ? this.changeTabAndSendData(obj) : this.close(data);
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
   // }
-  close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  close(data) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
   }
 
 }

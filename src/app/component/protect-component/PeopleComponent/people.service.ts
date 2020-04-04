@@ -80,6 +80,10 @@ export class PeopleService {
     return this.http.postEncoded(apiConfig.USER + appConfig.LOGIN_WITH_PASSWORD, data);
   }
 
-
-  // commented Code closed which are giving error ->>>>>>>>>>>>>
+  getAllCLients(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_ALL_CLIENTS, data, 1)
+  }
+  updateClientStatus(data) {
+    return this.http.putEncoded(apiConfig.USER + appConfig.UPDATE_CLIENT_STATUS, data)
+  }
 }
