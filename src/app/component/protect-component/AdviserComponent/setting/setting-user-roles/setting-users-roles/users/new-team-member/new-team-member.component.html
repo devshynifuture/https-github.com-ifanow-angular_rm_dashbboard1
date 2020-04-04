@@ -45,7 +45,8 @@
             <div class="form-group">
                 <mat-form-field>
                     <input matInput formControlName="mobileNo" class="form-control">
-                    <mat-error>This field is required</mat-error>
+                    <mat-error *ngIf="teamMemberFG.get('mobileNo').errors?.minlength || teamMemberFG.get('mobileNo').errors?.maxlength">Enter Valid Mobile number</mat-error>
+                    <mat-error *ngIf="teamMemberFG.get('mobileNo').errors?.required">This field is required</mat-error>
                 </mat-form-field>
 
             </div>
