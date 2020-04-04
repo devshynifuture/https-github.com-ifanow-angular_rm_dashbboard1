@@ -35,6 +35,8 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input type="text" matInput formControlName="registeredEmail" class="form-control">
+                    <mat-error *ngIf="camsFG.get('registeredEmail').errors?.required">This field is required</mat-error>
+                    <mat-error *ngIf="camsFG.get('registeredEmail').errors?.pattern">Email is not valid</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -47,6 +49,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input type="text" matInput formControlName="mailbackPassword" class="form-control">
+                    <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>

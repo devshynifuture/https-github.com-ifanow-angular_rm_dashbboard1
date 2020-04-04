@@ -43,8 +43,8 @@
     </ng-container>
     <ng-container matColumnDef="report">
         <th mat-header-cell *matHeaderCellDef class="br"> Reporting to </th>
-        <td (click)="openTask(null, element)" mat-cell *matCellDef="let element" class="br c-p">
-            <div class="bar"> {{element.report}} </div>
+        <td (click)="assignTeamMember(null, element)" mat-cell *matCellDef="let element" class="br c-p">
+            <div class="bar"> {{(element.report)}}  ADD TEAM MEMBER</div>
         </td>
     </ng-container>
     <ng-container matColumnDef="icons">

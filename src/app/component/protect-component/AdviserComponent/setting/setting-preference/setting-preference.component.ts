@@ -177,7 +177,7 @@ export class SettingPreferenceComponent implements OnInit {
   selectMutualFund(event, value) {
 
     this.portfolio.forEach(element => {
-      if (element.planOptionId == value.planOptionId) {
+      if (element.portfolioOptionId == value.portfolioOptionId) {
         element.selectedOrDeselected = (event.checked == true) ? 1 : 0;
       }
     });

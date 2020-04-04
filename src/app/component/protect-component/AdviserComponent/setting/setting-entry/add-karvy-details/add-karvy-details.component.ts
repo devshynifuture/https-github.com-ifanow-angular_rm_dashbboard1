@@ -36,13 +36,14 @@ export class AddKarvyDetailsComponent implements OnInit {
     this.karvyFG = this.fb.group({
       advisorId: [this.advisorId],
       arnRiaDetailsId: [this.data.mainData.arnRiaDetailsId, [Validators.required]],
-      rtTypeMasterid: [this.data.rtType],
-      loginId: [this.data.number, [Validators.required]],
-      loginPassword: [this.data.type, [Validators.required]],
+      arnOrRia: [this.data.mainData.arnOrRia],
+      rtTypeMasterid: [this.data.mainData.rtType],
+      loginId: [this.data.mainData.loginId, [Validators.required]],
+      loginPassword: [this.data.mainData.loginPassword, [Validators.required]],
       rtExtTypeId: [2], // dbf file extension
-      mailbackPassword: [this.data.type, [Validators.required]],
-      registeredEmail: [this.data.email, [Validators.required, Validators.email]],
-      file_ordering: [this.data.type, [Validators.required]],
+      mailbackPassword: [this.data.mainData.mailbackPassword, [Validators.required]],
+      registeredEmail: [this.data.mainData.registeredEmail, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
+      fileOrderingUseabilityStatusId: [this.data.mainData.fileOrderingUseabilityStatusId, [Validators.required]],
     });
   }
 
@@ -51,6 +52,7 @@ export class AddKarvyDetailsComponent implements OnInit {
       this.karvyFG.markAllAsTouched();
     } else {
       const jsonObj = this.karvyFG.getRawValue();
+      jsonObj.arnOrRia = this.data.arnData.find((data) => this.karvyFG.controls.arnRiaDetailsId.value == data.id).arnOrRia;
 
       // add action
       if(!this.data.mainData.arnRiaDetailsId) {

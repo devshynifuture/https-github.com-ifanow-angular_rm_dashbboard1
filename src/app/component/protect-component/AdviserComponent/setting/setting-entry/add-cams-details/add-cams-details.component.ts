@@ -39,7 +39,7 @@ export class AddCamsDetailsComponent implements OnInit {
       arnOrRia: [this.data.mainData.arnOrRia],
       rtExtTypeId: [2], // dbf file extension
       arnRiaDetailsId: [this.data.mainData.arnRiaDetailsId, [Validators.required]],
-      registeredEmail: [this.data.mainData.registeredEmail, [Validators.required, Validators.email]],
+      registeredEmail: [this.data.mainData.registeredEmail, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
       mailbackPassword: [this.data.mainData.mailbackPassword, [Validators.required]],
     });
   }
