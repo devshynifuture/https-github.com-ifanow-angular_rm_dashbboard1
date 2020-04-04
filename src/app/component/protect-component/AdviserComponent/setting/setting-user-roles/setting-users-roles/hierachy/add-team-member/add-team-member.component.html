@@ -15,7 +15,7 @@
 
 <div class="wrapper-16 pt-90 pb-44 mb-44" [formGroup]="teamMember">
     <div class="row">
-        <div class="col-md-12 p-0">
+        <div class="col-md-11 p-0">
             <h5>Select a team member from the search box below...</h5>
             <div class="from-group">
                 <mat-form-field>
@@ -33,6 +33,9 @@
                     </mat-error>
                 </mat-form-field>
             </div>
+        </div>
+        <div class="col-md-1" *ngIf="showSpinner == true">
+            <mat-spinner class="mt-8"></mat-spinner>
         </div>
     </div>
 
@@ -61,7 +64,7 @@
                 <p class="m-0 pt-6 pb-6">Mobile number</p>
             </div>
             <div class="col-md-6 pr-10 text-right">
-                <p class="m-0 pt-6 pb-6">{{selectedMember.mobileNo}}</p>
+                <p class="m-0 pt-6 pb-6">{{selectedMember.mobile}}</p>
             </div>
         </div>
         <div class="row borderBtm">
@@ -69,7 +72,7 @@
                 <p class="m-0 pt-6 pb-6">Email</p>
             </div>
             <div class="col-md-6 pr-10 text-right">
-                <p class="m-0 pt-6 pb-6"> {{selectedMember.emailId}}</p>
+                <p class="m-0 pt-6 pb-6"> {{selectedMember.email}}</p>
             </div>
         </div>
 
@@ -91,7 +94,7 @@
             <!--        TODO    <h5 class="mb-0  text-white c-p" (click)="Close('close')">Cancel</h5>-->
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveTeamMember()">Save</button>
 
         </div>
     </div>

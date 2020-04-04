@@ -163,7 +163,7 @@ export class AddTaskTemplateComponent implements OnInit {
       category: [(!data) ? '' : (data.categoryId), [Validators.required]],
       subCategory: [(!data) ? '' : (data.subcategoryId), [Validators.required]],
       subSubCategory: [(!data) ? '' : (data.subSubCategoryId), [Validators.required]],
-      taskTemplate: [(!data) ? '' : data.taskDescription, [Validators.required]],
+      taskTemplate: [(!data) ? '' : data.adviceType, [Validators.required]],
       adviceType: [(!data) ? '' : (data.adviceTypeId) + "", [Validators.required]],
       defaultAssign: [(!data) ? '' : data.ownerName],
       turnAroundTime1: [(!data) ? '' : (data.turnAroundTime)],
