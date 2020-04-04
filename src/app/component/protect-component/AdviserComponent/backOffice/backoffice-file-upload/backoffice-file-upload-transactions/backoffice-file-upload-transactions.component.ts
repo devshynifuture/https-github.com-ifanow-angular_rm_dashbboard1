@@ -3,6 +3,8 @@ import { ReconciliationService } from '../../backoffice-aum-reconciliation/recon
 import { AuthService } from 'src/app/auth-service/authService';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
+import { BackofficeFileUploadService } from '../backoffice-file-upload.service';
+import { Subscription } from 'rxjs';
 
 export interface PeriodicElement {
   name: string;
@@ -30,26 +32,41 @@ export class BackofficeFileUploadTransactionsComponent implements OnInit {
   dataSource;
   filterObj:any;
   @ViewChild(MatSort, {static: true}) sortList: MatSort;
-  constructor(private reconService: ReconciliationService, public router : ActivatedRoute) { }
+  constructor(private reconService: ReconciliationService, public router : ActivatedRoute, private BackOffice: BackofficeFileUploadService) { }
+filter:any= {
+  rt:0,
+  status:0
+};
+private unSubcrip: Subscription;
 
   ngOnInit() {
     this.dataSource = [{}, {}, {}];
     this.isLoading = true;
     this.advisorId = AuthService.getAdvisorId();
-    this.reconService.getBackOfficeTransactions({advisorId:this.advisorId}).subscribe((data)=>{
+
+    this.unSubcrip = this.BackOffice.getFilterData().subscribe((data)=>{
+      this.filter = data;
+      this.getBackOfficeTransactions(this.filter);
+    })
+    this.getBackOfficeTransactions(this.filter);
+  }
+
+  getBackOfficeTransactions(filter){
+    let obj = {
+      advisorId:this.advisorId,
+      rt:filter.rt,
+      status:filter.status
+    }
+    this.reconService.getBackOfficeTransactions(obj).subscribe((data)=>{
       this.listData = data;
       this.dataSource = new MatTableDataSource(this.listData);
       this.dataSource.sort = this.sortList;
       this.isLoading = false;
-    })
-    
-    // this.router.paramMap.subscribe((paramMap) => {
-    //   if(paramMap.has("fliter")){
-    //     this.filterObj = paramMap.get("fliter");
-    //   }
-    // });
-    this.router.data.subscribe(data => {
-      this.filterObj=data;
-  })
+    });
+  }
+
+  ngOnDestroy() {
+    this.unSubcrip.unsubscribe();
+    console.log("unsubscribe");
   }
 }
