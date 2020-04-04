@@ -22,7 +22,7 @@ export class PeopleClientsComponent implements OnInit {
   advisorId: any;
   clientDatasource = new MatTableDataSource();
   isLoading: boolean;
-  constructor(private ngZone: NgZone, private router: Router, private subInjectService: SubscriptionInject, public eventService: EventService, private peopleService: PeopleService, public dialog: MatDialog) { }
+  constructor(private authService: AuthService, private ngZone: NgZone, private router: Router, private subInjectService: SubscriptionInject, public eventService: EventService, private peopleService: PeopleService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -93,7 +93,8 @@ export class PeopleClientsComponent implements OnInit {
   selectClient(singleClientData) {
     console.log(singleClientData);
     this.ngZone.run(() => {
-      this.router.navigate(['/customer/detail/overview/myfeed'], { state: { ...singleClientData } });
+      this.authService.setClientData(singleClientData);
+      this.router.navigate(['/customer/detail/overview/profile']);
     });
   }
   deleteModal(value, data) {
