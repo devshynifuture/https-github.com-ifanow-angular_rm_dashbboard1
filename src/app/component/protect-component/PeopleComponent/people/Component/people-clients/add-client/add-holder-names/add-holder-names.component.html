@@ -1,0 +1,20 @@
+<div [formGroup]="holderNamesForm">
+    <div [formGroup]="holderName" *ngFor="let holderName of holderNameList.controls;index as i" class="row pt-44">
+        <div class="col-md-4 text-right">
+            <h5 class="m-0 pt-8">{{i+1}} Holder Name</h5>
+        </div>
+        <div class="col-md-6 p-0">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input autocomplete="off" #name appInputValueValidation [inputValidator]="validatorType.PERSON_NAME"
+                        [maxLength]="50" formControlName="name" matInput class="form-control">
+                    <mat-hint align="end" class="f-12">{{name.value.length}}/50</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <p class="m-0 text-custom roboto pt-8" (click)="addHolders()">+</p>
+            <p class="m-0 text-custom roboto pt-8" (click)="removeHolders(i)">-
+            </p>
+        </div>
+    </div>

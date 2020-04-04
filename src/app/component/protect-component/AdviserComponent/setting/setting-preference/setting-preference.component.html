@@ -9,39 +9,49 @@
         <div class="row">
             <div class="col-md-2 p-0 pt-1 settingPreference">
                 <ul class="vertical-menu">
-                    <li (click)="viewMode ='tab1';getPortfolio()" [ngClass]="{'b-outline':viewMode =='tab1','':viewMode =='tab1'}" class="c-p">
+                    <li (click)="viewMode ='tab1';getPortfolio()"
+                        [ngClass]="{'b-outline':viewMode =='tab1','':viewMode =='tab1'}" class="c-p">
                         Portfolio section
                     </li>
 
-                    <li (click)="viewMode ='tab2';getPlan()" [ngClass]="{'b-outline':viewMode =='tab2','':viewMode =='tab2'}" class="c-p">
+                    <li (click)="viewMode ='tab2';getPlan()"
+                        [ngClass]="{'b-outline':viewMode =='tab2','':viewMode =='tab2'}" class="c-p">
                         Plan section
                     </li>
-                    <li (click)="viewMode ='tab3';" [ngClass]="{'b-outline':viewMode =='tab3','':viewMode =='tab3'}" class="c-p">
+                    <li (click)="viewMode ='tab3';" [ngClass]="{'b-outline':viewMode =='tab3','':viewMode =='tab3'}"
+                        class="c-p">
                         Activity section
                     </li>
-                    <li (click)="viewMode ='tab4';getEmailVerification()" [ngClass]="{'b-outline':viewMode =='tab4','':viewMode =='tab4'}" class=" c-p">
+                    <li (click)="viewMode ='tab4';getEmailVerification()"
+                        [ngClass]="{'b-outline':viewMode =='tab4','':viewMode =='tab4'}" class=" c-p">
                         Email verification
                     </li>
-                    <li (click)="viewMode ='tab5';getEmailTemplate()" [ngClass]="{'b-outline':viewMode =='tab5','':viewMode =='tab5'}" class=" c-p">
+                    <li (click)="viewMode ='tab5';getEmailTemplate()"
+                        [ngClass]="{'b-outline':viewMode =='tab5','':viewMode =='tab5'}" class=" c-p">
                         Email templates
                     </li>
-                    <li (click)="viewMode ='tab6'" [ngClass]="{'b-outline':viewMode =='tab6','':viewMode =='tab6'}" class=" c-p">
+                    <li (click)="viewMode ='tab6'" [ngClass]="{'b-outline':viewMode =='tab6','':viewMode =='tab6'}"
+                        class=" c-p">
                         Color theme
                     </li>
-                    <li (click)="viewMode ='tab7';getDomain()" [ngClass]="{'b-outline':viewMode =='tab7','':viewMode =='tab7'}" class=" c-p">
+                    <li (click)="viewMode ='tab7';getDomain()"
+                        [ngClass]="{'b-outline':viewMode =='tab7','':viewMode =='tab7'}" class=" c-p">
                         Domain settings
                     </li>
-                    <li (click)="viewMode ='tab8'" [ngClass]="{'b-outline':viewMode =='tab8','':viewMode =='tab8'}" class=" c-p">
+                    <li (click)="viewMode ='tab8'" [ngClass]="{'b-outline':viewMode =='tab8','':viewMode =='tab8'}"
+                        class=" c-p">
                         Website integration
                     </li>
-                    <li (click)="viewMode ='tab9'" [ngClass]="{'b-outline':viewMode =='tab9','':viewMode =='tab9'}" class=" c-p">
+                    <li (click)="viewMode ='tab9'" [ngClass]="{'b-outline':viewMode =='tab9','':viewMode =='tab9'}"
+                        class=" c-p">
                         Appearance
                     </li>
                 </ul>
 
             </div>
             <div class="col-md-10 b-a p-0 min-height" [ngSwitch]="viewMode">
-                <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngSwitchCase="'tab1'">
+                <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading"
+                    *ngSwitchCase="'tab1'">
                     <div class="p-20 ">
                         <div class="relClass">
                             <h5 class="mb-8 bar text-black" [ngClass]="{'height23': isLoading}">
@@ -50,21 +60,28 @@
                         </div>
 
                         <div class="bar">
-                            <mat-checkbox *ngIf="mutualFund" class="text-black" (change)="selectMutualFund($event,mutualFund)" [checked]="mutualFund.selectedOrDeselected">Show absolute returns for new clients
+                            <mat-checkbox *ngIf="mutualFund" class="text-black"
+                                (change)="selectMutualFund($event,mutualFund)"
+                                [checked]="mutualFund.selectedOrDeselected">Show absolute returns for new clients
                             </mat-checkbox>
-                            <p class="m-0 text-custom pb-20 bb-1 pl-24">New client is defined as one whose oldest mutual fund transaction is less than one year old.</p>
+                            <p class="m-0 text-custom pb-20 bb-1 pl-24">New client is defined as one whose oldest mutual
+                                fund transaction is less than one year old.</p>
                         </div>
 
                         <div class="pt-20 relClass">
                             <div class="bar">
-                                <mat-checkbox class="text-black" *ngIf="mutualFund2" (change)="selectMutualFund($event,mutualFund2)" [checked]="mutualFund2.selectedOrDeselected">Show mutual fund fact sheet
+                                <mat-checkbox class="text-black" *ngIf="mutualFund2"
+                                    (change)="selectMutualFund($event,mutualFund2)"
+                                    [checked]="mutualFund2.selectedOrDeselected">Show mutual fund fact sheet
                                 </mat-checkbox>
-                                <p class="m-0 text-custom pl-24">Mutual fund fact sheets are shown when clicked on the mutual fund schemes from the portfolio MF reports section.</p>
+                                <p class="m-0 text-custom pl-24">Mutual fund fact sheets are shown when clicked on the
+                                    mutual fund schemes from the portfolio MF reports section.</p>
                             </div>
 
                             <div class="bb-1 pl-24 pt-12 pb-20 relClass">
                                 <div class="bar" [ngClass]="{'height23': isLoading}">
-                                    <mat-checkbox class="text-black" (change)="selectMutualFund($event, null)">Show investor returns vs scheme returns widget in fact sheet
+                                    <mat-checkbox class="text-black" (change)="selectMutualFund($event, null)">Show
+                                        investor returns vs scheme returns widget in fact sheet
                                     </mat-checkbox>
                                 </div>
                             </div>
@@ -78,9 +95,15 @@
                 <div *ngSwitchCase="'tab2'">
                     <div class="p-20" *ngIf="planSection">
                         <h5 class="mb-8  text-black">Insurance planning</h5>
-                        <mat-checkbox class="text-black" (change)="selectPlan($event,planSec1[0])" [checked]="planSec1[0].selectedOrDeselected">Show XIRR returns for insurance policies
-                        </mat-checkbox>
-                        <p class="m-0 text-custom pb-20 bb-1 pl-24">These returns are displayed when giving recommendations on current policies.</p>
+                        <div class="pt-20 relClass">
+                            <div class="bar">
+                                <mat-checkbox *ngIf="planSec1" class="text-black" (change)="selectPlan($event,planSec1)"
+                                    [checked]="planSec1.selectedOrDeselected">Show XIRR returns for insurance policies
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                        <p class="m-0 text-custom pb-20 bb-1 pl-24">These returns are displayed when giving
+                            recommendations on current policies.</p>
                     </div>
                     <div *ngIf="planSection == undefined" class="d-flex flex-column align-items-center">
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
@@ -97,10 +120,15 @@
                         <div class="row">
                             <div class="col-md-8 p-0">
                                 <h5 class="mb-8 text-black">Email verification</h5>
-                                <p class="m-0 text-custom l-18 roboto">When you verify your email, you can send various mails to your clients through the verified email. To verify an emaiil, click the Add now button and follow the procedure explained therein.</p>
-                                <p class="mb-0 text-custom l-18 roboto mt-12">Tip: You can have different email for different purpose. E.g. for welcome email, for sending reports, taking cosent on advice, transaction confirmation etc.</p>
+                                <p class="m-0 text-custom l-18 roboto">When you verify your email, you can send various
+                                    mails to your clients through the verified email. To verify an emaiil, click the Add
+                                    now button and follow the procedure explained therein.</p>
+                                <p class="mb-0 text-custom l-18 roboto mt-12">Tip: You can have different email for
+                                    different purpose. E.g. for welcome email, for sending reports, taking cosent on
+                                    advice, transaction confirmation etc.</p>
                                 <div class="col-md-12 p-0 mt-24 text-right">
-                                    <button mat-stroked-button class="btn-primary btnNewEmail" (click)="verifyEmail('')">
+                                    <button mat-stroked-button class="btn-primary btnNewEmail"
+                                        (click)="verifyEmail('')">
                                         <i class="material-icons text-white"> add</i>
                                         ADD NEW
                                     </button>
@@ -130,13 +158,14 @@
                                     <ng-container matColumnDef="weight">
                                         <th mat-header-cell *matHeaderCellDef> </th>
                                         <td mat-cell class="text-center" *matCellDef="let element">
-                                            <img class="c-p" [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg">
+                                            <img class="c-p" [matMenuTriggerFor]="menu"
+                                                src="/assets/images/svg/dot-menu.svg">
                                             <mat-menu #menu="matMenu">
-                                                <button mat-menu-item (click)="verifyEmail(element)">
+                                                <!-- <button mat-menu-item (click)="verifyEmail(element)">
                                                     <span>Edit</span>
-                                                </button>
-                                                <button mat-menu-item>
-                                                    <span>menu2</span>
+                                                </button> -->
+                                                <button mat-menu-item (click)="deleteModal('emailVerify',element)">
+                                                    <span>Delete</span>
                                                 </button>
                                             </mat-menu>
                                         </td>
@@ -184,13 +213,14 @@
                                     <ng-container matColumnDef="symbol">
                                         <th mat-header-cell class="br w-3" *matHeaderCellDef> </th>
                                         <td mat-cell class="br w-3" *matCellDef="let element">
-                                            <img class="c-p" [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg">
+                                            <img class="c-p" [matMenuTriggerFor]="menu"
+                                                src="/assets/images/svg/dot-menu.svg">
                                             <mat-menu #menu="matMenu">
                                                 <button mat-menu-item (click)="OpenEmail('emailTemp',element)">
                                                     <span>Edit</span>
                                                 </button>
-                                                <button mat-menu-item>
-                                                    <span>menu2</span>
+                                                <button mat-menu-item (click)="deleteModal('template',element)">
+                                                    <span>Delete</span>
                                                 </button>
                                             </mat-menu>
                                         </td>
@@ -213,10 +243,13 @@
                     <div class="p-20">
                         <div class="row">
                             <div class="col-md-10 p-0">
-                                <h5 class="m-0">Color theme<span class="ba-warning text-warning f-12 p-4 br-2 ml-12" matTooltip="This is a premium feature.Please upgrade to use it.">Premium</span>
+                                <h5 class="m-0">Color theme<span class="ba-warning text-warning f-12 p-4 br-2 ml-12"
+                                        matTooltip="This is a premium feature.Please upgrade to use it.">Premium</span>
                                 </h5>
-                                <p class="m-0 text-custom roboto pt-8">Color theme customization allows you to have great control over the look and feel of the IFANOW application.</p>
-                                <p class="m-0 roboto text-custom">Tip: Match the theme color with your logo or brand’s primary color. And avoid light colors totally.</p>
+                                <p class="m-0 text-custom roboto pt-8">Color theme customization allows you to have
+                                    great control over the look and feel of the IFANOW application.</p>
+                                <p class="m-0 roboto text-custom">Tip: Match the theme color with your logo or brand’s
+                                    primary color. And avoid light colors totally.</p>
                             </div>
                         </div>
                         <div class="row pt-32">
@@ -226,14 +259,16 @@
                             <div class="col-md-6 bl-1 pl-48 color-picker-tabs">
                                 <p class="m-0 roboto f-500 pt-12">Preview</p>
                                 <p class="m-0 roboto f-500 pt-20">Button</p>
-                                <p class="m-0 text-custom roboto">Below is the preview of how a button will look with the chosen color</p>
+                                <p class="m-0 text-custom roboto">Below is the preview of how a button will look with
+                                    the chosen color</p>
                                 <div class="pt-12">
                                     <button mat-stroked-button class="btn-header sampleButton mr-20">Sample button
                                         1</button>
                                     <button mat-stroked-button class="text-header sampleButton">Sample button 2</button>
                                 </div>
                                 <p class="text-black mb-0 roboto mt-28">Menu bar</p>
-                                <p class="f-12 roboto mb-12 text-custom  ">Below is the preview of how a menu bar will look with the chosen color</p>
+                                <p class="f-12 roboto mb-12 text-custom  ">Below is the preview of how a menu bar will
+                                    look with the chosen color</p>
                                 <mat-tab-group animationDuration="0ms">
                                     <mat-tab label="ITEM 1"></mat-tab>
                                     <mat-tab label="ITEM 2"></mat-tab>
@@ -247,7 +282,10 @@
                     <div class="row p-20">
                         <div class="col-md-10 p-0">
                             <h5 class="m-0">Domain settings</h5>
-                            <p class="text-custom m-0 roboto pt-6">Domain settings gives you an option to customize the link with which IFANOW is accessed by you, your team and your clients. You have an option to either Partially or Completely white label the URL. <span class="text-primary text-underline c-p">Read more</span></p>
+                            <p class="text-custom m-0 roboto pt-6">Domain settings gives you an option to customize the
+                                link with which IFANOW is accessed by you, your team and your clients. You have an
+                                option to either Partially or Completely white label the URL. <span
+                                    class="text-primary text-underline c-p">Read more</span></p>
                         </div>
                         <div class="row pt-28" [formGroup]="domainS">
                             <div class="col-md-7 pl-0">
@@ -256,19 +294,24 @@
                                         <p class="m-0 text-black roboto f-500">Option 1: Partial white label</p>
                                     </div>
                                     <div class="col-md-1 p-0 text-right" *ngIf="showUpdate == false">
-                                        <button mat-stroked-button class="btn-dark-outline xs" (click)="editDomain(true,'normal',normalDomain[0])">Edit</button>
+                                        <button mat-stroked-button class="btn-dark-outline xs"
+                                            (click)="editDomain(true,'normal',normalDomain[0])">Edit</button>
                                     </div>
                                     <div class="col-md-1 p-0 text-right" *ngIf="showUpdate == true">
-                                        <button mat-stroked-button class="btn-dark-outline xs" (click)="editDomain(false,'normal',normalDomain[0])">Update</button>
+                                        <button mat-stroked-button class="btn-dark-outline xs"
+                                            (click)="editDomain(false,'normal',normalDomain[0])">Update</button>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-11 p-0 pt-6">
                                         <div class="form-group b-a">
                                             <mat-form-field class="url">
-                                                <button mat-stroked-button class="b-0 h-40 bg-grey lter min-80 text-custom">https://</button>
-                                                <input matInput type="text" [disabled]="!showUpdate" class="form-control b-0 w-60" formControlName="normalLable">
-                                                <button mat-stroked-button class="right b-0 h-40 bg-grey lter min-80 pl-8 text-custom">.myplanner.in</button>
+                                                <button mat-stroked-button
+                                                    class="b-0 h-40 bg-grey lter min-80 text-custom">https://</button>
+                                                <input matInput type="text" [disabled]="!showUpdate"
+                                                    class="form-control b-0 w-60" formControlName="normalLable">
+                                                <button mat-stroked-button
+                                                    class="right b-0 h-40 bg-grey lter min-80 pl-8 text-custom">.myplanner.in</button>
                                             </mat-form-field>
                                         </div>
                                     </div>
@@ -276,22 +319,27 @@
 
                                 <div class="row pt-60" *ngIf="whiteLabledDomain">
                                     <div class="col-md-10 p-0">
-                                        <p class="m-0 text-black roboto f-500">Option 2: Complete white label<span class="text-warning ba-warning f-12 p-2 ml-12 ba-warning br-2 c-p">Premium</span>
+                                        <p class="m-0 text-black roboto f-500">Option 2: Complete white label<span
+                                                class="text-warning ba-warning f-12 p-2 ml-12 ba-warning br-2 c-p">Premium</span>
                                         </p>
                                     </div>
                                     <div class="col-md-1 p-0 text-right" *ngIf="showUpdateWhite == false">
-                                        <button mat-stroked-button class="btn-dark-outline xs" (click)="editDomain(true,'white',whiteLabledDomain[0])">Edit</button>
+                                        <button mat-stroked-button class="btn-dark-outline xs"
+                                            (click)="editDomain(true,'white',whiteLabledDomain[0])">Edit</button>
                                     </div>
                                     <div class="col-md-1 p-0 text-right" *ngIf="showUpdateWhite == true">
-                                        <button mat-stroked-button class="btn-dark-outline xs" (click)="editDomain(false,'white',whiteLabledDomain[0])">Update</button>
+                                        <button mat-stroked-button class="btn-dark-outline xs"
+                                            (click)="editDomain(false,'white',whiteLabledDomain[0])">Update</button>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-11 p-0 pt-6">
                                         <div class="form-group b-a">
                                             <mat-form-field class="url">
-                                                <button mat-stroked-button class="b-0 h-40 bg-grey lter min-80 text-custom">https://</button>
-                                                <input matInput type="text" disabled=true class="form-control b-0 w-60" formControlName="whiteLable">
+                                                <button mat-stroked-button
+                                                    class="b-0 h-40 bg-grey lter min-80 text-custom">https://</button>
+                                                <input matInput type="text" disabled=true class="form-control b-0 w-60"
+                                                    formControlName="whiteLable">
 
                                             </mat-form-field>
                                         </div>
@@ -300,22 +348,31 @@
 
                                 <div class="url-details">
                                     <ul class="d-block">
-                                        <li class="text-custom p-0">Please decide on a subdomain that you want for your main domain
+                                        <li class="text-custom p-0">Please decide on a subdomain that you want for your
+                                            main domain
                                         </li>
                                     </ul>
                                     <ul class="d-block pl-16 pt-8">
-                                        <li class="text-custom p-0">E.g. if your main domain is abcadvisor.in and you want your clients to redirect to clients.abcadvisor.in then the subdomain in this case is clients.
+                                        <li class="text-custom p-0">E.g. if your main domain is abcadvisor.in and you
+                                            want your clients to redirect to clients.abcadvisor.in then the subdomain in
+                                            this case is clients.
                                         </li>
                                     </ul>
                                     <ul class="d-block pt-10">
-                                        <li class="text-custom p-0">PNext, create a <span class="text-primary">CNAME</span> entry with this subdomain in your domain’s admin portal. The CNAME should point to <span class="text-primary">my-planner.in</span></li>
+                                        <li class="text-custom p-0">PNext, create a <span
+                                                class="text-primary">CNAME</span> entry with this subdomain in your
+                                            domain’s admin portal. The CNAME should point to <span
+                                                class="text-primary">my-planner.in</span></li>
                                     </ul>
                                     <ul class="d-block pt-10 pl-16">
-                                        <li class="text-custom p-0">If you are not sure, your website developer or domain provider should be able to help. <span class="text-primary">Email
+                                        <li class="text-custom p-0">If you are not sure, your website developer or
+                                            domain provider should be able to help. <span class="text-primary">Email
                                                 these instructions.</span></li>
                                     </ul>
                                     <ul class="d-block pt-10 pl-16">
-                                        <li class="text-custom p-0">Once done, please let us know. We will install an SSL certificate from our end. This is to ensure data is encrypted with 256-bit SSL encyrption while being sent to the server.</li>
+                                        <li class="text-custom p-0">Once done, please let us know. We will install an
+                                            SSL certificate from our end. This is to ensure data is encrypted with
+                                            256-bit SSL encyrption while being sent to the server.</li>
                                     </ul>
                                 </div>
                             </div>
@@ -324,18 +381,26 @@
                                     <div class="col-md-10 p-0">
                                         <p class="m-0 text-black roboto f-500">Option 1: Partial white label</p>
                                     </div>
-                                    <div class="col-md-2 p-0 text-right">
-                                        <button mat-stroked-button class="btn-dark-outline xs">Edit</button>
+                                    <div class="col-md-1 p-0 text-right" *ngIf="showUpdateBrand == false">
+                                        <button mat-stroked-button class="btn-dark-outline xs"
+                                            (click)="editDomain(true,'brand',brandVisibility[0])">Edit</button>
+                                    </div>
+                                    <div class="col-md-1 p-0 text-right" *ngIf="showUpdateBrand == true">
+                                        <button mat-stroked-button class="btn-dark-outline xs"
+                                            (click)="editDomain(false,'brand',brandVisibility[0])">Update</button>
                                     </div>
                                 </div>
                                 <img src="/assets/images/svg/site-title.svg" class="pt-20">
                                 <div class="form-group mb-0 pt-20">
                                     <mat-form-field>
-                                        <input matInput class="form-control">
+                                        <input matInput class="form-control" formControlName="brandVisible"
+                                            brandVisible>
                                     </mat-form-field>
                                 </div>
-                                <p class="pt-20 text-custom roboto m-0"> The site title is visible on the browser bar. You can customize it here. </p>
-                                <p class="pt-4 text-custom roboto m-0">Tip: You can put your company name here for better brand visibility.</p>
+                                <p class="pt-20 text-custom roboto m-0"> The site title is visible on the browser bar.
+                                    You can customize it here. </p>
+                                <p class="pt-4 text-custom roboto m-0">Tip: You can put your company name here for
+                                    better brand visibility.</p>
                             </div>
                         </div>
                     </div>

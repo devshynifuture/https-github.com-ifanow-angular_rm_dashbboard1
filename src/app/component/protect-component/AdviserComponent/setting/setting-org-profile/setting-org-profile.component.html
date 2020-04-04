@@ -16,10 +16,10 @@
     <div class="col-xl-2"></div>
     <div class="col-xl-8">
         <mat-card class="b-a p-0 br-4">
-            <mat-card-header class="bg-grey lter wrapper-18 relClass">
+            <mat-card-header class="bg-grey lter wrapper-18">
                 <div class="row w-100" *ngIf="userList">
                     <div class="col-md-9 pl-0">
-                        <h2 class="m-0">{{userList.name}}</h2>
+                        <h2 class="m-0">{{userList.fullName}}</h2>
                     </div>
                     <div class="col-md-3 p-0 text-right">
                         <button mat-stroked-button class="text-primary">ADMIN</button>
@@ -28,7 +28,7 @@
                         <mat-menu #menu="matMenu">
                             <!-- ng build prod issue expected 2 args given empty string -->
                             <button mat-menu-item (click)="OpenpersonalProfile(userList, '')">Edit</button>
-                            <button mat-menu-item>Delete</button>
+                            <!-- <button mat-menu-item>Delete</button> -->
                         </mat-menu>
                     </div>
                 </div>
@@ -79,10 +79,10 @@
 
 <div class="row pt-40 pb-20" id="ui-setting-profile" *ngIf="orgProfile == true">
     <div class="col-xl-2"></div>
-    <div class="col-xl-8 p-0">
+    <div class="col-xl-8">
         <mat-card class="b-a p-0 br-4">
-            <mat-card-header class="bg-grey lter p-24">
-                <div class="row w-100">
+            <mat-card-header class="bg-grey lter wrapper-18">
+                <div class="row w-100" *ngIf="orgDetails">
                     <div class="col-md-9 pl-0">
                         <h2 class="m-0">{{orgDetails.companyName}}</h2>
                     </div>
@@ -163,11 +163,11 @@
     </div>
     <div class="col-xl-2"></div>
 </div>
-<!-- <div *ngIf="orgDetails == undefined && orgProfile == true" class="d-flex flex-column align-items-center">
+<div *ngIf="orgDetails == undefined && orgProfile == true" class="d-flex flex-column align-items-center">
     <img class="width300" src="assets/images/svg/noDataFound.svg">
     <h4 class="text-center pt-12">No organization profile found</h4>
 </div>
 <div *ngIf="userList == undefined && orgProfile == false" class="d-flex flex-column align-items-center">
     <img class="width300" src="assets/images/svg/noDataFound.svg">
     <h4 class="text-center pt-12">No personal profile found</h4>
-</div> -->
+</div>

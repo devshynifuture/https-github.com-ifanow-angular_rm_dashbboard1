@@ -49,6 +49,9 @@ export class OrgSettingServiceService {
   getEmailTempalate(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EMAIL_TEMPLATES, data);
   }
+  editPreEmailTemplate(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_PREF_EMAIL_TEMPLATE, data);
+  }
   addEmailVerfify(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_EMAIL_VERIFY, data);
   }
@@ -68,7 +71,7 @@ export class OrgSettingServiceService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.UPLOAD_PLAN_GALLERY, data);
   }
   updateKeyParameter(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.UPDATE_DOMAIN, data);
+    return this.http.post(apiConfig.MAIN_URL + appConfig.UPLOAD_KEY_PARAMETER, data);
   }
 
   addTaskTemplate(data) {
@@ -103,6 +106,12 @@ export class OrgSettingServiceService {
   }
   getTeamMemberList(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_TEAM_MEMBER_LIST, data, 1);
+  }
+  deleteEmailVerify(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_EMAIL_VERIFY, data);
+  }
+  deletePrefEmailTemplate(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_PREF_EMAIL_TEMPLATE, data);
   }
   alterTable(table: (UpperTableBox | Group)[], field: string, value: string, index: number): (UpperTableBox | Group)[] {
     table[index][field]['value'] = value;

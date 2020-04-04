@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
@@ -12,11 +12,11 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
   styleUrls: ['./client-upload.component.scss']
 })
 export class ClientUploadComponent implements OnInit {
-  @ViewChild('fileComPan',{static:false}) fileComPanRef;
+  @ViewChild('fileComPan', { static: false }) fileComPanRef;
   advisorId: any;
   clientId: any;
-  proofTypes:any = [];
-  bankLIst:any = [];
+  proofTypes: any = [];
+  bankLIst: any = [];
   constructor(private subInjectService: SubscriptionInject, private http: HttpService, private custumService: CustomerService, private enumService: EnumServiceService) { }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -29,10 +29,14 @@ export class ClientUploadComponent implements OnInit {
       userId: 2,
       userType: 2
     };
-    this.custumService.getClientUploadFile(obj).subscribe((data)=>{
+    this.custumService.getClientUploadFile(obj).subscribe((data) => {
       console.log("added get", data);
-      
+      this.getUploadedImg(data)
     });
+  }
+
+  @Input() set data(data) {
+    console.log(data)    //////////user data////////////////////
   }
 
   saveClose() {
@@ -41,25 +45,65 @@ export class ClientUploadComponent implements OnInit {
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
-  myFiles:any =[];
-  filenm:any;
-  parentId:any;
-  addressProof:any="";
-  bankProof:any = "";
-  selectedBank:any = "";
-  proofSubType:any = 1;
-  fileComPanImg:any = {view:'', store:''};
-  filePerPanImg:any= {view:'', store:''};
-  fileProof1Img:any = {view:'', store:''};
-  fileProof2Img:any = {view:'', store:''};
-  imgWidth:any=100;
+  myFiles: any = [];
+  filenm: any;
+  parentId: any;
+  addressProof: any = "";
+  bankProof: any = "";
+  selectedBank: any = "";
+  proofSubType: any = 0;
+  fileComPanImg: any = { view: '', store: '' };
+  filePerPanImg: any = { view: '', store: '' };
+  fileProof1Img: any = { view: '', store: '' };
+  fileProof2Img: any = { view: '', store: '' };
+  fileProof2BackImg: any = { view: '', store: '' };
+  imgWidth: any = 100;
   imgStyleCom = {
-    "width":this.imgWidth + "%",
-    "height":"auto"
+    "width": this.imgWidth + "%",
+    "height": "auto"
   }
-  imgStylePer= {
-    "width":this.imgWidth + "%",
-    "height":"auto"
+  imgStylePer = {
+    "width": this.imgWidth + "%",
+    "height": "auto"
+  }
+
+  getUploadedImg(data) {
+    data.forEach(imgData => {
+      // const obj = {
+      //   clientId: imgData.clientId,
+      //   advisorId: this.advisorId,
+      //   folderId: imgData.folderId,
+      //   fileName: imgData.fileName
+      // };
+      const obj = {
+        fileId: imgData.fileId
+      };
+      this.custumService.getClientProof(obj).subscribe(
+        (data) => {
+          if (imgData.proofType == 2 && imgData.documentId == 0) {
+            this.fileComPanImg.view = data;
+            this.fileComPanImg.store = imgData;
+          }
+          else if (imgData.proofType == 1 && imgData.documentId == 0) {
+            this.filePerPanImg.view = data;
+            this.filePerPanImg.store = imgData;
+          }
+          else if (imgData.documentId == 1) {
+            this.fileProof1Img.view = data;
+            this.fileProof1Img.store = imgData;
+          }
+          else if (imgData.documentId == 2 && imgData.proofSubType == 1) {
+            this.fileProof2Img.view = data;
+            this.fileProof2Img.store = imgData;
+          }
+          else if (imgData.documentId == 2 && imgData.proofSubType == 2) {
+            this.fileProof2BackImg.view = data;
+            this.fileProof2BackImg.store = imgData;
+          }
+          console.log(data, "imge");
+        }
+      );
+    });
   }
 
   addDocObj = {
@@ -67,13 +111,13 @@ export class ClientUploadComponent implements OnInit {
     clientId: 0,
     userId: 2,
     userType: 2,
-    documentId:0,
-    documentType:0,
-    proofType:0,
-    proofSubType:0,
-    fileName:''
+    documentId: 0,
+    documentType: 0,
+    proofType: 0,
+    proofSubType: 1,
+    fileName: ''
   }
-  
+
   getFile(e, type) {
     this.myFiles = [];
     const file = (e.target as HTMLInputElement).files[0];
@@ -95,13 +139,19 @@ export class ClientUploadComponent implements OnInit {
           this.fileProof1Img.view = reader.result;
           break;
         case "proof-type2":
-          this.fileProof2Img.store = e.target.files[0];
-          this.fileProof2Img.view = reader.result;
+          if (this.viewFront) {
+            this.fileProof2Img.store = e.target.files[0];
+            this.fileProof2Img.view = reader.result;
+          }
+          else {
+            this.fileProof2BackImg.store = e.target.files[0];
+            this.fileProof2BackImg.view = reader.result;
+          }
           break;
         default:
           break;
       }
-    } 
+    }
     reader.readAsDataURL(file);
     for (let i = 0; i < e.target.files.length; i++) {
       this.myFiles.push(e.target.files[i]);
@@ -113,8 +163,8 @@ export class ClientUploadComponent implements OnInit {
     this.uploadFile(type);
   }
 
-  
-  countFile:any;
+
+  countFile: any;
   uploadFile(imgType) {
     this.parentId = (this.parentId == undefined) ? 0 : this.parentId;
     this.countFile++;
@@ -134,7 +184,6 @@ export class ClientUploadComponent implements OnInit {
       case "proof-type2":
         fileName = this.fileProof2Img.store;
         this.addDocObj.documentType = 2;
-
         break;
     }
     const obj = {
@@ -149,19 +198,28 @@ export class ClientUploadComponent implements OnInit {
   removeImg(imgType) {
     switch (imgType) {
       case "company-pan":
-        this.fileComPanImg = {view:'', store:''};
+        this.deleteImg(this.fileComPanImg.store.id);
+        this.fileComPanImg = { view: '', store: '' };
         this.fileComPanRef.nativeElement.files.FileList = null;
         break;
       case "personal-pan":
-        this.filePerPanImg= {view:'', store:''};
+        this.deleteImg(this.filePerPanImg.store.id);
+        this.filePerPanImg = { view: '', store: '' };
         break;
       case "proof-type1":
-        this.fileProof1Img = {view:'', store:''};
+        this.fileProof1Img = { view: '', store: '' };
         break;
       case "proof-type2":
-        this.fileProof2Img = {view:'', store:''};
+        this.fileProof2Img = { view: '', store: '' };
         break;
     }
+  }
+
+  deleteImg(imgId) {
+    let obj = { id: imgId }
+    this.custumService.deleteClientProof(obj).subscribe((data) => {
+      console.log("delete proof", data);
+    });
   }
 
   uploadFileRes(data, fileName, type) {
@@ -201,15 +259,23 @@ export class ClientUploadComponent implements OnInit {
     });
   }
 
-  addDocumentUsers(obj){
-    this.custumService.saveClientUploadFile(obj).subscribe((data)=>{
+  addDocumentUsers(obj) {
+    console.log(obj, "save obj");
+
+    this.custumService.saveClientUploadFile(obj).subscribe((data) => {
       console.log("added", data);
-      
+
     });
   }
-
-  getSubType(sub){
+  viewFront: boolean = true;
+  getSubType(sub) {
     this.proofSubType = sub;
+    if (sub == 1) {
+      this.viewFront = true;
+    }
+    else {
+      this.viewFront = false;
+    }
   }
   // getProofType(type){
   //   switch (type) {
@@ -221,27 +287,27 @@ export class ClientUploadComponent implements OnInit {
   //       break;
   //   }
   // }
-  errProof1:boolean = true;
-  showErr1:boolean = false;
-  errProof2:boolean = true;
-  showErr2:boolean = false;
-  checkSelected(proof, err){
+  errProof1: boolean = true;
+  showErr1: boolean = false;
+  errProof2: boolean = true;
+  showErr2: boolean = false;
+  checkSelected(proof, err) {
     switch (proof) {
       case 'proof-type1':
-        if(this.selectedBank != '' && this.bankProof!=""){
+        if (this.selectedBank != '' && this.bankProof != "") {
           this.errProof1 = false;
-        }else{
-          if(err){
+        } else {
+          if (err) {
             this.showErr1 = true;
           }
         }
         break;
-    
+
       case 'proof-type2':
-        if(this.addressProof != ''){
+        if (this.addressProof != '') {
           this.errProof2 = false;
-        }else{
-          if(err){
+        } else {
+          if (err) {
             this.showErr2 = true;
           }
         }
@@ -249,24 +315,24 @@ export class ClientUploadComponent implements OnInit {
     }
   }
 
-  zoomInOut(zoom, imgType){
+  zoomInOut(zoom, imgType) {
     switch (imgType) {
       case "company-pan":
-        if(this.imgWidth < 300 && zoom == "zoomIn" ){
+        if (this.imgWidth < 300 && zoom == "zoomIn") {
           this.imgWidth += 10;
           this.imgStyleCom.width = this.imgWidth + "%";
         }
-        else if(this.imgWidth > 100 && zoom == "zoomOut"){
+        else if (this.imgWidth > 100 && zoom == "zoomOut") {
           this.imgWidth -= 10;
           this.imgStyleCom.width = this.imgWidth + "%";
         }
         break;
       case "personal-pan":
-        if(this.imgWidth < 300 && zoom == "zoomIn" ){
+        if (this.imgWidth < 300 && zoom == "zoomIn") {
           this.imgWidth += 10;
           this.imgStylePer.width = this.imgWidth + "%";
         }
-        else if(this.imgWidth > 100 && zoom == "zoomOut"){
+        else if (this.imgWidth > 100 && zoom == "zoomOut") {
           this.imgWidth -= 10;
           this.imgStylePer.width = this.imgWidth + "%";
         }

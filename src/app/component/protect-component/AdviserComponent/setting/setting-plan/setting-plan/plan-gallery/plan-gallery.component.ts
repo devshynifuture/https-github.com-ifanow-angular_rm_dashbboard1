@@ -21,18 +21,20 @@ export class PlanGalleryComponent implements OnInit {
 
   constructor(private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject, private eventService: EventService,
-    public dialog: MatDialog, private fb: FormBuilder, private planService: PlanService) { }
+    public dialog: MatDialog, private fb: FormBuilder, private planService: PlanService) {
+    this.advisorId = AuthService.getAdvisorId()
+    this.userId = AuthService.getUserId()
+  }
 
   ngOnInit() {
     this.getDefault()
-    this.advisorId = AuthService.getAdvisorId()
-    this.userId = AuthService.getUserId()
+
   }
 
 
   getDefault() {
     let advisorObj = {
-      advisorId: 2808
+      advisorId: this.advisorId
     }
     this.planService.getGoalGlobalData(advisorObj).subscribe(
       data => this.getGoalGlobalDataRes(data),
@@ -46,8 +48,8 @@ export class PlanGalleryComponent implements OnInit {
   }
   openGallery() {
     const dialogRef = this.dialog.open(OpenGalleryPlanComponent, {
-      width: '500px',
-      height: '500px',
+      width: '470px',
+      height: '280px',
       data: { bank: '', animal: '' }
     });
     dialogRef.afterClosed().subscribe(result => {

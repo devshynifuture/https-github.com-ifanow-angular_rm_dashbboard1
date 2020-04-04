@@ -12,9 +12,10 @@ import { ClientDematComponent } from './Component/people-clients/add-client/clie
 import { ClientUploadComponent } from './Component/people-clients/add-client/client-upload/client-upload.component';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { AddNumberComponent } from './Component/people-clients/add-client/add-number/add-number.component';
+import { AddHolderNamesComponent } from './Component/people-clients/add-client/add-holder-names/add-holder-names.component';
 
 
-export const componentList = [AddClientComponent, LeadsClientsComponent, ClientBasicDetailsComponent, ClientMoreInfoComponent, ClientAddressComponent, ClientBankComponent, ClientDematComponent, ClientUploadComponent, AddNumberComponent]
+export const componentList = [AddClientComponent, LeadsClientsComponent, ClientBasicDetailsComponent, ClientMoreInfoComponent, ClientAddressComponent, ClientBankComponent, ClientDematComponent, ClientUploadComponent, AddNumberComponent, AddHolderNamesComponent]
 @NgModule({
   declarations: [componentList],
   imports: [

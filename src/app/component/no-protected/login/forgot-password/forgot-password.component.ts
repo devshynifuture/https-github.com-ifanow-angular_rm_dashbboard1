@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ValidatorType } from 'src/app/services/util.service';
-import { FormControl, Validators, FormBuilder } from '@angular/forms';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { LoginService } from '../login.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { Router } from '@angular/router';
@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./forgot-password.component.scss']
 })
 export class ForgotPasswordComponent implements OnInit {
-  isVerify: boolean = false;
-  verifyFlag
+  isVerify = false;
+  verifyFlag;
   otp: any;
   validatorType = ValidatorType;
   otpData = [];
@@ -27,9 +27,12 @@ export class ForgotPasswordComponent implements OnInit {
     no4: [],
     no5: [],
     no6: []
-  })
+  });
   userNameVerifyResponse: any;
-  constructor(private loginService: LoginService, private eventService: EventService, private router: Router, private fb: FormBuilder) { }
+
+  constructor(private loginService: LoginService, private eventService: EventService, private router: Router, private fb: FormBuilder) {
+  }
+
   ngOnInit() {
     this.verifyData = window.history.state;
     this.saveVerifyData = Object.assign({}, window.history.state);
@@ -38,25 +41,31 @@ export class ForgotPasswordComponent implements OnInit {
       this.verify('Email');
       this.verifyFlag = 'Email';
       this.hideNumEmailFromUser(this.verifyData);
-    }
-    else {
+    } else {
       this.isVerify = false;
-    };
+    }
     this.userName = new FormControl('', [Validators.required]);
   }
-  hideNumEmailFromUser(verifyData) {
-    this.verifyData.mobileNo = verifyData.mobileNo.substr(0, 2) + 'XXXXX' + verifyData.mobileNo.substr(7, 9);
-    this.verifyData.emailId = verifyData.emailId.substr(2, verifyData.emailId.indexOf('@') - 2) + 'XXXXX' + verifyData.emailId.substr(7, 9)
+
+  hideNumEmailFromUser(data) {
+    if (data.emailList && data.emailList.length > 0) {
+      data.email = data.emailList[0].email;
+      this.verifyData.email = UtilService.obfuscateEmail(data.email);
+    }
+    if (data.mobileList && data.mobileList.length > 0) {
+      data.mobileNo = data.mobileList[0].mobileNo;
+      this.verifyData.mobileNo = UtilService.obfuscateEmail(String(data.mobile));
+    }
   }
+
   enterOtp(value) {
-    if (value.code.substring(0, value.code.length - 1) == 'Key' || value.code == "Backspace") {
+    if (value.code.substring(0, value.code.length - 1) == 'Key' || value.code == 'Backspace') {
       if (value.srcElement.previousElementSibling == undefined) {
         return;
       }
       value.srcElement.previousElementSibling.focus();
       this.otpData.pop();
-    }
-    else {
+    } else {
       if (value.srcElement.nextElementSibling == undefined) {
         this.otpData.push(parseInt(value.key));
         return;
@@ -65,89 +74,90 @@ export class ForgotPasswordComponent implements OnInit {
       value.srcElement.nextElementSibling.focus();
     }
   }
+
   verifyUsername() {   //////////// username///////////////////
-    let obj = {
+    const obj = {
       userName: this.userName.value
-    }
+    };
     this.loginService.getUsernameData(obj).subscribe(
       data => {
         console.log(data);
         if (data) {
-          this.userNameVerifyResponse = data;
-          this.saveVerifyData.emailId = data.emailList[0].email;
-          this.saveVerifyData.mobileNo = data.mobileList[0].mobileNo;
           this.hideNumEmailFromUser(this.saveVerifyData);
+          this.userNameVerifyResponse = data;
+          this.saveVerifyData.email = data.emailList[0].email;
+          this.saveVerifyData.mobileNo = data.mobileList[0].mobileNo;
+          this.saveVerifyData['userData'] = data
           this.isVerify = true;
-          if (this.saveVerifyData.emailId) {
-            this.verifyFlag = "Email"
-            this.verify('Email')
-          }
-          else if (this.saveVerifyData.mobileNo != 0) {
-            this.verifyFlag = "Mobile";
-            this.verify("Mobile");
-          }
-          else {
-            this.eventService.openSnackBar("Please contact your advisor for more details")
+          if (this.saveVerifyData.email) {
+            this.verifyFlag = 'Email';
+            this.verify('Email');
+          } else if (this.saveVerifyData.mobileNo != 0) {
+            this.verifyFlag = 'Mobile';
+            this.verify('Mobile');
+          } else {
+            this.eventService.openSnackBar('Please contact your advisor for more details');
           }
         }
       }
       ,
-      err => this.eventService.openSnackBar(err, "Dismiss")
-    )
+      err => this.eventService.openSnackBar(err, 'Dismiss')
+    );
   }
+
   ///////////////////////////////////// signup process///////////////////////////////
   verify(flag) {
     let verifyObj;
-    (flag == 'Email') ? verifyObj = { "forEmail": this.saveVerifyData.emailId } : verifyObj = { 'forMobNum': this.saveVerifyData.mobileNo };
-    this.verifyWithCredential(verifyObj)   ////verify Email Address
+    (flag == 'Email') ? verifyObj = { email: this.saveVerifyData.email } : verifyObj = { mobileNo: this.saveVerifyData.mobileNo };
+    this.verifyWithCredential(verifyObj);   //// verify Email Address
   }
-  verifyWithCredential(obj) {    //// verify email or mobile with credentials
+
+  verifyWithCredential(obj) {    //// verify email or mobileNo with credentials
     this.loginService.generateOtp(obj).subscribe(
       data => {
         console.log(data);
         this.otpResponse = data;
         this.isVerify = true;
       },
-      err => this.eventService.openSnackBar(err, "Dismiss")
-    )
+      err => this.eventService.openSnackBar(err, 'Dismiss')
+    );
   }
-  saveAfterVerifyCredential(obj) {    //////save verified email or mobile in the table
+
+  saveAfterVerifyCredential(obj) {    ////// save verified email or mobileNo in the table
     this.loginService.saveAfterVerification(obj).subscribe(
       data => {
         console.log(data);
-        (this.verifyFlag == 'Email') ? this.verifyFlag = "Mobile" : '';
+        (this.verifyFlag == 'Email') ? this.verifyFlag = 'Mobile' : '';
       },
-      err => this.eventService.openSnackBar(err, "Dismiss")
-    )
+      err => this.eventService.openSnackBar(err, 'Dismiss')
+    );
   }
+
   verifyWithOtpResponse(flag) {  ///// check user filled otp is correct or not
-    let otpString = this.otpData.toString().replace(/,/g, "");
-    let obj =
-    {
-      email: (this.verifyFlag == 'Email') ? this.saveVerifyData.emailId : null,
+    const otpString = this.otpData.toString().replace(/,/g, '');
+    const obj = {
+      email: (this.verifyFlag == 'Email') ? this.saveVerifyData.email : null,
       userId: this.saveVerifyData.userId,
       userType: this.saveVerifyData.userType,
       mobileNo: (this.verifyFlag == 'Mobile') ? this.saveVerifyData.mobileNo : null
-    }
+    };
     if (flag == 'Email' && this.otpData.length == 6 && this.otpResponse == otpString) {
       this.verifyForm.reset();
-      this.otpData = []
+      this.otpData = [];
       this.saveAfterVerifyCredential(obj);
-      this.eventService.openSnackBar("Otp matches sucessfully", "Dismiss");
+      this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
       if (this.userNameVerifyResponse != undefined) {
         this.router.navigate(['/login/setpassword'], { state: { userData: this.saveVerifyData.userData } });                      /////// check wheather user came from forgot password or sign-up Process
         return;
       }
       this.verify('Mobile');
-      this.verifyFlag = 'Mobile'
-    }
-    else if (flag == 'Mobile' && this.otpData.length == 6 && this.otpResponse == otpString) {
-      this.eventService.openSnackBar("Otp matches sucessfully", "Dismiss");
+      this.verifyFlag = 'Mobile';
+    } else if (flag == 'Mobile' && this.otpData.length == 6 && this.otpResponse == otpString) {
+      this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
       this.saveAfterVerifyCredential(obj);
       this.router.navigate(['/login/setpassword'], { state: { userData: this.saveVerifyData.userData } });
-    }
-    else {
-      this.eventService.openSnackBar("OTP is incorrect", "Dismiss");
+    } else {
+      this.eventService.openSnackBar('OTP is incorrect', 'Dismiss');
     }
   }
 }

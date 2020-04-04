@@ -365,12 +365,18 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
       clientData: this.storeData,
       templateType: this.templateType, // 2 is for quotation
       documentList: [this.storeData],
+      showfromEmail :(this.inputData.showfromEmail == true)? true:false,
+      fromEmailId : this.inputData.fromEmail,
+      subject:this.inputData.subject,
+      id:this.inputData.id,
+      emailTemplateTypeId:this.inputData.emailTemplateTypeId
     };
     // this.dataSource.forEach(singleElement => {
     //   if (singleElement.selected) {
     //     data.documentList.push(singleElement);
     //   }
     // });
+    console.log(' yoooo i catch data here ===', data)
     this.openEmail(data, 'email');
   }
 

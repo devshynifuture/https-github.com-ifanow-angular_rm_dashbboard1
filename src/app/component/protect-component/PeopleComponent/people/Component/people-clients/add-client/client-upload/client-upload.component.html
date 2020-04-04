@@ -100,10 +100,17 @@
             <div *ngIf="errProof2" (click)="checkSelected('proof-type2' , true)" class="errDiv">
                 <p class="m-0 roboto text-black"><span *ngIf="showErr2" style="color: red;">please select Bank and Proof type first</span><span *ngIf="!showErr2">Drag & drop file here or Browse</span></p>
             </div>
-            <div *ngIf="!errProof2" class="imgDiv" (click)="fileProof1.click()">
-                <p *ngIf="!fileProof2Img.view" class="m-0 roboto text-black">Drag & drop file here or Browse
-                </p>
-                <img [src]="fileProof2Img.view" class="img" *ngIf="fileProof2Img.view">
+            <div *ngIf="!errProof2" class="imgDiv" (click)="fileProof2.click()">
+                <div *ngIf="viewFront">
+                    <p *ngIf="!fileProof2Img.view" class="m-0 roboto text-black">Drag & drop file here or Browse
+                    </p>
+                    <img [src]="fileProof2Img.view" class="img" *ngIf="fileProof2Img.view">
+                </div>
+                <div *ngIf="!viewFront">
+                    <p *ngIf="!fileProof2BackImg.view" class="m-0 roboto text-black">Drag & drop file here or Browse
+                    </p>
+                    <img [src]="fileProof2BackImg.view" class="img" *ngIf="fileProof2BackImg.view">
+                </div>
             </div>
             
         </mat-card>

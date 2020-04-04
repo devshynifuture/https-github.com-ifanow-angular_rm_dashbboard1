@@ -64,7 +64,10 @@ export class AddTaskTemplateComponent implements OnInit {
     private event: EventService,
     private fb: FormBuilder,
   ) {
-    this.taskTemplate = this.fb.group({
+    this.advisorId = AuthService.getAdvisorId()
+
+    this.taskTemplate = 
+    this.fb.group({
       published: true,
       subTask: this.fb.array([]),
     });
@@ -74,7 +77,6 @@ export class AddTaskTemplateComponent implements OnInit {
     this.getteamMemberList()
     this.getdataForm(this.inputData)
     this.taskTemplate.controls.category.setValue(1)
-    this.advisorId = AuthService.getAdvisorId()
     this.category = 'asset'
     this.editMode = false;
     this.isEdite = false
@@ -82,7 +84,7 @@ export class AddTaskTemplateComponent implements OnInit {
   getteamMemberList() {
 
     let obj = {
-      advisorId: 55
+      advisorId: this.advisorId
     }
     this.orgSetting.getTeamMemberList(obj).subscribe(
       data => this.getTeamMemberListRes(data),
@@ -126,19 +128,25 @@ export class AddTaskTemplateComponent implements OnInit {
       this.list = this.assetSubCategoryList
       if (this.inputData.subcategoryId) {
         var subList = this.list.filter(element => element.subcategoryId == this.inputData.subcategoryId)
-        this.listOfSub = subList[0].taskTempSubcattoSubCategories
+        if(subList.length>0){
+          this.listOfSub = subList[0].taskTempSubcattoSubCategories
+        }
       }
     } else if (value == 2) {
       this.list = this.libilitySubCategoryList
       if (this.inputData.subcategoryId) {
         var subList = this.list.filter(element => element.subcategoryId == this.inputData.subcategoryId)
+        if(subList.length>0){
         this.listOfSub = subList[0].taskTempSubcattoSubCategories
+        }
       }
     } else {
       this.list = this.insuranceSubCategoryList
       if (this.inputData.subcategoryId) {
         var subList = this.list.filter(element => element.subcategoryId == this.inputData.subcategoryId)
+        if(subList.length>0){
         this.listOfSub = subList[0].taskTempSubcattoSubCategories
+        }
       }
     }
     this.getdataForm(this.inputData)
@@ -158,7 +166,7 @@ export class AddTaskTemplateComponent implements OnInit {
       taskTemplate: [(!data) ? '' : data.taskDescription, [Validators.required]],
       adviceType: [(!data) ? '' : (data.adviceTypeId) + "", [Validators.required]],
       defaultAssign: [(!data) ? '' : data.ownerName],
-      turnAroundTime: [(!data) ? '' : (data.turnAroundTime)],
+      turnAroundTime1: [(!data) ? '' : (data.turnAroundTime)],
       subTaskList: this.fb.array([this.fb.group({
         taskNumber: [1, [Validators.required]],
         description: [null, [Validators.required]],
@@ -172,7 +180,7 @@ export class AddTaskTemplateComponent implements OnInit {
         this.taskTemplate.controls.subTaskList.push(this.fb.group({
           taskNumber: [(1) + "", [Validators.required]],
           description: [(element.description + ""), Validators.required],
-          turnAroundTime: [(element.turnAroundTime), Validators.required],
+          turnAroundTime: [(element.turtAroundTime), Validators.required],
           ownerId: [element.ownerId, [Validators.required]],
           isEdite: false
         }))
@@ -192,8 +200,9 @@ export class AddTaskTemplateComponent implements OnInit {
         description: [null, [Validators.required]],
         turnAroundTime: [null, [Validators.required]],
         ownerId: [null, [Validators.required]],
-        isEdite: false
+        isEdite: true
       }));
+      //value.controls.isEdite.setValue(true)
     } else {
       console.log('creds --', value)
       if (value.invalid) {
@@ -205,11 +214,11 @@ export class AddTaskTemplateComponent implements OnInit {
           TaskTemplateId: 1,
           taskNumber: 1,
           description: value.controls.description.value,
-          turnAroundTime: value.controls.turnAroundTime.value,
+          turtAroundTime: value.controls.turnAroundTime.value,
           ownerId: 2727,
-          id: value.controls.id.value,
+          id: null,
         }
-        if (value.controls.id.value) {
+        if (value.controls.id) {
           this.orgSetting.editSubTaskTemplate(obj).subscribe(
             data => {
               this.editSubTaskTemplateRes(data)
@@ -275,7 +284,7 @@ export class AddTaskTemplateComponent implements OnInit {
           this.taskTemplate.get('subSubCategory').markAsTouched();
           this.taskTemplate.get('subSubCategory').markAsTouched();
           this.taskTemplate.get('adviceType').markAsTouched();
-          this.taskTemplate.get('turnAroundTime').markAsTouched();
+          this.taskTemplate.get('turnAroundTime1').markAsTouched();
         }
       }
     } else {
@@ -288,11 +297,12 @@ export class AddTaskTemplateComponent implements OnInit {
         subSubCategoryId: this.taskTemplate.controls.subSubCategory.value,
         taskDescription: this.taskTemplate.controls.taskTemplate.value,
         assignedTo: 2727,
-        turnAroundTime: this.taskTemplate.controls.turnAroundTime.value,
+        turnAroundTime: this.taskTemplate.controls.turnAroundTime1.value,
         subTaskList: this.taskTemplate.controls.subTaskList.value,
-        id: this.taskTemplate.controls.id.value
+        id:null
       }
-      if (obj.id) {
+      if (this.taskTemplate.controls.id) {
+        obj.id = this.taskTemplate.controls.id.value;
         console.log('this what i want', obj)
         this.orgSetting.editTaskTemplate(obj).subscribe(
           data => {

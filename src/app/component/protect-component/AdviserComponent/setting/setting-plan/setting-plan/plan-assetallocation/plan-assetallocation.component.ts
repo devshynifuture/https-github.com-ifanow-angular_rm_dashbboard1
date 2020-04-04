@@ -31,11 +31,13 @@ export class PlanAssetallocationComponent implements OnInit {
   obj2: any;
   obj3: any;
   obj4: any;
+  isLoading = true;
   staticAllocation: any;
-  constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) { }
+  constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) {
+    this.advisorId = AuthService.getAdvisorId()
+  }
   ngOnInit() {
     this.getAssetAllocation()
-    this.advisorId = AuthService.getAdvisorId()
     this.editMode = false
     console.log('edit mode', this.editMode)
     this.staticAllocation = []
@@ -64,37 +66,37 @@ export class PlanAssetallocationComponent implements OnInit {
     this.staticAllocation = []
     this.staticAllocationData.forEach(element => {
       this.obj = {
-        advisorId : this.advisorId,
+        advisorId: this.advisorId,
         riskProfileMasterId: element.riskProfileMasterI1,
-        goalTimeFrameMasterId:element.goalTimeFrameMasterId,
+        goalTimeFrameMasterId: element.goalTimeFrameMasterId1,
         equityAllocation: element.equity1,
         debtAllocation: element.debt1,
       }
       this.obj1 = {
-        advisorId : this.advisorId,
+        advisorId: this.advisorId,
         riskProfileMasterId: element.riskProfileMasterI2,
-        goalTimeFrameMasterId:element.goalTimeFrameMasterId,
+        goalTimeFrameMasterId: element.goalTimeFrameMasterId2,
         equityAllocation: element.equity2,
         debtAllocation: element.debt2,
       }
       this.obj2 = {
-        advisorId : this.advisorId,
+        advisorId: this.advisorId,
         riskProfileMasterId: element.riskProfileMasterI3,
-        goalTimeFrameMasterId:element.goalTimeFrameMasterId,
+        goalTimeFrameMasterId: element.goalTimeFrameMasterId3,
         equityAllocation: element.equity3,
         debtAllocation: element.debt3,
       }
       this.obj3 = {
-        advisorId : this.advisorId,
+        advisorId: this.advisorId,
         riskProfileMasterId: element.riskProfileMasterI4,
-        goalTimeFrameMasterId:element.goalTimeFrameMasterId,
+        goalTimeFrameMasterId: element.goalTimeFrameMasterId4,
         equityAllocation: element.equity4,
         debtAllocation: element.debt4,
       }
       this.obj4 = {
-        advisorId : this.advisorId,
+        advisorId: this.advisorId,
         riskProfileMasterId: element.riskProfileMasterI5,
-        goalTimeFrameMasterId:element.goalTimeFrameMasterId,
+        goalTimeFrameMasterId: element.goalTimeFrameMasterId5,
         equityAllocation: element.equity5,
         debtAllocation: element.debt5,
       }
@@ -103,20 +105,21 @@ export class PlanAssetallocationComponent implements OnInit {
       this.staticAllocation.push(this.obj2)
       this.staticAllocation.push(this.obj3)
       this.staticAllocation.push(this.obj4)
-     
+
     });
-    console.log('sgdfg == ',this.staticAllocation)
+    console.log('sgdfg == ', this.staticAllocation)
     this.orgSetting.updateAssetAllocation(this.staticAllocation).subscribe(
       data => this.updateAssetAllocationRes(data),
       err => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
-  updateAssetAllocationRes(data){
-    console.log('updateAssetAllocationRes',data)
+  updateAssetAllocationRes(data) {
+    console.log('updateAssetAllocationRes', data)
   }
   getAssetAllocation() {
+    this.isLoading = true
     let obj = {
-      advisorId: 2808
+      advisorId: this.advisorId
     }
     this.orgSetting.getAssetAllocation(obj).subscribe(
       data => this.getAssetAllocationRes(data),
@@ -124,6 +127,7 @@ export class PlanAssetallocationComponent implements OnInit {
     );
   }
   getAssetAllocationRes(data) {
+    this.isLoading = false
     console.log('getAssetAllocationRes', data)
     this.staticAllocationData = data.staticAllocationData
   }

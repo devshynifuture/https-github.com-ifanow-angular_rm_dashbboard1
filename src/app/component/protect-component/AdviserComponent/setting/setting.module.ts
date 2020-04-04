@@ -19,6 +19,7 @@ import { SettingBackupModule } from './setting-backup/setting-backup/setting-bac
 import { SettingActivityComponent } from './setting-activity/setting-activity.component';
 import { CommonComponentModule } from '../../common-component/common-component.module';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 
 @NgModule({
@@ -34,7 +35,10 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
     SettingEntryModule,
     SettingBackupModule,
     CommonComponentModule,
-    CustomDirectiveModule
+    CustomDirectiveModule,
+    CommonComponentModule,
+    CustomDirectiveModule,
+    CustomCommonModule,
 
   ]
 })

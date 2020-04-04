@@ -26,7 +26,13 @@ export const appConfig = {
   GET_AMC_WISE: 'backoffice/mis/aum/amcWise/get',
   GET_APPLICANT_NAME: 'backoffice/mis/aum/amcWise/applicantName/get',
   ADVISOR_TAG_GET: '/advisor/tag/get',
-
+  //////////////////Foliodetails////////////////////////////
+  FOLIO_GROUP_HEAD_SEARCH: 'backoffice/folio/search/by/groupHead/get',
+  FOLIO_INVESTOR_SEARCH: 'backoffice/folio/search/by/investorName/get',
+  FOLIO_PAN_SEARCH: 'backoffice/folio/search/by/pan/get',
+  FOLIO_FOLIO_NO__SEARCH: 'backoffice/folio/search/by/folioNumber/get',
+  FOLIO_GROUP_HEAD_LIST: 'backoffice/foliowise/groupHead/list/get',
+  FOLIO_APPLICANT_NAME_LIST: 'backoffice/foliowise/applicaName/list/get',
 
 
   /////////////////////// sip api call//////////////////////////////////
@@ -49,8 +55,12 @@ export const appConfig = {
   CLIENT_WISE_APPLICANT_GET: 'backoffice/sip/ClientWiseApplicants/get',
   SIP_PAN_COUNT: 'backoffice/sip/scheme/pan/count/get',
   WBR_FOLIO_PAN_COUNT: 'backoffice/folio/pan/count/get',
-
+  SIP_APPLICANT_LIST: 'backoffice/sip/applicant/list/get',
+  SIP_FOLIO_LIST: 'backoffice/sip/applicant/scheme/folio/list/get',
   ///////////////////////////// back office/////////////////////////////////////////////
+
+
+
 
   AllClient_get: 'asset/allClient/get',
   AllClient_ByName_get: 'asset/allClient/ByName/get',
@@ -166,6 +176,8 @@ export const appConfig = {
   UPLOAD_FILE: 'document/account/document/all-file/file/put',
   CLIENT_UPLOAD_FILE: 'document/upload/pre-signed-url/get',
   SAVE_CLIENT_UPLOAD_FILE: 'user/document/mapping/save',
+  DELETE_CLIENT_UPLOAD_FILE: 'user/document/mapping/delete',
+  GET_CLIENT_PROOF: 'document/download/pre-signed-url/get',
   GET_CLIENT_UPLOAD_FILE: 'user/document/mapping/get',
   NEW_FOLDER: 'document/account/document/all-file/folder/post',
   GET_ASSET_STOCK: 'account/asset/stock/list/get',
@@ -489,17 +501,20 @@ export const appConfig = {
   PROTFOLIO_UPDATE: 'setting/preferences/portfolio/update',
   PLAN_SECTION_UPDATE: 'setting/preferences/plan/update',
   DOMAIN_GET: 'setting/preferences/domain/get',
-  UPDATE_DOMAIN: 'goal-planning/advisor-plan-configuration/add',
+  UPDATE_DOMAIN: 'setting/preferences/domain/update',
   EDIT_ORG_PROFILE_LOGO: 'setting/profile/organisation/logo/update',
   EDIT_ORG_PROFILE_REPORT_LOGO: 'setting/profile/organisation/report/logo/update',
   GET_EMAIL_VERIFICATION: 'setting/preference/email/get',
   GET_EMAIL_TEMPLATES: 'setting/preference/email/template/get',
+  EDIT_PREF_EMAIL_TEMPLATE: 'setting/preference/email/template/update',
+  DELETE_PREF_EMAIL_TEMPLATE: 'setting/preference/email/template/delete',
+  DELETE_EMAIL_VERIFY: 'setting/preference/email/delete',
   ADD_EMAIL_VERIFY: 'setting/preferences/email/post',
   GET_ASSET_ALLOCATION: 'goal-planning/static-allocation/get',
   GET_RETURNS: 'plan/config/return-inflation/get',
   GET_KEY_PARAMETERS: 'goal-planning/key-parameters/get',
   UPLOAD_PLAN_GALLERY: 'goal-planning/goal-gallery/add',
-  UPLOAD_KEY_PARAMETER: 'goal-planning/static-allocation/put',
+  UPLOAD_KEY_PARAMETER: 'goal-planning/advisor-plan-configuration/add',
   UPDATE_ASSET_ALLOCATION: 'goal-planning/static-allocation/put',
   GET_TASK_TEMPLATE: 'setting/task/template/list/get',
   GET_TEAM_MEMBER_LIST: 'user/advisor/team-members/detail/get',
@@ -537,7 +552,7 @@ export const appConfig = {
   EDIT_CLIENT: 'user/client/edit',
   ADD_EDIT_CLIENT_ADDRESS: 'user/address/add-edit',
   ADD_EDIT_CLIENT_BANK: 'user/bank/add-edit',
-  ADD_EDIT_CLIENT_DEMAT: 'user/bank/demat/edit',
+  ADD_EDIT_CLIENT_DEMAT: 'user/bank/demat/add-edit',
   GET_FAMILY_MEMBERS: 'user/family-member/get',
   DELETE_FAMILY_MEMBER: 'user/family-member/delete',
   ADD_FAMILY_MEMBER: 'user/family-member/add',
@@ -548,6 +563,10 @@ export const appConfig = {
   UPDATE_COMPANY_PERSON_DETAILS: 'user/client/company/person/edit',
   TEAM_MEMBER_WISE_CLIENT_COUNT: 'user/advisor/team-member/count/get',
   GET_TEAM_MEMBERS: 'user/advisor/team-members/detail/get',
+  DELETE_CLIENT: 'user/client/delete',
+  GET_CLIENT_OR_lEAD_DATA: 'user/client/detail/get',
+  // LOGIN_WITH_PASSWORD: 'user/login/with/password',
+
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: '/user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',

@@ -12,6 +12,7 @@ import { MatSort, MatTableDataSource } from '@angular/material';
 export class AllSipComponent implements OnInit {
   advisorId: any;
   dataSource: any;
+  showLoader=true;
   displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate',
     'frequency', 'amount'];
   totalAmount=0;
@@ -46,7 +47,11 @@ export class AllSipComponent implements OnInit {
         this.dataSource.filteredData.forEach(element => {
           this.totalAmount += element.amount;
         });
+        this.showLoader=false;
         console.log(data);
+      },
+      err=>{
+        this.showLoader=false;
       }
     )
   }

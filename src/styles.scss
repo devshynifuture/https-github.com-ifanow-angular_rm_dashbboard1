@@ -29,7 +29,10 @@
                 @import'./assets/style/scss/responsive/transaction-media';
                 @import'./assets/style/scss/responsive/account';
                 @import'./assets/style/scss/responsive/mobile/login';
+                @import'./assets/style/scss/responsive/mobile/mobcommon';
                 @import'./assets/style/scss/responsive/mobile/portfolio';
+                @import'./assets/style/scss/responsive/mobile/goal';
+                @import'./assets/style/scss/responsive/mobile/transactions';
                 @mixin heading {
                   padding-left: 20px !important;
                   padding-top: 20px !important;
