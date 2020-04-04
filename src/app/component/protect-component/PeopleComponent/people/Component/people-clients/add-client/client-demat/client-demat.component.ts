@@ -76,7 +76,7 @@ export class ClientDematComponent implements OnInit {
         this.mobileData.controls.forEach(element => {
           console.log(element);
           mobileList.push({
-            userType: 0,
+            userType: 5,
             mobileNo: element.get('number').value,
           });
         });
