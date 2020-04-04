@@ -18,7 +18,7 @@
             <mat-card class="b-a-l p-0">
                 <mat-card-header class="bg-grey lter row">
                     <div class="col-md-9 p-0">
-                        <h2 class="m-0">ARN-{{arn.number}}</h2>
+                        <h2 class="m-0">{{getArnType(arn.arnOrRia)}}-{{arn.number}}</h2>
                         <h3 class="m-0 roboto f-500  ">{{arn.nameOfTheHolder}}</h3>
                     </div>
 
@@ -38,7 +38,7 @@
                     <div class="row pt-36 bb-1 pb-36">
                         <div class="col-md-3">
                             <p class="f-12 m-0 proxima text-primitive">ARN TYPE</p>
-                            <h5 class="m-0">{{getArnType(arn.typeId)}}</h5>
+                            <h5 class="m-0">{{getArnMasterType(arn.typeId)}}</h5>
                         </div>
                         <div class="col-md-3 p-0">
                             <p class="f-12 m-0 proxima text-primitive">COMMENCEMENT DATE</p>

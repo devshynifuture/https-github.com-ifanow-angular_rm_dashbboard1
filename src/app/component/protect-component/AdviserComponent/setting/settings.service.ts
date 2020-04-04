@@ -71,6 +71,10 @@ export class SettingsService {
     let httpParams = new HttpParams().set('id', data.id)
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DETIALED_USER_ROLE, httpParams)
   }
+  getTemplateRole(data) {
+    let httpParams = new HttpParams().set('optionId', data.optionId)
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TEMPLATE_ROLE, httpParams)
+  }
   addRole(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_USER_ROLE, data);
   }
@@ -80,6 +84,9 @@ export class SettingsService {
   deleteRole(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_USER_ROLE, data);
   }
+  editRole(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_USER_ROLE, data);
+  }
 
   getAccessRightsList(data) {
     let httpParams = new HttpParams().set('advisorId', data.advisorId)
@@ -87,10 +94,6 @@ export class SettingsService {
   }
   editAccessRightOfUser(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_USER_ACCESS_RIGHTS, data);
-  }
-  searchTeamMember(data) {
-    let httpParams = new HttpParams().set('advisorId', data.advisorId).set('user', data.user);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_PERSONAL_PROFILE_DETAILS, httpParams);
   }
 
 

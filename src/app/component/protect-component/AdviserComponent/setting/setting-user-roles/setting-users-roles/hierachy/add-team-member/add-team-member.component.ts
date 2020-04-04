@@ -5,6 +5,7 @@ import { SettingsService } from '../../../../settings.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-add-team-member',
@@ -24,6 +25,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     private settingsService: SettingsService,
     private eventService: EventService,
     private fb: FormBuilder,
+    private subInjectService: SubscriptionInject,
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -33,7 +35,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     if(this.data) {
       this.initializeUserDetails();
     }
-    this.subscribeValueChange();
+    // this.subscribeValueChange();
   }
 
   initializeUserDetails(){
@@ -47,24 +49,24 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   }
 
   // mat auto complete search
-  subscribeValueChange() {
-    this.subscription = this.usersForm
-      .get('userInput')
-      .valueChanges
-      .pipe(
-        debounceTime(300),
-        tap(() => {
-          this.isLoading = true;
-          this.selectedUser = {};
-        }),
-        switchMap(value => this.settingsService.searchTeamMember({ user: value })
-          .pipe(
-            finalize(() => this.isLoading = false),
-          )
-        )
-      )
-      .subscribe(users => this.filteredUsers = users.results);
-  }
+  // subscribeValueChange() {
+  //   this.subscription = this.usersForm
+  //     .get('userInput')
+  //     .valueChanges
+  //     .pipe(
+  //       debounceTime(300),
+  //       tap(() => {
+  //         this.isLoading = true;
+  //         this.selectedUser = {};
+  //       }),
+  //       switchMap(value => this.settingsService.searchTeamMember({ user: value })
+  //         .pipe(
+  //           finalize(() => this.isLoading = false),
+  //         )
+  //       )
+  //     )
+  //     .subscribe(users => this.filteredUsers = users.results);
+  // }
 
   // when user chooses an option from the auto complete dropdown
   chooseUser(){
@@ -97,7 +99,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   }
 
   close(status = false){
-    this.eventService.changeUpperSliderState({state: 'close', refreshRequired: status});
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: status});
   }
 
   ngOnDestroy(){
