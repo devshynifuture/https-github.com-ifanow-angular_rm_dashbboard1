@@ -254,6 +254,8 @@ export class LoginComponent implements OnInit {
       this.isLoading = true;
       // TODO comment for old login
       this.peopleService.loginWithPassword(loginData).subscribe(data => {
+        this.isLoading = false;
+        this.barButtonOptions.active = false;
         console.log('data: ', data);
         if (data) {
           // this.authService.setToken(data.token);
