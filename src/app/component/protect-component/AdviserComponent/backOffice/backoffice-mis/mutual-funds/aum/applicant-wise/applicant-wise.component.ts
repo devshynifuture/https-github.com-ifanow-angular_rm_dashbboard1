@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AumComponent } from '../aum.component';
 import { BackOfficeService } from '../../../../back-office.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -13,6 +13,7 @@ export class ApplicantWiseComponent implements OnInit {
   clientId: any;
   totalCurrentValue=0;
   totalWeight=0;
+  @Output() changedValue = new EventEmitter();
 
   constructor(public aum:AumComponent,private backoffice:BackOfficeService) { }
   applicantName;
@@ -40,11 +41,13 @@ export class ApplicantWiseComponent implements OnInit {
   applicantNameGet(data)
   {
     this.applicantName=data;
-    this.applicantName.forEach(o => {
-      o.show = true;
-      this.totalCurrentValue+=o.totalAum;
-      this.totalWeight+=o.weightInPercentage;
-    });
+    if(this.applicantName){
+      this.applicantName.forEach(o => {
+        o.show = true;
+        this.totalCurrentValue+=o.totalAum;
+        this.totalWeight+=o.weightInPercentage;
+      });
+    }
     this.showLoader=false;
   }
   
@@ -146,7 +149,9 @@ export class ApplicantWiseComponent implements OnInit {
   }
   aumReport()
   {
-   this.aum.aumComponent=true;
+        this.changedValue.emit(true);
+
+  //  this.aum.aumComponent=true;
   }
 
 }

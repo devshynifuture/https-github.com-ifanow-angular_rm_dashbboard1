@@ -172,7 +172,8 @@
                             </div>
 
                             <div class=" col-md-3 text-right ">
-                                <a class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
+                                <a (click)="openAddEdit(clientOverviewData,'Address','Edit')"
+                                    class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                             </div>
                         </div>
                         <div class=" row ">
@@ -190,18 +191,15 @@
                                 </p>
                             </div>
                         </div>
-
-
-
-
-
                     </div>
 
                     <div class=" col-md-3 pl-20 ">
                         <div class=" row ">
                             <div class=" col-md-6 ">
-                                <h5 class=" headingDetails "> Demat
-                                    <i class=" material-icons f-18 "> add_circle_outline</i>
+                                <h5 class=" headingDetails "> Bank
+                                    <i (click)="openAddEdit(clientOverviewData,'Bank','Add')"
+                                        class=" material-icons f-18 ">
+                                        add_circle_outline</i>
                                 </h5>
                             </div>
 
@@ -229,12 +227,15 @@
                                     33938922 <br> Mumbai 400101 </p>
                             </div>
                             <div class=" col-md-2 p-0 text-right ">
-                                <a class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
+                                <a (click)="openAddEdit(clientOverviewData,'Bank','Edit')"
+                                    class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                             </div>
                         </div>
-
                         <hr class=" bb-primitive hrMargin ">
-
+                        <h5 class=" headingDetails "> Demat
+                            <i (click)="openAddEdit(clientOverviewData,'Demat','Add')" class=" material-icons f-18 ">
+                                add_circle_outline</i>
+                        </h5>
                         <div class=" row ">
                             <div class=" col-md-9 pr-0 ">
                                 <p class=" m-0 f-14 ">
@@ -242,7 +243,8 @@
                                     12393904937372 <br> Savings a/c <br> IFSC: OBCC000123 <br> Mumbai 400101 </p>
                             </div>
                             <div class=" col-md-2 p-0 text-right ">
-                                <a class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
+                                <a (click)="openAddEdit(clientOverviewData,'Demat','Edit')"
+                                    class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                             </div>
                         </div>
 

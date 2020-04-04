@@ -6,6 +6,7 @@ import { BackofficeMisComponent } from './backoffice-mis.component';
 import { MaterialModule } from 'src/app/material/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ChartModule } from 'angular-highcharts';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { ChartModule } from 'angular-highcharts';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    ChartModule
+    ChartModule,
+    CustomDirectiveModule
   ]
 })
 export class BackofficeMisModule { }
