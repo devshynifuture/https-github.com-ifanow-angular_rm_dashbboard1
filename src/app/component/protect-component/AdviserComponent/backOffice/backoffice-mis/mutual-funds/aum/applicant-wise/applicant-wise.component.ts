@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AumComponent } from '../aum.component';
 import { BackOfficeService } from '../../../../back-office.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -17,6 +17,7 @@ export class ApplicantWiseComponent implements OnInit {
   subCategoryList: any;
   categoryList: any;
   schemeList: any;
+  @Output() changedValue = new EventEmitter();
 
   constructor(public aum: AumComponent, private backoffice: BackOfficeService) { }
   applicantName;
@@ -220,15 +221,16 @@ export class ApplicantWiseComponent implements OnInit {
 
   applicantNameGet(data) {
     this.applicantName = data;
-    // this.initializeExcelSheet();
-    console.log("this is data that we need", data);
-    this.applicantName.forEach(o => {
-      o.show = true;
-      this.totalCurrentValue += o.totalAum;
-      this.totalWeight += o.weightInPercentage;
-    });
+    if (this.applicantName) {
+      this.applicantName.forEach(o => {
+        o.show = true;
+        this.totalCurrentValue += o.totalAum;
+        this.totalWeight += o.weightInPercentage;
+      });
+    }
     this.showLoader = false;
   }
+
 
   category(applicantData) {
     applicantData.show = !applicantData.show
@@ -325,7 +327,7 @@ export class ApplicantWiseComponent implements OnInit {
     subCat.showSubCategory = (subCat.showSubCategory) ? subCat.showSubCategory = false : subCat.showSubCategory = true;
   }
   aumReport() {
-    this.aum.aumComponent = true;
+    this.changedValue.emit(true);
   }
 
 }

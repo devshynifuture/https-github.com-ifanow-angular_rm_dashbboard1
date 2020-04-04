@@ -16,8 +16,11 @@
                         <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
                     </button>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="viewMode='All'">All</button>
-                        <button mat-menu-item (click)="viewMode='Broker code'">Broker code</button>
+                        <div *ngFor="let item of arnRiaList">
+                            <button mat-menu-item (click)="viewMode=item.number">{{item.number}}</button>
+                        </div>
+                        <!-- <button mat-menu-item (click)="viewMode='All'">All</button>
+                        <button mat-menu-item (click)="viewMode='Broker code'">Broker code</button> -->
                     </mat-menu>
                 </div>
                 <div class="pt-20 pr-20">
@@ -132,7 +135,7 @@
                             </div>
                             <div class="row p-12">
                                 <!-- <img src="/assets/images/grap.png" class="w-100 h-365"> -->
-                                <div class="col-md-9 p-0 b-a">
+                                <div class="col-md-12 p-0 b-a">
                                     <div class="highcharts-figure" id="pieChartAum"></div>
                                   </div>
                             </div>
@@ -225,14 +228,14 @@
 
     </div>
     <div *ngIf="componentWise=='category'">
-        <app-category-wise></app-category-wise>
+        <app-category-wise (changedValue)="display($event)"></app-category-wise>
     </div>
     <div *ngIf="componentWise=='amc'">
-        <app-amc-wise></app-amc-wise>
+        <app-amc-wise (changedValue)="display($event)"></app-amc-wise>
     </div>
     <div *ngIf="componentWise=='client'">
-        <app-client-wise></app-client-wise>
+        <app-client-wise (changedValue)="display($event)"></app-client-wise>
     </div>
     <div *ngIf="componentWise=='applicant'">
-        <app-applicant-wise></app-applicant-wise>
+        <app-applicant-wise (changedValue)="display($event)"></app-applicant-wise>
     </div>

@@ -18,7 +18,7 @@
                 <div class="col-md-6 p-0 pr-8 left">
                   <mat-form-field *ngIf="filterList">
                    <mat-select class="form-control" [(ngModel)]="filterRTA" (selectionChange)="setFilter()">  <!-- formControlName="lead" -->
-                        <mat-option value="">Select RTA</mat-option>
+                        <mat-option [value]="0">Select RTA</mat-option>
                         <mat-option [value]="rt.id" *ngFor="let rt of filterList.RT_TYPE">{{rt.name}}</mat-option>
                         <!-- <mat-option [value]="lead.id" *ngFor="let lead of leadList">{{lead.name}}</mat-option> -->
                     </mat-select>
@@ -27,7 +27,7 @@
                 <div class="col-md-6 p-0 pr-8 left">
                   <mat-form-field *ngIf="filterList">
                    <mat-select class="form-control" [(ngModel)]="filterStatus">  <!-- formControlName="lead" -->
-                        <mat-option value="">Select status</mat-option>
+                        <mat-option [value]="0">Select status</mat-option>
                         <mat-option [value]="status.id" *ngFor="let status of filterList.status">{{status.name}}</mat-option>
                         <!-- <mat-option [value]="lead.id" *ngFor="let lead of leadList">{{lead.name}}</mat-option> -->
                     </mat-select>

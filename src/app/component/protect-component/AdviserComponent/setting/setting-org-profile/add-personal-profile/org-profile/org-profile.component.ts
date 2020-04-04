@@ -173,7 +173,9 @@ export class OrgProfileComponent implements OnInit {
       PhotoCloudinaryUploadService.uploadFileToCloudinary([file], tag_folder, tags,
         (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
           if (status == 200) {
-            const responseObject = JSON.parse(response);
+            let responseObject = JSON.parse(response);
+            responseObject['advisorId'] = responseObject.id;
+            delete responseObject.id;
             if(tag_folder == 'organizational_profile_logo') {
               this.updateOrganizationPhotoAndMoveToNextPage(responseObject, 'web');
             } else if (tag_folder == 'organizational_report_logo') {
@@ -197,7 +199,7 @@ export class OrgProfileComponent implements OnInit {
   updateOrganizationPhotoAndMoveToNextPage(cloudinaryResponseJson:any, web_or_report: string) {
     if(web_or_report == 'web') {
       const jsonDataObj = {
-        id: this.advisorId,
+        advisorId: this.advisorId,
         logoUrl: cloudinaryResponseJson.url,
         cloudinary_json: JSON.stringify(cloudinaryResponseJson)
       }

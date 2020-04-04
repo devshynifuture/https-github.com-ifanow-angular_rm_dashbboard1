@@ -11,21 +11,8 @@
                     </div>
                     <div class="col-md-6 pr-0">
                         <div class="right text-right">
-                            <button mat-stroked-button class="btn-default addon"
-                                (click)="exportToExcelSheet('applicant-wise')"><i
-                                    class="material-icons">add</i>Applicant wise</button>
-                            <button mat-stroked-button class="btn-default addon"
-                                (click)="exportToExcelSheet('category-wise')"><i class="material-icons">add</i>category
-                                wise</button>
-                            <button mat-stroked-button class="btn-default addon"
-                                (click)="exportToExcelSheet('sub-category-wise')"><i class="material-icons">add</i>sub
-                                category wise</button>
-                            <button mat-stroked-button class="btn-default addon"
-                                (click)="exportToExcelSheet('sub-cat-scheme-wise')"><i class="material-icons">add</i>sub
-                                cat scheme wise</button>
-                            <button mat-stroked-button class="btn-default addon"
-                                (click)="exportToExcelSheet('scheme-wise')"><i class="material-icons">add</i>Scheme
-                                wise</button>
+                            <button mat-stroked-button class="btn-default addon"><i
+                                    class="material-icons">add</i>XLS</button>
                             <button mat-stroked-button class="btn-success ml-8 addon"
                                 (click)="aumReport()">Back</button>
                         </div>
@@ -45,9 +32,8 @@
                     <tbody *ngFor="let name of applicantName; index as i">
                         <tr>
                             <td>{{i+1}}</td>
-                            <td (click)="category(name)">
-                                {{name.name?name.name:'-'}}
-                                <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="name.show==true"> add </i>
+                            <td (click)="category(name)">{{(name.name)?name.name:'-'}}<i
+                                    class="material-icons right b-a f-14 mt-4 c-p" *ngIf="name.show==true"> add </i>
                                 <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="name.show==false"> remove </i>
                             </td>
                             <td class="text-right">{{name.totalAum}}</td>
@@ -102,6 +88,7 @@
                                                         <tr>
                                                             <th>Sr No.</th>
                                                             <th>Scheme Name</th>
+                                                            <th>Folio</th>
                                                             <th class="text-right">Current Value</th>
                                                             <th class="text-right">% Weight</th>
                                                         </tr>
@@ -126,6 +113,7 @@
                                                                     <tr>
                                                                         <th>Sr No.</th>
                                                                         <th>Scheme Name</th>
+                                                                        <th>Folio Number</th>
                                                                         <th class="text-right">Current Value</th>
                                                                         <th class="text-right">Balance unit </th>
                                                                         <th class="text-right">% Weight</th>

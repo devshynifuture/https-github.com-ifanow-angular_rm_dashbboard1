@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 // import * as $ from 'jquery';
 import { BackOfficeService } from '../../../../back-office.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AumComponent } from '../aum.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ExcelMisService } from '../excel-mis.service';
-
 @Component({
   selector: 'app-category-wise',
   templateUrl: './category-wise.component.html',
@@ -24,14 +22,15 @@ export class CategoryWiseComponent implements OnInit {
   arrayOfHeaders: any[] = [];
   arrayOfHeaderStyles: { width: number; key: string; }[][];
   arrayOfExcelData: any[][] = [];
+  @Output() changedValue = new EventEmitter();
+
   constructor(
     private backoffice: BackOfficeService, private dataService: EventService, public aum: AumComponent
   ) { }
-
   selectedCategory;
   ngOnInit() {
-
     this.getSubCatSchemeName();
+
     // this.clientFolioWise();
     // this.getSubCatAum();
   }
@@ -90,8 +89,11 @@ export class CategoryWiseComponent implements OnInit {
   showSchemeName(index, subcashowSubcat) {
     this.category[this.selectedCategory].subCategoryList[index].showSubCategory = (subcashowSubcat) ? subcashowSubcat = false : subcashowSubcat = true;
   }
+
   aumReport() {
-    this.aum.aumComponent = true;
+    this.changedValue.emit(true);
+
+    // this.aum.aumComponent = true;
   }
   getFilerrorResponse(err) {
     this.dataService.openSnackBar(err, 'Dismiss')

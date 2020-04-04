@@ -3,7 +3,6 @@ import { DatePipe, DecimalPipe } from '@angular/common';
 import { EventService } from '../Data-service/event.service';
 import { HttpClient } from '@angular/common/http';
 import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import { FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 
 
 @Injectable({
@@ -11,11 +10,12 @@ import { FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 })
 export class UtilService {
 
+  constructor(private eventService: EventService, private http: HttpClient, private subService: SubscriptionService) {
+  }
+
   private static decimalPipe = new DecimalPipe('en-US');
   advisorId: any;
 
-  constructor(private eventService: EventService, private http: HttpClient, private subService: SubscriptionService) {
-  }
   subscriptionStepData;
 
   static convertObjectToArray(inputObject: object): object[] {
@@ -47,17 +47,7 @@ export class UtilService {
   static isDialogClose(data) {
     return data && data.state && data.state === 'close';
   }
-  setSubscriptionStepData(data) {
-    this.subscriptionStepData = data
-  }
-  checkSubscriptionastepData(stepNo) {
-    let tempData;
-    tempData = Object.assign([], this.subscriptionStepData)
-    tempData = tempData.filter(element => element.stepTypeId == stepNo)
-    if (tempData.length != 0) {
-      return tempData[0].completed;
-    }
-  }
+
   static isRefreshRequired(data) {
     // let closeState = {
     //   "state": data.state,
@@ -103,6 +93,43 @@ export class UtilService {
     // console.log(' roundedOffString', this.decimalPipe.transform(data, '9.0-2', null).replace(/,/g, ''));
 
     return parseFloat(this.decimalPipe.transform(data, '9.0-' + noOfPlaces, null).replace(/,/g, ''));
+  }
+
+  static obfuscateEmail(email: string) {
+    let tempMail: string;
+    const indexOfAt = email.indexOf('@');
+
+    if (indexOfAt > 3) {
+      tempMail = email.substr(0, 3) + 'XXXXX@';
+
+    } else {
+      tempMail = email.substr(0, indexOfAt) + '@';
+    }
+
+    if ((email.length - indexOfAt) > 5) {
+      tempMail += 'XXXXXX' + email.substr(email.length - 5, email.length);
+    } else {
+      tempMail += 'XXXXXX';
+    }
+
+    return tempMail;
+  }
+
+  static obfuscateMobile(mobileNo: string) {
+    return mobileNo.substr(0, 2) + 'XXXXX' + mobileNo.substr(7, 9);
+  }
+
+  setSubscriptionStepData(data) {
+    this.subscriptionStepData = data
+  }
+
+  checkSubscriptionastepData(stepNo) {
+    let tempData;
+    tempData = Object.assign([], this.subscriptionStepData)
+    tempData = tempData.filter(element => element.stepTypeId == stepNo)
+    if (tempData.length != 0) {
+      return tempData[0].completed;
+    }
   }
 
 
@@ -290,6 +317,7 @@ export class ValidatorType {
   static EMAIL = new RegExp(/^[a-z0-9]+(.[_a-z0-9]+)@[a-z0-9-]+(.[a-z0-9-]+)(.[a-z]{2,15})$/);
   static ALPHA_NUMERIC_WITH_SLASH = new RegExp(/^[A-Z0-9//]+$/);
   static TEN_DIGITS = new RegExp(/^\d{10}$/);
+  static PAN = new RegExp(/^[a-zA-Z0-9]{10,}$/);
   // static EMAIL = new RegExp(/^[a-z0-9!#$%&'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/);
   // static EMAIL_ONLY = new RegExp(/\b[\w.!#$%&’*+\/=?^`{|}~-]+@[\w-]+(?:\.[\w-]+)*\b/);
   // static EMAIL_ONLY = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);

@@ -10,18 +10,8 @@
                 </div>
                 <div class="col-md-6 pr-0">
                     <div class="right text-right">
-                        <button mat-stroked-button class="btn-default addon"
-                            (click)="exportToExcelSheet('client-wise')"><i class="material-icons">add</i>Client
-                            wise</button>
-                        <button mat-stroked-button class="btn-default addon"
-                            (click)="exportToExcelSheet('investor-wise')"><i class="material-icons">add</i>Investor
-                            wise</button>
-                        <button mat-stroked-button class="btn-default addon"
-                            (click)="exportToExcelSheet('scheme1-wise')"><i class="material-icons">add</i>Scheme
-                            wise</button>
-                        <button mat-stroked-button class="btn-default addon"
-                            (click)="exportToExcelSheet('scheme2-wise')"><i class="material-icons">add</i>Scheme Folio
-                            wise</button>
+                        <button mat-stroked-button class="btn-default addon"><i
+                                class="material-icons">add</i>XLS</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                     </div>
                 </div>
@@ -96,6 +86,7 @@
                                                         <th>Sr No.</th>
                                                         <th>Scheme Name</th>
                                                         <th class="text-right">Folio Number</th>
+                                                        <th class="text-right">Balance Unit</th>
                                                         <th class="text-right">% Weight</th>
                                                     </tr>
                                                 </thead>

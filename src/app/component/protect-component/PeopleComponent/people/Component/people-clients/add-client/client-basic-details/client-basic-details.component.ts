@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ValidatorType } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -22,7 +22,8 @@ export class ClientBasicDetailsComponent implements OnInit {
   clientOwnerList: any;
   selectedClientOwner: any;
 
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService, private datePipe: DatePipe) { }
+  mobileNumberFlag = 'Mobile number';
+
   basicDetails;
   date = new Date();
   @Input() fieldFlag;
@@ -32,43 +33,42 @@ export class ClientBasicDetailsComponent implements OnInit {
   validatorType = ValidatorType;
   invTypeCategory;
   invTaxStatus;
-  mobileNumberFlag = "Mobile number";
-  ngOnInit() {
-    this.createMinorForm(null);
+
+  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService, private datePipe: DatePipe) {
   }
+
+  ngOnInit() {
+  }
+
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     if (data.fieldFlag == 'familyMember') {
       this.basicDetailsData = data;
       this.invTaxStatus = (this.basicDetailsData.familyMemberType == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
       this.invTypeCategory = (this.basicDetailsData.familyMemberType == 0) ? '1' : String(this.basicDetailsData.familyMemberType);
-      (this.basicDetailsData.familyMemberType == 1 || this.basicDetailsData.familyMemberType == 0) ? this.createIndividualForm(this.basicDetailsData) : this.createMinorForm(this.basicDetailsData)
-    }
-    else {
+      (this.basicDetailsData.familyMemberType == 1 || this.basicDetailsData.familyMemberType == 0) ? this.createIndividualForm(this.basicDetailsData) : this.createMinorForm(this.basicDetailsData);
+    } else {
+      this.getClientList();
       this.basicDetailsData = data;
       if (this.basicDetailsData.userId == null) {
         this.invTypeCategory = '1';
         this.invTaxStatus = '1';
         this.createIndividualForm(null);
+        return;
       }
-      else {
-        this.invTypeCategory = String(this.basicDetailsData.clientType);
-        this.invTaxStatus = String(this.basicDetailsData.taxStatusId);
-        (this.basicDetailsData.clientType == 1 || this.basicDetailsData.clientType == 0) ? this.createIndividualForm(this.basicDetailsData) : this.createNonIndividualForm(this.basicDetailsData)
-      }
-      this.getClientOrLeadData();
-      this.getClientList();
+      (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
+      this.getClientOrLeadData(this.basicDetailsData);
     }
-
     console.log(data);
   }
+
   createIndividualForm(data) {
     (data == undefined) ? data = {} : '';
     this.basicDetails = this.fb.group({
       fullName: [data.name, [Validators.required]],
-      email: [, [Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
-      pan: [data.pan, [Validators.required]],
-      username: [, [Validators.required]],
+      email: [data.email, [Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+      pan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
+      username: [data.userName, [Validators.required]],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       dobActual: [],
       gender: ['1'],
@@ -78,8 +78,9 @@ export class ClientBasicDetailsComponent implements OnInit {
       leadOwner: [],
       clientOwner: [],
       role: [],
-    })
+    });
   }
+
   createMinorForm(data) {
     (data == undefined) ? data = {} : '';
     this.minorForm = this.fb.group({
@@ -93,58 +94,68 @@ export class ClientBasicDetailsComponent implements OnInit {
       gGender: [(data.guardianData) ? String(data.genderId) : ''],
       relationWithMinor: [],
       gEmail: [, [Validators.pattern(this.validatorType.EMAIL)]],
-      pan: [data.pan]
-    })
+      pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]]
+    });
   }
+
   createNonIndividualForm(data) {
-    (data == undefined) ? data = {} : ''
+    (data == undefined) ? data = {} : '';
     this.nonIndividualForm = this.fb.group({
       comName: [data.name, [Validators.required]],
       dateOfIncorporation: [data.dateOfBirth],
       comStatus: [, [Validators.required]],
-      comEmail: [, [Validators.pattern(this.validatorType.EMAIL)]],
-      comPhone: [],
-      comPan: [data.pan, [Validators.required]],
+      comEmail: [data.email, [Validators.pattern(this.validatorType.EMAIL)]],
+      comPan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       comOccupation: [],
       username: [data.username, [Validators.required]],
       leadOwner: [, [Validators.required]],
       role: [, [Validators.required]]
-    })
+    });
   }
-  getClientOrLeadData() {
-    let obj =
-    {
-      "advisorId": this.advisorId,
-      "status": (this.fieldFlag == 'client') ? 1 : 2
-    }
+
+  getClientOrLeadData(data) {
+    const obj = {
+      id: data.clientId
+    };
     this.peopleService.getClientOrLeadData(obj).subscribe(
       data => {
         console.log(data);
+        this.basicDetailsData = data;
+        if (data == undefined) {
+          return;
+        } else {
+          this.invTypeCategory = (data.clientType == 0) ? '1' : String(data.clientType);
+          this.invTaxStatus = (data.clientType == 0) ? '1' : String(data.taxStatusId);
+          (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
+        }
       },
-      err => this.eventService.openSnackBar(err, "Dismiss")
-    )
+      err => this.eventService.openSnackBar(err, 'Dismiss')
+    );
   }
+
   getNumberDetails(data) {
     console.log(data);
     this.mobileData = data;
   }
+
   changeInvestorType(event) {
-    (event.value == '1') ? this.createIndividualForm(this.basicDetailsData) : ''
+    (event.value == '1') ? this.createIndividualForm(this.basicDetailsData) : '';
     if (event.value == '2' && this.fieldFlag == 'familyMember') {
       this.createMinorForm(this.basicDetailsData);
-      this.mobileNumberFlag = "Mobile number"
-    }
-    else {
+      this.mobileNumberFlag = 'Mobile number';
+    } else {
       this.createNonIndividualForm(this.basicDetails);
-      this.mobileNumberFlag = "Company mobile number"
+      this.mobileNumberFlag = 'Company mobile number';
     }
     this.invTypeCategory = event.value;
   }
+
   changeTaxStatus(event) {
     this.invTaxStatus = event.value;
   }
+
   saveNextClient(flag) {
-    if (this.fieldFlag == 'client') {
+    if (this.fieldFlag == 'client' && this.basicDetailsData.userId == null) {
       this.basicDetails.get('clientOwner').setValidators([Validators.required]);
       this.basicDetails.get('clientOwner').updateValueAndValidity();
     }
@@ -154,33 +165,25 @@ export class ClientBasicDetailsComponent implements OnInit {
     }
     if (this.invTypeCategory == '2' && this.nonIndividualForm.invalid) {
       this.nonIndividualForm.markAllAsTouched();
-      return
-    }
-    else {
-      let mobileList = [];
-      this.mobileData.controls.forEach(element => {
-        console.log(element);
-        mobileList.push({
-          "verificationStatus": 0,
-          "id": 0,
-          "userType": 0,
-          "mobileNo": element.get('number').value,
-          "isActive": 1,
-          "userId": 0
-        })
-      });
-      let obj =
-      {
-        "advisorId": (this.selectedClientOwner) ? this.selectedClientOwner.advisorId : null,
-        "taxStatusId": parseInt(this.invTaxStatus),
-        "emailList": [
+      return;
+    } else {
+      const mobileList = [];
+      if (this.mobileData) {
+        this.mobileData.controls.forEach(element => {
+          console.log(element);
+          mobileList.push({
+            userType: 2,
+            mobileNo: element.get('number').value,
+          });
+        });
+      }
+      const obj = {
+        advisorId: (this.selectedClientOwner) ? this.selectedClientOwner.advisorId : this.basicDetailsData.advisorId,
+        taxStatusId: parseInt(this.invTaxStatus),
+        emailList: [
           {
-            "verificationStatus": 0,
-            "id": 0,
-            "userType": 0,
-            "isActive": 1,
-            "userId": 0,
-            "email": (this.invTypeCategory == '1') ? this.basicDetails.controls.email.value : this.nonIndividualForm.value.comEmail
+            userType: 2,
+            email: (this.invTypeCategory == '1') ? this.basicDetails.controls.email.value : this.nonIndividualForm.value.comEmail
           }
         ],
         "displayName": null,
@@ -199,7 +202,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         "aadharCard": null,
         "dateOfBirth": this.datePipe.transform((this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value : this.nonIndividualForm.value.dateOfIncorporation, 'dd/MM/yyyy'),
         "userName": (this.invTypeCategory == '1') ? this.basicDetails.controls.username.value : this.nonIndividualForm.value.username,
-        "userId": this.advisorId,
+        "userId": (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? this.basicDetailsData.clientId : this.basicDetailsData.id,
         "mobileList": mobileList,
         "referredBy": 0,
         "name": (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : this.nonIndividualForm.value.comName,
@@ -216,69 +219,64 @@ export class ClientBasicDetailsComponent implements OnInit {
           this.peopleService.addClient(obj).subscribe(
             data => {
               console.log(data);
-              data['invCategory'] = this.invTypeCategory;
-              data['categoryTypeflag'] = "Individual";
-              (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
+              data.invCategory = this.invTypeCategory;
+              data.categoryTypeflag = 'Individual';
+              (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
             },
-            err => this.eventService.openSnackBar(err, "Dismiss")
-          )
-        }
-        else {
+            err => this.eventService.openSnackBar(err, 'Dismiss')
+          );
+        } else {
           this.peopleService.saveCompanyPersonDetail(obj).subscribe(
             data => {
               console.log(data);
-              data['invCategory'] = this.invTypeCategory;
-              data['categoryTypeflag'] = "clientNonIndividual";
-              (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
+              data.invCategory = this.invTypeCategory;
+              data.categoryTypeflag = 'clientNonIndividual';
+              (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
             },
-            err => err => this.eventService.openSnackBar(err, "Dismiss")
-          )
+            err => err => this.eventService.openSnackBar(err, 'Dismiss')
+          );
         }
-      }
-      else {
-        if (this.invTypeCategory == '1') {
-          this.peopleService.editClient(obj).subscribe(
-            data => {
-              console.log(data);
-              data['invCategory'] = this.invTypeCategory;
-              data['categoryTypeflag'] = "clientNonIndividual";
-              (flag == "Next") ? this.changeTabAndSendData(data) : this.close();
-            },
-            err => this.eventService.openSnackBar(err, "Dismiss")
-          )
-        }
-        else {
-
-        }
+      } else {
+        this.peopleService.editClient(obj).subscribe(
+          data => {
+            console.log(data);
+            data.invCategory = this.invTypeCategory;
+            data.categoryTypeflag = (this.invTypeCategory == '1') ? 'Individual' : 'clientNonIndividual';
+            (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
+          },
+          err => this.eventService.openSnackBar(err, 'Dismiss')
+        );
       }
     }
   }
+
   getClientList() {
-    let obj =
-    {
-      advisorId: 1
-    }
-    this.peopleService.getTeamMemberList(obj).subscribe(
+    const obj = {
+      advisorId: this.advisorId
+    };
+    this.peopleService.getAllCLients(obj).subscribe(
       data => {
         console.log(data);
         this.clientOwnerList = data;
       },
-      err => this.eventService.openSnackBar(err, "Dismiss")
-    )
+      err => this.eventService.openSnackBar(err, 'Dismiss')
+    );
   }
+
   changeTabAndSendData(data) {
     this.clientData.emit(data);
     this.tabChange.emit(1);
   }
+
   saveNextFamilyMember(flag) {
     this.basicDetails.get('clientOwner').setValidators(null);
-    let mobileList = [];
+    const mobileList = [];
     this.mobileData.controls.forEach(element => {
       console.log(element);
       mobileList.push({
-        "mobileNo": element.get('number').value,
-        "verificationStatus": 0
-      })
+        mobileNo: element.get('number').value,
+        verificationStatus: 0
+      });
     });
     if (this.invTypeCategory == '1' && this.basicDetails.invalid) {
       this.basicDetails.markAllAsTouched();
@@ -288,68 +286,71 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.minorForm.markAllAsTouched();
       return;
     }
-    let obj =
-    {
-      "id": this.basicDetailsData.id,
-      "clientId": this.basicDetailsData.clientId,
-      "name": (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : this.minorForm.value.minorFullName,
-      "displayName": null,
-      "dateOfBirth": (this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value : this.minorForm.value.dobAsPerRecord,
-      "martialStatusId": null,
-      "anniversaryDate": null,
-      "genderId": (this.invTypeCategory == '1') ? this.basicDetails.controls.gender.value : this.minorForm.value.gender,
-      "occupationId": 1,
-      "pan": (this.invTypeCategory == '1') ? this.basicDetails.controls.pan.value : this.minorForm.value.pan,
-      "taxStatusId": this.invTaxStatus,
-      "relationshipId": 1,
-      "familyMemberType": parseInt(this.invTypeCategory),
-      "isKycCompliant": 1,
-      "aadhaarNumber": null,
-      "mobileList": mobileList,
-      "bio": null,
-      "remarks": null,
-      "emailList": [
+    const obj = {
+      id: this.basicDetailsData.id,
+      clientId: this.basicDetailsData.clientId,
+      name: (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : this.minorForm.value.minorFullName,
+      displayName: null,
+      dateOfBirth: (this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value : this.minorForm.value.dobAsPerRecord,
+      martialStatusId: null,
+      anniversaryDate: null,
+      genderId: (this.invTypeCategory == '1') ? this.basicDetails.controls.gender.value : this.minorForm.value.gender,
+      occupationId: 1,
+      pan: (this.invTypeCategory == '1') ? this.basicDetails.controls.pan.value : this.minorForm.value.pan,
+      taxStatusId: this.invTaxStatus,
+      relationshipId: 1,
+      familyMemberType: parseInt(this.invTypeCategory),
+      isKycCompliant: 1,
+      aadhaarNumber: null,
+      mobileList: mobileList,
+      bio: null,
+      remarks: null,
+      emailList: [
         {
-          "email": (this.invTypeCategory == '1') ? this.basicDetails.controls.email.value : null,
-          "verificationStatus": 0
+          email: (this.invTypeCategory == '1') ? this.basicDetails.controls.email.value : null,
+          verificationStatus: 0
         }
       ],
-      "guardianData": {
-        "name": (this.invTypeCategory == '2') ? this.minorForm.value.gFullName : null,
-        "birthDate": (this.invTypeCategory == '2') ? this.datePipe.transform(this.minorForm.value.gDobAsPerRecord, 'dd/MM/yyyy') : null,
-        "pan": "pan",
-        "genderId": (this.invTypeCategory == '2') ? this.minorForm.value.gGender : null,
-        "relationshipId": 1,
-        "aadhaarNumber": null,
-        "occupationId": 1,
-        "martialStatusId": 1,
-        "anniversaryDate": "2000-01-01",
-        "mobileList": [
+      guardianData: {
+        name: (this.invTypeCategory == '2') ? this.minorForm.value.gFullName : null,
+        birthDate: (this.invTypeCategory == '2') ? this.datePipe.transform(this.minorForm.value.gDobAsPerRecord, 'dd/MM/yyyy') : null,
+        pan: 'pan',
+        genderId: (this.invTypeCategory == '2') ? this.minorForm.value.gGender : null,
+        relationshipId: 1,
+        aadhaarNumber: null,
+        occupationId: 1,
+        martialStatusId: 1,
+        anniversaryDate: '2000-01-01',
+        mobileList: [
           {
-            "mobileNo": 9987442988,
-            "verificationStatus": 0
+            mobileNo: 9987442988,
+            userType: 4,
           },
         ],
-        "emailList": [
+        emailList: [
           {
-            "email": (this.invTypeCategory == '2') ? this.minorForm.value.gEmail : null,
-            "verificationStatus": 0
+            email: (this.invTypeCategory == '2') ? this.minorForm.value.gEmail : null,
+            userType: 4,
+            verificationStatus: 0
           }
         ]
-      }
-    }
+      },
+      invTypeCategory: 0,
+      categoryTypeflag: null
+    };
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {
-        obj['invTypeCategory'] = this.invTypeCategory;
-        obj['categoryTypeflag'] = "familyMinor";
-        (flag == "Next") ? this.changeTabAndSendData(obj) : this.close();
+        obj.invTypeCategory = this.invTypeCategory;
+        obj.categoryTypeflag = 'familyMinor';
+        (flag == 'Next') ? this.changeTabAndSendData(obj) : this.close(data);
       },
-      err => this.eventService.openSnackBar(err, "Dismiss")
-    )
+      err => this.eventService.openSnackBar(err, 'Dismiss')
+    );
   }
+
   // }
-  close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  close(data) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
   }
 
 }

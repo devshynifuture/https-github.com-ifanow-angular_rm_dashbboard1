@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-upload.service';
 import { ParsedResponseHeaders, FileItem } from 'ng2-file-upload';
 import { SettingsService } from '../../../../settings.service';
@@ -6,6 +6,9 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { OrgSettingServiceService } from '../../../../org-setting-service.service';
 import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { DialogData } from 'src/app/component/protect-component/AdviserComponent/Activities/calendar/calendar.component';
 
 @Component({
   selector: 'app-open-gallery-plan',
@@ -22,11 +25,18 @@ export class OpenGalleryPlanComponent implements OnInit {
   showCropper: boolean = false;
   cropImage: boolean = false;
   selectedTab:number = 0;
+  showSpinner = false;
   anyDetailsChanged:boolean; // check if any details have been updated
   inputData: any;
-  constructor(  private settingsService: SettingsService,private event : EventService,
+  sendToCopy: any;
+  constructor( public dialogRef: MatDialogRef<OpenGalleryPlanComponent>,
+    @Inject(MAT_DIALOG_DATA) public dataGet: DialogData, private settingsService: SettingsService,private event : EventService,
     private subInjectService : SubscriptionInject,private orgSetting : OrgSettingServiceService,
-    private utilService: UtilService,) { }
+    private utilService: UtilService,) { 
+      this.advisorId = AuthService.getAdvisorId()
+      console.log('data', this.dataGet);
+    this.sendToCopy = this.dataGet.bank
+    }
 
   ngOnInit() {
    //this.getdataForm('')
@@ -35,7 +45,7 @@ export class OpenGalleryPlanComponent implements OnInit {
 
   getPersonalInfo() {
     this.settingsService.getProfileDetails({ id: this.advisorId }).subscribe((res) => {
-      this.imgURL = res.profilePic;
+      this.imgURL = this.sendToCopy.imageUrl;
     });
   }
 
@@ -45,23 +55,27 @@ export class OpenGalleryPlanComponent implements OnInit {
   }
   onNoClick() {
     if (this.showCropper) {
+      this.showSpinner = true
       const tags = this.advisorId + ',advisor_profile_logo,';
       const file = this.utilService.convertB64toImageFile(this.finalImage);
       PhotoCloudinaryUploadService.uploadFileToCloudinary([file], 'advisor_profile_logo', tags,
         (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
           if (status == 200) {
+            this.showSpinner = true
             const responseObject = JSON.parse(response);
             const jsonDataObj = {
-              advisorId: this.advisorId    ,
-              name:'Retirement',
-              imageUrl: responseObject.url,
-              goalTypeId:1,
+              advisorId: this.advisorId,
+              goalName:this.sendToCopy.name,
+              imageURL: responseObject.url,
+              goalTypeId:this.sendToCopy.goalTypeId,
             }
             this.orgSetting.uploadPlanPhoto(jsonDataObj).subscribe((res) => {
               this.anyDetailsChanged = true;
-              this.imgURL = jsonDataObj.imageUrl;
+              this.imgURL = jsonDataObj.imageURL;
+              this.showSpinner = false
               this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
               this.Close(this.anyDetailsChanged);
+              this.dialogRef.close(this.anyDetailsChanged);
             });
           }
         });

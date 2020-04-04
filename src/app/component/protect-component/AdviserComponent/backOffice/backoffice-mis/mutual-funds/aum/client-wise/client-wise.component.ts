@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { AumComponent } from '../aum.component';
 import { BackOfficeService } from '../../../../back-office.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -75,6 +75,7 @@ export class ClientWiseComponent implements OnInit {
   investorList: any;
   scheme1List: any;
   scheme2List: any;
+  @Output() changedValue = new EventEmitter();
 
   constructor(public aum: AumComponent, private backoffice: BackOfficeService) { }
 
@@ -222,14 +223,16 @@ export class ClientWiseComponent implements OnInit {
   }
 
   clientTotalAum(data) {
-    this.clientList = data;
-    console.log("client list ::::", data);
-    this.clientList.forEach(o => {
-      o.show = true;
-      this.totalCurrentValue += o.totalAum;
-      this.totalWeight += o.weightInPercentage;
-    });
-    this.showLoader = false;
+    if (data) {
+      this.clientList = data;
+      console.log("client list ::::", data);
+      this.clientList.forEach(o => {
+        o.show = true;
+        this.totalCurrentValue += o.totalAum;
+        this.totalWeight += o.weightInPercentage;
+      });
+      this.showLoader = false;
+    }
   }
   clientScheme(data, show, index) {
     this.subList = data;
@@ -291,7 +294,7 @@ export class ClientWiseComponent implements OnInit {
     this.clientList[this.selectedClient].subList[this.selectedInvestor].schemes[index].showScheme = (show) ? show = false : show = true;
   }
   aumReport() {
-    this.aum.aumComponent = true;
+    this.changedValue.emit(true);
   }
 
 }

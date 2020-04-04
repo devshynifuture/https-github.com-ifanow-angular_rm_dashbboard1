@@ -1,14 +1,14 @@
-<div>
-    <div class="dialogclose">
-        <div class="row popup-header-fix-100">
-            <div class="col-md-2 border-right-1 d-flex justify-content-center align-items-center p-0">
-                <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
-            </div>
-            <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
-                <p class="f-16 mb-0"
-                    *ngIf="fragmentDataSubsUpper.data.flag=='plan' || fragmentDataSubsUpper.data==='plan'">Add plan
-                    details, map services/documents to the selected plan</p>
-                <p class="f-16 mb-0"
+<div *ngIf="fragmentDataSubsUpper">
+  <div class="dialogclose">
+    <div class="row popup-header-fix-100">
+      <div class="col-md-2 border-right-1 d-flex justify-content-center align-items-center p-0">
+        <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+      </div>
+      <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
+        <p class="f-16 mb-0"
+           *ngIf="fragmentDataSubsUpper.data.flag=='plan' || fragmentDataSubsUpper.data==='plan'">Add plan
+          details, map services/documents to the selected plan</p>
+        <p class="f-16 mb-0"
                     *ngIf="fragmentDataSubsUpper.data.flag=='services' || fragmentDataSubsUpper.data===''">Add fee
                     structure, map plans/documents to the selected service</p>
                 <p class="f-16 mb-0"

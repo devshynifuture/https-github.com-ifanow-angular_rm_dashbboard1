@@ -11,16 +11,28 @@
 
 
 <div [formGroup]="arnRiaFG">
-    <div class="row pt-125">
-        <div class="col-md-4 pr-0">
+    <div class="row pt-90">
+        <div class="col-md-4">
+            <div class="form-control mb-0">
+                <mat-form-field>
+                    <mat-select class="form-group b-0" formControlName="arnOrRia">
+                        <mat-option value="" selected disabled>Select Type</mat-option>
+                        <mat-option [value]="option.id" *ngFor="let option of data.globalData.arn_type_list">{{option.type}}</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-2 pr-0">
             <h5 class="m-0 text-right pt-8">ARN/RIA type</h5>
         </div>
         <div class="col-md-5">
-            <div class="form-control mb-0">
+            <div class="mb-0 form-group">
                 <mat-form-field>
-                    <mat-select class="form-group b-0" formControlName="typeId">
+                    <mat-select class="form-control br-0" formControlName="typeId">
                         <mat-option value="" selected disabled>Select Option</mat-option>
-                        <mat-option [value]="option.id" *ngFor="let option of data.globalData.arn_type_master_list">{{option.type}}</mat-option>
+                        <mat-option [value]="option.id" *ngFor="let option of data.globalData.arn_type_master_list">
+                            {{option.type}}</mat-option>
                     </mat-select>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -32,54 +44,56 @@
             <h5 class="m-0 text-right pt-8">ARN/RIA number</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-control p-0">
+            <div class="form-group p-0">
                 <mat-form-field>
-                    <input matInput type="text" formControlName="number" class="form-group">
-                    <mat-error *ngIf="arnRiaFG.controls.number.invalid && arnRiaFG.controls.number.errors.required">This field is required</mat-error>
-                    <mat-error *ngIf="arnRiaFG.controls.number.invalid && arnRiaFG.controls.number.errors.pattern">Numbers only</mat-error>
+                    <input matInput type="text" formControlName="number" class="form-control br-0">
+                    <mat-error *ngIf="arnRiaFG.get('number').errors?.required">This field is required</mat-error>
+                    <mat-error *ngIf="arnRiaFG.get('number').errors?.pattern">Numbers only</mat-error>
                 </mat-form-field>
             </div>
         </div>
     </div>
-    <div class="row pt-40">
+    <div class="row pt-28">
         <div class="col-md-4 pr-0">
             <h5 class="m-0 text-right pt-8">Name of ARN/RIA holder</h5>
         </div>
         <div class="col-md-5">
-            <div class="form-control p-0">
+            <div class="form-group p-0">
                 <mat-form-field>
-                    <input matInput type="text" formControlName="nameOfTheHolder" class="form-group">
+                    <input matInput type="text" formControlName="nameOfTheHolder" class="form-control br-0">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
     </div>
-    <div class="row pt-40">
+    <div class="row pt-28">
         <div class="col-md-4 pr-0">
             <h5 class="m-0 text-right pt-8">EUIN</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-control p-0">
+            <div class="form-group p-0">
                 <mat-form-field>
-                    <input matInput type="text" formControlName="euin" class="form-group">
-                    <mat-error *ngIf="arnRiaFG.controls.euin.invalid && arnRiaFG.controls.euin.errors.required">This field is required</mat-error>
-                    <mat-error *ngIf="arnRiaFG.controls.euin.invalid && arnRiaFG.controls.euin.errors.pattern">Valid EUIN required</mat-error>
+                    <input matInput type="text" formControlName="euin" class="form-control br-0">
+                    <mat-error *ngIf="arnRiaFG.get('euin').errors?.required">This field is required</mat-error>
+                    <mat-error *ngIf="arnRiaFG.get('euin').errors?.pattern">Valid EUIN required</mat-error>
                 </mat-form-field>
             </div>
         </div>
     </div>
-    <div class="row pt-40">
+    <div class="row pt-28">
         <div class="col-md-4 pr-0">
             <h5 class="m-0 text-right pt-8">Commencement date</h5>
         </div>
         <div class="col-md-3 pr-0">
             <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
-                    <input class="form-control br-0 b-0" formControlName="commencementDate" (focus)="picker.open()" matInput [matDatepicker]="picker" [max]="yesterdaysDate" readonly>
+                    <input class="form-control b-0" formControlName="commencementDate" (focus)="picker.open()" matInput [matDatepicker]="picker" [max]="yesterdaysDate" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
-                    <mat-error *ngIf="arnRiaFG.controls.commencementDate.invalid && arnRiaFG.controls.commencementDate.errors.required">This field is required</mat-error>
-                    <mat-error *ngIf="arnRiaFG.controls.commencementDate.invalid && arnRiaFG.controls.commencementDate.errors.matDatepickerMax">Please enter valid date</mat-error>
+                    <mat-error *ngIf="arnRiaFG.get('commencementDate').errors?.required">
+                        This field is required</mat-error>
+                    <mat-error *ngIf="arnRiaFG.get('commencementDate').errors?.matDatepickerMax">
+                        Please enter valid date</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -91,11 +105,13 @@
         <div class="col-md-3 pr-0">
             <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
-                    <input class="form-control br-0 b-0" formControlName="renewalDate" matInput (focus)="picker1.open()" [matDatepicker]="picker1" [min]="tomrrowsDate" readonly>
+                    <input class="form-control b-0" formControlName="renewalDate" matInput (focus)="picker1.open()" [matDatepicker]="picker1" [min]="tomrrowsDate" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                    <mat-datepicker #picker1 ></mat-datepicker>
-                    <mat-error *ngIf="arnRiaFG.controls.commencementDate.invalid && arnRiaFG.controls.commencementDate.errors.required">This field is required</mat-error>
-                    <mat-error *ngIf="arnRiaFG.controls.commencementDate.invalid && arnRiaFG.controls.commencementDate.errors.matDatepickerMin">Please enter valid date</mat-error>
+                    <mat-datepicker #picker1></mat-datepicker>
+                    <mat-error *ngIf="arnRiaFG.get('renewalDate').errors?.required">
+                        This field is required</mat-error>
+                    <mat-error *ngIf="arnRiaFG.get('renewalDate').errors?.matDatepickerMin">
+                        Please enter valid date</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -105,39 +121,43 @@
             <h5 class="m-0 text-right pt-8">Registered email</h5>
         </div>
         <div class="col-md-5">
-            <div class="form-control p-0">
+            <div class="form-group p-0">
                 <mat-form-field>
-                    <input matInput type="text" formControlName="registeredEmail" class="form-group">
-                    <mat-error *ngIf="arnRiaFG.controls.registeredEmail.invalid && arnRiaFG.controls.registeredEmail.errors.required">This field is required</mat-error>
-                    <mat-error *ngIf="arnRiaFG.controls.registeredEmail.invalid && arnRiaFG.controls.registeredEmail.errors.email">Valid Email required</mat-error>
+                    <input matInput type="text" formControlName="registeredEmail" class="form-control br-0">
+                    <mat-error *ngIf="arnRiaFG.get('registeredEmail').errors?.required">This field is required</mat-error>
+                    <mat-error *ngIf="arnRiaFG.get('registeredEmail').errors?.pattern">Email is not valid</mat-error>
                 </mat-form-field>
             </div>
         </div>
     </div>
-    <div class="row pt-40">
+    <div class="row pt-28">
         <div class="col-md-4 pr-0">
             <h5 class="m-0 text-right pt-8">Registered PAN</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-control p-0">
+            <div class="form-group p-0">
                 <mat-form-field>
-                    <input matInput type="text" formControlName="registeredPan" class="form-group">
-                    <mat-error *ngIf="arnRiaFG.controls.registeredPan.invalid && arnRiaFG.controls.registeredPan.errors.required">This field is required</mat-error>
-                    <mat-error *ngIf="(arnRiaFG.controls.registeredPan.invalid && arnRiaFG.controls.registeredPan.errors.minlength) || (arnRiaFG.controls.registeredPan.invalid && arnRiaFG.controls.registeredPan.errors.minlength) ">Valid PAN required</mat-error>
+                    <input matInput type="text" formControlName="registeredPan" class="form-control br-0">
+                    <mat-error *ngIf="arnRiaFG.controls.registeredPan.invalid && arnRiaFG.controls.registeredPan.errors.required">
+                        This field is required</mat-error>
+                    <mat-error *ngIf="arnRiaFG.get('registeredPan').errors?.minlength || arnRiaFG.get('registeredPan').errors?.maxlength">
+                        Valid PAN required</mat-error>
                 </mat-form-field>
             </div>
         </div>
     </div>
-    <div class="row pt-40 pb-44">
+    <div class="row pt-28 pb-44">
         <div class="col-md-4 pr-0">
             <h5 class="m-0 text-right pt-8">Registered address</h5>
         </div>
         <div class="col-md-5">
             <div class="form-group p-0">
                 <mat-form-field>
-                    <textarea matInput formControlName="registeredAddress" class="form-control" rows="5"></textarea>
-                    <mat-error *ngIf="arnRiaFG.controls.registeredAddress.invalid && arnRiaFG.controls.registeredAddress.errors.required">This field is required</mat-error>
-                    <mat-error *ngIf="arnRiaFG.controls.registeredAddress.invalid && arnRiaFG.controls.registeredAddress.errors.maxlength">Text exceeds 150 characters</mat-error>
+                    <textarea matInput formControlName="registeredAddress" class="form-control br-0" rows="5"></textarea>
+                    <mat-error *ngIf="arnRiaFG.get('registeredAddress').errors?.required">
+                        This field is required</mat-error>
+                    <mat-error *ngIf="arnRiaFG.get('registeredAddress').errors?.maxlength">
+                        Text exceeds 150 characters</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -147,11 +167,12 @@
             <h5 class="m-0 text-right pt-8">GST Treatment</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-control mb-0">
+            <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select class="form-group b-0" formControlName="gstApplicableId">
+                    <mat-select class="form-control br-0" formControlName="gstApplicableId">
                         <mat-option value="" selected disabled>Select Option</mat-option>
-                        <mat-option [value]="gst_applicable_list.id" *ngFor="let gst_applicable_list of data.globalData.gst_applicable_list">{{gst_applicable_list.type}}</mat-option>
+                        <mat-option [value]="gst_applicable_list.id" *ngFor="let gst_applicable_list of data.globalData.gst_applicable_list">
+                            {{gst_applicable_list.type}}</mat-option>
                     </mat-select>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -163,11 +184,12 @@
             <h5 class="m-0 text-right pt-8">GST Number</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-control mb-0">
+            <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput type="text" formControlName="gstNumber" class="form-group">
-                    <mat-error *ngIf="arnRiaFG.controls.gstNumber.invalid && arnRiaFG.controls.gstNumber.errors.required">This field is required</mat-error>
-                    <mat-error *ngIf="(arnRiaFG.controls.gstNumber.invalid && arnRiaFG.controls.gstNumber.errors.minlength) || (arnRiaFG.controls.gstNumber.invalid && arnRiaFG.controls.gstNumber.errors.minlength) ">Valid GST required</mat-error>
+                    <input matInput type="text" formControlName="gstNumber" class="form-control br-0">
+                    <mat-error *ngIf="arnRiaFG.get('gstNumber').errors?.required">This field is required</mat-error>
+                    <mat-error *ngIf="arnRiaFG.get('gstNumber').errors?.maxlength || arnRiaFG.get('gstNumber').errors?.minlength">
+                        Valid GST required</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -177,9 +199,9 @@
             <h5 class="m-0 text-right pt-8">Data upload</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-control mb-0">
+            <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select class="form-group b-0" formControlName="dataUploadTypeId">
+                    <mat-select class="form-control br-0" formControlName="dataUploadTypeId">
                         <mat-option value="" selected disabled>Select Option</mat-option>
                         <mat-option [value]="1">auto</mat-option>
                         <mat-option [value]="2">manual</mat-option>

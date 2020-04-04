@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { AumComponent } from '../aum.component';
 import { BackOfficeService } from '../../../../back-office.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -18,6 +18,7 @@ export class AmcWiseComponent implements OnInit {
   amcList: any;
   totalCurrentValue = 0;
   totalWeight = 0;
+  @Output() changedValue = new EventEmitter();
 
   arrayOfExcelData: any[][] = [];
   arrayOfHeaders: any[][] = [
@@ -70,7 +71,7 @@ export class AmcWiseComponent implements OnInit {
     this.getAmcWiseData();
   }
   aumReport() {
-    this.aum.aumComponent = true;
+    this.changedValue.emit(true);
   }
   getAmcWiseData() {
     const obj = {
@@ -170,21 +171,21 @@ export class AmcWiseComponent implements OnInit {
   }
 
   getReponseAmcWiseGet(data) {
-    this.amcList = data;
-    this.initializeExcelSheet();
-    // this.exportToExcelSheet('applicant-wise');
-    console.log("this we need", data)
-    this.amcList.forEach(o => {
-      o.showAmc = true;
-      this.totalCurrentValue += o.totalAum;
-      this.totalWeight += o.weightInPercentage;
-    });
+    if (data) {
+      this.initializeExcelSheet();
+      console.log("this we need", data)
+      this.amcList = data;
+      this.amcList.forEach(o => {
+        o.showAmc = true;
+        this.totalCurrentValue += o.totalAum;
+        this.totalWeight += o.weightInPercentage;
+      });
+    }
     this.showLoader = false;
   }
   showScheme(amcData) {
     amcData.showAmc = !amcData.showAmc
     amcData.schemes.forEach(o => {
-      o.mutualFundSchemeMasterId = amcData.id;
       o.showScheme = true;
     });
   }
@@ -196,7 +197,7 @@ export class AmcWiseComponent implements OnInit {
         advisorId: this.advisorId,
         arnRiaDetailsId: -1,
         parentId: -1,
-        schemeMasterId: schemeData.mutualFundSchemeMasterId,
+        schemeMasterId: schemeData.id,
         totalAum: schemeData.totalAum
       }
       this.backoffice.amcWiseApplicantGet(obj).subscribe(
@@ -212,7 +213,7 @@ export class AmcWiseComponent implements OnInit {
   getApplicantName() {
     const obj = {
       advisorId: this.advisorId,
-      arnRiaDetailId: 12345,
+      arnRiaDetailId: -1,
       schemeMasterId: 1345,
       totalAum: 2000
     }

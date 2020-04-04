@@ -385,7 +385,9 @@ $lineheight:20px;
 .pt-2 {
   padding-top: $p4 - 2 !important;
 }
-
+.pt-3{
+  padding-top:3px !important;
+}
 .pt-4 {
   padding-top: $p4 !important;
 }
@@ -573,7 +575,9 @@ $lineheight:20px;
 .pb-4 {
   padding-bottom: $p4 !important;
 }
-
+.pb-6{
+  padding-bottom:6px !important;
+}
 .pb-8 {
   padding-bottom: $p4*2 !important;
 }

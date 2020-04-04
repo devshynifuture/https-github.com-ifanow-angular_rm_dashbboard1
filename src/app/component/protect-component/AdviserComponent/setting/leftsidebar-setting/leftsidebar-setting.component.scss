@@ -1,12 +1,21 @@
 .example-card {
     height: 457px;
-  }
-  
-  
-  ::ng-deep .subnav-fixed {
+}
+
+ ::ng-deep .subnav-fixed {
     right: 0;
     position: fixed;
     margin-right: 10px;
-  
-  }
-  
+}
+
+.minWidth130 {
+    min-width: 130px !important;
+}
+
+.minWidth70 {
+    min-width: 70px !important;
+}
+
+.minWidth80 {
+    min-width: 80px !important;
+}

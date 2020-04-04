@@ -12,6 +12,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 export class LeadsClientsComponent implements OnInit {
   clientOwnerList: any;
   flag: any;
+  clientData: any;
 
   constructor(private fb: FormBuilder, private peopleService: PeopleService, private subInjectService: SubscriptionInject, private eventService: EventService) { }
   convertClientForm;
@@ -20,10 +21,10 @@ export class LeadsClientsComponent implements OnInit {
     this.convertClientForm = this.fb.group({
       clientRole: [, [Validators.required]],
       confirmRole: [, [Validators.required]],
-      userName: [, [Validators.required]]
     })
   }
   set data(data) {
+    this.clientData = data;
     this.getClientList(data);
   }
   getClientList(data) {
@@ -31,7 +32,7 @@ export class LeadsClientsComponent implements OnInit {
     {
       advisorId: 1
     }
-    this.peopleService.getTeamMemberList(obj).subscribe(
+    this.peopleService.getAllCLients(obj).subscribe(
       data => {
         console.log(data);
         this.clientOwnerList = data;
@@ -46,12 +47,13 @@ export class LeadsClientsComponent implements OnInit {
     }
     let obj =
     {
-      "clientId": 61,
-      "roleId": this.selectedClient.roleId,
+      "clientId": this.convertClientForm.get('clientRole').value.clientId,
+      "roleId": parseInt(this.convertClientForm.get('confirmRole').value),
       "status": 1,
-      "advisorId": this.selectedClient.advisorId
+      "advisorId": this.convertClientForm.get('clientRole').value.advisorId,
+      "sendEmail": true
     }
-    this.peopleService.loginWithPassword(obj).subscribe(
+    this.peopleService.updateClientStatus(obj).subscribe(
       data => {
         console.log(data);
         this.close();

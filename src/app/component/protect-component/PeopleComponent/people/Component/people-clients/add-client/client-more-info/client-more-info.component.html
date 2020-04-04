@@ -25,7 +25,7 @@
                     <input autocomplete="off" formControlName="email" matInput placeholder="Enter Email"
                         class="form-control">
                     <mat-hint>Optional</mat-hint>
-                    <!-- <mat-error *ngIf="basicDetails.get('email').errors?.pattern">Email is not valid</mat-error> -->
+                    <mat-error *ngIf="moreInfoForm.get('email').errors?.pattern">Email is not valid</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -42,6 +42,7 @@
                     <input autocomplete="off" formControlName="pan" #pan appInputValueValidation
                         [inputValidator]="validatorType.ALPHA_NUMERIC" maxlength="10" matInput class="form-control">
                     <mat-hint>Optional</mat-hint>
+                    <mat-error *ngIf="moreInfoForm.get('pan').errors?.pattern">Pan must be 10 digits</mat-error>
                     <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
                 </mat-form-field>
             </div>
@@ -227,10 +228,10 @@
         <div class="col-md-3 p-0">
             <!-- <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
-                    <input [matDatepicker]="anniversaryDate1" formControlName="anniversaryDate"
+                    <input [matDatepicker]="anniversaryDate1" formControlName="anniversaryDate1"
                         (click)="anniversaryDate1.open()" class="form-control br-0 b-0" matInput readonly>
                     <mat-datepicker-toggle matSuffix [for]="anniversaryDate1"></mat-datepicker-toggle>
-                    <mat-datepicker #anniversaryDate></mat-datepicker>
+                    <mat-datepicker #anniversaryDate1></mat-datepicker>
                     <mat-error class="f-12">This field is required
                     </mat-error>
                 </mat-form-field>

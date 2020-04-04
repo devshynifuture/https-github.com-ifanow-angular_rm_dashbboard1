@@ -53,35 +53,29 @@
             </div>
         </div>
     </div>
-    <div class="row pt-44" formArrayName="rtaCamsFundNetSecurityQuestionsList">
+    <div class="row pt-44 pb-60" formArrayName="rtaCamsFundNetSecurityQuestionsList">
         <div class="col-md-4 pr-0">
             <h5 class="m-0 text-right pt-12">Secret question & answer</h5>
         </div>
         <ng-container [formGroupName]="i" *ngFor="let secretQuestionForm of camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.value; let i = index; trackBy:trackByFn">
             <div class="col-md-4 pr-0" *ngIf="i > 0"></div>
             <div class="col-md-4">
-                <div class="form-group mb-0">
-                    <!-- mat select has issues with formarray -->
-                    <!-- <mat-form-field>
-                        <mat-select class="form-control" formControlName="question">
-                            <mat-option [value]="questionObj.id" *ngFor="let questionObj of secretQuestionsSet">{{questionObj.question}}</mat-option>
-                        </mat-select>
-                    </mat-form-field> -->
-
+                <div class="form-group  mb-24">
                     <select class="form-control" formControlName="questionId">
                         <option value="" selected disabled>Select Question</option>
-                        <option [value]="questionObj.id"
-                            *ngFor="let questionObj of data.globalData.rta_cams_fund_net_security_questions_list">
+                        <option [value]="questionObj.id" *ngFor="let questionObj of data.globalData.rta_cams_fund_net_security_questions_list">
                             {{questionObj.question}}</option>
                     </select>
                     <mat-error *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.questionId.invalid && camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.questionId.errors.required && camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.questionId.touched">
                         This field is required</mat-error>
                     <mat-error *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.questionId.invalid && camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.questionId.errors.duplicate">
                         This question already exists</mat-error>
+                    <!-- <mat-form-field>
+                    </mat-form-field> -->
                 </div>
             </div>
             <div class="col-md-2 pl-0">
-                <div class="form-group mb-0">
+                <div class="form-group mb-24 ">
                     <mat-form-field>
                         <input type="text" formControlName="answer" matInput class="form-control">
                         <mat-error>This field is required</mat-error>
@@ -90,13 +84,13 @@
             </div>
 
             <!-- controls when adding first time -->
-            <div *ngIf="is_add">
-                <div class="col-md-1 pl-0" *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.length == (i+1)">
+            <div class="col-md-2 pl-0 d-flex" *ngIf="is_add">
+                <div *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.length == (i+1)">
                     <i class="material-icons c-p text-custom pt-8" (click)="addMoreQuestion()">
                         add
                     </i>
                 </div>
-                <div class="col-md-1 pl-0" *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.value.length > 1">
+                <div *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.value.length > 1">
                     <i class="material-icons c-p text-custom pt-8" (click)="removeQuestion(i)">
                         remove
                     </i>
@@ -104,18 +98,18 @@
             </div>
 
             <!-- controls on edit -->
-            <div *ngIf="!is_add">
-                <div class="col-md-1 pl-0" *ngIf="showAddMoreQuestionBtn && camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.length == (i+1)">
+            <div class="col-md-2 pl-0 d-flex" *ngIf="!is_add">
+                <div *ngIf="showAddMoreQuestionBtn && camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.length == (i+1)">
                     <i class="material-icons c-p text-custom pt-8" (click)="addIndividualQuestion()">
                         add
                     </i>
                 </div>
-                <div class="col-md-1 pl-0" *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.value.length > 1">
+                <div *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.value.length > 1">
                     <i class="material-icons c-p text-custom pt-8" (click)="removeQuestion(i)">
                         remove
                     </i>
                 </div>
-                <div class="col-md-1 pl-0">
+                <div>
                     <i class="material-icons c-p text-custom pt-8" (click)="addOrUpdateIndividualQuestion(i)">
                         save
                     </i>
