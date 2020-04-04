@@ -113,6 +113,12 @@ export class OrgSettingServiceService {
   deletePrefEmailTemplate(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_PREF_EMAIL_TEMPLATE, data);
   }
+  getTeamMember(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TEAM_MEMBER, data);
+  }
+  updateAccessControl(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_ACCESS_CONTROL, data);
+  }
   alterTable(table: (UpperTableBox | Group)[], field: string, value: string, index: number): (UpperTableBox | Group)[] {
     table[index][field]['value'] = value;
 

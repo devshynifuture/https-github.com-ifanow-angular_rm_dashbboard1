@@ -5,6 +5,7 @@ import { ValidatorType } from 'src/app/services/util.service';
 import { PostalService } from 'src/app/services/postal.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 
 @Component({
   selector: 'app-client-address',
@@ -13,15 +14,21 @@ import { EventService } from 'src/app/Data-service/event.service';
 })
 export class ClientAddressComponent implements OnInit {
   userData: any;
-
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private postalService: PostalService, private peopleService: PeopleService, private eventService: EventService) { }
+  proofType
+  constructor(private cusService: CustomerService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private postalService: PostalService, private peopleService: PeopleService, private eventService: EventService) { }
   addressForm;
   validatorType = ValidatorType;
   @Output() tabChange = new EventEmitter();
+  @Input() fieldFlag;
   @Input() set data(data) {
     this.userData = data;
+    this.proofType = '1';
+    this.createAddressForm(data);
   }
   ngOnInit() {
+  }
+  createAddressForm(data) {
+    (data == undefined) ? data = {} : data;
     this.addressForm = this.fb.group({
       proofType: ['1', [Validators.required]],
       addProofType: [, [Validators.required]],
@@ -72,7 +79,7 @@ export class ClientAddressComponent implements OnInit {
         "state": this.addressForm.get('state').value,
         "stateId": '',
         "country": this.addressForm.get('country').value,
-        "userId": this.userData.clientId,
+        "userId": (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? this.userData.clientId : this.userData.id,
         "userType": 1,
         "addressType": this.addressForm.get('proofType').value,
         "proofType": this.addressForm.get('addProofType').value,

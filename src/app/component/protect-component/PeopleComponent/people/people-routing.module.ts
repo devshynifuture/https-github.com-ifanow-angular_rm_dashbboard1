@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { PeopleComponent } from './people.component';
-import { PeopleClientsComponent } from './Component/people-clients/people-clients.component';
-import { PeopleLeadsComponent } from './Component/people-leads/people-leads.component';
-import { PeopleTeamMembersComponent } from './Component/people-team-members/people-team-members.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {PeopleComponent} from './people.component';
+import {PeopleClientsComponent} from './Component/people-clients/people-clients.component';
+import {PeopleLeadsComponent} from './Component/people-leads/people-leads.component';
+import {PeopleTeamMembersComponent} from './Component/people-team-members/people-team-members.component';
 
 
 const routes: Routes = [
@@ -19,6 +19,10 @@ const routes: Routes = [
         path: 'leads',
         component: PeopleLeadsComponent
       },
+      /* {
+         path: 'team-members',
+         component: UsersComponent
+       },*/
       {
         path: 'team-members',
         component: PeopleTeamMembersComponent
@@ -40,4 +44,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PeopleRoutingModule { }
+export class PeopleRoutingModule {
+}

@@ -17,7 +17,7 @@ export class HierachyComponent implements OnInit {
   dataSource:MatTableDataSource<any>;
   advisorId:any;
   counter: any;
-  isLoading: boolean;
+  isLoading: boolean = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -32,22 +32,22 @@ export class HierachyComponent implements OnInit {
   }
 
   getAccessRightsList() {
-    this.loader(1);
+    //this.loader(1);
     const dataObj = {
       advisorId: this.advisorId
     }
     this.settingsService.getAccessRightsList(dataObj).subscribe((res) => {
-      this.loader(-1);
+     // this.loader(-1);
       console.log(res);
       this.dataSource = new MatTableDataSource(res);
     }, err => {
       console.error(err);
-      this.loader(-1);
+     // this.loader(-1);
       this.eventService.openSnackBar("Error occured");
     })
   }
 
-  openTask(value, data) {
+  assignTeamMember(value, data) {
     const fragmentData = {
       flag: value,
       data: data,
@@ -79,29 +79,3 @@ export class HierachyComponent implements OnInit {
   }
 
 }
-
-export interface PeriodicElement {
-  name: string;
-  position: string;
-  weight: string;
-  symbol: string;
-  report: string;
-  role: string;
-
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    position: 'Ronak Hindocha', name: 'Active', weight: '+91 9987412342',
-    symbol: 'ronak.hindocha@futurewise.co.in', role: 'Admin', report: '-'
-  },
-
-  {
-    position: 'Ronak Hindocha', name: 'Active', weight: '+91 9987412342',
-    symbol: 'ronak.hindocha@futurewise.co.in', role: 'Admin', report: 'Ronak Hindocha'
-  },
-  {
-    position: 'Ronak Hindocha', name: 'Active', weight: '+91 9987412342',
-    symbol: 'ronak.hindocha@futurewise.co.in', role: 'Admin', report: 'ADD REPORTING MANAGER'
-  },
-];

@@ -4,7 +4,7 @@ import {SettingsService} from '../../../../settings.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import {ValidatorType} from 'src/app/services/util.service';
 import {EventService} from 'src/app/Data-service/event.service';
-import {LoginService} from '../../../../../../../no-protected/login/login.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-new-team-member',
@@ -21,7 +21,7 @@ export class NewTeamMemberComponent implements OnInit {
     private fb: FormBuilder,
     private settingsService: SettingsService,
     private eventService: EventService,
-    private loginService: LoginService
+    private subInjectService: SubscriptionInject,
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -31,12 +31,13 @@ export class NewTeamMemberComponent implements OnInit {
   }
 
   createForm() {
+    let roleId = this.data.mainData.role ? this.data.mainData.role.id : '';
     this.teamMemberFG = this.fb.group({
       adminAdvisorId: [this.data.mainData.adminAdvisorId || this.advisorId],
       fullName: [this.data.mainData.fullName, [Validators.required, Validators.maxLength(50), Validators.pattern(ValidatorType.PERSON_NAME)]],
-      emailId: [this.data.mainData.emailId, [Validators.required, Validators.maxLength(50), Validators.pattern(ValidatorType.EMAIL)]],
-      mobileNo: [this.data.mainData.mobileNo, [Validators.required, Validators.maxLength(50), Validators.pattern(ValidatorType.NUMBER_ONLY)]],
-      roleId: [this.data.mainData.roleId, [Validators.required]],
+      emailId: [this.data.mainData.email, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
+      mobileNo: [this.data.mainData.mobile, [Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern(ValidatorType.NUMBER_ONLY)]],
+      roleId: [roleId, [Validators.required]],
     });
   }
 
@@ -47,7 +48,7 @@ export class NewTeamMemberComponent implements OnInit {
       if(this.data.is_add_call) {
         this.addTeamMember();
       } else {
-        this.editTeamMember();
+        // this.editTeamMember();
       }
     }
   }
@@ -63,21 +64,23 @@ export class NewTeamMemberComponent implements OnInit {
     });
   }
 
-  editTeamMember() {
-    let dataObj = {
-      ...this.data.mainData,
-      ...this.teamMemberFG.value,
-    };
-    this.settingsService.addTeamMember(dataObj).subscribe((res)=>{
-      this.close(true);
-      this.eventService.openSnackBar("Invitation sent successfully");
-    }, (err) => {
-      console.error(err);
-      this.eventService.openSnackBar("Error occured.");
-    });
-  }
+  // editTeamMember() {
+  //   let dataObj = {
+  //     ...this.data.mainData,
+  //     ...this.teamMemberFG.value,
+  //   };
+
+  //   delete dataObj.role;
+  //   this.settingsService.editTeamMember(dataObj).subscribe((res)=>{
+  //     this.close(true);
+  //     this.eventService.openSnackBar("Invitation sent successfully");
+  //   }, (err) => {
+  //     console.error(err);
+  //     this.eventService.openSnackBar("Error occured.");
+  //   });
+  // }
 
   close(status = false){
-    this.eventService.changeUpperSliderState({state: 'close', refreshRequired: status});
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: status});
   }
 }

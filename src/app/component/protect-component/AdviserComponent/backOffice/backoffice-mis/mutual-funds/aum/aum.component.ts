@@ -25,17 +25,18 @@ export class AumComponent implements OnInit {
   aumComponent = true;
   componentWise;
   advisorId: any;
-
+  arnRiaList: any;
+  aumGraph:any
 
   constructor(private backoffice: BackOfficeService, private dataService: EventService) { }
 
   teamMemberId = 2929;
   ngOnInit() {
-    this.viewMode = 'Select option';
     this.advisorId = AuthService.getAdvisorId();
-    setTimeout(() => {
-      this.pieChart('pieChartAum');
-    }, 1000);
+
+    this.viewMode = 'Select option';
+    this.getArnRiaList();
+    this.getGraphData();
     this.getTotalAum();
     // this.getSubCatScheme();
     this.getSubCatAum()
@@ -52,14 +53,30 @@ export class AumComponent implements OnInit {
     this.categoryshow = true;
     this.showMainWrapperFlag = false;
   }
+  getArnRiaList(){
+    this.backoffice.getArnRiaList(this.advisorId).subscribe(
+      data =>{
 
+        this.arnRiaList=data;
+        const obj = {
+          number: 'All'
+        }
+        this.arnRiaList.push(obj);
+    },
+    )
+  }
   showSubTableList() {
     this.showMainWrapperFlag = false;
     this.showSubTable = true;
     this.showAddBtn = false;
     this.showRemoveBtn = true;
   }
-
+  display(value){
+    this.aumComponent=true;
+    setTimeout(() => {
+      this.pieChart('pieChartAum',this.aumGraph);
+    }, 1000);
+  }
 
   hideSubTableList() {
     this.showMainWrapperFlag = false;
@@ -130,34 +147,58 @@ export class AumComponent implements OnInit {
     this.componentWise = value;
     this.aumComponent = false;
   }
-  pieChart(id){
-    Highcharts.chart('pieChartAum', {
-    chart: {
-        type: 'column'
-    },
-    title: {
-        text: 'Column chart with negative values'
-    },
-    xAxis: {
-        categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
-    },
-    credits: {
-        enabled: false
-    },
-    series: [{
-      type: undefined ,
-      name: 'John',
-      data: [5, 3, 4, 7, 2]
-    }, {
-      type: undefined,
-        name: 'Jane',
-        data: [2, -2, -3, 2, 1]
-    }, {
-      type: undefined,
-        name: 'Joe',
-        data: [3, 4, 4, -2, 5]
-    }]
-});
+  getGraphData(){
+    const obj={
+      advisorId:this.advisorId,
+      arnRiaDetailsId:-1,
+      parentId:-1
+    }
+    this.backoffice.aumGraphGet(obj).subscribe(
+      data => {
+        this.aumGraph=data;
+        setTimeout(() => {
+          this.pieChart('pieChartAum',data);
+        }, 1000);
+        console.log(data)
+      }
+    )
   }
+  pieChart(id,obj){
+    var obj1 = obj[obj.length - 1]
+    var obj2 = obj[obj.length - 2]
+    var obj3 = obj[obj.length - 3]
+    var obj4 = obj[obj.length - 4]
+    var months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    Highcharts.chart('pieChartAum', {
+      chart: {
+          type: 'column'
+      },
+      title: {
+        text: ''
+      },    
+      xAxis: {
+          categories: [months[obj1.Month]+'-'+obj1.Year,months[obj2.Month]+'-'+obj2.Year,months[obj3.Month]+'-'+obj3.Year,months[obj4.Month]+'-'+obj4.Year]
+      },
+      credits: {
+          enabled: false
+      },
+      series: [{
+        type: undefined ,
+        name: 'Purchase',
+        color: '#70ca86',
+        data: [obj1.GrossSale,obj2.GrossSale,obj3.GrossSale,obj4.GrossSale]
+      }, {
+        type: undefined,
+          name: 'Redemption',
+          color: '#f05050',
+          data: [obj1.Redemption,obj2.Redemption,obj3.Redemption,obj4.Redemption]
+      }, {
+        type: undefined,
+          name: 'Net Sales',
+          color:'#55c3e6',
+          data: [obj1.GrossSale + obj1.Redemption,obj2.GrossSale + obj2.Redemption,obj3.GrossSale + obj3.Redemption,obj4.GrossSale + obj4.Redemption]
+      }]
+  });
+}
 }
 

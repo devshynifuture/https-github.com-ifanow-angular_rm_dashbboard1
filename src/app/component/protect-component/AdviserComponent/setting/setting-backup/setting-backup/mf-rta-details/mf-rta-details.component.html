@@ -30,7 +30,7 @@
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef class="br"> Registered email ID </th>
                 <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">{{element.email}} </div>
+                    <div class="bar">{{element.registeredEmail}} </div>
                 </td>
             </ng-container>
 
@@ -109,7 +109,7 @@
                 <th mat-header-cell *matHeaderCellDef class="br"> Registered email ID </th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar">
-                        {{element.email}}
+                        {{element.registeredEmail}}
                     </div>
                 </td>
             </ng-container>
@@ -186,14 +186,17 @@
             <ng-container matColumnDef="email">
                 <th mat-header-cell *matHeaderCellDef class="br"> Registered email ID </th>
                 <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.email}} </div>
+                    <div class="bar"> {{element.registeredEmail}} </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="mail">
                 <th mat-header-cell *matHeaderCellDef class="br"> Mailback password</th>
                 <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.mail}} </div>
-                    <mat-icon>visibility</mat-icon>
+                    <div class="bar">
+                        <ng-container>
+                            <ng-template *ngTemplateOutlet="templateRef; context:{element :element.mailbackPassword, toggle: true}"></ng-template>
+                        </ng-container>
+                    </div>
                 </td>
             </ng-container>
 
@@ -294,7 +297,6 @@
 
 <ng-container>
     <ng-template #templateRef let-toggle="toggle" let-element="element">
-        {{(toggleVisibility(element, toggle))}}
-        <mat-icon (click)="toggle = !toggle">visibility</mat-icon>
-    </ng-template>
+        {{(toggleVisibility(element, toggle))}} <mat-icon (click)="toggle = !toggle">{{toggle ? 'visibility' : 'visibility_off'}}</mat-icon>
+      </ng-template>
 </ng-container>
