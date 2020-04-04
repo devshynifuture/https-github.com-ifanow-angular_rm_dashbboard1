@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, QueryList, Input } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
 import { SettingsService } from '../../settings.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
@@ -22,11 +22,16 @@ export class AddTaskTemplateComponent implements OnInit {
   editMode: boolean = false;
   subTaskList = [];
   Tat = [
-    {
-      value: 1, tat: 'T+0 day'
-    }, { value: 2, tat: 'T+1 day' }, { value: 3, tat: 'T+2 day' }, { value: 4, tat: 'T+3 day' },
-    { value: 5, tat: 'T+4 day' }, { value: 6, tat: 'T+5 day' }, { value: 7, tat: 'T+6 day' },
-    { value: 8, tat: 'T+7 day' }, { value: 9, tat: 'T+8 day' }, { value: 10, tat: 'T+9 day' }
+    { value: 1, tat: 'T+0 day'}, { value: 2, tat: 'T+1 day' }, { value: 3, tat: 'T+2 day' }, { value: 4, tat: 'T+3 day' },{ value: 5, tat: 'T+4 day' }, { value: 6, tat: 'T+5 day' }, { value: 7, tat: 'T+6 day' }, { value: 8, tat: 'T+7 day' }, { value: 9, tat: 'T+8 day' }, { value: 10, tat: 'T+9 day' },
+    { value: 11, tat: 'T+0 day'}, { value: 12, tat: 'T+1 day' }, { value: 13, tat: 'T+2 day' }, { value: 14, tat: 'T+3 day' },{ value: 15, tat: 'T+4 day' }, { value: 16, tat: 'T+5 day' }, { value: 17, tat: 'T+6 day' }, { value: 18, tat: 'T+7 day' }, { value: 19, tat: 'T+8 day' }, { value: 20, tat: 'T+9 day' },
+    { value: 21, tat: 'T+0 day'}, { value: 22, tat: 'T+1 day' }, { value: 23, tat: 'T+2 day' }, { value: 24, tat: 'T+3 day' },{ value: 25, tat: 'T+4 day' }, { value: 26, tat: 'T+5 day' }, { value: 27, tat: 'T+6 day' }, { value: 28, tat: 'T+7 day' }, { value: 29, tat: 'T+8 day' }, { value: 30, tat: 'T+9 day' },
+    { value: 31, tat: 'T+0 day'}, { value: 32, tat: 'T+1 day' }, { value: 33, tat: 'T+2 day' }, { value: 34, tat: 'T+3 day' },{ value: 35, tat: 'T+4 day' }, { value: 36, tat: 'T+5 day' }, { value: 37, tat: 'T+6 day' }, { value: 38, tat: 'T+7 day' }, { value: 39, tat: 'T+8 day' }, { value: 40, tat: 'T+9 day' },
+    { value: 41, tat: 'T+0 day'}, { value: 42, tat: 'T+1 day' }, { value: 43, tat: 'T+2 day' }, { value: 44, tat: 'T+3 day' },{ value: 45, tat: 'T+4 day' }, { value: 46, tat: 'T+5 day' }, { value: 47, tat: 'T+6 day' }, { value: 48, tat: 'T+7 day' }, { value: 49, tat: 'T+8 day' }, { value: 50, tat: 'T+9 day' },
+    { value: 51, tat: 'T+0 day'}, { value: 52, tat: 'T+1 day' }, { value: 53, tat: 'T+2 day' }, { value: 54, tat: 'T+3 day' },{ value: 55, tat: 'T+4 day' }, { value: 56, tat: 'T+5 day' }, { value: 57, tat: 'T+6 day' }, { value: 58, tat: 'T+7 day' }, { value: 59, tat: 'T+8 day' }, { value: 60, tat: 'T+9 day' },
+    { value: 61, tat: 'T+0 day'}, { value: 62, tat: 'T+1 day' }, { value: 63, tat: 'T+2 day' }, { value: 64, tat: 'T+3 day' },{ value: 65, tat: 'T+4 day' }, { value: 66, tat: 'T+5 day' }, { value: 67, tat: 'T+6 day' }, { value: 68, tat: 'T+7 day' }, { value: 69, tat: 'T+8 day' }, { value: 70, tat: 'T+9 day' },
+    { value: 71, tat: 'T+0 day'}, { value: 72, tat: 'T+1 day' }, { value: 73, tat: 'T+2 day' }, { value: 74, tat: 'T+3 day' },{ value: 75, tat: 'T+4 day' }, { value: 76, tat: 'T+5 day' }, { value: 77, tat: 'T+6 day' }, { value: 78, tat: 'T+7 day' }, { value: 79, tat: 'T+8 day' }, { value: 80, tat: 'T+9 day' },
+    { value: 81, tat: 'T+0 day'}, { value: 82, tat: 'T+1 day' }, { value: 83, tat: 'T+2 day' }, { value: 84, tat: 'T+3 day' },{ value: 85, tat: 'T+4 day' }, { value: 86, tat: 'T+5 day' }, { value: 87, tat: 'T+6 day' }, { value: 88, tat: 'T+7 day' }, { value: 89, tat: 'T+8 day' }, { value: 90, tat: 'T+9 day' },
+    { value: 91, tat: 'T+0 day'}, { value: 92, tat: 'T+1 day' }, { value: 93, tat: 'T+2 day' }, { value: 94, tat: 'T+3 day' },{ value: 95, tat: 'T+4 day' }, { value: 96, tat: 'T+5 day' }, { value: 97, tat: 'T+6 day' }, { value: 98, tat: 'T+7 day' }, { value: 99, tat: 'T+8 day' }, { value: 100, tat: 'T+9 day' }
   ]
   assetList: any;
   libilitiesList: any;
@@ -41,6 +46,7 @@ export class AddTaskTemplateComponent implements OnInit {
   inputData: any;
   linkedTemplateId: any;
   isEdite: boolean;
+  teamMemberList: any;
 
   @Input()
   set data(data) {
@@ -93,6 +99,7 @@ export class AddTaskTemplateComponent implements OnInit {
   }
   getTeamMemberListRes(data) {
     console.log('team member', data)
+    this.teamMemberList = data
   }
 
   getGlobalTaskData() {
@@ -133,7 +140,7 @@ export class AddTaskTemplateComponent implements OnInit {
         }
       }
     } else if (value == 2) {
-      this.list = this.libilitySubCategoryList
+      this.list = this.insuranceSubCategoryList
       if (this.inputData.subcategoryId) {
         var subList = this.list.filter(element => element.subcategoryId == this.inputData.subcategoryId)
         if(subList.length>0){
@@ -141,7 +148,7 @@ export class AddTaskTemplateComponent implements OnInit {
         }
       }
     } else {
-      this.list = this.insuranceSubCategoryList
+      this.list = this.libilitySubCategoryList
       if (this.inputData.subcategoryId) {
         var subList = this.list.filter(element => element.subcategoryId == this.inputData.subcategoryId)
         if(subList.length>0){
@@ -153,10 +160,6 @@ export class AddTaskTemplateComponent implements OnInit {
   }
   getdataForm(data) {
     if (!data) {
-      data = {}
-    } else if (data == 1) {
-      data = {}
-    } else if (data == 2) {
       data = {}
     }
     this.taskTemplate = this.fb.group({
@@ -215,7 +218,7 @@ export class AddTaskTemplateComponent implements OnInit {
           taskNumber: 1,
           description: value.controls.description.value,
           turtAroundTime: value.controls.turnAroundTime.value,
-          ownerId: 2727,
+          ownerId: value.controls.defaultAssign.value,
           id: null,
         }
         if (value.controls.id) {
@@ -256,7 +259,7 @@ export class AddTaskTemplateComponent implements OnInit {
   updateOwner() {
     if (this.inputData.id) {
       let obj = {
-        ownerId: 2227,
+        ownerId: this.taskTemplate.controls.defaultAssign.value,
         taskTemplateId: this.taskTemplate.controls.id.value,
       }
       this.orgSetting.updateOwnerTaskTemplate(obj).subscribe(
@@ -275,19 +278,17 @@ export class AddTaskTemplateComponent implements OnInit {
     }
   }
   saveTaskTemplate() {
-    if (this.taskTemplate.invalid) {
-      for (let element in this.taskTemplate.controls) {
-        console.log(element)
-        if (this.taskTemplate.get(element).invalid) {
-          this.inputs.find(input => !input.ngControl.valid).focus();
-          this.taskTemplate.controls[element].markAsTouched();
-          this.taskTemplate.get('subSubCategory').markAsTouched();
-          this.taskTemplate.get('subSubCategory').markAsTouched();
-          this.taskTemplate.get('adviceType').markAsTouched();
-          this.taskTemplate.get('turnAroundTime1').markAsTouched();
-        }
-      }
-    } else {
+    // if (this.taskTemplate.invalid) {
+    //   for (let element in this.taskTemplate.controls) {
+    //     console.log(element)
+    //     if (this.taskTemplate.get(element).invalid) {
+    //       // this.inputs.find(input => !input.ngControl.valid).focus();
+    //       this.taskTemplate.controls[element].markAsTouched();
+    //       this.taskTemplate.get('subSubCategory').markAsTouched();
+    //       this.taskTemplate.get('subSubCategory').markAsTouched();
+    //     }
+    //   }
+    // } else {
       let obj = {
         advisorId: this.advisorId,
         categoryId: this.taskTemplate.controls.category.value,
@@ -296,7 +297,7 @@ export class AddTaskTemplateComponent implements OnInit {
         adviceTypeId: this.taskTemplate.controls.adviceType.value,
         subSubCategoryId: this.taskTemplate.controls.subSubCategory.value,
         taskDescription: this.taskTemplate.controls.taskTemplate.value,
-        assignedTo: 2727,
+        assignedTo: this.taskTemplate.controls.defaultAssign.value,
         turnAroundTime: this.taskTemplate.controls.turnAroundTime1.value,
         subTaskList: this.taskTemplate.controls.subTaskList.value,
         id:null
@@ -319,8 +320,6 @@ export class AddTaskTemplateComponent implements OnInit {
           err => this.event.openSnackBar(err, "Dismiss")
         );
       }
-    }
-
   }
   addTaskTemplateRes(data) {
     console.log('addTaskTemplateRes', data);
