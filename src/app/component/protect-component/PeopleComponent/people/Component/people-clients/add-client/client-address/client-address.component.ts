@@ -15,6 +15,7 @@ import { CustomerService } from 'src/app/component/protect-component/customers/c
 export class ClientAddressComponent implements OnInit {
   userData: any;
   proofType
+  addressList: any;
   constructor(private cusService: CustomerService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private postalService: PostalService, private peopleService: PeopleService, private eventService: EventService) { }
   addressForm;
   validatorType = ValidatorType;
@@ -23,7 +24,7 @@ export class ClientAddressComponent implements OnInit {
   @Input() set data(data) {
     this.userData = data;
     this.proofType = '1';
-    this.createAddressForm(data);
+    (this.fieldFlag) ? this.getAddressList(data) : this.createAddressForm(data);
   }
   ngOnInit() {
   }
@@ -59,6 +60,20 @@ export class ClientAddressComponent implements OnInit {
     this.addressForm.get('state').setValue(pincodeData[0].State);
     this.addressForm.get('country').setValue(pincodeData[0].Country);
   }
+  getAddressList(data) {
+    let obj =
+    {
+      "userId": data.userId,
+      "userType": data.userType
+    }
+    this.cusService.getAddressList(obj).subscribe(
+      data => {
+        console.log(data);
+        this.addressList = data;
+      },
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
   addMore() {
     this.addressForm.reset();
   }
@@ -80,7 +95,7 @@ export class ClientAddressComponent implements OnInit {
         "stateId": '',
         "country": this.addressForm.get('country').value,
         "userId": (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? this.userData.clientId : this.userData.id,
-        "userType": 1,
+        " userType": (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? 2 : 3,
         "addressType": this.addressForm.get('proofType').value,
         "proofType": this.addressForm.get('addProofType').value,
         "proofIdNumber": this.addressForm.get('proofIdNum').value,

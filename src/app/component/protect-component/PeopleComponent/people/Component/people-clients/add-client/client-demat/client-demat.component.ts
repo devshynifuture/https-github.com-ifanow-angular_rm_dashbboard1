@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormArray, FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {ValidatorType} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { ValidatorType } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 
 @Component({
   selector: 'app-client-demat',
@@ -19,10 +19,11 @@ export class ClientDematComponent implements OnInit {
 
   dematForm;
   userData;
+  dematList: any;
 
   constructor(private cusService: CustomerService, private fb: FormBuilder,
-              private subInjectService: SubscriptionInject, private peopleService: PeopleService,
-              private eventService: EventService) {
+    private subInjectService: SubscriptionInject, private peopleService: PeopleService,
+    private eventService: EventService) {
   }
 
   validatorType = ValidatorType;
@@ -32,6 +33,8 @@ export class ClientDematComponent implements OnInit {
   @Input() set data(data) {
     this.userData = data;
     this.createDematForm(data);
+    (this.fieldFlag) ? this.getDematList(data) : this.createDematForm(data);
+
   }
 
   createDematForm(data) {
@@ -50,7 +53,19 @@ export class ClientDematComponent implements OnInit {
       powerOfAttMasId: []
     });
   }
-
+  getDematList(data) {
+    let obj =
+    {
+      "userId": data.userId,
+      "userType": data.userType
+    }
+    this.cusService.getDematList(obj).subscribe(
+      data => {
+        console.log(data);
+        this.dematList = data;
+      }, err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
   ngOnInit() {
     this.createDematForm(null);
   }
@@ -144,6 +159,6 @@ export class ClientDematComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 }

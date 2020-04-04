@@ -33,9 +33,23 @@ export class ClientBankComponent implements OnInit {
   @Input() set data(data) {
     this.userData = data;
     this.fieldFlag;
-    this.createBankForm(data)
-  }
+    this.createBankForm(data);
+    (this.fieldFlag) ? this.getBankList(data) : this.createBankForm(data);
 
+  }
+  getBankList(data) {
+    let obj =
+    {
+      "userId": data.userId,
+      "userType": data.userType
+    }
+    this.cusService.getDematList(obj).subscribe(
+      data => {
+        console.log(data);
+        this.bankList = data;
+      }, err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
   createBankForm(data) {
     (data == undefined) ? data = {} : data;
     this.bankForm = this.fb.group({
