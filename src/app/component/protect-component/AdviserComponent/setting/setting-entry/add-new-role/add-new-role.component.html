@@ -25,7 +25,9 @@
         <div class="form-group mb-0">
             <mat-form-field>
                 <input matInput formControlName="roleName" class="form-control">
-                <mat-hint align="end">0 / 30</mat-hint>
+                <mat-hint align="end">{{rolesFG.get('roleName').value.length}}/ 30</mat-hint>
+                <mat-error *ngIf="rolesFG.get('roleName').errors?.required">This field is required</mat-error>
+                <mat-error *ngIf="rolesFG.get('roleName').errors?.maxlength">Max length exceeded</mat-error>
             </mat-form-field>
         </div>
         <h5 class="m-0 pt-36">Role description</h5>
@@ -33,7 +35,9 @@
         <div class="form-group mb-0">
             <mat-form-field hintLabel="optional">
                 <textarea matInput formControlName="roleDescription" class="form-control" rows="5"></textarea>
-                <mat-hint align="end">0 / 60</mat-hint>
+                <mat-hint align="end">{{rolesFG.get('roleDescription').value.length}}/ 60</mat-hint>
+                <mat-error *ngIf="rolesFG.get('roleDescription').errors?.required">This field is required</mat-error>
+                <mat-error *ngIf="rolesFG.get('roleDescription').errors?.maxlength">Max length exceeded</mat-error>
             </mat-form-field>
         </div>
     </div>

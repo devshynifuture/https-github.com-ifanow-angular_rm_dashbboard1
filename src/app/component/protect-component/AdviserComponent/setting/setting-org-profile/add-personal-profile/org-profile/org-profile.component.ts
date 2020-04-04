@@ -155,7 +155,7 @@ export class OrgProfileComponent implements OnInit {
   updateOrganizationPhotoAndMoveToNextPage(cloudinaryResponseJson:any, web_or_report: string) {
     if(web_or_report == 'web') {
       const jsonDataObj = {
-        id: this.advisorId,
+        advisorId: this.advisorId,
         logoUrl: cloudinaryResponseJson.url,
         cloudinary_json: JSON.stringify(cloudinaryResponseJson)
       }

@@ -12,7 +12,7 @@ export class AuthService {
   }
 
   static getAdvisorId() {
-    return this.getUserInfo().advisorId;
+    return 2808;
   }
   static getUserId() {
     return this.getUserInfo().userId;
