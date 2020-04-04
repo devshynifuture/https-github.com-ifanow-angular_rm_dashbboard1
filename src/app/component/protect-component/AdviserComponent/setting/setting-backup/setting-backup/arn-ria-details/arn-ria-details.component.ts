@@ -30,7 +30,6 @@ export class ArnRiaDetailsComponent implements OnInit {
   initializeData(){
     this.settingsService.getArnGlobalData().subscribe((res)=>{
       this.globalData = res;
-      console.log(res);
     });
     this.getArnDetails();
   }
@@ -77,5 +76,10 @@ export class ArnRiaDetailsComponent implements OnInit {
   getArnType(id) {
     if(this.globalData.arn_type_list)
       return this.globalData.arn_type_list.find((data) => data.id == id).type
+  }
+
+  getArnMasterType(id) {
+    if(this.globalData.arn_type_master_list)
+      return this.globalData.arn_type_master_list.find((data) => data.id == id).type
   }
 }

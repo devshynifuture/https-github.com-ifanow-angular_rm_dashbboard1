@@ -18,12 +18,12 @@
             <mat-card class="b-a-l p-0">
                 <mat-card-header class="bg-grey lter row">
                     <div class="col-md-9 p-0">
-                        <h2 class="m-0">ARN-{{arn.number}}</h2>
+                        <h2 class="m-0">{{getArnType(arn.arnOrRia)}}-{{arn.number}}</h2>
                         <h3 class="m-0 roboto f-500  ">{{arn.nameOfTheHolder}}</h3>
                     </div>
 
                     <div class="col-md-3 p-0 d-flex align-items-center justify-content-end">
-                        <button mat-stroked-button class="text-primary mr-12">{{arn.status}}</button>
+                        <button mat-stroked-button class="text-primary mr-12">{{arn.isActive ? 'ACTIVE' : 'INACTIVE'}}</button>
                         <ng-container>
                             <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
 
@@ -38,7 +38,7 @@
                     <div class="row pt-36 bb-1 pb-36">
                         <div class="col-md-3">
                             <p class="f-12 m-0 proxima text-primitive">ARN TYPE</p>
-                            <h5 class="m-0">{{getArnType(arn.typeId)}}</h5>
+                            <h5 class="m-0">{{getArnMasterType(arn.typeId)}}</h5>
                         </div>
                         <div class="col-md-3 p-0">
                             <p class="f-12 m-0 proxima text-primitive">COMMENCEMENT DATE</p>
@@ -68,7 +68,7 @@
                         </div>
                         <div class="col-md-3 pl-0">
                             <p class="f-12 m-0 proxima text-primitive">GST</p>
-                            <h5 class="m-0">{{arn.gstNumber}}</h5>
+                            <h5 class="m-0">{{arn.gstNumber || 'NA'}}</h5>
                             <div class="pt-44">
                                 <p class="f-12 m-0 proxima text-primitive">EMAIL </p>
                                 <h5 class="m-0">{{arn.registeredEmail}}</h5>

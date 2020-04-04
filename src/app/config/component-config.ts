@@ -526,6 +526,8 @@ export const appConfig = {
   DELETE_SUBTASK_TEMPLATE: 'setting/task/sub-task/delete',
   OWNER_SUBTASK_UPDATE: 'setting/task/template/owner/update',
   OWNER_TASK_UPDATE: 'setting/task/sub-task/owner/update',
+  GET_TEAM_MEMBER:'setting/users/team-members/get',
+  UPDATE_ACCESS_CONTROL:'setting/users-roles/access-rights/update',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
@@ -563,8 +565,10 @@ export const appConfig = {
   UPDATE_COMPANY_PERSON_DETAILS: 'user/client/company/person/edit',
   TEAM_MEMBER_WISE_CLIENT_COUNT: 'user/advisor/team-member/count/get',
   GET_TEAM_MEMBERS: 'user/advisor/team-members/detail/get',
+  GET_ALL_CLIENTS: 'user/client/all/get',
   DELETE_CLIENT: 'user/client/delete',
   GET_CLIENT_OR_lEAD_DATA: 'user/client/detail/get',
+  UPDATE_CLIENT_STATUS: 'user/client/status/update',
   // LOGIN_WITH_PASSWORD: 'user/login/with/password',
 
   //////////////////////////////Login///////////////////////////////////
@@ -606,7 +610,8 @@ export const appConfig = {
   DELETE_USER_ROLE: 'setting/users-roles/role/delete',
   CLONE_USER_ROLE: 'setting/users-roles/role/clone/add',
   ADD_USER_ROLE: 'setting/users-roles/role/add',
-  GET_DETIALED_USER_ROLE: 'setting/users-roles/role/detail/get',
+  GET_DETIALED_USER_ROLE: 'setting/users-roles/role/module-detail/get',
+  GET_TEMPLATE_ROLE: 'setting/users-roles/role/advisor-or-client-role/template/get',
 
   GET_ALL_FEATURES: 'setting/users-roles/feature-capabilities/all/get',
 

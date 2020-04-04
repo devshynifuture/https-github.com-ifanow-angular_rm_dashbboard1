@@ -37,11 +37,9 @@
                             </div>
                             <div class="col-md-10 pl-12">
                                 <div class="profileDetails">
-                                    <h1 class="f-26 roboto f-500">Rahul Harish Jain</h1>
+                                    <h1 class="f-26 roboto f-500">{{clientOverviewData.name}}</h1>
                                     <h5>Software engineer | 36 Years</h5>
-                                    <p class="roboto l-18 f-14 text-primitive">Rahul is a software engineer from Mumbai.
-                                        He is working at TCS for past 5 years. He loves music and adventure sports. His
-                                        wife Shilpa works with Reliance.</p>
+                                    <p class="roboto l-18 f-14 text-primitive">{{clientOverviewData.bio}}</p>
                                 </div>
                             </div>
                         </div>
@@ -90,26 +88,27 @@
                             </div>
 
                             <div class=" col-md-2 text-right ">
-                                <a class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
+                                <a class=" f-12 text-primary primary-border c-p editCLass "
+                                    (click)="openClient('edit client',clientOverviewData)">EDIT</a>
                             </div>
 
                         </div>
 
-                        <div *ngIf="selectedFamilyMember" class=" row ">
+                        <div *ngIf="clientOverviewData" class=" row ">
                             <div class=" col-md-6 ">
                                 <div class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">DISPLAY NAME</p>
-                                    <p class=" f-14 roboto f-500 m-0 ">{{selectedFamilyMember.displayName}}</p>
+                                    <p class=" f-14 roboto f-500 m-0 ">{{clientOverviewData.displayName}}</p>
                                 </div>
 
                                 <div class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">MOBILE</p>
-                                    <!-- <p class=" f-14 roboto f-500 m-0 ">{{selectedFamilyMember.mobileList[0].mobileNo}}</p> -->
+                                    <!-- <p class=" f-14 roboto f-500 m-0 ">{{clientOverviewData.mobileList[0].mobileNo}}</p> -->
                                 </div>
 
                                 <div class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">PAN</p>
-                                    <p class=" f-14 roboto f-500 m-0 "> {{selectedFamilyMember.pan}}</p>
+                                    <p class=" f-14 roboto f-500 m-0 "> {{clientOverviewData.pan}}</p>
                                 </div>
 
                                 <div class=" basicDetaisList ">
@@ -119,11 +118,11 @@
 
                                 <div class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">GENDER</p>
-                                    <p class=" f-14 roboto f-500 m-0 " *ngIf="selectedFamilyMember.genderId=='1'">Male
+                                    <p class=" f-14 roboto f-500 m-0 " *ngIf="clientOverviewData.genderId=='1'">Male
                                     </p>
-                                    <p class=" f-14 roboto f-500 m-0 " *ngIf="selectedFamilyMember.genderId=='2'">Female
+                                    <p class=" f-14 roboto f-500 m-0 " *ngIf="clientOverviewData.genderId=='2'">Female
                                     </p>
-                                    <p class=" f-14 roboto f-500 m-0 " *ngIf="selectedFamilyMember.genderId=='3'">Other
+                                    <p class=" f-14 roboto f-500 m-0 " *ngIf="clientOverviewData.genderId=='3'">Other
                                     </p>
                                 </div>
                             </div>
@@ -136,27 +135,30 @@
 
                                 <div class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">USERNAME</p>
-                                    <p class=" f-14 roboto f-500 m-0 "> {{selectedFamilyMember.userName}}</p>
+                                    <p class=" f-14 roboto f-500 m-0 "> {{clientOverviewData.userName}}</p>
                                 </div>
 
                                 <div class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">AADHAAR</p>
-                                    <p class=" f-14 roboto f-500 m-0 ">{{selectedFamilyMember.aadharCard}}</p>
+                                    <p class=" f-14 roboto f-500 m-0 ">{{clientOverviewData.aadharCard}}</p>
                                 </div>
 
                                 <div class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">TAX STATUS</p>
-                                    <!-- <p class=" f-14 roboto f-500 m-0 " *ngIf="selectedFamilyMember.taxStatusId=='1'">
+                                    <p class=" f-14 roboto f-500 m-0 " *ngIf="clientOverviewData.taxStatusId=='1'">
                                         Individual</p>
-                                    <p class=" f-14 roboto f-500 m-0 " *ngIf="selectedFamilyMember.taxStatusId=='2'">
-                                        Non-individual</p> -->
+                                    <p class=" f-14 roboto f-500 m-0 " *ngIf="clientOverviewData.taxStatusId=='2'">
+                                        Non-individual</p>
                                 </div>
 
                                 <div class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">MARITAL STATUS</p>
-                                    <!-- <p class=" f-14 roboto f-500 m-0 " *ngIf="selectedFamilyMember.martialStatusId=='1'"> Married</p>
-                                    <p class=" f-14 roboto f-500 m-0 " *ngIf="selectedFamilyMember.martialStatusId=='2'"> Unmarried</p>
-                                    <p class=" f-14 roboto f-500 m-0 " *ngIf="selectedFamilyMember.martialStatusId=='3'"> Other</p> -->
+                                    <p class=" f-14 roboto f-500 m-0 " *ngIf="clientOverviewData.martialStatusId=='1'">
+                                        Married</p>
+                                    <p class=" f-14 roboto f-500 m-0 " *ngIf="clientOverviewData.martialStatusId=='2'">
+                                        Unmarried</p>
+                                    <p class=" f-14 roboto f-500 m-0 " *ngIf="clientOverviewData.martialStatusId=='3'">
+                                        Other</p>
                                 </div>
                             </div>
                         </div>

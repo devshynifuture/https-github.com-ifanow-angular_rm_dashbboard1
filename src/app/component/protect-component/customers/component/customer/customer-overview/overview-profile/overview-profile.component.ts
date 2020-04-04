@@ -8,6 +8,7 @@ import { CustomerService } from '../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-overview-profile',
@@ -17,10 +18,14 @@ import { MatDialog } from '@angular/material';
 export class OverviewProfileComponent implements OnInit {
   familyMemberList: any;
   selectedFamilyMember: any;
+  clientOverviewData: string;
 
-  constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject, private cusService: CustomerService, private eventService: EventService) { }
+  constructor(private authService: AuthService, public dialog: MatDialog, public subInjectService: SubscriptionInject, private cusService: CustomerService, private eventService: EventService) { }
 
   ngOnInit() {
+    console.log(sessionStorage.getItem('clientData'));
+    this.clientOverviewData = JSON.parse(sessionStorage.getItem('clientData'));
+    console.log(this.clientOverviewData);
     this.getFamilyMembersList();
   }
   getFamilyMembersList() {
@@ -32,15 +37,10 @@ export class OverviewProfileComponent implements OnInit {
     this.cusService.getFamilyMembers(obj).subscribe(
       data => {
         this.familyMemberList = data;
-        this.selectedFamilyMember = data[0];
         console.log(data)
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
     )
-  }
-  detailedViewData(data) {
-    console.log(data);
-    this.selectedFamilyMember = data;
   }
   deleteModal(value, data) {
     const dialogData = {
@@ -109,7 +109,33 @@ export class OverviewProfileComponent implements OnInit {
     );
   }
 
+  openClient(value, data) {
+    data['flag'] = 'Edit client';
+    data['fieldFlag'] = "client";
+    const fragmentData = {
+      flag: value,
+      data,
+      id: 1,
+      state: 'open50',
+      componentName: AddClientComponent,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (sideBarData.clientData) {
+            this.authService.setClientData(sideBarData.clientData)
+            this.clientOverviewData = sideBarData.clientData;
+          }
+          this.getFamilyMembersList();
+          if (UtilService.isRefreshRequired(sideBarData)) {
+          }
+          rightSideDataSub.unsubscribe();
+        }
 
+      }
+    );
+  }
   openHistory(value, data) {
 
     const fragmentData = {
