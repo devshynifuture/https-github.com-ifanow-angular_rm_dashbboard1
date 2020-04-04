@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { SettingsService } from '../../../../settings.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { OrgSettingServiceService } from '../../../../org-setting-service.service';
 
 @Component({
   selector: 'app-add-team-member',
@@ -13,41 +14,87 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
   styleUrls: ['./add-team-member.component.scss']
 })
 export class AddTeamMemberComponent implements OnInit, OnDestroy {
-  usersForm:FormGroup;
+  usersForm: FormGroup;
   subscription: Subscription;
   isLoading: boolean;
   filteredUsers: any;
-  selectedUser:any = {};
-  @Input() data:any = {};
+  selectedUser: any = {};
+  @Input() data: any = {};
   advisorId: any;
+  teamMember: FormGroup;
+  teamMembers: any;
+  selectedMember: any;
 
   constructor(
     private settingsService: SettingsService,
     private eventService: EventService,
     private fb: FormBuilder,
-    private subInjectService: SubscriptionInject,
+    private subInjectService : SubscriptionInject,
+    private orgSetting: OrgSettingServiceService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
 
   ngOnInit() {
     this.createForm();
-    if(this.data) {
+    this.getdataForm('')
+    this.getTeamMembers()
+    if (this.data) {
       this.initializeUserDetails();
     }
     // this.subscribeValueChange();
   }
 
-  initializeUserDetails(){
+  initializeUserDetails() {
 
   }
-  chooseMember(){}
-  createForm(){
+  chooseMember() { }
+  createForm() {
     this.usersForm = this.fb.group({
       userInput: [''],
     })
   }
-
+  getdataForm(data) {
+    this.teamMember = this.fb.group({
+      userInput: [(!data) ? '' : (data.fullName), [Validators.required]],
+      emailId: [(!data) ? '' : data.emailId, [Validators.required]],
+      mobileNo: [(!data) ? '' : data.mobileNo, [Validators.required]],
+      userName: [(!data) ? '' : data.userName, [Validators.required]],
+    });
+  }
+  getTeamMembers() {
+    const dataObj = {
+      advisorId: this.advisorId
+    }
+    this.orgSetting.getTeamMember(dataObj).subscribe((res) => {
+      console.log('team member details', res)
+      this.teamMembers = res;
+    });
+  }
+  getFormControl(): any {
+    return this.teamMember.controls;
+  }
+  Close(flag: boolean) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+  }
+  selectTeamMember(teamMember) {
+    console.log(teamMember)
+    this.selectedMember = teamMember
+  }
+  saveTeamMember(){
+    let obj = {
+      childId: this.selectedMember.id,
+      emailId: this.selectedMember.emailId,
+      mobileNo: this.selectedMember.mobileNo,
+      name: this.selectedMember.name,
+      parentId: this.selectedMember.admminAdvisorId,
+      roleName: this.selectedMember.roleName,
+    }
+    this.orgSetting.updateAccessControl(obj).subscribe((res) => {
+      console.log('team member details', res)
+      this.teamMembers = res;
+    });
+  }
   // mat auto complete search
   // subscribeValueChange() {
   //   this.subscription = this.usersForm
@@ -69,32 +116,32 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   // }
 
   // when user chooses an option from the auto complete dropdown
-  chooseUser(){
+  chooseUser() {
     this.selectedUser = this.usersForm.get('userInput').value;
   }
 
-  save(){
-    if(!this.selectedUser.id) {
+  save() {
+    if (!this.selectedUser.id) {
       this.eventService.openSnackBar("No User Selected");
     } else {
-        let dataObj = {
-          ...this.data.mainData,
-        };
-        const obj = {
-          "childId": 0,
-          "emailId": "string",
-          "mobileNo": "string",
-          "name": "string",
-          "parentId": 0,
-          "roleName": "string"
-        };
-        this.settingsService.editAccessRightOfUser(dataObj).subscribe((res)=>{
-          this.close(true);
-          this.eventService.openSnackBar("Reporting Manager Updated Successfully");
-        }, (err) => {
-          console.error(err);
-          this.eventService.openSnackBar("Error occured.");
-        });
+      let dataObj = {
+        ...this.data.mainData,
+      };
+      const obj = {
+        "childId": 0,
+        "emailId": "string",
+        "mobileNo": "string",
+        "name": "string",
+        "parentId": 0,
+        "roleName": "string"
+      };
+      this.settingsService.editAccessRightOfUser(dataObj).subscribe((res) => {
+        this.close(true);
+        this.eventService.openSnackBar("Reporting Manager Updated Successfully");
+      }, (err) => {
+        console.error(err);
+        this.eventService.openSnackBar("Error occured.");
+      });
     }
   }
 
@@ -102,7 +149,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: status});
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 }

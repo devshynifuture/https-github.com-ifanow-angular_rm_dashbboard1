@@ -526,6 +526,8 @@ export const appConfig = {
   DELETE_SUBTASK_TEMPLATE: 'setting/task/sub-task/delete',
   OWNER_SUBTASK_UPDATE: 'setting/task/template/owner/update',
   OWNER_TASK_UPDATE: 'setting/task/sub-task/owner/update',
+  GET_TEAM_MEMBER:'setting/users/team-members/get',
+  UPDATE_ACCESS_CONTROL:'setting/users-roles/access-rights/update',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
