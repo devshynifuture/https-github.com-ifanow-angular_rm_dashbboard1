@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChildren, Output, EventEmitter } from '@angular/core';
 import { BackOfficeService } from '../../../../back-office.service';
 import { SipComponent } from '../sip.component';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -20,6 +20,8 @@ export class SipClientWiseComponent implements OnInit {
   totalWeight = 0
   clientFilter: any;
   filteredArray: any[];
+  @Output() changedValue = new EventEmitter();
+
   constructor(private backoffice: BackOfficeService, public sip: SipComponent) { }
 
   ngOnInit() {
@@ -29,7 +31,9 @@ export class SipClientWiseComponent implements OnInit {
     this.clientWiseClientName();
   }
   aumReport() {
-    this.sip.sipComponent = true;
+    this.changedValue.emit(true);
+
+    // this.sip.sipComponent = true;
   }
   clientWiseClientName() {
     const obj = {

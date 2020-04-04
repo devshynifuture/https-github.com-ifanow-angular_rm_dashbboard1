@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { AumComponent } from '../aum.component';
 import { BackOfficeService } from '../../../../back-office.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -17,6 +17,7 @@ export class AmcWiseComponent implements OnInit {
   amcList: any;
   totalCurrentValue=0;
   totalWeight=0;
+  @Output() changedValue = new EventEmitter();
 
   constructor(public aum:AumComponent,private backoffice:BackOfficeService,private dataService:EventService) { }
 
@@ -26,7 +27,9 @@ export class AmcWiseComponent implements OnInit {
   }
   aumReport()
   {
-   this.aum.aumComponent=true;
+    this.changedValue.emit(true);
+
+  //  this.aum.aumComponent=true;
   }
   getAmcWiseData(){
     const obj={

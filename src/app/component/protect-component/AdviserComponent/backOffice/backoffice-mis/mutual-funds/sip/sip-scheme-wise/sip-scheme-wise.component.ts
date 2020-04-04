@@ -1,4 +1,4 @@
-import { Component, OnInit ,ViewChildren } from '@angular/core';
+import { Component, OnInit ,ViewChildren, EventEmitter, Output } from '@angular/core';
 import {SipComponent} from '../sip.component';
 import { BackOfficeService } from '../../../../back-office.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -24,6 +24,7 @@ export class SipSchemeWiseComponent implements OnInit {
   totalOfSipCount=0;
   totalWeight=0;
   filteredArray: any[];
+  @Output() changedValue = new EventEmitter();
 
   constructor(private backoffice:BackOfficeService,public sip:SipComponent) { }
 
@@ -36,7 +37,9 @@ export class SipSchemeWiseComponent implements OnInit {
 
   aumReport()
   {
-   this.sip.sipComponent=true;
+    this.changedValue.emit(true);
+
+  //  this.sip.sipComponent=true;
   }
   getSchemeWiseGet(){
     const obj={

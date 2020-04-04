@@ -216,17 +216,17 @@
 </div>
 </div>
 <div *ngIf="sipcomponentWise=='Allsip' && sipComponent==false" >
-    <app-all-sip></app-all-sip>
+    <app-all-sip (changedValue)="display($event)"></app-all-sip>
 </div>
 <div *ngIf="sipcomponentWise=='amc'">
     <app-sip-amc-wise  (changedValue)="display($event)" ></app-sip-amc-wise>
 </div>
 <div *ngIf="sipcomponentWise=='scheme'">
-    <app-sip-scheme-wise></app-sip-scheme-wise>
+    <app-sip-scheme-wise (changedValue)="display($event)"></app-sip-scheme-wise>
 </div>
 <div *ngIf="sipcomponentWise=='client'">
-    <app-sip-client-wise></app-sip-client-wise>
+    <app-sip-client-wise (changedValue)="display($event)"></app-sip-client-wise>
 </div>
 <div *ngIf="sipcomponentWise=='applicant'">
-    <app-sip-applicant-wise ></app-sip-applicant-wise>
+    <app-sip-applicant-wise (changedValue)="display($event)"></app-sip-applicant-wise>
 </div>

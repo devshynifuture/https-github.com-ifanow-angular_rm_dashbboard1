@@ -228,14 +228,14 @@
 
     </div>
     <div *ngIf="componentWise=='category'">
-        <app-category-wise></app-category-wise>
+        <app-category-wise (changedValue)="display($event)"></app-category-wise>
     </div>
     <div *ngIf="componentWise=='amc'">
-        <app-amc-wise></app-amc-wise>
+        <app-amc-wise (changedValue)="display($event)"></app-amc-wise>
     </div>
     <div *ngIf="componentWise=='client'">
-        <app-client-wise></app-client-wise>
+        <app-client-wise (changedValue)="display($event)"></app-client-wise>
     </div>
     <div *ngIf="componentWise=='applicant'">
-        <app-applicant-wise></app-applicant-wise>
+        <app-applicant-wise (changedValue)="display($event)"></app-applicant-wise>
     </div>

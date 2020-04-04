@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 // import * as $ from 'jquery';
 import { BackOfficeService } from '../../../../back-office.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -18,6 +18,8 @@ teamMemberId = 2929;
 advisorId = AuthService.getAdvisorId();
 subCategoryList: any[] = [];
 totalAumForSubSchemeName: any;
+@Output() changedValue = new EventEmitter();
+
 constructor(
 private backoffice: BackOfficeService, private dataService: EventService, public aum: AumComponent
 ) { }
@@ -88,7 +90,9 @@ showSchemeName(index, subcashowSubcat) {
 this.category[this.selectedCategory].subCategoryList[index].showSubCategory = (subcashowSubcat) ? subcashowSubcat = false : subcashowSubcat = true;
 }
 aumReport() {
-this.aum.aumComponent = true;
+    this.changedValue.emit(true);
+
+// this.aum.aumComponent = true;
 }
 getFilerrorResponse(err) {
 this.dataService.openSnackBar(err, 'Dismiss')

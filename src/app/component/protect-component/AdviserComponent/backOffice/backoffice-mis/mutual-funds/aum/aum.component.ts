@@ -26,7 +26,7 @@ export class AumComponent implements OnInit {
   componentWise;
   advisorId: any;
   arnRiaList: any;
-
+  aumGraph:any
 
   constructor(private backoffice: BackOfficeService, private dataService: EventService) { }
 
@@ -71,7 +71,12 @@ export class AumComponent implements OnInit {
     this.showAddBtn = false;
     this.showRemoveBtn = true;
   }
-
+  display(value){
+    this.aumComponent=true;
+    setTimeout(() => {
+      this.pieChart('pieChartAum',this.aumGraph);
+    }, 1000);
+  }
 
   hideSubTableList() {
     this.showMainWrapperFlag = false;
@@ -150,6 +155,7 @@ export class AumComponent implements OnInit {
     }
     this.backoffice.aumGraphGet(obj).subscribe(
       data => {
+        this.aumGraph=data;
         setTimeout(() => {
           this.pieChart('pieChartAum',data);
         }, 1000);
