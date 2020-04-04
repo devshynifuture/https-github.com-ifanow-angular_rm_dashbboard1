@@ -3,7 +3,7 @@
         <h4 class="m-0 text-black">Team members</h4>
     </div>
     <div class="col-md-6 text-right">
-        <button (click)="addEditTeamMember(null, false)" mat-stroked-button class="btn-primary pl-8">
+        <button (click)="addEditTeamMember(null, true)" mat-stroked-button class="btn-primary pl-8">
             <i class="material-icons pr-8 text-white">add</i>ADD NEW
         </button>
     </div>
@@ -13,11 +13,11 @@
         <mat-card class="b-a p-9 br-4">
             <div class="row">
                 <div class="col-md-4 p-0">
-                    <img [src]="user.img" class="w-100 h-80">
+                    <img [src]="user.profilePicUrl" class="w-100 h-80">
                 </div>
                 <div class="col-md-8 pr-0">
                     <h5 class="m-0 text-black">{{user.name}}</h5>
-                    <p class="text-custom roboto m-0">{{user.roleName}}</p>
+                    <p class="text-custom roboto m-0">{{user.role.roleName}}</p>
                     <h3 class="m-0 f-500 text-primary pt-16">{{user.clientCount}} client(s)</h3>
                 </div>
             </div>

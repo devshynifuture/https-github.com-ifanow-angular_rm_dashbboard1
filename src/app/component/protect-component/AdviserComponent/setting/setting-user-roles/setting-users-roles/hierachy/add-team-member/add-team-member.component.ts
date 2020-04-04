@@ -42,7 +42,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     if (this.data) {
       this.initializeUserDetails();
     }
-    this.subscribeValueChange();
+    // this.subscribeValueChange();
   }
 
   initializeUserDetails() {
@@ -96,24 +96,24 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     });
   }
   // mat auto complete search
-  subscribeValueChange() {
-    this.subscription = this.usersForm
-      .get('userInput')
-      .valueChanges
-      .pipe(
-        debounceTime(300),
-        tap(() => {
-          this.isLoading = true;
-          this.selectedUser = {};
-        }),
-        switchMap(value => this.settingsService.searchTeamMember({ user: value })
-          .pipe(
-            finalize(() => this.isLoading = false),
-          )
-        )
-      )
-      .subscribe(users => this.filteredUsers = users.results);
-  }
+  // subscribeValueChange() {
+  //   this.subscription = this.usersForm
+  //     .get('userInput')
+  //     .valueChanges
+  //     .pipe(
+  //       debounceTime(300),
+  //       tap(() => {
+  //         this.isLoading = true;
+  //         this.selectedUser = {};
+  //       }),
+  //       switchMap(value => this.settingsService.searchTeamMember({ user: value })
+  //         .pipe(
+  //           finalize(() => this.isLoading = false),
+  //         )
+  //       )
+  //     )
+  //     .subscribe(users => this.filteredUsers = users.results);
+  // }
 
   // when user chooses an option from the auto complete dropdown
   chooseUser() {
@@ -145,8 +145,8 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     }
   }
 
-  close(status = false) {
-    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: status });
+  close(status = false){
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: status});
   }
 
   ngOnDestroy() {

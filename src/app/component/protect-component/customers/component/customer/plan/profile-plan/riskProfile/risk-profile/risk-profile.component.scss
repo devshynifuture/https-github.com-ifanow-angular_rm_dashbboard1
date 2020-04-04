@@ -1,14 +1,18 @@
-#Gauge{
+#Gauge {
     height: 150px !important;
 }
-#container1{
+
+#container1 {
     height: 80px !important;
-    width:650px;
+    width: 650px;
+    margin: 0px auto;
 }
+
 body {
-    font-family:helvetica, sans-serif;
-    font-size:.7em;
+    font-family: helvetica, sans-serif;
+    font-size: .7em;
 }
+
 p {
-    margin:.5em 1em;
+    margin: .5em 1em;
 }

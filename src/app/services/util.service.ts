@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
-import { DatePipe, DecimalPipe } from '@angular/common';
-import { EventService } from '../Data-service/event.service';
-import { HttpClient } from '@angular/common/http';
-import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import { FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
+import {Injectable} from '@angular/core';
+import {DatePipe, DecimalPipe} from '@angular/common';
+import {EventService} from '../Data-service/event.service';
+import {HttpClient} from '@angular/common/http';
+import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
 
 
 @Injectable({
@@ -11,11 +10,12 @@ import { FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 })
 export class UtilService {
 
+  constructor(private eventService: EventService, private http: HttpClient, private subService: SubscriptionService) {
+  }
+
   private static decimalPipe = new DecimalPipe('en-US');
   advisorId: any;
 
-  constructor(private eventService: EventService, private http: HttpClient, private subService: SubscriptionService) {
-  }
   subscriptionStepData;
 
   static convertObjectToArray(inputObject: object): object[] {
@@ -34,7 +34,7 @@ export class UtilService {
   static convertObjectToCustomArray(inputObject: object, keyNameForOutput: string, keyValueForOutput: string): object[] {
     const outputArray = [];
     Object.keys(inputObject).map(key => {
-      const object = { selected: false };
+      const object = {selected: false};
       object[keyNameForOutput] = inputObject[key];
       object[keyValueForOutput] = key;
 
@@ -47,17 +47,7 @@ export class UtilService {
   static isDialogClose(data) {
     return data && data.state && data.state === 'close';
   }
-  setSubscriptionStepData(data) {
-    this.subscriptionStepData = data
-  }
-  checkSubscriptionastepData(stepNo) {
-    let tempData;
-    tempData = Object.assign([], this.subscriptionStepData)
-    tempData = tempData.filter(element => element.stepTypeId == stepNo)
-    if (tempData.length != 0) {
-      return tempData[0].completed;
-    }
-  }
+
   static isRefreshRequired(data) {
     // let closeState = {
     //   "state": data.state,
@@ -103,6 +93,43 @@ export class UtilService {
     // console.log(' roundedOffString', this.decimalPipe.transform(data, '9.0-2', null).replace(/,/g, ''));
 
     return parseFloat(this.decimalPipe.transform(data, '9.0-' + noOfPlaces, null).replace(/,/g, ''));
+  }
+
+  static obfuscateEmail(email: string) {
+    let tempMail: string;
+    const indexOfAt = email.indexOf('@');
+
+    if (indexOfAt > 3) {
+      tempMail = email.substr(0, 3) + 'XXXXX@';
+
+    } else {
+      tempMail = email.substr(0, indexOfAt) + '@';
+    }
+
+    if ((email.length - indexOfAt) > 5) {
+      tempMail += 'XXXXXX' + email.substr(email.length - 5, email.length);
+    } else {
+      tempMail += 'XXXXXX';
+    }
+
+    return tempMail;
+  }
+
+  static obfuscateMobile(mobileNo: string) {
+    return mobileNo.substr(0, 2) + 'XXXXX' + mobileNo.substr(7, 9);
+  }
+
+  setSubscriptionStepData(data) {
+    this.subscriptionStepData = data
+  }
+
+  checkSubscriptionastepData(stepNo) {
+    let tempData;
+    tempData = Object.assign([], this.subscriptionStepData)
+    tempData = tempData.filter(element => element.stepTypeId == stepNo)
+    if (tempData.length != 0) {
+      return tempData[0].completed;
+    }
   }
 
 
@@ -225,9 +252,9 @@ export class UtilService {
       htmlInput: inputData,
       name: pdfName
     };
-    this.http.post('http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj, { responseType: 'blob' }).subscribe(
+    this.http.post('http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj, {responseType: 'blob'}).subscribe(
       data => {
-        const file = new Blob([data], { type: 'application/pdf' });
+        const file = new Blob([data], {type: 'application/pdf'});
         const fileURL = URL.createObjectURL(file);
         window.open(fileURL);
         const a = document.createElement('a');
@@ -267,8 +294,8 @@ export class UtilService {
     for (let i = 0; i < byteString.length; i++) {
       ia[i] = byteString.charCodeAt(i);
     }
-    const imageBlob = new Blob([ia], { type: mimeString });
-    return new File([imageBlob], imageName, { type: 'image/png' });
+    const imageBlob = new Blob([ia], {type: mimeString});
+    return new File([imageBlob], imageName, {type: 'image/png'});
   }
 }
 

@@ -28,21 +28,7 @@ export class RolesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadGlobalData();
     this.getAllRoles();
-  }
-
-  loadGlobalData() {
-    this.loader(1);
-    const obj = {
-      advisorId: this.advisorId
-    }
-
-    this.settingsService.getUserRolesGlobalData(obj).subscribe((res) => {
-      this.loader(-1);
-      console.log(res)
-      this.globalData = res;
-    })
   }
 
   getAllRoles() {
@@ -52,9 +38,8 @@ export class RolesComponent implements OnInit {
     }
 
     this.settingsService.getAllRoles(obj).subscribe((res) => {
-      console.log(res)
-      this.loader(-1);
       this.dataSource = new MatTableDataSource(res);
+      this.loader(-1);
     })
   }
 
@@ -86,13 +71,7 @@ export class RolesComponent implements OnInit {
 
   cloneRole(data) {
     this.loader(1);
-    let jsonObj = {
-      ...data
-    }
-
-    delete jsonObj.id;
-
-    this.settingsService.cloneRole(jsonObj).subscribe((res) => {
+    this.settingsService.cloneRole({id: data.id}).subscribe((res) => {
       this.getAllRoles();
       this.loader(-1);
     });
@@ -100,7 +79,7 @@ export class RolesComponent implements OnInit {
 
   deleteRole(data) {
     this.loader(1);
-    this.settingsService.deleteRole(data.id).subscribe((res) => {
+    this.settingsService.deleteRole({id: data.id}).subscribe((res) => {
       this.getAllRoles();
       this.loader(-1);
     });

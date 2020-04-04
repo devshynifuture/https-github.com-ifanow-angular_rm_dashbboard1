@@ -26,13 +26,13 @@ export const appConfig = {
   GET_AMC_WISE: 'backoffice/mis/aum/amcWise/get',
   GET_APPLICANT_NAME: 'backoffice/mis/aum/amcWise/applicantName/get',
   ADVISOR_TAG_GET: '/advisor/tag/get',
-//////////////////Foliodetails////////////////////////////
-  FOLIO_GROUP_HEAD_SEARCH:'backoffice/folio/search/by/groupHead/get',
-  FOLIO_INVESTOR_SEARCH:'backoffice/folio/search/by/investorName/get',
-  FOLIO_PAN_SEARCH:'backoffice/folio/search/by/pan/get',
-  FOLIO_FOLIO_NO__SEARCH:'backoffice/folio/search/by/folioNumber/get',
-  FOLIO_GROUP_HEAD_LIST:'backoffice/foliowise/groupHead/list/get',
-  FOLIO_APPLICANT_NAME_LIST:'backoffice/foliowise/applicaName/list/get',
+  //////////////////Foliodetails////////////////////////////
+  FOLIO_GROUP_HEAD_SEARCH: 'backoffice/folio/search/by/groupHead/get',
+  FOLIO_INVESTOR_SEARCH: 'backoffice/folio/search/by/investorName/get',
+  FOLIO_PAN_SEARCH: 'backoffice/folio/search/by/pan/get',
+  FOLIO_FOLIO_NO__SEARCH: 'backoffice/folio/search/by/folioNumber/get',
+  FOLIO_GROUP_HEAD_LIST: 'backoffice/foliowise/groupHead/list/get',
+  FOLIO_APPLICANT_NAME_LIST: 'backoffice/foliowise/applicaName/list/get',
 
 
   /////////////////////// sip api call//////////////////////////////////
@@ -53,10 +53,10 @@ export const appConfig = {
   ALL_SIP_GET: 'backoffice/sip/allSip/get',
   CLIENT_WISE_CLIENTNAME_GET: 'backoffice/sip/ClientWiseClientsName/get',
   CLIENT_WISE_APPLICANT_GET: 'backoffice/sip/ClientWiseApplicants/get',
-  SIP_PAN_COUNT:'backoffice/sip/scheme/pan/count/get',
-  WBR_FOLIO_PAN_COUNT:'backoffice/folio/pan/count/get',
-  SIP_APPLICANT_LIST:'backoffice/sip/applicant/list/get',
-  SIP_FOLIO_LIST:'backoffice/sip/applicant/scheme/folio/list/get',
+  SIP_PAN_COUNT: 'backoffice/sip/scheme/pan/count/get',
+  WBR_FOLIO_PAN_COUNT: 'backoffice/folio/pan/count/get',
+  SIP_APPLICANT_LIST: 'backoffice/sip/applicant/list/get',
+  SIP_FOLIO_LIST: 'backoffice/sip/applicant/scheme/folio/list/get',
   ///////////////////////////// back office/////////////////////////////////////////////
 
 
@@ -177,7 +177,7 @@ export const appConfig = {
   CLIENT_UPLOAD_FILE: 'document/upload/pre-signed-url/get',
   SAVE_CLIENT_UPLOAD_FILE: 'user/document/mapping/save',
   DELETE_CLIENT_UPLOAD_FILE: 'user/document/mapping/delete',
-  GET_CLIENT_PROOF:'document/download/pre-signed-url/get',
+  GET_CLIENT_PROOF: 'document/download/pre-signed-url/get',
   GET_CLIENT_UPLOAD_FILE: 'user/document/mapping/get',
   NEW_FOLDER: 'document/account/document/all-file/folder/post',
   GET_ASSET_STOCK: 'account/asset/stock/list/get',
@@ -506,9 +506,9 @@ export const appConfig = {
   EDIT_ORG_PROFILE_REPORT_LOGO: 'setting/profile/organisation/report/logo/update',
   GET_EMAIL_VERIFICATION: 'setting/preference/email/get',
   GET_EMAIL_TEMPLATES: 'setting/preference/email/template/get',
-  EDIT_PREF_EMAIL_TEMPLATE:'setting/preference/email/template/update',
-  DELETE_PREF_EMAIL_TEMPLATE:'setting/preference/email/template/delete',
-  DELETE_EMAIL_VERIFY:'setting/preference/email/delete',
+  EDIT_PREF_EMAIL_TEMPLATE: 'setting/preference/email/template/update',
+  DELETE_PREF_EMAIL_TEMPLATE: 'setting/preference/email/template/delete',
+  DELETE_EMAIL_VERIFY: 'setting/preference/email/delete',
   ADD_EMAIL_VERIFY: 'setting/preferences/email/post',
   GET_ASSET_ALLOCATION: 'goal-planning/static-allocation/get',
   GET_RETURNS: 'plan/config/return-inflation/get',
@@ -566,7 +566,7 @@ export const appConfig = {
   TEAM_MEMBER_WISE_CLIENT_COUNT: 'user/advisor/team-member/count/get',
   GET_TEAM_MEMBERS: 'user/advisor/team-members/detail/get',
   DELETE_CLIENT: 'user/client/delete',
-  GET_CLIENT_OR_lEAD_DATA: 'user/client/advisor-wise/get',
+  GET_CLIENT_OR_lEAD_DATA: 'user/client/detail/get',
   // LOGIN_WITH_PASSWORD: 'user/login/with/password',
 
   //////////////////////////////Login///////////////////////////////////
@@ -608,7 +608,8 @@ export const appConfig = {
   DELETE_USER_ROLE: 'setting/users-roles/role/delete',
   CLONE_USER_ROLE: 'setting/users-roles/role/clone/add',
   ADD_USER_ROLE: 'setting/users-roles/role/add',
-  GET_DETIALED_USER_ROLE: 'setting/users-roles/role/detail/get',
+  GET_DETIALED_USER_ROLE: 'setting/users-roles/role/module-detail/get',
+  GET_TEMPLATE_ROLE: 'setting/users-roles/role/advisor-or-client-role/template/get',
 
   GET_ALL_FEATURES: 'setting/users-roles/feature-capabilities/all/get',
 

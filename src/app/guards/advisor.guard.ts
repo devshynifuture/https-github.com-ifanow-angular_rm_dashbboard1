@@ -10,6 +10,9 @@ export class AdvisorGuard implements CanActivate {
   }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    // if (true) {
+    // return true;
+    // }
     if (this.authService.isAdvisor()) {
       console.log('AuthGuard : ', next, state);
       // const user = this.authService.decode();
@@ -23,9 +26,12 @@ export class AdvisorGuard implements CanActivate {
 
       return true;
     } else {
-      if (state && state.url === '/login') {
+      if (state && state.url.match('login')) {
+        console.log('advisorGuard failed login regex: ', next, state);
+
         this.myRoute.navigate(['customer', 'detail', 'overview', 'myfeed']);
       } else {
+        console.log('advisorGuard failed general: ', next, state);
         this.myRoute.navigate(['unauthorized']);
       }
       return false;
