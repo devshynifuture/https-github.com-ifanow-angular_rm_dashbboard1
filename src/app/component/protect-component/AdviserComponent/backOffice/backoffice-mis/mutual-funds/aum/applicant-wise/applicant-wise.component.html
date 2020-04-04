@@ -2,143 +2,177 @@
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div>
 <div *ngIf="showLoader==false">
-<div *ngIf="aum.aumComponent==false">
+    <div *ngIf="aum.aumComponent==false">
         <div>
-                <div class="wrapper-20 bg-white">
-                        <div class="row">
-                            <div class="col-md-6 pl-0">
-                                <h3 class="pt-8 mb-0">Applicant Wise AUM</h3>
-                            </div>
-                            <div class="col-md-6 pr-0">
-                                <div class="right text-right">
-                                    <button mat-stroked-button class="btn-default addon"><i class="material-icons">add</i>XLS</button>
-                                    <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
-                                </div>
-                            </div>
+            <div class="wrapper-20 bg-white">
+                <div class="row">
+                    <div class="col-md-6 pl-0">
+                        <h3 class="pt-8 mb-0">Applicant Wise AUM</h3>
+                    </div>
+                    <div class="col-md-6 pr-0">
+                        <div class="right text-right">
+                            <button mat-stroked-button class="btn-default addon"
+                                (click)="exportToExcelSheet('applicant-wise')"><i
+                                    class="material-icons">add</i>Applicant wise</button>
+                            <button mat-stroked-button class="btn-default addon"
+                                (click)="exportToExcelSheet('category-wise')"><i class="material-icons">add</i>category
+                                wise</button>
+                            <button mat-stroked-button class="btn-default addon"
+                                (click)="exportToExcelSheet('sub-category-wise')"><i class="material-icons">add</i>sub
+                                category wise</button>
+                            <button mat-stroked-button class="btn-default addon"
+                                (click)="exportToExcelSheet('sub-cat-scheme-wise')"><i class="material-icons">add</i>sub
+                                cat scheme wise</button>
+                            <button mat-stroked-button class="btn-default addon"
+                                (click)="exportToExcelSheet('scheme-wise')"><i class="material-icons">add</i>Scheme
+                                wise</button>
+                            <button mat-stroked-button class="btn-success ml-8 addon"
+                                (click)="aumReport()">Back</button>
                         </div>
-                
-                        <table class="table-low mt-16" id="table-high" *ngIf="applicantName">
-                            <thead class="text-dark">
-                                <tr>
-                                    <th>Sr No.</th>
-                                    <th>Applicant Name</th>
-                                    <th class="text-right">Current Value</th>
-                                    <th class="text-right">% Weight</th>
-                
-                                </tr>
-                            </thead>
-                            <tbody *ngFor="let name of applicantName; index as i">
-                                <tr>
-                                    <td>{{i+1}}</td>
-                                    <td (click)="category(name)" >{{(name.investorName)?name.investorName:'-'}}<i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="name.show==true"> add  </i>
-                                    <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="name.show==false" > remove  </i></td>
-                                    <td class="text-right">{{name.totalAum}}</td>
-                                    <td class="text-right">{{name.weightInPercentage}}</td>
-                                 </tr>
-                                 <tr>
-                                     <tr>
-                                    <table *ngIf="!name.show" class="table-low mt-8 " id="table-high">
-                                            <thead class="bg-light text-dark">
-                                                    <tr>
-                                                        <th>Sr No.</th>
-                                                        <th>Category Name</th>
-                                                        <th class="text-right">Current Value</th>
-                                                        <th class="text-right">% Weight</th>
-                                
-                                                    </tr>
-                                                </thead>
-                                                   <tbody *ngFor="let category of name.categoryList; index as i" >
+                    </div>
+                </div>
+
+                <table class="table-low mt-16" id="table-high" *ngIf="applicantName">
+                    <thead class="text-dark">
+                        <tr>
+                            <th>Sr No.</th>
+                            <th>Applicant Name</th>
+                            <th class="text-right">Current Value</th>
+                            <th class="text-right">% Weight</th>
+
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let name of applicantName; index as i">
+                        <tr>
+                            <td>{{i+1}}</td>
+                            <td (click)="category(name)">
+                                {{name.name?name.name:'-'}}
+                                <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="name.show==true"> add </i>
+                                <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="name.show==false"> remove </i>
+                            </td>
+                            <td class="text-right">{{name.totalAum}}</td>
+                            <td class="text-right">{{name.weightInPercentage}}</td>
+                        </tr>
+                        <tr>
+                        <tr>
+                            <table *ngIf="!name.show" class="table-low mt-8 " id="table-high">
+                                <thead class="bg-light text-dark">
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Category Name</th>
+                                        <th class="text-right">Current Value</th>
+                                        <th class="text-right">% Weight</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let category of name.categoryList; index as i">
+                                    <tr>
+                                        <td>{{i+1}}</td>
+                                        <td (click)="subCategory(category)">{{category.name}}<i
+                                                class="material-icons right b-a f-14 mt-4 c-p"
+                                                *ngIf="category.showCategory">add</i>
+                                            <i class="material-icons right b-a f-14 mt-4 c-p"
+                                                *ngIf="!category.showCategory"> remove </i> </td>
+                                        <td class="text-right">{{category.totalAum}}</td>
+                                        <td class="text-right">{{category.weightInPercentage}}%</td>
+                                    </tr>
+                                    <table *ngIf="!category.showCategory">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr No.</th>
+                                                <th>Sub Category Name</th>
+                                                <th class="text-right">Current Value</th>
+                                                <th class="text-right">% Weight</th>
+                                            </tr>
+                                        </thead>
+                                        <tr>
+                                            <tbody *ngFor="let sub of category.subCatList; index as i">
+                                                <tr>
+                                                    <td>{{i+1}}</td>
+                                                    <td (click)="getScheme(sub)">{{sub.name}}<i
+                                                            class="material-icons right b-a f-14 mt-4 c-p"
+                                                            *ngIf="sub.showSubCategory">add</i>
+                                                        <i class="material-icons right b-a f-14 mt-4 c-p"
+                                                            *ngIf="!sub.showSubCategory"> remove </i> </td>
+                                                    <td class="text-right">{{sub.totalAum}} </td>
+                                                    <td class="text-right">{{sub.weightInPercentage}}</td>
+                                                </tr>
+                                                <table *ngIf="!sub.showSubCategory">
+                                                    <thead>
                                                         <tr>
-                                                            <td>{{i+1}}</td>
-                                                            <td (click)="subCategory(category)" >{{category.name}}<i  class="material-icons right b-a f-14 mt-4 c-p" *ngIf="category.showCategory">add</i>
-                                                                <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="!category.showCategory"> remove  </i> </td>
-                                                            <td class="text-right">{{category.totalAum}}</td>
-                                                            <td class="text-right">{{category.weightInPercentage}}%</td>
+                                                            <th>Sr No.</th>
+                                                            <th>Scheme Name</th>
+                                                            <th class="text-right">Current Value</th>
+                                                            <th class="text-right">% Weight</th>
                                                         </tr>
-                                                        <table *ngIf="!category.showCategory" >
-                                                            <thead>
-                                                                <tr>
-                                                                <th>Sr No.</th>
-                                                                <th>Sub Category Name</th>
-                                                                <th class="text-right">Current Value</th>
-                                                                <th class="text-right">% Weight</th>
-                                                                </tr>
-                                                            </thead>
+                                                    </thead>
+                                                    <tr>
+                                                        <tbody *ngFor="let client of sub.schemeList; index as i">
                                                             <tr>
-                                                            <tbody *ngFor="let sub of category.subCatList; index as i" >
-                                                                <tr >
-                                                                    <td>{{i+1}}</td>
-                                                                    <td (click)="getScheme(sub)">{{sub.name}}<i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="sub.showSubCategory" >add</i>
-                                                                        <i  class="material-icons right b-a f-14 mt-4 c-p" *ngIf="!sub.showSubCategory"> remove  </i> </td>
-                                                                    <td class="text-right">{{sub.totalAum}} </td>
-                                                                    <td class="text-right">{{sub.weightInPercentage}}</td>
-                                                                </tr>
-                                                                <table *ngIf="!sub.showSubCategory">
-                                                                    <thead>
-                                                                        <tr>
+                                                                <td>{{i+1}}</td>
+                                                                <td (click)="getSchemeFolio(client)">
+                                                                    {{client.schemeName}}<i
+                                                                        class="material-icons right b-a f-14 mt-4 c-p"
+                                                                        *ngIf="client.showFolio">add</i>
+                                                                    <i class="material-icons right b-a f-14 mt-4 c-p"
+                                                                        *ngIf="!client.showFolio"> remove </i> </td>
+                                                                <td class="text-right">{{client.folioNumber}}</td>
+                                                                <td class="text-right">{{client.totalAum}}</td>
+                                                                <td class="text-right">{{client.weightInPercentage}}
+                                                                </td>
+                                                            </tr>
+                                                            <table *ngIf="!client.showFolio">
+                                                                <thead>
+                                                                    <tr>
                                                                         <th>Sr No.</th>
                                                                         <th>Scheme Name</th>
                                                                         <th class="text-right">Current Value</th>
+                                                                        <th class="text-right">Balance unit </th>
                                                                         <th class="text-right">% Weight</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tr>
-                                                                    <tbody *ngFor="let client of sub.schemeList; index as i" >
-                                                                        <tr >
+                                                                    </tr>
+                                                                </thead>
+                                                                <tr>
+                                                                    <tbody
+                                                                        *ngFor="let client of sub.schemeList; index as i">
+                                                                        <tr>
                                                                             <td>{{i+1}}</td>
-                                                                            <td (click)="getSchemeFolio(client)">{{client.schemeName}}<i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="client.showFolio" >add</i>
-                                                                                <i  class="material-icons right b-a f-14 mt-4 c-p" *ngIf="!client.showFolio"> remove  </i> </td>
-                                                                            <td class="text-right">{{client.folioNumber}}</td>
-                                                                            <td class="text-right">{{client.totalAum}}</td>
-                                                                            <td class="text-right">{{client.weightInPercentage}}</td>
+                                                                            <td>{{client.schemeName}}</td>
+                                                                            <td class="text-right">
+                                                                                {{client.folioNumber}}</td>
+                                                                            <td class="text-right">{{client.totalAum}}
+                                                                            </td>
+                                                                            <td class="text-right">
+                                                                                {{client.balanceUnit}}</td>
+                                                                            <td class="text-right">
+                                                                                {{client.weightInPercentage}}</td>
                                                                         </tr>
-                                                                        <table *ngIf="!client.showFolio">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                <th>Sr No.</th>
-                                                                                <th>Scheme Name</th>
-                                                                                <th class="text-right">Current Value</th>
-                                                                                <th class="text-right">Balance unit </th>
-                                                                                <th class="text-right">% Weight</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tr>
-                                                                            <tbody *ngFor="let client of sub.schemeList; index as i" >
-                                                                                <tr >
-                                                                                    <td>{{i+1}}</td>
-                                                                                    <td >{{client.schemeName}}</td>
-                                                                                    <td class="text-right">{{client.folioNumber}}</td>
-                                                                                    <td class="text-right">{{client.totalAum}}</td>
-                                                                                    <td class="text-right">{{client.balanceUnit}}</td>
-                                                                                    <td class="text-right">{{client.weightInPercentage}}</td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                            
-                                                                        </table>
                                                                     </tbody>
-                                                                    
-                                                                </table>
-                                                            </tbody>
-                                                            
-                                                        </table>
-                                                </tbody>
+
+                                                            </table>
+                                                        </tbody>
+
+                                                </table>
+                                            </tbody>
+
                                     </table>
-            
-                                </tr>
-                            </tbody>
-                            <tbody>
-                                <tr>
-                                    <td class="p-table t-35 b-a"><strong>Total</strong></td>
-                                    <td class="p-table t-7 b-a">&nbsp;</td>
-                                    <td class="p-table t-19 b-a text-right"><strong>{{totalCurrentValue}}</strong></td>
-                                    <td class="p-table t-19 b-a text-right"><strong>{{totalWeight}}%</strong></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div *ngIf="!applicantName">
-                            <p>No data found</p>
-                        </div>
-                    </div>
+                                </tbody>
+                            </table>
+
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td class="p-table t-35 b-a"><strong>Total</strong></td>
+                            <td class="p-table t-7 b-a">&nbsp;</td>
+                            <td class="p-table t-19 b-a text-right"><strong>{{totalCurrentValue}}</strong></td>
+                            <td class="p-table t-19 b-a text-right"><strong>{{totalWeight}}%</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="!applicantName">
+                    <p>No data found</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

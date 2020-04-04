@@ -10,8 +10,14 @@
                 </div>
                 <div class="col-md-6 pr-0">
                     <div class="right text-right">
-                        <button mat-stroked-button class="btn-default addon" (click)="createExcelSheet()"><i
-                                class="material-icons">add</i>XLS</button>
+                        <button mat-stroked-button class="btn-default addon"
+                            (click)="exportToExcelReport('category')"><i class="material-icons">add</i>category</button>
+                        <button mat-stroked-button class="btn-default addon"
+                            (click)="exportToExcelReport('sub-category')"><i
+                                class="material-icons">add</i>SubCategory</button>
+                        <button mat-stroked-button class="btn-default addon"
+                            (click)="exportToExcelReport('applicant-wise')"><i
+                                class="material-icons">add</i>Applicant</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                     </div>
                 </div>

@@ -2,117 +2,136 @@
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div>
 <div *ngIf="showLoader==false">
-<div *ngIf="aum.aumComponent==false">
+    <div *ngIf="aum.aumComponent==false">
         <div class="wrapper-20 bg-white">
-                <div class="row">
-                    <div class="col-md-6 pl-0">
-                        <h3 class="pt-8 mb-0">Client Wise AUM</h3>
-                    </div>
-                    <div class="col-md-6 pr-0">
-                        <div class="right text-right">
-                            <button mat-stroked-button class="btn-default addon"><i class="material-icons">add</i>XLS</button>
-                            <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
-                        </div>
-                    </div>
+            <div class="row">
+                <div class="col-md-6 pl-0">
+                    <h3 class="pt-8 mb-0">Client Wise AUM</h3>
                 </div>
-        
-                <table class="table-low mt-16" id="table-high"  *ngIf="clientList">
-                    <thead class="text-dark">
-                        <tr>
-                            <th>Sr No.</th>
-                            <th>Client Name</th>
-                            <th class="text-right">Current Value</th>
-                            <th class="text-right">% Weight</th>
-        
-                        </tr>
-                    </thead>
-                    <tbody *ngFor="let name of clientList; index as i" >
-                        <tr>
-                            <td>{{i+1}}</td>
-                            <td (click)="getInvestorName(name)">{{name.name}}<i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="name.show" > add  </i>
-                            <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="name.show==false" > remove  </i></td>
-                            <td class="text-right">{{name.totalAum}} </td>
-                            <td class="text-right">{{name.weightInPercentage}}</td>
-                         </tr>
-                        
-                             <tr>
-                            <table *ngIf="name.show==false" class="table-low mt-8 " id="table-high">
-                                    <thead class="bg-light text-dark">
-                                            <tr>
-                                                <th>Sr No.</th>
-                                                <th>Investor Name</th>
-                                                <th class="text-right">Current Value</th>
-                                                <th class="text-right">% Weight</th>
-                        
-                                            </tr>
-                                        </thead>
-                                           <tbody *ngFor="let investor of name.investorList; index as i" >
-                                                <tr>
-                                                    <td>{{i+1}}</td>
-                                                    <td (click)="getSchemeName(investor)" >{{investor.investorName}}<i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="investor.showInvestor">add</i>
-                                                        <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="!investor.showInvestor"> remove </i></td>
-                                                    <td class="text-right">{{name.totalAum}}</td>
-                                                    <td class="text-right">{{name.weightInPercentage}}%</td>
-                                                </tr>
-                                                <table *ngIf="!investor.showInvestor">
-                                                    <thead>
-                                                        <tr>
-                                                        <th>Sr No.</th>
-                                                        <th>Scheme Name</th>
-                                                        <th class="text-right">Current Value</th>
-                                                        <th class="text-right">% Weight</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tr>
-                                                    <tbody *ngFor="let scheme of investor.schemeList; index as i">
-                                                        <tr >
-                                                            <td>{{i+1}}</td>
-                                                            <td (click)="getFolio(scheme)">{{scheme.schemeName}}<i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="scheme.showScheme" >add</i>
-                                                                <i  class="material-icons right b-a f-14 mt-4 c-p" *ngIf="scheme.showScheme==false"> remove  </i> </td>
-                                                            <td class="text-right">{{scheme.totalAum}}</td>
-                                                            <td class="text-right">{{scheme.weightInPercentage}}</td>
-                                                        </tr>
-                                                        <table *ngIf="scheme.showScheme==false">
-                                                            <thead>
-                                                                <tr>
-                                                                <th>Sr No.</th>
-                                                                <th>Scheme Name</th>
-                                                                <th class="text-right">Folio Number</th>
-                                                                <th class="text-right">% Weight</th>
-                                                                </tr>
-                                                            </thead> 
-                                                            <tbody *ngFor="let folio of scheme.folioList;index as i">
-                                                                <tr>
-                                                                    <td>{{i+1}}</td>
-                                                                    <td>{{folio.schemeName}}<td>
-                                                                    <td class="text-right">{{folio.folioNumber}}</td>
-                                                                    <td class="text-right">{{folio.totalAum}}</td>
-                                                                    <td class="text-right">{{folio.balanceUnit}}</td>
-                                                                    <td class="text-right">{{folio.weightInPercentage}}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                            
-                                                        </table>
-                                                    </tbody>
-                                                    
-                                                </table>
-                                        </tbody>
-                            </table>
-    
-                        </tr>
-                    </tbody>
-                    <tbody>
-                        <tr>
-                            <td class="p-table t-35 b-a"><strong>Total</strong></td>
-                            <td class="p-table t-7 b-a">&nbsp;</td>
-                            <td class="p-table t-19 b-a text-right"><strong>{{totalCurrentValue}}</strong></td>
-                            <td class="p-table t-19 b-a text-right"><strong>{{totalWeight}}%</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div *ngIf="!clientList">
-                    <p>No data found</p>
+                <div class="col-md-6 pr-0">
+                    <div class="right text-right">
+                        <button mat-stroked-button class="btn-default addon"
+                            (click)="exportToExcelSheet('client-wise')"><i class="material-icons">add</i>Client
+                            wise</button>
+                        <button mat-stroked-button class="btn-default addon"
+                            (click)="exportToExcelSheet('investor-wise')"><i class="material-icons">add</i>Investor
+                            wise</button>
+                        <button mat-stroked-button class="btn-default addon"
+                            (click)="exportToExcelSheet('scheme1-wise')"><i class="material-icons">add</i>Scheme
+                            wise</button>
+                        <button mat-stroked-button class="btn-default addon"
+                            (click)="exportToExcelSheet('scheme2-wise')"><i class="material-icons">add</i>Scheme Folio
+                            wise</button>
+                        <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
+                    </div>
                 </div>
             </div>
-     </div>
+
+            <table class="table-low mt-16" id="table-high" *ngIf="clientList">
+                <thead class="text-dark">
+                    <tr>
+                        <th>Sr No.</th>
+                        <th>Client Name</th>
+                        <th class="text-right">Current Value</th>
+                        <th class="text-right">% Weight</th>
+
+                    </tr>
+                </thead>
+                <tbody *ngFor="let name of clientList; index as i">
+                    <tr>
+                        <td>{{i+1}}</td>
+                        <td (click)="getInvestorName(name)">{{name.name}}<i
+                                class="material-icons right b-a f-14 mt-4 c-p" *ngIf="name.show"> add </i>
+                            <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="name.show==false"> remove </i></td>
+                        <td class="text-right">{{name.totalAum}} </td>
+                        <td class="text-right">{{name.weightInPercentage}}</td>
+                    </tr>
+
+                    <tr>
+                        <table *ngIf="name.show==false" class="table-low mt-8 " id="table-high">
+                            <thead class="bg-light text-dark">
+                                <tr>
+                                    <th>Sr No.</th>
+                                    <th>Investor Name</th>
+                                    <th class="text-right">Current Value</th>
+                                    <th class="text-right">% Weight</th>
+
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let investor of name.investorList; index as i">
+                                <tr>
+                                    <td>{{i+1}}</td>
+                                    <td (click)="getSchemeName(investor)">{{investor.investorName}}<i
+                                            class="material-icons right b-a f-14 mt-4 c-p"
+                                            *ngIf="investor.showInvestor">add</i>
+                                        <i class="material-icons right b-a f-14 mt-4 c-p"
+                                            *ngIf="!investor.showInvestor"> remove </i></td>
+                                    <td class="text-right">{{name.totalAum}}</td>
+                                    <td class="text-right">{{name.weightInPercentage}}%</td>
+                                </tr>
+                                <table *ngIf="!investor.showInvestor">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr No.</th>
+                                            <th>Scheme Name</th>
+                                            <th class="text-right">Current Value</th>
+                                            <th class="text-right">% Weight</th>
+                                        </tr>
+                                    </thead>
+                                    <tr>
+                                        <tbody *ngFor="let scheme of investor.schemeList; index as i">
+                                            <tr>
+                                                <td>{{i+1}}</td>
+                                                <td (click)="getFolio(scheme)">{{scheme.schemeName}}<i
+                                                        class="material-icons right b-a f-14 mt-4 c-p"
+                                                        *ngIf="scheme.showScheme">add</i>
+                                                    <i class="material-icons right b-a f-14 mt-4 c-p"
+                                                        *ngIf="scheme.showScheme==false"> remove </i> </td>
+                                                <td class="text-right">{{scheme.totalAum}}</td>
+                                                <td class="text-right">{{scheme.weightInPercentage}}</td>
+                                            </tr>
+                                            <table *ngIf="scheme.showScheme==false">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sr No.</th>
+                                                        <th>Scheme Name</th>
+                                                        <th class="text-right">Folio Number</th>
+                                                        <th class="text-right">% Weight</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody *ngFor="let folio of scheme.folioList;index as i">
+                                                    <tr>
+                                                        <td>{{i+1}}</td>
+                                                        <td>{{folio.schemeName}}
+                                                        <td>
+                                                        <td class="text-right">{{folio.folioNumber}}</td>
+                                                        <td class="text-right">{{folio.totalAum}}</td>
+                                                        <td class="text-right">{{folio.balanceUnit}}</td>
+                                                        <td class="text-right">{{folio.weightInPercentage}}</td>
+                                                    </tr>
+                                                </tbody>
+
+                                            </table>
+                                        </tbody>
+
+                                </table>
+                            </tbody>
+                        </table>
+
+                    </tr>
+                </tbody>
+                <tbody>
+                    <tr>
+                        <td class="p-table t-35 b-a"><strong>Total</strong></td>
+                        <td class="p-table t-7 b-a">&nbsp;</td>
+                        <td class="p-table t-19 b-a text-right"><strong>{{totalCurrentValue}}</strong></td>
+                        <td class="p-table t-19 b-a text-right"><strong>{{totalWeight}}%</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div *ngIf="!clientList">
+                <p>No data found</p>
+            </div>
+        </div>
+    </div>
 </div>
