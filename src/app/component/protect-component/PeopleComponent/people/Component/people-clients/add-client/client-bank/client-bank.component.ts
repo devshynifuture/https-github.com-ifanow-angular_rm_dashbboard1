@@ -6,6 +6,7 @@ import { SubscriptionService } from 'src/app/component/protect-component/Adviser
 import { PostalService } from 'src/app/services/postal.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 
 @Component({
   selector: 'app-client-bank',
@@ -16,8 +17,9 @@ export class ClientBankComponent implements OnInit {
   bankDetail: any;
   userData: any;
   holderList: any;
+  bankList: any;
 
-  constructor(private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private subService: SubscriptionService, private postalService: PostalService, private peopleService: PeopleService) {
+  constructor(private cusService: CustomerService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private subService: SubscriptionService, private postalService: PostalService, private peopleService: PeopleService) {
   }
 
   bankForm;
@@ -26,8 +28,24 @@ export class ClientBankComponent implements OnInit {
 
   @Input() set data(data) {
     this.userData = data;
+    this.getBankList(data)
   }
-  ngOnInit() {
+  getBankList(data) {
+    let obj =
+    {
+      "userId": data.userId,
+      "userType": data.userType
+    }
+    this.cusService.getDematList(obj).subscribe(
+      data => {
+        console.log(data);
+        this.bankList = data;
+        this.createBankForm(data);
+      }, err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+  createBankForm(data) {
+    (data == undefined) ? data = {} : data;
     this.bankForm = this.fb.group({
       ifscCode: [, [Validators.required]],
       bankName: [, [Validators.required]],
@@ -43,6 +61,10 @@ export class ClientBankComponent implements OnInit {
       branchState: [, [Validators.required]]
     })
   }
+  ngOnInit() {
+    this.createBankForm(null);
+  }
+
   getBankAddress(ifsc) {
     let obj = {
       ifsc: ifsc

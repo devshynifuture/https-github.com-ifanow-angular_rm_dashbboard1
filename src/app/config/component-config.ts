@@ -526,8 +526,8 @@ export const appConfig = {
   DELETE_SUBTASK_TEMPLATE: 'setting/task/sub-task/delete',
   OWNER_SUBTASK_UPDATE: 'setting/task/template/owner/update',
   OWNER_TASK_UPDATE: 'setting/task/sub-task/owner/update',
-  GET_TEAM_MEMBER:'setting/users/team-members/get',
-  UPDATE_ACCESS_CONTROL:'setting/users-roles/access-rights/update',
+  GET_TEAM_MEMBER: 'setting/users/team-members/get',
+  UPDATE_ACCESS_CONTROL: 'setting/users-roles/access-rights/update',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
@@ -569,6 +569,9 @@ export const appConfig = {
   DELETE_CLIENT: 'user/client/delete',
   GET_CLIENT_OR_lEAD_DATA: 'user/client/detail/get',
   UPDATE_CLIENT_STATUS: 'user/client/status/update',
+  GET_ADDRESS_LIST: 'user/address/list/get',
+  GET_DEMAT_LIST: 'user/bank/demat/list/get',
+  GET_BANK_LIST: 'user/bank/list/get',
   // LOGIN_WITH_PASSWORD: 'user/login/with/password',
 
   //////////////////////////////Login///////////////////////////////////

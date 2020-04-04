@@ -5,6 +5,7 @@ import { ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { element } from 'protractor';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 
 @Component({
   selector: 'app-client-demat',
@@ -15,7 +16,7 @@ export class ClientDematComponent implements OnInit {
   mobileData: any;
   holderList: any;
 
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService) { }
+  constructor(private cusService: CustomerService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService) { }
   dematForm;
   userData;
   mobileNumberFlag = "Broker number"
@@ -23,8 +24,23 @@ export class ClientDematComponent implements OnInit {
   @Output() tabChange = new EventEmitter();
   @Input() set data(data) {
     this.userData = data;
+    this.getDematList(data);
   }
-  ngOnInit() {
+  getDematList(data) {
+    let obj =
+    {
+      "userId": data.userId,
+      "userType": data.userType
+    }
+    this.cusService.getDematList(obj).subscribe(
+      data => {
+        console.log(data);
+        this.createDematForm(data)
+      }, err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+  createDematForm(data) {
+    (data == undefined) ? data = {} : data;
     this.dematForm = this.fb.group({
       modeOfHolding: ['1'],
       holderNameList: new FormArray([]),
@@ -38,6 +54,9 @@ export class ClientDematComponent implements OnInit {
       powerOfAttName: [],
       powerOfAttMasId: []
     })
+  }
+  ngOnInit() {
+    this.createDematForm(null)
   }
   getHolderList(data) {
     console.log(data)
