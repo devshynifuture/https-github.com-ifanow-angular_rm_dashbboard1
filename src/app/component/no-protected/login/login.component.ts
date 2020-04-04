@@ -253,70 +253,70 @@ export class LoginComponent implements OnInit {
       };
       this.isLoading = true;
       // TODO comment for old login
-      // this.peopleService.loginWithPassword(loginData).subscribe(data => {
-      //   console.log('data: ', data);
-      //   if (data) {
-      //     // this.authService.setToken(data.token);
-      //     this.authService.setToken('authTokenInLoginComponnennt');
-      //     if (data.userType == 1) {
-      //       // data.advisorId = data.userId;
+      this.peopleService.loginWithPassword(loginData).subscribe(data => {
+        console.log('data: ', data);
+        if (data) {
+          // this.authService.setToken(data.token);
+          this.authService.setToken('authTokenInLoginComponnennt');
+          if (data.userType == 1) {
+            // data.advisorId = data.userId;
+            this.authService.setUserInfo(data);
+            this.router.navigate(['admin', 'subscription', 'dashboard']);
+          } else {
+            this.authService.setToken('authTokenInLoginComponnennt');
+
+            data.id = data.clientId;
+            this.authService.setClientData(data);
+            this.authService.setUserInfo(data);
+            this.router.navigate(['customer', 'detail', 'overview', 'myfeed']);
+          }
+        } else {
+          this.passEvent = '';
+          this.errorMsg = true;
+          this.errorStyle = {
+            visibility: this.errorMsg ? 'visible' : 'hidden',
+            opacity: this.errorMsg ? '1' : '0',
+          };
+          this.barButtonOptions.active = false;
+        }
+      }, err => {
+        this.isLoading = false;
+        this.barButtonOptions.active = false;
+        console.log('error on login: ', err);
+        this.eventService.openSnackBar(err, 'Dismiss');
+      });
+      // this.backOfficeService.loginApi(loginData).subscribe(
+      //   data => {
+      //
+      //     if (data) {
+      //       console.log('data: ', data);
+      //       this.authService.setToken(data.token);
+      //       if (!data.advisorId) {
+      //         data.advisorId = data.adminAdvisorId;
+      //       }
       //       this.authService.setUserInfo(data);
       //       this.router.navigate(['admin', 'subscription', 'dashboard']);
+      //       this.authService.setClientData({
+      //         id: 2978, name: 'Aryendra Kumar Saxena'
+      //       });
+      //
       //     } else {
-      //       this.authService.setToken('authTokenInLoginComponnennt');
-
-      //       data.id = data.clientId;
-      //       this.authService.setClientData(data);
-      //       this.authService.setUserInfo(data);
-      //       this.router.navigate(['customer', 'detail', 'overview', 'myfeed']);
+      //       this.passEvent = '';
+      //       this.errorMsg = true;
+      //       this.errorStyle = {
+      //         visibility: this.errorMsg ? 'visible' : 'hidden',
+      //         opacity: this.errorMsg ? '1' : '0',
+      //       };
+      //       this.barButtonOptions.active = false;
       //     }
-      //   } else {
-      //     this.passEvent = '';
-      //     this.errorMsg = true;
-      //     this.errorStyle = {
-      //       visibility: this.errorMsg ? 'visible' : 'hidden',
-      //       opacity: this.errorMsg ? '1' : '0',
-      //     };
+      //   },
+      //   err => {
+      //     this.isLoading = false;
       //     this.barButtonOptions.active = false;
+      //     console.log('error on login: ', err);
+      //     this.eventService.openSnackBar(err, 'Dismiss');
       //   }
-      // }, err => {
-      //   this.isLoading = false;
-      //   this.barButtonOptions.active = false;
-      //   console.log('error on login: ', err);
-      //   this.eventService.openSnackBar(err, 'Dismiss');
-      // });
-       this.backOfficeService.loginApi(loginData).subscribe(
-         data => {
-
-           if (data) {
-             console.log('data: ', data);
-             this.authService.setToken(data.token);
-             if (!data.advisorId) {
-               data.advisorId = data.adminAdvisorId;
-             }
-             this.authService.setUserInfo(data);
-             this.router.navigate(['admin', 'subscription', 'dashboard']);
-             this.authService.setClientData({
-               id: 2978, name: 'Aryendra Kumar Saxena'
-             });
-
-           } else {
-             this.passEvent = '';
-             this.errorMsg = true;
-             this.errorStyle = {
-               visibility: this.errorMsg ? 'visible' : 'hidden',
-               opacity: this.errorMsg ? '1' : '0',
-             };
-             this.barButtonOptions.active = false;
-           }
-         },
-         err => {
-           this.isLoading = false;
-           this.barButtonOptions.active = false;
-           console.log('error on login: ', err);
-           this.eventService.openSnackBar(err, 'Dismiss');
-         }
-       );
+      // );
     }
   }
 
