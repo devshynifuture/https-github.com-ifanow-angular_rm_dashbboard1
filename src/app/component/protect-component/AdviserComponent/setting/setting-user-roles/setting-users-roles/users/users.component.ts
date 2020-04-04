@@ -42,6 +42,7 @@ export class UsersComponent implements OnInit {
     }
     this.settingsService.getTeamMembers(dataObj).subscribe((res) => {
       this.loader(-1);
+      console.log('team member details',res)
       this.userList = res;
     });
   }
