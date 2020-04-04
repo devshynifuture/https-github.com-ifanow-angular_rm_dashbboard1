@@ -131,7 +131,10 @@
                                 </div>
                             </div>
                             <div class="row p-12">
-                                <img src="/assets/images/grap.png" class="w-100 h-365">
+                                <!-- <img src="/assets/images/grap.png" class="w-100 h-365"> -->
+                                <div class="col-md-9 p-0 b-a">
+                                    <div class="highcharts-figure" id="pieChartAum"></div>
+                                  </div>
                             </div>
                         </div>
                         <div class="col-md-3 p-0">
@@ -177,7 +180,7 @@
                             </div>
                             <div class="col-md-12 aumtabs p-0 mt-20 " id="mistabs2">
                                 <mat-tab-group class="h-300 bg-white b-a ">
-                                    <mat-tab label="Client ">
+                                    <mat-tab label="Category ">
                                         <h6 class="f-bold b-a text-center p-12 mb-0 f-14 ">TOP CATEGORY</h6>
                                         <div class="b-white " *ngIf="category">
                                             <div class="row bb-dotted " *ngFor="let item of category">
@@ -195,7 +198,7 @@
                                            </div>
                                     </mat-tab>
 
-                                    <mat-tab label="AMC ">
+                                    <mat-tab label="Sub category ">
                                         <h6 class="f-bold b-a text-center p-12 mb-0 f-14 ">Sub Category</h6>
                                         <div class="b-white " *ngIf="subcategory">
                                             <div class="row bb-dotted " *ngFor="let item of subcategory">

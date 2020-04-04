@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-people-clients',
@@ -21,7 +22,7 @@ export class PeopleClientsComponent implements OnInit {
   advisorId: any;
   clientDatasource = new MatTableDataSource();
   isLoading: boolean;
-  constructor(private subInjectService: SubscriptionInject, public eventService: EventService, private peopleService: PeopleService, public dialog: MatDialog) { }
+  constructor(private ngZone: NgZone, private router: Router, private subInjectService: SubscriptionInject, public eventService: EventService, private peopleService: PeopleService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -88,6 +89,12 @@ export class PeopleClientsComponent implements OnInit {
         }
       }
     );
+  }
+  selectClient(singleClientData) {
+    console.log(singleClientData);
+    this.ngZone.run(() => {
+      this.router.navigate(['/customer/detail/overview/myfeed'], { state: { ...singleClientData } });
+    });
   }
   deleteModal(value, data) {
     const dialogData = {

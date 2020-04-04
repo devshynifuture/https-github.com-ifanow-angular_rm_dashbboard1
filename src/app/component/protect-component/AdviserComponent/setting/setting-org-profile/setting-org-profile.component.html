@@ -16,7 +16,7 @@
     <div class="col-xl-2"></div>
     <div class="col-xl-8">
         <mat-card class="b-a p-0 br-4">
-            <mat-card-header class="bg-grey lter wrapper-18 relClass">
+            <mat-card-header class="bg-grey lter wrapper-18">
                 <div class="row w-100" *ngIf="userList">
                     <div class="col-md-9 pl-0">
                         <h2 class="m-0">{{userList.fullName}}</h2>
@@ -79,10 +79,10 @@
 
 <div class="row pt-40 pb-20" id="ui-setting-profile" *ngIf="orgProfile == true">
     <div class="col-xl-2"></div>
-    <div class="col-xl-8 p-0">
+    <div class="col-xl-8">
         <mat-card class="b-a p-0 br-4">
-            <mat-card-header class="bg-grey lter p-24">
-                <div class="row w-100">
+            <mat-card-header class="bg-grey lter wrapper-18">
+                <div class="row w-100" *ngIf="orgDetails">
                     <div class="col-md-9 pl-0">
                         <h2 class="m-0">{{orgDetails.companyName}}</h2>
                     </div>

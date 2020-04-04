@@ -14,26 +14,25 @@
 <div *ngIf="globalData">
     <div class="row pt-20 arn-ria-deatils" *ngFor="let arn of arnobjs">
         <div class="col-md-2"></div>
-        <div class="col-md-8 p-0">
+        <div class="col-md-8">
             <mat-card class="b-a-l p-0">
-                <mat-card-header class="bg-grey lter">
-                    <div class="row w-100">
-                        <div class="col-md-10 p-0">
-                            <h2 class="m-0">{{getArnType(arn.arnOrRia)}}-{{arn.number}}</h2>
-                            <h3 class="m-0 f-500 pt-8">{{arn.nameOfTheHolder}}</h3>
-                        </div>
-                        <div class="co-md-2 p-0 right pt-12">
-                            <button mat-stroked-button class="text-primary">{{arn.status}}</button>
-                            <ng-container>
-                                <button mat-icon-button [matMenuTriggerFor]="menu">
-                                    <mat-icon>more_vert</mat-icon>
-                                </button>
-                                <mat-menu #menu="matMenu">
-                                    <button mat-menu-item (click)="openArnDetails(null, arn)">Edit</button>
-                                </mat-menu>
-                            </ng-container>
-                        </div>
+                <mat-card-header class="bg-grey lter row">
+                    <div class="col-md-9 p-0">
+                        <h2 class="m-0">{{getArnType(arn.arnOrRia)}}-{{arn.number}}</h2>
+                        <h3 class="m-0 roboto f-500  ">{{arn.nameOfTheHolder}}</h3>
                     </div>
+
+                    <div class="col-md-3 p-0 d-flex align-items-center justify-content-end">
+                        <button mat-stroked-button class="text-primary mr-12">{{arn.status}}</button>
+                        <ng-container>
+                            <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
+
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="openArnDetails(null, arn)">Edit</button>
+                            </mat-menu>
+                        </ng-container>
+                    </div>
+
                 </mat-card-header>
                 <mat-card-content>
                     <div class="row pt-36 bb-1 pb-36">

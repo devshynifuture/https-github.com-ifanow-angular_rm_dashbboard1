@@ -12,7 +12,7 @@ import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } fr
   templateUrl: './customer.component.html',
   // templateUrl: './customer.mobile.component.html',
   //  templateUrl: './goal.mobile.component.html',
-
+// templateUrl: './transactions-mob.component.html',
   styleUrls: ['./customer.component.scss'],
   animations: [
     dialogContainerOpacity,

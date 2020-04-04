@@ -41,7 +41,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   initializeUserDetails(){
 
   }
-
+  chooseMember(){}
   createForm(){
     this.usersForm = this.fb.group({
       userInput: [''],

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
@@ -7,6 +7,7 @@ import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { SettingsService } from '../../../settings.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { PostalService } from 'src/app/services/postal.service';
 
 @Component({
   selector: 'app-org-profile',
@@ -27,6 +28,8 @@ export class OrgProfileComponent implements OnInit {
 
   anyDetailsChanged:boolean;
   inputData: any;
+  pinInvalid: boolean;
+  validatorType = ValidatorType
 
   constructor(
     public utils: UtilService, 
@@ -34,6 +37,7 @@ export class OrgProfileComponent implements OnInit {
     private fb: FormBuilder, 
     public subInjectService: SubscriptionInject,
     private settingsService: SettingsService,
+    private postalService: PostalService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -55,6 +59,41 @@ export class OrgProfileComponent implements OnInit {
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
+
+  getPostalPin(value) {
+    let obj = {
+      zipCode: value
+    }
+    console.log(value, "check value");
+    if (value != "") {
+      this.postalService.getPostalPin(value).subscribe(data => {
+        console.log('postal 121221', data)
+        this.PinData(data)
+      })
+    }
+    else {
+      this.pinInvalid = false;
+    }
+  }
+
+  PinData(data) {
+    if (data[0].Status == "Error") {
+      this.pinInvalid = true;
+
+      this.getFormControl().pincode.setErrors(this.pinInvalid);
+      this.getFormControl().city.setValue("");
+      this.getFormControl().country.setValue("");
+      this.getFormControl().state.setValue("");
+
+    }
+    else {
+      this.getFormControl().city.setValue(data[0].PostOffice[0].District);
+      this.getFormControl().country.setValue(data[0].PostOffice[0].Country);
+      this.getFormControl().state.setValue(data[0].PostOffice[0].Circle);
+      this.pinInvalid = false;
+    }
+  }
+
 
   getOrgProfiles() {
     let obj = {
@@ -80,6 +119,11 @@ export class OrgProfileComponent implements OnInit {
       gstNumber: [(!data) ? '' : data.gstin, [Validators.required]],
       logoUrl:[(!data) ? '' : data.gstNumber, [Validators.required]],
       reportLogoUrl:[(!data) ? '' : data.gstNumber, [Validators.required]],
+      city: [(!data) ? '' :data.city],
+      state: [(!data) ? '' :data.state],
+      country: [(!data) ? '' :data.country],
+      pincode: [(!data) ? '' :data.zipCode, [Validators.required, Validators.minLength(6)]],
+
     });
   }
 

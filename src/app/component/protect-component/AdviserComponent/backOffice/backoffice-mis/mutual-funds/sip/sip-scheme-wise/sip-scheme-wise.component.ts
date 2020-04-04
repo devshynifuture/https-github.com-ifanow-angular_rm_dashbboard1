@@ -45,7 +45,10 @@ export class SipSchemeWiseComponent implements OnInit {
       parentId:-1
     }
     this.backoffice.Sip_Schemewise_Get(obj).subscribe(
-      data =>this.getSchemeWiseRes(data)
+      data =>this.getSchemeWiseRes(data),
+      err=>{
+        this.showLoader = false;
+      }
     )
   }
   

@@ -85,7 +85,8 @@
                         <input autocomplete="off" #pan appInputValueValidation
                             [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="pan" maxlength="10" matInput
                             class="form-control">
-                        <mat-error>This Field is required</mat-error>
+                        <mat-error *ngIf="basicDetails.get('pan').errors?.required">This Field is required</mat-error>
+                        <mat-error *ngIf="basicDetails.get('pan').errors?.pattern">Pan must be 10 digits</mat-error>
                         <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
                     </mat-form-field>
                 </div>
@@ -161,7 +162,7 @@
                 </mat-radio-group>
             </div>
         </div>
-        <div *ngIf="fieldFlag=='client'" class="row pt-44">
+        <div *ngIf="fieldFlag=='client' && basicDetailsData.userId==null" class="row pt-44">
             <div class="col-md-4 text-right">
                 <h5 class="m-0 pt-12">Client owner</h5>
                 <p class="m-0 f-12 text-custom">Team Owner</p>
@@ -169,10 +170,10 @@
             <div class="col-md-5 p-0">
                 <div class="form-group m-0">
                     <mat-form-field>
-                        <mat-select formControlName="clientOwner" class="form-control">
-                            <!-- <mat-option *ngFor="let singleClient of clientOwnerList" value="1">{{singleClient}}
-                            </mat-option> -->
-                            <mat-option value="1">Test
+                        <mat-select [(ngModel)]="selectedClientOwner" formControlName="clientOwner"
+                            class="form-control">
+                            <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
+                                {{singleClient.name}}
                             </mat-option>
                         </mat-select>
                         <mat-error class="f-12">This field is required
@@ -189,9 +190,14 @@
             <div class="col-md-5 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select formControlName="leadSource" class="form-control">
+                        <input autocomplete="off" #leadSource appInputValueValidation
+                            [inputValidator]="validatorType.TEXT_ONLY" formControlName="leadSource" matInput
+                            class="form-control">
+                        <mat-hint align="end">{{leadSource.value.length}}/ 50</mat-hint>
+                        <mat-error>This field is required</mat-error>
+                        <!-- <mat-select formControlName="leadSource" class="form-control">
                             <mat-option value="option">Option</mat-option>
-                        </mat-select>
+                        </mat-select> -->
                     </mat-form-field>
                 </div>
             </div>
@@ -205,7 +211,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select formControlName="leaadStatus" class="form-control">
-                            <mat-option value="option">Option</mat-option>
+                            <mat-option value="1">Option</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -220,7 +226,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select formControlName="leadRating" class="form-control">
-                            <mat-option value="option">Option</mat-option>
+                            <mat-option value="1">Option</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -233,8 +239,10 @@
             <div class="col-md-5 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select formControlName="leadOwner" class="form-control">
-                            <mat-option value="option">Option</mat-option>
+                        <mat-select [(ngModel)]="selectedClientOwner" formControlName="leadOwner" class="form-control">
+                            <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
+                                {{singleClient.name}}
+                            </mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -418,6 +426,7 @@
                     <mat-form-field floatLabel="never" appearance="standard">
                         <input matInput placeholder="Enter Name" formControlName="gEmail" class="form-control">
                         <mat-hint>Optional</mat-hint>
+                        <mat-error *ngIf="minorForm.get('gEmail').errors?.pattern">Email invalid</mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -431,6 +440,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input [maxLength]="10" formControlName="pan" #pan matInput class="form-control">
+                        <mat-error *ngIf="minorForm.get('pan').errors?.required">This Field is required</mat-error>
                         <mat-hint>Optional</mat-hint>
                         <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
                     </mat-form-field>
@@ -580,6 +590,8 @@
                     <mat-form-field>
                         <input formControlName="comPan" #cpan maxlength="10" matInput class="form-control">
                         <mat-error>This Field is required</mat-error>
+                        <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.required">This Field is required
+                        </mat-error>
                         <mat-hint align="end">{{cpan.value.length}} / 10</mat-hint>
                     </mat-form-field>
                 </div>
@@ -638,8 +650,10 @@
             <div class="col-md-5 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select formControlName="leadOwner" class="form-control">
-                            <mat-option value="option">Option</mat-option>
+                        <mat-select [(ngModel)]="selectedClientOwner" formControlName="leadOwner" class="form-control">
+                            <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
+                                {{singleClient.name}}
+                            </mat-option>
                         </mat-select>
                         <mat-error>This field is required</mat-error>
                     </mat-form-field>
