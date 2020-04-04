@@ -1,14 +1,14 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { BackOfficeService } from '../../protect-component/AdviserComponent/backOffice/back-office.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatProgressButtonOptions } from '../../../common/progress-button/progress-button.component';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { LoginService } from './login.service';
-import { PeopleService } from '../../protect-component/PeopleComponent/people.service';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {BackOfficeService} from '../../protect-component/AdviserComponent/backOffice/back-office.service';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {MatProgressButtonOptions} from '../../../common/progress-button/progress-button.component';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {LoginService} from './login.service';
+import {PeopleService} from '../../protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-login',
@@ -136,11 +136,11 @@ export class LoginComponent implements OnInit {
     console.log(this.verifyResponseData);
     if (this.verifyResponseData.email) {
       this.verifyFlag = 'Email';
-      const obj = { email: data.email };
+      const obj = {email: data.email};
       this.loginUsingCredential(obj);
     } else {
       this.verifyFlag = 'mobile';
-      const obj = { mobileNo: data.mobileNo };
+      const obj = {mobileNo: data.mobileNo};
       this.loginUsingCredential(obj);
     }
   }
@@ -253,70 +253,70 @@ export class LoginComponent implements OnInit {
       };
       this.isLoading = true;
       // TODO comment for old login
-      /*  this.peopleService.loginWithPassword(loginData).subscribe(data => {
-          console.log('data: ', data);
-          if (data) {
-            // this.authService.setToken(data.token);
-            this.authService.setToken('authTokenInLoginComponnennt');
-            if (data.userType == 1) {
-              // data.advisorId = data.userId;
-              this.authService.setUserInfo(data);
-              this.router.navigate(['admin', 'subscription', 'dashboard']);
-            } else {
-              this.authService.setToken('authTokenInLoginComponnennt');
-  
-              data.id = data.clientId;
-              this.authService.setClientData(data);
-              this.authService.setUserInfo(data);
-              this.router.navigate(['customer', 'detail', 'overview', 'myfeed']);
-            }
-          } else {
-            this.passEvent = '';
-            this.errorMsg = true;
-            this.errorStyle = {
-              visibility: this.errorMsg ? 'visible' : 'hidden',
-              opacity: this.errorMsg ? '1' : '0',
-            };
-            this.barButtonOptions.active = false;
-          }
-        }, err => {
-          this.isLoading = false;
-          this.barButtonOptions.active = false;
-          console.log('error on login: ', err);
-          this.eventService.openSnackBar(err, 'Dismiss');
-        });*/
-      this.backOfficeService.loginApi(loginData).subscribe(
-        data => {
-
-          if (data) {
-            console.log('data: ', data);
-            this.authService.setToken(data.token);
-            if (!data.advisorId) {
-              data.advisorId = data.adminAdvisorId;
-            }
+      this.peopleService.loginWithPassword(loginData).subscribe(data => {
+        console.log('data: ', data);
+        if (data) {
+          // this.authService.setToken(data.token);
+          this.authService.setToken('authTokenInLoginComponnennt');
+          if (data.userType == 1) {
+            // data.advisorId = data.userId;
             this.authService.setUserInfo(data);
             this.router.navigate(['admin', 'subscription', 'dashboard']);
-            this.authService.setClientData({
-              id: 2978, name: 'Aryendra Kumar Saxena'
-            });
-
           } else {
-            this.passEvent = '';
-            this.errorMsg = true;
-            this.errorStyle = {
-              visibility: this.errorMsg ? 'visible' : 'hidden',
-              opacity: this.errorMsg ? '1' : '0',
-            };
-            this.barButtonOptions.active = false;
+            this.authService.setToken('authTokenInLoginComponnennt');
+
+            data.id = data.clientId;
+            this.authService.setClientData(data);
+            this.authService.setUserInfo(data);
+            this.router.navigate(['customer', 'detail', 'overview', 'myfeed']);
           }
-        },
-        err => {
-          this.isLoading = false;
+        } else {
+          this.passEvent = '';
+          this.errorMsg = true;
+          this.errorStyle = {
+            visibility: this.errorMsg ? 'visible' : 'hidden',
+            opacity: this.errorMsg ? '1' : '0',
+          };
           this.barButtonOptions.active = false;
-          console.log('error on login: ', err);
-          this.eventService.openSnackBar(err, 'Dismiss');
         }
-      );
+      }, err => {
+        this.isLoading = false;
+        this.barButtonOptions.active = false;
+        console.log('error on login: ', err);
+        this.eventService.openSnackBar(err, 'Dismiss');
+      });
+      /* this.backOfficeService.loginApi(loginData).subscribe(
+         data => {
+
+           if (data) {
+             console.log('data: ', data);
+             this.authService.setToken(data.token);
+             if (!data.advisorId) {
+               data.advisorId = data.adminAdvisorId;
+             }
+             this.authService.setUserInfo(data);
+             this.router.navigate(['admin', 'subscription', 'dashboard']);
+             this.authService.setClientData({
+               id: 2978, name: 'Aryendra Kumar Saxena'
+             });
+
+           } else {
+             this.passEvent = '';
+             this.errorMsg = true;
+             this.errorStyle = {
+               visibility: this.errorMsg ? 'visible' : 'hidden',
+               opacity: this.errorMsg ? '1' : '0',
+             };
+             this.barButtonOptions.active = false;
+           }
+         },
+         err => {
+           this.isLoading = false;
+           this.barButtonOptions.active = false;
+           console.log('error on login: ', err);
+           this.eventService.openSnackBar(err, 'Dismiss');
+         }
+       );*/
     }
   }
 
