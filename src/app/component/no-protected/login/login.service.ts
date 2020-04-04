@@ -19,10 +19,16 @@ export class LoginService {
     return this.http.postEncoded(apiConfig.USER + appConfig.SAVE_AFTER_VERIFICATION, data);
   }
 
-  register(data) {
-    return this.http.postEncoded(apiConfig.USER + appConfig.REGISTER, data);
+  register(data, isClient) {
+    if(isClient){
+      return this.http.postEncoded(apiConfig.USER + appConfig.ADD_CLIENT, data);
+    }else{
+      return this.http.postEncoded(apiConfig.USER + appConfig.REGISTER, data);
+    }
   }
 
+  userRegister(data) {
+  }
   getUsernameData(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.SEARCH_USERNAME, data, 1);
   }
