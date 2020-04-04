@@ -67,7 +67,9 @@ export class SipComponent implements OnInit {
   }
   display(value){
     this.sipComponent=true;
-    this.pieChart('pieChartSip');
+    setTimeout(() => {
+      this.pieChart('pieChartSip');
+    }, 1000);
   }
   getAllSip()
   {
