@@ -26,17 +26,20 @@ export const appConfig = {
   GET_AMC_WISE: 'backoffice/mis/aum/amcWise/get',
   GET_APPLICANT_NAME: 'backoffice/mis/aum/amcWise/applicantName/get',
   ADVISOR_TAG_GET: '/advisor/tag/get',
-  //////////////////Foliodetails////////////////////////////
-  FOLIO_GROUP_HEAD_SEARCH: 'backoffice/folio/search/by/groupHead/get',
-  FOLIO_INVESTOR_SEARCH: 'backoffice/folio/search/by/investorName/get',
-  FOLIO_PAN_SEARCH: 'backoffice/folio/search/by/pan/get',
-  FOLIO_FOLIO_NO__SEARCH: 'backoffice/folio/search/by/folioNumber/get',
-  FOLIO_GROUP_HEAD_LIST: 'backoffice/foliowise/groupHead/list/get',
-  FOLIO_APPLICANT_NAME_LIST: 'backoffice/foliowise/applicaName/list/get',
+  AUM_GRAPH_GET:'backoffice/aum/graph/details/get',
+  ARN_RIA_LIST:'backoffice/arn/ria/list/get',
+///////////////////foliodetails///////////////////////////
+  FOLIO_GROUP_HEAD_SEARCH:'backoffice/folio/search/by/groupHead/get',
+  FOLIO_INVESTOR_SEARCH:'backoffice/folio/search/by/investorName/get',
+  FOLIO_PAN_SEARCH:'backoffice/folio/search/by/pan/get',
+  FOLIO_FOLIO_NO__SEARCH:'backoffice/folio/search/by/folioNumber/get',
+  FOLIO_GROUP_HEAD_LIST:'backoffice/foliowise/groupHead/list/get',
+  FOLIO_APPLICANT_NAME_LIST:'backoffice/foliowise/applicaName/list/get',
 
 
   /////////////////////// sip api call//////////////////////////////////
-
+  GET_NEW_SIP:'backoffice/sip/new/sip/get',
+  GET_CEASE_SIP:'backoffice/sip/ceased/sip/get',
   GET_EXPIRING: 'backoffice/sip/expiring/get',
   GET_expired: 'backoffice/sip/expired/get',
   GET_SIP_REJECTION: 'backoffice/sip/sipRejection/get',

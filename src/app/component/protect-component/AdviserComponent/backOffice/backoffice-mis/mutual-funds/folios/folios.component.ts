@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder, FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { BackOfficeService } from '../../../back-office.service';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-folios',
@@ -10,56 +11,35 @@ import { BackOfficeService } from '../../../back-office.service';
 })
 export class FoliosComponent implements OnInit {
  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
   folioDetails: any;
   dataList: any;
   advisorId: any;
-
-
+  dataSource:any;
+  folioList:any;
   constructor( private fb: FormBuilder,private backoffice:BackOfficeService) { }
+  isLoading = false;
+  searchGroupHead = new FormControl();
+  searchInvestorName = new FormControl();
+
 
   ngOnInit() {
-    this.getFolioDetails();
+    // this.getFolioDetails();
     this.advisorId = AuthService.getAdvisorId();
 
   }
 
-  getFolioDetails(){
-    this.folioDetails = this.fb.group({
-      searchGroupHead: [],
-      searchInvestorName:[]
-    });
+  // getFolioDetails(){
+  //   this.folioDetails = this.fb.group({
+  //     searchGroupHead: [],
+  //     searchInvestorName:[]
+  //   });
+  // }
+  displayFn(value): string | undefined {
+    return value ? value.name : undefined;
   }
 
   getList(data,value){//for seraching and dropdown of pan and folio
-    const obj={
-      advisorId:this.advisorId,
-      arnRiaDetailsId:-1,
-      parentId:-1,
-      clientName:data
-    }
-    if(value=='groupyHead'){
-      this.backoffice.folioSearchByGroupHead(obj).subscribe(
-        data =>{
-          if(data){
-            this.dataSource=data;
-            console.log(data)
-          }
-        }
-      )
-    }else{
-      this.backoffice.folioSearchByInvestor(obj).subscribe(
-        data =>{
-          if(data){
-            this.dataSource=data;
-            console.log(data)
-          }
-        }
-      )
-    }
 
-  }
-  selectedData(data,value) {//for getting selected option data 
     if(value=='groupyHead'){
       const obj={
         advisorId:this.advisorId,
@@ -69,10 +49,7 @@ export class FoliosComponent implements OnInit {
       }
       this.backoffice.folioGroupHeadList(obj).subscribe(
         data =>{
-          if(data){
-            this.dataSource=data;
-            console.log(data)
-          }
+            this.dataList=data;
         }
       )
     }else{
@@ -84,16 +61,50 @@ export class FoliosComponent implements OnInit {
       }
       this.backoffice.folioApplicantList(obj).subscribe(
         data =>{
-          if(data){
-            this.dataSource=data;
-            console.log(data)
-          }
+            this.folioList=data;
+        }
+      )
+    }
+
+  }
+  selectedData(data,value) {//for getting selected option data 
+    this.isLoading = true;
+    let tempData=[{}, {}, {}];
+    this.dataSource = new MatTableDataSource(tempData);
+    if(value=='groupyHead'){
+      const obj={
+        advisorId:this.advisorId,
+        arnRiaDetailsId:-1,
+        parentId:-1,
+        clientName:data
+      }
+      this.backoffice.folioSearchByGroupHead(obj).subscribe(
+        data =>{
+          this.isLoading = false;
+          this.dataSource = new MatTableDataSource(data);
+        }
+      )
+    }else{
+      const obj={
+        advisorId:this.advisorId,
+        arnRiaDetailsId:-1,
+        parentId:-1,
+        familyMemberName:data
+      }
+      this.backoffice.folioSearchByInvestor(obj).subscribe(
+        data =>{
+          this.isLoading = false;
+          this.dataSource = new MatTableDataSource(data);
+
         }
       )
     }
 
   }
   getData(data,value){//for pan and folio search data
+    this.isLoading = true;
+    let tempData=[{}, {}, {}];
+    this.dataSource = new MatTableDataSource(tempData);
     if(value=='pan'){
       const obj={
         advisorId:this.advisorId,
@@ -103,10 +114,9 @@ export class FoliosComponent implements OnInit {
       }
       this.backoffice.folioSearchByPan(obj).subscribe(
         data =>{
-          if(data){
-            this.dataSource=data;
-            console.log(data)
-          }
+          this.isLoading = false;
+          this.dataSource = new MatTableDataSource(data);
+
         }
       )
     }else{
@@ -118,10 +128,9 @@ export class FoliosComponent implements OnInit {
       }
       this.backoffice.folioSearchByfolio(obj).subscribe(
         data =>{
-          if(data){
-            this.dataSource=data;
-            console.log(data)
-          }
+          this.isLoading = false;
+          this.dataSource = new MatTableDataSource(data);
+
         }
       )
     }

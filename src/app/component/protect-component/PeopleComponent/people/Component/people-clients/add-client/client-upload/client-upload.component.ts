@@ -19,9 +19,8 @@ export class ClientUploadComponent implements OnInit {
   bankLIst: any = [];
   constructor(private subInjectService: SubscriptionInject, private http: HttpService, private custumService: CustomerService, private enumService: EnumServiceService) { }
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId();
+    this.advisorId = AuthService.getUserInfo().advisorId;
     // this.clientId = AuthService.getClientId();
-    this.addDocObj.advisorId = this.advisorId;
     // this.addDocObj.clientId = this.clientId;
     this.proofTypes = this.enumService.getProofType();
     this.bankLIst = this.enumService.getBank();
@@ -36,7 +35,7 @@ export class ClientUploadComponent implements OnInit {
   }
 
   @Input() set data(data) {
-    console.log(data)    //////////user data////////////////////
+    console.log(data, "user data1")    //////////user data////////////////////
   }
 
   saveClose() {
@@ -51,7 +50,7 @@ export class ClientUploadComponent implements OnInit {
   addressProof: any = "";
   bankProof: any = "";
   selectedBank: any = "";
-  proofSubType: any = 0;
+  proofSubType: any = 1;
   fileComPanImg: any = { view: '', store: '' };
   filePerPanImg: any = { view: '', store: '' };
   fileProof1Img: any = { view: '', store: '' };
@@ -81,24 +80,30 @@ export class ClientUploadComponent implements OnInit {
       this.custumService.getClientProof(obj).subscribe(
         (data) => {
           if (imgData.proofType == 2 && imgData.documentId == 0) {
-            this.fileComPanImg.view = data;
+            this.fileComPanImg.view = data.preSignedUrl;
             this.fileComPanImg.store = imgData;
           }
           else if (imgData.proofType == 1 && imgData.documentId == 0) {
-            this.filePerPanImg.view = data;
+            this.filePerPanImg.view = data.preSignedUrl;
             this.filePerPanImg.store = imgData;
           }
           else if (imgData.documentId == 1) {
-            this.fileProof1Img.view = data;
+            this.fileProof1Img.view = data.preSignedUrl;
             this.fileProof1Img.store = imgData;
+            this.selectedBank = imgData.documentId;
+            this.bankProof = imgData.proofType;
           }
           else if (imgData.documentId == 2 && imgData.proofSubType == 1) {
-            this.fileProof2Img.view = data;
+            this.fileProof2Img.view = data.preSignedUrl;
             this.fileProof2Img.store = imgData;
+            this.addressProof = imgData.proofType;
+            this.proofSubType = imgData.proofSubType;
           }
           else if (imgData.documentId == 2 && imgData.proofSubType == 2) {
-            this.fileProof2BackImg.view = data;
+            this.fileProof2BackImg.view = data.preSignedUrl;
             this.fileProof2BackImg.store = imgData;
+            this.addressProof = imgData.proofType;
+            this.proofSubType = imgData.proofSubType;
           }
           console.log(data, "imge");
         }
@@ -106,19 +111,20 @@ export class ClientUploadComponent implements OnInit {
     });
   }
 
-  addDocObj = {
-    advisorId: this.advisorId,
-    clientId: 0,
-    userId: 2,
-    userType: 2,
-    documentId: 0,
-    documentType: 0,
-    proofType: 0,
-    proofSubType: 1,
-    fileName: ''
-  }
+  addDocObj:any;
 
   getFile(e, type) {
+    this.addDocObj = {
+      advisorId: this.advisorId,
+      clientId: 0,
+      userId: 2,
+      userType: 2,
+      documentId: 0,
+      documentType: 0,
+      proofType: 0,
+      proofSubType: 0,
+      fileName: ''
+    }
     this.myFiles = [];
     const file = (e.target as HTMLInputElement).files[0];
     const reader = new FileReader();

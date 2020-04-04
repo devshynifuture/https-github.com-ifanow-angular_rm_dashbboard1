@@ -46,17 +46,18 @@ export class PlanGalleryComponent implements OnInit {
     console.log('gallery === ', data)
     this.defaultGallery = data
   }
-  openGallery() {
+  openGallery(gallery) {
     const dialogRef = this.dialog.open(OpenGalleryPlanComponent, {
       width: '470px',
       height: '280px',
-      data: { bank: '', animal: '' }
+      data: { bank: gallery, animal: '' }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
         return
       }
       console.log('The dialog was closed');
+      this.getDefault()
       this.element = result;
       console.log('result -==', this.element)
       let obj = {

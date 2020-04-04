@@ -20,11 +20,8 @@
         </div>
         <div class="col-md-5">
             <i class="material-icons c-p" (click)="cropImage = true" style="font-size: 100px;">
-                insert_photo
-            </i>
-            <div class="profile-img">
                 <img [src]="imgURL" class="w-100">
-            </div>
+            </i>
         </div>
     </div>
 
@@ -55,12 +52,15 @@
 </div>
 
 <div class="row pt-16 pb-16">
-    <div class="col-md-12 text-right">
+    <div class="col-md-11 text-right">
         <!--    // TODo [mat-dialog-close]="data"-->
         <button class="br-0 text-inherit f-14" mat-button>
             CANCEL
         </button>
         <button class="btn-green text-white f-14 ml-12" (click)="onNoClick()" mat-button mat-raised-button cdkFocusInitial>UPLOAD
         </button>
+    </div>
+    <div class="col-md-1" *ngIf="showSpinner == true">
+        <mat-spinner class="mt-8"></mat-spinner>
     </div>
 </div>
