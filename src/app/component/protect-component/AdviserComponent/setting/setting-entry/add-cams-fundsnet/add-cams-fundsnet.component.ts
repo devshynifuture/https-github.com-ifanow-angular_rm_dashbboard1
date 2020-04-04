@@ -41,8 +41,8 @@ export class AddCamsFundsnetComponent implements OnInit {
       arnOrRia: [this.data.mainData.arnOrRia],
       rtTypeMasterid: [this.data.rtType],
       rtExtTypeId: [2], // dbf file extension
-      loginId: [this.data.mainData.type, [Validators.required]],
-      loginPassword: [this.data.mainData.type, [Validators.required]],
+      loginId: [this.data.mainData.loginId, [Validators.required]],
+      loginPassword: [this.data.mainData.loginPassword, [Validators.required]],
       rtaCamsFundNetSecurityQuestionsList: this.fb.array([]),
     });
 

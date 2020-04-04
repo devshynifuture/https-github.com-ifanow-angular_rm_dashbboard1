@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SettingsService } from '../../settings.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatTableDataSource } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-add-new-role',
@@ -12,148 +13,175 @@ import { MatTableDataSource } from '@angular/material';
 export class AddNewRoleComponent implements OnInit {
   displayedColumns: string[] = ['position', 'weight', 'symbol', 'edit', 'del', 'adv'];
   dataSource:MatTableDataSource<any>;
-  displayedColumns1: string[] = ['position', 'adv'];
-  dataSource1 = ELEMENT_DATA1;
+  dataModels:any[] = [];
   @Input() data: any = {};
-  is_add:boolean = true;
-
   rolesFG: FormGroup;
-
-  dummyAdminRole: any = {
-    id: 1,
-    type: 1,
-    accounts: [
-      {
-        model: 'mutual funds',
-        permissions: [
-          {
-            name: 'view',
-            is_allowed: true,
-            is_advanced: false
-          },
-          {
-            name: 'add',
-            is_allowed: true,
-            is_advanced: false
-          },
-          {
-            name: 'edit',
-            is_allowed: true,
-            is_advanced: false
-          },
-          {
-            name: 'delete',
-            is_allowed: false,
-            is_advanced: false
-          },
-          {
-            name: 'invest',
-            is_allowed: false,
-            is_advanced: true
-          },
-          {
-            name: 'Redeem',
-            is_allowed: false,
-            is_advanced: true
-          },
-          {
-            name: 'Download SOA',
-            is_allowed: true,
-            is_advanced: true
-          },
-        ]
-      },
-      {
-        model: 'stocks',
-        permissions: [
-          {
-            name: 'view',
-            is_allowed: true,
-            is_advanced: false
-          },
-          {
-            name: 'add',
-            is_allowed: true,
-            is_advanced: false
-          },
-          {
-            name: 'edit',
-            is_allowed: true,
-            is_advanced: false
-          },
-          {
-            name: 'delete',
-            is_allowed: true,
-            is_advanced: false
-          },
-          {
-            name: 'invest',
-            is_allowed: true,
-            is_advanced: true
-          },
-          {
-            name: 'Redeem',
-            is_allowed: true,
-            is_advanced: true
-          },
-          {
-            name: 'Download SOA',
-            is_allowed: true,
-            is_advanced: true
-          },
-        ]
-      }
-    ]
-  }
+  editDetails:any;
+  advisorId:any;
 
   constructor(
     private fb: FormBuilder,
     private settingsService: SettingsService,
     private eventService: EventService,
-  ) { }
+  ) {
+    this.advisorId = AuthService.getAdvisorId();
+  }
 
   ngOnInit() {
-    this.is_add = this.data.type ? true : false;
     this.createFormGroup();
-    this.constructAdminDataSource();
+
+    if(this.data.is_add_flag) {
+      this.getTemplate();
+    } else {
+      this.getRoleDetails();
+    }
+  }
+
+  getTemplate() {
+    this.settingsService.getTemplateRole({optionId: this.data.roleType}).subscribe((res) => {
+      if(res) {
+        console.log(res);
+        this.constructAdminDataSource(res.modules);
+      }
+    }, err => {
+      this.eventService.openSnackBar("Error Occured");
+    })
+  }
+
+  getRoleDetails() {
+    this.settingsService.getDetailedRole({id: this.data.mainData.id}).subscribe((res) => {
+      if(res) {
+        console.log(res); 
+        this.editDetails = res.roleDetail;
+        this.constructAdminDataSource(res.modules);
+      }
+    }, err => {
+      this.eventService.openSnackBar("Error Occured");
+    })
   }
 
   createFormGroup() {
     this.rolesFG = this.fb.group({
-      type: [this.data.type],
-      name: [this.data.name, [Validators.required, Validators.maxLength(30)]],
-      description: [this.data.description, [Validators.maxLength(60)]]
+      advisorId: [this.advisorId],
+      roleName: [this.data.mainData.roleName, [Validators.required, Validators.maxLength(30)]],
+      roleDescription: [this.data.mainData.roleDesc, [Validators.maxLength(60)]]
     });
   }
 
-  segregateNormalAndAdvancedPermissionsForModule(data: any[]) {
+  segregateNormalAndAdvancedPermissions(data: any[], featureId) {
     let permissions_json = {
-      view: data.find((permission) => permission.name == 'view'),
-      add: data.find((permission) => permission.name == 'add'),
-      edit: data.find((permission) => permission.name == 'edit'),
-      delete: data.find((permission) => permission.name == 'delete'),
+      view: data.find((permission) => permission.capabilityName == 'View'),
+      add: data.find((permission) => permission.capabilityName == 'Add'),
+      edit: data.find((permission) => permission.capabilityName == 'Edit'),
+      delete: data.find((permission) => permission.capabilityName == 'Delete'),
     }
-    let advanced_permissions = data.filter((permission) => permission.is_advanced);
+    permissions_json.add.featureId = featureId;
+    permissions_json.edit.featureId = featureId;
+    permissions_json.view.featureId = featureId;
+    permissions_json.delete.featureId = featureId;
+    let advanced_permissions = data.filter((permission) => permission.basicOrAdvanceCapability == 2);
+    advanced_permissions.forEach((permission) => {
+      permission.featureId = featureId;
+    })
     return {permissions: permissions_json, advanced_permissions: advanced_permissions};
   }
 
-  constructAdminDataSource() {
-    let adminDatasource = this.dummyAdminRole.accounts;
-    for(let i = 0; i < adminDatasource.length; i++) {
-      let segregated_permissions = this.segregateNormalAndAdvancedPermissionsForModule(adminDatasource[i].permissions);
-      delete adminDatasource[i].permissions;
-      adminDatasource[i] = {
-        ...adminDatasource[i],
-        ...segregated_permissions
+  constructAdminDataSource(adminDatasource) {
+    for (var key in adminDatasource) {
+      let subModules = adminDatasource[key];
+      for(let i = 0; i < subModules.length; i++) {
+        let segregated_permissions = this.segregateNormalAndAdvancedPermissions(subModules[i].capabilityList, subModules[i].childId);
+        segregated_permissions = this.convertEnabledOrDisabledAsBoolean(segregated_permissions);
+        delete subModules[i].capabilityList;
+        subModules[i] = {
+          ...subModules[i],
+          ...segregated_permissions
+        };
+      }
+      let obj = {
+        modelName: subModules[0].parentName,
+        subModules: subModules,
+        dataSource:  new MatTableDataSource(subModules)
       };
+      this.dataModels.push(obj);
     }
-    console.log('sagar', adminDatasource);
-    this.dataSource = new MatTableDataSource(adminDatasource);
+    console.log(this.dataModels);
+  }
+
+  mergeAllCapabilitiesAndFilterEnabled() {
+    let capabilityList = [];
+    for (let module of this.dataModels) {
+      let data = JSON.parse(JSON.stringify(module.dataSource.data));
+      data.map((submodule) => {
+        capabilityList.push(submodule.permissions.view);
+        capabilityList.push(submodule.permissions.add);
+        capabilityList.push(submodule.permissions.edit);
+        capabilityList.push(submodule.permissions.delete);
+        capabilityList.push(submodule.advanced_permissions);
+      });
+    }
+    capabilityList = capabilityList.flat().filter(permission => permission.enabledOrDisabled);
+    let featureList = capabilityList.map(feature => {
+      return {
+        enabledOrDisabled: feature.enabledOrDisabled ? 1 : 2,
+        featureId: feature.featureId,
+        capabilityId: feature.id,
+      }
+    })
+
+    return featureList;
+  }
+
+  convertEnabledOrDisabledAsBoolean(segregatedPermissions) {
+    segregatedPermissions.permissions.view.enabledOrDisabled = segregatedPermissions.permissions.view.enabledOrDisabled == 1 ? true : false;
+    segregatedPermissions.permissions.add.enabledOrDisabled = segregatedPermissions.permissions.add.enabledOrDisabled == 1 ? true : false;
+    segregatedPermissions.permissions.edit.enabledOrDisabled = segregatedPermissions.permissions.edit.enabledOrDisabled == 1 ? true : false;
+    segregatedPermissions.permissions.delete.enabledOrDisabled = segregatedPermissions.permissions.delete.enabledOrDisabled == 1 ? true : false;
+
+    segregatedPermissions.advanced_permissions.forEach((permission) => {
+      permission.enabledOrDisabled = permission.enabledOrDisabled == 1 ? true : false;
+    })
+
+    return segregatedPermissions;
   }
 
   save() {
-    console.log('closing sagar', this.dataSource.data);
-    this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
+    if(this.rolesFG.invalid) {
+      this.rolesFG.markAllAsTouched();
+    } else {
+      if(this.data.is_add_flag) {
+        let dataObj = {
+          "advisorOrClientRole": [1,2,3].includes(this.data.roleType) ? 1 : 2,
+          "systemGeneratedOrCustom":2,
+          ...this.rolesFG.value,
+          featureToCapabilitiesList: this.mergeAllCapabilitiesAndFilterEnabled(),
+        };
+        console.log(dataObj)
+        // this.settingsService.addRole(dataObj).subscribe((res) => {
+        //   if(res) {
+        //     this.eventService.openSnackBar("Role Added Successfully");
+        //     this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
+        //   }
+        // }, err => {
+        //   this.eventService.openSnackBar("Error Occured");
+        // })
+      } else {
+        let dataObj = {
+          ...this.data.mainData,
+          ...this.rolesFG.value,
+          featureToCapabilitiesList: this.mergeAllCapabilitiesAndFilterEnabled(),
+        };
+        console.log(dataObj)
+        // this.settingsService.editRole(dataObj).subscribe((res) => {
+        //   if(res) {
+        //     this.eventService.openSnackBar("Role Modified Successfully");
+        //     this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
+        //   }
+        // }, err => {
+        //   this.eventService.openSnackBar("Error Occured");
+        // })
+      }
+    }
   }
 
   close(){
@@ -161,21 +189,3 @@ export class AddNewRoleComponent implements OnInit {
   }
 
 }
-export interface PeriodicElement {
-  position: string;
-  adv: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 'Mutual funds', adv: 'Manage ' },
-  { position: 'Stocks', adv: 'Manage ' },
-];
-export interface PeriodicElement1 {
-  position: string;
-
-}
-
-const ELEMENT_DATA1: PeriodicElement1[] = [
-  { position: 'Mutual funds' },
-  { position: 'Stocks' },
-];

@@ -606,7 +606,8 @@ export const appConfig = {
   DELETE_USER_ROLE: 'setting/users-roles/role/delete',
   CLONE_USER_ROLE: 'setting/users-roles/role/clone/add',
   ADD_USER_ROLE: 'setting/users-roles/role/add',
-  GET_DETIALED_USER_ROLE: 'setting/users-roles/role/detail/get',
+  GET_DETIALED_USER_ROLE: 'setting/users-roles/role/module-detail/get',
+  GET_TEMPLATE_ROLE: 'setting/users-roles/role/advisor-or-client-role/template/get',
 
   GET_ALL_FEATURES: 'setting/users-roles/feature-capabilities/all/get',
 
