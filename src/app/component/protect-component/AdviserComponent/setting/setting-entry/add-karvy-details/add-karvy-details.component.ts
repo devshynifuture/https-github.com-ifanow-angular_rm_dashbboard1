@@ -36,6 +36,7 @@ export class AddKarvyDetailsComponent implements OnInit {
     this.karvyFG = this.fb.group({
       advisorId: [this.advisorId],
       arnRiaDetailsId: [this.data.mainData.arnRiaDetailsId, [Validators.required]],
+      arnOrRia: [this.data.mainData.arnOrRia],
       rtTypeMasterid: [this.data.mainData.rtType],
       loginId: [this.data.mainData.loginId, [Validators.required]],
       loginPassword: [this.data.mainData.loginPassword, [Validators.required]],
@@ -51,6 +52,7 @@ export class AddKarvyDetailsComponent implements OnInit {
       this.karvyFG.markAllAsTouched();
     } else {
       const jsonObj = this.karvyFG.getRawValue();
+      jsonObj.arnOrRia = this.data.arnData.find((data) => this.karvyFG.controls.arnRiaDetailsId.value == data.id).arnOrRia;
 
       // add action
       if(!this.data.mainData.arnRiaDetailsId) {

@@ -12,6 +12,17 @@
 
 <div [formGroup]="arnRiaFG">
     <div class="row pt-125">
+        <div class="col-md-3">
+            <div class="form-control mb-0">
+                <mat-form-field>
+                    <mat-select class="form-group b-0" formControlName="arnOrRia">
+                        <mat-option value="" selected disabled>Select Type</mat-option>
+                        <mat-option [value]="option.id" *ngFor="let option of data.globalData.arn_type_list">{{option.type}}</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
         <div class="col-md-4 pr-0">
             <h5 class="m-0 text-right pt-8">ARN/RIA type</h5>
         </div>
