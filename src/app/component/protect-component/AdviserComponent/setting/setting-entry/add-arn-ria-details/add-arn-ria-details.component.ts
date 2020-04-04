@@ -33,22 +33,21 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log(this.data);
     this.createForm();
     this.subscriberToFormChanges();
   }
 
-  // "arnOrRia":1
   createForm() {
     this.arnRiaFG = this.fb.group({
       advisorId: [this.advisorId,[]],
+      arnOrRia: [this.data.mainData.arnOrRia, [Validators.required]],
       typeId: [this.data.mainData.typeId, [Validators.required]],
       number: [this.data.mainData.number, [Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY)]],
       nameOfTheHolder: [this.data.mainData.nameOfTheHolder, [Validators.required]],
       euin: [this.data.mainData.euin, [Validators.required, Validators.pattern(/[eE]\d{6}/)]],
       commencementDate: [this.data.mainData.commencementDate, [Validators.required]],
       renewalDate: [this.data.mainData.renewalDate, [Validators.required]],
-      registeredEmail: [this.data.mainData.registeredEmail, [Validators.required, Validators.email]],
+      registeredEmail: [this.data.mainData.registeredEmail, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
       registeredPan: [this.data.mainData.registeredPan, [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       registeredAddress: [this.data.mainData.registeredAddress, [Validators.required, Validators.maxLength(150)]],
       gstApplicableId: [this.data.mainData.gstApplicableId, [Validators.required]],
