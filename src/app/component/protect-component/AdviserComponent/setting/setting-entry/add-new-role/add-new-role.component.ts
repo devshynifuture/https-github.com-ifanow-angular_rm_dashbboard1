@@ -30,7 +30,7 @@ export class AddNewRoleComponent implements OnInit {
   ngOnInit() {
     this.createFormGroup();
 
-    if(this.data.is_add_flag) {
+    if(this.data.is_add_flag && !this.data.mainData.id) {
       this.getTemplate();
     } else {
       this.getRoleDetails();
@@ -63,8 +63,8 @@ export class AddNewRoleComponent implements OnInit {
   createFormGroup() {
     this.rolesFG = this.fb.group({
       advisorId: [this.advisorId],
-      roleName: [this.data.mainData.roleName, [Validators.required, Validators.maxLength(30)]],
-      roleDescription: [this.data.mainData.roleDesc, [Validators.maxLength(60)]]
+      roleName: [this.data.mainData.roleName || '', [Validators.required, Validators.maxLength(30)]],
+      roleDescription: [this.data.mainData.roleDesc || '', [Validators.maxLength(60)]]
     });
   }
 
@@ -151,20 +151,21 @@ export class AddNewRoleComponent implements OnInit {
     } else {
       if(this.data.is_add_flag) {
         let dataObj = {
-          "advisorOrClientRole": [1,2,3].includes(this.data.roleType) ? 1 : 2,
+          // "advisorOrClientRole": [1,2,3].includes(this.data.roleType)? 1 : 2,
+          "advisorOrClientRole": this.data.roleType,
           "systemGeneratedOrCustom":2,
           ...this.rolesFG.value,
           featureToCapabilitiesList: this.mergeAllCapabilitiesAndFilterEnabled(),
         };
         console.log(dataObj)
-        // this.settingsService.addRole(dataObj).subscribe((res) => {
-        //   if(res) {
-        //     this.eventService.openSnackBar("Role Added Successfully");
-        //     this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
-        //   }
-        // }, err => {
-        //   this.eventService.openSnackBar("Error Occured");
-        // })
+        this.settingsService.addRole(dataObj).subscribe((res) => {
+          if(res) {
+            this.eventService.openSnackBar("Role Added Successfully");
+            this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
+          }
+        }, err => {
+          this.eventService.openSnackBar("Error Occured");
+        })
       } else {
         let dataObj = {
           ...this.data.mainData,

@@ -69,13 +69,14 @@ export class RolesComponent implements OnInit {
     );
   }
 
-  cloneRole(data) {
-    this.loader(1);
-    this.settingsService.cloneRole({id: data.id}).subscribe((res) => {
-      this.getAllRoles();
-      this.loader(-1);
-    });
-  }
+  // This api is commented as we need to show popup on clone
+  // cloneRole(data) {
+  //   this.loader(1);
+  //   this.settingsService.cloneRole({id: data.id}).subscribe((res) => {
+  //     this.getAllRoles();
+  //     this.loader(-1);
+  //   });
+  // }
 
   deleteRole(data) {
     this.loader(1);

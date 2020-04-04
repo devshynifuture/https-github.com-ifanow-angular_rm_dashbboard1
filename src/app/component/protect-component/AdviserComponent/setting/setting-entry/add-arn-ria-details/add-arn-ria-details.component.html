@@ -12,7 +12,18 @@
 
 <div [formGroup]="arnRiaFG">
     <div class="row pt-90">
-        <div class="col-md-4 pr-0">
+        <div class="col-md-4">
+            <div class="form-control mb-0">
+                <mat-form-field>
+                    <mat-select class="form-group b-0" formControlName="arnOrRia">
+                        <mat-option value="" selected disabled>Select Type</mat-option>
+                        <mat-option [value]="option.id" *ngFor="let option of data.globalData.arn_type_list">{{option.type}}</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-2 pr-0">
             <h5 class="m-0 text-right pt-8">ARN/RIA type</h5>
         </div>
         <div class="col-md-5">
@@ -36,9 +47,8 @@
             <div class="form-group p-0">
                 <mat-form-field>
                     <input matInput type="text" formControlName="number" class="form-control br-0">
-                    <mat-error *ngIf="arnRiaFG.controls.number.invalid && arnRiaFG.controls.number.errors.required">This field is required</mat-error>
-                    <mat-error *ngIf="arnRiaFG.controls.number.invalid && arnRiaFG.controls.number.errors.pattern">
-                        Numbers only</mat-error>
+                    <mat-error *ngIf="arnRiaFG.get('number').errors?.required">This field is required</mat-error>
+                    <mat-error *ngIf="arnRiaFG.get('number').errors?.pattern">Numbers only</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -64,8 +74,8 @@
             <div class="form-group p-0">
                 <mat-form-field>
                     <input matInput type="text" formControlName="euin" class="form-control br-0">
-                    <mat-error *ngIf="arnRiaFG.controls.euin.invalid && arnRiaFG.controls.euin.errors.required">This field is required</mat-error>
-                    <mat-error *ngIf="arnRiaFG.controls.euin.invalid && arnRiaFG.controls.euin.errors.pattern">Valid EUIN required</mat-error>
+                    <mat-error *ngIf="arnRiaFG.get('euin').errors?.required">This field is required</mat-error>
+                    <mat-error *ngIf="arnRiaFG.get('euin').errors?.pattern">Valid EUIN required</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -80,9 +90,9 @@
                     <input class="form-control b-0" formControlName="commencementDate" (focus)="picker.open()" matInput [matDatepicker]="picker" [max]="yesterdaysDate" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
-                    <mat-error *ngIf="arnRiaFG.controls.commencementDate.invalid && arnRiaFG.controls.commencementDate.errors.required">
+                    <mat-error *ngIf="arnRiaFG.get('commencementDate').errors?.required">
                         This field is required</mat-error>
-                    <mat-error *ngIf="arnRiaFG.controls.commencementDate.invalid && arnRiaFG.controls.commencementDate.errors.matDatepickerMax">
+                    <mat-error *ngIf="arnRiaFG.get('commencementDate').errors?.matDatepickerMax">
                         Please enter valid date</mat-error>
                 </mat-form-field>
             </div>
@@ -98,9 +108,9 @@
                     <input class="form-control b-0" formControlName="renewalDate" matInput (focus)="picker1.open()" [matDatepicker]="picker1" [min]="tomrrowsDate" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
-                    <mat-error *ngIf="arnRiaFG.controls.commencementDate.invalid && arnRiaFG.controls.commencementDate.errors.required">
+                    <mat-error *ngIf="arnRiaFG.get('renewalDate').errors?.required">
                         This field is required</mat-error>
-                    <mat-error *ngIf="arnRiaFG.controls.commencementDate.invalid && arnRiaFG.controls.commencementDate.errors.matDatepickerMin">
+                    <mat-error *ngIf="arnRiaFG.get('renewalDate').errors?.matDatepickerMin">
                         Please enter valid date</mat-error>
                 </mat-form-field>
             </div>
@@ -114,10 +124,8 @@
             <div class="form-group p-0">
                 <mat-form-field>
                     <input matInput type="text" formControlName="registeredEmail" class="form-control br-0">
-                    <mat-error *ngIf="arnRiaFG.controls.registeredEmail.invalid && arnRiaFG.controls.registeredEmail.errors.required">
-                        This field is required</mat-error>
-                    <mat-error *ngIf="arnRiaFG.controls.registeredEmail.invalid && arnRiaFG.controls.registeredEmail.errors.email">
-                        Valid Email required</mat-error>
+                    <mat-error *ngIf="arnRiaFG.get('registeredEmail').errors?.required">This field is required</mat-error>
+                    <mat-error *ngIf="arnRiaFG.get('registeredEmail').errors?.pattern">Email is not valid</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -132,7 +140,7 @@
                     <input matInput type="text" formControlName="registeredPan" class="form-control br-0">
                     <mat-error *ngIf="arnRiaFG.controls.registeredPan.invalid && arnRiaFG.controls.registeredPan.errors.required">
                         This field is required</mat-error>
-                    <mat-error *ngIf="(arnRiaFG.controls.registeredPan.invalid && arnRiaFG.controls.registeredPan.errors.minlength) || (arnRiaFG.controls.registeredPan.invalid && arnRiaFG.controls.registeredPan.errors.minlength) ">
+                    <mat-error *ngIf="arnRiaFG.get('registeredPan').errors?.minlength || arnRiaFG.get('registeredPan').errors?.maxlength">
                         Valid PAN required</mat-error>
                 </mat-form-field>
             </div>
@@ -146,9 +154,9 @@
             <div class="form-group p-0">
                 <mat-form-field>
                     <textarea matInput formControlName="registeredAddress" class="form-control br-0" rows="5"></textarea>
-                    <mat-error *ngIf="arnRiaFG.controls.registeredAddress.invalid && arnRiaFG.controls.registeredAddress.errors.required">
+                    <mat-error *ngIf="arnRiaFG.get('registeredAddress').errors?.required">
                         This field is required</mat-error>
-                    <mat-error *ngIf="arnRiaFG.controls.registeredAddress.invalid && arnRiaFG.controls.registeredAddress.errors.maxlength">
+                    <mat-error *ngIf="arnRiaFG.get('registeredAddress').errors?.maxlength">
                         Text exceeds 150 characters</mat-error>
                 </mat-form-field>
             </div>
@@ -179,8 +187,8 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input matInput type="text" formControlName="gstNumber" class="form-control br-0">
-                    <mat-error *ngIf="arnRiaFG.controls.gstNumber.invalid && arnRiaFG.controls.gstNumber.errors.required">This field is required</mat-error>
-                    <mat-error *ngIf="(arnRiaFG.controls.gstNumber.invalid && arnRiaFG.controls.gstNumber.errors.minlength) || (arnRiaFG.controls.gstNumber.invalid && arnRiaFG.controls.gstNumber.errors.minlength) ">
+                    <mat-error *ngIf="arnRiaFG.get('gstNumber').errors?.required">This field is required</mat-error>
+                    <mat-error *ngIf="arnRiaFG.get('gstNumber').errors?.maxlength || arnRiaFG.get('gstNumber').errors?.minlength">
                         Valid GST required</mat-error>
                 </mat-form-field>
             </div>
