@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { ValidatorType } from 'src/app/services/util.service';
-import { PostalService } from 'src/app/services/postal.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {ValidatorType} from 'src/app/services/util.service';
+import {PostalService} from 'src/app/services/postal.service';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
 
 @Component({
   selector: 'app-client-address',
@@ -14,7 +14,7 @@ import { CustomerService } from 'src/app/component/protect-component/customers/c
 })
 export class ClientAddressComponent implements OnInit {
   userData: any;
-  proofType;
+  addressType;
   addressList: any;
   addressData: void;
 
@@ -28,7 +28,7 @@ export class ClientAddressComponent implements OnInit {
 
   @Input() set data(data) {
     this.userData = data;
-    this.proofType = (this.userData.addressData) ? String(this.userData.addressData.addressType) : '1';
+    this.addressType = (this.userData.addressData) ? String(this.userData.addressData.proofType) : '1';
     (this.userData.addressData == undefined) ? this.getAddressList(data) : this.createAddressForm(this.userData.addressData);
   }
 
@@ -38,7 +38,7 @@ export class ClientAddressComponent implements OnInit {
   createAddressForm(data) {
     (data == undefined) ? data = {} : data;
     this.addressForm = this.fb.group({
-      proofType: [(data.addressType) ? String(data.addressType) : '1', [Validators.required]],
+      addressType: [(data.addressType) ? String(data.addressType) : '1', [Validators.required]],
       addProofType: [(data.proofType) ? String(data.proofType) : '1', [Validators.required]],
       proofIdNum: [data.proofIdNumber, [Validators.required]],
       addressLine1: [data.address1, [Validators.required]],

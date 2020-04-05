@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../../../../../auth-service/authService';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../../../../../../auth-service/authService';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-customer-overview',
@@ -15,7 +15,8 @@ export class CustomerOverviewComponent implements OnInit {
 
   ngOnInit() {
     console.log('overview is called');
-    this.clientData = JSON.parse(sessionStorage.getItem('clientData'));
+    this.clientData = AuthService.getClientData();
+    // this.clientData = JSON.parse(sessionStorage.getItem('clientData'));
   }
 
   logout() {
