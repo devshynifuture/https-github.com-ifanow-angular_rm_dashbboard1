@@ -28,8 +28,8 @@ export class ClientAddressComponent implements OnInit {
 
   @Input() set data(data) {
     this.userData = data;
-    this.proofType = '1';
-    ((this.userData.addressData) == undefined) ? this.getAddressList(data) : this.createAddressForm(this.userData.addressData);
+    this.proofType = (this.userData.addressData) ? String(this.userData.addressData.addressType) : '1';
+    (this.userData.addressData == undefined) ? this.getAddressList(data) : this.createAddressForm(this.userData.addressData);
   }
 
   ngOnInit() {
@@ -38,8 +38,8 @@ export class ClientAddressComponent implements OnInit {
   createAddressForm(data) {
     (data == undefined) ? data = {} : data;
     this.addressForm = this.fb.group({
-      proofType: [String(data.addressType), [Validators.required]],
-      addProofType: [String(data.proofType), [Validators.required]],
+      proofType: [(data.addressType) ? String(data.addressType) : '1', [Validators.required]],
+      addProofType: [(data.proofType) ? String(data.proofType) : '1', [Validators.required]],
       proofIdNum: [data.proofIdNumber, [Validators.required]],
       addressLine1: [data.address1, [Validators.required]],
       addressLine2: [data.address2, [Validators.required]],
@@ -78,7 +78,9 @@ export class ClientAddressComponent implements OnInit {
     this.cusService.getAddressList(obj).subscribe(
       data => {
         console.log(data);
-        this.addressList = data;
+        if (data) {
+          this.addressList = data[0];
+        }
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
     );
@@ -108,8 +110,8 @@ export class ClientAddressComponent implements OnInit {
         addressType: this.addressForm.get('proofType').value,
         proofType: this.addressForm.get('addProofType').value,
         proofIdNumber: this.addressForm.get('proofIdNum').value,
-        userAddressMappingId: (this.userData.addressData) ? this.userData.addressData.userAddressMappingId : null,
-        addressId: (this.userData.addressData) ? this.userData.addressData.addressId : null
+        userAddressMappingId: (this.userData.addressData) ? this.userData.addressData.userAddressMappingId : (this.addressList) ? this.addressList.userAddressMappingId : null,
+        addressId: (this.userData.addressData) ? this.userData.addressData.addressId : (this.addressList) ? this.addressList.addressId : null
       };
 
       this.peopleService.addEditClientAddress(obj).subscribe(

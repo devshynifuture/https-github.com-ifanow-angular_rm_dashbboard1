@@ -25,6 +25,8 @@ export class OverviewProfileComponent implements OnInit {
   addressList: any;
   dematList: any;
   bankList: any;
+  selectedBankData: any;
+  selectedDemat: any;
 
   constructor(private authService: AuthService, public dialog: MatDialog, public subInjectService: SubscriptionInject, private cusService: CustomerService, private eventService: EventService) { }
 
@@ -74,7 +76,10 @@ export class OverviewProfileComponent implements OnInit {
     this.cusService.getDematList(obj).subscribe(
       data => {
         console.log(data);
-        this.dematList = data;
+        if (data && data.length > 0) {
+          this.dematList = data;
+          this.selectedDemat = data[0];
+        }
       }, err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
@@ -87,9 +92,28 @@ export class OverviewProfileComponent implements OnInit {
     this.cusService.getBankList(obj).subscribe(
       data => {
         console.log(data);
-        this.bankList = data;
+        if (data && data.length > 0) {
+          this.bankList = data;
+          this.selectedBankData = data[0];
+        }
       }, err => this.eventService.openSnackBar(err, "Dismiss")
     )
+  }
+  next(flag, index) {
+    if (flag == 'bank') {
+      (index < this.bankList.length - 1) ? this.selectedBankData = this.bankList[index + 1] : '';
+    }
+    else {
+      (index < this.dematList.length - 1) ? this.selectedDemat = this.dematList[index + 1] : '';
+    }
+  }
+  previous(flag, index) {
+    if (flag == 'bank') {
+      (index > 0) ? this.selectedBankData = this.bankList[index - 1] : '';
+    }
+    else {
+      (index > 0) ? this.selectedDemat = this.dematList[index - 1] : '';
+    }
   }
   deleteModal(value, data) {
     const dialogData = {

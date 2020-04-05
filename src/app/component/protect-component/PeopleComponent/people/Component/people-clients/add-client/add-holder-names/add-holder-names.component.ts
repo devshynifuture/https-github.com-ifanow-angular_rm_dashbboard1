@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { ValidatorType } from 'src/app/services/util.service';
 
@@ -8,25 +8,40 @@ import { ValidatorType } from 'src/app/services/util.service';
   styleUrls: ['./add-holder-names.component.scss']
 })
 export class AddHolderNamesComponent implements OnInit {
+  holderListResponse: any;
 
   constructor(private fb: FormBuilder) { }
   holderNamesForm;
   validatorType = ValidatorType;
   @Output() holderList = new EventEmitter;
-  ngOnInit() {
+  @Input() set holderListInput(data) {
+    console.log(data);
     this.holderNamesForm = this.fb.group({
       holderNameList: new FormArray([])
     })
-    this.addHolders();
+    if (data == undefined || data.length == 0) {
+      data = {};
+      this.addHolders(data);
+      this.holderListResponse = data;
+      return;
+    }
+    else {
+      this.holderListResponse = data;
+      data.forEach(element => {
+        this.addHolders(element);
+      })
+    }
+  }
+  ngOnInit() {
   }
   get getHolderForm() { return this.holderNamesForm.controls };
   get holderNameList() { return this.getHolderForm.holderNameList as FormArray };
-  addHolders() {
+  addHolders(data) {
     if (this.holderNameList.length == 3) {
       return;
     }
     this.holderNameList.push(this.fb.group({
-      name: ['', [Validators.required]],
+      name: [data.name, [Validators.required]],
       id: []
     }));
     this.holderList.emit(this.holderNameList);

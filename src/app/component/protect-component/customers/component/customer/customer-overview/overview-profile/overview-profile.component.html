@@ -187,61 +187,85 @@
                     </div>
 
                     <div class=" col-md-3 pl-20 ">
-                        <div class=" row ">
-                            <div class=" col-md-6 ">
-                                <h5 class=" headingDetails "> Bank
-                                    <i (click)="openAddEdit(clientOverviewData,null,'Bank','Add')"
-                                        class=" material-icons f-18 ">
-                                        add_circle_outline</i>
-                                </h5>
-                            </div>
+                        <div class="row">
+                            <div *ngFor="let singleBank of bankList;index as i" class="col-md-12">
+                                <div *ngIf="selectedBankData===singleBank" class=" row ">
+                                    <div class=" col-md-6 ">
+                                        <h5 class=" headingDetails "> Bank
+                                            <i (click)="openAddEdit(clientOverviewData,null,'Bank','Add')"
+                                                class=" material-icons f-18 ">
+                                                add_circle_outline</i>
+                                        </h5>
+                                    </div>
+                                    <div *ngIf="bankList && bankList.length>0"
+                                        class=" col-md-5 p-0 d-flex align-items-center justify-content-end ">
+                                        <span class=" f-12 text-primitive ">{{i+1}} of {{bankList.length}}</span>
+                                        <span class=" arrow-primitive arrowSlider c-p ">
+                                            <i (click)="previous('bank',i)"
+                                                class=" material-icons f-17 text-primitive ">
+                                                chevron_left
+                                            </i>
+                                        </span>
+                                        <span class=" arrow-primitive arrowSlider c-p ">
+                                            <i (click)="next('bank',i)" class=" material-icons f-17 text-primitive ">
+                                                chevron_right
+                                            </i>
+                                        </span>
+                                    </div>
+                                </div>
 
-                            <div class=" col-md-5 p-0 d-flex align-items-center justify-content-end ">
-
-                                <span class=" f-12 text-primitive ">1 of 4</span>
-                                <span class=" arrow-primitive arrowSlider c-p ">
-                                    <i class=" material-icons f-17 text-primitive ">
-                                        chevron_left
-                                    </i>
-                                </span>
-                                <span class=" arrow-primitive arrowSlider c-p ">
-                                    <i class=" material-icons f-17 text-primitive ">
-                                        chevron_right
-                                    </i>
-                                </span>
-
-                            </div>
-                        </div>
-
-                        <div class=" row ">
-                            <div class=" col-md-9 pr-0 ">
-                                <p class=" m-0 f-14 ">
-                                    <span class=" f-500 roboto ">Motilal Oswal </span> DP ID: 9873457842 <br> UCC:
-                                    33938922 <br> Mumbai 400101 </p>
-                            </div>
-                            <div class=" col-md-2 p-0 text-right ">
-                                <a (click)="openAddEdit(clientOverviewData,null,'Bank','Edit')"
-                                    class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
+                                <div *ngIf="selectedBankData===singleBank" class="row">
+                                    <div class=" col-md-9 pr-0 ">
+                                        <p class=" m-0 f-14 ">
+                                            <span class=" f-500 roboto ">Motilal {{selectedBankData.bankId}} </span> DP
+                                            ID: 9873457842 <br>
+                                            UCC:
+                                            33938922 <br> Mumbai 400101 </p>
+                                    </div>
+                                    <div class=" col-md-2 p-0 text-right ">
+                                        <a (click)="openAddEdit(clientOverviewData,selectedBankData,'Bank','Edit')"
+                                            class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <hr class=" bb-primitive hrMargin ">
-                        <h5 class=" headingDetails "> Demat
-                            <i (click)="openAddEdit(clientOverviewData,null,'Demat','Add')"
-                                class=" material-icons f-18 ">
-                                add_circle_outline</i>
-                        </h5>
-                        <div class=" row ">
-                            <div class=" col-md-9 pr-0 ">
-                                <p class=" m-0 f-14 ">
-                                    <span class=" f-500 roboto ">Oriental bank of commerce </span> <br> A/c:
-                                    12393904937372 <br> Savings a/c <br> IFSC: OBCC000123 <br> Mumbai 400101 </p>
-                            </div>
-                            <div class=" col-md-2 p-0 text-right ">
-                                <a (click)="openAddEdit(clientOverviewData,'Demat','Edit')"
-                                    class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
+                        <div *ngFor="let singleDemat of dematList;index as i">
+                            <div *ngIf="selectedDemat===singleDemat">
+                                <h5 class=" headingDetails "> Demat
+                                    <i (click)="openAddEdit(clientOverviewData,null,'Demat','Add')"
+                                        class=" material-icons f-18 ">
+                                        add_circle_outline</i>
+                                </h5>
+                                <div *ngIf="dematList.legnth>0"
+                                    class=" col-md-5 p-0 d-flex align-items-center justify-content-end ">
+                                    <span class=" f-12 text-primitive ">1 of 2</span>
+                                    <span class=" arrow-primitive arrowSlider c-p ">
+                                        <i (click)="previous('demat',i)" class=" material-icons f-17 text-primitive ">
+                                            chevron_left
+                                        </i>
+                                    </span>
+                                    <span class=" arrow-primitive arrowSlider c-p ">
+                                        <i (click)="next('deamt',i)" class=" material-icons f-17 text-primitive ">
+                                            chevron_right
+                                        </i>
+                                    </span>
+                                </div>
+                                <div class=" row ">
+                                    <div class=" col-md-9 pr-0 ">
+                                        <p class=" m-0 f-14 ">
+                                            <span class=" f-500 roboto ">Oriental bank of {{selectedDemat.dematId}}
+                                            </span> <br> A/c:
+                                            12393904937372 <br> Savings a/c <br> IFSC: OBCC000123 <br> Mumbai 400101
+                                        </p>
+                                    </div>
+                                    <div class=" col-md-2 p-0 text-right ">
+                                        <a (click)="openAddEdit(clientOverviewData,selectedDemat,'Demat','Edit')"
+                                            class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

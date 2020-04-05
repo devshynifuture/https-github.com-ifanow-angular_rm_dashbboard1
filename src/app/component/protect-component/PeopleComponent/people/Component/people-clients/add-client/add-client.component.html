@@ -24,16 +24,22 @@
                     </app-client-more-info>
                 </mat-tab>
                 <mat-tab [disabled]="tabData.userId==undefined " label=" Address">
-                    <app-client-address [data]="tabData" [fieldFlag]="headingData.fieldFlag"
-                        (tabChange)="changeTab($event)"></app-client-address>
+                    <ng-template>
+                        <app-client-address [data]="tabData" [fieldFlag]="headingData.fieldFlag"
+                            (tabChange)="changeTab($event)"></app-client-address>
+                    </ng-template>
                 </mat-tab>
                 <mat-tab [disabled]="tabData.userId==undefined " label=" Bank">
-                    <app-client-bank [data]="tabData" [fieldFlag]="headingData.fieldFlag"
-                        (tabChange)="changeTab($event)"></app-client-bank>
+                    <ng-template>
+                        <app-client-bank [data]="tabData" [fieldFlag]="headingData.fieldFlag"
+                            (tabChange)="changeTab($event)"></app-client-bank>
+                    </ng-template>
                 </mat-tab>
                 <mat-tab [disabled]="tabData.userId==undefined " label=" Demat">
-                    <app-client-demat [data]="tabData" [fieldFlag]="headingData.fieldFlag"
-                        (tabChange)="changeTab($event)"></app-client-demat>
+                    <ng-template>
+                        <app-client-demat [data]="tabData" [fieldFlag]="headingData.fieldFlag"
+                            (tabChange)="changeTab($event)"></app-client-demat>
+                    </ng-template>
                 </mat-tab>
                 <!-- [disabled]="tabData.userId==undefined" -->
                 <mat-tab [disabled]="true" label=" Upload">
