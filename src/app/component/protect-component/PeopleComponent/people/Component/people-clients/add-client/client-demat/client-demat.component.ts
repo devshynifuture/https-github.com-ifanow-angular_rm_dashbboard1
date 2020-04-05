@@ -32,6 +32,7 @@ export class ClientDematComponent implements OnInit {
 
   @Input() set data(data) {
     this.userData = data;
+    (this.userData.dematData) ? this.dematList = this.userData.dematData : '';
     (this.userData.dematData == undefined) ? this.getDematList(data) : this.createDematForm(this.userData.dematData);
   }
 

@@ -28,7 +28,8 @@ export class ClientAddressComponent implements OnInit {
 
   @Input() set data(data) {
     this.userData = data;
-    this.addressType = (this.userData.addressData) ? String(this.userData.addressData.proofType) : '1';
+    (this.userData.addressData) ? this.addressList = this.userData.addressData : ''
+    this.proofType = (this.userData.addressData) ? String(this.userData.addressData.addressType) : '1';
     (this.userData.addressData == undefined) ? this.getAddressList(data) : this.createAddressForm(this.userData.addressData);
   }
 
