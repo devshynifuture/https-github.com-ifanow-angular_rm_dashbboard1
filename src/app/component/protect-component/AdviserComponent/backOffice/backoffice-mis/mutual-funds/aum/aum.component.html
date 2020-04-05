@@ -11,7 +11,7 @@
                     <h3 class="m-0">Mutual Fund - AUM Report1</h3>
                 </div>
                 <div class="col-md-4 text-right ">
-                    <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
+                    <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black borderLine br-0">
                         {{viewMode}}
                         <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
                     </button>
@@ -27,9 +27,9 @@
 
             <div class="pt-20 pr-20">
                 <div class="row ">
-                    <div class="col-md-9 pl-0">
+                    <div class="col-md-9 p-0">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-4 pr-0">
                                 <div class="bg-aum pt-24 pb-24 text-center br-2 height180">
                                     <h1 class="text-white f-44 f-300 pt-32" *ngIf="MiscData1">
                                         {{MiscData1.totalAumRupees}}
@@ -37,7 +37,7 @@
                                     <p class="f-16 pt-4 text-white">TOTAL AUM</p>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 pr-0">
                                 <div class="bg-foliocount br-2 height180 pr-20 pl-12">
                                     <div class="row pt-12">
                                         <div class="col-md-5 text-left p-0" *ngIf="MiscData1">
@@ -63,7 +63,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 pr-0">
                                 <div class="bg-goal p-16 br-2 pt-12 height180">
                                     <div class="row">
                                         <div class="col-md-12 p-0">
@@ -78,81 +78,78 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-12">
-                                <p class="pt-12 mb-8 text-muted">Filter Options</p>
+                            <div class="col-md-12 mt-20">
+                                <p class=" f-16 mb-4 text-muted">Filter Options</p>
                             </div>
                         </div>
-                        <div class="margin-12 mt-0">
-                            <div class="row">
-                                <div class=" col-md-3 p-0 ">
-                                    <div class="mr-8 bg-white b-a">
-                                        <div class="row ">
-                                            <div class="col-md-3 pt-12 pl-8">
-                                                <img src="/assets/images/svg/cal.svg">
-                                            </div>
-                                            <div class="col-md-9 p-0 c-p" (click)="categoryWise('category')">
-                                                <h5 class="mb-0 text-custom pt-16 pb-16 ">Category wise</h5>
-                                            </div>
+
+                        <div class="row">
+                            <div class="col-md-12 d-flex">
+                                <div class="width183 borderLine">
+                                    <div class="row">
+                                        <div class="col-md-3 pt-12 pl-8">
+                                            <img src="/assets/images/svg/cal.svg">
+                                        </div>
+                                        <div class="col-md-9 p-0 c-p" (click)="categoryWise('category')">
+                                            <h5 class="mb-0 text-custom pt-16 pb-16 ">Category wise</h5>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3 pl-0 p-0 ">
-                                    <div class="mr-8 bg-white b-a">
-                                        <div class="row ">
-                                            <div class="col-md-3 pt-12 pl-8 ">
-                                                <img src="/assets/images/svg/cal.svg">
-                                            </div>
-                                            <div class="col-sm-9 p-0 c-p" (click)="categoryWise('amc')">
-                                                <h5 class="mb-0 text-custom pt-16 pb-16 ">AMC wise</h5>
-                                            </div>
+
+                                <div class="width183 borderLine">
+                                    <div class="row ">
+                                        <div class="col-md-3 pt-12 pl-8 ">
+                                            <img src="/assets/images/svg/cal.svg">
+                                        </div>
+                                        <div class="col-sm-9 p-0 c-p" (click)="categoryWise('amc')">
+                                            <h5 class="mb-0 text-custom pt-16 pb-16 ">AMC wise</h5>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3 pl-0 p-0 ">
-                                    <div class="mr-8 bg-white b-a">
-                                        <div class="row ">
-                                            <div class="col-md-3 pt-12 pl-8 ">
-                                                <img src="/assets/images/svg/cal.svg">
-                                            </div>
-                                            <div class="col-md-9 p-0 c-p" (click)="categoryWise('client')">
-                                                <h5 class="mb-0 text-custom pt-16 pb-16 ">Client wise</h5>
-                                            </div>
+
+                                <div class="width183 borderLine">
+                                    <div class="row ">
+                                        <div class="col-md-3 pt-12 pl-8 ">
+                                            <img src="/assets/images/svg/cal.svg">
+                                        </div>
+                                        <div class="col-md-9 p-0 c-p" (click)="categoryWise('client')">
+                                            <h5 class="mb-0 text-custom pt-16 pb-16 ">Client wise</h5>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3 p-0 ">
-                                    <div class="bg-white b-a">
-                                        <div class="row ">
-                                            <div class="col-md-3 pt-12 pl-8">
-                                                <img src="/assets/images/svg/cal.svg">
-                                            </div>
-                                            <div class="col-sm-9 p-0 c-p" (click)="categoryWise('applicant')">
-                                                <h5 class="mb-0 text-custom pt-16 pb-16 ">Applicant wise</h5>
-                                            </div>
+
+                                <div class="width183 borderLine m-0">
+                                    <div class="row ">
+                                        <div class="col-md-3 pt-12 pl-8">
+                                            <img src="/assets/images/svg/cal.svg">
+                                        </div>
+                                        <div class="col-sm-9 p-0 c-p" (click)="categoryWise('applicant')">
+                                            <h5 class="mb-0 text-custom pt-16 pb-16 ">Applicant wise</h5>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="row p-12">
                             <!-- <img src="/assets/images/grap.png" class="w-100 h-365"> -->
-                            <div class="col-md-12 p-0 b-a">
+                            <div class="col-md-12 p-0 borderLine">
                                 <div class="highcharts-figure" id="pieChartAum"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 p-0">
+                    <div class="col-md-3 pr-0">
                         <div id="mistabs1">
-                            <mat-tab-group class="h-300 bg-white b-a ">
+                            <mat-tab-group class="h-300 bg-white borderLine ">
                                 <mat-tab label="Clients">
-                                    <h6 class="f-bold b-a text-center p-12 mb-0 f-14 ">Top Clients </h6>
+                                    <h6 class="f-bold bb text-center p-12 mb-0 f-14 ">Top Clients </h6>
 
                                     <div class="b-white" *ngIf="clientTotalAum">
-                                        <div class="row bb-dotted" *ngFor="let item of clientTotalAum">
+                                        <div class="row bb" *ngFor="let item of clientTotalAum">
                                             <div class="col-md-7 p-0 ">
                                                 <p class="mb-0 f-bold f-13 p-8 ">{{(item.name)?item.name:'-'}}</p>
                                             </div>
-                                            <div class="col-md-5 p-0 ">
+                                            <div class="col-md-5 text-right p-0 ">
                                                 <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
                                                     {{(item.totalAum)?item.totalAum:'-'}}</p>
                                             </div>
@@ -164,14 +161,14 @@
                                     </div>
                                 </mat-tab>
                                 <mat-tab label="AMC " class="min-w140 ">
-                                    <h6 class="f-bold b-a text-center p-12 mb-0 f-14 ">Top AMC</h6>
+                                    <h6 class="f-bold bb text-center p-12 mb-0 f-14 ">Top AMC</h6>
                                     <div class="b-white " *ngIf="amcTotalAum">
-                                        <div class="row bb-dotted " *ngFor="let item of amcTotalAum">
+                                        <div class="row bb " *ngFor="let item of amcTotalAum">
                                             <div class="col-md-7 p-0 ">
                                                 <p class="mb-0 f-bold f-13 p-8 ">
                                                     {{(item.schemeName)?item.schemeName:'-'}}</p>
                                             </div>
-                                            <div class="col-md-5 p-0 ">
+                                            <div class="col-md-5 p-0 text-right ">
                                                 <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
                                                     {{(item.totalAum)?item.totalAum:-''}}</p>
                                             </div>
@@ -184,15 +181,15 @@
                             </mat-tab-group>
                         </div>
                         <div class="col-md-12 aumtabs p-0 mt-20 " id="mistabs2">
-                            <mat-tab-group class="h-300 bg-white b-a ">
+                            <mat-tab-group class="h-300 bg-white borderLine ">
                                 <mat-tab label="Category ">
-                                    <h6 class="f-bold b-a text-center p-12 mb-0 f-14 ">TOP CATEGORY</h6>
+                                    <h6 class="f-bold bb text-center p-12 mb-0 f-14 ">TOP CATEGORY</h6>
                                     <div class="b-white " *ngIf="category">
-                                        <div class="row bb-dotted " *ngFor="let item of category">
+                                        <div class="row bb " *ngFor="let item of category">
                                             <div class="col-md-7 p-0 ">
                                                 <p class="mb-0 f-bold f-13 p-8 ">{{item.name}}</p>
                                             </div>
-                                            <div class="col-md-5 p-0 ">
+                                            <div class="col-md-5 text-right p-0 ">
                                                 <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
                                                     {{item.totalAum}}</p>
                                             </div>
@@ -206,11 +203,11 @@
                                 <mat-tab label="Sub category ">
                                     <h6 class="f-bold b-a text-center p-12 mb-0 f-14 ">Sub Category</h6>
                                     <div class="b-white " *ngIf="subcategory">
-                                        <div class="row bb-dotted " *ngFor="let item of subcategory">
+                                        <div class="row bb " *ngFor="let item of subcategory">
                                             <div class="col-md-7 p-0 ">
                                                 <p class="mb-0 f-bold f-13 p-8 ">{{item.name}}</p>
                                             </div>
-                                            <div class="col-md-5 p-0 ">
+                                            <div class="col-md-5 text-right p-0 ">
                                                 <p class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
                                                     {{item.totalAum}}</p>
                                             </div>

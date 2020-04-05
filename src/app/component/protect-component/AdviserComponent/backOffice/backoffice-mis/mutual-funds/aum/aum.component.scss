@@ -61,17 +61,17 @@
 
 .bg-aum {
     background: linear-gradient(90deg, #004680 0%, #4484BA 100%) !important;
-    border: 1px solid #BCC6CA;
+    //border: 1px solid #BCC6CA;
 }
 
 .bg-foliocount {
     background: linear-gradient(90deg, #FF0099 0%, #493240 100%) !important;
-    border: 1px solid #BCC6CA;
+    // border: 1px solid #BCC6CA;
 }
 
 .bg-goal {
     background: linear-gradient(90deg, #00B4DB 0%, #0083B0 100%) !important;
-    border: 1px solid #BCC6CA;
+    //border: 1px solid #BCC6CA;
 }
 
 .h-365 {
@@ -97,4 +97,21 @@
 
 ::ng-deep #mistabs2 .mat-ink-bar {
     display: block !important
+}
+
+.borderBottom {
+    border-bottom: 1px solid #BCC6CA !important;
+}
+
+::ng-deep #mistabs1 .mat-tab-label {
+    border-bottom: 1px solid #DADCE0;
+}
+
+::ng-deep #mistabs2 .mat-tab-label {
+    border-bottom: 1px solid #DADCE0;
+}
+
+.width183 {
+    min-width: 183px;
+    margin-right: 20px;
 }
