@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormArray } from '@angular/forms';
+import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
@@ -26,7 +26,8 @@ export class AddHolderNamesComponent implements OnInit {
       return;
     }
     this.holderNameList.push(this.fb.group({
-      name: ['']
+      name: ['', [Validators.required]],
+      id: []
     }));
     this.holderList.emit(this.holderNameList);
   }

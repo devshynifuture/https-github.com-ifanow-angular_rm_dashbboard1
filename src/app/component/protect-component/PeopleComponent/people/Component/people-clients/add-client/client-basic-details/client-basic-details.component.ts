@@ -66,7 +66,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     (data == undefined) ? data = {} : '';
     this.basicDetails = this.fb.group({
       fullName: [data.name, [Validators.required]],
-      email: [data.email, [Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+      email: [(data.emailList) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       username: [data.userName, [Validators.required]],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
@@ -104,7 +104,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       comName: [data.name, [Validators.required]],
       dateOfIncorporation: [data.dateOfBirth],
       comStatus: [, [Validators.required]],
-      comEmail: [data.email, [Validators.pattern(this.validatorType.EMAIL)]],
+      comEmail: [(data.emailList) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
       comPan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       comOccupation: [],
       username: [data.username, [Validators.required]],

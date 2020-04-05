@@ -146,7 +146,53 @@ export class ClientDematComponent implements OnInit {
         powerOfAttorneyName: this.dematForm.get('powerOfAttName').value,
         powerOfAttorneyMasterId: this.dematForm.get('powerOfAttMasId').value
       };
+      let dematObj =
+      {
+        "id": 1,
 
+        "dematList": [
+          {
+            "id": 16,
+            "modeOfHolding": 1,
+            "depositoryParticipantName": "doom",
+            "depositoryParticipantId": 1,
+            "brokerName": "brokerName",
+            "brokerAddress": "brokerAddress",
+            "linkedBankAccount": "linkedBankAccount",
+            "powerOfAttorneyName": "powerOfAttorneyName",
+            "powerOfAttorneyMasterId": "powerOfAttorneyMasterId",
+            "holderNameList": [
+              {
+                "fMDetailTypeId": 1,
+                "name": "name",
+                "id": 10,
+                "dematId": 1
+              }
+            ],
+            "mobileDataList": [
+              {
+                "verificationStatus": 0,
+                "id": 0,
+                "userType": 0,
+                "mobileNo": 9987442988,
+                "isActive": 1,
+                "userId": 0
+              }
+            ],
+            "familyMemberid": 1,
+            "nomineeList": [
+              {
+                "assetTypeId": 0,
+                "familyMemberId": 1,
+                "assetId": 0,
+                "name": "name",
+                "id": 273,
+                "sharePercentage": 50
+              }
+            ]
+          }
+        ]
+      }
       this.peopleService.addEditClientDemat(obj).subscribe(
         data => {
           console.log(data);

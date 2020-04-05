@@ -1,12 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {ValidatorType} from 'src/app/services/util.service';
-import {SubscriptionService} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import {PostalService} from 'src/app/services/postal.service';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { ValidatorType } from 'src/app/services/util.service';
+import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { PostalService } from 'src/app/services/postal.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 
 @Component({
   selector: 'app-client-bank',
@@ -34,14 +34,14 @@ export class ClientBankComponent implements OnInit {
     this.userData = data;
     this.fieldFlag;
     this.createBankForm(data);
-    (this.fieldFlag) ? this.getBankList(data) : this.createBankForm(data);
+    (this.userData.bankData == undefined) ? this.getBankList(data) : this.createBankForm(data);
 
   }
   getBankList(data) {
     let obj =
     {
-      "userId": data.userId,
-      "userType": data.userType
+      "userId": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
+      "userType": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
     }
     this.cusService.getDematList(obj).subscribe(
       data => {
@@ -139,10 +139,8 @@ export class ClientBankComponent implements OnInit {
       if (this.holderList) {
         this.holderList.controls.forEach(element => {
           holderList.push({
-            fMDetailTypeId: 1,
             name: element.get('name').value,
-            id: 1,
-            dematId: 1
+            id: element.get('id').value,
           });
         });
       }
@@ -161,17 +159,15 @@ export class ClientBankComponent implements OnInit {
           pinCode: this.bankForm.get('branchPinCode').value,
           city: this.bankForm.get('branchCity').value,
           state: this.bankForm.get('branchState').value,
-          stateId: '27',
           country: this.bankForm.get('branchCountry').value
         },
-        userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? this.userData.clientId : this.userData.familyMemberId,
-        userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? 2 : 3,
+        userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
+        userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
         minorAccountHolderName: 'sarvesh',
         guardianAccountHolderName: 'chetan',
-        userBankMappingId: '',
-        bankId: '',
-        addressId: '',
-        name: ''
+        userBankMappingId: (this.userData.bankData) ? this.userData.bankData : null,
+        bankId: (this.userData.bankData) ? this.userData.bankData : null,
+        addressId: (this.userData.bankData) ? this.userData.bankData : null
       };
       this.peopleService.addEditClientBankDetails(obj).subscribe(
         data => {

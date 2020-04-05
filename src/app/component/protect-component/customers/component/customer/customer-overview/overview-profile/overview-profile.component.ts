@@ -24,6 +24,7 @@ export class OverviewProfileComponent implements OnInit {
   clientOverviewData;
   addressList: any;
   dematList: any;
+  bankList: any;
 
   constructor(private authService: AuthService, public dialog: MatDialog, public subInjectService: SubscriptionInject, private cusService: CustomerService, private eventService: EventService) { }
 
@@ -53,7 +54,7 @@ export class OverviewProfileComponent implements OnInit {
   getAddressList() {
     let obj =
     {
-      "userId": this.clientOverviewData.userId,
+      "userId": this.clientOverviewData.clientId,
       "userType": this.clientOverviewData.userType
     }
     this.cusService.getAddressList(obj).subscribe(
@@ -67,7 +68,7 @@ export class OverviewProfileComponent implements OnInit {
   getDematList() {
     let obj =
     {
-      "userId": this.clientOverviewData.userId,
+      "userId": this.clientOverviewData.clientId,
       "userType": this.clientOverviewData.userType
     }
     this.cusService.getDematList(obj).subscribe(
@@ -80,13 +81,13 @@ export class OverviewProfileComponent implements OnInit {
   getBankList() {
     let obj =
     {
-      "userId": this.clientOverviewData.userId,
+      "userId": this.clientOverviewData.clientId,
       "userType": this.clientOverviewData.userType
     }
-    this.cusService.getDematList(obj).subscribe(
+    this.cusService.getBankList(obj).subscribe(
       data => {
         console.log(data);
-        this.dematList = data;
+        this.bankList = data;
       }, err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
@@ -182,12 +183,24 @@ export class OverviewProfileComponent implements OnInit {
       }
     );
   }
-  openAddEdit(data, flag, headerFlag) {
-    let component = (flag == "Address") ? ClientAddressComponent : (flag == "Bank") ? ClientBankComponent : ClientDematComponent
-    data["headerFlag"] = headerFlag;
+  openAddEdit(clientData, data, flag, headerFlag) {
+    let component;
+    if (flag == "Address") {
+      component = ClientAddressComponent;
+      clientData['addressData'] = data;
+    }
+    else if (flag == "Bank") {
+      component = ClientBankComponent;
+      clientData['bankData'] = data;
+    }
+    else {
+      component = ClientDematComponent;
+      clientData['dematData'] = data;
+    }
+    clientData["headerFlag"] = headerFlag;
     const fragmentData = {
-      flag: '',
-      data,
+      flag,
+      data: clientData,
       id: 1,
       state: 'open50',
       componentName: component,

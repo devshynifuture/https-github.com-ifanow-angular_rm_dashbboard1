@@ -692,5 +692,8 @@ export class CustomerService {
   getDematList(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_DEMAT_LIST, data, 1)
   }
+  getBankList(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_BANK_LIST, data, 1)
+  }
 }
 

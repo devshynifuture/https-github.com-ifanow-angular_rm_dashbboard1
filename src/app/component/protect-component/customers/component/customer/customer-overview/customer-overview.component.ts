@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../../../../../../auth-service/authService';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../../../../../auth-service/authService';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customer-overview',
@@ -8,12 +8,14 @@ import {Router} from '@angular/router';
   styleUrls: ['./customer-overview.component.scss']
 })
 export class CustomerOverviewComponent implements OnInit {
+  clientData: any;
 
   constructor(private authService: AuthService, private router: Router) {
   }
 
   ngOnInit() {
     console.log('overview is called');
+    this.clientData = JSON.parse(sessionStorage.getItem('clientData'));
   }
 
   logout() {
