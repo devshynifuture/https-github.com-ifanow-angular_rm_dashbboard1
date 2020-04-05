@@ -18,7 +18,9 @@ export class ClientAddressComponent implements OnInit {
   addressList: any;
   addressData: void;
 
-  constructor(private cusService: CustomerService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private postalService: PostalService, private peopleService: PeopleService, private eventService: EventService) {
+  constructor(private cusService: CustomerService, private fb: FormBuilder,
+              private subInjectService: SubscriptionInject, private postalService: PostalService,
+              private peopleService: PeopleService, private eventService: EventService) {
   }
 
   addressForm;
@@ -127,6 +129,6 @@ export class ClientAddressComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 }
