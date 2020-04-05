@@ -259,7 +259,8 @@
                 <div class="form-group m-0">
                     <mat-form-field>
                         <mat-select formControlName="role" class="form-control">
-                            <mat-option value="1">Option</mat-option>
+                            <mat-option value="">Option</mat-option>
+                            <mat-option [value]="role.clientRoleId" *ngFor="let role of clientRoles">{{role.clientRoleName}}</mat-option>
                         </mat-select>
                         <mat-error class="f-12">This field is required
                         </mat-error>
@@ -676,7 +677,8 @@
                 <div class="form-group m-0">
                     <mat-form-field>
                         <mat-select formControlName="role" class="form-control">
-                            <mat-option value="option">Option</mat-option>
+                            <mat-option value="">Option</mat-option>
+                            <mat-option [value]="role.clientRoleId" *ngFor="let role of clientRoles">{{role.clientRoleName}}</mat-option>
                         </mat-select>
                         <mat-error>This field is required</mat-error>
                     </mat-form-field>

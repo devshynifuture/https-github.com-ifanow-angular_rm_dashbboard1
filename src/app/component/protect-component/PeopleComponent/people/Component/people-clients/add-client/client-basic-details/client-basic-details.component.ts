@@ -6,6 +6,7 @@ import {AuthService} from 'src/app/auth-service/authService';
 import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {DatePipe} from '@angular/common';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-client-basic-details',
@@ -33,11 +34,14 @@ export class ClientBasicDetailsComponent implements OnInit {
   validatorType = ValidatorType;
   invTypeCategory;
   invTaxStatus;
-
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService, private datePipe: DatePipe) {
+  clientRoles:any = []
+  constructor(private fb: FormBuilder, private enumService: EnumServiceService, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
+    this.clientRoles = this.enumService.getClientRole();
+    console.log(this.clientRoles, "this.clientRoles 123A");
+    
   }
 
   @Input() set data(data) {
@@ -68,7 +72,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       fullName: [data.name, [Validators.required]],
       email: [data.email, [Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
       pan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
-      username: [data.userName, [Validators.required]],
+      username: [data.userName],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       dobActual: [],
       gender: ['1'],
@@ -77,7 +81,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       leadRating: [],
       leadOwner: [],
       clientOwner: [],
-      role: [],
+      role: [''],
     });
   }
 
