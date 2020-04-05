@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { ValidatorType } from 'src/app/services/util.service';
-import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import { PostalService } from 'src/app/services/postal.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {ValidatorType} from 'src/app/services/util.service';
+import {SubscriptionService} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import {PostalService} from 'src/app/services/postal.service';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
 
 @Component({
   selector: 'app-client-bank',
@@ -164,7 +164,7 @@ export class ClientBankComponent implements OnInit {
           stateId: '27',
           country: this.bankForm.get('branchCountry').value
         },
-        userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? this.userData.clientId : this.userData.id,
+        userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? this.userData.clientId : this.userData.familyMemberId,
         userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? 2 : 3,
         minorAccountHolderName: 'sarvesh',
         guardianAccountHolderName: 'chetan',
