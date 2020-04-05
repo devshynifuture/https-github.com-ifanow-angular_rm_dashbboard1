@@ -1,6 +1,6 @@
-<div *ngIf="showLoader">
+<!-- <div *ngIf="showLoader">
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-</div>
+</div> -->
 <div *ngIf="showLoader==false">
     <div *ngIf="aum.aumComponent==false" id="ui-category">
         <div class="wrapper-20 bg-white">
@@ -10,13 +10,10 @@
                 </div>
                 <div class="col-md-6 pr-0">
                     <div class="right text-right">
-                        <button mat-stroked-button class="btn-default addon"
-                            (click)="exportToExcelReport('category')"><i class="material-icons">add</i>category</button>
-                        <button mat-stroked-button class="btn-default addon"
-                            (click)="exportToExcelReport('sub-category')"><i
+                        <button mat-stroked-button class="btn-default addon" (click)="exportToExcelReport('category')"><i class="material-icons">add</i>category</button>
+                        <button mat-stroked-button class="btn-default addon" (click)="exportToExcelReport('sub-category')"><i
                                 class="material-icons">add</i>SubCategory</button>
-                        <button mat-stroked-button class="btn-default addon"
-                            (click)="exportToExcelReport('applicant-wise')"><i
+                        <button mat-stroked-button class="btn-default addon" (click)="exportToExcelReport('applicant-wise')"><i
                                 class="material-icons">add</i>Applicant</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                     </div>
@@ -35,8 +32,7 @@
                     <tbody *ngFor="let category of category; let i = index">
                         <tr>
                             <td>{{i+1}}</td>
-                            <td (click)="showSubTableList(i,category.showCategory)">{{category.name}} <i
-                                    class="material-icons right b-a f-14 mt-4 c-p" *ngIf="category.showCategory==true">
+                            <td (click)="showSubTableList(i,category.showCategory)">{{category.name}} <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="category.showCategory==true">
                                     add </i>
                                 <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="category.showCategory==false">
                                     remove </i></td>
@@ -44,56 +40,51 @@
                             <td class="text-right">{{category.weightInPercentage}}%</td>
                         </tr>
                         <tr>
-                        <tr>
-                            <table *ngIf="category.showCategory==false" class="table-low mt-8 " id="table-high">
-                                <thead class="bg-light text-dark">
-                                    <tr>
-                                        <th>Sr No.</th>
-                                        <th>Sub Category Name</th>
-                                        <th class="text-right">Current Value</th>
-                                        <th class="text-right">% Weight</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody *ngFor="let subcategory of category.subCategoryList; let i = index">
-                                    <tr>
-                                        <td>{{i+1}}</td>
-                                        <td (click)="showSchemeName(i,subcategory.showSubCategory)">
-                                            {{subcategory.name}}<i *ngIf="subcategory.showSubCategory==true"
-                                                class="material-icons right b-a f-14 mt-4 c-p">add</i>
-                                            <i *ngIf="subcategory.showSubCategory==false"
-                                                class="material-icons right b-a f-14 mt-4 c-p"> remove </i> </td>
-                                        <td class="text-right">{{subcategory.totalAum}} </td>
-                                        <td class="text-right">{{subcategory.weightInPercentage}}%</td>
-                                    </tr>
-                                    <table *ngIf="subcategory.showSubCategory==false">
-                                        <thead>
-                                            <tr>
-                                                <th>Sr No.</th>
-                                                <th>Sub Category Name</th>
-                                                <th class="text-right">Current Value</th>
-                                                <th class="text-right">% Weight</th>
-                                            </tr>
-                                        </thead>
+                            <tr>
+                                <table *ngIf="category.showCategory==false" class="table-low mt-8 " id="table-high">
+                                    <thead class="bg-light text-dark">
                                         <tr>
-                                            <tbody *ngFor="let scheme of subcategory.schemes;let i = index">
+                                            <th>Sr No.</th>
+                                            <th>Sub Category Name</th>
+                                            <th class="text-right">Current Value</th>
+                                            <th class="text-right">% Weight</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let subcategory of category.subCategoryList; let i = index">
+                                        <tr>
+                                            <td>{{i+1}}</td>
+                                            <td (click)="showSchemeName(i,subcategory.showSubCategory)">
+                                                {{subcategory.name}}<i *ngIf="subcategory.showSubCategory==true" class="material-icons right b-a f-14 mt-4 c-p">add</i>
+                                                <i *ngIf="subcategory.showSubCategory==false" class="material-icons right b-a f-14 mt-4 c-p"> remove </i> </td>
+                                            <td class="text-right">{{subcategory.totalAum}} </td>
+                                            <td class="text-right">{{subcategory.weightInPercentage}}%</td>
+                                        </tr>
+                                        <table *ngIf="subcategory.showSubCategory==false">
+                                            <thead>
                                                 <tr>
-                                                    <td>{{i+1}}</td>
-                                                    <td>{{scheme.schemeName}}<i
-                                                            class="material-icons right b-a f-14 mt-4 c-p"
-                                                            *ngIf="subcategory.showSubCategory==false">add</i>
-                                                        <i class="material-icons right b-a f-14 mt-4 c-p"
-                                                            *ngIf="subcategory.showSubCategory==true"> remove </i> </td>
-                                                    <td class="text-right">{{scheme.totalAum}} </td>
-                                                    <td class="text-right">{{scheme.weightInPercentage}}</td>
+                                                    <th>Sr No.</th>
+                                                    <th>Sub Category Name</th>
+                                                    <th class="text-right">Current Value</th>
+                                                    <th class="text-right">% Weight</th>
                                                 </tr>
-                                            </tbody>
+                                            </thead>
+                                            <tr>
+                                                <tbody *ngFor="let scheme of subcategory.schemes;let i = index">
+                                                    <tr>
+                                                        <td>{{i+1}}</td>
+                                                        <td>{{scheme.schemeName}}<i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="subcategory.showSubCategory==false">add</i>
+                                                            <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="subcategory.showSubCategory==true"> remove </i> </td>
+                                                        <td class="text-right">{{scheme.totalAum}} </td>
+                                                        <td class="text-right">{{scheme.weightInPercentage}}</td>
+                                                    </tr>
+                                                </tbody>
 
-                                    </table>
-                                </tbody>
-                            </table>
+                                        </table>
+                                    </tbody>
+                                </table>
 
-                        </tr>
+                                </tr>
                     </tbody>
                 </table>
 
