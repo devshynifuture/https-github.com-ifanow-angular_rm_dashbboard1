@@ -41,11 +41,10 @@ export class TaskTemplateTypeComponent implements OnInit {
   }
   addTaskTemplate(singleProfile, value) {
     var data = this.taskTemplateType.controls.type.value
-    this.Close(false)
+    //this.Close(false)
     const fragmentData = {
       flag: value,
       data: data,
-      id: 1,
       state: 'open50',
       componentName: AddTaskTemplateComponent
     };

@@ -86,11 +86,11 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   }
   saveTeamMember(){
     let obj = {
-      childId: this.selectedMember.id,
+      childId: 2809,
       emailId: this.selectedMember.email,
       mobileNo: this.selectedMember.mobile,
       name: this.selectedMember.name,
-      parentId: this.selectedMember.adminAdvisorId,
+      parentId: 2808,//this.selectedMember.adminAdvisorId,
       roleName: this.selectedMember.role.roleName,
     }
     this.orgSetting.updateAccessControl(obj).subscribe((res) => {

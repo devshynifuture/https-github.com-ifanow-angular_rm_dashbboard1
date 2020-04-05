@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { ValidatorType } from 'src/app/services/util.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { DatePipe } from '@angular/common';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {ValidatorType} from 'src/app/services/util.service';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-client-more-info',
@@ -174,6 +174,7 @@ export class ClientMoreInfoComponent implements OnInit {
       addressModelList: null,
       occupationId: this.moreInfoForm.controls.occupation.value,
       id: this.moreInfoData.id,
+      familyMemberId: this.moreInfoData.familyMemberId,
       dematList: null,
       pan: this.moreInfoData.pan,
       familyMemberType: 0,

@@ -13,9 +13,9 @@ export interface PeriodicElement {
   range: string;
   status: string;
   download: string;
-  added:Date;
-  txnFile:string;
-  uploadedBy:string;
+  added: Date;
+  txnFile: string;
+  uploadedBy: string;
 }
 
 @Component({
@@ -25,39 +25,39 @@ export interface PeriodicElement {
 })
 
 export class BackofficeFileUploadTransactionsComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'rt', 'uploadDate', 'range', 'added', 'txnFile','uploadedBy', 'status', 'download'];
+  displayedColumns: string[] = ['name', 'rt', 'uploadDate', 'range', 'added', 'txnFile', 'uploadedBy', 'status', 'download'];
   advisorId: any;
   isLoading = false;
-  listData:any = [];
+  listData: any = [];
   dataSource;
-  filterObj:any;
-  @ViewChild(MatSort, {static: true}) sortList: MatSort;
-  constructor(private reconService: ReconciliationService, public router : ActivatedRoute, private BackOffice: BackofficeFileUploadService) { }
-filter:any= {
-  rt:0,
-  status:0
-};
-private unSubcrip: Subscription;
+  filterObj: any;
+  @ViewChild(MatSort, { static: true }) sortList: MatSort;
+  constructor(private reconService: ReconciliationService, public router: ActivatedRoute, private BackOffice: BackofficeFileUploadService) { }
+  filter: any = {
+    rt: 0,
+    status: 0
+  };
+  private unSubcrip: Subscription;
 
   ngOnInit() {
     this.dataSource = [{}, {}, {}];
     this.isLoading = true;
     this.advisorId = AuthService.getAdvisorId();
 
-    this.unSubcrip = this.BackOffice.getFilterData().subscribe((data)=>{
+    this.unSubcrip = this.BackOffice.getFilterData().subscribe((data) => {
       this.filter = data;
       this.getBackOfficeTransactions(this.filter);
     })
     this.getBackOfficeTransactions(this.filter);
   }
 
-  getBackOfficeTransactions(filter){
+  getBackOfficeTransactions(filter) {
     let obj = {
-      advisorId:this.advisorId,
-      rt:filter.rt,
-      status:filter.status
+      advisorId: this.advisorId,
+      rt: filter.rt,
+      status: filter.status
     }
-    this.reconService.getBackOfficeTransactions(obj).subscribe((data)=>{
+    this.reconService.getBackOfficeTransactions(obj).subscribe((data) => {
       this.listData = data;
       this.dataSource = new MatTableDataSource(this.listData);
       this.dataSource.sort = this.sortList;

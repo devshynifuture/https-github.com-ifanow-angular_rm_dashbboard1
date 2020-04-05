@@ -190,34 +190,34 @@ export class ClientBasicDetailsComponent implements OnInit {
             email: (this.invTypeCategory == '1') ? this.basicDetails.controls.email.value : this.nonIndividualForm.value.comEmail
           }
         ],
-        displayName: null,
-        bio: null,
-        martialStatusId: 0,
-        password: null,
-        clientType: parseInt(this.invTypeCategory),
-        occupationId: 0,
-        id: null,
-        pan: (this.invTypeCategory == '1') ? this.basicDetails.controls.pan.value : this.nonIndividualForm.value.comPan,
-        clientId: (this.basicDetailsData == null) ? null : this.basicDetailsData.clientId,
-        kycComplaint: 0,
-        roleId: 1,
-        genderId: parseInt(this.basicDetails.controls.gender.value),
-        companyStatus: 0,
-        aadharCard: null,
-        dateOfBirth: this.datePipe.transform((this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value : this.nonIndividualForm.value.dateOfIncorporation, 'dd/MM/yyyy'),
-        userName: (this.invTypeCategory == '1') ? this.basicDetails.controls.username.value : this.nonIndividualForm.value.username,
-        userId: this.advisorId,
-        mobileList: mobileList,
-        referredBy: 0,
-        name: (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : this.nonIndividualForm.value.comName,
-        bioRemarkId: 0,
-        userType: 1,
-        remarks: null,
-        status: (this.fieldFlag == 'client') ? 1 : 2,
-        leadSource: (this.fieldFlag == 'lead') ? this.basicDetails.value.leadSource : null,
-        leadRating: (this.fieldFlag == 'lead') ? this.basicDetails.value.leadRating : null,
-        leadStatus: (this.fieldFlag == 'lead') ? this.basicDetails.value.leaadStatus : null
-      };
+        "displayName": null,
+        "bio": null,
+        "martialStatusId": 0,
+        "password": null,
+        "clientType": parseInt(this.invTypeCategory),
+        "occupationId": 0,
+        "id": null,
+        "pan": (this.invTypeCategory == '1') ? this.basicDetails.controls.pan.value : this.nonIndividualForm.value.comPan,
+        "clientId": (this.basicDetailsData == null) ? null : this.basicDetailsData.clientId,
+        "kycComplaint": 0,
+        "roleId": 1,
+        "genderId": parseInt(this.basicDetails.controls.gender.value),
+        "companyStatus": 0,
+        "aadharCard": null,
+        "dateOfBirth": this.datePipe.transform((this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value : this.nonIndividualForm.value.dateOfIncorporation, 'dd/MM/yyyy'),
+        "userName": (this.invTypeCategory == '1') ? this.basicDetails.controls.username.value : this.nonIndividualForm.value.username,
+        "userId": (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? this.basicDetailsData.clientId : this.basicDetailsData.id,
+        "mobileList": mobileList,
+        "referredBy": 0,
+        "name": (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : this.nonIndividualForm.value.comName,
+        "bioRemarkId": 0,
+        "userType": 1,
+        "remarks": null,
+        "status": (this.fieldFlag == 'client') ? 1 : 2,
+        "leadSource": (this.fieldFlag == 'lead') ? this.basicDetails.value.leadSource : null,
+        "leadRating": (this.fieldFlag == 'lead') ? this.basicDetails.value.leadRating : null,
+        "leadStatus": (this.fieldFlag == 'lead') ? this.basicDetails.value.leaadStatus : null
+      }
       if (this.basicDetailsData.userId == null) {
         if (this.invTypeCategory == '1') {
           this.peopleService.addClient(obj).subscribe(
@@ -354,7 +354,7 @@ export class ClientBasicDetailsComponent implements OnInit {
 
   // }
   close(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', clientData: data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
   }
 
 }

@@ -54,7 +54,9 @@
 .border-right-1 {
   border-right: 1px solid #ddd !important;
 }
-
+.br-25{
+  border-radius:25px !important;
+}
 .bb {
   border-bottom: 1px solid #DADCE0;
 }
@@ -62,7 +64,9 @@
 .bt {
   border-top: 1px solid #DADCE0;
 }
-
+.blr-40{
+      border-bottom-left-radius: 40px !important;
+}
 .b-red {
   border: 1px solid $red;
 }
@@ -98,7 +102,9 @@
 .br-blue-2 {
   border-right: 2px solid #008FFF !important;
 }
-
+.bl-25{
+  border-radius: 25px !important;
+}
 .ba-dotted {
   border: 1px dotted #BCC6CA;
 }
