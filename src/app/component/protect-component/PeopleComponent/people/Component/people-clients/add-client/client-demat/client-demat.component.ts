@@ -60,6 +60,7 @@ export class ClientDematComponent implements OnInit {
         console.log(data);
         if (data) {
           this.dematList = data[0];
+          this.createDematForm(this.dematList)
         }
       }, err => this.eventService.openSnackBar(err, "Dismiss")
     )

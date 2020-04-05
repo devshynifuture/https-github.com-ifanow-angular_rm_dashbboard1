@@ -80,6 +80,7 @@ export class ClientAddressComponent implements OnInit {
         console.log(data);
         if (data) {
           this.addressList = data[0];
+          this.createAddressForm(this.addressList)
         }
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
