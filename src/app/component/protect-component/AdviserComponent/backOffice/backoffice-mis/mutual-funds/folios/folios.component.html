@@ -11,7 +11,7 @@
     <div class="col-md-3">
         <div class="form-group folioInputBox">
             <mat-form-field class="relativePos" floatLabel="never" appearance="standard">
-                <input type="text" aria-label="State" formControlName="searchGroupHead" class="form-control pr-15" #groupHeadRef matInput (keyup)="getList($event.target.value,'groupyHead')" [matAutocomplete]="auto1" placeholder="Search by group head">
+                <input type="text" aria-label="State" formControlName="searchGroupHead" class="form-control pr-32" #groupHeadRef matInput (keyup)="getList($event.target.value,'groupyHead')" [matAutocomplete]="auto1" placeholder="Search by group head">
                 <mat-autocomplete #auto1="matAutocomplete">
                     <mat-option *ngFor="let data of dataList" [value]="data.name">
                         {{data.name}}
@@ -25,7 +25,7 @@
     <div class="col-md-3">
         <div class="form-group folioInputBox ">
             <mat-form-field class="relativePos" floatLabel="never" appearance="standard">
-                <input type="text" aria-label="State" formControlName="searchInvestorName" class="form-control pr-15" #investorRef matInput (keyup)="getList($event.target.value,'investor')" [matAutocomplete]="auto2" placeholder="Search by investor Name">
+                <input type="text" aria-label="State" formControlName="searchInvestorName" class="form-control pr-32" #investorRef matInput (keyup)="getList($event.target.value,'investor')" [matAutocomplete]="auto2" placeholder="Search by investor Name">
                 <mat-autocomplete #auto2="matAutocomplete">
                     <mat-option *ngFor="let data of folioList" [value]="data.name">
                         {{data.name}}
@@ -38,7 +38,7 @@
     <div class="col-md-3">
         <div class="form-group folioInputBox ">
             <mat-form-field class="relativePos" floatLabel="never" appearance="standard">
-                <input class="form-control pr-15" matInput #panRef placeholder="Enter PAN">
+                <input class="form-control pr-32" matInput #panRef placeholder="Enter PAN">
                 <mat-icon class="positionIcon" matSuffix (click)="getData(panRef.value,'pan')">check</mat-icon>
             </mat-form-field>
         </div>
@@ -46,7 +46,7 @@
     <div class="col-md-3">
         <div class="form-group folioInputBox ">
             <mat-form-field class="relativePos" floatLabel="never" appearance="standard">
-                <input class="form-control pr-15" matInput #folioRef placeholder="Enter folio number">
+                <input class="form-control pr-32" matInput #folioRef placeholder="Enter folio number">
                 <mat-icon class="positionIcon" matSuffix (click)="getData(folioRef.value,'folio')">check</mat-icon>
             </mat-form-field>
         </div>
