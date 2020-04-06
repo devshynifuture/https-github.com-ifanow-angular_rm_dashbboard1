@@ -74,7 +74,9 @@ export class SipAmcWiseComponent implements OnInit {
       this.backoffice.GET_SIP_AMC_SCHEME(obj).subscribe(
         data =>{
           if(data){
-            data[0].showSubCategory=true
+            data.forEach(element => {
+              element.showSubCategory=true;
+            });
             schemeData.schemeList=data
             console.log(data)
           }
@@ -96,8 +98,10 @@ export class SipAmcWiseComponent implements OnInit {
       this.backoffice.GET_SIP_INVERSTORS(obj).subscribe(
         data =>{
           if(data){
-            data[0].showInvestor=true;
-            data[0].mutualFundSchemeMasterId=investorData.mutualFundSchemeMasterId;
+            data.forEach(element => {
+              element.showInvestor=true;
+              element.mutualFundSchemeMasterId=investorData.mutualFundSchemeMasterId
+            });
             investorData.investorList=data;
             console.log(data)
           }

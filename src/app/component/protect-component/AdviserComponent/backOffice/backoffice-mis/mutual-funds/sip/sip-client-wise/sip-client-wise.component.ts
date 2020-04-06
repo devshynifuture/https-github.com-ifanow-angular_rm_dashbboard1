@@ -103,7 +103,9 @@ export class SipClientWiseComponent implements OnInit {
       this.backoffice.sipClientWiseApplicant(obj).subscribe(
         data => {
           if (data) {
-            data[0].showSubCategory = true
+            data.forEach(o => {
+              o.showSubCategory = true;
+            });
             applicantData.applicantList = data
             console.log(data)
           }

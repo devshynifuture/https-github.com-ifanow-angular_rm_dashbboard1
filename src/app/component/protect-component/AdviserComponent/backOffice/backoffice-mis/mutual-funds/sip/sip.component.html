@@ -48,8 +48,8 @@
                                             </div>
                                         </div>
                                         <div class="col-md-7 p-0 text-right" *ngIf="sipCount">
-                                            <h1 class="text-white f-24 mb-0 pb-8">
-                                                {{(sipCount.totalAmount)?sipCount.totalAmount:0}}</h1>
+                                            <h1 class="text-white f-24 mb-0 pb-8"><span appFormatNumber>
+                                                {{(sipCount.totalAmount)?sipCount.totalAmount:0}}</span></h1>
                                             <p class="f-12 mb-0 text-white">Average SIP</p>
 
                                         </div>

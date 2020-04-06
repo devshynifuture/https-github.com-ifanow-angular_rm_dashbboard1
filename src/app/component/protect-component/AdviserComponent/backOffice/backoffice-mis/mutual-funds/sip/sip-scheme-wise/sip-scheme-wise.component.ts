@@ -115,8 +115,10 @@ export class SipSchemeWiseComponent implements OnInit {
       this.backoffice.Scheme_Wise_Investor_Get(obj).subscribe(
         data =>{
           if(data){
-            data[0].showSubCategory=true
-            data[0].mutualFundSchemeMasterId=schemeData.mutualFundSchemeMasterId
+            data.forEach(element => {
+              element.showSubCategory=true;
+              element.mutualFundSchemeMasterId=schemeData.mutualFundSchemeMasterId;
+            });
             schemeData.InvestorList=data
             console.log(data)
           }

@@ -250,8 +250,10 @@ export class ApplicantWiseComponent implements OnInit {
       this.backoffice.getAumApplicantCategory(obj).subscribe(
         data => {
           if (data) {
-            data[0].showCategory = true;
-            data[0].familyMemberId = applicantData.id
+            data.forEach(element => {
+              element.showCategory = true;
+              element.familyMemberId = applicantData.id
+            });
             applicantData.categoryList = data
             console.log(data);
             this.categoryList = data;
@@ -281,8 +283,10 @@ export class ApplicantWiseComponent implements OnInit {
       this.backoffice.getAumApplicantSubCategory(obj).subscribe(
         data => {
           if (data) {
-            data[0].showSubCategory = true;
-            data[0].familyMemberId = catData.familyMemberId;
+            data.forEach(element => {
+              element.showSubCategory=true;
+              element.familyMemberId=catData.familyMemberId;;
+            });
             catData.subCatList = data;
             console.log(data);
             this.subCategoryList = data;
@@ -312,7 +316,9 @@ export class ApplicantWiseComponent implements OnInit {
       this.backoffice.getAumApplicantScheme(obj).subscribe(
         data => {
           if (data) {
-            data[0].showFolio = true
+            data.forEach(element => {
+              element.showFolio=true;
+            });
             subCatData.schemeList = data
             console.log(data);
             this.schemeList = data;

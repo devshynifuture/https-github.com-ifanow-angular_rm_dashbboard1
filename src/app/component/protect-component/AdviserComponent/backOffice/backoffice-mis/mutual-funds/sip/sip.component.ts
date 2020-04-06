@@ -227,9 +227,7 @@ export class SipComponent implements OnInit {
           this.ceaseSipObj[4].dateDiff=150;
           this.ceaseSipObj[5].dateDiff=180;
           this.ceaseSipObj[6].dateDiff=360;
-          setTimeout(() => {
             this.pieChart('pieChartSip');
-          }, 600);
    
       }
     )

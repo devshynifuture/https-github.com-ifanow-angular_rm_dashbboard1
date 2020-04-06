@@ -133,7 +133,9 @@ export class ClientWiseComponent implements OnInit {
       this.backoffice.getAumFamilyMember(obj).subscribe(
         data => {
           if (data) {
-            data[0].showInvestor = true
+            data.forEach(element => {
+              element.showInvestor=true;
+            });
             clientData.investorList = data
             this.investorList = data;
             console.log(data);
@@ -258,8 +260,10 @@ export class ClientWiseComponent implements OnInit {
       this.backoffice.getAumFamilyMemberScheme(obj).subscribe(
         data => {
           if (data) {
-            data[0].showScheme = true;
-            data[0].familyMemberId = investorData.familyMemberId;
+            data.forEach(element => {
+              element.showScheme=true;
+              element.familyMemberId=investorData.familyMemberId;
+            });
             investorData.schemeList = data;
             console.log(data);
             this.scheme1List = data;
