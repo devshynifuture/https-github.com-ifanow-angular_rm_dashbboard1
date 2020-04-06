@@ -66,7 +66,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     (data == undefined) ? data = {} : '';
     this.basicDetails = this.fb.group({
       fullName: [data.name, [Validators.required]],
-      email: [(data.emailList) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
+      email: [(data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       username: [data.userName, [Validators.required]],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
@@ -272,7 +272,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   }
 
   saveNextFamilyMember(flag) {
-    this.basicDetails.get('clientOwner').setValidators(null);
+    // this.basicDetails.get('clientOwner').setValidators(null);
     const mobileList = [];
     this.mobileData.controls.forEach(element => {
       console.log(element);
@@ -290,18 +290,17 @@ export class ClientBasicDetailsComponent implements OnInit {
       return;
     }
     const obj = {
-      id: this.basicDetailsData.id,
+      id: this.basicDetailsData.familyMemberId,
       clientId: this.basicDetailsData.clientId,
       name: (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : this.minorForm.value.minorFullName,
       displayName: null,
-      dateOfBirth: (this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value : this.minorForm.value.dobAsPerRecord,
+      dateOfBirth: this.datePipe.transform((this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value : this.minorForm.value.dobAsPerRecord, 'dd/MM/yyyy'),
       martialStatusId: null,
-      anniversaryDate: null,
       genderId: (this.invTypeCategory == '1') ? this.basicDetails.controls.gender.value : this.minorForm.value.gender,
       occupationId: 1,
       pan: (this.invTypeCategory == '1') ? this.basicDetails.controls.pan.value : this.minorForm.value.pan,
       taxStatusId: this.invTaxStatus,
-      relationshipId: 1,
+      relationshipId: this.basicDetailsData.relationshipId,
       familyMemberType: parseInt(this.invTypeCategory),
       isKycCompliant: 1,
       aadhaarNumber: null,
@@ -323,13 +322,8 @@ export class ClientBasicDetailsComponent implements OnInit {
         aadhaarNumber: null,
         occupationId: 1,
         martialStatusId: 1,
-        anniversaryDate: '2000-01-01',
-        mobileList: [
-          {
-            mobileNo: 9987442988,
-            userType: 4,
-          },
-        ],
+        anniversaryDate: null,
+        mobileList: mobileList,
         emailList: [
           {
             email: (this.invTypeCategory == '2') ? this.minorForm.value.gEmail : null,

@@ -47,7 +47,7 @@ export class OverviewProfileComponent implements OnInit {
 
   getFamilyMembersList() {
     const obj = {
-      clientId: 2978,
+      clientId: this.clientOverviewData.clientId,
       id: 0
     };
     this.cusService.getFamilyMembers(obj).subscribe(

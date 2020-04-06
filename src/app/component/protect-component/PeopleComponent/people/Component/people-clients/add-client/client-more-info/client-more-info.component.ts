@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {ValidatorType} from 'src/app/services/util.service';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {DatePipe} from '@angular/common';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { ValidatorType } from 'src/app/services/util.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-client-more-info',
@@ -72,8 +72,8 @@ export class ClientMoreInfoComponent implements OnInit {
       pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
       designation: [],
       gender: ['1'],
-      adhaarMinor: [new Date(data.dateOfBirth)],
-      adhharGuardian: [(data.guardianData) ? data.guardianData.birthDate : '']
+      adhaarMinor: [new Date(data.aadharCard)],
+      adhharGuardian: [(data.guardianData) ? data.guardianData.aadharCard : '']
     });
   }
   ngOnInit() {
@@ -180,17 +180,35 @@ export class ClientMoreInfoComponent implements OnInit {
       familyMemberType: 0,
       clientId: this.moreInfoData.clientId,
       genderId: this.moreInfoData.genderId,
-      dateOfBirth: this.moreInfoData.dateOfBirth,
+      dateOfBirth: this.datePipe.transform(this.moreInfoData.dateOfBirth, 'dd/MM/yyyy'),
       bankDetailList: this.moreInfoData.bankDetail,
       relationshipId: this.moreInfoData.relationshipId,
       mobileList: this.moreInfoData.mobileList,
-      anniversaryDate: this.moreInfoForm.controls.anniversaryDate.value,
-      aadhaarNumber: this.moreInfoForm.controls.adhaarNo.value,
+      aadhaarNumber: this.moreInfoForm.value.adhaarMinor,
       name: this.moreInfoData.name,
       bioRemarkId: 0,
       bio: this.moreInfoForm.controls.bio.value,
       remarks: this.moreInfoForm.controls.myNotes.value,
-      guardianData: this.moreInfoData.guardianData
+      // guardianData: this.moreInfoData.guardianData,
+      guardianData: {
+        name: this.moreInfoData.guardianData.name,
+        birthDate: this.datePipe.transform(this.moreInfoData.guardianData.birthDate, 'dd/MM/yyyy'),
+        pan: 'pan',
+        genderId: this.moreInfoData.guardianData.genderId,
+        relationshipId: 1,
+        aadhaarNumber: this.moreInfoForm.value.adhharGuardian,
+        occupationId: 1,
+        martialStatusId: 1,
+        anniversaryDate: this.datePipe.transform(this.moreInfoForm.value.anniversaryDate, 'dd/MM/yyyy'),
+        mobileList: this.moreInfoData.guardianData.mobileList,
+        emailList: [
+          {
+            email: (this.moreInfoData.guardianData.emailList) ? this.moreInfoData.guardianData.emailList.email : '',
+            userType: 4,
+            verificationStatus: 0
+          }
+        ]
+      }
     };
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {

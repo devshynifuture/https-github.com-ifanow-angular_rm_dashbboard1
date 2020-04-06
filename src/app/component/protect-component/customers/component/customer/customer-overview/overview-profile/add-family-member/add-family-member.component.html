@@ -152,7 +152,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <mat-form-field class="ba-date">
-                                <input matInput formControlName="date" (click)="picker.open" class="form-control b-0"
+                                <input matInput formControlName="date" (click)="picker.open()" class="form-control b-0"
                                     [matDatepicker]="picker">
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>

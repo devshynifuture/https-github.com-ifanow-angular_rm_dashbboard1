@@ -124,8 +124,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
                         <input [matDatepicker]="dobAsPerRecord" (click)="dobAsPerRecord.open()"
-                            class="form-control br-0 b-0" [max]="date" formControlName="dobAsPerRecord" matInput
-                            readonly>
+                            class="form-control br-0 b-0" formControlName="dobAsPerRecord" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord"></mat-datepicker-toggle>
                         <mat-datepicker #dobAsPerRecord></mat-datepicker>
                         <mat-hint>Optiona</mat-hint>
@@ -136,8 +135,8 @@
                 <p class="m-0 roboto">Actual</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input [matDatepicker]="dobActual" [max]="date" (click)="dobActual.open()"
-                            class="form-control br-0 b-0" formControlName="dobActual" matInput readonly>
+                        <input [matDatepicker]="dobActual" (click)="dobActual.open()" class="form-control br-0 b-0"
+                            formControlName="dobActual" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="dobActual"></mat-datepicker-toggle>
                         <mat-datepicker #dobActual></mat-datepicker>
                         <mat-hint>Optiona</mat-hint>

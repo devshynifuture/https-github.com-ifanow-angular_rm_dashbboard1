@@ -18,20 +18,20 @@
                     </app-client-basic-details>
                 </mat-tab>
                 <!-- [disabled]="tabData.id==undefined" -->
-                <mat-tab [disabled]="tabData.userId==undefined " label=" More info">
+                <mat-tab [disabled]="tabData.userId==undefined || tabData.familyMemberId==undefined" label=" More info">
                     <app-client-more-info [data]="tabData" [fieldFlag]="headingData.fieldFlag"
                         (tabChange)="changeTab($event)">
                     </app-client-more-info>
                 </mat-tab>
-                <mat-tab [disabled]="tabData.userId==undefined " label=" Address">
+                <mat-tab [disabled]="tabData.userId==undefined || tabData.familyMemberId==undefined" label=" Address">
                     <app-client-address [data]="tabData" [fieldFlag]="headingData.fieldFlag"
                         (tabChange)="changeTab($event)"></app-client-address>
                 </mat-tab>
-                <mat-tab [disabled]="tabData.userId==undefined " label=" Bank">
+                <mat-tab [disabled]="tabData.userId==undefined || tabData.familyMemberId==undefined" label=" Bank">
                     <app-client-bank [data]="tabData" [fieldFlag]="headingData.fieldFlag"
                         (tabChange)="changeTab($event)"></app-client-bank>
                 </mat-tab>
-                <mat-tab [disabled]="tabData.userId==undefined " label=" Demat">
+                <mat-tab [disabled]="tabData.userId==undefined || tabData.familyMemberId==undefined" label=" Demat">
                     <app-client-demat [data]="tabData" [fieldFlag]="headingData.fieldFlag"
                         (tabChange)="changeTab($event)"></app-client-demat>
                 </mat-tab>
