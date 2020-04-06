@@ -42,58 +42,28 @@ export class SignUpComponent implements OnInit {
       this.signUpForm.markAllAsTouched();
     } else {
       const obj = {
-        advisorId: 0,
-        taxStatusId: 0,
         emailList: [
           {
-            verificationStatus: 0,
-            id: 0,
             userType: 1,
-            isActive: 1,
-            userId: 0,
             email: this.signUpForm.get('email').value
           }
         ],
-        displayName: null,
-        bio: null,
-        martialStatusId: 0,
-        password: null,
-        clientType: 0,
-        occupationId: 0,
-        id: null,
-        pan: null,
-        clientId: null,
-        kycComplaint: 0,
-        roleId: 0,
-        genderId: 0,
-        companyStatus: 0,
-        dateOfBirth: null,
-        userName: null,
-        userId: null,
+        name: this.signUpForm.get('fullName').value,
+        displayName: this.signUpForm.get('fullName').value,
         mobileList: [
           {
-            verificationStatus: 0,
-            id: 0,
             userType: 1,
             mobileNo: this.signUpForm.get('mobile').value,
-            isActive: 1,
-            userId: 0
           }
         ],
-        aadhaarNumber: null,
-        referredBy: 0,
-        name: this.signUpForm.get('fullName').value,
-        bioRemarkId: 0,
-        userType: 1,
-        remarks: null,
-        status: 0
+        userType: 1
       };
       this.loginService.register(obj, this.clientSignUp).subscribe(
         data => {
           console.log(data);
           const forgotPassObjData = {
             mobileNo: this.signUpForm.get('mobile').value,
-            emailId: this.signUpForm.get('email').value,
+            email: this.signUpForm.get('email').value,
             flag: true,
             userType: data.userType,
             userId: data.userId,
