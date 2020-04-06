@@ -139,18 +139,28 @@
         <div class="col-md-3 pr-7 pl-0">
             <p class="m-0 roboto">Minor</p>
             <div class="form-group mb-0">
-                <mat-form-field class="ba-date">
-                    <input class="form-control br-0 b-0" formControlName="adhaarMinor" matInput readonly>
-                    <mat-hint>Optiona</mat-hint>
+                <mat-form-field>
+                    <input autocomplete="off" #adhaarMinor appInputValueValidation
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="adhaarMinor" matInput
+                        [maxLength]="10" class="form-control">
+                    <mat-hint align="end">{{adhaarMinor.value.length}}/10</mat-hint>
+                    <mat-hint>Optional</mat-hint>
                 </mat-form-field>
             </div>
         </div>
         <div class="col-md-3 pl-7 pr-0">
             <p class="m-0 roboto">Guardian</p>
             <div class="form-group mb-0">
-                <mat-form-field class="ba-date">
+                <mat-form-field>
+                    <input autocomplete="off" #adhharGuardian appInputValueValidation
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="adhharGuardian" matInput
+                        [maxLength]="10" class="form-control">
+                    <mat-hint align="end">{{adhharGuardian.value.length}}/10</mat-hint>
+                    <mat-hint>Optional</mat-hint>
+                </mat-form-field>
+                <mat-form-field>
                     <input class="form-control br-0 b-0" formControlName="adhharGuardian" matInput readonly>
-                    <mat-hint>Optiona</mat-hint>
+                    <mat-hint>Optional</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -226,16 +236,16 @@
             <h5 class="m-0 pt-8">Anniversary date</h5>
         </div>
         <div class="col-md-3 p-0">
-            <!-- <div class="form-group mb-0">
+            <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
-                    <input [matDatepicker]="anniversaryDate1" formControlName="anniversaryDate1"
-                        (click)="anniversaryDate1.open()" class="form-control br-0 b-0" matInput readonly>
-                    <mat-datepicker-toggle matSuffix [for]="anniversaryDate1"></mat-datepicker-toggle>
-                    <mat-datepicker #anniversaryDate1></mat-datepicker>
+                    <input [matDatepicker]="anniversaryDate" formControlName="anniversaryDate"
+                        (click)="anniversaryDate.open()" class="form-control br-0 b-0" matInput readonly>
+                    <mat-datepicker-toggle matSuffix [for]="anniversaryDate"></mat-datepicker-toggle>
+                    <mat-datepicker #anniversaryDate></mat-datepicker>
                     <mat-error class="f-12">This field is required
                     </mat-error>
                 </mat-form-field>
-            </div> -->
+            </div>
         </div>
     </div>
     <div class="row pt-44">
