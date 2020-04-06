@@ -26,8 +26,8 @@
                     <table class="skeletonAnimation mt-16" appSkeletonLoading [appSkeletonLoading]="isLoading" id="table-low" *ngIf="filteredArray">
                         <thead class="text-dark">
                             <tr>
-                                <th>Client Name</th>
-                                <th>SIP Amount</th>
+                                <th  (click)="sortBy(filteredArray,'investorName')" class="c-p">Client Name</th>
+                                <th  (click)="sortBy(filteredArray,'sipAmount')" class="c-p">SIP Amount</th>
                                 <th>% Weight</th>
                                 <th></th>
                             </tr>

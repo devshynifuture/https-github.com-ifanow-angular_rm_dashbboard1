@@ -18,6 +18,8 @@ export class ApplicantWiseComponent implements OnInit {
   categoryList: any;
   schemeList: any;
   isLoading=false;
+  propertyName: any;
+  reverse=true;
   @Output() changedValue = new EventEmitter();
 
   constructor(public aum: AumComponent, private backoffice: BackOfficeService) { }
@@ -100,6 +102,15 @@ export class ApplicantWiseComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.aumApplicantWiseTotalaumApplicantNameGet();
+  }
+  sortBy(applicant,propertyName){
+    this.propertyName = propertyName;
+    this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
+    if (this.reverse === false){
+      applicant=applicant.sort((a, b) => a[propertyName] > b[propertyName] ? 1 : -1);
+    }else{
+      applicant=applicant.reverse();
+    }
   }
   aumApplicantWiseTotalaumApplicantNameGet() {
     this.isLoading=true;

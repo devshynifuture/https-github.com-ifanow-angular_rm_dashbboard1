@@ -17,6 +17,8 @@ export class SipAmcWiseComponent implements OnInit {
   totalOfSipCount=0;
   totalWeight=0;
   isLoading=false;
+  propertyName: any;
+  reverse=true;
   constructor(private backoffice:BackOfficeService,public sip:SipComponent) { }
   teamMemberId=2929;
   @Output() changedValue = new EventEmitter();
@@ -28,7 +30,15 @@ export class SipAmcWiseComponent implements OnInit {
     this.clientId=AuthService.getClientId();
     this.amcGet();
   }
-
+  sortBy(amc,propertyName){
+    this.propertyName = propertyName;
+    this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
+    if (this.reverse === false){
+      amc=amc.sort((a, b) => a[propertyName] > b[propertyName] ? 1 : -1);
+    }else{
+      amc=amc.reverse();
+    }
+  }
   aumReport()
   {
     this.changedValue.emit(true);

@@ -28,9 +28,9 @@
                         <thead class="text-dark">
                             <tr>
                                 <th class="w-10">Sr No.</th>
-                                <th class="w-40">Scheme Name</th>
-                                <th>SIP Amount</th>
-                                <th>SIP Count</th>
+                                <th class="w-40 c-p" (click)="sortBy(filteredArray,'schemeName')">Scheme Name</th>
+                                <th (click)="sortBy(filteredArray,'sipAmount')" class="c-p">SIP Amount</th>
+                                <th (click)="sortBy(filteredArray,'sipCount')" class="c-p">SIP Count</th>
                                 <th>% Weight</th>
                                 <th></th>
                             </tr>

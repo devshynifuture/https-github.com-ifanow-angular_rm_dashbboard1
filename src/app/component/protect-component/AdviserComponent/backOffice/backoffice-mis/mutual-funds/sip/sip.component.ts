@@ -195,19 +195,20 @@ export class SipComponent implements OnInit {
     }
     this.backoffice.newSipGet(obj).subscribe(
       data =>{
-       this.newSipObj=data;
-
-      
+        if(data){
+          this.newSipObj=data;
           this.newSipObj[0].dateDiff=30;
           this.newSipObj[1].dateDiff=60;
           this.newSipObj[2].dateDiff=90;
           this.newSipObj[3].dateDiff=120
           this.newSipObj[4].dateDiff=150;
           this.newSipObj[5].dateDiff=180;
-          this.newSipObj[6].dateDiff=360;
+          this.ceaseSip();
+
+        }
+      
 
       });
-          this.ceaseSip();
       }
     
   ceaseSip(){
@@ -226,7 +227,6 @@ export class SipComponent implements OnInit {
           this.ceaseSipObj[3].dateDiff=120
           this.ceaseSipObj[4].dateDiff=150;
           this.ceaseSipObj[5].dateDiff=180;
-          this.ceaseSipObj[6].dateDiff=360;
             this.pieChart('pieChartSip');
    
       }

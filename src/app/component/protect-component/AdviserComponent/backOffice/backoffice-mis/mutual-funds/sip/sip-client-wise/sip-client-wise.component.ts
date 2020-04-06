@@ -22,7 +22,8 @@ export class SipClientWiseComponent implements OnInit {
   filteredArray: any[];
   isLoading=false;
   @Output() changedValue = new EventEmitter();
-
+  propertyName: any;
+  reverse=true;
   constructor(private backoffice: BackOfficeService, public sip: SipComponent) { }
 
   ngOnInit() {
@@ -30,6 +31,15 @@ export class SipClientWiseComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.clientWiseClientName();
+  }
+    sortBy(client,propertyName){
+    this.propertyName = propertyName;
+    this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
+    if (this.reverse === false){
+      client=client.sort((a, b) => a[propertyName] > b[propertyName] ? 1 : -1);
+    }else{
+      client=client.reverse();
+    }
   }
   aumReport() {
     this.changedValue.emit(true);

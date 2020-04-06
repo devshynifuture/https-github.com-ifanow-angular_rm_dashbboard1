@@ -19,6 +19,8 @@ export class AmcWiseComponent implements OnInit {
   totalCurrentValue = 0;
   totalWeight = 0;
   isLoading = false;
+  propertyName: any;
+  reverse=true;
   @Output() changedValue = new EventEmitter();
 
   arrayOfExcelData: any[][] = [];
@@ -70,6 +72,15 @@ export class AmcWiseComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.getAmcWiseData();
+  }
+  sortBy(amc,propertyName){
+    this.propertyName = propertyName;
+    this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
+    if (this.reverse === false){
+      amc=amc.sort((a, b) => a[propertyName] > b[propertyName] ? 1 : -1);
+    }else{
+      amc=amc.reverse();
+    }
   }
   aumReport() {
     this.changedValue.emit(true);

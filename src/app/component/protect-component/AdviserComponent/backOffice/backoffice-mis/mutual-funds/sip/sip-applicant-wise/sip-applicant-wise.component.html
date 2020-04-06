@@ -22,9 +22,12 @@
                     <table class="skeletonAnimation mt-16" appSkeletonLoading [appSkeletonLoading]="isLoading" id="table-low">
                         <thead class="text-dark">
                             <tr>
-                                <th>Applicant Name</th>
-                                <th>SIP Amount</th>
-                                <th>% Weight</th>
+                                <th class="c-p" (click)="sortBy(filteredArray,'name')">Applicant Name
+                                    <span class="text-primary" *ngIf="propertyName=='name' && !reverse"></span>
+                                    <span class="text-danger" *ngIf="propertyName=='name' && reverse"></span>
+                                </th>
+                                <th (click)="sortBy(filteredArray,'sipAmount')">SIP Amount</th>
+                                <th >% Weight</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -36,7 +39,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="bar"><span appFormatNumber> {{data.totalAum}} </span></div>
+                                    <div class="bar"><span appFormatNumber> {{data.sipAmount}} </span></div>
                                 </td>
                                 <td>
                                     <div class="bar"> {{data.weightInPercentage}}{{(isLoading?'':'%') }} </div>
@@ -74,13 +77,12 @@
                                             <tr>
                                                 <td>{{scheme.name}}</td>
                                                 <td>{{scheme.schemeName}} </td>
-                                                <td><span appFormatNumber>{{scheme.totalAum}}</span></td>
                                                 <td>{{scheme.folioNumber}} </td>
                                                 <td>{{scheme.registeredDate | date:'dd/MM/yyyy'}} </td>
                                                 <td>{{scheme.to_date | date:'dd/MM/yyyy'}} </td>
                                                 <td>{{scheme.sipTriggerDay}} </td>
                                                 <td>{{scheme.frequency}} </td>
-                                                <td><span appFormatNumber>{{scheme.amount}}</span></td>
+                                                <td><span appFormatNumber>{{scheme.sipAmount}}</span></td>
                                                 <td>{{scheme.weightInPercentage}}%</td>
                                                 <td>add cease date </td>
                                             </tr>

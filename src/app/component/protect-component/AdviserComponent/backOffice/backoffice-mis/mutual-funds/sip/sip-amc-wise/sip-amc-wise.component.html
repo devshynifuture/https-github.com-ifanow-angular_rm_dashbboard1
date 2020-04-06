@@ -20,9 +20,9 @@
                         <thead class="text-dark">
                             <tr>
                                 <th class="w-10">Sr No.</th>
-                                <th class="w-40">Amc Name</th>
-                                <th>SIP Amount</th>
-                                <th>SIP Count</th>
+                                <th class="w-40 c-p"  (click)="sortBy(amcList,'amcName')">Amc Name</th>
+                                <th  (click)="sortBy(amcList,'sipAmount')" class="c-p">SIP Amount</th>
+                                <th  (click)="sortBy(amcList,'sipCount')" class="c-p">SIP Count</th>
                                 <th>% Weight</th>
                                 <th></th>
                             </tr>

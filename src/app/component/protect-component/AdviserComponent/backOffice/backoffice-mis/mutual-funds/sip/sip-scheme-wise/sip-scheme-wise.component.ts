@@ -25,6 +25,8 @@ export class SipSchemeWiseComponent implements OnInit {
   totalOfSipCount=0;
   totalWeight=0;
   filteredArray: any[];
+  propertyName: any;
+  reverse=true;
   @Output() changedValue = new EventEmitter();
 
   constructor(private backoffice:BackOfficeService,public sip:SipComponent) { }
@@ -35,7 +37,15 @@ export class SipSchemeWiseComponent implements OnInit {
     this.clientId=AuthService.getClientId();
     this.getSchemeWiseGet();
   }
-
+  sortBy(scheme,propertyName){
+    this.propertyName = propertyName;
+    this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
+    if (this.reverse === false){
+      scheme=scheme.sort((a, b) => a[propertyName] > b[propertyName] ? 1 : -1);
+    }else{
+      scheme=scheme.reverse();
+    }
+  }
   aumReport()
   {
     this.changedValue.emit(true);

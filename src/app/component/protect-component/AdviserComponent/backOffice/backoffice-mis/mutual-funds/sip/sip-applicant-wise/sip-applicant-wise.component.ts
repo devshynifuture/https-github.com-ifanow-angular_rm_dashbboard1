@@ -20,13 +20,24 @@ export class SipApplicantWiseComponent implements OnInit {
   applicantFilter: any;
   isLoading=false;
   @Output() changedValue = new EventEmitter();
+  propertyName: any;
+  reverse=true;
 
   constructor(private backoffice:BackOfficeService,public sip:SipComponent) { }
 
   ngOnInit() {
     this.advisorId=AuthService.getAdvisorId();
     this.clientId=AuthService.getClientId();
-    this.schemeWiseApplicantGet()
+    this.schemeWiseApplicantGet();
+  }
+  sortBy(applicant,propertyName){
+    this.propertyName = propertyName;
+    this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
+    if (this.reverse === false){
+      applicant=applicant.sort((a, b) => a[propertyName] > b[propertyName] ? 1 : -1);
+    }else{
+      applicant=applicant.reverse();
+    }
   }
   aumReport()
   {
@@ -50,7 +61,7 @@ export class SipApplicantWiseComponent implements OnInit {
         if(this.applicantList){
           this.applicantList.forEach(o => {
             o.showScheme = true;
-            this.totalOfSipAmount+=o.totalAum;
+            this.totalOfSipAmount+=o.sipAmount;
             this.totalOfSipCount+=o.count;
             this.totalWeight+=o.weightInPercentage;
             o.InvestorList=[];

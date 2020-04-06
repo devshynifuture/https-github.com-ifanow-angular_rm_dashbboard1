@@ -87,9 +87,20 @@ export class ClientWiseComponent implements OnInit {
   subList;
   selectedInvestor;
   teamMemberId = 2929;
+  propertyName: any;
+  reverse=true;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()
     this.getClientTotalAum();
+  }
+  sortBy(client,propertyName){
+    this.propertyName = propertyName;
+    this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
+    if (this.reverse === false){
+      client=client.sort((a, b) => a[propertyName] > b[propertyName] ? 1 : -1);
+    }else{
+      client=client.reverse();
+    }
   }
   getClientSchemeName() {
     let obj = {
