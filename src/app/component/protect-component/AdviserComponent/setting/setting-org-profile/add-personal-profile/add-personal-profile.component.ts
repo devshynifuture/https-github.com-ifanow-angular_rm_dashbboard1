@@ -4,9 +4,8 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { SettingsService } from '../../settings.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { EventService } from 'src/app/Data-service/event.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
 
 @Component({
@@ -36,13 +35,12 @@ export class AddPersonalProfileComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
   }
 
-  personalProfile: any;
+  personalProfile: FormGroup;
   validatorType = ValidatorType
   @Input()
   set data(data) {
     this.inputData = data;
 
-    console.log('This is Input data', data);
     this.getdataForm(data);
   }
   get data() {
@@ -119,10 +117,10 @@ export class AddPersonalProfileComponent implements OnInit {
   }
   getdataForm(data) {
     this.personalProfile = this.fb.group({
-      name: [(!data) ? '' : (data.fullName), [Validators.required]],
-      emailId: [(!data) ? '' : data.emailId, [Validators.required]],
-      mobileNo: [(!data) ? '' : data.mobileNo, [Validators.required]],
-      userName: [(!data) ? '' : data.userName, [Validators.required]],
+      name: [(!data) ? '' : (data.fullName), [Validators.required, Validators.maxLength(80)]],
+      emailId: [(!data) ? '' : data.emailId, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
+      mobileNo: [(!data) ? '' : data.mobileNo, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(ValidatorType.NUMBER_ONLY)]],
+      // userName: [(!data) ? '' : data.userName, [Validators.required]],
     });
   }
 
@@ -131,27 +129,25 @@ export class AddPersonalProfileComponent implements OnInit {
   }
   
   updatePersonalProfile() {
+    if(this.personalProfile.invalid) {
+      this.personalProfile.markAllAsTouched();
+      return;
+    }
     let obj = {
       adminAdvisorId: this.advisorId,
       fullName: this.personalProfile.controls.name.value,
       emailId: this.personalProfile.controls.emailId.value,
-      userName: this.personalProfile.controls.userName.value,
+      // userName: this.personalProfile.controls.userName.value,
       mobileNo: this.personalProfile.controls.mobileNo.value,
-      roleId: 0,
+      // roleId: 0,
     }
     this.settingsService.editPersonalProfile(obj).subscribe(
       data => {
-        this.editPersonalProfileRes(data)
+        this.selectedTab = 2; // switch tab to profile pic
         this.anyDetailsChanged = true;
       },
       err => this.event.openSnackBar(err, "Dismiss")
     );
-  }
-
-  editPersonalProfileRes(data) {
-    console.log('editPersonalProfileRes', data)
-    this.selectedTab = 2
-
   }
 
   Close(flag: boolean) {

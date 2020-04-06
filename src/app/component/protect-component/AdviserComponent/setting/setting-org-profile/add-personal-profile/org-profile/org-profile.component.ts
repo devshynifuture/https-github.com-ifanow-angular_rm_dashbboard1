@@ -1,13 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-upload.service';
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { SettingsService } from '../../../settings.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PostalService } from 'src/app/services/postal.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-org-profile',
@@ -15,7 +16,7 @@ import { PostalService } from 'src/app/services/postal.service';
   styleUrls: ['./org-profile.component.scss']
 })
 export class OrgProfileComponent implements OnInit {
-  orgProfile: any;
+  orgProfile: FormGroup;
   advisorId: any;
 
   profileImg: string = ''
@@ -30,6 +31,7 @@ export class OrgProfileComponent implements OnInit {
   inputData: any;
   pinInvalid: boolean;
   validatorType = ValidatorType
+  subscription = new Subscription();
 
   constructor(
     public utils: UtilService, 
@@ -61,10 +63,6 @@ export class OrgProfileComponent implements OnInit {
   }
 
   getPostalPin(value) {
-    let obj = {
-      zipCode: value
-    }
-    console.log(value, "check value");
     if (value != "") {
       this.postalService.getPostalPin(value).subscribe(data => {
         console.log('postal 121221', data)
@@ -73,23 +71,20 @@ export class OrgProfileComponent implements OnInit {
     }
     else {
       this.pinInvalid = false;
+      this.getFormControl().pincode.setErrors(this.pinInvalid);
     }
   }
 
   PinData(data) {
     if (data[0].Status == "Error") {
       this.pinInvalid = true;
-
       this.getFormControl().pincode.setErrors(this.pinInvalid);
       this.getFormControl().city.setValue("");
-      this.getFormControl().country.setValue("");
       this.getFormControl().state.setValue("");
-
     }
     else {
       this.getFormControl().city.setValue(data[0].PostOffice[0].District);
-      this.getFormControl().country.setValue(data[0].PostOffice[0].Country);
-      this.getFormControl().state.setValue(data[0].PostOffice[0].Circle);
+      this.getFormControl().state.setValue(data[0].PostOffice[0].State);
       this.pinInvalid = false;
     }
   }
@@ -110,21 +105,34 @@ export class OrgProfileComponent implements OnInit {
 
   getdataForm(data) {
     this.orgProfile = this.fb.group({
-      companyName: [(!data) ? '' : (data.companyName), [Validators.required]],
-      emailId: [(!data) ? '' : data.email, [Validators.required]],
-      mobileNo: [(!data) ? '' : data.mobileNo, [Validators.required]],
+      companyName: [(!data) ? '' : (data.companyName), [Validators.required, Validators.maxLength(50)]],
+      emailId: [(!data) ? '' : data.email, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
+      mobileNo: [(!data) ? '' : data.mobileNumber, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(ValidatorType.NUMBER_ONLY)]],
       website: [(!data) ? '' : data.website, [Validators.required]],
       address: [(!data) ? '' : data.billerAddress, [Validators.required]],
-      gstTreatment:  [(!data) ? '' : data.gstTreatmentId+'', [Validators.required]],
-      gstNumber: [(!data) ? '' : data.gstin, [Validators.required]],
-      logoUrl:[(!data) ? '' : data.gstNumber, [Validators.required]],
-      reportLogoUrl:[(!data) ? '' : data.gstNumber, [Validators.required]],
-      city: [(!data) ? '' :data.city],
-      state: [(!data) ? '' :data.state],
-      country: [(!data) ? '' :data.country],
-      pincode: [(!data) ? '' :data.zipCode, [Validators.required, Validators.minLength(6)]],
-
+      gstTreatment:  ['', [Validators.required]],
+      gstNumber: [(!data) ? '' : data.gstin],
+      city: [(!data) ? '' :data.city, [Validators.required, Validators.maxLength(30), Validators.pattern(ValidatorType.TEXT_ONLY)]],
+      state: [(!data) ? '' :data.state, [Validators.required, Validators.maxLength(30), Validators.pattern(ValidatorType.TEXT_ONLY)]],
+      pincode: [(!data) ? '' :data.zipCode, [Validators.required, Validators.minLength(6), Validators.maxLength(6), Validators.pattern(ValidatorType.NUMBER_ONLY)]],
     });
+
+    this.subscribeToGSTTypeValueChange();
+    this.orgProfile.controls.gstTreatment.setValue((!data) ? '' : data.gstTreatmentId);
+  }
+
+  subscribeToGSTTypeValueChange() {
+    this.subscription.add(
+      this.orgProfile.controls.gstTreatment.valueChanges.subscribe(value => {
+        if(value == 4) {
+          this.orgProfile.controls.gstNumber.setValidators([Validators.required, Validators.maxLength(15), Validators.minLength(15)]);
+        } else {
+          this.orgProfile.controls.gstNumber.setValue('');
+          this.orgProfile.controls.gstNumber.clearValidators();
+        }
+        this.orgProfile.updateValueAndValidity();
+      })
+    )
   }
 
   getFormControl(): any {
@@ -132,33 +140,31 @@ export class OrgProfileComponent implements OnInit {
   }
 
   updateOrgProfile(){
+    if(this.orgProfile.invalid) {
+      this.orgProfile.markAllAsTouched();
+      return;
+    }
     let obj = {
       advisorId:this.advisorId,
       companyName: this.orgProfile.controls.companyName.value,
       email:this.orgProfile.controls.emailId.value ,
+      mobileNumber: this.orgProfile.controls.mobileNo.value,
       website:this.orgProfile.controls.website.value ,
       billerAddress:this.orgProfile.controls.address.value ,
-      // city: this.orgProfile.controls.value,
-      // state:this.orgProfile.controls.value ,
-      // country: this.orgProfile.controls.value,
-      // zipCode:this.orgProfile.controls.value ,
+      city: this.orgProfile.controls.value,
+      state:this.orgProfile.controls.value ,
+      zipCode:this.orgProfile.controls.pincode.value ,
       gstTreatmentId:this.orgProfile.controls.gstTreatment.value ,
       gstin: this.orgProfile.controls.gstNumber.value,
     }
-    this.settingsService.editPersonalProfile(obj).subscribe(
+    this.settingsService.editOrgProfile(obj).subscribe(
       data => {
-        this.editOrgProfileRes(data)
         this.anyDetailsChanged = true;
         this.switchToTab(++this.selectedTab);
       },
       err => this.event.openSnackBar(err, "Dismiss")
     );
   }
-
-  editOrgProfileRes(data){
-    console.log('editOrgProfileRes',data)
-  }
-
 
   // method for org & report logo
   uploadImageForCorping(event) {
