@@ -100,7 +100,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       gender: ['1'],
       leadSource: [],
       leaadStatus: [],
-      leadRating: [],
+      leadRating: [data.leadRating],
       leadOwner: [],
       clientOwner: [''],
       role: [''],
