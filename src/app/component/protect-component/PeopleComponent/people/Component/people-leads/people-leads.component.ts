@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { LeadsClientsComponent } from './leads-clients/leads-clients.component';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { AddClientComponent } from '../people-clients/add-client/add-client.component';
-import { AuthService } from 'src/app/auth-service/authService';
-import { PeopleService } from '../../../people.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { MatTableDataSource } from '@angular/material';
+import {Component, OnInit} from '@angular/core';
+import {LeadsClientsComponent} from './leads-clients/leads-clients.component';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {AddClientComponent} from '../people-clients/add-client/add-client.component';
+import {AuthService} from 'src/app/auth-service/authService';
+import {PeopleService} from '../../../people.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-people-leads',
@@ -14,7 +14,7 @@ import { MatTableDataSource } from '@angular/material';
   styleUrls: ['./people-leads.component.scss']
 })
 export class PeopleLeadsComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'lsource', 'status', 'rating', 'lead',
+  displayedColumns: string[] = ['position', 'name', 'weight', 'lsource', /*'status', 'rating',*/ 'lead',
     'icon', 'icons'];
   leadDataSource = new MatTableDataSource();
   isLoading: boolean;
