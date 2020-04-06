@@ -114,7 +114,7 @@ export class ClientWiseComponent implements OnInit {
     this.backoffice.getAumClientTotalAum(obj).subscribe(
       data => this.clientTotalAum(data),
       err => {
-        this.showLoader = false;
+        this.isLoading = false;
       }
     )
 

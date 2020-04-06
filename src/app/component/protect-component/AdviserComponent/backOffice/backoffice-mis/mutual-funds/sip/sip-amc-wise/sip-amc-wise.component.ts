@@ -16,6 +16,7 @@ export class SipAmcWiseComponent implements OnInit {
   totalOfSipAmount=0;
   totalOfSipCount=0;
   totalWeight=0;
+  isLoading=false;
   constructor(private backoffice:BackOfficeService,public sip:SipComponent) { }
   teamMemberId=2929;
   @Output() changedValue = new EventEmitter();
@@ -34,6 +35,8 @@ export class SipAmcWiseComponent implements OnInit {
   //  this.sip.sipComponent=true;
   }  
   amcGet(){
+    this.isLoading=true;
+    this.amcList=[{},{},{}]
     const obj={
       advisorId:this.advisorId,
       arnRiaDetailsId:-1,
@@ -41,7 +44,7 @@ export class SipAmcWiseComponent implements OnInit {
     }
     this.backoffice.GET_SIP_AMC(obj).subscribe(
       data =>{
-        this.showLoader = false;
+        this.isLoading=false;
         this.amcList=data;
         if(this.amcList){
           this.amcList.forEach(o => {
@@ -53,7 +56,7 @@ export class SipAmcWiseComponent implements OnInit {
         }
       },
       err=>{
-        this.showLoader = false;
+        this.isLoading=false;
       }
     )
   }

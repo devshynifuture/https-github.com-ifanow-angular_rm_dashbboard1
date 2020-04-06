@@ -21,11 +21,11 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <table matSort mat-table [dataSource]="dataSource" id="tbs">
+            <table matSort mat-table [dataSource]="dataSource" id="tbs"  class=" skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" >
                 <ng-container matColumnDef="no" sticky>
                     <th *matHeaderCellDef class="br" mat-header-cell> Index</th>
                     <td *matCellDef="let element; let i = index;" class="br" mat-cell>
-                        <div class="bar"> {{ i + 1 }} </div>
+                        <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class=""> </td>
                 </ng-container>
@@ -55,8 +55,8 @@
                 </ng-container>
                 <ng-container matColumnDef="fromDate">
                     <th mat-sort-header="from_date" mat-header-cell *matHeaderCellDef class="br">From Date </th>
-                    <td *matCellDef="let element" appFormatNumber class="br text-right" mat-cell>
-                        <div class="bar"> {{element.from_date | date:'dd/MM/yyyy'}} </div>
+                    <td *matCellDef="let element"  class="br text-right" mat-cell>
+                        <div class="bar" appFormatNumber> {{element.from_date | date:'dd/MM/yyyy'}} </div>
                     </td>
                     <td *matFooterCellDef class="br text-right t-10 f-600 p-8 " mat-footer-cell></td>
                 </ng-container>
@@ -79,14 +79,14 @@
                 <ng-container matColumnDef="amount">
                     <th *matHeaderCellDef class="br textRight t-14" mat-header-cell mat-sort-header="amount">Amount
                     </th>
-                    <td *matCellDef="let element" appFormatNumber class="br t-14 amt text-right" mat-cell>
-                        <div class="bar"> {{element.amount}} </div>
+                    <td *matCellDef="let element"  class="br t-14 amt text-right" mat-cell>
+                        <div class="bar" appFormatNumber>{{element.amount}}</div>
                     </td>
-                    <td *matFooterCellDef class="br text-right t-10 f-600 p-8" mat-footer-cell>{{totalAmount}}</td>
+                    <td *matFooterCellDef class="br text-right t-10 f-600 p-8" mat-footer-cell appFormatNumber [value]="totalAmount">{{totalAmount}}</td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
+                <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
             </table>
         </div>
     </div>

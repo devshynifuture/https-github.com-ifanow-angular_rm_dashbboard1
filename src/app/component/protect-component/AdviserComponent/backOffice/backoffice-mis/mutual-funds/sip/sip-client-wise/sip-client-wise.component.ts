@@ -20,6 +20,7 @@ export class SipClientWiseComponent implements OnInit {
   totalWeight = 0
   clientFilter: any;
   filteredArray: any[];
+  isLoading=false;
   @Output() changedValue = new EventEmitter();
 
   constructor(private backoffice: BackOfficeService, public sip: SipComponent) { }
@@ -36,6 +37,8 @@ export class SipClientWiseComponent implements OnInit {
     // this.sip.sipComponent = true;
   }
   clientWiseClientName() {
+    this.isLoading=true;
+    this.filteredArray=[{},{},{}];
     const obj = {
       advisorId: this.advisorId,
       arnRiaDetailsId: -1,
@@ -43,7 +46,7 @@ export class SipClientWiseComponent implements OnInit {
     }
     this.backoffice.sipClientWiseClientName(obj).subscribe(
       data => {
-        this.showLoader = false;
+        this.isLoading=false;
         this.clientList = data;
         if(this.clientList){
           this.clientList.forEach(o => {
@@ -56,7 +59,7 @@ export class SipClientWiseComponent implements OnInit {
         this.filteredArray = [...this.clientList];
       },
       err=>{
-        this.showLoader = false;
+        this.isLoading = false;
       }
     )
   }

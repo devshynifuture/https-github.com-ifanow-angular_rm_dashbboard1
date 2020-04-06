@@ -113,7 +113,7 @@ export class CategoryWiseComponent implements OnInit {
     this.changedValue.emit(true);
   }
   getFilerrorResponse(err) {
-    this.showLoader=false;
+    this.isLoading=false;
     this.dataService.openSnackBar(err, 'Dismiss')
   }
 

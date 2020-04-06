@@ -18,6 +18,7 @@ export class SipApplicantWiseComponent implements OnInit {
   totalWeight =0;
   filteredArray: any[];
   applicantFilter: any;
+  isLoading=false;
   @Output() changedValue = new EventEmitter();
 
   constructor(private backoffice:BackOfficeService,public sip:SipComponent) { }
@@ -34,6 +35,8 @@ export class SipApplicantWiseComponent implements OnInit {
   //  this.sip.sipComponent=true;
   }  
   schemeWiseApplicantGet(){
+    this.isLoading=true;
+    this.filteredArray=[{},{},{}];
     const obj={
       advisorId:this.advisorId,
       arnRiaDetailsId:-1,
@@ -41,6 +44,7 @@ export class SipApplicantWiseComponent implements OnInit {
     }
     this.backoffice.sipApplicantList(obj).subscribe(
       data =>{
+        this.isLoading=false;
         console.log("scheme Name", data)
         this.applicantList = data;
         if(this.applicantList){
@@ -53,11 +57,9 @@ export class SipApplicantWiseComponent implements OnInit {
           });
         }
         this.filteredArray = [...this.applicantList];
-    
-        this.showLoader = false;
       },
       err=>{
-        this.showLoader = false;
+        this.isLoading = false;
       }
     )
   }

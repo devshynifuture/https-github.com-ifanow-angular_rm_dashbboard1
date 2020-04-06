@@ -39,8 +39,8 @@
                                         {{category.investorName}}
                                     </div>
                                 </td>
-                                <td><span appFormatNumber>{{category.sipAmount}}</span> </td>
-                                <td>{{category.weightInPercentage}}%</td>
+                                <td> <div class="bar"><span appFormatNumber>{{category.sipAmount}}</span></div></td>
+                                <td><div class="bar">{{category.weightInPercentage}}{{(isLoading?'':'%') }}</div></td>
                                 <td class="text-center" (click)="showSubTableList(i,category.showCategory,category)">
                                     <div class="bar text-center">
                                         <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="category.showCategory==true">
@@ -54,7 +54,7 @@
                             </tr>
                             <tr style="border: transparent !important">
                                 <td colspan="4" class="innerTd one">
-                                    <table *ngIf="category.showCategory==false" class="table-low mt-8 " id="table-high">
+                                    <table *ngIf="category.showCategory==false && !isLoading" class="table-low mt-8 " id="table-high">
                                         <thead class="bg-light text-dark">
                                             <tr>
                                                 <th>Applicant Name</th>
@@ -89,7 +89,7 @@
                                 </td>
                             </tr>
                         </tbody>
-                        <tbody>
+                        <tbody *ngIf="!isLoading">
                             <tr>
                                 <td class="p-table"><strong>Total</strong></td>
                                 <td class="p-table"><strong><span appFormatNumber>{{totalOfSipAmount}}</span></strong>

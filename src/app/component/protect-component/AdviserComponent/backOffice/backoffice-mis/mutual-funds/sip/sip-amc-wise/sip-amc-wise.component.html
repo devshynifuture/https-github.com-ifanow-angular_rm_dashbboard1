@@ -31,7 +31,7 @@
                             <tr>
                                 <td>
                                     <div class="bar">
-                                        {{i+1}}
+                                        {{(isLoading)?'':i+1}}
                                     </div>
                                 </td>
                                 <td>
@@ -48,7 +48,7 @@
                                     <div class="bar"> {{category.sipCount}} </div>
                                 </td>
                                 <td>
-                                    <div class="bar"> {{category.weightInPercentage}}% </div>
+                                    <div class="bar"> {{category.weightInPercentage}}{{(isLoading?'':'%') }} </div>
                                 </td>
 
                                 <td (click)="showSubTableList(i,category.showCategory,category)">
@@ -63,7 +63,7 @@
                             </tr>
                             <tr style="border: transparent !important">
                                 <td colspan="6" class="innerTd one">
-                                    <table *ngIf="category.showCategory==false" class=" mt-8 mb-8" id="table-low">
+                                    <table *ngIf="category.showCategory==false && !isLoading" class=" mt-8 mb-8" id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr>
                                                 <th class="w-10">Sr No.</th>
@@ -185,7 +185,7 @@
                                 </td>
                             </tr>
                         </tbody>
-                        <tbody>
+                        <tbody *ngIf="!isLoading">
                             <tr>
                                 <td class="p-table">&nbsp;</td>
                                 <td class="p-table"><strong>Total</strong></td>

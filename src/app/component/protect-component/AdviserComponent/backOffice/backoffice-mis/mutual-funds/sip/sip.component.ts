@@ -27,11 +27,15 @@ export class SipComponent implements OnInit {
   clientWithoutSip=0;
   newSipObj: any;
   ceaseSipObj: any;
+  arnRiaList:any;
+  viewMode: string;
   constructor(private backoffice:BackOfficeService,private dataService:EventService) { }
  
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.viewMode = 'Select option';
+    this.getArnRiaList();
     this.newSip();
     this.ceaseSip();
    this.sipCountGet();
@@ -41,6 +45,17 @@ export class SipComponent implements OnInit {
    this.getSipPanCount();
 
 
+  }
+  getArnRiaList(){
+    this.backoffice.getArnRiaList(this.advisorId).subscribe(
+      data =>{
+        this.arnRiaList=data;
+        const obj = {
+          number: 'All'
+        }
+        this.arnRiaList.unshift(obj);
+    },
+    )
   }
   sipCountGet()
   {
@@ -212,7 +227,10 @@ export class SipComponent implements OnInit {
           this.ceaseSipObj[4].dateDiff=150;
           this.ceaseSipObj[5].dateDiff=180;
           this.ceaseSipObj[6].dateDiff=360;
-    this.pieChart('pieChartSip');
+          setTimeout(() => {
+            this.pieChart('pieChartSip');
+          }, 600);
+   
       }
     )
   }

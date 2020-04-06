@@ -228,7 +228,7 @@ export class AmcWiseComponent implements OnInit {
     )
   }
   getFilerrorResponse(err) {
-    this.showLoader = false;
+    this.isLoading = false;
     this.dataService.openSnackBar(err, 'Dismiss')
   }
 }

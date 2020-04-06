@@ -10,14 +10,15 @@
                 <div class="col-md-8">
                     <h3 class="mb-0">SIP</h3>
                 </div>
-                <div class="col-md-4 text-right">
+                <div class="col-md-4 text-right ">
                     <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black borderLine br-0">
-                        Select option
+                        {{viewMode}}
                         <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
                     </button>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item>All</button>
-                        <button mat-menu-item>Broker code</button>
+                    <mat-menu #menu="matMenu" >
+                        <div *ngFor="let item of arnRiaList">
+                            <button mat-menu-item (click)="viewMode=item.number">{{item.number}}</button>
+                        </div>
                     </mat-menu>
                 </div>
             </div>

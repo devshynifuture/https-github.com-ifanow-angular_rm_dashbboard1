@@ -19,6 +19,7 @@ export class SipSchemeWiseComponent implements OnInit {
   InvestorList: any;
   applicantList: any;
   schemeFilter:any;
+  isLoading=false;
   @ViewChildren(FormatNumberDirective) formatNumber;
   totalOfSipAmount=0;
   totalOfSipCount=0;
@@ -42,6 +43,8 @@ export class SipSchemeWiseComponent implements OnInit {
   //  this.sip.sipComponent=true;
   }
   getSchemeWiseGet(){
+    this.isLoading=true;
+    this.filteredArray=[{},{},{}]
     const obj={
       advisorId:this.advisorId,
       arnRiaDetailsId:-1,
@@ -50,12 +53,13 @@ export class SipSchemeWiseComponent implements OnInit {
     this.backoffice.Sip_Schemewise_Get(obj).subscribe(
       data =>this.getSchemeWiseRes(data),
       err=>{
-        this.showLoader = false;
+        this.isLoading = false;
       }
     )
   }
   
   getSchemeWiseRes(data) {
+    this.isLoading=false;
     console.log("scheme Name", data)
     this.category = data;
     if(this.category){

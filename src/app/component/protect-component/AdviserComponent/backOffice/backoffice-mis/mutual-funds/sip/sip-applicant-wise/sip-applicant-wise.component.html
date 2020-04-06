@@ -37,10 +37,10 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="bar"> {{data.totalAum}} </div>
+                                    <div class="bar"><span appFormatNumber> {{data.totalAum}} </span></div>
                                 </td>
                                 <td>
-                                    <div class="bar"> {{data.weightInPercentage}}% </div>
+                                    <div class="bar"> {{data.weightInPercentage}}{{(isLoading?'':'%') }} </div>
                                 </td>
                                 <td class="text-center" (click)="showSubTableList(data)">
                                     <div class="bar">
@@ -54,7 +54,7 @@
                             </tr>
                             <tr style="border: transparent !important">
                                 <td colspan="4" class="innerTd one">
-                                    <table *ngIf="!data.showScheme" class=" mt-8 mb-8" id="table-low">
+                                    <table *ngIf="!data.showScheme && !isLoading" class=" mt-8 mb-8" id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr>
                                                 <th>Applicant Name</th>
@@ -75,7 +75,7 @@
                                             <tr>
                                                 <td>{{scheme.name}}</td>
                                                 <td>{{scheme.schemeName}} </td>
-                                                <td>{{scheme.totalAum}} </td>
+                                                <td><span appFormatNumber>{{scheme.totalAum}}</span></td>
                                                 <td>{{scheme.folioNumber}} </td>
                                                 <td>{{scheme.registeredDate | date:'dd/MM/yyyy'}} </td>
                                                 <td>{{scheme.to_date | date:'dd/MM/yyyy'}} </td>
@@ -90,7 +90,7 @@
                                 </td>
                             </tr>
                         </tbody>
-                        <tbody>
+                        <tbody *ngIf="!isLoading">
                             <tr>
                                 <td class="p-table"><strong>Total</strong></td>
                                 <td class="p-table"><strong><span appFormatNumber>{{totalOfSipAmount}}</span></strong>
@@ -100,6 +100,9 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div *ngIf="!filteredArray">
+                        <p>No data Found</p>
+                    </div>
                 </div>
             </div>
         </div>

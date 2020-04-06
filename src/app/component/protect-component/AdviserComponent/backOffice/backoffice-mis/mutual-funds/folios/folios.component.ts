@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators, FormBuilder, FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { BackOfficeService } from '../../../back-office.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-folios',
@@ -16,6 +16,8 @@ export class FoliosComponent implements OnInit {
   advisorId: any;
   dataSource:any;
   folioList:any;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
   constructor( private fb: FormBuilder,private backoffice:BackOfficeService) { }
   isLoading = false;
   searchGroupHead = new FormControl();
@@ -82,6 +84,8 @@ export class FoliosComponent implements OnInit {
         data =>{
           this.isLoading = false;
           this.dataSource = new MatTableDataSource(data);
+          this.dataSource.sort = this.sort;
+
         }
       )
     }else{
@@ -95,6 +99,7 @@ export class FoliosComponent implements OnInit {
         data =>{
           this.isLoading = false;
           this.dataSource = new MatTableDataSource(data);
+          this.dataSource.sort = this.sort;
 
         }
       )
@@ -116,6 +121,7 @@ export class FoliosComponent implements OnInit {
         data =>{
           this.isLoading = false;
           this.dataSource = new MatTableDataSource(data);
+          this.dataSource.sort = this.sort;
 
         }
       )
@@ -130,6 +136,7 @@ export class FoliosComponent implements OnInit {
         data =>{
           this.isLoading = false;
           this.dataSource = new MatTableDataSource(data);
+          this.dataSource.sort = this.sort;
 
         }
       )
