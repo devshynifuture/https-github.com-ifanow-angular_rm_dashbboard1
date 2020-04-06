@@ -99,7 +99,7 @@
                                                 </td>
                                             </tr>
                                             <tr style="border: transparent !important">
-                                                <td colspan="5" class="innerTd rwo">
+                                                <td colspan="5" class="innerTd two">
                                                     <table class=" mt-8 mb-8 " id="table-low" *ngIf="subcategory.showSubCategory==false">
                                                         <thead>
                                                             <tr>
@@ -125,27 +125,32 @@
                                                                     </i>
                                                                 </td>
                                                             </tr>
-                                                            <table class=" mt-8 mb-8 " id="table-low" *ngIf="!scheme.showScheme">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th class="w-40">Applicant Name</th>
-                                                                        <th>Balance Unit</th>
-                                                                        <th>Folio</th>
-                                                                        <th>Current Amount</th>
-                                                                        <th>% Weight</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody *ngFor="let applicant of scheme.clientList;let i = index">
-                                                                    <tr>
-                                                                        <td>{{applicant.name}} </td>
-                                                                        <td>{{applicant.balanceUnit}} </td>
-                                                                        <td>{{applicant.folioNumber}} </td>
-                                                                        <td>{{applicant.totalAum}} </td>
-                                                                        <td>{{applicant.weightInPercentage}}</td>
-                                                                    </tr>
-                                                                    
-                                                                </tbody>
-                                                            </table>
+                                                            <tr style="border: transparent !important">
+                                                                <td colspan="5" class="innerTd three">
+                                                                    <table class=" mt-8 mb-8 " id="table-low" *ngIf="!scheme.showScheme">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th class="w-40">Applicant Name</th>
+                                                                                <th>Balance Unit</th>
+                                                                                <th>Folio</th>
+                                                                                <th>Current Amount</th>
+                                                                                <th>% Weight</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody *ngFor="let applicant of scheme.clientList;let i = index">
+                                                                            <tr>
+                                                                                <td>{{applicant.name}} </td>
+                                                                                <td>{{applicant.balanceUnit}} </td>
+                                                                                <td>{{applicant.folioNumber}} </td>
+                                                                                <td>{{applicant.totalAum}} </td>
+                                                                                <td>{{applicant.weightInPercentage}}
+                                                                                </td>
+                                                                            </tr>
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
                                                         </tbody>
                                                     </table>
                                                 </td>
