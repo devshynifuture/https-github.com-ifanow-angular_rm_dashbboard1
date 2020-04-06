@@ -290,7 +290,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       return;
     }
     const obj = {
-      id: this.basicDetailsData.familyMemberId,
+      familyMemberId: this.basicDetailsData.familyMemberId,
       clientId: this.basicDetailsData.clientId,
       name: (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : this.minorForm.value.minorFullName,
       displayName: null,
