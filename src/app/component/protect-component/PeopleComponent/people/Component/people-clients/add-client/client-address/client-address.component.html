@@ -16,14 +16,17 @@
     </div>
     <div class="col-md-6 p-0">
       <div class="form-group m-0 p-address">
-        <mat-radio-group [(ngModel)]="proofType" formControlName="proofType" aria-label="Select an option">
+        <mat-radio-group [(ngModel)]="proofType" aria-label="Select an option" formControlName="addressType">
           <mat-radio-button [checked]="proofType=='1'" value="1"
-            [ngClass]="{'bu-primary':proofType=='1','text-primary':proofType=='1'}" class="borderRadio text-custom">
+                            [ngClass]="{'bu-primary':proofType=='1','text-primary':proofType=='1'}"
+                            class="borderRadio text-custom">
             Residential
           </mat-radio-button>
           <mat-radio-button value="2" [checked]="proofType=='2'"
-            [ngClass]="{'bu-primary':proofType=='2','text-primary':proofType=='2'}" class="borderRadio text-custom">
-            Business</mat-radio-button>
+                            [ngClass]="{'bu-primary':proofType=='2','text-primary':proofType=='2'}"
+                            class="borderRadio text-custom">
+            Business
+          </mat-radio-button>
         </mat-radio-group>
       </div>
     </div>

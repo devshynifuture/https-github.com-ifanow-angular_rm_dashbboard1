@@ -1,14 +1,14 @@
-<div [formGroup]="companyMoreInfoFormGroup" class="pb-100">
-    <div class="row pt-44">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0">Name</h5>
-            <p class="m-0 f-12 text-custom">This will display everwhere</p>
-        </div>
-        <div class="col-md-6 p-0">
-            <div class="form-group">
-                <mat-form-field>
-                    <input autocomplete="off" formControlName="name" #Name appInputValueValidation
-                        [inputValidator]="validatorType.TEXT_ONLY" matInput [maxLength]="50" class="form-control">
+<div [formGroup]="moreInfoForm" class="pb-100">
+  <div class="row pt-44">
+    <div class="col-md-4 text-right">
+      <h5 class="m-0">Name</h5>
+      <p class="m-0 f-12 text-custom">This will display everwhere</p>
+    </div>
+    <div class="col-md-6 p-0">
+      <div class="form-group">
+        <mat-form-field>
+          <input autocomplete="off" formControlName="name" #Name appInputValueValidation
+                 [inputValidator]="validatorType.TEXT_ONLY" matInput [maxLength]="50" class="form-control">
                     <mat-hint align="end">{{Name.value.length}}/50</mat-hint>
                     <mat-hint>Optional</mat-hint>
                 </mat-form-field>

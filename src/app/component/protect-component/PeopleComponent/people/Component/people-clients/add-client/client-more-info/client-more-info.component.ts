@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { ValidatorType } from 'src/app/services/util.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { DatePipe } from '@angular/common';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {ValidatorType} from 'src/app/services/util.service';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-client-more-info',
@@ -13,8 +13,8 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./client-more-info.component.scss']
 })
 export class ClientMoreInfoComponent implements OnInit {
-  advisorId: any;
   moreInfoData: any;
+  advisorId: any;
   mobileNumberFlag = 'Mobile';
   nonindividualForm: any;
   mobileData: any;
@@ -23,7 +23,9 @@ export class ClientMoreInfoComponent implements OnInit {
 
   moreInfoForm;
 
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService, private datePipe: DatePipe) {
+  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
+              private peopleService: PeopleService, private eventService: EventService,
+              private datePipe: DatePipe) {
   }
 
   @Input() fieldFlag;
@@ -32,30 +34,29 @@ export class ClientMoreInfoComponent implements OnInit {
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     this.moreInfoData = data;
-    console.log(data);
+    console.log('ClientMoreInfoComponent data : ', data);
     if (this.fieldFlag == 'familyMember') {
       this.createMoreInfoForm(data);
-      (this.moreInfoData.familyMemberType == 0 || this.moreInfoData.familyMemberType == 1) ? this.moreInfoData['categoryTypeflag'] = "Individual" : this.moreInfoData['categoryTypeflag'] = "familyMinor";
-    }
-    else {
+      (this.moreInfoData.familyMemberType == 0 || this.moreInfoData.familyMemberType == 1) ?
+        this.moreInfoData.categoryTypeflag = 'Individual' : this.moreInfoData.categoryTypeflag = 'familyMinor';
+    } else {
       if (this.moreInfoData.userId == null) {
         this.createMoreInfoForm(null);
         return;
-      }
-      else {
+      } else {
         if (this.moreInfoData.clientType == 1 || this.moreInfoData.clientType == 0) {
-          this.moreInfoData['categoryTypeflag'] = "Individual";
-          this.moreInfoData['invCategory'] = '1'
-        }
-        else {
-          this.moreInfoData['categoryTypeflag'] = "clientNonIndividual";
-          this.moreInfoData['invCategory'] = '2'
+          this.moreInfoData.categoryTypeflag = 'Individual';
+          this.moreInfoData.invCategory = '1';
+        } else {
+          this.moreInfoData.categoryTypeflag = 'clientNonIndividual';
+          this.moreInfoData.invCategory = '2';
         }
         (this.moreInfoData.clientType == '2') ? this.getCompanyDetails(this.moreInfoData) : '';
         this.createMoreInfoForm(data);
       }
     }
   }
+
   createMoreInfoForm(data) {
     (data == undefined) ? data = {} : data;
     this.moreInfoForm = this.fb.group({
@@ -76,6 +77,7 @@ export class ClientMoreInfoComponent implements OnInit {
       adhharGuardian: [(data.guardianData) ? data.guardianData.aadhaarNumber : '']
     });
   }
+
   ngOnInit() {
 
   }
@@ -92,9 +94,9 @@ export class ClientMoreInfoComponent implements OnInit {
     };
     this.peopleService.getCompanyPersonDetail(obj).subscribe(
       data => {
-        console.log(data)
-      }, err => this.eventService.openSnackBar(err, "Dismiss")
-    )
+        console.log(data);
+      }, err => this.eventService.openSnackBar(err, 'Dismiss')
+    );
   }
 
   saveNext(flag) {
@@ -156,8 +158,8 @@ export class ClientMoreInfoComponent implements OnInit {
             console.log(data);
             (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
           },
-          err => this.eventService.openSnackBar(err, "Dismiss")
-        )
+          err => this.eventService.openSnackBar(err, 'Dismiss')
+        );
       }
     }
   }
@@ -221,7 +223,7 @@ export class ClientMoreInfoComponent implements OnInit {
   }
 
   close(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
+    this.subInjectService.changeNewRightSliderState({state: 'close', clientData: data});
   }
 
 }

@@ -1,10 +1,10 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { HttpService } from 'src/app/http-service/http-service';
-import { HttpHeaders } from '@angular/common/http';
-import { EnumServiceService } from 'src/app/services/enum-service.service';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {HttpService} from 'src/app/http-service/http-service';
+import {HttpHeaders} from '@angular/common/http';
+import {EnumServiceService} from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-client-upload',
@@ -14,7 +14,7 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
 export class ClientUploadComponent implements OnInit {
   clientRoles: any = [];
   myFiles: any = [];
-  @ViewChild('fileComPan', { static: false }) fileComPanRef;
+  @ViewChild('fileComPan', {static: false}) fileComPanRef;
   advisorId: any;
   clientId: any;
   proofTypes: any = [];
@@ -25,11 +25,11 @@ export class ClientUploadComponent implements OnInit {
   bankProof: any = '';
   selectedBank: any = '';
   proofSubType: any = 1;
-  fileComPanImg: any = { view: '', store: '' };
-  filePerPanImg: any = { view: '', store: '' };
-  fileProof1Img: any = { view: '', store: '' };
-  fileProof2Img: any = { view: '', store: '' };
-  fileProof2BackImg: any = { view: '', store: '' };
+  fileComPanImg: any = {view: '', store: ''};
+  filePerPanImg: any = {view: '', store: ''};
+  fileProof1Img: any = {view: '', store: ''};
+  fileProof2Img: any = {view: '', store: ''};
+  fileProof2BackImg: any = {view: '', store: ''};
   imgWidth: any = 100;
   imgStyleCom = {
     width: this.imgWidth + '%',
@@ -58,19 +58,25 @@ export class ClientUploadComponent implements OnInit {
   showErr2 = false;
   userData: any;
 
-  constructor(private subInjectService: SubscriptionInject, private http: HttpService, private custumService: CustomerService, private enumService: EnumServiceService) {
+  constructor(private subInjectService: SubscriptionInject, private http: HttpService,
+              private custumService: CustomerService, private enumService: EnumServiceService) {
   }
+
   @Input() fieldFlag;
+
   @Input() set data(data) {
     console.log(data, 'user data1');
     this.userData = data;
     const obj = {
-      userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
+      userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ?
+        this.userData.clientId : this.userData.familyMemberId,
       userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
     };
     this.custumService.getClientUploadFile(obj).subscribe((data) => {
       console.log('added get', data);
-      this.getUploadedImg(data);
+      if (data && data.length > 0) {
+        this.getUploadedImg(data);
+      }
     });   ////////// user data////////////////////
   }
 
@@ -86,8 +92,9 @@ export class ClientUploadComponent implements OnInit {
   saveClose() {
     this.close();
   }
+
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
   getUploadedImg(data) {
@@ -203,6 +210,7 @@ export class ClientUploadComponent implements OnInit {
     console.log(this.myFiles);
     this.uploadFile(type);
   }
+
   uploadFile(imgType) {
     this.parentId = (this.parentId == undefined) ? 0 : this.parentId;
     this.countFile++;
@@ -237,24 +245,24 @@ export class ClientUploadComponent implements OnInit {
     switch (imgType) {
       case 'company-pan':
         this.deleteImg(this.fileComPanImg.store.id);
-        this.fileComPanImg = { view: '', store: '' };
+        this.fileComPanImg = {view: '', store: ''};
         this.fileComPanRef.nativeElement.files.FileList = null;
         break;
       case 'personal-pan':
         this.deleteImg(this.filePerPanImg.store.id);
-        this.filePerPanImg = { view: '', store: '' };
+        this.filePerPanImg = {view: '', store: ''};
         break;
       case 'proof-type1':
-        this.fileProof1Img = { view: '', store: '' };
+        this.fileProof1Img = {view: '', store: ''};
         break;
       case 'proof-type2':
-        this.fileProof2Img = { view: '', store: '' };
+        this.fileProof2Img = {view: '', store: ''};
         break;
     }
   }
 
   deleteImg(imgId) {
-    const obj = { id: imgId };
+    const obj = {id: imgId};
     this.custumService.deleteClientProof(obj).subscribe((data) => {
       console.log('delete proof', data);
     });
@@ -305,6 +313,7 @@ export class ClientUploadComponent implements OnInit {
 
     });
   }
+
   getSubType(sub) {
     this.proofSubType = sub;
     if (sub == 1) {
@@ -313,6 +322,7 @@ export class ClientUploadComponent implements OnInit {
       this.viewFront = false;
     }
   }
+
   checkSelected(proof, err) {
     switch (proof) {
       case 'proof-type1':
