@@ -104,7 +104,7 @@
                                                         <thead>
                                                             <tr>
                                                                 <th class="w-10">Sr No.</th>
-                                                                <th class="w-40">Sub Category Name</th>
+                                                                <th class="w-40">Scheme Name</th>
                                                                 <th>Current Value</th>
                                                                 <th>% Weight</th>
                                                                 <th> </th>
@@ -119,13 +119,13 @@
                                                                 <td>{{scheme.totalAum}} </td>
                                                                 <td>{{scheme.weightInPercentage}}</td>
                                                                 <td class="text-center" (click)="showApplicantName(i,scheme)">
-                                                                    <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="subcategory.showScheme">add</i>
-                                                                    <i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="!subcategory.showScheme">
+                                                                    <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="scheme.showScheme">add</i>
+                                                                    <i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="!scheme.showScheme">
                                                                         remove
                                                                     </i>
                                                                 </td>
                                                             </tr>
-                                                            <table class=" mt-8 mb-8 " id="table-low" *ngIf="!subcategory.showScheme">
+                                                            <table class=" mt-8 mb-8 " id="table-low" *ngIf="!scheme.showScheme">
                                                                 <thead>
                                                                     <tr>
                                                                         <th class="w-40">Applicant Name</th>
@@ -140,7 +140,7 @@
                                                                         <td>{{applicant.name}} </td>
                                                                         <td>{{applicant.balanceUnit}} </td>
                                                                         <td>{{applicant.folioNumber}} </td>
-                                                                        <td>{{applicant.amount}} </td>
+                                                                        <td>{{applicant.totalAum}} </td>
                                                                         <td>{{applicant.weightInPercentage}}</td>
                                                                     </tr>
                                                                     
