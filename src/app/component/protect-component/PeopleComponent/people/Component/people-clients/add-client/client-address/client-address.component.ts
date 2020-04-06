@@ -33,7 +33,13 @@ export class ClientAddressComponent implements OnInit {
     this.userData = data;
     (this.userData.addressData) ? this.addressList = this.userData.addressData : ''
     this.proofType = (this.userData.addressData) ? String(this.userData.addressData.addressType) : '1';
-    (this.userData.addressData == undefined) ? this.getAddressList(data) : this.createAddressForm(this.userData.addressData);
+    if (this.userData.addressData == undefined) {
+      this.createAddressForm(null);
+      this.getAddressList(data);
+    }
+    else {
+      this.createAddressForm(this.userData.addressData);
+    }
   }
 
   ngOnInit() {
