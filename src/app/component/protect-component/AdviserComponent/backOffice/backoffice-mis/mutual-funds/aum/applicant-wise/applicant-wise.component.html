@@ -120,7 +120,8 @@
                                                                                     <td>{{i+1}}</td>
                                                                                     <td>{{client.schemeName}}</td>
                                                                                     <td>{{client.folioNumber}}</td>
-                                                                                    <td><span appFormatNumber>{{client.totalAum}}</span></td>
+                                                                                    <td><span appFormatNumber>{{client.totalAum}}</span>
+                                                                                    </td>
                                                                                     <td>{{client.weightInPercentage}}
                                                                                     </td>
                                                                                     <td class="text-center" (click)="getSchemeFolio(client)">
@@ -194,20 +195,21 @@
                                 <tr>
                                     <td class="p-table"><strong>Total</strong></td>
                                     <td class="p-table">&nbsp;</td>
-                                    <td class="p-table"><strong><span appFormatNumber>{{totalCurrentValue}}</span></strong></td>
+                                    <td class="p-table"><strong><span
+                                                appFormatNumber>{{totalCurrentValue}}</span></strong></td>
                                     <td class="p-table"><strong>{{totalWeight}}%</strong></td>
                                     <td></td>
                                 </tr>
                             </tbody>
                         </table>
-                        <div *ngIf="!applicantName">
-                            <p>No data found</p>
+
+                        <div *ngIf="!applicantName" class="d-flex flex-column align-items-center">
+                            <img class="width300" src="assets/images/svg/noDataFound.svg">
+                            <h4 class="text-center pt-12">No data Found</h4>
                         </div>
 
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
