@@ -48,7 +48,7 @@ export class NewTeamMemberComponent implements OnInit {
       if(this.data.is_add_call) {
         this.addTeamMember();
       } else {
-        // this.editTeamMember();
+        this.editTeamMember();
       }
     }
   }
