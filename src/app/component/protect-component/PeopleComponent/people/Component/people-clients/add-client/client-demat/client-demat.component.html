@@ -14,10 +14,10 @@
             <h5 class="m-0 pt-8">Mode of holding</h5>
         </div>
         <div class="col-md-7 p-0 mode-holding">
-            <mat-radio-group formControlName="modeOfHolding" [(ngModel)]="modeOfHOlding" aria-label="Select an option">
-                <mat-radio-button value="1" [ngClass]="{'bu-primary': modeOfHOlding=='1'}" class="borderRadio">Single
+            <mat-radio-group formControlName="modeOfHolding" [(ngModel)]="holdingMode" aria-label="Select an option">
+                <mat-radio-button value="1" [ngClass]="{'bu-primary': holdingMode=='1'}" class="borderRadio">Single
                 </mat-radio-button>
-                <mat-radio-button value="2" [ngClass]="{'bu-primary': modeOfHOlding=='2'}" class="borderRadio">Joint
+                <mat-radio-button value="2" [ngClass]="{'bu-primary': holdingMode=='2'}" class="borderRadio">Joint
                 </mat-radio-button>
             </mat-radio-group>
         </div>

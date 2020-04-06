@@ -1,17 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {AddFamilyMemberComponent} from './add-family-member/add-family-member.component';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {HistoryViewComponent} from './history-view/history-view.component';
-import {AddClientComponent} from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/add-client.component';
-import {CustomerService} from '../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {AuthService} from 'src/app/auth-service/authService';
-import {ClientAddressComponent} from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-address/client-address.component';
-import {ClientDematComponent} from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-demat/client-demat.component';
-import {ClientBankComponent} from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-bank/client-bank.component';
+import { Component, OnInit } from '@angular/core';
+import { AddFamilyMemberComponent } from './add-family-member/add-family-member.component';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { HistoryViewComponent } from './history-view/history-view.component';
+import { AddClientComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/add-client.component';
+import { CustomerService } from '../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ClientAddressComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-address/client-address.component';
+import { ClientDematComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-demat/client-demat.component';
+import { ClientBankComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-bank/client-bank.component';
 
 @Component({
   selector: 'app-overview-profile',
@@ -31,7 +31,7 @@ export class OverviewProfileComponent implements OnInit {
   // clientData;
 
   constructor(private authService: AuthService, public dialog: MatDialog, public subInjectService: SubscriptionInject,
-              private cusService: CustomerService, private eventService: EventService) {
+    private cusService: CustomerService, private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -166,7 +166,7 @@ export class OverviewProfileComponent implements OnInit {
     let component;
     if (value == 'add') {
       component = AddFamilyMemberComponent;
-      data = {flag: 'Add Family Member', fieldFlag: 'familyMember'};
+      data = { flag: 'Add Family Member', fieldFlag: 'familyMember' };
     } else {
       data.flag = 'Add Family Member';
       data.fieldFlag = 'familyMember';
@@ -246,6 +246,7 @@ export class OverviewProfileComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           (flag == 'Address') ? this.getAddressList() : (flag == 'Bank') ? this.getBankList() : this.getDematList();
+          clientData = [];
           if (UtilService.isRefreshRequired(sideBarData)) {
 
           }
