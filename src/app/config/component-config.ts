@@ -618,6 +618,7 @@ export const appConfig = {
 
   GET_ALL_TEAM_MEMEBERS: 'setting/users/team-members/get',
   ADD_TEAM_MEMBER: 'setting/users/team-member/add',
+  EDIT_TEAM_MEMBER: 'setting/users/team-member/edit',
   DELETE_TEAM_MEMBER: 'setting/users/team-member/delete',
   SUSPEND_TEAM_MEMBER: 'setting/users/team-member/suspend',
   HAND_OVER_TEAM_MEMBER: 'setting/users/team-member/hand-over/get',
