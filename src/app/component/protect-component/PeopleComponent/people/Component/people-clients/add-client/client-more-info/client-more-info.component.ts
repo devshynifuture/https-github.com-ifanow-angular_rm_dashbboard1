@@ -190,25 +190,26 @@ export class ClientMoreInfoComponent implements OnInit {
       bio: this.moreInfoForm.controls.bio.value,
       remarks: this.moreInfoForm.controls.myNotes.value,
       // guardianData: this.moreInfoData.guardianData,
-      guardianData: {
-        name: this.moreInfoData.guardianData.name,
-        birthDate: this.datePipe.transform(this.moreInfoData.guardianData.birthDate, 'dd/MM/yyyy'),
-        pan: 'pan',
-        genderId: this.moreInfoData.guardianData.genderId,
-        relationshipId: 1,
-        aadhaarNumber: this.moreInfoForm.value.adhharGuardian,
-        occupationId: 1,
-        martialStatusId: 1,
-        anniversaryDate: this.datePipe.transform(this.moreInfoForm.value.anniversaryDate, 'dd/MM/yyyy'),
-        mobileList: this.moreInfoData.guardianData.mobileList,
-        emailList: [
-          {
-            email: (this.moreInfoData.guardianData.emailList) ? this.moreInfoData.guardianData.emailList.email : '',
-            userType: 4,
-            verificationStatus: 0
-          }
-        ]
-      }
+      guardianData: this.moreInfoData.guardianData
+      //  {
+      //   name: this.moreInfoData.guardianData.name,
+      //   birthDate: this.datePipe.transform(this.moreInfoData.guardianData.birthDate, 'dd/MM/yyyy'),
+      //   pan: 'pan',
+      //   genderId: this.moreInfoData.guardianData.genderId,
+      //   relationshipId: 1,
+      //   aadhaarNumber: this.moreInfoForm.value.adhharGuardian,
+      //   occupationId: 1,
+      //   martialStatusId: 1,
+      //   anniversaryDate: this.datePipe.transform(this.moreInfoForm.value.anniversaryDate, 'dd/MM/yyyy'),
+      //   mobileList: this.moreInfoData.guardianData.mobileList,
+      //   emailList: [
+      //     {
+      //       email: (this.moreInfoData.guardianData.emailList) ? this.moreInfoData.guardianData.emailList.email : '',
+      //       userType: 4,
+      //       verificationStatus: 0
+      //     }
+      //   ]
+      // }
     };
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {
