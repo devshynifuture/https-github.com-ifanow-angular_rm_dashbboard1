@@ -13,7 +13,8 @@ import { ExcelMisService } from '../excel-mis.service';
 export class CategoryWiseComponent implements OnInit {
   category;
   subcategory;
-  showLoader;
+  showLoader = true;
+  isLoading = false;
   teamMemberId = 2929;
   advisorId = AuthService.getAdvisorId();
   subCategoryList: any[] = [];
@@ -88,7 +89,7 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   getSubCatSchemeName() {
-    this.showLoader = true;
+
     const obj = {
       advisorId: this.advisorId,
       arnRiaDetailsId: -1,
@@ -115,10 +116,10 @@ export class CategoryWiseComponent implements OnInit {
 
   showSubTableList(index, category) {
     this.selectedCategory = index;
-    this.category[index].showCategory = (category) ? category = false : category = true;
+    category.showCategory = !category.showCategory;
     console.log("need to check this::", this.category[index]);
     // console.log(category);
-    if (!category) {
+    if (!category.showCategory) {
       if (this.category[index].hasOwnProperty('subCategoryList') && this.category[index].subCategoryList.length !== 0) {
         this.arrayOfExcelData[1] = [];
         this.appendingOfValuesInExcel(this.category[index].subCategoryList, 1);
@@ -134,6 +135,7 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   getFileResponseDataForSubSchemeName(data) {
+    this.showLoader = false;
     console.log("scheme Name:::", data);
     if (data) {
       this.category = data.categories;
@@ -152,11 +154,14 @@ export class CategoryWiseComponent implements OnInit {
         sub.showSubCategory = true;
       })
     });
-    this.showLoader = false;
+
   }
   showSchemeName(index, subcatshowSubcat) {
-    this.category[this.selectedCategory].subCategoryList[index].showSubCategory = (subcatshowSubcat) ? subcatshowSubcat = false : subcatshowSubcat = true;
-    if (!subcatshowSubcat) {
+    subcatshowSubcat.showSubCategory = !subcatshowSubcat.showSubCategory
+    subcatshowSubcat.schemes.forEach(element => {
+      element.showScheme = true;
+    });
+    if (!subcatshowSubcat.showSubCategory) {
       this.arrayOfExcelData[2] = [];
 
       // this.arrayOfExcelData[3] = [];
@@ -165,13 +170,17 @@ export class CategoryWiseComponent implements OnInit {
       this.removeValuesFromExcel(2);
     }
   }
+  showApplicantName(index, schemeData) {
+    schemeData.showScheme = !schemeData.showScheme
 
+
+    // this.category[this.selectedCategory].subCategoryList[index].showSubCategory = (subcashowSubcat) ? subcashowSubcat = false : subcashowSubcat = true;
+  }
   aumReport() {
     this.changedValue.emit(true);
-
-    // this.aum.aumComponent = true;
   }
   getFilerrorResponse(err) {
+    this.showLoader = false;
     this.dataService.openSnackBar(err, 'Dismiss')
   }
 

@@ -48,7 +48,7 @@ export class NewTeamMemberComponent implements OnInit {
       if(this.data.is_add_call) {
         this.addTeamMember();
       } else {
-        // this.editTeamMember();
+        this.editTeamMember();
       }
     }
   }
@@ -64,21 +64,20 @@ export class NewTeamMemberComponent implements OnInit {
     });
   }
 
-  // editTeamMember() {
-  //   let dataObj = {
-  //     ...this.data.mainData,
-  //     ...this.teamMemberFG.value,
-  //   };
+  editTeamMember() {
+    let dataObj = {
+      id: this.data.mainData.id,
+      roleId: this.teamMemberFG.controls.roleId.value,
+    };
 
-  //   delete dataObj.role;
-  //   this.settingsService.editTeamMember(dataObj).subscribe((res)=>{
-  //     this.close(true);
-  //     this.eventService.openSnackBar("Invitation sent successfully");
-  //   }, (err) => {
-  //     console.error(err);
-  //     this.eventService.openSnackBar("Error occured.");
-  //   });
-  // }
+    this.settingsService.editTeamMember(dataObj).subscribe((res)=>{
+      this.close(true);
+      this.eventService.openSnackBar("Invitation sent successfully");
+    }, (err) => {
+      console.error(err);
+      this.eventService.openSnackBar("Error occured.");
+    });
+  }
 
   close(status = false){
     this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: status});

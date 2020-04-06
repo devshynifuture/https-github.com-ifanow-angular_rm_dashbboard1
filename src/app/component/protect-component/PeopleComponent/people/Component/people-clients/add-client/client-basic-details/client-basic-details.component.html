@@ -111,6 +111,7 @@
                             class="form-control">
                         <mat-hint align="end">{{username.value.length}}/ 50</mat-hint>
                         <mat-error>This field is required</mat-error>
+                        <mat-hint>Optional</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -173,6 +174,7 @@
                     <mat-form-field>
                         <mat-select [(ngModel)]="selectedClientOwner" formControlName="clientOwner"
                             class="form-control">
+                            <mat-option value="">Select option</mat-option>
                             <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
                                 {{singleClient.name}}
                             </mat-option>
@@ -259,7 +261,9 @@
                 <div class="form-group m-0">
                     <mat-form-field>
                         <mat-select formControlName="role" class="form-control">
-                            <mat-option value="1">Option</mat-option>
+                            <mat-option value="">Option</mat-option>
+                            <mat-option [value]="role.clientRoleId" *ngFor="let role of clientRoles">
+                                {{role.clientRoleName}}</mat-option>
                         </mat-select>
                         <mat-error class="f-12">This field is required
                         </mat-error>
@@ -539,8 +543,8 @@
             <div class="col-md-3 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input formControlName="dateOfIncorporation" matInput class="form-control"
-                            [matDatepicker]="picker">
+                        <input (click)="picker.open()" formControlName="dateOfIncorporation" matInput
+                            class="form-control" [matDatepicker]="picker">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-hint>Optional</mat-hint>
@@ -676,7 +680,9 @@
                 <div class="form-group m-0">
                     <mat-form-field>
                         <mat-select formControlName="role" class="form-control">
-                            <mat-option value="option">Option</mat-option>
+                            <mat-option value="">Option</mat-option>
+                            <mat-option [value]="role.clientRoleId" *ngFor="let role of clientRoles">
+                                {{role.clientRoleName}}</mat-option>
                         </mat-select>
                         <mat-error>This field is required</mat-error>
                     </mat-form-field>
@@ -685,14 +691,23 @@
         </div>
     </div>
 </div>
-<div class="bottom-fixed wrapper-12 w-50">
+<div class="bottom-fixed wrapper-12 w-50 -m-28">
     <div class="row">
         <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="close('close')">Cancel</h5>
         </div>
         <div *ngIf="fieldFlag=='client' || fieldFlag=='lead'" class="col-md-8 right text-right">
-            <button mat-raised-button (click)="saveNextClient('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
-            </button>
+
+            <!-- <button mat-raised-button (click)="saveNextClient('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
+            </button> -->
+            <!-- ================= ERROR ======================= -->
+            <!-- options not defined in ts and causing error on loading ui -->
+            <!--  -->
+            <!-- ================= ERROR ======================= -->
+
+            <!-- <app-progress-button (btnClick)="saveNextClient('Next')" class="br-0 text-inherit mr-12"
+                [options]="barButtonOptions" [logEvent]="passEvent">
+            </app-progress-button> -->
             <button mat-stroked-button (click)="saveNextClient('close')" class="btn-bottom br-0 text-inherit">SAVE &
                 CLOSE
             </button>

@@ -53,9 +53,9 @@ export class SettingsService {
   addTeamMember(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_TEAM_MEMBER, data);
   }
-  // editTeamMember(data) {
-  //   return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_USER_ROLE, data);
-  // }
+  editTeamMember(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_TEAM_MEMBER, data);
+  }
   deleteTeamMember(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_TEAM_MEMBER, data);
   }

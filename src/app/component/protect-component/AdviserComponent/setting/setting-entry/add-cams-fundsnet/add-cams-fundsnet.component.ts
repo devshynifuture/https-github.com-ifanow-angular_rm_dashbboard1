@@ -57,8 +57,7 @@ export class AddCamsFundsnetComponent implements OnInit {
   }
 
   secretQuestionsFG(questionId = '', answer = ''){
-    let qObj = {value: questionId, disabled: !!questionId};;
-    
+    let qObj = {value: questionId, disabled: !!questionId};
     return this.fb.group({
       questionId: [qObj, [Validators.required, this.isQuestionDuplicate()]],
       answer: [answer, [Validators.required]],
@@ -75,13 +74,17 @@ export class AddCamsFundsnetComponent implements OnInit {
     const questionSet = secretQuestionsArr.controls[index] as FormGroup;
     if(!this.is_add) {
       const questionId = this.data.mainData.rtaCamsFundNetSecurityQuestionsList.map(data => data.questionId);
-      const questionExist = questionId.includes(questionSet.controls.questionId.value);
+      const questionExist = questionId.includes(parseInt(questionSet.controls.questionId.value));
       if(questionExist) {
+        if(questionId.length <=1) {
+          this.eventService.openSnackBar("You must have at least 1 security question")
+          return;
+        }
         const questionToRemove = this.data.mainData.rtaCamsFundNetSecurityQuestionsList.find(data => data.questionId == questionSet.controls.questionId.value).id
         this.settingService.deleteQuestion(questionToRemove).subscribe(res => {
-          this.data.mainData.rtaCamsFundNetSecurityQuestionsList.splice(this.data.mainData.rtaCamsFundNetSecurityQuestionsList.findIndex((data)=> data.id == secretQuestionsArr.controls[index].value.id), 1);
+          this.data.mainData.rtaCamsFundNetSecurityQuestionsList.splice(this.data.mainData.rtaCamsFundNetSecurityQuestionsList.findIndex((data)=> data.id == questionSet.controls.questionId.value), 1);
+          this.resetQuestionSet();
           this.eventService.openSnackBar("Question deleted successfully");
-          secretQuestionsArr.removeAt(index);
         }, err => {
           this.eventService.openSnackBar("Error occured");
         })
@@ -91,6 +94,25 @@ export class AddCamsFundsnetComponent implements OnInit {
       }
     } else {
       secretQuestionsArr.removeAt(index);
+    }
+  }
+
+  resetQuestionSet(){
+    let extraQuestionObj = {questionId: '', answer: ''};
+    const secretQuestionsArr = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
+    if(!this.showAddMoreQuestionBtn) {
+      extraQuestionObj = secretQuestionsArr.controls[secretQuestionsArr.controls.length -1].value;
+    }
+    for (let index = secretQuestionsArr.controls.length-1; index >= 0; index--) {
+      secretQuestionsArr.removeAt(index);
+    }
+    for (let index = 0; index < this.data.mainData.rtaCamsFundNetSecurityQuestionsList.length; index++) {
+      secretQuestionsArr.push(this.secretQuestionsFG(this.data.mainData.rtaCamsFundNetSecurityQuestionsList[index].questionId, this.data.mainData.rtaCamsFundNetSecurityQuestionsList[index].answer));
+    }
+    if(!this.showAddMoreQuestionBtn) {
+      secretQuestionsArr.push(this.secretQuestionsFG('', extraQuestionObj.answer));
+      const questionSet = secretQuestionsArr.controls[secretQuestionsArr.controls.length-1] as FormGroup;
+      questionSet.controls.questionId.setValue(extraQuestionObj.questionId)
     }
   }
 
@@ -187,9 +209,11 @@ export class AddCamsFundsnetComponent implements OnInit {
   }
 
   addOrUpdateIndividualQuestion(index) {
-    let questionSet = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.value;
-
-    if (questionSet.length == (index+1) && !this.showAddMoreQuestionBtn) {
+    const secretQuestionsArr = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
+    const questionSet = secretQuestionsArr.controls[index] as FormGroup;
+    const questionId = this.data.mainData.rtaCamsFundNetSecurityQuestionsList.map(data => data.questionId);
+    const questionExist = questionId.includes(questionSet.controls.questionId.value);
+    if (!questionExist) {
       this.saveIndividualQuestion(index);
     } else {
       this.updateAnswer(index);
@@ -199,7 +223,13 @@ export class AddCamsFundsnetComponent implements OnInit {
   Close(status) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: status });
   }
+
   trackByFn(index: any, item: any) {
     return index;
+  }
+
+  getRtaControlArray(){
+    let formarr =  this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
+    return formarr.controls;
   }
 }

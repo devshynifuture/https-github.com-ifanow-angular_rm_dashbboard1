@@ -1,14 +1,14 @@
-import {Component, NgZone, OnInit} from '@angular/core';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {AddClientComponent} from './add-client/add-client.component';
-import {PeopleService} from '../../../people.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {MatTableDataSource} from '@angular/material/table';
-import {Router} from '@angular/router';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { AddClientComponent } from './add-client/add-client.component';
+import { PeopleService } from '../../../people.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-people-clients',
@@ -24,8 +24,8 @@ export class PeopleClientsComponent implements OnInit {
   isLoading: boolean;
 
   constructor(private authService: AuthService, private ngZone: NgZone, private router: Router,
-              private subInjectService: SubscriptionInject, public eventService: EventService,
-              private peopleService: PeopleService, public dialog: MatDialog) {
+    private subInjectService: SubscriptionInject, public eventService: EventService,
+    private peopleService: PeopleService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -68,7 +68,7 @@ export class PeopleClientsComponent implements OnInit {
 
   addClient(data) {
     if (data == null) {
-      data = {flag: 'Add client', fieldFlag: 'client'};
+      data = { flag: 'Add client', fieldFlag: 'client' };
     } else {
       data.flag = 'Edit client';
       data.fieldFlag = 'client';

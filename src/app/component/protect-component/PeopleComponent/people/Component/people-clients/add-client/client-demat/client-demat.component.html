@@ -1,4 +1,4 @@
-<div *ngIf="!userData.flag" class="row bb-1 popup-header-fix-50">
+<div *ngIf="fieldFlag==undefined" class="row bb-1 popup-header-fix-50">
     <div class="col-md-10 p-0">
         <h4 class="mb-0 l-22 wrapper-20">{{userData.headerFlag}} Demat</h4>
     </div>
@@ -14,16 +14,20 @@
             <h5 class="m-0 pt-8">Mode of holding</h5>
         </div>
         <div class="col-md-7 p-0 mode-holding">
-            <mat-radio-group formControlName="modeOfHolding" aria-label="Select an option">
-                <mat-radio-button value="1" [ngClass]="{'bu-primary': dematForm.get('modeOfHolding').value=='1'}"
-                    class="borderRadio">Single</mat-radio-button>
-                <mat-radio-button value="2" [ngClass]="{'bu-primary': dematForm.get('modeOfHolding').value=='2'}"
-                    class="borderRadio">Joint</mat-radio-button>
+            <mat-radio-group formControlName="modeOfHolding" [(ngModel)]="holdingMode" aria-label="Select an option">
+                <mat-radio-button value="1" [ngClass]="{'bu-primary': holdingMode=='1'}" class="borderRadio">Single
+                </mat-radio-button>
+                <mat-radio-button value="2" [ngClass]="{'bu-primary': holdingMode=='2'}" class="borderRadio">Joint
+                </mat-radio-button>
             </mat-radio-group>
         </div>
     </div>
-    <app-add-holder-names (holderList)="getHolderList($event)">
-    </app-add-holder-names>
+
+    <!-- error ========== -->
+    <!-- <app-add-holder-names *ngIf="dematList" [holderListInput]="dematList.holderNameList"
+        (holderList)="getHolderList($event)">
+    </app-add-holder-names> -->
+    <!-- error ========== -->
     <div class="row pt-44">
         <div class="col-md-4 text-right pl-0">
             <h5 class="m-0 pt-8">Depository participant name</h5>
@@ -99,7 +103,7 @@
     </div>
     <app-add-number [numberList]="userData.mobileList" [flag]="mobileNumberFlag"
         (numberArray)="getNumberDetails($event)"></app-add-number>
-    <div class="row pt-44">
+    <!-- <div class="row pt-44">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-8">Nominee</h5>
         </div>
@@ -122,6 +126,53 @@
         </div>
         <div class="col-md-2 pr-0">
             <p class="m-0 roboto text-custom pt-8 ws-pre">+ Add nominee</p>
+        </div>
+    </div> -->
+    <div formArrayName="getNomineeName">
+        <div class="row pt-36" *ngFor="let obj of dematForm.controls['getNomineeName'].controls; let pointIndex=index"
+            [formGroupName]="pointIndex">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
+            </div>
+            <div [ngClass]="getNominee.length > 1?'col-md-4' : 'col-md-6'">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                            (selectionChange)="disabledMember($event.value,'nominee')"
+                            (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                            <mat-option value='' disabled>Select family members</mat-option>
+                            <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
+                                <span>{{f.userName}}</span>
+                            </mat-option>
+                        </mat-select>
+                        <mat-error class="f-12">
+                            This field is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-2" *ngIf="getNominee.length > 1">
+                <div class="form-group mb-0 iconPetage">
+                    <mat-form-field>
+                        <input matInput class="form-control br-0 percentage" type="number"
+                            formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
+                        <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('required')">
+                            This field is required
+                        </mat-error>
+                        <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('incorrect') ">
+                            Total percent should be 100%
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-2 p-0 d-flex align-items-center">
+                <i *ngIf="dematForm.value.getNomineeName.length < 3"
+                    class="material-icons text-primitive f-20 c-p float-left" (click)="addNewNominee(undefined)">add</i>
+                <i *ngIf="dematForm.value.getNomineeName.length > 1"
+                    class="material-icons text-primitive f-20 c-p pl-10"
+                    (click)="removeNewNominee(pointIndex)">remove</i>
+            </div>
+
         </div>
     </div>
     <div class="row pt-44">

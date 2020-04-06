@@ -40,6 +40,17 @@ export class EnumDataService {
     this.enumService.addRoles(this.roleList);
   }
 
+  clientRoleList = [
+    {clientRoleId: 1, clientRoleName: "Mutual Fund (MF) only"},
+    {clientRoleId: 2, clientRoleName: "MF + Multi asset"},
+    {clientRoleId: 3, clientRoleName: "MF + Multi asset + Basic Plan"},
+    {clientRoleId: 4, clientRoleName: "MF + Multi asset + Advanced Plan"},
+  ]
+
+  public getClientRole() {
+    this.enumService.addClientRole(this.clientRoleList);
+  }
+
   bankList = [
     {bankId:1, bankName:"HDFC"},
     {bankId:2, bankName:"SBI"},
