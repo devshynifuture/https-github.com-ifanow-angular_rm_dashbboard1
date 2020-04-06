@@ -32,7 +32,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   };
   minorForm: any;
   nonIndividualForm: any;
-  advisorId: typeof AuthService;
+  advisorId;
   basicDetailsData: any;
   mobileData: any;
   categoryList: any[];
@@ -204,8 +204,17 @@ export class ClientBasicDetailsComponent implements OnInit {
           });
         });
       }
+      var advisorId;
+      if (this.selectedClientOwner && this.selectedClientOwner.advisorId) {
+        advisorId = this.selectedClientOwner.advisorId;
+      } else if (this.basicDetailsData && this.basicDetailsData.advisorId) {
+        advisorId = this.basicDetailsData.advisorId;
+      } else {
+        advisorId = this.advisorId;
+      }
+
       const obj = {
-        advisorId: (this.selectedClientOwner) ? this.selectedClientOwner.advisorId ? this.basicDetailsData.advisorId : this.advisorId : this.advisorId,
+        advisorId,
         taxStatusId: parseInt(this.invTaxStatus),
         emailList: [
           {
@@ -216,25 +225,21 @@ export class ClientBasicDetailsComponent implements OnInit {
         displayName: null,
         bio: null,
         martialStatusId: 0,
-        password: null,
         clientType: parseInt(this.invTypeCategory),
-        occupationId: 0,
-        id: null,
         pan: (this.invTypeCategory == '1') ? this.basicDetails.controls.pan.value : this.nonIndividualForm.value.comPan,
         clientId: (this.basicDetailsData == null) ? null : this.basicDetailsData.clientId,
         kycComplaint: 0,
         roleId: 1,
         genderId: parseInt(this.basicDetails.controls.gender.value),
-        companyStatus: 0,
-        aadharCard: null,
-        dateOfBirth: this.datePipe.transform((this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value : this.nonIndividualForm.value.dateOfIncorporation, 'dd/MM/yyyy'),
+        dateOfBirth: this.datePipe.transform((this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value :
+          this.nonIndividualForm.value.dateOfIncorporation, 'dd/MM/yyyy'),
         userName: (this.invTypeCategory == '1') ? this.basicDetails.controls.username.value : this.nonIndividualForm.value.username,
         userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? this.basicDetailsData.clientId : this.basicDetailsData.id,
         mobileList,
         referredBy: 0,
         name: (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : this.nonIndividualForm.value.comName,
         bioRemarkId: 0,
-        userType: 1,
+        userType: 2,
         remarks: null,
         status: (this.fieldFlag == 'client') ? 1 : 2,
         leadSource: (this.fieldFlag == 'lead') ? this.basicDetails.value.leadSource : null,
