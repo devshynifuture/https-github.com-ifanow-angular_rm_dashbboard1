@@ -28,11 +28,10 @@ export class PeopleLeadsComponent implements OnInit {
   getLeadList() {
     this.leadDataSource.data = [{}, {}, {}];
     this.isLoading = true;
-    let obj =
-    {
+    const obj = {
       advisorId: this.advisorId,
       status: 2
-    }
+    };
     this.peopleService.getClientList(obj).subscribe(
       data => {
         console.log(data);
@@ -49,23 +48,21 @@ export class PeopleLeadsComponent implements OnInit {
         }
         this.leadDataSource.data = data;
       },
-      err => this.eventService.openSnackBar(err, "dismiss")
-    )
+      err => this.eventService.openSnackBar(err, 'dismiss')
+    );
   }
   open(data, flag) {
     let component;
     if (flag == 'lead') {
       if (data == null) {
-        data = { flag: 'Add lead', fieldFlag: 'lead' }
-      }
-      else {
-        data['flag'] = 'Edit lead';
-        data['fieldFlag'] = "lead";
+        data = {flag: 'Add lead', fieldFlag: 'lead'};
+      } else {
+        data.flag = 'Edit lead';
+        data.fieldFlag = 'lead';
       }
       component = AddClientComponent;
-    }
-    else {
-      component = LeadsClientsComponent;;
+    } else {
+      component = LeadsClientsComponent;
     }
     const fragmentData = {
       flag,

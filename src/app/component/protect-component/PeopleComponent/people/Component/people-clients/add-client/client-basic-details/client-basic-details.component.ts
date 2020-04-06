@@ -198,10 +198,13 @@ export class ClientBasicDetailsComponent implements OnInit {
       if (this.mobileData) {
         this.mobileData.controls.forEach(element => {
           console.log(element);
-          mobileList.push({
-            userType: 2,
-            mobileNo: element.get('number').value,
-          });
+          const mobileNo = element.get('number').value;
+          if (mobileNo) {
+            mobileList.push({
+              userType: 2,
+              mobileNo: element.get('number').value,
+            });
+          }
         });
       }
       var advisorId;
@@ -212,16 +215,18 @@ export class ClientBasicDetailsComponent implements OnInit {
       } else {
         advisorId = this.advisorId;
       }
-
+      const emailId = (this.invTypeCategory == '1') ? this.basicDetails.controls.email.value : this.nonIndividualForm.value.comEmail;
+      const emailList = [];
+      if (emailId) {
+        emailList.push({
+          userType: 2,
+          email: emailId
+        });
+      }
       const obj = {
         advisorId,
         taxStatusId: parseInt(this.invTaxStatus),
-        emailList: [
-          {
-            userType: 2,
-            email: (this.invTypeCategory == '1') ? this.basicDetails.controls.email.value : this.nonIndividualForm.value.comEmail
-          }
-        ],
+        emailList,
         displayName: null,
         bio: null,
         martialStatusId: 0,
