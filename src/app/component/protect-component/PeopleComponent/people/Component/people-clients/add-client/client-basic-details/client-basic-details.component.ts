@@ -263,7 +263,7 @@ export class ClientBasicDetailsComponent implements OnInit {
             this.barButtonOptions.active = false;
             console.log(data);
             data.invCategory = this.invTypeCategory;
-            data.categoryTypeflag = 'Individual';
+            (this.invTypeCategory == '2') ? data.categoryTypeflag = 'Individual' : data.categoryTypeflag = "clientNonIndividual";
             this.eventService.openSnackBar('Added successfully!', 'Dismiss');
             (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
           },
