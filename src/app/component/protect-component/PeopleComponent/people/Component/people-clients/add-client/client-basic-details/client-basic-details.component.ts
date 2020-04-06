@@ -7,6 +7,7 @@ import {PeopleService} from 'src/app/component/protect-component/PeopleComponent
 import {EventService} from 'src/app/Data-service/event.service';
 import {DatePipe} from '@angular/common';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-client-basic-details',
@@ -14,6 +15,21 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
   styleUrls: ['./client-basic-details.component.scss']
 })
 export class ClientBasicDetailsComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & NEXT',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   minorForm: any;
   nonIndividualForm: any;
   advisorId: typeof AuthService;
@@ -80,7 +96,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       leaadStatus: [],
       leadRating: [],
       leadOwner: [],
-      clientOwner: [],
+      clientOwner: [''],
       role: [''],
     });
   }
@@ -171,6 +187,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.nonIndividualForm.markAllAsTouched();
       return;
     } else {
+      this.barButtonOptions.active = true;
       const mobileList = [];
       if (this.mobileData) {
         this.mobileData.controls.forEach(element => {
@@ -222,33 +239,44 @@ export class ClientBasicDetailsComponent implements OnInit {
         if (this.invTypeCategory == '1') {
           this.peopleService.addClient(obj).subscribe(
             data => {
+              this.barButtonOptions.active = false;
               console.log(data);
               data.invCategory = this.invTypeCategory;
               data.categoryTypeflag = 'Individual';
               (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
             },
-            err => this.eventService.openSnackBar(err, 'Dismiss')
+            (err) => {
+              this.barButtonOptions.active = false;
+              this.eventService.openSnackBar(err, 'Dismiss')
+            }
           );
         } else {
           this.peopleService.saveCompanyPersonDetail(obj).subscribe(
             data => {
+              this.barButtonOptions.active = false;
               console.log(data);
               data.invCategory = this.invTypeCategory;
               data.categoryTypeflag = 'clientNonIndividual';
               (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
             },
-            err => err => this.eventService.openSnackBar(err, 'Dismiss')
+            (err) =>{ this.eventService.openSnackBar(err, 'Dismiss')
+            this.barButtonOptions.active = false;
+          }
           );
         }
       } else {
         this.peopleService.editClient(obj).subscribe(
           data => {
+            this.barButtonOptions.active = false;
             console.log(data);
             data.invCategory = this.invTypeCategory;
             data.categoryTypeflag = (this.invTypeCategory == '1') ? 'Individual' : 'clientNonIndividual';
             (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
           },
-          err => this.eventService.openSnackBar(err, 'Dismiss')
+          (err) =>{
+            this.barButtonOptions.active = false;
+            this.eventService.openSnackBar(err, 'Dismiss')
+          }
         );
       }
     }
