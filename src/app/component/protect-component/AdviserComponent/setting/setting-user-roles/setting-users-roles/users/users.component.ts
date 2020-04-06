@@ -118,7 +118,7 @@ export class UsersComponent implements OnInit {
       header: 'SUSPEND',
       body: 'Are you sure you want to suspend this user?',
       body2: 'This cannot be undone.',
-      btnNo: 'DELETE',
+      btnNo: 'SUSPEND',
       btnYes: 'CANCEL',
       positiveMethod: () => {
         console.log('aborted');
