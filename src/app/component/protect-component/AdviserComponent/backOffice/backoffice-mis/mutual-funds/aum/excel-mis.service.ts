@@ -99,7 +99,7 @@ export class ExcelMisService {
             ws.getRow(currentRowPos).values = arrayOfHeaders[2];
             let head2 = ws.getRow(currentRowPos);
             head2.font = { bold: true };
-        } else if (arrayOfHeaders[2]) {
+        } else if (arrayOfHeaders[2] && arrayOfExcelData[1]) {
             currentRowPos = currentRowPos + arrayOfExcelData[1].length + 1;
             ws.getRow(currentRowPos).values = arrayOfHeaders[2];
             let head2 = ws.getRow(currentRowPos);
@@ -123,7 +123,7 @@ export class ExcelMisService {
             let head3 = ws.getRow(currentRowPos);
 
             head3.font = { bold: true };
-        } else if (arrayOfHeaders[3]) {
+        } else if (arrayOfHeaders[3] && arrayOfExcelData[2]) {
             currentRowPos = currentRowPos + arrayOfExcelData[2].length + 1;
             ws.getRow(currentRowPos).values = arrayOfHeaders[3];
             let head3 = ws.getRow(currentRowPos);
@@ -147,7 +147,7 @@ export class ExcelMisService {
             ws.getRow(currentRowPos).values = arrayOfHeaders[4];
             let head3 = ws.getRow(currentRowPos);
             head3.font = { bold: true };
-        } else if (arrayOfHeaders[4]) {
+        } else if (arrayOfHeaders[4] && arrayOfExcelData[3]) {
             currentRowPos = currentRowPos + arrayOfExcelData[3].length + 1;
             ws.getRow(currentRowPos).values = arrayOfHeaders[4];
             let head3 = ws.getRow(currentRowPos);
@@ -183,7 +183,13 @@ export class ExcelMisService {
         // else 
         // continue
         const buf = await wb.xlsx.writeBuffer();
-        saveAs(new Blob([buf]), userData.fullName + '-' + metaData + '-' + new Date() + '.xlsx');
+        let name;
+        if (userData.hasOwnProperty('fullName')) {
+            name = userData.fullName;
+        } else {
+            name = userData.name;
+        }
+        saveAs(new Blob([buf]), name + '-' + metaData + '-' + new Date() + '.xlsx');
 
     }
 

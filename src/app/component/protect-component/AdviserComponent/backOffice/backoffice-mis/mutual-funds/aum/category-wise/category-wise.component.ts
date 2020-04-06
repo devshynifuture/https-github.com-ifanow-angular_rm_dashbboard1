@@ -19,8 +19,60 @@ export class CategoryWiseComponent implements OnInit {
   subCategoryList: any[] = [];
   totalAumForSubSchemeName: any;
   amcWiseData: any;
-  arrayOfHeaders: any[] = [];
-  arrayOfHeaderStyles: { width: number; key: string; }[][];
+  arrayOfHeaders: any[][] = [
+    [
+      'Sr. No.',
+      'Category Name',
+      'Current Value',
+      '% Weight'
+    ],
+    [
+      'Sr. No.',
+      'Sub Category Name',
+      'Current Name',
+      '% Weight'
+    ],
+    [
+      'Sr. No.',
+      'Scheme Name',
+      'Current Value',
+      '% Weight'
+    ],
+    [
+      'Applicant Name',
+      'Balance Unit',
+      'Folio',
+      'Current Amount',
+      '% Weight'
+    ]
+  ];
+  arrayOfHeaderStyles: { width: number; key: string; }[][] = [
+    [
+      { width: 10, key: 'Sr. No.' },
+      { width: 50, key: 'Category Name' },
+      { width: 30, key: 'Current Value' },
+      { width: 10, key: '% Weight' }
+    ],
+    [
+      { width: 10, key: 'Sr. No.' },
+      { width: 50, key: 'Sub Category Name' },
+      { width: 30, key: 'Current Value' },
+      { width: 10, key: '% Weight' }
+    ],
+    [
+      { width: 10, key: 'Sr. No.' },
+      { width: 50, key: 'Scheme Name' },
+      { width: 30, key: 'Current Name' },
+      { width: 10, key: '% Weight' }
+    ],
+    [
+      { width: 50, key: 'Applicant Name' },
+      { width: 30, key: 'Balance Unit' },
+      { width: 30, key: 'Folio' },
+      { width: 30, key: 'Current Amount' },
+      { width: 10, key: '% Weight' },
+    ]
+  ];
   arrayOfExcelData: any[][] = [];
   @Output() changedValue = new EventEmitter();
 
@@ -62,20 +114,36 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   showSubTableList(index, category) {
-    this.selectedCategory = index
+    this.selectedCategory = index;
     this.category[index].showCategory = (category) ? category = false : category = true;
-    console.log(this.category[index])
-    console.log(category)
+    console.log("need to check this::", this.category[index]);
+    // console.log(category);
+    if (!category) {
+      if (this.category[index].hasOwnProperty('subCategoryList') && this.category[index].subCategoryList.length !== 0) {
+        this.arrayOfExcelData[1] = [];
+        this.appendingOfValuesInExcel(this.category[index].subCategoryList, 1);
+      }
+    } else {
+      // remove
+      this.removeValuesFromExcel(1);
+    }
+  }
+
+  removeValuesFromExcel(choice) {
+    this.arrayOfExcelData[choice].splice(0, 1);
   }
 
   getFileResponseDataForSubSchemeName(data) {
     console.log("scheme Name:::", data);
     if (data) {
+      this.category = data.categories;
       this.totalAumForSubSchemeName = data.totalAum;
+      // excel init
+      this.arrayOfExcelData[0] = [];
+      this.excelInitOfCategories();
     }
 
-    this.category = data.categories;
-    this.excelSheetInitialization();
+    // this.excelSheetInitialization();
     this.category.forEach(o => {
       o.showCategory = true;
       this.subCategoryList.push(o.subCategoryList);
@@ -86,8 +154,16 @@ export class CategoryWiseComponent implements OnInit {
     });
     this.showLoader = false;
   }
-  showSchemeName(index, subcashowSubcat) {
-    this.category[this.selectedCategory].subCategoryList[index].showSubCategory = (subcashowSubcat) ? subcashowSubcat = false : subcashowSubcat = true;
+  showSchemeName(index, subcatshowSubcat) {
+    this.category[this.selectedCategory].subCategoryList[index].showSubCategory = (subcatshowSubcat) ? subcatshowSubcat = false : subcatshowSubcat = true;
+    if (!subcatshowSubcat) {
+      this.arrayOfExcelData[2] = [];
+
+      // this.arrayOfExcelData[3] = [];
+      this.appendingOfValuesInExcel(this.category[this.selectedCategory].subCategoryList, 2);
+    } else {
+      this.removeValuesFromExcel(2);
+    }
   }
 
   aumReport() {
@@ -135,68 +211,9 @@ export class CategoryWiseComponent implements OnInit {
   //   // excelData: any, footer: any[], metaData: any
   // }
 
-  excelSheetInitialization() {
-    this.arrayOfHeaders = [
-      [
-        'Sr. No.',
-        'Category Name',
-        'Current Value',
-        '% Weight'
-      ],
-      [
-        'Sr. No.',
-        'Sub Category Name',
-        'Current Name',
-        '% Weight'
-      ],
-      [
-        'Sr. No.',
-        'Scheme Name',
-        'Current Value',
-        '% Weight'
-      ],
-      [
-        'Applicant Name',
-        'Balance Unit',
-        'Folio',
-        'Current Amount',
-        '% Weight'
-      ]
-    ];
-
-    this.arrayOfHeaderStyles = [
-      [
-        { width: 10, key: 'Sr. No.' },
-        { width: 50, key: 'Category Name' },
-        { width: 30, key: 'Current Value' },
-        { width: 10, key: '% Weight' }
-      ],
-      [
-        { width: 10, key: 'Sr. No.' },
-        { width: 50, key: 'Sub Category Name' },
-        { width: 30, key: 'Current Value' },
-        { width: 10, key: '% Weight' }
-      ],
-      [
-        { width: 10, key: 'Sr. No.' },
-        { width: 50, key: 'Scheme Name' },
-        { width: 30, key: 'Current Name' },
-        { width: 10, key: '% Weight' }
-      ],
-      [
-        { width: 50, key: 'Applicant Name' },
-        { width: 30, key: 'Balance Unit' },
-        { width: 30, key: 'Folio' },
-        { width: 30, key: 'Current Amount' },
-        { width: 10, key: '% Weight' },
-      ]
-    ];
-
+  excelInitOfCategories() {
     let dataValue = [];
-    this.arrayOfExcelData[0] = [];
-    this.arrayOfExcelData[1] = [];
-    this.arrayOfExcelData[2] = [];
-    this.arrayOfExcelData[3] = [];
+
     this.category.forEach((element, index1) => {
       dataValue = [
         index1 + 1,
@@ -205,46 +222,181 @@ export class CategoryWiseComponent implements OnInit {
         element.weightInPercentage
       ];
       this.arrayOfExcelData[0].push(Object.assign(dataValue));
-      if (element.hasOwnProperty('subCategoryList') && element.subCategoryList.length !== 0) {
-        console.log("this is something i need 2");
-        element.subCategoryList.forEach((element, index2) => {
-          dataValue = [
-            index2 + 1,
+    });
+  }
+
+  // excelInitOfClients() {
+  //   let dataValue = [];
+  //   this.category.forEach(element => {
+  //     if (element.hasOwnProperty('subCategoryList') && element.subCategoryList.length !== 0) {
+  //       element.subCategoryList.forEach(element => {
+  //         if (element.hasOwnProperty('schemes') && element.schemes.length !== 0) {
+  //           element.schemes.forEach(element => {
+  //             if (element.hasOwnProperty('clientList') && element.clientList.length !== 0) {
+  //               element.clientList.forEach((element, index4) => {
+  //                 dataValue = [
+  //                   index4 + 1,
+  //                   element.name,
+  //                   element.balanceUnit,
+  //                   element.folioNumber,
+  //                   element.totalAum,
+  //                   element.weightInPercentage
+  //                 ];
+  //                 this.arrayOfExcelData[3].push(Object.assign(dataValue));
+  //               });
+  //             }
+  //           });
+  //         }
+  //       });
+  //     }
+  //   });
+  // }
+
+  // excelInitOfSchemes() {
+  //   let dataValue = [];
+  //   this.category.forEach(element => {
+  //     if (element.hasOwnProperty('subCategoryList') && element.subCategoryList.length !== 0) {
+  //       element.subCategoryList.forEach(element => {
+  //         if (element.hasOwnProperty('schemes') && element.schemes.length !== 0) {
+  //           element.schemes.forEach((element, index) => {
+  //             dataValue = [
+  //               index + 1,
+  //               element.schemeName,
+  //               element.totalAum,
+  //               element.weightInPercentage
+  //             ];
+  //             this.arrayOfExcelData[2].push(Object.assign(dataValue));
+  //           });
+  //         }
+  //       });
+  //     }
+  //   });
+  // }
+
+  // excelInitOfSubCategories() {
+  //   // let dataValue = [];
+  //   // this.category.forEach(element => {
+  //   //   if (element.hasOwnProperty('subCategoryList') && element.subCategoryList.length !== 0) {
+  //   //     element.subCategoryList.forEach((element, index2) => {
+  //   //       dataValue = [
+  //   //         index2 + 1,
+  //   //         element.name,
+  //   //         element.totalAum,
+  //   //         element.weightInPercentage
+  //   //       ];
+  //   //       this.arrayOfExcelData[1].push(Object.assign(dataValue));
+  //   //     });
+  //   //   }
+  //   // });
+
+  //   this.arrayOfExcelData[1] = [];
+  // }
+
+  appendingOfValuesInExcel(iterable, choice) {
+    switch (choice) {
+      case 0:
+        // categories
+        iterable.forEach((element, index1) => {
+          this.arrayOfExcelData[0].push(Object.assign([
+            index1,
             element.name,
             element.totalAum,
             element.weightInPercentage
-          ];
-          this.arrayOfExcelData[1].push(Object.assign(dataValue));
-
-          if (element.hasOwnProperty('schemes') && element.schemes.length !== 0) {
-            element.schemes.forEach((element, index3) => {
-              dataValue = [
-                index3 + 1,
-                element.schemeName,
-                element.totalAum,
-                element.weightInPercentage
-              ];
-              this.arrayOfExcelData[2].push(Object.assign(dataValue));
-
-              if (element.hasOwnProperty('clientList') && element.clientList.length !== 0) {
-                element.clientList.forEach((element, index4) => {
-                  dataValue = [
-                    index4 + 1,
-                    element.clientName,
-                    element.balanceUnit,
-                    element.folio,
-                    element.currentAmount,
-                    element.weightInPercentage
-                  ];
-                  this.arrayOfExcelData[3].push(Object.assign(dataValue));
-                });
-              }
-            });
-          }
+          ]));
         });
-      }
-    });
+        break;
+      case 1:
+        // sub categories
+        iterable.forEach((element, index1) => {
+          this.arrayOfExcelData[1].push(Object.assign([
+            index1,
+            element.name,
+            element.totalAum,
+            element.weightInPercentage
+          ]));
+        });
+        break;
+      case 2:
+        // scheme
+        iterable.forEach((element, index1) => {
+          this.arrayOfExcelData[3].push(Object.assign([
+            index1,
+            element.schemeName,
+            element.totalAum,
+            element.weightInPercentage
+          ]));
+        });
+        break;
+      case 3:
+        // applicant
+        iterable.forEach((element, index1) => {
+          this.arrayOfExcelData[4].push(Object.assign([
+            index1,
+            element.clientName,
+            element.balanceUnit,
+            element.folio,
+            element.currentAmount,
+            element.weightInPercentage
+          ]));
+        });
+        break;
+    }
   }
+
+  // excelSheetInitialization() {
+  //   let dataValue = [];
+  //   this.arrayOfExcelData[0] = [];
+  //   this.arrayOfExcelData[1] = [];
+  //   this.arrayOfExcelData[2] = [];
+  //   this.arrayOfExcelData[3] = [];
+  //   this.category.forEach((element, index1) => {
+  //     dataValue = [
+  //       index1 + 1,
+  //       element.name,
+  //       element.totalAum,
+  //       element.weightInPercentage
+  //     ];
+  //     this.arrayOfExcelData[0].push(Object.assign(dataValue));
+  //     if (element.hasOwnProperty('subCategoryList') && element.subCategoryList.length !== 0) {
+  //       console.log("this is something i need 2");
+  //       element.subCategoryList.forEach((element, index2) => {
+  //         dataValue = [
+  //           index2 + 1,
+  //           element.name,
+  //           element.totalAum,
+  //           element.weightInPercentage
+  //         ];
+  //         this.arrayOfExcelData[1].push(Object.assign(dataValue));
+
+  //         if (element.hasOwnProperty('schemes') && element.schemes.length !== 0) {
+  //           element.schemes.forEach((element, index3) => {
+  //             dataValue = [
+  //               index3 + 1,
+  //               element.schemeName,
+  //               element.totalAum,
+  //               element.weightInPercentage
+  //             ];
+  //             this.arrayOfExcelData[2].push(Object.assign(dataValue));
+
+  //             if (element.hasOwnProperty('clientList') && element.clientList.length !== 0) {
+  //               element.clientList.forEach((element, index4) => {
+  //                 dataValue = [
+  //                   index4 + 1,
+  //                   element.clientName,
+  //                   element.balanceUnit,
+  //                   element.folio,
+  //                   element.currentAmount,
+  //                   element.weightInPercentage
+  //                 ];
+  //                 this.arrayOfExcelData[3].push(Object.assign(dataValue));
+  //               });
+  //             }
+  //           });
+  //         }
+  //       });
+  //     }
+  //   });
+  // }
 
   categoryWiseExcelSheet() {
     ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'selectedScheme', 'Category Wise MIS Report');
