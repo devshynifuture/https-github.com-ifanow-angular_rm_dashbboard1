@@ -37,7 +37,6 @@ export class SipComponent implements OnInit {
     this.viewMode = 'Select option';
     this.getArnRiaList();
     this.newSip();
-    this.ceaseSip();
    this.sipCountGet();
    this.expiredGet();
    this.expiringGet();
@@ -208,6 +207,7 @@ export class SipComponent implements OnInit {
           this.newSipObj[6].dateDiff=360;
 
       });
+          this.ceaseSip();
       }
     
   ceaseSip(){
