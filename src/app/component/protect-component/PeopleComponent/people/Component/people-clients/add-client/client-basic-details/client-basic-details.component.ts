@@ -6,8 +6,8 @@ import {AuthService} from 'src/app/auth-service/authService';
 import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {DatePipe} from '@angular/common';
-import { EnumServiceService } from 'src/app/services/enum-service.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import {EnumServiceService} from 'src/app/services/enum-service.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-client-basic-details',
@@ -57,7 +57,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   ngOnInit() {
     this.clientRoles = this.enumService.getClientRole();
     console.log(this.clientRoles, "this.clientRoles 123A");
-    
+
   }
 
   @Input() set data(data) {
@@ -289,7 +289,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId
     };
-    this.peopleService.getAllCLients(obj).subscribe(
+    this.peopleService.getAllClients(obj).subscribe(
       data => {
         console.log(data);
         this.clientOwnerList = data;

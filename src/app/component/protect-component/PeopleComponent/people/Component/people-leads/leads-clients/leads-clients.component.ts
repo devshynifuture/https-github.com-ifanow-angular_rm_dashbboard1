@@ -38,7 +38,7 @@ export class LeadsClientsComponent implements OnInit {
     const obj = {
       advisorId: 1
     };
-    this.peopleService.getAllCLients(obj).subscribe(
+    this.peopleService.getAllClients(obj).subscribe(
       data => {
         console.log(data);
         this.clientOwnerList = data;
