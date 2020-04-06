@@ -91,7 +91,7 @@ export class CategoryWiseComponent implements OnInit {
   }
   showSchemeName(index, subcashowSubcat,subCatList) {
     subcashowSubcat.showSubCategory = !subcashowSubcat.showSubCategory
-    subCatList.forEach(element => {
+    subCatList.schemes.forEach(element => {
       element.showScheme=true;
     });
 
