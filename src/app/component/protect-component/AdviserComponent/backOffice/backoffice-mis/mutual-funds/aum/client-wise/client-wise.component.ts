@@ -15,6 +15,7 @@ export class ClientWiseComponent implements OnInit {
   clientId: any;
   totalCurrentValue = 0;
   totalWeight = 0;
+  isLoading=false;
   arrayOfExcelData: any[][] = [];
   arrayOfHeaders: any[][] = [
     [
@@ -103,6 +104,8 @@ export class ClientWiseComponent implements OnInit {
     )
   }
   getClientTotalAum() {
+    this.isLoading=true;
+    this.clientList=[{},{},{}];
     let obj = {
       advisorId: this.advisorId,
       arnRiaDetailsId: -1,
@@ -223,6 +226,7 @@ export class ClientWiseComponent implements OnInit {
   }
 
   clientTotalAum(data) {
+    this.isLoading=false;
     if (data) {
       this.clientList = data;
       console.log("client list ::::", data);

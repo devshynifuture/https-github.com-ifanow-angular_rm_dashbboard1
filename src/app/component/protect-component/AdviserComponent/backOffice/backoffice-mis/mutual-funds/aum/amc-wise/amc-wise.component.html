@@ -30,7 +30,7 @@
                         <tbody *ngFor="let amc of amcList; let i = index">
                             <tr>
                                 <td>
-                                    <div class="bar"> {{i+1}} </div>
+                                    <div class="bar"> {{(isLoading)?'':i+1}} </div>
                                 </td>
                                 <td>
                                     <div class="bar"> {{amc.name}} </div>
@@ -39,7 +39,7 @@
                                     <div class="bar"> {{amc.totalAum}} </div>
                                 </td>
                                 <td>
-                                    <div class="bar"> {{amc.weightInPercentage}}% </div>
+                                    <div class="bar"> {{amc.weightInPercentage}}{{(isLoading?'':'%')}}</div>
                                 </td>
                                 <td (click)="showScheme(amc)">
                                     <div class="bar text-center">
@@ -106,7 +106,7 @@
                                 </tr>
                         </tbody>
                         <tbody>
-                            <tr>
+                            <tr>    
                                 <td class="p-table"><strong>Total</strong></td>
                                 <td class="p-table">&nbsp;</td>
                                 <td class="p-table"><strong>{{totalCurrentValue}}</strong></td>

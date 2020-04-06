@@ -41,7 +41,7 @@
                             <tr>
                                 <td>
                                     <div class="bar">
-                                        {{i+1}}
+                                        {{(isLoading)?'':i+1}}
                                     </div>
                                 </td>
 
@@ -58,7 +58,7 @@
                                 </td>
                                 <td>
                                     <div class="bar">
-                                        {{category.weightInPercentage}}%
+                                        {{category.weightInPercentage}}{{(isLoading?'':'%')}}
                                     </div>
                                 </td>
                                 <td class="text-center" (click)="showSubTableList(i,category)">
@@ -160,6 +160,18 @@
                                 </td>
                             </tr>
                         </tbody>
+                         <tbody>
+                            <tr>
+                                <td class="p-table"><strong>Total</strong></td>
+                                <td class="p-table">&nbsp;</td>
+                                <td class="p-table"><strong>{{totalCurrentValue}}</strong></td>
+                                <td class="p-table"><strong>{{totalWeight}}%</strong></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                        <div *ngIf="!category">
+                            <p>No data found</p>
+                        </div>
                     </table>
                 </div>
             </div>

@@ -35,7 +35,7 @@
                             <tbody *ngFor="let name of applicantName; index as i">
                                 <tr>
                                     <td>
-                                        <div class="bar"> {{i+1}} </div>
+                                        <div class="bar"> {{(isLoading)?'':i+1}} </div>
                                     </td>
                                     <td>
                                         <div class="bar"> {{(name.name)?name.name:'-'}} </div>
@@ -44,7 +44,7 @@
                                         <div class="bar"> {{name.totalAum}} </div>
                                     </td>
                                     <td class="">
-                                        <div class="bar"> {{name.weightInPercentage}} </div>
+                                        <div class="bar"> {{name.weightInPercentage}}{{(isLoading?'':'%') }}</div>
                                     </td>
                                     <td class="text-center" (click)="category(name)">
                                         <div class="bar text-center">

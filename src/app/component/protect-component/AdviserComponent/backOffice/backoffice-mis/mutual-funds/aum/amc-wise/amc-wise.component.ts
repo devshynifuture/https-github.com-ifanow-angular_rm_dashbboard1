@@ -18,6 +18,7 @@ export class AmcWiseComponent implements OnInit {
   amcList: any;
   totalCurrentValue = 0;
   totalWeight = 0;
+  isLoading=false;
   @Output() changedValue = new EventEmitter();
 
   arrayOfExcelData: any[][] = [];
@@ -74,6 +75,8 @@ export class AmcWiseComponent implements OnInit {
     this.changedValue.emit(true);
   }
   getAmcWiseData() {
+    this.isLoading=true;
+    this.amcList=[{},{},{}]
     const obj = {
       advisorId: this.advisorId,
       arnRiaDetailsId: -1,
@@ -171,6 +174,7 @@ export class AmcWiseComponent implements OnInit {
   }
 
   getReponseAmcWiseGet(data) {
+    this.isLoading=false;
     if (data) {
       console.log("this we need", data)
       this.amcList = data;
