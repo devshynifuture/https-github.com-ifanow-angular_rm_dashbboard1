@@ -18,9 +18,6 @@
                     <input class="form-control" type="text" placeholder="Search applicant Name" [(ngModel)]="applicantFilter" (keyup)="filterArray()">
                 </div>
             </div>
-
-
-
             <div class="row">
                 <div class="col-md-12 p-0 cat-wise overflow-hidden">
                     <table class="skeletonAnimation mt-16" appSkeletonLoading [appSkeletonLoading]="isLoading" id="table-low">
