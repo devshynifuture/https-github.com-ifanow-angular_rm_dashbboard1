@@ -12,6 +12,33 @@
 border-radius: 30px !important;
 background-color:#fff !important;
 height: 46px !important;
+color: #939393 !important;
+	}
+	.mob-amt{
+		.mat-chip-list-wrapper{
+			justify-content: center;
+		}
+		.mat-standard-chip{
+			padding:8px 15px !important;
+			background-color: #fff;
+			color: #1A303E;
+			border: 1px solid #1A303E;
+			font-size: 16px;
+			
+		}
+	}
+	.payment-copy{
+		    background: linear-gradient(180deg, #94E9B6 0%, #5BCF7F 100%);
+    border-radius: 50%;
+    text-align: center;
+    padding-top: 3px;
+    color: #fff;
+
+	}
+	.payment-empty{
+		border: 1.1px solid #D8D8D8;
+		padding: 3px 7px;
+		border-radius:50%;
 	}
 	.mob-add-center {
 		button {
@@ -127,11 +154,16 @@ height: 46px !important;
 	}
 }
 
-#mob-noresult,#mob-quick-invest,#mob-quick-invest-payment,#mob-payment-gateway {
+#mob-noresult,#mob-quick-invest,#mob-quick-invest-payment,#mob-payment-gateway,
+#mob-payment-gateway-copy,#mob-quick-invest-new,#mob-funds-page,#mob-existing-investor {
 	background-color: #f2f2f2;
+	.bg-white {
+			box-shadow: 0px 1px 1px rgba(198, 198, 198, 0.2);
+			border-radius: 10px;
+		}
 }
 
-#mob-quick-invest,#mob-quick-invest-payment{
+#mob-quick-invest,#mob-quick-invest-payment,#mob-quick-invest-new,#mob-existing-investor{
 	.mat-button-toggle-group-appearance-standard{
 		height: 46px;
 		border-radius: 25px;
@@ -139,19 +171,7 @@ height: 46px !important;
 		background-color:#fff;
 		box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14);
 	}
-	.mob-amt{
-		.mat-chip-list-wrapper{
-			justify-content: center;
-		}
-		.mat-standard-chip{
-			padding:8px 15px !important;
-			background-color: #fff;
-			color: #1A303E;
-			border: 1px solid #1A303E;
-			font-size: 16px;
-			
-		}
-	}
+	
 }
 
 #mob-quick-invest-payment{
@@ -163,6 +183,27 @@ background: #FFFFFF;
 box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.12);
 border-radius: 9.5px;
 		}
+	}
+}
+#mob-quick-invest-new,#mob-funds-page,.mob-folio{
+	.mat-form-field-appearance-fill .mat-form-field-flex{
+		background-color: transparent;
+		padding-left:0px;
+		padding-right:0px;
+	}
+	.mat-select{
+		background: #FFFFFF;
+    border: 1px solid #1A303E !important;
+    border-radius: 35px !important;
+    .mat-select-arrow-wrapper{
+    	display: block;
+    }
+	}
+}
+#mob-funds-page,#mob-existing-investor{
+	.mob-input{
+		    padding-left: 16px !important;
+    padding-top: 8px !important;
 	}
 }
 }
