@@ -177,7 +177,7 @@ export class AmcWiseComponent implements OnInit {
     this.isLoading = false;
     if (data) {
       console.log("this we need", data)
-      this.amcList = undefined;
+      this.amcList = data;
       this.initializeExcelSheet();
       this.amcList.forEach(o => {
         o.showAmc = true;
