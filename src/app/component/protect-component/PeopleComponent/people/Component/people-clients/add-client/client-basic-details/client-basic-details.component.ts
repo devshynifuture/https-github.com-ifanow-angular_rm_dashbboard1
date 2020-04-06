@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {ValidatorType} from 'src/app/services/util.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {DatePipe} from '@angular/common';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ValidatorType } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { DatePipe } from '@angular/common';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
@@ -50,14 +50,14 @@ export class ClientBasicDetailsComponent implements OnInit {
   validatorType = ValidatorType;
   invTypeCategory;
   invTaxStatus;
-  clientRoles:any = []
+  clientRoles: any = []
   constructor(private fb: FormBuilder, private enumService: EnumServiceService, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
     this.clientRoles = this.enumService.getClientRole();
     console.log(this.clientRoles, "this.clientRoles 123A");
-    
+
   }
 
   @Input() set data(data) {
@@ -107,13 +107,13 @@ export class ClientBasicDetailsComponent implements OnInit {
       minorFullName: [data.name, [Validators.required]],
       dobAsPerRecord: [new Date(data.dateOfBirth)],
       dobActual: [],
-      gender: [(String(data.genderId))],
+      gender: [(data.genderId) ? String(data.genderId) : '1'],
       gFullName: [(data.guardianData) ? data.guardianData.name : '', [Validators.required]],
       gDobAsPerRecord: [(data.guardianData) ? new Date(data.guardianData.birthDate) : ''],
       gDobActual: [],
-      gGender: [(data.guardianData) ? String(data.genderId) : ''],
-      relationWithMinor: [],
-      gEmail: [, [Validators.pattern(this.validatorType.EMAIL)]],
+      gGender: [(data.guardianData) ? String(data.genderId) : '1'],
+      relationWithMinor: [String(data.relationshipId)],
+      gEmail: [(data.emailList.length > 0) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]]
     });
   }
@@ -261,9 +261,10 @@ export class ClientBasicDetailsComponent implements OnInit {
               this.eventService.openSnackBar("Added successfully!", "Dismiss");
               (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
             },
-            (err) =>{ this.eventService.openSnackBar(err, 'Dismiss')
-            this.barButtonOptions.active = false;
-          }
+            (err) => {
+              this.eventService.openSnackBar(err, 'Dismiss')
+              this.barButtonOptions.active = false;
+            }
           );
         }
       } else {
@@ -276,7 +277,7 @@ export class ClientBasicDetailsComponent implements OnInit {
             this.eventService.openSnackBar("Updated successfully!", "Dismiss");
             (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
           },
-          (err) =>{
+          (err) => {
             this.barButtonOptions.active = false;
             this.eventService.openSnackBar(err, 'Dismiss')
           }
@@ -313,6 +314,32 @@ export class ClientBasicDetailsComponent implements OnInit {
         verificationStatus: 0
       });
     });
+    let gardianObj;
+    if (this.invTypeCategory == '2') {
+      gardianObj =
+      {
+        name: (this.invTypeCategory == '2') ? this.minorForm.value.gFullName : null,
+        birthDate: (this.invTypeCategory == '2') ? this.datePipe.transform(this.minorForm.value.gDobAsPerRecord, 'dd/MM/yyyy') : null,
+        pan: 'pan',
+        genderId: (this.invTypeCategory == '2') ? this.minorForm.value.gGender : null,
+        relationshipId: 1,
+        aadhaarNumber: null,
+        occupationId: 1,
+        martialStatusId: 1,
+        anniversaryDate: null,
+        mobileList: (this.invTypeCategory == '2') ? mobileList : null,
+        emailList: [
+          {
+            email: (this.invTypeCategory == '2') ? this.minorForm.value.gEmail : null,
+            userType: 4,
+            verificationStatus: 0
+          }
+        ]
+      }
+    }
+    else {
+      gardianObj = null;
+    }
     if (this.invTypeCategory == '1' && this.basicDetails.invalid) {
       this.basicDetails.markAllAsTouched();
       return;
@@ -341,29 +368,11 @@ export class ClientBasicDetailsComponent implements OnInit {
       remarks: null,
       emailList: [
         {
-          email: (this.invTypeCategory == '1') ? this.basicDetails.controls.email.value : null,
+          email: (this.invTypeCategory == '1') ? this.basicDetails.controls.email.value : this.minorForm.value.gEmail,
           verificationStatus: 0
         }
       ],
-      guardianData: {
-        name: (this.invTypeCategory == '2') ? this.minorForm.value.gFullName : null,
-        birthDate: (this.invTypeCategory == '2') ? this.datePipe.transform(this.minorForm.value.gDobAsPerRecord, 'dd/MM/yyyy') : null,
-        pan: 'pan',
-        genderId: (this.invTypeCategory == '2') ? this.minorForm.value.gGender : null,
-        relationshipId: 1,
-        aadhaarNumber: null,
-        occupationId: 1,
-        martialStatusId: 1,
-        anniversaryDate: null,
-        mobileList: (this.invTypeCategory == '2') ? mobileList : null,
-        emailList: [
-          {
-            email: (this.invTypeCategory == '2') ? this.minorForm.value.gEmail : null,
-            userType: 4,
-            verificationStatus: 0
-          }
-        ]
-      },
+      guardianData: gardianObj,
       invTypeCategory: 0,
       categoryTypeflag: null
     };
