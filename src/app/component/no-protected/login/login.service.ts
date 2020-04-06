@@ -20,15 +20,16 @@ export class LoginService {
   }
 
   register(data, isClient) {
-    if(isClient){
+    if (isClient) {
       return this.http.postEncoded(apiConfig.USER + appConfig.ADD_CLIENT, data);
-    }else{
+    } else {
       return this.http.postEncoded(apiConfig.USER + appConfig.REGISTER, data);
     }
   }
 
   userRegister(data) {
   }
+
   getUsernameData(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.SEARCH_USERNAME, data, 1);
   }

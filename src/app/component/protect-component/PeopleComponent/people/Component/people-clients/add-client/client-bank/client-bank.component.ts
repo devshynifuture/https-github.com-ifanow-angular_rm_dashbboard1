@@ -147,7 +147,7 @@ export class ClientBankComponent implements OnInit {
         });
       }
       const obj = {
-        branchCode: this.bankDetail.branchCode,
+        branchCode: (this.bankList) ? this.bankList.branchCode : this.bankDetail.branchCode,
         branchName: this.bankForm.get('branchName').value,
         bankName: this.bankForm.get('bankName').value,
         accountType: this.bankForm.get('accType').value,

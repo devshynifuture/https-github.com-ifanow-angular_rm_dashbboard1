@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ValidatorType } from 'src/app/services/util.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { LoginService } from '../login.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {ValidatorType} from 'src/app/services/util.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {LoginService} from '../login.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-sign-up',
@@ -12,22 +12,25 @@ import { AuthService } from 'src/app/auth-service/authService';
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit {
-  constructor(private fb: FormBuilder, private authService: AuthService, public routerActive: ActivatedRoute, private router: Router, private loginService: LoginService, private eventService: EventService) {
+  clientSignUp = false;
+
+  constructor(private fb: FormBuilder, private authService: AuthService, public routerActive: ActivatedRoute,
+              private router: Router, private loginService: LoginService, private eventService: EventService) {
   }
-  clientSignUp: boolean = false;
+
   signUpForm;
   validatorType = ValidatorType;
 
   ngOnInit() {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
-      if (queryParamMap.has("advisorId")) {
-        this.clientSignUp = true;
+      if (queryParamMap.has('advisorId')) {
+        // this.clientSignUp = true;
       }
     });
     this.signUpForm = this.fb.group({
       fullName: [, [Validators.required]],
       email: [, [Validators.required,
-      Validators.pattern(this.validatorType.EMAIL)]],
+        Validators.pattern(this.validatorType.EMAIL)]],
       mobile: [, [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
       termsAgreement: [, [Validators.required]]
     });
@@ -81,7 +84,7 @@ export class SignUpComponent implements OnInit {
         referredBy: 0,
         name: this.signUpForm.get('fullName').value,
         bioRemarkId: 0,
-        userType: 2,
+        userType: 1,
         remarks: null,
         status: 0
       };
@@ -112,9 +115,8 @@ export class SignUpComponent implements OnInit {
               id: 2978, name: 'Aryendra Kumar Saxena'
             });
             this.router.navigate(['customer', 'detail', 'overview', 'myfeed']);
-          }
-          else {
-            this.router.navigate(['/login/forgotpassword'], { state: forgotPassObjData });
+          } else {
+            this.router.navigate(['/login/forgotpassword'], {state: forgotPassObjData});
           }
         },
         err => this.eventService.openSnackBar(err, 'Dismiss')

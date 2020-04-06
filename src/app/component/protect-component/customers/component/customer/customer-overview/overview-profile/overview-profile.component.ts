@@ -31,7 +31,7 @@ export class OverviewProfileComponent implements OnInit {
   // clientData;
 
   constructor(private authService: AuthService, public dialog: MatDialog, public subInjectService: SubscriptionInject,
-              private cusService: CustomerService, private eventService: EventService) {
+    private cusService: CustomerService, private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -111,6 +111,7 @@ export class OverviewProfileComponent implements OnInit {
   }
 
   next(flag, index) {
+    // console.log('next index: ', index);
     if (flag == 'bank') {
       (index < this.bankList.length - 1) ? this.selectedBankData = this.bankList[index + 1] : '';
     } else {
@@ -166,7 +167,7 @@ export class OverviewProfileComponent implements OnInit {
     let component;
     if (value == 'add') {
       component = AddFamilyMemberComponent;
-      data = {flag: 'Add Family Member', fieldFlag: 'familyMember'};
+      data = { flag: 'Add Family Member', fieldFlag: 'familyMember' };
     } else {
       data.flag = 'Add Family Member';
       data.fieldFlag = 'familyMember';
@@ -246,6 +247,7 @@ export class OverviewProfileComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           (flag == 'Address') ? this.getAddressList() : (flag == 'Bank') ? this.getBankList() : this.getDematList();
+          clientData = [];
           if (UtilService.isRefreshRequired(sideBarData)) {
 
           }
