@@ -31,7 +31,8 @@
                     <app-client-bank [data]="tabData" [fieldFlag]="headingData.fieldFlag"
                         (tabChange)="changeTab($event)"></app-client-bank>
                 </mat-tab>
-                <mat-tab [disabled]="tabData.userId==undefined " label=" Demat">
+                <!-- [disabled]="tabData.userId==undefined " -->
+                <mat-tab  label=" Demat">
                     <app-client-demat [data]="tabData" [fieldFlag]="headingData.fieldFlag"
                         (tabChange)="changeTab($event)"></app-client-demat>
                 </mat-tab>

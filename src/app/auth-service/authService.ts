@@ -20,13 +20,13 @@ export class AuthService {
   }
 
   static getClientData() {
-    let clientDataString = sessionStorage.getItem('clientData');
+    let clientDataString = localStorage.getItem('clientData');
     return clientDataString ? JSON.parse(clientDataString) : undefined;
   }
 
   static getClientId() {
     const clientData = this.getClientData();
-    return clientData ? clientData.id : undefined;
+    return clientData ? clientData.clientId : undefined;
   }
 
   setToken(token: string) {
