@@ -118,7 +118,7 @@
                                                                 </td>
                                                                 <td>{{scheme.totalAum}} </td>
                                                                 <td>{{scheme.weightInPercentage}}</td>
-                                                                <td class="text-center" (click)="showApplicantName(i,scheme,scheme.applicantList)">
+                                                                <td class="text-center" (click)="showApplicantName(i,scheme)">
                                                                     <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="subcategory.showScheme">add</i>
                                                                     <i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="!subcategory.showScheme">
                                                                         remove
@@ -135,7 +135,7 @@
                                                                         <th>% Weight</th>
                                                                     </tr>
                                                                 </thead>
-                                                                <tbody *ngFor="let applicant of scheme.applicantList;let i = index">
+                                                                <tbody *ngFor="let applicant of scheme.clientList;let i = index">
                                                                     <tr>
                                                                         <td>{{applicant.name}} </td>
                                                                         <td>{{applicant.balanceUnit}} </td>
