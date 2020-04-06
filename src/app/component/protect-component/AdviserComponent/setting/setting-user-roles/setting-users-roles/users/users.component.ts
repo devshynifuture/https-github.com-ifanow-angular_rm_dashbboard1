@@ -91,10 +91,10 @@ export class UsersComponent implements OnInit {
       body2: 'This cannot be undone.',
       btnNo: 'DELETE',
       btnYes: 'CANCEL',
-      positiveMethod: () => {
+      negativeMethod: () => {
         console.log('aborted');
       },
-      negativeMethod: () => {
+      positiveMethod: () => {
         const deleteFromTrashSubscription = this.settingsService.deleteTeamMember(user.id)
           .subscribe(response => {
             console.log(response);
@@ -118,12 +118,12 @@ export class UsersComponent implements OnInit {
       header: 'SUSPEND',
       body: 'Are you sure you want to suspend this user?',
       body2: 'This cannot be undone.',
-      btnNo: 'DELETE',
+      btnNo: 'SUSPEND',
       btnYes: 'CANCEL',
-      positiveMethod: () => {
+      negativeMethod: () => {
         console.log('aborted');
       },
-      negativeMethod: () => {
+      positiveMethod: () => {
         const deleteFromTrashSubscription = this.settingsService.suspendMember(user.id)
           .subscribe(response => {
             console.log(response);

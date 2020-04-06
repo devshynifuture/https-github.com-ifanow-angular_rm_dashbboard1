@@ -30,16 +30,16 @@
                         <tbody *ngFor="let amc of amcList; let i = index">
                             <tr>
                                 <td>
-                                    <div class="bar"> {{i+1}} </div>
+                                    <div class="bar"> {{(isLoading)?'':i+1}} </div>
                                 </td>
                                 <td>
                                     <div class="bar"> {{amc.name}} </div>
                                 </td>
                                 <td>
-                                    <div class="bar"> {{amc.totalAum}} </div>
+                                    <div class="bar"><span appFormatNumber>{{amc.totalAum}}</span> </div>
                                 </td>
                                 <td>
-                                    <div class="bar"> {{amc.weightInPercentage}}% </div>
+                                    <div class="bar"> {{amc.weightInPercentage}}{{(isLoading?'':'%')}}</div>
                                 </td>
                                 <td (click)="showScheme(amc)">
                                     <div class="bar text-center">
@@ -52,7 +52,7 @@
                             <tr>
                                 <tr style="border: transparent !important">
                                     <td colspan="5" class="innerTd one">
-                                        <table *ngIf="!amc.showAmc" class=" mb-8 mt-8 " id="table-low">
+                                        <table *ngIf="!amc.showAmc && !isLoading" class=" mb-8 mt-8 " id="table-low">
                                             <thead class="bg-light text-dark">
                                                 <tr>
                                                     <th class="w-10">Sr No.</th>
@@ -67,7 +67,7 @@
                                                 <tr>
                                                     <td>{{i+1}}</td>
                                                     <td>{{scheme.schemeName}}</td>
-                                                    <td>{{scheme.totalAum}} </td>
+                                                    <td><span appFormatNumber>{{scheme.totalAum}}</span> </td>
                                                     <td>{{scheme.weightInPercentage}}%</td>
                                                     <td class="text-center" (click)="showApplicant(scheme)">
                                                         <i *ngIf="scheme.showScheme==true" class="material-icons b-a f-14 mt-4 c-p">add</i>
@@ -92,7 +92,7 @@
                                                                     <td>{{applicant.investorName}}</td>
                                                                     <td>{{applicant.balanceUit}}</td>
                                                                     <td>{{applicant.folioNumber}} </td>
-                                                                    <td>{{applicant.totalAum}} </td>
+                                                                    <td><span appFormatNumber>{{applicant.totalAum}}</span> </td>
                                                                     <td>{{applicant.weightInPercentage}}% </td>
                                                                     <td></td>
                                                                 </tr>
@@ -105,11 +105,11 @@
                                     </td>
                                 </tr>
                         </tbody>
-                        <tbody>
-                            <tr>
+                        <tbody *ngIf="!isLoading">
+                            <tr>    
                                 <td class="p-table"><strong>Total</strong></td>
                                 <td class="p-table">&nbsp;</td>
-                                <td class="p-table"><strong>{{totalCurrentValue}}</strong></td>
+                                <td class="p-table"><strong><span appFormatNumber>{{totalCurrentValue}}</span></strong></td>
                                 <td class="p-table"><strong>{{totalWeight}}%</strong></td>
                                 <td></td>
                             </tr>
