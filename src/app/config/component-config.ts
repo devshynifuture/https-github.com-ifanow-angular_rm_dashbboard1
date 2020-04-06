@@ -578,7 +578,7 @@ export const appConfig = {
   // LOGIN_WITH_PASSWORD: 'user/login/with/password',
 
   //////////////////////////////Login///////////////////////////////////
-  GENERATE_OTP: '/user/generate/otp',
+  GENERATE_OTP: 'user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
   REGISTER: 'user/advisor/add',
   SEARCH_USERNAME: 'user/search/username',
