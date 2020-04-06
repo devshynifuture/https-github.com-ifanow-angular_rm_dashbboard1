@@ -13,7 +13,8 @@ import { ExcelMisService } from '../excel-mis.service';
 export class CategoryWiseComponent implements OnInit {
   category;
   subcategory;
-  showLoader;
+  // showLoader;
+  isLoading = false;
   teamMemberId = 2929;
   advisorId = AuthService.getAdvisorId();
   subCategoryList: any[] = [];
@@ -36,7 +37,7 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   getSubCatSchemeName() {
-    this.showLoader = true;
+    //this.showLoader = true;
     const obj = {
       advisorId: this.advisorId,
       arnRiaDetailsId: -1,
@@ -84,7 +85,7 @@ export class CategoryWiseComponent implements OnInit {
         sub.showSubCategory = true;
       })
     });
-    this.showLoader = false;
+    //this.showLoader = false;
   }
   showSchemeName(index, subcashowSubcat) {
     this.category[this.selectedCategory].subCategoryList[index].showSubCategory = (subcashowSubcat) ? subcashowSubcat = false : subcashowSubcat = true;

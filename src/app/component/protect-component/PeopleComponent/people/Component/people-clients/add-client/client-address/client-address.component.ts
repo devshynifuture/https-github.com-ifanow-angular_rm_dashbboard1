@@ -14,11 +14,14 @@ import { CustomerService } from 'src/app/component/protect-component/customers/c
 })
 export class ClientAddressComponent implements OnInit {
   userData: any;
-  proofType;
+  addressType;
   addressList: any;
   addressData: void;
+  proofType: string;
 
-  constructor(private cusService: CustomerService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private postalService: PostalService, private peopleService: PeopleService, private eventService: EventService) {
+  constructor(private cusService: CustomerService, private fb: FormBuilder,
+    private subInjectService: SubscriptionInject, private postalService: PostalService,
+    private peopleService: PeopleService, private eventService: EventService) {
   }
 
   addressForm;
@@ -39,7 +42,7 @@ export class ClientAddressComponent implements OnInit {
   createAddressForm(data) {
     (data == undefined) ? data = {} : data;
     this.addressForm = this.fb.group({
-      proofType: [(data.addressType) ? String(data.addressType) : '1', [Validators.required]],
+      addressType: [(data.addressType) ? String(data.addressType) : '1', [Validators.required]],
       addProofType: [(data.proofType) ? String(data.proofType) : '1', [Validators.required]],
       proofIdNum: [data.proofIdNumber, [Validators.required]],
       addressLine1: [data.address1, [Validators.required]],
