@@ -13,25 +13,28 @@
         <div class="col-md-12 p-0">
             <mat-tab-group [(selectedIndex)]="selected" animationDuration="0ms" id="ui-add-client">
                 <mat-tab label="Basic details">
-                    <app-client-basic-details [data]="headingData" [fieldFlag]="headingData.fieldFlag" (tabChange)="changeTab($event)" (clientData)="getTabData($event)">
+                    <app-client-basic-details (clientData)="getTabData($event)" (tabChange)="changeTab($event)" [data]="headingData" [fieldFlag]="headingData.fieldFlag">
                     </app-client-basic-details>
                 </mat-tab>
                 <!-- [disabled]="tabData.id==undefined" -->
-                <mat-tab [disabled]="tabData.userId==undefined" label=" More info">
-                    <app-client-more-info [data]="tabData" [fieldFlag]="headingData.fieldFlag" (tabChange)="changeTab($event)"></app-client-more-info>
+                <mat-tab [disabled]="tabData.clientId==undefined&&tabData.familyMemberId==undefined" label=" More info">
+                    <app-client-more-info (tabChange)="changeTab($event)" *ngIf="!tabData.clientType || tabData.clientType!='2'" [data]="tabData" [fieldFlag]="headingData.fieldFlag">
+                    </app-client-more-info>
+                    <app-company-more-info (tabChange)="changeTab($event)" *ngIf="tabData.clientType && tabData.clientType=='2'" [data]="tabData" [fieldFlag]="headingData.fieldFlag">
+                    </app-company-more-info>
                 </mat-tab>
                 <mat-tab [disabled]="tabData.userId==undefined" label=" Address">
-                    <app-client-address [data]="tabData" [fieldFlag]="headingData.fieldFlag" (tabChange)="changeTab($event)"></app-client-address>
+                    <app-client-address (tabChange)="changeTab($event)" [data]="tabData" [fieldFlag]="headingData.fieldFlag"></app-client-address>
                 </mat-tab>
                 <mat-tab [disabled]="tabData.userId==undefined" label=" Bank">
-                    <app-client-bank [data]="tabData" [fieldFlag]="headingData.fieldFlag" (tabChange)="changeTab($event)"></app-client-bank>
+                    <app-client-bank (tabChange)="changeTab($event)" [data]="tabData" [fieldFlag]="headingData.fieldFlag"></app-client-bank>
                 </mat-tab>
                 <mat-tab [disabled]="tabData.userId==undefined" label=" Demat">
-                    <app-client-demat [data]="tabData" [fieldFlag]="headingData.fieldFlag" (tabChange)="changeTab($event)"></app-client-demat>
+                    <app-client-demat (tabChange)="changeTab($event)" [data]="tabData" [fieldFlag]="headingData.fieldFlag"></app-client-demat>
                 </mat-tab>
                 <!-- [disabled]="tabData.userId==undefined" -->
                 <mat-tab [disabled]="tabData.userId==undefined" label=" Upload">
-                    <app-client-upload [data]="tabData" [fieldFlag]="headingData.fieldFlag" (tabChange)="changeTab($event)"></app-client-upload>
+                    <app-client-upload (tabChange)="changeTab($event)" [data]="tabData" [fieldFlag]="headingData.fieldFlag"></app-client-upload>
                 </mat-tab>
             </mat-tab-group>
         </div>

@@ -55,8 +55,8 @@ export class ClientBasicDetailsComponent implements OnInit {
   // advisorId;
 
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
-    private subInjectService: SubscriptionInject, private peopleService: PeopleService,
-    private eventService: EventService, private datePipe: DatePipe) {
+              private subInjectService: SubscriptionInject, private peopleService: PeopleService,
+              private eventService: EventService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
@@ -70,7 +70,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     if (data.fieldFlag == 'familyMember') {
       this.basicDetailsData = data;
-      this.invTaxStatus = (this.basicDetailsData.familyMemberType == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
+      this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
       this.invTypeCategory = (this.basicDetailsData.familyMemberType == 0) ? '1' : String(this.basicDetailsData.familyMemberType);
       (this.basicDetailsData.familyMemberType == 1 || this.basicDetailsData.familyMemberType == 0) ? this.createIndividualForm(this.basicDetailsData) : this.createMinorForm(this.basicDetailsData);
     } else {
@@ -81,6 +81,8 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.invTaxStatus = '1';
         this.createIndividualForm(null);
         return;
+      } else {
+        this.invTaxStatus = (this.basicDetailsData.familyMembtaxStatusIderType == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
       }
       (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
       this.getClientOrLeadData(this.basicDetailsData);
@@ -98,9 +100,9 @@ export class ClientBasicDetailsComponent implements OnInit {
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       dobActual: [],
       gender: ['1'],
-      leadSource: [],
+      leadSource: [data.leadSource],
       leaadStatus: [],
-      leadRating: [data.leadRating],
+      leadRating: [(data.leadRating) ? String(data.leadRating) : '1'],
       leadOwner: [],
       clientOwner: [''],
       role: [''],
@@ -145,14 +147,16 @@ export class ClientBasicDetailsComponent implements OnInit {
     };
     this.peopleService.getClientOrLeadData(obj).subscribe(
       data => {
-        console.log(data);
+        console.log('ClientBasicDetailsComponent getClientOrLeadData data: ', data);
         this.basicDetailsData = data;
         if (data == undefined) {
           return;
         } else {
           this.invTypeCategory = (data.clientType == 0) ? '1' : String(data.clientType);
-          this.invTaxStatus = (data.clientType == 0) ? '1' : String(data.taxStatusId);
+          this.invTaxStatus = (data.taxStatusId == 0) ? '1' : String(data.taxStatusId);
           (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
+          this.clientData.emit(data);
+
         }
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
@@ -227,7 +231,6 @@ export class ClientBasicDetailsComponent implements OnInit {
         advisorId,
         taxStatusId: parseInt(this.invTaxStatus),
         emailList,
-        displayName: null,
         bio: null,
         martialStatusId: 0,
         clientType: parseInt(this.invTypeCategory),
@@ -239,10 +242,12 @@ export class ClientBasicDetailsComponent implements OnInit {
         dateOfBirth: this.datePipe.transform((this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value :
           this.nonIndividualForm.value.dateOfIncorporation, 'dd/MM/yyyy'),
         userName: (this.invTypeCategory == '1') ? this.basicDetails.controls.username.value : this.nonIndividualForm.value.username,
-        userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? this.basicDetailsData.clientId : this.basicDetailsData.id,
+        userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? this.basicDetailsData.userId : null,
         mobileList,
         referredBy: 0,
         name: (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : this.nonIndividualForm.value.comName,
+        displayName: (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : this.nonIndividualForm.value.comName,
+
         bioRemarkId: 0,
         userType: 2,
         remarks: null,
@@ -252,37 +257,40 @@ export class ClientBasicDetailsComponent implements OnInit {
         leadStatus: (this.fieldFlag == 'lead') ? this.basicDetails.value.leaadStatus : null
       };
       if (this.basicDetailsData.userId == null) {
-        if (this.invTypeCategory == '1') {
-          this.peopleService.addClient(obj).subscribe(
-            data => {
-              this.barButtonOptions.active = false;
-              console.log(data);
-              data.invCategory = this.invTypeCategory;
-              data.categoryTypeflag = 'Individual';
-              this.eventService.openSnackBar('Added successfully!', 'Dismiss');
-              (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
-            },
-            (err) => {
-              this.barButtonOptions.active = false;
-              this.eventService.openSnackBar(err, 'Dismiss');
-            }
-          );
-        } else {
-          this.peopleService.saveCompanyPersonDetail(obj).subscribe(
-            data => {
-              this.barButtonOptions.active = false;
-              console.log(data);
-              data.invCategory = this.invTypeCategory;
-              data.categoryTypeflag = 'clientNonIndividual';
-              this.eventService.openSnackBar('Added successfully!', 'Dismiss');
-              (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
-            },
-            (err) => {
-              this.eventService.openSnackBar(err, 'Dismiss');
-              this.barButtonOptions.active = false;
-            }
-          );
-        }
+        // if (this.invTypeCategory == '2') {
+        //   obj['userId'] = this.basicDetailsData.clientId;
+        // }
+        this.peopleService.addClient(obj).subscribe(
+          data => {
+            this.barButtonOptions.active = false;
+            console.log(data);
+            data.invCategory = this.invTypeCategory;
+            (this.invTypeCategory == '2') ? data.categoryTypeflag = 'Individual' : data.categoryTypeflag = "clientNonIndividual";
+            this.eventService.openSnackBar('Added successfully!', 'Dismiss');
+            (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
+          },
+          (err) => {
+            this.barButtonOptions.active = false;
+            this.eventService.openSnackBar(err, 'Dismiss');
+          }
+        );
+
+        // else {
+        // this.peopleService.saveCompanyPersonDetail(obj).subscribe(
+        //   data => {
+        //     this.barButtonOptions.active = false;
+        //     console.log(data);
+        //     data.invCategory = this.invTypeCategory;
+        //     data.categoryTypeflag = 'clientNonIndividual';
+        //     this.eventService.openSnackBar('Added successfully!', 'Dismiss');
+        //     (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
+        //   },
+        //   (err) => {
+        //     this.eventService.openSnackBar(err, 'Dismiss');
+        //     this.barButtonOptions.active = false;
+        //   }
+        // );
+        // }
       } else {
         this.peopleService.editClient(obj).subscribe(
           data => {
@@ -333,27 +341,26 @@ export class ClientBasicDetailsComponent implements OnInit {
     let gardianObj;
     if (this.invTypeCategory == '2') {
       gardianObj =
-      {
-        name: (this.invTypeCategory == '2') ? this.minorForm.value.gFullName : null,
-        birthDate: (this.invTypeCategory == '2') ? this.datePipe.transform(this.minorForm.value.gDobAsPerRecord, 'dd/MM/yyyy') : null,
-        pan: 'pan',
-        genderId: (this.invTypeCategory == '2') ? this.minorForm.value.gGender : null,
-        relationshipId: 1,
-        aadhaarNumber: null,
-        occupationId: 1,
-        martialStatusId: 1,
-        anniversaryDate: null,
-        mobileList: (this.invTypeCategory == '2') ? mobileList : null,
-        emailList: [
-          {
-            email: (this.invTypeCategory == '2') ? this.minorForm.value.gEmail : null,
-            userType: 4,
-            verificationStatus: 0
-          }
-        ]
-      }
-    }
-    else {
+        {
+          name: (this.invTypeCategory == '2') ? this.minorForm.value.gFullName : null,
+          birthDate: (this.invTypeCategory == '2') ? this.datePipe.transform(this.minorForm.value.gDobAsPerRecord, 'dd/MM/yyyy') : null,
+          pan: 'pan',
+          genderId: (this.invTypeCategory == '2') ? this.minorForm.value.gGender : null,
+          relationshipId: 1,
+          aadhaarNumber: null,
+          occupationId: 1,
+          martialStatusId: 1,
+          anniversaryDate: null,
+          mobileList: (this.invTypeCategory == '2') ? mobileList : null,
+          emailList: [
+            {
+              email: (this.invTypeCategory == '2') ? this.minorForm.value.gEmail : null,
+              userType: 4,
+              verificationStatus: 0
+            }
+          ]
+        }
+    } else {
       gardianObj = null;
     }
     if (this.invTypeCategory == '1' && this.basicDetails.invalid) {
@@ -404,7 +411,7 @@ export class ClientBasicDetailsComponent implements OnInit {
 
   // }
   close(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
+    this.subInjectService.changeNewRightSliderState({state: 'close', clientData: data});
   }
 
 }
