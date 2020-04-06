@@ -116,4 +116,19 @@ export class SettingOrgProfileComponent implements OnInit {
       }
     );
   }
+
+  getGSTTreatmentType(value) {
+    switch (value) {
+      case 1:
+        return 'Consumer';
+      case 2:
+        return 'Not registered business';
+      case 3:
+        return 'Overseas';
+      case 4:
+        return 'Registered Business';
+      default:
+        return 'NA';
+    }
+  }
 }
