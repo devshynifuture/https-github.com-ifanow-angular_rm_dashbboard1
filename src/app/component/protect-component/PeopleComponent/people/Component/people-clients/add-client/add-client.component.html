@@ -18,21 +18,31 @@
                     </app-client-basic-details>
                 </mat-tab>
                 <!-- [disabled]="tabData.id==undefined" -->
-                <mat-tab [disabled]="tabData.userId==undefined" label=" More info">
+                <mat-tab [disabled]="tabData.userId==undefined " label=" More info">
                     <app-client-more-info [data]="tabData" [fieldFlag]="headingData.fieldFlag"
                         (tabChange)="changeTab($event)">
                     </app-client-more-info>
                 </mat-tab>
-                <mat-tab [disabled]="tabData.userId==undefined" label=" Address">
-                    <app-client-address [data]="tabData" (tabChange)="changeTab($event)"></app-client-address>
+                <mat-tab [disabled]="tabData.userId==undefined " label=" Address">
+                    <ng-template>
+                        <app-client-address [data]="tabData" [fieldFlag]="headingData.fieldFlag"
+                            (tabChange)="changeTab($event)"></app-client-address>
+                    </ng-template>
                 </mat-tab>
-                <mat-tab [disabled]="tabData.userId==undefined" label=" Bank">
-                    <app-client-bank [data]="tabData" (tabChange)="changeTab($event)"></app-client-bank>
+                <mat-tab [disabled]="tabData.userId==undefined " label=" Bank">
+                    <ng-template>
+                        <app-client-bank [data]="tabData" [fieldFlag]="headingData.fieldFlag"
+                            (tabChange)="changeTab($event)"></app-client-bank>
+                    </ng-template>
                 </mat-tab>
-                <mat-tab [disabled]="tabData.userId==undefined" label=" Demat">
-                    <app-client-demat [data]="tabData" (tabChange)="changeTab($event)"></app-client-demat>
+                <mat-tab [disabled]="tabData.userId==undefined " label=" Demat">
+                    <ng-template>
+                        <app-client-demat [data]="tabData" [fieldFlag]="headingData.fieldFlag"
+                            (tabChange)="changeTab($event)"></app-client-demat>
+                    </ng-template>
                 </mat-tab>
-                <mat-tab [disabled]="tabData.userId==undefined" label=" Upload">
+                <!-- [disabled]="tabData.userId==undefined" -->
+                <mat-tab [disabled]="true" label=" Upload">
                     <app-client-upload [data]="tabData" (tabChange)="changeTab($event)"></app-client-upload>
                 </mat-tab>
             </mat-tab-group>

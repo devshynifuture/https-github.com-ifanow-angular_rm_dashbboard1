@@ -2,83 +2,91 @@
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div>
 <div *ngIf="showLoader==false">
-<div class="row">
-    <div class="col-md-6 pl-0">
-        <h3 class="pt-8 mb-0">ALL SIP</h3>
-    </div>
-    <div class="col-md-6 pr-0">
-        <div class="right text-right">
-            <button mat-stroked-button class="btn-default addon"><i class="material-icons">add</i>XLS</button>
-            <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="pt-8 mb-0">ALL SIP</h3>
+        </div>
+        <div class="col-md-6 ">
+            <div class="right text-right">
+                <button mat-stroked-button class="btn-default addon"><i class="material-icons">add</i>XLS</button>
+                <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
+            </div>
         </div>
     </div>
-</div>
-<div>
-    <input type="text" placeholder="Search..." (keyup)="applyFilter($event)">
-</div>
-<table matSort mat-table [dataSource]="dataSource" id="tbs">
-    <ng-container matColumnDef="no" sticky>
-        <th *matHeaderCellDef class="br" mat-header-cell> Index</th>
-        <td *matCellDef="let element; let i = index;" class="br" mat-cell>
-            <div class="bar"> {{ i + 1 }} </div>
-        </td>
-        <td mat-footer-cell *matFooterCellDef class=""> </td>
-    </ng-container>
-    <ng-container matColumnDef="applicantName">
-        <th mat-sort-header="investorName" mat-header-cell *matHeaderCellDef class="br t-18"> Applicant Name</th>
-        <td mat-cell *matCellDef="let element" class="br t-18">
-            <div class="bar"> {{element.investorName}} </div>
-        </td>
-        <td mat-footer-cell *matFooterCellDef class=""> </td>
-    </ng-container>
-    <ng-container matColumnDef="schemeName">
-        <th mat-sort-header="schemeName" mat-header-cell *matHeaderCellDef class="br t-12"> Scheme Name	
-        </th>
-        <td mat-cell *matCellDef="let element" class="br t-12">
-            <div class="bar"> {{element.schemeName}} </div>
-        </td>
-        <td *matFooterCellDef class="br text-right t-10" mat-footer-cell></td>
-    </ng-container>
-    <ng-container matColumnDef="folioNumber">
-        <th mat-sort-header="folioNumber" mat-header-cell *matHeaderCellDef class="br t-18"> Folio Number	</th>
-        <td mat-cell *matCellDef="let element" class="br t-18">
-            <div class="bar"> {{element.folioNumber}} </div>
-        </td>
-        <td *matFooterCellDef class="br text-right t-10" mat-footer-cell></td>
-    </ng-container>
-    <ng-container matColumnDef="fromDate">
-        <th mat-sort-header="from_date" mat-header-cell *matHeaderCellDef class="br">From Date	</th>
-        <td *matCellDef="let element" appFormatNumber class="br text-right" mat-cell>
-            <div class="bar"> {{element.from_date | date:'dd/MM/yyyy'}} </div>
-        </td>
-        <td *matFooterCellDef class="br text-right t-10 f-600 p-8 " mat-footer-cell></td>
-    </ng-container>
-    <ng-container matColumnDef="toDate">
-        <th mat-sort-header="to_date" mat-header-cell *matHeaderCellDef class="br t-14">To Date	
-        </th>
-        <td mat-cell *matCellDef="let element" class="br t-14 text-right">
-            <div class="bar"> {{element.to_date | date:'dd/MM/yyyy'}} </div>
-        </td>
-        <td *matFooterCellDef class="br text-right t-10" mat-footer-cell></td>
-    </ng-container>
-    <ng-container matColumnDef="frequency">
-        <th mat-sort-header="frequency" mat-header-cell *matHeaderCellDef class="br">Frequency
-        </th>
-        <td mat-cell *matCellDef="let element" class="br">
-            <div class="bar"> {{element.frequency}} </div>
-        </td>
-        <td *matFooterCellDef class="br text-right t-10 f-600 p-8" mat-footer-cell>Total</td>
-    </ng-container>
-    <ng-container matColumnDef="amount">
-        <th *matHeaderCellDef class="br t-14" mat-header-cell mat-sort-header="amount">Amount
-        </th>
-        <td *matCellDef="let element" appFormatNumber class="br t-14 text-right" mat-cell>
-            <div class="bar"> {{element.amount}} </div>
-        </td>
-        <td *matFooterCellDef class="br text-right t-10 f-600 p-8" mat-footer-cell>{{totalAmount}}</td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
-</table>
-</div>
+    <div class="row">
+        <div class="col-md-8"></div>
+        <div class="col-md-4 mt-12 mb-12">
+            <input type="text" class="form-control" placeholder="Search..." (keyup)="applyFilter($event)">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table matSort mat-table [dataSource]="dataSource" id="tbs">
+                <ng-container matColumnDef="no" sticky>
+                    <th *matHeaderCellDef class="br" mat-header-cell> Index</th>
+                    <td *matCellDef="let element; let i = index;" class="br" mat-cell>
+                        <div class="bar"> {{ i + 1 }} </div>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef class=""> </td>
+                </ng-container>
+                <ng-container matColumnDef="applicantName">
+                    <th mat-sort-header="investorName" mat-header-cell *matHeaderCellDef class="br t-18"> Applicant Name
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="br t-18">
+                        <div class="bar"> {{element.investorName}} </div>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef class=""> </td>
+                </ng-container>
+                <ng-container matColumnDef="schemeName">
+                    <th mat-sort-header="schemeName" mat-header-cell *matHeaderCellDef class="br t-12"> Scheme Name
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="br t-12">
+                        <div class="bar"> {{element.schemeName}} </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right t-10" mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="folioNumber">
+                    <th mat-sort-header="folioNumber" mat-header-cell *matHeaderCellDef class="br t-18"> Folio Number
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="br t-18">
+                        <div class="bar"> {{element.folioNumber}} </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right t-10" mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="fromDate">
+                    <th mat-sort-header="from_date" mat-header-cell *matHeaderCellDef class="br">From Date </th>
+                    <td *matCellDef="let element" appFormatNumber class="br text-right" mat-cell>
+                        <div class="bar"> {{element.from_date | date:'dd/MM/yyyy'}} </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right t-10 f-600 p-8 " mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="toDate">
+                    <th mat-sort-header="to_date" mat-header-cell *matHeaderCellDef class="br t-14">To Date
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="br t-14 text-right">
+                        <div class="bar"> {{element.to_date | date:'dd/MM/yyyy'}} </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right t-10" mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="frequency">
+                    <th mat-sort-header="frequency" mat-header-cell *matHeaderCellDef class="br">Frequency
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.frequency}} </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right t-10 f-600 p-8" mat-footer-cell>Total</td>
+                </ng-container>
+                <ng-container matColumnDef="amount">
+                    <th *matHeaderCellDef class="br textRight t-14" mat-header-cell mat-sort-header="amount">Amount
+                    </th>
+                    <td *matCellDef="let element" appFormatNumber class="br t-14 amt text-right" mat-cell>
+                        <div class="bar"> {{element.amount}} </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right t-10 f-600 p-8" mat-footer-cell>{{totalAmount}}</td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
+            </table>
+        </div>
+    </div>

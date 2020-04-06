@@ -3,6 +3,7 @@ import {ReconciliationService} from '../backoffice-aum-reconciliation/reconcilia
 import {AuthService} from 'src/app/auth-service/authService';
 import {HttpHeaders} from '@angular/common/http';
 import {HttpService} from 'src/app/http-service/http-service';
+import { BackofficeFileUploadService } from './backoffice-file-upload.service';
 
 @Component({
   selector: 'app-backoffice-file-upload',
@@ -10,17 +11,17 @@ import {HttpService} from 'src/app/http-service/http-service';
   styleUrls: ['./backoffice-file-upload.component.scss']
 })
 export class BackofficeFileUploadComponent implements OnInit {
-  filterRTA: any = "";
-  filterStatus: any = "";
+  filterRTA: any = 0;
+  filterStatus: any = 0;
   selectedFileType: any = "";
   fileType: any;
   advisorId: any;
   filterList:any;
   filter:any = {
-    rt:this.filterRTA,
-    status:this.filterStatus
+    rt:0,
+    status:0
   }
-  constructor(private reconService: ReconciliationService, private http: HttpService) { }
+  constructor(private reconService: ReconciliationService, private http: HttpService, private BackOffice: BackofficeFileUploadService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -32,6 +33,7 @@ export class BackofficeFileUploadComponent implements OnInit {
       console.log(this.filterList, "this.filterList 123");
       
     })
+    this.setFilter();
   }
 
   getFile(e) {
@@ -79,5 +81,11 @@ export class BackofficeFileUploadComponent implements OnInit {
     this.reconService.successBackOfficeFileToUpload(obj).subscribe((data) => {
       
     })
+  }
+
+  setFilter(){
+    this.filter.status = this.filterStatus;
+    this.filter.rt = this.filterRTA;
+    this.BackOffice.addFilterData(this.filter);
   }
 }

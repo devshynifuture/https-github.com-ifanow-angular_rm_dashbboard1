@@ -65,7 +65,7 @@
         </div>
         <input #fileProof1 (change)="getFile($event, 'proof-type1')" style="display: none;" accept='image/*' type="file">
         <mat-card class="upload-card c-p h-340" >
-            <div *ngIf="errProof1" (click)="checkSelected('proof-type1' , true)" class="errDiv">
+            <div *ngIf="errProof1 && !fileProof1Img.view" (click)="checkSelected('proof-type1' , true)" class="errDiv">
                 <p class="m-0 roboto text-black"><span *ngIf="showErr1" style="color: red;">please select Bank and Proof type first</span><span *ngIf="!showErr1">Drag & drop file here or Browse</span></p>
             </div>
             <div *ngIf="!errProof1" class="imgDiv" (click)="fileProof1.click()">
@@ -97,7 +97,7 @@
         </div>
         <input #fileProof2 (change)="getFile($event, 'proof-type2')" style="display: none;" accept='image/*' type="file">
         <mat-card class="upload-card c-p h-340" >
-            <div *ngIf="errProof2" (click)="checkSelected('proof-type2' , true)" class="errDiv">
+            <div *ngIf="errProof2 && (!fileProof2Img.view && !fileProof2BackImg.view)" (click)="checkSelected('proof-type2' , true)" class="errDiv">
                 <p class="m-0 roboto text-black"><span *ngIf="showErr2" style="color: red;">please select Bank and Proof type first</span><span *ngIf="!showErr2">Drag & drop file here or Browse</span></p>
             </div>
             <div *ngIf="!errProof2" class="imgDiv" (click)="fileProof2.click()">

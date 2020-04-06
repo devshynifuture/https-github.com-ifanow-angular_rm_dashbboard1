@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { BackOfficeService } from '../../../../back-office.service';
 import {SipComponent} from '../sip.component';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -18,6 +18,8 @@ export class SipApplicantWiseComponent implements OnInit {
   totalWeight =0;
   filteredArray: any[];
   applicantFilter: any;
+  @Output() changedValue = new EventEmitter();
+
   constructor(private backoffice:BackOfficeService,public sip:SipComponent) { }
 
   ngOnInit() {
@@ -27,7 +29,9 @@ export class SipApplicantWiseComponent implements OnInit {
   }
   aumReport()
   {
-   this.sip.sipComponent=true;
+  this.changedValue.emit(true);
+
+  //  this.sip.sipComponent=true;
   }  
   schemeWiseApplicantGet(){
     const obj={
@@ -39,14 +43,15 @@ export class SipApplicantWiseComponent implements OnInit {
       data =>{
         console.log("scheme Name", data)
         this.applicantList = data;
-    
-        this.applicantList.forEach(o => {
-          o.showScheme = true;
-          this.totalOfSipAmount+=o.totalAum;
-          this.totalOfSipCount+=o.count;
-          this.totalWeight+=o.weightInPercentage;
-          o.InvestorList=[];
-        });
+        if(this.applicantList){
+          this.applicantList.forEach(o => {
+            o.showScheme = true;
+            this.totalOfSipAmount+=o.totalAum;
+            this.totalOfSipCount+=o.count;
+            this.totalWeight+=o.weightInPercentage;
+            o.InvestorList=[];
+          });
+        }
         this.filteredArray = [...this.applicantList];
     
         this.showLoader = false;
@@ -70,6 +75,9 @@ export class SipApplicantWiseComponent implements OnInit {
       this.backoffice.sipApplicantFolioList(obj).subscribe(
         data =>{
           if(data){
+            data.forEach(element => {
+              element.name=applicantData.name
+            });
             applicantData.schemeList=data
             console.log(data)
           }

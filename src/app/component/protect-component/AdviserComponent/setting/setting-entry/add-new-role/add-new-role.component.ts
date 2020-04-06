@@ -12,12 +12,12 @@ import { AuthService } from 'src/app/auth-service/authService';
 })
 export class AddNewRoleComponent implements OnInit {
   displayedColumns: string[] = ['position', 'weight', 'symbol', 'edit', 'del', 'adv'];
-  dataSource:MatTableDataSource<any>;
-  dataModels:any[] = [];
+  dataSource: MatTableDataSource<any>;
+  dataModels: any[] = [];
   @Input() data: any = {};
   rolesFG: FormGroup;
-  editDetails:any;
-  advisorId:any;
+  editDetails: any;
+  advisorId: any;
 
   constructor(
     private fb: FormBuilder,
@@ -30,7 +30,7 @@ export class AddNewRoleComponent implements OnInit {
   ngOnInit() {
     this.createFormGroup();
 
-    if(this.data.is_add_flag && !this.data.mainData.id) {
+    if (this.data.is_add_flag && !this.data.mainData.id) {
       this.getTemplate();
     } else {
       this.getRoleDetails();
@@ -38,8 +38,8 @@ export class AddNewRoleComponent implements OnInit {
   }
 
   getTemplate() {
-    this.settingsService.getTemplateRole({optionId: this.data.roleType}).subscribe((res) => {
-      if(res) {
+    this.settingsService.getTemplateRole({ optionId: this.data.roleType }).subscribe((res) => {
+      if (res) {
         console.log(res);
         this.constructAdminDataSource(res.modules);
       }
@@ -49,9 +49,9 @@ export class AddNewRoleComponent implements OnInit {
   }
 
   getRoleDetails() {
-    this.settingsService.getDetailedRole({id: this.data.mainData.id}).subscribe((res) => {
-      if(res) {
-        console.log(res); 
+    this.settingsService.getDetailedRole({ id: this.data.mainData.id }).subscribe((res) => {
+      if (res) {
+        console.log(res);
         this.editDetails = res.roleDetail;
         this.constructAdminDataSource(res.modules);
       }
@@ -83,13 +83,13 @@ export class AddNewRoleComponent implements OnInit {
     advanced_permissions.forEach((permission) => {
       permission.featureId = featureId;
     })
-    return {permissions: permissions_json, advanced_permissions: advanced_permissions};
+    return { permissions: permissions_json, advanced_permissions: advanced_permissions };
   }
 
   constructAdminDataSource(adminDatasource) {
     for (var key in adminDatasource) {
       let subModules = adminDatasource[key];
-      for(let i = 0; i < subModules.length; i++) {
+      for (let i = 0; i < subModules.length; i++) {
         let segregated_permissions = this.segregateNormalAndAdvancedPermissions(subModules[i].capabilityList, subModules[i].childId);
         segregated_permissions = this.convertEnabledOrDisabledAsBoolean(segregated_permissions);
         delete subModules[i].capabilityList;
@@ -101,7 +101,7 @@ export class AddNewRoleComponent implements OnInit {
       let obj = {
         modelName: subModules[0].parentName,
         subModules: subModules,
-        dataSource:  new MatTableDataSource(subModules)
+        dataSource: new MatTableDataSource(subModules)
       };
       this.dataModels.push(obj);
     }
@@ -146,22 +146,22 @@ export class AddNewRoleComponent implements OnInit {
   }
 
   save() {
-    if(this.rolesFG.invalid) {
+    if (this.rolesFG.invalid) {
       this.rolesFG.markAllAsTouched();
     } else {
-      if(this.data.is_add_flag) {
+      if (this.data.is_add_flag) {
         let dataObj = {
           // "advisorOrClientRole": [1,2,3].includes(this.data.roleType)? 1 : 2,
           "advisorOrClientRole": this.data.roleType,
-          "systemGeneratedOrCustom":2,
+          "systemGeneratedOrCustom": 2,
           ...this.rolesFG.value,
           featureToCapabilitiesList: this.mergeAllCapabilitiesAndFilterEnabled(),
         };
         console.log(dataObj)
         this.settingsService.addRole(dataObj).subscribe((res) => {
-          if(res) {
+          if (res) {
             this.eventService.openSnackBar("Role Added Successfully");
-            this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
+            this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
           }
         }, err => {
           this.eventService.openSnackBar("Error Occured");
@@ -185,8 +185,8 @@ export class AddNewRoleComponent implements OnInit {
     }
   }
 
-  close(){
-    this.eventService.changeUpperSliderState({state: 'close', refreshRequired: false});
+  close() {
+    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: false });
   }
 
 }

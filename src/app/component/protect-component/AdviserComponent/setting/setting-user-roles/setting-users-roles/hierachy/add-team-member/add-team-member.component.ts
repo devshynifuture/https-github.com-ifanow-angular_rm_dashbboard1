@@ -24,6 +24,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   teamMember: FormGroup;
   teamMembers: any;
   selectedMember: any;
+  showSpinner = false;
 
   constructor(
     private settingsService: SettingsService,
@@ -63,11 +64,13 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     });
   }
   getTeamMembers() {
+    this.showSpinner = true
     const dataObj = {
       advisorId: this.advisorId
     }
     this.orgSetting.getTeamMember(dataObj).subscribe((res) => {
       console.log('team member details', res)
+      this.showSpinner = false
       this.teamMembers = res;
     });
   }
@@ -83,12 +86,12 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   }
   saveTeamMember(){
     let obj = {
-      childId: this.selectedMember.id,
-      emailId: this.selectedMember.emailId,
-      mobileNo: this.selectedMember.mobileNo,
+      childId: 2809,
+      emailId: this.selectedMember.email,
+      mobileNo: this.selectedMember.mobile,
       name: this.selectedMember.name,
-      parentId: this.selectedMember.admminAdvisorId,
-      roleName: this.selectedMember.roleName,
+      parentId: 2808,//this.selectedMember.adminAdvisorId,
+      roleName: this.selectedMember.role.roleName,
     }
     this.orgSetting.updateAccessControl(obj).subscribe((res) => {
       console.log('team member details', res)

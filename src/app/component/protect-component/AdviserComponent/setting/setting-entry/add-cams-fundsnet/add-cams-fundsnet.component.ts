@@ -137,6 +137,9 @@ export class AddCamsFundsnetComponent implements OnInit {
           ...this.data.mainData,
           ...jsonObj
         }
+        if(this.showAddMoreQuestionBtn) {
+          this.saveIndividualQuestion(editJson.rtaCamsFundNetSecurityQuestionsList.length -1);
+        }
         delete editJson.rtaCamsFundNetSecurityQuestionsList;
         this.settingService.editMFRTA(editJson).subscribe((res)=> {
           this.eventService.openSnackBar("CAMS Fundsnet Modified successfully");
@@ -163,7 +166,7 @@ export class AddCamsFundsnetComponent implements OnInit {
     return (c: AbstractControl): { [key: string]: boolean } | null => {
       const questions = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
       const questionsRaw = questions.getRawValue();
-      const questionId = questionsRaw.map(item => item.questionId);
+      const questionId = questionsRaw.map(item => parseInt(item.questionId));
       const hasDuplicate = questionId.some(
         (name, index) => questionId.indexOf(name, index + 1) != -1
       );
@@ -184,6 +187,10 @@ export class AddCamsFundsnetComponent implements OnInit {
   saveIndividualQuestion(index){
     let questionSet = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
     let fg = questionSet.controls[index] as FormGroup;
+    if(fg.invalid) {
+      fg.markAllAsTouched();
+      return;
+    }
     this.showAddMoreQuestionBtn = !this.showAddMoreQuestionBtn;
     const jsonObj = {
       "answer": fg.controls.answer.value,

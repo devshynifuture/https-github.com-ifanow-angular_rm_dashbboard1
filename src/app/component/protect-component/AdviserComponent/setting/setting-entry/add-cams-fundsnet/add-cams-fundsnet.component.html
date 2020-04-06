@@ -71,20 +71,6 @@
                     <mat-error *ngIf="secretQuestionForm.controls.questionId.invalid && secretQuestionForm.controls.questionId.errors.duplicate">
                         This question already exists</mat-error>
                     <!-- <mat-form-field>
-                        <mat-select class="form-control" formControlName="question">
-                            <mat-option [value]="questionObj.id" *ngFor="let questionObj of secretQuestionsSet">{{questionObj.question}}</mat-option>
-                        </mat-select>
-                    </mat-form-field> -->
-                    <!-- <mat-form-field>
-                        <mat-select class="form-control" formControlName="questionId">
-                            <option value="" selected disabled>Select Question</option>
-                            <option [value]="questionObj.id" *ngFor="let questionObj of data.globalData.rta_cams_fund_net_security_questions_list">
-                                {{questionObj.question}}</option>
-                        </mat-select>
-                        <mat-error *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.questionId.invalid && camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.questionId.errors.required && camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.questionId.touched">
-                            This field is required</mat-error>
-                        <mat-error *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.questionId.invalid && camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.questionId.errors.duplicate">
-                            This question already exists</mat-error>
                     </mat-form-field> -->
                 </div>
             </div>

@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {DatePipe, DecimalPipe} from '@angular/common';
-import {EventService} from '../Data-service/event.service';
-import {HttpClient} from '@angular/common/http';
-import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { Injectable } from '@angular/core';
+import { DatePipe, DecimalPipe } from '@angular/common';
+import { EventService } from '../Data-service/event.service';
+import { HttpClient } from '@angular/common/http';
+import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
 
 
 @Injectable({
@@ -34,7 +34,7 @@ export class UtilService {
   static convertObjectToCustomArray(inputObject: object, keyNameForOutput: string, keyValueForOutput: string): object[] {
     const outputArray = [];
     Object.keys(inputObject).map(key => {
-      const object = {selected: false};
+      const object = { selected: false };
       object[keyNameForOutput] = inputObject[key];
       object[keyValueForOutput] = key;
 
@@ -252,9 +252,9 @@ export class UtilService {
       htmlInput: inputData,
       name: pdfName
     };
-    this.http.post('http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj, {responseType: 'blob'}).subscribe(
+    this.http.post('http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj, { responseType: 'blob' }).subscribe(
       data => {
-        const file = new Blob([data], {type: 'application/pdf'});
+        const file = new Blob([data], { type: 'application/pdf' });
         const fileURL = URL.createObjectURL(file);
         window.open(fileURL);
         const a = document.createElement('a');
@@ -294,8 +294,8 @@ export class UtilService {
     for (let i = 0; i < byteString.length; i++) {
       ia[i] = byteString.charCodeAt(i);
     }
-    const imageBlob = new Blob([ia], {type: mimeString});
-    return new File([imageBlob], imageName, {type: 'image/png'});
+    const imageBlob = new Blob([ia], { type: mimeString });
+    return new File([imageBlob], imageName, { type: 'image/png' });
   }
 }
 
@@ -314,9 +314,10 @@ export class ValidatorType {
   static ALPHA_NUMERIC = new RegExp(/^[a-zA-Z0-9/-]*$/);
   static COMPULSORY_ALPHA_NUMERIC = new RegExp(/^[a-zA-Z]+[a-zA-Z0-9/-]*$/);
   static ALPHA_NUMERIC_WITH_SPACE = new RegExp(/^[a-zA-Z0-9 /-]*$/);
-  static EMAIL = new RegExp(/^[a-z0-9]+(.[_a-z0-9]+)@[a-z0-9-]+(.[a-z0-9-]+)(.[a-z]{2,15})$/);
+  static EMAIL = new RegExp(/^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$/);
   static ALPHA_NUMERIC_WITH_SLASH = new RegExp(/^[A-Z0-9//]+$/);
   static TEN_DIGITS = new RegExp(/^\d{10}$/);
+  static PAN = new RegExp(/^[a-zA-Z0-9]{10,}$/);
   // static EMAIL = new RegExp(/^[a-z0-9!#$%&'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/);
   // static EMAIL_ONLY = new RegExp(/\b[\w.!#$%&’*+\/=?^`{|}~-]+@[\w-]+(?:\.[\w-]+)*\b/);
   // static EMAIL_ONLY = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);

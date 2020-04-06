@@ -26,17 +26,20 @@ export const appConfig = {
   GET_AMC_WISE: 'backoffice/mis/aum/amcWise/get',
   GET_APPLICANT_NAME: 'backoffice/mis/aum/amcWise/applicantName/get',
   ADVISOR_TAG_GET: '/advisor/tag/get',
-  //////////////////Foliodetails////////////////////////////
-  FOLIO_GROUP_HEAD_SEARCH: 'backoffice/folio/search/by/groupHead/get',
-  FOLIO_INVESTOR_SEARCH: 'backoffice/folio/search/by/investorName/get',
-  FOLIO_PAN_SEARCH: 'backoffice/folio/search/by/pan/get',
-  FOLIO_FOLIO_NO__SEARCH: 'backoffice/folio/search/by/folioNumber/get',
-  FOLIO_GROUP_HEAD_LIST: 'backoffice/foliowise/groupHead/list/get',
-  FOLIO_APPLICANT_NAME_LIST: 'backoffice/foliowise/applicaName/list/get',
+  AUM_GRAPH_GET:'backoffice/aum/graph/details/get',
+  ARN_RIA_LIST:'backoffice/arn/ria/list/get',
+///////////////////foliodetails///////////////////////////
+  FOLIO_GROUP_HEAD_SEARCH:'backoffice/folio/search/by/groupHead/get',
+  FOLIO_INVESTOR_SEARCH:'backoffice/folio/search/by/investorName/get',
+  FOLIO_PAN_SEARCH:'backoffice/folio/search/by/pan/get',
+  FOLIO_FOLIO_NO__SEARCH:'backoffice/folio/search/by/folioNumber/get',
+  FOLIO_GROUP_HEAD_LIST:'backoffice/foliowise/groupHead/list/get',
+  FOLIO_APPLICANT_NAME_LIST:'backoffice/foliowise/applicaName/list/get',
 
 
   /////////////////////// sip api call//////////////////////////////////
-
+  GET_NEW_SIP:'backoffice/sip/new/sip/get',
+  GET_CEASE_SIP:'backoffice/sip/ceased/sip/get',
   GET_EXPIRING: 'backoffice/sip/expiring/get',
   GET_expired: 'backoffice/sip/expired/get',
   GET_SIP_REJECTION: 'backoffice/sip/sipRejection/get',
@@ -526,8 +529,8 @@ export const appConfig = {
   DELETE_SUBTASK_TEMPLATE: 'setting/task/sub-task/delete',
   OWNER_SUBTASK_UPDATE: 'setting/task/template/owner/update',
   OWNER_TASK_UPDATE: 'setting/task/sub-task/owner/update',
-  GET_TEAM_MEMBER:'setting/users/team-members/get',
-  UPDATE_ACCESS_CONTROL:'setting/users-roles/access-rights/update',
+  GET_TEAM_MEMBER: 'setting/users/team-members/get',
+  UPDATE_ACCESS_CONTROL: 'setting/users-roles/access-rights/update',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
@@ -565,8 +568,13 @@ export const appConfig = {
   UPDATE_COMPANY_PERSON_DETAILS: 'user/client/company/person/edit',
   TEAM_MEMBER_WISE_CLIENT_COUNT: 'user/advisor/team-member/count/get',
   GET_TEAM_MEMBERS: 'user/advisor/team-members/detail/get',
+  GET_ALL_CLIENTS: 'user/client/all/get',
   DELETE_CLIENT: 'user/client/delete',
   GET_CLIENT_OR_lEAD_DATA: 'user/client/detail/get',
+  UPDATE_CLIENT_STATUS: 'user/client/status/update',
+  GET_ADDRESS_LIST: 'user/address/list/get',
+  GET_DEMAT_LIST: 'user/bank/demat/list/get',
+  GET_BANK_LIST: 'user/bank/list/get',
   // LOGIN_WITH_PASSWORD: 'user/login/with/password',
 
   //////////////////////////////Login///////////////////////////////////

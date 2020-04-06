@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -17,12 +17,16 @@ import { Router } from '@angular/router';
 })
 export class PeopleClientsComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'member', 'owner',
-    'login', 'status', 'icons', 'icons1'];
+    'login', /*'status', *//*'icons',*/ 'icons1'];
   dataSource;
   advisorId: any;
   clientDatasource = new MatTableDataSource();
   isLoading: boolean;
-  constructor(private ngZone: NgZone, private router: Router, private subInjectService: SubscriptionInject, public eventService: EventService, private peopleService: PeopleService, public dialog: MatDialog) { }
+
+  constructor(private authService: AuthService, private ngZone: NgZone, private router: Router,
+    private subInjectService: SubscriptionInject, public eventService: EventService,
+    private peopleService: PeopleService, public dialog: MatDialog) {
+  }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -32,11 +36,10 @@ export class PeopleClientsComponent implements OnInit {
   getClientList() {
     this.clientDatasource.data = [{}, {}, {}];
     this.isLoading = true;
-    let obj =
-    {
+    const obj = {
       advisorId: this.advisorId,
       status: 1
-    }
+    };
 
     this.peopleService.getClientList(obj).subscribe(
       data => {
@@ -63,13 +66,12 @@ export class PeopleClientsComponent implements OnInit {
     // commented code closed which are giving errors ====>>>>>>>>>>>>>>.
   }
 
-  Addclient(data) {
+  addClient(data) {
     if (data == null) {
-      data = { flag: 'Add client', fieldFlag: 'client' }
-    }
-    else {
-      data['flag'] = 'Edit client';
-      data['fieldFlag'] = "client";
+      data = { flag: 'Add client', fieldFlag: 'client' };
+    } else {
+      data.flag = 'Edit client';
+      data.fieldFlag = 'client';
     }
     const fragmentData = {
       flag: 'Add client',
@@ -90,12 +92,16 @@ export class PeopleClientsComponent implements OnInit {
       }
     );
   }
+
   selectClient(singleClientData) {
     console.log(singleClientData);
     this.ngZone.run(() => {
-      this.router.navigate(['/customer/detail/overview/myfeed'], { state: { ...singleClientData } });
+      singleClientData['clientId'] = 74;
+      this.authService.setClientData(singleClientData);
+      this.router.navigate(['/customer/detail/overview/profile']);
     });
   }
+
   deleteModal(value, data) {
     const dialogData = {
       data: value,
@@ -105,18 +111,18 @@ export class PeopleClientsComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        let obj =
-        {
-          userId: data.userId
-        }
+        const obj = {
+          clientId: data.clientId,
+          userType: 2
+        };
         this.peopleService.deleteClient(obj).subscribe(
-          data => {
-            this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
+          responseData => {
+            this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
             dialogRef.close();
             this.getClientList();
           },
           error => this.eventService.showErrorMessage(error)
-        )
+        );
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');

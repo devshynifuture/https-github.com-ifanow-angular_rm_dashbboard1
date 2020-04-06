@@ -686,5 +686,14 @@ export class CustomerService {
   deleteFamilyMember(data) {
     return this.http.putEncoded(apiConfig.USER + appConfig.DELETE_FAMILY_MEMBER, data);
   }
+  getAddressList(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_ADDRESS_LIST, data, 1)
+  }
+  getDematList(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_DEMAT_LIST, data, 1)
+  }
+  getBankList(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_BANK_LIST, data, 1)
+  }
 }
 
