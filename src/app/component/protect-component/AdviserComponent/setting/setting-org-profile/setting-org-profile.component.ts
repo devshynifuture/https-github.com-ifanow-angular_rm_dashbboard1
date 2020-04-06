@@ -16,7 +16,7 @@ export class SettingOrgProfileComponent implements OnInit {
   advisorId: any;
   orgProfile = false;
   userList: any;
-  orgDetails: any;
+  orgDetails: any = {};
   isLoading = true
 
   constructor(
@@ -46,7 +46,6 @@ export class SettingOrgProfileComponent implements OnInit {
   getPersonalProfileRes(data) {
     if (data) {
       this.isLoading = false
-      console.log('this.getPersonalProfileRes', data)
       this.userList = data
     } else {
       this.isLoading = false
@@ -67,13 +66,12 @@ export class SettingOrgProfileComponent implements OnInit {
 
     if (data) {
       this.isLoading = false
-      console.log('getOrgProfileRes', data)
       this.orgDetails = data
     } else {
       this.isLoading = false
     }
-
   }
+
   OpenpersonalProfile(data, flag) {
     const fragmentData = {
       flag: flag,
@@ -84,19 +82,14 @@ export class SettingOrgProfileComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getPersonalProfiles();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
-          }
+          this.getPersonalProfiles();
           rightSideDataSub.unsubscribe();
         }
-
       }
     );
   }
+  
   openOrg(flag) {
     if (flag == true) {
       this.orgProfile = true
@@ -116,17 +109,26 @@ export class SettingOrgProfileComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getOrgProfiles();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
-          }
+          this.getOrgProfiles();
           rightSideDataSub.unsubscribe();
         }
-
       }
     );
+  }
+
+  getGSTTreatmentType(value) {
+    switch (value) {
+      case 1:
+        return 'Consumer';
+      case 2:
+        return 'Not registered business';
+      case 3:
+        return 'Overseas';
+      case 4:
+        return 'Registered Business';
+      default:
+        return 'NA';
+    }
   }
 }

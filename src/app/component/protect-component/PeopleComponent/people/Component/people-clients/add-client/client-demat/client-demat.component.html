@@ -22,8 +22,7 @@
             </mat-radio-group>
         </div>
     </div>
-    <app-add-holder-names *ngIf="dematList" [holderListInput]="dematList.holderNameList"
-        (holderList)="getHolderList($event)">
+    <app-add-holder-names *ngIf="dematList" [holderListInput]="dematList.holderNameList" (holderList)="getHolderList($event)">
     </app-add-holder-names>
     <div class="row pt-44">
         <div class="col-md-4 text-right pl-0">
@@ -32,8 +31,7 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="depositoryPartName" #nadNameme appInputValueValidation
-                        [inputValidator]="validatorType.PERSON_NAME" [maxLength]="50" matInput class="form-control">
+                    <input autocomplete="off" formControlName="depositoryPartName" #nadNameme appInputValueValidation [inputValidator]="validatorType.PERSON_NAME" [maxLength]="50" matInput class="form-control">
                     <mat-hint align="end" class="f-12">{{nadNameme.value.length}}/50</mat-hint>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -60,8 +58,7 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                        formControlName="clientId" matInput class="form-control">
+                    <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="clientId" matInput class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -74,9 +71,7 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" #brokerName appInputValueValidation
-                        [inputValidator]="validatorType.PERSON_NAME" formControlName="brekerName" matInput
-                        class="form-control">
+                    <input autocomplete="off" #brokerName appInputValueValidation [inputValidator]="validatorType.PERSON_NAME" formControlName="brekerName" matInput class="form-control">
                     <mat-hint align="end" class="f-12">{{brokerName.value.length}}/50</mat-hint>
                     <mat-hint>Optional</mat-hint>
                 </mat-form-field>
@@ -90,17 +85,15 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" #bAddres formControlName="brokerAddress" matInput maxlength="200"
-                        class="form-control">
+                    <input autocomplete="off" #bAddres formControlName="brokerAddress" matInput maxlength="200" class="form-control">
                     <mat-hint align="end" class="f-12">{{brokerName.value.length}}/20</mat-hint>
                     <mat-hint>Optional</mat-hint>
                 </mat-form-field>
             </div>
         </div>
     </div>
-    <app-add-number [numberList]="userData.mobileList" [flag]="mobileNumberFlag"
-        (numberArray)="getNumberDetails($event)"></app-add-number>
-    <div class="row pt-44">
+    <app-add-number [numberList]="userData.mobileList" [flag]="mobileNumberFlag" (numberArray)="getNumberDetails($event)"></app-add-number>
+    <!-- <div class="row pt-44">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-8">Nominee</h5>
         </div>
@@ -124,6 +117,46 @@
         <div class="col-md-2 pr-0">
             <p class="m-0 roboto text-custom pt-8 ws-pre">+ Add nominee</p>
         </div>
+    </div> -->
+    <div formArrayName="getNomineeName">
+        <div class="row pt-36" *ngFor="let obj of dematForm.controls['getNomineeName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
+            <div class="col-md-4  text-right">
+                <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
+            </div>
+            <div class="p-0" [ngClass]="getNominee.length > 1?'col-md-4' : 'col-md-6'">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'nominee')" (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                            <mat-option value='' disabled>Select family members</mat-option>
+                            <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
+                                <span>{{f.userName}}</span>
+                            </mat-option>
+                        </mat-select>
+                        <mat-error class="f-12">
+                            This field is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-2  " *ngIf="getNominee.length > 1">
+                <div class="form-group mb-0 iconPetage">
+                    <mat-form-field>
+                        <input matInput class="form-control br-0 percentage" type="number" formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
+                        <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('required')">
+                            This field is required
+                        </mat-error>
+                        <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('incorrect') ">
+                            Total percent should be 100%
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-2 pr-0 d-flex align-items-center">
+                <i *ngIf="dematForm.value.getNomineeName.length < 3" class="material-icons f-20 c-p" (click)="addNewNominee(undefined)">add</i>
+                <i *ngIf="dematForm.value.getNomineeName.length > 1" class="material-icons f-20 c-p ml-10" (click)="removeNewNominee(pointIndex)">remove</i>
+            </div>
+
+        </div>
     </div>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
@@ -132,9 +165,7 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" #linkedAccNum [maxLength]="16" appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" formControlName="linkedBankAccount" matInput
-                        class="form-control">
+                    <input autocomplete="off" #linkedAccNum [maxLength]="16" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="linkedBankAccount" matInput class="form-control">
                     <mat-hint align="end" class="f-12">{{linkedAccNum.value.length}}/16</mat-hint>
                     <mat-hint>Optional</mat-hint>
                 </mat-form-field>
@@ -148,9 +179,7 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" #paName appInputValueValidation
-                        [inputValidator]="validatorType.PERSON_NAME" [maxLength]="50" formControlName="powerOfAttName"
-                        matInput class="form-control">
+                    <input autocomplete="off" #paName appInputValueValidation [inputValidator]="validatorType.PERSON_NAME" [maxLength]="50" formControlName="powerOfAttName" matInput class="form-control">
                     <mat-hint>Optional</mat-hint>
                     <mat-hint align="end" class="f-12">{{paName.value.length}}/50</mat-hint>
                 </mat-form-field>
@@ -171,14 +200,13 @@
         </div>
     </div>
 </div>
-<div class="bottom-fixed wrapper-12 w-50">
+<div class="bottom-fixed wrapper-12 w-50 -m-28">
     <div class="row">
         <div class="col-md-4">
             <h5 (click)="close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button *ngIf="fieldFlag!=undefined" mat-raised-button (click)="saveNext('Next')"
-                class="br-0 text-inherit mr-12">SAVE & NEXT
+            <button *ngIf="fieldFlag!=undefined" mat-raised-button (click)="saveNext('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
             </button>
             <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
             </button>

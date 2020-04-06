@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpService } from 'src/app/http-service/http-service';
-import { apiConfig } from 'src/app/config/main-config';
-import { appConfig } from 'src/app/config/component-config';
+import {Injectable} from '@angular/core';
+import {HttpService} from 'src/app/http-service/http-service';
+import {apiConfig} from 'src/app/config/main-config';
+import {appConfig} from 'src/app/config/component-config';
 
 @Injectable({
   providedIn: 'root'
@@ -46,16 +46,20 @@ export class PeopleService {
   addMultipleFamilyMembers(data) {
     return this.http.postEncoded(apiConfig.USER + appConfig.ADD_MULTIPLE_FAMILY_MEMBERS, data);
   }
+
   getCompanyPersonDetail(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_COMPANY_PERSON_DETAILS, data, 1);
   }
+
   saveCompanyPersonDetail(data) {
     return this.http.postEncoded(apiConfig.USER + appConfig.SAVE_COMPANY_PERSON_DEATILS, data);
   }
+
   updateCompanyPersonDetail(data) {
     return this.http.putEncoded(apiConfig.USER + appConfig.UPDATE_COMPANY_PERSON_DETAILS, data);
 
   }
+
   editFamilyMemberDetails(data) {
     return this.http.putEncoded(apiConfig.USER + appConfig.EDIT_FAMILY_MEMBER_BASIC_DETAILS_MORE_INFO, data);
   }
@@ -80,9 +84,10 @@ export class PeopleService {
     return this.http.postEncoded(apiConfig.USER + appConfig.LOGIN_WITH_PASSWORD, data);
   }
 
-  getAllCLients(data) {
-    return this.http.getEncoded(apiConfig.USER + appConfig.GET_ALL_CLIENTS, data, 1)
+  getAllClients(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_ALL_CLIENTS, data, 1);
   }
+
   updateClientStatus(data) {
     return this.http.putEncoded(apiConfig.USER + appConfig.UPDATE_CLIENT_STATUS, data)
   }

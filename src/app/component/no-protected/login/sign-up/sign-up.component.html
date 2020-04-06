@@ -18,7 +18,7 @@
 
           <p class="f-16 mb-12 mobileNone">
             <img class="advisorLogo "
-              src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                 src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
           </p>
           <h1 class="mb-16 mobileNone f-600">Create an account</h1>
           <p class="mb-24 mobileNone f-16">Please provide some basic details to help us create your account.
@@ -38,7 +38,8 @@
                 <h5 class="pt-12 mobileNone mb-4">Full name</h5>
                 <mat-form-field appearance="standard" floatLabel="never">
                   <input #fullName [inputValidator]="validatorType.PERSON_NAME" [maxLength]="40" appInputValueValidation
-                    class="form-control" formControlName="fullName" matInput placeholder="Enter your name" tabindex="1">
+                         class="form-control" formControlName="fullName" matInput placeholder="Enter your name"
+                         tabindex="1">
                   <mat-hint align="end" class="f-12 mobileNone">{{fullName.value.length}}/40
                   </mat-hint>
                   <mat-error align="end">Username required</mat-error>
@@ -64,8 +65,9 @@
                 <h5 class="pt-12 mobileNone mb-4">Mobile</h5>
                 <mat-form-field appearance="standard" floatLabel="never">
                   <input #mobNo [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="off"
-                    class="form-control" formControlName="mobile" matInput maxlength="10" placeholder="Enter mobile"
-                    tabindex="1">
+                         class="form-control" formControlName="mobile" matInput maxlength="10"
+                         placeholder="Enter mobile"
+                         tabindex="1">
                   <mat-error *ngIf="signUpForm.get('mobile').errors?.required" align="end">Mobile required</mat-error>
                   <mat-error *ngIf="signUpForm.get('mobile').errors?.pattern">Mobile number must be 10 digits
                   </mat-error>
@@ -94,12 +96,12 @@
 
             <div class="mobileCenter ds-none">
               <h5 class="mt-20 mb-10"> Already have an account? <span [routerLink]="[ '/login']"
-                  class="text-primary c-p"> Sign in </span>
+                                                                      class="text-primary c-p"> Sign in </span>
               </h5>
             </div>
 
             <h5 class="mt-36 mobileNone mb-36"> Already have an account? <span [routerLink]="[ '/login']"
-                class="text-primary c-p"> Sign in </span>
+                                                                               class="text-primary c-p"> Sign in </span>
             </h5>
           </div>
         </div>

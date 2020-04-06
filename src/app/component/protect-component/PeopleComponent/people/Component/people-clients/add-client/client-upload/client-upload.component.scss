@@ -1,11 +1,32 @@
-.img{width: 100%; height: auto;}
-.upload-card{overflow: auto; display: block;}
+.img {
+    width: 100%;
+    height: auto;
+}
 
-.errDiv{
-    position: absolute; height: 100%; width: 100%;  display: flex; align-items:center; justify-content: center; padding: 16px;
+.upload-card {
+    overflow: auto;
+    display: block;
+}
+
+.errDiv {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
     // p{margin-top: 12px;}
 }
 
-.imgDiv{
-    height: 100%; width: 100%;  display: flex; align-items:center; justify-content: center;
+.imgDiv {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.-m-28 {
+    margin-left: -28px;
 }

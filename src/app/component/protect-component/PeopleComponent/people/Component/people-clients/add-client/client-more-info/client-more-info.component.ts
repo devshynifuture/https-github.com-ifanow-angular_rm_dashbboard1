@@ -13,8 +13,8 @@ import {DatePipe} from '@angular/common';
   styleUrls: ['./client-more-info.component.scss']
 })
 export class ClientMoreInfoComponent implements OnInit {
-  advisorId: any;
   moreInfoData: any;
+  advisorId: any;
   mobileNumberFlag = 'Mobile';
   nonindividualForm: any;
   mobileData: any;
@@ -23,7 +23,9 @@ export class ClientMoreInfoComponent implements OnInit {
 
   moreInfoForm;
 
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService, private datePipe: DatePipe) {
+  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
+              private peopleService: PeopleService, private eventService: EventService,
+              private datePipe: DatePipe) {
   }
 
   @Input() fieldFlag;
@@ -32,38 +34,37 @@ export class ClientMoreInfoComponent implements OnInit {
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     this.moreInfoData = data;
-    console.log(data);
+    console.log('ClientMoreInfoComponent data : ', data);
     if (this.fieldFlag == 'familyMember') {
       this.createMoreInfoForm(data);
-      (this.moreInfoData.familyMemberType == 0 || this.moreInfoData.familyMemberType == 1) ? this.moreInfoData['categoryTypeflag'] = "Individual" : this.moreInfoData['categoryTypeflag'] = "familyMinor";
-    }
-    else {
+      (this.moreInfoData.familyMemberType == 0 || this.moreInfoData.familyMemberType == 1) ?
+        this.moreInfoData.categoryTypeflag = 'Individual' : this.moreInfoData.categoryTypeflag = 'familyMinor';
+    } else {
       if (this.moreInfoData.userId == null) {
         this.createMoreInfoForm(null);
         return;
-      }
-      else {
+      } else {
         if (this.moreInfoData.clientType == 1 || this.moreInfoData.clientType == 0) {
-          this.moreInfoData['categoryTypeflag'] = "Individual";
-          this.moreInfoData['invCategory'] = '1'
-        }
-        else {
-          this.moreInfoData['categoryTypeflag'] = "clientNonIndividual";
-          this.moreInfoData['invCategory'] = '2'
+          this.moreInfoData.categoryTypeflag = 'Individual';
+          this.moreInfoData.invCategory = '1';
+        } else {
+          this.moreInfoData.categoryTypeflag = 'clientNonIndividual';
+          this.moreInfoData.invCategory = '2';
         }
         (this.moreInfoData.clientType == '2') ? this.getCompanyDetails(this.moreInfoData) : '';
         this.createMoreInfoForm(data);
       }
     }
   }
+
   createMoreInfoForm(data) {
     (data == undefined) ? data = {} : data;
     this.moreInfoForm = this.fb.group({
       displayName: [data.displayName],
-      adhaarNo: [data.aadharCard],
+      adhaarNo: [data.aadhaarNumber],
       taxStatus: [],
       occupation: [],
-      maritalStatus: ['1'],
+      maritalStatus: [(data.martialStatusId) ? String(data.martialStatusId) : '1'],
       anniversaryDate: [],
       bio: [data.bio],
       myNotes: [data.remarks],
@@ -72,10 +73,11 @@ export class ClientMoreInfoComponent implements OnInit {
       pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
       designation: [],
       gender: ['1'],
-      adhaarMinor: [new Date(data.dateOfBirth)],
-      adhharGuardian: [(data.guardianData) ? data.guardianData.birthDate : '']
+      adhaarMinor: [data.aadhaarNumber],
+      adhharGuardian: [(data.guardianData) ? data.guardianData.aadhaarNumber : '']
     });
   }
+
   ngOnInit() {
 
   }
@@ -92,9 +94,9 @@ export class ClientMoreInfoComponent implements OnInit {
     };
     this.peopleService.getCompanyPersonDetail(obj).subscribe(
       data => {
-        console.log(data)
-      }, err => this.eventService.openSnackBar(err, "Dismiss")
-    )
+        console.log(data);
+      }, err => this.eventService.openSnackBar(err, 'Dismiss')
+    );
   }
 
   saveNext(flag) {
@@ -136,9 +138,9 @@ export class ClientMoreInfoComponent implements OnInit {
       referredBy: 0,
       name: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.name : this.moreInfoForm.value.name,
       bioRemarkId: 0,
-      userType: 0,
+      userType: 2,
       remarks: (this.moreInfoData.invCategory == '1') ? this.moreInfoForm.controls.myNotes.value : this.moreInfoForm.value.myNotes,
-      status: 0,
+      status: (this.fieldFlag == 'client') ? 1 : 2,
       companyPersonDetailId: (this.moreInfoData.invCategory == '1') ? null : this.moreInfoData.companyPersonDetailId
     };
     if (this.fieldFlag == 'client' || this.fieldFlag == 'lead') {
@@ -156,8 +158,8 @@ export class ClientMoreInfoComponent implements OnInit {
             console.log(data);
             (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
           },
-          err => this.eventService.openSnackBar(err, "Dismiss")
-        )
+          err => this.eventService.openSnackBar(err, 'Dismiss')
+        );
       }
     }
   }
@@ -180,17 +182,36 @@ export class ClientMoreInfoComponent implements OnInit {
       familyMemberType: 0,
       clientId: this.moreInfoData.clientId,
       genderId: this.moreInfoData.genderId,
-      dateOfBirth: this.moreInfoData.dateOfBirth,
+      dateOfBirth: this.datePipe.transform(this.moreInfoData.dateOfBirth, 'dd/MM/yyyy'),
       bankDetailList: this.moreInfoData.bankDetail,
       relationshipId: this.moreInfoData.relationshipId,
       mobileList: this.moreInfoData.mobileList,
-      anniversaryDate: this.moreInfoForm.controls.anniversaryDate.value,
-      aadhaarNumber: this.moreInfoForm.controls.adhaarNo.value,
+      aadhaarNumber: this.moreInfoForm.value.adhaarMinor,
       name: this.moreInfoData.name,
       bioRemarkId: 0,
       bio: this.moreInfoForm.controls.bio.value,
       remarks: this.moreInfoForm.controls.myNotes.value,
+      // guardianData: this.moreInfoData.guardianData,
       guardianData: this.moreInfoData.guardianData
+      //  {
+      //   name: this.moreInfoData.guardianData.name,
+      //   birthDate: this.datePipe.transform(this.moreInfoData.guardianData.birthDate, 'dd/MM/yyyy'),
+      //   pan: 'pan',
+      //   genderId: this.moreInfoData.guardianData.genderId,
+      //   relationshipId: 1,
+      //   aadhaarNumber: this.moreInfoForm.value.adhharGuardian,
+      //   occupationId: 1,
+      //   martialStatusId: 1,
+      //   anniversaryDate: this.datePipe.transform(this.moreInfoForm.value.anniversaryDate, 'dd/MM/yyyy'),
+      //   mobileList: this.moreInfoData.guardianData.mobileList,
+      //   emailList: [
+      //     {
+      //       email: (this.moreInfoData.guardianData.emailList) ? this.moreInfoData.guardianData.emailList.email : '',
+      //       userType: 4,
+      //       verificationStatus: 0
+      //     }
+      //   ]
+      // }
     };
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {
@@ -202,7 +223,7 @@ export class ClientMoreInfoComponent implements OnInit {
   }
 
   close(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
+    this.subInjectService.changeNewRightSliderState({state: 'close', clientData: data});
   }
 
 }
