@@ -16,17 +16,14 @@
     </div>
     <div class="col-md-6 p-0">
       <div class="form-group m-0 p-address">
-        <mat-radio-group [(ngModel)]="addressType" aria-label="Select an option" formControlName="addressType">
-          <mat-radio-button [checked]="addressType=='1'"
-                            [ngClass]="{'bu-primary':addressType=='1','text-primary':addressType=='1'}"
-                            class="borderRadio text-custom"
-                            value="1">Residential
+        <mat-radio-group [(ngModel)]="proofType" formControlName="proofType" aria-label="Select an option">
+          <mat-radio-button [checked]="proofType=='1'" value="1"
+            [ngClass]="{'bu-primary':proofType=='1','text-primary':proofType=='1'}" class="borderRadio text-custom">
+            Residential
           </mat-radio-button>
-          <mat-radio-button [checked]="addressType=='2'"
-                            [ngClass]="{'bu-primary':addressType=='2','text-primary':addressType=='2'}"
-                            class="borderRadio text-custom"
-                            value="2">Business
-          </mat-radio-button>
+          <mat-radio-button value="2" [checked]="proofType=='2'"
+            [ngClass]="{'bu-primary':proofType=='2','text-primary':proofType=='2'}" class="borderRadio text-custom">
+            Business</mat-radio-button>
         </mat-radio-group>
       </div>
     </div>
@@ -38,7 +35,7 @@
     <div class="col-md-6 p-0">
       <div class="form-group mb-0">
         <mat-form-field>
-          <mat-select class="form-control" formControlName="addProofType">
+          <mat-select formControlName="addProofType" class="form-control">
             <mat-option value="Select proof type">Select proof type</mat-option>
             <mat-option value="1">Passport</mat-option>
             <mat-option value="2">Aadhaar</mat-option>
@@ -59,7 +56,7 @@
     <div class="col-md-4 p-0">
       <div class="form-group mb-0">
         <mat-form-field>
-          <input autocomplete="off" class="form-control" formControlName="proofIdNum" matInput>
+          <input autocomplete="off" matInput formControlName="proofIdNum" class="form-control">
           <mat-error>This field is required</mat-error>
         </mat-form-field>
       </div>
@@ -72,7 +69,7 @@
     <div class="col-md-5 p-0">
       <div class="form-group mb-0">
         <mat-form-field>
-          <input autocomplete="off" class="form-control" formControlName="addressLine1" matInput>
+          <input autocomplete="off" matInput formControlName="addressLine1" class="form-control">
           <mat-error>This field is required</mat-error>
         </mat-form-field>
       </div>
@@ -85,7 +82,7 @@
     <div class="col-md-5 p-0">
       <div class="form-group mb-0">
         <mat-form-field>
-          <input autocomplete="off" class="form-control" formControlName="addressLine2" matInput>
+          <input autocomplete="off" matInput formControlName="addressLine2" class="form-control">
           <mat-error>This field is required</mat-error>
         </mat-form-field>
       </div>
@@ -98,10 +95,9 @@
     <div class="col-md-3 p-0">
       <div class="form-group mb-0">
         <mat-form-field>
-          <input #pinCode (focusout)="getPostalPin($event.target.value)" [inputValidator]="validatorType.NUMBER_ONLY"
-                 [maxLength]="6"
-                 appInputValueValidation autocomplete="off" class="form-control"
-                 formControlName="pinCode" matInput>
+          <input autocomplete="off" [maxLength]="6" #pinCode (focusout)="getPostalPin($event.target.value)"
+            appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" matInput formControlName="pinCode"
+            class="form-control">
           <mat-hint align="end" class="f-12">{{pinCode.value.length}}/6</mat-hint>
           <mat-error>This field is required</mat-error>
         </mat-form-field>
@@ -115,9 +111,8 @@
     <div class="col-md-5 p-0">
       <div class="form-group mb-0">
         <mat-form-field>
-          <input #city [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation autocomplete="off"
-                 class="form-control"
-                 formControlName="city" matInput maxlength="30">
+          <input autocomplete="off" #city matInput formControlName="city" appInputValueValidation
+            [inputValidator]="validatorType.TEXT_ONLY" maxlength="30" class="form-control">
           <mat-error>This field is required</mat-error>
           <mat-hint align="end" class="f-12">{{city.value.length}}/6</mat-hint>
         </mat-form-field>
@@ -131,9 +126,8 @@
     <div class="col-md-5 p-0">
       <div class="form-group mb-0">
         <mat-form-field>
-          <input #state [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation autocomplete="off"
-                 class="form-control" formControlName="state" matInput
-                 maxlength="30">
+          <input autocomplete="off" #state matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
+            maxlength="30" formControlName="state" class="form-control">
           <mat-error>This field is required</mat-error>
           <mat-hint align="end" class="f-12">{{state.value.length}}/6</mat-hint>
         </mat-form-field>
@@ -147,19 +141,13 @@
     <div class="col-md-5 p-0">
       <div class="form-group mb-0">
         <mat-form-field>
-          <input #country [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation autocomplete="off"
-                 class="form-control"
-                 formControlName="country" matInput maxlength="30">
+          <input autocomplete="off" #country matInput formControlName="country" appInputValueValidation
+            [inputValidator]="validatorType.TEXT_ONLY" maxlength="30" class="form-control">
           <mat-error>This field is required</mat-error>
           <mat-hint align="end" class="f-12">{{country.value.length}}/30</mat-hint>
         </mat-form-field>
       </div>
     </div>
-  </div>
-  <div class="pb-100 pl-20 pt-28">
-    <h4 class="f-500 text-black m-0 pb-16">Correspondence address</h4>
-    Same as a permanent address
-    <mat-checkbox checked="false"></mat-checkbox>
   </div>
   <div class="bottom-fixed wrapper-12 w-50">
     <div class="row">
@@ -167,10 +155,10 @@
         <h5 (click)="close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
       </div>
       <div class="col-md-8 right text-right">
-        <button (click)="saveNext('Next')" *ngIf="fieldFlag!=undefined" class="br-0 text-inherit mr-12"
-                mat-raised-button>SAVE & NEXT
+        <button *ngIf="fieldFlag!=undefined" mat-raised-button (click)="saveNext('Next')"
+          class="br-0 text-inherit mr-12">SAVE & NEXT
         </button>
-        <button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit" mat-stroked-button>SAVE & CLOSE
+        <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
         </button>
       </div>
 

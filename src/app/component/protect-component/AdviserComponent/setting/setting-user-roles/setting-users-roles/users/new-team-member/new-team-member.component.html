@@ -16,7 +16,7 @@
         <div class="col-md-7 pr-0">
             <div class="form-group">
                 <mat-form-field>
-                    <input matInput formControlName="fullName" class="form-control">
+                    <input matInput formControlName="fullName" class="form-control" [readonly]="data.is_add">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
 
@@ -30,7 +30,7 @@
         <div class="col-md-7 pr-0">
             <div class="form-group">
                 <mat-form-field>
-                    <input matInput formControlName="emailId" class="form-control">
+                    <input matInput formControlName="emailId" class="form-control" [readonly]="data.is_add">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
 
@@ -44,7 +44,7 @@
         <div class="col-md-7 pr-0">
             <div class="form-group">
                 <mat-form-field>
-                    <input matInput formControlName="mobileNo" class="form-control">
+                    <input matInput formControlName="mobileNo" class="form-control" [readonly]="data.is_add">
                     <mat-error *ngIf="teamMemberFG.get('mobileNo').errors?.minlength || teamMemberFG.get('mobileNo').errors?.maxlength">Enter Valid Mobile number</mat-error>
                     <mat-error *ngIf="teamMemberFG.get('mobileNo').errors?.required">This field is required</mat-error>
                 </mat-form-field>
