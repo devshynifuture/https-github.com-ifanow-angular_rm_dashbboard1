@@ -119,13 +119,13 @@
     </div>
     <div class="row pt-32">
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">Anniversary date</h5>
+            <h5 class="m-0 pt-8">Date of Birth</h5>
         </div>
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
-                    <input [matDatepicker]="anniversaryDate" formControlName="anniversaryDate"
-                        (click)="anniversaryDate.open()" class="form-control br-0 b-0" matInput readonly>
+                  <input [matDatepicker]="anniversaryDate" formControlName="dateOfBirth"
+                         (click)="anniversaryDate.open()" class="form-control br-0 b-0" matInput readonly>
                     <mat-datepicker-toggle matSuffix [for]="anniversaryDate"></mat-datepicker-toggle>
                     <mat-datepicker #anniversaryDate></mat-datepicker>
                     <mat-error class="f-12">This field is required

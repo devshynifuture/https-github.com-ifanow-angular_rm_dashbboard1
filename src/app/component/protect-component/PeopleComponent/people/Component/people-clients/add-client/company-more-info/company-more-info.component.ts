@@ -36,6 +36,7 @@ export class CompanyMoreInfoComponent implements OnInit {
       this.prevData = {};
     }
     console.log(data);
+    this.getCompanyDetails(data);
     this.createMoreInfoForm(null);
   }
 
@@ -45,7 +46,7 @@ export class CompanyMoreInfoComponent implements OnInit {
       displayName: [data.displayName],
       adhaarNo: [data.aadhaarNumber],
       maritalStatus: [(data.martialStatusId) ? String(data.martialStatusId) : '1'],
-      anniversaryDate: [],
+      dateOfBirth: [new Date(data.dateOfBirth)],
       bio: [data.bio],
       myNotes: [data.remarks],
       name: [data.name],
@@ -67,13 +68,17 @@ export class CompanyMoreInfoComponent implements OnInit {
 
   getCompanyDetails(data) {
     const obj = {
-      userId: data.userId,
+      userId: data.clientId,
       userType: data.userType
     };
     this.peopleService.getCompanyPersonDetail(obj).subscribe(
       responseData => {
         if (responseData && responseData.length > 0) {
-          this.moreInfoData = responseData[0];
+          const singleData = responseData[0];
+          if (singleData.emailList && singleData.emailList.length > 0) {
+            singleData.email = singleData.emailList[0].email;
+          }
+          this.moreInfoData = singleData;
           this.createMoreInfoForm(this.moreInfoData);
         }
         console.log(responseData);
@@ -113,7 +118,7 @@ export class CompanyMoreInfoComponent implements OnInit {
       roleId: 0,
       genderId: this.moreInfoForm.value.genderId,
       aadharCard: this.moreInfoForm.controls.adhaarNo.value,
-      dateOfBirth: this.datePipe.transform(this.moreInfoData.dateOfBirth, 'dd/MM/yyyy'),
+      dateOfBirth: this.datePipe.transform(this.moreInfoForm.value.dateOfBirth, 'dd/MM/yyyy'),
       userId: this.moreInfoData.clientId ? this.moreInfoData.clientId : this.prevData.clientId,
       mobileList,
       name: this.moreInfoForm.value.name,
