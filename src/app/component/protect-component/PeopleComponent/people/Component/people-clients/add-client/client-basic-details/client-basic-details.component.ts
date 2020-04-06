@@ -242,7 +242,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         dateOfBirth: this.datePipe.transform((this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value :
           this.nonIndividualForm.value.dateOfIncorporation, 'dd/MM/yyyy'),
         userName: (this.invTypeCategory == '1') ? this.basicDetails.controls.username.value : this.nonIndividualForm.value.username,
-        userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? this.basicDetailsData.userId : this.basicDetailsData.familyMemberId,
+        userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? this.basicDetailsData.userId : null,
         mobileList,
         referredBy: 0,
         name: (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : this.nonIndividualForm.value.comName,
@@ -255,37 +255,40 @@ export class ClientBasicDetailsComponent implements OnInit {
         leadStatus: (this.fieldFlag == 'lead') ? this.basicDetails.value.leaadStatus : null
       };
       if (this.basicDetailsData.userId == null) {
-        if (this.invTypeCategory == '1') {
-          this.peopleService.addClient(obj).subscribe(
-            data => {
-              this.barButtonOptions.active = false;
-              console.log(data);
-              data.invCategory = this.invTypeCategory;
-              data.categoryTypeflag = 'Individual';
-              this.eventService.openSnackBar('Added successfully!', 'Dismiss');
-              (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
-            },
-            (err) => {
-              this.barButtonOptions.active = false;
-              this.eventService.openSnackBar(err, 'Dismiss');
-            }
-          );
-        } else {
-          this.peopleService.saveCompanyPersonDetail(obj).subscribe(
-            data => {
-              this.barButtonOptions.active = false;
-              console.log(data);
-              data.invCategory = this.invTypeCategory;
-              data.categoryTypeflag = 'clientNonIndividual';
-              this.eventService.openSnackBar('Added successfully!', 'Dismiss');
-              (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
-            },
-            (err) => {
-              this.eventService.openSnackBar(err, 'Dismiss');
-              this.barButtonOptions.active = false;
-            }
-          );
-        }
+        // if (this.invTypeCategory == '2') {
+        //   obj['userId'] = this.basicDetailsData.clientId;
+        // }
+        this.peopleService.addClient(obj).subscribe(
+          data => {
+            this.barButtonOptions.active = false;
+            console.log(data);
+            data.invCategory = this.invTypeCategory;
+            data.categoryTypeflag = 'Individual';
+            this.eventService.openSnackBar('Added successfully!', 'Dismiss');
+            (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
+          },
+          (err) => {
+            this.barButtonOptions.active = false;
+            this.eventService.openSnackBar(err, 'Dismiss');
+          }
+        );
+
+        // else {
+        // this.peopleService.saveCompanyPersonDetail(obj).subscribe(
+        //   data => {
+        //     this.barButtonOptions.active = false;
+        //     console.log(data);
+        //     data.invCategory = this.invTypeCategory;
+        //     data.categoryTypeflag = 'clientNonIndividual';
+        //     this.eventService.openSnackBar('Added successfully!', 'Dismiss');
+        //     (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
+        //   },
+        //   (err) => {
+        //     this.eventService.openSnackBar(err, 'Dismiss');
+        //     this.barButtonOptions.active = false;
+        //   }
+        // );
+        // }
       } else {
         this.peopleService.editClient(obj).subscribe(
           data => {
