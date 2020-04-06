@@ -100,7 +100,8 @@
                                                                 <td>{{i+1}}</td>
                                                                 <td>
                                                                     {{scheme.schemeName}} </td>
-                                                                <td><span appFormatNumber>{{scheme.totalAum}}</span></td>
+                                                                <td><span appFormatNumber>{{scheme.totalAum}}</span>
+                                                                </td>
                                                                 <td>{{scheme.weightInPercentage}}</td>
                                                                 <td class="text-center" (click)="getFolio(scheme)">
                                                                     <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="scheme.showScheme">add</i>
@@ -114,7 +115,7 @@
                                                                         <thead>
                                                                             <tr>
                                                                                 <th class="w-10">Sr No.</th>
-                                                                                <th class="w-40">Scheme Name</th>
+                                                                                <th class="w-30">Scheme Name</th>
                                                                                 <th class="w-25">Folio Number</th>
                                                                                 <th>Balance Unit</th>
                                                                                 <th>% Weight</th>
@@ -127,7 +128,8 @@
                                                                                 <td>{{folio.schemeName}} </td>
 
                                                                                 <td>{{folio.folioNumber}}</td>
-                                                                                <td><span appFormatNumber>{{folio.totalAum}}</span></td>
+                                                                                <td><span appFormatNumber>{{folio.totalAum}}</span>
+                                                                                </td>
                                                                                 <td>{{folio.balanceUnit}}</td>
                                                                                 <td>
                                                                                     {{folio.weightInPercentage}}
@@ -153,16 +155,19 @@
                             <tr *ngIf="!isLoading">
                                 <td class="p-table  "><strong>Total</strong></td>
                                 <td class="p-table  ">&nbsp;</td>
-                                <td class="p-table  "><strong><span appFormatNumber>{{totalCurrentValue}}</span></strong></td>
+                                <td class="p-table  "><strong><span
+                                            appFormatNumber>{{totalCurrentValue}}</span></strong></td>
                                 <td class="p-table "><strong>{{totalWeight}}%</strong></td>
                                 <td></td>
                             </tr>
                         </tbody>
                     </table>
 
-                    <div *ngIf="!clientList">
-                        <p>No data found</p>
+                    <div *ngIf="!clientList" class="d-flex flex-column align-items-center">
+                        <img class="width300" src="assets/images/svg/noDataFound.svg">
+                        <h4 class="text-center pt-12">No task template found</h4>
                     </div>
+
                 </div>
             </div>
         </div>

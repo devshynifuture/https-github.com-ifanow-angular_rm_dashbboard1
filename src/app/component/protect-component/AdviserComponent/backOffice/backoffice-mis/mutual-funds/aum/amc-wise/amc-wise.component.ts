@@ -13,12 +13,12 @@ import { ExcelMisService } from '../excel-mis.service';
 export class AmcWiseComponent implements OnInit {
   teamMemberId = 2929;
   advisorId: any;
-  showLoader = true;
+  //showLoader = true;
   selectedCategory: any;
   amcList: any;
   totalCurrentValue = 0;
   totalWeight = 0;
-  isLoading=false;
+  isLoading = false;
   @Output() changedValue = new EventEmitter();
 
   arrayOfExcelData: any[][] = [];
@@ -75,8 +75,8 @@ export class AmcWiseComponent implements OnInit {
     this.changedValue.emit(true);
   }
   getAmcWiseData() {
-    this.isLoading=true;
-    this.amcList=[{},{},{}]
+    this.isLoading = true;
+    this.amcList = [{}, {}, {}]
     const obj = {
       advisorId: this.advisorId,
       arnRiaDetailsId: -1,
@@ -174,7 +174,7 @@ export class AmcWiseComponent implements OnInit {
   }
 
   getReponseAmcWiseGet(data) {
-    this.isLoading=false;
+    this.isLoading = false;
     if (data) {
       console.log("this we need", data)
       this.amcList = data;
@@ -185,7 +185,7 @@ export class AmcWiseComponent implements OnInit {
         this.totalWeight += o.weightInPercentage;
       });
     }
-    this.showLoader = false;
+    //this.showLoader = false;
   }
   showScheme(amcData) {
     amcData.showAmc = !amcData.showAmc

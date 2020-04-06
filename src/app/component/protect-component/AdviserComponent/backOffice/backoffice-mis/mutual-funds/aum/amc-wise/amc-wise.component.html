@@ -23,7 +23,7 @@
                                 <th class="w-40">Amc Name</th>
                                 <th>Current Value</th>
                                 <th>% Weight</th>
-                                <th></th>
+                                <th> </th>
 
                             </tr>
                         </thead>
@@ -39,13 +39,13 @@
                                     <div class="bar"><span appFormatNumber>{{amc.totalAum}}</span> </div>
                                 </td>
                                 <td>
-                                    <div class="bar"> {{amc.weightInPercentage}}{{(isLoading?'':'%')}}</div>
+                                    <div class="bar"> {{amc.weightInPercentage}} {{(isLoading?'':'%')}} </div>
                                 </td>
                                 <td (click)="showScheme(amc)">
                                     <div class="bar text-center">
                                         <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="amc.showAmc"> add </i>
-                                        <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="!amc.showAmc"> remove
-                                        </i>
+                                        <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="!amc.showAmc">
+                                            {{(isLoading?'':'remove')}} </i>
                                     </div>
                                 </td>
                             </tr>
@@ -92,7 +92,8 @@
                                                                     <td>{{applicant.investorName}}</td>
                                                                     <td>{{applicant.balanceUit}}</td>
                                                                     <td>{{applicant.folioNumber}} </td>
-                                                                    <td><span appFormatNumber>{{applicant.totalAum}}</span> </td>
+                                                                    <td><span appFormatNumber>{{applicant.totalAum}}</span>
+                                                                    </td>
                                                                     <td>{{applicant.weightInPercentage}}% </td>
                                                                     <td></td>
                                                                 </tr>
@@ -106,18 +107,23 @@
                                 </tr>
                         </tbody>
                         <tbody *ngIf="!isLoading">
-                            <tr>    
+                            <tr>
                                 <td class="p-table"><strong>Total</strong></td>
                                 <td class="p-table">&nbsp;</td>
-                                <td class="p-table"><strong><span appFormatNumber>{{totalCurrentValue}}</span></strong></td>
+                                <td class="p-table"><strong><span appFormatNumber>{{totalCurrentValue}}</span></strong>
+                                </td>
                                 <td class="p-table"><strong>{{totalWeight}}%</strong></td>
                                 <td></td>
                             </tr>
                         </tbody>
                     </table>
-                    <div *ngIf="!amcList">
-                        <p>No data found</p>
+
+                    <div *ngIf="!amcList" class="d-flex flex-column align-items-center">
+                        <img class="width300" src="assets/images/svg/noDataFound.svg">
+                        <h4 class="text-center pt-12">No data Found</h4>
                     </div>
+
+
                 </div>
             </div>
         </div>
