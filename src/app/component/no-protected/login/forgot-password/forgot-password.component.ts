@@ -30,17 +30,22 @@ export class ForgotPasswordComponent implements OnInit {
   });
   userNameVerifyResponse: any;
 
-  constructor(private loginService: LoginService, private eventService: EventService, private router: Router, private fb: FormBuilder) {
+  constructor(private loginService: LoginService, private eventService: EventService,
+              private router: Router, private fb: FormBuilder) {
   }
 
   ngOnInit() {
     this.verifyData = window.history.state;
     this.saveVerifyData = Object.assign({}, window.history.state);
+    if (!this.saveVerifyData) {
+      this.saveVerifyData = {};
+    }
     if (this.verifyData.flag) {
+      this.hideNumEmailFromUser(this.saveVerifyData);
+
       this.isVerify = true;
       this.verify('Email');
       this.verifyFlag = 'Email';
-      this.hideNumEmailFromUser(this.verifyData);
     } else {
       this.isVerify = false;
     }
@@ -48,12 +53,17 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   hideNumEmailFromUser(data) {
-    if (data.emailList && data.emailList.length > 0) {
-      data.email = data.emailList[0].email;
+    const userData = data.userData;
+    data.userId = userData.clientId ? userData.clientId : userData.advisorId;
+    data.userType = userData.userType;
+    if (userData.emailList && userData.emailList.length > 0) {
+      userData.email = userData.emailList[0].email;
+      data.email = userData.email;
       this.verifyData.email = UtilService.obfuscateEmail(data.email);
     }
-    if (data.mobileList && data.mobileList.length > 0) {
-      data.mobileNo = data.mobileList[0].mobileNo;
+    if (userData.mobileList && userData.mobileList.length > 0) {
+      userData.mobileNo = userData.mobileList[0].mobileNo;
+      data.mobileNo = userData.mobileNo;
       this.verifyData.mobileNo = UtilService.obfuscateEmail(String(data.mobile));
     }
   }
@@ -83,11 +93,12 @@ export class ForgotPasswordComponent implements OnInit {
       data => {
         console.log(data);
         if (data) {
+          this.saveVerifyData.userData = data;
           this.hideNumEmailFromUser(this.saveVerifyData);
           this.userNameVerifyResponse = data;
-          this.saveVerifyData.email = data.emailList[0].email;
-          this.saveVerifyData.mobileNo = data.mobileList[0].mobileNo;
-          this.saveVerifyData['userData'] = data
+          // this.saveVerifyData.email = data.emailList[0].email;
+          // this.saveVerifyData.mobileNo = data.mobileList[0].mobileNo;
+          // this.saveVerifyData['userData'] = data
           this.isVerify = true;
           if (this.saveVerifyData.email) {
             this.verifyFlag = 'Email';
@@ -126,6 +137,7 @@ export class ForgotPasswordComponent implements OnInit {
   saveAfterVerifyCredential(obj) {    ////// save verified email or mobileNo in the table
     this.loginService.saveAfterVerification(obj).subscribe(
       data => {
+
         console.log(data);
         (this.verifyFlag == 'Email') ? this.verifyFlag = 'Mobile' : '';
       },
