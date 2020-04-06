@@ -8,7 +8,6 @@
                 <div class="col-md-6 text-right pr-0">
                     <button mat-stroked-button class="btn-default addon"><i class="material-icons">add</i>XLS</button>
                     <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
-
                 </div>
             </div>
 
@@ -43,8 +42,8 @@
                                     <div class="bar"> {{data.weightInPercentage}}{{(isLoading?'':'%') }} </div>
                                 </td>
                                 <td class="text-center" (click)="showSubTableList(data)">
-                                    <div class="bar">
-                                        <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="data.showScheme"> add
+                                    <div class="bar text-center">
+                                        <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="data.showScheme"> add
                                         </i>
                                         <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="!data.showScheme">
                                             {{(isLoading?'':'remove')}}
@@ -57,7 +56,7 @@
                                     <table *ngIf="!data.showScheme && !isLoading" class=" mt-8 mb-8" id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr>
-                                                <th>Applicant Name</th>
+                                                <th class="w-11">Applicant Name</th>
                                                 <th>Scheme Name</th>
                                                 <th>Folio</th>
                                                 <th>Registered Date</th>
@@ -66,7 +65,7 @@
                                                 <th>Trigger Day</th>
                                                 <th>Frequency</th>
                                                 <th>Amount</th>
-                                                <th>% Weight</th>
+                                                <th class="w-8">% Weight</th>
                                                 <th>Edit/Delete
                                                 </th>
                                             </tr>
