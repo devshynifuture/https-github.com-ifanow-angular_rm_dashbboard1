@@ -70,7 +70,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     if (data.fieldFlag == 'familyMember') {
       this.basicDetailsData = data;
-      this.invTaxStatus = (this.basicDetailsData.familyMemberType == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
+      this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
       this.invTypeCategory = (this.basicDetailsData.familyMemberType == 0) ? '1' : String(this.basicDetailsData.familyMemberType);
       (this.basicDetailsData.familyMemberType == 1 || this.basicDetailsData.familyMemberType == 0) ? this.createIndividualForm(this.basicDetailsData) : this.createMinorForm(this.basicDetailsData);
     } else {
@@ -81,6 +81,9 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.invTaxStatus = '1';
         this.createIndividualForm(null);
         return;
+      }
+      else {
+        this.invTaxStatus = (this.basicDetailsData.familyMembtaxStatusIderType == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
       }
       (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
       this.getClientOrLeadData(this.basicDetailsData);
@@ -98,9 +101,9 @@ export class ClientBasicDetailsComponent implements OnInit {
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       dobActual: [],
       gender: ['1'],
-      leadSource: [],
+      leadSource: [data.leadSource],
       leaadStatus: [],
-      leadRating: [data.leadRating],
+      leadRating: [(data.leadRating) ? String(data.leadRating) : '1'],
       leadOwner: [],
       clientOwner: [''],
       role: [''],
@@ -151,7 +154,7 @@ export class ClientBasicDetailsComponent implements OnInit {
           return;
         } else {
           this.invTypeCategory = (data.clientType == 0) ? '1' : String(data.clientType);
-          this.invTaxStatus = (data.clientType == 0) ? '1' : String(data.taxStatusId);
+          this.invTaxStatus = (data.taxStatusId == 0) ? '1' : String(data.taxStatusId);
           (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
         }
       },
@@ -239,7 +242,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         dateOfBirth: this.datePipe.transform((this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value :
           this.nonIndividualForm.value.dateOfIncorporation, 'dd/MM/yyyy'),
         userName: (this.invTypeCategory == '1') ? this.basicDetails.controls.username.value : this.nonIndividualForm.value.username,
-        userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? this.basicDetailsData.clientId : this.basicDetailsData.id,
+        userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? this.basicDetailsData.userId : this.basicDetailsData.familyMemberId,
         mobileList,
         referredBy: 0,
         name: (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : this.nonIndividualForm.value.comName,

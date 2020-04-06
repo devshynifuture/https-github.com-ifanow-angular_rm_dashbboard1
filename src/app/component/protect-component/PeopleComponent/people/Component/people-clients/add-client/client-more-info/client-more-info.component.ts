@@ -60,10 +60,10 @@ export class ClientMoreInfoComponent implements OnInit {
     (data == undefined) ? data = {} : data;
     this.moreInfoForm = this.fb.group({
       displayName: [data.displayName],
-      adhaarNo: [data.aadharCard],
+      adhaarNo: [data.aadhaarNumber],
       taxStatus: [],
       occupation: [],
-      maritalStatus: ['1'],
+      maritalStatus: [(data.martialStatusId) ? String(data.martialStatusId) : '1'],
       anniversaryDate: [],
       bio: [data.bio],
       myNotes: [data.remarks],
@@ -72,8 +72,8 @@ export class ClientMoreInfoComponent implements OnInit {
       pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
       designation: [],
       gender: ['1'],
-      adhaarMinor: [new Date(data.aadharCard)],
-      adhharGuardian: [(data.guardianData) ? data.guardianData.aadharCard : '']
+      adhaarMinor: [data.aadhaarNumber],
+      adhharGuardian: [(data.guardianData) ? data.guardianData.aadhaarNumber : '']
     });
   }
   ngOnInit() {
@@ -136,9 +136,9 @@ export class ClientMoreInfoComponent implements OnInit {
       referredBy: 0,
       name: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.name : this.moreInfoForm.value.name,
       bioRemarkId: 0,
-      userType: 0,
+      userType: 2,
       remarks: (this.moreInfoData.invCategory == '1') ? this.moreInfoForm.controls.myNotes.value : this.moreInfoForm.value.myNotes,
-      status: 0,
+      status: (this.fieldFlag == 'client') ? 1 : 2,
       companyPersonDetailId: (this.moreInfoData.invCategory == '1') ? null : this.moreInfoData.companyPersonDetailId
     };
     if (this.fieldFlag == 'client' || this.fieldFlag == 'lead') {
