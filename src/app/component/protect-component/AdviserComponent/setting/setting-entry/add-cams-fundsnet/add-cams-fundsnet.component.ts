@@ -227,4 +227,9 @@ export class AddCamsFundsnetComponent implements OnInit {
   trackByFn(index: any, item: any) {
     return index;
   }
+
+  getRtaControlArray(){
+    let formarr =  this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
+    return formarr.controls;
+  }
 }
