@@ -96,7 +96,6 @@ export class PeopleClientsComponent implements OnInit {
   selectClient(singleClientData) {
     console.log(singleClientData);
     this.ngZone.run(() => {
-      singleClientData['clientId'] = 74;
       this.authService.setClientData(singleClientData);
       this.router.navigate(['/customer/detail/overview/profile']);
     });

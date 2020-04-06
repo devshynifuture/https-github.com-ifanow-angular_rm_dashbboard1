@@ -221,6 +221,7 @@ export class ClientBasicDetailsComponent implements OnInit {
               console.log(data);
               data.invCategory = this.invTypeCategory;
               data.categoryTypeflag = 'Individual';
+              this.eventService.openSnackBar("Added successfully!", "Dismiss");
               (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
             },
             err => this.eventService.openSnackBar(err, 'Dismiss')
@@ -231,6 +232,7 @@ export class ClientBasicDetailsComponent implements OnInit {
               console.log(data);
               data.invCategory = this.invTypeCategory;
               data.categoryTypeflag = 'clientNonIndividual';
+              this.eventService.openSnackBar("Added successfully!", "Dismiss");
               (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
             },
             err => err => this.eventService.openSnackBar(err, 'Dismiss')
@@ -242,6 +244,7 @@ export class ClientBasicDetailsComponent implements OnInit {
             console.log(data);
             data.invCategory = this.invTypeCategory;
             data.categoryTypeflag = (this.invTypeCategory == '1') ? 'Individual' : 'clientNonIndividual';
+            this.eventService.openSnackBar("Updated successfully!", "Dismiss");
             (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
           },
           err => this.eventService.openSnackBar(err, 'Dismiss')

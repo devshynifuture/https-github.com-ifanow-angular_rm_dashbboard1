@@ -20,7 +20,7 @@ export class ClientDematComponent implements OnInit {
   dematForm;
   userData;
   dematList: any;
-  modeOfHolding: any;
+  holdingMode: string;
 
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
@@ -34,7 +34,7 @@ export class ClientDematComponent implements OnInit {
   @Input() set data(data) {
     this.userData = data;
     (this.userData.dematData) ? this.dematList = this.userData.dematData : '';
-    this.modeOfHolding = (this.userData.dematData) ? this.userData.dematData.modeOfHolding : '1';
+    this.holdingMode = (this.userData.dematData) ? String(this.userData.dematData.modeOfHolding) : '1';
     if (this.userData.dematData == undefined) {
       this.createDematForm(null);
       this.getDematList(data);
