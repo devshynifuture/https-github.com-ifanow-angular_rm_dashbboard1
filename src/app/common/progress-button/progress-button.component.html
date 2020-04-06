@@ -11,11 +11,11 @@
       </mat-icon>
     </ng-container>
     <img *ngIf="islogBut" class="iconPosition mobileNone" src="assets/images/svg/login-btn-icon.svg">
-    <!-- <span class="textZindex">
+    <span class="textZindex">
       {{ options.text }}
-    </span> -->
+    </span>
 
-    <span class="textZindex"> Submit</span>
+    <!-- <span class="textZindex"> Submit</span> -->
 
     <mat-progress-bar #progressBar *ngIf="options.active && !options.disabled" [color]="options.barColor"
       [mode]="options.mode" [value]="options.value" class="bar">

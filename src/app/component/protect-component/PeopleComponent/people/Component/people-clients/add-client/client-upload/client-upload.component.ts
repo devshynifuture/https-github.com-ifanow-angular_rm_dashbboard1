@@ -17,11 +17,13 @@ export class ClientUploadComponent implements OnInit {
   clientId: any;
   proofTypes: any = [];
   bankLIst: any = [];
+  clientRoles:any = [];
   constructor(private subInjectService: SubscriptionInject, private http: HttpService, private custumService: CustomerService, private enumService: EnumServiceService) { }
   ngOnInit() {
     this.advisorId = AuthService.getUserInfo().advisorId;
     // this.clientId = AuthService.getClientId();
     // this.addDocObj.clientId = this.clientId;
+    
     this.proofTypes = this.enumService.getProofType();
     this.bankLIst = this.enumService.getBank();
     const obj = {
@@ -92,18 +94,21 @@ export class ClientUploadComponent implements OnInit {
             this.fileProof1Img.store = imgData;
             this.selectedBank = imgData.documentId;
             this.bankProof = imgData.proofType;
+            this.errProof1 = false;
           }
           else if (imgData.documentId == 2 && imgData.proofSubType == 1) {
             this.fileProof2Img.view = data.preSignedUrl;
             this.fileProof2Img.store = imgData;
             this.addressProof = imgData.proofType;
             this.proofSubType = imgData.proofSubType;
+            this.errProof2 = false;
           }
           else if (imgData.documentId == 2 && imgData.proofSubType == 2) {
             this.fileProof2BackImg.view = data.preSignedUrl;
             this.fileProof2BackImg.store = imgData;
             this.addressProof = imgData.proofType;
             this.proofSubType = imgData.proofSubType;
+            this.errProof2 = false;
           }
           console.log(data, "imge");
         }
@@ -133,23 +138,38 @@ export class ClientUploadComponent implements OnInit {
       // this.imageViewer = reader.result;
       switch (type) {
         case "company-pan":
+          if(this.fileComPanImg.store){ // to remove existing img
+            this.deleteImg(this.fileComPanImg.store.id);
+          }
           this.fileComPanImg.view = reader.result;
           this.fileComPanImg.store = e.target.files[0];
           break;
         case "personal-pan":
+          if(this.filePerPanImg.store){ // to remove existing img
+            this.deleteImg(this.filePerPanImg.store.id);
+          }
           this.filePerPanImg.store = e.target.files[0];
           this.filePerPanImg.view = reader.result;
           break;
         case "proof-type1":
+          if(this.fileProof1Img.store){ // to remove existing img
+            this.deleteImg(this.fileProof1Img.store.id);
+          }
           this.fileProof1Img.store = e.target.files[0];
           this.fileProof1Img.view = reader.result;
           break;
         case "proof-type2":
           if (this.viewFront) {
+            if(this.fileProof2Img.store){ // to remove existing img
+              this.deleteImg(this.fileProof2Img.store.id);
+            }
             this.fileProof2Img.store = e.target.files[0];
             this.fileProof2Img.view = reader.result;
           }
           else {
+            if(this.fileProof2BackImg.store){ // to remove existing img
+              this.deleteImg(this.fileProof2BackImg.store.id);
+            }
             this.fileProof2BackImg.store = e.target.files[0];
             this.fileProof2BackImg.view = reader.result;
           }
