@@ -1,11 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ValidatorType } from 'src/app/services/util.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { DatePipe } from '@angular/common';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {ValidatorType} from 'src/app/services/util.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {DatePipe} from '@angular/common';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-client-basic-details',
@@ -13,6 +15,21 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./client-basic-details.component.scss']
 })
 export class ClientBasicDetailsComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & NEXT',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   minorForm: any;
   nonIndividualForm: any;
   advisorId: typeof AuthService;
@@ -33,11 +50,14 @@ export class ClientBasicDetailsComponent implements OnInit {
   validatorType = ValidatorType;
   invTypeCategory;
   invTaxStatus;
-
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService, private datePipe: DatePipe) {
+  clientRoles:any = []
+  constructor(private fb: FormBuilder, private enumService: EnumServiceService, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
+    this.clientRoles = this.enumService.getClientRole();
+    console.log(this.clientRoles, "this.clientRoles 123A");
+    
   }
 
   @Input() set data(data) {
@@ -68,7 +88,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       fullName: [data.name, [Validators.required]],
       email: [(data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
-      username: [data.userName, [Validators.required]],
+      username: [data.userName],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       dobActual: [],
       gender: ['1'],
@@ -76,8 +96,8 @@ export class ClientBasicDetailsComponent implements OnInit {
       leaadStatus: [],
       leadRating: [],
       leadOwner: [],
-      clientOwner: [],
-      role: [],
+      clientOwner: [''],
+      role: [''],
     });
   }
 
@@ -167,6 +187,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.nonIndividualForm.markAllAsTouched();
       return;
     } else {
+      this.barButtonOptions.active = true;
       const mobileList = [];
       if (this.mobileData) {
         this.mobileData.controls.forEach(element => {
@@ -218,36 +239,47 @@ export class ClientBasicDetailsComponent implements OnInit {
         if (this.invTypeCategory == '1') {
           this.peopleService.addClient(obj).subscribe(
             data => {
+              this.barButtonOptions.active = false;
               console.log(data);
               data.invCategory = this.invTypeCategory;
               data.categoryTypeflag = 'Individual';
               this.eventService.openSnackBar("Added successfully!", "Dismiss");
               (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
             },
-            err => this.eventService.openSnackBar(err, 'Dismiss')
+            (err) => {
+              this.barButtonOptions.active = false;
+              this.eventService.openSnackBar(err, 'Dismiss')
+            }
           );
         } else {
           this.peopleService.saveCompanyPersonDetail(obj).subscribe(
             data => {
+              this.barButtonOptions.active = false;
               console.log(data);
               data.invCategory = this.invTypeCategory;
               data.categoryTypeflag = 'clientNonIndividual';
               this.eventService.openSnackBar("Added successfully!", "Dismiss");
               (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
             },
-            err => err => this.eventService.openSnackBar(err, 'Dismiss')
+            (err) =>{ this.eventService.openSnackBar(err, 'Dismiss')
+            this.barButtonOptions.active = false;
+          }
           );
         }
       } else {
         this.peopleService.editClient(obj).subscribe(
           data => {
+            this.barButtonOptions.active = false;
             console.log(data);
             data.invCategory = this.invTypeCategory;
             data.categoryTypeflag = (this.invTypeCategory == '1') ? 'Individual' : 'clientNonIndividual';
             this.eventService.openSnackBar("Updated successfully!", "Dismiss");
             (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
           },
-          err => this.eventService.openSnackBar(err, 'Dismiss')
+          (err) =>{
+            this.barButtonOptions.active = false;
+            this.eventService.openSnackBar(err, 'Dismiss')
+          }
         );
       }
     }

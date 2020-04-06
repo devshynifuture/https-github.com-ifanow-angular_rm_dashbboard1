@@ -13,6 +13,7 @@ import { ClientUploadComponent } from './Component/people-clients/add-client/cli
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { AddNumberComponent } from './Component/people-clients/add-client/add-number/add-number.component';
 import { AddHolderNamesComponent } from './Component/people-clients/add-client/add-holder-names/add-holder-names.component';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 
 export const componentList = [AddClientComponent, LeadsClientsComponent, ClientBasicDetailsComponent, ClientMoreInfoComponent, ClientAddressComponent, ClientBankComponent, ClientDematComponent, ClientUploadComponent, AddNumberComponent, AddHolderNamesComponent]
@@ -23,7 +24,8 @@ export const componentList = [AddClientComponent, LeadsClientsComponent, ClientB
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    CustomDirectiveModule
+    CustomDirectiveModule,
+    CustomCommonModule
   ], entryComponents: [componentList]
 })
 export class PeopleEntryModule {

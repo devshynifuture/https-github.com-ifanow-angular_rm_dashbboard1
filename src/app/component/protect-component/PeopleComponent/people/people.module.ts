@@ -12,6 +12,7 @@ import {PeopleEntryModule} from './people-entry-module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CustomDirectiveModule} from 'src/app/common/directives/common-directive.module';
 import {SettingModule} from '../../AdviserComponent/setting/setting.module';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 // import { LeadsClientsComponent } from './Component/people-leads/leads-clients/leads-clients.component';
 
@@ -28,7 +29,7 @@ import {SettingModule} from '../../AdviserComponent/setting/setting.module';
     PeopleEntryModule,
     CustomDirectiveModule,
     SettingModule,
-
+    CustomCommonModule
   ]
 })
 

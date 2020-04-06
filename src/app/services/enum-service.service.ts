@@ -6,6 +6,7 @@ import {Injectable} from '@angular/core';
 export class EnumServiceService {
   roleList:any = [];
   bankList:any = [];
+  clientRoleList:any = [];
   proofTypeList:any = [];
   constructor() {
   }
@@ -53,5 +54,14 @@ export class EnumServiceService {
 
   public getBank(){
     return this.bankList;
+  }
+
+  public addClientRole(data){
+    this.clientRoleList = data;
+
+  }
+
+  public getClientRole() {
+    return this.clientRoleList;
   }
 }

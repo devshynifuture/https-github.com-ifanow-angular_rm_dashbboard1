@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ValidatorType } from 'src/app/services/util.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { LoginService } from '../login.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {ValidatorType} from 'src/app/services/util.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {LoginService} from '../login.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-sign-up',
@@ -12,22 +12,25 @@ import { AuthService } from 'src/app/auth-service/authService';
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit {
-  constructor(private fb: FormBuilder, private authService: AuthService, public routerActive: ActivatedRoute, private router: Router, private loginService: LoginService, private eventService: EventService) {
+  clientSignUp = false;
+
+  constructor(private fb: FormBuilder, private authService: AuthService, public routerActive: ActivatedRoute,
+              private router: Router, private loginService: LoginService, private eventService: EventService) {
   }
-  clientSignUp: boolean = false;
+
   signUpForm;
   validatorType = ValidatorType;
 
   ngOnInit() {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
-      if (queryParamMap.has("advisorId")) {
-        this.clientSignUp = true;
+      if (queryParamMap.has('advisorId')) {
+        // this.clientSignUp = true;
       }
     });
     this.signUpForm = this.fb.group({
       fullName: [, [Validators.required]],
       email: [, [Validators.required,
-      Validators.pattern(this.validatorType.EMAIL)]],
+        Validators.pattern(this.validatorType.EMAIL)]],
       mobile: [, [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
       termsAgreement: [, [Validators.required]]
     });
@@ -39,58 +42,28 @@ export class SignUpComponent implements OnInit {
       this.signUpForm.markAllAsTouched();
     } else {
       const obj = {
-        advisorId: 0,
-        taxStatusId: 0,
         emailList: [
           {
-            verificationStatus: 0,
-            id: 0,
             userType: 1,
-            isActive: 1,
-            userId: 0,
             email: this.signUpForm.get('email').value
           }
         ],
-        displayName: null,
-        bio: null,
-        martialStatusId: 0,
-        password: null,
-        clientType: 0,
-        occupationId: 0,
-        id: null,
-        pan: null,
-        clientId: null,
-        kycComplaint: 0,
-        roleId: 0,
-        genderId: 0,
-        companyStatus: 0,
-        dateOfBirth: null,
-        userName: null,
-        userId: null,
+        name: this.signUpForm.get('fullName').value,
+        displayName: this.signUpForm.get('fullName').value,
         mobileList: [
           {
-            verificationStatus: 0,
-            id: 0,
             userType: 1,
             mobileNo: this.signUpForm.get('mobile').value,
-            isActive: 1,
-            userId: 0
           }
         ],
-        aadhaarNumber: null,
-        referredBy: 0,
-        name: this.signUpForm.get('fullName').value,
-        bioRemarkId: 0,
-        userType: 2,
-        remarks: null,
-        status: 0
+        userType: 1
       };
       this.loginService.register(obj, this.clientSignUp).subscribe(
         data => {
           console.log(data);
           const forgotPassObjData = {
             mobileNo: this.signUpForm.get('mobile').value,
-            emailId: this.signUpForm.get('email').value,
+            email: this.signUpForm.get('email').value,
             flag: true,
             userType: data.userType,
             userId: data.userId,
@@ -112,9 +85,8 @@ export class SignUpComponent implements OnInit {
               id: 2978, name: 'Aryendra Kumar Saxena'
             });
             this.router.navigate(['customer', 'detail', 'overview', 'myfeed']);
-          }
-          else {
-            this.router.navigate(['/login/forgotpassword'], { state: forgotPassObjData });
+          } else {
+            this.router.navigate(['/login/forgotpassword'], {state: forgotPassObjData});
           }
         },
         err => this.eventService.openSnackBar(err, 'Dismiss')
