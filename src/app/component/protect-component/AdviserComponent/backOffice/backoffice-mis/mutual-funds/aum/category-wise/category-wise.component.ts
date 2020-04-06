@@ -63,8 +63,9 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   showSubTableList(index, category) {
-    this.selectedCategory = index
-    this.category[index].showCategory = (category) ? category = false : category = true;
+    // this.selectedCategory = index
+    category.showCategory = !category.showCategory
+    // this.category[index].showCategory = (category) ? category = false : category = true;
     console.log(this.category[index])
     console.log(category)
   }
@@ -87,10 +88,20 @@ export class CategoryWiseComponent implements OnInit {
     });
     //this.showLoader = false;
   }
-  showSchemeName(index, subcashowSubcat) {
-    this.category[this.selectedCategory].subCategoryList[index].showSubCategory = (subcashowSubcat) ? subcashowSubcat = false : subcashowSubcat = true;
-  }
+  showSchemeName(index, subcashowSubcat,subCatList) {
+    subcashowSubcat.showSubCategory = !subcashowSubcat.showSubCategory
+    subCatList.forEach(element => {
+      element.showScheme=true;
+    });
 
+    // this.category[this.selectedCategory].subCategoryList[index].showSubCategory = (subcashowSubcat) ? subcashowSubcat = false : subcashowSubcat = true;
+  }
+    showApplicantName(index, schemeData,schemeList) {
+    schemeData.showScheme = !schemeData.showScheme
+
+
+    // this.category[this.selectedCategory].subCategoryList[index].showSubCategory = (subcashowSubcat) ? subcashowSubcat = false : subcashowSubcat = true;
+  }
   aumReport() {
     this.changedValue.emit(true);
 

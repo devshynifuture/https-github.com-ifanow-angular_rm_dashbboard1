@@ -172,9 +172,9 @@ export class AmcWiseComponent implements OnInit {
 
   getReponseAmcWiseGet(data) {
     if (data) {
-      this.initializeExcelSheet();
       console.log("this we need", data)
       this.amcList = data;
+      this.initializeExcelSheet();
       this.amcList.forEach(o => {
         o.showAmc = true;
         this.totalCurrentValue += o.totalAum;

@@ -61,7 +61,7 @@
                                         {{category.weightInPercentage}}%
                                     </div>
                                 </td>
-                                <td class="text-center" (click)="showSubTableList(i,category.showCategory)">
+                                <td class="text-center" (click)="showSubTableList(i,category)">
                                     <div class="bar">
                                         <i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="category.showCategory==true">
                                             add </i>
@@ -93,7 +93,7 @@
                                                 </td>
                                                 <td>{{subcategory.totalAum}} </td>
                                                 <td>{{subcategory.weightInPercentage}}%</td>
-                                                <td class="text-center" (click)="showSchemeName(i,subcategory.showSubCategory)">
+                                                <td class="text-center" (click)="showSchemeName(i,subcategory,category.subCategoryList)">
                                                     <i *ngIf="subcategory.showSubCategory==true" class="material-icons  b-a f-14 mt-4 c-p">add</i>
                                                     <i *ngIf="subcategory.showSubCategory==false" class="material-icons  b-a f-14 mt-4 c-p"> remove </i>
                                                 </td>
@@ -118,13 +118,34 @@
                                                                 </td>
                                                                 <td>{{scheme.totalAum}} </td>
                                                                 <td>{{scheme.weightInPercentage}}</td>
-                                                                <td class="text-center">
-                                                                    <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="subcategory.showSubCategory==false">add</i>
-                                                                    <i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="subcategory.showSubCategory==true">
+                                                                <td class="text-center" (click)="showApplicantName(i,scheme,scheme.applicantList)">
+                                                                    <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="subcategory.showScheme">add</i>
+                                                                    <i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="!subcategory.showScheme">
                                                                         remove
                                                                     </i>
                                                                 </td>
                                                             </tr>
+                                                            <table class=" mt-8 mb-8 " id="table-low" *ngIf="!subcategory.showScheme">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="w-40">Applicant Name</th>
+                                                                        <th>Balance Unit</th>
+                                                                        <th>Folio</th>
+                                                                        <th>Current Amount</th>
+                                                                        <th>% Weight</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody *ngFor="let applicant of scheme.applicantList;let i = index">
+                                                                    <tr>
+                                                                        <td>{{applicant.name}} </td>
+                                                                        <td>{{applicant.balanceUnit}} </td>
+                                                                        <td>{{applicant.folioNumber}} </td>
+                                                                        <td>{{applicant.amount}} </td>
+                                                                        <td>{{applicant.weightInPercentage}}</td>
+                                                                    </tr>
+                                                                    
+                                                                </tbody>
+                                                            </table>
                                                         </tbody>
                                                     </table>
                                                 </td>
