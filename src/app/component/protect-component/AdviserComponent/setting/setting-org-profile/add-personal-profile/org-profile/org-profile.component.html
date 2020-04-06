@@ -35,9 +35,8 @@
                     <div class="form-group">
                         <mat-form-field>
                             <input matInput formControlName="emailId" class="form-control">
-                            <mat-error class="f-12 pt-4">
-                                This field is required
-                            </mat-error>
+                            <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('emailId').errors?.required">This field is required</mat-error>
+                            <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('emailId').errors?.pattern">Please enter valid email</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -50,9 +49,8 @@
                     <div class="form-group">
                         <mat-form-field>
                             <input matInput formControlName="mobileNo" class="form-control">
-                            <mat-error class="f-12 pt-4">
-                                This field is required
-                            </mat-error>
+                            <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('mobileNo').errors?.required">This field is required</mat-error>
+                            <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('mobileNo').errors?.pattern || orgProfile.get('mobileNo').errors?.minlength || orgProfile.get('mobileNo').errors?.maxlength">Please enter valid mobile number</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -109,7 +107,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row pt-40">
+            <div class="row pt-40" *ngIf="orgProfile.get('gstTreatment').value == 4">
                 <div class="col-md-4 text-right pr-0">
                     <h5 class="m-0 pt-12">GSTIN Number</h5>
                 </div>
@@ -117,9 +115,8 @@
                     <div class="form-group">
                         <mat-form-field>
                             <input matInput formControlName="gstNumber" class="form-control">
-                            <mat-error class="f-12 pt-4">
-                                This field is required
-                            </mat-error>
+                            <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('gstNumber').errors?.required">This field is required</mat-error>
+                            <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('gstNumber').errors?.pattern || orgProfile.get('gstNumber').errors?.minlength || orgProfile.get('gstNumber').errors?.maxlength">Please enter valid GSTIN number</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -131,11 +128,11 @@
                 <div class="col-md-5">
                     <div class="form-group">
                     <mat-form-field>
-                        <input #pincode [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
-                            (focusout)="getPostalPin($event.target.value)" appInputValueValidation
-                            class="form-control br-0 text-left" formControlName="pincode" matInput minlength="6" type="text">
-                        <mat-error class="f-12">{{pinInvalid?'Invalid pincode':'Pincode is required'}}</mat-error>
-                        <mat-hint align="end" class="f-12">{{pincode.value.length}}/6</mat-hint>
+                        <input (focusout)="getPostalPin($event.target.value)" 
+                            class="form-control br-0 text-left" formControlName="pincode" matInput type="text">
+                        <mat-hint align="end" class="f-12" >{{orgProfile.get('pincode').value.length}}/6</mat-hint>
+                        <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('pincode').errors?.required">This field is required</mat-error>
+                        <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('pincode').errors?.pattern || orgProfile.get('pincode').errors?.minlength || orgProfile.get('pincode').errors?.maxlength">Please enter valid pincode number</mat-error>
                     </mat-form-field>
                     </div>
                 </div>
@@ -146,13 +143,10 @@
                 </div>
                 <div class="col-md-6">
                     <mat-form-field class="w-100">
-                        <input #city class="form-control br-0" appInputValueValidation
-                            [inputValidator]="validatorType.TEXT_ONLY" formControlName="city" matInput maxlength="30"
-                            type="text">
-                        <mat-error class="f-12">
-                            This field is required
-                        </mat-error>
+                        <input #city class="form-control br-0" formControlName="city" type="text" matInput readonly>
                         <mat-hint align="end" class="f-12">{{city.value.length}}/30</mat-hint>
+                        <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('city').errors?.required">This field is required</mat-error>
+                        <!-- <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('city').errors?.pattern || orgProfile.get('city').errors?.minlength || orgProfile.get('city').errors?.maxlength">Please enter valid city name</mat-error> -->
                     </mat-form-field>
                 </div>
             </div>
@@ -162,29 +156,10 @@
                 </div>
                 <div class="col-md-6">
                     <mat-form-field class="w-100">
-                        <input #state class="form-control br-0" appInputValueValidation
-                            [inputValidator]="validatorType.TEXT_ONLY" formControlName="state" matInput maxlength="30"
-                            type="text">
-                        <mat-error class="f-12">
-                            This field is required
-                        </mat-error>
+                        <input #state class="form-control br-0" type="text" formControlName="state" matInput readonly>
                         <mat-hint align="end" class="f-12">{{state.value.length}}/30</mat-hint>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="row pt-40">
-                <div class="col-md-6 pr-0">
-                    <h5 class="m-0">Country</h5>
-                </div>
-                <div class="col-md-6">
-                    <mat-form-field class="w-100">
-                        <input #country class="form-control br-0" appInputValueValidation
-                            [inputValidator]="validatorType.TEXT_ONLY" formControlName="country" matInput maxlength="30"
-                            type="text">
-                        <mat-error class="f-12">
-                            This field is required
-                        </mat-error>
-                        <mat-hint align="end" class="f-12">{{country.value.length}}/30</mat-hint>
+                        <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('state').errors?.required">This field is required</mat-error>
+                        <!-- <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('state').errors?.pattern || orgProfile.get('state').errors?.minlength || orgProfile.get('state').errors?.maxlength">Please enter valid state name</mat-error> -->
                     </mat-form-field>
                 </div>
             </div>

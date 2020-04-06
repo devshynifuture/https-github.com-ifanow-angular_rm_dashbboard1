@@ -1,13 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ValidatorType } from 'src/app/services/util.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { DatePipe } from '@angular/common';
-import { EnumServiceService } from 'src/app/services/enum-service.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {ValidatorType} from 'src/app/services/util.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {DatePipe} from '@angular/common';
+import {EnumServiceService} from 'src/app/services/enum-service.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-client-basic-details',
@@ -144,7 +144,7 @@ export class ClientBasicDetailsComponent implements OnInit {
 
   getClientOrLeadData(data) {
     const obj = {
-      id: data.clientId
+      clientId: data.clientId
     };
     this.peopleService.getClientOrLeadData(obj).subscribe(
       data => {

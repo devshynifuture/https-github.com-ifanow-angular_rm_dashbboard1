@@ -98,15 +98,18 @@ export class UsersComponent implements OnInit {
         const deleteFromTrashSubscription = this.settingsService.deleteTeamMember(user.id)
           .subscribe(response => {
             console.log(response);
+            this.eventService.openSnackBar("User Deleted");
             deleteFromTrashSubscription.unsubscribe();
             this.loadUsers();
+            dialog.close();
           }, error => {
+            dialog.close();
             console.error(error)
             this.eventService.openSnackBar("Error occured");
           });
       }
     }
-    this.dialog.open(ConfirmDialogComponent, {
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: dialogData,
       autoFocus: false,
@@ -127,15 +130,18 @@ export class UsersComponent implements OnInit {
         const deleteFromTrashSubscription = this.settingsService.suspendMember(user.id)
           .subscribe(response => {
             console.log(response);
+            this.eventService.openSnackBar("User Suspended");
             deleteFromTrashSubscription.unsubscribe();
             this.loadUsers();
+            dialog.close();
           }, error => {
+            dialog.close();
             console.error(error)
             this.eventService.openSnackBar("Error occured");
           });
       }
     }
-    this.dialog.open(ConfirmDialogComponent, {
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: dialogData,
       autoFocus: false,
