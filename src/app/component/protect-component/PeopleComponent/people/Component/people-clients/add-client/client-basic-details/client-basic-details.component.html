@@ -97,7 +97,7 @@
                     <i class="material-icons mr-4"> check_circle </i> KYC compliant</p>
             </div>
         </div>
-        <div class="row pt-40">
+        <div *ngIf="fieldFlag=='client'" class="row pt-40">
             <div class="col-md-4 text-right">
                 <h5 class="m-0 pt-12">Username</h5>
                 <p class="f-12 m-0 l-18 roboto text-custom">This will be the login ID. By default, email is the username
@@ -125,11 +125,10 @@
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
                         <input [matDatepicker]="dobAsPerRecord" (click)="dobAsPerRecord.open()"
-                            class="form-control br-0 b-0" [max]="date" formControlName="dobAsPerRecord" matInput
-                            readonly>
+                            class="form-control br-0 b-0" formControlName="dobAsPerRecord" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord"></mat-datepicker-toggle>
                         <mat-datepicker #dobAsPerRecord></mat-datepicker>
-                        <mat-hint>Optiona</mat-hint>
+                        <mat-hint>Optional</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -137,8 +136,8 @@
                 <p class="m-0 roboto">Actual</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input [matDatepicker]="dobActual" [max]="date" (click)="dobActual.open()"
-                            class="form-control br-0 b-0" formControlName="dobActual" matInput readonly>
+                        <input [matDatepicker]="dobActual" (click)="dobActual.open()" class="form-control br-0 b-0"
+                            formControlName="dobActual" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="dobActual"></mat-datepicker-toggle>
                         <mat-datepicker #dobActual></mat-datepicker>
                         <mat-hint>Optiona</mat-hint>
@@ -173,7 +172,7 @@
                 <div class="form-group m-0">
                     <mat-form-field>
                         <mat-select [(ngModel)]="selectedClientOwner" formControlName="clientOwner"
-                        class="form-control">
+                            class="form-control">
                             <mat-option value="">Select option</mat-option>
                             <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
                                 {{singleClient.name}}
@@ -262,7 +261,8 @@
                     <mat-form-field>
                         <mat-select formControlName="role" class="form-control">
                             <mat-option value="">Option</mat-option>
-                            <mat-option [value]="role.clientRoleId" *ngFor="let role of clientRoles">{{role.clientRoleName}}</mat-option>
+                            <mat-option [value]="role.clientRoleId" *ngFor="let role of clientRoles">
+                                {{role.clientRoleName}}</mat-option>
                         </mat-select>
                         <mat-error class="f-12">This field is required
                         </mat-error>
@@ -362,8 +362,8 @@
                 <p class="m-0 roboto">As per records</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input formControlName="gDobAsPerRecord" (click)="gDobAsPerRecord.open()"
-                            class="form-control br-0 b-0" matInput readonly>
+                        <input [matDatepicker]="gDobAsPerRecord" (click)="gDobAsPerRecord.open()"
+                            class="form-control br-0 b-0" formControlName="gDobAsPerRecord" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="gDobAsPerRecord"></mat-datepicker-toggle>
                         <mat-datepicker #gDobAsPerRecord></mat-datepicker>
                         <mat-hint>Optional</mat-hint>
@@ -371,11 +371,11 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <p class="m-0 roboto">As per records</p>
+                <p class="m-0 roboto">Actual</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input formControlName="gDobActual" (click)="gDobActual.open()" class="form-control br-0 b-0"
-                            matInput readonly>
+                        <input formControlName="gDobActual" [matDatepicker]="gDobActual" (click)="gDobActual.open()"
+                            class="form-control br-0 b-0" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="gDobActual"></mat-datepicker-toggle>
                         <mat-datepicker #gDobActual></mat-datepicker>
                         <mat-hint>Optional</mat-hint>
@@ -412,7 +412,9 @@
                 <div class="form-group mb-0">
                     <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select formControlName="relationWithMinor" class="form-control">
-                            <mat-option value="option">Option</mat-option>
+                            <mat-option value="6">Father</mat-option>
+                            <mat-option value="2">Mother</mat-option>
+                            <mat-option value="7">Court appointed</mat-option>
                         </mat-select>
                         <mat-hint>Optional</mat-hint>
                     </mat-form-field>
@@ -542,8 +544,8 @@
             <div class="col-md-3 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input (click)="picker.open()" formControlName="dateOfIncorporation" matInput class="form-control"
-                            [matDatepicker]="picker">
+                        <input (click)="picker.open()" formControlName="dateOfIncorporation" matInput
+                            class="form-control" [matDatepicker]="picker">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-hint>Optional</mat-hint>
@@ -680,7 +682,8 @@
                     <mat-form-field>
                         <mat-select formControlName="role" class="form-control">
                             <mat-option value="">Option</mat-option>
-                            <mat-option [value]="role.clientRoleId" *ngFor="let role of clientRoles">{{role.clientRoleName}}</mat-option>
+                            <mat-option [value]="role.clientRoleId" *ngFor="let role of clientRoles">
+                                {{role.clientRoleName}}</mat-option>
                         </mat-select>
                         <mat-error>This field is required</mat-error>
                     </mat-form-field>
@@ -696,7 +699,7 @@
         </div>
         <div *ngIf="fieldFlag=='client' || fieldFlag=='lead'" class="col-md-8 right text-right">
 
-        <!-- <button mat-raised-button (click)="saveNextClient('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
+            <!-- <button mat-raised-button (click)="saveNextClient('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
             </button> -->
 
             <app-progress-button (btnClick)="saveNextClient('Next')" class="br-0 text-inherit mr-12"

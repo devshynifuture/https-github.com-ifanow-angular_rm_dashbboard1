@@ -1,13 +1,13 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {ValidatorType} from 'src/app/services/util.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {DatePipe} from '@angular/common';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ValidatorType } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { DatePipe } from '@angular/common';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-client-basic-details',
@@ -55,8 +55,8 @@ export class ClientBasicDetailsComponent implements OnInit {
   // advisorId;
 
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
-              private subInjectService: SubscriptionInject, private peopleService: PeopleService,
-              private eventService: EventService, private datePipe: DatePipe) {
+    private subInjectService: SubscriptionInject, private peopleService: PeopleService,
+    private eventService: EventService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
@@ -92,7 +92,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     (data == undefined) ? data = {} : '';
     this.basicDetails = this.fb.group({
       fullName: [data.name, [Validators.required]],
-      email: [(data.emailList) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
+      email: [(data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       username: [data.userName],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
@@ -113,13 +113,13 @@ export class ClientBasicDetailsComponent implements OnInit {
       minorFullName: [data.name, [Validators.required]],
       dobAsPerRecord: [new Date(data.dateOfBirth)],
       dobActual: [],
-      gender: [(String(data.genderId))],
+      gender: [(data.genderId) ? String(data.genderId) : '1'],
       gFullName: [(data.guardianData) ? data.guardianData.name : '', [Validators.required]],
       gDobAsPerRecord: [(data.guardianData) ? new Date(data.guardianData.birthDate) : ''],
       gDobActual: [],
-      gGender: [(data.guardianData) ? String(data.genderId) : ''],
-      relationWithMinor: [],
-      gEmail: [, [Validators.pattern(this.validatorType.EMAIL)]],
+      gGender: [(data.guardianData) ? String(data.genderId) : '1'],
+      relationWithMinor: [String(data.relationshipId)],
+      gEmail: [(data.emailList.length > 0) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]]
     });
   }
@@ -321,7 +321,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   }
 
   saveNextFamilyMember(flag) {
-    this.basicDetails.get('clientOwner').setValidators(null);
+    // this.basicDetails.get('clientOwner').setValidators(null);
     const mobileList = [];
     this.mobileData.controls.forEach(element => {
       console.log(element);
@@ -330,6 +330,32 @@ export class ClientBasicDetailsComponent implements OnInit {
         verificationStatus: 0
       });
     });
+    let gardianObj;
+    if (this.invTypeCategory == '2') {
+      gardianObj =
+      {
+        name: (this.invTypeCategory == '2') ? this.minorForm.value.gFullName : null,
+        birthDate: (this.invTypeCategory == '2') ? this.datePipe.transform(this.minorForm.value.gDobAsPerRecord, 'dd/MM/yyyy') : null,
+        pan: 'pan',
+        genderId: (this.invTypeCategory == '2') ? this.minorForm.value.gGender : null,
+        relationshipId: 1,
+        aadhaarNumber: null,
+        occupationId: 1,
+        martialStatusId: 1,
+        anniversaryDate: null,
+        mobileList: (this.invTypeCategory == '2') ? mobileList : null,
+        emailList: [
+          {
+            email: (this.invTypeCategory == '2') ? this.minorForm.value.gEmail : null,
+            userType: 4,
+            verificationStatus: 0
+          }
+        ]
+      }
+    }
+    else {
+      gardianObj = null;
+    }
     if (this.invTypeCategory == '1' && this.basicDetails.invalid) {
       this.basicDetails.markAllAsTouched();
       return;
@@ -339,18 +365,17 @@ export class ClientBasicDetailsComponent implements OnInit {
       return;
     }
     const obj = {
-      id: this.basicDetailsData.id,
+      familyMemberId: this.basicDetailsData.familyMemberId,
       clientId: this.basicDetailsData.clientId,
       name: (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : this.minorForm.value.minorFullName,
       displayName: null,
-      dateOfBirth: (this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value : this.minorForm.value.dobAsPerRecord,
+      dateOfBirth: this.datePipe.transform((this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value : this.minorForm.value.dobAsPerRecord, 'dd/MM/yyyy'),
       martialStatusId: null,
-      anniversaryDate: null,
       genderId: (this.invTypeCategory == '1') ? this.basicDetails.controls.gender.value : this.minorForm.value.gender,
       occupationId: 1,
       pan: (this.invTypeCategory == '1') ? this.basicDetails.controls.pan.value : this.minorForm.value.pan,
       taxStatusId: this.invTaxStatus,
-      relationshipId: 1,
+      relationshipId: this.basicDetailsData.relationshipId,
       familyMemberType: parseInt(this.invTypeCategory),
       isKycCompliant: 1,
       aadhaarNumber: null,
@@ -359,34 +384,11 @@ export class ClientBasicDetailsComponent implements OnInit {
       remarks: null,
       emailList: [
         {
-          email: (this.invTypeCategory == '1') ? this.basicDetails.controls.email.value : null,
+          email: (this.invTypeCategory == '1') ? this.basicDetails.controls.email.value : this.minorForm.value.gEmail,
           verificationStatus: 0
         }
       ],
-      guardianData: {
-        name: (this.invTypeCategory == '2') ? this.minorForm.value.gFullName : null,
-        birthDate: (this.invTypeCategory == '2') ? this.datePipe.transform(this.minorForm.value.gDobAsPerRecord, 'dd/MM/yyyy') : null,
-        pan: 'pan',
-        genderId: (this.invTypeCategory == '2') ? this.minorForm.value.gGender : null,
-        relationshipId: 1,
-        aadhaarNumber: null,
-        occupationId: 1,
-        martialStatusId: 1,
-        anniversaryDate: '2000-01-01',
-        mobileList: [
-          {
-            mobileNo: 9987442988,
-            userType: 4,
-          },
-        ],
-        emailList: [
-          {
-            email: (this.invTypeCategory == '2') ? this.minorForm.value.gEmail : null,
-            userType: 4,
-            verificationStatus: 0
-          }
-        ]
-      },
+      guardianData: gardianObj,
       invTypeCategory: 0,
       categoryTypeflag: null
     };
@@ -402,7 +404,7 @@ export class ClientBasicDetailsComponent implements OnInit {
 
   // }
   close(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', clientData: data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
   }
 
 }
