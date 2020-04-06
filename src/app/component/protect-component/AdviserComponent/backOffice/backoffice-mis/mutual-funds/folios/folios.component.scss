@@ -1,8 +1,22 @@
-::ng-deep   .icons-set{
-  .mat-icon{
-     position: relative;
-    top: -3px;
-    width:24px !important;
-    cursor:pointer;
-  }
-  }
+::ng-deep .icons-set {
+    .mat-icon {
+        position: relative;
+        top: -3px;
+        width: 24px !important;
+        cursor: pointer;
+    }
+}
+
+.mat-form-field-appearance-standard .mat-form-field-flex {
+    padding-top: 0px;
+}
+
+.positionIcon {
+    position: absolute;
+    top: -16px;
+    right: 6px;
+}
+
+.relativePos {
+    position: relative;
+}
