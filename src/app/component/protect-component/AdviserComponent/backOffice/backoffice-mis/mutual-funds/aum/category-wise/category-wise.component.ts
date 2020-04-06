@@ -13,7 +13,8 @@ import { ExcelMisService } from '../excel-mis.service';
 export class CategoryWiseComponent implements OnInit {
   category;
   subcategory;
-  showLoader;
+  showLoader=true;
+  isLoading = false;
   teamMemberId = 2929;
   advisorId = AuthService.getAdvisorId();
   subCategoryList: any[] = [];
@@ -36,7 +37,7 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   getSubCatSchemeName() {
-    this.showLoader = true;
+    
     const obj = {
       advisorId: this.advisorId,
       arnRiaDetailsId: -1,
@@ -62,13 +63,15 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   showSubTableList(index, category) {
-    this.selectedCategory = index
-    this.category[index].showCategory = (category) ? category = false : category = true;
+    // this.selectedCategory = index
+    category.showCategory = !category.showCategory
+    // this.category[index].showCategory = (category) ? category = false : category = true;
     console.log(this.category[index])
     console.log(category)
   }
 
   getFileResponseDataForSubSchemeName(data) {
+    this.showLoader = false;
     console.log("scheme Name:::", data);
     if (data) {
       this.totalAumForSubSchemeName = data.totalAum;
@@ -84,18 +87,27 @@ export class CategoryWiseComponent implements OnInit {
         sub.showSubCategory = true;
       })
     });
-    this.showLoader = false;
+    
   }
   showSchemeName(index, subcashowSubcat) {
-    this.category[this.selectedCategory].subCategoryList[index].showSubCategory = (subcashowSubcat) ? subcashowSubcat = false : subcashowSubcat = true;
-  }
+    subcashowSubcat.showSubCategory = !subcashowSubcat.showSubCategory
+    subcashowSubcat.schemes.forEach(element => {
+      element.showScheme=true;
+    });
 
+    // this.category[this.selectedCategory].subCategoryList[index].showSubCategory = (subcashowSubcat) ? subcashowSubcat = false : subcashowSubcat = true;
+  }
+    showApplicantName(index, schemeData) {
+    schemeData.showScheme = !schemeData.showScheme
+
+
+    // this.category[this.selectedCategory].subCategoryList[index].showSubCategory = (subcashowSubcat) ? subcashowSubcat = false : subcashowSubcat = true;
+  }
   aumReport() {
     this.changedValue.emit(true);
-
-    // this.aum.aumComponent = true;
   }
   getFilerrorResponse(err) {
+    this.showLoader=false;
     this.dataService.openSnackBar(err, 'Dismiss')
   }
 

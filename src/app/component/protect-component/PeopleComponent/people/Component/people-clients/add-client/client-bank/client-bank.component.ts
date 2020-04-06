@@ -1,12 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {ValidatorType} from 'src/app/services/util.service';
-import {SubscriptionService} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import {PostalService} from 'src/app/services/postal.service';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { ValidatorType } from 'src/app/services/util.service';
+import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { PostalService } from 'src/app/services/postal.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 
 @Component({
   selector: 'app-client-bank',
@@ -34,42 +34,45 @@ export class ClientBankComponent implements OnInit {
     this.userData = data;
     this.fieldFlag;
     this.createBankForm(data);
-    (this.fieldFlag) ? this.getBankList(data) : this.createBankForm(data);
+    (this.userData.bankData) ? this.bankList = this.userData.bankData : '';
+    (this.userData.bankData == undefined) ? this.getBankList(data) : this.createBankForm(this.userData.bankData);
 
   }
   getBankList(data) {
     let obj =
     {
-      "userId": data.userId,
-      "userType": data.userType
+      "userId": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
+      "userType": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
     }
-    this.cusService.getDematList(obj).subscribe(
+    this.cusService.getBankList(obj).subscribe(
       data => {
         console.log(data);
-        this.bankList = data;
+        if (data) {
+          this.bankList = data[0];
+          this.createBankForm(this.bankList)
+        }
       }, err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
   createBankForm(data) {
     (data == undefined) ? data = {} : data;
     this.bankForm = this.fb.group({
-      ifscCode: [, [Validators.required]],
-      bankName: [, [Validators.required]],
-      micrName: [, [Validators.required]],
-      accNumber: [, [Validators.required]],
-      accType: ['1', [Validators.required]],
-      branchName: [, [Validators.required]],
-      branchCountry: [, [Validators.required]],
-      branchPinCode: [, [Validators.required]],
-      branchAddressLine1: [, [Validators.required]],
-      branchAddressLine2: [, [Validators.required]],
-      branchCity: [, [Validators.required]],
-      branchState: [, [Validators.required]]
+      ifscCode: [data.ifscCode, [Validators.required]],
+      bankName: [data.bankName, [Validators.required]],
+      micrName: [data.micrNo, [Validators.required]],
+      accNumber: [data.accountNumber, [Validators.required]],
+      accType: [(data.accountType) ? data.accountType : '1', [Validators.required]],
+      branchName: [data.branchName, [Validators.required]],
+      branchCountry: [(data.address) ? data.address.country : '', [Validators.required]],
+      branchPinCode: [(data.address) ? data.address.pinCode : '', [Validators.required]],
+      branchAddressLine1: [(data.address) ? data.address.address1 : '', [Validators.required]],
+      branchAddressLine2: [(data.address) ? data.address.address2 : '', [Validators.required]],
+      branchCity: [(data.address) ? data.address.city : '', [Validators.required]],
+      branchState: [(data.address) ? data.address.state : '', [Validators.required]]
     });
   }
 
   ngOnInit() {
-    this.createBankForm(null);
   }
 
   getBankAddress(ifsc) {
@@ -99,7 +102,6 @@ export class ClientBankComponent implements OnInit {
     this.bankForm.get('bankName').setValue(data.bank);
     this.bankForm.get('branchCity').setValue(data.city);
     this.bankForm.get('branchState').setValue(data.state);
-    this.bankForm.get('branchPinCode').setValue(data.state);
     this.bankForm.get('branchName').setValue(data.centre);
     this.bankForm.get('branchCountry').setValue('India');
     this.bankForm.get('branchAddressLine1').setValue(data.address);
@@ -139,15 +141,13 @@ export class ClientBankComponent implements OnInit {
       if (this.holderList) {
         this.holderList.controls.forEach(element => {
           holderList.push({
-            fMDetailTypeId: 1,
             name: element.get('name').value,
-            id: 1,
-            dematId: 1
+            id: element.get('id').value,
           });
         });
       }
       const obj = {
-        branchCode: '',
+        branchCode: (this.bankList) ? this.bankList.branchCode : this.bankDetail.branchCode,
         branchName: this.bankForm.get('branchName').value,
         bankName: this.bankForm.get('bankName').value,
         accountType: this.bankForm.get('accType').value,
@@ -161,17 +161,17 @@ export class ClientBankComponent implements OnInit {
           pinCode: this.bankForm.get('branchPinCode').value,
           city: this.bankForm.get('branchCity').value,
           state: this.bankForm.get('branchState').value,
-          stateId: '27',
-          country: this.bankForm.get('branchCountry').value
+          country: this.bankForm.get('branchCountry').value,
+          addressId: (this.userData.bankData) ? this.userData.bankData.address.addressId : (this.bankList) ? this.bankList.addressId : null
         },
-        userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? this.userData.clientId : this.userData.familyMemberId,
-        userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? 2 : 3,
-        minorAccountHolderName: 'sarvesh',
-        guardianAccountHolderName: 'chetan',
-        userBankMappingId: '',
-        bankId: '',
-        addressId: '',
-        name: ''
+        userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
+        userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
+        minorAccountHolderName: (this.userData.id) ? '' : null,
+        guardianAccountHolderName: (this.userData.id) ? '' : null,
+        holderNameList: holderList,
+        userBankMappingId: (this.userData.bankData) ? this.userData.bankData.userBankMappingId : (this.bankList) ? this.bankList.userBankMappingId : null,
+        bankId: (this.userData.bankData) ? this.userData.bankData.bankId : (this.bankList) ? this.bankList.bankId : null,
+        addressId: (this.userData.bankData) ? this.userData.bankData.address.addressId : (this.bankList) ? this.bankList.addressId : null
       };
       this.peopleService.addEditClientBankDetails(obj).subscribe(
         data => {

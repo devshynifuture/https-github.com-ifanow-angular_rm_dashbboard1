@@ -20,6 +20,7 @@ export class ClientDematComponent implements OnInit {
   dematForm;
   userData;
   dematList: any;
+  holdingMode: string;
 
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
@@ -32,42 +33,48 @@ export class ClientDematComponent implements OnInit {
 
   @Input() set data(data) {
     this.userData = data;
-    this.createDematForm(data);
-    (this.fieldFlag) ? this.getDematList(data) : this.createDematForm(data);
-
+    (this.userData.dematData) ? this.dematList = this.userData.dematData : '';
+    this.holdingMode = (this.userData.dematData) ? String(this.userData.dematData.modeOfHolding) : '1';
+    if (this.userData.dematData == undefined) {
+      this.createDematForm(null);
+      this.getDematList(data);
+    }
+    else {
+      this.createDematForm(this.userData.dematData);
+    }
   }
 
   createDematForm(data) {
     (data == undefined) ? data = {} : data;
     this.dematForm = this.fb.group({
-      modeOfHolding: ['1'],
-      holderNameList: new FormArray([]),
-      depositoryPartName: [, [Validators.required]],
-      depositoryPartId: [, [Validators.required]],
+      modeOfHolding: [(data.modeOfHolding) ? String(data.modeOfHolding) : '1'],
+      depositoryPartName: [data.depositoryParticipantName, [Validators.required]],
+      depositoryPartId: [data.depositoryParticipantId, [Validators.required]],
       clientId: [, [Validators.required]],
-      brekerName: [],
-      brokerAddress: [],
-      brokerPhone: [],
-      linkedBankAccount: [],
-      powerOfAttName: [],
-      powerOfAttMasId: []
+      brekerName: [data.brokerName],
+      brokerAddress: [data.brokerAddress],
+      linkedBankAccount: [data.linkedBankAccount],
+      powerOfAttName: [data.powerOfAttorneyName],
+      powerOfAttMasId: [data.powerOfAttorneyMasterId]
     });
   }
   getDematList(data) {
     let obj =
     {
-      "userId": data.userId,
-      "userType": data.userType
+      "userId": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
+      "userType": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
     }
     this.cusService.getDematList(obj).subscribe(
       data => {
         console.log(data);
-        this.dematList = data;
+        if (data) {
+          this.dematList = data[0];
+          this.createDematForm(this.dematList)
+        }
       }, err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
   ngOnInit() {
-    this.createDematForm(null);
   }
 
   getHolderList(data) {
@@ -91,8 +98,12 @@ export class ClientDematComponent implements OnInit {
         this.mobileData.controls.forEach(element => {
           console.log(element);
           mobileList.push({
-            userType: 5,
-            mobileNo: element.get('number').value,
+            "verificationStatus": 0,
+            "id": 0,
+            "userType": 0,
+            "mobileNo": element.get('number').value,
+            "isActive": 1,
+            "userId": 0
           });
         });
       }
@@ -102,51 +113,36 @@ export class ClientDematComponent implements OnInit {
             fMDetailTypeId: 1,
             name: element.get('name').value,
             id: 1,
-            dematId: 1
+            dematId: (this.userData.dematData) ? this.userData.dematData.dematId : (this.dematList) ? this.dematList.dematId : null
           });
         });
       }
-      const test = {
-        dematList: [
+      let obj =
+      {
+        "depositoryParticipantName": this.dematForm.get('depositoryPartName').value,
+        "powerOfAttorneyMasterId": this.dematForm.get('depositoryPartId').value,
+        "holderNameList": holderList,
+        "modeOfHolding": this.dematForm.get('modeOfHolding').value,
+        "mobileDataList": mobileList,
+        "dematId": (this.userData.dematData) ? this.userData.dematData.dematId : (this.dematList) ? this.dematList.dematId : null,
+        "userId": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
+        "brokerAddress": this.dematForm.get('brokerAddress').value,
+        "depositoryParticipantId": this.dematForm.get('depositoryPartId').value,
+        "linkedBankAccount": this.dematForm.get('linkedBankAccount').value,
+        "powerOfAttorneyName": this.dematForm.get('powerOfAttName').value,
+        "nomineeList": [
           {
-            id: 3,
-            clientId: this.dematForm.get('clientId').value,
-            depositoryParticipantName: this.dematForm.get('depositoryPartName').value,
-            powerOfAttorneyMasterId: this.dematForm.get('powerOfAttMasId').value,
-            holderNameList: holderList,
-            modeOfHolding: this.dematForm.get('modeOfHolding').value,
-            mobileDataList: mobileList,
-            brokerAddress: this.dematForm.get('brokerAddress').value,
-            depositoryParticipantId: this.dematForm.get('depositoryPartId').value,
-            linkedBankAccount: this.dematForm.get('linkedBankAccount').value,
-            familyMemberid: 1,
-            powerOfAttorneyName: this.dematForm.get('powerOfAttName').value,
-            nomineeList: [
-              {
-                assetTypeId: 0,
-                familyMemberId: 1,
-                assetId: 0,
-                name: 'name',
-                id: 0,
-                sharePercentage: 100
-              }
-            ],
-            brokerName: this.dematForm.get('brekerName').value
+            "name": null,
+            "id": 0,
+            "userType": 0,
+            "userId": 0,
+            "sharePercentage": 0
           }
-        ]
-      };
-      const obj = {
-        modeOfHolding: this.dematForm.get('modeOfHolding').value,
-        depositoryParticipantName: this.dematForm.get('depositoryPartName').value,
-        depositoryParticipantId: this.dematForm.get('depositoryPartId').value,
-        clientId: this.userData.clientId,
-        brokerName: this.dematForm.get('brekerName').value,
-        brokerAddress: this.dematForm.get('brokerAddress').value,
-        linkedBankAccount: this.dematForm.get('linkedBankAccount').value,
-        powerOfAttorneyName: this.dematForm.get('powerOfAttName').value,
-        powerOfAttorneyMasterId: this.dematForm.get('powerOfAttMasId').value
-      };
-
+        ],
+        "userType": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
+        "brokerName": this.dematForm.get('brekerName').value,
+        "dematClientId": this.dematForm.get('clientId').value
+      }
       this.peopleService.addEditClientDemat(obj).subscribe(
         data => {
           console.log(data);

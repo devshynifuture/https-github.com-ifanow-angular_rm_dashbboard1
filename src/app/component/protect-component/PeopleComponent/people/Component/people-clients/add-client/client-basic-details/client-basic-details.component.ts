@@ -86,7 +86,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     (data == undefined) ? data = {} : '';
     this.basicDetails = this.fb.group({
       fullName: [data.name, [Validators.required]],
-      email: [data.email, [Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+      email: [(data.emailList) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       username: [data.userName],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
@@ -124,7 +124,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       comName: [data.name, [Validators.required]],
       dateOfIncorporation: [data.dateOfBirth],
       comStatus: [, [Validators.required]],
-      comEmail: [data.email, [Validators.pattern(this.validatorType.EMAIL)]],
+      comEmail: [(data.emailList) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
       comPan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       comOccupation: [],
       username: [data.username, [Validators.required]],
@@ -243,6 +243,7 @@ export class ClientBasicDetailsComponent implements OnInit {
               console.log(data);
               data.invCategory = this.invTypeCategory;
               data.categoryTypeflag = 'Individual';
+              this.eventService.openSnackBar("Added successfully!", "Dismiss");
               (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
             },
             (err) => {
@@ -257,6 +258,7 @@ export class ClientBasicDetailsComponent implements OnInit {
               console.log(data);
               data.invCategory = this.invTypeCategory;
               data.categoryTypeflag = 'clientNonIndividual';
+              this.eventService.openSnackBar("Added successfully!", "Dismiss");
               (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
             },
             (err) =>{ this.eventService.openSnackBar(err, 'Dismiss')
@@ -271,6 +273,7 @@ export class ClientBasicDetailsComponent implements OnInit {
             console.log(data);
             data.invCategory = this.invTypeCategory;
             data.categoryTypeflag = (this.invTypeCategory == '1') ? 'Individual' : 'clientNonIndividual';
+            this.eventService.openSnackBar("Updated successfully!", "Dismiss");
             (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
           },
           (err) =>{
