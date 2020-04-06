@@ -22,7 +22,6 @@ export class AddFamilyMemberComponent implements OnInit {
   createFamily: any;
   familyMemberList = {
     'firstRow': [
-      { name: 'You', imgUrl: '/assets/images/svg/man-profile.svg', selected: true, relationshipTypeId: 1 },
       { name: 'Wife', imgUrl: '/assets/images/svg/wife-profile.svg', selected: false, relationshipTypeId: 2 }
     ],
     'secondRow': [

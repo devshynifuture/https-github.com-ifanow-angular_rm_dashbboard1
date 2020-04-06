@@ -139,7 +139,7 @@ export class ClientUploadComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: 0,
       userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
-      userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
+      userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
       documentId: 0,
       documentType: 0,
       proofType: 0,
