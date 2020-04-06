@@ -57,18 +57,18 @@
         <div class="col-md-4 pr-0">
             <h5 class="m-0 text-right pt-12">Secret question & answer</h5>
         </div>
-        <ng-container [formGroupName]="i" *ngFor="let secretQuestionForm of camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.value; let i = index; trackBy:trackByFn">
+        <ng-container [formGroupName]="i" *ngFor="let secretQuestionForm of camsFundFG.get('rtaCamsFundNetSecurityQuestionsList').controls; let i = index;">
             <div class="col-md-4 pr-0" *ngIf="i > 0"></div>
             <div class="col-md-4">
                 <div class="form-group  mb-24">
-                    <select class="form-control" formControlName="questionId">
+                    <select class="form-control" [formControlName]="'questionId'">
                         <option value="" selected disabled>Select Question</option>
                         <option [value]="questionObj.id" *ngFor="let questionObj of data.globalData.rta_cams_fund_net_security_questions_list">
                             {{questionObj.question}}</option>
                     </select>
-                    <mat-error *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.questionId.invalid && camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.questionId.errors.required && camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.questionId.touched">
+                    <mat-error *ngIf="secretQuestionForm.controls.questionId.invalid && secretQuestionForm.controls.questionId.errors.required && secretQuestionForm.controls.questionId.touched">
                         This field is required</mat-error>
-                    <mat-error *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.questionId.invalid && camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.controls[i].controls.questionId.errors.duplicate">
+                    <mat-error *ngIf="secretQuestionForm.controls.questionId.invalid && secretQuestionForm.controls.questionId.errors.duplicate">
                         This question already exists</mat-error>
                     <!-- <mat-form-field>
                     </mat-form-field> -->
@@ -77,7 +77,7 @@
             <div class="col-md-2 pl-0">
                 <div class="form-group mb-24 ">
                     <mat-form-field>
-                        <input type="text" formControlName="answer" matInput class="form-control">
+                        <input type="text" [formControlName]="'answer'" matInput class="form-control">
                         <mat-error>This field is required</mat-error>
                     </mat-form-field>
                 </div>
