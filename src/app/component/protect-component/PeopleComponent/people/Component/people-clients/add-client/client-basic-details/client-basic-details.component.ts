@@ -323,7 +323,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         occupationId: 1,
         martialStatusId: 1,
         anniversaryDate: null,
-        mobileList: mobileList,
+        mobileList: (this.invTypeCategory == '2') ? mobileList : null,
         emailList: [
           {
             email: (this.invTypeCategory == '2') ? this.minorForm.value.gEmail : null,
