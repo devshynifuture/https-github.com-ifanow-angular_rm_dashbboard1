@@ -22,7 +22,9 @@
 .h-30 {
   height: 30px !important;
 }
-
+.h-32{
+  height: 32px !important;
+}
 .h-40 {
   height: 40px !important;
 }
@@ -205,7 +207,7 @@ height: 40px !important;
 }
 
 .h-auto {
-  height: $auto;
+  height: $auto !important;
 }
 
 .m-n0 {

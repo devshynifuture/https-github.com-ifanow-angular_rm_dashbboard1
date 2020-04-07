@@ -27,8 +27,8 @@
             <div class="col-md-6 p-0 text-right right" *ngIf="dataSource.filteredData.length > 0">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
-                    <button mat-menu-item>PDF</button>
-                    <button (click)="ExportTOExcel('Fixed Deposit')" mat-menu-item>XLS</button>
+                    <button (click)="pdf('Fixed deposit')" mat-menu-item>PDF</button>
+                    <button (click)="Excel('Fixed deposit')" mat-menu-item>XLS</button>
                 </mat-menu>
                 <img src="assets/images/svg/up-down.svg">
                 <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p">
@@ -66,7 +66,7 @@
         </div>
         <div [ngClass]="{'table-scroll':isLoading==false }"
             class="col-md-12 p-0 mt-8 overflow-hidden newFont tableHeightClass fixed-DEPOSIT">
-            <table *ngIf="dataSource.filteredData.length > 0" matSort #fixedIncomeTableSort="matSort" mat-table
+            <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort #fixedIncomeTableSort="matSort" mat-table
                 [dataSource]="dataSource" id="tbs" class="skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no" sticky>
@@ -227,8 +227,8 @@
             <div class="col-md-6 p-0 text-right right " *ngIf="dataSource.filteredData.length > 0">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
-                    <button mat-menu-item>PDF</button>
-                    <button (click)="ExportTOExcel('Fixed Reccuring')" mat-menu-item>XLS</button>
+                    <button (click)="pdf('Recurring deposit')" mat-menu-item>PDF</button>
+                    <button (click)="Excel('Recurring deposit')" mat-menu-item>XLS</button>
                 </mat-menu>
                 <img src="assets/images/svg/up-down.svg">
                 <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p">
@@ -262,7 +262,7 @@
         </div>
         <div [ngClass]="{'table-scroll':isLoading==false }" class=" col-md-12 overflow-hidden p-0 mt-8 fixed-DEPOSIT ">
 
-            <table *ngIf="dataSource.filteredData.length > 0" matSort #recurringDepositTable="matSort" mat-table
+            <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort #recurringDepositTable="matSort" mat-table
                 [dataSource]="dataSource" id="tbs" class="skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no" sticky>
@@ -397,8 +397,8 @@
             <div class="col-md-6 p-0 text-right right " *ngIf="dataSource.filteredData.length > 0">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
-                    <button mat-menu-item>PDF</button>
-                    <button mat-menu-item (click)="ExportTOExcel('Bonds')">XLS</button>
+                    <button (click)="pdf('Bonds')" mat-menu-item>PDF</button>
+                    <button (click)="Excel('Bonds')" mat-menu-item>XLS</button>
                 </mat-menu>
                 <img src="assets/images/svg/up-down.svg">
                 <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p">
@@ -416,7 +416,7 @@
         </div>
         <div class=" p-0 col-md-12  mt-8  fixed-DEPOSIT">
             <div [ngClass]="{'table-scroll':isLoading==false }" class="overflow-hidden tableHeightClass">
-                <table *ngIf="dataSource.filteredData.length > 0" matSort #bondListTable="matSort" mat-table
+                <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort #bondListTable="matSort" mat-table
                     [dataSource]="dataSource" id="tbs" class="skeletonAnimation" appSkeletonLoading
                     [appSkeletonLoading]="isLoading">
                     <ng-container matColumnDef="no" sticky>
