@@ -18,6 +18,7 @@ export class DocumentNewFolderComponent implements OnInit {
   SendObj: {};
   reameValue: string;
   parentId: any;
+  showSpinner = false
 
   constructor(private custumService: CustomerService,
     public dialogRef: MatDialogRef<DocumentNewFolderComponent>,
@@ -34,7 +35,7 @@ export class DocumentNewFolderComponent implements OnInit {
 
   createNewFolder(value){
    console.log(this.nameFolder)
-
+   this.showSpinner = true
 
 
     if(this.folderUpload!='CREATE'){
@@ -56,6 +57,7 @@ export class DocumentNewFolderComponent implements OnInit {
 
   }
   newFolderRes(data){
+    this.showSpinner = false
     console.log(data)
     if(data==204){
       this.eventService.openSnackBar('Folder name already exist', 'Ok');

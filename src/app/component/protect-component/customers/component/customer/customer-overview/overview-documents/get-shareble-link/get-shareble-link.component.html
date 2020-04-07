@@ -1,0 +1,63 @@
+<div class="popup-header-fix-30">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-0 wrapper-20">SHAREBLE LINK</h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle" (click)="onNoClick()"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+<div [formGroup]="emailVierify">
+    <div>
+        <div class="row pt-12">
+            <div class="col-md-12 iconPetage">
+                <h5 class="mb-8 ">Link</h5>
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput #interestRate matInput type="email" [(ngModel)]="link" formControlName="link"
+                            class="form-control br-0 ">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-12" *ngIf="flag == 'share'">
+        <div class="col-md-12 iconPetage">
+            <h5 class="mb-8 ">Enter emailId</h5>
+            <div class="form-group mb-0">
+                <mat-form-field class="heightAuto">
+                    <mat-chip-list #chipListEmail>
+                        <mat-chip [removable]="true" *ngFor="let singleEmailId of emailIdList; let i = index"
+                            [selectable]="false" (removed)="removeEmailId(i)">
+                            {{singleEmailId.emailAddress}}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                        <input [matChipInputFor]="chipListEmail" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                            [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event)" [autofocus]="true">
+                    </mat-chip-list>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row pt-16 pb-16" *ngIf="flag == 'shareLink'">
+    <div class="col-md-12 text-right">
+        <button class="br-0 text-inherit f-14" mat-button [mat-dialog-close]="data.investor">
+            CANCEL
+        </button>
+        <button class="btn-primary f-14 ml-12" (click)="onNoClick()" mat-button mat-raised-button
+            cdkFocusInitial>COPY</button>
+    </div>
+</div>
+<div class="row pt-16 pb-16" *ngIf="flag == 'share'">
+    <div class="col-md-12 text-right">
+        <button class="br-0 text-inherit f-14" mat-button [mat-dialog-close]="data.investor">
+            CANCEL
+        </button>
+        <button class="btn-primary f-14 ml-12" (click)="onNoClick()" mat-button mat-raised-button cdkFocusInitial
+            (click)="saveEmail()">SEND</button>
+    </div>
+</div>
