@@ -18,7 +18,13 @@ export class SipAmcWiseComponent implements OnInit {
   totalWeight=0;
   isLoading=false;
   propertyName: any;
+  propertyName2: any;
+  propertyName3: any;
+  propertyName4: any;
   reverse=true;
+  reverse2=true;
+  reverse3=true;
+  reverse4=true;
   constructor(private backoffice:BackOfficeService,public sip:SipComponent) { }
   teamMemberId=2929;
   @Output() changedValue = new EventEmitter();
@@ -43,7 +49,45 @@ export class SipAmcWiseComponent implements OnInit {
       );
     }
   }
-
+  sortByScheme(applicant,propertyName){
+    this.propertyName2 = propertyName;
+    this.reverse2 = (propertyName !== null && this.propertyName2 === propertyName) ? !this.reverse2 : false;
+    if (this.reverse2 === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortByInvestor(applicant,propertyName){
+    this.propertyName3 = propertyName;
+    this.reverse3 = (propertyName !== null && this.propertyName3 === propertyName) ? !this.reverse3 : false;
+    if (this.reverse3 === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortByApplicant(applicant,propertyName){
+    this.propertyName4 = propertyName;
+    this.reverse4 = (propertyName !== null && this.propertyName4 === propertyName) ? !this.reverse4 : false;
+    if (this.reverse4 === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
   aumReport()
   {
     this.changedValue.emit(true);
@@ -60,18 +104,21 @@ export class SipAmcWiseComponent implements OnInit {
     this.backoffice.GET_SIP_AMC(obj).subscribe(
       data =>{
         this.isLoading=false;
-        this.amcList=data;
-        if(this.amcList){
+        if(data){
+          this.amcList=data;
           this.amcList.forEach(o => {
             o.showCategory = true;
             this.totalOfSipAmount+=o.sipAmount;
             this.totalOfSipCount+=o.sipCount;
             this.totalWeight+=o.weightInPercentage;
           });
+        }else{
+          this.amcList=[]
         }
       },
       err=>{
         this.isLoading=false;
+        this.amcList=[]
       }
     )
   }

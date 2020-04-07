@@ -26,7 +26,11 @@ export class SipSchemeWiseComponent implements OnInit {
   totalWeight=0;
   filteredArray: any[];
   propertyName: any;
+  propertyName2: any;
+  propertyName3: any;
   reverse=true;
+  reverse2=true;
+  reverse3=true;
   @Output() changedValue = new EventEmitter();
 
   constructor(private backoffice:BackOfficeService,public sip:SipComponent) { }
@@ -37,13 +41,43 @@ export class SipSchemeWiseComponent implements OnInit {
     this.clientId=AuthService.getClientId();
     this.getSchemeWiseGet();
   }
-  sortBy(scheme,propertyName){
+  sortBy(applicant,propertyName){
     this.propertyName = propertyName;
     this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
     if (this.reverse === false){
-      scheme=scheme.sort((a, b) => a[propertyName] > b[propertyName] ? 1 : -1);
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
     }else{
-      scheme=scheme.reverse();
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortByInvestor(applicant,propertyName){
+    this.propertyName2 = propertyName;
+    this.reverse2 = (propertyName !== null && this.propertyName2 === propertyName) ? !this.reverse2 : false;
+    if (this.reverse2 === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortByApplicant(applicant,propertyName){
+    this.propertyName3 = propertyName;
+    this.reverse3 = (propertyName !== null && this.propertyName3 === propertyName) ? !this.reverse3 : false;
+    if (this.reverse3 === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
     }
   }
   aumReport()
@@ -64,15 +98,16 @@ export class SipSchemeWiseComponent implements OnInit {
       data =>this.getSchemeWiseRes(data),
       err=>{
         this.isLoading = false;
+        this.filteredArray=[]
       }
     )
   }
   
   getSchemeWiseRes(data) {
     this.isLoading=false;
-    console.log("scheme Name", data)
-    this.category = data;
-    if(this.category){
+    console.log("scheme Name", data);
+    if(data){
+      this.category = data;
       this.category.forEach(o => {
         o.showCategory = true;
         this.totalOfSipAmount+=o.sipAmount;
@@ -80,8 +115,10 @@ export class SipSchemeWiseComponent implements OnInit {
         this.totalWeight+=o.weightInPercentage;
         o.InvestorList=[];
       });
+      this.filteredArray = [...this.category];
+    }else{
+      this.filteredArray=[];
     }
-    this.filteredArray = [...this.category];
 
     this.showLoader = false;
   }

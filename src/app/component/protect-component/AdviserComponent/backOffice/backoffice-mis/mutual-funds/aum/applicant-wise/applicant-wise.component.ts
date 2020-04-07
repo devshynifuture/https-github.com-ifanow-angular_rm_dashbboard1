@@ -19,7 +19,15 @@ export class ApplicantWiseComponent implements OnInit {
   schemeList: any;
   isLoading=false;
   propertyName: any;
+  propertyName2: any;
+  propertyName3: any;
+  propertyName4: any;
+  propertyName5: any;
   reverse=true;
+  reverse2=true;
+  reverse3=true;
+  reverse4=true;
+  reverse5=true;
   @Output() changedValue = new EventEmitter();
   selectedApplicant: any;
 
@@ -108,9 +116,65 @@ export class ApplicantWiseComponent implements OnInit {
     this.propertyName = propertyName;
     this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
     if (this.reverse === false){
-      applicant=applicant.sort((a, b) => a[propertyName] > b[propertyName] ? 1 : -1);
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
     }else{
-      applicant=applicant.reverse();
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortByCat(applicant,propertyName){
+    this.propertyName2 = propertyName;
+    this.reverse2 = (propertyName !== null && this.propertyName2 === propertyName) ? !this.reverse2 : false;
+    if (this.reverse2 === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortBySubCat(applicant,propertyName){
+    this.propertyName3 = propertyName;
+    this.reverse3 = (propertyName !== null && this.propertyName3 === propertyName) ? !this.reverse3 : false;
+    if (this.reverse3 === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortByScheme(applicant,propertyName){
+    this.propertyName4 = propertyName;
+    this.reverse4 = (propertyName !== null && this.propertyName4 === propertyName) ? !this.reverse4 : false;
+    if (this.reverse4 === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortByBalanceUnit(applicant,propertyName){
+    this.propertyName5 = propertyName;
+    this.reverse5 = (propertyName !== null && this.propertyName5 === propertyName) ? !this.reverse5 : false;
+    if (this.reverse5 === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
     }
   }
   aumApplicantWiseTotalaumApplicantNameGet() {
@@ -125,6 +189,7 @@ export class ApplicantWiseComponent implements OnInit {
       data => this.applicantNameGet(data),
       err => {
         this.isLoading = false;
+        this.applicantName=[];
       }
     )
   }
@@ -328,14 +393,16 @@ export class ApplicantWiseComponent implements OnInit {
 
   applicantNameGet(data) {
     this.isLoading=false;
-    this.applicantName = data;
-    if (this.applicantName) {
+    if (data) {
+      this.applicantName = data;
       this.excelInitApplicant();
       this.applicantName.forEach(o => {
         o.show = true;
         this.totalCurrentValue += o.totalAum;
         this.totalWeight += o.weightInPercentage;
       });
+    }else{
+      this.applicantName = [];
     }
     this.showLoader = false;
   }

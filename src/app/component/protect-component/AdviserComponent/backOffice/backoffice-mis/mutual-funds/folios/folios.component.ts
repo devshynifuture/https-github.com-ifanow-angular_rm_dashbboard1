@@ -70,44 +70,46 @@ export class FoliosComponent implements OnInit {
 
   }
   selectedData(data,value) {//for getting selected option data 
-    this.isLoading = true;
-    let tempData=[{}, {}, {}];
-    this.dataSource = new MatTableDataSource(tempData);
-    if(value=='groupyHead'){
-      const obj={
-        advisorId:this.advisorId,
-        arnRiaDetailsId:-1,
-        parentId:-1,
-        clientName:data
-      }
-      this.backoffice.folioSearchByGroupHead(obj).subscribe(
-        data =>{
-          this.isLoading = false;
-          this.dataSource = new MatTableDataSource(data);
-          this.dataSource.sort = this.sort;
-
+    if(data){
+      this.isLoading = true;
+      let tempData=[{}, {}, {}];
+      this.dataSource = new MatTableDataSource(tempData);
+      if(value=='groupyHead'){
+        const obj={
+          advisorId:this.advisorId,
+          arnRiaDetailsId:-1,
+          parentId:-1,
+          clientName:data
         }
-      )
-    }else{
-      const obj={
-        advisorId:this.advisorId,
-        arnRiaDetailsId:-1,
-        parentId:-1,
-        familyMemberName:data
-      }
-      this.backoffice.folioSearchByInvestor(obj).subscribe(
-        data =>{
-          this.isLoading = false;
-          this.dataSource = new MatTableDataSource(data);
-          this.dataSource.sort = this.sort;
-
+        this.backoffice.folioSearchByGroupHead(obj).subscribe(
+          data =>{
+            this.isLoading = false;
+            this.dataSource = new MatTableDataSource(data);
+            this.dataSource.sort = this.sort;
+  
+          }
+        )
+      }else{
+        const obj={
+          advisorId:this.advisorId,
+          arnRiaDetailsId:-1,
+          parentId:-1,
+          familyMemberName:data
         }
-      )
+        this.backoffice.folioSearchByInvestor(obj).subscribe(
+          data =>{
+            this.isLoading = false;
+            this.dataSource = new MatTableDataSource(data);
+            this.dataSource.sort = this.sort;
+  
+          }
+        )
+      }
     }
-
   }
   getData(data,value){//for pan and folio search data
-    this.isLoading = true;
+    if(data){
+      this.isLoading = true;
     let tempData=[{}, {}, {}];
     this.dataSource = new MatTableDataSource(tempData);
     if(value=='pan'){
@@ -140,6 +142,7 @@ export class FoliosComponent implements OnInit {
 
         }
       )
+    }
     }
   }
 }

@@ -89,18 +89,68 @@ export class ClientWiseComponent implements OnInit {
   selectedInvestor;
   teamMemberId = 2929;
   propertyName: any;
+  propertyName2: any;
+  propertyName3: any;
+  propertyName4: any;
   reverse=true;
+  reverse2=true;
+  reverse3=true;
+  reverse4=true;
+
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()
     this.getClientTotalAum();
   }
-  sortBy(client,propertyName){
+  sortBy(applicant,propertyName){
     this.propertyName = propertyName;
     this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
     if (this.reverse === false){
-      client=client.sort((a, b) => a[propertyName] > b[propertyName] ? 1 : -1);
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
     }else{
-      client=client.reverse();
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortByInvestor(applicant,propertyName){
+    this.propertyName2 = propertyName;
+    this.reverse2 = (propertyName !== null && this.propertyName2 === propertyName) ? !this.reverse2 : false;
+    if (this.reverse2 === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortByScheme(applicant,propertyName){
+    this.propertyName3 = propertyName;
+    this.reverse3 = (propertyName !== null && this.propertyName3 === propertyName) ? !this.reverse3 : false;
+    if (this.reverse3 === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortByFolio(applicant,propertyName){
+    this.propertyName4 = propertyName;
+    this.reverse4 = (propertyName !== null && this.propertyName4 === propertyName) ? !this.reverse4 : false;
+    if (this.reverse4 === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
     }
   }
   getClientSchemeName() {
@@ -127,6 +177,7 @@ export class ClientWiseComponent implements OnInit {
       data => this.clientTotalAum(data),
       err => {
         this.isLoading = false;
+        this.clientList = [];
       }
     )
 
@@ -332,6 +383,8 @@ export class ClientWiseComponent implements OnInit {
         this.totalWeight += o.weightInPercentage;
       });
       this.showLoader = false;
+    }else{
+      this.clientList = [];
     }
   }
   clientScheme(data, show, index) {

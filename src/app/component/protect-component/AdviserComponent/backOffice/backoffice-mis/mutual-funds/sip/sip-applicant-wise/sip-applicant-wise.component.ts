@@ -21,7 +21,9 @@ export class SipApplicantWiseComponent implements OnInit {
   isLoading=false;
   @Output() changedValue = new EventEmitter();
   propertyName: any;
+  propertyName2: any;
   reverse=true;
+  reverse2=true;
 
   constructor(private backoffice:BackOfficeService,public sip:SipComponent) { }
 
@@ -34,9 +36,26 @@ export class SipApplicantWiseComponent implements OnInit {
     this.propertyName = propertyName;
     this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
     if (this.reverse === false){
-      applicant=applicant.sort((a, b) => a[propertyName] > b[propertyName] ? 1 : -1);
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
     }else{
-      applicant=applicant.reverse();
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortByApplicant(applicant,propertyName){
+    this.propertyName2 = propertyName;
+    this.reverse2 = (propertyName !== null && this.propertyName2 === propertyName) ? !this.reverse2 : false;
+    if (this.reverse2 === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
     }
   }
   aumReport()
@@ -57,8 +76,8 @@ export class SipApplicantWiseComponent implements OnInit {
       data =>{
         this.isLoading=false;
         console.log("scheme Name", data)
-        this.applicantList = data;
-        if(this.applicantList){
+        if(data){
+          this.applicantList = data;
           this.applicantList.forEach(o => {
             o.showScheme = true;
             this.totalOfSipAmount+=o.totalAum;
@@ -66,11 +85,14 @@ export class SipApplicantWiseComponent implements OnInit {
             this.totalWeight+=o.weightInPercentage;
             o.InvestorList=[];
           });
+          this.filteredArray = [...this.applicantList];
+        }else{
+          this.filteredArray=[];
         }
-        this.filteredArray = [...this.applicantList];
       },
       err=>{
         this.isLoading = false;
+        this.filteredArray=[];
       }
     )
   }

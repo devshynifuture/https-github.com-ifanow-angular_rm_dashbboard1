@@ -3,7 +3,7 @@
         <div class="wrapper-20 bg-white">
             <div class="row">
                 <div class="col-md-6 pl-0">
-                    <h3 class="pt-8 mb-0">AMC Wise SIP</h3>
+                    <h3 class="pt-8 mb-0">AMC Wise SIP </h3>
                 </div>
                 <div class="col-md-6 pr-0">
                     <div class="text-right">
@@ -16,15 +16,28 @@
 
             <div class="row">
                 <div class="col-md-12 p-0 cat-wise overflow-hidden">
-                    <table class="skeletonAnimation mt-16" appSkeletonLoading [appSkeletonLoading]="isLoading" id="table-low" *ngIf="amcList">
+                    <table class="skeletonAnimation mt-16" appSkeletonLoading [appSkeletonLoading]="isLoading"
+                        id="table-low" *ngIf="amcList.length>0">
                         <thead class="text-dark">
                             <tr>
                                 <th class="w-10">Sr No.</th>
-                                <th class="w-40 c-p"  (click)="sortBy(amcList,'amcName')">Amc Name
-                                      <span>{{(propertyName=='amcName' && !reverse)?'↥':'↧'}}</span>
+                                <th class="w-40 c-p" (click)="sortBy(amcList,'amcName')">Amc Name
+                                    <span class="material-icons" *ngIf="propertyName=='amcName' && !reverse">
+                                        arrow_upward </span>
+                                    <span class="material-icons"
+                                        *ngIf="propertyName=='amcName' && reverse">arrow_downward</span>
                                 </th>
-                                <th  (click)="sortBy(amcList,'sipAmount')" class="c-p">SIP Amount</th>
-                                <th  (click)="sortBy(amcList,'sipCount')" class="c-p">SIP Count</th>
+                                <th (click)="sortBy(amcList,'sipAmount')" class="c-p">SIP Amount
+                                    <span class="material-icons" *ngIf="propertyName=='sipAmount' && !reverse">
+                                        arrow_upward </span>
+                                    <span class="material-icons"
+                                        *ngIf="propertyName=='sipAmount' && reverse">arrow_downward</span>
+                                </th>
+                                <th (click)="sortBy(amcList,'sipCount')" class="c-p">SIP Count
+                                    <span class="material-icons" *ngIf="propertyName=='sipCount' && !reverse">
+                                        arrow_upward </span>
+                                    <span class="material-icons"
+                                        *ngIf="propertyName=='sipCount' && reverse">arrow_downward</span></th>
                                 <th>% Weight</th>
                                 <th></th>
                             </tr>
@@ -58,20 +71,43 @@
                                         <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="category.showCategory==true">
                                             add
                                         </i>
-                                        <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="category.showCategory==false">
+                                        <i class="material-icons b-a f-14 mt-4 c-p"
+                                            *ngIf="category.showCategory==false">
                                             remove </i>
                                     </div>
                                 </td>
                             </tr>
                             <tr style="border: transparent !important">
                                 <td colspan="6" class="innerTd one">
-                                    <table *ngIf="category.showCategory==false && !isLoading" class=" mt-8 mb-8" id="table-low">
+                                    <table *ngIf="category.showCategory==false && !isLoading" class=" mt-8 mb-8"
+                                        id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr>
                                                 <th class="w-10">Sr No.</th>
-                                                <th class="w-40 c-p" (click)="sortBy(category.schemeList,'schemeName')">Scheme Name</th>
-                                                <th class="c-p" (click)="sortBy(category.schemeList,'sipAmount')">SIP Amount</th>
-                                                <th class="c-p" (click)="sortBy(category.schemeList,'sipCount')">SIP Count</th>
+                                                <th class="w-40 c-p" (click)="sortByScheme(category.schemeList,'schemeName')">
+                                                    Scheme Name
+                                                    <span class="material-icons"
+                                                        *ngIf="propertyName2=='schemeName' && !reverse2"> arrow_upward
+                                                    </span>
+                                                    <span class="material-icons"
+                                                        *ngIf="propertyName2=='schemeName' && reverse2">arrow_downward</span>
+                                                </th>
+                                                <th class="c-p" (click)="sortByScheme(category.schemeList,'sipAmount')">SIP
+                                                    Amount
+                                                    <span class="material-icons"
+                                                        *ngIf="propertyName2=='sipAmount' && !reverse2"> arrow_upward
+                                                    </span>
+                                                    <span class="material-icons"
+                                                        *ngIf="propertyName2=='sipAmount' && reverse2">arrow_downward</span>
+                                                </th>
+                                                <th class="c-p" (click)="sortByScheme(category.schemeList,'sipCount')">SIP
+                                                    Count
+                                                    <span class="material-icons"
+                                                        *ngIf="propertyName2=='sipCount' && !reverse2"> arrow_upward
+                                                    </span>
+                                                    <span class="material-icons"
+                                                        *ngIf="propertyName2=='sipCount' && reverse2">arrow_downward</span>
+                                                </th>
                                                 <th>% Weight</th>
                                                 <th></th>
                                             </tr>
@@ -85,25 +121,54 @@
                                                 <td><span appFormatNumber>{{subcategory.sipAmount}}</span> </td>
                                                 <td>{{subcategory.sipCount}} </td>
                                                 <td>{{subcategory.weightInPercentage}}%</td>
-                                                <td class="text-center" (click)="showSchemeName(i,subcategory.showSubCategory,subcategory)">
-                                                    <i *ngIf="subcategory.showSubCategory==true" class="material-icons b-a f-14 mt-4 c-p">add</i>
-                                                    <i *ngIf="subcategory.showSubCategory==false" class="material-icons b-a f-14 mt-4 c-p"> remove </i>
+                                                <td class="text-center"
+                                                    (click)="showSchemeName(i,subcategory.showSubCategory,subcategory)">
+                                                    <i *ngIf="subcategory.showSubCategory==true"
+                                                        class="material-icons b-a f-14 mt-4 c-p">add</i>
+                                                    <i *ngIf="subcategory.showSubCategory==false"
+                                                        class="material-icons b-a f-14 mt-4 c-p"> remove </i>
                                                 </td>
                                             </tr>
                                             <tr style="border: transparent !important">
                                                 <td colspan="6" class="innerTd two">
-                                                    <table class=" mt-8 mb-8" id="table-low" *ngIf="subcategory.showSubCategory==false">
+                                                    <table class=" mt-8 mb-8" id="table-low"
+                                                        *ngIf="subcategory.showSubCategory==false">
                                                         <thead>
                                                             <tr>
                                                                 <th class="w-10">Sr No.</th>
-                                                                <th class="w-40" class="c-p" (click)="sortBy(subcategory.investorList,'investorName')">Investor Name </th>
-                                                                <th class="c-p" (click)="sortBy(subcategory.investorList,'sipAmount')">SIP Amount</th>
-                                                                <th class="c-p" (click)="sortBy(subcategory.investorList,'sipCount')">SIP Count</th>
+                                                                <th class="w-40" class="c-p"
+                                                                    (click)="sortByInvestor(subcategory.investorList,'investorName')">
+                                                                    Investor Name
+                                                                    <span class="material-icons"
+                                                                        *ngIf="propertyName3=='investorName' && !reverse3">
+                                                                        arrow_upward </span>
+                                                                    <span class="material-icons"
+                                                                        *ngIf="propertyName3=='investorName' && reverse3">arrow_downward</span>
+                                                                </th>
+                                                                <th class="c-p"
+                                                                    (click)="sortByInvestor(subcategory.investorList,'sipAmount')">
+                                                                    SIP Amount
+                                                                    <span class="material-icons"
+                                                                        *ngIf="propertyName3=='sipAmount' && !reverse3">
+                                                                        arrow_upward </span>
+                                                                    <span class="material-icons"
+                                                                        *ngIf="propertyName3=='sipAmount' && reverse3">arrow_downward</span>
+                                                                </th>
+                                                                <th class="c-p"
+                                                                    (click)="sortByInvestor(subcategory.investorList,'sipCount')">
+                                                                    SIP Count
+                                                                    <span class="material-icons"
+                                                                        *ngIf="propertyName3=='sipCount' && !reverse3">
+                                                                        arrow_upward </span>
+                                                                    <span class="material-icons"
+                                                                        *ngIf="propertyName3=='sipCount' && reverse3">arrow_downward</span>
+                                                                </th>
                                                                 <th>% Weight</th>
                                                                 <th></th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody *ngFor="let inv of subcategory.investorList;let i = index">
+                                                        <tbody
+                                                            *ngFor="let inv of subcategory.investorList;let i = index">
                                                             <tr>
                                                                 <td>{{i+1}}</td>
                                                                 <td>
@@ -115,31 +180,108 @@
                                                                 <td>{{inv.weightInPercentage}}%
                                                                 </td>
 
-                                                                <td class="text-center" (click)="showApplicantName(i,inv.showInvestor,inv)">
-                                                                    <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="inv.showInvestor==true">add</i>
-                                                                    <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="inv.showInvestor==false"> remove </i>
+                                                                <td class="text-center"
+                                                                    (click)="showApplicantName(i,inv.showInvestor,inv)">
+                                                                    <i class="material-icons b-a f-14 mt-4 c-p"
+                                                                        *ngIf="inv.showInvestor==true">add</i>
+                                                                    <i class="material-icons b-a f-14 mt-4 c-p"
+                                                                        *ngIf="inv.showInvestor==false"> remove </i>
                                                                 </td>
                                                             </tr>
                                                             <tr style="border: transparent !important">
                                                                 <td colspan="6" class="innerTd three">
-                                                                    <table class=" mt-8 mb-8" id="table-low" *ngIf="inv.showInvestor==false">
+                                                                    <table class=" mt-8 mb-8" id="table-low"
+                                                                        *ngIf="inv.showInvestor==false">
                                                                         <thead>
                                                                             <tr>
-                                                                                <th class="w-12 c-p" (click)="sortBy(inv.applicantList,'investorName')">Applicant Name</th>
-                                                                                <th class="w-15 c-p" (click)="sortBy(inv.applicantList,'schemeName')">Scheme Name</th>
-                                                                                <th class="c-p " (click)="sortBy(inv.applicantList,'folioNumber')">Folio</th>
-                                                                                <th class="c-p" (click)="sortBy(inv.applicantList,'registeredDate')">Registered Date</th>
-                                                                                <th class="c-p" (click)="sortBy(inv.applicantList,'from_date')">From Date</th>
-                                                                                <th class="c-p" (click)="sortBy(inv.applicantList,'to_date')">To Date</th>
-                                                                                <th class="c-p" (click)="sortBy(inv.applicantList,'sipTriggerDay')">Trigger Day</th>
-                                                                                <th class="c-p" (click)="sortBy(inv.applicantList,'frequency')">Frequency</th>
-                                                                                <th class="c-p" (click)="sortBy(inv.applicantList,'sipAmount')">Amount</th>
+                                                                                <th class="w-12 c-p"
+                                                                                    (click)="sortByApplicant(inv.applicantList,'investorName')">
+                                                                                    Applicant Name
+                                                                                    <span class="material-icons"
+                                                                                        *ngIf="propertyName4=='investorName' && !reverse4">
+                                                                                        arrow_upward </span>
+                                                                                    <span class="material-icons"
+                                                                                        *ngIf="propertyName4=='investorName' && reverse4">arrow_downward</span>
+                                                                                </th>
+                                                                                <th class="w-15 c-p"
+                                                                                    (click)="sortByApplicant(inv.applicantList,'schemeName')">
+                                                                                    Scheme Name
+                                                                                    <span class="material-icons"
+                                                                                        *ngIf="propertyName4=='schemeName' && !reverse4">
+                                                                                        arrow_upward </span>
+                                                                                    <span class="material-icons"
+                                                                                        *ngIf="propertyName4=='schemeName' && reverse4">arrow_downward</span>
+                                                                                </th>
+                                                                                <th class="c-p "
+                                                                                    (click)="sortByApplicant(inv.applicantList,'folioNumber')">
+                                                                                    Folio
+                                                                                    <span class="material-icons"
+                                                                                        *ngIf="propertyName4=='folioNumber' && !reverse4">
+                                                                                        arrow_upward </span>
+                                                                                    <span class="material-icons"
+                                                                                        *ngIf="propertyName4=='folioNumber' && reverse4">arrow_downward</span>
+                                                                                </th>
+                                                                                <th class="c-p"
+                                                                                    (click)="sortByApplicant(inv.applicantList,'registeredDate')">
+                                                                                    Registered Date
+                                                                                    <span class="material-icons"
+                                                                                        *ngIf="propertyName4=='registeredDate' && !reverse4">
+                                                                                        arrow_upward </span>
+                                                                                    <span class="material-icons"
+                                                                                        *ngIf="propertyName4=='registeredDate' && reverse4">arrow_downward</span>
+                                                                                </th>
+                                                                                <th class="c-p"
+                                                                                    (click)="sortByApplicant(inv.applicantList,'from_date')">
+                                                                                    From Date
+                                                                                    <span class="material-icons"
+                                                                                        *ngIf="propertyName4=='from_date' && !reverse4">
+                                                                                        arrow_upward </span>
+                                                                                    <span class="material-icons"
+                                                                                        *ngIf="propertyName4=='from_date' && reverse4">arrow_downward</span>
+                                                                                </th>
+                                                                                <th class="c-p"
+                                                                                    (click)="sortByApplicant(inv.applicantList,'to_date')">
+                                                                                    To Date
+                                                                                    <span class="material-icons"
+                                                                                        *ngIf="propertyName4=='to_date' && !reverse4">
+                                                                                        arrow_upward </span>
+                                                                                    <span class="material-icons"
+                                                                                        *ngIf="propertyName4=='to_date' && reverse4">arrow_downward</span>
+                                                                                </th>
+                                                                                <th class="c-p"
+                                                                                    (click)="sortByApplicant(inv.applicantList,'sipTriggerDay')">
+                                                                                    Trigger Day
+                                                                                    <span class="material-icons"
+                                                                                        *ngIf="propertyName4=='sipTriggerDay' && !reverse4">
+                                                                                        arrow_upward </span>
+                                                                                    <span class="material-icons"
+                                                                                        *ngIf="propertyName4=='sipTriggerDay' && reverse4">arrow_downward</span>
+                                                                                </th>
+                                                                                <th class="c-p"
+                                                                                    (click)="sortByApplicant(inv.applicantList,'frequency')">
+                                                                                    Frequency
+                                                                                    <span class="material-icons"
+                                                                                        *ngIf="propertyName4=='frequency' && !reverse4">
+                                                                                        arrow_upward </span>
+                                                                                    <span class="material-icons"
+                                                                                        *ngIf="propertyName4=='frequency' && reverse4">arrow_downward</span>
+                                                                                </th>
+                                                                                <th class="c-p"
+                                                                                    (click)="sortByApplicant(inv.applicantList,'sipAmount')">
+                                                                                    Amount
+                                                                                    <span class="material-icons"
+                                                                                        *ngIf="propertyName4=='sipAmount' && !reverse4">
+                                                                                        arrow_upward </span>
+                                                                                    <span class="material-icons"
+                                                                                        *ngIf="propertyName4=='sipAmount' && reverse4">arrow_downward</span>
+                                                                                </th>
                                                                                 <th>% Weight</th>
                                                                                 <th>ceased</th>
                                                                             </tr>
                                                                         </thead>
 
-                                                                        <tbody *ngFor="let applicant of inv.applicantList;let i = index">
+                                                                        <tbody
+                                                                            *ngFor="let applicant of inv.applicantList;let i = index">
                                                                             <tr>
                                                                                 <td>{{applicant.investorName}}
                                                                                 </td>
@@ -164,7 +306,8 @@
                                                                                 <td>
                                                                                     {{applicant.frequency}}
                                                                                 </td>
-                                                                                <td><span appFormatNumber>{{applicant.sipAmount}}</span>
+                                                                                <td><span
+                                                                                        appFormatNumber>{{applicant.sipAmount}}</span>
                                                                                 </td>
                                                                                 <td>
                                                                                     {{applicant.weightInPercentage}}%
@@ -187,7 +330,7 @@
                                 </td>
                             </tr>
                         </tbody>
-                        <tbody *ngIf="!isLoading">
+                        <tbody *ngIf="!isLoading && amcList.length>0">
                             <tr>
                                 <td class="p-table">&nbsp;</td>
                                 <td class="p-table"><strong>Total</strong></td>
@@ -201,12 +344,10 @@
                     </table>
 
 
-                    <div *ngIf="!amcList" class="d-flex flex-column align-items-center">
+                    <div *ngIf="amcList.length==0" class="d-flex flex-column align-items-center">
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
                         <h4 class="text-center pt-12">No data Found</h4>
                     </div>
-
-
                 </div>
             </div>
         </div>

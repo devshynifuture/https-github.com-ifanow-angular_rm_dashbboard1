@@ -86,8 +86,9 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <div *ngIf="!dataSource || dataSource.filteredData.length==0">
-            <h4 class="text-center pt-12">No Data Found</h4>
+        <div *ngIf="!dataSource || dataSource.filteredData.length==0" class="d-flex flex-column align-items-center">
+            <img class="width300" src="assets/images/svg/noDataFound.svg">
+            <h4 class="text-center pt-12">No data found</h4>
         </div>
     </div>
 </div>

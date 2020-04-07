@@ -23,7 +23,9 @@ export class SipClientWiseComponent implements OnInit {
   isLoading=false;
   @Output() changedValue = new EventEmitter();
   propertyName: any;
+  propertyName2: any;
   reverse=true;
+  reverse2=true;
   constructor(private backoffice: BackOfficeService, public sip: SipComponent) { }
 
   ngOnInit() {
@@ -32,13 +34,30 @@ export class SipClientWiseComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.clientWiseClientName();
   }
-    sortBy(client,propertyName){
+  sortBy(applicant,propertyName){
     this.propertyName = propertyName;
     this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
     if (this.reverse === false){
-      client=client.sort((a, b) => a[propertyName] > b[propertyName] ? 1 : -1);
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
     }else{
-      client=client.reverse();
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortByApplicant(applicant,propertyName){
+    this.propertyName2 = propertyName;
+    this.reverse2 = (propertyName !== null && this.propertyName2 === propertyName) ? !this.reverse2 : false;
+    if (this.reverse2 === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
     }
   }
   aumReport() {
@@ -57,19 +76,23 @@ export class SipClientWiseComponent implements OnInit {
     this.backoffice.sipClientWiseClientName(obj).subscribe(
       data => {
         this.isLoading=false;
-        this.clientList = data;
-        if(this.clientList){
+        if(data){
+          this.clientList = data;
           this.clientList.forEach(o => {
             o.showCategory = true;
             this.totalOfSipAmount += o.sipAmount;
             this.totalOfSipCount += o.sipCount;
             this.totalWeight += o.weightInPercentage;
           });
+          this.filteredArray = [...this.clientList];
+        }else{
+          this.filteredArray=[];
         }
-        this.filteredArray = [...this.clientList];
+       
       },
       err=>{
         this.isLoading = false;
+        this.filteredArray=[];
       }
     )
   }
