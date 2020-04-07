@@ -220,19 +220,7 @@
                             </div>
 
                         </div>
-
-                        <div class="col-md-9 d-flex justify-content-center  flex-column align-items-center">
-                            <div *ngIf="showMsg == true">
-                                <img class="mr-12" src="/assets/images/svg/folder-icon.svg"> Folder is empty<br>
-                                <p class="m-0 f-12 text-custom">Drop files here</p>
-                            </div>
-                            <div *ngIf="noResult == true">
-                                <img src="assets/images/svg/document-search-icon.svg"> No result found<br>
-                                <p class="m-0 f-12 text-custom">Try a diffrent search</p>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
+                        <div class="col-md-3" *ngIf="showMsg == false">
                             <div class="bg-grey lter mb-16 boxGrey f-14">
                                 <p class="selectMoreDetails">
                                     Select a file to see more details
@@ -243,10 +231,7 @@
                                     <div class="col-md-6">
                                         <!-- <p class="f-12">Bajaj Allizan critical care</p> -->
                                     </div>
-                                </div>
-                            </div>
-
-                            <!-- <div class="row">
+                                      <!-- <div class="row">
                                 <div class="col">
                                     <ul class="d-block options">
                                         <li class="p-0">
@@ -269,6 +254,18 @@
                                     </ul>
                                 </div>
                             </div> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-9 d-flex justify-content-center  flex-column align-items-center">
+                            <div *ngIf="showMsg == true">
+                                <img class="mr-12" src="/assets/images/svg/folder-icon.svg"> Folder is empty<br>
+                                <p class="m-0 f-12 text-custom">Drop files here</p>
+                            </div>
+                            <div *ngIf="noResult == true">
+                                <img src="assets/images/svg/document-search-icon.svg"> No result found<br>
+                                <p class="m-0 f-12 text-custom">Try a diffrent search</p>
+                            </div>
                         </div>
                     </div>
                 </div>
