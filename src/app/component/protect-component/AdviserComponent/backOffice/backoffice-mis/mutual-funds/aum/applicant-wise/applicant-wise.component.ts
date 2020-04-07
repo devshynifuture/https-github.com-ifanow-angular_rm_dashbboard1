@@ -17,6 +17,7 @@ export class ApplicantWiseComponent implements OnInit {
   subCategoryList: any;
   categoryList: any;
   schemeList: any;
+  isLoading=false;
   @Output() changedValue = new EventEmitter();
   selectedApplicant: any;
 
@@ -102,6 +103,8 @@ export class ApplicantWiseComponent implements OnInit {
     this.aumApplicantWiseTotalaumApplicantNameGet();
   }
   aumApplicantWiseTotalaumApplicantNameGet() {
+    this.isLoading=true;
+    this.applicantName=[{},{},{}]
     const obj = {
       advisorId: this.advisorId,
       arnRiaDetailsId: -1,
@@ -313,6 +316,7 @@ export class ApplicantWiseComponent implements OnInit {
   }
 
   applicantNameGet(data) {
+    this.isLoading=false;
     this.applicantName = data;
     if (this.applicantName) {
       this.excelInitApplicant();

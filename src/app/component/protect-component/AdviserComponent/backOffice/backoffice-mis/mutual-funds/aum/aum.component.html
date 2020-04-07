@@ -15,7 +15,7 @@
                         {{viewMode}}
                         <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
                     </button>
-                    <mat-menu #menu="matMenu">
+                    <mat-menu #menu="matMenu" >
                         <div *ngFor="let item of arnRiaList">
                             <button mat-menu-item (click)="viewMode=item.number">{{item.number}}</button>
                         </div>

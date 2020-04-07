@@ -20,6 +20,7 @@ export class CategoryWiseComponent implements OnInit {
   subCategoryList: any[] = [];
   totalAumForSubSchemeName: any;
   amcWiseData: any;
+
   arrayOfHeaders: any[][] = [
     [
       'Sr. No.',
@@ -78,6 +79,8 @@ export class CategoryWiseComponent implements OnInit {
   @Output() changedValue = new EventEmitter();
   selectedSubCategory: any;
   selectedClientIndex: any;
+  totalCurrentValue: any;
+  totalWeight: any;
 
   constructor(
     private backoffice: BackOfficeService, private dataService: EventService, public aum: AumComponent
@@ -92,7 +95,8 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   getSubCatSchemeName() {
-
+    this.isLoading = true;
+    this.category = [{}, {}, {}];
     const obj = {
       advisorId: this.advisorId,
       arnRiaDetailsId: -1,
@@ -153,6 +157,7 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   getFileResponseDataForSubSchemeName(data) {
+    this.isLoading = false;
     this.showLoader = false;
     console.log("scheme Name:::", data);
     if (data) {
@@ -165,6 +170,8 @@ export class CategoryWiseComponent implements OnInit {
     // this.excelSheetInitialization();
     this.category.forEach(o => {
       o.showCategory = true;
+      this.totalCurrentValue += o.totalAum;
+      this.totalWeight += o.weightInPercentage;
       this.subCategoryList.push(o.subCategoryList);
 
       o.subCategoryList.forEach(sub => {

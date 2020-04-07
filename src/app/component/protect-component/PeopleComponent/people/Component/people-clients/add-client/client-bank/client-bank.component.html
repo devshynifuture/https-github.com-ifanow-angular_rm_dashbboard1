@@ -82,14 +82,9 @@
             </mat-radio-group>
         </div>
     </div>
-    <!-- ================== ERRORS +=================== -->
-    <!-- cannot load ui  -->
-    <!-- <app-add-holder-names *ngIf="bankList" [holderListInput]="bankList.holderNameList"
+    <app-add-holder-names *ngIf="bankList" [holderListInput]="bankList.holderNameList"
         (holderList)="getHolderList($event)">
-    </app-add-holder-names> -->
-
-    <!-- ================== ERRORS +=================== -->
-
+    </app-add-holder-names>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-8">Branch name</h5>
@@ -181,7 +176,7 @@
         </div>
     </div>
 </div>
-<div class="bottom-fixed wrapper-12 w-50">
+<div class="bottom-fixed wrapper-12 w-50 -m-28">
     <div class="row">
         <div class="col-md-4">
             <h5 (click)="close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>

@@ -20,9 +20,8 @@
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <input matInput formControlName="name" class="form-control">
-                            <mat-error class="f-12 pt-4">
-                                This field is required
-                            </mat-error>
+                            <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('name').errors?.required">This field is required</mat-error>
+                            <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('name').errors?.maxlength">Character limit exceeded</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -35,9 +34,8 @@
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <input matInput formControlName="emailId" class="form-control">
-                            <mat-error class="f-12 pt-4">
-                                This field is required
-                            </mat-error>
+                            <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('emailId').errors?.required">This field is required</mat-error>
+                            <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('emailId').errors?.pattern">Please enter valid email</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -50,14 +48,13 @@
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <input matInput formControlName="mobileNo" class="form-control">
-                            <mat-error class="f-12 pt-4">
-                                This field is required
-                            </mat-error>
+                            <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('mobileNo').errors?.required">This field is required</mat-error>
+                            <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('mobileNo').errors?.maxlength || personalProfile.get('mobileNo').errors?.minlength || personalProfile.get('mobileNo').errors?.pattern">Please enter valid mobile number</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
             </div>
-            <div class="row pt-40">
+            <!-- <div class="row pt-40">
                 <div class="col-md-4 text-right pr-0">
                     <h5 class="m-0 pt-8">Username</h5>
                 </div>
@@ -68,7 +65,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
         </mat-tab>
         <mat-tab label="Profile pic">

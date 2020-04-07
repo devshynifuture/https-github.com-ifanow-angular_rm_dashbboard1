@@ -488,7 +488,9 @@ export class CustomerService {
   renameFolder(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.RENAME_FOLDER, data);
   }
-
+  sendSharebleLink(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.SEND_SHAREBLE_LINK, data);
+  }
   deleteFolder(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_FOLDER, data);
   }
@@ -510,7 +512,9 @@ export class CustomerService {
     // .set("clientId",data.clientId).set('folderId',data.folderId).set('fileName',data.fileName)
     return this.http.get(apiConfig.MAIN_URL + appConfig.UPLOAD_FILE, data);
   }
-
+  getCountAllDocs(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_COUNT_DOCS, data);
+  }
   clientUploadFile(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.CLIENT_UPLOAD_FILE, data);
   }
@@ -583,7 +587,7 @@ export class CustomerService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_DETAILS, data);
   }
   searchFile(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.SEARCH_FILE, data);
+    return this.http.put(apiConfig.MAIN_URL + appConfig.SEARCH_FILE, data);
   }
   getAdviceFd(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_FD, data)

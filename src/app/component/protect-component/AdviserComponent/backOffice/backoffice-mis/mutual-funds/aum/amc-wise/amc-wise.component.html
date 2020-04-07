@@ -24,33 +24,32 @@
                                 <th class="w-40">Amc Name</th>
                                 <th>Current Value</th>
                                 <th>% Weight</th>
-                                <th></th>
+                                <th> </th>
 
                             </tr>
                         </thead>
                         <tbody *ngFor="let amc of amcList; let amcIndex = index">
                             <tr>
                                 <td>
-                                    <div class="bar"> {{amcIndex+1}} </div>
+                                    <div class="bar"> {{(isLoading)?'':amcIndex+1}} </div>
                                 </td>
                                 <td>
                                     <div class="bar"> {{amc.name}} </div>
                                 </td>
                                 <td>
-                                    <div class="bar"> {{amc.totalAum}} </div>
+                                    <div class="bar"><span appFormatNumber>{{amc.totalAum}}</span> </div>
                                 </td>
                                 <td>
-                                    <div class="bar"> {{amc.weightInPercentage}}% </div>
+                                    <div class="bar"> {{amc.weightInPercentage}} {{(isLoading?'':'%')}} </div>
                                 </td>
                                 <td (click)="showScheme(amc, amcIndex)">
                                     <div class="bar text-center">
                                         <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="amc.showAmc"> add </i>
-                                        <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="!amc.showAmc"> remove
-                                        </i>
+                                        <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="!amc.showAmc">
+                                            {{(isLoading?'':'remove')}} </i>
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
                             <tr style="border: transparent !important">
                                 <td colspan="5" class="innerTd one">
                                     <table *ngIf="!amc.showAmc" class=" mb-8 mt-8 " id="table-low">
@@ -110,19 +109,24 @@
                                 </td>
                             </tr>
                         </tbody>
-                        <tbody>
+                        <tbody *ngIf="!isLoading">
                             <tr>
                                 <td class="p-table"><strong>Total</strong></td>
                                 <td class="p-table">&nbsp;</td>
-                                <td class="p-table"><strong>{{totalCurrentValue}}</strong></td>
+                                <td class="p-table"><strong><span appFormatNumber>{{totalCurrentValue}}</span></strong>
+                                </td>
                                 <td class="p-table"><strong>{{totalWeight}}%</strong></td>
                                 <td></td>
                             </tr>
                         </tbody>
                     </table>
-                    <div *ngIf="!amcList">
-                        <p>No data found</p>
+
+                    <div *ngIf="!amcList" class="d-flex flex-column align-items-center">
+                        <img class="width300" src="assets/images/svg/noDataFound.svg">
+                        <h4 class="text-center pt-12">No data Found</h4>
                     </div>
+
+
                 </div>
             </div>
         </div>

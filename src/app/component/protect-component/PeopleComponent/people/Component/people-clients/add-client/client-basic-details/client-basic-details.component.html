@@ -97,7 +97,7 @@
                     <i class="material-icons mr-4"> check_circle </i> KYC compliant</p>
             </div>
         </div>
-        <div class="row pt-40">
+        <div *ngIf="fieldFlag=='client'" class="row pt-40">
             <div class="col-md-4 text-right">
                 <h5 class="m-0 pt-12">Username</h5>
                 <p class="f-12 m-0 l-18 roboto text-custom">This will be the login ID. By default, email is the username
@@ -125,11 +125,10 @@
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
                         <input [matDatepicker]="dobAsPerRecord" (click)="dobAsPerRecord.open()"
-                            class="form-control br-0 b-0" [max]="date" formControlName="dobAsPerRecord" matInput
-                            readonly>
+                            class="form-control br-0 b-0" formControlName="dobAsPerRecord" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord"></mat-datepicker-toggle>
                         <mat-datepicker #dobAsPerRecord></mat-datepicker>
-                        <mat-hint>Optiona</mat-hint>
+                        <mat-hint>Optional</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -137,8 +136,8 @@
                 <p class="m-0 roboto">Actual</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input [matDatepicker]="dobActual" [max]="date" (click)="dobActual.open()"
-                            class="form-control br-0 b-0" formControlName="dobActual" matInput readonly>
+                        <input [matDatepicker]="dobActual" (click)="dobActual.open()" class="form-control br-0 b-0"
+                            formControlName="dobActual" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="dobActual"></mat-datepicker-toggle>
                         <mat-datepicker #dobActual></mat-datepicker>
                         <mat-hint>Optiona</mat-hint>
@@ -223,13 +222,13 @@
         <div *ngIf="fieldFlag=='lead'" class="row pt-44">
             <div class="col-md-4 text-right">
                 <h5 class="m-0 pt-12">Lead rating</h5>
-                <p class="m-0 f-12 text-custom">Team member</p>
             </div>
             <div class="col-md-5 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select formControlName="leadRating" class="form-control">
-                            <mat-option value="1">Option</mat-option>
+                            <mat-option value="1">Cold</mat-option>
+                            <mat-option value="2">Hot</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -363,8 +362,8 @@
                 <p class="m-0 roboto">As per records</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input formControlName="gDobAsPerRecord" (click)="gDobAsPerRecord.open()"
-                            class="form-control br-0 b-0" matInput readonly>
+                        <input [matDatepicker]="gDobAsPerRecord" (click)="gDobAsPerRecord.open()"
+                            class="form-control br-0 b-0" formControlName="gDobAsPerRecord" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="gDobAsPerRecord"></mat-datepicker-toggle>
                         <mat-datepicker #gDobAsPerRecord></mat-datepicker>
                         <mat-hint>Optional</mat-hint>
@@ -372,11 +371,11 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <p class="m-0 roboto">As per records</p>
+                <p class="m-0 roboto">Actual</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input formControlName="gDobActual" (click)="gDobActual.open()" class="form-control br-0 b-0"
-                            matInput readonly>
+                        <input formControlName="gDobActual" [matDatepicker]="gDobActual" (click)="gDobActual.open()"
+                            class="form-control br-0 b-0" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="gDobActual"></mat-datepicker-toggle>
                         <mat-datepicker #gDobActual></mat-datepicker>
                         <mat-hint>Optional</mat-hint>
@@ -413,7 +412,9 @@
                 <div class="form-group mb-0">
                     <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select formControlName="relationWithMinor" class="form-control">
-                            <mat-option value="option">Option</mat-option>
+                            <mat-option value="6">Father</mat-option>
+                            <mat-option value="2">Mother</mat-option>
+                            <mat-option value="7">Court appointed</mat-option>
                         </mat-select>
                         <mat-hint>Optional</mat-hint>
                     </mat-form-field>
@@ -458,7 +459,7 @@
             </div>
         </div>
 
-        <!-- 
+        <!--
         <div class="row pt-44">
             <div class="col-md-4 text-right">
                 <h5 class="m-0 pt-12">Username</h5>
@@ -691,6 +692,7 @@
         </div>
     </div>
 </div>
+
 <div class="bottom-fixed wrapper-12 w-50 -m-28">
     <div class="row">
         <div class="col-md-4">
@@ -705,12 +707,12 @@
             <!--  -->
             <!-- ================= ERROR ======================= -->
 
-            <!-- <app-progress-button (btnClick)="saveNextClient('Next')" class="br-0 text-inherit mr-12"
+            <app-progress-button (btnClick)="saveNextClient('Next')" class="br-0 text-inherit mr-12"
                 [options]="barButtonOptions" [logEvent]="passEvent">
-            </app-progress-button> -->
-            <button mat-stroked-button (click)="saveNextClient('close')" class="btn-bottom br-0 text-inherit">SAVE &
+            </app-progress-button>
+            <!-- <button mat-stroked-button (click)="saveNextClient('close')" class="btn-bottom br-0 text-inherit">SAVE &
                 CLOSE
-            </button>
+            </button> -->
         </div>
         <div *ngIf="fieldFlag=='familyMember'" class="col-md-8 right text-right">
             <button mat-raised-button (click)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT

@@ -45,7 +45,7 @@
                             <tr>
                                 <td>
                                     <div class="bar">
-                                        {{categoryIndex+1}}
+                                        {{(isLoading)?'':categoryIndex+1}}
                                     </div>
                                 </td>
 
@@ -57,12 +57,12 @@
 
                                 <td>
                                     <div class="bar">
-                                        {{category.totalAum}}
+                                        <span appFormatNumber> {{category.totalAum}}</span>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="bar">
-                                        {{category.weightInPercentage}}%
+                                        {{category.weightInPercentage}}{{(isLoading?'':'%')}}
                                     </div>
                                 </td>
                                 <td class="text-center"
@@ -99,7 +99,7 @@
                                                 <td>
                                                     {{subcategory.name}}
                                                 </td>
-                                                <td>{{subcategory.totalAum}} </td>
+                                                <td><span appFormatNumber>{{subcategory.totalAum}}</span> </td>
                                                 <td>{{subcategory.weightInPercentage}}%</td>
                                                 <td class="text-center"
                                                     (click)="showSchemeName(subCatIndex,subcategory, categoryIndex)">
@@ -129,7 +129,8 @@
                                                                 <td>{{scheme.schemeName}}
 
                                                                 </td>
-                                                                <td>{{scheme.totalAum}} </td>
+                                                                <td><span appFormatNumber>{{scheme.totalAum}}</span>
+                                                                </td>
                                                                 <td>{{scheme.weightInPercentage}}</td>
                                                                 <td class="text-center"
                                                                     (click)="showApplicantName(schemeIndex,scheme, categoryIndex)">
@@ -147,7 +148,7 @@
                                                                         *ngIf="!scheme.showScheme">
                                                                         <thead>
                                                                             <tr>
-                                                                                <th class="w-40">Applicant Name</th>
+                                                                                <th class="w-25">Applicant Name</th>
                                                                                 <th>Balance Unit</th>
                                                                                 <th>Folio</th>
                                                                                 <th>Current Amount</th>
@@ -160,7 +161,9 @@
                                                                                 <td>{{applicant.name}} </td>
                                                                                 <td>{{applicant.balanceUnit}} </td>
                                                                                 <td>{{applicant.folioNumber}} </td>
-                                                                                <td>{{applicant.totalAum}} </td>
+                                                                                <td><span
+                                                                                        appFormatNumber>{{applicant.totalAum}}</span>
+                                                                                </td>
                                                                                 <td>{{applicant.weightInPercentage}}
                                                                                 </td>
                                                                             </tr>
@@ -178,6 +181,20 @@
                                 </td>
                             </tr>
                         </tbody>
+                        <tbody *ngIf="!isLoading">
+                            <tr>
+                                <td class="p-table"><strong>Total</strong></td>
+                                <td class="p-table">&nbsp;</td>
+                                <td class="p-table"><strong><span appFormatNumber>{{totalCurrentValue}}</span></strong>
+                                </td>
+                                <td class="p-table"><strong>{{totalWeight}}%</strong></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                        <div *ngIf="!category" class="d-flex flex-column align-items-center">
+                            <img class="width300" src="assets/images/svg/noDataFound.svg">
+                            <h4 class="text-center pt-12">No task template found</h4>
+                        </div>
                     </table>
                 </div>
             </div>

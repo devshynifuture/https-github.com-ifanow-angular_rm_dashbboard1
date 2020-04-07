@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { DocumentExplorerComponent } from './document-explorer.component';
 
-
 @NgModule({
   declarations: [DocumentExplorerComponent],
   imports: [

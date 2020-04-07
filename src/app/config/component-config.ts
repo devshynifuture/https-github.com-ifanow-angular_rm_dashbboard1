@@ -161,6 +161,7 @@ export const appConfig = {
   DELETE_FOLDER: 'document/account/document/all-file/folder/trash',
   SEARCH_FILE: 'document/account/document/all-file/search',
   STAR_FILE: 'document/document/all-file/star',
+  SEND_SHAREBLE_LINK:'pdfAndEmail/email-only/send',
   VIEW_ACTIVITY_FILE: 'document/account/document/all-file/file/view-activity/get',
   VIEW_ACTIVITY_FOLDER: 'document/account/document/all-file/folder/view-activity/get',
   DELETE_FIXED_DEPOSITE: 'account/asset/fixed-income/fixed-deposit/delete',
@@ -177,6 +178,7 @@ export const appConfig = {
   DELETE_OTHERS: 'account/asset/commodity/other/delete',
   GLOBAL_LIABILITIES: 'account/liability/global/get',
   UPLOAD_FILE: 'document/account/document/all-file/file/put',
+  GET_COUNT_DOCS:'document/account/document/all-file/count/get',
   CLIENT_UPLOAD_FILE: 'document/upload/pre-signed-url/get',
   SAVE_CLIENT_UPLOAD_FILE: 'user/document/mapping/save',
   DELETE_CLIENT_UPLOAD_FILE: 'user/document/mapping/delete',
@@ -495,10 +497,6 @@ export const appConfig = {
   BACKOFFICE_SUCCESS_FILE_UPLOAD: 'backoffice/file-upload/success',
 
   ///org setting ////
-  GET_PERSONAL_PROFILE: 'setting/profile/personal/details/get',
-  GET_ORG_PROFILE: 'setting/profile/organisation/details/get',
-  EDIT_PERSONAL_PROFILE: 'setting/profile/personal/profile-photo/update',
-  EDIT_ORG_PROFILE: 'setting/profile/organisation/update',
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',
   GET_PLANS: 'setting/preferences/plan/get',
   PROTFOLIO_UPDATE: 'setting/preferences/portfolio/update',
@@ -578,7 +576,7 @@ export const appConfig = {
   // LOGIN_WITH_PASSWORD: 'user/login/with/password',
 
   //////////////////////////////Login///////////////////////////////////
-  GENERATE_OTP: '/user/generate/otp',
+  GENERATE_OTP: 'user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
   REGISTER: 'user/advisor/add',
   SEARCH_USERNAME: 'user/search/username',
@@ -593,6 +591,10 @@ export const appConfig = {
   ///////////////////////////////Postal////////////////////////////////
 
   ////////////////////////////// settings////////////////////////////////////////////
+  GET_PERSONAL_PROFILE: 'setting/profile/personal/details/get',
+  GET_ORG_PROFILE: 'setting/profile/organisation/details/get',
+  EDIT_PERSONAL_PROFILE: 'setting/profile/personal/update',
+  EDIT_ORG_PROFILE: 'setting/profile/organisation/update',
   GET_PERSONAL_PROFILE_DETAILS: 'setting/profile/personal/details/get',
   UPLOAD_PERSONAL_PROFILE_PHOTO: 'setting/profile/personal/profile-photo/update',
 
