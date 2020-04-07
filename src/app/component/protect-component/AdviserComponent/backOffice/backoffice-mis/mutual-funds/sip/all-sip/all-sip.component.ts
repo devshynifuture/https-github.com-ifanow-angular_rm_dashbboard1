@@ -16,6 +16,7 @@ export class AllSipComponent implements OnInit {
   displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate',
     'frequency', 'amount'];
   totalAmount=0;
+  isLoading=false;
   @Output() changedValue = new EventEmitter();
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -34,6 +35,8 @@ export class AllSipComponent implements OnInit {
   }
   getAllSip()
   {
+  this.isLoading=true;
+  this.dataSource=new MatTableDataSource([{},{},{}]);
     const obj={
       limit:20,
       offset:0,
@@ -43,23 +46,22 @@ export class AllSipComponent implements OnInit {
     }
     this.backoffice.allSipGet(obj).subscribe(
       data =>{
+        this.isLoading=false;
         this.dataSource=new MatTableDataSource(data);
         this.dataSource.sort = this.sort;
         this.dataSource.filteredData.forEach(element => {
           this.totalAmount += element.amount;
         });
-        this.showLoader=false;
         console.log(data);
       },
       err=>{
-        this.showLoader=false;
+        this.isLoading=false;
       }
     )
   }
   aumReport()
   {
     this.changedValue.emit(true);
-
   //  this.sip.sipComponent=true;
   }
 }
