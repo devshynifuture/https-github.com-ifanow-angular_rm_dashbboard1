@@ -1,12 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ValidatorType} from '../../../../../../../../services/util.service';
-import {DatePipe} from '@angular/common';
-import {EventEmitter, Output} from '@angular/core/src/metadata/*';
-import {AuthService} from '../../../../../../../../auth-service/authService';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ValidatorType } from '../../../../../../../../services/util.service';
+import { DatePipe } from '@angular/common';
+import { EventEmitter, Output } from '@angular/core/src/metadata/*';
+import { AuthService } from '../../../../../../../../auth-service/authService';
 
 @Component({
   selector: 'app-company-more-info',
@@ -149,6 +149,6 @@ export class CompanyMoreInfoComponent implements OnInit {
   }
 
   close(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', clientData: data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
   }
 }

@@ -16,6 +16,7 @@ import { DynamicComponentService } from '../../../services/dynamic-component.ser
 import { AdviceEntryModule } from './component/customer/customer-activity/advice-entry.module';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { CustomerOverviewEntryModule } from './component/customer/customer-overview/customer-overview-entry-module';
+import { TransactionSuccessfulComponent } from './component/customer/transaction-successful/transaction-successful.component';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -24,7 +25,7 @@ import { CustomerOverviewEntryModule } from './component/customer/customer-overv
 
 
 @NgModule({
-  declarations: [CustomerComponent],
+  declarations: [CustomerComponent, TransactionSuccessfulComponent],
   imports: [
     // BrowserModule,
     CommonModule,
