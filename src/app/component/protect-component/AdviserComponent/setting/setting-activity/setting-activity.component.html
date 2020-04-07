@@ -15,7 +15,7 @@
                 add
             </i>ADD NEW</button>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-12" [hidden]="taskList.length == 0">
         <table mat-table [dataSource]="taskList" class="mt-8 skeletonAnimation" id="table-low" appSkeletonLoading
             [appSkeletonLoading]="isLoading">
 

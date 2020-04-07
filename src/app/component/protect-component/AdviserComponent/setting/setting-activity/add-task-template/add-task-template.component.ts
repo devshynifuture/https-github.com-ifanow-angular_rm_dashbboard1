@@ -21,18 +21,7 @@ export class AddTaskTemplateComponent implements OnInit {
   category: any;
   editMode: boolean = false;
   subTaskList = [];
-  Tat = [
-    { value: 1, tat: 'T+0 day'}, { value: 2, tat: 'T+1 day' }, { value: 3, tat: 'T+2 day' }, { value: 4, tat: 'T+3 day' },{ value: 5, tat: 'T+4 day' }, { value: 6, tat: 'T+5 day' }, { value: 7, tat: 'T+6 day' }, { value: 8, tat: 'T+7 day' }, { value: 9, tat: 'T+8 day' }, { value: 10, tat: 'T+9 day' },
-    { value: 11, tat: 'T+0 day'}, { value: 12, tat: 'T+1 day' }, { value: 13, tat: 'T+2 day' }, { value: 14, tat: 'T+3 day' },{ value: 15, tat: 'T+4 day' }, { value: 16, tat: 'T+5 day' }, { value: 17, tat: 'T+6 day' }, { value: 18, tat: 'T+7 day' }, { value: 19, tat: 'T+8 day' }, { value: 20, tat: 'T+9 day' },
-    { value: 21, tat: 'T+0 day'}, { value: 22, tat: 'T+1 day' }, { value: 23, tat: 'T+2 day' }, { value: 24, tat: 'T+3 day' },{ value: 25, tat: 'T+4 day' }, { value: 26, tat: 'T+5 day' }, { value: 27, tat: 'T+6 day' }, { value: 28, tat: 'T+7 day' }, { value: 29, tat: 'T+8 day' }, { value: 30, tat: 'T+9 day' },
-    { value: 31, tat: 'T+0 day'}, { value: 32, tat: 'T+1 day' }, { value: 33, tat: 'T+2 day' }, { value: 34, tat: 'T+3 day' },{ value: 35, tat: 'T+4 day' }, { value: 36, tat: 'T+5 day' }, { value: 37, tat: 'T+6 day' }, { value: 38, tat: 'T+7 day' }, { value: 39, tat: 'T+8 day' }, { value: 40, tat: 'T+9 day' },
-    { value: 41, tat: 'T+0 day'}, { value: 42, tat: 'T+1 day' }, { value: 43, tat: 'T+2 day' }, { value: 44, tat: 'T+3 day' },{ value: 45, tat: 'T+4 day' }, { value: 46, tat: 'T+5 day' }, { value: 47, tat: 'T+6 day' }, { value: 48, tat: 'T+7 day' }, { value: 49, tat: 'T+8 day' }, { value: 50, tat: 'T+9 day' },
-    { value: 51, tat: 'T+0 day'}, { value: 52, tat: 'T+1 day' }, { value: 53, tat: 'T+2 day' }, { value: 54, tat: 'T+3 day' },{ value: 55, tat: 'T+4 day' }, { value: 56, tat: 'T+5 day' }, { value: 57, tat: 'T+6 day' }, { value: 58, tat: 'T+7 day' }, { value: 59, tat: 'T+8 day' }, { value: 60, tat: 'T+9 day' },
-    { value: 61, tat: 'T+0 day'}, { value: 62, tat: 'T+1 day' }, { value: 63, tat: 'T+2 day' }, { value: 64, tat: 'T+3 day' },{ value: 65, tat: 'T+4 day' }, { value: 66, tat: 'T+5 day' }, { value: 67, tat: 'T+6 day' }, { value: 68, tat: 'T+7 day' }, { value: 69, tat: 'T+8 day' }, { value: 70, tat: 'T+9 day' },
-    { value: 71, tat: 'T+0 day'}, { value: 72, tat: 'T+1 day' }, { value: 73, tat: 'T+2 day' }, { value: 74, tat: 'T+3 day' },{ value: 75, tat: 'T+4 day' }, { value: 76, tat: 'T+5 day' }, { value: 77, tat: 'T+6 day' }, { value: 78, tat: 'T+7 day' }, { value: 79, tat: 'T+8 day' }, { value: 80, tat: 'T+9 day' },
-    { value: 81, tat: 'T+0 day'}, { value: 82, tat: 'T+1 day' }, { value: 83, tat: 'T+2 day' }, { value: 84, tat: 'T+3 day' },{ value: 85, tat: 'T+4 day' }, { value: 86, tat: 'T+5 day' }, { value: 87, tat: 'T+6 day' }, { value: 88, tat: 'T+7 day' }, { value: 89, tat: 'T+8 day' }, { value: 90, tat: 'T+9 day' },
-    { value: 91, tat: 'T+0 day'}, { value: 92, tat: 'T+1 day' }, { value: 93, tat: 'T+2 day' }, { value: 94, tat: 'T+3 day' },{ value: 95, tat: 'T+4 day' }, { value: 96, tat: 'T+5 day' }, { value: 97, tat: 'T+6 day' }, { value: 98, tat: 'T+7 day' }, { value: 99, tat: 'T+8 day' }, { value: 100, tat: 'T+9 day' }
-  ]
+  Tat = []
   assetList: any;
   libilitiesList: any;
   insuranceList: any;
@@ -72,7 +61,10 @@ export class AddTaskTemplateComponent implements OnInit {
   ) {
     this.advisorId = AuthService.getAdvisorId()
 
-    this.taskTemplate = 
+    for (let index = 1; index <= 100; index++) {
+      this.Tat.push({ value: index, tat: `T+${index} day` })
+    }
+    
     this.fb.group({
       published: true,
       subTask: this.fb.array([]),
@@ -163,6 +155,7 @@ export class AddTaskTemplateComponent implements OnInit {
       data = {}
     }
     this.taskTemplate = this.fb.group({
+      id: [(!data) ? '' : (data.id), []],
       category: [(!data) ? '' : (data.categoryId), [Validators.required]],
       subCategory: [(!data) ? '' : (data.subcategoryId), [Validators.required]],
       subSubCategory: [(!data) ? '' : (data.subSubCategoryId), [Validators.required]],
@@ -175,20 +168,20 @@ export class AddTaskTemplateComponent implements OnInit {
         description: [null, [Validators.required]],
         turnAroundTime: [null, [Validators.required]],
         ownerId: [null, [Validators.required]],
-        isEdite: true,
+        isEdite: false,
       })]),
     });
     if (data.subTaskList != undefined) {
+      this.subTask.removeAt(0);
       data.subTaskList.forEach(element => {
         this.taskTemplate.controls.subTaskList.push(this.fb.group({
           taskNumber: [(1) + "", [Validators.required]],
           description: [(element.description + ""), Validators.required],
           turnAroundTime: [(element.turtAroundTime), Validators.required],
           ownerId: [element.ownerId, [Validators.required]],
-          isEdite: false
+          isEdite: true
         }))
       })
-      this.subTask.removeAt(0);
     }
   }
   editSubtask(value, flag, index) {
@@ -203,7 +196,7 @@ export class AddTaskTemplateComponent implements OnInit {
         description: [null, [Validators.required]],
         turnAroundTime: [null, [Validators.required]],
         ownerId: [null, [Validators.required]],
-        isEdite: true
+        isEdite: false
       }));
       //value.controls.isEdite.setValue(true)
     } else {
@@ -302,7 +295,7 @@ export class AddTaskTemplateComponent implements OnInit {
         subTaskList: this.taskTemplate.controls.subTaskList.value,
         id:null
       }
-      if (this.taskTemplate.controls.id) {
+      if (this.taskTemplate.controls.id.value) {
         obj.id = this.taskTemplate.controls.id.value;
         console.log('this what i want', obj)
         this.orgSetting.editTaskTemplate(obj).subscribe(

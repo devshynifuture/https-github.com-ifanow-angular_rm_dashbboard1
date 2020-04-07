@@ -48,7 +48,6 @@ export class SettingActivityComponent implements OnInit {
     if (data) {
       this.taskList = data
     } else {
-      this.isLoading = false
       this.taskList = []
     }
   }
@@ -101,7 +100,7 @@ export class SettingActivityComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-
+            this.getTaskTemplate();
             console.log('this is sidebardata in subs subs 2: ');
           }
           rightSideDataSub.unsubscribe();

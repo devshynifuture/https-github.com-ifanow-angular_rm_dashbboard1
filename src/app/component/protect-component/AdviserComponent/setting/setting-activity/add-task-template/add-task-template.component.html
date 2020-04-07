@@ -129,7 +129,7 @@
             <div class="col-md-4 pl-0">
                 <div class="form-group">
                     <mat-form-field>
-                        <input matInput #currentValue type="text" maxlength="10" class="form-control br-0 rupess"
+                        <input matInput #currentValue type="text" class="form-control br-0 rupess"
                             formControlName="description">
                         <mat-error class="f-12">
                             This field is required
@@ -176,7 +176,7 @@
 
                 <i *ngIf="creds.get('isEdite').value == true" (click)="addSubTask(creds,'edit')"
                     class="material-icons c-p mt-6">
-                    add
+                    save
                 </i>
 
                 <i class="material-icons c-p mt-6" (click)="removeSubTask(i)">
