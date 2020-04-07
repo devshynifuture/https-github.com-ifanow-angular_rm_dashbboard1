@@ -10,8 +10,8 @@
                 </div>
                 <div class="col-md-6 pr-0">
                     <div class="right text-right">
-                        <button mat-stroked-button class="btn-default addon"><i
-                                class="material-icons">add</i>XLS</button>
+                        <button mat-stroked-button class="btn-default addon"
+                            (click)="exportToExcelSheet('client-wise')"><i class="material-icons">add</i>XLS</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                     </div>
                 </div>
@@ -19,7 +19,8 @@
 
             <div class="row">
                 <div class="col-md-12 p-0 cli-wise overflow-hidden">
-                    <table class="skeletonAnimation mt-16" appSkeletonLoading [appSkeletonLoading]="isLoading" id="table-low" *ngIf="clientList">
+                    <table class="skeletonAnimation mt-16" appSkeletonLoading [appSkeletonLoading]="isLoading"
+                        id="table-low" *ngIf="clientList">
                         <thead class="text-dark">
                             <tr>
                                 <th class="w-10">Sr No.</th>
@@ -30,11 +31,11 @@
 
                             </tr>
                         </thead>
-                        <tbody *ngFor="let name of clientList; index as i">
+                        <tbody *ngFor="let name of clientList; let clientIndex = index">
                             <tr>
                                 <td>
                                     <div class="bar">
-                                        {{i+1}}
+                                        {{clientIndex+1}}
                                     </div>
                                 </td>
                                 <td>
@@ -46,7 +47,7 @@
                                 <td>
                                     <div class="bar"> {{name.weightInPercentage}} </div>
                                 </td>
-                                <td (click)="getInvestorName(name)">
+                                <td (click)="getInvestorName(name, clientIndex)">
                                     <div class="bar text-center">
                                         <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="name.show"> add </i>
                                         <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="name.show==false">
@@ -77,14 +78,18 @@
                                                 </td>
                                                 <td>{{name.totalAum}}</td>
                                                 <td>{{name.weightInPercentage}}%</td>
-                                                <td class="text-center" (click)="getSchemeName(investor)">
-                                                    <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="investor.showInvestor">add</i>
-                                                    <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="!investor.showInvestor"> remove </i>
+                                                <td class="text-center"
+                                                    (click)="getSchemeName(investor, i, clientIndex)">
+                                                    <i class="material-icons  b-a f-14 mt-4 c-p"
+                                                        *ngIf="investor.showInvestor">add</i>
+                                                    <i class="material-icons  b-a f-14 mt-4 c-p"
+                                                        *ngIf="!investor.showInvestor"> remove </i>
                                                 </td>
                                             </tr>
                                             <tr style="border: transparent !important">
                                                 <td class="innerTd two" colspan="5">
-                                                    <table class=" mt-8 mb-8 " id="table-low" *ngIf="!investor.showInvestor">
+                                                    <table class=" mt-8 mb-8 " id="table-low"
+                                                        *ngIf="!investor.showInvestor">
                                                         <thead>
                                                             <tr>
                                                                 <th class="w-10">Sr No.</th>
@@ -102,15 +107,19 @@
                                                                     {{scheme.schemeName}} </td>
                                                                 <td>{{scheme.totalAum}}</td>
                                                                 <td>{{scheme.weightInPercentage}}</td>
-                                                                <td class="text-center" (click)="getFolio(scheme)">
-                                                                    <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="scheme.showScheme">add</i>
-                                                                    <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="scheme.showScheme==false"> remove
+                                                                <td class="text-center"
+                                                                    (click)="getFolio(scheme, clientIndex)">
+                                                                    <i class="material-icons  b-a f-14 mt-4 c-p"
+                                                                        *ngIf="scheme.showScheme">add</i>
+                                                                    <i class="material-icons  b-a f-14 mt-4 c-p"
+                                                                        *ngIf="scheme.showScheme==false"> remove
                                                                     </i>
                                                                 </td>
                                                             </tr>
                                                             <tr style="border: transparent !important">
                                                                 <td class="innerTd four" colspan="5">
-                                                                    <table class=" mt-8 mb-8 " id="table-low" *ngIf="scheme.showScheme==false">
+                                                                    <table class=" mt-8 mb-8 " id="table-low"
+                                                                        *ngIf="scheme.showScheme==false">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th class="w-10">Sr No.</th>
@@ -121,7 +130,8 @@
                                                                                 <th></th>
                                                                             </tr>
                                                                         </thead>
-                                                                        <tbody *ngFor="let folio of scheme.folioList;index as i">
+                                                                        <tbody
+                                                                            *ngFor="let folio of scheme.folioList;index as i">
                                                                             <tr>
                                                                                 <td>{{i+1}}</td>
                                                                                 <td>{{folio.schemeName}} </td>

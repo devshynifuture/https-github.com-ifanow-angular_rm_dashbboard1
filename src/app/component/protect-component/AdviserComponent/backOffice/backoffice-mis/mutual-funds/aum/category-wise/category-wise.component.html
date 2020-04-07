@@ -13,10 +13,13 @@
                 </div>
                 <div class="col-md-6 pr-0">
                     <div class="right text-right">
-                        <button mat-stroked-button class="btn-default addon" (click)="exportToExcelReport('category')"><i class="material-icons">add</i>category</button>
-                        <button mat-stroked-button class="btn-default addon" (click)="exportToExcelReport('sub-category')"><i
+                        <button mat-stroked-button class="btn-default addon"
+                            (click)="exportToExcelReport('category')"><i class="material-icons">add</i>category</button>
+                        <button mat-stroked-button class="btn-default addon"
+                            (click)="exportToExcelReport('sub-category')"><i
                                 class="material-icons">add</i>SubCategory</button>
-                        <button mat-stroked-button class="btn-default addon" (click)="exportToExcelReport('applicant-wise')"><i
+                        <button mat-stroked-button class="btn-default addon"
+                            (click)="exportToExcelReport('applicant-wise')"><i
                                 class="material-icons">add</i>Applicant</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                     </div>
@@ -25,7 +28,8 @@
 
             <div class="row">
                 <div class="col-md-12 p-0 cat-wise overflow-hidden">
-                    <table id="table-low" class="skeletonAnimation mt-16" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                    <table id="table-low" class="skeletonAnimation mt-16" appSkeletonLoading
+                        [appSkeletonLoading]="isLoading">
                         <thead class="text-dark">
                             <tr>
                                 <th class="w-10">Sr No.</th>
@@ -37,11 +41,11 @@
                             </tr>
                         </thead>
 
-                        <tbody *ngFor="let category of category; let i = index">
+                        <tbody *ngFor="let category of category; let categoryIndex = index">
                             <tr>
                                 <td>
                                     <div class="bar">
-                                        {{i+1}}
+                                        {{categoryIndex+1}}
                                     </div>
                                 </td>
 
@@ -61,11 +65,14 @@
                                         {{category.weightInPercentage}}%
                                     </div>
                                 </td>
-                                <td class="text-center" (click)="showSubTableList(i,category)">
+                                <td class="text-center"
+                                    (click)="showSubTableList(categoryIndex, category, categoryIndex)">
                                     <div class="bar">
-                                        <i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="category.showCategory==true">
+                                        <i class="material-icons   b-a f-14 mt-4 c-p"
+                                            *ngIf="category.showCategory==true">
                                             add </i>
-                                        <i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="category.showCategory==false">
+                                        <i class="material-icons   b-a f-14 mt-4 c-p"
+                                            *ngIf="category.showCategory==false">
                                             remove </i>
                                     </div>
                                 </td>
@@ -85,22 +92,27 @@
 
                                             </tr>
                                         </thead>
-                                        <tbody *ngFor="let subcategory of category.subCategoryList; let i = index">
+                                        <tbody
+                                            *ngFor="let subcategory of category.subCategoryList; let subCatIndex = index">
                                             <tr>
-                                                <td>{{i+1}}</td>
+                                                <td>{{subCatIndex+1}}</td>
                                                 <td>
                                                     {{subcategory.name}}
                                                 </td>
                                                 <td>{{subcategory.totalAum}} </td>
                                                 <td>{{subcategory.weightInPercentage}}%</td>
-                                                <td class="text-center" (click)="showSchemeName(i,subcategory)">
-                                                    <i *ngIf="subcategory.showSubCategory==true" class="material-icons  b-a f-14 mt-4 c-p">add</i>
-                                                    <i *ngIf="subcategory.showSubCategory==false" class="material-icons  b-a f-14 mt-4 c-p"> remove </i>
+                                                <td class="text-center"
+                                                    (click)="showSchemeName(subCatIndex,subcategory, categoryIndex)">
+                                                    <i *ngIf="subcategory.showSubCategory==true"
+                                                        class="material-icons  b-a f-14 mt-4 c-p">add</i>
+                                                    <i *ngIf="subcategory.showSubCategory==false"
+                                                        class="material-icons  b-a f-14 mt-4 c-p"> remove </i>
                                                 </td>
                                             </tr>
                                             <tr style="border: transparent !important">
                                                 <td colspan="5" class="innerTd two">
-                                                    <table class=" mt-8 mb-8 " id="table-low" *ngIf="subcategory.showSubCategory==false">
+                                                    <table class=" mt-8 mb-8 " id="table-low"
+                                                        *ngIf="subcategory.showSubCategory==false">
                                                         <thead>
                                                             <tr>
                                                                 <th class="w-10">Sr No.</th>
@@ -110,24 +122,29 @@
                                                                 <th> </th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody *ngFor="let scheme of subcategory.schemes;let i = index">
+                                                        <tbody
+                                                            *ngFor="let scheme of subcategory.schemes;let schemeIndex = index">
                                                             <tr>
-                                                                <td>{{i+1}}</td>
+                                                                <td>{{schemeIndex+1}}</td>
                                                                 <td>{{scheme.schemeName}}
 
                                                                 </td>
                                                                 <td>{{scheme.totalAum}} </td>
                                                                 <td>{{scheme.weightInPercentage}}</td>
-                                                                <td class="text-center" (click)="showApplicantName(i,scheme)">
-                                                                    <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="scheme.showScheme">add</i>
-                                                                    <i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="!scheme.showScheme">
+                                                                <td class="text-center"
+                                                                    (click)="showApplicantName(schemeIndex,scheme, categoryIndex)">
+                                                                    <i class="material-icons  b-a f-14 mt-4 c-p"
+                                                                        *ngIf="scheme.showScheme">add</i>
+                                                                    <i class="material-icons   b-a f-14 mt-4 c-p"
+                                                                        *ngIf="!scheme.showScheme">
                                                                         remove
                                                                     </i>
                                                                 </td>
                                                             </tr>
                                                             <tr style="border: transparent !important">
                                                                 <td colspan="5" class="innerTd three">
-                                                                    <table class=" mt-8 mb-8 " id="table-low" *ngIf="!scheme.showScheme">
+                                                                    <table class=" mt-8 mb-8 " id="table-low"
+                                                                        *ngIf="!scheme.showScheme">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th class="w-40">Applicant Name</th>
@@ -137,7 +154,8 @@
                                                                                 <th>% Weight</th>
                                                                             </tr>
                                                                         </thead>
-                                                                        <tbody *ngFor="let applicant of scheme.clientList;let i = index">
+                                                                        <tbody
+                                                                            *ngFor="let applicant of scheme.clientList;let i = index">
                                                                             <tr>
                                                                                 <td>{{applicant.name}} </td>
                                                                                 <td>{{applicant.balanceUnit}} </td>

@@ -11,9 +11,10 @@
                     </div>
                     <div class="col-md-6 pr-0">
                         <div class="right text-right">
-                            <button mat-stroked-button class="btn-default addon"><i
-                                    class="material-icons">add</i>XLS</button>
-                            <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
+                            <button mat-stroked-button (click)="exportToExcelSheet('applicant-wise')"
+                                class="btn-default addon"><i class="material-icons">add</i>XLS</button>
+                            <button mat-stroked-button class="btn-success ml-8 addon"
+                                (click)="aumReport()">Back</button>
                         </div>
                     </div>
                 </div>
@@ -21,7 +22,8 @@
                 <div class="row">
                     <div class="col-md-12 p-0 cli-wise overflow-hidden">
 
-                        <table class="skeletonAnimation mt-16" appSkeletonLoading [appSkeletonLoading]="isLoading" id="table-low" *ngIf="applicantName">
+                        <table class="skeletonAnimation mt-16" appSkeletonLoading [appSkeletonLoading]="isLoading"
+                            id="table-low" *ngIf="applicantName">
                             <thead class="text-dark">
                                 <tr>
                                     <th class="w-10">Sr No.</th>
@@ -32,10 +34,10 @@
 
                                 </tr>
                             </thead>
-                            <tbody *ngFor="let name of applicantName; index as i">
+                            <tbody *ngFor="let name of applicantName; index as applicantIndex">
                                 <tr>
                                     <td>
-                                        <div class="bar"> {{i+1}} </div>
+                                        <div class="bar"> {{applicantIndex+1}} </div>
                                     </td>
                                     <td>
                                         <div class="bar"> {{(name.name)?name.name:'-'}} </div>
@@ -46,7 +48,7 @@
                                     <td class="">
                                         <div class="bar"> {{name.weightInPercentage}} </div>
                                     </td>
-                                    <td class="text-center" (click)="category(name)">
+                                    <td class="text-center" (click)="category(name, applicantIndex)">
                                         <div class="bar text-center">
                                             <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="name.show==true">
                                                 add
@@ -75,13 +77,17 @@
                                                     <td>{{category.name}} </td>
                                                     <td>{{category.totalAum}}</td>
                                                     <td>{{category.weightInPercentage}}%</td>
-                                                    <td class="text-center" (click)="subCategory(category)">
-                                                        <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="category.showCategory">add</i>
-                                                        <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="!category.showCategory"> remove </i> </td>
+                                                    <td class="text-center"
+                                                        (click)="subCategory(category, applicantIndex)">
+                                                        <i class="material-icons  b-a f-14 mt-4 c-p"
+                                                            *ngIf="category.showCategory">add</i>
+                                                        <i class="material-icons  b-a f-14 mt-4 c-p"
+                                                            *ngIf="!category.showCategory"> remove </i> </td>
                                                 </tr>
                                                 <tr style="border: transparent !important">
                                                     <td class="innerTd two" colspan="5">
-                                                        <table class=" mb-8 mt-8 " id="table-low" *ngIf="!category.showCategory">
+                                                        <table class=" mb-8 mt-8 " id="table-low"
+                                                            *ngIf="!category.showCategory">
                                                             <thead>
                                                                 <tr>
                                                                     <th class="w-10">Sr No.</th>
@@ -98,13 +104,19 @@
                                                                     </td>
                                                                     <td class="">{{sub.totalAum}} </td>
                                                                     <td class="">{{sub.weightInPercentage}}</td>
-                                                                    <td class="text-center" (click)="getScheme(sub)"><i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="sub.showSubCategory">add</i>
-                                                                        <i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="!sub.showSubCategory"> remove
+                                                                    <td class="text-center"
+                                                                        (click)="getScheme(sub, applicantIndex)"><i
+                                                                            class="material-icons   b-a f-14 mt-4 c-p"
+                                                                            *ngIf="sub.showSubCategory">add</i>
+                                                                        <i class="material-icons   b-a f-14 mt-4 c-p"
+                                                                            *ngIf="!sub.showSubCategory"> remove
                                                                         </i> </td>
                                                                 </tr>
-                                                                <tr *ngIf="!sub.showSubCategory" style="border: transparent !important">
+                                                                <tr *ngIf="!sub.showSubCategory"
+                                                                    style="border: transparent !important">
                                                                     <td class="innerTd three" colspan="6">
-                                                                        <table class=" mb-8 mt-8 " id="table-low" *ngIf="!sub.showSubCategory">
+                                                                        <table class=" mb-8 mt-8 " id="table-low"
+                                                                            *ngIf="!sub.showSubCategory">
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th class="w-10">Sr No.</th>
@@ -115,7 +127,8 @@
                                                                                     <th></th>
                                                                                 </tr>
                                                                             </thead>
-                                                                            <tbody *ngFor="let client of sub.schemeList; index as i">
+                                                                            <tbody
+                                                                                *ngFor="let client of sub.schemeList; index as i">
                                                                                 <tr>
                                                                                     <td>{{i+1}}</td>
                                                                                     <td>{{client.schemeName}}</td>
@@ -123,18 +136,25 @@
                                                                                     <td>{{client.totalAum}}</td>
                                                                                     <td>{{client.weightInPercentage}}
                                                                                     </td>
-                                                                                    <td class="text-center" (click)="getSchemeFolio(client)">
-                                                                                        <i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="client.showFolio">add</i>
-                                                                                        <i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="!client.showFolio">
+                                                                                    <td class="text-center"
+                                                                                        (click)="getSchemeFolio(client, applicantIndex)">
+                                                                                        <i class="material-icons   b-a f-14 mt-4 c-p"
+                                                                                            *ngIf="client.showFolio">add</i>
+                                                                                        <i class="material-icons   b-a f-14 mt-4 c-p"
+                                                                                            *ngIf="!client.showFolio">
                                                                                             remove
                                                                                         </i>
                                                                                     </td>
                                                                                 </tr>
 
-                                                                                <tr style="border: transparent !important">
-                                                                                    <td class="innerTd four" colspan="6">
+                                                                                <tr
+                                                                                    style="border: transparent !important">
+                                                                                    <td class="innerTd four"
+                                                                                        colspan="6">
 
-                                                                                        <table class=" mb-8 mt-8 " id="table-low" *ngIf="!client.showFolio">
+                                                                                        <table class=" mb-8 mt-8 "
+                                                                                            id="table-low"
+                                                                                            *ngIf="!client.showFolio">
                                                                                             <thead>
                                                                                                 <tr>
                                                                                                     <th class="w-10">
@@ -151,13 +171,15 @@
                                                                                                     <th class="w-15">
                                                                                                         Balance unit
                                                                                                     </th>
-                                                                                                    <th class="">% Weight
+                                                                                                    <th class="">%
+                                                                                                        Weight
                                                                                                     </th>
                                                                                                     <th></th>
                                                                                                 </tr>
                                                                                             </thead>
 
-                                                                                            <tbody *ngFor="let client of sub.schemeList; index as i">
+                                                                                            <tbody
+                                                                                                *ngFor="let client of sub.schemeList; index as i">
                                                                                                 <tr>
                                                                                                     <td>{{i+1}}
                                                                                                     </td>

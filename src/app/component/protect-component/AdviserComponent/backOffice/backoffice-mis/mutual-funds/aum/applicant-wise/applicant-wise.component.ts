@@ -18,12 +18,13 @@ export class ApplicantWiseComponent implements OnInit {
   categoryList: any;
   schemeList: any;
   @Output() changedValue = new EventEmitter();
+  selectedApplicant: any;
 
   constructor(public aum: AumComponent, private backoffice: BackOfficeService) { }
   applicantName;
   showLoader = true;
   teamMemberId = 2929;
-  arrayOfExcelData: any[][] = [];
+  arrayOfExcelData: any[] = [];
   arrayOfHeaders: any[][] = [
     [
       'Sr. No.',
@@ -115,23 +116,23 @@ export class ApplicantWiseComponent implements OnInit {
   }
 
   applicantWiseExcelSheet() {
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'selected value', 'Applicant wise')
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'Applicant wise MIS Report', 'applicant-wise-aum-mis')
   }
 
   categoryWiseExcelSheet() {
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[1], this.arrayOfHeaders[1], this.arrayOfExcelData[1], [], 'Category wise');
+    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[1], this.arrayOfHeaders[1], this.arrayOfExcelData[this.selectedApplicant].categoryList, [], 'applicant-wise-aum-mis');
   }
 
   subCategoryWiseExcelSheet() {
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[2], this.arrayOfHeaders[2], this.arrayOfExcelData[2], [], 'Sub Category wise');
+    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[2], this.arrayOfHeaders[2], this.arrayOfExcelData[this.selectedApplicant].subCategoryList, [], 'applicant-wise-aum-mis');
   }
 
   subCatSchemeWiseExcelSheet() {
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], this.arrayOfExcelData[3], [], 'SubCategory Scheme wise');
+    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], this.arrayOfExcelData[this.selectedApplicant].schemeList, [], 'applicant-wise-aum-mis');
   }
 
   schemeWiseExcelSheet() {
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[4], this.arrayOfHeaders[4], this.arrayOfExcelData[4], [], 'Scheme wise');
+    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[4], this.arrayOfHeaders[4], this.arrayOfExcelData[this.selectedApplicant].schemeFolioList, [], 'applicant-wise-aum-mis');
   }
 
   exportToExcelSheet(choice) {
@@ -154,74 +155,167 @@ export class ApplicantWiseComponent implements OnInit {
     }
   }
 
-  initializeExcelSheet() {
-    let dataValue = [];
-    this.arrayOfExcelData[0] = [];
-    this.arrayOfExcelData[1] = [];
-    this.arrayOfExcelData[2] = [];
-    this.arrayOfExcelData[3] = [];
-    this.arrayOfExcelData[4] = [];
+  // initializeExcelSheet() {
+  //   let dataValue = [];
+  //   this.arrayOfExcelData[0] = [];
+  //   this.arrayOfExcelData[1] = [];
+  //   this.arrayOfExcelData[2] = [];
+  //   this.arrayOfExcelData[3] = [];
+  //   this.arrayOfExcelData[4] = [];
+  //   this.applicantName.forEach((element, index1) => {
+  //     dataValue = [
+  //       index1 + 1,
+  //       element.name,
+  //       element.totalAum,
+  //       element.weightInPercentage
+  //     ];
+  //     this.arrayOfExcelData[0].push(Object.assign(dataValue));
+  //   });
+
+  //   this.categoryList.forEach((element, index2) => {
+  //     dataValue = [
+  //       index2 + 1,
+  //       element.name,
+  //       element.totalAum,
+  //       element.weightInPercentage
+  //     ]
+  //     this.arrayOfExcelData[1].push(Object.assign(dataValue))
+  //   });
+
+  //   this.subCategoryList.forEach((element, index3) => {
+  //     dataValue = [
+  //       index3 + 1,
+  //       element.name,
+  //       element.totalAum,
+  //       element.weightInPercentage
+  //     ];
+  //     this.arrayOfExcelData[2].push(Object.assign(dataValue));
+  //     if (element.hasOwnProperty('schemes') && element.schemes) {
+  //       if (element.schemes.length !== 0) {
+  //         element.schemes.forEach((element, index4) => {
+  //           dataValue = [
+  //             index3 + 1,
+  //             element.schemeName,
+  //             element.folio,
+  //             element.totalAum,
+  //             element.weightInPercentage
+  //           ];
+  //           this.arrayOfExcelData[3].push(Object.assign(dataValue));
+  //         });
+  //       }
+  //     }
+  //   });
+
+  //   this.schemeList.forEach((element, index5) => {
+  //     dataValue = [
+  //       index5 + 1,
+  //       element.schemeName,
+  //       element.folioNumber,
+  //       element.totalAum,
+  //       element.balanceUnit,
+  //       element.weightInPercentage
+  //     ];
+
+  //     this.arrayOfExcelData[4].push(Object.assign(dataValue));
+  //   });
+  // }
+
+  excelInitApplicant() {
     this.applicantName.forEach((element, index1) => {
-      dataValue = [
-        index1 + 1,
-        element.name,
-        element.totalAum,
-        element.weightInPercentage
-      ];
-      this.arrayOfExcelData[0].push(Object.assign(dataValue));
+      this.arrayOfExcelData.push({
+        index: index1 + 1,
+        name: element.name,
+        totalAum: element.totalAum,
+        weightInperc: element.weightInPercentage,
+        categoryList: [],
+        subCategoryList: [],
+        schemeList: [],
+        schemeFolioList: []
+      });
     });
+  }
 
-    this.categoryList.forEach((element, index2) => {
-      dataValue = [
-        index2 + 1,
-        element.name,
-        element.totalAum,
-        element.weightInPercentage
-      ]
-      this.arrayOfExcelData[1].push(Object.assign(dataValue))
-    });
-
-    this.subCategoryList.forEach((element, index3) => {
-      dataValue = [
-        index3 + 1,
-        element.name,
-        element.totalAum,
-        element.weightInPercentage
-      ];
-      this.arrayOfExcelData[2].push(Object.assign(dataValue));
-      if (element.hasOwnProperty('schemes') && element.schemes) {
-        if (element.schemes.length !== 0) {
-          element.schemes.forEach((element, index4) => {
-            dataValue = [
-              index3 + 1,
-              element.schemeName,
-              element.folio,
-              element.totalAum,
-              element.weightInPercentage
-            ];
-            this.arrayOfExcelData[3].push(Object.assign(dataValue));
+  appendingOfValuesInExcel(iterable, index, choice) {
+    console.log(iterable, index, choice);
+    switch (choice) {
+      case 'category':
+        // categories
+        iterable.forEach((element, index1) => {
+          this.arrayOfExcelData[index].categoryList.push({
+            index: index1 + 1,
+            name: element.name,
+            totalAum: element.totalAum,
+            weightInPerc: element.weightInPercentage
           });
-        }
-      }
-    });
+        });
+        break;
+      case 'sub-category':
+        // sub categories
+        iterable.forEach((element, index1) => {
+          this.arrayOfExcelData[index].subCategoryList.push({
+            index: index1 + 1,
+            name: element.name,
+            totalAum: element.totalAum,
+            weightInPerc: element.weightInPercentage
+          });
+        });
+        break;
+      case 'schemes':
+        iterable.forEach((element, index1) => {
+          this.arrayOfExcelData[index].schemeList.push({
+            index: index1 + 1,
+            name: element.schemeName,
+            folioNumber: element.folioNumber,
+            totalAum: element.totalAum,
+            weightInPerc: element.weightInPercentage
+          });
+        });
+        break;
+      case 'scheme-folio':
+        iterable.forEach((element, index1) => {
+          this.arrayOfExcelData[index].schemeFolioList.push({
+            index: index1 + 1,
+            name: element.schemeName,
+            folioNumber: element.folioNumber,
+            totalAum: element.totalAum,
+            balanceUnit: element.balanceUnit,
+            weightInPerc: element.weightInPercentage
+          });
+        });
+        break;
+    }
+    console.log(this.arrayOfExcelData);
+  }
 
-    this.schemeList.forEach((element, index5) => {
-      dataValue = [
-        index5 + 1,
-        element.schemeName,
-        element.folioNumber,
-        element.totalAum,
-        element.balanceUnit,
-        element.weightInPercentage
-      ];
+  removeValuesFromExcel(whichList, applicantIndex) {
+    console.log(applicantIndex);
 
-      this.arrayOfExcelData[4].push(Object.assign(dataValue));
-    });
+    switch (whichList) {
+      case 'category':
+        this.arrayOfExcelData[applicantIndex].categoryList = [];
+        this.arrayOfExcelData[applicantIndex].subCategoryList = [];
+        this.arrayOfExcelData[applicantIndex].schemeList = [];
+        this.arrayOfExcelData[applicantIndex].schemeFolioList = [];
+        break;
+      case 'sub-category':
+        this.arrayOfExcelData[applicantIndex].subCategoryList = [];
+        this.arrayOfExcelData[applicantIndex].schemeList = [];
+        this.arrayOfExcelData[applicantIndex].schemeFolioList = [];
+        break;
+      case 'schemes':
+        this.arrayOfExcelData[applicantIndex].schemeList = [];
+        this.arrayOfExcelData[applicantIndex].schemeFolioList = [];
+        break;
+      case 'scheme-folio':
+        this.arrayOfExcelData[applicantIndex].schemeFolioList = [];
+        break;
+    }
   }
 
   applicantNameGet(data) {
     this.applicantName = data;
     if (this.applicantName) {
+      this.excelInitApplicant();
       this.applicantName.forEach(o => {
         o.show = true;
         this.totalCurrentValue += o.totalAum;
@@ -232,7 +326,8 @@ export class ApplicantWiseComponent implements OnInit {
   }
 
 
-  category(applicantData) {
+  category(applicantData, index) {
+    this.selectedApplicant = index;
     applicantData.show = !applicantData.show
     applicantData.categoryList = []
     if (applicantData.show == false) {
@@ -251,9 +346,12 @@ export class ApplicantWiseComponent implements OnInit {
             applicantData.categoryList = data
             console.log(data);
             this.categoryList = data;
+            this.appendingOfValuesInExcel(data, this.selectedApplicant, 'category');
           }
         }
       )
+    } else {
+      this.removeValuesFromExcel('category', index);
     }
   }
   sortCategoryApplicant(data, show, applicantData) {
@@ -262,7 +360,8 @@ export class ApplicantWiseComponent implements OnInit {
     applicantData.show = (show) ? show = false : show = true;
 
   }
-  subCategory(catData) {
+  subCategory(catData, applicantIndex) {
+    this.selectedApplicant = applicantIndex;
     catData.showCategory = !catData.showCategory
     catData.subCatList = []
     if (catData.showCategory == false) {
@@ -282,9 +381,12 @@ export class ApplicantWiseComponent implements OnInit {
             catData.subCatList = data;
             console.log(data);
             this.subCategoryList = data;
+            this.appendingOfValuesInExcel(data, this.selectedApplicant, 'sub-category');
           }
         }
       )
+    } else {
+      this.removeValuesFromExcel('sub-category', applicantIndex);
     }
   }
 
@@ -293,7 +395,8 @@ export class ApplicantWiseComponent implements OnInit {
     category.showCategory = (showCategory) ? showCategory = false : showCategory = true;
     category.subCategoryList = data;
   }
-  getScheme(subCatData) {
+  getScheme(subCatData, applicantIndex) {
+    this.selectedApplicant = applicantIndex;
     subCatData.showSubCategory = !subCatData.showSubCategory
     subCatData.schemeList = []
     if (subCatData.showSubCategory == false) {
@@ -312,15 +415,25 @@ export class ApplicantWiseComponent implements OnInit {
             subCatData.schemeList = data
             console.log(data);
             this.schemeList = data;
-            this.initializeExcelSheet();
+            this.appendingOfValuesInExcel(data, this.selectedApplicant, 'schemes');
           }
         }
       )
+    } else {
+      this.removeValuesFromExcel('schemes', applicantIndex);
     }
   }
-  getSchemeFolio(schemeData) {
-    schemeData.showFolio = !schemeData.showFolio
+  getSchemeFolio(schemeData, applicantIndex) {
+    this.selectedApplicant = applicantIndex;
 
+    schemeData.showFolio = !schemeData.showFolio;
+    // console.log(schemeData, this.schemeList);
+    //  need to check
+    if (schemeData.showFolio === false) {
+      this.appendingOfValuesInExcel(this.schemeList, this.selectedApplicant, 'scheme-folio');
+    } else {
+      this.removeValuesFromExcel('scheme-folio', applicantIndex);
+    }
   }
   getResponseSchemeData(data, subCat) {
     subCat.schemes = data;

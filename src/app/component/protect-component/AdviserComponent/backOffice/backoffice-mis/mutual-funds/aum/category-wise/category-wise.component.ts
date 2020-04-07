@@ -74,8 +74,10 @@ export class CategoryWiseComponent implements OnInit {
       { width: 10, key: '% Weight' },
     ]
   ];
-  arrayOfExcelData: any[][] = [];
+  arrayOfExcelData: any[] = [];
   @Output() changedValue = new EventEmitter();
+  selectedSubCategory: any;
+  selectedClientIndex: any;
 
   constructor(
     private backoffice: BackOfficeService, private dataService: EventService, public aum: AumComponent
@@ -83,6 +85,7 @@ export class CategoryWiseComponent implements OnInit {
   selectedCategory;
   ngOnInit() {
     this.getSubCatSchemeName();
+
 
     // this.clientFolioWise();
     // this.getSubCatAum();
@@ -114,24 +117,39 @@ export class CategoryWiseComponent implements OnInit {
     )
   }
 
-  showSubTableList(index, category) {
+  showSubTableList(index, category, catIndex) {
+
     this.selectedCategory = index;
     category.showCategory = !category.showCategory;
     console.log("need to check this::", this.category[index]);
     // console.log(category);
     if (!category.showCategory) {
-      if (this.category[index].hasOwnProperty('subCategoryList') && this.category[index].subCategoryList.length !== 0) {
-        this.arrayOfExcelData[1] = [];
-        this.appendingOfValuesInExcel(this.category[index].subCategoryList, 1);
+      if (this.category[this.selectedCategory].hasOwnProperty('subCategoryList') && this.category[this.selectedCategory].subCategoryList.length !== 0) {
+        this.appendingOfValuesInExcel(this.category[this.selectedCategory].subCategoryList, this.selectedCategory, 'sub-category');
       }
     } else {
       // remove
-      this.removeValuesFromExcel(1);
+      this.removeValuesFromExcel('sub-category', catIndex);
     }
   }
 
-  removeValuesFromExcel(choice) {
-    this.arrayOfExcelData[choice].splice(0, 1);
+  removeValuesFromExcel(whichList, catIndex) {
+    console.log(catIndex);
+
+    switch (whichList) {
+      case 'sub-category':
+        this.arrayOfExcelData[catIndex].subCatList = [];
+        this.arrayOfExcelData[catIndex].schemeList = [];
+        this.arrayOfExcelData[catIndex].applicantList = [];
+        break;
+      case 'schemes':
+        this.arrayOfExcelData[catIndex].schemeList = [];
+        this.arrayOfExcelData[catIndex].applicantList = [];
+        break;
+      case 'applicant':
+        this.arrayOfExcelData[catIndex].applicantList = [];
+        break;
+    }
   }
 
   getFileResponseDataForSubSchemeName(data) {
@@ -141,7 +159,6 @@ export class CategoryWiseComponent implements OnInit {
       this.category = data.categories;
       this.totalAumForSubSchemeName = data.totalAum;
       // excel init
-      this.arrayOfExcelData[0] = [];
       this.excelInitOfCategories();
     }
 
@@ -156,24 +173,26 @@ export class CategoryWiseComponent implements OnInit {
     });
 
   }
-  showSchemeName(index, subcatshowSubcat) {
+  showSchemeName(index, subcatshowSubcat, catIndex) {
+    this.selectedSubCategory = index;
     subcatshowSubcat.showSubCategory = !subcatshowSubcat.showSubCategory
     subcatshowSubcat.schemes.forEach(element => {
       element.showScheme = true;
     });
     if (!subcatshowSubcat.showSubCategory) {
-      this.arrayOfExcelData[2] = [];
-
-      // this.arrayOfExcelData[3] = [];
-      this.appendingOfValuesInExcel(this.category[this.selectedCategory].subCategoryList, 2);
+      this.appendingOfValuesInExcel(this.category[this.selectedCategory].subCategoryList[this.selectedSubCategory].schemes, this.selectedCategory, 'schemes');
     } else {
-      this.removeValuesFromExcel(2);
+      this.removeValuesFromExcel('schemes', catIndex);
     }
   }
-  showApplicantName(index, schemeData) {
+  showApplicantName(index, schemeData, catIndex) {
+    this.selectedClientIndex = index;
     schemeData.showScheme = !schemeData.showScheme
-
-
+    if (!schemeData.showScheme) {
+      this.appendingOfValuesInExcel(this.category[this.selectedCategory].subCategoryList[this.selectedSubCategory].schemes[this.selectedClientIndex].clientList, this.selectedCategory, 'applicant');
+    } else {
+      this.removeValuesFromExcel('applicant', catIndex);
+    }
     // this.category[this.selectedCategory].subCategoryList[index].showSubCategory = (subcashowSubcat) ? subcashowSubcat = false : subcashowSubcat = true;
   }
   aumReport() {
@@ -221,16 +240,19 @@ export class CategoryWiseComponent implements OnInit {
   // }
 
   excelInitOfCategories() {
-    let dataValue = [];
+    let dataValue = {};
 
     this.category.forEach((element, index1) => {
-      dataValue = [
-        index1 + 1,
-        element.name,
-        element.totalAum,
-        element.weightInPercentage
-      ];
-      this.arrayOfExcelData[0].push(Object.assign(dataValue));
+      dataValue = {
+        index: index1 + 1,
+        categoryName: element.name,
+        totalAum: element.totalAum,
+        weightInPerc: element.weightInPercentage,
+        subCatList: [],
+        schemeList: [],
+        applicantList: []
+      };
+      this.arrayOfExcelData.push(dataValue);
     });
   }
 
@@ -301,55 +323,44 @@ export class CategoryWiseComponent implements OnInit {
   //   this.arrayOfExcelData[1] = [];
   // }
 
-  appendingOfValuesInExcel(iterable, choice) {
+  appendingOfValuesInExcel(iterable, index, choice) {
+    console.log(iterable, index, choice);
     switch (choice) {
-      case 0:
+      case 'sub-category':
         // categories
         iterable.forEach((element, index1) => {
-          this.arrayOfExcelData[0].push(Object.assign([
-            index1,
-            element.name,
-            element.totalAum,
-            element.weightInPercentage
-          ]));
+          this.arrayOfExcelData[index].subCatList.push({
+            index: index1 + 1,
+            name: element.name,
+            totalAum: element.totalAum,
+            weightInPerc: element.weightInPercentage
+          });
         });
         break;
-      case 1:
+      case 'schemes':
         // sub categories
         iterable.forEach((element, index1) => {
-          this.arrayOfExcelData[1].push(Object.assign([
-            index1,
-            element.name,
-            element.totalAum,
-            element.weightInPercentage
-          ]));
+          this.arrayOfExcelData[index].schemeList.push({
+            index: index1 + 1,
+            name: element.schemeName,
+            totalAum: element.totalAum,
+            weightInPerc: element.weightInPercentage
+          });
         });
         break;
-      case 2:
-        // scheme
+      case 'applicant':
         iterable.forEach((element, index1) => {
-          this.arrayOfExcelData[3].push(Object.assign([
-            index1,
-            element.schemeName,
-            element.totalAum,
-            element.weightInPercentage
-          ]));
-        });
-        break;
-      case 3:
-        // applicant
-        iterable.forEach((element, index1) => {
-          this.arrayOfExcelData[4].push(Object.assign([
-            index1,
-            element.clientName,
-            element.balanceUnit,
-            element.folio,
-            element.currentAmount,
-            element.weightInPercentage
-          ]));
+          this.arrayOfExcelData[index].applicantList.push({
+            name: element.name,
+            balanceUnit: element.balanceUnit,
+            folioNumber: element.folioNumber,
+            totalAum: element.totalAum,
+            weightInPerc: element.weightInPercentage
+          });
         });
         break;
     }
+    console.log(this.arrayOfExcelData);
   }
 
   // excelSheetInitialization() {
@@ -408,17 +419,18 @@ export class CategoryWiseComponent implements OnInit {
   // }
 
   categoryWiseExcelSheet() {
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'selectedScheme', 'Category Wise MIS Report');
+    console.log(this.arrayOfExcelData);
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'Category wise MIS Report', 'category-wise-aum-mis');
   }
 
   subCategoryWiseExcelSheet() {
     let footer = [];
     footer = ['', 'Total', this.totalAumForSubSchemeName, ''];
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[1], this.arrayOfHeaders[1], this.arrayOfExcelData[1], footer, 'Sub Category Wise MIS Report');
+    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[1], this.arrayOfHeaders[1], this.arrayOfExcelData[this.selectedCategory].subCatList, footer, 'Sub Category Wise MIS Report');
   }
 
   applicantWiseExcelSheet() {
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], this.arrayOfExcelData[3], [], 'Applicant Wise MIS Report');
+    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], this.arrayOfExcelData[this.selectedCategory].applicantList, [], 'Applicant Wise MIS Report');
   }
 
   exportToExcelReport(choice) {
