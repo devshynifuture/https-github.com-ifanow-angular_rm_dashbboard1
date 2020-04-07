@@ -84,8 +84,8 @@ export class PeopleService {
     return this.http.postEncoded(apiConfig.USER + appConfig.LOGIN_WITH_PASSWORD, data);
   }
 
-  getAllCLients(data) {
-    return this.http.getEncoded(apiConfig.USER + appConfig.GET_ALL_CLIENTS, data, 1)
+  getAllClients(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_ALL_CLIENTS, data, 1);
   }
 
   updateClientStatus(data) {

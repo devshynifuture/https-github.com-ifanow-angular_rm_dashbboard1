@@ -1,85 +1,106 @@
-<div *ngIf="showLoader">
-    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-</div>
-<div *ngIf="showLoader==false">
-<div *ngIf="sip.sipComponent==false" id="ui-category">
+<div>
+    <div *ngIf="sip.sipComponent==false" id="ui-category">
         <div class="wrapper-20 bg-white">
             <div class="row">
                 <div class="col-md-6 pl-0">
                     <h3 class="pt-8 mb-0">Applicant wise SIP</h3>
                 </div>
-                <div class="col-md-6 pr-0">
-                    <div class="right text-right">
-                        <button mat-stroked-button class="btn-default addon"><i class="material-icons">add</i>XLS</button>
-                        <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
-                    </div>
+                <div class="col-md-6 text-right pr-0">
+                    <button mat-stroked-button class="btn-default addon"><i class="material-icons">add</i>XLS</button>
+                    <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                 </div>
             </div>
-            <div ng-init="applicantFilter=''">
-                <input type="text" placeholder="Search applicant Name" [(ngModel)]="applicantFilter" (keyup)="filterArray()">
+
+            <div class="row">
+                <div class="col-md-8"></div>
+                <div class="col-md-4 pr-0 mt-12 mb-12" ng-init="applicantFilter=''">
+                    <input class="form-control" type="text" placeholder="Search applicant Name" [(ngModel)]="applicantFilter" (keyup)="filterArray()">
+                </div>
             </div>
-            <table class="table-low mt-16" id="table-high" >
-                <thead class="text-dark">
-                    <tr>
-                        <th>Applicant Name</th>
-                        <th class="text-right">SIP Amount</th>
-                        <th class="text-right">% Weight</th>
-                    </tr>
-                </thead>
-                <tbody *ngFor="let data of filteredArray; let i = index">
-                    <tr>
-                        <td (click)="showSubTableList(data)">{{data.name}} <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="data.showScheme"> add  </i>
-                        <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="!data.showScheme"> remove  </i></td>
-                        <td class="text-right">{{data.totalAum}} </td>
-                        <td class="text-right">{{data.weightInPercentage}}%</td>
-                     </tr>
-                     <tr>
-                         <tr>
-                        <table *ngIf="!data.showScheme" class="table-low mt-8 " id="table-high">
-                                <thead class="bg-light text-dark">
-                                        <tr>
-                                            <th>Applicant Name</th>
-                                            <th class="text-right">Scheme Name</th>
-                                            <th class="text-right">Folio</th>
-                                            <th class="text-right">Registered Date</th>
-                                            <th class="text-right">From Date</th>
-                                            <th class="text-right">To Date</th>
-                                            <th class="text-right">Trigger Day</th>
-                                            <th class="text-right">Frequency</th>
-                                            <th class="text-right">Amount</th>
-                                            <th class="text-right">% Weight</th>
-                                            <th class="text-right">Edit/Delete
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                       <tbody *ngFor="let scheme of data.schemeList; let i = index">
+            <div class="row">
+                <div class="col-md-12 p-0 cat-wise overflow-hidden">
+                    <table class="skeletonAnimation mt-16" appSkeletonLoading [appSkeletonLoading]="isLoading" id="table-low">
+                        <thead class="text-dark">
+                            <tr>
+                                <th>Applicant Name</th>
+                                <th>SIP Amount</th>
+                                <th>% Weight</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let data of filteredArray; let i = index">
+                            <tr>
+                                <td>
+                                    <div class="bar">
+                                        {{data.name}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="bar"> {{data.totalAum}} </div>
+                                </td>
+                                <td>
+                                    <div class="bar"> {{data.weightInPercentage}}% </div>
+                                </td>
+                                <td class="text-center" (click)="showSubTableList(data)">
+                                    <div class="bar text-center">
+                                        <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="data.showScheme"> add
+                                        </i>
+                                        <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="!data.showScheme">
+                                            remove
+                                        </i>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style="border: transparent !important">
+                                <td colspan="4" class="innerTd one">
+                                    <table *ngIf="!data.showScheme" class=" mt-8 mb-8" id="table-low">
+                                        <thead class="bg-light text-dark">
+                                            <tr>
+                                                <th class="w-11">Applicant Name</th>
+                                                <th>Scheme Name</th>
+                                                <th>Folio</th>
+                                                <th>Registered Date</th>
+                                                <th>From Date</th>
+                                                <th>To Date</th>
+                                                <th>Trigger Day</th>
+                                                <th>Frequency</th>
+                                                <th>Amount</th>
+                                                <th class="w-8">% Weight</th>
+                                                <th>Edit/Delete
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let scheme of data.schemeList; let i = index">
                                             <tr>
                                                 <td>{{scheme.name}}</td>
-                                                <td class="text-right">{{scheme.schemeName}} </td>                                                <td class="text-right">{{scheme.totalAum}} </td>
-                                                <td class="text-right">{{scheme.folioNumber}} </td>
-                                                <td class="text-right">{{scheme.registeredDate | date:'dd/MM/yyyy'}} </td>
-                                                <td class="text-right">{{scheme.to_date | date:'dd/MM/yyyy'}} </td>
-                                                <td class="text-right">{{scheme.sipTriggerDay}} </td>
-                                                <td class="text-right">{{scheme.frequency}} </td>
-                                                <td class="text-right">{{scheme.amount}} </td>
-                                                <td class="text-right">{{scheme.weightInPercentage}}%</td>
-                                                <td class="text-right">add cease date </td>
-
+                                                <td>{{scheme.schemeName}} </td>
+                                                <td>{{scheme.totalAum}} </td>
+                                                <td>{{scheme.folioNumber}} </td>
+                                                <td>{{scheme.registeredDate | date:'dd/MM/yyyy'}} </td>
+                                                <td>{{scheme.to_date | date:'dd/MM/yyyy'}} </td>
+                                                <td>{{scheme.sipTriggerDay}} </td>
+                                                <td>{{scheme.frequency}} </td>
+                                                <td>{{scheme.amount}} </td>
+                                                <td>{{scheme.weightInPercentage}}%</td>
+                                                <td>add cease date </td>
                                             </tr>
-                                    </tbody>
-                        </table>
-
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                      <td class="p-table t-35 b-a"><strong>Total</strong></td>
-                      <td class="p-table t-20 b-a text-right" ><strong><span appFormatNumber>{{totalOfSipAmount}}</span></strong></td>
-                      <td class="p-table t-19 b-a text-right"><strong>{{totalWeight}}%</strong></td>
-                    </tr>
-                  </tbody>
-            </table>
-   
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr>
+                                <td class="p-table"><strong>Total</strong></td>
+                                <td class="p-table"><strong><span appFormatNumber>{{totalOfSipAmount}}</span></strong>
+                                </td>
+                                <td class="p-table"><strong>{{totalWeight}}%</strong></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -87,4 +108,3 @@
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div> -->
 </div>
-

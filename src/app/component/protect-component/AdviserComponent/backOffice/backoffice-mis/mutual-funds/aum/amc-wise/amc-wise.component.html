@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-md-6 pr-0">
                     <div class="right text-right">
-                        <button mat-stroked-button class="btn-default addon"><i
+                        <button mat-stroked-button (click)="exportToExcelSheet('amc-wise')" class="btn-default addon"><i
                                 class="material-icons">add</i>XLS</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                     </div>
@@ -16,108 +16,117 @@
 
             <div class="row">
                 <div class="col-md-12 p-0 cat-wise overflow-hidden">
-                    <table id="table-low" class="skeletonAnimation mt-16" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="amcList">
+                    <table id="table-low" class="skeletonAnimation mt-16" appSkeletonLoading
+                        [appSkeletonLoading]="isLoading" *ngIf="amcList">
                         <thead class="text-dark">
                             <tr>
                                 <th class="w-10">Sr No.</th>
                                 <th class="w-40">Amc Name</th>
                                 <th>Current Value</th>
                                 <th>% Weight</th>
-                                <th></th>
+                                <th> </th>
 
                             </tr>
                         </thead>
-                        <tbody *ngFor="let amc of amcList; let i = index">
+                        <tbody *ngFor="let amc of amcList; let amcIndex = index">
                             <tr>
                                 <td>
-                                    <div class="bar"> {{i+1}} </div>
+                                    <div class="bar"> {{(isLoading)?'':amcIndex+1}} </div>
                                 </td>
                                 <td>
                                     <div class="bar"> {{amc.name}} </div>
                                 </td>
                                 <td>
-                                    <div class="bar"> {{amc.totalAum}} </div>
+                                    <div class="bar"><span appFormatNumber>{{amc.totalAum}}</span> </div>
                                 </td>
                                 <td>
-                                    <div class="bar"> {{amc.weightInPercentage}}% </div>
+                                    <div class="bar"> {{amc.weightInPercentage}} {{(isLoading?'':'%')}} </div>
                                 </td>
-                                <td (click)="showScheme(amc)">
+                                <td (click)="showScheme(amc, amcIndex)">
                                     <div class="bar text-center">
                                         <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="amc.showAmc"> add </i>
-                                        <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="!amc.showAmc"> remove
-                                        </i>
+                                        <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="!amc.showAmc">
+                                            {{(isLoading?'':'remove')}} </i>
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <tr style="border: transparent !important">
-                                    <td colspan="5" class="innerTd one">
-                                        <table *ngIf="!amc.showAmc" class=" mb-8 mt-8 " id="table-low">
-                                            <thead class="bg-light text-dark">
-                                                <tr>
-                                                    <th class="w-10">Sr No.</th>
-                                                    <th class="w-40">Scheme Name</th>
-                                                    <th>Current Value</th>
-                                                    <th>% Weight</th>
-                                                    <th></th>
+                            <tr style="border: transparent !important">
+                                <td colspan="5" class="innerTd one">
+                                    <table *ngIf="!amc.showAmc" class=" mb-8 mt-8 " id="table-low">
+                                        <thead class="bg-light text-dark">
+                                            <tr>
+                                                <th class="w-10">Sr No.</th>
+                                                <th class="w-40">Scheme Name</th>
+                                                <th>Current Value</th>
+                                                <th>% Weight</th>
+                                                <th></th>
 
-                                                </tr>
-                                            </thead>
-                                            <tbody *ngFor="let scheme of amc.schemes; let i = index">
-                                                <tr>
-                                                    <td>{{i+1}}</td>
-                                                    <td>{{scheme.schemeName}}</td>
-                                                    <td>{{scheme.totalAum}} </td>
-                                                    <td>{{scheme.weightInPercentage}}%</td>
-                                                    <td class="text-center" (click)="showApplicant(scheme)">
-                                                        <i *ngIf="scheme.showScheme==true" class="material-icons b-a f-14 mt-4 c-p">add</i>
-                                                        <i *ngIf="scheme.showScheme==false" class="material-icons b-a f-14 mt-4 c-p"> remove </i>
-                                                    </td>
-                                                </tr>
-                                                <tr style="border: transparent !important">
-                                                    <td colspan="6" class="innerTd two">
-                                                        <table id="table-low" class=" mb-8 mt-8 " *ngIf="!scheme.showScheme">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th class="w-25">Applicant Name</th>
-                                                                    <th class="w-20">Balance Unit</th>
-                                                                    <th>Folio</th>
-                                                                    <th>Current Amount</th>
-                                                                    <th>% Weight</th>
-                                                                    <th></th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody *ngFor="let applicant of scheme.applicantList;let i = index">
-                                                                <tr>
-                                                                    <td>{{applicant.investorName}}</td>
-                                                                    <td>{{applicant.balanceUit}}</td>
-                                                                    <td>{{applicant.folioNumber}} </td>
-                                                                    <td>{{applicant.totalAum}} </td>
-                                                                    <td>{{applicant.weightInPercentage}}% </td>
-                                                                    <td></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let scheme of amc.schemes; let i = index">
+                                            <tr>
+                                                <td>{{i+1}}</td>
+                                                <td>{{scheme.schemeName}}</td>
+                                                <td>{{scheme.totalAum}} </td>
+                                                <td>{{scheme.weightInPercentage}}%</td>
+                                                <td class="text-center" (click)="showApplicant(scheme, amcIndex)">
+                                                    <i *ngIf="scheme.showScheme==true"
+                                                        class="material-icons b-a f-14 mt-4 c-p">add</i>
+                                                    <i *ngIf="scheme.showScheme==false"
+                                                        class="material-icons b-a f-14 mt-4 c-p"> remove </i>
+                                                </td>
+                                            </tr>
+                                            <tr style="border: transparent !important">
+                                                <td colspan="6" class="innerTd two">
+                                                    <table id="table-low" class=" mb-8 mt-8 "
+                                                        *ngIf="!scheme.showScheme">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="w-25">Applicant Name</th>
+                                                                <th class="w-20">Balance Unit</th>
+                                                                <th>Folio</th>
+                                                                <th>Current Amount</th>
+                                                                <th>% Weight</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody
+                                                            *ngFor="let applicant of scheme.applicantList;let i = index">
+                                                            <tr>
+                                                                <td>{{applicant.investorName}}</td>
+                                                                <td>{{applicant.balanceUit}}</td>
+                                                                <td>{{applicant.folioNumber}} </td>
+                                                                <td>{{applicant.totalAum}} </td>
+                                                                <td>{{applicant.weightInPercentage}}% </td>
+                                                                <td></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
                         </tbody>
-                        <tbody>
+                        <tbody *ngIf="!isLoading">
                             <tr>
                                 <td class="p-table"><strong>Total</strong></td>
                                 <td class="p-table">&nbsp;</td>
-                                <td class="p-table"><strong>{{totalCurrentValue}}</strong></td>
+                                <td class="p-table"><strong><span appFormatNumber>{{totalCurrentValue}}</span></strong>
+                                </td>
                                 <td class="p-table"><strong>{{totalWeight}}%</strong></td>
                                 <td></td>
                             </tr>
                         </tbody>
                     </table>
-                    <div *ngIf="!amcList">
-                        <p>No data found</p>
+
+                    <div *ngIf="!amcList" class="d-flex flex-column align-items-center">
+                        <img class="width300" src="assets/images/svg/noDataFound.svg">
+                        <h4 class="text-center pt-12">No data Found</h4>
                     </div>
+
+
                 </div>
             </div>
         </div>

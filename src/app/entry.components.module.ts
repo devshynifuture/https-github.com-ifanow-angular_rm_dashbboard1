@@ -90,6 +90,8 @@ import { DetailedViewNpsComponent } from './component/protect-component/customer
 import { CommonComponentModule } from './component/protect-component/common-component/common-component.module';
 import { OwnerNomineeComponent } from './component/protect-component/common-component/owner-nominee/owner-nominee.component';
 import { AddRecommendationsInsuComponent } from './component/protect-component/customers/component/customer/plan/insurance-plan/add-recommendations-insu/add-recommendations-insu.component';
+import { GetSharebleLinkComponent } from './component/protect-component/customers/component/customer/customer-overview/overview-documents/get-shareble-link/get-shareble-link.component';
+import { BottomSheetComponent } from './component/protect-component/customers/component/common-component/bottom-sheet/bottom-sheet.component';
 //import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
 
@@ -187,6 +189,8 @@ export const componentList = [
   DetailedViewRealEstateComponent,
   DetaildedViewSuperannuationComponent,
   CopyDocumentsComponent,
+  GetSharebleLinkComponent,
+  BottomSheetComponent,
   DetailedPoRdComponent,
   AddPlaninsuranceComponent,
   DetailedPoRdComponent,

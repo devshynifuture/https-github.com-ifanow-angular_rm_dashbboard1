@@ -128,18 +128,17 @@
     <div formArrayName="getNomineeName">
         <div class="row pt-36" *ngFor="let obj of dematForm.controls['getNomineeName'].controls; let pointIndex=index"
             [formGroupName]="pointIndex">
-            <div class="col-md-4 text-right">
+            <div class="col-md-4  text-right">
                 <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
             </div>
-            <div [ngClass]="getNominee.length > 1?'col-md-4' : 'col-md-6'">
+            <div class="p-0" [ngClass]="getNominee.length > 1?'col-md-4' : 'col-md-6'">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
                             (selectionChange)="disabledMember($event.value,'nominee')"
                             (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                             <mat-option value='' disabled>Select family members</mat-option>
-                            <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
-                                [value]="f.userName">
+                            <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                 <span>{{f.userName}}</span>
                             </mat-option>
                         </mat-select>
@@ -149,7 +148,7 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-2" *ngIf="getNominee.length > 1">
+            <div class="col-md-2  " *ngIf="getNominee.length > 1">
                 <div class="form-group mb-0 iconPetage">
                     <mat-form-field>
                         <input matInput class="form-control br-0 percentage" type="number"
@@ -163,12 +162,10 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-2 p-0 d-flex align-items-center">
-                <i *ngIf="dematForm.value.getNomineeName.length < 3"
-                    class="material-icons text-primitive f-20 c-p float-left"
+            <div class="col-md-2 pr-0 d-flex align-items-center">
+                <i *ngIf="dematForm.value.getNomineeName.length < 3" class="material-icons f-20 c-p"
                     (click)="addNewNominee(undefined)">add</i>
-                <i *ngIf="dematForm.value.getNomineeName.length > 1"
-                    class="material-icons text-primitive f-20 c-p pl-10"
+                <i *ngIf="dematForm.value.getNomineeName.length > 1" class="material-icons f-20 c-p ml-10"
                     (click)="removeNewNominee(pointIndex)">remove</i>
             </div>
 
@@ -220,7 +217,7 @@
         </div>
     </div>
 </div>
-<div class="bottom-fixed wrapper-12 w-50">
+<div class="bottom-fixed wrapper-12 w-50 -m-28">
     <div class="row">
         <div class="col-md-4">
             <h5 (click)="close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>

@@ -11,11 +11,12 @@ export class CustomerOverviewComponent implements OnInit {
   clientData: any;
 
   constructor(private authService: AuthService, private router: Router) {
+    this.clientData = AuthService.getClientData();
   }
 
   ngOnInit() {
     console.log('overview is called');
-    this.clientData = AuthService.getClientData();
+   
     // this.clientData = JSON.parse(sessionStorage.getItem('clientData'));
   }
 

@@ -14,7 +14,7 @@ import { HttpService } from 'src/app/http-service/http-service';
 import { CopyDocumentsComponent } from '../../../common-component/copy-documents/copy-documents.component';
 import { ViewActivityComponent } from './view-activity/view-activity.component';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { EmailQuotationComponent } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/email-quotation/email-quotation.component';
+import { GetSharebleLinkComponent } from './get-shareble-link/get-shareble-link.component';
 
 @Component({
   selector: 'app-document-explorer',
@@ -66,11 +66,18 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   noResult = false;
   selectedFolder: any;
   countFile: any;
+  element: any;
+  countDocs: any;
+  isAdvisor: any;
+  getUserInfo: any;
 
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
-    private event: EventService, private router: Router, private fb: FormBuilder,
     private custumService: CustomerService, public subInjectService: SubscriptionInject,
-    public utils: UtilService, public dialog: MatDialog) {
+    public utils: UtilService, public dialog: MatDialog,private authService: AuthService) {
+      this.advisorId = AuthService.getAdvisorId();
+      this.clientId = AuthService.getClientId();
+      this.getUserInfo = AuthService.getUserInfo()
+      console.log('thiss.getUserInfo',this.getUserInfo)
   }
 
   showDots = false;
@@ -96,9 +103,23 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     this.viewMode = 'tab1';
     this.backUpfiles = [];
     this.openFolderName = [];
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
+    this.isAdvisor = this.authService.isAdvisor()
     this.getAllFileList(tabValue);
+    this.getCount()
+  }
+  getCount(){ 
+    const obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+    };
+    this.custumService.getCountAllDocs(obj).subscribe(
+      data => this.getCountAllDocsRes(data)
+    );
+  }
+
+  getCountAllDocsRes(data) {
+    console.log(data);
+    this.countDocs = data
   }
 
   openDialog(element, value): void {
@@ -129,17 +150,41 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     });
 
   }
-  copyFilesRes(data) {
-    this.eventService.openSnackBar('copy file successfully', 'Dismiss');
+  getSharebleLink(element,flag) {
+    this.downlodFiles(element,flag);
+  }
+  // openDocumentPreview() {
+
+  //   let obj =
+  //     {
+  //       data: this.dataTerms.docText,
+  //       cancelButton: () => {
+  //         this.utilservice.htmlToPdf(this.dataTerms.docText, 'document');
+  //         dialogRef.close();
+  //       }
+  //     }
+  //   const dialogRef = this.dialog.open(DocumentPreviewComponent, {
+  //     width: '1800px',
+  //     height: '900px',
+  //     data: obj,
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log('The dialog was closed');
+  //   });
+
+  // }
+  copyFilesRes() {
+    this.eventService.openSnackBar('copied file successfully', 'Dismiss');
     this.reset()
   }
-  moveFilesRes(data) {
-    this.eventService.openSnackBar('move file successfully', 'Dismiss');
+  moveFilesRes() {
+    this.eventService.openSnackBar('moved file successfully', 'Dismiss');
     this.getAllFileList('Documents')
     this.reset()
   }
-  moveFolderRes(data) {
-    this.eventService.openSnackBar('move folder successfully', 'Dismiss');
+  moveFolderRes() {
+    this.eventService.openSnackBar('moved folder successfully', 'Dismiss');
     this.getAllFileList('Documents')
     this.reset()
   }
@@ -158,18 +203,18 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       if (result.value == 'Copy') {
         delete result.value;
         this.custumService.copyFiles(result).subscribe(
-          data => this.copyFilesRes(data)
+          data => this.copyFilesRes()
         );
       } else if (result.value == 'Move') {
         if (element.folderName == undefined) {
           delete result.value;
           this.custumService.moveFiles(result).subscribe(
-            data => this.moveFilesRes(data)
+            data => this.moveFilesRes()
           );
         } else {
           delete result.value;
           this.custumService.moveFolder(result).subscribe(
-            data => this.moveFolderRes(data)
+            data => this.moveFolderRes()
           );
         }
       }
@@ -230,7 +275,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       this.eventService.openSnackBar('Folder name already exist', 'Ok');
     }
     console.log('newFolderRes', data);
-    // this.getAllFileList(this.valueTab);
+    this.reset();
   }
 
   openBottomSheet(): void {
@@ -327,7 +372,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       const obj = {
         clientId: this.clientId,
         advisorId: this.advisorId,
-        name: event
+        search: event
       };
       if (event.length > 2) {
         this.custumService.searchFile(obj).subscribe(
@@ -341,9 +386,9 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     this.showResult = true;
     const obj = [];
     console.log(data);
-    Object.assign(obj, { files: data.SEARCHED_FILE });
-    Object.assign(obj, { folders: data.SEARCHED_FOLDER });
-    if (data.SEARCHED_FILE.length == 0 && data.SEARCHED_FILE.length == 0) {
+    Object.assign(obj, { files: data.files });
+    Object.assign(obj, { folders: data.folders });
+    if (data.files.length == 0 && data.folders.length == 0) {
       this.noResult = true;
     } else {
       this.isLoading = true;
@@ -418,7 +463,8 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     }
   }
 
-  downlodFiles(element) {
+  downlodFiles(element,value) {
+    this.isLoading = true
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
@@ -426,15 +472,48 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       fileName: element.fileName
     };
     this.custumService.downloadFile(obj).subscribe(
-      data => this.downloadFileRes(data)
+      data => this.downloadFileRes(data,value)
     );
   }
 
-  downloadFileRes(data) {
-    console.log(data);
-    window.open(data);
-  }
+  downloadFileRes(data,value) {
+    this.isLoading = false
 
+    console.log(data);
+    if(value == 'shareLink' || value == 'share'){
+      console.log('shareLink',data)
+      this.verifyEmail(data,value)
+    }else{
+      window.open(data);
+    }
+  }
+  verifyEmail(value,flag) {
+    const dialogRef = this.dialog.open(GetSharebleLinkComponent, {
+      width: '400px',
+      data: { bank: value, flag: flag }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == undefined) {
+        return
+      }
+      console.log('The dialog was closed');
+      this.element = result;
+      console.log('result -==', this.element)
+      let obj = {
+        fromEmail : "support@futurewise.co.in",
+        toEmail: this.element.email,
+        emailSubject:"Share link",
+        messageBody:this.element.link
+      }
+      this.custumService.sendSharebleLink(obj).subscribe(
+        data => this.sendSharebleLinkRes(data),
+        err => this.eventService.openSnackBar(err, "Dismiss")
+      );
+    });
+  }
+  sendSharebleLinkRes(data){
+
+  }
   deleteModal(flag, data) {
     const dialogData = {
       data: flag,
@@ -459,7 +538,8 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
             data => {
               this.eventService.openSnackBar('Deleted', 'Dismiss');
               dialogRef.close();
-              this.getAllFileList(this.valueTab);
+              this.getCount()
+             this.reset();
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -474,7 +554,8 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
             data => {
               this.eventService.openSnackBar('Deleted', 'Dismiss');
               dialogRef.close();
-              this.getAllFileList(this.valueTab);
+              this.getCount()
+             this.reset();
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -492,35 +573,18 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(() => {
     });
   }
 
-  OpenEmail(data) {
-    const fragmentData = {
-      flag: 'addSchemeHolding',
-      data,
-      id: 1,
-      state: 'open',
-      componentName: EmailQuotationComponent
-    };
-
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
-        }
-      }
-    );
-  }
-
-  starFiles(element) {
+  starFiles(element,flag) {
+    this.getCount()
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
       id: element.id,
-      flag: (element.folderName == undefined) ? 2 : 1
+      flag: (element.folderName == undefined) ? 2 : 1,
+      isStarred: flag
     };
     this.custumService.starFile(obj).subscribe(
       data => this.starFileRes(data)
@@ -529,6 +593,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   starFileRes(data) {
     console.log(data);
+    this.getCount()
     this.getAllFileList(this.valueTab);
   }
 
@@ -539,6 +604,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         advisorId: this.advisorId,
         fileId: (element.folderName == undefined) ? element.id : null,
       };
+      console.log('activity obj',obj)
       this.custumService.viewActivityFile(obj).subscribe(
         data => this.viewActivityFileRes(data)
       );
@@ -571,7 +637,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       flag: 'addSchemeHolding',
       data,
       id: 1,
-      state: 'open',
+      state: 'open35',
       componentName: ViewActivityComponent
     };
 
@@ -596,9 +662,6 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       this.uploadFile(this.parentId, this.filenm);
     });
     console.log(this.myFiles);
-    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
-      data: this.myFiles,
-    });
   }
 
   uploadDocumentFolder(data) {
@@ -632,9 +695,6 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
     };
     console.log(this.myFiles);
-    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
-      data: fragData
-    });
   }
 
   uploadFiles() {
@@ -659,12 +719,6 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   uploadFileRes(data, fileName) {
     this.countFile++;
-    const fragData = {
-      uploadFolder: this.uploadFolder,
-      flag: 'uploadFolder',
-      viewFolder: this.viewFolder,
-      countFiles:this.countFile
-    };
     const fileuploadurl = data;
     const httpOptions = {
       headers: new HttpHeaders()
