@@ -16,6 +16,7 @@ import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../excel.service';
 import { MathUtilService } from "../../../../../../../../../services/math-util.service";
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
 
 
 @Component({
@@ -52,7 +53,7 @@ export class FixedIncomeComponent implements OnInit {
 
 
   constructor(private excelSer: ExcelService, private subInjectService: SubscriptionInject,
-    private customerService: CustomerService, private eventService: EventService, private excel:ExcelGenService,
+    private customerService: CustomerService, private eventService: EventService, private excel:ExcelGenService,  private pdfGen:PdfGenService,
     public util: UtilService, public dialog: MatDialog) {
   }
 
@@ -78,13 +79,14 @@ export class FixedIncomeComponent implements OnInit {
 
   }
 
-  Excel(){
-    let exData = [];
-    this.dataSource.data.forEach(data => {
-      exData.push(Object.values(data));
-    });
-    console.log(exData, this.fixedIncomeTableSort,this.tableEl,"dataSource excel");
-    this.excel.generateExcel(exData, this.displayedColumns4)
+  Excel(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows,tableTitle)
+  }
+
+  pdf(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.pdfGen.generatePdf(rows, tableTitle);
   }
 
   // async ExportTOExcel(value) {
