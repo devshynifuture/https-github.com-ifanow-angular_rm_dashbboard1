@@ -30,15 +30,20 @@ export class SipAmcWiseComponent implements OnInit {
     this.clientId=AuthService.getClientId();
     this.amcGet();
   }
-  sortBy(amc,propertyName){
+  sortBy(applicant,propertyName){
     this.propertyName = propertyName;
     this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
     if (this.reverse === false){
-      amc=amc.sort((a, b) => a[propertyName] > b[propertyName] ? 1 : -1);
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
     }else{
-      amc=amc.reverse();
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
     }
   }
+
   aumReport()
   {
     this.changedValue.emit(true);
