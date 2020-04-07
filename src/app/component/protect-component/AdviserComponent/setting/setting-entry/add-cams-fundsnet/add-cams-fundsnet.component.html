@@ -57,7 +57,7 @@
         <div class="col-md-4 pr-0">
             <h5 class="m-0 text-right pt-12">Secret question & answer</h5>
         </div>
-        <ng-container [formGroupName]="i" *ngFor="let secretQuestionForm of camsFundFG.get('rtaCamsFundNetSecurityQuestionsList').controls; let i = index;">
+        <ng-container [formGroupName]="i" *ngFor="let secretQuestionForm of getRtaControlArray(); let i = index;">
             <div class="col-md-4 pr-0" *ngIf="i > 0"></div>
             <div class="col-md-4">
                 <div class="form-group  mb-24">

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { LoginService } from '../login.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {LoginService} from '../login.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password',
@@ -30,17 +30,22 @@ export class ForgotPasswordComponent implements OnInit {
   });
   userNameVerifyResponse: any;
 
-  constructor(private loginService: LoginService, private eventService: EventService, private router: Router, private fb: FormBuilder) {
+  constructor(private loginService: LoginService, private eventService: EventService,
+              private router: Router, private fb: FormBuilder) {
   }
 
   ngOnInit() {
     this.verifyData = window.history.state;
     this.saveVerifyData = Object.assign({}, window.history.state);
+    if (!this.saveVerifyData) {
+      this.saveVerifyData = {};
+    }
     if (this.verifyData.flag) {
+      this.hideNumEmailFromUser(this.saveVerifyData);
+
       this.isVerify = true;
       this.verify('Email');
       this.verifyFlag = 'Email';
-      this.hideNumEmailFromUser(this.verifyData);
     } else {
       this.isVerify = false;
     }
@@ -48,12 +53,17 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   hideNumEmailFromUser(data) {
-    if (data.emailList && data.emailList.length > 0) {
-      data.email = data.emailList[0].email;
+    const userData = data.userData;
+    data.userId = userData.clientId ? userData.clientId : userData.advisorId;
+    data.userType = userData.userType;
+    if (userData.emailList && userData.emailList.length > 0) {
+      userData.email = userData.emailList[0].email;
+      data.email = userData.email;
       this.verifyData.email = UtilService.obfuscateEmail(data.email);
     }
-    if (data.mobileList && data.mobileList.length > 0) {
-      data.mobileNo = data.mobileList[0].mobileNo;
+    if (userData.mobileList && userData.mobileList.length > 0) {
+      userData.mobileNo = userData.mobileList[0].mobileNo;
+      data.mobileNo = userData.mobileNo;
       this.verifyData.mobileNo = UtilService.obfuscateEmail(String(data.mobile));
     }
   }
@@ -83,11 +93,12 @@ export class ForgotPasswordComponent implements OnInit {
       data => {
         console.log(data);
         if (data) {
+          this.saveVerifyData.userData = data;
           this.hideNumEmailFromUser(this.saveVerifyData);
           this.userNameVerifyResponse = data;
-          this.saveVerifyData.email = data.emailList[0].email;
-          this.saveVerifyData.mobileNo = data.mobileList[0].mobileNo;
-          this.saveVerifyData['userData'] = data
+          // this.saveVerifyData.email = data.emailList[0].email;
+          // this.saveVerifyData.mobileNo = data.mobileList[0].mobileNo;
+          // this.saveVerifyData['userData'] = data
           this.isVerify = true;
           if (this.saveVerifyData.email) {
             this.verifyFlag = 'Email';
@@ -108,7 +119,7 @@ export class ForgotPasswordComponent implements OnInit {
   ///////////////////////////////////// signup process///////////////////////////////
   verify(flag) {
     let verifyObj;
-    (flag == 'Email') ? verifyObj = { email: this.saveVerifyData.email } : verifyObj = { mobileNo: this.saveVerifyData.mobileNo };
+    (flag == 'Email') ? verifyObj = {email: this.saveVerifyData.email} : verifyObj = {mobileNo: this.saveVerifyData.mobileNo};
     this.verifyWithCredential(verifyObj);   //// verify Email Address
   }
 
@@ -126,6 +137,7 @@ export class ForgotPasswordComponent implements OnInit {
   saveAfterVerifyCredential(obj) {    ////// save verified email or mobileNo in the table
     this.loginService.saveAfterVerification(obj).subscribe(
       data => {
+
         console.log(data);
         (this.verifyFlag == 'Email') ? this.verifyFlag = 'Mobile' : '';
       },
@@ -135,27 +147,34 @@ export class ForgotPasswordComponent implements OnInit {
 
   verifyWithOtpResponse(flag) {  ///// check user filled otp is correct or not
     const otpString = this.otpData.toString().replace(/,/g, '');
-    const obj = {
-      email: (this.verifyFlag == 'Email') ? this.saveVerifyData.email : null,
-      userId: this.saveVerifyData.userId,
-      userType: this.saveVerifyData.userType,
-      mobileNo: (this.verifyFlag == 'Mobile') ? this.saveVerifyData.mobileNo : null
-    };
+
     if (flag == 'Email' && this.otpData.length == 6 && this.otpResponse == otpString) {
+      const obj = {
+        email: this.saveVerifyData.email,
+        userId: this.saveVerifyData.userId,
+        userType: this.saveVerifyData.userType
+      };
       this.verifyForm.reset();
       this.otpData = [];
       this.saveAfterVerifyCredential(obj);
       this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
       if (this.userNameVerifyResponse != undefined) {
-        this.router.navigate(['/login/setpassword'], { state: { userData: this.saveVerifyData.userData } });                      /////// check wheather user came from forgot password or sign-up Process
+        this.router.navigate(['/login/setpassword'],
+          {state: {userData: this.saveVerifyData.userData}});
+        /////// check wheather user came from forgot password or sign-up Process
         return;
       }
       this.verify('Mobile');
       this.verifyFlag = 'Mobile';
     } else if (flag == 'Mobile' && this.otpData.length == 6 && this.otpResponse == otpString) {
+      const obj = {
+        userId: this.saveVerifyData.userId,
+        userType: this.saveVerifyData.userType,
+        mobileNo: this.saveVerifyData.mobileNo
+      };
       this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
       this.saveAfterVerifyCredential(obj);
-      this.router.navigate(['/login/setpassword'], { state: { userData: this.saveVerifyData.userData } });
+      this.router.navigate(['/login/setpassword'], {state: {userData: this.saveVerifyData.userData}});
     } else {
       this.eventService.openSnackBar('OTP is incorrect', 'Dismiss');
     }

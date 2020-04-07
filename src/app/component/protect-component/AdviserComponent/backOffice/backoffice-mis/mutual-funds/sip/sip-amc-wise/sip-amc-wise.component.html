@@ -1,7 +1,4 @@
-<div *ngIf="showLoader">
-    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-</div>
-<div *ngIf="showLoader==false">
+<div>
     <div *ngIf="sip.sipComponent==false" id="ui-category">
         <div class="wrapper-20 bg-white">
             <div class="row">
@@ -9,7 +6,7 @@
                     <h3 class="pt-8 mb-0">AMC Wise SIP</h3>
                 </div>
                 <div class="col-md-6 pr-0">
-                    <div class="right text-right">
+                    <div class="text-right">
                         <button mat-stroked-button class="btn-default addon"><i
                                 class="material-icons">add</i>XLS</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
@@ -17,135 +14,198 @@
                 </div>
             </div>
 
-            <table class="table-low mt-16" id="table-high" *ngIf="amcList">
-                <thead class="text-dark">
-                    <tr>
-                        <th>Sr No.</th>
-                        <th>Amc Name</th>
-                        <th class="text-right">SIP Amount</th>
-                        <th class="text-right">SIP Count</th>
-                        <th class="text-right">% Weight</th>
-                    </tr>
-                </thead>
-                <tbody *ngFor="let category of amcList; let i = index">
-                    <tr>
-                        <td>{{i+1}}</td>
-                        <td (click)="showSubTableList(i,category.showCategory,category)">{{category.amcName}} <i
-                                class="material-icons right b-a f-14 mt-4 c-p" *ngIf="category.showCategory==true"> add
-                            </i>
-                            <i class="material-icons right b-a f-14 mt-4 c-p" *ngIf="category.showCategory==false">
-                                remove </i></td>
-                        <td class="text-right" ><span appFormatNumber>{{category.sipAmount}} </span></td>
-                        <td class="text-right" >{{category.sipCount}} </td>
-                        <td class="text-right">{{category.weightInPercentage}}%</td>
-                    </tr>
-                    <tr>
-                    <tr>
-                        <table *ngIf="category.showCategory==false" class="table-low mt-8 " id="table-high">
-                            <thead class="bg-light text-dark">
-                                <tr>
-                                    <th>Sr No.</th>
-                                    <th>Scheme Name</th>
-                                    <th class="text-right" >SIP Amount</th>
-                                    <th class="text-right">SIP Count</th>
-                                    <th class="text-right">% Weight</th>
-                                </tr>
-                            </thead>
-                            <tbody *ngFor="let subcategory of category.schemeList; let i = index">
-                                <tr>
-                                    <td>{{i+1}}</td>
-                                    <td (click)="showSchemeName(i,subcategory.showSubCategory,subcategory)">
-                                        {{subcategory.schemeName}}<i *ngIf="subcategory.showSubCategory==true"
-                                            class="material-icons right b-a f-14 mt-4 c-p">add</i>
-                                        <i *ngIf="subcategory.showSubCategory==false"
-                                            class="material-icons right b-a f-14 mt-4 c-p"> remove </i> </td>
-                                    <td class="text-right" ><span appFormatNumber>{{subcategory.sipAmount}}</span> </td>
-                                    <td class="text-right">{{subcategory.sipCount}} </td>
-                                    <td class="text-right">{{subcategory.weightInPercentage}}%</td>
-                                </tr>
-                                <table *ngIf="subcategory.showSubCategory==false">
-                                    <thead>
-                                        <tr>
-                                            <th>Sr No.</th>
-                                            <th>Investor Name </th>
-                                            <th class="text-right">SIP Amount</th>
-                                            <th class="text-right">SIP Count</th>
-                                            <th class="text-right">% Weight</th>
-                                        </tr>
-                                    </thead>
-                                    <tr>
-                                        <tbody *ngFor="let inv of subcategory.investorList;let i = index">
+            <div class="row">
+                <div class="col-md-12 p-0 cat-wise overflow-hidden">
+                    <table class="skeletonAnimation mt-16" appSkeletonLoading [appSkeletonLoading]="isLoading" id="table-low" *ngIf="amcList">
+                        <thead class="text-dark">
+                            <tr>
+                                <th class="w-10">Sr No.</th>
+                                <th class="w-40">Amc Name</th>
+                                <th>SIP Amount</th>
+                                <th>SIP Count</th>
+                                <th>% Weight</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let category of amcList; let i = index">
+                            <tr>
+                                <td>
+                                    <div class="bar">
+                                        {{i+1}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="bar">
+                                        {{category.amcName}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="bar">
+                                        <span appFormatNumber>{{category.sipAmount}} </span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="bar"> {{category.sipCount}} </div>
+                                </td>
+                                <td>
+                                    <div class="bar"> {{category.weightInPercentage}}% </div>
+                                </td>
+
+                                <td (click)="showSubTableList(i,category.showCategory,category)">
+                                    <div class="bar text-center">
+                                        <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="category.showCategory==true">
+                                            add
+                                        </i>
+                                        <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="category.showCategory==false">
+                                            remove </i>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style="border: transparent !important">
+                                <td colspan="6" class="innerTd one">
+                                    <table *ngIf="category.showCategory==false" class=" mt-8 mb-8" id="table-low">
+                                        <thead class="bg-light text-dark">
+                                            <tr>
+                                                <th class="w-10">Sr No.</th>
+                                                <th class="w-40">Scheme Name</th>
+                                                <th>SIP Amount</th>
+                                                <th>SIP Count</th>
+                                                <th>% Weight</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let subcategory of category.schemeList; let i = index">
                                             <tr>
                                                 <td>{{i+1}}</td>
-                                                <td (click)="showApplicantName(i,inv.showInvestor,inv)">
-                                                    {{inv.investorName}}<i
-                                                        class="material-icons right b-a f-14 mt-4 c-p"
-                                                        *ngIf="inv.showInvestor==true">add</i>
-                                                    <i class="material-icons right b-a f-14 mt-4 c-p"
-                                                        *ngIf="inv.showInvestor==false"> remove </i> </td>
-                                                <td class="text-right"><span appFormatNumber>{{inv.sipAmount}}</span> </td>
-                                                <td class="text-right">{{inv.sipCount}} </td>
-                                                <td class="text-right">{{inv.weightInPercentage}}%</td>
+                                                <td>
+                                                    {{subcategory.schemeName}}
+                                                </td>
+                                                <td><span appFormatNumber>{{subcategory.sipAmount}}</span> </td>
+                                                <td>{{subcategory.sipCount}} </td>
+                                                <td>{{subcategory.weightInPercentage}}%</td>
+                                                <td class="text-center" (click)="showSchemeName(i,subcategory.showSubCategory,subcategory)">
+                                                    <i *ngIf="subcategory.showSubCategory==true" class="material-icons b-a f-14 mt-4 c-p">add</i>
+                                                    <i *ngIf="subcategory.showSubCategory==false" class="material-icons b-a f-14 mt-4 c-p"> remove </i>
+                                                </td>
                                             </tr>
+                                            <tr style="border: transparent !important">
+                                                <td colspan="6" class="innerTd two">
+                                                    <table class=" mt-8 mb-8" id="table-low" *ngIf="subcategory.showSubCategory==false">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="w-10">Sr No.</th>
+                                                                <th class="w-40">Investor Name </th>
+                                                                <th>SIP Amount</th>
+                                                                <th>SIP Count</th>
+                                                                <th>% Weight</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody *ngFor="let inv of subcategory.investorList;let i = index">
+                                                            <tr>
+                                                                <td>{{i+1}}</td>
+                                                                <td>
+                                                                    {{inv.investorName}}
+                                                                </td>
+                                                                <td><span appFormatNumber>{{inv.sipAmount}}</span>
+                                                                </td>
+                                                                <td>{{inv.sipCount}} </td>
+                                                                <td>{{inv.weightInPercentage}}%
+                                                                </td>
 
-                                            <table *ngIf="inv.showInvestor==false">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Applicant Name</th>
-                                                        <th class="text-right">Scheme Name</th>
-                                                        <th class="text-right">Folio</th>
-                                                        <th class="text-right">Registered Date</th>
-                                                        <th class="text-right">From Date</th>
-                                                        <th class="text-right">To Date</th>
-                                                        <th class="text-right">Trigger Day</th>
-                                                        <th class="text-right">Frequency</th>
-                                                        <th class="text-right">Amount</th>
-                                                        <th class="text-right">% Weight</th>
-                                                        <th class="text-right">ceased</th>
-                                                    </tr>
-                                                </thead>
-                                                <tr>
-                                                    <tbody *ngFor="let applicant of inv.applicantList;let i = index">
-                                                        <tr>
-                                                            <td>{{applicant.investorName}}</td>
-                                                            <td class="text-right">{{applicant.schemeName}} </td>
-                                                            <td class="text-right">{{applicant.folioNumber}} </td>
-                                                            <td class="text-right">
-                                                                {{applicant.registeredDate | date:'dd/MM/yyyy'}} </td>
-                                                            <td class="text-right">
-                                                                {{applicant.from_date | date:'dd/MM/yyyy'}} </td>
-                                                            <td class="text-right">
-                                                                {{applicant.to_date | date:'dd/MM/yyyy'}} </td>
-                                                            <td class="text-right">{{applicant.sipTriggerDay}} </td>
-                                                            <td class="text-right">{{applicant.frequency}} </td>
-                                                            <td class="text-right" ><span appFormatNumber>{{applicant.sipAmount}}</span> </td>
-                                                            <td class="text-right">{{applicant.weightInPercentage}}%
-                                                            </td>
-                                                            <td class="text-right">ceased</td>
+                                                                <td class="text-center" (click)="showApplicantName(i,inv.showInvestor,inv)">
+                                                                    <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="inv.showInvestor==true">add</i>
+                                                                    <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="inv.showInvestor==false"> remove </i>
+                                                                </td>
+                                                            </tr>
+                                                            <tr style="border: transparent !important">
+                                                                <td colspan="6" class="innerTd three">
+                                                                    <table class=" mt-8 mb-8" id="table-low" *ngIf="inv.showInvestor==false">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th class="w-12">Applicant Name</th>
+                                                                                <th class="w-15">Scheme Name</th>
+                                                                                <th>Folio</th>
+                                                                                <th>Registered Date</th>
+                                                                                <th>From Date</th>
+                                                                                <th>To Date</th>
+                                                                                <th>Trigger Day</th>
+                                                                                <th>Frequency</th>
+                                                                                <th>Amount</th>
+                                                                                <th>% Weight</th>
+                                                                                <th>ceased</th>
+                                                                            </tr>
+                                                                        </thead>
 
-                                                        </tr>
-                                                    </tbody>
+                                                                        <tbody *ngFor="let applicant of inv.applicantList;let i = index">
+                                                                            <tr>
+                                                                                <td>{{applicant.investorName}}
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{applicant.schemeName}}
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{applicant.folioNumber}}
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{applicant.registeredDate | date:'dd/MM/yyyy'}}
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{applicant.from_date | date:'dd/MM/yyyy'}}
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{applicant.to_date | date:'dd/MM/yyyy'}}
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{applicant.sipTriggerDay}}
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{applicant.frequency}}
+                                                                                </td>
+                                                                                <td><span appFormatNumber>{{applicant.sipAmount}}</span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{applicant.weightInPercentage}}%
+                                                                                </td>
+                                                                                <td>ceased
+                                                                                </td>
 
-                                            </table>
+                                                                            </tr>
+                                                                        </tbody>
+
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
                                         </tbody>
-                                </table>
-                            </tbody>
-                        </table>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr>
+                                <td class="p-table">&nbsp;</td>
+                                <td class="p-table"><strong>Total</strong></td>
+                                <td class="p-table"><strong><span appFormatNumber>{{totalOfSipAmount}}</span></strong>
+                                </td>
+                                <td class="p-table"><strong>{{totalOfSipCount}}</strong></td>
+                                <td class="p-table"><strong>{{totalWeight}}%</strong></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                      <td class="p-table t-7 b-a">&nbsp;</td>
-                      <td class="p-table t-35 b-a"><strong>Total</strong></td>
-                      <td class="p-table t-20 b-a text-right" ><strong><span appFormatNumber>{{totalOfSipAmount}}</span></strong></td>
-                      <td class="p-table t-19 b-a text-right"><strong>{{totalOfSipCount}}</strong></td>
-                      <td class="p-table t-19 b-a text-right"><strong>{{totalWeight}}%</strong></td>
-                    </tr>
-                  </tbody>
-            </table>
-            <div  *ngIf="!amcList">
-                <p>No data Found</p>
+
+                    <div *ngIf="!amcList" class="d-flex flex-column align-items-center">
+                        <img class="width300" src="assets/images/svg/noDataFound.svg">
+                        <h4 class="text-center pt-12">No data Found</h4>
+                    </div>
+
+
+                </div>
             </div>
         </div>
     </div>

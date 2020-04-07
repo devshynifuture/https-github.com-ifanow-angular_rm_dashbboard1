@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { LeadsClientsComponent } from './leads-clients/leads-clients.component';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { AddClientComponent } from '../people-clients/add-client/add-client.component';
-import { AuthService } from 'src/app/auth-service/authService';
-import { PeopleService } from '../../../people.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { MatTableDataSource } from '@angular/material';
+import {Component, OnInit} from '@angular/core';
+import {LeadsClientsComponent} from './leads-clients/leads-clients.component';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {AddClientComponent} from '../people-clients/add-client/add-client.component';
+import {AuthService} from 'src/app/auth-service/authService';
+import {PeopleService} from '../../../people.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-people-leads',
@@ -14,7 +14,7 @@ import { MatTableDataSource } from '@angular/material';
   styleUrls: ['./people-leads.component.scss']
 })
 export class PeopleLeadsComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'lsource', 'status', 'rating', 'lead',
+  displayedColumns: string[] = ['position', 'name', 'weight', 'lsource', /*'status', 'rating',*/ 'lead',
     'icon', 'icons'];
   leadDataSource = new MatTableDataSource();
   isLoading: boolean;
@@ -28,11 +28,10 @@ export class PeopleLeadsComponent implements OnInit {
   getLeadList() {
     this.leadDataSource.data = [{}, {}, {}];
     this.isLoading = true;
-    let obj =
-    {
+    const obj = {
       advisorId: this.advisorId,
       status: 2
-    }
+    };
     this.peopleService.getClientList(obj).subscribe(
       data => {
         console.log(data);
@@ -49,23 +48,21 @@ export class PeopleLeadsComponent implements OnInit {
         }
         this.leadDataSource.data = data;
       },
-      err => this.eventService.openSnackBar(err, "dismiss")
-    )
+      err => this.eventService.openSnackBar(err, 'dismiss')
+    );
   }
   open(data, flag) {
     let component;
     if (flag == 'lead') {
       if (data == null) {
-        data = { flag: 'Add lead', fieldFlag: 'lead' }
-      }
-      else {
-        data['flag'] = 'Edit lead';
-        data['fieldFlag'] = "lead";
+        data = {flag: 'Add lead', fieldFlag: 'lead'};
+      } else {
+        data.flag = 'Edit lead';
+        data.fieldFlag = 'lead';
       }
       component = AddClientComponent;
-    }
-    else {
-      component = LeadsClientsComponent;;
+    } else {
+      component = LeadsClientsComponent;
     }
     const fragmentData = {
       flag,
