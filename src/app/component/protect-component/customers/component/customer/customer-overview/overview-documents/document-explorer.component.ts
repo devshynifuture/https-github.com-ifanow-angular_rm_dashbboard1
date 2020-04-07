@@ -579,6 +579,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   starFiles(element,flag) {
     this.getCount()
+    this.isLoading = true
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
@@ -593,11 +594,15 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   starFileRes(data) {
     console.log(data);
-    this.getCount()
-    this.getAllFileList(this.valueTab);
+    if(data){
+      this.getCount()
+      this.getAllFileList(this.valueTab);
+    }
+    this.isLoading = false
   }
 
   viewActivities(element) {
+    this.isLoading = true
     if (element.folderName == undefined) {
       const obj = {
         clientId: this.clientId,
@@ -623,10 +628,14 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   viewActivityFolderRes(data) {
     console.log(data);
-    this.openActivity(data);
+    this.isLoading = false
+    if(data){
+      this.openActivity(data);
+    }
   }
 
   viewActivityFileRes(data) {
+    this.isLoading = false
     console.log(data);
     data.foldersNm = this.openFolderName;
     this.openActivity(data);
