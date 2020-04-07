@@ -464,6 +464,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   downlodFiles(element,value) {
+    this.isLoading = true
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
@@ -476,6 +477,8 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   downloadFileRes(data,value) {
+    this.isLoading = false
+
     console.log(data);
     if(value == 'shareLink' || value == 'share'){
       console.log('shareLink',data)
