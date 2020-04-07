@@ -508,7 +508,7 @@ export const appConfig = {
   GET_EMAIL_VERIFICATION: 'setting/preference/email/get',
   GET_EMAIL_TEMPLATES: 'setting/preference/email/template/get',
   EDIT_PREF_EMAIL_TEMPLATE: 'setting/preference/email/template/update',
-  DELETE_PREF_EMAIL_TEMPLATE: 'setting/preference/email/template/delete',
+  DELETE_PREF_EMAIL_TEMPLATE: 'setting/preference/email/delete',
   DELETE_EMAIL_VERIFY: 'setting/preference/email/delete',
   ADD_EMAIL_VERIFY: 'setting/preferences/email/post',
   GET_ASSET_ALLOCATION: 'goal-planning/static-allocation/get',

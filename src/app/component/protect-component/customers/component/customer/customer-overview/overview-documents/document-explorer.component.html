@@ -124,9 +124,9 @@
                                         <td *matCellDef="let element" class="c-p" mat-cell>
                                             <div (click)="openFolder(element)">
                                                 <div class="bar">
-                                                    <img *ngIf="element.folderName != undefined" class="mr-12" src="/assets/images/svg/folder-icon.svg"> {{element.folderName}}
+                                                    <img *ngIf="element.folderName != undefined" class="mr-12" src="/assets/images/svg/folder-icon.svg"> {{isLoading ? '' : element.folderName}}
                                                     <img *ngIf="element.isStarred == 1" class="mr-12">
-                                                    <img *ngIf="element.fileName != undefined" class="mr-12" src="/assets/images/svg/file-lines.svg"> {{element.fileName}}
+                                                    <img *ngIf="element.fileName != undefined" class="mr-12" src="/assets/images/svg/file-lines.svg"> {{isLoading ? '' : element.fileName}}
                                                     <img *ngIf="element.isStarred == 1" class="mr-12" src="/assets/images/svg/document-star.svg">
                                                 </div>
                                             </div>
@@ -137,7 +137,8 @@
                                         <th *matHeaderCellDef mat-header-cell mat-sort-header="createdDate"> Last modified
                                         </th>
                                         <td *matCellDef="let element" mat-cell>
-                                            <div class="bar"> {{element.createdDate | date:'dd/MM/yyyy'}} </div>
+                                            <div class="bar">
+                                                {{isLoading ? '' : element.createdDate | date:'dd/MM/yyyy'}} </div>
                                         </td>
                                     </ng-container>
 
@@ -146,7 +147,7 @@
                                         <th *matHeaderCellDef mat-header-cell mat-sort-header="fileTypeId"> Type</th>
                                         <td *matCellDef="let element" mat-cell>
                                             <div class="bar">
-                                                {{element.fileType}}
+                                                {{isLoading ? '' : element.fileType}}
                                             </div>
                                         </td>
                                     </ng-container>
@@ -155,7 +156,7 @@
                                         <th *matHeaderCellDef mat-header-cell mat-sort-header="size"> Size</th>
                                         <td *matCellDef="let element" mat-cell>
                                             <div class="bar">
-                                                {{element.size}}
+                                                {{isLoading ? '' : element.size}}
                                             </div>
                                         </td>
                                     </ng-container>
