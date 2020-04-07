@@ -55,7 +55,7 @@
 
 <div class="row pt-24 icons-set">
     <div class="col-md-12 overflow-hidden folioDetails">
-        <table matSort mat-table [dataSource]="dataSource" id="table-low" *ngIf="dataSource" class="skeletonAnimation mt-28" appSkeletonLoading [appSkeletonLoading]="isLoading">
+        <table matSort mat-table [dataSource]="dataSource" id="table-low" *ngIf="dataSource.filteredData.length>0" class="skeletonAnimation mt-28" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="position">
                 <th mat-sort-header="folioNumber" mat-header-cell *matHeaderCellDef> Folio Number </th>
                 <td mat-cell *matCellDef="let element">
@@ -86,7 +86,7 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <div *ngIf="!dataSource || dataSource.filteredData.length==0" class="d-flex flex-column align-items-center">
+        <div *ngIf="dataSource.filteredData.length==0" class="d-flex flex-column align-items-center">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
             <h4 class="text-center pt-12">No data found</h4>
         </div>

@@ -14,7 +14,7 @@ export class FoliosComponent implements OnInit {
   folioDetails: any;
   dataList: any;
   advisorId: any;
-  dataSource:any;
+  dataSource = new MatTableDataSource([]);
   folioList:any;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
