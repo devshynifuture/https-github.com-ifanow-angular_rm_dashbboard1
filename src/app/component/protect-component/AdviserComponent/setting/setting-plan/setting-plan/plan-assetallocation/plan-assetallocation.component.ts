@@ -33,7 +33,11 @@ export class PlanAssetallocationComponent implements OnInit {
   obj4: any;
   isLoading = true;
   staticAllocation: any;
-  constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) {
+  validatorType = ValidatorType;
+  constructor(
+    private orgSetting: OrgSettingServiceService, 
+    private eventService: EventService,
+  ) {
     this.advisorId = AuthService.getAdvisorId()
   }
   ngOnInit() {
@@ -49,6 +53,9 @@ export class PlanAssetallocationComponent implements OnInit {
   }
   changeTableTdValue(value, field, field2, ele, index) {
     console.log(value, field, index);
+    if(value > 100) {
+      value = 100;
+    }
     this.secondValue = 100 - value
     ele[field2] = this.secondValue
     ele[field] = value

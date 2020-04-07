@@ -52,7 +52,7 @@
             <div class="col-md-10 b-a p-0 min-height" [ngSwitch]="viewMode">
                 <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading"
                     *ngSwitchCase="'tab1'">
-                    <div class="p-20 ">
+                    <div class="p-20" *ngIf="portfolio">
                         <div class="relClass">
                             <h5 class="mb-8 bar text-black" [ngClass]="{'height23': isLoading}">
                                 Mutual Fund
@@ -60,7 +60,7 @@
                         </div>
 
                         <div class="bar">
-                            <mat-checkbox *ngIf="mutualFund" class="text-black"
+                            <mat-checkbox class="text-black"
                                 (change)="selectMutualFund($event,mutualFund)"
                                 [checked]="mutualFund.selectedOrDeselected">Show absolute returns for new clients
                             </mat-checkbox>
@@ -70,7 +70,7 @@
 
                         <div class="pt-20 relClass">
                             <div class="bar">
-                                <mat-checkbox class="text-black" *ngIf="mutualFund2"
+                                <mat-checkbox class="text-black" #mutual2
                                     (change)="selectMutualFund($event,mutualFund2)"
                                     [checked]="mutualFund2.selectedOrDeselected">Show mutual fund fact sheet
                                 </mat-checkbox>
@@ -80,7 +80,7 @@
 
                             <div class="bb-1 pl-24 pt-12 pb-20 relClass">
                                 <div class="bar" [ngClass]="{'height23': isLoading}">
-                                    <mat-checkbox class="text-black" (change)="selectMutualFund($event, null)">Show
+                                    <mat-checkbox class="text-black" (change)="selectMutualFund($event, mutualFund3)" [checked]="mutualFund3.selectedOrDeselected" [disabled]="!mutualFund2.selectedOrDeselected">Show
                                         investor returns vs scheme returns widget in fact sheet
                                     </mat-checkbox>
                                 </div>
@@ -93,7 +93,7 @@
                     </div>
                 </div>
                 <div *ngSwitchCase="'tab2'">
-                    <div class="p-20" *ngIf="planSection">
+                    <div class="p-20" *ngIf="!isLoading">
                         <h5 class="mb-8  text-black">Insurance planning</h5>
                         <div class="pt-20 relClass">
                             <div class="bar">
@@ -105,7 +105,7 @@
                         <p class="m-0 text-custom pb-20 bb-1 pl-24">These returns are displayed when giving
                             recommendations on current policies.</p>
                     </div>
-                    <div *ngIf="planSection == undefined" class="d-flex flex-column align-items-center">
+                    <div *ngIf="isLoading" class="d-flex flex-column align-items-center">
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
                         <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
                     </div>
@@ -192,21 +192,21 @@
                                     <ng-container matColumnDef="position">
                                         <th mat-header-cell class="br w-23" *matHeaderCellDef> Type </th>
                                         <td mat-cell class="br w-23" *matCellDef="let element">
-                                            <div class="bar"> {{isLoading ? '' :element.emailTemplateTypeId}}</div>
+                                            <div class="bar" [innerHTML]="element.subject"></div>
                                         </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="name">
                                         <th mat-header-cell class="br" *matHeaderCellDef> Description </th>
                                         <td mat-cell class="br" *matCellDef="let element">
-                                            <div class="bar">{{isLoading ? '' :element.subject}}</div>
+                                            <div class="bar" [innerHTML]="element.body"></div>
                                         </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="weight">
                                         <th mat-header-cell class="br" *matHeaderCellDef> From email </th>
                                         <td mat-cell class="br" *matCellDef="let element">
-                                            <div class="bar"> {{isLoading ? '' :element.fromEmail}} </div>
+                                            <div class="bar"> {{element.fromEmail}} </div>
                                         </td>
                                     </ng-container>
 
@@ -219,9 +219,9 @@
                                                 <button mat-menu-item (click)="OpenEmail('emailTemp',element)">
                                                     <span>Edit</span>
                                                 </button>
-                                                <button mat-menu-item (click)="deleteModal('template',element)">
+                                                <!-- <button mat-menu-item (click)="deleteModal('template',element)">
                                                     <span>Delete</span>
-                                                </button>
+                                                </button> -->
                                             </mat-menu>
                                         </td>
                                     </ng-container>
@@ -308,7 +308,7 @@
                                             <mat-form-field class="url">
                                                 <button mat-stroked-button
                                                     class="b-0 h-40 bg-grey lter min-80 text-custom">https://</button>
-                                                <input matInput type="text" [disabled]="!showUpdate"
+                                                <input matInput type="text" [readonly]="!showUpdate"
                                                     class="form-control b-0 w-60" formControlName="normalLable">
                                                 <button mat-stroked-button
                                                     class="right b-0 h-40 bg-grey lter min-80 pl-8 text-custom">.myplanner.in</button>
@@ -338,7 +338,7 @@
                                             <mat-form-field class="url">
                                                 <button mat-stroked-button
                                                     class="b-0 h-40 bg-grey lter min-80 text-custom">https://</button>
-                                                <input matInput type="text" disabled=true class="form-control b-0 w-60"
+                                                <input matInput type="text" [readonly]="!showUpdateWhite" class="form-control b-0 w-60"
                                                     formControlName="whiteLable">
 
                                             </mat-form-field>
