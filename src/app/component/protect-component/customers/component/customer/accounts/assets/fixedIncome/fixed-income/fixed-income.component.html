@@ -28,7 +28,7 @@
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button mat-menu-item>PDF</button>
-                    <button (click)="ExportTOExcel('Fixed Deposit')" mat-menu-item>XLS</button>
+                    <button (click)="Excel()" mat-menu-item>XLS</button>
                 </mat-menu>
                 <img src="assets/images/svg/up-down.svg">
                 <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p">
@@ -66,7 +66,7 @@
         </div>
         <div [ngClass]="{'table-scroll':isLoading==false }"
             class="col-md-12 p-0 mt-8 overflow-hidden newFont tableHeightClass fixed-DEPOSIT">
-            <table *ngIf="dataSource.filteredData.length > 0" matSort #fixedIncomeTableSort="matSort" mat-table
+            <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort #fixedIncomeTableSort="matSort" mat-table
                 [dataSource]="dataSource" id="tbs" class="skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no" sticky>

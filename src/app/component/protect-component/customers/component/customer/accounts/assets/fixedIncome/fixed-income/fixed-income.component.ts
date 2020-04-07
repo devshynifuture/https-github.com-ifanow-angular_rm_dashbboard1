@@ -15,6 +15,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../excel.service';
 import { MathUtilService } from "../../../../../../../../../services/math-util.service";
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
 
 
 @Component({
@@ -38,6 +39,7 @@ export class FixedIncomeComponent implements OnInit {
   sumCurrentValueB: any;
 
   @ViewChild('fixedIncomeTableSort', { static: false }) fixedIncomeTableSort: MatSort;
+  @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild('recurringDepositTable', { static: false }) recurringDepositTableSort: MatSort;
   @ViewChild('bondListTable', { static: false }) bondListTableSort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
@@ -50,7 +52,7 @@ export class FixedIncomeComponent implements OnInit {
 
 
   constructor(private excelSer: ExcelService, private subInjectService: SubscriptionInject,
-    private customerService: CustomerService, private eventService: EventService,
+    private customerService: CustomerService, private eventService: EventService, private excel:ExcelGenService,
     public util: UtilService, public dialog: MatDialog) {
   }
 
@@ -76,88 +78,97 @@ export class FixedIncomeComponent implements OnInit {
 
   }
 
-  async ExportTOExcel(value) {
-    this.excelData = [];
-    let data = [];
-    var headerData, header, footerData;
-    if (value == 'Fixed Deposit') {
-      headerData = [{ width: 20, key: 'Owner' },
-      { width: 20, key: 'Type of FD' },
-      { width: 25, key: 'Current value' },
-      { width: 25, key: 'Rate' },
-      { width: 18, key: 'Amount invested' },
-      { width: 18, key: 'Maturity date' },
-      { width: 18, key: 'Maturity value' },
-      { width: 18, key: 'FD number' },
-      { width: 15, key: 'Description' },
-      { width: 10, key: 'Status' },];
-      header = ['Owner', 'Type of FD', 'Current value', 'Rate', 'Amount invested',
-        'Maturity date', 'FD number', 'Description', 'Status'];
-      this.dataSource.filteredData.forEach(element => {
-        data = [element.ownerName, MathUtilService.formatAndRoundOffNumber(element.fdType),
-        MathUtilService.formatAndRoundOffNumber(element.currentValue),
-        MathUtilService.formatAndRoundOffNumber(element.interestRate),
-        new Date(element.maturityDate), MathUtilService.formatAndRoundOffNumber(element.maturityValue),
-        element.fdNumber, element.description, element.status];
-        this.excelData.push(Object.assign(data));
-      });
-      footerData = ['Total', '',
-        MathUtilService.formatAndRoundOffNumber(this.sumCurrentValue), '',
-        MathUtilService.formatAndRoundOffNumber(this.sumAmountInvested), '',
-        MathUtilService.formatAndRoundOffNumber(this.sumMaturityValue), '', '', '',];
-      this.footer.push(Object.assign(footerData));
-    } else if (value == 'Fixed Reccuring') {
-      headerData = [
-        { width: 20, key: 'Owner' },
-        { width: 20, key: 'Current value' },
-        { width: 25, key: 'Rate' },
-        { width: 25, key: 'Monthly contribution' },
-        { width: 18, key: 'Maturity date' },
-        { width: 18, key: 'RD number' },
-        { width: 15, key: 'Description' },
-        { width: 10, key: 'Status' },
-      ];
-      header = ['Owner', 'Current value', 'Rate', 'Monthly contribution',
-        'Maturity date', 'RD number', 'Description', 'Status'];
-      this.dataSource.filteredData.forEach(element => {
-        data = [element.ownerName, MathUtilService.formatAndRoundOffNumber(element.currentValue),
-        (element.interestRate), MathUtilService.formatAndRoundOffNumber(element.monthlyContribution),
-        new Date(element.maturityDate), (element.rdNumber), element.description, element.status];
-        this.excelData.push(Object.assign(data));
-      });
-      footerData = ['Total',
-        MathUtilService.formatAndRoundOffNumber(this.totalCurrentValue), '', '',
-        MathUtilService.formatAndRoundOffNumber(this.totalMarketValue), '', '', ''];
-      this.footer.push(Object.assign(footerData));
-    } else {
-      headerData = [{ width: 20, key: 'Owner' },
-      { width: 20, key: 'Current value' },
-      { width: 25, key: 'Coupon amount' },
-      { width: 18, key: 'Amount invested' },
-      { width: 18, key: 'Commencement date' },
-      { width: 18, key: 'Rate' },
-      { width: 18, key: 'Maturity value' },
-      { width: 18, key: 'Tenure' },
-      { width: 18, key: 'Type' },
-      { width: 15, key: 'Description' },
-      { width: 10, key: 'Status' },];
-      header = ['Owner', 'Current value', 'Coupon amount', 'Amount invested', 'Commencement date',
-        'Rate', 'Maturity value', 'Tenure', 'Type', 'Description', 'Status'];
-      this.dataSource.filteredData.forEach(element => {
-        data = [element.ownerName, MathUtilService.formatAndRoundOffNumber(element.currentValue),
-        MathUtilService.formatAndRoundOffNumber(element.couponAmount), (element.amountInvested),
-        new Date(element.commencementDate),
-        (element.rate), (element.maturityValue), (element.tenure), ((element.type == 1) ? 'Tax free' : 'Non tax free'), element.description, element.status];
-        this.excelData.push(Object.assign(data));
-      });
-      footerData = ['Total', MathUtilService.formatAndRoundOffNumber(this.sumCurrentValueB),
-        MathUtilService.formatAndRoundOffNumber(this.sumCouponAmount),
-        MathUtilService.formatAndRoundOffNumber(this.sumAmountInvestedB), '', '', '', '', '', '', ''];
-      this.footer.push(Object.assign(footerData));
-
-    }
-    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value);
+  Excel(){
+    let exData = [];
+    this.dataSource.data.forEach(data => {
+      exData.push(Object.values(data));
+    });
+    console.log(exData, this.fixedIncomeTableSort,this.tableEl,"dataSource excel");
+    this.excel.generateExcel(exData, this.displayedColumns4)
   }
+
+  // async ExportTOExcel(value) {
+  //   this.excelData = [];
+  //   let data = [];
+  //   var headerData, header, footerData;
+  //   if (value == 'Fixed Deposit') {
+  //     headerData = [{ width: 20, key: 'Owner' },
+  //     { width: 20, key: 'Type of FD' },
+  //     { width: 25, key: 'Current value' },
+  //     { width: 25, key: 'Rate' },
+  //     { width: 18, key: 'Amount invested' },
+  //     { width: 18, key: 'Maturity date' },
+  //     { width: 18, key: 'Maturity value' },
+  //     { width: 18, key: 'FD number' },
+  //     { width: 15, key: 'Description' },
+  //     { width: 10, key: 'Status' },];
+  //     header = ['Owner', 'Type of FD', 'Current value', 'Rate', 'Amount invested',
+  //       'Maturity date', 'FD number', 'Description', 'Status'];
+  //     this.dataSource.filteredData.forEach(element => {
+  //       data = [element.ownerName, MathUtilService.formatAndRoundOffNumber(element.fdType),
+  //       MathUtilService.formatAndRoundOffNumber(element.currentValue),
+  //       MathUtilService.formatAndRoundOffNumber(element.interestRate),
+  //       new Date(element.maturityDate), MathUtilService.formatAndRoundOffNumber(element.maturityValue),
+  //       element.fdNumber, element.description, element.status];
+  //       this.excelData.push(Object.assign(data));
+  //     });
+  //     footerData = ['Total', '',
+  //       MathUtilService.formatAndRoundOffNumber(this.sumCurrentValue), '',
+  //       MathUtilService.formatAndRoundOffNumber(this.sumAmountInvested), '',
+  //       MathUtilService.formatAndRoundOffNumber(this.sumMaturityValue), '', '', '',];
+  //     this.footer.push(Object.assign(footerData));
+  //   } else if (value == 'Fixed Reccuring') {
+  //     headerData = [
+  //       { width: 20, key: 'Owner' },
+  //       { width: 20, key: 'Current value' },
+  //       { width: 25, key: 'Rate' },
+  //       { width: 25, key: 'Monthly contribution' },
+  //       { width: 18, key: 'Maturity date' },
+  //       { width: 18, key: 'RD number' },
+  //       { width: 15, key: 'Description' },
+  //       { width: 10, key: 'Status' },
+  //     ];
+  //     header = ['Owner', 'Current value', 'Rate', 'Monthly contribution',
+  //       'Maturity date', 'RD number', 'Description', 'Status'];
+  //     this.dataSource.filteredData.forEach(element => {
+  //       data = [element.ownerName, MathUtilService.formatAndRoundOffNumber(element.currentValue),
+  //       (element.interestRate), MathUtilService.formatAndRoundOffNumber(element.monthlyContribution),
+  //       new Date(element.maturityDate), (element.rdNumber), element.description, element.status];
+  //       this.excelData.push(Object.assign(data));
+  //     });
+  //     footerData = ['Total',
+  //       MathUtilService.formatAndRoundOffNumber(this.totalCurrentValue), '', '',
+  //       MathUtilService.formatAndRoundOffNumber(this.totalMarketValue), '', '', ''];
+  //     this.footer.push(Object.assign(footerData));
+  //   } else {
+  //     headerData = [{ width: 20, key: 'Owner' },
+  //     { width: 20, key: 'Current value' },
+  //     { width: 25, key: 'Coupon amount' },
+  //     { width: 18, key: 'Amount invested' },
+  //     { width: 18, key: 'Commencement date' },
+  //     { width: 18, key: 'Rate' },
+  //     { width: 18, key: 'Maturity value' },
+  //     { width: 18, key: 'Tenure' },
+  //     { width: 18, key: 'Type' },
+  //     { width: 15, key: 'Description' },
+  //     { width: 10, key: 'Status' },];
+  //     header = ['Owner', 'Current value', 'Coupon amount', 'Amount invested', 'Commencement date',
+  //       'Rate', 'Maturity value', 'Tenure', 'Type', 'Description', 'Status'];
+  //     this.dataSource.filteredData.forEach(element => {
+  //       data = [element.ownerName, MathUtilService.formatAndRoundOffNumber(element.currentValue),
+  //       MathUtilService.formatAndRoundOffNumber(element.couponAmount), (element.amountInvested),
+  //       new Date(element.commencementDate),
+  //       (element.rate), (element.maturityValue), (element.tenure), ((element.type == 1) ? 'Tax free' : 'Non tax free'), element.description, element.status];
+  //       this.excelData.push(Object.assign(data));
+  //     });
+  //     footerData = ['Total', MathUtilService.formatAndRoundOffNumber(this.sumCurrentValueB),
+  //       MathUtilService.formatAndRoundOffNumber(this.sumCouponAmount),
+  //       MathUtilService.formatAndRoundOffNumber(this.sumAmountInvestedB), '', '', '', '', '', '', ''];
+  //     this.footer.push(Object.assign(footerData));
+
+  //   }
+  //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value);
+  // }
 
   filterFixedIncome(key: string, value: any) {
     let dataFiltered;
