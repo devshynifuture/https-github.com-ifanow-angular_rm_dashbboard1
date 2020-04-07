@@ -9,7 +9,12 @@
 @import url('https://fonts.adobe.com/fonts/proxima-nova');
 $smallfont:10px;
 $lineheight:20px;
-
+.lh-15{
+line-height: 15px !important;
+}
+.lh-17{
+  line-height: 17px !important;
+}
 .l-18 {
   line-height: 18px !important;
 }
