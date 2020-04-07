@@ -1,92 +1,93 @@
-<div class="row">
-  <div class="col-md-12">
-    <h3 class="m-0 pt-36">Folio Details</h3>
-  </div>
-  <div class="col-md-12 text-right">
-    <button mat-stroked-button class="btn-primary">Export folio</button>
-  </div>
+<div class="row pt-36">
+    <div class="col-md-6">
+        <h3 class="m-0  ">Folio Details</h3>
+    </div>
+    <div class="col-md-6 text-right">
+        <button mat-stroked-button class="btn-primary">Export folio</button>
+    </div>
 </div>
+
 <div class="row pt-24 icons-set">
-  <div class="col-md-3">
-    <div class="form-group b-a mb-0">
-      <mat-form-field floatLabel="never" appearance="standard">
-        <input type="text" aria-label="State" formControlName="searchGroupHead"
-            class="form-control" #groupHeadRef matInput (keyup)="getList($event.target.value,'groupyHead')"
-            [matAutocomplete]="auto1" placeholder="Search by group head">
-        <mat-autocomplete #auto1="matAutocomplete">
-            <mat-option 
-                *ngFor="let data of dataList" [value]="data.name">
-                {{data.name}}
-            </mat-option>
-        </mat-autocomplete>
-        <mat-icon matSuffix (click)="selectedData(groupHeadRef.value,'groupyHead')">search</mat-icon>
-    </mat-form-field>
+    <div class="col-md-3">
+        <div class="form-group folioInputBox">
+            <mat-form-field class="relativePos" floatLabel="never" appearance="standard">
+                <input type="text" aria-label="State" formControlName="searchGroupHead" class="form-control pr-32" #groupHeadRef matInput (keyup)="getList($event.target.value,'groupyHead')" [matAutocomplete]="auto1" placeholder="Search by group head">
+                <mat-autocomplete #auto1="matAutocomplete">
+                    <mat-option *ngFor="let data of dataList" [value]="data.name">
+                        {{data.name}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-icon class="positionIcon" matSuffix (click)="selectedData(groupHeadRef.value,'groupyHead')">search
+                </mat-icon>
+            </mat-form-field>
+        </div>
     </div>
-  </div>
-  <div class="col-md-3">
-    <div class="form-group b-a mb-0">
-      <mat-form-field floatLabel="never" appearance="standard">
-        <input type="text" aria-label="State" formControlName="searchInvestorName"
-            class="form-control" #investorRef matInput (keyup)="getList($event.target.value,'investor')"
-            [matAutocomplete]="auto2" placeholder="Search by investor Name">
-        <mat-autocomplete #auto2="matAutocomplete">
-            <mat-option
-                *ngFor="let data of folioList" [value]="data.name">
-                {{data.name}}
-            </mat-option>
-        </mat-autocomplete>
-        <mat-icon matSuffix (click)="selectedData(investorRef.value,'investor')">search</mat-icon>
-    </mat-form-field>
+    <div class="col-md-3">
+        <div class="form-group folioInputBox ">
+            <mat-form-field class="relativePos" floatLabel="never" appearance="standard">
+                <input type="text" aria-label="State" formControlName="searchInvestorName" class="form-control pr-32" #investorRef matInput (keyup)="getList($event.target.value,'investor')" [matAutocomplete]="auto2" placeholder="Search by investor Name">
+                <mat-autocomplete #auto2="matAutocomplete">
+                    <mat-option *ngFor="let data of folioList" [value]="data.name">
+                        {{data.name}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-icon class="positionIcon" matSuffix (click)="selectedData(investorRef.value,'investor')">search</mat-icon>
+            </mat-form-field>
+        </div>
     </div>
-  </div>
-  <div class="col-md-3">
-    <div class="form-group b-a mb-0">
-      <mat-form-field floatLabel="never" appearance="standard">
-        <input matInput #panRef placeholder="Enter PAN">
-        <mat-icon matSuffix (click)="getData(panRef.value,'pan')">check</mat-icon>
-      </mat-form-field>
+    <div class="col-md-3">
+        <div class="form-group folioInputBox ">
+            <mat-form-field class="relativePos" floatLabel="never" appearance="standard">
+                <input class="form-control pr-32" matInput #panRef placeholder="Enter PAN">
+                <mat-icon class="positionIcon" matSuffix (click)="getData(panRef.value,'pan')">check</mat-icon>
+            </mat-form-field>
+        </div>
     </div>
-  </div>
-  <div class="col-md-3">
-    <div class="form-group b-a mb-0">
-      <mat-form-field floatLabel="never" appearance="standard">
-        <input matInput #folioRef placeholder="Enter folio number">
-        <mat-icon matSuffix (click)="getData(folioRef.value,'folio')">check</mat-icon>
-      </mat-form-field>
+    <div class="col-md-3">
+        <div class="form-group folioInputBox ">
+            <mat-form-field class="relativePos" floatLabel="never" appearance="standard">
+                <input class="form-control pr-32" matInput #folioRef placeholder="Enter folio number">
+                <mat-icon class="positionIcon" matSuffix (click)="getData(folioRef.value,'folio')">check</mat-icon>
+            </mat-form-field>
+        </div>
     </div>
-  </div>
-  <div class="col-md-12 folioDetails">
-    <table mat-table [dataSource]="dataSource"  id="table-low" *ngIf="dataSource"  class="skeletonAnimation mt-28" appSkeletonLoading [appSkeletonLoading]="isLoading">
-      <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> Folio Number	</th>
-        <td mat-cell *matCellDef="let element">
-          <div class="bar">{{isLoading ? '':((element.folioNumber)?element.folioNumber:'-')}} </div>
-         </td>
-      </ng-container>
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Scheme Name</th>
-        <td mat-cell *matCellDef="let element">
-          <div class="bar">  {{isLoading ? '':((element.schemeName)?element.schemeName:'-')}} </div> </td>
-      </ng-container>
-      <!-- Weight Column -->
-      <ng-container matColumnDef="weight">
-        <th mat-header-cell *matHeaderCellDef> Investor Name</th>
-        <td mat-cell *matCellDef="let element"> 
-          <div class="bar">  {{isLoading ? '':((element.investorName)?element.investorName:element.name)}}  </div> 
-        </td>
-      </ng-container>
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="symbol">
-        <th mat-header-cell *matHeaderCellDef> Broker Code </th>
-        <td mat-cell *matCellDef="let element"> 
-          <div class="bar">  {{isLoading ? '':((element.brokerCode)?element.brokerCode:'-')}}  </div> 
-         </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-    <div *ngIf="!dataSource || dataSource.filteredData.length==0" >
-      <h4 class="text-center pt-12">No Data Found</h4>
+</div>
+
+<div class="row pt-24 icons-set">
+    <div class="col-md-12 overflow-hidden folioDetails">
+        <table mat-table [dataSource]="dataSource" id="table-low" *ngIf="dataSource" class="skeletonAnimation mt-28" appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef> Folio Number </th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="bar">{{isLoading ? '':((element.folioNumber)?element.folioNumber:'-')}} </div>
+                </td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Scheme Name</th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="bar"> {{isLoading ? '':((element.schemeName)?element.schemeName:'-')}} </div>
+                </td>
+            </ng-container>
+            <!-- Weight Column -->
+            <ng-container matColumnDef="weight">
+                <th mat-header-cell *matHeaderCellDef> Investor Name</th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="bar"> {{isLoading ? '':((element.investorName)?element.investorName:element.name)}} </div>
+                </td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="symbol">
+                <th mat-header-cell *matHeaderCellDef> Broker Code </th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="bar"> {{isLoading ? '':((element.brokerCode)?element.brokerCode:'-')}} </div>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div *ngIf="!dataSource || dataSource.filteredData.length==0">
+            <h4 class="text-center pt-12">No Data Found</h4>
+        </div>
     </div>
 </div>

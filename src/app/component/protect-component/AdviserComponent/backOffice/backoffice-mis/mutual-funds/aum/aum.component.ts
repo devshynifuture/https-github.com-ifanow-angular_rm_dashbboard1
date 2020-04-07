@@ -61,7 +61,7 @@ export class AumComponent implements OnInit {
         const obj = {
           number: 'All'
         }
-        this.arnRiaList.push(obj);
+        this.arnRiaList.unshift(obj);
     },
     )
   }

@@ -4,6 +4,8 @@ import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { EventService } from 'src/app/Data-service/event.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { ValidatorType } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-family-member',
@@ -20,7 +22,6 @@ export class AddFamilyMemberComponent implements OnInit {
   createFamily: any;
   familyMemberList = {
     'firstRow': [
-      { name: 'You', imgUrl: '/assets/images/svg/man-profile.svg', selected: true, relationshipTypeId: 1 },
       { name: 'Wife', imgUrl: '/assets/images/svg/wife-profile.svg', selected: false, relationshipTypeId: 2 }
     ],
     'secondRow': [
@@ -33,7 +34,7 @@ export class AddFamilyMemberComponent implements OnInit {
       { name: 'Others', imgUrl: '/assets/images/svg/man-profile.svg', selected: false, count: 0, relationshipTypeId: 7 }
     ]
   }
-  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService, private peopleService: PeopleService) { }
+  constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService, private peopleService: PeopleService) { }
 
   ngOnInit() {
     this.createFamily = this.fb.group({
@@ -81,9 +82,9 @@ export class AddFamilyMemberComponent implements OnInit {
           "dematList": null,
           "pan": null,
           "familyMemberType": 0,
-          "clientId": 2978,
+          "clientId": AuthService.getClientData().clientId,
           "genderId": 0,
-          "dateOfBirth": element.get('date').value._d,
+          "dateOfBirth": this.datePipe.transform(element.get('date').value._d, 'dd/MM/yyyy'),
           "bankDetailList": null,
           "relationshipId": element.get('relationTypeId').value,
           "mobileList": [
@@ -129,7 +130,6 @@ export class AddFamilyMemberComponent implements OnInit {
         },
         err => this.eventService.openSnackBar(err, "Dismiss")
       )
-      this.close();
     }
   }
   selectFamilyMembers(selectedFamilyMember) {

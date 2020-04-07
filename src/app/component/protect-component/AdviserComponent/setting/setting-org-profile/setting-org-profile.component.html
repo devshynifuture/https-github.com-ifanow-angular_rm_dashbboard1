@@ -21,14 +21,12 @@
                     <div class="col-md-9 pl-0">
                         <h2 class="m-0">{{userList.fullName}}</h2>
                     </div>
-                    <div class="col-md-3 p-0 text-right">
+                    <div class="col-md-3 p-0 text-right autoHeight">
                         <button mat-stroked-button class="text-primary">ADMIN</button>
                         <mat-icon class="text-custom" [matMenuTriggerFor]="menu" class="c-p v-middle">more_vert
                         </mat-icon>
                         <mat-menu #menu="matMenu">
-                            <!-- ng build prod issue expected 2 args given empty string -->
                             <button mat-menu-item (click)="OpenpersonalProfile(userList, '')">Edit</button>
-                            <!-- <button mat-menu-item>Delete</button> -->
                         </mat-menu>
                     </div>
                 </div>
@@ -93,7 +91,6 @@
                         </button>
                         <mat-menu #menu="matMenu">
                             <button mat-menu-item (click)="OpenOrgProfile(orgDetails,'')">Edit</button>
-                            <button mat-menu-item>Delete</button>
                         </mat-menu>
                     </div>
                 </div>
@@ -110,7 +107,7 @@
                         <div class="relClass">
                             <p class="f-12 m-0 text-custom pt-28"> MOBILE</p>
                             <div class="bar" [ngClass]="{'height23': isLoading}">
-                                <p class="m-0">{{orgDetails.mobileNo}}</p>
+                                <p class="m-0">{{orgDetails.mobileNumber}}</p>
                             </div>
                         </div>
                         <div class="relClass">
@@ -126,13 +123,33 @@
                             </div>
                         </div>
                         <div class="row pt-36">
+                            <div class="col-md-6 pr-0">
+                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                                    <p class="m-0 f-12 text-custom">PIN</p>
+                                    <p class="m-0">{{orgDetails.zipCode}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 pl-0">
+                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                                    <p class="m-0 f-12 text-custom">CITY</p>
+                                    <p class="m-0">{{orgDetails.city}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 pl-0">
+                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                                    <p class="m-0 f-12 text-custom">STATE</p>
+                                    <p class="m-0">{{orgDetails.state}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-36">
                             <div class="col-md-6 pl-0">
                                 <div class="bar" [ngClass]="{'height23': isLoading}">
                                     <p class="m-0 f-12 text-custom">GST TREATMENT</p>
-                                    <p class="m-0">{{orgDetails.gstTreatmentId}}</p>
+                                    <p class="m-0">{{getGSTTreatmentType(orgDetails.gstTreatmentId)}}</p>
                                 </div>
                             </div>
-                            <div class="col-md-6 pr-0">
+                            <div class="col-md-6 pr-0" *ngIf="orgDetails.gstTreatmentId == 4">
                                 <div class="bar" [ngClass]="{'height23': isLoading}">
                                     <p class="m-0 f-12 text-custom">GST</p>
                                     <p class="m-0">{{orgDetails.gstin}}</p>

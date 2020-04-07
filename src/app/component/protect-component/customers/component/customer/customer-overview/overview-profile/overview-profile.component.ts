@@ -36,6 +36,7 @@ export class OverviewProfileComponent implements OnInit {
 
   ngOnInit() {
     this.clientOverviewData = AuthService.getClientData();
+    this.calculateAge(this.clientOverviewData.dateOfBirth)
     // console.log(sessionStorage.getItem('clientData'));
     // this.clientOverviewData = JSON.parse(sessionStorage.getItem('clientData'));
     console.log(this.clientOverviewData);
@@ -47,7 +48,7 @@ export class OverviewProfileComponent implements OnInit {
 
   getFamilyMembersList() {
     const obj = {
-      clientId: 2978,
+      clientId: this.clientOverviewData.clientId,
       id: 0
     };
     this.cusService.getFamilyMembers(obj).subscribe(
@@ -88,7 +89,16 @@ export class OverviewProfileComponent implements OnInit {
       }, err => this.eventService.openSnackBar(err, 'Dismiss')
     );
   }
-
+  calculateAge(data) {
+    const today = new Date();
+    const birthDate = new Date(data);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    this.clientOverviewData['age'] = age;
+  }
   getBankList() {
     const obj = {
       userId: this.clientOverviewData.clientId,
@@ -111,6 +121,7 @@ export class OverviewProfileComponent implements OnInit {
   }
 
   next(flag, index) {
+    // console.log('next index: ', index);
     if (flag == 'bank') {
       (index < this.bankList.length - 1) ? this.selectedBankData = this.bankList[index + 1] : '';
     } else {

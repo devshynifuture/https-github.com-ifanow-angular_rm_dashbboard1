@@ -1,5 +1,5 @@
 <div class="row pt-150">
-    <div class="col-md-4">
+    <div class="col-md-4 d-flex align-items-center">
         <h3 class="m-0">Leads</h3>
     </div>
     <div *ngIf="leadDataSource.data.length>0" class="col-md-8">
@@ -17,13 +17,12 @@
         </div>
     </div>
     <div class="col-md-12 people-leads">
-        <table mat-table *ngIf="leadDataSource.data.length>0" [dataSource]="leadDataSource" appSkeletonLoading
-            [appSkeletonLoading]="isLoading" class="skeletonAnimation" class="mt-8" id="table-low">
+        <table mat-table *ngIf="leadDataSource.data.length>0" [dataSource]="leadDataSource" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation" class="mt-8" id="table-low">
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef class="br w-20"> Lead name </th>
                 <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">{{element.position}}</div>
+                    <div class="bar">{{element.displayName}}</div>
                 </td>
             </ng-container>
 
@@ -31,7 +30,7 @@
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef class="br"> Registered mobile </th>
                 <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.name}}</div>
+                    <div class="bar"> {{element.mobileNo}}</div>
                 </td>
             </ng-container>
 
@@ -39,7 +38,7 @@
             <ng-container matColumnDef="weight">
                 <th mat-header-cell *matHeaderCellDef class="br"> Registered email </th>
                 <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.weight}}</div>
+                    <div class="bar"> {{element.email}}</div>
                 </td>
             </ng-container>
 
@@ -47,7 +46,7 @@
             <ng-container matColumnDef="lsource">
                 <th mat-header-cell *matHeaderCellDef class="br"> Lead source </th>
                 <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.lsource}}</div>
+                    <div class="bar"> {{element.leadSource}}</div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="status">
@@ -65,20 +64,19 @@
             <ng-container matColumnDef="lead">
                 <th mat-header-cell *matHeaderCellDef class="br"> Lead owner </th>
                 <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.lead}}</div>
+                    <div class="bar"> {{element.ownerName}}</div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="icon">
                 <th mat-header-cell *matHeaderCellDef class="br"> </th>
-                <td mat-cell *matCellDef="let element" class="br">
+                <td mat-cell *matCellDef="let element" class="br text-center">
                     <img src="/assets/images/svg/action.svg">
                 </td>
             </ng-container>
             <ng-container matColumnDef="icons">
                 <th mat-header-cell *matHeaderCellDef> </th>
-                <td mat-cell *matCellDef="let element">
-                    <img class="c-p" *ngIf="isLoading==false" [matMenuTriggerFor]="menu"
-                        src="/assets/images/svg/dot-menu.svg">
+                <td mat-cell class="text-center" *matCellDef="let element">
+                    <img class="c-p" *ngIf="isLoading==false" [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg">
                     <mat-menu #menu="matMenu">
                         <button (click)="open(element,'lead')" mat-menu-item>
                             <span>Edit</span>

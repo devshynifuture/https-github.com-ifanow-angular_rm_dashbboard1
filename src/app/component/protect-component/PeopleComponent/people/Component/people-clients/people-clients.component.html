@@ -11,17 +11,17 @@
             <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                     class="material-icons">filter_list</i>FILTERS</button>
             <button (click)="addClient(null)" class="btn-primary pl-8" mat-stroked-button><i
-              class="material-icons pr-8 v-middle">
-              add
-            </i>ADD NEW
+                    class="material-icons pr-8 v-middle">
+                    add
+                </i>ADD NEW
             </button>
         </div>
     </div>
     <div class="col-md-12 people-clients">
-        <table *ngIf="clientDatasource.data.length>0" mat-table [dataSource]="clientDatasource" class="mt-8"
-            id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
+        <table *ngIf="clientDatasource.data.length>0" mat-table [dataSource]="clientDatasource" id="table-low"
+            appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation mt-8">
             <ng-container matColumnDef="position">
-                <th mat-header-cell *matHeaderCellDef class="br w-20"> Group head name </th>
+                <th mat-header-cell *matHeaderCellDef class="br w-20"> Group head name1 </th>
                 <td (click)="selectClient(element)" mat-cell *matCellDef="let element" class="br">
                     <div class="bar"> {{element.name}}</div>
                 </td>
@@ -53,13 +53,13 @@
             <ng-container matColumnDef="member">
                 <th mat-header-cell *matHeaderCellDef class="br"> Members </th>
                 <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
-                  <div class="bar"> {{element.count}}</div>
+                    <div class="bar"> {{element.count}}</div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="owner">
                 <th mat-header-cell *matHeaderCellDef class="br"> Client owner </th>
                 <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.owner}}</div>
+                    <div class="bar"> {{element.ownerName}}</div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="login">
@@ -86,9 +86,9 @@
                     <img *ngIf="isLoading==false" class="c-p" [matMenuTriggerFor]="menu"
                         src="/assets/images/svg/dot-menu.svg">
                     <mat-menu #menu="matMenu">
-                      <button (click)="addClient(element)" mat-menu-item>
-                        <span>Edit</span>
-                      </button>
+                        <button (click)="addClient(element)" mat-menu-item>
+                            <span>Edit</span>
+                        </button>
                         <button (click)="deleteModal('CLIENT',element)" mat-menu-item>
                             <span>Delete</span>
                         </button>
@@ -101,9 +101,9 @@
         <div *ngIf="clientDatasource.data.length==0" class="d-flex flex-column align-items-center">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
             <h4 class="pt-12">No Clients found</h4>
-          <button (click)="addClient(null)" class="btn-primary addon v-middle  " mat-stroked-button>
-            ADD NEW
-          </button>
+            <button (click)="addClient(null)" class="btn-primary addon v-middle  " mat-stroked-button>
+                ADD NEW
+            </button>
         </div>
     </div>
 </div>

@@ -8,6 +8,7 @@ import { HistoryViewComponent } from './overview-profile/history-view/history-vi
 import { ViewActivityComponent } from './overview-documents/view-activity/view-activity.component';
 import { DocumentNewFolderComponent } from '../../common-component/document-new-folder/document-new-folder.component';
 import { PeopleEntryModule } from 'src/app/component/protect-component/PeopleComponent/people/people-entry-module';
+import { BottomSheetComponent } from '../../common-component/bottom-sheet/bottom-sheet.component';
 
 
 export const componentList = [AddFamilyMemberComponent, HistoryViewComponent, ViewActivityComponent, DocumentNewFolderComponent];
