@@ -13,6 +13,7 @@ import {PeopleService} from '../../protect-component/PeopleComponent/people.serv
 @Component({
   selector: 'app-login',
   templateUrl: './login-new.component.html',
+ // templateUrl: './login-mobile.component.html',
   styleUrls: ['./login.component.scss'],
   animations: [
     trigger('btnProgress', [
