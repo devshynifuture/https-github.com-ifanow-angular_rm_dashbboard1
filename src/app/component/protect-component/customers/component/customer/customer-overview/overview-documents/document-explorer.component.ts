@@ -175,16 +175,16 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   // }
   copyFilesRes() {
-    this.eventService.openSnackBar('copied file successfully', 'Dismiss');
+    this.eventService.openSnackBar('File copied successfully', 'Dismiss');
     this.reset()
   }
   moveFilesRes() {
-    this.eventService.openSnackBar('moved file successfully', 'Dismiss');
+    this.eventService.openSnackBar('File moved successfully', 'Dismiss');
     this.getAllFileList('Documents')
     this.reset()
   }
   moveFolderRes() {
-    this.eventService.openSnackBar('moved folder successfully', 'Dismiss');
+    this.eventService.openSnackBar('Folder moved successfully', 'Dismiss');
     this.getAllFileList('Documents')
     this.reset()
   }
