@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-6 d-flex align-items-center p-0">
+    <div class="col-md-6 d-flex align-items-center">
         <h4 class="m-0 text-black">Team members</h4>
     </div>
     <div class="col-md-6 text-right">
@@ -9,25 +9,31 @@
     </div>
 </div>
 <div class="row pt-20">
-    <div class="col-md-3 pl-0" *ngFor="let user of userList">
+    <div class="col-md-3 pr-0" *ngFor="let user of userList">
         <mat-card class="b-a p-9 br-4">
             <div class="row">
                 <div class="col-md-4 p-0">
                     <img [src]="user.profilePicUrl" class="w-100 h-80">
                 </div>
                 <div class="col-md-8 pr-0">
-                    <div>
-                        <i class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu">
-                            more_vert
-                        </i>
-                        <mat-menu #menu="matMenu">
-                            <!-- <button mat-menu-item (click)="addEditTeamMember(user, false)">Edit</button> -->
-                            <button mat-menu-item (click)="suspendUser(user)">Suspend</button>
-                            <button mat-menu-item (click)="deleteUser(user)">Delete</button>
-                        </mat-menu>
+                    <div class="row">
+                        <div class="col-md-10 p-0">
+                            <h5 class="m-0 text-black">{{user.fullName}}</h5>
+                            <p class="text-custom roboto m-0">{{user.role.roleName}}</p>
+                        </div>
+                        <div class="col-md-1 p-0">
+                            <i class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu">
+                                more_vert
+                            </i>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="addEditTeamMember(user, false)">Edit</button>
+                                <button mat-menu-item (click)="suspendUser(user)">Suspend</button>
+                                <button mat-menu-item (click)="deleteUser(user)">Delete</button>
+                            </mat-menu>
+                        </div>
+
                     </div>
-                    <h5 class="m-0 text-black">{{user.name}}</h5>
-                    <p class="text-custom roboto m-0">{{user.role.roleName}}</p>
+
                     <h3 class="m-0 f-500 text-primary pt-16">{{user.clientCount}} client(s)</h3>
                 </div>
             </div>

@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { ValidatorType } from 'src/app/services/util.service';
-import { PostalService } from 'src/app/services/postal.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {ValidatorType} from 'src/app/services/util.service';
+import {PostalService} from 'src/app/services/postal.service';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
 
 @Component({
   selector: 'app-client-address',
@@ -33,7 +33,13 @@ export class ClientAddressComponent implements OnInit {
     this.userData = data;
     (this.userData.addressData) ? this.addressList = this.userData.addressData : ''
     this.proofType = (this.userData.addressData) ? String(this.userData.addressData.addressType) : '1';
-    (this.userData.addressData == undefined) ? this.getAddressList(data) : this.createAddressForm(this.userData.addressData);
+    if (this.userData.addressData == undefined) {
+      this.createAddressForm(null);
+      this.getAddressList(data);
+    }
+    else {
+      this.createAddressForm(this.userData.addressData);
+    }
   }
 
   ngOnInit() {
@@ -112,7 +118,7 @@ export class ClientAddressComponent implements OnInit {
         country: this.addressForm.get('country').value,
         userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
         userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
-        addressType: this.addressForm.get('proofType').value,
+        addressType: this.addressForm.get('addressType').value,
         proofType: this.addressForm.get('addProofType').value,
         proofIdNumber: this.addressForm.get('proofIdNum').value,
         userAddressMappingId: (this.userData.addressData) ? this.userData.addressData.userAddressMappingId : (this.addressList) ? this.addressList.userAddressMappingId : null,

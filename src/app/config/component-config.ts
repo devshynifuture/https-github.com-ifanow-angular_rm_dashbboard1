@@ -495,10 +495,6 @@ export const appConfig = {
   BACKOFFICE_SUCCESS_FILE_UPLOAD: 'backoffice/file-upload/success',
 
   ///org setting ////
-  GET_PERSONAL_PROFILE: 'setting/profile/personal/details/get',
-  GET_ORG_PROFILE: 'setting/profile/organisation/details/get',
-  EDIT_PERSONAL_PROFILE: 'setting/profile/personal/profile-photo/update',
-  EDIT_ORG_PROFILE: 'setting/profile/organisation/update',
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',
   GET_PLANS: 'setting/preferences/plan/get',
   PROTFOLIO_UPDATE: 'setting/preferences/portfolio/update',
@@ -578,7 +574,7 @@ export const appConfig = {
   // LOGIN_WITH_PASSWORD: 'user/login/with/password',
 
   //////////////////////////////Login///////////////////////////////////
-  GENERATE_OTP: '/user/generate/otp',
+  GENERATE_OTP: 'user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
   REGISTER: 'user/advisor/add',
   SEARCH_USERNAME: 'user/search/username',
@@ -593,6 +589,10 @@ export const appConfig = {
   ///////////////////////////////Postal////////////////////////////////
 
   ////////////////////////////// settings////////////////////////////////////////////
+  GET_PERSONAL_PROFILE: 'setting/profile/personal/details/get',
+  GET_ORG_PROFILE: 'setting/profile/organisation/details/get',
+  EDIT_PERSONAL_PROFILE: 'setting/profile/personal/update',
+  EDIT_ORG_PROFILE: 'setting/profile/organisation/update',
   GET_PERSONAL_PROFILE_DETAILS: 'setting/profile/personal/details/get',
   UPLOAD_PERSONAL_PROFILE_PHOTO: 'setting/profile/personal/profile-photo/update',
 
@@ -626,6 +626,7 @@ export const appConfig = {
 
   GET_ALL_TEAM_MEMEBERS: 'setting/users/team-members/get',
   ADD_TEAM_MEMBER: 'setting/users/team-member/add',
+  EDIT_TEAM_MEMBER: 'setting/users/team-member/edit',
   DELETE_TEAM_MEMBER: 'setting/users/team-member/delete',
   SUSPEND_TEAM_MEMBER: 'setting/users/team-member/suspend',
   HAND_OVER_TEAM_MEMBER: 'setting/users/team-member/hand-over/get',

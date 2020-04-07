@@ -28,10 +28,10 @@ export class SettingsService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ORG_PROFILE, httpParams);
   }
   editPersonalProfile(data){
-    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_ORG_PROFILE, data);
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_PERSONAL_PROFILE, data);
   }
   editOrgProfile(data){
-    return this.http.post(apiConfig.MAIN_URL + appConfig.EDIT_ORG_PROFILE, data);
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_ORG_PROFILE, data);
   }
   editOrgProfileLogo(data){
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_ORG_PROFILE_LOGO, data)
@@ -53,9 +53,9 @@ export class SettingsService {
   addTeamMember(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_TEAM_MEMBER, data);
   }
-  // editTeamMember(data) {
-  //   return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_USER_ROLE, data);
-  // }
+  editTeamMember(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_TEAM_MEMBER, data);
+  }
   deleteTeamMember(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_TEAM_MEMBER, data);
   }

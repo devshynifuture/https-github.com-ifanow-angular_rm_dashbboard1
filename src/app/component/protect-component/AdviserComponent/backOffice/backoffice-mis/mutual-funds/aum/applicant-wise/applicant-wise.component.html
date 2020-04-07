@@ -35,16 +35,16 @@
                             <tbody *ngFor="let name of applicantName; index as i">
                                 <tr>
                                     <td>
-                                        <div class="bar"> {{i+1}} </div>
+                                        <div class="bar"> {{(isLoading)?'':i+1}} </div>
                                     </td>
                                     <td>
-                                        <div class="bar"> {{(name.name)?name.name:'-'}} </div>
+                                        <div class="bar"> {{(isLoading)?'':((name.name)?name.name:'-')}} </div>
                                     </td>
                                     <td class="">
-                                        <div class="bar"> {{name.totalAum}} </div>
+                                        <div class="bar"><span appFormatNumber> {{name.totalAum}} </span></div>
                                     </td>
                                     <td class="">
-                                        <div class="bar"> {{name.weightInPercentage}} </div>
+                                        <div class="bar"> {{name.weightInPercentage}}{{(isLoading?'':'%') }}</div>
                                     </td>
                                     <td class="text-center" (click)="category(name)">
                                         <div class="bar text-center">
@@ -59,7 +59,7 @@
 
                                 <tr style="border: transparent !important">
                                     <td class="innerTd one" colspan="5">
-                                        <table *ngIf="!name.show" class=" mb-8 mt-8 " id="table-low">
+                                        <table *ngIf="!name.show && !isLoading" class=" mb-8 mt-8 " id="table-low">
                                             <thead class="bg-light text-dark">
                                                 <tr>
                                                     <th class="w-10">Sr No.</th>
@@ -73,7 +73,7 @@
                                                 <tr>
                                                     <td>{{i+1}}</td>
                                                     <td>{{category.name}} </td>
-                                                    <td>{{category.totalAum}}</td>
+                                                    <td><span appFormatNumber>{{category.totalAum}}</span></td>
                                                     <td>{{category.weightInPercentage}}%</td>
                                                     <td class="text-center" (click)="subCategory(category)">
                                                         <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="category.showCategory">add</i>
@@ -96,7 +96,7 @@
                                                                     <td>{{i+1}}</td>
                                                                     <td>{{sub.name}}
                                                                     </td>
-                                                                    <td class="">{{sub.totalAum}} </td>
+                                                                    <td class=""><span appFormatNumber>{{sub.totalAum}}</span></td>
                                                                     <td class="">{{sub.weightInPercentage}}</td>
                                                                     <td class="text-center" (click)="getScheme(sub)"><i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="sub.showSubCategory">add</i>
                                                                         <i class="material-icons   b-a f-14 mt-4 c-p" *ngIf="!sub.showSubCategory"> remove
@@ -120,7 +120,8 @@
                                                                                     <td>{{i+1}}</td>
                                                                                     <td>{{client.schemeName}}</td>
                                                                                     <td>{{client.folioNumber}}</td>
-                                                                                    <td>{{client.totalAum}}</td>
+                                                                                    <td><span appFormatNumber>{{client.totalAum}}</span>
+                                                                                    </td>
                                                                                     <td>{{client.weightInPercentage}}
                                                                                     </td>
                                                                                     <td class="text-center" (click)="getSchemeFolio(client)">
@@ -165,7 +166,7 @@
                                                                                                     </td>
                                                                                                     <td>{{client.folioNumber}}
                                                                                                     </td>
-                                                                                                    <td>{{client.totalAum}}
+                                                                                                    <td><span appFormatNumber>{{client.totalAum}}</span>
                                                                                                     </td>
                                                                                                     <td>{{client.balanceUnit}}
                                                                                                     </td>
@@ -190,24 +191,25 @@
                                     </td>
                                 </tr>
                             </tbody>
-                            <tbody>
+                            <tbody *ngIf="!isLoading">
                                 <tr>
                                     <td class="p-table"><strong>Total</strong></td>
                                     <td class="p-table">&nbsp;</td>
-                                    <td class="p-table"><strong>{{totalCurrentValue}}</strong></td>
+                                    <td class="p-table"><strong><span
+                                                appFormatNumber>{{totalCurrentValue}}</span></strong></td>
                                     <td class="p-table"><strong>{{totalWeight}}%</strong></td>
                                     <td></td>
                                 </tr>
                             </tbody>
                         </table>
-                        <div *ngIf="!applicantName">
-                            <p>No data found</p>
+
+                        <div *ngIf="!applicantName" class="d-flex flex-column align-items-center">
+                            <img class="width300" src="assets/images/svg/noDataFound.svg">
+                            <h4 class="text-center pt-12">No data Found</h4>
                         </div>
 
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
