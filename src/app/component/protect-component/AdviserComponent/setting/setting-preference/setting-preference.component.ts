@@ -9,6 +9,7 @@ import { CommonFroalaComponent } from '../../Subscriptions/subscription/common-s
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
 import { ConfirmDialogComponent } from '../../../common-component/confirm-dialog/confirm-dialog.component';
+import { EmailOnlyComponent } from '../../Subscriptions/subscription/common-subscription-component/email-only/email-only.component';
 
 @Component({
   selector: 'app-setting-preference',
@@ -25,6 +26,7 @@ export class SettingPreferenceComponent implements OnInit {
   portfolio: any;
   mutualFund: any;
   mutualFund2: any;
+  mutualFund3: any;
   factSheet: any;
   planSec1: any;
   planSection: any;
@@ -49,11 +51,13 @@ export class SettingPreferenceComponent implements OnInit {
   showUpdateBrand: boolean = false;
   brandVisible: any;
   constructor(private orgSetting: OrgSettingServiceService,
-    public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, ) { }
-
-  ngOnInit() {
+    public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, ) {
+      
     this.advisorId = AuthService.getAdvisorId()
     this.userId = AuthService.getUserId()
+  }
+
+  ngOnInit() {
     console.log('3456893469 ===', this.userId)
     this.getPortfolio()
     this.getdataForm('')
@@ -108,8 +112,8 @@ export class SettingPreferenceComponent implements OnInit {
         } else {
           element.optionValue = this.domainS.controls.brandVisible.value;
         }
-
       }
+      element.advisorId = this.advisorId;
     });
     this.orgSetting.updateDomainSetting(this.domainSetting).subscribe(
       data => this.updateDomainSettingRes(data),
@@ -156,11 +160,9 @@ export class SettingPreferenceComponent implements OnInit {
     this.isLoading = false
     console.log('getPortfolioReslase == ', data)
     this.portfolio = data
-    this.mutualFund = this.portfolio.filter(element => element.portfolioOptionId == 1)
-    this.mutualFund = this.mutualFund[0]
-    this.mutualFund2 = this.portfolio.filter(element => element.portfolioOptionId == 2)
-    this.mutualFund2 = this.mutualFund2[0]
-    this.factSheet = this.portfolio.filter(element => element.portfolioOptionId == 3)
+    this.mutualFund = this.portfolio.find(element => element.portfolioOptionId == 1)
+    this.mutualFund2 = this.portfolio.find(element => element.portfolioOptionId == 2)
+    this.mutualFund3 = this.portfolio.find(element => element.portfolioOptionId == 3)
   }
 
   getPlan() {
@@ -173,15 +175,26 @@ export class SettingPreferenceComponent implements OnInit {
       err => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
-  test = []
+  
   selectMutualFund(event, value) {
-
     this.portfolio.forEach(element => {
       if (element.portfolioOptionId == value.portfolioOptionId) {
         element.selectedOrDeselected = (event.checked == true) ? 1 : 0;
+        value.selectedOrDeselected = element.selectedOrDeselected;
       }
+      element.advisorId = this.advisorId;
     });
-    console.log(this.portfolio)
+
+    if(value.portfolioOptionId == 2 && !event.checked) {
+      this.mutualFund3.selectedOrDeselected = 0;
+      this.mutualFund3 = JSON.parse(JSON.stringify(this.mutualFund3));
+      this.portfolio.forEach(element => {
+        if (element.portfolioOptionId == this.mutualFund3.portfolioOptionId) {
+          element.selectedOrDeselected = this.mutualFund3.selectedOrDeselected;
+        }
+      });
+    }
+    
     const obj = this.portfolio
     this.orgSetting.updatePortFolio(obj).subscribe(
       data => this.updatePortFolioRes(data),
@@ -193,9 +206,10 @@ export class SettingPreferenceComponent implements OnInit {
   }
   selectPlan(event, value) {
     this.planSection.forEach(element => {
-      if (element.portfolioOptionId == value.planOptionId) {
+      if (element.planOptionId == value.planOptionId) {
         element.selectedOrDeselected = (event.checked == true) ? 1 : 0;
       }
+      element.advisorId = this.advisorId;
     });
     console.log(this.planSection)
     var obj = this.planSection
@@ -222,7 +236,7 @@ export class SettingPreferenceComponent implements OnInit {
       let obj = {
         id: this.element.id,
         emailAddress: this.element.emailAddress,
-        userId: 12249
+        userId: this.userId
       }
       this.orgSetting.addEmailVerfify(obj).subscribe(
         data => this.addEmailVerfifyRes(data),
@@ -245,18 +259,19 @@ export class SettingPreferenceComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         if (value == 'template') {
+          // delete email template is not allowed
+          // this.orgSetting.deletePrefEmailTemplate(data.id).subscribe(
+          //   data => {
+          //     dialogRef.close();
+          //     this.getEmailTemplate();
+          //   },
+          //   error => this.eventService.showErrorMessage(error)
+          // );
+        } else if (value == 'emailVerify') {
           this.orgSetting.deleteEmailVerify(data.id).subscribe(
             data => {
               dialogRef.close();
               this.getEmailVerification();
-            },
-            error => this.eventService.showErrorMessage(error)
-          );
-        } else if (value == 'emailVerify') {
-          this.orgSetting.deletePrefEmailTemplate(data.id).subscribe(
-            data => {
-              dialogRef.close();
-              this.getEmailTemplate();
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -297,8 +312,8 @@ export class SettingPreferenceComponent implements OnInit {
   getEmailVerification() {
     this.isLoading = true
     let obj = {
-      userId: 12249,
-      advisorId: 414
+      userId: this.userId,
+      // advisorId: this.advisorId
     }
     this.orgSetting.getEmailVerification(obj).subscribe(
       data => this.getEmailVerificationRes(data),
@@ -341,19 +356,21 @@ export class SettingPreferenceComponent implements OnInit {
       return;
     }
     let obj = {
-      documentText: data.body,
+      clientData: {documentText: data.body},
       showfromEmail: true,
-      fromEmailId: data.fromEmail,
+      fromEmail: data.fromEmail || '',
+      documentList: [],
       id: data.id,
       subject: data.subject,
-      emailTemplateTypeId: data.emailTemplateTypeId
+      emailTemplateTypeId: data.emailTemplateTypeId,
+      component_type: 'email_template',
     }
     const fragmentData = {
       flag: value,
       data: obj,
       id: 1,
       state: 'open',
-      componentName: CommonFroalaComponent
+      componentName: EmailOnlyComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

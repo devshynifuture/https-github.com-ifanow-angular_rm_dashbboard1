@@ -4,10 +4,10 @@
     </div>
 </div>
 
-<div class="row pb-44 skeletonAnimation" [formGroup]="keyParameter">
+<div class="row pb-44" [formGroup]="keyParameter"  *ngIf="allParameters">
     <div class="col-md-4 pl-0">
         <h5 class="m-0 pb-12">Saving type</h5>
-        <div class="form-control w-80 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="allParameters">
+        <div class="form-control w-80" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <div class="relClass">
                 <div class="bar" [ngClass]="{'height23': isLoading}">
                     <mat-form-field>
@@ -28,8 +28,8 @@
         <p class="text-regular pt-12">In such cases, you can select “Save for individual years”. As each goal year passes by, system calculates requirement for the next applicable goal year. This will show a lower savings required.
         </p>
         <h5 class="m-0 pt-44 pb-12">Savings status</h5>
-        <div class="form-control w-50">
-            <mat-form-field *ngIf="allParameters">
+        <div class="form-control w-50" >
+            <mat-form-field>
                 <mat-select class="form-group b-0" formControlName="savingStatus" (selectionChange)="updateKeyParameter($event,4)">
                     <mat-option value="" disabled>Select savings status</mat-option>
                     <mat-option value="1">Break up</mat-option>
@@ -44,7 +44,7 @@
     </div>
     <div class="col-md-4">
         <h5 class="m-0 pb-12">Retirement age</h5>
-        <div class="form-control w-50" *ngIf="allParameters">
+        <div class="form-control w-50">
             <mat-form-field>
                 <mat-select class="form-group b-0" formControlName="retirementAge">
                     <mat-option value="" disabled>Select retirement age</mat-option>
@@ -58,7 +58,7 @@
         <p class="text-regular pt-12">Additionally, wherever the lifetime period is used (viz. incomes and expenses) the assumptions are picked from here, unless a retirement goal has been added with a different life expectancy.
         </p>
         <h5 class="m-0 pt-44 pb-12">Life expectancy</h5>
-        <div class="form-control w-50" *ngIf="allParameters">
+        <div class="form-control w-50">
             <mat-form-field>
                 <mat-select class="form-group b-0" formControlName="lifeExpectancy">
                     <mat-option value="" disabled>Select life expectancySelect</mat-option>
@@ -74,7 +74,7 @@
     </div>
     <div class="col-md-4">
         <h5 class="m-0 pb-12">Insurance planning - Asset growth rate</h5>
-        <div class="form-control w-50" *ngIf="allParameters">
+        <div class="form-control w-50">
             <mat-form-field>
                 <mat-select class="form-group b-0" formControlName="InsurancePlanGrowthRate">
                     <mat-option value="" disabled>Select asset growth rate</mat-option>

@@ -19,7 +19,8 @@
             <div class="col-md-9">
                 <p *ngIf="this.emailData" class="m-0 text-black">
                     {{(this.emailData) ? this.emailData.fromEmail : 'support@futurewise.co.in'}}</p>
-                    <input class="form-control" *ngIf="showfromEmail == true" [(ngModel)] ="_inputData.fromEmail" type="text" >
+                <input class="form-control" *ngIf="showfromEmail == true" [(ngModel)]="_inputData.fromEmail"
+                    type="text">
             </div>
         </div>
     </div>
@@ -32,11 +33,13 @@
             <div class="col-md-11">
                 <mat-form-field class="heightAuto">
                     <mat-chip-list #chipListEmail>
-                        <mat-chip [removable]="true" *ngFor="let singleEmailId of emailIdList; let i = index" [selectable]="false" (removed)="removeEmailId(i)">
+                        <mat-chip [removable]="true" *ngFor="let singleEmailId of emailIdList; let i = index"
+                            [selectable]="false" (removed)="removeEmailId(i)">
                             {{singleEmailId.emailAddress}}
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
-                        <input [matChipInputFor]="chipListEmail" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event)" [autofocus]="true">
+                        <input [matChipInputFor]="chipListEmail" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                            [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event)" [autofocus]="true">
                     </mat-chip-list>
                 </mat-form-field>
             </div>
