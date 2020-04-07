@@ -121,13 +121,54 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
           this.renameFolders(this.getInnerDoc);
         }
       }
-      if(result.isRefreshRequired){
+      if (result.isRefreshRequired) {
         this.getAllFileList(this.valueTab);
       }
 
     });
 
   }
+  getSharebleLink(element) {
+    this.downlodFiles(element,'getSharebleLink');
+  }
+  // openDocumentPreview() {
+  //   // const obj = {
+  //   //   documentRepositoryId: this._upperData.documentData.documentRepositoryId
+  //   // };
+  //   // this.subService.getQuotationServiceData(obj).subscribe(
+  //   //   data => console.log(data)
+  //   // );
+  //   let d = new Date();
+  //   this.serviceData.forEach(element => {
+  //     this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp('$(service_' + element.id + ')'), 'g'),
+  //       element.serviceName);
+  //     this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp('$(client_name)'), 'g'),
+  //       'Ronak Hindocha');
+  //     this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp('$(service_fee_' + element.id + ')'), 'g'),
+  //       tableHtml);
+  //     this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp('$(advisor_name)'), 'g'), 'Ronak Hindocha')
+  //     this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp('$(date)'), 'g'),
+  //       d.getDate() + "/" + d.getMonth() + 1 + "/" + d.getFullYear())
+  //   });
+  //   let obj =
+  //     {
+  //       data: this.dataTerms.docText,
+  //       cancelButton: () => {
+  //         this.utilservice.htmlToPdf(this.dataTerms.docText, 'document');
+  //         dialogRef.close();
+  //       }
+  //     }
+  //   const dialogRef = this.dialog.open(DocumentPreviewComponent, {
+  //     width: '1800px',
+  //     height: '900px',
+  //     data: obj,
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log('The dialog was closed');
+  //   });
+
+  // }
   copyFilesRes(data) {
     this.eventService.openSnackBar('copy file successfully', 'Dismiss');
     this.reset()
@@ -418,7 +459,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     }
   }
 
-  downlodFiles(element) {
+  downlodFiles(element,value) {
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
@@ -426,13 +467,17 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       fileName: element.fileName
     };
     this.custumService.downloadFile(obj).subscribe(
-      data => this.downloadFileRes(data)
+      data => this.downloadFileRes(data,value)
     );
   }
 
-  downloadFileRes(data) {
+  downloadFileRes(data,value) {
     console.log(data);
-    window.open(data);
+    if(value == 'getSharebleLink'){
+      console.log('getSharebleLink',data)
+    }else{
+      window.open(data);
+    }
   }
 
   deleteModal(flag, data) {
