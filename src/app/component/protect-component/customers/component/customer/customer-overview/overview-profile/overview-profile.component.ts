@@ -1,17 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {AddFamilyMemberComponent} from './add-family-member/add-family-member.component';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {HistoryViewComponent} from './history-view/history-view.component';
-import {AddClientComponent} from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/add-client.component';
-import {CustomerService} from '../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {AuthService} from 'src/app/auth-service/authService';
-import {ClientAddressComponent} from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-address/client-address.component';
-import {ClientDematComponent} from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-demat/client-demat.component';
-import {ClientBankComponent} from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-bank/client-bank.component';
+import { Component, OnInit } from '@angular/core';
+import { AddFamilyMemberComponent } from './add-family-member/add-family-member.component';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { HistoryViewComponent } from './history-view/history-view.component';
+import { AddClientComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/add-client.component';
+import { CustomerService } from '../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ClientAddressComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-address/client-address.component';
+import { ClientDematComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-demat/client-demat.component';
+import { ClientBankComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-bank/client-bank.component';
 
 @Component({
   selector: 'app-overview-profile',
@@ -36,6 +36,7 @@ export class OverviewProfileComponent implements OnInit {
 
   ngOnInit() {
     this.clientOverviewData = AuthService.getClientData();
+    this.calculateAge(this.clientOverviewData.dateOfBirth)
     // console.log(sessionStorage.getItem('clientData'));
     // this.clientOverviewData = JSON.parse(sessionStorage.getItem('clientData'));
     console.log(this.clientOverviewData);
@@ -88,7 +89,16 @@ export class OverviewProfileComponent implements OnInit {
       }, err => this.eventService.openSnackBar(err, 'Dismiss')
     );
   }
-
+  calculateAge(data) {
+    const today = new Date();
+    const birthDate = new Date(data);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    this.clientOverviewData['age'] = age;
+  }
   getBankList() {
     const obj = {
       userId: this.clientOverviewData.clientId,
