@@ -136,8 +136,8 @@ export class ClientBasicDetailsComponent implements OnInit {
       comPan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       comOccupation: [(data.occupationId == 0) ? '1' : String(data.occupationId)],
       username: [{ value: data.userName, disabled: true }],
-      leadOwner: [, [Validators.required]],
-      role: [, [Validators.required]]
+      leadOwner: [],
+      role: []
     });
   }
 
@@ -186,8 +186,24 @@ export class ClientBasicDetailsComponent implements OnInit {
 
   saveNextClient(flag) {
     if (this.fieldFlag == 'client' && this.basicDetailsData.userId == null) {
-      this.basicDetails.get('clientOwner').setValidators([Validators.required]);
-      this.basicDetails.get('clientOwner').updateValueAndValidity();
+      if (this.invTypeCategory == '1') {
+        this.basicDetails.get('clientOwner').setValidators([Validators.required]);
+        this.basicDetails.get('clientOwner').updateValueAndValidity();
+      }
+      else {
+        this.nonIndividualForm.get('leadOwner').setValidators([Validators.required]);
+        this.nonIndividualForm.get('leadOwner').updateValueAndValidity();
+      }
+    }
+    else {
+      this.basicDetails.get('leadOwner').setValidators(null);
+    }
+    if (this.fieldFlag == 'lead' && this.basicDetailsData.userId == null) {
+      this.basicDetails.get('leadOwner').setValidators([Validators.required]);
+      this.basicDetails.get('leadOwner').updateValueAndValidity();
+    }
+    else {
+      this.basicDetails.get('leadOwner').setValidators(null);
     }
     if (this.basicDetails.invalid && this.invTypeCategory == '1') {
       this.basicDetails.markAllAsTouched();
