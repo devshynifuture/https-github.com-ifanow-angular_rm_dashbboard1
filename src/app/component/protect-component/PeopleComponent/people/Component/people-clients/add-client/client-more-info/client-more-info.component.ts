@@ -139,7 +139,6 @@ export class ClientMoreInfoComponent implements OnInit {
       userType: 2,
       remarks: (this.moreInfoData.invCategory == '1') ? this.moreInfoForm.controls.myNotes.value : this.moreInfoForm.value.myNotes,
       status: (this.fieldFlag == 'client') ? 1 : 2,
-      anniversaryDate: this.moreInfoForm.value.anniversaryDate
     };
     if (this.fieldFlag == 'client' || this.fieldFlag == 'lead') {
       if (this.moreInfoData.invCategory == '1') {
@@ -164,6 +163,7 @@ export class ClientMoreInfoComponent implements OnInit {
   }
 
   saveNextFamilyMember(flag) {
+    this.moreInfoData.guardianData['aadhaarNumber'] = this.moreInfoForm.value.adhharGuardian;
     const obj = {
       isKycCompliant: this.moreInfoData.isKycCompliant,
       taxStatusId: this.moreInfoData.taxStatusId,
@@ -187,6 +187,7 @@ export class ClientMoreInfoComponent implements OnInit {
       bioRemarkId: 0,
       bio: this.moreInfoForm.controls.bio.value,
       remarks: this.moreInfoForm.controls.myNotes.value,
+      anniversaryDate: this.datePipe.transform(this.moreInfoForm.value.anniversaryDate._d, 'dd/MM/yyyy'),
       // guardianData: this.moreInfoData.guardianData,
       guardianData: this.moreInfoData.guardianData
       //  {

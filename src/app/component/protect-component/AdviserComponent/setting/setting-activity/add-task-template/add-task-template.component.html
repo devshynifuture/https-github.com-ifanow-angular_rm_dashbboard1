@@ -18,14 +18,11 @@
         <div class="col-md-12 p-0 select-category">
             <h5 class="m-0 pb-12">Select category</h5>
             <mat-radio-group class="taskradio" aria-label="Select an option" formControlName="category">
-                <mat-radio-button [value]="1" (click)="getSelectedCategory(1,'asset')" checked
-                    [ngClass]="taskTemplate.get('category').value == 1 ? 'text-primary b-a-custom': ' b-a text-primitive'">
+                <mat-radio-button [value]="1" (click)="getSelectedCategory(1,'asset')" checked [ngClass]="taskTemplate.get('category').value == 1 ? 'text-primary b-a-custom': 'text-primitive'">
                     Asset</mat-radio-button>
-                <mat-radio-button [value]="2" (click)="getSelectedCategory(2,'insurance')"
-                    [ngClass]="taskTemplate.get('category').value == 2 ? 'text-primary b-a-custom': ' b-a text-primitive'">
+                <mat-radio-button [value]="2" (click)="getSelectedCategory(2,'insurance')" [ngClass]="taskTemplate.get('category').value == 2 ? 'text-primary b-a-custom': 'text-primitive'">
                     Insurance</mat-radio-button>
-                <mat-radio-button [value]="3" (click)="getSelectedCategory(3,'liability')"
-                    [ngClass]="taskTemplate.get('category').value == 3 ? 'text-primary b-a-custom': ' b-a text-primitive'">
+                <mat-radio-button [value]="3" (click)="getSelectedCategory(3,'liability')" [ngClass]="taskTemplate.get('category').value == 3 ? 'text-primary b-a-custom': 'text-primitive'">
                     Liability</mat-radio-button>
             </mat-radio-group>
         </div>
@@ -38,8 +35,7 @@
             <div class="form-group">
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="subCategory">
-                        <mat-option [value]="subCategory.subcategoryId" (click)="selectedSubcategory(subCategory)"
-                            *ngFor="let subCategory of list">
+                        <mat-option [value]="subCategory.subcategoryId" (click)="selectedSubcategory(subCategory)" *ngFor="let subCategory of list">
                             {{subCategory.subcategoryType}}
                         </mat-option>
                     </mat-select>
@@ -129,8 +125,7 @@
             <div class="col-md-4 pl-0">
                 <div class="form-group">
                     <mat-form-field>
-                        <input matInput #currentValue type="text" maxlength="10" class="form-control br-0 rupess"
-                            formControlName="description">
+                        <input matInput #currentValue type="text" maxlength="10" class="form-control br-0 rupess" formControlName="description">
                         <mat-error class="f-12">
                             This field is required
                         </mat-error>
@@ -143,8 +138,7 @@
                     <mat-form-field class="arrowRemoveBox">
                         <img class="img-pos" src="/assets/images/svg/calander.svg">
                         <mat-select class="form-control  " formControlName="turnAroundTime">
-                            <mat-option [disabled]="creds.get('isEdite').value == false" [value]="t.value"
-                                *ngFor="let t of Tat">{{t.tat}}
+                            <mat-option [disabled]="creds.get('isEdite').value == false" [value]="t.value" *ngFor="let t of Tat">{{t.tat}}
                             </mat-option>
                         </mat-select>
                         <mat-error class="f-12">
@@ -159,8 +153,7 @@
                     <mat-form-field class="arrowRemoveBox">
                         <img class="img-pos-two" src="/assets/images/svg/people.svg">
                         <mat-select class="form-control" formControlName="ownerId">
-                            <mat-option (click)="updateOwner()" [value]="team.userId"
-                                *ngFor="let team of teamMemberList">{{team.name}}</mat-option>
+                            <mat-option (click)="updateOwner()" [value]="team.userId" *ngFor="let team of teamMemberList">{{team.name}}</mat-option>
                         </mat-select>
                         <mat-error class="f-12">
                             This field is required
@@ -174,17 +167,14 @@
                     class="m-0 roboto text-custom pt-4 pb-44">
                     + Save</p> -->
 
-                <i *ngIf="creds.get('isEdite').value == true" (click)="addSubTask(creds,'edit')"
-                    class="material-icons c-p mt-6">
+                <i *ngIf="creds.get('isEdite').value == true" (click)="addSubTask(creds,'edit')" class="material-icons c-p mt-6">
                     add
                 </i>
 
                 <i class="material-icons c-p mt-6" (click)="removeSubTask(i)">
                     remove
                 </i>
-                <p *ngIf="creds.get('isEdite').value == false && inputData.categoryId"
-                    class="m-0 roboto text-custom pt-4 pb-44" (click)="editSubtask(creds,true,i)"> <img
-                        src="/assets/images/svg/cash-flow-edit-icon.svg"></p>
+                <p *ngIf="creds.get('isEdite').value == false && inputData.categoryId" class="m-0 roboto text-custom pt-4 pb-44" (click)="editSubtask(creds,true,i)"> <img src="/assets/images/svg/cash-flow-edit-icon.svg"></p>
             </div>
         </div>
 
