@@ -1,338 +1,318 @@
-import { Component, Input, OnInit, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ViewChildren, QueryList, OnDestroy } from '@angular/core';
 import { SettingsService } from '../../settings.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { OrgSettingServiceService } from '../../org-setting-service.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { MatInput } from '@angular/material';
+import { Subscription, Observable, observable } from 'rxjs';
 
 @Component({
   selector: 'app-add-task-template',
   templateUrl: './add-task-template.component.html',
   styleUrls: ['./add-task-template.component.scss']
 })
-export class AddTaskTemplateComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
-  taskTemplate
+export class AddTaskTemplateComponent implements OnInit, OnDestroy {
+  teamMemberList: any[];
+  taskTemplate:FormGroup;
   advisorId: any;
-  category: any;
-  editMode: boolean = false;
-  subTaskList = [];
-  Tat = []
-  assetList: any;
-  libilitiesList: any;
-  insuranceList: any;
-  assetSubCategoryList: any;
+  user:any;
+  Tat = [];
+  isLoading:boolean = true;
+  loadCounter:number = 0;
+  globalData:any = {};
+  subscription = new Subscription();
+  categoryList: any[] = [];
+  category: any = 'asset';
   listOfSub: any;
-  libilitySubCategoryList: any;
-  insuranceSubCategoryList: any;
-  list: any;
-  hideSubcategory: boolean = false;
-  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
-  inputData: any;
-  linkedTemplateId: any;
-  isEdite: boolean;
-  teamMemberList: any;
 
-  @Input()
-  set data(data) {
-    this.inputData = data;
-    console.log('This is Input data ', data)
-    if (data == 1) {
-      this.linkedTemplateId = data
-    } else if (data == 2) {
-      this.linkedTemplateId = data
-    } else {
-      this.getdataForm(data);
-    }
-  }
+  dataEdited = false;
+  
+  @Input() data;
+  hideSubcategory: boolean;
 
-  get data() {
-    return this.inputData;
-  }
-  constructor(private subInjectService: SubscriptionInject,
-    private utilService: UtilService,
+  constructor(
+    private subInjectService: SubscriptionInject,
     private orgSetting: OrgSettingServiceService,
     private event: EventService,
     private fb: FormBuilder,
   ) {
     this.advisorId = AuthService.getAdvisorId()
+    this.user = AuthService.getUserInfo();
 
+    // create turnaround time list
     for (let index = 1; index <= 100; index++) {
       this.Tat.push({ value: index, tat: `T+${index} day` })
     }
-    
-    this.fb.group({
-      published: true,
-      subTask: this.fb.array([]),
-    });
   }
-  ngOnInit() {
-    this.getGlobalTaskData()
-    this.getteamMemberList()
-    this.getdataForm(this.inputData)
-    this.taskTemplate.controls.category.setValue(1)
-    this.category = 'asset'
-    this.editMode = false;
-    this.isEdite = false
-  }
-  getteamMemberList() {
 
+  ngOnInit() {
+    if(this.data.templateType == 1) {
+      this.getGlobalTaskData();
+    }
+    this.getteamMemberList();
+  }
+  
+  getteamMemberList() {
+    this.changeLoadCounter(1);
     let obj = {
       advisorId: this.advisorId
     }
     this.orgSetting.getTeamMemberList(obj).subscribe(
-      data => this.getTeamMemberListRes(data),
-      err => this.event.openSnackBar(err, "Dismiss")
-    );
-  }
-  getTeamMemberListRes(data) {
-    console.log('team member', data)
-    this.teamMemberList = data
-  }
-
-  getGlobalTaskData() {
-    this.orgSetting.getGlobalDataTask().subscribe(
       data => {
-        this.getGlobalDataTaskRes(data)
+        this.changeLoadCounter(-1);
+        this.teamMemberList = data
+        this.teamMemberList.unshift(this.user);
       },
       err => this.event.openSnackBar(err, "Dismiss")
     );
   }
-  getGlobalDataTaskRes(data) {
-    console.log('getGlobalDataTaskRes', data)
-    this.assetList = data.task_template_category_and_subcategory_list[0]
-    this.assetSubCategoryList = this.assetList.taskTempSubCategorytoCategoryList
-    this.libilitiesList = data.task_template_category_and_subcategory_list[1]
-    this.libilitySubCategoryList = this.libilitiesList.taskTempSubCategorytoCategoryList
-    this.insuranceList = data.task_template_category_and_subcategory_list[2]
-    this.insuranceSubCategoryList = this.insuranceList.taskTempSubCategorytoCategoryList
-    this.getSelectedCategory(1, 'asset')
+
+  getGlobalTaskData() {
+    this.changeLoadCounter(1);
+    this.orgSetting.getGlobalDataTask().subscribe(
+      data => {
+        this.globalData = data;
+        this.changeLoadCounter(-1);
+      },
+      err => this.event.openSnackBar(err, "Dismiss")
+    );
   }
+
   selectedSubcategory(value) {
     this.listOfSub = value.taskTempSubcattoSubCategories
-    if (value.taskTempSubcattoSubCategories.length == 0) {
-      this.hideSubcategory = true
+    this.taskTemplate.controls.subSubCategoryId.setValue('');
+    if (this.listOfSub.length == 0) {
+      this.hideSubcategory = true;
+      this.taskTemplate.controls.subSubCategoryId.clearValidators();
+      this.taskTemplate.updateValueAndValidity();
     } else {
-      this.hideSubcategory = false
+      this.hideSubcategory = false;
+      this.taskTemplate.controls.subSubCategoryId.setValidators([Validators.required]);
+      this.taskTemplate.updateValueAndValidity();
     }
   }
-  getSelectedCategory(value, category) {
-    this.category = category
-    console.log('getSelectedCategory', value)
-    if (value == 1) {
-      this.list = this.assetSubCategoryList
-      if (this.inputData.subcategoryId) {
-        var subList = this.list.filter(element => element.subcategoryId == this.inputData.subcategoryId)
-        if(subList.length>0){
-          this.listOfSub = subList[0].taskTempSubcattoSubCategories
-        }
-      }
-    } else if (value == 2) {
-      this.list = this.insuranceSubCategoryList
-      if (this.inputData.subcategoryId) {
-        var subList = this.list.filter(element => element.subcategoryId == this.inputData.subcategoryId)
-        if(subList.length>0){
-        this.listOfSub = subList[0].taskTempSubcattoSubCategories
-        }
-      }
-    } else {
-      this.list = this.libilitySubCategoryList
-      if (this.inputData.subcategoryId) {
-        var subList = this.list.filter(element => element.subcategoryId == this.inputData.subcategoryId)
-        if(subList.length>0){
-        this.listOfSub = subList[0].taskTempSubcattoSubCategories
-        }
-      }
-    }
-    this.getdataForm(this.inputData)
-  }
-  getdataForm(data) {
-    if (!data) {
-      data = {}
-    }
+
+  createTaskTemplateForm() {
     this.taskTemplate = this.fb.group({
-      id: [(!data) ? '' : (data.id), []],
-      category: [(!data) ? '' : (data.categoryId), [Validators.required]],
-      subCategory: [(!data) ? '' : (data.subcategoryId), [Validators.required]],
-      subSubCategory: [(!data) ? '' : (data.subSubCategoryId), [Validators.required]],
-      taskTemplate: [(!data) ? '' : data.adviceType, [Validators.required]],
-      adviceType: [(!data) ? '' : (data.adviceTypeId) + "", [Validators.required]],
-      defaultAssign: [(!data) ? '' : data.ownerName],
-      turnAroundTime1: [(!data) ? '' : (data.turnAroundTime)],
-      subTaskList: this.fb.array([this.fb.group({
-        taskNumber: [1, [Validators.required]],
-        description: [null, [Validators.required]],
-        turnAroundTime: [null, [Validators.required]],
-        ownerId: [null, [Validators.required]],
-        isEdite: false,
-      })]),
+      id: [this.data.id, []],
+      advisorId: this.advisorId,
+      categoryId: [this.data.categoryId || 1],
+      subcategoryId: [this.data.subcategoryId || ''],
+      subSubCategoryId: [this.data.subSubCategoryId || ''],
+      adviceTypeId: [this.data.adviceTypeId || ''],
+      templateType: this.data.templateType,
+      taskDescription: [this.data.taskDescription || ''],
+      assignedTo: this.data.ownerName || '',
+      turnAroundTime: [this.data.turnAroundTime || ''],
+      subTaskList: this.fb.array([]),
     });
-    if (data.subTaskList != undefined) {
-      this.subTask.removeAt(0);
-      data.subTaskList.forEach(element => {
-        this.taskTemplate.controls.subTaskList.push(this.fb.group({
-          taskNumber: [(1) + "", [Validators.required]],
-          description: [(element.description + ""), Validators.required],
-          turnAroundTime: [(element.turtAroundTime), Validators.required],
-          ownerId: [element.ownerId, [Validators.required]],
-          isEdite: true
-        }))
+
+    // assign validators based on template type
+    if (this.taskTemplate.controls.templateType.value == 1) {
+      this.taskTemplate.controls.categoryId.setValidators([Validators.required]);
+      this.taskTemplate.controls.subcategoryId.setValidators([Validators.required]);
+      this.taskTemplate.controls.adviceTypeId.setValidators([Validators.required]);
+      this.taskTemplate.controls.subSubCategoryId.setValidators([Validators.required]);
+    } else {
+      this.taskTemplate.controls.taskDescription.setValidators([Validators.required]);
+    }
+
+    const subtask = this.taskTemplate.controls.subTaskList as FormArray;
+    if (this.data.subTaskList) {
+      this.data.subTaskList.forEach(element => {
+        subtask.push(this.subTaskFormGroup(
+          element.id,
+          element.taskNumber,
+          element.description,
+          element.turnAroundTime,
+          element.ownerId
+        ));
       })
     }
-  }
-  editSubtask(value, flag, index) {
-    value.controls.isEdite.setValue(true)
-    console.log('flag', flag)
 
+    if(this.data.id) {
+      this.taskTemplate.controls.subSubCategoryId.clearValidators();
+    }
+
+    this.taskTemplate.updateValueAndValidity();
   }
-  addSubTask(value, flag) {
-    if (flag == 'add') {
-      this.subTask.push(this.fb.group({
-        taskNumber: [1, [Validators.required]],
-        description: [null, [Validators.required]],
-        turnAroundTime: [null, [Validators.required]],
-        ownerId: [null, [Validators.required]],
-        isEdite: false
-      }));
-      //value.controls.isEdite.setValue(true)
-    } else {
-      console.log('creds --', value)
-      if (value.invalid) {
-        this.inputs.find(input => !input.ngControl.valid).focus();
-        value.markAllAsTouched();
-      } else {
-        value.controls.isEdite.setValue(false)
-        let obj = {
-          TaskTemplateId: 1,
-          taskNumber: 1,
-          description: value.controls.description.value,
-          turtAroundTime: value.controls.turnAroundTime.value,
-          ownerId: value.controls.defaultAssign.value,
-          id: null,
-        }
-        if (value.controls.id) {
-          this.orgSetting.editSubTaskTemplate(obj).subscribe(
-            data => {
-              this.editSubTaskTemplateRes(data)
-            }, err => this.event.openSnackBar(err, "Dismiss")
-          );
-        } else {
-          this.orgSetting.addSubtaskTemplate(obj).subscribe(
-            data => {
-              this.addSubtaskTemplateRes(data)
-            }, err => this.event.openSnackBar(err, "Dismiss")
-          );
-        }
-      }
+
+  setFormListeners(){
+    this.subscription.add(
+      this.taskTemplate.controls.categoryId.valueChanges.subscribe(value => {
+        this.category = value == 1 ? 'Asset' : value == 2 ? 'Insurance' : 'Liability';
+        this.taskTemplate.controls.subcategoryId.setValue('');
+        this.taskTemplate.controls.subSubCategoryId.setValue('');
+        this.dataEdited = true;
+        this.categoryList = this.globalData.task_template_category_and_subcategory_list.find(data => data.categoryId == value).taskTempSubCategorytoCategoryList;
+      })
+    )
+    if(this.data.id) {
+      this.subscription.add(
+        this.taskTemplate.controls.subcategoryId.valueChanges.subscribe(value => {
+        this.dataEdited = true;
+        })
+      )
+      this.subscription.add(
+        this.taskTemplate.controls.subSubCategoryId.valueChanges.subscribe(value => {
+        this.dataEdited = true;
+        })
+      )
+      this.subscription.add(
+        this.taskTemplate.controls.adviceTypeId.valueChanges.subscribe(value => {
+        this.dataEdited = true;
+        })
+      )
+      this.subscription.add(
+        this.taskTemplate.controls.templateType.valueChanges.subscribe(value => {
+        this.dataEdited = true;
+        })
+      )
+      this.subscription.add(
+        this.taskTemplate.controls.taskDescription.valueChanges.subscribe(value => {
+        this.dataEdited = true;
+        })
+      )
+      this.subscription.add(
+        this.taskTemplate.controls.assignedTo.valueChanges.subscribe(value => {
+        this.dataEdited = true;
+        })
+      )
+      this.subscription.add(
+        this.taskTemplate.controls.turnAroundTime.valueChanges.subscribe(value => {
+        this.dataEdited = true;
+        })
+      )
     }
   }
-  editSubTaskTemplateRes(data) {
-    console.log('editSubTaskTemplateRes', data)
+
+  subTaskFormGroup(id = '', taskNo = '', desp = '', tat = '', ownerId = '') {
+    return this.fb.group({
+      id: id,
+      taskNumber: taskNo,
+      description: [(desp), Validators.required],
+      turnAroundTime: [tat],
+      ownerId: [ownerId],
+    })
   }
-  addSubtaskTemplateRes(data) {
-    console.log('addSubtaskTemplateRes', data)
+
+  addSubTask() {
+    const subtask = this.taskTemplate.controls.subTaskList as FormArray;
+    subtask.push(this.subTaskFormGroup());
   }
-  getFormControl(): any {
-    return this.taskTemplate.controls;
-  }
+
   get subTask() {
     return this.taskTemplate.get('subTaskList') as FormArray;
   }
+
   Close(flag: boolean) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
-  toggleEditMode() {
-    this.editMode = !this.editMode;
-    console.log('hgdsfhg ==', this.editMode)
-  }
-  updateOwner() {
-    if (this.inputData.id) {
-      let obj = {
-        ownerId: this.taskTemplate.controls.defaultAssign.value,
-        taskTemplateId: this.taskTemplate.controls.id.value,
-      }
-      this.orgSetting.updateOwnerTaskTemplate(obj).subscribe(
-        data => {
-          this.updateOwnerTaskTemplateRes(data)
-        }, err => this.event.openSnackBar(err, "Dismiss")
-      );
+
+  save() {
+    if(this.taskTemplate.invalid) {
+      this.taskTemplate.markAllAsTouched();
+      return;
+    }
+    if(this.data.id) {
+      this.saveEditedTemplate();
+    }else {
+      this.saveNewTemplate();
     }
   }
-  updateOwnerTaskTemplateRes(data) {
-    console.log('updateOwnerTaskTemplateRes', data)
+
+  saveEditedTemplate(){
+    let jsonObj = this.taskTemplate.value;
+    jsonObj.subTaskList = this.reorderSubtasksForEditedTemplate();
+    jsonObj.isEdited = this.dataEdited ? 1 : 0;
+
+    this.orgSetting.editTaskTemplate(jsonObj).subscribe(
+      data => {
+        this.event.openSnackBar('Modified successfully!', 'Dismiss');
+        this.Close(true);
+      },
+      err => this.event.openSnackBar(err, "Dismiss")
+    );
   }
-  removeSubTask(item) {
-    if (this.subTask.value.length > 1) {
-      this.subTask.removeAt(item);
+
+  saveNewTemplate(){
+    let jsonObj = this.taskTemplate.value;
+    delete jsonObj.id;
+    jsonObj.subTaskList.forEach((task, index) => {
+      task.taskNumber = index + 1;
+    });
+    if(jsonObj.taskTemplate == 1) {
+      jsonObj.taskDescription = this.globalData.system_generated_advice_map_key.find(obj => obj.id == jsonObj.adviceTypeId).name;
+    }
+    this.orgSetting.addTaskTemplate(jsonObj).subscribe(
+      data => {
+        this.event.openSnackBar('Added successfully!', 'Dismiss');
+        this.Close(true);
+      },
+      err => this.event.openSnackBar(err, "Dismiss")
+    );
+  }
+
+  reorderSubtasksForEditedTemplate() {
+    let formSubTaskList = this.subTask.value as Array<any>;
+    let deletedSubTasks = this.data.subTaskList.filter(sb => !formSubTaskList.map(li => li.id).includes(sb.id));
+    deletedSubTasks.forEach(task => {
+      task.taskNumber = 0;
+      task['isEdited'] = 0;
+      task['isDeleted'] = 1;
+    });
+
+    formSubTaskList.forEach((newSubTask, index) => {
+      const previousSubtask = this.data.subTaskList.find(subTask => subTask.id == newSubTask.id);
+      if(previousSubtask) {
+        if(previousSubtask.description == newSubTask.description &&
+          previousSubtask.turnAroundTime == newSubTask.turnAroundTime &&
+          previousSubtask.ownerId == newSubTask.ownerId) {
+
+          newSubTask['isEdited'] = 0;
+        } else {
+          newSubTask['isEdited'] = 1;
+        }
+        newSubTask.taskNumber = index + 1;
+        newSubTask['isDeleted'] = 0;
+      }
+    });
+
+    return [deletedSubTasks, formSubTaskList].flat();
+  }
+
+  changeLoadCounter(value) {
+    this.loadCounter += value;
+    if (this.loadCounter == 0) {
+      this.isLoading = false;
+      this.createTaskTemplateForm();
+      this.setFormListeners();
+      this.initializeVariables();
+      this.taskTemplate.updateValueAndValidity();
+    } else {
+      this.isLoading = true;
     }
   }
-  saveTaskTemplate() {
-    // if (this.taskTemplate.invalid) {
-    //   for (let element in this.taskTemplate.controls) {
-    //     console.log(element)
-    //     if (this.taskTemplate.get(element).invalid) {
-    //       // this.inputs.find(input => !input.ngControl.valid).focus();
-    //       this.taskTemplate.controls[element].markAsTouched();
-    //       this.taskTemplate.get('subSubCategory').markAsTouched();
-    //       this.taskTemplate.get('subSubCategory').markAsTouched();
-    //     }
-    //   }
-    // } else {
-      let obj = {
-        advisorId: this.advisorId,
-        categoryId: this.taskTemplate.controls.category.value,
-        subcategoryId: this.taskTemplate.controls.subCategory.value,
-        linkedTemplateId: this.linkedTemplateId,
-        adviceTypeId: this.taskTemplate.controls.adviceType.value,
-        subSubCategoryId: this.taskTemplate.controls.subSubCategory.value,
-        taskDescription: this.taskTemplate.controls.taskTemplate.value,
-        assignedTo: this.taskTemplate.controls.defaultAssign.value,
-        turnAroundTime: this.taskTemplate.controls.turnAroundTime1.value,
-        subTaskList: this.taskTemplate.controls.subTaskList.value,
-        id:null
-      }
-      if (this.taskTemplate.controls.id.value) {
-        obj.id = this.taskTemplate.controls.id.value;
-        console.log('this what i want', obj)
-        this.orgSetting.editTaskTemplate(obj).subscribe(
-          data => {
-            this.editTaskTemplateRes(data)
-          },
-          err => this.event.openSnackBar(err, "Dismiss")
-        );
+
+  initializeVariables(){
+    if(this.data.templateType == 1) {
+      this.categoryList = this.globalData.task_template_category_and_subcategory_list.find(data => data.categoryId == this.taskTemplate.get('categoryId').value).taskTempSubCategorytoCategoryList;
+    }
+
+    if(this.data.id) {
+      this.listOfSub = this.categoryList.find(data => this.data.subcategoryId == data.subcategoryId).taskTempSubcattoSubCategories;
+      if(this.listOfSub.length == 0) {
+        this.hideSubcategory = true;
       } else {
-        console.log('this what i want', obj)
-        this.orgSetting.addTaskTemplate(obj).subscribe(
-          data => {
-            this.addTaskTemplateRes(data)
-          },
-          err => this.event.openSnackBar(err, "Dismiss")
-        );
+        this.hideSubcategory = false;
       }
-  }
-  addTaskTemplateRes(data) {
-    console.log('addTaskTemplateRes', data);
-    this.event.openSnackBar('Added successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
-  }
-  editTaskTemplateRes(data) {
-    console.log('editTaskTemplateRes', data);
-    this.event.openSnackBar('Updated successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
+    }
   }
 
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+  }
 }
-export interface PeriodicElement {
-
-  position: string;
-
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 'Sub task 1' },
-
-];

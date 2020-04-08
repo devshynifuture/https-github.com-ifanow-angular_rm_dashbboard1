@@ -16,22 +16,24 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./setting-activity.component.scss']
 })
 export class SettingActivityComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'assign', 'time', 'icons'];
-  dataSource = ELEMENT_DATA;
   advisorId: any;
-  taskList: Array<any> = [{}, {}, {}];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'assign', 'time', 'icons'];
+
+  taskList: Array<any> = [];
   isLoading = false
   constructor(private subInjectService: SubscriptionInject,
     public subscription: SubscriptionService,
-    public eventService: EventService, private utilService: UtilService,
-    private orgSetting: OrgSettingServiceService, public dialog: MatDialog,) {
-      this.advisorId = AuthService.getAdvisorId()
-     }
+    public eventService: EventService,
+    private orgSetting: OrgSettingServiceService,
+    public dialog: MatDialog
+  ) {
+    this.advisorId = AuthService.getAdvisorId()
+  }
 
   ngOnInit() {
     this.getTaskTemplate();
-    this.taskList = []
   }
+
   getTaskTemplate() {
     this.isLoading = true
     let obj = {
@@ -42,16 +44,15 @@ export class SettingActivityComponent implements OnInit {
       err => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
+
   getTaskTemplateRes(data) {
     this.isLoading = false
     console.log('getTaskTemplateRes == ', data)
     if (data) {
       this.taskList = data
-    } else {
-      this.taskList = []
     }
   }
-  
+
   deleteTask(value, data) {
     const dialogData = {
       data: value,
@@ -61,20 +62,18 @@ export class SettingActivityComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-          this.orgSetting.deleteTaskTemplate(data.id).subscribe(
-            data => {
-              dialogRef.close();
-              this.getTaskTemplate();
-            },
-            error => this.eventService.showErrorMessage(error)
-          );
+        this.orgSetting.deleteTaskTemplate(data.id).subscribe(
+          data => {
+            dialogRef.close();
+            this.getTaskTemplate();
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
         this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
       },
       negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
       }
     };
-    console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
@@ -87,7 +86,8 @@ export class SettingActivityComponent implements OnInit {
 
     });
   }
-  addTaskTemplate(singleProfile, value) {
+
+  editTaskTemplate(singleProfile, value) {
     const fragmentData = {
       flag: value,
       data: singleProfile,
@@ -97,58 +97,34 @@ export class SettingActivityComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getTaskTemplate();
-            console.log('this is sidebardata in subs subs 2: ');
           }
           rightSideDataSub.unsubscribe();
         }
       }
 
     );
-    // this.billerProfileData = this.dataTOget.data
   }
-  openTaskTemplateType(singleProfile, value) {
 
+  addNewTaskTemplate() {
     const fragmentData = {
-      flag: value,
-      data: singleProfile,
+      flag: '',
+      data: {},
       id: 1,
       state: 'open50',
       componentName: TaskTemplateTypeComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-
-            console.log('this is sidebardata in subs subs 2: ');
+            this.getTaskTemplate();
           }
           rightSideDataSub.unsubscribe();
         }
       }
-
     );
-    // this.billerProfileData = this.dataTOget.data
   }
-
 }
-export interface PeriodicElement {
-  name: string;
-  position: string;
-  weight: string;
-  symbol: string;
-  assign: string;
-  time: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    position: 'Linked', name: 'Insurance', weight: 'Health Insurance', symbol: 'Port policy',
-    assign: 'Aniket Shah', time: 'T + 2 days'
-  },
-
-];
