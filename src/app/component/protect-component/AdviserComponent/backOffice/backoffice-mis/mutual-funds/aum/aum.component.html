@@ -19,8 +19,6 @@
                         <div *ngFor="let item of arnRiaList">
                             <button mat-menu-item (click)="viewMode=item.number">{{item.number}}</button>
                         </div>
-                        <!-- <button mat-menu-item (click)="viewMode='All'">All</button>
-                        <button mat-menu-item (click)="viewMode='Broker code'">Broker code</button> -->
                     </mat-menu>
                 </div>
             </div>
@@ -48,7 +46,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-7 p-0 text-right" *ngIf="MiscData1">
-                                            <h1 class="text-white f-24 mb-0 pb-8">{{MiscData1.averageFolioSize}}
+                                            <h1 class="text-white f-24 mb-0 pb-8"><span appFormatNumber>{{MiscData1.averageFolioSize}}</span>
                                             </h1>
                                             <p class="f-12 mb-0 text-white">Average Folio Size</p>
                                         </div>
@@ -157,7 +155,7 @@
 
                                     </div>
                                     <div *ngIf="!clientTotalAum || clientTotalAum.length==0" class="text-center">
-                                        No Client Found
+                                        No client found
                                     </div>
                                 </mat-tab>
                                 <mat-tab label="AMC " class="min-w140 ">

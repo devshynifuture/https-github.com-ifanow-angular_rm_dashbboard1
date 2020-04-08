@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators, FormBuilder, FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { BackOfficeService } from '../../../back-office.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-folios',
@@ -14,8 +14,10 @@ export class FoliosComponent implements OnInit {
   folioDetails: any;
   dataList: any;
   advisorId: any;
-  dataSource:any;
+  dataSource = new MatTableDataSource([]);
   folioList:any;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
   constructor( private fb: FormBuilder,private backoffice:BackOfficeService) { }
   isLoading = false;
   searchGroupHead = new FormControl();
@@ -68,41 +70,46 @@ export class FoliosComponent implements OnInit {
 
   }
   selectedData(data,value) {//for getting selected option data 
-    this.isLoading = true;
-    let tempData=[{}, {}, {}];
-    this.dataSource = new MatTableDataSource(tempData);
-    if(value=='groupyHead'){
-      const obj={
-        advisorId:this.advisorId,
-        arnRiaDetailsId:-1,
-        parentId:-1,
-        clientName:data
-      }
-      this.backoffice.folioSearchByGroupHead(obj).subscribe(
-        data =>{
-          this.isLoading = false;
-          this.dataSource = new MatTableDataSource(data);
+    if(data){
+      this.isLoading = true;
+      let tempData=[{}, {}, {}];
+      this.dataSource = new MatTableDataSource(tempData);
+      if(value=='groupyHead'){
+        const obj={
+          advisorId:this.advisorId,
+          arnRiaDetailsId:-1,
+          parentId:-1,
+          clientName:data
         }
-      )
-    }else{
-      const obj={
-        advisorId:this.advisorId,
-        arnRiaDetailsId:-1,
-        parentId:-1,
-        familyMemberName:data
-      }
-      this.backoffice.folioSearchByInvestor(obj).subscribe(
-        data =>{
-          this.isLoading = false;
-          this.dataSource = new MatTableDataSource(data);
-
+        this.backoffice.folioSearchByGroupHead(obj).subscribe(
+          data =>{
+            this.isLoading = false;
+            this.dataSource = new MatTableDataSource(data);
+            this.dataSource.sort = this.sort;
+  
+          }
+        )
+      }else{
+        const obj={
+          advisorId:this.advisorId,
+          arnRiaDetailsId:-1,
+          parentId:-1,
+          familyMemberName:data
         }
-      )
+        this.backoffice.folioSearchByInvestor(obj).subscribe(
+          data =>{
+            this.isLoading = false;
+            this.dataSource = new MatTableDataSource(data);
+            this.dataSource.sort = this.sort;
+  
+          }
+        )
+      }
     }
-
   }
   getData(data,value){//for pan and folio search data
-    this.isLoading = true;
+    if(data){
+      this.isLoading = true;
     let tempData=[{}, {}, {}];
     this.dataSource = new MatTableDataSource(tempData);
     if(value=='pan'){
@@ -116,6 +123,7 @@ export class FoliosComponent implements OnInit {
         data =>{
           this.isLoading = false;
           this.dataSource = new MatTableDataSource(data);
+          this.dataSource.sort = this.sort;
 
         }
       )
@@ -130,9 +138,11 @@ export class FoliosComponent implements OnInit {
         data =>{
           this.isLoading = false;
           this.dataSource = new MatTableDataSource(data);
+          this.dataSource.sort = this.sort;
 
         }
       )
+    }
     }
   }
 }

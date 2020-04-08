@@ -19,6 +19,12 @@ export class AmcWiseComponent implements OnInit {
   totalCurrentValue = 0;
   totalWeight = 0;
   isLoading = false;
+  propertyName: any;
+  propertyName2: any;
+  propertyName3: any;
+  reverse=true;
+  reverse2=true;
+  reverse3=true;
   @Output() changedValue = new EventEmitter();
 
   arrayOfExcelData: any[] = [];
@@ -71,6 +77,45 @@ export class AmcWiseComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.getAmcWiseData();
+  }
+  sortBy(applicant,propertyName){
+    this.propertyName = propertyName;
+    this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
+    if (this.reverse === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortByScheme(applicant,propertyName){
+    this.propertyName2 = propertyName;
+    this.reverse2 = (propertyName !== null && this.propertyName2 === propertyName) ? !this.reverse2 : false;
+    if (this.reverse2 === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortByApplicant(applicant,propertyName){
+    this.propertyName3 = propertyName;
+    this.reverse3 = (propertyName !== null && this.propertyName3 === propertyName) ? !this.reverse3 : false;
+    if (this.reverse3 === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
   }
   aumReport() {
     this.changedValue.emit(true);
@@ -244,6 +289,8 @@ export class AmcWiseComponent implements OnInit {
         this.totalCurrentValue += o.totalAum;
         this.totalWeight += o.weightInPercentage;
       });
+    }else{
+      this.amcList = []
     }
     //this.showLoader = false;
   }
@@ -298,7 +345,8 @@ export class AmcWiseComponent implements OnInit {
     )
   }
   getFilerrorResponse(err) {
-    //this.showLoader = false;
+    this.isLoading = false;
+    this.amcList = [];
     this.dataService.openSnackBar(err, 'Dismiss')
   }
 }

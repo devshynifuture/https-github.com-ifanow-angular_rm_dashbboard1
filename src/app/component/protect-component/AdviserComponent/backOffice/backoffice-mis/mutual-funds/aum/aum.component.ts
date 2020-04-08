@@ -33,7 +33,6 @@ export class AumComponent implements OnInit {
   teamMemberId = 2929;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-
     this.viewMode = 'Select option';
     this.getArnRiaList();
     this.getGraphData();
@@ -56,7 +55,6 @@ export class AumComponent implements OnInit {
   getArnRiaList(){
     this.backoffice.getArnRiaList(this.advisorId).subscribe(
       data =>{
-
         this.arnRiaList=data;
         const obj = {
           number: 'All'

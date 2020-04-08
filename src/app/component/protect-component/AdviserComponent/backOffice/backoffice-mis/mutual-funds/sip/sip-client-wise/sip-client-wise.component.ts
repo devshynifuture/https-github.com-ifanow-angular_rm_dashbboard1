@@ -20,8 +20,12 @@ export class SipClientWiseComponent implements OnInit {
   totalWeight = 0
   clientFilter: any;
   filteredArray: any[];
+  isLoading=false;
   @Output() changedValue = new EventEmitter();
-
+  propertyName: any;
+  propertyName2: any;
+  reverse=true;
+  reverse2=true;
   constructor(private backoffice: BackOfficeService, public sip: SipComponent) { }
 
   ngOnInit() {
@@ -30,12 +34,40 @@ export class SipClientWiseComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.clientWiseClientName();
   }
+  sortBy(applicant,propertyName){
+    this.propertyName = propertyName;
+    this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
+    if (this.reverse === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortByApplicant(applicant,propertyName){
+    this.propertyName2 = propertyName;
+    this.reverse2 = (propertyName !== null && this.propertyName2 === propertyName) ? !this.reverse2 : false;
+    if (this.reverse2 === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
   aumReport() {
     this.changedValue.emit(true);
 
     // this.sip.sipComponent = true;
   }
   clientWiseClientName() {
+    this.isLoading=true;
+    this.filteredArray=[{},{},{}];
     const obj = {
       advisorId: this.advisorId,
       arnRiaDetailsId: -1,
@@ -43,20 +75,24 @@ export class SipClientWiseComponent implements OnInit {
     }
     this.backoffice.sipClientWiseClientName(obj).subscribe(
       data => {
-        this.showLoader = false;
-        this.clientList = data;
-        if(this.clientList){
+        this.isLoading=false;
+        if(data){
+          this.clientList = data;
           this.clientList.forEach(o => {
             o.showCategory = true;
             this.totalOfSipAmount += o.sipAmount;
             this.totalOfSipCount += o.sipCount;
             this.totalWeight += o.weightInPercentage;
           });
+          this.filteredArray = [...this.clientList];
+        }else{
+          this.filteredArray=[];
         }
-        this.filteredArray = [...this.clientList];
+       
       },
       err=>{
-        this.showLoader = false;
+        this.isLoading = false;
+        this.filteredArray=[];
       }
     )
   }
@@ -100,7 +136,9 @@ export class SipClientWiseComponent implements OnInit {
       this.backoffice.sipClientWiseApplicant(obj).subscribe(
         data => {
           if (data) {
-            data[0].showSubCategory = true
+            data.forEach(o => {
+              o.showSubCategory = true;
+            });
             applicantData.applicantList = data
             console.log(data)
           }

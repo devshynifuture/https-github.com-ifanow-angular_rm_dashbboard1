@@ -52,6 +52,7 @@
     .breadcrumb-item+.breadcrumb-item::before {
         content: ">";
         font-size: 19px;
+        margin-top: -2px;
     }
     
     .input_class {
@@ -121,5 +122,21 @@
             font-size: 14px;
             text-align: left;
             margin-bottom: 10px;
+        }
+    }
+    
+    .document-side-menu {
+        .menuListDocument {
+            .documentBreadCrumb {
+                .paddingLeftNone {
+                    padding-left: 0px !important;
+                }
+            }
+            li {
+                line-height: normal !important;
+                padding: 0 0px 0 10px !important;
+                display: flex;
+                margin-bottom: 0px;
+            }
         }
     }
