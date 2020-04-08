@@ -15,16 +15,13 @@
             <div class="col-md-12 p-0 select-category">
                 <h5 class="m-0 pb-12">Select category</h5>
                 <mat-radio-group class="taskradio" aria-label="Select an option" formControlName="categoryId">
-                    <mat-radio-button [value]="1"
-                        [ngClass]="taskTemplate.get('categoryId').value == 1 ? 'text-primary b-a-custom': ' b-a text-primitive'">
+                    <mat-radio-button [value]="1" [ngClass]="taskTemplate.get('categoryId').value == 1 ? 'text-primary b-a-custom': 'text-primitive'">
                         Asset
                     </mat-radio-button>
-                    <mat-radio-button [value]="2"
-                        [ngClass]="taskTemplate.get('categoryId').value == 2 ? 'text-primary b-a-custom': ' b-a text-primitive'">
+                    <mat-radio-button [value]="2" [ngClass]="taskTemplate.get('categoryId').value == 2 ? 'text-primary b-a-custom': 'text-primitive'">
                         Insurance
                     </mat-radio-button>
-                    <mat-radio-button [value]="3"
-                        [ngClass]="taskTemplate.get('categoryId').value == 3 ? 'text-primary b-a-custom': ' b-a text-primitive'">
+                    <mat-radio-button [value]="3" [ngClass]="taskTemplate.get('categoryId').value == 3 ? 'text-primary b-a-custom': 'text-primitive'">
                         Liability
                     </mat-radio-button>
                 </mat-radio-group>
