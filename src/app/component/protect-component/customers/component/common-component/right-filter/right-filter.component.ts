@@ -413,6 +413,8 @@ export class RightFilterComponent implements OnInit {
       scheme: this.scheme,
       folio: this.folio,
       category:this.category,
+      reportType:this.reportType,
+      transactionView:this.transactionView,
       reportAsOn: (this.summaryFilerForm.controls.reportAsOn.value) ? this.summaryFilerForm.controls.reportAsOn.value.toISOString().slice(0, 10) : null,
       showFolio: parseInt(this.summaryFilerForm.controls.showFolios.value),
     };

@@ -186,14 +186,24 @@ export class MfServiceService {
     return sendData;
   }
   filterFinalData(mfData,dataForFilter){
-    mfData.family_member_list=this.filterArray(mfData.family_member_list,'id',dataForFilter.familyMember,'familyMemberId');
-    mfData.mutualFundCategoryMastersList=this.filterArray(mfData.mutualFundCategoryMastersList,'id',dataForFilter.category,'categoryId');
-    let subCatData = this.filter(mfData.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
-    let amcData=this.filter(subCatData, 'mutualFundSchemeMaster');
-    amcData=this.filterArray(amcData,'amc_id',dataForFilter.amc,'amc_id');
-    let folioData=this.filter(amcData, 'mutualFund');
-    folioData=this.filterArray(folioData,'folioNumber',dataForFilter.folio,'folioNumber');
-    return mfData;
+    let family_member_list=this.filterArray(mfData.family_member_list,'id',dataForFilter.familyMember,'familyMemberId');
+    let category=this.filterArray(mfData.mutualFundCategoryMastersList,'id',dataForFilter.category,'categoryId');
+    let subCategoryData = this.filter(mfData.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+    let schemeWiseFilter = this.filter(subCategoryData, 'mutualFundSchemeMaster');
+    let schemeWise=this.filterArray(schemeWiseFilter,'amc_id',dataForFilter.amc,'amc_id');
+    let mutualFundListFilter = this.filter(schemeWiseFilter, 'mutualFund');
+    let mutualFundList=this.filterArray(mutualFundListFilter,'folioNumber',dataForFilter.folio,'folioNumber');
+    var sendData={
+      family_member_list:family_member_list,
+      category:category,
+      schemeWise:schemeWise,
+      mutualFundList:mutualFundList,
+      reportAsOn:dataForFilter.reportAsOn,
+      showFolio:dataForFilter.showFolio,
+      reportType:dataForFilter.reportType,
+      transactionView:dataForFilter.transactionView,
+    }
+    return sendData;
   }
   filterArray(data,dataKey,filterData,filterDataKey){
     let filter=[];
