@@ -3,6 +3,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { UtilService } from 'src/app/services/util.service';
 import { MatTableDataSource } from '@angular/material';
 import { MfServiceService } from '../../mf-service.service';
+import { RightFilterComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
 
 @Component({
   selector: 'app-mutual-fund-unrealized-tran',
@@ -30,6 +31,31 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       this.mfSchemes();
       this.getfinalTotalValue();
     }
+  }
+  openFilter() {
+    const fragmentData = {
+      flag: 'openFilter',
+      data: {},
+      id: 1,
+      state: 'open35',
+      componentName: RightFilterComponent
+    };
+    fragmentData.data = {
+      folioWise: this.mutualFundList,
+      schemeWise: this.schemeWise,
+      familyMember: this.mutualFund.family_member_list,
+      category: this.mutualFund.mutualFundCategoryMastersList,
+      transactionView: this.displayedColumns
+    }
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
   }
   subCatArray() {
     const categoryArray = [];

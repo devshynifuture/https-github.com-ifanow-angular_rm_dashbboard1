@@ -596,7 +596,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     console.log(data);
     if(data){
       this.getCount()
-      this.getAllFileList(this.valueTab);
+      //this.getAllFileList(this.valueTab);
     }
     this.isLoading = false
   }

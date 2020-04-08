@@ -79,6 +79,9 @@ export class MutualFundSummaryComponent implements OnInit {
   mfSchemes() {
     this.mutualFundList = this.MfServiceService.filter(this.schemeWise, 'mutualFund');
   }
+  // transactionPeriod(){
+  //   this.trasactionPeriodList = this.MfServiceService.filter(this.transactionPeriodWise, 'transactionPeriod')
+  // }
   openFilter() {
     const fragmentData = {
       flag: 'openFilter',

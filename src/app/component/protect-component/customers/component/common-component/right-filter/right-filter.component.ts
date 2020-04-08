@@ -51,6 +51,7 @@ export class RightFilterComponent implements OnInit {
     this.getSchemeWise(this.amc);//scheme wise data
     this.getFamilyMember(this._data.folioWise)//for family memeber
     this.getTransactionView(this._data.transactionView);//for displaying how many columns to show in table
+    this.getTransactionPeriod(this._data.transactionPeriod)
     this.getReportType();//get type of report categorywise,investor,sub category wise
     this.setDefaultFilters();//setting default selected in each above array
     this.showSummaryFilterForm('');//as on date and showZero folio form
@@ -103,6 +104,16 @@ export class RightFilterComponent implements OnInit {
     this.familyMember = [...new Map(filterData.map(item => [item['familyMemberId'], item])).values()];;
   }
   getTransactionView(data) {
+    let filterData = [];
+    data.filter(function (element) {
+      const obj = {
+        "displayName": element,
+      }
+      filterData.push(obj);
+    })
+    this.transactionView = filterData;
+  }
+  getTransactionPeriod(data){
     let filterData = [];
     data.filter(function (element) {
       const obj = {
