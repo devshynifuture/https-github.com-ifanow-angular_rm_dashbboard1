@@ -95,22 +95,20 @@
                                             <tr class="h-40">
                                                 <th class="w-10">Sr No.</th>
                                                 <th class="w-40 c-p" (click)="sortBySubCat(category.subCategoryList,'name')">
-                                                    <span class="d-flex align-items-center"> Sub Category Name
+                                                    <span class="d-flex align-items-center">  Sub Category Name
                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                             *ngIf="propertyName2=='name' && !reverse2">
                                                             arrow_upward </i>
                                                         <i class="material-icons ml-4 f-14 text-primitive"
-                                                            *ngIf="propertyName2=='name' && reverse2">arrow_downward
-                                                        </i>
+                                                            *ngIf="propertyName2=='name' && reverse2">arrow_downward</i>
                                                     </span>
                                                 </th>
                                                 <th class="c-p" (click)="sortBySubCat(category.subCategoryList,'totalAum')">
-                                                    <span class="d-flex align-items-center">
-                                                        Current Value
-                                                        <i class="material-icons  ml-4 f-14 text-primitive"
+                                                    <span class="d-flex align-items-center">  Current Value
+                                                        <i class="material-icons ml-4 f-14 text-primitive"
                                                             *ngIf="propertyName2=='totalAum' && !reverse2">
                                                             arrow_upward </i>
-                                                        <i class="material-icon  ml-4 f-14 text-primitives"
+                                                        <i class="material-icons ml-4 f-14 text-primitive"
                                                             *ngIf="propertyName2=='totalAum' && reverse2">arrow_downward</i>
                                                     </span>
                                                 </th>
@@ -139,7 +137,7 @@
                                                             <tr class="h-40">
                                                                 <th class="w-10">Sr No.</th>
                                                                 <th class="w-40 c-p" (click)="sortByScheme(subcategory.schemes,'schemeName')">
-                                                                    <span class="d-flex align-items-center"> Scheme Name
+                                                                    <span class="d-flex align-items-center">  Scheme Name
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                                             *ngIf="propertyName3=='schemeName' && !reverse3">
                                                                             arrow_upward </i>
@@ -148,8 +146,7 @@
                                                                     </span>
                                                                 </th>
                                                                 <th class="c-p" (click)="sortByScheme(subcategory.schemes,'totalAum')">
-                                                                    <span class="d-flex align-items-center"> Current
-                                                                        Value
+                                                                    <span class="d-flex align-items-center">  Scheme Name
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                                             *ngIf="propertyName3=='totalAum' && !reverse3">
                                                                             arrow_upward </i>
