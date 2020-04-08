@@ -6,7 +6,7 @@
             </h4>
         </div>
         <div class="col-md-4 text-right">
-            <div class="wrapper-12">
+            <div class="wrapper-12 pr-0">
                 <i class="material-icons c-p pt-8 v-middle" (click)="onNoClick()"> clear</i>
             </div>
         </div>
@@ -27,7 +27,7 @@
     </div>
     <div class="row pt-12" *ngIf="flag == 'share'">
         <div class="col-md-12 iconPetage">
-            <h5 class="mb-8 ">Enter emailId</h5>
+            <h5 class="mb-8 ">Enter Email Id</h5>
             <div class="form-group mb-0">
                 <mat-form-field class="heightAuto">
                     <mat-chip-list #chipListEmail>
@@ -35,7 +35,7 @@
                             {{singleEmailId.emailAddress}}
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
-                        <input [matChipInputFor]="chipListEmail" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event)" [autofocus]="true">
+                        <input class="form-control" [matChipInputFor]="chipListEmail" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event)" [autofocus]="true">
                     </mat-chip-list>
                 </mat-form-field>
             </div>
