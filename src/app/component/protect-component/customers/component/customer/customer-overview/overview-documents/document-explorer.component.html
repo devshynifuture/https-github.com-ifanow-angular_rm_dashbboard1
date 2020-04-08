@@ -60,7 +60,7 @@
                             <button [matMenuTriggerFor]="menu1" class="btn-primary br-0 pl-8" mat-stroked-button> ADD
                                 NEW
                             </button>
-                            <mat-menu #menu1="matMenu" class="add-new">
+                            <mat-menu #menu1="matMenu">
                                 <button mat-menu-item>
                                     <input (change)="getFileDetails($event)" class="inputfile inputfile-3" id="file-3"
                                         multiple type="file">
