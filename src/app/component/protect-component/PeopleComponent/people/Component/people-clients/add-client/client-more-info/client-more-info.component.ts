@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {ValidatorType} from 'src/app/services/util.service';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {DatePipe} from '@angular/common';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { ValidatorType } from 'src/app/services/util.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-client-more-info',
@@ -24,8 +24,8 @@ export class ClientMoreInfoComponent implements OnInit {
   moreInfoForm;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
-              private peopleService: PeopleService, private eventService: EventService,
-              private datePipe: DatePipe) {
+    private peopleService: PeopleService, private eventService: EventService,
+    private datePipe: DatePipe) {
   }
 
   @Input() fieldFlag;
@@ -51,7 +51,6 @@ export class ClientMoreInfoComponent implements OnInit {
           this.moreInfoData.categoryTypeflag = 'clientNonIndividual';
           this.moreInfoData.invCategory = '2';
         }
-        (this.moreInfoData.clientType == '2') ? this.getCompanyDetails(this.moreInfoData) : '';
         this.createMoreInfoForm(data);
       }
     }
@@ -63,7 +62,7 @@ export class ClientMoreInfoComponent implements OnInit {
       displayName: [data.displayName],
       adhaarNo: [data.aadhaarNumber],
       taxStatus: [],
-      occupation: [],
+      occupation: [(data.occupationId == 0) ? '1' : String(data.occupationId)],
       maritalStatus: [(data.martialStatusId) ? String(data.martialStatusId) : '1'],
       anniversaryDate: [],
       bio: [data.bio],
@@ -71,7 +70,6 @@ export class ClientMoreInfoComponent implements OnInit {
       name: [data.name],
       email: [data.email, [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
-      designation: [],
       gender: ['1'],
       adhaarMinor: [data.aadhaarNumber],
       adhharGuardian: [(data.guardianData) ? data.guardianData.aadhaarNumber : '']
@@ -87,17 +85,17 @@ export class ClientMoreInfoComponent implements OnInit {
     this.mobileData = data;
   }
 
-  getCompanyDetails(data) {
-    const obj = {
-      userId: data.userId,
-      userType: data.userType
-    };
-    this.peopleService.getCompanyPersonDetail(obj).subscribe(
-      data => {
-        console.log(data);
-      }, err => this.eventService.openSnackBar(err, 'Dismiss')
-    );
-  }
+  // getCompanyDetails(data) {
+  //   const obj = {
+  //     userId: data.userId,
+  //     userType: data.userType
+  //   };
+  //   this.peopleService.getCompanyPersonDetail(obj).subscribe(
+  //     data => {
+  //       console.log(data);
+  //     }, err => this.eventService.openSnackBar(err, 'Dismiss')
+  //   );
+  // }
 
   saveNext(flag) {
     const mobileList = [];
@@ -121,7 +119,7 @@ export class ClientMoreInfoComponent implements OnInit {
       bio: this.moreInfoForm.controls.bio.value,
       martialStatusId: this.moreInfoForm.controls.maritalStatus.value,
       password: null,
-      clientType: 0,
+      clientType: this.moreInfoData.clientType,
       occupationId: (this.moreInfoData.invCategory == '1') ? this.moreInfoForm.controls.occupation.value : null,
       id: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.id : null,
       pan: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.pan : this.moreInfoForm.value.pan,
@@ -130,7 +128,7 @@ export class ClientMoreInfoComponent implements OnInit {
       roleId: 0,
       genderId: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.genderId : this.moreInfoForm.value.genderId,
       companyStatus: 0,
-      aadharCard: this.moreInfoForm.controls.adhaarNo.value,
+      aadhaarNumber: this.moreInfoForm.controls.adhaarNo.value,
       dateOfBirth: this.datePipe.transform(this.moreInfoData.dateOfBirth, 'dd/MM/yyyy'),
       userName: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.userName : null,
       userId: this.moreInfoData.userId,
@@ -141,7 +139,7 @@ export class ClientMoreInfoComponent implements OnInit {
       userType: 2,
       remarks: (this.moreInfoData.invCategory == '1') ? this.moreInfoForm.controls.myNotes.value : this.moreInfoForm.value.myNotes,
       status: (this.fieldFlag == 'client') ? 1 : 2,
-      companyPersonDetailId: (this.moreInfoData.invCategory == '1') ? null : this.moreInfoData.companyPersonDetailId
+      anniversaryDate: this.moreInfoForm.value.anniversaryDate
     };
     if (this.fieldFlag == 'client' || this.fieldFlag == 'lead') {
       if (this.moreInfoData.invCategory == '1') {
@@ -152,15 +150,16 @@ export class ClientMoreInfoComponent implements OnInit {
           },
           err => this.eventService.openSnackBar(err, 'Dismiss')
         );
-      } else {
-        this.peopleService.updateCompanyPersonDetail(obj).subscribe(
-          data => {
-            console.log(data);
-            (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
-          },
-          err => this.eventService.openSnackBar(err, 'Dismiss')
-        );
       }
+      // else {
+      //   this.peopleService.updateCompanyPersonDetail(obj).subscribe(
+      //     data => {
+      //       console.log(data);
+      //       (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
+      //     },
+      //     err => this.eventService.openSnackBar(err, 'Dismiss')
+      //   );
+      // }
     }
   }
 
@@ -172,14 +171,11 @@ export class ClientMoreInfoComponent implements OnInit {
       displayName: this.moreInfoForm.controls.displayName.value,
       guardianId: 0,
       martialStatusId: this.moreInfoForm.controls.maritalStatus.value,
-      isActive: 0,
-      addressModelList: null,
       occupationId: this.moreInfoForm.controls.occupation.value,
       id: this.moreInfoData.id,
       familyMemberId: this.moreInfoData.familyMemberId,
-      dematList: null,
       pan: this.moreInfoData.pan,
-      familyMemberType: 0,
+      familyMemberType: this.moreInfoData.familyMemberType,
       clientId: this.moreInfoData.clientId,
       genderId: this.moreInfoData.genderId,
       dateOfBirth: this.datePipe.transform(this.moreInfoData.dateOfBirth, 'dd/MM/yyyy'),
@@ -223,7 +219,7 @@ export class ClientMoreInfoComponent implements OnInit {
   }
 
   close(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', clientData: data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
   }
 
 }

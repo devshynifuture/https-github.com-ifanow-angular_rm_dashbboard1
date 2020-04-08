@@ -88,9 +88,70 @@ export class ClientWiseComponent implements OnInit {
   subList;
   selectedInvestor;
   teamMemberId = 2929;
+  propertyName: any;
+  propertyName2: any;
+  propertyName3: any;
+  propertyName4: any;
+  reverse=true;
+  reverse2=true;
+  reverse3=true;
+  reverse4=true;
+
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId()
     this.getClientTotalAum();
+  }
+  sortBy(applicant,propertyName){
+    this.propertyName = propertyName;
+    this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
+    if (this.reverse === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortByInvestor(applicant,propertyName){
+    this.propertyName2 = propertyName;
+    this.reverse2 = (propertyName !== null && this.propertyName2 === propertyName) ? !this.reverse2 : false;
+    if (this.reverse2 === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortByScheme(applicant,propertyName){
+    this.propertyName3 = propertyName;
+    this.reverse3 = (propertyName !== null && this.propertyName3 === propertyName) ? !this.reverse3 : false;
+    if (this.reverse3 === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortByFolio(applicant,propertyName){
+    this.propertyName4 = propertyName;
+    this.reverse4 = (propertyName !== null && this.propertyName4 === propertyName) ? !this.reverse4 : false;
+    if (this.reverse4 === false){
+      applicant=applicant.sort((a, b) =>
+         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+        );
+    }else{
+      applicant=applicant.sort((a, b) => 
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
   }
   getClientSchemeName() {
     let obj = {
@@ -115,7 +176,8 @@ export class ClientWiseComponent implements OnInit {
     this.backoffice.getAumClientTotalAum(obj).subscribe(
       data => this.clientTotalAum(data),
       err => {
-        this.showLoader = false;
+        this.isLoading = false;
+        this.clientList = [];
       }
     )
 
@@ -135,8 +197,9 @@ export class ClientWiseComponent implements OnInit {
       this.backoffice.getAumFamilyMember(obj).subscribe(
         data => {
           if (data) {
-            data[0].showInvestor = true;
-
+            data.forEach(element => {
+              element.showInvestor=true;
+            });
             clientData.investorList = data
             this.investorList = data;
             console.log(data);
@@ -320,6 +383,8 @@ export class ClientWiseComponent implements OnInit {
         this.totalWeight += o.weightInPercentage;
       });
       this.showLoader = false;
+    }else{
+      this.clientList = [];
     }
   }
   clientScheme(data, show, index) {
@@ -343,8 +408,10 @@ export class ClientWiseComponent implements OnInit {
       this.backoffice.getAumFamilyMemberScheme(obj).subscribe(
         data => {
           if (data) {
-            data[0].showScheme = true;
-            data[0].familyMemberId = investorData.familyMemberId;
+            data.forEach(element => {
+              element.showScheme=true;
+              element.familyMemberId=investorData.familyMemberId;
+            });
             investorData.schemeList = data;
             console.log(data);
             this.appendingOfValuesInExcel(data, this.selectedClient, 'schemes');

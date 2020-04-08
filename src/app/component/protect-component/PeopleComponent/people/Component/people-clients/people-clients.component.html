@@ -20,7 +20,7 @@
     <div class="col-md-12 people-clients">
         <table *ngIf="clientDatasource.data.length>0" mat-table [dataSource]="clientDatasource" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation mt-8">
             <ng-container matColumnDef="position">
-                <th mat-header-cell *matHeaderCellDef class="br w-20"> Group head name1 </th>
+                <th mat-header-cell *matHeaderCellDef class="br w-20"> Group head name </th>
                 <td (click)="selectClient(element)" mat-cell *matCellDef="let element" class="br">
                     <div class="bar"> {{element.name}}</div>
                 </td>
@@ -58,7 +58,7 @@
             <ng-container matColumnDef="owner">
                 <th mat-header-cell *matHeaderCellDef class="br"> Client owner </th>
                 <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.owner}}</div>
+                    <div class="bar"> {{element.ownerName}}</div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="login">
