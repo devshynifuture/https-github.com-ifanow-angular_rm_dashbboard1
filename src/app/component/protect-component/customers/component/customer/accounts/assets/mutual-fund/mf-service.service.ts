@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -23,24 +23,27 @@ export class MfServiceService {
   totalAmount: any;
   totalGain: any;
   allocationPer: any;
-  constructor() { }
 
-  filter(data, key) {//filtering data as per category
+  constructor() {
+  }
+
+  filter(data, key) {// filtering data as per category
     const filterData = [];
     const finalDataSource = [];
-    data.filter(function (element) {
-      filterData.push(element[key])
-    })
+    data.filter(element => {
+      filterData.push(element[key]);
+    });
     if (filterData.length > 0) {
       filterData.forEach(element => {
-        element.forEach(data => {
-          finalDataSource.push(data)
+        element.forEach(singleData => {
+          finalDataSource.push(singleData);
         });
       });
     }
-    this.filteredArray = finalDataSource;//final dataSource Value
-    return this.filteredArray
+    this.filteredArray = finalDataSource; // final dataSource Value
+    return this.filteredArray;
   }
+
   initializeValues() {
     this.amtInvested = 0;
     this.currentValue = 0;
@@ -60,7 +63,8 @@ export class MfServiceService {
     this.totalGain = 0;
     this.allocationPer = 0;
   }
-  calculateTotalValue(data) {//for getting total value as per category in Summary
+
+  calculateTotalValue(data) {// for getting total value as per category in Summary
     this.amtInvested += (data.amountInvested) ? data.amountInvested : 0;
     this.currentValue += (data.currentValue) ? data.currentValue : 0;
     this.unrealizedGainLoss += (data.unrealizedGain) ? data.unrealizedGain : 0;
@@ -71,21 +75,22 @@ export class MfServiceService {
     this.balanceUnit += (data.balanceUnit) ? data.switchOut : 0;
     this.sip += (data.sipAmount) ? data.sipAmount : 0;
     const obj = {
-      'schemeName': 'Total',
-      'totalAmountInvested': this.amtInvested,
-      'totalCurrentValue': this.currentValue,
-      'totalUnrealizedGain': this.unrealizedGainLoss,
-      'totalAbsoluteReturn': this.absReturn,
-      'totalXirr': this.xirr,
-      'totalDividendPayout': this.divPayout,
-      'totalSwitchOut': this.withdrawals,
-      'totalBalanceUnit': this.balanceUnit,
-      'totalSipAmount': this.sip
-    }
-    this.totalObj = obj
-    return this.totalObj
+      schemeName: 'Total',
+      totalAmountInvested: this.amtInvested,
+      totalCurrentValue: this.currentValue,
+      totalUnrealizedGain: this.unrealizedGainLoss,
+      totalAbsoluteReturn: this.absReturn,
+      totalXirr: this.xirr,
+      totalDividendPayout: this.divPayout,
+      totalSwitchOut: this.withdrawals,
+      totalBalanceUnit: this.balanceUnit,
+      totalSipAmount: this.sip
+    };
+    this.totalObj = obj;
+    return this.totalObj;
   }
-  getEachTotalValue(data) { //get total value as per category for transaction
+
+  getEachTotalValue(data) { // get total value as per category for transaction
     data.mutualFundTransactions.forEach(ele => {
       this.totalTransactionAmt += (ele.amount) ? ele.amount : 0;
       this.totalUnit += (ele.unit) ? ele.unit : 0;
@@ -101,81 +106,83 @@ export class MfServiceService {
       this.allocationPer += (ele.allocationPercent) ? ele.allocationPercent : 0;
     });
     const obj = {
-      'total': 'Total',
-      'totalTransactionAmt': this.totalTransactionAmt,
-      'totalUnit': this.totalUnit,
-      'totalNav': this.totalNav,
-      'totalBalanceUnit': this.balanceUnit,
-      'currentValue': this.currentValue,
-      'dividendPayout': this.dividendPayout,
-      'dividendReinvest': this.dividendReinvest,
-      'totalAmount': this.totalAmount,
-      'totalGain': this.totalGain,
-      'absReturn': this.absReturn,
-      'xirr': this.xirr,
-      'allocationPer': this.allocationPer
-    }
-    this.totalObj = obj
+      total: 'Total',
+      totalTransactionAmt: this.totalTransactionAmt,
+      totalUnit: this.totalUnit,
+      totalNav: this.totalNav,
+      totalBalanceUnit: this.balanceUnit,
+      currentValue: this.currentValue,
+      dividendPayout: this.dividendPayout,
+      dividendReinvest: this.dividendReinvest,
+      totalAmount: this.totalAmount,
+      totalGain: this.totalGain,
+      absReturn: this.absReturn,
+      xirr: this.xirr,
+      allocationPer: this.allocationPer
+    };
+    this.totalObj = obj;
     return this.totalObj;
   }
+
   categoryFilter(data) {
-    let catObj = {};
+    const catObj = {};
     const categoryArray = [];
     data.forEach(ele => {
       if (ele.subCategoryName) {
-        const categoryArray = catObj[ele.subCategoryName] ? catObj[ele.subCategoryName] : [];
-        categoryArray.push(ele);
-        catObj[ele.subCategoryName] = categoryArray;
+        const categoryArrayLocal = catObj[ele.subCategoryName] ? catObj[ele.subCategoryName] : [];
+        categoryArrayLocal.push(ele);
+        catObj[ele.subCategoryName] = categoryArrayLocal;
       } else {
         categoryArray.push(ele);
       }
     });
     return catObj;
   }
+
   filterScheme(data) {
-    let filterData = [];
-    let filterData2 = [];
-    let filterData3 = [];
-    let filterData4 = [];
+    const filterData = [];
+    const filterData2 = [];
+    const filterData3 = [];
+    const filterData4 = [];
     let sendData = {};
-    data.filter(function (element) {
-      if (element.selected == true) {
+    data.filter(element => {
+      if (element.selected) {
         element.mutualFund.forEach(ele => {
           const obj = {
-            "folioNumber": ele.folioNumber,
-            "selected": true
-          }
+            folioNumber: ele.folioNumber,
+            selected: true
+          };
           const obj2 = {
-            "name": ele.ownerName,
-            "familyMemberId": ele.familyMemberId,
-            "selected": true
-          }
+            name: ele.ownerName,
+            familyMemberId: ele.familyMemberId,
+            selected: true
+          };
           const obj3 = {
-            "category": ele.categoryName,
-            "categoryId": ele.categoryId,
-            "selected": true
-          }
+            category: ele.categoryName,
+            categoryId: ele.categoryId,
+            selected: true
+          };
           filterData.push(obj);
           filterData2.push(obj2);
-          filterData3.push(obj3)
+          filterData3.push(obj3);
         });
         const obj = {
-          "amc_name": element.amc_name,
-          "schemeName": element.schemeName,
-          "mutualFund": element.mutualFund,
-          "id": element.id,
-          "amc_id": element.amc_id,
-          "selected": true
-        }
+          amc_name: element.amc_name,
+          schemeName: element.schemeName,
+          mutualFund: element.mutualFund,
+          id: element.id,
+          amc_id: element.amc_id,
+          selected: true
+        };
         filterData4.push(obj);
       }
-    })
+    });
     sendData = {
-      filterData: filterData,
-      filterData2: filterData2,
-      filterData3: filterData3,
-      filterData4: filterData4
-    }
+      filterData,
+      filterData2,
+      filterData3,
+      filterData4
+    };
     return sendData;
   }
 }
