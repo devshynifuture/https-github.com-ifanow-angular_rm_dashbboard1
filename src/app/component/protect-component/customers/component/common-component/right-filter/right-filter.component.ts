@@ -37,6 +37,7 @@ export class RightFilterComponent implements OnInit {
   obj: any;
   mfData: any;
   finalFilterData: any;
+  reportTypeobj: any;
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
               private custumService: CustomerService, private eventService: EventService,
@@ -159,6 +160,7 @@ export class RightFilterComponent implements OnInit {
     this.reportType.filter(function (element) {
       const obj = {
         name: element,
+        selected:false
       };
       filterData.push(obj);
     });
@@ -176,7 +178,11 @@ export class RightFilterComponent implements OnInit {
     this.folio.forEach(item => item.selected = true);
     this.category.forEach(item => item.selected = true);
     this.transactionView.forEach(item => item.selected = true);
-    this.reportType.forEach(item => item.selected = true);
+    this.reportType.forEach(item => {
+      if(item.name=='Sub Category wise'){
+        item.selected = true
+      }
+    });
     this.countFamily = this.familyMember.length;
     this.countAmc = this.amc.length;
     this.countScheme = this.scheme.length;
@@ -400,12 +406,15 @@ export class RightFilterComponent implements OnInit {
       this.categoryObj = filter;
     }
     if (this.reportType != undefined) {
+      const filter = [];
       this.countReport = 0;
       this.reportType.forEach(item => {
         if (item.selected) {
           this.countReport++;
+          filter.push(item);
         }
       });
+      this.reportTypeobj = filter;
     }
   };
 
@@ -420,13 +429,13 @@ export class RightFilterComponent implements OnInit {
       scheme: this.scheme,
       folio: this.folio,
       category:this.category,
-      reportType:this.reportType,
+      reportType:this.reportTypeobj,
       transactionView:this.transactionView,
       reportAsOn: (this.summaryFilerForm.controls.reportAsOn.value) ? this.summaryFilerForm.controls.reportAsOn.value.toISOString().slice(0, 10) : null,
       showFolio: parseInt(this.summaryFilerForm.controls.showFolios.value),
     };
     console.log('dataToSend---------->', this.dataToSend);
-      this.finalFilterData=this.mfService.filterFinalData(this.mfData,this.dataToSend);
+      this.finalFilterData=this.mfService.filterFinalData(this._data.mfData,this.dataToSend);
       this.Close(this.finalFilterData);
     // this.custumService.getMutualFund(this.dataToSend).subscribe(
     //   data => this.getMutualFundResponse(data), (error) => {
