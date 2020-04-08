@@ -22,6 +22,7 @@ export class MutualFundComponent implements OnInit {
   totalObj: any;
   customDataSource: any;
   catObj: {};
+  mfDataUnrealised: any;
 
   constructor(public subInjectService: SubscriptionInject, public utilService: UtilService,
               public eventService: EventService, private custumService: CustomerService,
@@ -49,6 +50,9 @@ export class MutualFundComponent implements OnInit {
 
   getMutualFundResponse(data) {
     this.mfData = data;
+  }
+  unrealiseTransaction(){
+    this.mfDataUnrealised = this.mfData;
   }
 
 

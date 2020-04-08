@@ -54,7 +54,15 @@ export class RightFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.mfData=this._data.mfData;
+    this.amc = this._data.schemeWise;//amc wise data 
+    this.folio = this._data.folioWise;//for getting all folios
+    this.getCategoryWise(this._data.category)//get category wise data
+    this.getSchemeWise(this.amc);//scheme wise data
+    this.getFamilyMember(this._data.folioWise)//for family memeber
+    this.getTransactionView(this._data.transactionView);//for displaying how many columns to show in table
+    this.getReportType();//get type of report categorywise,investor,sub category wise
+    this.setDefaultFilters();//setting default selected in each above array
+    this.showSummaryFilterForm('');//as on date and showZero folio form
     this.amc = this._data.schemeWise; // amc wise data
     this.folio = this._data.folioWise; // for getting all folios
     if (this._data.category) {
@@ -146,7 +154,6 @@ export class RightFilterComponent implements OnInit {
     });
     this.transactionView = filterData;
   }
-
   getReportType() {
     this.reportType = ['Investor wise', 'Category wise', 'Sub Category wise'];
     const filterData = [];

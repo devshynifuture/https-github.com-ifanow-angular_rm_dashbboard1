@@ -28,6 +28,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   constructor(private subInjectService: SubscriptionInject, private UtilService: UtilService, private MfServiceService: MfServiceService) { }
   @Input() mutualFund;
   ngOnInit() {
+    console.log('this.mutualFund == ',this.mutualFund)
     if (this.mutualFund != undefined) {
       this.getSubCategoryWise(this.mutualFund)
       this.getSchemeWise();
@@ -67,7 +68,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
           customDataSource.data.push(this.totalObj);
         });
       });
-      console.log(customDataSource)
+      //console.log(customDataSource)
       return customDataSource;
     }
   }

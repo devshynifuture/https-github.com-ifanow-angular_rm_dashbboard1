@@ -7,26 +7,30 @@
             <ul class="vertical-menu">
                 <li (click)="viewMode ='tab1'" [ngClass]="{'activeColor':viewMode =='tab1'}" class="activeColor c-p">
                     <div (click)="tabValue = 'Documents';getAllFileList(tabValue)" class="row">
-                        <div class="col-md-12 p-0"><img class="mr-8" src="assets/images/svg/document-file-icon.svg"> All files
+                        <div class="col-md-12 p-0"><img class="mr-8" src="assets/images/svg/document-file-icon.svg"> All
+                            files
                         </div>
                     </div>
                 </li>
                 <li (click)="viewMode ='tab2'" [ngClass]="{'activeColor':viewMode =='tab2'}" class="c-p">
                     <div (click)="tabValue = 'Recents';getAllFileList(tabValue)" class="row">
-                        <div class="col-md-12 p-0"><img class="mr-8" src="assets/images/svg/recent-document.svg"> Recents
+                        <div class="col-md-12 p-0"><img class="mr-8" src="assets/images/svg/recent-document.svg">
+                            Recents
                         </div>
                     </div>
                 </li>
                 <li (click)="viewMode ='tab3'" [ngClass]="{'activeColor':viewMode =='tab3'}" class="c-p">
                     <div (click)="tabValue = 'Starred';getAllFileList(tabValue)" class="row">
-                        <div class="col-md-11 p-0"><img class="mr-8" src="assets/images/svg/star-menu-documents.svg"> Starred
+                        <div class="col-md-11 p-0"><img class="mr-8" src="assets/images/svg/star-menu-documents.svg">
+                            Starred
                         </div>
                         <div *ngIf="countDocs" class="col-md-1 p-0 text-custom">{{countDocs.starredFiles}}</div>
                     </div>
                 </li>
                 <li (click)="viewMode ='tab4'" [ngClass]="{'activeColor':viewMode =='tab4'}" class=" c-p">
                     <div (click)="tabValue = 'Deleted files';getAllFileList(tabValue)" class="row">
-                        <div class="col-md-11 p-0"><img class="mr-8" src="assets/images/svg/remove-documents.svg"> Deleted files
+                        <div class="col-md-11 p-0"><img class="mr-8" src="assets/images/svg/remove-documents.svg">
+                            Deleted files
                         </div>
                         <div *ngIf="countDocs" class="col-md-1 p-0 text-custom">{{countDocs.trashedFiles}}</div>
                     </div>
@@ -45,14 +49,17 @@
                                     <p *ngIf="showResult == true" class="m-0 text-black roboto f-18">Search results</p>
                                 </li>
 
-                                <li (click)="getFolders(folder,i)" *ngFor="let folder of openFolderName; let i = index" class="breadcrumb-item active c-p" [ngClass]="folder.openFolderNm ? 'breadcrumb-item active c-p' : 'none'">
+                                <li (click)="getFolders(folder,i)" *ngFor="let folder of openFolderName; let i = index"
+                                    class="breadcrumb-item active c-p"
+                                    [ngClass]="folder.openFolderNm ? 'breadcrumb-item active c-p' : 'none'">
                                     <p class="text-black roboto f-18 "> {{folder.openFolderNm}} </p>
                                 </li>
                             </ol>
                         </div>
                         <div class="col-md-6 p-0 d-flex justify-content-end">
                             <div class="input_class">
-                                <input (keyup)="keyPress($event.target.value)" class="b-a bg-grey lter mr-8" matInput value="">
+                                <input (keyup)="keyPress($event.target.value)" class="b-a bg-grey lter mr-8" matInput
+                                    value="">
                                 <img src="assets/images/svg/document-search-icon.svg">
                             </div>
                             <!-- <img src="assets/images/svg/grid.svg" class="c-p gridIcon mr-12"> -->
@@ -70,7 +77,8 @@
                                         <img class="mr-8" src="assets/images/svg/uploads-icon.svg">
                                         <span>Upload file</span></label>
                                 </button>
-                                <button mat-menu-item class="text-black d-flex align-items-center" (click)="openDialog('CREATE','')">
+                                <button mat-menu-item class="text-black d-flex align-items-center"
+                                    (click)="openDialog('CREATE','')">
                                     <img class="mr-8" src="assets/images/svg/create-new-floder.svg">
                                     Create Folder
                                 </button>
@@ -98,9 +106,11 @@
                 </div> -->
 
                     <div class="row">
-                        <div *ngIf="showMsg == false && noResult == false && commonFileFolders.data.length > 0" class="col-md-9 p-0 documentsTable">
+                        <div *ngIf="showMsg == false && noResult == false && commonFileFolders.data.length > 0"
+                            class="col-md-9 p-0 documentsTable">
                             <div *ngSwitchCase="viewMode">
-                                <table [appSkeletonLoading]="isLoading" [dataSource]="commonFileFolders" appSkeletonLoading class="skeletonAnimation" id="table-low" mat-table matSort>
+                                <table [appSkeletonLoading]="isLoading" [dataSource]="commonFileFolders"
+                                    appSkeletonLoading class="skeletonAnimation" id="table-low" mat-table matSort>
                                     <ng-container matColumnDef="emptySpace">
                                         <th *matHeaderCellDef mat-header-cell></th>
                                         <td *matCellDef="let element" mat-cell></td>
@@ -111,17 +121,23 @@
                                         <td *matCellDef="let element" class="c-p" mat-cell>
                                             <div (click)="openFolder(element)">
                                                 <div class="bar">
-                                                    <img *ngIf="element.folderName != undefined" src="/assets/images/svg/folder-icon.svg"> {{isLoading ? '' : element.folderName}}
+                                                    <img *ngIf="element.folderName != undefined"
+                                                        src="/assets/images/svg/folder-icon.svg">
+                                                    {{isLoading ? '' : element.folderName}}
                                                     <img *ngIf="element.isStarred == 1">
-                                                    <img *ngIf="element.fileName != undefined" src="/assets/images/svg/file-lines.svg"> {{isLoading ? '' : element.fileName}}
-                                                    <img *ngIf="element.isStarred == 1" src="/assets/images/svg/document-star.svg">
+                                                    <img *ngIf="element.fileName != undefined"
+                                                        src="/assets/images/svg/file-lines.svg">
+                                                    {{isLoading ? '' : element.fileName}}
+                                                    <img *ngIf="element.isStarred == 1"
+                                                        src="/assets/images/svg/document-star.svg">
                                                 </div>
                                             </div>
                                         </td>
                                     </ng-container>
                                     <!-- Weight Column -->
                                     <ng-container matColumnDef="lastModi">
-                                        <th *matHeaderCellDef mat-header-cell mat-sort-header="createdDate"> Last modified
+                                        <th *matHeaderCellDef mat-header-cell mat-sort-header="createdDate"> Last
+                                            modified
                                         </th>
                                         <td *matCellDef="let element" mat-cell>
                                             <div class="bar">
@@ -158,44 +174,59 @@
                                                     <img class="mr-20" src="assets/images/svg/preview.svg">
                                                     Preview
                                                 </button> -->
-                                                <button (click)="getSharebleLink(element,'share')" class="f-14" mat-menu-item>
+                                                <button (click)="getSharebleLink(element,'share')" class="f-14"
+                                                    mat-menu-item>
                                                     <img class="mr-20" src="assets/images/svg/share.svg">
                                                     Share
                                                 </button>
-                                                <button class="f-14" mat-menu-item (click)="getSharebleLink(element,'shareLink')">
+                                                <button class="f-14" mat-menu-item
+                                                    (click)="getSharebleLink(element,'shareLink')">
                                                     <img class="mr-20" src="assets/images/svg/shareable.svg">
                                                     Get shareable link
                                                 </button>
-                                                <button *ngIf="element.isStarred == 0" (click)="starFiles(element,1)" class="f-14" mat-menu-item><img class="mr-20"
+                                                <button *ngIf="element.isStarred == 0" (click)="starFiles(element,1)"
+                                                    class="f-14" mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/star-border-icon.svg">Add
                                                     to
                                                     starred
                                                 </button>
-                                                <button *ngIf="element.isStarred == 1" (click)="starFiles(element,0)" class="f-14" mat-menu-item><img class="mr-20"
+                                                <button *ngIf="element.isStarred == 1" (click)="starFiles(element,0)"
+                                                    class="f-14" mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/star-border-icon.svg">Remove
                                                     to
                                                     starred
                                                 </button>
-                                                <button (click)="openDialog('RENAME',element)" class="f-14" mat-menu-item><img class="mr-20"
+                                                <button (click)="openDialog('RENAME',element)" class="f-14"
+                                                    mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/edit-name.svg">Rename
                                                 </button>
-                                                <button (click)="viewActivities(element)" class="f-14" mat-menu-item><img class="mr-20"
+                                                <button (click)="viewActivities(element)" class="f-14"
+                                                    mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/info-icon.svg">View
                                                     activity
                                                 </button>
-                                                <button (click)="openDialogCopy(element, 'Move')" class="f-14" mat-menu-item><img class="mr-20"
+                                                <button (click)="openDialogCopy(element, 'Move')" class="f-14"
+                                                    mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/move-to-icon.svg">Move to
                                                 </button>
-                                                <button (click)="openDialogCopy(element, 'Copy')" *ngIf="element.folderName == undefined" class="f-14" mat-menu-item><img class="mr-20"
+                                                <button (click)="openDialogCopy(element, 'Copy')"
+                                                    *ngIf="element.folderName == undefined" class="f-14"
+                                                    mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/file-copy.svg">Copy to
                                                 </button>
-                                                <button (click)="downlodFiles(element)" *ngIf="element.folderName == undefined" class="f-14" mat-menu-item><img class="mr-20"
+                                                <button (click)="downlodFiles(element)"
+                                                    *ngIf="element.folderName == undefined" class="f-14"
+                                                    mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/download-icon.svg">Download
                                                 </button>
-                                                <button (click)="deleteModal('FILE',element)" *ngIf="element.folderName == undefined" class="f-14" mat-menu-item><img class="mr-20"
+                                                <button (click)="deleteModal('FILE',element)"
+                                                    *ngIf="element.folderName == undefined" class="f-14"
+                                                    mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/delete-icon.svg">Delete
                                                 </button>
-                                                <button (click)="deleteModal('FOLDER',element)" *ngIf="element.fileName == undefined" class="f-14" mat-menu-item><img class="mr-20"
+                                                <button (click)="deleteModal('FOLDER',element)"
+                                                    *ngIf="element.fileName == undefined" class="f-14"
+                                                    mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/delete-icon.svg">Delete
                                                 </button>
                                             </mat-menu>
