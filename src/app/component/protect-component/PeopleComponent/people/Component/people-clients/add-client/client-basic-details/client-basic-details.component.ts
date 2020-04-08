@@ -131,7 +131,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     (data == undefined) ? data = {} : '';
     this.nonIndividualForm = this.fb.group({
       comName: [data.name, [Validators.required]],
-      dateOfIncorporation: [data.dateOfBirth],
+      dateOfIncorporation: [(data.dateOfBirth) ? new Date(data.dateOfBirth) : ''],
       comStatus: [, [Validators.required]],
       comEmail: [(data.emailList) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
       comPan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
@@ -429,9 +429,9 @@ export class ClientBasicDetailsComponent implements OnInit {
     obj['displayName'] = this.basicDetailsData.displayName;
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {
-        obj.invTypeCategory = this.invTypeCategory;
-        obj.categoryTypeflag = 'familyMinor';
-        (flag == 'Next') ? this.changeTabAndSendData(obj) : this.close(data);
+        data.invTypeCategory = this.invTypeCategory;
+        data.categoryTypeflag = 'familyMinor';
+        (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(data);
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
     );
