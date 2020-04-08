@@ -3,6 +3,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { UtilService } from 'src/app/services/util.service';
 import { MatTableDataSource } from '@angular/material';
 import { MfServiceService } from '../../mf-service.service';
+import { RightFilterComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
 
 @Component({
   selector: 'app-mutual-fund-unrealized-tran',
@@ -21,6 +22,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   dataSource: any[];
   catObj: {};
   grandTotal: any;
+  schemeWiseForFilter: any;
+  mutualFundListFilter: any[];
+  rightFilterData: any;
   constructor(private subInjectService: SubscriptionInject, private UtilService: UtilService, private MfServiceService: MfServiceService) { }
   @Input() mutualFund;
   ngOnInit() {
@@ -29,13 +33,17 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       this.getSchemeWise();
       this.mfSchemes();
       this.getfinalTotalValue();
+      // this.subCatArray(this.mutualFundList,''); // for displaying table values as per category
+      this.getDataForRightFilter();
     }
   }
-  subCatArray() {
+  subCatArray(mutualFundList,type) {
+    var reportType;
+    (type=='' || type[0].name=='Sub Category wise')?reportType='subCategoryName':(type[0].name=='Category wise')?reportType='categoryName':reportType='name'
     const categoryArray = [];
     let filterArray = []
     if (this.mutualFundList != undefined) {
-      this.catObj = this.MfServiceService.categoryFilter(this.mutualFundList);
+      this.catObj = this.MfServiceService.categoryFilter(mutualFundList,reportType);
       const customDataSource = new MatTableDataSource(categoryArray);
       Object.keys(this.catObj).map(key => {
         this.MfServiceService.initializeValues();//for initializing total values object
@@ -63,11 +71,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       return customDataSource;
     }
   }
-  getCategory() { // first table category wise
+  getCategory(mutualFundList,type) { // first table category wise
+    var reportType;
+    (type=='' || type[0].name=='Sub Category wise')?reportType='subCategoryName':(type[0].name=='Category wise')?reportType='categoryName':reportType='name';
     let catObj = {};
     let newArray = [];
     if (this.mutualFundList != undefined) {
-      this.catObj = this.MfServiceService.categoryFilter(this.mutualFundList);
+      this.catObj = this.MfServiceService.categoryFilter(mutualFundList,reportType);
       Object.keys(this.catObj).map(key => {
         this.MfServiceService.initializeValues();//for initializing total values object
         this.catObj[key].forEach((singleData) => {
@@ -78,6 +88,41 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       });
       this.dataSource = newArray
     }
+  }
+  getDataForRightFilter(){//for rightSidefilter data this does not change after generating report
+    var subCatData = this.MfServiceService.filter(this.mutualFund.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+    this.schemeWiseForFilter = this.MfServiceService.filter(subCatData, 'mutualFundSchemeMaster');
+    this.mutualFundListFilter = this.MfServiceService.filter(this.schemeWiseForFilter, 'mutualFund');
+  }
+  openFilter() {
+    const fragmentData = {
+      flag: 'openFilter',
+      data: {},
+      id: 1,
+      state: 'open35',
+      componentName: RightFilterComponent
+    };
+    fragmentData.data = {
+      mfData:this.mutualFund,
+      folioWise: this.mutualFundListFilter,
+      schemeWise: this.schemeWiseForFilter,
+      familyMember: this.mutualFund.family_member_list,
+      category: this.mutualFund.mutualFundCategoryMastersList,
+      transactionView: this.displayedColumns
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          if(sideBarData.data){
+            this.rightFilterData=sideBarData.data
+            this.subCatArray(this.rightFilterData.mutualFundList,this.rightFilterData.reportType)
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
   }
   isGroup(index, item): boolean {//group category wise
     return item.groupName;
@@ -112,7 +157,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   }
   mfSchemes() {//get last mf list
     this.mutualFundList = this.MfServiceService.filter(this.schemeWise, 'mutualFund');
-    this.getCategory();
+    this.getCategory(this.mutualFundList,'');
   }
   getfinalTotalValue() { //grand total values
     this.MfServiceService.initializeValues()

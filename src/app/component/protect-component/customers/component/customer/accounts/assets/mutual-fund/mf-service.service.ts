@@ -124,14 +124,14 @@ export class MfServiceService {
     return this.totalObj;
   }
 
-  categoryFilter(data) {
+  categoryFilter(data,type) {
     const catObj = {};
     const categoryArray = [];
     data.forEach(ele => {
-      if (ele.subCategoryName) {
-        const categoryArrayLocal = catObj[ele.subCategoryName] ? catObj[ele.subCategoryName] : [];
+      if (ele[type]) {
+        const categoryArrayLocal = catObj[ele[type]] ? catObj[ele[type]] : [];
         categoryArrayLocal.push(ele);
-        catObj[ele.subCategoryName] = categoryArrayLocal;
+        catObj[ele[type]] = categoryArrayLocal;
       } else {
         categoryArray.push(ele);
       }
