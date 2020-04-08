@@ -435,7 +435,7 @@ export class RightFilterComponent implements OnInit {
       showFolio: parseInt(this.summaryFilerForm.controls.showFolios.value),
     };
     console.log('dataToSend---------->', this.dataToSend);
-      this.finalFilterData=this.mfService.filterFinalData(this.mfData,this.dataToSend);
+      this.finalFilterData=this.mfService.filterFinalData(this._data.mfData,this.dataToSend);
       this.Close(this.finalFilterData);
     // this.custumService.getMutualFund(this.dataToSend).subscribe(
     //   data => this.getMutualFundResponse(data), (error) => {
