@@ -41,6 +41,7 @@ export class AddNumberComponent implements OnInit {
     (this.numberFormGroup.controls.mobileNo.length == 1) ? '' : this.numberFormGroup.controls.mobileNo.removeAt(index)
   }
   addNumber(data) {
+    (data == undefined) ? data = {} : data;
     this.getMobileNumList.push(this.fb.group({
       code: ['+91'],
       number: [data.mobileNo, Validators.pattern(this.validatorType.TEN_DIGITS)]
