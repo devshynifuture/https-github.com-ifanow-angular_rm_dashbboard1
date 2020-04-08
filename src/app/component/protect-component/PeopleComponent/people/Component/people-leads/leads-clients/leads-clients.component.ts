@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {PeopleService} from '../../../../people.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { PeopleService } from '../../../../people.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-leads-clients',
@@ -36,7 +37,7 @@ export class LeadsClientsComponent implements OnInit {
 
   getClientList(data) {
     const obj = {
-      advisorId: 1
+      advisorId: AuthService.getAdvisorId()
     };
     this.peopleService.getAllClients(obj).subscribe(
       data => {
@@ -69,6 +70,6 @@ export class LeadsClientsComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 }
