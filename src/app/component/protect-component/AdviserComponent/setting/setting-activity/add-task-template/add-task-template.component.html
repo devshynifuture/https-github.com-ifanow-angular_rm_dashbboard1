@@ -1,6 +1,6 @@
 <div class="row bb-1 popup-header-fix-50">
     <div class="col-md-10 p-0">
-        <h4 class="mb-0 l-22 wrapper-20">Add task template</h4>
+        <h4 class="mb-0 l-22 wrapper-20">{{data.id ? 'Editing' : 'Adding'}} a {{data.templateType == 1 ? 'linked' : 'non-linked'}} task template</h4>
     </div>
     <div class="col-md-2 text-right">
         <i class="material-icons pt-20 c-p pr-16" (click)="Close(false)">
@@ -8,137 +8,49 @@
         </i>
     </div>
 </div>
-<!-- Add task template -->
 
-
-<!-- Adding a linked task template -->
-
-<div class="pt-90 pl-28 pr-28" [formGroup]="taskTemplate">
-    <div class="row">
-        <div class="col-md-12 p-0 select-category">
-            <h5 class="m-0 pb-12">Select category</h5>
-            <mat-radio-group class="taskradio" aria-label="Select an option" formControlName="category">
-                <mat-radio-button [value]="1" (click)="getSelectedCategory(1,'asset')" checked [ngClass]="taskTemplate.get('category').value == 1 ? 'text-primary b-a-custom': 'text-primitive'">
-                    Asset</mat-radio-button>
-                <mat-radio-button [value]="2" (click)="getSelectedCategory(2,'insurance')" [ngClass]="taskTemplate.get('category').value == 2 ? 'text-primary b-a-custom': 'text-primitive'">
-                    Insurance</mat-radio-button>
-                <mat-radio-button [value]="3" (click)="getSelectedCategory(3,'liability')" [ngClass]="taskTemplate.get('category').value == 3 ? 'text-primary b-a-custom': 'text-primitive'">
-                    Liability</mat-radio-button>
-            </mat-radio-group>
-        </div>
-    </div>
-
-    <div class="row">
-
-        <div class="col-md-5 pl-0">
-            <h5 class="m-0 pb-8 pt-24">Select {{category}}</h5>
-            <div class="form-group">
-                <mat-form-field>
-                    <mat-select class="form-control" formControlName="subCategory">
-                        <mat-option [value]="subCategory.subcategoryId" (click)="selectedSubcategory(subCategory)" *ngFor="let subCategory of list">
-                            {{subCategory.subcategoryType}}
-                        </mat-option>
-                    </mat-select>
-                    <mat-error class="f-12">
-                        This field is required
-                    </mat-error>
-                </mat-form-field>
+<div *ngIf="!isLoading">
+    <div class="pt-90 pl-28 pr-28" [formGroup]="taskTemplate">
+        <div class="row" [hidden]="taskTemplate.get('templateType').value == 2">
+            <div class="col-md-12 p-0 select-category">
+                <h5 class="m-0 pb-12">Select category</h5>
+                <mat-radio-group class="taskradio" aria-label="Select an option" formControlName="categoryId">
+                    <mat-radio-button [value]="1" [ngClass]="taskTemplate.get('categoryId').value == 1 ? 'text-primary b-a-custom': 'text-primitive'">
+                        Asset
+                    </mat-radio-button>
+                    <mat-radio-button [value]="2" [ngClass]="taskTemplate.get('categoryId').value == 2 ? 'text-primary b-a-custom': 'text-primitive'">
+                        Insurance
+                    </mat-radio-button>
+                    <mat-radio-button [value]="3" [ngClass]="taskTemplate.get('categoryId').value == 3 ? 'text-primary b-a-custom': 'text-primitive'">
+                        Liability
+                    </mat-radio-button>
+                </mat-radio-group>
             </div>
         </div>
-
-        <div class="col-md-5 pl-0" *ngIf="hideSubcategory == false">
-            <h5 class="m-0 pb-8 pt-24">Select sub category</h5>
-            <div class="form-group">
-                <mat-form-field>
-                    <mat-select class="form-control" formControlName="subSubCategory">
-                        <mat-option [value]="sub.subSubCategoryId" *ngFor="let sub of listOfSub">
-                            {{sub.subcategoryType}}</mat-option>
-                    </mat-select>
-                    <mat-error class="f-12">
-                        This field is required
-                    </mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
-    <!-- <div class="row">
-        <div class="col-md-10 pl-0">
-            <h5 class="m-0 pb-8 pt-24">Select task template</h5>
-            <div class="form-group">
-                <mat-form-field>
-                    <mat-select class="form-control" formControlName="taskTemplate">
-                        <mat-option value="1">Port policy</mat-option>
-                    </mat-select>
-                    <mat-error class="f-12">
-                        This field is required
-                    </mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-    </div> -->
-    <div class="row">
-        <div class="col-md-10 pl-0">
-            <h5 class="m-0 pb-8 pt-24">Select task template</h5>
-            <div class="form-group">
-                <mat-form-field>
-                    <mat-select class="form-control" formControlName="adviceType">
-                        <mat-option value="1">Withdraw</mat-option>
-                        <mat-option value="2">Continue</mat-option>
-                    </mat-select>
-                    <mat-error class="f-12">
-                        This field is required
-                    </mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
-
-    <div class="row pt-24">
-        <div class="col-md-5 pl-0">
-            <h5 class="m-0 pb-8">Default assigned to</h5>
-            <div class="form-group">
-                <mat-form-field>
-                    <mat-select class="form-control" formControlName="defaultAssign">
-                        <mat-option (click)="updateOwner()" [value]="team.userId" *ngFor="let team of teamMemberList">
-                            {{team.name}}</mat-option>
-                    </mat-select>
-                    <mat-hint>Optional</mat-hint>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="col-md-5 pl-0">
-            <h5 class="m-0 pb-8">Turnaround time</h5>
-            <div class="form-group">
-                <mat-form-field>
-                    <mat-select class="form-control" formControlName="turnAroundTime1">
-                        <mat-option [value]="t.value" *ngFor="let t of Tat">{{t.tat}}</mat-option>
-                    </mat-select>
-                    <mat-hint>Optional</mat-hint>
-
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
-    <div class="pt-24 sub-tasks pb-60" formArrayName="subTaskList">
-        <h5 class="mb-10 f-500 text-black">Sub-tasks</h5>
-        <div class="row pb-16" *ngFor="let creds of subTask.controls; let i = index" [formGroupName]="i">
-            <div class="col-md-4 pl-0">
+    
+        <div class="row" [hidden]="taskTemplate.get('templateType').value == 1">
+            <div class="col-md-10 pl-0" >
+                <h5 class="m-0 pb-8 pt-24">Template Name</h5>
                 <div class="form-group">
                     <mat-form-field>
-                        <input matInput #currentValue type="text" maxlength="10" class="form-control br-0 rupess" formControlName="description">
-                        <mat-error class="f-12">
-                            This field is required
-                        </mat-error>
+                        <input matInput type="text" class="form-control br-0 rupess" formControlName="taskDescription" maxlength="60">
+                        <mat-hint>{{taskTemplate.get('taskDescription').value.length}}/60</mat-hint>
+                        <mat-error class="f-12">This field is required</mat-error>
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-3 pl-0">
-
+        </div>
+    
+        <div class="row" [hidden]="taskTemplate.get('templateType').value == 2">
+            <div class="col-md-5 pl-0">
+                <h5 class="m-0 pb-8 pt-24">Select {{category}}</h5>
                 <div class="form-group">
-                    <mat-form-field class="arrowRemoveBox">
-                        <img class="img-pos" src="/assets/images/svg/calander.svg">
-                        <mat-select class="form-control  " formControlName="turnAroundTime">
-                            <mat-option [disabled]="creds.get('isEdite').value == false" [value]="t.value" *ngFor="let t of Tat">{{t.tat}}
+                    <mat-form-field>
+                        <mat-select class="form-control" formControlName="subcategoryId">
+                            <mat-option value="" disabled>Select option</mat-option>
+                            <mat-option [value]="subCategory.subcategoryId" (click)="selectedSubcategory(subCategory)"
+                                *ngFor="let subCategory of categoryList">
+                                {{subCategory.subcategoryType}}
                             </mat-option>
                         </mat-select>
                         <mat-error class="f-12">
@@ -147,13 +59,15 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-3 pl-0">
-
+    
+            <div class="col-md-5 pl-0" [hidden]="hideSubcategory">
+                <h5 class="m-0 pb-8 pt-24">Select sub category</h5>
                 <div class="form-group">
-                    <mat-form-field class="arrowRemoveBox">
-                        <img class="img-pos-two" src="/assets/images/svg/people.svg">
-                        <mat-select class="form-control" formControlName="ownerId">
-                            <mat-option (click)="updateOwner()" [value]="team.userId" *ngFor="let team of teamMemberList">{{team.name}}</mat-option>
+                    <mat-form-field>
+                        <mat-select class="form-control" formControlName="subSubCategoryId">
+                            <mat-option value="" disabled>Select option</mat-option>
+                            <mat-option [value]="sub.subSubCategoryId" *ngFor="let sub of listOfSub">
+                                {{sub.subcategoryType}}</mat-option>
                         </mat-select>
                         <mat-error class="f-12">
                             This field is required
@@ -161,33 +75,113 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-1 p-0 d-flex justify-content-sm-between">
-                {{creds.isEdite}}
-                <!-- <p *ngIf="creds.get('isEdite').value == true" (click)="addSubTask(creds,'edit')"
-                    class="m-0 roboto text-custom pt-4 pb-44">
-                    + Save</p> -->
-
-                <i *ngIf="creds.get('isEdite').value == true" (click)="addSubTask(creds,'edit')" class="material-icons c-p mt-6">
-                    add
-                </i>
-
-                <i class="material-icons c-p mt-6" (click)="removeSubTask(i)">
-                    remove
-                </i>
-                <p *ngIf="creds.get('isEdite').value == false && inputData.categoryId" class="m-0 roboto text-custom pt-4 pb-44" (click)="editSubtask(creds,true,i)"> <img src="/assets/images/svg/cash-flow-edit-icon.svg"></p>
+        </div>
+    
+        <div class="row" [hidden]="taskTemplate.get('templateType').value == 2">
+            <div class="col-md-10 pl-0">
+                <h5 class="m-0 pb-8 pt-24">Select task template</h5>
+                <div class="form-group">
+                    <mat-form-field>
+                        <mat-select class="form-control" formControlName="adviceTypeId">
+                            <mat-option value="" disabled>Select option</mat-option>
+                            <mat-option [value]="advise.id"
+                                *ngFor="let advise of globalData.system_generated_advice_map_key">{{advise.name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error class="f-12">
+                            This field is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-12 p-0">
-                <!--            TODO  addSubTask(creds,'add')-->
-                <p (click)="addSubTask(null,'add')" class="m-0 c-p roboto text-custom pt-4 pb-44">+ Add more sub task
-                </p>
+    
+        <div class="row pt-24">
+            <div class="col-md-5 pl-0">
+                <h5 class="m-0 pb-8">Default assigned to</h5>
+                <div class="form-group">
+                    <mat-form-field>
+                        <mat-select class="form-control" formControlName="assignedTo">
+                            <mat-option value="" disabled>Select option</mat-option>
+                            <mat-option [value]="team.userId" *ngFor="let team of teamMemberList">
+                                {{team.name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-hint>Optional</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-5 pl-0">
+                <h5 class="m-0 pb-8">Turnaround time</h5>
+                <div class="form-group">
+                    <mat-form-field>
+                        <mat-select class="form-control" formControlName="turnAroundTime">
+                            <mat-option value="" disabled>Select option</mat-option>
+                            <mat-option [value]="t.value" *ngFor="let t of Tat">{{t.tat}}</mat-option>
+                        </mat-select>
+                        <mat-hint>Optional</mat-hint>
+                    </mat-form-field>
+                </div>
             </div>
         </div>
-
+    
+        <div class="pt-24 sub-tasks pb-60" formArrayName="subTaskList">
+            <h5 class="mb-10 f-500 text-black">Sub-tasks</h5>
+            <div class="row pb-16" *ngFor="let creds of subTask.controls; let i = index" [formGroupName]="i">
+                <div class="col-md-4 pl-0">
+                    <div class="form-group">
+                        <mat-form-field>
+                            <input matInput type="text" class="form-control br-0 rupess" formControlName="description">
+                            <mat-error class="f-12">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3 pl-0">
+                    <div class="form-group">
+                        <mat-form-field class="arrowRemoveBox">
+                            <img class="img-pos" src="/assets/images/svg/calander.svg">
+                            <mat-select class="form-control" formControlName="turnAroundTime">
+                                <mat-option value="" disabled>Select option</mat-option>
+                                <mat-option [value]="t.value" *ngFor="let t of Tat">{{t.tat}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3 pl-0">
+                    <div class="form-group">
+                        <mat-form-field class="arrowRemoveBox">
+                            <img class="img-pos-two" src="/assets/images/svg/people.svg">
+                            <mat-select class="form-control" formControlName="ownerId">
+                                <mat-option (click)="updateOwner()" [value]="team.userId"
+                                    *ngFor="let team of teamMemberList">{{team.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-1 p-0 d-flex justify-content-sm-between">
+                    <i class="material-icons c-p mt-6" (click)="removeSubTask(i)">
+                        remove
+                    </i>
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="col-md-12 p-0">
+                    <p (click)="addSubTask()" class="m-0 c-p roboto text-custom pt-4 pb-44">+ Add more sub task
+                    </p>
+                </div>
+            </div>
+    
+        </div>
+    
     </div>
+</div>
 
+<div class="pt-90 pl-28 pr-28" *ngIf="isLoading">
+    Loading data...
 </div>
 <div class="bottom-fixed wrapper-12 w-50">
     <div class="row">
@@ -195,7 +189,7 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveTaskTemplate()">SAVE
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()">SAVE
             </button>
         </div>
     </div>

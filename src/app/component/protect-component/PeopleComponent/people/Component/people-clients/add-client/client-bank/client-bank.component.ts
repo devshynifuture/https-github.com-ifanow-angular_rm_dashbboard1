@@ -47,9 +47,12 @@ export class ClientBankComponent implements OnInit {
     this.cusService.getBankList(obj).subscribe(
       data => {
         console.log(data);
-        if (data) {
+        if (data && data.length > 0) {
           this.bankList = data[0];
           this.createBankForm(this.bankList)
+        }
+        else {
+          this.bankList = {};
         }
       }, err => this.eventService.openSnackBar(err, "Dismiss")
     )
@@ -167,7 +170,7 @@ export class ClientBankComponent implements OnInit {
           city: this.bankForm.get('branchCity').value,
           state: this.bankForm.get('branchState').value,
           country: this.bankForm.get('branchCountry').value,
-          addressId: (this.userData.bankData) ? this.userData.bankData.address.addressId : (this.bankList) ? this.bankList.address.addressId : null
+          addressId: (this.userData.bankData) ? this.userData.bankData.address.addressId : (this.bankList.address) ? this.bankList.address.addressId : null
         },
         userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
         userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
@@ -176,7 +179,7 @@ export class ClientBankComponent implements OnInit {
         holderNameList: holderList,
         userBankMappingId: (this.userData.bankData) ? this.userData.bankData.userBankMappingId : (this.bankList) ? this.bankList.userBankMappingId : null,
         bankId: (this.userData.bankData) ? this.userData.bankData.bankId : (this.bankList) ? this.bankList.bankId : null,
-        addressId: (this.userData.bankData) ? this.userData.bankData.address.addressId : (this.bankList) ? this.bankList.address.addressId : null
+        addressId: (this.userData.bankData) ? this.userData.bankData.address.addressId : (this.bankList.address) ? this.bankList.address.addressId : null
       };
       this.peopleService.addEditClientBankDetails(obj).subscribe(
         data => {

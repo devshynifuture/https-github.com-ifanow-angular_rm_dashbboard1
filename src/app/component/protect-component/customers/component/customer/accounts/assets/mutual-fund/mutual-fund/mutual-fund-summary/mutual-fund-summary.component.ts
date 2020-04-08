@@ -72,6 +72,9 @@ export class MutualFundSummaryComponent implements OnInit {
   mfSchemes() {
     this.mutualFundList = this.mfService.filter(this.schemeWise, 'mutualFund');
   }
+  // transactionPeriod(){
+  //   this.trasactionPeriodList = this.MfServiceService.filter(this.transactionPeriodWise, 'transactionPeriod')
+  // }
   openFilter() {
     const fragmentData = {
       flag: 'openFilter',
@@ -81,6 +84,7 @@ export class MutualFundSummaryComponent implements OnInit {
       componentName: RightFilterComponent
     };
     fragmentData.data = {
+      mfData:this.mutualFund,
       folioWise: this.mutualFundList,
       schemeWise: this.schemeWise,
       familyMember: this.mutualFund.family_member_list,
