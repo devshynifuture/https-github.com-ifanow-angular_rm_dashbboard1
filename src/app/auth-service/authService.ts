@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 // import {Router} from '@angular/router';
 
@@ -26,7 +26,7 @@ export class AuthService {
 
   static getClientId() {
     const clientData = this.getClientData();
-    return clientData ? clientData.id : undefined;
+    return clientData ? clientData.clientId : undefined;
   }
 
   setToken(token: string) {

@@ -253,9 +253,12 @@ export class ClientDematComponent implements OnInit {
     this.cusService.getDematList(obj).subscribe(
       data => {
         console.log(data);
-        if (data) {
+        if (data && data.length > 0) {
           this.dematList = data[0];
           this.createDematForm(this.dematList)
+        }
+        else {
+          this.dematList = {};
         }
       }, err => this.eventService.openSnackBar(err, "Dismiss")
     )
