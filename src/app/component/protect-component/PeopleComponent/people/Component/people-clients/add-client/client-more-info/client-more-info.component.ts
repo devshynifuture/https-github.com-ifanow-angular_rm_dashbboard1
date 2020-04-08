@@ -163,6 +163,7 @@ export class ClientMoreInfoComponent implements OnInit {
   }
 
   saveNextFamilyMember(flag) {
+    this.moreInfoData.guardianData['aadhaarNumber'] = this.moreInfoForm.value.adhharGuardian;
     const obj = {
       isKycCompliant: this.moreInfoData.isKycCompliant,
       taxStatusId: this.moreInfoData.taxStatusId,
