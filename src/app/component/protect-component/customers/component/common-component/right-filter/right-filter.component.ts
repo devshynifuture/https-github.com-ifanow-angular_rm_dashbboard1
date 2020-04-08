@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {CustomerService} from '../../customer/customer.service';
@@ -36,7 +36,9 @@ export class RightFilterComponent implements OnInit {
   amcObj: [];
   obj: any;
 
-  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, private custumService: CustomerService, private eventService: EventService, private mfService: MfServiceService) {
+  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
+              private custumService: CustomerService, private eventService: EventService,
+              private mfService: MfServiceService) {
   }
 
   @Input()
@@ -51,10 +53,27 @@ export class RightFilterComponent implements OnInit {
   ngOnInit(): void {
     this.amc = this._data.schemeWise; // amc wise data
     this.folio = this._data.folioWise; // for getting all folios
-    this.getCategoryWise(this._data.category); // get category wise data
-    this.getSchemeWise(this.amc); // scheme wise data
-    this.getFamilyMember(this._data.folioWise); // for family memeber
-    this.getTransactionView(this._data.transactionView); // for displaying how many columns to show in table
+    if (this._data.category) {
+      this.getCategoryWise(this._data.category);
+      // get category wise data
+    } else {
+      console.log('RightFilterComponent ngOninit category data is empty');
+    }
+    if (this.amc) {
+      this.getSchemeWise(this.amc); // scheme wise data
+    } else {
+      console.log('RightFilterComponent ngOninit getSchemeWise data is empty');
+    }
+    if (this._data.folioWise) {
+      this.getFamilyMember(this._data.folioWise); // for family memeber
+    } else {
+      console.log('RightFilterComponent ngOninit getFamilyMember foliowise data is empty');
+    }
+    if (this._data.transactionView) {
+      this.getTransactionView(this._data.transactionView); // for displaying how many columns to show in table
+    } else {
+      console.log('RightFilterComponent ngOninit getTransactionView data is empty');
+    }
     this.getReportType(); // get type of report categorywise,investor,sub category wise
     this.setDefaultFilters(); // setting default selected in each above array
     this.showSummaryFilterForm(''); // as on date and showZero folio form
@@ -86,7 +105,7 @@ export class RightFilterComponent implements OnInit {
 
   getSchemeWise(data) {
     const filterData = [];
-    data.filter(function(element) {
+    data.filter(function (element) {
       const obj = {
         id: element.id,
         schemeName: element.schemeName,
@@ -110,12 +129,12 @@ export class RightFilterComponent implements OnInit {
       filterData.push(obj);
     });
     this.familyMember = [...new Map(filterData.map(item => [item.familyMemberId, item])).values()];
-    
+
   }
 
   getTransactionView(data) {
     const filterData = [];
-    data.filter(function(element) {
+    data.filter(function (element) {
       const obj = {
         displayName: element,
       };
@@ -127,7 +146,7 @@ export class RightFilterComponent implements OnInit {
   getReportType() {
     this.reportType = ['Investor wise', 'Category wise', 'Sub Category wise'];
     const filterData = [];
-    this.reportType.filter(function(element) {
+    this.reportType.filter(function (element) {
       const obj = {
         name: element,
       };
@@ -137,8 +156,12 @@ export class RightFilterComponent implements OnInit {
   }
 
   setDefaultFilters() {
-    this.familyMember.forEach(item => item.selected = true);
-    this.amc.forEach(item => item.selected = true);
+    if (this.familyMember) {
+      this.familyMember.forEach(item => item.selected = true);
+    }
+    if (this.amc) {
+      this.amc.forEach(item => item.selected = true);
+    }
     this.scheme.forEach(item => item.selected = true);
     this.folio.forEach(item => item.selected = true);
     this.category.forEach(item => item.selected = true);
@@ -158,10 +181,10 @@ export class RightFilterComponent implements OnInit {
     const filterData1 = [];
     const filterData2 = [];
     const filterData3 = [];
-    this.familyMember.filter(function(element) {
+    this.familyMember.filter(function (element) {
       if (element.selected == true) {
-        filterData.filter(function(amc) {
-          amc.mutualFund.forEach(function(mf) {
+        filterData.filter(function (amc) {
+          amc.mutualFund.forEach(function (mf) {
             if (mf.familyMemberId == element.familyMemberId) {
               const obj = {
                 amc_name: amc.amc_name,
@@ -200,10 +223,10 @@ export class RightFilterComponent implements OnInit {
     const filterData1 = [];
     const filterData2 = [];
     const filterData3 = [];
-    data.filter(function(element) {
+    data.filter(function (element) {
       if (element.selected == true) {
-        filterData.filter(function(amc) {
-          amc.mutualFund.forEach(function(mf) {
+        filterData.filter(function (amc) {
+          amc.mutualFund.forEach(function (mf) {
             if (mf.categoryId == element.categoryId) {
               const obj = {
                 amc_name: amc.amc_name,
@@ -243,7 +266,7 @@ export class RightFilterComponent implements OnInit {
     const filterData2 = this._data.schemeWise;
     const filterData1 = [];
     const filterData3 = [];
-    this.folio.filter(function(element) {
+    this.folio.filter(function (element) {
       if (element.selected == true) {
         filterData2.forEach(amc => {
           amc.mutualFund.forEach(mf => {
@@ -289,7 +312,7 @@ export class RightFilterComponent implements OnInit {
     this.familyMember = [...new Map(this.obj.filterData2.map(item => [item.familyMemberId, item])).values()];
     this.category = [...new Map(this.obj.filterData3.map(item => [item.categoryId, item])).values()];
     this.scheme = [...new Map(this.obj.filterData4.map(item => [item.id, item])).values()];
-    
+
     this.changeSelect();
   }
 
@@ -302,7 +325,7 @@ export class RightFilterComponent implements OnInit {
     this.changeSelect();
   }
 
-  changeSelect = function() {
+  changeSelect = function () {
     if (this.familyMember != undefined) {
       const filter = [];
       this.countFamily = 0;

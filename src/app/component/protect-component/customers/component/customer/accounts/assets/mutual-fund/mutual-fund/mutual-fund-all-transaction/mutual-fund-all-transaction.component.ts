@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
-import { MfServiceService } from '../../mf-service.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {MFSchemeLevelHoldingsComponent} from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
+import {MfServiceService} from '../../mf-service.service';
+import {RightFilterComponent} from "../../../../../../common-component/right-filter/right-filter.component";
+import {EventService} from "../../../../../../../../../../Data-service/event.service";
 
 @Component({
   selector: 'app-mutual-fund-all-transaction',
@@ -11,7 +12,8 @@ import { MfServiceService } from '../../mf-service.service';
   styleUrls: ['./mutual-fund-all-transaction.component.scss']
 })
 export class MutualFundAllTransactionComponent implements OnInit {
-  displayedColumns: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav', 'units', 'balanceUnits', 'days', 'icons'];
+  displayedColumns: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount',
+    'transactionNav', 'units', 'balanceUnits', 'days', 'icons'];
   // totalColumns: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav', 'units', 'balanceUnits', 'days', 'icons'];
 
   mfData: any;
@@ -23,90 +25,134 @@ export class MutualFundAllTransactionComponent implements OnInit {
   customDataSource: any;
   grandTotal: any;
   catObj: any;
-  constructor(private subInjectService: SubscriptionInject, private UtilService: UtilService, private MfServiceService: MfServiceService) { }
+
+  constructor(private subInjectService: SubscriptionInject, private uilService: UtilService,
+              private mfService: MfServiceService, private eventService: EventService) {
+  }
+
   @Input() mutualFund;
 
   ngOnInit() {
     if (this.mutualFund != undefined) {
-      this.getSubCategoryWise(this.mutualFund)//get subCategoryWise list
-      this.getSchemeWise();//get scheme wise list
-      this.mfSchemes();//get mutualFund list
-      this.getTotalValue();//to get GrandTotal value
-      this.subCatArray();//for displaying table values as per category
+      this.getSubCategoryWise(this.mutualFund); // get subCategoryWise list
+      this.getSchemeWise(); // get scheme wise list
+      this.mfSchemes(); // get mutualFund list
+      this.getTotalValue(); // to get GrandTotal value
+      this.subCatArray(); // for displaying table values as per category
     }
   }
+
   subCatArray() {
-    let filteredArray = [];
+    const filteredArray = [];
     if (this.mutualFundList != undefined) {
-      this.catObj = this.MfServiceService.categoryFilter(this.mutualFundList);
+      this.catObj = this.mfService.categoryFilter(this.mutualFundList);
       Object.keys(this.catObj).map(key => {
-        this.MfServiceService.initializeValues();//for initializing total values object
-        filteredArray.push({ groupName: key });
+        this.mfService.initializeValues(); // for initializing total values object
+        filteredArray.push({groupName: key});
         this.catObj[key].forEach((singleData) => {
           const obj = {
-            'schemeName': singleData.schemeName,
-            'nav': singleData.nav
-          }
+            schemeName: singleData.schemeName,
+            nav: singleData.nav
+          };
           filteredArray.push(obj);
           const obj2 = {
-            'name': singleData.ownerName,
-            'pan': singleData.pan,
-            'folio': singleData.folioNumber
-          }
+            name: singleData.ownerName,
+            pan: singleData.pan,
+            folio: singleData.folioNumber
+          };
           filteredArray.push(obj2);
           singleData.mutualFundTransactions.forEach((ele) => {
             filteredArray.push(ele);
-          })
-          this.totalObj = this.MfServiceService.getEachTotalValue(singleData);
+          });
+          this.totalObj = this.mfService.getEachTotalValue(singleData);
           filteredArray.push(this.totalObj);
         });
       });
-      this.customDataSource = filteredArray
-      console.log(this.customDataSource)
+      this.customDataSource = filteredArray;
+      console.log(this.customDataSource);
     }
   }
-  isGroup(index, item): boolean {//get headerName as per category
+
+  isGroup(index, item): boolean {// get headerName as per category
     return item.groupName;
   }
-  isGroup2(index, item): boolean {//for displaying schemeName and currentNav
+
+  isGroup2(index, item): boolean {// for displaying schemeName and currentNav
     return item.schemeName;
-    return item.nav
+    return item.nav;
   }
-  isGroup3(index, item): boolean {//for displaying family members name,pan and folio
+
+  isGroup3(index, item): boolean {// for displaying family members name,pan and folio
     return item.name;
     return item.pan;
     return item.folio;
   }
-  isGroup4(index, item): boolean {//this header is used for showing total as per category
+
+  isGroup4(index, item): boolean {// this header is used for showing total as per category
     return item.total;
     return item.totalTransactionAmt;
     return item.totalUnit;
     return item.totalNav;
     return item.totalBalanceUnit;
   }
+
   getSubCategoryWise(data) {
-    this.subCategoryData = this.MfServiceService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+    this.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
   }
+
   getSchemeWise() {
-    this.schemeWise = this.MfServiceService.filter(this.subCategoryData, 'mutualFundSchemeMaster');
+    this.schemeWise = this.mfService.filter(this.subCategoryData, 'mutualFundSchemeMaster');
   }
+
   mfSchemes() {
-    this.mutualFundList = this.MfServiceService.filter(this.schemeWise, 'mutualFund');
+    this.mutualFundList = this.mfService.filter(this.schemeWise, 'mutualFund');
   }
+
   getTotalValue() {
-    this.MfServiceService.initializeValues()
+    this.mfService.initializeValues();
     this.mutualFundList.forEach(element => {
-      this.grandTotal = this.MfServiceService.getEachTotalValue(element)
-    })
+      this.grandTotal = this.mfService.getEachTotalValue(element);
+    });
   }
+
   editTransaction(portfolioData, data) {
     const fragmentData = {
       flag: portfolioData,
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: MFSchemeLevelHoldingsComponent
     };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+
+  openFilter() {
+    if (!this.mutualFund) {
+      this.eventService.openSnackBar('No data to filter', 'OK');
+      return
+    }
+    const fragmentData = {
+      flag: 'openFilter',
+      data: {...this.mutualFund},
+      id: 1,
+      state: 'open35',
+      componentName: RightFilterComponent
+    };
+    fragmentData.data = {
+      folioWise: this.mutualFundList,
+      schemeWise: this.schemeWise,
+      familyMember: this.mutualFund.family_member_list,
+      category: this.mutualFund.mutualFundCategoryMastersList,
+      transactionView: this.displayedColumns
+    }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
