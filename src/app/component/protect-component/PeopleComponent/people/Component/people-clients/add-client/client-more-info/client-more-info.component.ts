@@ -64,7 +64,7 @@ export class ClientMoreInfoComponent implements OnInit {
       taxStatus: [],
       occupation: [(data.occupationId == 0) ? '1' : String(data.occupationId)],
       maritalStatus: [(data.martialStatusId) ? String(data.martialStatusId) : '1'],
-      anniversaryDate: [],
+      anniversaryDate: [String(data.anniversaryDate)],
       bio: [data.bio],
       myNotes: [data.remarks],
       name: [data.name],
@@ -163,13 +163,15 @@ export class ClientMoreInfoComponent implements OnInit {
   }
 
   saveNextFamilyMember(flag) {
-    this.moreInfoData.guardianData['aadhaarNumber'] = this.moreInfoForm.value.adhharGuardian;
+    if (this.moreInfoData.guardianData) {
+      this.moreInfoData.guardianData['aadhaarNumber'] = this.moreInfoForm.value.adhharGuardian;
+      this.moreInfoData.guardianData['birthDate'] = this.datePipe.transform(this.moreInfoData.guardianData.birthDate, 'dd/MM/yyyy')
+    }
     const obj = {
       isKycCompliant: this.moreInfoData.isKycCompliant,
       taxStatusId: this.moreInfoData.taxStatusId,
       emailList: this.moreInfoData.emailList,
       displayName: this.moreInfoForm.controls.displayName.value,
-      guardianId: 0,
       martialStatusId: this.moreInfoForm.controls.maritalStatus.value,
       occupationId: this.moreInfoForm.controls.occupation.value,
       id: this.moreInfoData.id,
@@ -182,12 +184,12 @@ export class ClientMoreInfoComponent implements OnInit {
       bankDetailList: this.moreInfoData.bankDetail,
       relationshipId: this.moreInfoData.relationshipId,
       mobileList: this.moreInfoData.mobileList,
-      aadhaarNumber: this.moreInfoForm.value.adhaarMinor,
+      aadhaarNumber: (this.moreInfoData.invCategory == 2) ? this.moreInfoForm.value.adhaarMinor : this.moreInfoForm.value.adhaarNo,
       name: this.moreInfoData.name,
       bioRemarkId: 0,
       bio: this.moreInfoForm.controls.bio.value,
       remarks: this.moreInfoForm.controls.myNotes.value,
-      anniversaryDate: this.datePipe.transform(this.moreInfoForm.value.anniversaryDate._d, 'dd/MM/yyyy'),
+      anniversaryDate: this.datePipe.transform((this.moreInfoForm.value.anniversaryDate == undefined) ? null : this.moreInfoForm.value.anniversaryDate._d, 'dd/MM/yyyy'),
       // guardianData: this.moreInfoData.guardianData,
       guardianData: this.moreInfoData.guardianData
       //  {
