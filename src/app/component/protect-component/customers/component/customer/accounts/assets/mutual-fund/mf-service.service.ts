@@ -185,4 +185,25 @@ export class MfServiceService {
     };
     return sendData;
   }
+  filterFinalData(mfData,dataForFilter){
+    mfData.family_member_list=this.filterArray(mfData.family_member_list,'id',dataForFilter.familyMember,'familyMemberId');
+    mfData.mutualFundCategoryMastersList=this.filterArray(mfData.mutualFundCategoryMastersList,'id',dataForFilter.category,'categoryId');
+    let subCatData = this.filter(mfData.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+    let amcData=this.filter(subCatData, 'mutualFundSchemeMaster');
+    amcData=this.filterArray(amcData,'amc_id',dataForFilter.amc,'amc_id');
+    let folioData=this.filter(amcData, 'mutualFund');
+    folioData=this.filterArray(folioData,'folioNumber',dataForFilter.folio,'folioNumber');
+    return mfData;
+  }
+  filterArray(data,dataKey,filterData,filterDataKey){
+    let filter=[];
+    filterData.forEach(ele => {
+      data.forEach(element => {
+        if(element[dataKey]==ele[filterDataKey]){
+          filter.push(element)
+        }
+      });
+    });
+    return filter;
+  }
 }
