@@ -16,27 +16,27 @@ export class MutualFundComponent implements OnInit {
   advisorId: any;
   clientId: any;
 
-  constructor(public subInjectService:SubscriptionInject,public UtilService:UtilService,public eventService:EventService,private custumService:CustomerService) { }
-  
+  constructor(public subInjectService: SubscriptionInject, public UtilService: UtilService, public eventService: EventService, private custumService: CustomerService) { }
+
   ngOnInit() {
     this.viewMode = 'Overview Report';
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getMutualFund();
   }
-  getMutualFund(){
+  getMutualFund() {
     const obj = {
-      advisorId: 3967,
-      clientId: 2982
-    }
+      advisorId: 2753,
+      clientId: 15545
+    };
     this.custumService.getMutualFund(obj).subscribe(
       data => this.getMutualFundResponse(data), (error) => {
         this.eventService.showErrorMessage(error);
       }
     );
   }
-  getMutualFundResponse(data){
-    this.mfData=data
+  getMutualFundResponse(data) {
+    this.mfData = data;
   }
 
 }
