@@ -10,7 +10,7 @@
           <button mat-menu-item (click)="viewMode='Overview Report'">Overview Report</button>
           <button mat-menu-item (click)="viewMode='Summary'">Summary</button>
           <button mat-menu-item (click)="viewMode='All Transactions'">All Transactions</button>
-          <button mat-menu-item (click)="viewMode='Unrealized Transactions'">Unrealized Transactions</button>
+          <button mat-menu-item (click)="viewMode='Unrealized Transactions';unrealiseTransaction()">Unrealized Transactions</button>
           <button mat-menu-item (click)="viewMode='Capital Gains'">Capital Gains</button>
           <button mat-menu-item (click)="viewMode='Goal Linkage'">Goal Linkage</button>
         </mat-menu>
@@ -28,7 +28,7 @@
       <app-mutual-fund-all-transaction [mutualFund]="mfData"></app-mutual-fund-all-transaction>
     </div>
     <div *ngSwitchCase="'Unrealized Transactions'">
-      <app-mutual-fund-unrealized-tran [mutualFund]="mfData"></app-mutual-fund-unrealized-tran>
+      <app-mutual-fund-unrealized-tran [mutualFund]="mfDataUnrealised"></app-mutual-fund-unrealized-tran>
     </div>
     <div *ngSwitchCase="'Capital Gains'">
       <app-mutual-funds-capital></app-mutual-funds-capital>

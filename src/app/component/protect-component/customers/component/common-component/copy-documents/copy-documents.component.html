@@ -11,20 +11,24 @@
         <li class="breadcrumb-item c-p" (click)="reset()">
             <span>{{tabValue || 'Documents'}}</span>
         </li>
-        <li class="breadcrumb-item active c-p" (click)="getFolders(folder,i)" *ngFor="let folder of openFolderName;index as i">
+        <li class="breadcrumb-item active c-p" (click)="getFolders(folder,i)"
+            *ngFor="let folder of openFolderName;index as i"
+            [ngClass]="folder.openFolderNm ? 'breadcrumb-item active c-p' : 'none'">
             {{folder.openFolderNm}}
         </li>
     </ol>
 </div>
 
 <div class="col-md-12 p-0 copyDocumentcomp ">
-    <table mat-table [dataSource]="commonFileFolders" id="table-low" [appSkeletonLoading]="isLoading" [dataSource]="commonFileFolders" appSkeletonLoading class="skeletonAnimation">
+    <table mat-table [dataSource]="commonFileFolders" id="table-low" [appSkeletonLoading]="isLoading"
+        [dataSource]="commonFileFolders" appSkeletonLoading class="skeletonAnimation">
 
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell class="c-p " *matCellDef="let element" (click)="openFolder(element)">
                 <div class="bar">
-                    <img *ngIf="element.folderName != undefined" class="mr-12" src="/assets/images/svg/folder-icon.svg"> {{element.folderName}}
+                    <img *ngIf="element.folderName != undefined" class="mr-12" src="/assets/images/svg/folder-icon.svg">
+                    {{element.folderName}}
                     <img *ngIf="element.isStarred == 1" class="mr-12" src="/assets/images/svg/document-star.svg">
                 </div>
             </td>
