@@ -88,8 +88,12 @@
     // border-left: 1px solid #e8ecef;
 }
 
-.width187 {
-    min-width: 187px;
+.borderLeftNone {
+    border-left: transparent !important;
+}
+
+.width183 {
+    min-width: 183px;
     margin-right: 20px;
 }
 

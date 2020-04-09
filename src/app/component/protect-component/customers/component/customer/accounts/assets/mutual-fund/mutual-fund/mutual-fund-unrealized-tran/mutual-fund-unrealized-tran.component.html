@@ -138,11 +138,15 @@
 
 
                 </table>
+                <div *ngIf="dataSource.length == 0" class="d-flex flex-column align-items-center">
+                    <img class="width300" src="assets/images/svg/noDataFound.svg">
+                    <h4 class="text-center pt-12"> No data found</h4>
+                </div>
             </div>
         </div>
         <div class="row">
             <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 pl-0 mb-8">
-                <table matSort mat-table [dataSource]="subCatArray(mutualFundList,'')" id="tbs"
+                <table matSort mat-table [dataSource]="customDataSource" id="tbs"
                     class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
                     [appSkeletonLoading]="isLoading">
                     <ng-container matColumnDef="no" sticky>

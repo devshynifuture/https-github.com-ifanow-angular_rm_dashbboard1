@@ -157,6 +157,7 @@ export class MutualFundAllTransactionComponent implements OnInit {
       componentName: RightFilterComponent
     };
     fragmentData.data = {
+      name:'TRANSACTION REPORT',
       mfData:this.mutualFund,
       folioWise: this.mutualFundListFilter,
       schemeWise: this.schemeWiseForFilter,
