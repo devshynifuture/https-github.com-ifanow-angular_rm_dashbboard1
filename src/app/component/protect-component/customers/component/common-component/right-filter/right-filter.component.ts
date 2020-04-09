@@ -179,8 +179,10 @@ export class RightFilterComponent implements OnInit {
     this.category.forEach(item => item.selected = true);
     this.transactionView.forEach(item => item.selected = true);
     this.reportType.forEach(item => {
+      this.countReport=0
       if(item.name=='Sub Category wise'){
-        item.selected = true
+        item.selected = true;
+        this.countReport++;
       }
     });
     this.countFamily = this.familyMember.length;
@@ -188,8 +190,8 @@ export class RightFilterComponent implements OnInit {
     this.countScheme = this.scheme.length;
     this.countFolio = this.folio.length;
     this.countTranView = this.transactionView.length;
-    this.countReport = this.reportType.length;
     this.countCategory = this.category.length;
+    this.changeSelect();
   }
 
   changeFilterFamily() {
@@ -340,7 +342,14 @@ export class RightFilterComponent implements OnInit {
     this.amc = [...new Map(this.obj.filterData4.map(item => [item.amc_id, item])).values()];
     this.changeSelect();
   }
-
+  changeFilterFilter(value) {
+    value.forEach(element => {
+      if(element.name != value.name){
+        element.selected =false;
+      }
+    });
+    this.changeSelect();
+  }
   changeSelect = function () {
     if (this.familyMember != undefined) {
       const filter = [];
@@ -348,7 +357,7 @@ export class RightFilterComponent implements OnInit {
       this.familyMember.forEach(item => {
         if (item.selected) {
           this.countFamily++;
-          filter.push(item.familyMemberId);
+          filter.push(item);
         }
       });
       this.familyMemObj = filter;
@@ -359,7 +368,7 @@ export class RightFilterComponent implements OnInit {
       this.amc.forEach(item => {
         if (item.selected) {
           this.countAmc++;
-          filter.push(item.amc_id);
+          filter.push(item);
         }
       });
       this.amcObj = filter;
@@ -370,7 +379,7 @@ export class RightFilterComponent implements OnInit {
       this.scheme.forEach(item => {
         if (item.selected) {
           this.countScheme++;
-          filter.push(item.id);
+          filter.push(item);
         }
       });
       this.schemeObj = filter;
@@ -381,7 +390,7 @@ export class RightFilterComponent implements OnInit {
       this.folio.forEach(item => {
         if (item.selected) {
           this.countFolio++;
-          filter.push(item.folioNumber);
+          filter.push(item);
         }
       });
       this.folioObj = filter;
@@ -400,17 +409,15 @@ export class RightFilterComponent implements OnInit {
       this.category.forEach(item => {
         if (item.selected) {
           this.countCategory++;
-          filter.push(item.categoryId);
+          filter.push(item);
         }
       });
       this.categoryObj = filter;
     }
     if (this.reportType != undefined) {
       const filter = [];
-      this.countReport = 0;
       this.reportType.forEach(item => {
         if (item.selected) {
-          this.countReport++;
           filter.push(item);
         }
       });
@@ -424,12 +431,12 @@ export class RightFilterComponent implements OnInit {
       return;
     }
     this.dataToSend = {
-      familyMember: this.familyMember,
-      amc: this.amc,
-      scheme: this.scheme,
-      folio: this.folio,
-      category:this.category,
-      reportType:this.reportTypeobj,
+      familyMember: (this.familyMemObj)?this.familyMemObj:this.familyMember,
+      amc: (this.amcObj)?this.amcObj:this.amc,
+      scheme: (this.schemeObj)?this.schemeObj:this.scheme,
+      folio: (this.folioObj)?this.folioObj:this.folio,
+      category:(this.categoryObj)?this.categoryObj:this.category,
+      reportType:(this.reportTypeobj)?this.reportTypeobj:this.reportType,
       transactionView:this.transactionView,
       reportAsOn: (this.summaryFilerForm.controls.reportAsOn.value) ? this.summaryFilerForm.controls.reportAsOn.value.toISOString().slice(0, 10) : null,
       showFolio: parseInt(this.summaryFilerForm.controls.showFolios.value),
@@ -437,6 +444,7 @@ export class RightFilterComponent implements OnInit {
     console.log('dataToSend---------->', this.dataToSend);
       this.finalFilterData=this.mfService.filterFinalData(this._data.mfData,this.dataToSend);
       this.Close(this.finalFilterData);
+      console.log(this.finalFilterData)
     // this.custumService.getMutualFund(this.dataToSend).subscribe(
     //   data => this.getMutualFundResponse(data), (error) => {
     //     this.eventService.showErrorMessage(error);
