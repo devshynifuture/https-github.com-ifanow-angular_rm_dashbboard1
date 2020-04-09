@@ -38,6 +38,8 @@ export class RightFilterComponent implements OnInit {
   mfData: any;
   finalFilterData: any;
   reportTypeobj: any;
+  selectedTransactionView;
+  sendTransactionView
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
               private custumService: CustomerService, private eventService: EventService,
@@ -191,7 +193,7 @@ export class RightFilterComponent implements OnInit {
     this.countFolio = this.folio.length;
     this.countTranView = this.transactionView.length;
     this.countCategory = this.category.length;
-    this.changeSelect();
+    this.changeSelect('','');
   }
 
   changeFilterFamily() {
@@ -233,7 +235,7 @@ export class RightFilterComponent implements OnInit {
     this.amc = [...new Map(filterData1.map(item => [item.amc_id, item])).values()];
     this.folio = filterData2;
     this.category = [...new Map(filterData3.map(item => [item.categoryId, item])).values()];
-    this.changeSelect();
+    this.changeSelect('','');
   }
 
   changeFilterCategory(data) {
@@ -276,7 +278,7 @@ export class RightFilterComponent implements OnInit {
     this.amc = [...new Map(filterData1.map(item => [item.amc_id, item])).values()];
     this.folio = filterData2;
     this.familyMember = [...new Map(filterData3.map(item => [item.familyMemberId, item])).values()];
-    this.changeSelect();
+    this.changeSelect('','');
   }
 
   changeFilterFolio() {
@@ -321,7 +323,7 @@ export class RightFilterComponent implements OnInit {
     this.familyMember = [...new Map(filterData1.map(item => [item.familyMemberId, item])).values()];
     this.category = [...new Map(filterData3.map(item => [item.categoryId, item])).values()];
     console.log(this.amc);
-    this.changeSelect();
+    this.changeSelect('','');
   }
 
   changeFilterAmc() {
@@ -331,7 +333,7 @@ export class RightFilterComponent implements OnInit {
     this.category = [...new Map(this.obj.filterData3.map(item => [item.categoryId, item])).values()];
     this.scheme = [...new Map(this.obj.filterData4.map(item => [item.id, item])).values()];
 
-    this.changeSelect();
+    this.changeSelect('','');
   }
 
   changeFilterScheme() {
@@ -340,7 +342,7 @@ export class RightFilterComponent implements OnInit {
     this.familyMember = [...new Map(this.obj.filterData2.map(item => [item.familyMemberId, item])).values()];
     this.category = [...new Map(this.obj.filterData3.map(item => [item.categoryId, item])).values()];
     this.amc = [...new Map(this.obj.filterData4.map(item => [item.amc_id, item])).values()];
-    this.changeSelect();
+    this.changeSelect('','');
   }
   changeReportFilter(value) {
     this.reportType.forEach(element => {
@@ -348,9 +350,17 @@ export class RightFilterComponent implements OnInit {
         element.selected =false;
       }
     });
-    this.changeSelect();
+    this.changeSelect('','');
   }
-  changeSelect = function () {
+  changeSelect = function (data,i) {
+    this.sendTransactionView = this._data.transactionView
+    console.log('transaction ==',this._data.transactionView)
+    if(data.selected == true){
+      this.sendTransactionView.push(i)
+    }else{
+      this.sendTransactionView.pop(i)
+    }
+    console.log('data ==',this.sendTransactionView)
     if (this.familyMember != undefined) {
       const filter = [];
       this.countFamily = 0;
@@ -454,6 +464,8 @@ export class RightFilterComponent implements OnInit {
     };
     console.log('dataToSend---------->', this.dataToSend);
       this.finalFilterData=this.mfService.filterFinalData(this._data.mfData,this.dataToSend);
+      this.finalFilterData.transactionView = this.sendTransactionView
+      console.log('this.sendTransactionView ====',this.finalFilterData)
       this.Close(this.finalFilterData);
       console.log(this.finalFilterData);
   }

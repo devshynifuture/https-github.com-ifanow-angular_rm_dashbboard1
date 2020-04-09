@@ -191,7 +191,9 @@
                             </div>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(grandTotal)?grandTotal.totalTransactionAmt:'0'}}</td>
+                            <div class="bar"> {{(grandTotal)?grandTotal.totalTransactionAmt:'0'}}
+                            </div>
+                        </td>
 
                     </ng-container>
 
@@ -207,7 +209,9 @@
                             </div>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                            {{(grandTotal)?grandTotal.totalNav:'0'}}</td>
+                            <div class="bar">{{(grandTotal)?grandTotal.totalNav:'0'}}
+                            </div>
+                        </td>
 
                     </ng-container>
 
