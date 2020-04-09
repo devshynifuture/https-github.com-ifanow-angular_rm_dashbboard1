@@ -19,8 +19,8 @@ export class MutualFundSummaryComponent implements OnInit {
   displayedColumns: string[] = ['schemeName', 'amountInvested', 'currentValue', 'unrealizedProfit', 'absoluteReturn',
     'xirr', 'dividendPayout', 'switchOut', 'balanceUnit', 'navDate', 'sipAmount', 'icons'];
   mfData: any;
-  subCategoryData: any[];
-  schemeWise: any[];
+  // subCategoryData: any[];
+  // schemeWise: any[];
   mutualFundList: any[];
   totalObj: any;
   customDataSource: Array<any> = [{}, {}, {}];
@@ -36,21 +36,23 @@ export class MutualFundSummaryComponent implements OnInit {
   @Input() mutualFund;
 
   ngOnInit() {
-    if (this.mutualFund) {
-      this.getSubCategoryWise(this.mutualFund); // get subCategoryWise list
-      this.getSchemeWise(); // get scheme wise list
-      this.mfSchemes(); // get mutualFund list
-      this.subCatArray(this.mutualFundList,''); // for displaying table values as per category
+    if (this.mutualFund.mutualFundList) {
+      this.mutualFundList = this.mutualFund.mutualFundList;
+      // this.getSubCategoryWise(this.mutualFund); // get subCategoryWise list
+      // this.getSchemeWise(); // get scheme wise list
+      // this.mfSchemes(); // get mutualFund list
+      this.subCatArray(this.mutualFund.mutualFundList, ''); // for displaying table values as per category
       this.getDataForRightFilter();
     }
   }
 
-  subCatArray(mutualFundList,type) {
-      var reportType;
-      (type=='' || type[0].name=='Sub Category wise')?reportType='subCategoryName':(type[0].name=='Category wise')?reportType='categoryName':reportType='name'
-    const filteredArray = [];
-    if (mutualFundList) {
-      this.catObj = this.mfService.categoryFilter(mutualFundList,reportType);
+  subCatArray(mutualFundList, type) {
+      let reportType;
+      (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
+        (type[0].name == 'Category wise') ? reportType = 'categoryName' : reportType = 'name';
+      const filteredArray = [];
+      if (mutualFundList) {
+      this.catObj = this.mfService.categoryFilter(mutualFundList, reportType);
       Object.keys(this.catObj).map(key => {
         this.mfService.initializeValues();
         filteredArray.push({groupName: key});
@@ -67,19 +69,19 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
 
-  getSubCategoryWise(data) {
-    this.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
-  }
-
-  getSchemeWise() {
-    this.schemeWise = this.mfService.filter(this.subCategoryData, 'mutualFundSchemeMaster');
-  }
-
-  mfSchemes() {
-    this.mutualFundList = this.mfService.filter(this.schemeWise, 'mutualFund');
-  }
-  getDataForRightFilter(){//for rightSidefilter data this does not change after generating report
-    var subCatData = this.mfService.filter(this.mutualFund.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+  // getSubCategoryWise(data) {
+  //   this.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+  // }
+  //
+  // getSchemeWise() {
+  //   this.schemeWise = this.mfService.filter(this.subCategoryData, 'mutualFundSchemeMaster');
+  // }
+  //
+  // mfSchemes() {
+  //   this.mutualFundList = this.mfService.filter(this.schemeWise, 'mutualFund');
+  // }
+  getDataForRightFilter() {// for rightSidefilter data this does not change after generating report
+    let subCatData = this.mfService.filter(this.mutualFund.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
     this.schemeWiseForFilter = this.mfService.filter(subCatData, 'mutualFundSchemeMaster');
     this.mutualFundListFilter = this.mfService.filter(this.schemeWiseForFilter, 'mutualFund');
   }
@@ -92,8 +94,8 @@ export class MutualFundSummaryComponent implements OnInit {
       componentName: RightFilterComponent
     };
     fragmentData.data = {
-      name:'SUMMARY REPORT',
-      mfData:this.mutualFund,
+      name: 'SUMMARY REPORT',
+      mfData: this.mutualFund,
       folioWise: this.mutualFundListFilter,
       schemeWise: this.schemeWiseForFilter,
       familyMember: this.mutualFund.family_member_list,
@@ -105,9 +107,9 @@ export class MutualFundSummaryComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          if(sideBarData.data){
-            this.rightFilterData=sideBarData.data
-            this.subCatArray(this.rightFilterData.mutualFundList,this.rightFilterData.reportType)
+          if (sideBarData.data) {
+            this.rightFilterData = sideBarData.data;
+            this.subCatArray(this.rightFilterData.mutualFundList, this.rightFilterData.reportType);
           }
           rightSideDataSub.unsubscribe();
         }

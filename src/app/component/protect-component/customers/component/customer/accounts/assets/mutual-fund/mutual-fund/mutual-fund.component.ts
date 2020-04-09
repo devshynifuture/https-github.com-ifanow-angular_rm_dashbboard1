@@ -5,6 +5,7 @@ import {UtilService} from 'src/app/services/util.service';
 import {CustomerService} from '../../../../customer.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import {MfServiceService} from '../mf-service.service';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-mutual-fund',
@@ -19,11 +20,10 @@ export class MutualFundComponent implements OnInit {
   subCategoryData: any[];
   schemeWise: any[];
   mutualFundList: any[];
-  totalObj: any;
-  customDataSource: any;
-  catObj: {};
   mfDataUnrealised: any;
-  isLoading: boolean = false;
+  isLoading = false;
+
+  dataHolder: any = {};
 
   constructor(public subInjectService: SubscriptionInject, public utilService: UtilService,
               public eventService: EventService, private custumService: CustomerService,
@@ -38,26 +38,43 @@ export class MutualFundComponent implements OnInit {
   }
 
   getMutualFund() {
-    this.isLoading = true
+    this.isLoading = true;
     const obj = {
       advisorId: 2753,
       clientId: 15545
     };
-    this.custumService.getMutualFund(obj).subscribe(
+    this.custumService.getMutualFund(obj).pipe(map((data) => {
+      return this.doFiltering(data);
+    })).subscribe(
       data => this.getMutualFundResponse(data), (error) => {
         this.eventService.showErrorMessage(error);
       }
     );
   }
 
+  doFiltering(data) {
+    // return sub category list
+    // this.dataHolder.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+    // this.dataHolder.schemeWise = this.mfService.filter(this.dataHolder.subCategoryData, 'mutualFundSchemeMaster');
+    // this.dataHolder.mutualFundList = this.mfService.filter(this.dataHolder.schemeWise, 'mutualFund');
+
+    data.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+    data.schemeWise = this.mfService.filter(data.subCategoryData, 'mutualFundSchemeMaster');
+    data.mutualFundList = this.mfService.filter(data.schemeWise, 'mutualFund');
+    return data;
+  }
+
+
   getMutualFundResponse(data) {
-    if(data){
-      this.isLoading = false
+    if (data) {
+      this.isLoading = false;
+
       this.mfData = data;
     }
-    this.isLoading = false
+    this.isLoading = false;
   }
-  unrealiseTransaction(){
+
+  unrealiseTransaction() {
     this.mfDataUnrealised = this.mfData;
   }
 
