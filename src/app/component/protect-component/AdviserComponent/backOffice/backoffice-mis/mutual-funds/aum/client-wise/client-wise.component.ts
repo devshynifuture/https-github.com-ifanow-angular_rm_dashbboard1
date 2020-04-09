@@ -77,7 +77,7 @@ export class ClientWiseComponent implements OnInit {
   scheme1List: any;
   scheme2List: any;
   @Output() changedValue = new EventEmitter();
-  selectedInvestorIndex: any;
+  selectedScheme: any;
 
   constructor(public aum: AumComponent, private backoffice: BackOfficeService) { }
 
@@ -182,8 +182,9 @@ export class ClientWiseComponent implements OnInit {
     )
 
   }
-  getInvestorName(clientData, clientIndex) {
-    this.selectedClient = clientIndex;
+  getInvestorName(clientData, index) {
+    this.selectedClient = index;
+
     clientData.show = !clientData.show
     clientData.investorList = []
     if (clientData.show == false) {
@@ -204,109 +205,105 @@ export class ClientWiseComponent implements OnInit {
             this.investorList = data;
             console.log(data);
 
-            this.appendingOfValuesInExcel(data, this.selectedClient, 'investor');
+            this.appendingOfValuesInExcel(data, index, 'investor');
           }
         }
       )
     } else {
-      this.removeValuesFromExcel('investor', clientIndex);
+      this.removeValuesFromExcel('investor', index);
     }
   }
 
-  removeValuesFromExcel(whichList, clientIndex) {
-    console.log(clientIndex, this.arrayOfExcelData);
+  removeValuesFromExcel(whichList, index) {
 
     switch (whichList) {
       case 'investor':
-        this.arrayOfExcelData[clientIndex].investorList = [];
-        this.arrayOfExcelData[clientIndex].schemeList = [];
-        this.arrayOfExcelData[clientIndex].schemeFolioList = [];
+        this.arrayOfExcelData[index].investorList = [];
         break;
       case 'schemes':
-        this.arrayOfExcelData[clientIndex].schemeList = [];
-        this.arrayOfExcelData[clientIndex].schemeFolioList = [];
+        this.arrayOfExcelData[this.selectedClient].investorList[index].schemeList = [];
         break;
       case 'scheme-folio':
-        this.arrayOfExcelData[clientIndex].schemeFolioList = [];
+        this.arrayOfExcelData[this.selectedClient].investorList[this.selectedInvestor].schemeList[index].schemeFolioList = [];
         break;
     }
   }
 
-  // initializeExcelData() {
-  //   let dataValue = [];
-  //   this.arrayOfExcelData[0] = [];
-  //   this.arrayOfExcelData[1] = [];
-  //   this.arrayOfExcelData[2] = [];
-  //   this.arrayOfExcelData[3] = [];
-  //   this.clientList.forEach((element, index1) => {
-  //     dataValue = [
-  //       index1 + 1,
-  //       element.name,
-  //       element.totalAum,
-  //       element.weightInPercentage
-  //     ];
-  //     this.arrayOfExcelData[0].push(Object.assign(dataValue));
-  //   });
-
-  //   this.investorList.forEach((element, index2) => {
-  //     dataValue = [
-  //       index2 + 1,
-  //       element.investorName,
-  //       element.totalAum,
-  //       element.weightInPercentage
-  //     ]
-  //     this.arrayOfExcelData[1].push(Object.assign(dataValue))
-  //   });
-
-  //   this.scheme1List.forEach((element, index3) => {
-  //     dataValue = [
-  //       index3 + 1,
-  //       element.schemeName,
-  //       element.totalAum,
-  //       element.weightInPercentage
-  //     ]
-  //     this.arrayOfExcelData[2].push(Object.assign(dataValue))
-  //   });
-
-  //   this.scheme2List.forEach((element, index4) => {
-  //     dataValue = [
-  //       index4 + 1,
-  //       element.schemeName,
-  //       element.folioNumber,
-  //       element.totalAum,
-  //       element.balanceUnit,
-  //       element.weightInPercentage
-  //     ]
-  //     this.arrayOfExcelData[3].push(Object.assign(dataValue))
-  //   });
-  // }
-
-  clientWiseExcelSheet() {
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'Client wise MIS Report', 'client-wise-aum-mis');
+  clientWiseExcelSheet(index) {
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'Client wise MIS Report', 'client-wise-aum-mis', {
+      clientList: false,
+      investorList: false,
+      schemeList: false,
+      schemeFolioList: false
+    });
   }
 
-  investorWiseExcelSheet() {
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[1], this.arrayOfHeaders[1], this.arrayOfExcelData[this.selectedClient].investorList, [], 'Investor Wise');
+  investorWiseExcelSheet(index) {
+    let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
+    copyOfExcelData.forEach((element, index1) => {
+      if (index1 === index) {
+        return;
+      } else {
+        element.investorList = [];
+      }
+    });
+
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'Client wise MIS Report', 'client-wise-aum-mis', {
+      clientList: true,
+      investorList: false,
+      schemeList: false,
+      schemeFolioList: false
+    });
   }
 
-  scheme1WiseExcelSheet() {
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[2], this.arrayOfHeaders[2], this.arrayOfExcelData[this.selectedClient].schemeList, [], 'Scheme Wise');
+  scheme1WiseExcelSheet(index) {
+    let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
+    copyOfExcelData.forEach((element, index1) => {
+      if (index1 === index) {
+        return;
+      } else {
+        if (element.investorList.length !== 0) {
+          element.investorList.forEach(element => {
+            element.schemeList = [];
+          });
+        }
+      }
+    });
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'Client wise MIS Report', 'client-wise-aum-mis', {
+      clientList: true,
+      investorList: true,
+      schemeList: false,
+      schemeFolioList: false
+    });
   }
 
   scheme2WiseExcelSheet() {
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], this.arrayOfExcelData[this.selectedClient].schemeFolioList, [], 'Scheme Folio Wise');
+    let schemeFolioList = this.arrayOfExcelData[this.selectedClient].investorList[this.selectedInvestor].schemeList[this.selectedScheme].schemeFolioList;
+    console.log(schemeFolioList);
+    let newarr = [];
+    schemeFolioList.forEach(element => {
+      newarr.push({
+        field1: element.index,
+        field2: element.name,
+        field3: element.folioNumber,
+        field4: element.totalAum,
+        field5: element.balanceUnit,
+        field6: element.weightInPerc
+      });
+    });
+    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'Scheme Folio Wise');
   }
 
-  exportToExcelSheet(choice) {
+  exportToExcelSheet(choice, index) {
     switch (choice) {
       case 'client-wise':
-        this.clientWiseExcelSheet();
+        this.clientWiseExcelSheet(index);
         break;
       case 'investor-wise':
-        this.investorWiseExcelSheet();
+        this.investorWiseExcelSheet(index);
         break;
       case 'scheme1-wise':
-        this.scheme1WiseExcelSheet();
+        this.scheme1WiseExcelSheet(index);
         break;
       case 'scheme2-wise':
         this.scheme2WiseExcelSheet();
@@ -323,41 +320,42 @@ export class ClientWiseComponent implements OnInit {
         totalAum: element.totalAum,
         weightInPerc: element.weightInPercentage,
         investorList: [],
-        schemeList: [],
-        schemeFolioList: []
       }
       this.arrayOfExcelData.push(data);
-    });
+    })
   }
 
   appendingOfValuesInExcel(iterable, index, choice) {
     switch (choice) {
       case 'investor':
+        console.log(iterable, this.arrayOfExcelData, index);
         // investor
         iterable.forEach((element, index1) => {
           this.arrayOfExcelData[index].investorList.push({
             index: index1 + 1,
             name: element.investorName,
             totalAum: element.totalAum,
-            weightInPerc: element.weightInPercentage
+            weightInPerc: element.weightInPercentage,
+            schemeList: [],
           });
         });
         break;
       case 'schemes':
         // schemes
         iterable.forEach((element, index1) => {
-          this.arrayOfExcelData[index].schemeList.push({
+          this.arrayOfExcelData[this.selectedClient].investorList[index].schemeList.push({
             index: index1 + 1,
             name: element.schemeName,
             totalAum: element.totalAum,
-            weightInPerc: element.weightInPercentage
+            weightInPerc: element.weightInPercentage,
+            schemeFolioList: []
           });
         });
         break;
       case 'scheme-folio':
         // scheme folio
         iterable.forEach((element, index1) => {
-          this.arrayOfExcelData[index].schemeFolioList.push({
+          this.arrayOfExcelData[this.selectedClient].investorList[this.selectedInvestor].schemeList[index].schemeFolioList.push({
             index: index1 + 1,
             name: element.schemeName,
             folioNumber: element.folioNumber,
@@ -394,9 +392,10 @@ export class ClientWiseComponent implements OnInit {
     this.clientList[index].show = (show) ? show = false : show = true;
   }
   getSchemeName(investorData, index, clientIndex) {
+    this.selectedInvestor = index;
+    this.selectedClient = clientIndex;
     investorData.showInvestor = !investorData.showInvestor
     investorData.schemeList = [];
-    this.selectedInvestorIndex = index;
     if (investorData.showInvestor == false) {
       const obj = {
         advisorId: this.advisorId,
@@ -414,16 +413,19 @@ export class ClientWiseComponent implements OnInit {
             });
             investorData.schemeList = data;
             console.log(data);
-            this.appendingOfValuesInExcel(data, this.selectedClient, 'schemes');
+            this.appendingOfValuesInExcel(data, index, 'schemes');
           }
         }
       )
     } else {
-      this.removeValuesFromExcel('schemes', clientIndex);
+      this.removeValuesFromExcel('schemes', index);
     }
 
   }
-  getFolio(schemeData, clientIndex) {
+  getFolio(schemeData, index, investorIndex, clientIndex) {
+    this.selectedScheme = index;
+    this.selectedInvestor = investorIndex;
+    this.selectedClient = clientIndex;
     schemeData.showScheme = !schemeData.showScheme
     schemeData.folioList = []
     if (schemeData.showScheme == false) {
@@ -442,13 +444,13 @@ export class ClientWiseComponent implements OnInit {
             this.scheme2List = data;
             // this.initializeExcelData();
             console.log(data);
-            this.appendingOfValuesInExcel(data, this.selectedClient, 'scheme-folio');
+            this.appendingOfValuesInExcel(data, index, 'scheme-folio');
 
           }
         }
       )
     } else {
-      this.removeValuesFromExcel('scheme-folio', clientIndex);
+      this.removeValuesFromExcel('scheme-folio', index);
     }
 
   }

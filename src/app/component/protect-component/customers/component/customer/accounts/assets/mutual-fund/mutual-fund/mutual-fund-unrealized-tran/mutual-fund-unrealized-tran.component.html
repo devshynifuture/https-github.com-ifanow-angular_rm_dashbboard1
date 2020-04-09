@@ -32,11 +32,15 @@
         </div>
         <div class="row">
             <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8">
-                <table matSort mat-table [dataSource]="dataSource" id="tbs" class="mutualfunds-capital-equity">
+                <table matSort mat-table [dataSource]="dataSource" id="tbs"
+                    class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
+                    [appSkeletonLoading]="isLoading">
                     <ng-container matColumnDef="categoryName" sticky>
                         <th class="br" mat-sort-header="categoryName" mat-header-cell *matHeaderCellDef>
                             Sub category name </th>
-                        <td class="br" mat-cell *matCellDef="let element"> {{element.categoryName}} </td>
+                        <td class="br" mat-cell *matCellDef="let element">
+                            <div class="bar">{{element.categoryName}}</div>
+                        </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left">Grand Total
                         </td>
 
@@ -46,7 +50,8 @@
                         <th class="br text-left" mat-sort-header="amtInvested" mat-header-cell *matHeaderCellDef>
                             Amount invested</th>
                         <td class="br text-left" mat-cell *matCellDef="let element" appFormatNumber>
-                            {{element.totalTransactionAmt}} </td>
+                            <div class="bar">{{element.totalTransactionAmt}}</div>
+                        </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.totalTransactionAmt:'0'}}</td>
 
@@ -56,7 +61,7 @@
                         <th class="br text-right" mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef>
                             Current value</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
-                            {{element.currentValue}}
+                            <div class="bar">{{element.currentValue}}</div>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.currentValue:'0'}}</td>
@@ -66,7 +71,7 @@
                         <th class="br text-right" mat-sort-header="dividendPayout" mat-header-cell *matHeaderCellDef>
                             Dividend payout</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
-                            {{element.dividendPayout}}
+                            <div class="bar">{{element.dividendPayout}}</div>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.dividendPayout:'0'}}</td>
@@ -77,7 +82,7 @@
                         <th class="br text-right" mat-sort-header="dividendReinvest" mat-header-cell *matHeaderCellDef>
                             Dividend reinvestment</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
-                            {{element.dividendReinvest}}
+                            <div class="bar">{{element.dividendReinvest}}</div>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.dividendReinvest:'0'}}</td>
@@ -88,7 +93,7 @@
                         <th class="br text-right" mat-sort-header="gain" mat-header-cell *matHeaderCellDef>
                             Gain</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
-                            {{element.gain}}
+                            <div class="bar">{{element.gain}}</div>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.totalGain:'0'}}</td>
@@ -99,7 +104,7 @@
                         <th class="br text-right" mat-sort-header="absReturn" mat-header-cell *matHeaderCellDef>
                             Absolute Return%</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
-                            {{element.absReturn}}
+                            <div class="bar">{{element.absReturn}}</div>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.totalGain:'0'}}</td>
@@ -110,7 +115,7 @@
                         <th class="br text-right" mat-sort-header="xirr" mat-header-cell *matHeaderCellDef>
                             Xirr%</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
-                            {{element.xirr}}
+                            <div class="bar"> {{element.xirr}}</div>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.xirr:'0'}}</td>
@@ -121,7 +126,7 @@
                         <th class="br text-right" mat-sort-header="allocation" mat-header-cell *matHeaderCellDef>
                             Allocation%</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
-                            {{element.allocation}}
+                            <div class="bar">{{element.allocation}}</div>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.allocationPer:'0'}}</td>
@@ -133,11 +138,17 @@
 
 
                 </table>
+                <div *ngIf="dataSource.length == 0" class="d-flex flex-column align-items-center">
+                    <img class="width300" src="assets/images/svg/noDataFound.svg">
+                    <h4 class="text-center pt-12"> No data found</h4>
+                </div>
             </div>
         </div>
         <div class="row">
             <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 pl-0 mb-8">
-                <table matSort mat-table [dataSource]="subCatArray(mutualFundList,'')" id="tbs" class="mutualfunds-capital-equity">
+                <table matSort mat-table [dataSource]="subCatArray(mutualFundList,'')" id="tbs"
+                    class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
+                    [appSkeletonLoading]="isLoading">
                     <ng-container matColumnDef="no" sticky>
                         <th mat-header-cell *matHeaderCellDef class="br">Sr no. </th>
                         <td mat-cell *matCellDef="let element;index as i" class="br">
@@ -150,8 +161,9 @@
                         <th class="br" mat-sort-header="transactionType" mat-header-cell *matHeaderCellDef> Transaction
                             Type </th>
                         <td class="br" mat-cell *matCellDef="let element">
-                            <span class="f-700" *ngIf="element.total=='Total'">{{element.total}}</span>
-                            <span *ngIf="element.fwTransactionType">{{element.fwTransactionType}}</span>
+                            <div class="bar"><span class="f-700" *ngIf="element.total=='Total'">{{element.total}}</span>
+                                <span *ngIf="element.fwTransactionType">{{element.fwTransactionType}}</span>
+                            </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left">Grand Total
                         </td>
@@ -162,7 +174,8 @@
                         <th class="br text-right" mat-sort-header="transactionDate" mat-header-cell *matHeaderCellDef>
                             Transaction date</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
-                            {{element.transactionDate}} </td>
+                            <div class="bar">{{element.transactionDate}} </div>
+                        </td>
                         <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
                         </td>
 
@@ -172,9 +185,10 @@
                         <th class="br text-left" mat-sort-header="transactionAmount" mat-header-cell *matHeaderCellDef>
                             Transaction amount</th>
                         <td class="br text-left" mat-cell *matCellDef="let element">
-                            <span appFormatNumber *ngIf="element.amount">{{element.amount}}</span>
-                            <span appFormatNumber class="f-700"
-                                *ngIf="element.totalTransactionAmt">{{element.totalTransactionAmt}}</span>
+                            <div class="bar"><span appFormatNumber *ngIf="element.amount">{{element.amount}}</span>
+                                <span appFormatNumber class="f-700"
+                                    *ngIf="element.totalTransactionAmt">{{element.totalTransactionAmt}}</span>
+                            </div>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.totalTransactionAmt:'0'}}</td>
@@ -187,8 +201,10 @@
                             Transaction NAV</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
                             {{element.transactionNav}}
-                            <span appFormatNumber *ngIf="element.amount">{{element.transactionNav}}</span>
-                            <span appFormatNumber class="f-700" *ngIf="element.totalNav">{{element.totalNav}}</span>
+                            <div class="bar"><span appFormatNumber
+                                    *ngIf="element.amount">{{element.transactionNav}}</span>
+                                <span appFormatNumber class="f-700" *ngIf="element.totalNav">{{element.totalNav}}</span>
+                            </div>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.totalNav:'0'}}</td>
@@ -198,8 +214,10 @@
                     <ng-container matColumnDef="units">
                         <th class="br text-right" mat-sort-header="units" mat-header-cell *matHeaderCellDef>Units</th>
                         <td class="br text-right" mat-cell *matCellDef="let element">
-                            <span appFormatNumber *ngIf="element.unit">{{element.unit}}</span>
-                            <span appFormatNumber class="f-700" *ngIf="element.totalUnit">{{element.totalUnit}}</span>
+                            <div class="bar"><span appFormatNumber *ngIf="element.unit">{{element.unit}}</span>
+                                <span appFormatNumber class="f-700"
+                                    *ngIf="element.totalUnit">{{element.totalUnit}}</span>
+                            </div>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.finalTotalUnit:'0'}}</td>
@@ -210,7 +228,7 @@
                         <th class="br text-right" mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef>
                             Current value</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
-                            {{element.currentValue}}
+                            <div class="bar"> {{element.currentValue}}</div>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.currentValue:'0'}}</td>
@@ -220,7 +238,7 @@
                         <th class="br text-right" mat-sort-header="dividendPayout" mat-header-cell *matHeaderCellDef>
                             Dividend payout</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
-                            {{element.dividendPayout}}
+                            <div class="bar">{{element.dividendPayout}}</div>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.dividendPayout:'0'}}</td>
@@ -230,7 +248,7 @@
                         <th class="br text-right" mat-sort-header="dividendReinvest" mat-header-cell *matHeaderCellDef>
                             Dividend reinvestment</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
-                            {{element.dividendReinvest}}
+                            <div class="bar">{{element.dividendReinvest}}</div>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.dividendReinvest:'0'}}</td>
@@ -240,7 +258,7 @@
                         <th class="br text-right" mat-sort-header="totalAmount" mat-header-cell *matHeaderCellDef>
                             Total amount</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
-                            {{element.totalAmount}}
+                            <div class="bar"> {{element.totalAmount}}</div>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.totalAmount:'0'}}</td>
@@ -251,7 +269,7 @@
                         <th class="br text-right" mat-sort-header="gain" mat-header-cell *matHeaderCellDef>
                             Gain</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
-                            {{element.gain}}
+                            <div class="bar"> {{element.gain}}</div>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.totalGain:'0'}}</td>
@@ -262,7 +280,7 @@
                         <th class="br text-right" mat-sort-header="absReturn" mat-header-cell *matHeaderCellDef>
                             Absolute Return%</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
-                            {{element.absReturn}}
+                            <div class="bar"> {{element.absReturn}}</div>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.absReturn:'0'}}</td>
@@ -273,7 +291,8 @@
                         <th class="br text-right" mat-sort-header="xirr" mat-header-cell *matHeaderCellDef>
                             Xirr%</th>
                         <td class="br text-right" mat-cell *matCellDef="let element" appFormatNumber>
-                            {{element.xirr}}
+                            <div class="bar"> {{element.xirr}}
+                            </div>
                         </td>
                         <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                             {{(grandTotal)?grandTotal.xirr:'0'}}</td>
@@ -283,26 +302,24 @@
                     <ng-container matColumnDef="groupHeader">
                         <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
                             class="text-center text-primary">
-                            {{group.groupName}}</td>
+                            <div class="bar">{{group.groupName}}
+                            </div>
+                        </td>
                     </ng-container>
 
                     <ng-container matColumnDef="groupHeader2">
                         <td *matCellDef="let group" [attr.colspan]="displayedColumns.length">
-                            {{group.schemeName}} <p class="text-right">Current NAV:{{group.nav}}</p>
+                            <div class="bar">{{group.schemeName}} <p class="text-right">Current NAV:{{group.nav}}</p>
+                            </div>
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="groupHeader3" sticky>
                         <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
                             class="text-center text-primary">
-                            {{group.name}}(PAN:{{group.pan}})|{{group.folio}}</td>
-                    </ng-container>
-
-                    <!-- <ng-container matColumnDef="groupHeader4">
-                        <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="text-center f-600">
-                            {{group.total}}{{group.totalTransactionAmt}}{{group.totalNav}}{{group.totalUnit}}{{group.totalNav}}{{group.totalCurrentValue}}{{group.dividendPayout}}{{group.divReinvestment}}{{group.totalAmount}}{{group.gain}}{{group.absReturn}}{{group.xirr}}
+                            <div class="bar">{{group.name}}(PAN:{{group.pan}})|{{group.folio}}</div>
                         </td>
-                    </ng-container> -->
+                    </ng-container>
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -314,10 +331,11 @@
 
 
                 </table>
+                <div *ngIf="dataSource.length == 0" class="d-flex flex-column align-items-center">
+                    <img class="width300" src="assets/images/svg/noDataFound.svg">
+                    <h4 class="text-center pt-12"> No data found</h4>
+                </div>
             </div>
         </div>
-
-
-
     </div>
 </div>

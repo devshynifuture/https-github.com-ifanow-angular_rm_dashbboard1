@@ -22,6 +22,7 @@ import { ScrollDispatchModule, ScrollingModule } from '@angular/cdk/scrolling';
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { LifeInsuranceComponent } from '../../customers/component/customer/plan/insurance-plan/mainInsuranceScreen/life-insurance/life-insurance.component';
 import { TransactionMobileViewComponent } from './transaction-mobile-view/transaction-mobile-view.component';
+import { TransactionBottomButtonComponent } from './transaction-mobile-view/transaction-bottom-button/transaction-bottom-button.component';
 //import { VideoKycComponent } from './overview-transactions/know-your-customer/video-kyc/video-kyc.component';
 //import { FatcaDetailsComponent } from './overview-transactions/know-your-customer/fatca-details/fatca-details.component';
 //import { NomineeDetailsComponent } from './overview-transactions/know-your-customer/nominee-details/nominee-details.component';
@@ -46,7 +47,8 @@ import { TransactionMobileViewComponent } from './transaction-mobile-view/transa
     PhotoSigntureComponent,
     // FatcaDetailsComponent,
     VideoKycComponent,
-    TransactionMobileViewComponent
+    TransactionMobileViewComponent,
+    TransactionBottomButtonComponent
   ],
   imports: [
     CommonModule,
@@ -67,7 +69,7 @@ import { TransactionMobileViewComponent } from './transaction-mobile-view/transa
     ScrollDispatchModule,
     ScrollingModule
   ],
-  entryComponents: [TransactionMobileViewComponent]
+  entryComponents: [TransactionMobileViewComponent, TransactionBottomButtonComponent]
 })
 export class TransactionsModule {
 
