@@ -146,7 +146,7 @@
         </div>
         <div class="row">
             <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 pl-0 mb-8">
-                <table matSort mat-table [dataSource]="subCatArray(mutualFundList,'')" id="tbs"
+                <table matSort mat-table [dataSource]="customDataSource" id="tbs"
                     class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
                     [appSkeletonLoading]="isLoading">
                     <ng-container matColumnDef="no" sticky>

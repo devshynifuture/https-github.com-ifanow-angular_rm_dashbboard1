@@ -92,6 +92,7 @@ export class MutualFundSummaryComponent implements OnInit {
       componentName: RightFilterComponent
     };
     fragmentData.data = {
+      name:'SUMMARY REPORT',
       mfData:this.mutualFund,
       folioWise: this.mutualFundListFilter,
       schemeWise: this.schemeWiseForFilter,
