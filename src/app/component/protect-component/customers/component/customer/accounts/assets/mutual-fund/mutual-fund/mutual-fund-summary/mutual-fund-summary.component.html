@@ -90,7 +90,9 @@
                         </div>
                     </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                        {{(mutualFund)?mutualFund.total_amount_invested:'0'}}</td>
+                        <div class="bar"> {{(mutualFund)?mutualFund.total_amount_invested:'0'}}
+                        </div>
+                    </td>
 
                 </ng-container>
 
@@ -105,7 +107,9 @@
                         </div>
                     </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                        {{(mutualFund)?mutualFund.total_current_value:'0'}}</td>
+                        <div class="bar"> {{(mutualFund)?mutualFund.total_current_value:'0'}}
+                        </div>
+                    </td>
 
                 </ng-container>
 
@@ -121,7 +125,9 @@
                         </div>
                     </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                        {{(mutualFund)?mutualFund.total_unrealized_gain:'0'}}</td>
+                        <div class="bar"> {{(mutualFund)?mutualFund.total_unrealized_gain:'0'}}
+                        </div>
+                    </td>
 
                 </ng-container>
 
@@ -136,7 +142,9 @@
                         </div>
                     </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                        {{(mutualFund)?mutualFund.total_absolute_return:'0'}}</td>
+                        <div class="bar"> {{(mutualFund)?mutualFund.total_absolute_return:'0'}}
+                        </div>
+                    </td>
 
                 </ng-container>
 
@@ -148,7 +156,9 @@
                         </div>
                     </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                        {{(mutualFund)?mutualFund.total_xirr:'0'}}</td>
+                        <div class="bar">{{(mutualFund)?mutualFund.total_xirr:'0'}}
+                        </div>
+                    </td>
 
                 </ng-container>
 
@@ -164,7 +174,9 @@
                         </div>
                     </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                        {{(mutualFund)?mutualFund.total_dividend_payout:'0'}}</td>
+                        <div class="bar"> {{(mutualFund)?mutualFund.total_dividend_payout:'0'}}
+                        </div>
+                    </td>
 
                 </ng-container>
 
@@ -178,7 +190,9 @@
                         </div>
                     </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                        {{(mutualFund)?mutualFund.total_switch_out:'0'}}</td>
+                        <div class="bar"> {{(mutualFund)?mutualFund.total_switch_out:'0'}}
+                        </div>
+                    </td>
 
                 </ng-container>
 
@@ -194,7 +208,9 @@
                         </div>
                     </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                        {{(mutualFund)?mutualFund.balanceUnit:'0'}}</td>
+                        <div class="bar"> {{(mutualFund)?mutualFund.balanceUnit:'0'}}
+                        </div>
+                    </td>
 
                 </ng-container>
 
@@ -218,13 +234,16 @@
                         </div>
                     </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                        {{(mutualFund)?mutualFund.totalSipAmount:'0'}}
+                        <div class="bar"> {{(mutualFund)?mutualFund.totalSipAmount:'0'}}
+                        </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="groupHeader">
                     <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
                         class="text-center text-primary">
-                        {{group.groupName}}</td>
+                        <div class="bar"> {{group.groupName}}
+                        </div>
+                    </td>
                 </ng-container>
                 <!-- <ng-container matColumnDef="groupHeader2">
                         <td colspan="11" *matCellDef="let group" [attr.colspan]="displayedColumns.length"

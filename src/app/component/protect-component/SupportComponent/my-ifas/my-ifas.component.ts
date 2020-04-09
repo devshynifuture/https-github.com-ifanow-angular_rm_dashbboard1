@@ -6,6 +6,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IfasDetailsComponent } from './ifas-details/ifas-details.component';
 import { MatSort, MatTableDataSource, MatDialog } from '@angular/material';
 import { OrderHistoricalFileComponent } from './../order-historical-file/order-historical-file.component';
+import { SupportService } from '../support.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-my-ifas',
@@ -18,7 +20,7 @@ export class MyIfasComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   isLoading = false;
   constructor(
-    private subInjectService: SubscriptionInject
+    private subInjectService: SubscriptionInject, private supportService: SupportService, private eventService: EventService
   ) { }
 
   dataSource;
@@ -27,8 +29,20 @@ export class MyIfasComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
     this.dataSource.sort = this.sort;
+    this.getMyIfasList();
   }
+  getMyIfasList() {
+    let obj = {}
+    this.supportService.getMyIFAValues(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
 
+        }
+      },
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
   openOrderHistoricalFile(data) {
     const fragmentData = {
       flag: 'ifaDetails',
