@@ -106,6 +106,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       componentName: RightFilterComponent
     };
     fragmentData.data = {
+      name:'UNREALIZED TRANSACTION REPORT',
       mfData:this.mutualFund,
       folioWise: this.mutualFundListFilter,
       schemeWise: this.schemeWiseForFilter,
