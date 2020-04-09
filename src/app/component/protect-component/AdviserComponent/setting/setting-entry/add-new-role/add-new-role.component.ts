@@ -153,7 +153,7 @@ export class AddNewRoleComponent implements OnInit {
         let dataObj = {
           // "advisorOrClientRole": [1,2,3].includes(this.data.roleType)? 1 : 2,
           "advisorOrClientRole": this.data.roleType,
-          "systemGeneratedOrCustom": 2,
+          "systemGeneratedOrCustomRole": 2,
           ...this.rolesFG.value,
           featureToCapabilitiesList: this.mergeAllCapabilitiesAndFilterEnabled(),
         };

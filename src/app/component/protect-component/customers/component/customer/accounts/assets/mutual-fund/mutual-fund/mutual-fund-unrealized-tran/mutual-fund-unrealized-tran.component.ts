@@ -19,7 +19,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   totalObj: {};
   isLoading
   categoryMF: any[];
-  dataSource: any[];
+  dataSource: Array<any> = [{}, {}, {}];
   catObj: {};
   grandTotal: any;
   schemeWiseForFilter: any;
