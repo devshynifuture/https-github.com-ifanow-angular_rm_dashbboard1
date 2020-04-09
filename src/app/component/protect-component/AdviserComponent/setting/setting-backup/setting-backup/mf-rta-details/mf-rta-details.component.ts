@@ -64,7 +64,7 @@ export class MfRtaDetailsComponent implements OnInit {
   loadRTAList() {
     const jsonData = { advisorId: this.advisorId }
     this.settingsService.getMFRTAList(jsonData).subscribe((res) => {
-      this.mfRTAlist = res || {};
+      this.mfRTAlist = res || [];
       this.createDataSource();
       console.log(res);
     })
