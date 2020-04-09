@@ -434,7 +434,18 @@ export class RightFilterComponent implements OnInit {
       this.reportTypeobj = filter;
     }
   };
+  selectAll(event,array,count){
+    count = 0;
+    if (array != undefined) {
 
+      array.forEach(item => {
+        item.selected = event.checked;
+        if (item.selected) {
+          count++;
+        }
+      });
+    }
+  }
   generateReport() {
     if (this.summaryFilerForm.get('reportAsOn').invalid) {
       this.summaryFilerForm.get('reportAsOn').markAsTouched();
@@ -456,18 +467,8 @@ export class RightFilterComponent implements OnInit {
       this.finalFilterData.transactionView = this.sendTransactionView
       console.log('this.sendTransactionView ====',this.finalFilterData)
       this.Close(this.finalFilterData);
-      console.log(this.finalFilterData)
-    // this.custumService.getMutualFund(this.dataToSend).subscribe(
-    //   data => this.getMutualFundResponse(data), (error) => {
-    //     this.eventService.showErrorMessage(error);
-    //   }
-    // );
+      console.log(this.finalFilterData);
   }
-
-  // getMutualFundResponse(data) {
-  //   console.log(data);
-  //   this.Close(data);
-  // }
 
   Close(data) {
     this.subInjectService.changeNewRightSliderState({state: 'close',data:data});
