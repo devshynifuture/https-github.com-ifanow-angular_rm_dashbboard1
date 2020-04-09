@@ -210,7 +210,9 @@
               </div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
-              {{mfData.total_current_value}}</td>
+              <div class="bar" *ngIf="mfData">{{mfData.total_current_value}}
+              </div>
+            </td>
           </ng-container>
           <ng-container matColumnDef="abs">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret % </th>
@@ -218,7 +220,9 @@
               <div class="bar"> {{element.absoluteReturn | number:'1.2-2'}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-              {{mfData.total_absolute_return | number:'1.2-2'}}</td>
+              <div class="bar" *ngIf="mfData">{{mfData.total_absolute_return | number:'1.2-2'}}
+                </div>
+              </td>
           </ng-container>
           <ng-container matColumnDef="xirr">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR % </th>
@@ -227,7 +231,7 @@
                 {{element.xirr | number:'1.2-2'}} </div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
-              <div class="bar">{{mfData.total_xirr | number:'1.2-2'}}</div>
+              <div class="bar" *ngIf="mfData">{{mfData.total_xirr | number:'1.2-2'}}</div>
             </td>
           </ng-container>
           <ng-container matColumnDef="alloc">
@@ -307,7 +311,7 @@
               <div class="bar">{{element.currentValue}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
-              <div class="bar">{{mfData.total_current_value}}
+              <div class="bar" *ngIf="mfData">{{mfData.total_current_value}}
               </div>
             </td>
           </ng-container>
@@ -317,7 +321,7 @@
               <div class="bar"> {{element.absoluteReturn | number:'1.2-2'}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-              <div class="bar">{{mfData.total_absolute_return | number:'1.2-2'}}
+              <div class="bar" *ngIf="mfData">{{mfData.total_absolute_return | number:'1.2-2'}}
               </div>
             </td>
           </ng-container>
@@ -327,7 +331,7 @@
               <div class="bar">{{element.xirr | number:'1.2-2'}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
-              <div class="bar"> {{mfData.total_xirr | number:'1.2-2'}}
+              <div class="bar" *ngIf="mfData"> {{mfData.total_xirr | number:'1.2-2'}}
               </div>
             </td>
           </ng-container>
@@ -371,7 +375,7 @@
               <div class="bar">{{element.amountInv}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
-              <div class="bar"  *ngIf="mfData"> {{mfData.total_amount_invested}}
+              <div class="bar" *ngIf="mfData"> {{mfData.total_amount_invested}}
               </div>
             </td>
           </ng-container>
@@ -381,7 +385,7 @@
               <div class="bar">{{element.value}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
-              <div class="bar">{{mfData.total_current_value}}
+              <div class="bar" *ngIf="mfData">{{mfData.total_current_value}}
               </div>
             </td>
           </ng-container>
@@ -391,7 +395,9 @@
               <div class="bar">{{element.absoluteReturn | number:'1.2-2'}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-              {{mfData.total_absolute_return | number:'1.2-2'}}</td>
+              <div class="bar" *ngIf="mfData">{{mfData.total_absolute_return | number:'1.2-2'}}
+                </div>
+              </td>
           </ng-container>
           <ng-container matColumnDef="xirr">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR % </th>
@@ -399,7 +405,9 @@
               <div class="bar">{{element.xirr | number:'1.2-2'}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
-              {{mfData.total_xirr | number:'1.2-2'}}</td>
+              <div class="bar" *ngIf="mfData">{{mfData.total_xirr | number:'1.2-2'}}
+              </div>
+              </td>
           </ng-container>
           <ng-container matColumnDef="alloc">
             <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc % </th>
@@ -441,7 +449,7 @@
               <div class="bar">{{element.amountInvested}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
-              <div class="bar"  *ngIf="mfData">{{mfData.total_amount_invested}}
+              <div class="bar" *ngIf="mfData">{{mfData.total_amount_invested}}
               </div>
             </td>
           </ng-container>
@@ -451,7 +459,9 @@
               <div class="bar">{{element.currentValue}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
-              {{mfData.total_current_value}}</td>
+              <div class="bar" *ngIf="mfData">{{mfData.total_current_value}}
+              </div>
+            </td>
           </ng-container>
           <ng-container matColumnDef="abs">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret % </th>
@@ -459,7 +469,9 @@
               <div class="bar"> {{element.absoluteReturn | number:'1.2-2' }}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-              {{mfData.total_absolute_return | number:'1.2-2'}}</td>
+              <div class="bar" *ngIf="mfData"> {{mfData.total_absolute_return | number:'1.2-2'}}
+                </div>
+              </td>
           </ng-container>
           <ng-container matColumnDef="xirr">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR % </th>
@@ -467,7 +479,9 @@
               <div class="bar">{{element.xirr | number:'1.2-2'}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-              {{mfData.total_xirr | number:'1.2-2'}}</td>
+              <div class="bar" *ngIf="mfData"> {{mfData.total_xirr | number:'1.2-2'}}
+                </div>
+              </td>
           </ng-container>
           <ng-container matColumnDef="alloc">
             <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc % </th>
