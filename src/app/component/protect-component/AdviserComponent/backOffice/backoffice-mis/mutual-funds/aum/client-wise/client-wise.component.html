@@ -11,7 +11,8 @@
                 <div class="col-md-6 pr-0">
                     <div class="right text-right">
                         <button mat-stroked-button class="btn-default addon"
-                            (click)="exportToExcelSheet('client-wise')"><i class="material-icons">add</i>XLS</button>
+                            (click)="exportToExcelSheet('client-wise', null)"><i
+                                class="material-icons">add</i>XLS</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                     </div>
                 </div>
@@ -42,12 +43,12 @@
                                     <div class="bar"> {{name.name}} </div>
                                 </td>
                                 <td>
-                                    <div class="bar"><span appFormatNumber>{{name.totalAum}}</span></div>
+                                    <div class="bar"><span>{{name.totalAum}}</span></div>
                                 </td>
                                 <td>
                                     <div class="bar"> {{name.weightInPercentage}}{{(isLoading?'':'%')}}</div>
                                 </td>
-                                <td (click)="getInvestorName(name, clientIndex)">
+                                <td (click)="getInvestorName(name, clientIndex, null)">
                                     <div class="bar text-center">
                                         <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="name.show"> add </i>
                                         <i class="material-icons  b-a f-14 mt-4 c-p" *ngIf="name.show==false">
@@ -59,6 +60,14 @@
 
                             <tr style="border: transparent !important">
                                 <td class="innerTd one" colspan="5">
+                                    <div class="d-block text-right" *ngIf="name.show==false">
+                                        <button mat-icon-button
+                                            (click)="exportToExcelSheet('investor-wise', clientIndex)">
+                                            <mat-icon>
+                                                save_alt
+                                            </mat-icon>
+                                        </button>
+                                    </div>
                                     <table *ngIf="name.show==false" class=" mt-8 mb-8 " id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr>
@@ -70,16 +79,16 @@
 
                                             </tr>
                                         </thead>
-                                        <tbody *ngFor="let investor of name.investorList; index as i">
+                                        <tbody *ngFor="let investor of name.investorList; index as investorIndex">
                                             <tr>
-                                                <td>{{i+1}}</td>
+                                                <td>{{investorIndex+1}}</td>
                                                 <td>
                                                     {{investor.investorName}}
                                                 </td>
-                                                <td><span appFormatNumber>{{name.totalAum}}</span></td>
+                                                <td><span>{{name.totalAum}}</span></td>
                                                 <td>{{name.weightInPercentage}}%</td>
                                                 <td class="text-center"
-                                                    (click)="getSchemeName(investor, i, clientIndex)">
+                                                    (click)="getSchemeName(investor, investorIndex, clientIndex)">
                                                     <i class="material-icons  b-a f-14 mt-4 c-p"
                                                         *ngIf="investor.showInvestor">add</i>
                                                     <i class="material-icons  b-a f-14 mt-4 c-p"
@@ -88,6 +97,14 @@
                                             </tr>
                                             <tr style="border: transparent !important">
                                                 <td class="innerTd two" colspan="5">
+                                                    <div class="d-block text-right" *ngIf="!investor.showInvestor">
+                                                        <button mat-icon-button
+                                                            (click)="exportToExcelSheet('scheme1-wise', investorIndex)">
+                                                            <mat-icon>
+                                                                save_alt
+                                                            </mat-icon>
+                                                        </button>
+                                                    </div>
                                                     <table class=" mt-8 mb-8 " id="table-low"
                                                         *ngIf="!investor.showInvestor">
                                                         <thead>
@@ -100,16 +117,17 @@
 
                                                             </tr>
                                                         </thead>
-                                                        <tbody *ngFor="let scheme of investor.schemeList; index as i">
+                                                        <tbody
+                                                            *ngFor="let scheme of investor.schemeList; index as schemeIndex">
                                                             <tr>
-                                                                <td>{{i+1}}</td>
+                                                                <td>{{schemeIndex+1}}</td>
                                                                 <td>
                                                                     {{scheme.schemeName}} </td>
-                                                                <td><span appFormatNumber>{{scheme.totalAum}}</span>
+                                                                <td><span>{{scheme.totalAum}}</span>
                                                                 </td>
                                                                 <td>{{scheme.weightInPercentage}}</td>
                                                                 <td class="text-center"
-                                                                    (click)="getFolio(scheme, clientIndex)">
+                                                                    (click)="getFolio(scheme, schemeIndex, investorIndex, clientIndex)">
                                                                     <i class="material-icons  b-a f-14 mt-4 c-p"
                                                                         *ngIf="scheme.showScheme">add</i>
                                                                     <i class="material-icons  b-a f-14 mt-4 c-p"
@@ -119,6 +137,14 @@
                                                             </tr>
                                                             <tr style="border: transparent !important">
                                                                 <td class="innerTd four" colspan="5">
+                                                                    <div class="d-block text-right">
+                                                                        <button mat-icon-button
+                                                                            (click)="exportToExcelSheet('scheme2-wise', schemeIndex)">
+                                                                            <mat-icon>
+                                                                                save_alt
+                                                                            </mat-icon>
+                                                                        </button>
+                                                                    </div>
                                                                     <table class=" mt-8 mb-8 " id="table-low"
                                                                         *ngIf="scheme.showScheme==false">
                                                                         <thead>
@@ -138,8 +164,7 @@
                                                                                 <td>{{folio.schemeName}} </td>
 
                                                                                 <td>{{folio.folioNumber}}</td>
-                                                                                <td><span
-                                                                                        appFormatNumber>{{folio.totalAum}}</span>
+                                                                                <td><span>{{folio.totalAum}}</span>
                                                                                 </td>
                                                                                 <td>{{folio.balanceUnit}}</td>
                                                                                 <td>
@@ -166,8 +191,7 @@
                             <tr *ngIf="!isLoading">
                                 <td class="p-table  "><strong>Total</strong></td>
                                 <td class="p-table  ">&nbsp;</td>
-                                <td class="p-table  "><strong><span
-                                            appFormatNumber>{{totalCurrentValue}}</span></strong></td>
+                                <td class="p-table  "><strong><span>{{totalCurrentValue}}</span></strong></td>
                                 <td class="p-table "><strong>{{totalWeight}}%</strong></td>
                                 <td></td>
                             </tr>

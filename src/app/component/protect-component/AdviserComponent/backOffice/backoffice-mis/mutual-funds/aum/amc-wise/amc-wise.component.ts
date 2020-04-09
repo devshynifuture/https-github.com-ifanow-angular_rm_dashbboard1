@@ -65,6 +65,10 @@ export class AmcWiseComponent implements OnInit {
     ]
   ];
   selectedAmc: any;
+  applicantIndex: any;
+  schemeIndex: any;
+  copyOfSchemeList: any;
+  copyOfExcelData: any;
 
   constructor(public aum: AumComponent, private backoffice: BackOfficeService, private dataService: EventService) { }
 
@@ -89,30 +93,61 @@ export class AmcWiseComponent implements OnInit {
     )
   }
 
-  exportToExcelSheet(choice) {
+  exportToExcelSheet(choice, index, amcIndex) {
     switch (choice) {
       case 'amc-wise':
         this.amcWiseExcelReport();
         break;
       case 'scheme-wise':
-        this.schemeWiseExcelReport();
+        this.schemeWiseExcelReport(index);
         break;
       case 'applicant-wise':
-        this.applicantWiseExcelReport();
+        this.applicantWiseExcelReport(index, amcIndex);
         break;
     }
+
+    console.log(this.arrayOfExcelData);
   }
 
-  applicantWiseExcelReport() {
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[2], this.arrayOfHeaders[2], this.arrayOfExcelData[2], [], 'Applicant wise report');
+  applicantWiseExcelReport(index, amcIndex) {
+    let applicantList = this.arrayOfExcelData[amcIndex].schemeList[index].applicantList;
+    let newArray = [];
+    applicantList.forEach(element => {
+      newArray.push({
+        field1: element.name,
+        field2: element.balanceUnit,
+        field3: element.folioNumber,
+        field4: element.totalAum,
+        field5: element.weightInPerc
+      })
+    });
+
+    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[2], this.arrayOfHeaders[2], newArray, [], 'AMC wise MIS report');
   }
 
-  schemeWiseExcelReport() {
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[1], this.arrayOfHeaders[1], this.arrayOfExcelData[1], [], 'Scheme wise report');
+  schemeWiseExcelReport(index) {
+    let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
+
+    copyOfExcelData.forEach((element, index1) => {
+      if (index1 === index) {
+        return;
+      } else {
+        element.schemeList = [];
+      }
+    });
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'AMC wise MIS report', 'amc-wise-aum-mis', {
+      amcList: true,
+      schemeList: false,
+      applicantList: false
+    });
   }
 
   amcWiseExcelReport() {
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'AMC wise MIS report', 'amc-wise-aum-mis');
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'AMC wise MIS report', 'amc-wise-aum-mis', {
+      amcList: false,
+      schemeList: false,
+      applicantList: false
+    });
   }
 
   // initializeExcelSheet() {
@@ -179,11 +214,10 @@ export class AmcWiseComponent implements OnInit {
 
     switch (whichList) {
       case 'schemes':
-        this.arrayOfExcelData[clientIndex].schemeList = [];
-        this.arrayOfExcelData[clientIndex].applicantList = [];
+        this.arrayOfExcelData[this.selectedAmc].schemeList = [];
         break;
       case 'applicant':
-        this.arrayOfExcelData[clientIndex].applicantList = [];
+        this.arrayOfExcelData[this.selectedAmc].schemeList[clientIndex].applicantList = [];
         break;
     }
   }
@@ -191,20 +225,22 @@ export class AmcWiseComponent implements OnInit {
   appendingOfValuesInExcel(iterable, index, choice) {
     switch (choice) {
       case 'schemes':
-        // investor
+        // scheme
         iterable.forEach((element, index1) => {
           this.arrayOfExcelData[index].schemeList.push({
             index: index1 + 1,
             name: element.schemeName,
             totalAum: element.totalAum,
-            weightInPerc: element.weightInPercentage
+            weightInPerc: element.weightInPercentage,
+            applicantList: []
           });
         });
         break;
       case 'applicant':
-        // schemes
+        // applicant
         iterable.forEach((element, index1) => {
-          this.arrayOfExcelData[index].applicantList.push({
+          console.log(index, iterable, this.arrayOfExcelData);
+          this.arrayOfExcelData[this.selectedAmc].schemeList[index].applicantList.push({
             name: element.investorName,
             balanceUnit: element.balanceUnit,
             folioNumber: element.folioNumber,
@@ -218,17 +254,14 @@ export class AmcWiseComponent implements OnInit {
   }
 
   excelInitAmcList() {
-    let data = {};
     this.amcList.forEach((element, index1) => {
-      data = {
+      this.arrayOfExcelData.push({
         index: index1 + 1,
         name: element.name,
         totalAum: element.totalAum,
         weightInPerc: element.weightInPercentage,
         schemeList: [],
-        applicantList: []
-      }
-      this.arrayOfExcelData.push(data);
+      });
     });
 
   }
@@ -260,7 +293,8 @@ export class AmcWiseComponent implements OnInit {
       this.removeValuesFromExcel('schemes', amcIndex);
     }
   }
-  showApplicant(schemeData, amcIndex) {
+  showApplicant(schemeData, index, amcIndex) {
+    this.schemeIndex = index;
     schemeData.showScheme = !schemeData.showScheme
     schemeData.applicantList = []
     if (schemeData.showScheme == false) {
@@ -276,12 +310,12 @@ export class AmcWiseComponent implements OnInit {
           if (data) {
             schemeData.applicantList = data
             console.log(amcIndex, data);
-            this.appendingOfValuesInExcel(data, amcIndex, 'applicant');
+            this.appendingOfValuesInExcel(data, index, 'applicant');
           }
         }
       )
     } else {
-      this.removeValuesFromExcel('applicant', amcIndex);
+      this.removeValuesFromExcel('applicant', index);
     }
   }
   getApplicantName() {

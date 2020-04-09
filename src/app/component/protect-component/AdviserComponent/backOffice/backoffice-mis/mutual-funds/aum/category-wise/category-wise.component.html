@@ -14,13 +14,8 @@
                 <div class="col-md-6 pr-0">
                     <div class="right text-right">
                         <button mat-stroked-button class="btn-default addon"
-                            (click)="exportToExcelReport('category')"><i class="material-icons">add</i>category</button>
-                        <button mat-stroked-button class="btn-default addon"
-                            (click)="exportToExcelReport('sub-category')"><i
-                                class="material-icons">add</i>SubCategory</button>
-                        <button mat-stroked-button class="btn-default addon"
-                            (click)="exportToExcelReport('applicant-wise')"><i
-                                class="material-icons">add</i>Applicant</button>
+                            (click)="exportToExcelReport('category', null)"><i
+                                class="material-icons">add</i>XLXS</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                     </div>
                 </div>
@@ -81,6 +76,14 @@
 
                             <tr style="border: transparent !important">
                                 <td colspan="5" class="innerTd one">
+                                    <div class="d-block text-right" *ngIf="category.showCategory==false">
+                                        <button mat-icon-button
+                                            (click)="exportToExcelReport('sub-category', categoryIndex)">
+                                            <mat-icon>
+                                                save_alt
+                                            </mat-icon>
+                                        </button>
+                                    </div>
                                     <table *ngIf="category.showCategory==false" class=" mt-8 mb-8 " id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr>
@@ -102,7 +105,7 @@
                                                 <td><span appFormatNumber>{{subcategory.totalAum}}</span> </td>
                                                 <td>{{subcategory.weightInPercentage}}%</td>
                                                 <td class="text-center"
-                                                    (click)="showSchemeName(subCatIndex,subcategory, categoryIndex)">
+                                                    (click)="showSchemeName(subcategory, subCatIndex, categoryIndex)">
                                                     <i *ngIf="subcategory.showSubCategory==true"
                                                         class="material-icons  b-a f-14 mt-4 c-p">add</i>
                                                     <i *ngIf="subcategory.showSubCategory==false"
@@ -111,6 +114,15 @@
                                             </tr>
                                             <tr style="border: transparent !important">
                                                 <td colspan="5" class="innerTd two">
+                                                    <div class="d-block text-right"
+                                                        *ngIf="subcategory.showSubCategory==false">
+                                                        <button mat-icon-button
+                                                            (click)="exportToExcelReport('schemes', categoryIndex)">
+                                                            <mat-icon>
+                                                                save_alt
+                                                            </mat-icon>
+                                                        </button>
+                                                    </div>
                                                     <table class=" mt-8 mb-8 " id="table-low"
                                                         *ngIf="subcategory.showSubCategory==false">
                                                         <thead>
@@ -133,7 +145,7 @@
                                                                 </td>
                                                                 <td>{{scheme.weightInPercentage}}</td>
                                                                 <td class="text-center"
-                                                                    (click)="showApplicantName(schemeIndex,scheme, categoryIndex)">
+                                                                    (click)="showApplicantName(scheme, schemeIndex, categoryIndex)">
                                                                     <i class="material-icons  b-a f-14 mt-4 c-p"
                                                                         *ngIf="scheme.showScheme">add</i>
                                                                     <i class="material-icons   b-a f-14 mt-4 c-p"
@@ -144,6 +156,15 @@
                                                             </tr>
                                                             <tr style="border: transparent !important">
                                                                 <td colspan="5" class="innerTd three">
+                                                                    <div class="d-block text-right"
+                                                                        *ngIf="!scheme.showScheme">
+                                                                        <button mat-icon-button
+                                                                            (click)="exportToExcelReport('applicant', categoryIndex)">
+                                                                            <mat-icon>
+                                                                                save_alt
+                                                                            </mat-icon>
+                                                                        </button>
+                                                                    </div>
                                                                     <table class=" mt-8 mb-8 " id="table-low"
                                                                         *ngIf="!scheme.showScheme">
                                                                         <thead>

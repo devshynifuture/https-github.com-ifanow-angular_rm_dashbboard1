@@ -11,7 +11,7 @@
                     </div>
                     <div class="col-md-6 pr-0">
                         <div class="right text-right">
-                            <button mat-stroked-button (click)="exportToExcelSheet('applicant-wise')"
+                            <button mat-stroked-button (click)="exportToExcelSheet('applicant-wise', null)"
                                 class="btn-default addon"><i class="material-icons">add</i>XLS</button>
                             <button mat-stroked-button class="btn-success ml-8 addon"
                                 (click)="aumReport()">Back</button>
@@ -61,6 +61,14 @@
 
                                 <tr style="border: transparent !important">
                                     <td class="innerTd one" colspan="5">
+                                        <div class="d-block text-right" *ngIf="!name.show && !isLoading">
+                                            <button mat-icon-button
+                                                (click)="exportToExcelSheet('category-wise', applicantIndex)">
+                                                <mat-icon>
+                                                    save_alt
+                                                </mat-icon>
+                                            </button>
+                                        </div>
                                         <table *ngIf="!name.show && !isLoading" class=" mb-8 mt-8 " id="table-low">
                                             <thead class="bg-light text-dark">
                                                 <tr>
@@ -71,14 +79,14 @@
                                                     <th></th>
                                                 </tr>
                                             </thead>
-                                            <tbody *ngFor="let category of name.categoryList; index as i">
+                                            <tbody *ngFor="let category of name.categoryList; index as catIndex">
                                                 <tr>
-                                                    <td>{{i+1}}</td>
+                                                    <td>{{catIndex+1}}</td>
                                                     <td>{{category.name}} </td>
                                                     <td><span appFormatNumber>{{category.totalAum}}</span></td>
                                                     <td>{{category.weightInPercentage}}%</td>
                                                     <td class="text-center"
-                                                        (click)="subCategory(category, applicantIndex)">
+                                                        (click)="subCategory(category, catIndex ,applicantIndex)">
                                                         <i class="material-icons  b-a f-14 mt-4 c-p"
                                                             *ngIf="category.showCategory">add</i>
                                                         <i class="material-icons  b-a f-14 mt-4 c-p"
@@ -86,6 +94,14 @@
                                                 </tr>
                                                 <tr style="border: transparent !important">
                                                     <td class="innerTd two" colspan="5">
+                                                        <div class="d-block text-right" *ngIf="!category.showCategory">
+                                                            <button mat-icon-button
+                                                                (click)="exportToExcelSheet('sub-category-wise', applicantIndex)">
+                                                                <mat-icon>
+                                                                    save_alt
+                                                                </mat-icon>
+                                                            </button>
+                                                        </div>
                                                         <table class=" mb-8 mt-8 " id="table-low"
                                                             *ngIf="!category.showCategory">
                                                             <thead>
@@ -97,17 +113,18 @@
                                                                     <th> </th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody *ngFor="let sub of category.subCatList; index as i">
+                                                            <tbody
+                                                                *ngFor="let sub of category.subCatList; index as schemeIndex">
                                                                 <tr>
-                                                                    <td>{{i+1}}</td>
+                                                                    <td>{{schemeIndex+1}}</td>
                                                                     <td>{{sub.name}}
                                                                     </td>
                                                                     <td class=""><span
                                                                             appFormatNumber>{{sub.totalAum}}</span></td>
                                                                     <td class="">{{sub.weightInPercentage}}</td>
                                                                     <td class="text-center"
-                                                                        (click)="getScheme(sub, applicantIndex)"><i
-                                                                            class="material-icons   b-a f-14 mt-4 c-p"
+                                                                        (click)="getScheme(sub, schemeIndex, catIndex, applicantIndex)">
+                                                                        <i class="material-icons   b-a f-14 mt-4 c-p"
                                                                             *ngIf="sub.showSubCategory">add</i>
                                                                         <i class="material-icons   b-a f-14 mt-4 c-p"
                                                                             *ngIf="!sub.showSubCategory"> remove
@@ -116,6 +133,15 @@
                                                                 <tr *ngIf="!sub.showSubCategory"
                                                                     style="border: transparent !important">
                                                                     <td class="innerTd three" colspan="6">
+                                                                        <div class="d-block text-right"
+                                                                            *ngIf="!sub.showSubCategory">
+                                                                            <button mat-icon-button
+                                                                                (click)="exportToExcelSheet('sub-cat-scheme-wise', applicantIndex)">
+                                                                                <mat-icon>
+                                                                                    save_alt
+                                                                                </mat-icon>
+                                                                            </button>
+                                                                        </div>
                                                                         <table class=" mb-8 mt-8 " id="table-low"
                                                                             *ngIf="!sub.showSubCategory">
                                                                             <thead>
@@ -129,9 +155,9 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody
-                                                                                *ngFor="let client of sub.schemeList; index as i">
+                                                                                *ngFor="let client of sub.schemeList; index as clientIndex">
                                                                                 <tr>
-                                                                                    <td>{{i+1}}</td>
+                                                                                    <td>{{clientIndex+1}}</td>
                                                                                     <td>{{client.schemeName}}</td>
                                                                                     <td>{{client.folioNumber}}</td>
                                                                                     <td><span
@@ -140,10 +166,10 @@
                                                                                     <td>{{client.weightInPercentage}}
                                                                                     </td>
                                                                                     <td class="text-center"
-                                                                                        (click)="getSchemeFolio(client, applicantIndex)">
+                                                                                        (click)="getSchemeFolio(client, clientIndex, schemeIndex, catIndex, applicantIndex)">
                                                                                         <i class="material-icons   b-a f-14 mt-4 c-p"
                                                                                             *ngIf="client.showFolio">add</i>
-                                                                                        <i class="material-icons   b-a f-14 mt-4 c-p"
+                                                                                        <i class="material-icons b-a f-14 mt-4 c-p"
                                                                                             *ngIf="!client.showFolio">
                                                                                             remove
                                                                                         </i>
@@ -154,7 +180,14 @@
                                                                                     style="border: transparent !important">
                                                                                     <td class="innerTd four"
                                                                                         colspan="6">
-
+                                                                                        <div class="d-block text-right">
+                                                                                            <button mat-icon-button
+                                                                                                (click)="exportToExcelSheet('scheme-wise', applicantIndex)">
+                                                                                                <mat-icon>
+                                                                                                    save_alt
+                                                                                                </mat-icon>
+                                                                                            </button>
+                                                                                        </div>
                                                                                         <table class=" mb-8 mt-8 "
                                                                                             id="table-low"
                                                                                             *ngIf="!client.showFolio">

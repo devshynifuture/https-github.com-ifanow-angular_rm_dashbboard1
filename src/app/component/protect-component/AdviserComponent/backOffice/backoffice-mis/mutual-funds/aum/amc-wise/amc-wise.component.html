@@ -7,8 +7,8 @@
                 </div>
                 <div class="col-md-6 pr-0">
                     <div class="right text-right">
-                        <button mat-stroked-button (click)="exportToExcelSheet('amc-wise')" class="btn-default addon"><i
-                                class="material-icons">add</i>XLS</button>
+                        <button mat-stroked-button (click)="exportToExcelSheet('amc-wise', null, null)"
+                            class="btn-default addon"><i class="material-icons">add</i>XLS</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                     </div>
                 </div>
@@ -52,6 +52,14 @@
                             </tr>
                             <tr style="border: transparent !important">
                                 <td colspan="5" class="innerTd one">
+                                    <div class="d-block text-right" *ngIf="!amc.showAmc">
+                                        <button mat-icon-button
+                                            (click)="exportToExcelSheet('scheme-wise', amcIndex, null)">
+                                            <mat-icon>
+                                                save_alt
+                                            </mat-icon>
+                                        </button>
+                                    </div>
                                     <table *ngIf="!amc.showAmc" class=" mb-8 mt-8 " id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr>
@@ -69,7 +77,7 @@
                                                 <td>{{scheme.schemeName}}</td>
                                                 <td>{{scheme.totalAum}} </td>
                                                 <td>{{scheme.weightInPercentage}}%</td>
-                                                <td class="text-center" (click)="showApplicant(scheme, amcIndex)">
+                                                <td class="text-center" (click)="showApplicant(scheme, i, amcIndex)">
                                                     <i *ngIf="scheme.showScheme==true"
                                                         class="material-icons b-a f-14 mt-4 c-p">add</i>
                                                     <i *ngIf="scheme.showScheme==false"
@@ -78,6 +86,14 @@
                                             </tr>
                                             <tr style="border: transparent !important">
                                                 <td colspan="6" class="innerTd two">
+                                                    <div class="d-block text-right" *ngIf="!scheme.showScheme">
+                                                        <button mat-icon-button
+                                                            (click)="exportToExcelSheet('applicant-wise', i, amcIndex)">
+                                                            <mat-icon>
+                                                                save_alt
+                                                            </mat-icon>
+                                                        </button>
+                                                    </div>
                                                     <table id="table-low" class=" mb-8 mt-8 "
                                                         *ngIf="!scheme.showScheme">
                                                         <thead>
