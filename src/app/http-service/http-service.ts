@@ -322,7 +322,7 @@ export class HttpService {
           // console.log('decoded resData', resData);
           return resData;
         } else if (res.status === 304) {
-          return res.status;
+          throwError(new Error(res.message));
         } else {
           // this._router.navigate(['login']);
           return;

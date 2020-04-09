@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { ClientAddressComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-address/client-address.component';
 import { ClientDematComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-demat/client-demat.component';
 import { ClientBankComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-bank/client-bank.component';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-overview-profile',
@@ -27,28 +28,44 @@ export class OverviewProfileComponent implements OnInit {
   bankList: any;
   selectedBankData: any;
   selectedDemat: any;
+  clientData: any;
 
   // clientData;
 
-  constructor(private authService: AuthService, public dialog: MatDialog, public subInjectService: SubscriptionInject,
+  constructor(private peopleService: PeopleService, private authService: AuthService, public dialog: MatDialog, public subInjectService: SubscriptionInject,
     private cusService: CustomerService, private eventService: EventService) {
   }
 
   ngOnInit() {
-    this.clientOverviewData = AuthService.getClientData();
-    this.calculateAge(this.clientOverviewData.dateOfBirth)
+    this.clientData = AuthService.getClientData();
     // console.log(sessionStorage.getItem('clientData'));
     // this.clientOverviewData = JSON.parse(sessionStorage.getItem('clientData'));
-    console.log(this.clientOverviewData);
-    this.getFamilyMembersList();
-    this.getAddressList();
-    this.getDematList();
-    this.getBankList();
+    this.getFamilyMembersList(this.clientData);
+    this.getAddressList(this.clientData);
+    this.getDematList(this.clientData);
+    this.getBankList(this.clientData);
+    this.getClientData(this.clientData);
   }
-
-  getFamilyMembersList() {
+  getClientData(data) {
     const obj = {
-      clientId: this.clientOverviewData.clientId,
+      clientId: data.clientId
+    };
+    this.peopleService.getClientOrLeadData(obj).subscribe(
+      data => {
+        console.log('ClientBasicDetailsComponent getClientOrLeadData data: ', data);
+        if (data == undefined) {
+          return;
+        } else {
+          this.clientOverviewData = data;
+          this.calculateAge(this.clientOverviewData.dateOfBirth);
+        }
+      },
+      err => this.eventService.openSnackBar(err, 'Dismiss')
+    );
+  }
+  getFamilyMembersList(data) {
+    const obj = {
+      clientId: data.clientId,
       id: 0
     };
     this.cusService.getFamilyMembers(obj).subscribe(
@@ -60,10 +77,10 @@ export class OverviewProfileComponent implements OnInit {
     );
   }
 
-  getAddressList() {
+  getAddressList(data) {
     const obj = {
-      userId: this.clientOverviewData.clientId,
-      userType: this.clientOverviewData.userType
+      userId: data.clientId,
+      userType: data.userType
     };
     this.cusService.getAddressList(obj).subscribe(
       data => {
@@ -74,10 +91,10 @@ export class OverviewProfileComponent implements OnInit {
     );
   }
 
-  getDematList() {
+  getDematList(data) {
     const obj = {
-      userId: this.clientOverviewData.clientId,
-      userType: this.clientOverviewData.userType
+      userId: data.clientId,
+      userType: data.userType
     };
     this.cusService.getDematList(obj).subscribe(
       data => {
@@ -99,10 +116,10 @@ export class OverviewProfileComponent implements OnInit {
     }
     this.clientOverviewData['age'] = age;
   }
-  getBankList() {
+  getBankList(data) {
     const obj = {
-      userId: this.clientOverviewData.clientId,
-      userType: this.clientOverviewData.userType
+      userId: data.clientId,
+      userType: data.userType
     };
     this.cusService.getBankList(obj).subscribe(
       data => {
@@ -150,7 +167,7 @@ export class OverviewProfileComponent implements OnInit {
           data => {
             this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
             dialogRef.close();
-            this.getFamilyMembersList();
+            this.getFamilyMembersList(this.clientData);
           },
           error => this.eventService.showErrorMessage(error)
         );
@@ -194,7 +211,7 @@ export class OverviewProfileComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getFamilyMembersList();
+          this.getFamilyMembersList(this.clientData);
           if (UtilService.isRefreshRequired(sideBarData)) {
           }
           rightSideDataSub.unsubscribe();
@@ -221,7 +238,7 @@ export class OverviewProfileComponent implements OnInit {
             this.authService.setClientData(sideBarData.clientData);
             this.clientOverviewData = sideBarData.clientData;
           }
-          this.getFamilyMembersList();
+          this.getFamilyMembersList(this.clientData);
           if (UtilService.isRefreshRequired(sideBarData)) {
           }
           rightSideDataSub.unsubscribe();
@@ -256,7 +273,7 @@ export class OverviewProfileComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          (flag == 'Address') ? this.getAddressList() : (flag == 'Bank') ? this.getBankList() : this.getDematList();
+          (flag == 'Address') ? this.getAddressList(this.clientData) : (flag == 'Bank') ? this.getBankList(this.clientData) : this.getDematList(this.clientData);
           clientData = [];
           if (UtilService.isRefreshRequired(sideBarData)) {
 

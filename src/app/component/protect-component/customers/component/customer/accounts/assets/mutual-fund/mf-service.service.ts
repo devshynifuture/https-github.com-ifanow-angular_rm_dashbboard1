@@ -124,14 +124,14 @@ export class MfServiceService {
     return this.totalObj;
   }
 
-  categoryFilter(data) {
+  categoryFilter(data,type) {
     const catObj = {};
     const categoryArray = [];
     data.forEach(ele => {
-      if (ele.subCategoryName) {
-        const categoryArrayLocal = catObj[ele.subCategoryName] ? catObj[ele.subCategoryName] : [];
+      if (ele[type]) {
+        const categoryArrayLocal = catObj[ele[type]] ? catObj[ele[type]] : [];
         categoryArrayLocal.push(ele);
-        catObj[ele.subCategoryName] = categoryArrayLocal;
+        catObj[ele[type]] = categoryArrayLocal;
       } else {
         categoryArray.push(ele);
       }
@@ -184,5 +184,36 @@ export class MfServiceService {
       filterData4
     };
     return sendData;
+  }
+  filterFinalData(mfData,dataForFilter){
+    let family_member_list=this.filterArray(mfData.family_member_list,'id',dataForFilter.familyMember,'familyMemberId');
+    let category=this.filterArray(mfData.mutualFundCategoryMastersList,'id',dataForFilter.category,'categoryId');
+    let subCategoryData = this.filter(mfData.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+    let schemeWiseFilter = this.filter(subCategoryData, 'mutualFundSchemeMaster');
+    let schemeWise=this.filterArray(schemeWiseFilter,'amc_id',dataForFilter.amc,'amc_id');
+    let mutualFundListFilter = this.filter(schemeWiseFilter, 'mutualFund');
+    let mutualFundList=this.filterArray(mutualFundListFilter,'folioNumber',dataForFilter.folio,'folioNumber');
+    var sendData={
+      family_member_list:family_member_list,
+      category:category,
+      schemeWise:schemeWise,
+      mutualFundList:mutualFundList,
+      reportAsOn:dataForFilter.reportAsOn,
+      showFolio:dataForFilter.showFolio,
+      reportType:dataForFilter.reportType,
+      transactionView:dataForFilter.transactionView,
+    }
+    return sendData;
+  }
+  filterArray(data,dataKey,filterData,filterDataKey){
+    let filter=[];
+    filterData.forEach(ele => {
+      data.forEach(element => {
+        if(element[dataKey]==ele[filterDataKey]){
+          filter.push(element)
+        }
+      });
+    });
+    return filter;
   }
 }

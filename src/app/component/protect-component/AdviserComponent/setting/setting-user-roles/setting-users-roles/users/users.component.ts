@@ -30,7 +30,6 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadRoles();
     this.loadUsers();
   }
 
@@ -46,42 +45,28 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  loadRoles() {
-    this.loader(1);
-    const obj = {
-      advisorId: this.advisorId
-    }
-
-    this.settingsService.getAllRoles(obj).subscribe((res) => {
-      this.loader(-1);
-      this.roles = res;
-    })
-  }
-
   addEditTeamMember(data, add_flag) {
-    if (this.roles && this.roles.length > 0) {
-      let dataObj = {
-        mainData: data || {},
-        is_add_call: add_flag,
-        roles: this.roles
-      }
-      const fragmentData = {
-        flag: 'add-ARI-RIA-details',
-        data: dataObj,
-        id: 1,
-        state: 'open35',
-        componentName: NewTeamMemberComponent
-      };
-      this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-        sideBarData => {
-          if (UtilService.isDialogClose(sideBarData) && UtilService.isRefreshRequired(sideBarData)) {
-            this.loadUsers();
-          }
-        }
-      );
-    } else {
-      this.eventService.openSnackBar("You need to define roles before you could add members");
+    let dataObj = {
+      mainData: data || {},
+      is_add_call: add_flag,
     }
+    const fragmentData = {
+      flag: 'add-ARI-RIA-details',
+      data: dataObj,
+      id: 1,
+      state: 'open35',
+      componentName: NewTeamMemberComponent
+    };
+    const sidebar = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData) && UtilService.isRefreshRequired(sideBarData)) {
+          this.loadUsers();
+        }
+        if(UtilService.isDialogClose(sideBarData)) {
+          sidebar.unsubscribe();
+        }
+      }
+    );
   }
 
   deleteUser(user) {
