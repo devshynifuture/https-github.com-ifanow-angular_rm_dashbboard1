@@ -10,6 +10,8 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { DetailedPoTdComponent } from './detailed-po-td/detailed-po-td.component';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../excel.service';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
 
 @Component({
   selector: 'app-po-td-scheme',
@@ -25,7 +27,7 @@ export class PoTdSchemeComponent implements OnInit {
   isLoading = false;
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
-
+  @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
@@ -33,7 +35,7 @@ export class PoTdSchemeComponent implements OnInit {
   sumOfAmountInvested: any;
   sumOfMaturityValue: any;
 
-  constructor(private excel: ExcelService, public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) {
+  constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService,public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) {
   }
 
   displayedColumns22 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'tenure', 'mvalue', 'mdate', 'number', 'desc', 'status', 'icons'];
@@ -43,6 +45,16 @@ export class PoTdSchemeComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getPoTdSchemedata();
+  }
+
+  Excel(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows,tableTitle)
+  }
+
+  pdf(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.pdfGen.generatePdf(rows, tableTitle);
   }
 
   async ExportTOExcel(value) {

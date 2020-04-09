@@ -10,6 +10,8 @@ import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { DetailedSsyComponent } from './detailed-ssy/detailed-ssy.component';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../excel.service';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
 
 @Component({
   selector: 'app-ssy-scheme',
@@ -27,12 +29,13 @@ export class SsySchemeComponent implements OnInit {
   sumOfCurrentValue: number;
   sumOfAmountInvested: number;
 
+  @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
   footer = [];
 
-  constructor(public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private eventService: EventService) {
+  constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private eventService: EventService) {
   }
 
   displayedColumns16 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
@@ -41,6 +44,16 @@ export class SsySchemeComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getSsySchemedata();
+  }
+
+  Excel(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows,tableTitle)
+  }
+
+  pdf(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.pdfGen.generatePdf(rows, tableTitle);
   }
 
   async ExportTOExcel(value) {

@@ -6,8 +6,8 @@
     <div class="col-md-6 p-0 right text-right" *ngIf="datasource.filteredData.length > 0">
         <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
         <mat-menu #menu5="matMenu">
-            <button mat-menu-item>PDF</button>
-            <button (click)="ExportTOExcel('SCSS')" mat-menu-item>XLS</button>
+            <button (click)="pdf('SCSS')" mat-menu-item>PDF</button>
+            <button (click)="Excel('SCSS')" mat-menu-item>XLS</button>
         </mat-menu>
         <img src="assets/images/svg/up-down.svg" class="">
         <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-12">
@@ -23,7 +23,7 @@
     </div>
 </div>
 <div [ngClass]="{'table-scroll':isLoading==false }" class=" col-md-12 overflow-hidden p-0 mt-8 scss-scheme">
-    <table *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="tbs"
+    <table #tableEl *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="tbs"
         class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
         <ng-container matColumnDef="no" sticky>

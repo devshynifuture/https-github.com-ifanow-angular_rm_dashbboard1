@@ -38,15 +38,7 @@ Description description: "this is futurewise Tech" -->
                         {{i != 0?'Co-o' : 'O'}}wner {{i != 0?i:''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{owner.name}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Type of FD
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(fixedDeposit.fdType == 1)?'Bank FD':'Corporate FD'}}
+                        {{owner.name}} sharing {{owner.share}}% ownership
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -57,6 +49,15 @@ Description description: "this is futurewise Tech" -->
                         {{fixedDeposit.amountInvested?utils.formatter(fixedDeposit.amountInvested):'-'}}
                     </div>
                 </div>
+                <!-- <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Type of FD
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(fixedDeposit.fdType == 1)?'Bank FD':'Corporate FD'}}
+                    </div>
+                </div> -->
+                
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Commencement date
@@ -67,10 +68,12 @@ Description description: "this is futurewise Tech" -->
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Interest rate
+                        Tenure
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{fixedDeposit.interestRate?fixedDeposit.interestRate:'-'}}
+                        <span *ngIf="fixedDeposit.tenureInYear > 0">{{fixedDeposit.tenureInYear == 1?fixedDeposit.tenureInYear+ 'Year':fixedDeposit.tenureInYear+ 'Years'}}</span>
+                        <span *ngIf="fixedDeposit.tenureInMonth > 0">{{fixedDeposit.tenureInMonth == 1?fixedDeposit.tenureInMonth+ 'Month':fixedDeposit.tenureInMonth+ 'Months'}}</span>
+                        <span *ngIf="fixedDeposit.tenureInDay > 0">{{fixedDeposit.tenureInDay == 1?fixedDeposit.tenureInDay+ 'Day':fixedDeposit.tenureInDay+ 'Days'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -83,10 +86,18 @@ Description description: "this is futurewise Tech" -->
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Interest payout option
+                        Rate of interest
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(fixedDeposit.interestPayoutOption == 1)?'Cumulative payout':'Interest payout'}}
+                        {{fixedDeposit.interestRate?fixedDeposit.interestRate:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        interest option
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(fixedDeposit.interestPayoutOption == 1)?'Cumulative':'Interest payout'}}
                     </div>
                 </div>
                 <div *ngIf="fixedDeposit.interestPayoutOption == 1" class="row bb p-8 b-l br">

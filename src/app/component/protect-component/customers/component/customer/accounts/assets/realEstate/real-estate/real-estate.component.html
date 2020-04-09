@@ -26,8 +26,8 @@
 
             <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
             <mat-menu #menu5="matMenu">
-                <button mat-menu-item>PDF</button>
-                <button (click)="ExportTOExcel('Real estate')" mat-menu-item>XLS</button>
+                <button (click)="pdf('Real estate')" mat-menu-item>PDF</button>
+                <button (click)="Excel('Real estate')" mat-menu-item>XLS</button>
             </mat-menu>
             <img src="assets/images/svg/up-down.svg" class="">
             <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-12">
@@ -47,7 +47,7 @@
     </div>
     <div class="mt-8 p-0 col-md-12 real-estate">
         <div class="overflow-hidden" [ngClass]="{'table-scroll':isLoading==false }">
-            <table *ngIf="datasource3.filteredData.length > 0" matSort mat-table [dataSource]="datasource3"
+            <table #tableEl *ngIf="datasource3.filteredData.length > 0" matSort mat-table [dataSource]="datasource3"
                 id="table-low" class=" skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
                     <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br w-4"> No </th>
