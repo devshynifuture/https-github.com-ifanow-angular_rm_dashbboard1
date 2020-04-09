@@ -23,7 +23,7 @@ export class MutualFundSummaryComponent implements OnInit {
   schemeWise: any[];
   mutualFundList: any[];
   totalObj: any;
-  customDataSource: any;
+  customDataSource: Array<any> = [{}, {}, {}];
   catObj: {};
   isLoading = false; // added for prod build
   schemeWiseForFilter: any[];

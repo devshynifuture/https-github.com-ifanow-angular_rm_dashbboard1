@@ -306,70 +306,71 @@
   </div>
   </div>
   </div> -->
-<!-- <div id="mob-transaction-profile" class="h-100vh">
+<div id="mob-transaction-profile" class="h-100vh">
   <div class="bg-white mob-bx blr-40">
-  <div class="row pt-20">
-    <div class="col-6">
-      <span class="material-icons">
-  keyboard_backspace
-  </span>
-    </div>
-     <div class="col-6">
-     <img src="/assets/images/svg/mob-cart.svg" class="right">
-     </div>
-  </div>
-  <div class="row pt-24">
-  <div class="col-12">
-    <img src="/assets/images/svg/realinace.svg" class="left">
-  </div>
-  <div class="col-12 pt-16">
-    <p class="m-0 f-16">Reliance Quant Fund</p>
-  </div>
-  </div>
-  <div class="row pt-12 pb-24 mob-realinace">
-    <div class="col-3">
-      <button mat-stroked-button>Direct</button>
-    </div>
-      <div class="col-8">
-        <button mat-stroked-button >Equity - Largecap</button>
+    <div class="row pt-20">
+      <div class="col-6">
+        <span class="material-icons">
+          keyboard_backspace
+        </span>
       </div>
-  </div>
+      <div class="col-6">
+        <img src="/assets/images/svg/mob-cart.svg" class="right">
+      </div>
+    </div>
+    <div class="row pt-24">
+      <div class="col-12">
+        <img src="/assets/images/svg/realinace.svg" class="left">
+      </div>
+      <div class="col-12 pt-16">
+        <p class="m-0 f-16">Reliance Quant Fund</p>
+      </div>
+    </div>
+    <div class="row pt-12 pb-24 mob-realinace">
+      <div class="col-3">
+        <button mat-stroked-button>Direct</button>
+      </div>
+      <div class="col-8">
+        <button mat-stroked-button>Equity - Largecap</button>
+      </div>
+    </div>
   </div>
   <div class="p-8">
-  <div class="mt-20 bg-white">
-  <div class="row pt-10">
-    <div class="col-4 pr-0">
-      <p class="mob-text-xs">NAV (09 Nov 2018)</p>
-      <h5 class="mb-0 mob-text-success f-16 pt-2">Rs. 24.53</h5>
+    <div class="mt-20 bg-white">
+      <div class="row pt-10">
+        <div class="col-4 pr-0">
+          <p class="mob-text-xs">NAV (09 Nov 2018)</p>
+          <h5 class="mb-0 mob-text-success f-16 pt-2">Rs. 24.53</h5>
+        </div>
+        <div class="col-4 pr-0">
+          <p class="mob-text-xs">Min. Investment</p>
+          <h5 class="mb-0 f-16 pt-2">Rs. 5,000</h5>
+        </div>
+        <div class="col-4 pr-0">
+          <p class="mob-text-xs">Min. Investment</p>
+          <h5 class="mb-0 f-16 pt-2">Rs. 5,000</h5>
+        </div>
+      </div>
+      <div class="row pt-44 pb-28">
+        <div class="col-12">
+          <img src="/assets/images/svg/mob-line-chart.svg">
+        </div>
+      </div>
     </div>
-    <div class="col-4 pr-0">
-      <p class="mob-text-xs">Min. Investment</p>
-      <h5 class="mb-0 f-16 pt-2">Rs. 5,000</h5>
+    <div class="row pt-10">
+      <div class="col-12 p-0">
+        <p class="mob-text-xs lh-18">*Mutual Funds Investments are subject to market risks, please read the Offer
+          Document carefully before investing. </p>
+      </div>
     </div>
-    <div class="col-4 pr-0">
-      <p class="mob-text-xs">Min. Investment</p>
-      <h5 class="mb-0 f-16 pt-2">Rs. 5,000</h5>
-    </div>
-  </div>
-  <div class="row pt-44 pb-28">
-    <div class="col-12">
-      <img src="/assets/images/svg/mob-line-chart.svg">
-    </div>
-  </div>
-  </div>
-  <div class="row pt-10">
-  <div class="col-12 p-0">
-    <p class="mob-text-xs lh-18">*Mutual Funds Investments are subject to market risks, please read the Offer Document carefully before investing. </p>
-  </div>
-  </div>
   </div>
   <div class="mob-add-center mt-20 hw-40 pt-2">
-  <button mat-stroked-button><span class="material-icons text-white f-28">
+    <button (click)="openBottomSheet()" mat-stroked-button><span class="material-icons text-white f-28">
         add
-        </span></button>
-        
-      </div>
-  </div> -->
+      </span></button>
+
+  </div>
+</div>
 <!-- no result -->
 <!-- <div id="mob-noresult" class="mob-transaction-search">
   <div class="row bg-white br-0">
@@ -1248,13 +1249,13 @@ this payment and go back?</p>
 
 <!-- Redemption -->
 
-<div id="mob-error-transaction-payment">
+<!-- <div id="mob-error-transaction-payment">
   <div class="row">
     <div class="col-5"></div>
     <div class="col-2 pl-8">
       <div class="transaction-top">
-      <span class="material-icons text-white pt-8 f-28">
-        done
+        <span class="material-icons text-white pt-8 f-28">
+          done
         </span>
       </div>
     </div>
@@ -1264,11 +1265,11 @@ this payment and go back?</p>
   <div class="row">
     <div class="col-12 pt-28 pb-24 text-center">
       <h5 class="m-0 f-16">Redemption</h5>
-      <p class="m-0 lh-22 pt-12">Your redemption request has<br> 
-been sent successfully. </p>
+      <p class="m-0 lh-22 pt-12">Your redemption request has<br>
+        been sent successfully. </p>
     </div>
   </div>
   <div class="mobfixednow mt-20">
-        <button mat-stroked-button class="mob-btn-primary w-25">Done</button>
+    <button mat-stroked-button class="mob-btn-primary w-25">Done</button>
   </div>
-</div>
+</div> -->

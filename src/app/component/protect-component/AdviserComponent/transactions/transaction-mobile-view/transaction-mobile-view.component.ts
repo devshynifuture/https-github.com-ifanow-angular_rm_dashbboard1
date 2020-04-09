@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatBottomSheet } from '@angular/material';
+import { TransactionBottomButtonComponent } from './transaction-bottom-button/transaction-bottom-button.component';
 
 @Component({
   selector: 'app-transaction-mobile-view',
@@ -7,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TransactionMobileViewComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _bottomSheet: MatBottomSheet) { }
 
   ngOnInit() {
   }
-
+  openBottomSheet(): void {
+    this._bottomSheet.open(TransactionBottomButtonComponent);
+  }
 }
