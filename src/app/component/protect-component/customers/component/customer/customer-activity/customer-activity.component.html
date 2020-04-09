@@ -1,6 +1,7 @@
 <div class="row" id="ui-activity-secondhead">
     <div class="col-md-2 d-flex align-items-center">
-        <button (click)="goToAdvisorHome()" class="btn-warning-outline advisorHomeBtn br-2" mat-stroked-button>
+        <button *ngIf="clientData.userType==2" (click)="goToAdvisorHome()"
+            class="btn-warning-outline advisorHomeBtn br-2" mat-stroked-button>
             <i class="material-icons"> keyboard_backspace </i> ADVISOR HOME
         </button>
     </div>
@@ -9,7 +10,8 @@
 
             <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/summary']">SUMMARY</a>
             <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/advice']">ADVICE</a>
-            <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/deployments']">DEPLOYMENTS</a>
+            <a mat-tab-link routerLinkActive="active"
+                [routerLink]="['/customer/detail/activity/deployments']">DEPLOYMENTS</a>
             <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/action-plan']">ACTION
                 PLANS</a>
             <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/task']">TASKS</a>
