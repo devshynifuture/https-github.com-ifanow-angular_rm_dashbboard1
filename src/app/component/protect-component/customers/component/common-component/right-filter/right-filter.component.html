@@ -74,9 +74,9 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div>
-        <mat-list-item role="listitem" *ngFor="let item of transactionView">
+        <mat-list-item role="listitem" *ngFor="let item of transactionView let i = index;">
           <!-- $event removed for prod build -->
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect()">{{item.displayName}}</mat-checkbox>
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect(item,i)">{{item.displayName}}</mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>
