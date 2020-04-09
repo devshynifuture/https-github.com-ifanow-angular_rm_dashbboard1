@@ -110,6 +110,34 @@
         </mat-list-item>
       </div>
     </mat-expansion-panel>
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h5 class="m-0">Transaction View<span class="text-right f-14 pl-12">{{countCategory}} of {{category.length}}
+              selected</span></h5>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div>
+        <mat-list-item role="listitem" *ngFor="let item of category">
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterCategory(this.category)">{{item.category}}
+          </mat-checkbox>
+        </mat-list-item>
+      </div>
+    </mat-expansion-panel>
+    <!-- <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h5 class="m-0">Transaction Period<span class="text-right f-14 pl-12">{{countCategory}} of {{category.length}}
+              selected</span></h5>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div>
+        <mat-list-item role="listitem" *ngFor="let item of category">
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterCategory(this.category)">{{item.category}}
+          </mat-checkbox>
+        </mat-list-item>
+      </div>
+    </mat-expansion-panel> -->
   </mat-accordion>
 
 

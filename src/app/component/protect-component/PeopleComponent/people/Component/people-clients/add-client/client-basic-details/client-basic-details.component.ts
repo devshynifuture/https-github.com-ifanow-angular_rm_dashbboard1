@@ -1,13 +1,13 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {ValidatorType} from 'src/app/services/util.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {DatePipe} from '@angular/common';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ValidatorType } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { DatePipe } from '@angular/common';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-client-basic-details',
@@ -55,8 +55,8 @@ export class ClientBasicDetailsComponent implements OnInit {
   // advisorId;
 
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
-              private subInjectService: SubscriptionInject, private peopleService: PeopleService,
-              private eventService: EventService, private datePipe: DatePipe) {
+    private subInjectService: SubscriptionInject, private peopleService: PeopleService,
+    private eventService: EventService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
@@ -91,21 +91,22 @@ export class ClientBasicDetailsComponent implements OnInit {
   }
 
   createIndividualForm(data) {
+    this.selectedClientOwner = '1';
     (data == undefined) ? data = {} : '';
     this.basicDetails = this.fb.group({
       fullName: [data.name, [Validators.required]],
       email: [(data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
-      username: [data.userName],
+      username: [{ value: data.userName, disabled: true }],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       dobActual: [],
       gender: ['1'],
       leadSource: [data.leadSource],
       leaadStatus: [],
-      leadRating: [(data.leadRating) ? String(data.leadRating) : '1'],
+      leadRating: [(data.leadRating) ? String(data.leadRating) : '0'],
       leadOwner: [],
-      clientOwner: [''],
-      role: [''],
+      clientOwner: ['1'],
+      role: [(data.roleId) ? data.roleId : '0'],
     });
   }
 
@@ -130,14 +131,14 @@ export class ClientBasicDetailsComponent implements OnInit {
     (data == undefined) ? data = {} : '';
     this.nonIndividualForm = this.fb.group({
       comName: [data.name, [Validators.required]],
-      dateOfIncorporation: [data.dateOfBirth],
+      dateOfIncorporation: [(data.dateOfBirth) ? new Date(data.dateOfBirth) : ''],
       comStatus: [, [Validators.required]],
       comEmail: [(data.emailList) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
       comPan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
-      comOccupation: [],
-      username: [data.username, [Validators.required]],
-      leadOwner: [, [Validators.required]],
-      role: [, [Validators.required]]
+      comOccupation: [(data.occupationId == 0) ? '1' : String(data.occupationId)],
+      username: [{ value: data.userName, disabled: true }],
+      leadOwner: ['0'],
+      role: [(data.roleId) ? data.roleId : '0']
     });
   }
 
@@ -186,8 +187,24 @@ export class ClientBasicDetailsComponent implements OnInit {
 
   saveNextClient(flag) {
     if (this.fieldFlag == 'client' && this.basicDetailsData.userId == null) {
-      this.basicDetails.get('clientOwner').setValidators([Validators.required]);
-      this.basicDetails.get('clientOwner').updateValueAndValidity();
+      if (this.invTypeCategory == '1') {
+        this.basicDetails.get('clientOwner').setValidators([Validators.required]);
+        this.basicDetails.get('clientOwner').updateValueAndValidity();
+      }
+      else {
+        this.nonIndividualForm.get('leadOwner').setValidators([Validators.required]);
+        this.nonIndividualForm.get('leadOwner').updateValueAndValidity();
+      }
+    }
+    else {
+      this.basicDetails.get('leadOwner').setValidators(null);
+    }
+    if (this.fieldFlag == 'lead' && this.basicDetailsData.userId == null) {
+      this.basicDetails.get('leadOwner').setValidators([Validators.required]);
+      this.basicDetails.get('leadOwner').updateValueAndValidity();
+    }
+    else {
+      this.basicDetails.get('leadOwner').setValidators(null);
     }
     if (this.basicDetails.invalid && this.invTypeCategory == '1') {
       this.basicDetails.markAllAsTouched();
@@ -292,6 +309,11 @@ export class ClientBasicDetailsComponent implements OnInit {
         // );
         // }
       } else {
+        obj['bio'] = this.basicDetailsData.bio;
+        obj['remarks'] = this.basicDetailsData.remarks;
+        obj['aadhaarNumber'] = this.basicDetailsData.aadhaarNumber;
+        obj['martialStatusId'] = this.basicDetailsData.martialStatusId;
+        obj['occupationId'] = this.basicDetailsData.occupationId;
         this.peopleService.editClient(obj).subscribe(
           data => {
             this.barButtonOptions.active = false;
@@ -341,25 +363,25 @@ export class ClientBasicDetailsComponent implements OnInit {
     let gardianObj;
     if (this.invTypeCategory == '2') {
       gardianObj =
-        {
-          name: (this.invTypeCategory == '2') ? this.minorForm.value.gFullName : null,
-          birthDate: (this.invTypeCategory == '2') ? this.datePipe.transform(this.minorForm.value.gDobAsPerRecord, 'dd/MM/yyyy') : null,
-          pan: 'pan',
-          genderId: (this.invTypeCategory == '2') ? this.minorForm.value.gGender : null,
-          relationshipId: 1,
-          aadhaarNumber: null,
-          occupationId: 1,
-          martialStatusId: 1,
-          anniversaryDate: null,
-          mobileList: (this.invTypeCategory == '2') ? mobileList : null,
-          emailList: [
-            {
-              email: (this.invTypeCategory == '2') ? this.minorForm.value.gEmail : null,
-              userType: 4,
-              verificationStatus: 0
-            }
-          ]
-        }
+      {
+        name: (this.invTypeCategory == '2') ? this.minorForm.value.gFullName : null,
+        birthDate: (this.invTypeCategory == '2') ? this.datePipe.transform(this.minorForm.value.gDobAsPerRecord, 'dd/MM/yyyy') : null,
+        pan: 'pan',
+        genderId: (this.invTypeCategory == '2') ? this.minorForm.value.gGender : null,
+        relationshipId: 1,
+        aadhaarNumber: null,
+        occupationId: 1,
+        martialStatusId: 1,
+        anniversaryDate: null,
+        mobileList: (this.invTypeCategory == '2') ? mobileList : null,
+        emailList: [
+          {
+            email: (this.invTypeCategory == '2') ? this.minorForm.value.gEmail : null,
+            userType: 4,
+            verificationStatus: 0
+          }
+        ]
+      }
     } else {
       gardianObj = null;
     }
@@ -399,11 +421,17 @@ export class ClientBasicDetailsComponent implements OnInit {
       invTypeCategory: 0,
       categoryTypeflag: null
     };
+    obj['bio'] = this.basicDetailsData.bio;
+    obj['remarks'] = this.basicDetailsData.remarks;
+    obj['aadhaarNumber'] = this.basicDetailsData.aadhaarNumber;
+    obj['martialStatusId'] = this.basicDetailsData.martialStatusId;
+    obj['occupationId'] = this.basicDetailsData.occupationId;
+    obj['displayName'] = this.basicDetailsData.displayName;
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {
-        obj.invTypeCategory = this.invTypeCategory;
-        obj.categoryTypeflag = 'familyMinor';
-        (flag == 'Next') ? this.changeTabAndSendData(obj) : this.close(data);
+        data.invTypeCategory = this.invTypeCategory;
+        data.categoryTypeflag = 'familyMinor';
+        (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(data);
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
     );
@@ -411,7 +439,7 @@ export class ClientBasicDetailsComponent implements OnInit {
 
   // }
   close(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', clientData: data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
   }
 
 }

@@ -40,8 +40,8 @@
             <div class="col-md-6 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
                 <mat-menu #menu5="matMenu">
-                    <button mat-menu-item>PDF</button>
-                    <button mat-menu-item (click)="ExportTOExcel('EPF')">XLS</button>
+                    <button (click)="pdf('EPF')" mat-menu-item>PDF</button>
+                    <button (click)="Excel('EPF')" mat-menu-item>XLS</button>
                 </mat-menu>
                 <img class="" src="assets/images/svg/up-down.svg">
                 <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
@@ -62,7 +62,7 @@
 
         <div [ngClass]="{'table-scroll':isLoading==false }" class=" col-md-12 overflow-hidden p-0 mt-8 real-estate"
             id="epf" #EPF #epf>
-            <table *ngIf="dataSource.filteredData.length > 0" matSort #epfListTable="matSort" mat-table
+            <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort #epfListTable="matSort" mat-table
                 [dataSource]="dataSource" matSort id="tbs" class="skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading">
 
@@ -264,8 +264,8 @@
                             <div class="col-md-8 p-0 right text-right">
                                 <img class="c-p" src="assets/images/svg/download-bordered.svg">
                                 <mat-menu #menu5="matMenu">
-                                    <button mat-menu-item>PDF</button>
-                                    <button mat-menu-item (click)="ExportTOExcel('nps')">XLS</button>
+                                    <button (click)="pdf('NPS')" mat-menu-item>PDF</button>
+                                    <button (click)="Excel('NPS')" mat-menu-item>XLS</button>
                                 </mat-menu>
                                 <img class="" src="assets/images/svg/up-down.svg">
                                 <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
@@ -316,7 +316,7 @@
                 </mat-menu>
             </div>
             <div class=" mt-8 col-md-12 p-0 overflow-hidden real-estate" #NPS #nps>
-                <table *ngIf="dataSource.filteredData.length > 0" matSort #npsListTable="matSort" mat-table
+                <table #tableEl *ngIf="dataSource.filteredData.length > 0" matSort #npsListTable="matSort" mat-table
                     [dataSource]="dataSource" id="table-low" class="skeletonAnimation" appSkeletonLoading
                     [appSkeletonLoading]="isLoading">
                     <ng-container matColumnDef="no">
@@ -442,8 +442,8 @@
                                 <div class="col-md-8 p-0 right text-right">
                                     <img class="c-p" src="assets/images/svg/download-bordered.svg">
                                     <mat-menu #menu5="matMenu">
-                                        <button mat-menu-item>PDF</button>
-                                        <button mat-menu-item (click)="ExportTOExcel('nps')">XLS</button>
+                                        <button (click)="pdf('NPS')" mat-menu-item>PDF</button>
+                                        <button (click)="Excel('NPS')" mat-menu-item>XLS</button>
                                     </mat-menu>
                                     <img class="" src="assets/images/svg/up-down.svg">
                                     <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
@@ -528,7 +528,7 @@
         </div>
         <div [ngClass]="{'table-scroll':isLoading==false }" class=" mt-8 col-md-12 p-0 overflow-hidden real-estate"
             #GRATUITY #Gratuity>
-            <table *ngIf="dataSource.filteredData.length > 0" #gratuityListTable="matSort" [dataSource]="dataSource"
+            <table #tableEl *ngIf="dataSource.filteredData.length > 0" #gratuityListTable="matSort" [dataSource]="dataSource"
                 id="tbs" mat-table matSort class="skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no" sticky>
@@ -666,8 +666,8 @@
             <div class="col-md-8 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
                 <mat-menu #menu5="matMenu">
-                    <button mat-menu-item>PDF</button>
-                    <button mat-menu-item (click)="ExportTOExcel('Superannuation')">XLS</button>
+                    <button (click)="pdf('Superannuation')" mat-menu-item>PDF</button>
+                    <button (click)="Excel('Superannuation')" mat-menu-item>XLS</button>
                 </mat-menu>
                 <img class="" src="assets/images/svg/up-down.svg">
                 <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
@@ -687,7 +687,7 @@
         </div>
         <div [ngClass]="{'table-scroll':isLoading==false }" class=" overflow-hidden col-md-12 p-0 mt-8 superannuation"
             #SUPERANNUATION #Superannuation>
-            <table *ngIf="dataSource.filteredData.length > 0" #superAnnuationListTable="matSort"
+            <table #tableEl *ngIf="dataSource.filteredData.length > 0" #superAnnuationListTable="matSort"
                 [dataSource]="dataSource" id="tbs" mat-table matSort class="skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no" sticky>
@@ -830,8 +830,8 @@
             <div class="col-md-8 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
                 <mat-menu #menu5="matMenu">
-                    <button mat-menu-item>PDF</button>
-                    <button mat-menu-item (click)="ExportTOExcel('eps')">XLS</button>
+                    <button (click)="pdf('EPS')" mat-menu-item>PDF</button>
+                    <button (click)="Excel('EPS')" mat-menu-item>XLS</button>
                 </mat-menu>
                 <img class="" src="assets/images/svg/up-down.svg">
                 <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6">
@@ -849,7 +849,7 @@
             </div>
         </div>
         <div class=" overflow-hidden mt-8 col-md-12 p-0 real-estate" #EPS #eps>
-            <table *ngIf="dataSource.filteredData.length > 0" #epsListTable="matSort" [dataSource]="dataSource"
+            <table #tableEl *ngIf="dataSource.filteredData.length > 0" #epsListTable="matSort" [dataSource]="dataSource"
                 id="table-low" mat-table matSort class="skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">

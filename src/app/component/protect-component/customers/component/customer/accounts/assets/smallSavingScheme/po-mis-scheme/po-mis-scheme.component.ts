@@ -10,6 +10,8 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { DetailedPoMisComponent } from './detailed-po-mis/detailed-po-mis.component';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../excel.service';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
 
 @Component({
   selector: 'app-po-mis-scheme',
@@ -28,13 +30,14 @@ export class PoMisSchemeComponent implements OnInit {
   sumOfMonthlyPayout: number;
   sumOfAmountInvested: number;
   sumOfMaturityValue: number;
+  @ViewChild('tableEl', { static: false }) tableEl;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
   footer = [];
 
-  constructor(private excel: ExcelService, public dialog: MatDialog, private eventService: EventService,
+  constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, public dialog: MatDialog, private eventService: EventService,
     private cusService: CustomerService, private subInjectService: SubscriptionInject,
     public util: UtilService) {
   }
@@ -48,35 +51,44 @@ export class PoMisSchemeComponent implements OnInit {
     this.getPoMisSchemedata();
   }
 
-  async ExportTOExcel(value) {
-    this.excelData = [];
-    let data = [];
-    const headerData = [{ width: 20, key: 'Owner' },
-    { width: 20, key: 'Current Value' },
-    { width: 10, key: 'Monthly Payout' },
-    { width: 10, key: 'Rate' },
-    { width: 20, key: 'Amount Invested' },
-    { width: 20, key: 'Maturity Value' },
-    { width: 20, key: 'Maturity Date' },
-    { width: 15, key: 'Description' },
-    { width: 15, key: 'Status' },];
-    const header = ['Owner', 'Current Value', 'Monthly Payout', 'Rate',
-      'Amount Invested', 'Maturity Value', 'Maturity Date', 'Description', 'Status'];
-    this.datasource.filteredData.forEach(element => {
-      data = [element.ownerName, (element.currentValue),
-      this.formatNumber.first.formatAndRoundOffNumber(element.monthlyPayout),
-      (element.rate), this.formatNumber.first.formatAndRoundOffNumber(element.maturityValue),
-      this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested),
-      new Date(element.maturityDate), element.description, element.status];
-      this.excelData.push(Object.assign(data));
-    });
-    const footerData = ['Total', this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCurrentValue),
-      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMonthlyPayout),
-      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAmountInvested), '',
-      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMaturityValue), '', '', '',];
-    this.footer.push(Object.assign(footerData));
-    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value);
+  Excel(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows,tableTitle)
   }
+
+  pdf(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.pdfGen.generatePdf(rows, tableTitle);
+  }
+  // async ExportTOExcel(value) {
+  //   this.excelData = [];
+  //   let data = [];
+  //   const headerData = [{ width: 20, key: 'Owner' },
+  //   { width: 20, key: 'Current Value' },
+  //   { width: 10, key: 'Monthly Payout' },
+  //   { width: 10, key: 'Rate' },
+  //   { width: 20, key: 'Amount Invested' },
+  //   { width: 20, key: 'Maturity Value' },
+  //   { width: 20, key: 'Maturity Date' },
+  //   { width: 15, key: 'Description' },
+  //   { width: 15, key: 'Status' },];
+  //   const header = ['Owner', 'Current Value', 'Monthly Payout', 'Rate',
+  //     'Amount Invested', 'Maturity Value', 'Maturity Date', 'Description', 'Status'];
+  //   this.datasource.filteredData.forEach(element => {
+  //     data = [element.ownerName, (element.currentValue),
+  //     this.formatNumber.first.formatAndRoundOffNumber(element.monthlyPayout),
+  //     (element.rate), this.formatNumber.first.formatAndRoundOffNumber(element.maturityValue),
+  //     this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested),
+  //     new Date(element.maturityDate), element.description, element.status];
+  //     this.excelData.push(Object.assign(data));
+  //   });
+  //   const footerData = ['Total', this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCurrentValue),
+  //     this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMonthlyPayout),
+  //     this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAmountInvested), '',
+  //     this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMaturityValue), '', '', '',];
+  //   this.footer.push(Object.assign(footerData));
+  //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value);
+  // }
 
   getPoMisSchemedata() {
     this.isLoading = true;

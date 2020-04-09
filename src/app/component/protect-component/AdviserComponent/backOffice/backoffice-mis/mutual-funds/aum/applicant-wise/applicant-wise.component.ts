@@ -18,6 +18,16 @@ export class ApplicantWiseComponent implements OnInit {
   categoryList: any;
   schemeList: any;
   isLoading = false;
+  propertyName: any;
+  propertyName2: any;
+  propertyName3: any;
+  propertyName4: any;
+  propertyName5: any;
+  reverse = true;
+  reverse2 = true;
+  reverse3 = true;
+  reverse4 = true;
+  reverse5 = true;
   @Output() changedValue = new EventEmitter();
   selectedApplicant: any;
   selectedScheme: any;
@@ -106,6 +116,71 @@ export class ApplicantWiseComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.aumApplicantWiseTotalaumApplicantNameGet();
   }
+  sortBy(applicant, propertyName) {
+    this.propertyName = propertyName;
+    this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
+    if (this.reverse === false) {
+      applicant = applicant.sort((a, b) =>
+        a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+      );
+    } else {
+      applicant = applicant.sort((a, b) =>
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortByCat(applicant, propertyName) {
+    this.propertyName2 = propertyName;
+    this.reverse2 = (propertyName !== null && this.propertyName2 === propertyName) ? !this.reverse2 : false;
+    if (this.reverse2 === false) {
+      applicant = applicant.sort((a, b) =>
+        a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+      );
+    } else {
+      applicant = applicant.sort((a, b) =>
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortBySubCat(applicant, propertyName) {
+    this.propertyName3 = propertyName;
+    this.reverse3 = (propertyName !== null && this.propertyName3 === propertyName) ? !this.reverse3 : false;
+    if (this.reverse3 === false) {
+      applicant = applicant.sort((a, b) =>
+        a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+      );
+    } else {
+      applicant = applicant.sort((a, b) =>
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortByScheme(applicant, propertyName) {
+    this.propertyName4 = propertyName;
+    this.reverse4 = (propertyName !== null && this.propertyName4 === propertyName) ? !this.reverse4 : false;
+    if (this.reverse4 === false) {
+      applicant = applicant.sort((a, b) =>
+        a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+      );
+    } else {
+      applicant = applicant.sort((a, b) =>
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
+  sortByBalanceUnit(applicant, propertyName) {
+    this.propertyName5 = propertyName;
+    this.reverse5 = (propertyName !== null && this.propertyName5 === propertyName) ? !this.reverse5 : false;
+    if (this.reverse5 === false) {
+      applicant = applicant.sort((a, b) =>
+        a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+      );
+    } else {
+      applicant = applicant.sort((a, b) =>
+        a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
+      );
+    }
+  }
   aumApplicantWiseTotalaumApplicantNameGet() {
     this.isLoading = true;
     this.applicantName = [{}, {}, {}]
@@ -117,7 +192,8 @@ export class ApplicantWiseComponent implements OnInit {
     this.backoffice.getAumApplicantWiseTotalaumApplicantName(obj).subscribe(
       data => this.applicantNameGet(data),
       err => {
-        this.showLoader = false;
+        this.isLoading = false;
+        this.applicantName = [];
       }
     )
   }
@@ -332,14 +408,16 @@ export class ApplicantWiseComponent implements OnInit {
 
   applicantNameGet(data) {
     this.isLoading = false;
-    this.applicantName = data;
-    if (this.applicantName) {
+    if (data) {
+      this.applicantName = data;
       this.excelInitApplicant();
       this.applicantName.forEach(o => {
         o.show = true;
         this.totalCurrentValue += o.totalAum;
         this.totalWeight += o.weightInPercentage;
       });
+    } else {
+      this.applicantName = [];
     }
     this.showLoader = false;
   }
@@ -360,8 +438,10 @@ export class ApplicantWiseComponent implements OnInit {
       this.backoffice.getAumApplicantCategory(obj).subscribe(
         data => {
           if (data) {
-            data[0].showCategory = true;
-            data[0].familyMemberId = applicantData.id
+            data.forEach(element => {
+              element.showCategory = true;
+              element.familyMemberId = applicantData.id
+            });
             applicantData.categoryList = data
             console.log(data);
             this.categoryList = data;
@@ -400,8 +480,10 @@ export class ApplicantWiseComponent implements OnInit {
       this.backoffice.getAumApplicantSubCategory(obj).subscribe(
         data => {
           if (data) {
-            data[0].showSubCategory = true;
-            data[0].familyMemberId = catData.familyMemberId;
+            data.forEach(element => {
+              element.showSubCategory = true;
+              element.familyMemberId = catData.familyMemberId;;
+            });
             catData.subCatList = data;
             console.log(data);
             this.subCategoryList = data;
@@ -439,7 +521,9 @@ export class ApplicantWiseComponent implements OnInit {
       this.backoffice.getAumApplicantScheme(obj).subscribe(
         data => {
           if (data) {
-            data[0].showFolio = true
+            data.forEach(element => {
+              element.showFolio = true;
+            });
             subCatData.schemeList = data
             console.log(data);
             this.schemeList = data;

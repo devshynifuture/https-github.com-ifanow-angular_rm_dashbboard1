@@ -20,6 +20,8 @@ import { DetaildedViewSuperannuationComponent } from '../add-superannuation/deta
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../excel.service';
 import { DetailedViewNpsComponent } from '../add-nps/detailed-view-nps/detailed-view-nps.component';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
 
 
 @Component({
@@ -46,7 +48,7 @@ export class RetirementAccountComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   isLoading = false;
   dataSource: any = new MatTableDataSource();
-
+  @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild('epfListTable', { static: false }) epfListTableSort: MatSort;
   @ViewChild('npsListTable', { static: false }) npsListTableSort: MatSort;
   @ViewChild('gratuityListTable', { static: false }) gratuityListTableSort: MatSort;
@@ -63,132 +65,132 @@ export class RetirementAccountComponent implements OnInit {
   footer = [];
   noData: any;
 
-  async ExportTOExcel(value) {
-    this.excelData = []
-    var data = []
-    if (value == 'EPS') {
-      var headerData = [{ width: 20, key: 'Owner' },
-      { width: 20, key: 'Notional value' },
-      { width: 25, key: 'Commencement date' },
-      { width: 25, key: 'Pension amount' },
-      { width: 18, key: ' Pension payout frequency' },
-      { width: 15, key: 'Description' },
-      { width: 10, key: 'Status' },]
-      var header = ['Owner', 'Notional value', 'Commencement date', 'Pension amount', ' Pension payout frequency', 'Description', 'Status'];
-      this.dataSource.filteredData.forEach(element => {
-        data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.totalNotionalValue),
-        new Date(element.commencementDate),
-        this.formatNumber.first.formatAndRoundOffNumber(element.pensionAmount),
-        this.formatNumber.first.formatAndRoundOffNumber(element.pensionPayoutFrequencyId),
-        element.description, element.status]
-        this.excelData.push(Object.assign(data))
-      });
-      var footerData = ['Total',
-        this.formatNumber.first.formatAndRoundOffNumber(this.totalNotionalValue), '',
-        this.formatNumber.first.formatAndRoundOffNumber(this.totalPensionAmount), '', '', '',]
-      this.footer.push(Object.assign(footerData))
-    } else if (value == 'Gratuity') {
-      var headerData = [
-        { width: 20, key: 'Owner' },
-        { width: 20, key: 'Name of the organization' },
-        { width: 25, key: 'Number of completed years' },
-        { width: 25, key: 'Year of receipt' },
-        { width: 18, key: 'Amount recieved' },
-        { width: 18, key: 'Reason of receipt' },
-        { width: 15, key: 'Description' },
-        { width: 10, key: 'Status' },
-      ];
-      var header = ['Owner', 'Name of the organization', 'Number of completed years',
-        'Year of receipt', 'Amount recieved', 'Reason of receipt', 'Description', 'Status'];
-      this.dataSource.filteredData.forEach(element => {
-        data = [element.ownerName, (element.organizationName),
-        (element.yearsCompleted), (element.yearReceipt),
-        this.formatNumber.first.formatAndRoundOffNumber(element.amountReceived),
-        (element.reasonOfReceipt), element.description, element.status]
-        this.excelData.push(Object.assign(data))
-      });
-      var footerData = ['Total', '', '', '',
-        this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAmountReceived), '', '', '', '']
-      this.footer.push(Object.assign(footerData))
-    } else if (value == 'Superannuation') {
-      var headerData = [
-        { width: 20, key: 'Owner' },
-        { width: 20, key: 'Annual employer contribution' },
-        { width: 25, key: 'Annual employee contribution' },
-        { width: 25, key: 'Assumed rate' },
-        { width: 18, key: 'Growth rate employer contribution' },
-        { width: 18, key: 'Growth rate employee contribution' },
-        { width: 18, key: 'Date of first contribution' },
-        { width: 15, key: 'Description' },
-        { width: 10, key: 'Status' },
-      ];
-      var header = ['Owner', 'Annual employer contribution', 'Annual employee contribution', 'Assumed rate',
-        'Growth rate employer contribution', 'Growth rate employee contribution',
-        'Date of first contribution', 'Description', 'Status'];
-      this.dataSource.filteredData.forEach(element => {
-        data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.annualEmployerContribution),
-        this.formatNumber.first.formatAndRoundOffNumber(element.annualEmployeeContribution),
-        this.formatNumber.first.formatAndRoundOffNumber(element.assumedRateOfReturn),
-        this.formatNumber.first.formatAndRoundOffNumber(element.growthRateEmployerContribution),
-        this.formatNumber.first.formatAndRoundOffNumber(element.growthRateEmployeeContribution),
-        new Date(element.firstContributionDate), element.maturityYear, element.description, element.status]
-        this.excelData.push(Object.assign(data))
-      });
-      var footerData = ['Total', this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAnnualEmployeeContribution),
-        this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAnnualEmployerContribution), '', '', '', '', '', '']
-    } else if (value == 'EPF') {
-      var headerData = [
-        { width: 20, key: 'Owner' },
-        { width: 20, key: 'Current value' },
-        { width: 25, key: 'Employee’s contribution' },
-        { width: 25, key: 'Employer’s contribution' },
-        { width: 18, key: 'Rate of return' },
-        { width: 18, key: 'Balance mentioned' },
-        { width: 20, key: 'Balance as on' },
-        { width: 15, key: 'Maturity year' },
-        { width: 15, key: 'Description' },
-        { width: 10, key: 'Status' },
-      ];
-      var header = ['Owner', 'Current value', 'Employee’s contribution', 'Employer’s contribution',
-        'Rate of return', 'Balance mentioned', 'Balance as on', 'Maturity year', 'Description', 'Status'];
-      this.dataSource.filteredData.forEach(element => {
-        data = [element.ownerName, (element.currentValue == undefined) ? 0 : this.formatNumber.first.formatAndRoundOffNumber(element.currentValue),
-        (element.employeesMonthlyContribution == undefined) ? 0 : this.formatNumber.first.formatAndRoundOffNumber(element.employeesMonthlyContribution),
-        (element.employersMonthlyContribution == undefined) ? 0 : this.formatNumber.first.formatAndRoundOffNumber(element.employersMonthlyContribution),
-        (element.rateOfReturn == undefined) ? 0 : this.formatNumber.first.formatAndRoundOffNumber(element.rateOfReturn),
-        this.formatNumber.first.formatAndRoundOffNumber(element.currentEpfBalance),
-        new Date(element.balanceAsOnDate), element.maturityYear, element.description, element.status]
-        this.excelData.push(Object.assign(data))
-      });
-      var footerData = ['Total', this.formatNumber.first.formatAndRoundOffNumber(this.sumOfcurrentValue),
-        this.formatNumber.first.formatAndRoundOffNumber(this.sumOfemployersMonthlyContribution),
-        this.formatNumber.first.formatAndRoundOffNumber(this.sumOfemployeesMonthlyContribution), '',
-        this.formatNumber.first.formatAndRoundOffNumber(this.sumOfcurrentEpfBalance), '', '', '', '']
-      this.footer.push(Object.assign(footerData))
+  // async ExportTOExcel(value) {
+  //   this.excelData = []
+  //   var data = []
+  //   if (value == 'EPS') {
+  //     var headerData = [{ width: 20, key: 'Owner' },
+  //     { width: 20, key: 'Notional value' },
+  //     { width: 25, key: 'Commencement date' },
+  //     { width: 25, key: 'Pension amount' },
+  //     { width: 18, key: ' Pension payout frequency' },
+  //     { width: 15, key: 'Description' },
+  //     { width: 10, key: 'Status' },]
+  //     var header = ['Owner', 'Notional value', 'Commencement date', 'Pension amount', ' Pension payout frequency', 'Description', 'Status'];
+  //     this.dataSource.filteredData.forEach(element => {
+  //       data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.totalNotionalValue),
+  //       new Date(element.commencementDate),
+  //       this.formatNumber.first.formatAndRoundOffNumber(element.pensionAmount),
+  //       this.formatNumber.first.formatAndRoundOffNumber(element.pensionPayoutFrequencyId),
+  //       element.description, element.status]
+  //       this.excelData.push(Object.assign(data))
+  //     });
+  //     var footerData = ['Total',
+  //       this.formatNumber.first.formatAndRoundOffNumber(this.totalNotionalValue), '',
+  //       this.formatNumber.first.formatAndRoundOffNumber(this.totalPensionAmount), '', '', '',]
+  //     this.footer.push(Object.assign(footerData))
+  //   } else if (value == 'Gratuity') {
+  //     var headerData = [
+  //       { width: 20, key: 'Owner' },
+  //       { width: 20, key: 'Name of the organization' },
+  //       { width: 25, key: 'Number of completed years' },
+  //       { width: 25, key: 'Year of receipt' },
+  //       { width: 18, key: 'Amount recieved' },
+  //       { width: 18, key: 'Reason of receipt' },
+  //       { width: 15, key: 'Description' },
+  //       { width: 10, key: 'Status' },
+  //     ];
+  //     var header = ['Owner', 'Name of the organization', 'Number of completed years',
+  //       'Year of receipt', 'Amount recieved', 'Reason of receipt', 'Description', 'Status'];
+  //     this.dataSource.filteredData.forEach(element => {
+  //       data = [element.ownerName, (element.organizationName),
+  //       (element.yearsCompleted), (element.yearReceipt),
+  //       this.formatNumber.first.formatAndRoundOffNumber(element.amountReceived),
+  //       (element.reasonOfReceipt), element.description, element.status]
+  //       this.excelData.push(Object.assign(data))
+  //     });
+  //     var footerData = ['Total', '', '', '',
+  //       this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAmountReceived), '', '', '', '']
+  //     this.footer.push(Object.assign(footerData))
+  //   } else if (value == 'Superannuation') {
+  //     var headerData = [
+  //       { width: 20, key: 'Owner' },
+  //       { width: 20, key: 'Annual employer contribution' },
+  //       { width: 25, key: 'Annual employee contribution' },
+  //       { width: 25, key: 'Assumed rate' },
+  //       { width: 18, key: 'Growth rate employer contribution' },
+  //       { width: 18, key: 'Growth rate employee contribution' },
+  //       { width: 18, key: 'Date of first contribution' },
+  //       { width: 15, key: 'Description' },
+  //       { width: 10, key: 'Status' },
+  //     ];
+  //     var header = ['Owner', 'Annual employer contribution', 'Annual employee contribution', 'Assumed rate',
+  //       'Growth rate employer contribution', 'Growth rate employee contribution',
+  //       'Date of first contribution', 'Description', 'Status'];
+  //     this.dataSource.filteredData.forEach(element => {
+  //       data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.annualEmployerContribution),
+  //       this.formatNumber.first.formatAndRoundOffNumber(element.annualEmployeeContribution),
+  //       this.formatNumber.first.formatAndRoundOffNumber(element.assumedRateOfReturn),
+  //       this.formatNumber.first.formatAndRoundOffNumber(element.growthRateEmployerContribution),
+  //       this.formatNumber.first.formatAndRoundOffNumber(element.growthRateEmployeeContribution),
+  //       new Date(element.firstContributionDate), element.maturityYear, element.description, element.status]
+  //       this.excelData.push(Object.assign(data))
+  //     });
+  //     var footerData = ['Total', this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAnnualEmployeeContribution),
+  //       this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAnnualEmployerContribution), '', '', '', '', '', '']
+  //   } else if (value == 'EPF') {
+  //     var headerData = [
+  //       { width: 20, key: 'Owner' },
+  //       { width: 20, key: 'Current value' },
+  //       { width: 25, key: 'Employee’s contribution' },
+  //       { width: 25, key: 'Employer’s contribution' },
+  //       { width: 18, key: 'Rate of return' },
+  //       { width: 18, key: 'Balance mentioned' },
+  //       { width: 20, key: 'Balance as on' },
+  //       { width: 15, key: 'Maturity year' },
+  //       { width: 15, key: 'Description' },
+  //       { width: 10, key: 'Status' },
+  //     ];
+  //     var header = ['Owner', 'Current value', 'Employee’s contribution', 'Employer’s contribution',
+  //       'Rate of return', 'Balance mentioned', 'Balance as on', 'Maturity year', 'Description', 'Status'];
+  //     this.dataSource.filteredData.forEach(element => {
+  //       data = [element.ownerName, (element.currentValue == undefined) ? 0 : this.formatNumber.first.formatAndRoundOffNumber(element.currentValue),
+  //       (element.employeesMonthlyContribution == undefined) ? 0 : this.formatNumber.first.formatAndRoundOffNumber(element.employeesMonthlyContribution),
+  //       (element.employersMonthlyContribution == undefined) ? 0 : this.formatNumber.first.formatAndRoundOffNumber(element.employersMonthlyContribution),
+  //       (element.rateOfReturn == undefined) ? 0 : this.formatNumber.first.formatAndRoundOffNumber(element.rateOfReturn),
+  //       this.formatNumber.first.formatAndRoundOffNumber(element.currentEpfBalance),
+  //       new Date(element.balanceAsOnDate), element.maturityYear, element.description, element.status]
+  //       this.excelData.push(Object.assign(data))
+  //     });
+  //     var footerData = ['Total', this.formatNumber.first.formatAndRoundOffNumber(this.sumOfcurrentValue),
+  //       this.formatNumber.first.formatAndRoundOffNumber(this.sumOfemployersMonthlyContribution),
+  //       this.formatNumber.first.formatAndRoundOffNumber(this.sumOfemployeesMonthlyContribution), '',
+  //       this.formatNumber.first.formatAndRoundOffNumber(this.sumOfcurrentEpfBalance), '', '', '', '']
+  //     this.footer.push(Object.assign(footerData))
 
-    } else {
-      var headerData = [{ width: 20, key: 'Owner' },
-      { width: 20, key: 'Current value' },
-      { width: 25, key: 'Total contribution' },
-      { width: 18, key: 'Scheme choice' },
-      { width: 18, key: 'PRAN' },
-      { width: 15, key: 'Description' },
-      { width: 10, key: 'Status' },]
-      var header = ['Owner', 'Current value', 'Total contribution', 'Scheme choice', 'PRAN', 'Description', 'Status'];
-      this.dataSource.filteredData.forEach(element => {
-        data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValuation),
-        this.formatNumber.first.formatAndRoundOffNumber(element.contributionAmount), (element.schemeChoice), (element.pran),
-        element.description, element.status]
-        this.excelData.push(Object.assign(data))
-      });
-      var footerData = ['Total', this.formatNumber.first.formatAndRoundOffNumber(this.totalCurrentValue),
-        this.formatNumber.first.formatAndRoundOffNumber(this.totalContribution), '', '', '', '']
-      this.footer.push(Object.assign(footerData))
+  //   } else {
+  //     var headerData = [{ width: 20, key: 'Owner' },
+  //     { width: 20, key: 'Current value' },
+  //     { width: 25, key: 'Total contribution' },
+  //     { width: 18, key: 'Scheme choice' },
+  //     { width: 18, key: 'PRAN' },
+  //     { width: 15, key: 'Description' },
+  //     { width: 10, key: 'Status' },]
+  //     var header = ['Owner', 'Current value', 'Total contribution', 'Scheme choice', 'PRAN', 'Description', 'Status'];
+  //     this.dataSource.filteredData.forEach(element => {
+  //       data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValuation),
+  //       this.formatNumber.first.formatAndRoundOffNumber(element.contributionAmount), (element.schemeChoice), (element.pran),
+  //       element.description, element.status]
+  //       this.excelData.push(Object.assign(data))
+  //     });
+  //     var footerData = ['Total', this.formatNumber.first.formatAndRoundOffNumber(this.totalCurrentValue),
+  //       this.formatNumber.first.formatAndRoundOffNumber(this.totalContribution), '', '', '', '']
+  //     this.footer.push(Object.assign(footerData))
 
-    }
-    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
-  }
-  constructor(private excel: ExcelService, private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) {
+  //   }
+  //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
+  // }
+  constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) {
   }
 
   displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'employer','vol', 'rate', 'bal', 'bacla', 'year', 'desc', 'status', 'icons'];
@@ -215,6 +217,16 @@ export class RetirementAccountComponent implements OnInit {
     this.noData = "No scheme found";
     this.getListEPF();
     this.dataSource = new MatTableDataSource(this.data);
+  }
+
+  Excel(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows,tableTitle)
+  }
+
+  pdf(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.pdfGen.generatePdf(rows, tableTitle);
   }
   getfixedIncomeData(value) {
     this.showRecurring = value;

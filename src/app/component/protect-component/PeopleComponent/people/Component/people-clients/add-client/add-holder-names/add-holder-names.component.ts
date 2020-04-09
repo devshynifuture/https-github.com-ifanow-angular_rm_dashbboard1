@@ -40,9 +40,10 @@ export class AddHolderNamesComponent implements OnInit {
     if (this.holderNameList.length == 3) {
       return;
     }
+    (data == undefined) ? data = {} : data;
     this.holderNameList.push(this.fb.group({
       name: [data.name, [Validators.required]],
-      id: []
+      id: [data.id]
     }));
     this.holderList.emit(this.holderNameList);
   }

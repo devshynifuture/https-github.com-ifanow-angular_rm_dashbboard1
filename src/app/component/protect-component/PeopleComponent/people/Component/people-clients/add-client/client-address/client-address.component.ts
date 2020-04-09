@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {ValidatorType} from 'src/app/services/util.service';
-import {PostalService} from 'src/app/services/postal.service';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { ValidatorType } from 'src/app/services/util.service';
+import { PostalService } from 'src/app/services/postal.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 
 @Component({
   selector: 'app-client-address',
@@ -88,9 +88,12 @@ export class ClientAddressComponent implements OnInit {
     this.cusService.getAddressList(obj).subscribe(
       data => {
         console.log(data);
-        if (data) {
+        if (data && data.length > 0) {
           this.addressList = data[0];
           this.createAddressForm(this.addressList)
+        }
+        else {
+          this.addressList = {};
         }
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')

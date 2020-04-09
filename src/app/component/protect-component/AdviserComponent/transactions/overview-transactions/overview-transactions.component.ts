@@ -9,6 +9,8 @@ import { IinUccCreationComponent } from './IIN/UCC-Creation/iin-ucc-creation/iin
 import { VerifyMemberComponent } from './MandateCreation/verify-member/verify-member.component';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { HttpService } from 'src/app/http-service/http-service';
+import { TransactionMobileViewComponent } from '../transaction-mobile-view/transaction-mobile-view.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-overview-transactions',
@@ -19,7 +21,7 @@ export class OverviewTransactionsComponent implements OnInit {
   file: void;
 
 
-  constructor(private subInjectService: SubscriptionInject, public eventService: EventService, private http: HttpService, ) { }
+  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, public eventService: EventService, private http: HttpService, ) { }
 
   ngOnInit() {
   }
@@ -27,7 +29,44 @@ export class OverviewTransactionsComponent implements OnInit {
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
+  // openMobileTransactionPopup() {
+  //   const dialogRef = this.dialog.open(TransactionMobileViewComponent, {
 
+  //    maxWidth: '100vw',
+  //    width:'90%',
+  //    height:'466px',
+  //    panelClass: 'custom-modalbox'
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log('The dialog was closed');
+  //   });
+  // }
+  // openMobileErrroTransactionPopup() {
+  //   const dialogRef = this.dialog.open(TransactionMobileViewComponent, {
+
+  //    maxWidth: '100vw',
+  //    width:'90%',
+  //    panelClass: 'custom-modalbox-error'
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log('The dialog was closed');
+  //   });
+  // }
+   openMobileErrorCopyTransactionPopup() {
+    const dialogRef = this.dialog.open(TransactionMobileViewComponent, {
+
+     maxWidth: '100vw',
+     width:'90%',
+     // panelClass: 'custom-modalbox-error'
+      panelClass: 'custom-modalbox'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
   openNewTransaction() {
     const fragmentData = {
       flag: 'addNewTransaction',
@@ -159,7 +198,7 @@ export class OverviewTransactionsComponent implements OnInit {
     const fileName = file
 
     const params = new HttpParams()
-    
+
       .set('BrokCode', 'ARN-15348')
       .set('Appln_id', 'MFS15348')
       .set('Password', 'ju7w0cp2')
@@ -169,7 +208,7 @@ export class OverviewTransactionsComponent implements OnInit {
       .set('RefNo', '8000504');
 
     const httpOptions = {
-      headers: new HttpHeaders({ 
+      headers: new HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded',
         'Access-Control-Allow-Origin': "*",
         // 'Access-Control-Allow-Methods': "POST, GET, OPTIONS, DELETE, PUT",
@@ -178,7 +217,7 @@ export class OverviewTransactionsComponent implements OnInit {
       params: params,
       body: file
     };
-    
+
     this.http.post(fileuploadurl, fileName, httpOptions).subscribe((responseData) => {
       console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
 

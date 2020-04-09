@@ -10,6 +10,8 @@ import { AddRealEstateComponent } from '../add-real-estate/add-real-estate.compo
 import { DetailedViewRealEstateComponent } from '../detailed-view-real-estate/detailed-view-real-estate.component';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../excel.service';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
 
 @Component({
   selector: 'app-real-estate',
@@ -27,14 +29,15 @@ export class RealEstateComponent implements OnInit {
   sumOfMarketValue: any;
   sumOfpurchasedValue: any;
   footer = [];
+  @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'desc', 'status', 'icons'];
   excelData: any[];
   noData: string;
 
-  constructor(private excel: ExcelService, public subInjectService: SubscriptionInject,
-    public custmService: CustomerService, public cusService: CustomerService,
+  constructor( public subInjectService: SubscriptionInject,
+    public custmService: CustomerService, public cusService: CustomerService, private excel:ExcelGenService,  private pdfGen:PdfGenService,
     public eventService: EventService, public dialog: MatDialog) {
   }
 
@@ -46,31 +49,41 @@ export class RealEstateComponent implements OnInit {
 
   }
 
-  async ExportTOExcel(value) {
-
-    this.excelData = [];
-    let data = [];
-    let headerData = [{ width: 20, key: 'Owner' },
-    { width: 20, key: 'Type' },
-    { width: 10, key: 'Rate' },
-    { width: 20, key: 'Market Value' },
-    { width: 15, key: 'Purchase Value' },
-    { width: 15, key: 'Description' },
-    { width: 10, key: 'Status' },];
-    let header = ['Owner', 'Type', 'Rate', 'Market Value',
-      'Purchase Value', 'Description', 'Status'];
-    this.datasource3.filteredData.forEach(element => {
-      data = [element.ownerName, ((element.typeId == 1) ? 'Residential' : (element.typeId == 2) ? 'Secondary' : (element.typeId == 3) ? 'Commercial' : 'Land'), (element.rate),
-      this.formatNumber.first.formatAndRoundOffNumber(element.marketValue), (element.purchaseValue), element.description, element.status];
-      this.excelData.push(Object.assign(data));
-    });
-    let footerData = ['Total', '',
-      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMarketValue), '',
-      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfpurchasedValue), '', ''];
-    this.footer.push(Object.assign(footerData));
-    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value);
+  Excel(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows,tableTitle)
   }
-  // datasource3 = ELEMENT_DATA3;
+
+  pdf(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.pdfGen.generatePdf(rows, tableTitle);
+  }
+
+  // async ExportTOExcel(value) {
+
+  //   this.excelData = [];
+  //   let data = [];
+  //   let headerData = [{ width: 20, key: 'Owner' },
+  //   { width: 20, key: 'Type' },
+  //   { width: 10, key: 'Rate' },
+  //   { width: 20, key: 'Market Value' },
+  //   { width: 15, key: 'Purchase Value' },
+  //   { width: 15, key: 'Description' },
+  //   { width: 10, key: 'Status' },];
+  //   let header = ['Owner', 'Type', 'Rate', 'Market Value',
+  //     'Purchase Value', 'Description', 'Status'];
+  //   this.datasource3.filteredData.forEach(element => {
+  //     data = [element.ownerName, ((element.typeId == 1) ? 'Residential' : (element.typeId == 2) ? 'Secondary' : (element.typeId == 3) ? 'Commercial' : 'Land'), (element.rate),
+  //     this.formatNumber.first.formatAndRoundOffNumber(element.marketValue), (element.purchaseValue), element.description, element.status];
+  //     this.excelData.push(Object.assign(data));
+  //   });
+  //   let footerData = ['Total', '',
+  //     this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMarketValue), '',
+  //     this.formatNumber.first.formatAndRoundOffNumber(this.sumOfpurchasedValue), '', ''];
+  //   this.footer.push(Object.assign(footerData));
+  //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value);
+  // }
+  // // datasource3 = ELEMENT_DATA3;
 
   getRealEstate() {
     this.isLoading = true;
