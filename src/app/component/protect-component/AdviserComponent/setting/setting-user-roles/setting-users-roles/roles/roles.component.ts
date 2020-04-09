@@ -80,7 +80,7 @@ export class RolesComponent implements OnInit {
 
   deleteRole(data) {
     this.loader(1);
-    this.settingsService.deleteRole({id: data.id}).subscribe((res) => {
+    this.settingsService.deleteRole(data.id).subscribe((res) => {
       this.getAllRoles();
       this.loader(-1);
     });
