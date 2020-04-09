@@ -1,6 +1,7 @@
 <div class="row" id="ui-plan-secondhead">
     <div class="col-md-2 d-flex align-items-center">
-        <button (click)="goToAdvisorHome()" class="btn-warning-outline advisorHomeBtn br-2" mat-stroked-button>
+        <button *ngIf="clientData.userType==2" (click)="goToAdvisorHome()"
+            class="btn-warning-outline advisorHomeBtn br-2" mat-stroked-button>
             <i class="material-icons"> keyboard_backspace</i>
             ADVISOR HOME
         </button>
@@ -9,13 +10,18 @@
         <nav mat-align-tabs="center" mat-tab-nav-bar>
             <a [routerLink]="['/customer/detail/plan/summary']" mat-tab-link routerLinkActive="active">SUMMARY</a>
             <a [routerLink]="['/customer/detail/plan/profile']" mat-tab-link routerLinkActive="active">PROFILE</a>
-            <a class="width110" [routerLink]="['/customer/detail/plan/insurance']" mat-tab-link routerLinkActive="active">INSURANCE</a>
-            <a class="width70" [routerLink]="['/customer/detail/plan/goals']" mat-tab-link routerLinkActive="active">GOALS</a>
-            <a class="width70" [routerLink]="['/customer/detail/plan/taxes']" mat-tab-link routerLinkActive="active">TAXES</a>
-            <a class="width120" [routerLink]="['/customer/detail/plan/cash-flow']" mat-tab-link routerLinkActive="active">CASH
+            <a class="width110" [routerLink]="['/customer/detail/plan/insurance']" mat-tab-link
+                routerLinkActive="active">INSURANCE</a>
+            <a class="width70" [routerLink]="['/customer/detail/plan/goals']" mat-tab-link
+                routerLinkActive="active">GOALS</a>
+            <a class="width70" [routerLink]="['/customer/detail/plan/taxes']" mat-tab-link
+                routerLinkActive="active">TAXES</a>
+            <a class="width120" [routerLink]="['/customer/detail/plan/cash-flow']" mat-tab-link
+                routerLinkActive="active">CASH
                 FLOWS</a>
             <!-- <a class="width120" [routerLink]="['/customer/detail/plan/investments']" mat-tab-link routerLinkActive="active">DEPLOYMENTS</a> -->
-            <a class="width110" [routerLink]="['/customer/detail/plan/scenarios']" mat-tab-link routerLinkActive="active">SCENARIOS</a>
+            <a class="width110" [routerLink]="['/customer/detail/plan/scenarios']" mat-tab-link
+                routerLinkActive="active">SCENARIOS</a>
         </nav>
     </div>
     <div class="col-md-2 d-flex align-items-center borderLeft">
