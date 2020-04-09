@@ -183,22 +183,29 @@
         <h5 class="m-0 wrapper-8 b-a pt-10 pb-10 bb-0">Scheme wise allocation</h5>
       </div>
       <div class="example-container" id="table-low">
-        <table mat-table [dataSource]="dataSource2" *ngIf="mfData!=undefined">
+        <table mat-table [dataSource]="dataSource2" class="skeletonAnimation" appSkeletonLoading
+          [appSkeletonLoading]="isLoading">
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef class="br"> Scheme name </th>
-            <td mat-cell *matCellDef="let element" class="br"> {{element.schemeName}} </td>
+            <td mat-cell *matCellDef="let element" class="br">
+              <div class="bar">{{element.schemeName}}</div>
+            </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left"> Total</td>
           </ng-container>
           <ng-container matColumnDef="amt">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
-            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber> {{element.amountInvested}}
+            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
+              <div class="bar">{{element.amountInvested}}
+              </div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
               {{mfData.total_amount_invested}}</td>
           </ng-container>
           <ng-container matColumnDef="value">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Current value </th>
-            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber> {{element.currentValue}}
+            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
+              <div class="bar">{{element.currentValue}}
+              </div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
               {{mfData.total_current_value}}</td>
@@ -206,21 +213,26 @@
           <ng-container matColumnDef="abs">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret % </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
-              {{element.absoluteReturn | number:'1.2-2'}}
+              <div class="bar"> {{element.absoluteReturn | number:'1.2-2'}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
               {{mfData.total_absolute_return | number:'1.2-2'}}</td>
           </ng-container>
           <ng-container matColumnDef="xirr">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR % </th>
-            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.xirr | number:'1.2-2'}} </td>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+              <div class="bar">
+                {{element.xirr | number:'1.2-2'}} </div>
+            </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
-              {{mfData.total_xirr | number:'1.2-2'}}</td>
+              <div class="bar">{{mfData.total_xirr | number:'1.2-2'}}</div>
+            </td>
           </ng-container>
           <ng-container matColumnDef="alloc">
             <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc % </th>
             <td mat-cell *matCellDef="let element" class="text-right">
-              {{element.allocatedPercentage | number:'1.2-2' }} </td>
+              <div class="bar">{{element.allocatedPercentage | number:'1.2-2' }}</div>
+            </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
               {{7800}}
             </td>
@@ -230,6 +242,10 @@
           <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
 
         </table>
+        <div *ngIf="dataSource2.length == 0" class="d-flex flex-column align-items-center">
+          <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
+          <h4 class="text-center pt-12"> No data found</h4>
+        </div>
       </div>
     </div>
     <div class="col-xl-6 col-lg-12 col-md-12 pr-0 cashflow">
@@ -237,14 +253,19 @@
         <h5 class="m-0 wrapper-8 pt-10 pb-10 b-a bb-0">Cashflow status</h5>
       </div>
       <div class="example-container" id="table-low">
-        <table mat-table [dataSource]="datasource1">
+        <table mat-table [dataSource]="datasource1" class="skeletonAnimation" appSkeletonLoading
+          [appSkeletonLoading]="isLoading">
           <ng-container matColumnDef="data">
             <th mat-header-cell *matHeaderCellDef class="t-55"> Scheme name </th>
-            <td mat-cell *matCellDef="let element" class="t-55"> {{element.data}} </td>
+            <td mat-cell *matCellDef="let element" class="t-55">
+              <div class="bar">{{element.data}}</div>
+            </td>
           </ng-container>
           <ng-container matColumnDef="amts">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
-            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber> {{element.amts}}</td>
+            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
+              <div class="bar">{{element.amts}}</div>
+            </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
@@ -259,22 +280,27 @@
         </h5>
       </div>
       <div class="example-container" id="table-low">
-        <table mat-table [dataSource]="dataSource3" *ngIf="mfData!=undefined">
+        <table mat-table [dataSource]="dataSource3" class="skeletonAnimation" appSkeletonLoading
+        [appSkeletonLoading]="isLoading">
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef class="br"> Sub Category Name </th>
-            <td mat-cell *matCellDef="let element" class="br"> {{element.subCategory}} </td>
+            <td mat-cell *matCellDef="let element" class="br">
+              <div class="bar">{{element.subCategory}} </div>
+            </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left"> Total</td>
           </ng-container>
           <ng-container matColumnDef="amt">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
-            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber> {{element.amountInvested}}
+            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
+              <div class="bar">{{element.amountInvested}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
               {{mfData.total_amount_invested}}</td>
           </ng-container>
           <ng-container matColumnDef="value">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Current value </th>
-            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber> {{element.currentValue}}
+            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
+              <div class="bar">{{element.currentValue}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
               {{mfData.total_current_value}}</td>
@@ -282,21 +308,24 @@
           <ng-container matColumnDef="abs">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret % </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
-              {{element.absoluteReturn | number:'1.2-2'}}
+              <div class="bar"> {{element.absoluteReturn | number:'1.2-2'}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
               {{mfData.total_absolute_return | number:'1.2-2'}}</td>
           </ng-container>
           <ng-container matColumnDef="xirr">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR % </th>
-            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.xirr | number:'1.2-2'}} </td>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+              <div class="bar">{{element.xirr | number:'1.2-2'}}</div>
+            </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
               {{mfData.total_xirr | number:'1.2-2'}}</td>
           </ng-container>
           <ng-container matColumnDef="alloc">
             <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc % </th>
             <td mat-cell *matCellDef="let element" class="text-right">
-              {{element.allocatedPercentage | number:'1.2-2' }} </td>
+              <div class="bar"> {{element.allocatedPercentage | number:'1.2-2' }}</div>
+            </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
               {{7800}}
             </td>
@@ -305,6 +334,10 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
         </table>
+        <div *ngIf="dataSource3.length == 0" class="d-flex flex-column align-items-center">
+          <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
+          <h4 class="text-center pt-12"> No data found</h4>
+        </div>
       </div>
     </div>
     <div class="col-xl-6 col-lg-12 col-md-12 pr-0 familymember-wise">
@@ -312,44 +345,53 @@
         <h5 class="m-0 wrapper-8 pt-10 pb-10 b-a bb-0">Family member wise allocation</h5>
       </div>
       <div class="example-container" id="table-low">
-        <table mat-table [dataSource]="dataSource" *ngIf="mfData!=undefined">
+        <table mat-table [dataSource]="dataSource" class="skeletonAnimation" appSkeletonLoading
+        [appSkeletonLoading]="isLoading">
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef class="br"> Family Member Name </th>
-            <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+            <td mat-cell *matCellDef="let element" class="br">
+              <div class="bar">{{element.name}} </div>
+            </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left"> Total</td>
           </ng-container>
 
           <ng-container matColumnDef="amt">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
-            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber> {{element.amountInv}}
+            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
+              <div class="bar">{{element.amountInv}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
               {{mfData.total_amount_invested}}</td>
           </ng-container>
           <ng-container matColumnDef="value">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Current value </th>
-            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber> {{element.value}} </td>
+            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
+              <div class="bar">{{element.value}}</div>
+            </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
               {{mfData.total_current_value}}</td>
           </ng-container>
           <ng-container matColumnDef="abs">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret % </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
-              {{element.absoluteReturn | number:'1.2-2'}}
+              <div class="bar">{{element.absoluteReturn | number:'1.2-2'}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
               {{mfData.total_absolute_return | number:'1.2-2'}}</td>
           </ng-container>
           <ng-container matColumnDef="xirr">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR % </th>
-            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.xirr | number:'1.2-2'}} </td>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+              <div class="bar">{{element.xirr | number:'1.2-2'}}</div>
+            </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
               {{mfData.total_xirr | number:'1.2-2'}}</td>
           </ng-container>
           <ng-container matColumnDef="alloc">
             <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc % </th>
             <td mat-cell *matCellDef="let element" class="text-right">
-              {{element.allocatedPercentage | number:'1.2-2'}} </td>
+              <div class="bar"> {{element.allocatedPercentage | number:'1.2-2'}}</div>
+            </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
               {{7800}}
           </ng-container>
@@ -357,6 +399,10 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
         </table>
+        <div *ngIf="dataSource.length == 0" class="d-flex flex-column align-items-center">
+          <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
+          <h4 class="text-center pt-12"> No data found</h4>
+        </div>
       </div>
     </div>
   </div>
@@ -366,22 +412,26 @@
         <h5 class="m-0 wrapper-8 pt-10 pb-10 b-a bb-0">Category wise allocation</h5>
       </div>
       <div class="example-container" id="table-low">
-        <table mat-table [dataSource]="dataSource4" *ngIf="mfData!=undefined">
+        <table mat-table [dataSource]="dataSource4" class="skeletonAnimation" appSkeletonLoading
+        [appSkeletonLoading]="isLoading">
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef class="br"> Category name </th>
-            <td mat-cell *matCellDef="let element" class="br"> {{element.category}} </td>
+            <td mat-cell *matCellDef="let element" class="br"> 
+              <div class="bar">{{element.category}} </div></td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left"> Total</td>
           </ng-container>
           <ng-container matColumnDef="amt">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
-            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber> {{element.amountInvested}}
+            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
+              <div class="bar">{{element.amountInvested}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
               {{mfData.total_amount_invested}}</td>
           </ng-container>
           <ng-container matColumnDef="value">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Current value </th>
-            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber> {{element.currentValue}}
+            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
+              <div class="bar">{{element.currentValue}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
               {{mfData.total_current_value}}</td>
@@ -389,34 +439,42 @@
           <ng-container matColumnDef="abs">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Abs Ret % </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
-              {{element.absoluteReturn | number:'1.2-2' }}
+              <div class="bar"> {{element.absoluteReturn | number:'1.2-2' }}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
               {{mfData.total_absolute_return | number:'1.2-2'}}</td>
           </ng-container>
           <ng-container matColumnDef="xirr">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> XIRR % </th>
-            <td mat-cell *matCellDef="let element" class="br text-right"> {{element.xirr | number:'1.2-2'}} </td>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+              <div class="bar">{{element.xirr | number:'1.2-2'}}</div>
+            </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
               {{mfData.total_xirr | number:'1.2-2'}}</td>
           </ng-container>
           <ng-container matColumnDef="alloc">
             <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc % </th>
             <td mat-cell *matCellDef="let element" class="text-right">
-              {{element.allocatedPercentage | number:'1.2-2'}} </td>
+              <div class="bar"> {{element.allocatedPercentage | number:'1.2-2'}}</div>
+            </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">{{1800}}</td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
         </table>
+        <div *ngIf="dataSource4.length == 0" class="d-flex flex-column align-items-center">
+          <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
+          <h4 class="text-center pt-12"> No data found</h4>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 
-<div class="d-flex flex-column align-items-center">
+<div *ngIf="dataSource.length == 0 && dataSource2.length == 0 && dataSource3.length == 0 && dataSource4.length == 0"
+  class="d-flex flex-column align-items-center">
   <img class="width300" src="assets/images/svg/noDataFound.svg">
   <h4 class="text-center pt-12">No Data Found</h4>
   <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">ADD NEW
