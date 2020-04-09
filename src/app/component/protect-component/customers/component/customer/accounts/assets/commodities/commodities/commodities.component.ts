@@ -12,6 +12,8 @@ import { DetailedViewGoldComponent } from '../gold/detailed-view-gold/detailed-v
 import { DetailedViewOthersComponent } from '../others/detailed-view-others/detailed-view-others.component';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../excel.service';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
 
 @Component({
   selector: 'app-commodities',
@@ -20,6 +22,7 @@ import { ExcelService } from '../../../../excel.service';
 })
 export class CommoditiesComponent implements OnInit {
   showRequring: string;
+  @ViewChild('tableEl', { static: false }) tableEl;
 
   displayedColumns9 = ['no', 'owner', 'grams', 'car', 'price', 'mvalue', 'pvalue', 'desc', 'status', 'icons'];
   datasource9 = ELEMENT_DATA9;
@@ -45,8 +48,8 @@ export class CommoditiesComponent implements OnInit {
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
   noData: string;
-
-  constructor(private excel: ExcelService, private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) { }
+  
+  constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService,  private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) { }
   ngOnInit() {
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();
@@ -54,57 +57,67 @@ export class CommoditiesComponent implements OnInit {
     this.getGoldList()
 
   }
-  async ExportTOExcel(value) {
-    this.excelData = []
-    var data = []
-    if (value == 'Gold') {
-      var headerData = [{ width: 20, key: 'Owner' },
-      { width: 20, key: 'Tolas/grams' },
-      { width: 25, key: 'Carats' },
-      { width: 25, key: 'Carat gold price' },
-      { width: 18, key: ' Market value' },
-      { width: 18, key: 'Purchase value' },
-      { width: 15, key: 'Description' },
-      { width: 10, key: 'Status' },]
-      var header = ['Owner', 'Tolas/grams', 'Carats', 'Carat gold price', 'Market value',
-        'Purchase value', 'Description', 'Status'];
-      this.goldList.filteredData.forEach(element => {
-        data = [element.ownerName, (element.gramsOrTola), (element.carat), (element.caratGoldPrice),
-        this.formatNumber.first.formatAndRoundOffNumber(element.marketValue),
-        this.formatNumber.first.formatAndRoundOffNumber(element.approximatePurchaseValue),
-        element.description, element.status]
-        this.excelData.push(Object.assign(data))
-      });
-      var footerData = ['Total',
-        this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMarketValueOther), '',
-        this.formatNumber.first.formatAndRoundOffNumber(this.sumOfPurchaseValueOther), '', , '', '',]
-      this.footer.push(Object.assign(footerData))
-    } else {
-      var headerData = [{ width: 20, key: 'Owner' },
-      { width: 20, key: 'Type of commodity' },
-      { width: 25, key: 'Coupon amount' },
-      { width: 18, key: 'Market value' },
-      { width: 18, key: 'Purchase value' },
-      { width: 18, key: 'Date of purchase' },
-      { width: 18, key: 'Growth rate' },
-      { width: 15, key: 'Description' },
-      { width: 10, key: 'Status' },]
-      var header = ['Owner', 'Type of commodity', 'Coupon amount', 'Market value', 'Purchase value',
-        'Date of purchase', 'Growth rate', 'Description', 'Status'];
-      this.otherCommodityList.filteredData.forEach(element => {
-        data = [element.ownerName, (element.commodityTypeId),
-        this.formatNumber.first.formatAndRoundOffNumber(element.marketValue),
-        (element.purchaseValue), new Date(element.dateOfPurchase),
-        (element.growthRate), element.description, element.status]
-        this.excelData.push(Object.assign(data))
-      });
-      var footerData = ['Total', '', '', this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMarketValue),
-        this.formatNumber.first.formatAndRoundOffNumber(this.sumOfPurchaseValue), '', '', '', '']
-      this.footer.push(Object.assign(footerData))
 
-    }
-    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
+  Excel(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows,tableTitle)
   }
+
+  pdf(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.pdfGen.generatePdf(rows, tableTitle);
+  }
+  // async ExportTOExcel(value) {
+  //   this.excelData = []
+  //   var data = []
+  //   if (value == 'Gold') {
+  //     var headerData = [{ width: 20, key: 'Owner' },
+  //     { width: 20, key: 'Tolas/grams' },
+  //     { width: 25, key: 'Carats' },
+  //     { width: 25, key: 'Carat gold price' },
+  //     { width: 18, key: ' Market value' },
+  //     { width: 18, key: 'Purchase value' },
+  //     { width: 15, key: 'Description' },
+  //     { width: 10, key: 'Status' },]
+  //     var header = ['Owner', 'Tolas/grams', 'Carats', 'Carat gold price', 'Market value',
+  //       'Purchase value', 'Description', 'Status'];
+  //     this.goldList.filteredData.forEach(element => {
+  //       data = [element.ownerName, (element.gramsOrTola), (element.carat), (element.caratGoldPrice),
+  //       this.formatNumber.first.formatAndRoundOffNumber(element.marketValue),
+  //       this.formatNumber.first.formatAndRoundOffNumber(element.approximatePurchaseValue),
+  //       element.description, element.status]
+  //       this.excelData.push(Object.assign(data))
+  //     });
+  //     var footerData = ['Total',
+  //       this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMarketValueOther), '',
+  //       this.formatNumber.first.formatAndRoundOffNumber(this.sumOfPurchaseValueOther), '', , '', '',]
+  //     this.footer.push(Object.assign(footerData))
+  //   } else {
+  //     var headerData = [{ width: 20, key: 'Owner' },
+  //     { width: 20, key: 'Type of commodity' },
+  //     { width: 25, key: 'Coupon amount' },
+  //     { width: 18, key: 'Market value' },
+  //     { width: 18, key: 'Purchase value' },
+  //     { width: 18, key: 'Date of purchase' },
+  //     { width: 18, key: 'Growth rate' },
+  //     { width: 15, key: 'Description' },
+  //     { width: 10, key: 'Status' },]
+  //     var header = ['Owner', 'Type of commodity', 'Coupon amount', 'Market value', 'Purchase value',
+  //       'Date of purchase', 'Growth rate', 'Description', 'Status'];
+  //     this.otherCommodityList.filteredData.forEach(element => {
+  //       data = [element.ownerName, (element.commodityTypeId),
+  //       this.formatNumber.first.formatAndRoundOffNumber(element.marketValue),
+  //       (element.purchaseValue), new Date(element.dateOfPurchase),
+  //       (element.growthRate), element.description, element.status]
+  //       this.excelData.push(Object.assign(data))
+  //     });
+  //     var footerData = ['Total', '', '', this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMarketValue),
+  //       this.formatNumber.first.formatAndRoundOffNumber(this.sumOfPurchaseValue), '', '', '', '']
+  //     this.footer.push(Object.assign(footerData))
+
+  //   }
+  //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
+  // }
 
   getfixedIncomeData(value) {
     console.log('value++++++', value)

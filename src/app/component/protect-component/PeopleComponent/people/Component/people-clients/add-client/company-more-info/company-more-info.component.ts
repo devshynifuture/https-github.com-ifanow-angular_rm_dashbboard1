@@ -52,7 +52,7 @@ export class CompanyMoreInfoComponent implements OnInit {
       name: [data.name],
       email: [data.email, [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
-      designation: [],
+      designation: [(data.occupationId) ? String(data.occupationId) : '1'],
       gender: ['1'],
     });
   }
@@ -116,8 +116,8 @@ export class CompanyMoreInfoComponent implements OnInit {
       clientId: this.moreInfoData.clientId ? this.moreInfoData.clientId : this.prevData.clientId,
       kycComplaint: 0,
       roleId: 0,
-      genderId: this.moreInfoForm.value.genderId,
-      aadharCard: this.moreInfoForm.controls.adhaarNo.value,
+      genderId: this.moreInfoForm.value.gender,
+      aadhaarNumber: this.moreInfoForm.controls.adhaarNo.value,
       dateOfBirth: this.datePipe.transform(this.moreInfoForm.value.dateOfBirth, 'dd/MM/yyyy'),
       userId: this.moreInfoData.clientId ? this.moreInfoData.clientId : this.prevData.clientId,
       mobileList,

@@ -29,9 +29,38 @@ export class OverviewTransactionsComponent implements OnInit {
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
-  openMobileTransactionPopup() {
+  // openMobileTransactionPopup() {
+  //   const dialogRef = this.dialog.open(TransactionMobileViewComponent, {
+
+  //    maxWidth: '100vw',
+  //    width:'90%',
+  //    height:'466px',
+  //    panelClass: 'custom-modalbox'
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log('The dialog was closed');
+  //   });
+  // }
+  // openMobileErrroTransactionPopup() {
+  //   const dialogRef = this.dialog.open(TransactionMobileViewComponent, {
+
+  //    maxWidth: '100vw',
+  //    width:'90%',
+  //    panelClass: 'custom-modalbox-error'
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log('The dialog was closed');
+  //   });
+  // }
+   openMobileErrorCopyTransactionPopup() {
     const dialogRef = this.dialog.open(TransactionMobileViewComponent, {
-      width: '250px',
+
+     maxWidth: '100vw',
+     width:'90%',
+     // panelClass: 'custom-modalbox-error'
+      panelClass: 'custom-modalbox'
     });
 
     dialogRef.afterClosed().subscribe(result => {

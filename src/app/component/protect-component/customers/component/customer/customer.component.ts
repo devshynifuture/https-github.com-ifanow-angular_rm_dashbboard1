@@ -25,6 +25,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
 
 
   status = false;
+  loading: boolean;
 
   constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
     protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
@@ -49,6 +50,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
   transact = false;
   currentUrl: string;
   clientData: any;
+  showRouter = false;
 
   get value() {
     return this._value;
@@ -74,6 +76,10 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     // performance.mark('');
     // performance.toJSON();
     // Performance.prototype  .mark();
+    this.showRouter = true;
+    this.selected = 1;
+    this._value = 1;
+    this.loading = false;
     const routeName = this.router.url.split('/')[3];
     console.log('CustomerComponent ngOnInit routeName : ', routeName);
     if (routeName == 'overview') {

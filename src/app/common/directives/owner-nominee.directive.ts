@@ -46,11 +46,15 @@ export class OwnerNomineeDirective {
   @Output() valueChange1 = new EventEmitter();
 
   get getCoOwner() {
-    return this.ownerData.get('getCoOwnerName') as FormArray;
+    if(this.ownerData){
+      return this.ownerData.get('getCoOwnerName') as FormArray;
+    }
   }
 
   get getNominee() {
-    return this.ownerData.get('getNomineeName') as FormArray;
+    if(this.ownerData){
+      return this.ownerData.get('getNomineeName') as FormArray;
+    }
   }
 
   get data() {

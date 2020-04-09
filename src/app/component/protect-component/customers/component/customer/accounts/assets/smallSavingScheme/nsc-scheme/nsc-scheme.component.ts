@@ -10,6 +10,8 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { DetailedNscComponent } from './detailed-nsc/detailed-nsc.component';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../excel.service';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
 
 @Component({
   selector: 'app-nsc-scheme',
@@ -30,14 +32,14 @@ export class NscSchemeComponent implements OnInit {
   SumOfMaturityValue;
   SumOfCurrentValue;
   datasource = new MatTableDataSource(this.data);
-
+  @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
 
   excelData: any[];
   footer;
 
-  constructor(private excel: ExcelService, public dialog: MatDialog, private eventService: EventService,
+  constructor( private excel:ExcelGenService,  private pdfGen:PdfGenService, public dialog: MatDialog, private eventService: EventService,
     private cusService: CustomerService, private subInjectService: SubscriptionInject) {
   }
 
@@ -50,31 +52,39 @@ export class NscSchemeComponent implements OnInit {
     this.getNscSchemedata();
     this.footer = [];
   }
-
-  async ExportTOExcel(value) {
-    this.excelData = [];
-    let data = [];
-    const headerData = [{ width: 20, key: 'Owner' },
-    { width: 20, key: 'Current Value' },
-    { width: 10, key: 'Rate' },
-    { width: 15, key: ' Maturity Value' },
-    { width: 15, key: 'Maturity Date' },
-    { width: 25, key: 'Certificate Number' },
-    { width: 15, key: 'Description' },
-    { width: 10, key: 'Status' },];
-    const header = ['Owner', 'Current Value', 'Rate', ' Maturity Value',
-      'Maturity Date', 'Certificate Number', 'Description', 'Status'];
-    this.datasource.filteredData.forEach(element => {
-      data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValue), (element.rate),
-      this.formatNumber.first.formatAndRoundOffNumber(element.maturityValue), new Date(element.maturityDate), element.certificateNumber, element.description, element.status];
-      this.excelData.push(Object.assign(data));
-    });
-    const footerData = ['Total',
-      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCurrentValue), '',
-      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMaturityValue), '', '', '', ''];
-    this.footer.push(Object.assign(footerData));
-    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value);
+  Excel(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows,tableTitle)
   }
+
+  pdf(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.pdfGen.generatePdf(rows, tableTitle);
+  }
+  // async ExportTOExcel(value) {
+  //   this.excelData = [];
+  //   let data = [];
+  //   const headerData = [{ width: 20, key: 'Owner' },
+  //   { width: 20, key: 'Current Value' },
+  //   { width: 10, key: 'Rate' },
+  //   { width: 15, key: ' Maturity Value' },
+  //   { width: 15, key: 'Maturity Date' },
+  //   { width: 25, key: 'Certificate Number' },
+  //   { width: 15, key: 'Description' },
+  //   { width: 10, key: 'Status' },];
+  //   const header = ['Owner', 'Current Value', 'Rate', ' Maturity Value',
+  //     'Maturity Date', 'Certificate Number', 'Description', 'Status'];
+  //   this.datasource.filteredData.forEach(element => {
+  //     data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValue), (element.rate),
+  //     this.formatNumber.first.formatAndRoundOffNumber(element.maturityValue), new Date(element.maturityDate), element.certificateNumber, element.description, element.status];
+  //     this.excelData.push(Object.assign(data));
+  //   });
+  //   const footerData = ['Total',
+  //     this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCurrentValue), '',
+  //     this.formatNumber.first.formatAndRoundOffNumber(this.sumOfMaturityValue), '', '', '', ''];
+  //   this.footer.push(Object.assign(footerData));
+  //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value);
+  // }
 
   getNscSchemedata() {
     this.isLoading = true;

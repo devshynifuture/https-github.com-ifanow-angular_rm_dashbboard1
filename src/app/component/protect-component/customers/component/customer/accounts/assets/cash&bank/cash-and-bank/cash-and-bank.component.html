@@ -22,8 +22,8 @@
             <div class="col-md-8 p-0 right text-right" *ngIf="bankAccountList.filteredData.length > 0">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
-                    <button mat-menu-item>PDF</button>
-                    <button (click)="ExportTOExcel('Bank account')" mat-menu-item>XLS</button>
+                    <button (click)="pdf('Bank accounts')" mat-menu-item>PDF</button>
+                    <button (click)="Excel('Bank accounts')" mat-menu-item>XLS</button>
                 </mat-menu>
                 <img src="assets/images/svg/up-down.svg" class="">
                 <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-12">
@@ -42,7 +42,7 @@
             </div>
         </div>
         <div [ngClass]="{'table-scroll':isLoading==false }" class="overflow-hidden mt-8 col-md-12 p-0 real-estate">
-            <table *ngIf="bankAccountList.filteredData.length > 0" matSort #bankAccountListTable="matSort"
+            <table #tableEl *ngIf="bankAccountList.filteredData.length > 0" matSort #bankAccountListTable="matSort"
                 [dataSource]="bankAccountList" id="tbs" mat-table class="skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no" sticky>
@@ -171,8 +171,8 @@
             <div class="col-md-8 p-0 right text-right" *ngIf="cashInHandList.filteredData.length > 0">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
-                    <button mat-menu-item>PDF</button>
-                    <button (click)="ExportTOExcel('Cash in hand')" mat-menu-item>XLS</button>
+                    <button (click)="pdf('Cash in hand')" mat-menu-item>PDF</button>
+                    <button (click)="Excel('Cash in hand')" mat-menu-item>XLS</button>
                 </mat-menu>
                 <img src="assets/images/svg/up-down.svg" class="">
                 <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-12">
@@ -190,7 +190,7 @@
             </div>
         </div>
         <div class=" mt-8 overflow-hidden col-md-12 p-0 real-estate">
-            <table *ngIf="cashInHandList.filteredData.length > 0" matSort #cashInHandListTable="matSort"
+            <table #tableEl *ngIf="cashInHandList.filteredData.length > 0" matSort #cashInHandListTable="matSort"
                 [dataSource]="cashInHandList" id="table-low" mat-table class="skeletonAnimation" appSkeletonLoading
                 [appSkeletonLoading]="isLoading">
 

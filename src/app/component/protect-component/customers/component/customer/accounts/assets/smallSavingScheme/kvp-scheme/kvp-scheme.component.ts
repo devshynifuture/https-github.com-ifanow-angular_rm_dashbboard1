@@ -10,6 +10,8 @@ import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { DetailedKvpComponent } from './detailed-kvp/detailed-kvp.component';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../excel.service';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
 
 @Component({
   selector: 'app-kvp-scheme',
@@ -26,13 +28,13 @@ export class KvpSchemeComponent implements OnInit {
   kvpData: any;
   sumOfCurrentValue: number;
   sumOfAmountInvested: number;
-
+  @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
   footer = [];
 
-  constructor(private excel: ExcelService, public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) {
+  constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) {
   }
 
   displayedColumns18 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'mvalue', 'mdate', 'desc', 'status', 'icons'];
@@ -44,30 +46,40 @@ export class KvpSchemeComponent implements OnInit {
     this.getKvpSchemedata();
   }
 
-  async ExportTOExcel(value) {
-    this.excelData = [];
-    let data = [];
-    let headerData = [{ width: 20, key: 'Owner' },
-    { width: 20, key: 'Current Value' },
-    { width: 10, key: 'Rate' },
-    { width: 25, key: 'Amount Invested' },
-    { width: 20, key: 'Maturity Value' },
-    { width: 15, key: 'Maturity Date' },
-    { width: 15, key: 'Description' },
-    { width: 10, key: 'Status' },];
-    let header = ['Owner', 'Current Value', 'Rate', 'Amount Invested',
-      'Maturity Value', 'Maturity Date', 'Description', 'Status'];
-    this.datasource.filteredData.forEach(element => {
-      data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValue), (element.rate),
-      this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested), (element.maturityValue), new Date(element.maturityDate), element.description, element.status];
-      this.excelData.push(Object.assign(data));
-    });
-    let footerData = ['Total',
-      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCurrentValue), '',
-      this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAmountInvested), '', '', '', ''];
-    this.footer.push(Object.assign(footerData));
-    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value);
+  Excel(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows,tableTitle)
   }
+
+  pdf(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.pdfGen.generatePdf(rows, tableTitle);
+  }
+
+  // async ExportTOExcel(value) {
+  //   this.excelData = [];
+  //   let data = [];
+  //   let headerData = [{ width: 20, key: 'Owner' },
+  //   { width: 20, key: 'Current Value' },
+  //   { width: 10, key: 'Rate' },
+  //   { width: 25, key: 'Amount Invested' },
+  //   { width: 20, key: 'Maturity Value' },
+  //   { width: 15, key: 'Maturity Date' },
+  //   { width: 15, key: 'Description' },
+  //   { width: 10, key: 'Status' },];
+  //   let header = ['Owner', 'Current Value', 'Rate', 'Amount Invested',
+  //     'Maturity Value', 'Maturity Date', 'Description', 'Status'];
+  //   this.datasource.filteredData.forEach(element => {
+  //     data = [element.ownerName, this.formatNumber.first.formatAndRoundOffNumber(element.currentValue), (element.rate),
+  //     this.formatNumber.first.formatAndRoundOffNumber(element.amountInvested), (element.maturityValue), new Date(element.maturityDate), element.description, element.status];
+  //     this.excelData.push(Object.assign(data));
+  //   });
+  //   let footerData = ['Total',
+  //     this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCurrentValue), '',
+  //     this.formatNumber.first.formatAndRoundOffNumber(this.sumOfAmountInvested), '', '', '', ''];
+  //   this.footer.push(Object.assign(footerData));
+  //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value);
+  // }
 
   getKvpSchemedata() {
     this.isLoading = true;
