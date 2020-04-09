@@ -193,12 +193,12 @@ export class MfServiceService {
     let schemeWise=this.filterArray(schemeWiseFilter,'amc_id',dataForFilter.amc,'amc_id');
     let mutualFundListFilter = this.filter(schemeWiseFilter, 'mutualFund');
     let mutualFundList=this.filterArray(mutualFundListFilter,'folioNumber',dataForFilter.folio,'folioNumber');
-    if(dataForFilter.showFolio){
+    if(dataForFilter.showFolio==2){
       mutualFundList = mutualFundList.filter((item: any) =>
         item.folioNumber != 0
         );
     }
-    if(dataForFilter.reportAsOn==2){
+    if(dataForFilter.reportAsOn){
       mutualFundList.forEach(element => {
         element.mutualFundTransactions = element.mutualFundTransactions.filter((item: any) =>
         item.transactionDate <= dataForFilter.reportAsOn
