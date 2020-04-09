@@ -174,6 +174,12 @@
                             </div>
                         </div>
                         <div class="row">
+
+                            <div class="col-md-12 addAddressClass">
+                                <button class="btn-primary br-0" mat-stroked-button> ADD ADDRESS</button>
+                            </div>
+
+
                             <div *ngFor="let singleAddress of addressList" class=" col-md-12 mb-8 ">
                                 <p class=" f-12 mb-0 mt-8 text-primitive ">PERMANENT</p><a (click)="openAddEdit(clientOverviewData,singleAddress,'Address','Edit')" class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
 
@@ -189,8 +195,8 @@
 
                     <div class=" col-md-3 pl-20 ">
                         <div class="row">
-                            <div *ngIf="bankList==undefined || bankList.length==0" class="col-md-12">
-                                <button (click)="openAddEdit(clientOverviewData,null,'Bank','Add')" class="btn-primary br-0 pl-8" mat-stroked-button> ADD BANK </button>
+                            <div *ngIf="bankList==undefined || bankList.length==0" class="col-md-12 text-center">
+                                <button (click)="openAddEdit(clientOverviewData,null,'Bank','Add')" class="btn-primary br-0 " mat-stroked-button> ADD BANK </button>
                             </div>
                             <div *ngFor="let singleBank of bankList;index as i" class="col-md-12">
                                 <div *ngIf="selectedBankData===singleBank" class=" row ">
@@ -228,8 +234,8 @@
                             </div>
                         </div>
                         <hr class=" bb-primitive hrMargin ">
-                        <div *ngIf="dematList==undefined || dematList.length==0" class="col-md-12">
-                            <button (click)="openAddEdit(clientOverviewData,null,'Demat','Add')" class="btn-primary br-0 pl-8" mat-stroked-button> ADD DENMAT </button>
+                        <div *ngIf="dematList==undefined || dematList.length==0" class="col-md-12 addDenmatClass">
+                            <button (click)="openAddEdit(clientOverviewData,null,'Demat','Add')" class="btn-primary br-0 " mat-stroked-button> ADD DENMAT </button>
                         </div>
                         <div *ngFor="let singleDemat of dematList;index as i">
                             <div *ngIf="selectedDemat===singleDemat">
