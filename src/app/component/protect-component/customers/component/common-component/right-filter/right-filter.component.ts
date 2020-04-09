@@ -111,7 +111,7 @@ export class RightFilterComponent implements OnInit {
   showSummaryFilterForm(data) {
     this.summaryFilerForm = this.fb.group({
       reportAsOn: [(data.reportAsOn == undefined) ? null : new Date(data.reportAsOn), [Validators.required]],
-      showFolios: [(data.showFolio), [Validators.required]],
+      showFolios: [(data.showFolio)?data.showFolio:'2', [Validators.required]],
     });
   }
 
@@ -342,8 +342,8 @@ export class RightFilterComponent implements OnInit {
     this.amc = [...new Map(this.obj.filterData4.map(item => [item.amc_id, item])).values()];
     this.changeSelect();
   }
-  changeFilterFilter(value) {
-    value.forEach(element => {
+  changeReportFilter(value) {
+    this.reportType.forEach(element => {
       if(element.name != value.name){
         element.selected =false;
       }

@@ -91,7 +91,7 @@
       <div>
         <mat-list-item role="listitem" *ngFor="let item of reportType">
           <!-- $event removed for prod build -->
-          <mat-checkbox [(ngModel)]="item.selected"  (change)="changeFilterFilter(item)">{{item.name}}</mat-checkbox>
+          <mat-checkbox [(ngModel)]="item.selected"  (change)="changeReportFilter(item)">{{item.name}}</mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>
