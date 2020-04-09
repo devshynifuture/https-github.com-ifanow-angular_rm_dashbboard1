@@ -5,8 +5,8 @@
     <div *ngIf="dataSource.data.length > 0" class="col-md-7 p-0 right text-right">
         <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
         <mat-menu #menu5="matMenu">
-            <button mat-menu-item>PDF</button>
-            <button (click)="ExportTOExcel('PO RD')" mat-menu-item>XLS</button>
+            <button (click)="pdf('PO RD')" mat-menu-item>PDF</button>
+            <button (click)="Excel('PO RD')" mat-menu-item>XLS</button>
         </mat-menu>
         <img src="assets/images/svg/up-down.svg" class="">
         <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-12">
@@ -23,7 +23,7 @@
 </div>
 <div [ngClass]="{'table-scroll':isLoading==false }" class=" mt-8 overflow-hidden real-estate">
     <!-- "dataSource" Property 'dataSource' does not exist on type 'PoTdSchemeComponent'. Did you mean 'dataSource'?-->
-    <table class="skeletonAnimation" *ngIf="dataSource.data.length > 0" matSort mat-table [dataSource]="dataSource"
+    <table #tableEl class="skeletonAnimation" *ngIf="dataSource.data.length > 0" matSort mat-table [dataSource]="dataSource"
         id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
         <ng-container matColumnDef="no" sticky>

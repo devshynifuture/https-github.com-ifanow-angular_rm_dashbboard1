@@ -15,7 +15,7 @@ export class DetailedViewFixedDepositComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
-    console.log('This is Input data of FixedDepositComponent')
+    console.log('This is Input data of FixedDepositComponent', this.inputData)
   }
 
   get data() {

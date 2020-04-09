@@ -12,10 +12,10 @@
     <div class="row h-350">
         <div class="col-md-12 p-0">
             <h5 class="m-0 pb-12">Select an option below to add a task template...</h5>
-            <mat-radio-group formControlName="type">
-                <mat-radio-button [value]="1" checked [ngClass]="taskTemplateType.get('type').value == 1 ? 'text-primary b-a-custom': 'b-a text-primitive'">
+            <mat-radio-group class="taskTemplatesRadio" formControlName="type">
+                <mat-radio-button [value]="1" checked [ngClass]="taskTemplateType.get('type').value == 1 ? 'text-primary b-a-custom': '  text-primitive'">
                     Create a linked task</mat-radio-button>
-                <mat-radio-button [value]="2" [ngClass]="taskTemplateType.get('type').value == 2 ? 'text-primary b-a-custom': 'b-a text-primitive'">
+                <mat-radio-button [value]="2" [ngClass]="taskTemplateType.get('type').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
                     Create a non-linked task
                 </mat-radio-button>
             </mat-radio-group>
@@ -45,8 +45,7 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <!--          TODO-->
-            <button (click)="addTaskTemplate(null,null)" class="btn-bottom br-0 text-inherit" mat-button>NEXT
+            <button (click)="addTaskTemplate()" class="btn-bottom br-0 text-inherit" mat-button>NEXT
             </button>
         </div>
     </div>

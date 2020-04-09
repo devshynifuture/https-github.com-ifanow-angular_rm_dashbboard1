@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {CustomerService} from '../../customer/customer.service';
@@ -35,8 +35,13 @@ export class RightFilterComponent implements OnInit {
   familyMemObj: [];
   amcObj: [];
   obj: any;
+  mfData: any;
+  finalFilterData: any;
+  reportTypeobj: any;
 
-  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, private custumService: CustomerService, private eventService: EventService, private mfService: MfServiceService) {
+  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
+              private custumService: CustomerService, private eventService: EventService,
+              private mfService: MfServiceService) {
   }
 
   @Input()
@@ -49,12 +54,38 @@ export class RightFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.amc = this._data.schemeWise;//amc wise data 
+    this.folio = this._data.folioWise;//for getting all folios
+    this.getCategoryWise(this._data.category)//get category wise data
+    this.getSchemeWise(this.amc);//scheme wise data
+    this.getFamilyMember(this._data.folioWise)//for family memeber
+    this.getTransactionView(this._data.transactionView);//for displaying how many columns to show in table
+    this.getReportType();//get type of report categorywise,investor,sub category wise
+    this.setDefaultFilters();//setting default selected in each above array
+    this.showSummaryFilterForm('');//as on date and showZero folio form
     this.amc = this._data.schemeWise; // amc wise data
     this.folio = this._data.folioWise; // for getting all folios
-    this.getCategoryWise(this._data.category); // get category wise data
-    this.getSchemeWise(this.amc); // scheme wise data
-    this.getFamilyMember(this._data.folioWise); // for family memeber
-    this.getTransactionView(this._data.transactionView); // for displaying how many columns to show in table
+    if (this._data.category) {
+      this.getCategoryWise(this._data.category);
+      // get category wise data
+    } else {
+      console.log('RightFilterComponent ngOninit category data is empty');
+    }
+    if (this.amc) {
+      this.getSchemeWise(this.amc); // scheme wise data
+    } else {
+      console.log('RightFilterComponent ngOninit getSchemeWise data is empty');
+    }
+    if (this._data.folioWise) {
+      this.getFamilyMember(this._data.folioWise); // for family memeber
+    } else {
+      console.log('RightFilterComponent ngOninit getFamilyMember foliowise data is empty');
+    }
+    if (this._data.transactionView) {
+      this.getTransactionView(this._data.transactionView); // for displaying how many columns to show in table
+    } else {
+      console.log('RightFilterComponent ngOninit getTransactionView data is empty');
+    }
     this.getReportType(); // get type of report categorywise,investor,sub category wise
     this.setDefaultFilters(); // setting default selected in each above array
     this.showSummaryFilterForm(''); // as on date and showZero folio form
@@ -86,7 +117,7 @@ export class RightFilterComponent implements OnInit {
 
   getSchemeWise(data) {
     const filterData = [];
-    data.filter(function(element) {
+    data.filter(function (element) {
       const obj = {
         id: element.id,
         schemeName: element.schemeName,
@@ -110,12 +141,12 @@ export class RightFilterComponent implements OnInit {
       filterData.push(obj);
     });
     this.familyMember = [...new Map(filterData.map(item => [item.familyMemberId, item])).values()];
-    
+
   }
 
   getTransactionView(data) {
     const filterData = [];
-    data.filter(function(element) {
+    data.filter(function (element) {
       const obj = {
         displayName: element,
       };
@@ -123,13 +154,13 @@ export class RightFilterComponent implements OnInit {
     });
     this.transactionView = filterData;
   }
-
   getReportType() {
     this.reportType = ['Investor wise', 'Category wise', 'Sub Category wise'];
     const filterData = [];
-    this.reportType.filter(function(element) {
+    this.reportType.filter(function (element) {
       const obj = {
         name: element,
+        selected:false
       };
       filterData.push(obj);
     });
@@ -137,13 +168,21 @@ export class RightFilterComponent implements OnInit {
   }
 
   setDefaultFilters() {
-    this.familyMember.forEach(item => item.selected = true);
-    this.amc.forEach(item => item.selected = true);
+    if (this.familyMember) {
+      this.familyMember.forEach(item => item.selected = true);
+    }
+    if (this.amc) {
+      this.amc.forEach(item => item.selected = true);
+    }
     this.scheme.forEach(item => item.selected = true);
     this.folio.forEach(item => item.selected = true);
     this.category.forEach(item => item.selected = true);
     this.transactionView.forEach(item => item.selected = true);
-    this.reportType.forEach(item => item.selected = true);
+    this.reportType.forEach(item => {
+      if(item.name=='Sub Category wise'){
+        item.selected = true
+      }
+    });
     this.countFamily = this.familyMember.length;
     this.countAmc = this.amc.length;
     this.countScheme = this.scheme.length;
@@ -158,10 +197,10 @@ export class RightFilterComponent implements OnInit {
     const filterData1 = [];
     const filterData2 = [];
     const filterData3 = [];
-    this.familyMember.filter(function(element) {
+    this.familyMember.filter(function (element) {
       if (element.selected == true) {
-        filterData.filter(function(amc) {
-          amc.mutualFund.forEach(function(mf) {
+        filterData.filter(function (amc) {
+          amc.mutualFund.forEach(function (mf) {
             if (mf.familyMemberId == element.familyMemberId) {
               const obj = {
                 amc_name: amc.amc_name,
@@ -200,10 +239,10 @@ export class RightFilterComponent implements OnInit {
     const filterData1 = [];
     const filterData2 = [];
     const filterData3 = [];
-    data.filter(function(element) {
+    data.filter(function (element) {
       if (element.selected == true) {
-        filterData.filter(function(amc) {
-          amc.mutualFund.forEach(function(mf) {
+        filterData.filter(function (amc) {
+          amc.mutualFund.forEach(function (mf) {
             if (mf.categoryId == element.categoryId) {
               const obj = {
                 amc_name: amc.amc_name,
@@ -243,7 +282,7 @@ export class RightFilterComponent implements OnInit {
     const filterData2 = this._data.schemeWise;
     const filterData1 = [];
     const filterData3 = [];
-    this.folio.filter(function(element) {
+    this.folio.filter(function (element) {
       if (element.selected == true) {
         filterData2.forEach(amc => {
           amc.mutualFund.forEach(mf => {
@@ -289,7 +328,7 @@ export class RightFilterComponent implements OnInit {
     this.familyMember = [...new Map(this.obj.filterData2.map(item => [item.familyMemberId, item])).values()];
     this.category = [...new Map(this.obj.filterData3.map(item => [item.categoryId, item])).values()];
     this.scheme = [...new Map(this.obj.filterData4.map(item => [item.id, item])).values()];
-    
+
     this.changeSelect();
   }
 
@@ -302,7 +341,7 @@ export class RightFilterComponent implements OnInit {
     this.changeSelect();
   }
 
-  changeSelect = function() {
+  changeSelect = function () {
     if (this.familyMember != undefined) {
       const filter = [];
       this.countFamily = 0;
@@ -367,12 +406,15 @@ export class RightFilterComponent implements OnInit {
       this.categoryObj = filter;
     }
     if (this.reportType != undefined) {
+      const filter = [];
       this.countReport = 0;
       this.reportType.forEach(item => {
         if (item.selected) {
           this.countReport++;
+          filter.push(item);
         }
       });
+      this.reportTypeobj = filter;
     }
   };
 
@@ -382,30 +424,32 @@ export class RightFilterComponent implements OnInit {
       return;
     }
     this.dataToSend = {
-      advisorId: 2753,
-      clientId: 15545,
-      familyMember: this.familyMemObj,
-      amc: this.amcObj,
-      scheme: this.schemeObj,
-      folio: this.folioObj,
-      category: this.categoryObj,
+      familyMember: this.familyMember,
+      amc: this.amc,
+      scheme: this.scheme,
+      folio: this.folio,
+      category:this.category,
+      reportType:this.reportTypeobj,
+      transactionView:this.transactionView,
       reportAsOn: (this.summaryFilerForm.controls.reportAsOn.value) ? this.summaryFilerForm.controls.reportAsOn.value.toISOString().slice(0, 10) : null,
       showFolio: parseInt(this.summaryFilerForm.controls.showFolios.value),
     };
     console.log('dataToSend---------->', this.dataToSend);
-    this.custumService.getMutualFund(this.dataToSend).subscribe(
-      data => this.getMutualFundResponse(data), (error) => {
-        this.eventService.showErrorMessage(error);
-      }
-    );
+      this.finalFilterData=this.mfService.filterFinalData(this._data.mfData,this.dataToSend);
+      this.Close(this.finalFilterData);
+    // this.custumService.getMutualFund(this.dataToSend).subscribe(
+    //   data => this.getMutualFundResponse(data), (error) => {
+    //     this.eventService.showErrorMessage(error);
+    //   }
+    // );
   }
 
-  getMutualFundResponse(data) {
-    console.log(data);
-    this.Close(data);
-  }
+  // getMutualFundResponse(data) {
+  //   console.log(data);
+  //   this.Close(data);
+  // }
 
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({state: 'close',data:data});
   }
 }

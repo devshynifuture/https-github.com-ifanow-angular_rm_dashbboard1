@@ -91,6 +91,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   }
 
   createIndividualForm(data) {
+    this.selectedClientOwner = '1';
     (data == undefined) ? data = {} : '';
     this.basicDetails = this.fb.group({
       fullName: [data.name, [Validators.required]],
@@ -102,10 +103,10 @@ export class ClientBasicDetailsComponent implements OnInit {
       gender: ['1'],
       leadSource: [data.leadSource],
       leaadStatus: [],
-      leadRating: [(data.leadRating) ? String(data.leadRating) : '1'],
+      leadRating: [(data.leadRating) ? String(data.leadRating) : '0'],
       leadOwner: [],
-      clientOwner: [''],
-      role: [''],
+      clientOwner: ['1'],
+      role: [(data.roleId) ? data.roleId : '0'],
     });
   }
 
@@ -130,14 +131,14 @@ export class ClientBasicDetailsComponent implements OnInit {
     (data == undefined) ? data = {} : '';
     this.nonIndividualForm = this.fb.group({
       comName: [data.name, [Validators.required]],
-      dateOfIncorporation: [data.dateOfBirth],
+      dateOfIncorporation: [(data.dateOfBirth) ? new Date(data.dateOfBirth) : ''],
       comStatus: [, [Validators.required]],
       comEmail: [(data.emailList) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
       comPan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       comOccupation: [(data.occupationId == 0) ? '1' : String(data.occupationId)],
       username: [{ value: data.userName, disabled: true }],
-      leadOwner: [],
-      role: []
+      leadOwner: ['0'],
+      role: [(data.roleId) ? data.roleId : '0']
     });
   }
 
@@ -428,9 +429,9 @@ export class ClientBasicDetailsComponent implements OnInit {
     obj['displayName'] = this.basicDetailsData.displayName;
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {
-        obj.invTypeCategory = this.invTypeCategory;
-        obj.categoryTypeflag = 'familyMinor';
-        (flag == 'Next') ? this.changeTabAndSendData(obj) : this.close(data);
+        data.invTypeCategory = this.invTypeCategory;
+        data.categoryTypeflag = 'familyMinor';
+        (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(data);
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
     );

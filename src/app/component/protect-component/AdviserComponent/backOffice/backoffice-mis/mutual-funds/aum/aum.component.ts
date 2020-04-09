@@ -73,7 +73,7 @@ export class AumComponent implements OnInit {
     this.aumComponent=true;
     setTimeout(() => {
       this.pieChart('pieChartAum',this.aumGraph);
-    }, 300);
+    }, 600);
   }
 
   hideSubTableList() {

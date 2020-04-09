@@ -10,6 +10,8 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { DetailedPoSavingsComponent } from './detailed-po-savings/detailed-po-savings.component';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../excel.service';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
 
 @Component({
   selector: 'app-po-savings',
@@ -26,6 +28,7 @@ export class PoSavingsComponent implements OnInit {
   balanceMentionedSum: number;
   data: Array<any> = [{}, {}, {}];
   datasource = new MatTableDataSource(this.data);
+  @ViewChild('tableEl', { static: false }) tableEl;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
@@ -38,7 +41,7 @@ export class PoSavingsComponent implements OnInit {
   SumOfBalancementioned: any;
 
 
-  constructor(private excel: ExcelService, public dialog: MatDialog, private eventService: EventService,
+  constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, public dialog: MatDialog, private eventService: EventService,
     private cusService: CustomerService, private subInjectService: SubscriptionInject) {
   }
 
@@ -48,6 +51,15 @@ export class PoSavingsComponent implements OnInit {
     this.getPoSavingSchemedata();
   }
 
+  Excel(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows,tableTitle)
+  }
+
+  pdf(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.pdfGen.generatePdf(rows, tableTitle);
+  }
   async ExportTOExcel(value) {
     this.excelData = [];
     let data = [];

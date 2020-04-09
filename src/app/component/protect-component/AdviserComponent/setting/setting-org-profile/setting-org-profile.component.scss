@@ -16,6 +16,6 @@
     color: #008FFF;
 }
 
-::ng-deep .autoHeight .mat-menu-panel {
-    min-height: auto;
+::ng-deep .mat-menu-panel {
+    min-height: auto !important;
 }

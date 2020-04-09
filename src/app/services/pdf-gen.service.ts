@@ -24,19 +24,21 @@ export class PdfGenService {
     const data = trTd;
     for(let cells in rows) {
       for(let c in rows[cells].cells){
-        if(cells == "0" && rows[cells].cells[c].innerText != undefined){
-          headers.push(rows[cells].cells[c].innerText);
-        }
-        else if(cells == rows.length - 1+"" && rows[cells].cells[c].innerText != undefined){
-          footer.push(rows[cells].cells[c].innerText);
-        }
-        else{
-          if(rows[cells].cells[c].innerText != undefined){
-            if(td.length >= parseInt(c)+1){
-              trTd.push(td);
-              td = []
+        if(parseInt(c)+1 != rows[cells].cells.length){
+          if(cells == "0" && rows[cells].cells[c].innerText != undefined){
+            headers.push(rows[cells].cells[c].innerText);
+          }
+          else if(cells == rows.length - 1+"" && rows[cells].cells[c].innerText != undefined){
+            footer.push(rows[cells].cells[c].innerText);
+          }
+          else{
+            if(rows[cells].cells[c].innerText != undefined){
+              if(td.length >= parseInt(c)+1){
+                trTd.push(td);
+                td = []
+              }
+              td.push(rows[cells].cells[c].innerText);
             }
-            td.push(rows[cells].cells[c].innerText);
           }
         }
       }

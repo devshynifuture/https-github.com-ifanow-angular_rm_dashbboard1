@@ -12,6 +12,8 @@ import { DetailedViewCashInHandComponent } from '../cash-in-hand/detailed-view-c
 import { DetailedViewBankAccountComponent } from '../bank-accounts/detailed-view-bank-account/detailed-view-bank-account.component';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../excel.service';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
 
 @Component({
   selector: 'app-cash-and-bank',
@@ -35,6 +37,7 @@ export class CashAndBankComponent implements OnInit {
   footer = [];
 
   @ViewChild('bankAccountListTable', { static: false }) bankAccountListTableSort: MatSort;
+  @ViewChild('tableEl', { static: false }) tableEl;
 
   displayedColumns7 = ['no', 'owner', 'type', 'amt', 'rate', 'bal', 'account', 'bank', 'desc', 'status', 'icons'];
   datasource7 = ELEMENT_DATA7;
@@ -42,7 +45,7 @@ export class CashAndBankComponent implements OnInit {
   datasource8 = ELEMENT_DATA8;
   @ViewChild('cashInHandListTable', { static: false }) cashInHandListTableSort: MatSort;
 
-  constructor(private excel: ExcelService, private subInjectService: SubscriptionInject,
+  constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, private subInjectService: SubscriptionInject,
     private custumService: CustomerService, private eventService: EventService,
     public utils: UtilService, public dialog: MatDialog) {
   }
@@ -56,74 +59,82 @@ export class CashAndBankComponent implements OnInit {
     this.getBankAccountList();
     this.bankAccountList = new MatTableDataSource(this.data);
   }
-
-  async ExportTOExcel(value) {
-    this.excelData = [];
-    let data = [];
-    var headerData = [{ width: 20, key: 'Owner' },
-    { width: 20, key: 'Account type' },
-    { width: 25, key: 'Balance as on' },
-    { width: 18, key: 'Rate' },
-    { width: 18, key: 'Balance mentioned' },
-    { width: 18, key: 'Account number' },
-    { width: 18, key: 'Bank name' },
-    { width: 15, key: 'Description' },
-    { width: 10, key: 'Status' }];
-    var header = ['Owner', 'Account type', ' Balance as on', 'Description', 'Status'];
-
-    if (value == 'Cash in hand') {
-      headerData = [
-        { width: 20, key: 'Owner' },
-        { width: 20, key: 'Account type' },
-        { width: 25, key: 'Balance as on' },
-        { width: 15, key: 'Description' },
-        { width: 10, key: 'Status' },
-      ];
-      this.cashInHandList.filteredData.forEach(element => {
-        data = [element.ownerName, (element.accountType), (element.balanceAsOn),
-        element.description, element.status];
-        this.excelData.push(Object.assign(data));
-      });
-      const footerData = [
-        'Total',
-        this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCashValue),
-        '',
-        '', ,
-        ''
-      ];
-      this.footer.push(Object.assign(footerData));
-    } else {
-
-      header = [
-        'Owner',
-        'Account type',
-        'Balance as on',
-        'Rate',
-        'Balance mentioned',
-        'Account number',
-        'Bank name',
-        'Description',
-        'Status'
-      ];
-      this.bankAccountList.filteredData.forEach(element => {
-        data = [
-          element.ownerName,
-          (element.accountType == 1) ? 'Current' : 'Savings',
-          new Date(element.balanceAsOn),
-          (element.interestRate),
-          this.formatNumber.first.formatAndRoundOffNumber(element.accountBalance),
-          (element.account),
-          element.bankName,
-          element.description,
-          element.status
-        ];
-        this.excelData.push(Object.assign(data));
-      });
-      const footerData = ['Total', '', '', '', this.formatNumber.first.formatAndRoundOffNumber(this.totalAccountBalance), '', '', '', ''];
-      this.footer.push(Object.assign(footerData));
-    }
-    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value);
+  Excel(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows,tableTitle)
   }
+
+  pdf(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.pdfGen.generatePdf(rows, tableTitle);
+  }
+  // async ExportTOExcel(value) {
+  //   this.excelData = [];
+  //   let data = [];
+  //   var headerData = [{ width: 20, key: 'Owner' },
+  //   { width: 20, key: 'Account type' },
+  //   { width: 25, key: 'Balance as on' },
+  //   { width: 18, key: 'Rate' },
+  //   { width: 18, key: 'Balance mentioned' },
+  //   { width: 18, key: 'Account number' },
+  //   { width: 18, key: 'Bank name' },
+  //   { width: 15, key: 'Description' },
+  //   { width: 10, key: 'Status' }];
+  //   var header = ['Owner', 'Account type', ' Balance as on', 'Description', 'Status'];
+
+  //   if (value == 'Cash in hand') {
+  //     headerData = [
+  //       { width: 20, key: 'Owner' },
+  //       { width: 20, key: 'Account type' },
+  //       { width: 25, key: 'Balance as on' },
+  //       { width: 15, key: 'Description' },
+  //       { width: 10, key: 'Status' },
+  //     ];
+  //     this.cashInHandList.filteredData.forEach(element => {
+  //       data = [element.ownerName, (element.accountType), (element.balanceAsOn),
+  //       element.description, element.status];
+  //       this.excelData.push(Object.assign(data));
+  //     });
+  //     const footerData = [
+  //       'Total',
+  //       this.formatNumber.first.formatAndRoundOffNumber(this.sumOfCashValue),
+  //       '',
+  //       '', ,
+  //       ''
+  //     ];
+  //     this.footer.push(Object.assign(footerData));
+  //   } else {
+
+  //     header = [
+  //       'Owner',
+  //       'Account type',
+  //       'Balance as on',
+  //       'Rate',
+  //       'Balance mentioned',
+  //       'Account number',
+  //       'Bank name',
+  //       'Description',
+  //       'Status'
+  //     ];
+  //     this.bankAccountList.filteredData.forEach(element => {
+  //       data = [
+  //         element.ownerName,
+  //         (element.accountType == 1) ? 'Current' : 'Savings',
+  //         new Date(element.balanceAsOn),
+  //         (element.interestRate),
+  //         this.formatNumber.first.formatAndRoundOffNumber(element.accountBalance),
+  //         (element.account),
+  //         element.bankName,
+  //         element.description,
+  //         element.status
+  //       ];
+  //       this.excelData.push(Object.assign(data));
+  //     });
+  //     const footerData = ['Total', '', '', '', this.formatNumber.first.formatAndRoundOffNumber(this.totalAccountBalance), '', '', '', ''];
+  //     this.footer.push(Object.assign(footerData));
+  //   }
+  //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value);
+  // }
 
   getfixedIncomeData(value) {
     console.log('value++++++', value);

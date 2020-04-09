@@ -9,6 +9,8 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { MatDialog, MatTableDataSource, MatSort } from '@angular/material';
 import { ExcelService } from '../../../../excel.service';
 import { DetailedPpfComponent } from './detailed-ppf/detailed-ppf.component';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
 
 @Component({
   selector: 'app-ppf-scheme',
@@ -23,11 +25,11 @@ export class PPFSchemeComponent implements OnInit {
   isLoading = false;
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
-
+  @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   SumOfAmountInvested: any;
   SumOfCurrentValue: any;
-  constructor(private excel: ExcelService, public dialog: MatDialog, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
+  constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, public dialog: MatDialog, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
   displayedColumns = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
 
   ngOnInit() {
@@ -35,6 +37,17 @@ export class PPFSchemeComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.getPpfSchemeData();
   }
+
+  Excel(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows,tableTitle)
+  }
+
+  pdf(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.pdfGen.generatePdf(rows, tableTitle);
+  }
+
   getPpfSchemeData() {
     this.isLoading = true;
     const obj = {
