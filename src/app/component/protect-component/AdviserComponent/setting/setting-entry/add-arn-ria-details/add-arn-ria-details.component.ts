@@ -44,11 +44,11 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
       typeId: [this.data.mainData.typeId, [Validators.required]],
       number: [this.data.mainData.number, [Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY)]],
       nameOfTheHolder: [this.data.mainData.nameOfTheHolder, [Validators.required]],
-      euin: [this.data.mainData.euin, [Validators.required, Validators.pattern(/[eE]\d{6}/)]],
-      commencementDate: [this.data.mainData.commencementDate, [Validators.required]],
-      renewalDate: [this.data.mainData.renewalDate, [Validators.required]],
-      registeredEmail: [this.data.mainData.registeredEmail, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
-      registeredPan: [this.data.mainData.registeredPan, [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+      euin: [this.data.mainData.euin],
+      commencementDate: [this.data.mainData.commencementDate],
+      renewalDate: [this.data.mainData.renewalDate],
+      registeredEmail: [this.data.mainData.registeredEmail, [Validators.pattern(ValidatorType.EMAIL)]],
+      registeredPan: [this.data.mainData.registeredPan, [Validators.minLength(10), Validators.maxLength(10)]],
       registeredAddress: [this.data.mainData.registeredAddress, [Validators.required, Validators.maxLength(150)]],
       gstApplicableId: [this.data.mainData.gstApplicableId, [Validators.required]],
       gstNumber: [this.data.mainData.gstNumber, []],
@@ -58,11 +58,16 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
     if(this.data.mainData.gstApplicableId == 1) {
       this.arnRiaFG.controls.gstNumber.setValidators([Validators.required, Validators.minLength(15), Validators.maxLength(15)]);
     }
-    if(this.data.mainData.advisorId) {
+    if(this.data.mainData.commencementDate) {
       this.arnRiaFG.controls.commencementDate.setValue(new Date(this.data.mainData.commencementDate));
-      this.arnRiaFG.controls.renewalDate.setValue(new Date(this.data.mainData.renewalDate));
-      this.arnRiaFG.updateValueAndValidity();
     }
+    if(this.data.mainData.renewalDate) {
+      this.arnRiaFG.controls.renewalDate.setValue(new Date(this.data.mainData.renewalDate));
+    }
+    if(this.data.mainData.arnOrRia == 2) {
+      this.arnRiaFG.controls.euin.setValidators([Validators.required, Validators.pattern(/[eE]\d{6}/)]);
+    }
+    this.arnRiaFG.updateValueAndValidity();
   }
 
   subscriberToFormChanges(){
@@ -73,6 +78,17 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
         } else {
           this.arnRiaFG.controls.gstNumber.clearValidators();
           this.arnRiaFG.controls.gstNumber.setValue('');
+        }
+        this.arnRiaFG.updateValueAndValidity();
+      })
+    )
+    this.subscriber.add(
+      this.arnRiaFG.controls.arnOrRia.valueChanges.subscribe((value)=>{
+        if(value == 1) {
+          this.arnRiaFG.controls.euin.clearValidators();
+          this.arnRiaFG.controls.euin.setValue('');
+        } else {
+          this.arnRiaFG.controls.euin.setValidators([Validators.required, Validators.pattern(/[eE]\d{6}/)]);
         }
         this.arnRiaFG.updateValueAndValidity();
       })

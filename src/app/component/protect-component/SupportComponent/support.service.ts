@@ -15,7 +15,7 @@ export class SupportService {
   private subject = new BehaviorSubject<any>('');
 
   getMyIFAValues(data) {
-
+    return null;
   }
 
   getBackofficeAumOrderListValues(data) {
@@ -28,6 +28,10 @@ export class SupportService {
 
   putAumTransactionKeepOrRemove(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_PUT_AUM_TRANSACTION_KEEP_OR_REMOVE, data);
+  }
+
+  getBackofficeReports(data) {
+    return null;
   }
 
   // observable data sending

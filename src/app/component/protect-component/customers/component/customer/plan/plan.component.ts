@@ -1,6 +1,7 @@
-import {Router} from '@angular/router';
-import {Component, OnInit} from '@angular/core';
-import {RoutingState} from "../../../../../../services/routing-state.service";
+import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { RoutingState } from "../../../../../../services/routing-state.service";
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-plan',
@@ -9,6 +10,7 @@ import {RoutingState} from "../../../../../../services/routing-state.service";
 })
 export class PlanComponent implements OnInit {
   _value: number;
+  clientData: any;
 
   set value(value: number) {
     this._value = value;
@@ -20,6 +22,7 @@ export class PlanComponent implements OnInit {
   selected;
 
   ngOnInit() {
+    this.clientData = AuthService.getClientData();
     this.selected = 0;
     if (this.router.url.split('/')[3] == 'summary') {
       this._value = 1;

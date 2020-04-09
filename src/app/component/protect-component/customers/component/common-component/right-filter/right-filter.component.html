@@ -1,6 +1,6 @@
 <div class="row bb-1 popup-header-fix-35">
   <div class="col-md-10 p-0">
-    <h3 class="m-0 wrapper-16">SELECT FILTERS - SUMMARY REPORT</h3>
+    <h3 class="m-0 wrapper-16">SELECT FILTERS - {{this._data.name}}</h3>
   </div>
   <div class="col-md-2">
     <i class="material-icons pt-16 right text-right c-p" (click)="Close('Close')"> clear </i>
@@ -74,9 +74,9 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div>
-        <mat-list-item role="listitem" *ngFor="let item of transactionView">
+        <mat-list-item role="listitem" *ngFor="let item of transactionView let i = index;">
           <!-- $event removed for prod build -->
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect()">{{item.displayName}}</mat-checkbox>
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect(item,i)">{{item.displayName}}</mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>
@@ -91,7 +91,7 @@
       <div>
         <mat-list-item role="listitem" *ngFor="let item of reportType">
           <!-- $event removed for prod build -->
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect()">{{item.name}}</mat-checkbox>
+          <mat-checkbox [(ngModel)]="item.selected"  (change)="changeReportFilter(item)">{{item.name}}</mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>
@@ -110,7 +110,7 @@
         </mat-list-item>
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <!-- <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h5 class="m-0">Transaction View<span class="text-right f-14 pl-12">{{countCategory}} of {{category.length}}
@@ -123,7 +123,7 @@
           </mat-checkbox>
         </mat-list-item>
       </div>
-    </mat-expansion-panel>
+    </mat-expansion-panel> -->
     <!-- <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
         <mat-panel-title>

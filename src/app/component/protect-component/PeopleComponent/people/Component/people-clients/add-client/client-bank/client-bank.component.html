@@ -9,7 +9,8 @@
     </div>
 </div>
 <div [formGroup]="bankForm">
-    <div class="row pt-44">
+    <div [ngClass]="{'pt-90': fieldFlag==undefined}" class="row pt-44">
+        <!-- vaibhav -->
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-8">IFSC code</h5>
         </div>

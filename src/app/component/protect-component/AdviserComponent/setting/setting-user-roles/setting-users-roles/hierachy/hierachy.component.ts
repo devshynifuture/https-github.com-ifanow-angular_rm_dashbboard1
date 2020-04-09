@@ -13,7 +13,7 @@ import { MatTableDataSource } from '@angular/material';
   styleUrls: ['./hierachy.component.scss']
 })
 export class HierachyComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'role', 'report', 'icons'];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'role', 'report'];
   dataSource:MatTableDataSource<any>;
   advisorId:any;
   counter: any;

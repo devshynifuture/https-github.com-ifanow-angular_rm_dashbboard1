@@ -193,6 +193,18 @@ export class MfServiceService {
     let schemeWise=this.filterArray(schemeWiseFilter,'amc_id',dataForFilter.amc,'amc_id');
     let mutualFundListFilter = this.filter(schemeWiseFilter, 'mutualFund');
     let mutualFundList=this.filterArray(mutualFundListFilter,'folioNumber',dataForFilter.folio,'folioNumber');
+    if(dataForFilter.showFolio==2){
+      mutualFundList = mutualFundList.filter((item: any) =>
+        item.folioNumber != 0
+        );
+    }
+    if(dataForFilter.reportAsOn){
+      mutualFundList.forEach(element => {
+        element.mutualFundTransactions = element.mutualFundTransactions.filter((item: any) =>
+        item.transactionDate <= dataForFilter.reportAsOn
+        );
+      });
+    }
     var sendData={
       family_member_list:family_member_list,
       category:category,
@@ -202,6 +214,7 @@ export class MfServiceService {
       showFolio:dataForFilter.showFolio,
       reportType:dataForFilter.reportType,
       transactionView:dataForFilter.transactionView,
+      mfData:mfData,
     }
     return sendData;
   }

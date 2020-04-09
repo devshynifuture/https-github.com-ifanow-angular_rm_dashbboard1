@@ -1,5 +1,5 @@
 import { EventService } from './../../../../../Data-service/event.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { MyIfaSelectArnRiaComponent } from '../my-ifa-select-arn-ria/my-ifa-select-arn-ria.component';
 import { MatDialog } from '@angular/material';
@@ -31,6 +31,7 @@ export class IfasDetailsComponent implements OnInit {
 
   displayedColumns5: string[] = ['invoice', 'sentDate', 'status', 'dueDate', 'amount', 'balance'];
   dataSource5 = ELEMENT_DATA5;
+  ifasData: any;
 
 
 
@@ -39,14 +40,42 @@ export class IfasDetailsComponent implements OnInit {
     private eventService: EventService) { }
 
   isInEditMode: boolean = false;
-
+  reconSummaryList;
   ngOnInit() {
+    // this.getReconSummaryList();
   }
-
+  @Input() set data(data) {
+    this.ifasData = data;
+    this.getReconSummaryList();
+  }
   toggleEditMode() {
     this.isInEditMode = !this.isInEditMode;
   }
+  getReconSummaryList() {
+    this.reconSummaryList = [
+      { name: 'CAMS' },
+      { name: 'Karvy' },
+      { name: 'Franklin Templeton' }
+    ]
+  }
+  getCancelSubscriptionData() {
 
+  }
+  getSuggestionsData() {
+
+  }
+  getTicketList() {
+
+  }
+  getTicketSummary() {
+
+  }
+  getTeamMembers() {
+
+  }
+  getBillingDetails() {
+
+  }
   openUpperSliderBackoffice(flag, data) {
     const fragmentData = {
       flag: "clients",

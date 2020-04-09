@@ -52,70 +52,28 @@ export class AddCamsFundsnetComponent implements OnInit {
         secretQuestionsArr.push(this.secretQuestionsFG(this.data.mainData.rtaCamsFundNetSecurityQuestionsList[index].questionId, this.data.mainData.rtaCamsFundNetSecurityQuestionsList[index].answer));
       }
     } else {
-      this.addMoreQuestion();
+      // instead of a single question we will be adding all 9 questions
+      // this.addMoreQuestion();
+      this.createAllQuestionSet();
     }
+  }
+
+  createAllQuestionSet() {
+    let questions = this.data.globalData.rta_cams_fund_net_security_questions_list as Array<any>;
+    const secretQuestionsArr = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
+
+    questions.forEach(question => {
+      secretQuestionsArr.push(this.secretQuestionsFG(question.id, ''));
+    })
   }
 
   secretQuestionsFG(questionId = '', answer = ''){
-    let qObj = {value: questionId, disabled: !!questionId};
+    // let qObj = {value: questionId, disabled: !!questionId};
     return this.fb.group({
-      questionId: [qObj, [Validators.required, this.isQuestionDuplicate()]],
+      questionId: [questionId, [Validators.required]],
       answer: [answer, [Validators.required]],
     });
   }
-
-  addMoreQuestion() {
-    const secretQuestionsArr = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
-    secretQuestionsArr.push(this.secretQuestionsFG());
-  }
-
-  removeQuestion(index=1) {
-    const secretQuestionsArr = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
-    const questionSet = secretQuestionsArr.controls[index] as FormGroup;
-    if(!this.is_add) {
-      const questionId = this.data.mainData.rtaCamsFundNetSecurityQuestionsList.map(data => data.questionId);
-      const questionExist = questionId.includes(parseInt(questionSet.controls.questionId.value));
-      if(questionExist) {
-        if(questionId.length <=1) {
-          this.eventService.openSnackBar("You must have at least 1 security question")
-          return;
-        }
-        const questionToRemove = this.data.mainData.rtaCamsFundNetSecurityQuestionsList.find(data => data.questionId == questionSet.controls.questionId.value).id
-        this.settingService.deleteQuestion(questionToRemove).subscribe(res => {
-          this.data.mainData.rtaCamsFundNetSecurityQuestionsList.splice(this.data.mainData.rtaCamsFundNetSecurityQuestionsList.findIndex((data)=> data.id == questionSet.controls.questionId.value), 1);
-          this.resetQuestionSet();
-          this.eventService.openSnackBar("Question deleted successfully");
-        }, err => {
-          this.eventService.openSnackBar("Error occured");
-        })
-      } else {
-        this.showAddMoreQuestionBtn = !this.showAddMoreQuestionBtn;
-        secretQuestionsArr.removeAt(index);
-      }
-    } else {
-      secretQuestionsArr.removeAt(index);
-    }
-  }
-
-  resetQuestionSet(){
-    let extraQuestionObj = {questionId: '', answer: ''};
-    const secretQuestionsArr = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
-    if(!this.showAddMoreQuestionBtn) {
-      extraQuestionObj = secretQuestionsArr.controls[secretQuestionsArr.controls.length -1].value;
-    }
-    for (let index = secretQuestionsArr.controls.length-1; index >= 0; index--) {
-      secretQuestionsArr.removeAt(index);
-    }
-    for (let index = 0; index < this.data.mainData.rtaCamsFundNetSecurityQuestionsList.length; index++) {
-      secretQuestionsArr.push(this.secretQuestionsFG(this.data.mainData.rtaCamsFundNetSecurityQuestionsList[index].questionId, this.data.mainData.rtaCamsFundNetSecurityQuestionsList[index].answer));
-    }
-    if(!this.showAddMoreQuestionBtn) {
-      secretQuestionsArr.push(this.secretQuestionsFG('', extraQuestionObj.answer));
-      const questionSet = secretQuestionsArr.controls[secretQuestionsArr.controls.length-1] as FormGroup;
-      questionSet.controls.questionId.setValue(extraQuestionObj.questionId)
-    }
-  }
-
   save(){
     if(this.camsFundFG.invalid) {
       this.camsFundFG.markAllAsTouched();
@@ -137,86 +95,11 @@ export class AddCamsFundsnetComponent implements OnInit {
           ...this.data.mainData,
           ...jsonObj
         }
-        if(this.showAddMoreQuestionBtn) {
-          this.saveIndividualQuestion(editJson.rtaCamsFundNetSecurityQuestionsList.length -1);
-        }
-        delete editJson.rtaCamsFundNetSecurityQuestionsList;
         this.settingService.editMFRTA(editJson).subscribe((res)=> {
           this.eventService.openSnackBar("CAMS Fundsnet Modified successfully");
           this.Close(true);
         });
       }
-    }
-  }
-  
-  updateAnswer(index) {
-    const secretQuestionsArr = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
-    const questionSet = secretQuestionsArr.controls[index] as FormGroup;
-    const questionToUpdate = this.data.mainData.rtaCamsFundNetSecurityQuestionsList.find(data => data.questionId == questionSet.controls.questionId.value).id
-    const jsonObj = {id: questionToUpdate, answer: secretQuestionsArr.controls[index].value.answer};
-    this.settingService.updateAnswer(jsonObj).subscribe(res => {
-      this.eventService.openSnackBar("Answer updated successfully");
-    }, err => {
-      this.eventService.openSnackBar("Error occured");
-    })
-  }
-  
-
-  isQuestionDuplicate(): ValidatorFn {
-    return (c: AbstractControl): { [key: string]: boolean } | null => {
-      const questions = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
-      const questionsRaw = questions.getRawValue();
-      const questionId = questionsRaw.map(item => parseInt(item.questionId));
-      const hasDuplicate = questionId.some(
-        (name, index) => questionId.indexOf(name, index + 1) != -1
-      );
-
-      if (hasDuplicate) {
-        return { duplicate: true };
-      }
-
-      return null;
-    }
-  }
-
-  addIndividualQuestion(){
-    this.showAddMoreQuestionBtn = !this.showAddMoreQuestionBtn;
-    this.addMoreQuestion();
-  }
-
-  saveIndividualQuestion(index){
-    let questionSet = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
-    let fg = questionSet.controls[index] as FormGroup;
-    if(fg.invalid) {
-      fg.markAllAsTouched();
-      return;
-    }
-    this.showAddMoreQuestionBtn = !this.showAddMoreQuestionBtn;
-    const jsonObj = {
-      "answer": fg.controls.answer.value,
-      "arnRtaDetailsId": this.data.mainData.id,
-      "questionId": parseInt(fg.controls.questionId.value)
-    };
-    this.settingService.addQuestion(jsonObj).subscribe(res => {
-      this.eventService.openSnackBar("Question added successfully");
-      jsonObj['id'] = res;
-      this.data.mainData.rtaCamsFundNetSecurityQuestionsList.push(jsonObj);
-      fg.controls.questionId.disable();
-      fg.updateValueAndValidity();
-    }, err => {
-      this.eventService.openSnackBar("Error occured");
-    })
-  }
-
-  addOrUpdateIndividualQuestion(index) {
-    const secretQuestionsArr = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
-    const questionSet = secretQuestionsArr.controls[index] as FormGroup;
-    const questionId = this.data.mainData.rtaCamsFundNetSecurityQuestionsList.map(data => data.questionId);
-    const questionExist = questionId.includes(questionSet.controls.questionId.value);
-    if (!questionExist) {
-      this.saveIndividualQuestion(index);
-    } else {
-      this.updateAnswer(index);
     }
   }
 

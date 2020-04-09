@@ -23,6 +23,7 @@ export class MutualFundComponent implements OnInit {
   customDataSource: any;
   catObj: {};
   mfDataUnrealised: any;
+  isLoading: boolean = false;
 
   constructor(public subInjectService: SubscriptionInject, public utilService: UtilService,
               public eventService: EventService, private custumService: CustomerService,
@@ -37,6 +38,7 @@ export class MutualFundComponent implements OnInit {
   }
 
   getMutualFund() {
+    this.isLoading = true
     const obj = {
       advisorId: 2753,
       clientId: 15545
@@ -49,7 +51,11 @@ export class MutualFundComponent implements OnInit {
   }
 
   getMutualFundResponse(data) {
-    this.mfData = data;
+    if(data){
+      this.isLoading = false
+      this.mfData = data;
+    }
+    this.isLoading = false
   }
   unrealiseTransaction(){
     this.mfDataUnrealised = this.mfData;
