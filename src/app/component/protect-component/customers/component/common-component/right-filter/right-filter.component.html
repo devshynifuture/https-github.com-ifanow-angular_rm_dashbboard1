@@ -114,7 +114,7 @@
         </mat-list-item>
       </div>
     </mat-expansion-panel>
-    <!-- <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h5 class="m-0">Transaction Period<span class="text-right f-14 pl-12">{{countCategory}} of {{category.length}}
@@ -122,17 +122,17 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div>
-        <mat-list-item role="listitem" *ngFor="let item of category">
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterCategory(this.category)">{{item.category}}
+        <mat-list-item role="listitem">
+          <mat-checkbox [(ngModel)]="transactionPeriodCheck" (change)="changeFilterPeriod(transactionPeriodCheck)">
           </mat-checkbox>
         </mat-list-item>
       </div>
-    </mat-expansion-panel> -->
+    </mat-expansion-panel>
   </mat-accordion>
 
 
   <div class="row pt-12" [formGroup]="summaryFilerForm">
-    <div class="col-md-6 p-0">
+    <div class="col-md-6 p-0" *ngIf="transactionPeriod == false">
       <h5 class="m-0 pb-8">Report as on</h5>
       <div class="col-md-8 pl-0">
         <mat-form-field>
@@ -144,6 +144,36 @@
           </mat-error>
         </mat-form-field>
 
+      </div>
+    </div>
+    <div class="row" *ngIf="transactionPeriod == true">
+      <div class="col-md-6 p-0">
+        <h5 class="m-0 pb-8">From date</h5>
+        <div class="col-md-8 pl-0">
+          <mat-form-field>
+            <input class="form-control br-0" matInput [matDatepicker]="picker1" formControlName="fromDate" readonly>
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+            <mat-error class="f-12">
+              This field is required
+            </mat-error>
+          </mat-form-field>
+  
+        </div>
+      </div>
+      <div class="col-md-6 p-0">
+        <h5 class="m-0 pb-8">To date</h5>
+        <div class="col-md-8 pl-0">
+          <mat-form-field>
+            <input class="form-control br-0" matInput [matDatepicker]="picker2" formControlName="toDate" readonly>
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+            <mat-error class="f-12">
+              This field is required
+            </mat-error>
+          </mat-form-field>
+  
+        </div>
       </div>
     </div>
     <div class="col-md-6 p-0">
