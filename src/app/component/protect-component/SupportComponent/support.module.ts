@@ -24,7 +24,6 @@ import { HighchartsChartModule } from 'highcharts-angular';
     IfaOnboardingComponent,
     SupportMiscellaneousComponent,
     SchemeMappingComponent,
-    HighchartsChartModule
   ],
   imports: [
     CommonModule,
@@ -35,6 +34,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
     ScrollDispatchModule,
     CustomDirectiveModule,
     SupportEntryModule,
+    HighchartsChartModule,
   ],
   entryComponents: [],
   providers: [DynamicComponentService]
