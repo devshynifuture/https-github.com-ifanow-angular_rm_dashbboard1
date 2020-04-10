@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -124,7 +124,7 @@ export class MfServiceService {
     return this.totalObj;
   }
 
-  categoryFilter(data,type) {
+  categoryFilter(data, type) {
     const catObj = {};
     const categoryArray = [];
     data.forEach(ele => {
@@ -185,44 +185,53 @@ export class MfServiceService {
     };
     return sendData;
   }
-  filterFinalData(mfData,dataForFilter){
-    let family_member_list=this.filterArray(mfData.family_member_list,'id',dataForFilter.familyMember,'familyMemberId');
-    let category=this.filterArray(mfData.mutualFundCategoryMastersList,'id',dataForFilter.category,'categoryId');
+  filterFinalData(mfData, dataForFilter) {
+    let family_member_list = this.filterArray(mfData.family_member_list, 'id', dataForFilter.familyMember, 'familyMemberId');
+    let category = this.filterArray(mfData.mutualFundCategoryMastersList, 'id', dataForFilter.category, 'categoryId');
     let subCategoryData = this.filter(mfData.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
     let schemeWiseFilter = this.filter(subCategoryData, 'mutualFundSchemeMaster');
-    let schemeWise=this.filterArray(schemeWiseFilter,'amc_id',dataForFilter.amc,'amc_id');
+    let schemeWise = this.filterArray(schemeWiseFilter, 'amc_id', dataForFilter.amc, 'amc_id');
     let mutualFundListFilter = this.filter(schemeWiseFilter, 'mutualFund');
-    let mutualFundList=this.filterArray(mutualFundListFilter,'folioNumber',dataForFilter.folio,'folioNumber');
-    if(dataForFilter.showFolio==2){
+    let mutualFundList = this.filterArray(mutualFundListFilter, 'folioNumber', dataForFilter.folio, 'folioNumber');
+    if (dataForFilter.showFolio == 2) {
       mutualFundList = mutualFundList.filter((item: any) =>
         item.folioNumber != 0
-        );
+      );
     }
-    if(dataForFilter.reportAsOn){
+    if (dataForFilter.reportAsOn) {
       mutualFundList.forEach(element => {
         element.mutualFundTransactions = element.mutualFundTransactions.filter((item: any) =>
-        item.transactionDate <= dataForFilter.reportAsOn
+          item.transactionDate <= dataForFilter.reportAsOn
         );
       });
     }
-    var sendData={
-      family_member_list:family_member_list,
-      category:category,
-      schemeWise:schemeWise,
-      mutualFundList:mutualFundList,
-      reportAsOn:dataForFilter.reportAsOn,
-      showFolio:dataForFilter.showFolio,
-      reportType:dataForFilter.reportType,
-      transactionView:dataForFilter.transactionView,
-      mfData:mfData,
+    if (dataForFilter.fromDate && dataForFilter.toDate) {
+      mutualFundList.forEach(element => {
+        element.mutualFundTransactions = element.mutualFundTransactions.filter((item: any) =>
+          item.transactionDate >= dataForFilter.fromDate && item.transactionDate <= dataForFilter.toDate
+        );
+      })
+    }
+    var sendData = {
+      family_member_list: family_member_list,
+      category: category,
+      schemeWise: schemeWise,
+      mutualFundList: mutualFundList,
+      reportAsOn: dataForFilter.reportAsOn,
+      fromDate : dataForFilter.fromDate,
+      toDate : dataForFilter.toDate,
+      showFolio: dataForFilter.showFolio,
+      reportType: dataForFilter.reportType,
+      transactionView: dataForFilter.transactionView,
+      mfData: mfData,
     }
     return sendData;
   }
-  filterArray(data,dataKey,filterData,filterDataKey){
-    let filter=[];
+  filterArray(data, dataKey, filterData, filterDataKey) {
+    let filter = [];
     filterData.forEach(ele => {
       data.forEach(element => {
-        if(element[dataKey]==ele[filterDataKey]){
+        if (element[dataKey] == ele[filterDataKey]) {
           filter.push(element)
         }
       });

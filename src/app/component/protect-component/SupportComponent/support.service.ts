@@ -33,7 +33,9 @@ export class SupportService {
   getBackofficeReports(data) {
     return null;
   }
-
+  getDailyServicesStatusReport(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DAILY_SERVICES_STATUS_REPORT, data);
+  }
   // observable data sending
 
   sendDataThroughObs(value) {
