@@ -90,7 +90,7 @@
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="col-md-12 f-14">
                                         CAMS
                                     </div>
@@ -99,7 +99,10 @@
                                     <div class="col-md-12 p-0">
                                         <img class="width200" src="assets/images/svg/backoffice-pie-chart.svg">
                                     </div>
-                                </div>
+                                </div> -->
+                                <highcharts-chart [Highcharts]="highcharts" [options]="chartOptions"
+                                    style="width: 100%; height: 400px; display: block;">
+                                </highcharts-chart>
                                 <div class="row">
                                     <div class="col-md-12 f-14">
                                         Karvy
@@ -474,27 +477,31 @@
             <div class="col-md-3 pt-20 pr-0 pl-10">
 
                 <h3 class="f-16 m-0 mb-20 roboto">Running services</h3>
-                <div class="boxColorGreen">
+                <div *ngFor="let singleService of serviceStatusData"
+                    [ngClass]="{'boxColorOrenge': singleService.service_status=='Not Updated'||singleService.service_status=='Not Working'}"
+                    class="boxColorGreen">
                     <div class="row">
                         <div class="col-md-10 p-0">
-                            <h4 class="f-14">Mutual fund NAV</h4>
+                            <h4 class="f-14">{{singleService.service_name}}</h4>
                         </div>
                         <div class="col-md-2 p-0">
-                            <i class="material-icons f-30 greenColor">
+                            <i class="material-icons f-30 greenColor"
+                                [ngClass]="{'orengeColor': singleService.service_status=='Not Updated' ||singleService.service_status=='Not Working'}">
                                 check_circle
                             </i>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6 f-12 p-0 greenColor">
-                            UPDATED
+                        <div class="col-md-6 f-12 p-0 greenColor"
+                            [ngClass]="{'orengeColor': singleService.service_status=='Not Updated' ||singleService.service_status=='Not Working'}">
+                            {{singleService.service_status}}
                         </div>
                         <div class="col-md-6 p-0 text-primitive text-right f-12">
-                            27/01 05:03AM
+                            {{singleService.created_date | date:'dd/MM h:mm a'}}
                         </div>
                     </div>
                 </div>
-                <div class="boxColorOrenge">
+                <!-- <div class="boxColorOrenge">
                     <div class="row">
                         <div class="col-md-10 p-0">
                             <h4 class="f-14">Stock prices</h4>
@@ -573,7 +580,7 @@
                             25/01 05:03AM
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <h4 class="f-16 f-600 mt-32">Scheme mapping</h4>
                 <div class="row">
