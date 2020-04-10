@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {RightFilterComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {UtilService} from 'src/app/services/util.service';
@@ -34,6 +34,7 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   @Input() mutualFund;
+  @ViewChild('summaryTemplate', {static: false}) summaryTemplate: ElementRef;
 
   ngOnInit() {
     if (this.mutualFund.mutualFundList) {
@@ -201,4 +202,8 @@ export class MutualFundSummaryComponent implements OnInit {
     return item.balanceUnit;
     return item.sipAmount;
   }
+    generatePdf() {
+    let para = document.getElementById('template');
+    this.utilService.htmlToPdf(para.innerHTML, 'Summary Report')
+    }
 }

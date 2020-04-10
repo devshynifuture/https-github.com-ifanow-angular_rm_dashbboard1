@@ -8,6 +8,8 @@
             <img class="c-p" src="assets/images/svg/download-bordered.svg">
             <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
             <img class="c-p mr-12" src="assets/images/svg/up-down.svg">
+            <img matTooltip="Download PDF" (click)="generatePdf()" class="b-a c-p"
+                            src="assets/images/svg/pdf-icons.svg">
             <button class="btn-default addon mr-12 v-middle mat-stroked-button mat-button-base" mat-stroked-button=""
                 (click)="openFilter()">
                 <span class="mat-button-wrapper"><i class="material-icons">filter_list</i>FILTERS</span>
@@ -62,7 +64,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" #summaryTemplate id="template">
         <div [ngClass]="isLoading ? '': 'table-scroll'" class="col-md-12 p-0 mb-8">
             <table matSort mat-table [dataSource]="customDataSource" id="tbs"
                 class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
