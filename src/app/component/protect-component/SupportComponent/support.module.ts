@@ -14,7 +14,7 @@ import { DynamicComponentService } from 'src/app/services/dynamic-component.serv
 import { SupportEntryModule } from './support.entry.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
-import { HighchartsChartComponent } from 'highcharts-angular';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ import { HighchartsChartComponent } from 'highcharts-angular';
     IfaOnboardingComponent,
     SupportMiscellaneousComponent,
     SchemeMappingComponent,
-    HighchartsChartComponent
+    HighchartsChartModule
   ],
   imports: [
     CommonModule,
