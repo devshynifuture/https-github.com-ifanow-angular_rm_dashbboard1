@@ -13,7 +13,7 @@
 
 <div [formGroup]="bankAccounts" class="pb-44 mb-48 pt-100">
     <div formArrayName="getCoOwnerName">
-        <div [ngClass]="{'pt-36': pointIndex > 0}" class="row" [ngClass]="{'pt-36': pointIndex >0}"
+        <div [ngClass]="{'pt-36': pointIndex>0}" class="row"
             *ngFor="let obj of bankAccounts.controls['getCoOwnerName'].controls; let pointIndex=index"
             [formGroupName]="pointIndex">
             <div class="col-md-5 pr-0 text-right">
@@ -26,9 +26,8 @@
                             (selectionChange)="disabledMember($event.value,'owner')"
                             (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
                             class="form-control br-0" [callMethod]='callMethod'>
-                            <mat-option value=''>Select family members</mat-option>
-                            <mat-option (click)="display(f)" *ngFor="let f of nomineesListFM" [disabled]="f.disable"
-                                [value]="f.userName">
+                            <mat-option value='' disabled>Select family members</mat-option>
+                            <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                 <span>{{f.userName}}</span>
                             </mat-option>
                         </mat-select>
@@ -51,6 +50,33 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
+            </div>
+            <div class="col-md-2 pr-0 d-flex align-items-center">
+                <i *ngIf="bankAccounts.value.getCoOwnerName.length < 3"
+                    class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i>
+                <i *ngIf="bankAccounts.value.getCoOwnerName.length > 1"
+                    class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                    (click)="removeCoOwner(pointIndex)">remove</i>
+            </div>
+
+        </div>
+    </div>
+    <div class="row pt-48">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Bank name</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input autocomplete="off" matInput #bankName maxlength="60" appInputValueValidation
+                        [inputValidator]="validatorType.TEXT_ONLY" class="form-control br-0"
+                        formControlName="bankName">
+                    <!-- <mat-hint align="start" class="f-12">Optional</mat-hint> -->
+                    <mat-hint align="end" class="f-12">{{bankName.value.length}}/60</mat-hint>
+                    <mat-error class="f-12">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
             </div>
         </div>
     </div>
@@ -77,7 +103,7 @@
     <div class="row pt-36">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Account balance</h5>
-            <p class="m-0 text-custom f-12">Leave bank if you want to enter<br> complete transaction history </p>
+            <!-- <p class="m-0 text-custom f-12">Leave bank if you want to enter<br> complete transaction history </p> -->
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
@@ -97,12 +123,12 @@
     <div class="row pt-24">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Balance as on</h5>
-            <p class="m-0 text-custom f-12">Leave bank if you want to enter<br> complete transaction history </p>
+            <!-- <p class="m-0 text-custom f-12">Leave bank if you want to enter<br> complete transaction history </p> -->
         </div>
         <div class="col-md-3">
             <mat-form-field class="ba-date">
                 <input matInput autocomplete="off" (focus)="picker.open()" formControlName="balanceAsOn"
-                    class="form-control br-0 b-0" [matDatepicker]="picker" readonly>
+                    class="form-control br-0 b-0" [max]="maxDate" [matDatepicker]="picker" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12"
@@ -133,7 +159,7 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Interest compounding</h5>
+            <h5 class="m-0 pt-8">Compounding frequency</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
@@ -166,22 +192,7 @@
         </div>
     </div>
     <div *ngIf="showHide == true">
-        <div class="row pt-48">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Bank name</h5>
-            </div>
-            <div class="col-md-5">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input autocomplete="off" matInput #bankName maxlength="60" appInputValueValidation
-                            [inputValidator]="validatorType.TEXT_ONLY" class="form-control br-0"
-                            formControlName="bankName">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{bankName.value.length}}/60</mat-hint>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
+       
         <div class="row pt-48">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Linked bank account</h5>

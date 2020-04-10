@@ -138,7 +138,7 @@ export class RecuringDepositComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
     }));
     if (data) {
       setTimeout(() => {
@@ -206,7 +206,7 @@ export class RecuringDepositComponent implements OnInit {
   
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+      name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -266,8 +266,9 @@ export class RecuringDepositComponent implements OnInit {
       getCoOwnerName: this.fb.array([this.fb.group({
         name: ['',[Validators.required]],
         share: [0,[Validators.required]],
-        familyMemberId: [0],
-        id:[0]
+        familyMemberId: 0,
+        id: 0,
+        isClient:0
       })]),
       // ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       monthlyContribution: [(data == undefined) ? '' : data.monthlyContribution, [Validators.required]],
