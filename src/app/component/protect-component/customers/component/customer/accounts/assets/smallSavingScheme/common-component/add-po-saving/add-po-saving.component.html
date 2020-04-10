@@ -84,12 +84,12 @@
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Balance as on</h5>
-                <p class="m-0 f-12 text-custom">Leave blank if you want to enter</p>
-                <p class="m-0 f-12 text-custom">complete transaction history</p>
+                <!-- <p class="m-0 f-12 text-custom">Leave blank if you want to enter</p>
+                <p class="m-0 f-12 text-custom">complete transaction history</p> -->
             </div>
             <div class="col-md-3">
                 <div class="form-group mb-0">
-                    <mat-form-field class="ba-date"> <input autocomplete="off" matInput formControlName="balAsOn"
+                    <mat-form-field class="ba-date"> <input [max]="maxDate" autocomplete="off" matInput formControlName="balAsOn"
                             (focus)="balanceAsOn.open()" matInput class="form-control b-0 br-0"
                             [matDatepicker]="balanceAsOn" readonly>
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
@@ -99,7 +99,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-40">
+        <!-- <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Ownership type</h5>
             </div>
@@ -115,7 +115,7 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-        </div>
+        </div> -->
     </div>
     <div class="row pt-40">
         <div *ngIf="isOptionalField==false" (click)="moreFields()" class="col-md-5 text-right">

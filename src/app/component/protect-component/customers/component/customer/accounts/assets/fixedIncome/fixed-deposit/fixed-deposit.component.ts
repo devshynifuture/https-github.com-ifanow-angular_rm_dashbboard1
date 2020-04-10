@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { ActiityService } from '../../../../customer-activity/actiity.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 
 @Component({
@@ -24,8 +25,23 @@ import { ActiityService } from '../../../../customer-activity/actiity.service';
   ],
 })
 export class FixedDepositComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   validatorType = ValidatorType
-  maxDate:any;
+  maxDate:Date = new Date();
   showHide = false;
   isownerName = false;
   showTenure = true;
@@ -207,7 +223,7 @@ export class FixedDepositComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
     }));
     if (data) {
       setTimeout(() => {
@@ -280,7 +296,7 @@ export class FixedDepositComponent implements OnInit {
 
   // addNewNominee(data) {
   //   this.getNominee.push(this.fb.group({
-  //     name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+  //     name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
   //   }));
   //   if (!data || this.getNominee.value.length < 1) {
   //     for (let e in this.getNominee.controls) {
@@ -379,7 +395,8 @@ export class FixedDepositComponent implements OnInit {
         name: ['', [Validators.required]],
         share: ['', [Validators.required]],
         familyMemberId: 0,
-        id: 0
+        id: 0,
+        isClient:0
       })]),
       // ownerType: [(!data.ownershipType) ? '' : (data.ownershipType) + '', [Validators.required]],
       // ownerName: [(!data.ownerName) ? '' : data.ownerName],
@@ -492,6 +509,7 @@ export class FixedDepositComponent implements OnInit {
         fdEndDateIn: this.fixedDeposit.controls.maturity.value,
         id: this.fixedDeposit.controls.id.value
       };
+      this.barButtonOptions.active = true;
       console.log('fixedDeposit', obj);
       this.dataSource = obj;
       let adviceObj = {
@@ -504,19 +522,28 @@ export class FixedDepositComponent implements OnInit {
       if (this.flag == 'adviceFixedDeposit') {
         this.custumService.getAdviceFd(adviceObj).subscribe(
           data => this.getAdviceFdRes(data),
-          err => this.event.openSnackBar(err, "Dismiss")
+          err =>{
+            this.barButtonOptions.active = false;
+            this.event.openSnackBar(err, "Dismiss")
+          } 
         );
       }
       else if (this.fixedDeposit.controls.id.value) {
         // edit call
         this.custumService.editFixedDeposit(obj).subscribe(
           data => this.editFixedDepositRes(data),
-          err => this.event.openSnackBar(err, "Dismiss")
+          err =>{
+            this.barButtonOptions.active = false;
+            this.event.openSnackBar(err, "Dismiss")
+          } 
         );
       } else {
         this.custumService.addFixedDeposit(obj).subscribe(
           data => this.addFixedDepositRes(data),
-          err => this.event.openSnackBar(err, "Dismiss")
+          err =>{
+            this.barButtonOptions.active = false;
+            this.event.openSnackBar(err, "Dismiss")
+          }
         );
       }
     }
@@ -555,6 +582,7 @@ export class FixedDepositComponent implements OnInit {
   }
   getAdviceFdRes(data) {
     console.log('advice activity res ==>', data)
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('Fixed deposite added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
@@ -570,10 +598,12 @@ export class FixedDepositComponent implements OnInit {
 
   addFixedDepositRes(data) {
     console.log('addFixedDepositRes', data);
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
   editFixedDepositRes(data) {
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }

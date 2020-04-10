@@ -52,21 +52,25 @@ export class PdfGenService {
    });
    tabArr.push(footer);
    headers.forEach(th => {
-     if(th == "No"){
-      cellWidth.push(20);
-     }
-     else if(th == "Rate"){
-      cellWidth.push(30);
-     }
-     else{
-      cellWidth.push('*');
-     }
+    //  if(th == "No"){
+    //   cellWidth.push(20);
+    //  }
+    //  else if(th == "Rate"){
+    //   cellWidth.push(30);
+    //  }
+    //  else{
+      cellWidth.push('auto');
+    //  }
   });
    console.log(tabArr,"tabArr");
    
     
     const documentDefinition = { 
       pageOrientation: 'landscape',
+      info: {
+        title: title,
+        author: 'IFAnow',
+        },
       defaultStyle: {
         fontSize: 9
       },
@@ -84,8 +88,8 @@ export class PdfGenService {
         
         {text: title, style: 'header'},
         {text: 'Adviser: ' + this.advisor.name, style: 'anotherStyle'},
-        {text: 'Client: ' + this.client.name, style: 'anotherStyle'},
-        { lineHeight: 2,text: 'Date: ' + this.datePipe.transform(new Date(), 'medium'), style: 'anotherStyle'},
+        {lineHeight: 2, text: 'Client: ' + this.client.name, style: 'anotherStyle'},
+        // { lineHeight: 2,text: 'Date: ' + this.datePipe.transform(new Date(), 'medium'), style: 'anotherStyle'},
         
         {
           layout: 'lightHorizontalLines', // optional

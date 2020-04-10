@@ -130,6 +130,7 @@ export class OwnerNomineeDirective {
           if (element.userName == e.data.name) {
             if (e.type == 'owner') {
               this.getCoOwner.controls[e.index].get('familyMemberId').setValue(element.id);
+              this.getCoOwner.controls[e.index].get('isClient').setValue(element.relationshipId==0?1:0);
             } else {
               this.getNominee.controls[e.index].get('familyMemberId').setValue(element.id);
             }
