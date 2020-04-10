@@ -12,37 +12,129 @@ import { AuthService } from 'src/app/auth-service/authService';
 export class PlanReturnsinflationComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name'];
   dataSource = ELEMENT_DATA;
-  displayedColumns2: string[] = ['position', 'name'];
-  dataSource2 = ELEMENT_DATA2;
-  displayedColumns3: string[] = ['position', 'name'];
-  dataSource3 = ELEMENT_DATA3;
-  displayedColumns4: string[] = ['position', 'name'];
-  dataSource4 = ELEMENT_DATA4;
   advisorId: any;
-  shortTerm;
-  longTerm: any;
   constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) { 
     this.advisorId = AuthService.getAdvisorId()
   }
 
-  ngOnInit() {
-    this.getAssetAllocationReturns()
-  
-  }
-  getAssetAllocationReturns() {
-    let obj = {
-      advisorId: this.advisorId
+  shortTermAsset =  [
+      {
+        "inflation_rate": 7,
+        "class": "Debt Asset Class",
+        "type": "Asset Class",
+        extend: true 
+      },
+      {
+        "inflation_rate": 12,
+        "class": "Equity Asset Class"
+      },
+      {
+        "inflation_rate": 7,
+        "class": "Debt Funds",
+        "type": "Mutual funds",
+        extend: true 
+      },
+      {
+        "inflation_rate": 12,
+        "class": "Equity Funds"
+      },
+      {
+        "inflation_rate": 8,
+        "class": "Balanced Funds"
+      },
+      {
+        "type": "Other Assets",
+        extend: true ,
+        "inflation_rate": 14,
+        "class": "Stocks"
+      },
+      {
+        "inflation_rate": 9,
+        "class": "Real Estates"
+      },
+      {
+        "inflation_rate": 4,
+        "class": "Bank Accounts Saving"
+      },
+      {
+        "inflation_rate": 7,
+        "class": "Commodities - Gold"
+      },
+      {
+        "inflation_rate": 7,
+        "class": "Commodities- Others"
+      }
+    ]
+
+  longTermAsset = [
+    {
+      "type": "Asset Class",
+      extend: true, 
+      "inflation_rate": 6,
+      "class": "Debt Asset Class"
+    },
+    {
+      "inflation_rate": 10,
+      "class": "Equity Asset Class"
+    },
+    {
+      "inflation_rate": 6,
+      "class": "Debt Funds",
+      "type": "Mutual funds",
+      extend: true 
+    },
+    {
+      "inflation_rate": 10,
+      "class": "Equity Funds"
+    },
+    {
+      "inflation_rate": 7,
+      "class": "Balanced Funds"
+    },
+    {
+      "inflation_rate": 12,
+      "class": "Stocks",
+      "type": "Other Assets",
+      extend: true 
+    },
+    {
+      "inflation_rate": 8,
+      "class": "Real Estates"
+    },
+    {
+      "inflation_rate": 3,
+      "class": "Bank Accounts Saving"
+    },
+    {
+      "inflation_rate": 6,
+      "class": "Commodities - Gold"
+    },
+    {
+      "inflation_rate": 6,
+      "class": "Commodities- Others"
     }
-    this.orgSetting.getRetuns(obj).subscribe(
-      data => this.getReturnsRes(data),
-      err => this.eventService.openSnackBar(err, "Dismiss")
-    );
+  ]
+
+  isExtendedRow = (index, item) => item.extend;
+
+  ngOnInit() {
+    // this.getAssetAllocationReturns()
   }
-  getReturnsRes(data){
-    console.log('getReturnsRes',data)
-    this.shortTerm = data.short_term
-    this.longTerm =data.long_term
-  }
+
+  // getAssetAllocationReturns() {
+  //   let obj = {
+  //     advisorId: this.advisorId
+  //   }
+  //   this.orgSetting.getRetuns(obj).subscribe(
+  //     data => this.getReturnsRes(data),
+  //     err => this.eventService.openSnackBar(err, "Dismiss")
+  //   );
+  // }
+  // getReturnsRes(data){
+  //   console.log('getReturnsRes',data)
+  //   this.shortTerm = data.short_term
+  //   this.longTerm =data.long_term
+  // }
 
 }
 export interface PeriodicElement {
@@ -53,37 +145,5 @@ export interface PeriodicElement {
 
 const ELEMENT_DATA: PeriodicElement[] = [
   { position: 'Inflation rate', name: '7%' },
-
-];
-export interface PeriodicElement2 {
-
-  position: string;
-  name: string;
-}
-
-const ELEMENT_DATA2: PeriodicElement2[] = [
-  { position: 'Inflation rate', name: '7%' },
-
-];
-export interface PeriodicElement3 {
-
-  position: string;
-  name: string;
-}
-
-const ELEMENT_DATA3: PeriodicElement3[] = [
-  { position: 'Debt asset class', name: '7%' },
-  { position: 'Equity asset class', name: '17%' },
-
-];
-export interface PeriodicElement4 {
-
-  position: string;
-  name: string;
-}
-
-const ELEMENT_DATA4: PeriodicElement4[] = [
-  { position: 'Debt asset class', name: '7%' },
-  { position: 'Equity asset class', name: '17%' },
 
 ];

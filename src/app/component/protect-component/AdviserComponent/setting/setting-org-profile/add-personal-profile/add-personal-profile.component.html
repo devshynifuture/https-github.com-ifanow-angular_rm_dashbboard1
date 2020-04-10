@@ -54,18 +54,18 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="row pt-40">
+            <div class="row pt-40">
                 <div class="col-md-4 text-right pr-0">
                     <h5 class="m-0 pt-8">Username</h5>
                 </div>
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput formControlName="userName" class="form-control">
+                            <input matInput formControlName="userName" class="form-control" readonly>
                         </mat-form-field>
                     </div>
                 </div>
-            </div> -->
+            </div>
 
         </mat-tab>
         <mat-tab label="Profile pic">
@@ -106,7 +106,7 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(null)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveCurrentPage()">SAVE & NEXT
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveCurrentPage()">SAVE & {{selectedTab == 1 ? 'CLOSE' : 'NEXT'}}
             </button>
         </div>
     </div>
