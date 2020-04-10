@@ -211,6 +211,6 @@ export class MutualFundSummaryComponent implements OnInit {
   }
     generatePdf() {
     let para = document.getElementById('template');
-    this.utilService.htmlToPdf(para.innerHTML, 'Summary Report')
+    this.utilService.htmlToPdf(para.innerHTML, 'Test');
     }
 }
