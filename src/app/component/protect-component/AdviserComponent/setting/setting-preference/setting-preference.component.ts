@@ -247,7 +247,7 @@ export class SettingPreferenceComponent implements OnInit {
     console.log(data)
     this.getEmailVerification()
   }
-  deleteModal(value, data) {
+  deleteEmailModal(value, data) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -256,40 +256,24 @@ export class SettingPreferenceComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        if (value == 'template') {
-          // delete email template is not allowed
-          // this.orgSetting.deletePrefEmailTemplate(data.id).subscribe(
-          //   data => {
-          //     dialogRef.close();
-          //     this.getEmailTemplate();
-          //   },
-          //   error => this.eventService.showErrorMessage(error)
-          // );
-        } else if (value == 'emailVerify') {
-          this.orgSetting.deleteEmailVerify(data.id).subscribe(
-            data => {
-              dialogRef.close();
-              this.getEmailVerification();
-            },
-            error => this.eventService.showErrorMessage(error)
-          );
-        }
-        this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
+        this.orgSetting.deleteEmailVerify(data.id).subscribe(
+          data => {
+            dialogRef.close();
+            this.getEmailVerification();
+            this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
       }
     };
-    console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: dialogData,
       autoFocus: false,
-
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
 
     });
   }

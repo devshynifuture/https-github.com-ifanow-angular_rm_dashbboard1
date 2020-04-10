@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {UtilService} from 'src/app/services/util.service';
 import {MFSchemeLevelHoldingsComponent} from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
@@ -29,10 +29,10 @@ export class MutualFundAllTransactionComponent implements OnInit {
   schemeWiseForFilter: any;
   mutualFundListFilter: any;
 
-  constructor(private subInjectService: SubscriptionInject, private uilService: UtilService,
+  constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
               private mfService: MfServiceService, private eventService: EventService) {
   }
-
+  @ViewChild('allTranTemplate', {static: false}) allTranTemplate: ElementRef;
   @Input() mutualFund;
 
   ngOnInit() {
@@ -44,6 +44,10 @@ export class MutualFundAllTransactionComponent implements OnInit {
       this.subCatArray(this.mutualFundList,''); // for displaying table values as per category
       this.getDataForRightFilter();
     }
+  }
+
+  Excel(someth) {
+    
   }
 
   subCatArray(mutualFundList,type) {
@@ -124,7 +128,10 @@ export class MutualFundAllTransactionComponent implements OnInit {
       this.grandTotal = this.mfService.getEachTotalValue(element);
     });
   }
-
+  generatePdf() {
+    let para = document.getElementById('template');
+    this.utilService.htmlToPdf(para.innerHTML, 'Test')
+  }
   editTransaction(portfolioData, data) {
     const fragmentData = {
       flag: portfolioData,

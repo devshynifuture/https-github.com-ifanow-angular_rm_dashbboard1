@@ -118,7 +118,7 @@ get getCoOwner() {
 
 addNewCoOwner(data) {
   this.getCoOwner.push(this.fb.group({
-    name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+    name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
   }));
   if (data) {
     setTimeout(() => {
@@ -186,7 +186,7 @@ removeNewNominee(item) {
 
 addNewNominee(data) {
   this.getNominee.push(this.fb.group({
-    name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+    name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
   }));
   if (!data || this.getNominee.value.length < 1) {
     for (let e in this.getNominee.controls) {
@@ -224,11 +224,12 @@ addNewNominee(data) {
       // ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
       getCoOwnerName: this.fb.array([this.fb.group({
         name: ['',[Validators.required]],
-        share: ['',[Validators.required]],
+        share: [0,[Validators.required]],
         familyMemberId: 0,
-        id:0
+        id: 0,
+        isClient:0
       })]),
-      guardian: [data.guardianName, [Validators.required]],
+      guardian: [data.guardianName?data.guardianName:'', [Validators.required]],
       accBalance: [data.accountBalance, [Validators.required, Validators.min(250), Validators.max(150000)]],
       balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],
       commDate: [new Date(data.commencementDate), [Validators.required]],

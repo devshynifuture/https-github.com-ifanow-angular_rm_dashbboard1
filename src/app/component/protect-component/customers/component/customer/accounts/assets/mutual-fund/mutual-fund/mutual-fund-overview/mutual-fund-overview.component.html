@@ -1,3 +1,4 @@
+<div #mfOverviewTemplate id="template">
 <div class="p-8">
   <div class="row pt-0">
     <div class="col-md-4 pl-0 c-p" (click)="openUpperFragment('mutualFunds')">
@@ -5,6 +6,10 @@
     </div>
     <div class="col-md-8 p-0 right text-right">
       <img src="assets/images/svg/download-bordered.svg" class="c-p">
+      <mat-menu #menu5="matMenu">
+        <button (click)="generatePdf()" mat-menu-item>PDF</button>
+        <button (click)="Excel('Mutual fund overview ')" mat-menu-item>XLS</button>
+    </mat-menu>
       <img src="assets/images/svg/up-down.svg" class="c-p">
       <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
       <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
@@ -551,4 +556,5 @@
       </div>
     </button>
   </mat-menu>
+</div>
 </div>

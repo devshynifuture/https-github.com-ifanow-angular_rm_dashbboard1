@@ -18,10 +18,10 @@
                     <mat-radio-button [value]="1" [ngClass]="taskTemplate.get('categoryId').value == 1 ? 'text-primary b-a-custom': 'text-primitive'">
                         Asset
                     </mat-radio-button>
-                    <mat-radio-button [value]="2" [ngClass]="taskTemplate.get('categoryId').value == 2 ? 'text-primary b-a-custom': 'text-primitive'">
+                    <mat-radio-button [value]="3" [ngClass]="taskTemplate.get('categoryId').value == 3 ? 'text-primary b-a-custom': 'text-primitive'">
                         Insurance
                     </mat-radio-button>
-                    <mat-radio-button [value]="3" [ngClass]="taskTemplate.get('categoryId').value == 3 ? 'text-primary b-a-custom': 'text-primitive'">
+                    <mat-radio-button [value]="2" [ngClass]="taskTemplate.get('categoryId').value == 2 ? 'text-primary b-a-custom': 'text-primitive'">
                         Liability
                     </mat-radio-button>
                 </mat-radio-group>
@@ -31,7 +31,7 @@
         <div class="row" [hidden]="taskTemplate.get('templateType').value == 1">
             <div class="col-md-10 pl-0">
                 <h5 class="m-0 pb-8 pt-24">Template Name</h5>
-                <div class="form-group">
+                <div class="form-group" floatLabel="never" appearance="standard">
                     <mat-form-field [floatLabel]="'never'">
                         <input matInput type="text" class="form-control br-0 rupess" formControlName="taskDescription" maxlength="60" placeholder="Template Name">
                         <mat-hint>{{taskTemplate.get('taskDescription').value.length}}/60</mat-hint>
@@ -45,10 +45,10 @@
             <div class="col-md-5 pl-0">
                 <h5 class="m-0 pb-8 pt-24">Select {{category}}</h5>
                 <div class="form-group">
-                    <mat-form-field>
+                    <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select class="form-control" formControlName="subcategoryId">
                             <mat-option value="" disabled>Select option</mat-option>
-                            <mat-option [value]="subCategory.subcategoryId" (click)="selectedSubcategory(subCategory)" *ngFor="let subCategory of categoryList">
+                            <mat-option [value]="subCategory.subcategoryId" *ngFor="let subCategory of categoryList">
                                 {{subCategory.subcategoryType}}
                             </mat-option>
                         </mat-select>
@@ -62,8 +62,8 @@
             <div class="col-md-5 pl-0" [hidden]="hideSubcategory">
                 <h5 class="m-0 pb-8 pt-24">Select sub category</h5>
                 <div class="form-group">
-                    <mat-form-field>
-                        <mat-select class="form-control" formControlName="subSubCategoryId">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <mat-select class="form-control" formControlName="subSubCategoryId" [required]="!hideSubcategory">
                             <mat-option value="" disabled>Select option</mat-option>
                             <mat-option [value]="sub.subSubCategoryId" *ngFor="let sub of listOfSub">
                                 {{sub.subcategoryType}}</mat-option>
@@ -80,7 +80,7 @@
             <div class="col-md-10 pl-0">
                 <h5 class="m-0 pb-8 pt-24">Select task template</h5>
                 <div class="form-group">
-                    <mat-form-field>
+                    <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select class="form-control" formControlName="adviceTypeId">
                             <mat-option value="" disabled>Select option</mat-option>
                             <mat-option [value]="advise.id" *ngFor="let advise of globalData.system_generated_advice_map_key">{{advise.name}}

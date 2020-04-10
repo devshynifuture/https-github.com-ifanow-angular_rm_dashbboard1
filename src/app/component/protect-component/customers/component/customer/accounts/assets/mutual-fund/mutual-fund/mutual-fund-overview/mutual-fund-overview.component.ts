@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { UpperCustomerComponent } from 'src/app/component/protect-component/customers/component/common-component/upper-customer/upper-customer.component';
 import { AddMutualFundComponent } from '../add-mutual-fund/add-mutual-fund.component';
 import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
@@ -44,6 +44,8 @@ export class MutualFundOverviewComponent implements OnInit {
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
   displayedColumns1 = ['data', 'amts'];
   datasource1 = ELEMENT_DATA1;
+  @ViewChild('mfOverviewTemplate', {static: false}) mfOverviewTemplate: ElementRef;
+
   // @Input() mutualFund;
 
   ngOnInit() {
@@ -162,6 +164,10 @@ export class MutualFundOverviewComponent implements OnInit {
       this.dataSource2 = new MatTableDataSource(this.filteredArray);
       this.isLoading = false
     }
+  }
+  generatePdf() {
+    let para = document.getElementById('template');
+    this.UtilService.htmlToPdf(para.innerHTML, 'Test')
   }
   pieChart(id) {
     Highcharts.chart('piechartMutualFund', {
@@ -292,6 +298,10 @@ export class MutualFundOverviewComponent implements OnInit {
         }
       }
     );
+  }
+
+  Excel(something) {
+    
   }
 }
 export interface PeriodicElement1 {

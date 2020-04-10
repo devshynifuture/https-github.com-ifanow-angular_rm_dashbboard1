@@ -64,8 +64,15 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" matInput #guradian class="form-control br-0" formControlName="guardian"
-                        matInput maxlength="20" type="text">
+                    <mat-select matInput formControlName="guardian" 
+                            class="form-control br-0" >
+                            <mat-option value='' disabled>Select Guardian</mat-option>
+                            <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
+                                <span>{{f.userName}}</span>
+                            </mat-option>
+                        </mat-select>
+                    <!-- <input autocomplete="off" matInput #guradian class="form-control br-0" formControlName="guardian"
+                        matInput maxlength="20" type="text"> -->
                     <mat-error class="f-12"> This field is required</mat-error>
 
                 </mat-form-field>

@@ -31,7 +31,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
   dataEdited = false;
   
   @Input() data;
-  hideSubcategory: boolean;
+  hideSubcategory: boolean = true;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -82,17 +82,6 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
   }
 
   selectedSubcategory(value) {
-    this.listOfSub = value.taskTempSubcattoSubCategories
-    this.taskTemplate.controls.subSubCategoryId.setValue('');
-    if (this.listOfSub.length == 0) {
-      this.hideSubcategory = true;
-      this.taskTemplate.controls.subSubCategoryId.clearValidators();
-      this.taskTemplate.updateValueAndValidity();
-    } else {
-      this.hideSubcategory = false;
-      this.taskTemplate.controls.subSubCategoryId.setValidators([Validators.required]);
-      this.taskTemplate.updateValueAndValidity();
-    }
   }
 
   createTaskTemplateForm() {
@@ -115,7 +104,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
       this.taskTemplate.controls.categoryId.setValidators([Validators.required]);
       this.taskTemplate.controls.subcategoryId.setValidators([Validators.required]);
       this.taskTemplate.controls.adviceTypeId.setValidators([Validators.required]);
-      this.taskTemplate.controls.subSubCategoryId.setValidators([Validators.required]);
+      // this.taskTemplate.controls.subSubCategoryId.setValidators([Validators.required]);
     } else {
       this.taskTemplate.controls.taskDescription.setValidators([Validators.required]);
     }
@@ -143,19 +132,30 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
   setFormListeners(){
     this.subscription.add(
       this.taskTemplate.controls.categoryId.valueChanges.subscribe(value => {
-        this.category = value == 1 ? 'Asset' : value == 2 ? 'Insurance' : 'Liability';
+        this.category = value == 1 ? 'Asset' : value == 3 ? 'Insurance' : 'Liability';
         this.taskTemplate.controls.subcategoryId.setValue('');
         this.taskTemplate.controls.subSubCategoryId.setValue('');
         this.dataEdited = true;
+        this.hideSubcategory = true;
         this.categoryList = this.globalData.task_template_category_and_subcategory_list.find(data => data.categoryId == value).taskTempSubCategorytoCategoryList;
       })
     )
-    if(this.data.id) {
-      this.subscription.add(
-        this.taskTemplate.controls.subcategoryId.valueChanges.subscribe(value => {
+    this.subscription.add(
+      this.taskTemplate.controls.subcategoryId.valueChanges.subscribe(value => {
         this.dataEdited = true;
-        })
-      )
+        if(value != '') {
+          this.listOfSub = this.categoryList.find(subCategory => subCategory.subcategoryId == value).taskTempSubcattoSubCategories;
+          this.taskTemplate.controls.subSubCategoryId.setValue('');
+          if (this.listOfSub.length == 0) {
+            this.hideSubcategory = true;
+          } else {
+            this.hideSubcategory = false;
+          }
+          this.taskTemplate.updateValueAndValidity();
+        }
+      })
+    )
+    if(this.data.id) {
       this.subscription.add(
         this.taskTemplate.controls.subSubCategoryId.valueChanges.subscribe(value => {
         this.dataEdited = true;
@@ -228,6 +228,11 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
     let jsonObj = this.taskTemplate.value;
     jsonObj.subTaskList = this.reorderSubtasksForEditedTemplate();
     jsonObj.isEdited = this.dataEdited ? 1 : 0;
+    if(jsonObj.templateType == 1) {
+      jsonObj.taskDescription = this.globalData.system_generated_advice_map_key.find(obj => obj.id == jsonObj.adviceTypeId).name;
+    }
+    this.setNullForEmptyValues(jsonObj);
+    console.log(jsonObj);
 
     this.orgSetting.editTaskTemplate(jsonObj).subscribe(
       data => {
@@ -244,9 +249,11 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
     jsonObj.subTaskList.forEach((task, index) => {
       task.taskNumber = index + 1;
     });
-    if(jsonObj.taskTemplate == 1) {
+    if(jsonObj.templateType == 1) {
       jsonObj.taskDescription = this.globalData.system_generated_advice_map_key.find(obj => obj.id == jsonObj.adviceTypeId).name;
     }
+    this.setNullForEmptyValues(jsonObj);
+    console.log(jsonObj);
     this.orgSetting.addTaskTemplate(jsonObj).subscribe(
       data => {
         this.event.openSnackBar('Added successfully!', 'Dismiss');
@@ -258,27 +265,36 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
 
   reorderSubtasksForEditedTemplate() {
     let formSubTaskList = this.subTask.value as Array<any>;
-    let deletedSubTasks = this.data.subTaskList.filter(sb => !formSubTaskList.map(li => li.id).includes(sb.id));
-    deletedSubTasks.forEach(task => {
-      task.taskNumber = 0;
-      task['isEdited'] = 0;
-      task['isDeleted'] = 1;
-    });
+    let deletedSubTasks = [];
+    const existingSubtaskList = this.data.subTaskList;
+    if(existingSubtaskList) {
+      deletedSubTasks = this.data.subTaskList.filter(sb => !formSubTaskList.map(li => li.id).includes(sb.id));
+      deletedSubTasks.forEach(task => {
+        task.taskNumber = 0;
+        task['isEdited'] = 0;
+        task['isDeleted'] = 1;
+      });
+    }
 
     formSubTaskList.forEach((newSubTask, index) => {
-      const previousSubtask = this.data.subTaskList.find(subTask => subTask.id == newSubTask.id);
-      if(previousSubtask) {
-        if(previousSubtask.description == newSubTask.description &&
-          previousSubtask.turnAroundTime == newSubTask.turnAroundTime &&
-          previousSubtask.ownerId == newSubTask.ownerId) {
-
-          newSubTask['isEdited'] = 0;
+      if(existingSubtaskList) {
+        const previousSubtask = this.data.subTaskList.find(subTask => subTask.id == newSubTask.id);
+        if(previousSubtask) {
+          if(previousSubtask.description == newSubTask.description &&
+            previousSubtask.turnAroundTime == newSubTask.turnAroundTime &&
+            previousSubtask.ownerId == newSubTask.ownerId) {
+            newSubTask['isEdited'] = 0;
+          } else {
+            newSubTask['isEdited'] = 1;
+          }
         } else {
-          newSubTask['isEdited'] = 1;
+          newSubTask['isEdited'] = 0;
         }
-        newSubTask.taskNumber = index + 1;
-        newSubTask['isDeleted'] = 0;
+      } else {
+        newSubTask['isEdited'] = 0;
       }
+      newSubTask.taskNumber = index + 1;
+      newSubTask['isDeleted'] = 0;
     });
 
     return [deletedSubTasks, formSubTaskList].flat();
@@ -294,6 +310,14 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
       this.taskTemplate.updateValueAndValidity();
     } else {
       this.isLoading = true;
+    }
+  }
+
+  setNullForEmptyValues(jsonObj:any){
+    for(let k in jsonObj) {
+      if(jsonObj[k] == '') {
+        jsonObj[k] = null;
+      }
     }
   }
 
