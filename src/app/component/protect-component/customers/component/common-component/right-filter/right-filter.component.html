@@ -79,8 +79,8 @@
       </mat-expansion-panel-header>
       <div>
         <mat-checkbox (change)="selectAll($event,transactionView,'countTranView')" name="selectAll">select/unselect All</mat-checkbox>
-        <mat-list-item role="listitem" *ngFor="let item of transactionView">
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect()">{{item.displayName}}</mat-checkbox>
+        <mat-list-item role="listitem" *ngFor="let item of transactionView let i = index;">
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect(item,i)">{{item.displayName}}</mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>
