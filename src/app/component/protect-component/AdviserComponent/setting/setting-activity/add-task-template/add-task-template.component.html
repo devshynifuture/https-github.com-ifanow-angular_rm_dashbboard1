@@ -31,8 +31,8 @@
         <div class="row" [hidden]="taskTemplate.get('templateType').value == 1">
             <div class="col-md-10 pl-0">
                 <h5 class="m-0 pb-8 pt-24">Template Name</h5>
-                <div class="form-group" floatLabel="never" appearance="standard">
-                    <mat-form-field [floatLabel]="'never'">
+                <div class="form-group matFormPadding">
+                    <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                         <input matInput type="text" class="form-control br-0 rupess" formControlName="taskDescription" maxlength="60" placeholder="Template Name">
                         <mat-hint>{{taskTemplate.get('taskDescription').value.length}}/60</mat-hint>
                         <mat-error class="f-12">This field is required</mat-error>
@@ -44,7 +44,7 @@
         <div class="row" [hidden]="taskTemplate.get('templateType').value == 2">
             <div class="col-md-5 pl-0">
                 <h5 class="m-0 pb-8 pt-24">Select {{category}}</h5>
-                <div class="form-group">
+                <div class="form-group matFormPadding">
                     <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select class="form-control" formControlName="subcategoryId">
                             <mat-option value="" disabled>Select option</mat-option>
@@ -61,7 +61,7 @@
 
             <div class="col-md-5 pl-0" [hidden]="hideSubcategory">
                 <h5 class="m-0 pb-8 pt-24">Select sub category</h5>
-                <div class="form-group">
+                <div class="form-group matFormPadding">
                     <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select class="form-control" formControlName="subSubCategoryId" [required]="!hideSubcategory">
                             <mat-option value="" disabled>Select option</mat-option>
@@ -79,7 +79,7 @@
         <div class="row" [hidden]="taskTemplate.get('templateType').value == 2">
             <div class="col-md-10 pl-0">
                 <h5 class="m-0 pb-8 pt-24">Select task template</h5>
-                <div class="form-group">
+                <div class="form-group matFormPadding">
                     <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select class="form-control" formControlName="adviceTypeId">
                             <mat-option value="" disabled>Select option</mat-option>
@@ -158,8 +158,8 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="col-md-1 p-0 d-flex align-items-center justify-content-sm-between">
-                    <i class="material-icons c-p " (click)="removeSubTask(i)">
+                <div class="col-md-1 p-0 d-flex  justify-content-sm-between">
+                    <i class="material-icons c-p mt-8" (click)="removeSubTask(i)">
                         remove
                     </i>
                 </div>
