@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 
 @Component({
@@ -21,6 +22,21 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
   ],
 })
 export class BondsComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   validatorType = ValidatorType
   maxDate = new Date();
   dataSource: any;
@@ -369,6 +385,7 @@ export class BondsComponent implements OnInit {
         compounding: this.bonds.controls.compound.value,
         id: this.bonds.controls.id.value
       }
+      this.barButtonOptions.active = true;
 
       obj.nomineeList.forEach((element, index) => {
         if(element.name == ''){
@@ -381,24 +398,32 @@ export class BondsComponent implements OnInit {
       if (this.bonds.controls.id.value == undefined) {
         this.custumService.addBonds(obj).subscribe(
           data => this.addBondsRes(data),
-          error => this.eventService.showErrorMessage(error)
+          error =>{
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(error)
+          } 
         );
       } else {
         //edit call
         this.custumService.editBonds(obj).subscribe(
           data => this.editBondsRes(data),
-          error => this.eventService.showErrorMessage(error)
+          error =>{
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(error)
+          } 
         );
       }
     }
   }
   addBondsRes(data) {
     console.log('addbondsRes', data)
+    this.barButtonOptions.active = false;
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
     this.eventService.openSnackBar('Added successfully!', 'Dismiss');
 
   }
   editBondsRes(data) {
+    this.barButtonOptions.active = false;
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
     this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
 
