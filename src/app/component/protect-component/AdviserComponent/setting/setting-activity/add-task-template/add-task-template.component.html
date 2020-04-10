@@ -97,8 +97,8 @@
         <div class="row pt-24">
             <div class="col-md-5 pl-0">
                 <h5 class="m-0 pb-8">Default assigned to</h5>
-                <div class="form-group">
-                    <mat-form-field>
+                <div class="form-group matFormPadding">
+                    <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select class="form-control" formControlName="assignedTo">
                             <mat-option value="" disabled>Select option</mat-option>
                             <mat-option [value]="team.userId" *ngFor="let team of teamMemberList">
@@ -111,8 +111,8 @@
             </div>
             <div class="col-md-5 pl-0">
                 <h5 class="m-0 pb-8">Turnaround time</h5>
-                <div class="form-group">
-                    <mat-form-field>
+                <div class="form-group matFormPadding">
+                    <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select class="form-control" formControlName="turnAroundTime">
                             <mat-option value="" disabled>Select option</mat-option>
                             <mat-option [value]="t.value" *ngFor="let t of Tat">{{t.tat}}</mat-option>
@@ -137,7 +137,7 @@
                     </div>
                 </div>
                 <div class="col-md-3 pl-0">
-                    <div class="form-group">
+                    <div class="form-group matFormPadding">
                         <mat-form-field floatLabel="never" appearance="standard" class="arrowRemoveBox">
                             <img class="img-pos" src="/assets/images/svg/calander.svg">
                             <mat-select class="form-control" formControlName="turnAroundTime">
@@ -149,7 +149,7 @@
                     </div>
                 </div>
                 <div class="col-md-3 pl-0">
-                    <div class="form-group">
+                    <div class="form-group matFormPadding">
                         <mat-form-field floatLabel="never" appearance="standard" class="arrowRemoveBox">
                             <img class="img-pos-two" src="/assets/images/svg/people.svg">
                             <mat-select class="form-control" formControlName="ownerId">

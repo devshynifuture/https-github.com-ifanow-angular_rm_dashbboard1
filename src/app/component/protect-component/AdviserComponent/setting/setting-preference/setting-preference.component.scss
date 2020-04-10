@@ -34,10 +34,11 @@
     height: 40px;
     border-radius: 2px !important;
 }
+
 .height23 {
     height: 23px;
-  }
-  
+}
+
 .skeletonAnimation .relClass {
     position: relative;
     .bar {
@@ -59,4 +60,8 @@
             animation: loading 1s infinite;
         }
     }
+}
+
+::ng-deep .matFormPadding .mat-form-field-appearance-standard .mat-form-field-flex {
+    padding-top: 0px;
 }
