@@ -208,7 +208,7 @@ export class MfServiceService {
     if (dataForFilter.fromDate && dataForFilter.toDate) {
       mutualFundList.forEach(element => {
         element.mutualFundTransactions = element.mutualFundTransactions.filter((item: any) =>
-          item.transactionDate <= dataForFilter.fromDate && item.transactionDate >= dataForFilter.toDate
+          item.transactionDate >= dataForFilter.fromDate && item.transactionDate <= dataForFilter.toDate
         );
       })
     }
