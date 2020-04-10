@@ -46,6 +46,10 @@ export class MutualFundAllTransactionComponent implements OnInit {
     }
   }
 
+  Excel(someth) {
+    
+  }
+
   subCatArray(mutualFundList,type) {
     var reportType;
     (type=='' || type[0].name=='Sub Category wise')?reportType='subCategoryName':(type[0].name=='Category wise')?reportType='categoryName':reportType='name'
