@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {RightFilterComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {UtilService} from 'src/app/services/util.service';
@@ -8,6 +8,7 @@ import {AddMutualFundComponent} from '../add-mutual-fund/add-mutual-fund.compone
 import {MFSchemeLevelHoldingsComponent} from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
 import {MFSchemeLevelTransactionsComponent} from '../mfscheme-level-transactions/mfscheme-level-transactions.component';
 import {MfServiceService} from '../../mf-service.service';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
 
 @Component({
   selector: 'app-mutual-fund-summary',
@@ -29,8 +30,11 @@ export class MutualFundSummaryComponent implements OnInit {
   schemeWiseForFilter: any[];
   mutualFundListFilter: any[];
   rightFilterData: any;
+  @ViewChild('tableEl', { static: false }) tableEl;
+
+
   constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
-              private mfService: MfServiceService) {
+              private mfService: MfServiceService,private excel : ExcelGenService) {
   }
 
   @Input() mutualFund;
@@ -45,7 +49,10 @@ export class MutualFundSummaryComponent implements OnInit {
       this.getDataForRightFilter();
     }
   }
-
+  Excel(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows,tableTitle)
+  }
   subCatArray(mutualFundList, type) {
       let reportType;
       (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
