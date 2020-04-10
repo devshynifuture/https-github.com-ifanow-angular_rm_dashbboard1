@@ -40,8 +40,7 @@
             <div class="col-md-2" *ngIf="bankAccounts.value.getCoOwnerName.length > 1">
                 <div class="form-group mb-0 iconPetage">
                     <mat-form-field>
-                        <input matInput class="form-control br-0 percentage" type="number" formControlName="share"
-                            (focusout)="onChangeJointOwnership('owner')">
+                        <input matInput class="form-control br-0 percentage" type="number" formControlName="share" (focusout)="onChangeJointOwnership('owner')">
                         <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
                             This field is required
                         </mat-error>
@@ -92,8 +91,7 @@
                         <mat-option value="1">Current</mat-option>
                         <mat-option value="2">Savings</mat-option>
                     </mat-select>
-                    <mat-error class="f-12"
-                        [ngClass]="{'v-h':!(isAccountType && getFormControl().accountType.invalid || getFormControl().accountType.touched && getFormControl().accountType.invalid)}">
+                    <mat-error class="f-12" [ngClass]="{'v-h':!(isAccountType && getFormControl().accountType.invalid || getFormControl().accountType.touched && getFormControl().accountType.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -108,11 +106,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input autocomplete="off" matInput #accountBalance type="text" appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess"
-                        formControlName="accountBalance">
-                    <mat-error class="f-12"
-                        [ngClass]="{'v-h':!(isAccountBalance && getFormControl().accountBalance.invalid || getFormControl().accountBalance.touched && getFormControl().accountBalance.invalid)}">
+                    <input autocomplete="off" matInput #accountBalance type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess" formControlName="accountBalance">
+                    <mat-error class="f-12" [ngClass]="{'v-h':!(isAccountBalance && getFormControl().accountBalance.invalid || getFormControl().accountBalance.touched && getFormControl().accountBalance.invalid)}">
                         This field is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{accountBalance.value.length}}/10</mat-hint>
@@ -131,8 +126,7 @@
                     class="form-control br-0 b-0" [max]="maxDate" [matDatepicker]="picker" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <mat-error class="f-12"
-                    [ngClass]="{'v-h':!(isBalanceAsOn && getFormControl().balanceAsOn.invalid || getFormControl().balanceAsOn.touched && getFormControl().balanceAsOn.invalid)}">
+                <mat-error class="f-12" [ngClass]="{'v-h':!(isBalanceAsOn && getFormControl().balanceAsOn.invalid || getFormControl().balanceAsOn.touched && getFormControl().balanceAsOn.invalid)}">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -146,11 +140,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0 iconPetage">
                 <mat-form-field>
-                    <input matInput autocomplete="off" type="number" appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage"
-                        formControlName="interestRate" (keyup)="onChange($event)">
-                    <mat-error class="f-12"
-                        [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
+                    <input matInput autocomplete="off" type="number" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage" formControlName="interestRate" (keyup)="onChange($event)">
+                    <mat-error class="f-12" [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -171,8 +162,7 @@
                         <mat-option value="4">Half yearly</mat-option>
                         <mat-option value="5">Yearly</mat-option>
                     </mat-select>
-                    <mat-error class="f-12"
-                        [ngClass]="{'v-h':!(isCompound && getFormControl().compound.invalid || getFormControl().compound.touched && getFormControl().compound.invalid)}">
+                    <mat-error class="f-12" [ngClass]="{'v-h':!(isCompound && getFormControl().compound.invalid || getFormControl().compound.touched && getFormControl().compound.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -200,9 +190,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" matInput #bankAcNo type="text" appInputValueValidation
-                            [inputValidator]="validatorType.NUMBER_ONLY" maxlength="16" class="form-control br-0"
-                            formControlName="bankAcNo">
+                        <input autocomplete="off" matInput #bankAcNo type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="16" class="form-control br-0" formControlName="bankAcNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{bankAcNo.value.length}}/16</mat-hint>
                     </mat-form-field>
@@ -217,8 +205,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" matInput #description maxlength="60" class="form-control br-0"
-                            formControlName="description">
+                        <input autocomplete="off" matInput #description maxlength="60" class="form-control br-0" formControlName="description">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
@@ -226,21 +213,16 @@
             </div>
         </div>
         <div formArrayName="getNomineeName">
-            <div class="row pt-36"
-                *ngFor="let obj of bankAccounts.controls['getNomineeName'].controls; let pointIndex=index"
-                [formGroupName]="pointIndex">
+            <div class="row pt-36" *ngFor="let obj of bankAccounts.controls['getNomineeName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
                 </div>
                 <div [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
-                                (selectionChange)="disabledMember($event.value,'nominee')"
-                                (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                            <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'nominee')" (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                                 <mat-option value='' disabled>Select family members</mat-option>
-                                <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
-                                    [value]="f.userName">
+                                <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                     <span>{{f.userName}}</span>
                                 </mat-option>
                             </mat-select>
@@ -253,8 +235,7 @@
                 <div class="col-md-2" *ngIf="getNominee.length > 1">
                     <div class="form-group mb-0 iconPetage">
                         <mat-form-field>
-                            <input matInput class="form-control br-0 percentage" type="number"
-                                formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
+                            <input matInput class="form-control br-0 percentage" type="number" formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
                             <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('required')">
                                 This field is required
                             </mat-error>
@@ -265,12 +246,8 @@
                     </div>
                 </div>
                 <div class="col-md-2 p-0 d-flex align-items-center">
-                    <i *ngIf="bankAccounts.value.getNomineeName.length < 3"
-                        class="material-icons text-primitive f-20 c-p float-left"
-                        (click)="addNewNominee(undefined)">add</i>
-                    <i *ngIf="bankAccounts.value.getNomineeName.length > 1"
-                        class="material-icons text-primitive f-20 c-p pl-10"
-                        (click)="removeNewNominee(pointIndex)">remove</i>
+                    <i *ngIf="bankAccounts.value.getNomineeName.length < 3" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewNominee(undefined)">add</i>
+                    <i *ngIf="bankAccounts.value.getNomineeName.length > 1" class="material-icons text-primitive f-20 c-p pl-10" (click)="removeNewNominee(pointIndex)">remove</i>
                 </div>
 
             </div>

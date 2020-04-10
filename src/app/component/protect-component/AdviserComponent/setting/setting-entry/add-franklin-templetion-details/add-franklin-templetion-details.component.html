@@ -59,10 +59,10 @@
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input type="text" matInput formControlName="registeredEmail" class="form-control">
+                <mat-form-field [floatLabel]="'never'">
+                    <input type="text" matInput formControlName="registeredEmail" class="form-control" placeholder="example@email.com">
                 </mat-form-field>
-                <mat-error *ngIf="franklinFG.get('registeredEmail').errors?.required">This field is required</mat-error>
+                <mat-error *ngIf="franklinFG.get('registeredEmail').errors?.required && franklinFG.get('registeredEmail').touched">This field is required</mat-error>
                 <mat-error *ngIf="franklinFG.get('registeredEmail').errors?.pattern">Email is not valid</mat-error>
             </div>
         </div>

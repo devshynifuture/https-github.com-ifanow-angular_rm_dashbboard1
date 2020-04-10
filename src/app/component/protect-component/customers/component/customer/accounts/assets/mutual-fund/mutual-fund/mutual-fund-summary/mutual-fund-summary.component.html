@@ -5,9 +5,15 @@
             <h4 class="m-0 text-black roboto pt-8">Mutual fund summary</h4>
         </div>
         <div class="col-md-8 p-0 d-flex justify-content-end">
-            <img class="c-p" src="assets/images/svg/download-bordered.svg">
+            <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
+            <mat-menu #menu5="matMenu">
+                <button (click)="generatePdf()" mat-menu-item>PDF</button>
+                <button (click)="Excel('Mutual fund summary')" mat-menu-item>XLS</button>
+            </mat-menu>
             <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
             <img class="c-p mr-12" src="assets/images/svg/up-down.svg">
+            <!-- <img matTooltip="Download PDF" (click)="generatePdf()" class="b-a c-p"
+                            src="assets/images/svg/pdf-icons.svg"> -->
             <button class="btn-default addon mr-12 v-middle mat-stroked-button mat-button-base" mat-stroked-button=""
                 (click)="openFilter()">
                 <span class="mat-button-wrapper"><i class="material-icons">filter_list</i>FILTERS</span>
@@ -62,30 +68,37 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" #summaryTemplate id="template">
         <div [ngClass]="isLoading ? '': 'table-scroll'" class="col-md-12 p-0 mb-8">
-            <table matSort mat-table [dataSource]="customDataSource" id="tbs" class="mutualfunds-capital-equity">
+            <table #tableEl matSort mat-table [dataSource]="customDataSource" id="tbs"
+                class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
+                [appSkeletonLoading]="isLoading">
 
                 <ng-container matColumnDef="schemeName" sticky>
                     <th class="br" mat-sort-header="schemeName" mat-header-cell *matHeaderCellDef> Scheme name </th>
-                    <td class="br" mat-cell *matCellDef="let element"><span
-                            *ngIf="element.schemeName!='Total'">{{element.schemeName}}</span>
-                        <span class="f-700" *ngIf="element.schemeName=='Total'">{{element.schemeName}}</span> </td>
+                    <td class="br" mat-cell *matCellDef="let element">
+                        <div class="bar"><span *ngIf="element.schemeName!='Total'">{{element.schemeName}}</span>
+                            <span class="f-700" *ngIf="element.schemeName=='Total'">{{element.schemeName}}</span>
+                        </div>
+                    </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left">Grand Total
                     </td>
-
                 </ng-container>
 
                 <ng-container matColumnDef="amountInvested">
                     <th class="br text-right" mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef>
                         Amount invested</th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <span appFormatNumber *ngIf="element.amountInvested">{{element.amountInvested}}</span>
-                        <span appFormatNumber class="f-700"
-                            *ngIf="element.totalAmountInvested">{{element.totalAmountInvested}}</span>
+                        <div class="bar"> <span appFormatNumber
+                                *ngIf="element.amountInvested">{{element.amountInvested}}</span>
+                            <span appFormatNumber class="f-700"
+                                *ngIf="element.totalAmountInvested">{{element.totalAmountInvested}}</span>
+                        </div>
                     </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                        {{(mutualFund)?mutualFund.total_amount_invested:'0'}}</td>
+                        <div class="bar"> {{(mutualFund)?mutualFund.total_amount_invested:'0'}}
+                        </div>
+                    </td>
 
                 </ng-container>
 
@@ -93,11 +106,16 @@
                     <th class="br text-left" mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef>
                         Current value</th>
                     <td class="br text-left" mat-cell *matCellDef="let element">
-                        <span appFormatNumber *ngIf="element.currentValue">{{element.currentValue}}</span>
-                        <span appFormatNumber class="f-700"
-                            *ngIf="element.totalCurrentValue">{{element.totalCurrentValue}}</span> </td>
+                        <div class="bar"><span appFormatNumber
+                                *ngIf="element.currentValue">{{element.currentValue}}</span>
+                            <span appFormatNumber class="f-700"
+                                *ngIf="element.totalCurrentValue">{{element.totalCurrentValue}}</span>
+                        </div>
+                    </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                        {{(mutualFund)?mutualFund.total_current_value:'0'}}</td>
+                        <div class="bar"> {{(mutualFund)?mutualFund.total_current_value:'0'}}
+                        </div>
+                    </td>
 
                 </ng-container>
 
@@ -106,11 +124,16 @@
                     <th class="br text-right" mat-sort-header="unrealizedProfit" mat-header-cell *matHeaderCellDef>
                         Unrealized profit (loss) </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <span appFormatNumber *ngIf="element.unrealizedGain">{{element.unrealizedGain}}</span>
-                        <span appFormatNumber class="f-700"
-                            *ngIf="element.totalUnrealizedGain">{{element.totalUnrealizedGain}}</span></td>
+                        <div class="bar"><span appFormatNumber
+                                *ngIf="element.unrealizedGain">{{element.unrealizedGain}}</span>
+                            <span appFormatNumber class="f-700"
+                                *ngIf="element.totalUnrealizedGain">{{element.totalUnrealizedGain}}</span>
+                        </div>
+                    </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                        {{(mutualFund)?mutualFund.total_unrealized_gain:'0'}}</td>
+                        <div class="bar"> {{(mutualFund)?mutualFund.total_unrealized_gain:'0'}}
+                        </div>
+                    </td>
 
                 </ng-container>
 
@@ -118,23 +141,30 @@
                     <th class="br text-right w-7" mat-sort-header="absoluteReturn" mat-header-cell *matHeaderCellDef>Abs
                         Ret %</th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <span appFormatNumber *ngIf="element.absoluteReturn">{{element.absoluteReturn}}</span>
-                        <span appFormatNumber class="f-700"
-                            *ngIf="element.totalAbsoluteReturn">{{element.totalAbsoluteReturn}}</span>
+                        <div class="bar"><span appFormatNumber
+                                *ngIf="element.absoluteReturn">{{element.absoluteReturn}}</span>
+                            <span appFormatNumber class="f-700"
+                                *ngIf="element.totalAbsoluteReturn">{{element.totalAbsoluteReturn}}</span>
+                        </div>
                     </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                        {{(mutualFund)?mutualFund.total_absolute_return:'0'}}</td>
+                        <div class="bar"> {{(mutualFund)?mutualFund.total_absolute_return:'0'}}
+                        </div>
+                    </td>
 
                 </ng-container>
 
                 <ng-container matColumnDef="xirr">
                     <th class="br text-right" mat-sort-header="xirr" mat-header-cell *matHeaderCellDef>XIRR % </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <span appFormatNumber *ngIf="element.xirr">{{element.xirr}}</span>
-                        <span appFormatNumber class="f-700" *ngIf="element.totalXirr">{{element.totalXirr}}</span>
+                        <div class="bar"> <span appFormatNumber *ngIf="element.xirr">{{element.xirr}}</span>
+                            <span appFormatNumber class="f-700" *ngIf="element.totalXirr">{{element.totalXirr}}</span>
+                        </div>
                     </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                        {{(mutualFund)?mutualFund.total_xirr:'0'}}</td>
+                        <div class="bar">{{(mutualFund)?mutualFund.total_xirr:'0'}}
+                        </div>
+                    </td>
 
                 </ng-container>
 
@@ -143,11 +173,16 @@
                         Dividend payout</th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         {{element.dividendPayout}}
-                        <span appFormatNumber *ngIf="element.dividendPayout">{{element.dividendPayout}}</span>
-                        <span appFormatNumber class="f-700"
-                            *ngIf="element.totalDividendPayout">{{element.totalDividendPayout}}</span> </td>
+                        <div class="bar"><span appFormatNumber
+                                *ngIf="element.dividendPayout">{{element.dividendPayout}}</span>
+                            <span appFormatNumber class="f-700"
+                                *ngIf="element.totalDividendPayout">{{element.totalDividendPayout}}</span>
+                        </div>
+                    </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                        {{(mutualFund)?mutualFund.total_dividend_payout:'0'}}</td>
+                        <div class="bar"> {{(mutualFund)?mutualFund.total_dividend_payout:'0'}}
+                        </div>
+                    </td>
 
                 </ng-container>
 
@@ -155,11 +190,15 @@
                     <th class="br text-right" mat-sort-header="switchOut" mat-header-cell *matHeaderCellDef>
                         Withdrawals Switch outs </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <span appFormatNumber *ngIf="element.switchOut">{{element.switchOut}}</span>
-                        <span appFormatNumber class="f-700"
-                            *ngIf="element.totalSwitchOut">{{element.totalSwitchOut}}</span></td>
+                        <div class="bar"><span appFormatNumber *ngIf="element.switchOut">{{element.switchOut}}</span>
+                            <span appFormatNumber class="f-700"
+                                *ngIf="element.totalSwitchOut">{{element.totalSwitchOut}}</span>
+                        </div>
+                    </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                        {{(mutualFund)?mutualFund.total_switch_out:'0'}}</td>
+                        <div class="bar"> {{(mutualFund)?mutualFund.total_switch_out:'0'}}
+                        </div>
+                    </td>
 
                 </ng-container>
 
@@ -168,11 +207,16 @@
                         Balance Unit </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         {{element.balanceUnit}}
-                        <span appFormatNumber *ngIf="element.balanceUnit">{{element.balanceUnit}}</span>
-                        <span appFormatNumber class="f-700"
-                            *ngIf="element.totalBalanceUnit">{{element.totalBalanceUnit}}</span></td>
+                        <div class="bar"><span appFormatNumber
+                                *ngIf="element.balanceUnit">{{element.balanceUnit}}</span>
+                            <span appFormatNumber class="f-700"
+                                *ngIf="element.totalBalanceUnit">{{element.totalBalanceUnit}}</span>
+                        </div>
+                    </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                        {{(mutualFund)?mutualFund.balanceUnit:'0'}}</td>
+                        <div class="bar"> {{(mutualFund)?mutualFund.balanceUnit:'0'}}
+                        </div>
+                    </td>
 
                 </ng-container>
 
@@ -181,7 +225,8 @@
                     </th>
                     <td class="br text-right" mat-cell *matCellDef="let element"> {{element.navDate}} </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                        {{(mutualFund)?mutualFund.navDate:'0'}}
+                        <div class="bar">{{(mutualFund)?mutualFund.navDate:'0'}}
+                        </div>
                     </td>
 
                 </ng-container>
@@ -189,18 +234,22 @@
                     <th class="br text-right" mat-sort-header="sipAmount" mat-header-cell *matHeaderCellDef> SIP
                     </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <span appFormatNumber *ngIf="element.sipAmount">{{element.sipAmount}}</span>
-                        <span appFormatNumber class="f-700"
-                            *ngIf="element.totalSipAmount">{{element.totalSipAmount}}</span>
+                        <div class="bar"><span appFormatNumber *ngIf="element.sipAmount">{{element.sipAmount}}</span>
+                            <span appFormatNumber class="f-700"
+                                *ngIf="element.totalSipAmount">{{element.totalSipAmount}}</span>
+                        </div>
                     </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                        {{(mutualFund)?mutualFund.totalSipAmount:'0'}}
+                        <div class="bar"> {{(mutualFund)?mutualFund.totalSipAmount:'0'}}
+                        </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="groupHeader">
                     <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
                         class="text-center text-primary">
-                        {{group.groupName}}</td>
+                        <div class="bar"> {{group.groupName}}
+                        </div>
+                    </td>
                 </ng-container>
                 <!-- <ng-container matColumnDef="groupHeader2">
                         <td colspan="11" *matCellDef="let group" [attr.colspan]="displayedColumns.length"
@@ -250,6 +299,53 @@
 
 
             </table>
+            <div *ngIf="customDataSource.length == 0" class="d-flex flex-column align-items-center">
+                <img class="width300" src="assets/images/svg/noDataFound.svg">
+                <h4 class="text-center pt-12"> No data found</h4>
+                <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1"><i
+                        class="material-icons">add</i>ADD NEW</button>
+                <mat-menu #menu1="matMenu" class="add-new">
+                    <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b">
+                        <div class="row">
+                            <div class="col-md-2 pr-8 text-right">
+                                <img src="assets/images/svg/dark-three-dot.svg">
+                            </div>
+                            <div class="col-md-10">
+                                <p class="m-0 text-black">Portfolio summary</p>
+                                <p class="m-0 f-13 pt-4 text-custom">Add just the overall portfolio
+                                    <br> summary. Time saver!
+                                </p>
+                            </div>
+                        </div>
+                    </button>
+                    <button (click)="openMutualFund('holding',null)" mat-menu-item class="b-b">
+                        <div class="row">
+                            <div class="col-md-2 pr-8 text-right">
+                                <img src="assets/images/svg/scheme-icon.svg">
+                            </div>
+                            <div class="col-md-10">
+                                <p class="m-0 text-black">Scheme level transactions</p>
+                                <p class="m-0 pt-4 f-13 text-custom">Add transaction data at
+                                    <br> scheme level for better reporting
+                                </p>
+                            </div>
+                        </div>
+                    </button>
+                    <button (click)="openMutualFund('transaction',null)" mat-menu-item>
+                        <div class="row">
+                            <div class="col-md-2 pr-8 text-right">
+                                <img src="assets/images/svg/dark-download.svg">
+                            </div>
+                            <div class="col-md-10">
+                                <p class="m-0 text-black">Import data</p>
+                                <p class="m-0 pt-4 f-13 text-custom">Add transaction data at
+                                    <br> scheme level for better reporting
+                                </p>
+                            </div>
+                        </div>
+                    </button>
+                </mat-menu>
+            </div>
         </div>
     </div>
 </div>

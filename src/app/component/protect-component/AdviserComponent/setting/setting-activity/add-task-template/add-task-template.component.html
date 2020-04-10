@@ -18,10 +18,10 @@
                     <mat-radio-button [value]="1" [ngClass]="taskTemplate.get('categoryId').value == 1 ? 'text-primary b-a-custom': 'text-primitive'">
                         Asset
                     </mat-radio-button>
-                    <mat-radio-button [value]="2" [ngClass]="taskTemplate.get('categoryId').value == 2 ? 'text-primary b-a-custom': 'text-primitive'">
+                    <mat-radio-button [value]="3" [ngClass]="taskTemplate.get('categoryId').value == 3 ? 'text-primary b-a-custom': 'text-primitive'">
                         Insurance
                     </mat-radio-button>
-                    <mat-radio-button [value]="3" [ngClass]="taskTemplate.get('categoryId').value == 3 ? 'text-primary b-a-custom': 'text-primitive'">
+                    <mat-radio-button [value]="2" [ngClass]="taskTemplate.get('categoryId').value == 2 ? 'text-primary b-a-custom': 'text-primitive'">
                         Liability
                     </mat-radio-button>
                 </mat-radio-group>
@@ -32,8 +32,8 @@
             <div class="col-md-10 pl-0" >
                 <h5 class="m-0 pb-8 pt-24">Template Name</h5>
                 <div class="form-group">
-                    <mat-form-field>
-                        <input matInput type="text" class="form-control br-0 rupess" formControlName="taskDescription" maxlength="60">
+                    <mat-form-field [floatLabel]="'never'">
+                        <input matInput type="text" class="form-control br-0 rupess" formControlName="taskDescription" maxlength="60" placeholder="Template Name">
                         <mat-hint>{{taskTemplate.get('taskDescription').value.length}}/60</mat-hint>
                         <mat-error class="f-12">This field is required</mat-error>
                     </mat-form-field>
@@ -130,8 +130,8 @@
             <div class="row pb-16" *ngFor="let creds of subTask.controls; let i = index" [formGroupName]="i">
                 <div class="col-md-4 pl-0">
                     <div class="form-group">
-                        <mat-form-field>
-                            <input matInput type="text" class="form-control br-0 rupess" formControlName="description">
+                        <mat-form-field [floatLabel]="'never'">
+                            <input matInput type="text" class="form-control br-0 rupess" formControlName="description" placeholder="Sub Task Description">
                             <mat-error class="f-12">
                                 This field is required
                             </mat-error>

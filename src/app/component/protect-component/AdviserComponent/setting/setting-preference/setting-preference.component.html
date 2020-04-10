@@ -16,9 +16,9 @@
                     <li (click)="viewMode ='tab2';getPlan()" [ngClass]="{'b-outline':viewMode =='tab2','':viewMode =='tab2'}" class="c-p">
                         Plan section
                     </li>
-                    <li (click)="viewMode ='tab3';" [ngClass]="{'b-outline':viewMode =='tab3','':viewMode =='tab3'}" class="c-p">
+                    <!-- <li (click)="viewMode ='tab3';" [ngClass]="{'b-outline':viewMode =='tab3','':viewMode =='tab3'}" class="c-p">
                         Activity section
-                    </li>
+                    </li> -->
                     <li (click)="viewMode ='tab4';getEmailVerification()" [ngClass]="{'b-outline':viewMode =='tab4','':viewMode =='tab4'}" class=" c-p">
                         Email verification
                     </li>
@@ -124,7 +124,7 @@
                                         <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
                                         <td mat-cell *matCellDef="let element" class="br">
                                             <div class="bar">
-                                                {{isLoading ? '' : (element.emailVerificationStatus == 2)?'Verification Pending':(element.emailVerificationStatus == 1)?'Veriied':'Verification Failed'}}
+                                                {{isLoading ? '' : (element.emailVerificationStatus == 2)?'Verification Pending':(element.emailVerificationStatus == 1)?'Verified':'Verification Failed'}}
                                             </div>
                                         </td>
                                     </ng-container>
@@ -138,7 +138,7 @@
                                                 <!-- <button mat-menu-item (click)="verifyEmail(element)">
                                                     <span>Edit</span>
                                                 </button> -->
-                                                <button mat-menu-item (click)="deleteModal('emailVerify',element)">
+                                                <button mat-menu-item (click)="deleteEmailModal('EMAIL',element)">
                                                     <span>Delete</span>
                                                 </button>
                                             </mat-menu>
@@ -267,9 +267,9 @@
                                 <div class="row">
                                     <div class="col-md-11 p-0 pt-6">
                                         <div class="form-group b-a">
-                                            <mat-form-field class="url">
+                                            <mat-form-field class="url" [floatLabel]="'never'">
                                                 <button mat-stroked-button class="b-0 h-40 bg-grey lter min-80 text-custom">https://</button>
-                                                <input matInput type="text" [readonly]="!showUpdate" class="form-control b-0 w-60" formControlName="normalLable">
+                                                <input matInput type="text" [readonly]="!showUpdate" class="form-control b-0 w-60" formControlName="normalLable" placeholder="example">
                                                 <button mat-stroked-button class="right b-0 h-40 bg-grey lter min-80 pl-8 text-custom">.myplanner.in</button>
                                             </mat-form-field>
                                         </div>
@@ -291,10 +291,9 @@
                                 <div class="row">
                                     <div class="col-md-11 p-0 pt-6">
                                         <div class="form-group b-a">
-                                            <mat-form-field class="url">
+                                            <mat-form-field class="url" [floatLabel]="'never'">
                                                 <button mat-stroked-button class="b-0 h-40 bg-grey lter min-80 text-custom">https://</button>
-                                                <input matInput type="text" [readonly]="!showUpdateWhite" class="form-control b-0 w-60" formControlName="whiteLable">
-
+                                                <input matInput type="text" [readonly]="!showUpdateWhite" class="form-control b-0 w-60" formControlName="whiteLable" placeholder="www.example.com">
                                             </mat-form-field>
                                         </div>
                                     </div>

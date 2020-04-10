@@ -66,9 +66,9 @@
                                 <h5 class="m-0">{{arn.phone}}</h5> -->
                             </div>
                         </div>
-                        <div class="col-md-3 pl-0">
+                        <div class="col-md-3 pl-0" *ngIf="arn.gstNumber">
                             <p class="f-12 m-0 proxima text-primitive">GST</p>
-                            <h5 class="m-0">{{arn.gstNumber || 'NA'}}</h5>
+                            <h5 class="m-0">{{arn.gstNumber}}</h5>
                             <div class="pt-44">
                                 <p class="f-12 m-0 proxima text-primitive">EMAIL </p>
                                 <h5 class="m-0">{{arn.registeredEmail}}</h5>

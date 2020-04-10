@@ -33,7 +33,7 @@
         </div>
         <div class="col-md-5">
             <div class="form-group mb-0">
-                <mat-form-field>
+                <mat-form-field [floatLabel]="'never'">
                     <input type="text" matInput formControlName="loginId" class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -61,7 +61,7 @@
             <div class="col-md-4 pr-0" *ngIf="i > 0"></div>
             <div class="col-md-4">
                 <div class="form-group  mb-24">
-                    <select class="form-control" [formControlName]="'questionId'">
+                    <!-- <select class="form-control" [formControlName]="'questionId'">
                         <option value="" selected disabled>Select Question</option>
                         <option [value]="questionObj.id" *ngFor="let questionObj of data.globalData.rta_cams_fund_net_security_questions_list">
                             {{questionObj.question}}</option>
@@ -69,9 +69,10 @@
                     <mat-error *ngIf="secretQuestionForm.controls.questionId.invalid && secretQuestionForm.controls.questionId.errors.required && secretQuestionForm.controls.questionId.touched">
                         This field is required</mat-error>
                     <mat-error *ngIf="secretQuestionForm.controls.questionId.invalid && secretQuestionForm.controls.questionId.errors.duplicate">
-                        This question already exists</mat-error>
+                        This question already exists</mat-error> -->
                     <!-- <mat-form-field>
                     </mat-form-field> -->
+                    {{data.globalData.rta_cams_fund_net_security_questions_list[i].question}}
                 </div>
             </div>
             <div class="col-md-2 pl-0">
@@ -84,7 +85,7 @@
             </div>
 
             <!-- controls when adding first time -->
-            <div class="col-md-2 pl-0 d-flex" *ngIf="is_add">
+            <!-- <div class="col-md-2 pl-0 d-flex" *ngIf="is_add">
                 <div *ngIf="camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.length == (i+1)">
                     <i class="material-icons c-p text-custom pt-8" (click)="addMoreQuestion()">
                         add
@@ -95,10 +96,10 @@
                         remove
                     </i>
                 </div>
-            </div>
+            </div> -->
 
             <!-- controls on edit -->
-            <div class="col-md-2 pl-0 d-flex" *ngIf="!is_add">
+            <!-- <div class="col-md-2 pl-0 d-flex" *ngIf="!is_add">
                 <div *ngIf="showAddMoreQuestionBtn && camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList.length == (i+1)">
                     <i class="material-icons c-p text-custom pt-8" (click)="addIndividualQuestion()">
                         add
@@ -114,7 +115,7 @@
                         save
                     </i>
                 </div>
-            </div>
+            </div> -->
         </ng-container>
     </div>
 </div>

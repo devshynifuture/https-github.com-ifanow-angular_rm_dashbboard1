@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { UpperCustomerComponent } from 'src/app/component/protect-component/customers/component/common-component/upper-customer/upper-customer.component';
 import { AddMutualFundComponent } from '../add-mutual-fund/add-mutual-fund.component';
 import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
@@ -30,25 +30,33 @@ export class MutualFundOverviewComponent implements OnInit {
   hybridCurrentValue: any;
   solution_OrientedCurrentValue: any;
   otherCurrentValue: any;
-  dataSource4: any;
-  dataSource3: any;
+  dataSource4: Array<any> = [{}, {}, {}];
   filteredArray: any[];
   subCategoryArray: any;
-  dataSource2: MatTableDataSource<any>;
-  dataSource: MatTableDataSource<unknown>;
+  dataSource2;
+  dataSource;
+  isLoading: boolean = false;
+  dataSource3;
   constructor(public subInjectService: SubscriptionInject, public UtilService: UtilService,
-              public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService) {
+    public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService) {
   }
 
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
   displayedColumns1 = ['data', 'amts'];
   datasource1 = ELEMENT_DATA1;
+  @ViewChild('mfOverviewTemplate', {static: false}) mfOverviewTemplate: ElementRef;
+
   // @Input() mutualFund;
 
   ngOnInit() {
     this.getMutualFundData();
+    this.dataSource = [{}, {}, {}];
+    this.dataSource2 = [{}, {}, {}];
+    this.dataSource3 = [{}, {}, {}];
   }
   getMutualFundData() {
+    this.isLoading = true
+
     const obj = {
       advisorId: 2753,
       clientId: 15545
@@ -60,6 +68,8 @@ export class MutualFundOverviewComponent implements OnInit {
     );
   }
   getMutualFundResponse(data) {
+    this.isLoading = false
+
     console.log(data);
     this.mfData = data;
     this.calculatePercentage(data); // for Calculating MF categories percentage
@@ -134,14 +144,30 @@ export class MutualFundOverviewComponent implements OnInit {
   }
   getsubCategorywiseAllocation(data) {
     this.filteredArray = this.MfServiceService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
-    this.dataSource3 = new MatTableDataSource(this.filteredArray);
+    this.isLoading = true
+    if(this.dataSource3.length > 0){
+      this.dataSource3 = new MatTableDataSource(this.filteredArray);
+      this.isLoading = false
+    }
   }
   getFamilyMemberWiseAllocation(data) {
-    this.dataSource = new MatTableDataSource(data.family_member_list);
+    this.isLoading = true
+    if(this.dataSource.length > 0){
+      this.dataSource = new MatTableDataSource(data.family_member_list);
+      this.isLoading = false
+    }
   }
   schemeWiseAllocation(data) {
+    this.isLoading = true
     this.filteredArray = this.MfServiceService.filter(this.filteredArray, 'mutualFundSchemeMaster');
-    this.dataSource2 = new MatTableDataSource(this.filteredArray);
+    if(this.dataSource2.length > 0){
+      this.dataSource2 = new MatTableDataSource(this.filteredArray);
+      this.isLoading = false
+    }
+  }
+  generatePdf() {
+    let para = document.getElementById('template');
+    this.UtilService.htmlToPdf(para.innerHTML, 'Test')
   }
   pieChart(id) {
     Highcharts.chart('piechartMutualFund', {

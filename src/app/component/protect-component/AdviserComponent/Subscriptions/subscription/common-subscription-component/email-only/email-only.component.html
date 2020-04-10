@@ -20,7 +20,7 @@
                 <p *ngIf="this.emailData" class="m-0 text-black">
                     {{(this.emailData) ? this.emailData.fromEmail : 'support@futurewise.co.in'}}</p>
                 <input class="form-control" *ngIf="showfromEmail == true" [(ngModel)]="_inputData.fromEmail"
-                    type="text">
+                    type="text" placeholder="example@email.com">
             </div>
         </div>
     </div>

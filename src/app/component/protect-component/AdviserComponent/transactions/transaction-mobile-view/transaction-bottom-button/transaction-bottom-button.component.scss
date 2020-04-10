@@ -1,0 +1,11 @@
+@media(max-width: 767px){
+	::ng-deep .mat-bottom-sheet-container{
+			background-color: transparent;
+			box-shadow: none;
+					
+	}
+	::ng-deep .cdk-global-overlay-wrapper{
+		align-items: center !important;
+		margin-top: 75px; 
+	}
+}

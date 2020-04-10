@@ -18,9 +18,7 @@ import { EmailOnlyComponent } from '../../Subscriptions/subscription/common-subs
 })
 export class SettingPreferenceComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight'];
-  dataSource = ELEMENT_DATA;
   displayedColumns1: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource1 = ELEMENT_DATA1;
   viewMode = 'tab1';
   advisorId: any;
   portfolio: any;
@@ -249,7 +247,7 @@ export class SettingPreferenceComponent implements OnInit {
     console.log(data)
     this.getEmailVerification()
   }
-  deleteModal(value, data) {
+  deleteEmailModal(value, data) {
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -258,40 +256,24 @@ export class SettingPreferenceComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        if (value == 'template') {
-          // delete email template is not allowed
-          // this.orgSetting.deletePrefEmailTemplate(data.id).subscribe(
-          //   data => {
-          //     dialogRef.close();
-          //     this.getEmailTemplate();
-          //   },
-          //   error => this.eventService.showErrorMessage(error)
-          // );
-        } else if (value == 'emailVerify') {
-          this.orgSetting.deleteEmailVerify(data.id).subscribe(
-            data => {
-              dialogRef.close();
-              this.getEmailVerification();
-            },
-            error => this.eventService.showErrorMessage(error)
-          );
-        }
-        this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
+        this.orgSetting.deleteEmailVerify(data.id).subscribe(
+          data => {
+            dialogRef.close();
+            this.getEmailVerification();
+            this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
       }
     };
-    console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: dialogData,
       autoFocus: false,
-
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
 
     });
   }
@@ -387,33 +369,3 @@ export class SettingPreferenceComponent implements OnInit {
     );
   }
 }
-export interface PeriodicElement {
-  name: string;
-  position: string;
-
-
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 'archit.gupta@acmefinancial.com', name: 'Verified' },
-  { position: 'welcome@acmefinancial.com', name: 'Verification in process' },
-  { position: 'info@acmefinancial.com', name: 'Verification failed' },
-
-];
-
-
-
-export interface PeriodicElement1 {
-  name: string;
-  position: string;
-  weight: string;
-
-}
-
-const ELEMENT_DATA1: PeriodicElement1[] = [
-  {
-    position: 'Welcome email', name: 'Used when creating a new client or converting prospect to client',
-    weight: 'welcome@acmefinancial.com',
-  },
-
-];
