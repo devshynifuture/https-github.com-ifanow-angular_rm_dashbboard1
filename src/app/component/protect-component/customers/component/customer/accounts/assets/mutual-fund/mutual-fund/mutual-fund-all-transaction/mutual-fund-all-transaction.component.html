@@ -23,10 +23,12 @@
             </div>
             <div class="col-md-8 p-0 d-flex justify-content-end">
                 <img class="c-p" src="assets/images/svg/download-bordered.svg">
+                <mat-menu #menu5="matMenu">
+                    <button (click)="generatePdf()" mat-menu-item>PDF</button>
+                    <button (click)="Excel('Mutual fund All transactions')" mat-menu-item>XLS</button>
+                </mat-menu>
                 <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
                 <img class="c-p mr-12" src="assets/images/svg/up-down.svg">
-                <img matTooltip="Download PDF" (click)="generatePdf()" class="b-a c-p"
-                src="assets/images/svg/pdf-icons.svg">
                 <button (click)="openFilter()" class="btn-default addon v-middle" mat-stroked-button>
                   <i class="material-icons">filter_list</i>FILTERS
                 </button>

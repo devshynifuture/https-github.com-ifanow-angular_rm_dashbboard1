@@ -48,7 +48,7 @@
                     <mat-form-field>
                         <mat-select class="form-control" formControlName="subcategoryId">
                             <mat-option value="" disabled>Select option</mat-option>
-                            <mat-option [value]="subCategory.subcategoryId" (click)="selectedSubcategory(subCategory)"
+                            <mat-option [value]="subCategory.subcategoryId"
                                 *ngFor="let subCategory of categoryList">
                                 {{subCategory.subcategoryType}}
                             </mat-option>
@@ -64,7 +64,7 @@
                 <h5 class="m-0 pb-8 pt-24">Select sub category</h5>
                 <div class="form-group">
                     <mat-form-field>
-                        <mat-select class="form-control" formControlName="subSubCategoryId">
+                        <mat-select class="form-control" formControlName="subSubCategoryId" [required]="!hideSubcategory">
                             <mat-option value="" disabled>Select option</mat-option>
                             <mat-option [value]="sub.subSubCategoryId" *ngFor="let sub of listOfSub">
                                 {{sub.subcategoryType}}</mat-option>
