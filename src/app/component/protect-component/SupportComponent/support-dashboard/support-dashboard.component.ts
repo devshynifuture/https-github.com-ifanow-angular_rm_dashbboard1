@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { SupportUpperComponent } from './support-upper/support-upper.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SupportService } from '../support.service';
+import * as Highcharts from 'highcharts';
 
 @Component({
   selector: 'app-support-dashboard',
@@ -14,7 +15,49 @@ import { SupportService } from '../support.service';
 })
 export class SupportDashboardComponent implements OnInit {
   serviceStatusData: any;
-
+  dailyData: any;
+  highcharts = Highcharts;
+  chartOptions = {
+    chart: {
+      type: 'column'
+    },
+    chardata: {
+      table: 'datatable'
+    },
+    xAxis: {
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+      crosshair: true
+    },
+    yAxis:
+    {
+      allowDecimals: false,
+      title: {
+        text: 'Units'
+      }
+    },
+    tooltip: {
+      headerFormat: '<span style = "font-size:10px"></span><table>',
+      pointFormat: '<tr><td style = "color:{series.color};padding:0"> </td>' +
+        '<td style = "padding:0"><b>{point.y:.1f} mm</b></td></tr>', footerFormat: '</table>', shared: true, useHTML: true
+    },
+    plotOptions: {
+      column: {
+        pointPadding: 0.2,
+        borderWidth: 0
+      }
+    },
+    series: [{
+      data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6,
+        148.5, 216.4, 194.1, 95.6, 54.4]
+    },
+    {
+      data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3,
+        91.2, 83.5, 106.6, 92.3]
+    }]
+  }
+  historicalFileData: any;
+  historicalFileValue: string;
+  ifaCountData: any;
   constructor(
     private eventService: EventService,
     private subInjectService: SubscriptionInject,
@@ -22,18 +65,82 @@ export class SupportDashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // this.highcharts.chart('container',
+    //   {
+    //     data: {
+    //       table: 'datatable'
+    //     },
+    //     chart: {
+    //       type: 'column'
+    //     },
+    //     title: {
+    //       text: 'Data extracted from a HTML table in the page'
+    //     },
+    //     yAxis: {
+    //       allowDecimals: false,
+    //       title: {
+    //         text: 'Units'
+    //       }
+    //     },
+    //     credits: {
+    //       enabled: false
+    //     },
+    //     tooltip: {
+    //       formatter: function () {
+    //         return '<b>' + this.series.name + '</b><br/>' +
+    //           this.point.y + ' ' + this.point.name.toLowerCase();
+    //       }
+    //     }
+    //   })
+    this.historicalFileValue = '0'
     this.getDailyServicesStatusReport();
+    this.getDailyFiles();
+    this.getIfaMatricData();
+    this.filterHistoricalFileData({ value: this.historicalFileValue });
   }
   getDailyServicesStatusReport() {
-    let obj =
-    {
-
-    }
+    let obj = {};
     this.supportService.getDailyServicesStatusReport(obj).subscribe(
       data => {
         console.log(data);
         if (data) {
           this.serviceStatusData = data.service_status;
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+  getDailyFiles() {
+    let obj = {};
+    this.supportService.getDailyFiles(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          this.dailyData = data;
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+  filterHistoricalFileData(data) {
+    let obj = { filterId: parseInt(data.value) };
+    this.supportService.getHistoricFilesReport(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          this.historicalFileData = data;
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+  getIfaMatricData() {
+    let obj = {};
+    this.supportService.getIfaMatricData(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          this.ifaCountData = data;
         }
       }
       , err => this.eventService.openSnackBar(err, "Dismiss")

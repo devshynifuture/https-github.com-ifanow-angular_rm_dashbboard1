@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {UtilService} from 'src/app/services/util.service';
 import {MFSchemeLevelHoldingsComponent} from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
 import {MfServiceService} from '../../mf-service.service';
 import {RightFilterComponent} from "../../../../../../common-component/right-filter/right-filter.component";
 import {EventService} from "../../../../../../../../../../Data-service/event.service";
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
 
 @Component({
   selector: 'app-mutual-fund-all-transaction',
@@ -29,9 +30,12 @@ export class MutualFundAllTransactionComponent implements OnInit {
   schemeWiseForFilter: any;
   mutualFundListFilter: any;
 
-  constructor(private subInjectService: SubscriptionInject, private uilService: UtilService,
-              private mfService: MfServiceService, private eventService: EventService) {
+  constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
+              private mfService: MfServiceService, private eventService: EventService,
+              private excel : ExcelGenService) {
   }
+  @ViewChild('allTranTemplate', {static: false}) allTranTemplate: ElementRef;
+  @ViewChild('tableEl', { static: false }) tableEl;
 
   @Input() mutualFund;
 
@@ -44,6 +48,11 @@ export class MutualFundAllTransactionComponent implements OnInit {
       this.subCatArray(this.mutualFundList,''); // for displaying table values as per category
       this.getDataForRightFilter();
     }
+  }
+
+  Excel(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows,tableTitle)
   }
 
   subCatArray(mutualFundList,type) {
@@ -124,7 +133,10 @@ export class MutualFundAllTransactionComponent implements OnInit {
       this.grandTotal = this.mfService.getEachTotalValue(element);
     });
   }
-
+  generatePdf() {
+    let para = document.getElementById('template');
+    this.utilService.htmlToPdf(para.innerHTML, 'Test')
+  }
   editTransaction(portfolioData, data) {
     const fragmentData = {
       flag: portfolioData,

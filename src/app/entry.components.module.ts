@@ -92,6 +92,7 @@ import { OwnerNomineeComponent } from './component/protect-component/common-comp
 import { AddRecommendationsInsuComponent } from './component/protect-component/customers/component/customer/plan/insurance-plan/add-recommendations-insu/add-recommendations-insu.component';
 import { GetSharebleLinkComponent } from './component/protect-component/customers/component/customer/customer-overview/overview-documents/get-shareble-link/get-shareble-link.component';
 import { BottomSheetComponent } from './component/protect-component/customers/component/common-component/bottom-sheet/bottom-sheet.component';
+import { CustomCommonModule } from './common/custom.common.module';
 //import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
 
@@ -236,6 +237,7 @@ export const componentList = [
     FormsModule,
     ReactiveFormsModule,
     CommonComponentModule,
+    CustomCommonModule,
     // OwnerComponentModule,
     AccountEntryModule,
     AccountCommonModule,

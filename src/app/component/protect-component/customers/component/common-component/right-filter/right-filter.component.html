@@ -93,7 +93,6 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div>
-        <mat-checkbox (change)="selectAll($event,reportType,'countReport')" name="selectAll">select/unselect All</mat-checkbox>
         <mat-list-item role="listitem" *ngFor="let item of reportType">
           <mat-checkbox [(ngModel)]="item.selected"  (change)="changeReportFilter(item)">{{item.name}}</mat-checkbox>
         </mat-list-item>
@@ -115,7 +114,7 @@
         </mat-list-item>
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngIf="_data.name!='SUMMARY REPORT'">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h5 class="m-0">Transaction Period<span class="text-right f-14 pl-12">{{countCategory}} of {{category.length}}

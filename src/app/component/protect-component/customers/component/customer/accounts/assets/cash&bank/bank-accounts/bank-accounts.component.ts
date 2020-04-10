@@ -42,6 +42,7 @@ export class BankAccountsComponent implements OnInit {
   isAdviceFormValid: boolean = false;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   editData: any;
+  maxDate:Date = new Date();
   callMethod: { methodName: string; ParamValue: any; };
   constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
 
@@ -111,7 +112,7 @@ export class BankAccountsComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+      name: [data ? data.name : '', [Validators.required]], share: [data ? String(data.share) : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
     }));
     if (data) {
       setTimeout(() => {
@@ -179,7 +180,7 @@ export class BankAccountsComponent implements OnInit {
   
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+      name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -240,14 +241,16 @@ export class BankAccountsComponent implements OnInit {
       getCoOwnerName: this.fb.array([this.fb.group({
         name: ['', [Validators.required]],
         share: ['', [Validators.required]],
-        familyMemberId: null
+        familyMemberId: 0,
+        id: 0,
+        isClient:0
       })]),
       accountType: [(data.accountType == undefined) ? '' : (data.accountType) + "", [Validators.required]],
       accountBalance: [(data.accountBalance == undefined) ? '' : data.accountBalance, [Validators.required]],
       balanceAsOn: [(data.balanceAsOn == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
       interestRate: [(data.interestRate == undefined) ? '' : data.interestRate, [Validators.required]],
       compound: [(data.interestCompounding == undefined) ? '' : (data.interestCompounding) + "", [Validators.required]],
-      bankName: [(data.bankName == undefined) ? '' : data.bankName,],
+      bankName: [(data.bankName == undefined) ? '' : data.bankName, [Validators.required]],
       bankAcNo: [(data.accountNo == undefined) ? '' : data.accountNo,],
       description: [(data.description == undefined) ? '' : data.description,],
       // id: [(data.id == undefined) ? '' : data.id,],

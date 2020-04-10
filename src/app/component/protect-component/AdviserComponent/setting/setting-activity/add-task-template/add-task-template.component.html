@@ -18,21 +18,21 @@
                     <mat-radio-button [value]="1" [ngClass]="taskTemplate.get('categoryId').value == 1 ? 'text-primary b-a-custom': 'text-primitive'">
                         Asset
                     </mat-radio-button>
-                    <mat-radio-button [value]="2" [ngClass]="taskTemplate.get('categoryId').value == 2 ? 'text-primary b-a-custom': 'text-primitive'">
+                    <mat-radio-button [value]="3" [ngClass]="taskTemplate.get('categoryId').value == 3 ? 'text-primary b-a-custom': 'text-primitive'">
                         Insurance
                     </mat-radio-button>
-                    <mat-radio-button [value]="3" [ngClass]="taskTemplate.get('categoryId').value == 3 ? 'text-primary b-a-custom': 'text-primitive'">
+                    <mat-radio-button [value]="2" [ngClass]="taskTemplate.get('categoryId').value == 2 ? 'text-primary b-a-custom': 'text-primitive'">
                         Liability
                     </mat-radio-button>
                 </mat-radio-group>
             </div>
         </div>
-    
+
         <div class="row" [hidden]="taskTemplate.get('templateType').value == 1">
-            <div class="col-md-10 pl-0" >
+            <div class="col-md-10 pl-0">
                 <h5 class="m-0 pb-8 pt-24">Template Name</h5>
-                <div class="form-group">
-                    <mat-form-field [floatLabel]="'never'">
+                <div class="form-group matFormPadding">
+                    <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                         <input matInput type="text" class="form-control br-0 rupess" formControlName="taskDescription" maxlength="60" placeholder="Template Name">
                         <mat-hint>{{taskTemplate.get('taskDescription').value.length}}/60</mat-hint>
                         <mat-error class="f-12">This field is required</mat-error>
@@ -40,16 +40,15 @@
                 </div>
             </div>
         </div>
-    
+
         <div class="row" [hidden]="taskTemplate.get('templateType').value == 2">
             <div class="col-md-5 pl-0">
                 <h5 class="m-0 pb-8 pt-24">Select {{category}}</h5>
-                <div class="form-group">
-                    <mat-form-field>
+                <div class="form-group matFormPadding">
+                    <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select class="form-control" formControlName="subcategoryId">
                             <mat-option value="" disabled>Select option</mat-option>
-                            <mat-option [value]="subCategory.subcategoryId" (click)="selectedSubcategory(subCategory)"
-                                *ngFor="let subCategory of categoryList">
+                            <mat-option [value]="subCategory.subcategoryId" *ngFor="let subCategory of categoryList">
                                 {{subCategory.subcategoryType}}
                             </mat-option>
                         </mat-select>
@@ -59,12 +58,12 @@
                     </mat-form-field>
                 </div>
             </div>
-    
+
             <div class="col-md-5 pl-0" [hidden]="hideSubcategory">
                 <h5 class="m-0 pb-8 pt-24">Select sub category</h5>
-                <div class="form-group">
-                    <mat-form-field>
-                        <mat-select class="form-control" formControlName="subSubCategoryId">
+                <div class="form-group matFormPadding">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <mat-select class="form-control" formControlName="subSubCategoryId" [required]="!hideSubcategory">
                             <mat-option value="" disabled>Select option</mat-option>
                             <mat-option [value]="sub.subSubCategoryId" *ngFor="let sub of listOfSub">
                                 {{sub.subcategoryType}}</mat-option>
@@ -76,16 +75,15 @@
                 </div>
             </div>
         </div>
-    
+
         <div class="row" [hidden]="taskTemplate.get('templateType').value == 2">
             <div class="col-md-10 pl-0">
                 <h5 class="m-0 pb-8 pt-24">Select task template</h5>
-                <div class="form-group">
-                    <mat-form-field>
+                <div class="form-group matFormPadding">
+                    <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select class="form-control" formControlName="adviceTypeId">
                             <mat-option value="" disabled>Select option</mat-option>
-                            <mat-option [value]="advise.id"
-                                *ngFor="let advise of globalData.system_generated_advice_map_key">{{advise.name}}
+                            <mat-option [value]="advise.id" *ngFor="let advise of globalData.system_generated_advice_map_key">{{advise.name}}
                             </mat-option>
                         </mat-select>
                         <mat-error class="f-12">
@@ -95,12 +93,12 @@
                 </div>
             </div>
         </div>
-    
+
         <div class="row pt-24">
             <div class="col-md-5 pl-0">
                 <h5 class="m-0 pb-8">Default assigned to</h5>
-                <div class="form-group">
-                    <mat-form-field>
+                <div class="form-group matFormPadding">
+                    <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select class="form-control" formControlName="assignedTo">
                             <mat-option value="" disabled>Select option</mat-option>
                             <mat-option [value]="team.userId" *ngFor="let team of teamMemberList">
@@ -113,8 +111,8 @@
             </div>
             <div class="col-md-5 pl-0">
                 <h5 class="m-0 pb-8">Turnaround time</h5>
-                <div class="form-group">
-                    <mat-form-field>
+                <div class="form-group matFormPadding">
+                    <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select class="form-control" formControlName="turnAroundTime">
                             <mat-option value="" disabled>Select option</mat-option>
                             <mat-option [value]="t.value" *ngFor="let t of Tat">{{t.tat}}</mat-option>
@@ -124,13 +122,13 @@
                 </div>
             </div>
         </div>
-    
+
         <div class="pt-24 sub-tasks pb-60" formArrayName="subTaskList">
             <h5 class="mb-10 f-500 text-black">Sub-tasks</h5>
             <div class="row pb-16" *ngFor="let creds of subTask.controls; let i = index" [formGroupName]="i">
                 <div class="col-md-4 pl-0">
-                    <div class="form-group">
-                        <mat-form-field [floatLabel]="'never'">
+                    <div class="form-group matFormPadding">
+                        <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                             <input matInput type="text" class="form-control br-0 rupess" formControlName="description" placeholder="Sub Task Description">
                             <mat-error class="f-12">
                                 This field is required
@@ -139,8 +137,8 @@
                     </div>
                 </div>
                 <div class="col-md-3 pl-0">
-                    <div class="form-group">
-                        <mat-form-field class="arrowRemoveBox">
+                    <div class="form-group matFormPadding">
+                        <mat-form-field floatLabel="never" appearance="standard" class="arrowRemoveBox">
                             <img class="img-pos" src="/assets/images/svg/calander.svg">
                             <mat-select class="form-control" formControlName="turnAroundTime">
                                 <mat-option value="" disabled>Select option</mat-option>
@@ -151,32 +149,31 @@
                     </div>
                 </div>
                 <div class="col-md-3 pl-0">
-                    <div class="form-group">
-                        <mat-form-field class="arrowRemoveBox">
+                    <div class="form-group matFormPadding">
+                        <mat-form-field floatLabel="never" appearance="standard" class="arrowRemoveBox">
                             <img class="img-pos-two" src="/assets/images/svg/people.svg">
                             <mat-select class="form-control" formControlName="ownerId">
-                                <mat-option (click)="updateOwner()" [value]="team.userId"
-                                    *ngFor="let team of teamMemberList">{{team.name}}</mat-option>
+                                <mat-option (click)="updateOwner()" [value]="team.userId" *ngFor="let team of teamMemberList">{{team.name}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="col-md-1 p-0 d-flex justify-content-sm-between">
-                    <i class="material-icons c-p mt-6" (click)="removeSubTask(i)">
+                <div class="col-md-1 p-0 d-flex  justify-content-sm-between">
+                    <i class="material-icons c-p mt-8" (click)="removeSubTask(i)">
                         remove
                     </i>
                 </div>
             </div>
-    
+
             <div class="row">
                 <div class="col-md-12 p-0">
                     <p (click)="addSubTask()" class="m-0 c-p roboto text-custom pt-4 pb-44">+ Add more sub task
                     </p>
                 </div>
             </div>
-    
+
         </div>
-    
+
     </div>
 </div>
 

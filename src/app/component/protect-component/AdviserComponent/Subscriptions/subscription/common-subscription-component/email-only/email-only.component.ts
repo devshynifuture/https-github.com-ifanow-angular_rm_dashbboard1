@@ -28,23 +28,6 @@ export class EmailOnlyComponent implements OnInit {
   model: any;
   showfromEmail: any;
 
-  // @Input()
-  // set data(data) {
-  //   this._inputData = data;
-  //   this._inputData = {
-  //     advisorId: 2808,
-  //     clientData: {
-  //       id: data.clientData.id,
-  //       userEmailId: data.clientData.userEmailId
-  //     },
-  //     documentList: [{id: data.documentList.id, documentName: data.documentName}],
-  //     templateType: data.templateType
-  //   };
-  //   this.getEmailTemplateFilterData();
-  // }
-  // get data() {
-  //   return this._inputData;
-  // }
   @Input() set data(inputData) {
     const obj = [];
     this.doc = inputData.documentList;
@@ -74,18 +57,6 @@ export class EmailOnlyComponent implements OnInit {
 
     this.docObj = obj;
     this._inputData = inputData;
-    // this._inputData = {
-    //   advisorId: this.advisorId,
-    //   clientData: {
-    //     id: inputData.clientData.id,
-    //     userEmailId: inputData.clientData.userEmailId
-    //   },
-    //   // documentList: [{id: inputData.documentList.id, documentName: inputData.documentList.documentName}],
-    //   documentList: obj,
-    //   templateType: inputData.templateType
-    // };
-    console.log('dsfgsdggggggggg', this.docObj);
-    console.log('EmailOnlyComponent inputData : ', inputData);
     if (this.showfromEmail == false) {
       this.getEmailTemplateFilterData(inputData);
     } else {
@@ -127,11 +98,6 @@ export class EmailOnlyComponent implements OnInit {
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
     public subscription: SubscriptionService, private orgSetting: OrgSettingServiceService) {
     this.advisorId = AuthService.getAdvisorId();
-
-    // this.dataSub = this.subInjectService.singleProfileData.subscribe(
-    //   data => this.getcommanFroalaData(data)
-    // );
-
   }
 
   ngOnInit() {
@@ -195,35 +161,11 @@ export class EmailOnlyComponent implements OnInit {
       });
     });
   }
-
-  // getEmailTemplateFilterDataforEdit() {
-
-  //   const data = {
-  //     advisorId: 2828,
-  //     clientId: 2978,
-  //     templateType:2
-  //   };
-  //   this.subscription.getEmailTemplateFilterData(data).subscribe(responseData => {
-  //     this.emailData = responseData;
-  //     this.subject = this.emailData.subject;
-  //     this.emailBody = this.emailData.body;
-  //   }, error => {
-  //     this.eventService.openSnackBar(error, 'Dismiss', () => {
-  //       console.log('Dismiss was clicked');
-  //     });
-  //   });
-  // }
+  
   close(flag) {
     this.subInjectService.changeUpperRightSliderState({ state: 'close', refreshRequired: flag });
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
-
-    // this.valueChange.emit(this.emailSend);
   }
-
-  // remove(item) {
-  //   this.docObj.splice(item, 1);
-
-  // }
 
   getEmailTemplate() {
     const obj = {
@@ -242,24 +184,14 @@ export class EmailOnlyComponent implements OnInit {
   openEmailQuot(value, state) {
     this.eventService.sliderData(value);
     this.subInjectService.rightSliderData(state);
-    // this.subInjectService.addSingleProfile(data)
   }
 
   getcommanFroalaData(data) {
     console.log(data);
     this._inputData = data;
-    // this.getEmailTemplateFilterDataforEdit();
     this.emailBody = data;
 
   }
-
-  /*
-
-    saveData(data) {
-      console.log(data);
-      this.storeData.documentText = data;
-    }
-  */
 
   save() {
     console.log('here is saved data', this.emailBody);
@@ -272,9 +204,6 @@ export class EmailOnlyComponent implements OnInit {
       id: data.documentRepositoryId, // pass here advisor id for Invoice advisor
       docText: data.documentText
     };
-    // this.subscription.updateQuotationData(obj).subscribe(
-    //   data => this.getResponseData(data)
-    // );
 
     this.subscription.updateDocumentData(obj).subscribe(
       responseJson => this.getResponseData(responseJson)
