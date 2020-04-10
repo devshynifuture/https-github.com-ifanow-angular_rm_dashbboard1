@@ -299,6 +299,10 @@ export class MutualFundOverviewComponent implements OnInit {
       }
     );
   }
+
+  Excel(something) {
+    
+  }
 }
 export interface PeriodicElement1 {
   data: string;
