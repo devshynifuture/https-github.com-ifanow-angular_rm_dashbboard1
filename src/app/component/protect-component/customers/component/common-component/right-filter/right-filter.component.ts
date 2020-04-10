@@ -434,17 +434,14 @@ export class RightFilterComponent implements OnInit {
       this.reportTypeobj = filter;
     }
   };
-  selectAll(event,array,count){
-    count = 0;
+  selectAll(event,array){
     if (array != undefined) {
-
       array.forEach(item => {
         item.selected = event.checked;
-        if (item.selected) {
-          count++;
-        }
       });
+      this.changeSelect('','');
     }
+
   }
   generateReport() {
     if (this.summaryFilerForm.get('reportAsOn').invalid) {
