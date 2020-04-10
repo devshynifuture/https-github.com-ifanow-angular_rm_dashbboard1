@@ -26,7 +26,7 @@ export class MutualFundSummaryComponent implements OnInit {
   totalObj: any;
   customDataSource: Array<any> = [{}, {}, {}];
   catObj: {};
-  isLoading = false; // added for prod build
+  isLoading = true; // added for prod build
   schemeWiseForFilter: any[];
   mutualFundListFilter: any[];
   rightFilterData: any;
@@ -42,6 +42,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
   ngOnInit() {
     if (this.mutualFund.mutualFundList) {
+      this.isLoading=false;
       this.mutualFundList = this.mutualFund.mutualFundList;
       // this.getSubCategoryWise(this.mutualFund); // get subCategoryWise list
       // this.getSchemeWise(); // get scheme wise list

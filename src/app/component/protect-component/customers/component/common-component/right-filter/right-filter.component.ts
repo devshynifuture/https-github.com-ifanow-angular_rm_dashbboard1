@@ -58,6 +58,7 @@ export class RightFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    (this._data.name=='SUMMARY REPORT')?this.transactionPeriod=false:this.transactionPeriod=true;
     this.transactionPeriodCheck = true
     this.amc = this._data.schemeWise;//amc wise data 
     this.folio = this._data.folioWise;//for getting all folios
@@ -451,7 +452,7 @@ export class RightFilterComponent implements OnInit {
       array.forEach(item => {
         item.selected = event.checked;
       });
-      this.changeSelect('','');
+      this.changeSelect('', '');
     }
 
   }

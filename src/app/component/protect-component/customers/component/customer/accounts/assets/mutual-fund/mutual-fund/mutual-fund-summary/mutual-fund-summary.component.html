@@ -223,8 +223,12 @@
                 <ng-container matColumnDef="navDate">
                     <th class="br text-right" mat-sort-header="navDate" mat-header-cell *matHeaderCellDef>NAV Date
                     </th>
-                    <td class="br text-right" mat-cell *matCellDef="let element"> {{element.navDate}} </td>
-                    <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
+                    <td class="br text-right" mat-cell *matCellDef="let element">
+                        <div class="bar"><span  *ngIf="element.navDate">{{element.navDate}} </span>
+                            <span  class="f-700"
+                                *ngIf="element.navDate">{{element.navDate}}</span>
+                        </div> </td>
+                    <td *matFooterCellDef  class="br f-600 text-right" mat-footer-cell>
                         <div class="bar">{{(mutualFund)?mutualFund.navDate:'0'}}
                         </div>
                     </td>
@@ -270,7 +274,9 @@
                     </ng-container> -->
                 <ng-container matColumnDef="icons" sticky>
                     <th *matHeaderCellDef class="" mat-header-cell>test</th>
-                    <td *matCellDef="let element" class="" mat-cell><i [matMenuTriggerFor]="menu25"
+                    <td *matCellDef="let element" class="" mat-cell>
+                        <div *ngIf="!isLoading">
+                        <i [matMenuTriggerFor]="menu25"
                             class="material-icons c-p text-black">
                             more_vert
                         </i>
@@ -286,6 +292,7 @@
                             <button mat-menu-item>Delete scheme</button>
 
                         </mat-menu>
+                        </div>
                     </td>
 
                     <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
@@ -295,7 +302,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
                 <!-- <tr *matRowDef="let row; columns: ['groupHeader2']; when: isGroup2" mat-row></tr> -->
-                <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
+                <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
 
 
             </table>
