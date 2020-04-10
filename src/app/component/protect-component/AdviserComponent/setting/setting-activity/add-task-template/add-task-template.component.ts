@@ -88,7 +88,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
     this.taskTemplate = this.fb.group({
       id: [this.data.id, []],
       advisorId: this.advisorId,
-      categoryId: [this.data.categoryId || 1],
+      categoryId: [this.data.categoryId || ''],
       subcategoryId: [this.data.subcategoryId || ''],
       subSubCategoryId: [this.data.subSubCategoryId || ''],
       adviceTypeId: [this.data.adviceTypeId || ''],
@@ -101,6 +101,8 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
 
     // assign validators based on template type
     if (this.taskTemplate.controls.templateType.value == 1) {
+
+      this.taskTemplate.controls.categoryId.setValue(this.data.categoryId || 1);
       this.taskTemplate.controls.categoryId.setValidators([Validators.required]);
       this.taskTemplate.controls.subcategoryId.setValidators([Validators.required]);
       this.taskTemplate.controls.adviceTypeId.setValidators([Validators.required]);
