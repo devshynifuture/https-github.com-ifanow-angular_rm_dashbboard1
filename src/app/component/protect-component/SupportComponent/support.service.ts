@@ -41,6 +41,14 @@ export class SupportService {
   getDailyFiles(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DAILY_FILES, data);
   }
+
+  getHistoricFilesReport(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.FILTER_HISTORICAL_REPORT, data);
+  }
+
+  getIfaMatricData(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_IFA_MATRIC_DATA, data);
+  }
   // observable data sending
 
   sendDataThroughObs(value) {

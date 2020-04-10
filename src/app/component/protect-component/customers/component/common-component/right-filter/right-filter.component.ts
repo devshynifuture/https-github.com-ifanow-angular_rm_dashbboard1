@@ -370,7 +370,7 @@ export class RightFilterComponent implements OnInit {
     console.log('transaction ==', this._data.transactionView)
     if (data.selected == true) {
       this.sendTransactionView.push(i)
-    } else {
+    } else if(data.selected == false){
       this.sendTransactionView.pop(i)
     }
     console.log('data ==', this.sendTransactionView)
