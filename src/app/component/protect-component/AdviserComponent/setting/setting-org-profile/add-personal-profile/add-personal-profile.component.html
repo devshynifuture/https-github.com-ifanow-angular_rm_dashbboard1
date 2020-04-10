@@ -9,16 +9,16 @@
     </div>
 </div>
 
-<div [formGroup]="personalProfile"  class="pt-90 pl-40 pr-40 " id="ui-add-personal-profile">
+<div [formGroup]="personalProfile" class="pt-90 pl-40 pr-40 " id="ui-add-personal-profile">
     <mat-tab-group animationDuration="0ms" (selectedTabChange)="resetPageVariables()" [(selectedIndex)]="selectedTab">
         <mat-tab label="Profile">
             <div class="row pt-40">
                 <div class="col-md-4 text-right pr-0">
-                    <h5 class="m-0 pt-8">Name</h5>
+                    <h5 class="mb-0 mt-20">Name</h5>
                 </div>
                 <div class="col-md-5">
                     <div class="form-group mb-0">
-                        <mat-form-field [floatLabel]="'never'">
+                        <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                             <input matInput formControlName="name" class="form-control" placeholder="Joe Smith">
                             <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('name').errors?.required">This field is required</mat-error>
                             <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('name').errors?.maxlength">Character limit exceeded</mat-error>
@@ -28,11 +28,11 @@
             </div>
             <div class="row pt-40">
                 <div class="col-md-4 text-right pr-0">
-                    <h5 class="m-0 pt-8">Email ID</h5>
+                    <h5 class="mb-0 mt-20">Email ID</h5>
                 </div>
                 <div class="col-md-5">
                     <div class="form-group mb-0">
-                        <mat-form-field [floatLabel]="'never'">
+                        <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                             <input matInput formControlName="emailId" class="form-control" placeholder="example@email.com">
                             <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('emailId').errors?.required">This field is required</mat-error>
                             <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('emailId').errors?.pattern">Please enter valid email</mat-error>
@@ -42,14 +42,15 @@
             </div>
             <div class="row pt-40 ">
                 <div class="col-md-4 text-right pr-0">
-                    <h5 class="m-0 pt-8">Mobile No.</h5>
+                    <h5 class="mb-0 mt-20">Mobile No.</h5>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group mb-0">
-                        <mat-form-field [floatLabel]="'never'">
+                        <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                             <input matInput formControlName="mobileNo" class="form-control" placeholder="9878523691">
                             <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('mobileNo').errors?.required">This field is required</mat-error>
-                            <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('mobileNo').errors?.maxlength || personalProfile.get('mobileNo').errors?.minlength || personalProfile.get('mobileNo').errors?.pattern">Please enter valid mobile number</mat-error>
+                            <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('mobileNo').errors?.maxlength || personalProfile.get('mobileNo').errors?.minlength || personalProfile.get('mobileNo').errors?.pattern">
+                                Please enter valid mobile number</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -74,7 +75,9 @@
                     <h5 class="m-0 pt-8" *ngIf="!cropImage">Your profile pic</h5>
                 </div>
                 <div class="col-md-5" *ngIf="cropImage">
-                    <div *ngIf="!showCropper"><h5 class="m-0 pt-8">Upload a photo to edit and upload.</h5></div>
+                    <div *ngIf="!showCropper">
+                        <h5 class="m-0 pt-8">Upload a photo to edit and upload.</h5>
+                    </div>
                     <div class="image-cropper">
                         <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)"></app-image-cropper>
                     </div>
@@ -100,7 +103,7 @@
         </mat-tab>
     </mat-tab-group>
 </div>
-<div class="bottom-fixed wrapper-12 w-70">
+<div class="bottom-fixed wrapper-12 w-60">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(null)">Cancel</h5>
@@ -111,4 +114,3 @@
         </div>
     </div>
 </div>
-

@@ -77,7 +77,7 @@ export class SettingOrgProfileComponent implements OnInit {
       flag: flag,
       data,
       id: 1,
-      state: (flag == 'detailedNsc') ? 'open70' : 'open70',
+      state: (flag == 'detailedNsc') ? 'open' : 'open',
       componentName: AddPersonalProfileComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -89,7 +89,7 @@ export class SettingOrgProfileComponent implements OnInit {
       }
     );
   }
-  
+
   openOrg(flag) {
     if (flag == true) {
       this.orgProfile = true
@@ -104,7 +104,7 @@ export class SettingOrgProfileComponent implements OnInit {
       flag: flag,
       data,
       id: 1,
-      state: (flag == 'detailedNsc') ? 'open70' : 'open70',
+      state: (flag == 'detailedNsc') ? 'open' : 'open',
       componentName: OrgProfileComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
