@@ -187,10 +187,12 @@ export class OrgProfileComponent implements OnInit {
             } else if (tag_folder == 'organizational_report_logo') {
               this.updateOrganizationPhotoAndMoveToNextPage(responseObject, 'report');
             }
+          } else {
+            this.event.openSnackBar("Error occured");
           }
         });
     } else {
-
+      this.switchToTab(++this.selectedTab);
     }
   }
 

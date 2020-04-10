@@ -31,7 +31,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
   dataEdited = false;
   
   @Input() data;
-  hideSubcategory: boolean;
+  hideSubcategory: boolean = true;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -147,6 +147,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
         this.taskTemplate.controls.subcategoryId.setValue('');
         this.taskTemplate.controls.subSubCategoryId.setValue('');
         this.dataEdited = true;
+        this.hideSubcategory = true;
         this.categoryList = this.globalData.task_template_category_and_subcategory_list.find(data => data.categoryId == value).taskTempSubCategorytoCategoryList;
       })
     )
