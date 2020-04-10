@@ -5,6 +5,7 @@ import { EventService } from './../../../../Data-service/event.service';
 import { Component, OnInit } from '@angular/core';
 import { SupportUpperComponent } from './support-upper/support-upper.component';
 import { UtilService } from 'src/app/services/util.service';
+import { SupportService } from '../support.service';
 
 @Component({
   selector: 'app-support-dashboard',
@@ -12,15 +13,32 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./support-dashboard.component.scss']
 })
 export class SupportDashboardComponent implements OnInit {
+  serviceStatusData: any;
 
   constructor(
     private eventService: EventService,
-    private subInjectService: SubscriptionInject
+    private subInjectService: SubscriptionInject,
+    private supportService: SupportService
   ) { }
 
   ngOnInit() {
+    this.getDailyServicesStatusReport();
   }
+  getDailyServicesStatusReport() {
+    let obj =
+    {
 
+    }
+    this.supportService.getDailyServicesStatusReport(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          this.serviceStatusData = data.service_status;
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
   openAddStockMaster(data) {
     const fragmentData = {
       flag: 'openAddStockMaster',
