@@ -22,15 +22,21 @@
                 <h4 class="m-0 text-black roboto pt-8">Mutual fund unrealized transactions</h4>
             </div>
             <div class="col-md-6 p-0 d-flex justify-content-end">
-                <img class="c-p" src="assets/images/svg/download-bordered.svg">
+                <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
+                <mat-menu #menu5="matMenu">
+                    <button (click)="generatePdf()" mat-menu-item>PDF</button>
+                    <button (click)="Excel('Mutual fund unrealized transactions')" mat-menu-item>XLS</button>
+                </mat-menu>
                 <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
                 <img class="c-p mr-12" src="assets/images/svg/up-down.svg">
+                <!-- <img matTooltip="Download PDF" (click)="generatePdf()" class="b-a c-p"
+                src="assets/images/svg/pdf-icons.svg"> -->
                 <button class="btn-default addon v-middle" mat-stroked-button (click)="openFilter()">
                     <i class="material-icons">filter_list</i>FILTERS
                 </button>
             </div>
         </div>
-        <div class="row">
+        <div class="row" #unrealizedTranTemplate id="template">
             <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8">
                 <table matSort mat-table [dataSource]="dataSource" id="tbs"
                     class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
@@ -146,7 +152,7 @@
         </div>
         <div class="row">
             <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 pl-0 mb-8">
-                <table matSort mat-table [dataSource]="customDataSource" id="tbs"
+                <table #tableEl matSort mat-table [dataSource]="customDataSource" id="tbs"
                     class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
                     [appSkeletonLoading]="isLoading">
                     <ng-container matColumnDef="no" sticky>

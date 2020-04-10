@@ -1,9 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { MatTableDataSource } from '@angular/material';
 import { MfServiceService } from '../../mf-service.service';
 import { RightFilterComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
+import { ExcelService } from '../../../../../excel.service';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
 
 @Component({
   selector: 'app-mutual-fund-unrealized-tran',
@@ -28,8 +30,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   mutualFundListFilter: any[];
   rightFilterData: any;
   customDataSource: Array<any> = [{}, {}, {}];
+  @ViewChild('tableEl', { static: false }) tableEl;
+
   constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
-              private mfService: MfServiceService) { }
+              private mfService: MfServiceService,private excel :ExcelGenService) { }
   @Input() mutualFund;
   ngOnInit() {
     console.log('this.mutualFund == ', this.mutualFund);
@@ -46,6 +50,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     }
   }
 
+  Excel(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows,tableTitle)
+  }
   mfSchemes() {// get last mf list
   }
   getfinalTotalValue() { // grand total values
@@ -170,6 +178,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     return item.gain;
     return item.absReturn;
     return item.xirr;
+  }
+  generatePdf() {
+    let para = document.getElementById('template');
+    this.utilService.htmlToPdf(para.innerHTML, 'Unrealized Transaction Report')
   }
 
 }

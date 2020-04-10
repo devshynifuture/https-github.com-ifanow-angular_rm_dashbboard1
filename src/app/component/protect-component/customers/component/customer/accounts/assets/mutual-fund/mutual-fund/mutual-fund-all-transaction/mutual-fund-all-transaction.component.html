@@ -25,13 +25,15 @@
                 <img class="c-p" src="assets/images/svg/download-bordered.svg">
                 <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
                 <img class="c-p mr-12" src="assets/images/svg/up-down.svg">
+                <img matTooltip="Download PDF" (click)="generatePdf()" class="b-a c-p"
+                src="assets/images/svg/pdf-icons.svg">
                 <button (click)="openFilter()" class="btn-default addon v-middle" mat-stroked-button>
                   <i class="material-icons">filter_list</i>FILTERS
                 </button>
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" #allTranTemplate id="template">
             <div class="col-md-12 p-0 mb-8">
                 <table matSort mat-table [dataSource]="customDataSource" id="table-low"
                     class="mutualfunds-capital-equity">

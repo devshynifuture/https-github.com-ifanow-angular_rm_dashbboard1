@@ -93,7 +93,6 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div>
-        <mat-checkbox (change)="selectAll($event,reportType,'countReport')" name="selectAll">select/unselect All</mat-checkbox>
         <mat-list-item role="listitem" *ngFor="let item of reportType">
           <mat-checkbox [(ngModel)]="item.selected"  (change)="changeReportFilter(item)">{{item.name}}</mat-checkbox>
         </mat-list-item>
