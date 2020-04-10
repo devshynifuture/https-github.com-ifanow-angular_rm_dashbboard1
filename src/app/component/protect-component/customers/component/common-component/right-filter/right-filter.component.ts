@@ -446,7 +446,7 @@ export class RightFilterComponent implements OnInit {
       this.reportTypeobj = filter;
     }
   };
-  selectAll(event,array){
+  selectAll(event,array, someString){
     if (array != undefined) {
       array.forEach(item => {
         item.selected = event.checked;

@@ -5,7 +5,11 @@
       <h4 class="m-0 text-black roboto">Mutual fund overview</h4>
     </div>
     <div class="col-md-8 p-0 right text-right">
-      <img src="assets/images/svg/download-bordered.svg" class="c-p">
+      <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
+      <mat-menu #menu5="matMenu">
+          <button (click)="generatePdf()" mat-menu-item>PDF</button>
+          <!-- <button (click)="Excel('Mutual fund transactions')" mat-menu-item>XLS</button> -->
+      </mat-menu>
       <img src="assets/images/svg/up-down.svg" class="c-p">
       <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
       <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i

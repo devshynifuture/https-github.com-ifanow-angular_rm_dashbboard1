@@ -9,6 +9,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import * as moment from 'moment';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 
 @Component({
@@ -21,6 +22,21 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
   ],
 })
 export class RecuringDepositComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   validatorType = ValidatorType;
   maxDate = new Date();
   advisorId: any;
@@ -138,7 +154,7 @@ export class RecuringDepositComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
     }));
     if (data) {
       setTimeout(() => {
@@ -206,7 +222,7 @@ export class RecuringDepositComponent implements OnInit {
   
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+      name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -266,8 +282,9 @@ export class RecuringDepositComponent implements OnInit {
       getCoOwnerName: this.fb.array([this.fb.group({
         name: ['',[Validators.required]],
         share: [0,[Validators.required]],
-        familyMemberId: [0],
-        id:[0]
+        familyMemberId: 0,
+        id: 0,
+        isClient:0
       })]),
       // ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       monthlyContribution: [(data == undefined) ? '' : data.monthlyContribution, [Validators.required]],
@@ -388,7 +405,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.recuringDeposi
         // nominees: this.nominees,
         id: this.recuringDeposit.value.id
       }
-
+      this.barButtonOptions.active = true;
       obj.nomineeList.forEach((element, index) => {
         if(element.name == ''){
           this.removeNewNominee(index);
@@ -406,19 +423,28 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.recuringDeposi
       if (this.flag == 'adviceRecurringDeposit') {
         this.custumService.getAdviceRd(adviceObj).subscribe(
           data => this.getAdviceRdRes(data),
-          err => this.event.openSnackBar(err, "Dismiss")
+          err =>{
+            this.barButtonOptions.active = false;
+            this.event.openSnackBar(err, "Dismiss")
+          }
         );
       }
       else if (this.recuringDeposit.controls.id.value == undefined) {
         this.custumService.addRecurringDeposit(obj).subscribe(
           data => this.addrecuringDepositRes(data),
-          err => this.event.openSnackBar(err, "Dismiss")
+          err =>{
+            this.barButtonOptions.active = false;
+            this.event.openSnackBar(err, "Dismiss")
+          } 
         );
       } else {
         //edit call
         this.custumService.editRecurringDeposit(obj).subscribe(
           data => this.editrecuringDepositRes(data),
-          err => this.event.openSnackBar(err, "Dismiss")
+          err =>{
+            this.barButtonOptions.active = false;
+            this.event.openSnackBar(err, "Dismiss")
+          }
         );
       }
 
@@ -431,15 +457,18 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.recuringDeposi
     }
   }
   getAdviceRdRes(data) {
+    this.barButtonOptions.active = false;
     console.log(data);
   }
   addrecuringDepositRes(data) {
     console.log('addrecuringDepositRes', data)
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
 
   editrecuringDepositRes(data) {
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }

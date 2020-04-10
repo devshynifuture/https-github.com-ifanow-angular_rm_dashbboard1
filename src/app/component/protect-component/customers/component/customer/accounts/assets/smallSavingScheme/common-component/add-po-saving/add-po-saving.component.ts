@@ -34,6 +34,7 @@ export class AddPoSavingComponent implements OnInit {
   nomineesList: any[] = [];
   nominees: any[];
   flag: any;
+  maxDate:Date=new Date();
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   adviceShowHeaderAndFooter: boolean = true;
   callMethod: { methodName: string; ParamValue: any; };
@@ -99,7 +100,7 @@ get getCoOwner() {
 
 addNewCoOwner(data) {
   this.getCoOwner.push(this.fb.group({
-    name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+    name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
   }));
   if (data) {
     setTimeout(() => {
@@ -167,7 +168,7 @@ removeNewNominee(item) {
 
 addNewNominee(data) {
   this.getNominee.push(this.fb.group({
-    name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+    name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
   }));
   if (!data || this.getNominee.value.length < 1) {
     for (let e in this.getNominee.controls) {
@@ -227,14 +228,15 @@ addNewNominee(data) {
     this.posavingData = data
     this.poSavingForm = this.fb.group({
       getCoOwnerName: this.fb.array([this.fb.group({
-        name: ['', [Validators.required,AssetValidationService.ageValidators]],
-        share: ['', [Validators.required]],
+        name: ['',[Validators.required]],
+        share: [0,[Validators.required]],
         familyMemberId: 0,
-        id: 0
+        id: 0,
+        isClient:0
       })]),
       accBal: [data.accountBalance, [Validators.required, Validators.min(20)]],
       balAsOn: [new Date(data.balanceAsOn), [Validators.required]],
-      ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]],
+      // ownershipType: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]],
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId], [Validators.required]],
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
@@ -304,7 +306,7 @@ addNewNominee(data) {
           balanceAsOn: this.poSavingForm.get('balAsOn').value,
           accountBalance: this.poSavingForm.get('accBal').value,
           postOfficeBranch: this.poSavingForm.get('poBranch').value,
-          ownerTypeId: this.poSavingForm.get('ownershipType').value,
+          // ownerTypeId: this.poSavingForm.get('ownershipType').value,
           ownerList: this.poSavingForm.value.getCoOwnerName,
           nomineeList: this.poSavingForm.value.getNomineeName,
           nominees: this.nominees,

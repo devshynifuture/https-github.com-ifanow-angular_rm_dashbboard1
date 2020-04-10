@@ -5,6 +5,7 @@ import {MFSchemeLevelHoldingsComponent} from '../mfscheme-level-holdings/mfschem
 import {MfServiceService} from '../../mf-service.service';
 import {RightFilterComponent} from "../../../../../../common-component/right-filter/right-filter.component";
 import {EventService} from "../../../../../../../../../../Data-service/event.service";
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
 
 @Component({
   selector: 'app-mutual-fund-all-transaction',
@@ -30,9 +31,12 @@ export class MutualFundAllTransactionComponent implements OnInit {
   mutualFundListFilter: any;
 
   constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
-              private mfService: MfServiceService, private eventService: EventService) {
+              private mfService: MfServiceService, private eventService: EventService,
+              private excel : ExcelGenService) {
   }
   @ViewChild('allTranTemplate', {static: false}) allTranTemplate: ElementRef;
+  @ViewChild('tableEl', { static: false }) tableEl;
+
   @Input() mutualFund;
 
   ngOnInit() {
@@ -44,6 +48,11 @@ export class MutualFundAllTransactionComponent implements OnInit {
       this.subCatArray(this.mutualFundList,''); // for displaying table values as per category
       this.getDataForRightFilter();
     }
+  }
+
+  Excel(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows,tableTitle)
   }
 
   subCatArray(mutualFundList,type) {
@@ -126,7 +135,7 @@ export class MutualFundAllTransactionComponent implements OnInit {
   }
   generatePdf() {
     let para = document.getElementById('template');
-    this.utilService.htmlToPdf(para.innerHTML, 'All Transaction Report')
+    this.utilService.htmlToPdf(para.innerHTML, 'Test')
   }
   editTransaction(portfolioData, data) {
     const fragmentData = {

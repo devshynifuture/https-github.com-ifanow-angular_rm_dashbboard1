@@ -167,7 +167,7 @@ export class MutualFundOverviewComponent implements OnInit {
   }
   generatePdf() {
     let para = document.getElementById('template');
-    this.UtilService.htmlToPdf(para.innerHTML, 'Overview Report')
+    this.UtilService.htmlToPdf(para.innerHTML, 'Test')
   }
   pieChart(id) {
     Highcharts.chart('piechartMutualFund', {
@@ -298,6 +298,10 @@ export class MutualFundOverviewComponent implements OnInit {
         }
       }
     );
+  }
+
+  Excel(something) {
+    
   }
 }
 export interface PeriodicElement1 {
