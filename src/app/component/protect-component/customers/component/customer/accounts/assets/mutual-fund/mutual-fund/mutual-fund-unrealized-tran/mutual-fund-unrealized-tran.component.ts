@@ -181,7 +181,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   }
   generatePdf() {
     let para = document.getElementById('template');
-    this.utilService.htmlToPdf(para.innerHTML, 'Unrealized Transaction Report')
+    this.utilService.htmlToPdf(para.innerHTML, 'Test')
   }
 
 }

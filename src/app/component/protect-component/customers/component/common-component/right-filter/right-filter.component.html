@@ -114,7 +114,7 @@
         </mat-list-item>
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngIf="_data.name!='SUMMARY REPORT'">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h5 class="m-0">Transaction Period<span class="text-right f-14 pl-12">{{countCategory}} of {{category.length}}
