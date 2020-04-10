@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { MatTableDataSource } from '@angular/material';
@@ -178,6 +178,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     return item.gain;
     return item.absReturn;
     return item.xirr;
+  }
+  generatePdf() {
+    let para = document.getElementById('template');
+    this.utilService.htmlToPdf(para.innerHTML, 'Unrealized Transaction Report')
   }
 
 }
