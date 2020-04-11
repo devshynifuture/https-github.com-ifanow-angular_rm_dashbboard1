@@ -17,9 +17,7 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" (focusout)="getBankAddress(ifcCode.value)" appInputValueValidation
-                        [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="ifscCode" #ifcCode
-                        [maxLength]="12" matInput class="form-control">
+                    <input autocomplete="off" (focusout)="getBankAddress(ifcCode.value)" appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="ifscCode" #ifcCode [maxLength]="12" matInput class="form-control">
                     <mat-hint align="end" class="f-12">{{ifcCode.value.length}}/12</mat-hint>
                 </mat-form-field>
             </div>
@@ -32,9 +30,7 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" [maxLength]="50" #bankName appInputValueValidation
-                        [inputValidator]="validatorType.TEXT_ONLY" formControlName="bankName" matInput
-                        class="form-control">
+                    <input autocomplete="off" [maxLength]="50" #bankName appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="bankName" matInput class="form-control">
                     <mat-hint align="end">{{bankName.value.length}}/50</mat-hint>
                 </mat-form-field>
             </div>
@@ -47,8 +43,7 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input #micr autocomplete="off" [maxLength]="9" formControlName="micrName" matInput
-                        class="form-control">
+                    <input #micr autocomplete="off" [maxLength]="9" formControlName="micrName" matInput class="form-control">
                     <mat-hint align="end">{{micr.value.length}} / 9</mat-hint>
                 </mat-form-field>
             </div>
@@ -61,8 +56,7 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" #accNum [maxLength]="16" formControlName="accNumber" matInput
-                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control">
+                    <input autocomplete="off" #accNum [maxLength]="16" formControlName="accNumber" matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control">
                     <mat-hint align="end">{{accNum.value.length}} / 16</mat-hint>
                 </mat-form-field>
             </div>
@@ -73,18 +67,14 @@
             <h5 class="m-0 pt-8">Account type</h5>
         </div>
         <div class="col-md-8 p-0 account-type">
-            <mat-radio-group formControlName="accType" aria-label="Select an option">
-                <mat-radio-button value="1" [ngClass]="{'bu-primary': bankForm.get('accType').value==1}"
-                    class="borderRadio">Savings</mat-radio-button>
-                <mat-radio-button value="2" [ngClass]="{'bu-primary': bankForm.get('accType').value==2}"
-                    class="borderRadio">Current</mat-radio-button>
-                <mat-radio-button value="3" [ngClass]="{'bu-primary': bankForm.get('accType').value==3}"
-                    class="borderRadio">Cash credit</mat-radio-button>
+            <mat-radio-group class="radioWidth110" formControlName="accType" aria-label="Select an option">
+                <mat-radio-button value="1" [ngClass]="{'bu-primary': bankForm.get('accType').value=='1','borderRadio':bankForm.get('accType').value!='1'}" class="bu-primary">Savings</mat-radio-button>
+                <mat-radio-button value="2" [ngClass]="{'bu-primary': bankForm.get('accType').value=='2','borderRadio':bankForm.get('accType').value!='2'}" class="borderRadio">Current</mat-radio-button>
+                <mat-radio-button value="3" [ngClass]="{'bu-primary': bankForm.get('accType').value=='3','borderRadio':bankForm.get('accType').value!='3'}" class="borderRadio pr-8">Cash credit</mat-radio-button>
             </mat-radio-group>
         </div>
     </div>
-    <app-add-holder-names *ngIf="bankList" [holderListInput]="bankList.holderNameList"
-        (holderList)="getHolderList($event)">
+    <app-add-holder-names *ngIf="bankList" [holderListInput]="bankList.holderNameList" (holderList)="getHolderList($event)">
     </app-add-holder-names>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
@@ -93,8 +83,7 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input #branchName autocomplete="off" formControlName="branchName" appInputValueValidation
-                        [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" matInput class="form-control">
+                    <input #branchName autocomplete="off" formControlName="branchName" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" matInput class="form-control">
                     <mat-hint align="end">{{branchName.value.length}}/50</mat-hint>
                 </mat-form-field>
             </div>
@@ -119,9 +108,7 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" [maxLength]="6" (focusout)="getPostalPin($event.target.value)"
-                        formControlName="branchPinCode" #branchCode matInput appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" class="form-control">
+                    <input autocomplete="off" [maxLength]="6" (focusout)="getPostalPin($event.target.value)" formControlName="branchPinCode" #branchCode matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control">
                     <mat-hint align="end" class="f-12">{{branchCode.value.length}}/6</mat-hint>
 
                 </mat-form-field>
@@ -177,14 +164,13 @@
         </div>
     </div>
 </div>
-<div class="bottom-fixed wrapper-12 w-50 -m-28">
+<div class="bottom-fixed wrapper-12 w-50 ">
     <div class="row">
         <div class="col-md-4">
             <h5 (click)="close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-raised-button *ngIf="fieldFlag!=undefined" (click)="saveNext('Next')"
-                class="br-0 text-inherit mr-12">SAVE & NEXT
+            <button mat-raised-button *ngIf="fieldFlag!=undefined" (click)="saveNext('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
             </button>
             <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
             </button>
