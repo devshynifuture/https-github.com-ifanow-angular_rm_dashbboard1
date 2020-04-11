@@ -19,16 +19,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   // subCategoryData: any[];
   // schemeWise: any[];
   mutualFundList: any[];
-  totalObj: {};
   isLoading;
-  categoryMF: any[];
-  dataSource = new MatTableDataSource([]);
-  catObj: {};
+  dataSource = new MatTableDataSource<any>([{}]);
   grandTotal: any;
   schemeWiseForFilter: any;
   mutualFundListFilter: any[];
   rightFilterData: any;
-  customDataSource = new MatTableDataSource([]);
+  customDataSource = new MatTableDataSource<any>([{}]);
   @ViewChild('tableEl', {static: false}) tableEl;
 
   constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -41,16 +38,38 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     console.log('this.mutualFund == ', this.mutualFund);
     if (this.mutualFund) {
       this.mutualFundList = this.mutualFund.mutualFundList;
-
+      this.asyncFilter(this.mutualFundList);
       // this.getSubCategoryWise(this.mutualFund);
       // this.getSchemeWise();
       // this.mfSchemes();
-      const output = this.getCategory(this.mutualFundList, '', this.mfService);
-      this.dataSource.data = output.dataSource;
-      this.grandTotal = this.getfinalTotalValue(this.mutualFundList, this.mfService);
+      // this.dataSource.data = this.getCategory(this.mutualFundList, '', this.mfService);
+      // this.grandTotal = this.getfinalTotalValue(this.mutualFundList, this.mfService);
       // for displaying table values as per category
-      this.customDataSource.data = this.subCatArray(this.mutualFundList, '', this.mfService);
-      this.getDataForRightFilter();
+      // this.customDataSource.data = this.subCatArray(this.mutualFundList, '', this.mfService);
+      // this.getDataForRightFilter();
+    }
+  }
+
+  asyncFilter(mutualFund) {
+    if (typeof Worker !== 'undefined') {
+      console.log(`13091830918239182390183091830912830918310938109381093809328`);
+      const input = {
+        mutualFundList: mutualFund,
+        type: '',
+        // mfService: this.mfService
+      };
+      // Create a new
+      const worker = new Worker('./mutual-fund-unrealized.worker.ts', {type: 'module'});
+      worker.onmessage = ({data}) => {
+        this.dataSource.data = data.dataSourceData;
+        this.grandTotal = data.totalValue;
+        this.customDataSource.data = data.customDataSourceData;
+        console.log(`MUTUALFUND COMPONENT page got message:`, data);
+      };
+      worker.postMessage(input);
+    } else {
+      // Web workers are not supported in this environment.
+      // You should add a fallback so that your program still executes correctly.
     }
   }
 
@@ -60,78 +79,6 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   }
 
   mfSchemes() {// get last mf list
-  }
-
-  getfinalTotalValue(data, mfService: MfServiceService) { // grand total values
-    let totalValue: any = {};
-    data.forEach(element => {
-      totalValue = mfService.addTwoObjectValues(mfService.getEachTotalValue(element), totalValue, {total: true});
-    });
-
-    return totalValue;
-  }
-
-  subCatArray(mutualFundList, type, mfService: MfServiceService) {
-    let reportType;
-    (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
-      (type[0].name == 'Category wise') ? reportType = 'categoryName' : reportType = 'name';
-    // const dataArray = [];
-    const filteredData = [];
-    let catObj;
-    catObj = mfService.categoryFilter(mutualFundList, reportType);
-    // const filteredData = new MatTableDataSource(dataArray);
-    Object.keys(catObj).map(key => {
-      mfService.initializeValues(); // for initializing total values object
-      let totalObj: any = {};
-
-      filteredData.push({groupName: key});
-      catObj[key].forEach((singleData) => {
-        const obj = {
-          schemeName: singleData.schemeName,
-          nav: singleData.nav
-        };
-        filteredData.push(obj);
-        const obj2 = {
-          name: singleData.ownerName,
-          pan: singleData.pan,
-          folio: singleData.folioNumber
-        };
-        filteredData.push(obj2);
-        singleData.mutualFundTransactions.forEach((ele) => {
-          filteredData.push(ele);
-        });
-        totalObj = mfService.addTwoObjectValues(mfService.getEachTotalValue(singleData), totalObj, {total: true});
-        filteredData.push(totalObj);
-      });
-    });
-    // console.log(customDataSource)
-    return filteredData;
-  }
-
-  getCategory(mutualFundList, type, mfService: MfServiceService) { // first table category wise
-    let reportType;
-    (type == '' || type[0].name == 'Sub Category wise') ?
-      reportType = 'subCategoryName' : (type[0].name == 'Category wise') ?
-      reportType = 'categoryName' : reportType = 'name';
-    let catObj = {};
-    const newArray = [];
-
-    catObj = mfService.categoryFilter(mutualFundList, reportType);
-    Object.keys(catObj).map(key => {
-      let totalObj: any = {};
-      catObj[key].forEach((singleData) => {
-        // this.totalObj = this.mfService.getEachTotalValue(singleData);
-        totalObj = mfService.addTwoObjectValues(mfService.getEachTotalValue(singleData), totalObj, {total: true});
-        Object.assign(totalObj, {categoryName: key});
-      });
-      newArray.push(totalObj);
-    });
-    // this.dataSource = newArray;
-    const output = {
-      dataSource: newArray,
-      catObj
-    };
-    return output;
   }
 
 
@@ -152,8 +99,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     fragmentData.data = {
       name: 'UNREALIZED TRANSACTION REPORT',
       mfData: this.mutualFund,
-      folioWise: this.mutualFundListFilter,
-      schemeWise: this.schemeWiseForFilter,
+      folioWise: this.mutualFund.mutualFundList,
+      schemeWise: this.mutualFund.schemeWise,
       familyMember: this.mutualFund.family_member_list,
       category: this.mutualFund.mutualFundCategoryMastersList,
       transactionView: this.displayedColumns
@@ -165,9 +112,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           if (sideBarData.data) {
             this.rightFilterData = sideBarData.data;
-            const output = this.getCategory(this.rightFilterData.mutualFundList, this.rightFilterData.reportType, this.mfService);
-            this.dataSource.data = output.dataSource;
-            this.customDataSource.data = this.subCatArray(this.rightFilterData.mutualFundList, this.rightFilterData.reportType, this.mfService);
+            this.asyncFilter(this.rightFilterData.mutualFundList);
+            // this.dataSource.data = this.getCategory(this.rightFilterData.mutualFundList,
+            // this.rightFilterData.reportType, this.mfService);
+            // this.customDataSource.data = this.subCatArray(this.rightFilterData.mutualFundList,
+            // this.rightFilterData.reportType, this.mfService);
 
           }
           rightSideDataSub.unsubscribe();

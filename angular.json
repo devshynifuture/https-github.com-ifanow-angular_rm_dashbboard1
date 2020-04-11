@@ -25,7 +25,12 @@
             "aot": false,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/xlsx/dist",
+                "output": "./scripts/"
+              }
             ],
             "styles": [
               "src/styles.scss",

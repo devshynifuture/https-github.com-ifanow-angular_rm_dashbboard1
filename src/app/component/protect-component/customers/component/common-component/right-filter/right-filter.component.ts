@@ -1,9 +1,9 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { CustomerService } from '../../customer/customer.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { MfServiceService } from '../../customer/accounts/assets/mutual-fund/mf-service.service';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {CustomerService} from '../../customer/customer.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {MfServiceService} from '../../customer/accounts/assets/mutual-fund/mf-service.service';
 
 @Component({
   selector: 'app-right-filter',
@@ -39,13 +39,13 @@ export class RightFilterComponent implements OnInit {
   finalFilterData: any;
   reportTypeobj: any;
   selectedTransactionView;
-  sendTransactionView
-  transactionPeriod = true
-  transactionPeriodCheck = true
+  sendTransactionView;
+  transactionPeriod = true;
+  transactionPeriodCheck = true;
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private custumService: CustomerService, private eventService: EventService,
-    private mfService: MfServiceService) {
+              private custumService: CustomerService, private eventService: EventService,
+              private mfService: MfServiceService) {
   }
 
   @Input()
@@ -58,14 +58,14 @@ export class RightFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.transactionPeriodCheck = true
+    this.transactionPeriodCheck = true;
     this.amc = this._data.schemeWise;//amc wise data 
     this.folio = this._data.folioWise;//for getting all folios
     this.showSummaryFilterForm('');//as on date and showZero folio form
 
-    this.getCategoryWise(this._data.category)//get category wise data
+    this.getCategoryWise(this._data.category);//get category wise data
     this.getSchemeWise(this.amc);//scheme wise data
-    this.getFamilyMember(this._data.folioWise)//for family memeber
+    this.getFamilyMember(this._data.folioWise);//for family memeber
     this.getTransactionView(this._data.transactionView);//for displaying how many columns to show in table
     this.getReportType();//get type of report categorywise,investor,sub category wise
     this.setDefaultFilters();//setting default selected in each above array
@@ -125,7 +125,7 @@ export class RightFilterComponent implements OnInit {
 
   getSchemeWise(data) {
     const filterData = [];
-    data.filter(function (element) {
+    data.filter(function(element) {
       const obj = {
         id: element.id,
         schemeName: element.schemeName,
@@ -154,7 +154,7 @@ export class RightFilterComponent implements OnInit {
 
   getTransactionView(data) {
     const filterData = [];
-    data.filter(function (element) {
+    data.filter(function(element) {
       const obj = {
         displayName: element,
       };
@@ -162,10 +162,11 @@ export class RightFilterComponent implements OnInit {
     });
     this.transactionView = filterData;
   }
+
   getReportType() {
     this.reportType = ['Investor wise', 'Category wise', 'Sub Category wise'];
     const filterData = [];
-    this.reportType.filter(function (element) {
+    this.reportType.filter(function(element) {
       const obj = {
         name: element,
         selected: false
@@ -174,14 +175,16 @@ export class RightFilterComponent implements OnInit {
     });
     this.reportType = filterData;
   }
+
   changeFilterPeriod(value) {
-    console.log('date period ==', value)
+    console.log('date period ==', value);
     if (value == true) {
-      this.transactionPeriod = true
+      this.transactionPeriod = true;
     } else {
-      this.transactionPeriod = false
+      this.transactionPeriod = false;
     }
   }
+
   setDefaultFilters() {
     if (this.familyMember) {
       this.familyMember.forEach(item => item.selected = true);
@@ -194,7 +197,7 @@ export class RightFilterComponent implements OnInit {
     this.category.forEach(item => item.selected = true);
     this.transactionView.forEach(item => item.selected = true);
     this.reportType.forEach(item => {
-      this.countReport = 0
+      this.countReport = 0;
       if (item.name == 'Sub Category wise') {
         item.selected = true;
         this.countReport++;
@@ -214,10 +217,10 @@ export class RightFilterComponent implements OnInit {
     const filterData1 = [];
     const filterData2 = [];
     const filterData3 = [];
-    this.familyMember.filter(function (element) {
+    this.familyMember.filter(function(element) {
       if (element.selected == true) {
-        filterData.filter(function (amc) {
-          amc.mutualFund.forEach(function (mf) {
+        filterData.filter(function(amc) {
+          amc.mutualFund.forEach(function(mf) {
             if (mf.familyMemberId == element.familyMemberId) {
               const obj = {
                 amc_name: amc.amc_name,
@@ -256,10 +259,10 @@ export class RightFilterComponent implements OnInit {
     const filterData1 = [];
     const filterData2 = [];
     const filterData3 = [];
-    data.filter(function (element) {
+    data.filter(function(element) {
       if (element.selected == true) {
-        filterData.filter(function (amc) {
-          amc.mutualFund.forEach(function (mf) {
+        filterData.filter(function(amc) {
+          amc.mutualFund.forEach(function(mf) {
             if (mf.categoryId == element.categoryId) {
               const obj = {
                 amc_name: amc.amc_name,
@@ -299,7 +302,7 @@ export class RightFilterComponent implements OnInit {
     const filterData2 = this._data.schemeWise;
     const filterData1 = [];
     const filterData3 = [];
-    this.folio.filter(function (element) {
+    this.folio.filter(function(element) {
       if (element.selected == true) {
         filterData2.forEach(amc => {
           amc.mutualFund.forEach(mf => {
@@ -357,6 +360,7 @@ export class RightFilterComponent implements OnInit {
     this.amc = [...new Map(this.obj.filterData4.map(item => [item.amc_id, item])).values()];
     this.changeSelect('', '');
   }
+
   changeReportFilter(value) {
     this.reportType.forEach(element => {
       if (element.name != value.name) {
@@ -365,15 +369,16 @@ export class RightFilterComponent implements OnInit {
     });
     this.changeSelect('', '');
   }
-  changeSelect = function (data, i) {
-    this.sendTransactionView = this._data.transactionView
-    console.log('transaction ==', this._data.transactionView)
+
+  changeSelect = function(data, i) {
+    this.sendTransactionView = this._data.transactionView;
+    console.log('transaction ==', this._data.transactionView);
     if (data.selected == true) {
-      this.sendTransactionView.push(i)
-    } else if(data.selected == false){
-      this.sendTransactionView.pop(i)
+      this.sendTransactionView.push(i);
+    } else if (data.selected == false) {
+      this.sendTransactionView.pop(i);
     }
-    console.log('data ==', this.sendTransactionView)
+    console.log('data ==', this.sendTransactionView);
     if (this.familyMember != undefined) {
       const filter = [];
       this.countFamily = 0;
@@ -447,15 +452,17 @@ export class RightFilterComponent implements OnInit {
       this.reportTypeobj = filter;
     }
   };
-  selectAll(event,array, someString){
+
+  selectAll(event, array, someString) {
     if (array != undefined) {
       array.forEach(item => {
         item.selected = event.checked;
       });
-      this.changeSelect('','');
+      this.changeSelect('', '');
     }
 
   }
+
   generateReport() {
     if (this.transactionPeriod == true) {
       if (this.summaryFilerForm.get('fromDate').invalid) {
@@ -478,20 +485,23 @@ export class RightFilterComponent implements OnInit {
       category: (this.categoryObj) ? this.categoryObj : this.category,
       reportType: (this.reportTypeobj) ? this.reportTypeobj : this.reportType,
       transactionView: this.transactionView,
-      reportAsOn: (this.summaryFilerForm.controls.reportAsOn.value) ? this.summaryFilerForm.controls.reportAsOn.value.toISOString().slice(0, 10) : null,
-      fromDate: (this.summaryFilerForm.controls.fromDate.value) ? this.summaryFilerForm.controls.fromDate.value.toISOString().slice(0, 10) : null,
-      toDate: (this.summaryFilerForm.controls.toDate.value) ? this.summaryFilerForm.controls.toDate.value.toISOString().slice(0, 10) : null,
+      reportAsOn: (this.summaryFilerForm.controls.reportAsOn.value) ?
+        this.summaryFilerForm.controls.reportAsOn.value.toISOString().slice(0, 10) : null,
+      fromDate: (this.summaryFilerForm.controls.fromDate.value) ?
+        this.summaryFilerForm.controls.fromDate.value.toISOString().slice(0, 10) : null,
+      toDate: (this.summaryFilerForm.controls.toDate.value) ?
+        this.summaryFilerForm.controls.toDate.value.toISOString().slice(0, 10) : null,
       showFolio: parseInt(this.summaryFilerForm.controls.showFolios.value),
     };
     console.log('dataToSend---------->', this.dataToSend);
     this.finalFilterData = this.mfService.filterFinalData(this._data.mfData, this.dataToSend);
-    this.finalFilterData.transactionView = this.sendTransactionView
-    console.log('this.sendTransactionView ====', this.finalFilterData)
+    this.finalFilterData.transactionView = this.sendTransactionView;
+    console.log('this.sendTransactionView ====', this.finalFilterData);
     this.Close(this.finalFilterData);
     console.log(this.finalFilterData);
   }
 
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data: data });
+    this.subInjectService.changeNewRightSliderState({state: 'close', data: data});
   }
 }

@@ -1,11 +1,4 @@
-import {Injectable} from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class MfServiceService {
-  constructor() {
-  }
+export class TempserviceService {
 
   subCatArrayForSummary = (mutualFundList, type) => {
     let reportType;
@@ -29,6 +22,78 @@ export class MfServiceService {
     }
   }
 
+  getCategoryForTransaction(mutualFundList, type) { // first table category wise
+    let reportType;
+    (type == '' || type[0].name == 'Sub Category wise') ?
+      reportType = 'subCategoryName' : (type[0].name == 'Category wise') ?
+      reportType = 'categoryName' : reportType = 'name';
+    let catObj = {};
+    const newArray = [];
+
+    catObj = this.categoryFilter(mutualFundList, reportType);
+    Object.keys(catObj).map(key => {
+      let totalObj: any = {};
+      catObj[key].forEach((singleData) => {
+        // this.totalObj = this.this.getEachTotalValue(singleData);
+        totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData), totalObj, {total: true});
+        Object.assign(totalObj, {categoryName: key});
+      });
+      newArray.push(totalObj);
+    });
+    // this.dataSource = newArray;
+    // const output = {
+    //   dataSource: newArray,
+    //   catObj
+    // };
+    return newArray;
+  }
+
+  getSubCategoryArrayForTransaction(mutualFundList, type) {
+    let reportType;
+    (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
+      (type[0].name == 'Category wise') ? reportType = 'categoryName' : reportType = 'name';
+    // const dataArray = [];
+    const filteredData = [];
+    let catObj;
+    catObj = this.categoryFilter(mutualFundList, reportType);
+    // const filteredData = new MatTableDataSource(dataArray);
+    Object.keys(catObj).map(key => {
+      // this.initializeValues(); // for initializing total values object
+      let totalObj: any = {};
+
+      filteredData.push({groupName: key});
+      catObj[key].forEach((singleData) => {
+        const obj = {
+          schemeName: singleData.schemeName,
+          nav: singleData.nav
+        };
+        filteredData.push(obj);
+        const obj2 = {
+          name: singleData.ownerName,
+          pan: singleData.pan,
+          folio: singleData.folioNumber
+        };
+        filteredData.push(obj2);
+        singleData.mutualFundTransactions.forEach((ele) => {
+          filteredData.push(ele);
+        });
+        totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData), totalObj, {total: true});
+        filteredData.push(totalObj);
+      });
+    });
+    // console.log(customDataSource)
+    return filteredData;
+  }
+
+
+  getFinalTotalValue(data) { // grand total values
+    let totalValue: any = {};
+    data.forEach(element => {
+      totalValue = this.addTwoObjectValues(this.getEachTotalValue(element), totalValue, {total: true});
+    });
+
+    return totalValue;
+  }
   filter(data, key) {// filtering data as per category
     const filterData = [];
     const finalDataSource = [];
@@ -162,6 +227,7 @@ export class MfServiceService {
   categoryFilter(data, type) {
     const catObj = {};
     const categoryArray = [];
+    console.log('category filter data: ', data);
     data.forEach(ele => {
       if (ele[type]) {
         const categoryArrayLocal = catObj[ele[type]] ? catObj[ele[type]] : [];
@@ -275,4 +341,5 @@ export class MfServiceService {
     });
     return filter;
   }
+
 }
