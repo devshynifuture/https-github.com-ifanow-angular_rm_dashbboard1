@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {UtilService} from 'src/app/services/util.service';
 import {MatTableDataSource} from '@angular/material';
@@ -11,7 +11,7 @@ import {ExcelGenService} from 'src/app/services/excel-gen.service';
   templateUrl: './mutual-fund-unrealized-tran.component.html',
   styleUrls: ['./mutual-fund-unrealized-tran.component.scss']
 })
-export class MutualFundUnrealizedTranComponent implements OnInit {
+export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   displayedColumns: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
     'units', 'currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr'];
   displayedColumns2: string[] = ['categoryName', 'amtInvested', 'currentValue', 'dividendPayout', 'dividendReinvest',
@@ -50,6 +50,15 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     }
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    for (const propName in changes) {
+      const chng = changes[propName];
+      const cur = JSON.stringify(chng.currentValue);
+      const prev = JSON.stringify(chng.previousValue);
+      console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
+    }
+  }
+
   asyncFilter(mutualFund) {
     if (typeof Worker !== 'undefined') {
       console.log(`13091830918239182390183091830912830918310938109381093809328`);
@@ -74,7 +83,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   }
 
   Excel(tableTitle) {
-    let rows = this.tableEl._elementRef.nativeElement.rows;
+    const rows = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows, tableTitle);
   }
 
@@ -155,7 +164,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   }
 
   generatePdf() {
-    let para = document.getElementById('template');
+    const para = document.getElementById('template');
     this.utilService.htmlToPdf(para.innerHTML, 'Test');
   }
 
