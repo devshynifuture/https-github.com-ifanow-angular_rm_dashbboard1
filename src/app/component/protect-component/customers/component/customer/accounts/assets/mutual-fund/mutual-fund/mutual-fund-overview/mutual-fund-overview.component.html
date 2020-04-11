@@ -1,4 +1,4 @@
-<div #mfOverviewTemplate id="template">
+<div >
 <div class="p-8">
   <div class="row pt-0">
     <div class="col-md-4 pl-0 c-p" (click)="openUpperFragment('mutualFunds')">
@@ -68,25 +68,25 @@
           </div>
           <div class="col-md-12 p-0">
             <p class="m-0 text-custom pt-20 pl-8">Current value</p>
-            <h2 class="m-0 f-300 text-black pt-4 pl-8 pb-16" appFormatNumber>
-              {{(mfData)?(mfData.total_current_value| currency:'INR'):'0'}}</h2>
+            <h2 class="m-0 f-300 text-black pt-4 pl-8 pb-16" >
+              <span appFormatNumber  *ngIf="mfData">{{(mfData)?(mfData.total_current_value):0}}</span></h2>
           </div>
           <div class="col-md-12 p-0">
             <div class="row bg-light lter pt-16 pb-16 bt-1">
               <div class="col-md-4 pr-0 pl-12">
                 <p class="text-custom m-0">Amount invested</p>
-                <h5 class="m-0 text-black" appFormatNumber>
-                  {{(mfData)?(mfData.total_amount_invested | currency:'INR'):'0'}}
+                <h5 class="m-0 text-black">
+                  <span appFormatNumber  *ngIf="mfData"> {{(mfData)?(mfData.total_amount_invested):0}}</span>
                 </h5>
               </div>
               <div class="col-md-4 pr-0 pl-12">
                 <p class="text-custom m-0">Unrealized gain/loss</p>
-                <h5 class="m-0 text-success" appFormatNumber>
-                  {{(mfData)?(mfData.total_unrealized_gain | currency:'INR'):'0'}}</h5>
+                <h5 class="m-0 text-success">
+                  <span appFormatNumber  *ngIf="mfData">{{(mfData)?(mfData.total_unrealized_gain):0}}</span></h5>
               </div>
               <div class="col-md-4 pr-0 pl-12">
                 <p class="text-custom m-0">Returns</p>
-                <h5 class="m-0 text-success" *ngIf="mfData"><span>{{mfData.total_xirr | number:'1.2-2'}}</span>% <i
+                <h5 class="m-0 text-success" ><span *ngIf="mfData">{{mfData.total_xirr | number:'1.2-2'}}</span>% <i
                     class="material-icons f-14 f-700">
                     arrow_upward
                   </i>
@@ -110,7 +110,7 @@
                 <p class="f-500 text-black mb-0">Equity</p>
               </div>
               <div class="col-md-3">
-                <p class="text-black mb-0">{{this.equityCurrentValue}}</p>
+                <p class="text-black mb-0"><span appFormatNumber *ngIf="this.equityCurrentValue">{{(this.equityCurrentValue)?this.equityCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.debtCurrentValue">0</span></p>
               </div>
               <div class="col-md-2">
                 <p class="text-black mb-0">{{(this.equityPercentage)?this.equityPercentage:'0'}}%</p>
@@ -123,8 +123,8 @@
               <div class="col-md-6">
                 <p class="f-500 text-black mb-0">Debt</p>
               </div>
-              <div class="col-md-3">
-                <p class="text-black mb-0">{{(this.debtCurrentValue)?this.debtCurrentValue:'0'}}</p>
+              <div class="col-md-3" >
+                <p class="text-black mb-0" ><span appFormatNumber *ngIf="this.debtCurrentValue">{{(this.debtCurrentValue)?this.debtCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.debtCurrentValue">0</span></p>
               </div>
               <div class="col-md-2">
                 <p class="text-black mb-0">{{(this.debtPercentage)?this.debtPercentage:'0'}}%</p>
@@ -138,7 +138,7 @@
                 <p class="f-500 text-black mb-0">Hybrid</p>
               </div>
               <div class="col-md-3">
-                <p class="text-black mb-0">{{(this.hybridCurrentValue)?this.hybridCurrentValue:'0'}}</p>
+                <p class="text-black mb-0" ><span appFormatNumber *ngIf="this.hybridCurrentValue">{{(this.hybridCurrentValue)?this.hybridCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.hybridCurrentValue">0</span></p>
               </div>
               <div class="col-md-2">
                 <p class="text-black mb-0">{{(this.hybridPercenatge)?this.hybridPercenatge:'0'}}%</p>
@@ -153,7 +153,7 @@
               </div>
               <div class="col-md-3">
                 <p class="text-black mb-0">
-                  {{(this.solution_OrientedCurrentValue)?this.solution_OrientedCurrentValue:'0'}}
+                  <span appFormatNumber *ngIf="this.solution_OrientedCurrentValue">{{(this.solution_OrientedCurrentValue)?this.solution_OrientedCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.solution_OrientedCurrentValue">0</span>
                 </p>
               </div>
               <div class="col-md-2">
@@ -169,7 +169,7 @@
                 <p class="f-500 text-black mb-0">Others</p>
               </div>
               <div class="col-md-3">
-                <p class="text-black mb-0">{{(this.otherCurrentValue)?this.otherCurrentValue:'0'}}</p>
+                <p class="text-black mb-0"><span appFormatNumber *ngIf="this.otherCurrentValue">{{(this.otherCurrentValue)?this.otherCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.otherCurrentValue">0</span></p>
               </div>
               <div class="col-md-2">
                 <p class="text-black mb-0">{{(this.otherPercentage)?this.otherPercentage:'0'}}%</p>
@@ -189,7 +189,7 @@
       </div>
       <div class="example-container" id="table-low">
         <table mat-table [dataSource]="dataSource2" class="skeletonAnimation" appSkeletonLoading
-          [appSkeletonLoading]="isLoading">
+          [appSkeletonLoading]="isLoading" >
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef class="br"> Scheme name </th>
             <td mat-cell *matCellDef="let element" class="br">
@@ -199,23 +199,23 @@
           </ng-container>
           <ng-container matColumnDef="amt">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
-            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
-              <div class="bar">{{element.amountInvested}}
+            <td mat-cell *matCellDef="let element" class="br text-right">
+              <div class="bar"><span appFormatNumber>{{element.amountInvested}}</span>
               </div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
-              <div class="bar" *ngIf="mfData">{{mfData.total_amount_invested}}
+              <div class="bar">{{(mfData.total_amount_invested)?mfData.total_amount_invested:0}}
               </div>
             </td>
           </ng-container>
           <ng-container matColumnDef="value">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Current value </th>
-            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
-              <div class="bar">{{element.currentValue}}
+            <td mat-cell *matCellDef="let element" class="br text-right" >
+              <div class="bar"><span appFormatNumber>{{element.currentValue}}</span>
               </div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
-              <div class="bar" *ngIf="mfData">{{mfData.total_current_value}}
+              <div class="bar">{{(mfData.total_current_value)?mfData.total_current_value:0}}
               </div>
             </td>
           </ng-container>
@@ -225,7 +225,7 @@
               <div class="bar"> {{element.absoluteReturn | number:'1.2-2'}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-              <div class="bar" *ngIf="mfData">{{mfData.total_absolute_return | number:'1.2-2'}}
+              <div class="bar">{{(mfData.total_absolute_return)?(mfData.total_absolute_return | number:'1.2-2'):0}}
                 </div>
               </td>
           </ng-container>
@@ -236,13 +236,13 @@
                 {{element.xirr | number:'1.2-2'}} </div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
-              <div class="bar" *ngIf="mfData">{{mfData.total_xirr | number:'1.2-2'}}</div>
+              <div class="bar">{{(mfData.total_xirr)?(mfData.total_xirr | number:'1.2-2'):0.00}}</div>
             </td>
           </ng-container>
           <ng-container matColumnDef="alloc">
             <th mat-header-cell *matHeaderCellDef class="text-right"> Alloc % </th>
             <td mat-cell *matCellDef="let element" class="text-right">
-              <div class="bar">{{element.allocatedPercentage | number:'1.2-2' }}</div>
+              <div class="bar" >{{(element.allocatedPercentage | number:'1.2-2')}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
               {{7800}}
@@ -250,7 +250,7 @@
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
 
         </table>
         <div *ngIf="dataSource2.length == 0" class="d-flex flex-column align-items-center">
@@ -274,8 +274,8 @@
           </ng-container>
           <ng-container matColumnDef="amts">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
-            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
-              <div class="bar">{{element.amts}}</div>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+              <div class="bar"><span appFormatNumber>{{element.amts}}</span></div>
             </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
@@ -302,21 +302,21 @@
           </ng-container>
           <ng-container matColumnDef="amt">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
-            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
-              <div class="bar">{{element.amountInvested}}</div>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+              <div class="bar"><span appFormatNumber>{{element.amountInvested}}</span></div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
-              <div class="bar" *ngIf="mfData">{{mfData.total_amount_invested}}
+              <div class="bar">{{(mfData.total_amount_invested)?mfData.total_amount_invested:0}}
               </div>
             </td>
           </ng-container>
           <ng-container matColumnDef="value">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Current value </th>
-            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
-              <div class="bar">{{element.currentValue}}</div>
+            <td mat-cell *matCellDef="let element" class="br text-right" >
+              <div class="bar"><span appFormatNumber>{{element.currentValue}}</span></div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
-              <div class="bar" *ngIf="mfData">{{mfData.total_current_value}}
+              <div class="bar">{{(mfData.total_current_value)?mfData.total_current_value:0}}
               </div>
             </td>
           </ng-container>
@@ -326,7 +326,7 @@
               <div class="bar"> {{element.absoluteReturn | number:'1.2-2'}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-              <div class="bar" *ngIf="mfData">{{mfData.total_absolute_return | number:'1.2-2'}}
+              <div class="bar">{{(mfData.total_absolute_return)?(mfData.total_absolute_return | number:'1.2-2'):0}}
               </div>
             </td>
           </ng-container>
@@ -336,7 +336,7 @@
               <div class="bar">{{element.xirr | number:'1.2-2'}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
-              <div class="bar" *ngIf="mfData"> {{mfData.total_xirr | number:'1.2-2'}}
+              <div class="bar">{{(mfData.total_xirr)?(mfData.total_xirr | number:'1.2-2'):0.00}}
               </div>
             </td>
           </ng-container>
@@ -351,7 +351,8 @@
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
+
         </table>
         <div *ngIf="dataSource3.length == 0" class="d-flex flex-column align-items-center">
           <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
@@ -365,7 +366,7 @@
       </div>
       <div class="example-container" id="table-low">
         <table mat-table [dataSource]="dataSource" class="skeletonAnimation" appSkeletonLoading
-          [appSkeletonLoading]="isLoading">
+          [appSkeletonLoading]="isLoading" >
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef class="br"> Family Member Name </th>
             <td mat-cell *matCellDef="let element" class="br">
@@ -376,21 +377,21 @@
 
           <ng-container matColumnDef="amt">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
-            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
-              <div class="bar">{{element.amountInv}}</div>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+              <div class="bar"><span appFormatNumber>{{element.amountInv}}</span></div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
-              <div class="bar" *ngIf="mfData"> {{mfData.total_amount_invested}}
+              <div class="bar"> {{(mfData.total_amount_invested)?mfData.total_amount_invested:0}}
               </div>
             </td>
           </ng-container>
           <ng-container matColumnDef="value">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Current value </th>
-            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
-              <div class="bar">{{element.value}}</div>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+              <div class="bar"><span appFormatNumber>{{element.value}}</span></div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
-              <div class="bar" *ngIf="mfData">{{mfData.total_current_value}}
+              <div class="bar">{{(mfData.total_current_value)?mfData.total_current_value:0}}
               </div>
             </td>
           </ng-container>
@@ -400,7 +401,7 @@
               <div class="bar">{{element.absoluteReturn | number:'1.2-2'}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-              <div class="bar" *ngIf="mfData">{{mfData.total_absolute_return | number:'1.2-2'}}
+              <div class="bar">{{(mfData.total_absolute_return)?(mfData.total_absolute_return | number:'1.2-2'):0}}
                 </div>
               </td>
           </ng-container>
@@ -410,8 +411,8 @@
               <div class="bar">{{element.xirr | number:'1.2-2'}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
-              <div class="bar" *ngIf="mfData">{{mfData.total_xirr | number:'1.2-2'}}
-              </div>
+              <div class="bar">{{(mfData.total_xirr)?(mfData.total_xirr | number:'1.2-2'):0.00}}
+                </div>
               </td>
           </ng-container>
           <ng-container matColumnDef="alloc">
@@ -420,11 +421,12 @@
               <div class="bar"> {{element.allocatedPercentage | number:'1.2-2'}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
-              {{7800}}
+              <div class="bar">{{7800}}</div>
+            </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
         </table>
         <div *ngIf="dataSource.length == 0" class="d-flex flex-column align-items-center">
           <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
@@ -450,21 +452,21 @@
           </ng-container>
           <ng-container matColumnDef="amt">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Amount invested </th>
-            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
-              <div class="bar">{{element.amountInvested}}</div>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+              <div class="bar"><span appFormatNumber>{{element.amountInvested}}</span></div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
-              <div class="bar" *ngIf="mfData">{{mfData.total_amount_invested}}
+              <div class="bar">{{(mfData.total_amount_invested)?mfData.total_amount_invested:0}}
               </div>
             </td>
           </ng-container>
           <ng-container matColumnDef="value">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Current value </th>
-            <td mat-cell *matCellDef="let element" class="br text-right" appFormatNumber>
-              <div class="bar">{{element.currentValue}}</div>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+              <div class="bar"><span appFormatNumber>{{element.currentValue}}</span></div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
-              <div class="bar" *ngIf="mfData">{{mfData.total_current_value}}
+              <div class="bar">{{(mfData.total_current_value)?mfData.total_current_value:0}}
               </div>
             </td>
           </ng-container>
@@ -474,7 +476,7 @@
               <div class="bar"> {{element.absoluteReturn | number:'1.2-2' }}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-              <div class="bar" *ngIf="mfData"> {{mfData.total_absolute_return | number:'1.2-2'}}
+              <div class="bar"> {{(mfData.total_absolute_return)?(mfData.total_absolute_return | number:'1.2-2'):0}}
                 </div>
               </td>
           </ng-container>
@@ -484,7 +486,7 @@
               <div class="bar">{{element.xirr | number:'1.2-2'}}</div>
             </td>
             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-              <div class="bar" *ngIf="mfData"> {{mfData.total_xirr | number:'1.2-2'}}
+              <div class="bar"> {{(mfData.total_xirr)?(mfData.total_xirr | number:'1.2-2'):0.00}}
                 </div>
               </td>
           </ng-container>
@@ -493,11 +495,13 @@
             <td mat-cell *matCellDef="let element" class="text-right">
               <div class="bar"> {{element.allocatedPercentage | number:'1.2-2'}}</div>
             </td>
-            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">{{1800}}</td>
+            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
+              <div class="bar">{{7800}}</div>
+            </td>          
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
         </table>
         <div *ngIf="dataSource4.length == 0" class="d-flex flex-column align-items-center">
           <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
@@ -509,8 +513,7 @@
 </div>
 
 
-<div *ngIf="dataSource.length == 0 && dataSource2.length == 0 && dataSource3.length == 0 && dataSource4.length == 0"
-  class="d-flex flex-column align-items-center">
+<div *ngIf="dataSource.length==0 && dataSource2.length==0 && dataSource3.length==0 && dataSource4.length==0" class="d-flex flex-column align-items-center">
   <img class="width300" src="assets/images/svg/noDataFound.svg">
   <h4 class="text-center pt-12">No Data Found</h4>
   <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">ADD NEW
@@ -557,4 +560,353 @@
     </button>
   </mat-menu>
 </div>
+</div>
+<div #mfOverviewTemplate id="template" class="hide"  *ngIf="mfData">
+  <table cellpadding="0" cellspacing="0" border="0" style="width: 700px; font-family: 'Roboto', sans-serif; margin: 0px auto;" align="center">
+    <tr>
+        <td style="width: 250px; border: 1px solid #dee5e7;" valign="top">
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                    <th bgcolor="#F5F7F7" style="font-size: 16px;  border-bottom: transparent; height: 40px; padding-left: 15px; text-align: left; color: #000000">
+                        Summary
+                    </th>
+                </tr>
+                <tr>
+                    <td style=" padding-top: 15px; padding-bottom: 10px; padding-left: 15px; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">
+                        <p style="font-size: 14px; margin: 0px;">Current value </p>
+                        <h2 style="margin: 0px; font-size: 24px; color: #000000;" appFormatNumber>{{mfData.total_current_value}}</h2>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <table bgcolor="#F5F7F7" style="padding: 16px 15px;" cellpadding="0" cellspacing="0" border="0" width="100%">
+                            <tr>
+                                <td valign="top">
+                                    <p style="font-size: 14px; color: #757575; margin: 0px;">Amount invested</p>
+                                    <h2 style="margin: 0px; font-size: 24px; color: #000000;" appFormatNumber>{{mfData.total_amount_invested}}</h2>
+                                </td>
+
+                                <td valign="top">
+                                    <p style="font-size: 14px; color: #757575; margin: 0px;">Unrealized gain/loss
+                                    </p>
+                                    <h2 style="margin: 0px; font-size: 24px; color: #000000;" appFormatNumber>{{mfData.total_unrealized_gain}}</h2>
+                                </td>
+
+                                <td valign="top">
+                                    <p style="font-size: 14px; color: #757575; margin: 0px;">Returns</p>
+                                    <h2 style="margin: 0px; font-size: 24px; color: #000000;" >{{mfData.total_xirr | number:'1.2-2'}}</h2>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                </tr>
+
+
+
+
+            </table>
+        </td>
+
+        <td valign="top" style="width: 196px;  border: 1px solid #dee5e7;">
+            <img src="/assets/images/img.png">
+           
+        </td>
+
+        <td style="padding: 10px; border: 1px solid #dee5e7;" valign="top">
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr style="height: 40px;">
+                    <td style="font-size: 13px;">
+                        <span style="width: 15px; height: 15px; background: #008FFF; display: inline-block;">
+          </span> </td>
+                    <td style="font-size: 13px;"> Equity </td>
+                    <td style="font-size: 13px;"> {{this.equityCurrentValue| number:'1.2-2'}} </td>
+                    <td style="font-size: 13px;"> {{(this.equityPercentage)?this.equityPercentage:'0'}}%</td>
+                </tr>
+
+                <tr style="height: 40px;">
+                    <td style="font-size: 13px;">
+                        <span style="width: 15px; height: 15px; background: #00B294; display: inline-block;">
+          </span> </td>
+                    <td style="font-size: 13px;"> Debt </td>
+                    <td style="font-size: 13px;"> {{(this.debtCurrentValue)?(this.debtCurrentValue | number:'1.2-2'):'0'}} </td>
+                    <td style="font-size: 13px;">{{(this.debtPercentage)?this.debtPercentage:'0'}}%</td>
+                </tr>
+
+
+                <tr style="height: 40px;">
+                    <td style="font-size: 13px;">
+                        <span style="width: 15px; height: 15px; background: #FFC100; display: inline-block;">
+          </span> </td>
+                    <td style="font-size: 13px;"> Hybrid </td>
+                    <td style="font-size: 13px;"> {{(this.hybridCurrentValue)?(this.hybridCurrentValue | number:'1.2-2'):'0'}} </td>
+                    <td style="font-size: 13px;"> {{(this.hybridPercenatge)?this.hybridPercenatge:'0'}}% </td>
+                </tr>
+
+                <tr style="height: 40px;">
+                    <td style="font-size: 13px;">
+                        <span style="width: 15px; height: 15px; background: #FF6823; display: inline-block;">
+          </span> </td>
+                    <td style="font-size: 13px;"> Solutions oriented </td>
+                    <td style="font-size: 13px;">  {{(this.solution_OrientedCurrentValue)?(this.solution_OrientedCurrentValue | number:'1.2-2'):'0'}} </td>
+                    <td style="font-size: 13px;"> {{(this.solution_OrientedPercenatge)?this.solution_OrientedPercenatge:'0'}}% </td>
+                </tr>
+
+                <tr style="height: 40px;">
+                    <td style="font-size: 13px;">
+                        <span style="width: 15px; height: 15px; background: #83959D; display: inline-block;">
+          </span> </td>
+                    <td style="font-size: 13px;"> Others </td>
+                    <td style="font-size: 13px;"> {{(this.otherCurrentValue)?(this.otherCurrentValue | number:'1.2-2'):'0'}} </td>
+                    <td style="font-size: 13px;"> {{(this.otherPercentage)?this.otherPercentage:'0'}}% </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="padding: 10px;" colspan="3"></td>
+    </tr>
+
+
+    <tr>
+        <td colspan="3">
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                    <td valign="top" style="width: 50%;">
+                        <h3 style="background: #F5F7F7; border: 1px solid #dee5e7; border-bottom: transparent; margin: 0px; padding: 10px; font-size: 16px;">
+                            Scheme wise allocation
+                        </h3>
+
+                        <table cellpadding="0" cellspacing="0" border="1" bordercolor="#DADCE0" width="100%">
+
+                            <tr style="background: #F5F7F7;">
+                                <th style="text-align: left; font-size: 13px; padding: 8px;">Scheme name</th>
+                                <th style="text-align: left; font-size: 13px; padding: 8px;">Amount invested</th>
+                                <th style="text-align: left; font-size: 13px; padding: 8px;">Current value</th>
+                                <th style="text-align: left; font-size: 13px; padding: 8px;">Abs Ret %</th>
+                                <th style="text-align: left; font-size: 13px; padding: 8px;">XIRR %</th>
+                                <th style="text-align: left; font-size: 13px; padding: 8px;">Alloc %</th>
+                            </tr>
+
+                            <tr  *ngFor="let item of dataSource2.data">
+                                <td style="font-size: 13px; padding: 5px;">{{item.schemeName}}</td>
+                                <td style="font-size: 13px; padding: 5px;" appFormatNumber>{{item.amountInvested}}</td>
+                                <td style="font-size: 13px; padding: 5px;" appFormatNumber>{{item.currentValue}}</td>
+                                <td style="font-size: 13px; padding: 5px;"> {{item.absoluteReturn | number:'1.2-2'}}</td>
+                                <td style="font-size: 13px; padding: 5px;"> {{item.xirr | number:'1.2-2'}} </td>
+                                <td style="font-size: 13px; padding: 5px;">{{item.allocatedPercentage | number:'1.2-2' }}</td>
+                            </tr>
+
+                            <tr>
+                                <td style="text-align: left; font-size: 13px; padding: 8px;">Total
+                                </td>
+                                <td style="text-align: left; font-size: 13px; padding: 8px;" appFormatNumber>{{mfData.total_amount_invested}}</td>
+                                <td style="text-align: left; font-size: 13px; padding: 8px;" appFormatNumber>{{mfData.total_current_value}}</td>
+                                <td style="text-align: left; font-size: 13px; padding: 8px;">{{mfData.total_absolute_return | number:'1.2-2'}}</td>
+                                <td style="text-align: left; font-size: 13px; padding: 8px;">{{mfData.total_xirr | number:'1.2-2'}}</td>
+                                <td style="text-align: left; font-size: 13px; padding: 8px;">{{1.02}}</td>
+                            </tr>
+
+                        </table>
+                    </td>
+
+                    <td valign="top" style="width: 50%">
+                        <h3 style="background: #F5F7F7; border: 1px solid #dee5e7; border-bottom: transparent; margin: 0px; padding: 10px; font-size: 16px;">
+                            Cashflow status
+                        </h3>
+                        <table cellpadding="0" cellspacing="0" border="0" style="border: 1px solid #DADCE0;" width="100%">
+                            <tr>
+                                <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">
+                                    a. Investment</td>
+                                <td style="font-size: 13px;border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;">{{this.mfData.total_amount_inv}}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">b. Switch In</td>
+                                <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;">{{this.mfData.total_switch_in}}</td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">c. Switch Out</td>
+                                <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;">{{this.mfData.total_switch_out}}</td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">d. Redemption</td>
+                                <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;">{{this.mfData.total_redemption}}</td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">e. Dividend Payout</td>
+                                <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;">{{this.mfData.total_dividend_payout}}</td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">f. Net Investment (a+b-c-d-e)
+                                </td>
+                                <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;">{{this.mfData.total_net_investment}}</td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-size: 13px;  border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">g. Market Value</td>
+                                <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;">{{this.mfData.total_market_value}}</td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">h. Net Gain (g-f)</td>
+                                <td style="font-size: 13px;  border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;">{{this.mfData.total_unrealized_gain}}</td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">i. Realized XIRR (All Transactions)
+                                </td>
+                                <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;">{{this.mfData.total_xirr}}</td>
+                            </tr>
+
+                        </table>
+        </td>	
+      </tr>
+
+      <tr>
+        <td colspan="2" style="padding: 10px;"></td>
+      </tr>
+      
+      <tr>
+
+          <td valign="top" style="width: 50%;">
+              <h3 style="background: #F5F7F7; border: 1px solid #dee5e7; border-bottom: transparent; margin: 0px; padding: 10px; font-size: 16px;">
+                  Sub category wise allocation
+              </h3>
+
+              <table cellpadding="0" cellspacing="0" border="1" bordercolor="#DADCE0" width="100%">
+
+                <tr style="background: #F5F7F7;">
+                  <th style="text-align: left; font-size: 13px; padding: 8px;">Scheme name</th>
+                  <th style="text-align: left; font-size: 13px; padding: 8px;">Amount invested</th>
+                  <th style="text-align: left; font-size: 13px; padding: 8px;">Current value</th>
+                  <th style="text-align: left; font-size: 13px; padding: 8px;">Abs Ret %</th>
+                  <th style="text-align: left; font-size: 13px; padding: 8px;">XIRR %</th>
+                  <th style="text-align: left; font-size: 13px; padding: 8px;">Alloc %</th>
+                </tr>
+
+                <tr *ngFor="let item of dataSource3.data">
+                  <td style="font-size: 13px; padding: 5px;">{{item.subCategory}}</td>
+                  <td style="font-size: 13px; padding: 5px;" appFormatNumber>{{item.amountInvested}}</td>
+                  <td style="font-size: 13px; padding: 5px;" appFormatNumber>{{item.currentValue}}</td>
+                  <td style="font-size: 13px; padding: 5px;"> {{item.absoluteReturn | number:'1.2-2'}}</td>
+                  <td style="font-size: 13px; padding: 5px;">{{item.xirr | number:'1.2-2'}}</td>
+                  <td style="font-size: 13px; padding: 5px;">{{item.allocatedPercentage | number:'1.2-2' }}</td>
+                </tr>
+
+                                    <tr>
+                                        <td style="text-align: left; font-size: 13px; padding: 8px;">Total
+                                        </td>
+                                        <td style="text-align: left; font-size: 13px; padding: 8px;" appFormatNumber>{{mfData.total_amount_invested}}</td>
+                                        <td style="text-align: left; font-size: 13px; padding: 8px;" appFormatNumber>{{mfData.total_current_value}}</td>
+                                        <td style="text-align: left; font-size: 13px; padding: 8px;">{{mfData.total_absolute_return | number:'1.2-2'}}</td>
+                                        <td style="text-align: left; font-size: 13px; padding: 8px;">{{mfData.total_xirr | number:'1.2-2'}}</td>
+                                        <td style="text-align: left; font-size: 13px; padding: 8px;">{{1.02}}</td>
+                                    </tr>
+
+                 
+
+              </table>
+            </td>
+
+
+                            <td valign="top" style="width: 50%;">
+              <h3 style="background: #F5F7F7; border: 1px solid #dee5e7; border-bottom: transparent; margin: 0px; padding: 10px; font-size: 16px;">
+                                    Family member wise allocation
+
+              </h3>
+
+              <table cellpadding="0" cellspacing="0" border="1" bordercolor="#DADCE0" width="100%">
+
+                <tr style="background: #F5F7F7;">
+                  <th style="text-align: left; font-size: 13px; padding: 8px;">Family Member Name	</th>
+                  <th style="text-align: left; font-size: 13px; padding: 8px;">Amount invested</th>
+                  <th style="text-align: left; font-size: 13px; padding: 8px;">Current value</th>
+                  <th style="text-align: left; font-size: 13px; padding: 8px;">Abs Ret %</th>
+                  <th style="text-align: left; font-size: 13px; padding: 8px;">XIRR %</th>
+                  <th style="text-align: left; font-size: 13px; padding: 8px;">Alloc %</th>
+                </tr>
+
+                <tr *ngFor="let item of dataSource.data">
+                  <td style="font-size: 13px; padding: 5px;">{{item.name}}</td>
+                  <td style="font-size: 13px; padding: 5px;" appFormatNumber>{{item.amountInv}}</td>
+                  <td style="font-size: 13px; padding: 5px;" appFormatNumber>{{item.value}}</td>
+                  <td style="font-size: 13px; padding: 5px;"> {{item.absoluteReturn | number:'1.2-2'}}</td>
+                  <td style="font-size: 13px; padding: 5px;">{{item.xirr | number:'1.2-2'}}</td>
+                  <td style="font-size: 13px; padding: 5px;">{{item.allocatedPercentage | number:'1.2-2' }}</td>
+                </tr>
+
+                                    <tr>
+                                        <td style="text-align: left; font-size: 13px; padding: 8px;">Total
+                                        </td>
+                                        <td style="text-align: left; font-size: 13px; padding: 8px;" appFormatNumber>{{mfData.total_amount_invested}}</td>
+                                        <td style="text-align: left; font-size: 13px; padding: 8px;" appFormatNumber>{{mfData.total_current_value}}</td>
+                                        <td style="text-align: left; font-size: 13px; padding: 8px;">{{mfData.total_absolute_return | number:'1.2-2'}}</td>
+                                        <td style="text-align: left; font-size: 13px; padding: 8px;">{{mfData.total_xirr | number:'1.2-2'}}</td>
+                                        <td style="text-align: left; font-size: 13px; padding: 8px;">{{1.02}}</td>
+                                    </tr>
+
+                 
+
+              </table>
+            </td>
+      </tr>
+
+                <td valign="top" style="width: 50%;">
+                    <h3 style="background: #F5F7F7; border: 1px solid #dee5e7; border-bottom: transparent; margin: 0px; padding: 10px; font-size: 16px;">
+                        Category wise allocation
+
+                    </h3>
+
+                    <table cellpadding="0" cellspacing="0" border="1" bordercolor="#DADCE0" width="100%">
+
+                        <tr style="background: #F5F7F7;">
+                            <th style="text-align: left; font-size: 13px; padding: 8px;">Category name</th>
+                            <th style="text-align: left; font-size: 13px; padding: 8px;">Amount invested</th>
+                            <th style="text-align: left; font-size: 13px; padding: 8px;">Current value</th>
+                            <th style="text-align: left; font-size: 13px; padding: 8px;">Abs Ret %</th>
+                            <th style="text-align: left; font-size: 13px; padding: 8px;">XIRR %</th>
+                            <th style="text-align: left; font-size: 13px; padding: 8px;">Alloc %</th>
+                        </tr>
+
+                        <tr *ngFor="let item of dataSource4">
+                            <td style="font-size: 13px; padding: 5px;">{{item.category}}</td>
+                            <td style="font-size: 13px; padding: 5px;" appFormatNumber>{{item.amountInvested}}</td>
+                            <td style="font-size: 13px; padding: 5px;" appFormatNumber>{{item.currentValue}}</td>
+                            <td style="font-size: 13px; padding: 5px;"> {{item.absoluteReturn | number:'1.2-2'}}</td>
+                            <td style="font-size: 13px; padding: 5px;">{{item.xirr | number:'1.2-2'}}</td>
+                            <td style="font-size: 13px; padding: 5px;">{{item.allocatedPercentage | number:'1.2-2' }}</td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: left; font-size: 13px; padding: 8px;">Total
+                            </td>
+                            <td style="text-align: left; font-size: 13px; padding: 8px;" appFormatNumber>{{mfData.total_amount_invested}}</td>
+                            <td style="text-align: left; font-size: 13px; padding: 8px;" appFormatNumber>{{mfData.total_current_value}}</td>
+                            <td style="text-align: left; font-size: 13px; padding: 8px;">{{mfData.total_absolute_return | number:'1.2-2'}}</td>
+                            <td style="text-align: left; font-size: 13px; padding: 8px;">{{mfData.total_xirr | number:'1.2-2'}}</td>
+                            <td style="text-align: left; font-size: 13px; padding: 8px;">{{1.02}}</td>
+                        </tr>
+
+                         
+
+                    </table>
+                </td>
+                
+            </table>
+        </td>
+    </tr>
+
+
+
+
+
+</table>
 </div>

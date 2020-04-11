@@ -37,8 +37,6 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   ngOnInit() {
     console.log('this.mutualFund == ', this.mutualFund);
     if (this.mutualFund) {
-      this.mutualFundList = this.mutualFund.mutualFundList;
-      this.asyncFilter(this.mutualFundList);
       // this.getSubCategoryWise(this.mutualFund);
       // this.getSchemeWise();
       // this.mfSchemes();
@@ -56,6 +54,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       const cur = JSON.stringify(chng.currentValue);
       const prev = JSON.stringify(chng.previousValue);
       console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
+    }
+    if(changes.mutualFund && !changes.currentValue) {
+      this.mutualFundList = this.mutualFund.mutualFundList;
+      this.asyncFilter(this.mutualFundList);
     }
   }
 

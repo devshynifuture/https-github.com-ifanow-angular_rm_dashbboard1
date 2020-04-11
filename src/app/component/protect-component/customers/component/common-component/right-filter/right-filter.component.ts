@@ -58,7 +58,8 @@ export class RightFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.transactionPeriodCheck = true;
+    (this._data.name=='SUMMARY REPORT')?this.transactionPeriod=false:this.transactionPeriod=true;
+    this.transactionPeriodCheck = true
     this.amc = this._data.schemeWise;//amc wise data 
     this.folio = this._data.folioWise;//for getting all folios
     this.showSummaryFilterForm('');//as on date and showZero folio form

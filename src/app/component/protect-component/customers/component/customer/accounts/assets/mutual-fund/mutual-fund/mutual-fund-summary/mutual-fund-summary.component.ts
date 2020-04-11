@@ -46,6 +46,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
   ngOnInit() {
     if (this.mutualFund.mutualFundList) {
+      this.isLoading=false;
       this.mutualFundList = this.mutualFund.mutualFundList;
       // this.getSubCategoryWise(this.mutualFund); // get subCategoryWise list
       // this.getSchemeWise(); // get scheme wise list
