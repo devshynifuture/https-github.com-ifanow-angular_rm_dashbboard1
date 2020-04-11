@@ -1,10 +1,9 @@
-import {Component, Input, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {UtilService} from 'src/app/services/util.service';
 import {MatTableDataSource} from '@angular/material';
 import {MfServiceService} from '../../mf-service.service';
 import {RightFilterComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
-import {ExcelService} from '../../../../../excel.service';
 import {ExcelGenService} from 'src/app/services/excel-gen.service';
 
 @Component({
@@ -23,13 +22,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   totalObj: {};
   isLoading;
   categoryMF: any[];
-  dataSource: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource([]);
   catObj: {};
   grandTotal: any;
   schemeWiseForFilter: any;
   mutualFundListFilter: any[];
   rightFilterData: any;
-  customDataSource: Array<any> = [{}, {}, {}];
+  customDataSource = new MatTableDataSource([]);
   @ViewChild('tableEl', {static: false}) tableEl;
 
   constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -46,9 +45,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       // this.getSubCategoryWise(this.mutualFund);
       // this.getSchemeWise();
       // this.mfSchemes();
-      this.getCategory(this.mutualFundList, '');
+      const output = this.getCategory(this.mutualFundList, '', this.mfService);
+      this.dataSource.data = output.dataSource;
       this.grandTotal = this.getfinalTotalValue(this.mutualFundList, this.mfService);
-      this.subCatArray(this.mutualFundList, ''); // for displaying table values as per category
+      // for displaying table values as per category
+      this.customDataSource.data = this.subCatArray(this.mutualFundList, '', this.mfService);
       this.getDataForRightFilter();
     }
   }
@@ -70,84 +71,69 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     return totalValue;
   }
 
-  subCatArray(mutualFundList, type) {
+  subCatArray(mutualFundList, type, mfService: MfServiceService) {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
       (type[0].name == 'Category wise') ? reportType = 'categoryName' : reportType = 'name';
-    const categoryArray = [];
-    const filterArray = [];
-    this.catObj = this.mfService.categoryFilter(mutualFundList, reportType);
-    const filteredData = new MatTableDataSource(categoryArray);
-    Object.keys(this.catObj).map(key => {
-      this.mfService.initializeValues(); // for initializing total values object
-      filteredData.data.push({groupName: key});
-      this.catObj[key].forEach((singleData) => {
+    // const dataArray = [];
+    const filteredData = [];
+    let catObj;
+    catObj = mfService.categoryFilter(mutualFundList, reportType);
+    // const filteredData = new MatTableDataSource(dataArray);
+    Object.keys(catObj).map(key => {
+      mfService.initializeValues(); // for initializing total values object
+      let totalObj: any = {};
+
+      filteredData.push({groupName: key});
+      catObj[key].forEach((singleData) => {
         const obj = {
           schemeName: singleData.schemeName,
           nav: singleData.nav
         };
-        filteredData.data.push(obj);
+        filteredData.push(obj);
         const obj2 = {
           name: singleData.ownerName,
           pan: singleData.pan,
           folio: singleData.folioNumber
         };
-        filteredData.data.push(obj2);
+        filteredData.push(obj2);
         singleData.mutualFundTransactions.forEach((ele) => {
-          filteredData.data.push(ele);
+          filteredData.push(ele);
         });
-        this.totalObj = this.mfService.getEachTotalValue(singleData);
-        filteredData.data.push(this.totalObj);
+        totalObj = mfService.addTwoObjectValues(mfService.getEachTotalValue(singleData), totalObj, {total: true});
+        filteredData.push(totalObj);
       });
     });
     // console.log(customDataSource)
-    this.customDataSource = filteredData.data;
-    return this.customDataSource;
+    return filteredData;
   }
 
-  getCategory(mutualFundList, type) { // first table category wise
-    let reportType;
-    (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' : (type[0].name == 'Category wise') ? reportType = 'categoryName' : reportType = 'name';
-    const catObj = {};
-    const newArray = [];
-    if (this.mutualFundList) {
-      this.catObj = this.mfService.categoryFilter(mutualFundList, reportType);
-      Object.keys(this.catObj).map(key => {
-        this.mfService.initializeValues(); // for initializing total values object
-        this.catObj[key].forEach((singleData) => {
-          this.totalObj = this.mfService.getEachTotalValue(singleData);
-          Object.assign(this.totalObj, {categoryName: key});
-        });
-        newArray.push(this.totalObj);
-      });
-      this.dataSource = newArray;
-    }
-  }
-
-  getCategoryNew(mutualFundList, type, mfService: MfServiceService) { // first table category wise
+  getCategory(mutualFundList, type, mfService: MfServiceService) { // first table category wise
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ?
       reportType = 'subCategoryName' : (type[0].name == 'Category wise') ?
       reportType = 'categoryName' : reportType = 'name';
-    let catObj;
-    let totalObj;
+    let catObj = {};
     const newArray = [];
+
     catObj = mfService.categoryFilter(mutualFundList, reportType);
     Object.keys(catObj).map(key => {
-      mfService.initializeValues(); // for initializing total values object
+      let totalObj: any = {};
       catObj[key].forEach((singleData) => {
-        totalObj = mfService.getEachTotalValue(singleData);
+        // this.totalObj = this.mfService.getEachTotalValue(singleData);
+        totalObj = mfService.addTwoObjectValues(mfService.getEachTotalValue(singleData), totalObj, {total: true});
         Object.assign(totalObj, {categoryName: key});
       });
       newArray.push(totalObj);
     });
+    // this.dataSource = newArray;
     const output = {
-      catObj,
-      totalObj,
-      dataSource: newArray
+      dataSource: newArray,
+      catObj
     };
     return output;
   }
+
 
   getDataForRightFilter() {// for rightSidefilter data this does not change after generating report
     const subCatData = this.mfService.filter(this.mutualFund.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
@@ -179,8 +165,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           if (sideBarData.data) {
             this.rightFilterData = sideBarData.data;
-            this.getCategory(this.rightFilterData.mutualFundList, this.rightFilterData.reportType);
-            this.subCatArray(this.rightFilterData.mutualFundList, this.rightFilterData.reportType);
+            const output = this.getCategory(this.rightFilterData.mutualFundList, this.rightFilterData.reportType, this.mfService);
+            this.dataSource.data = output.dataSource;
+            this.customDataSource.data = this.subCatArray(this.rightFilterData.mutualFundList, this.rightFilterData.reportType, this.mfService);
 
           }
           rightSideDataSub.unsubscribe();
