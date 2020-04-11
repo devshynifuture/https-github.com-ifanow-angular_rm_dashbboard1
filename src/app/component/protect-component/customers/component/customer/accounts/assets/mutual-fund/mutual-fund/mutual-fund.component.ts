@@ -52,6 +52,22 @@ export class MutualFundComponent implements OnInit {
     );
   }
 
+  asyncFilter(mutualFund) {
+    if (typeof Worker !== 'undefined') {
+      console.log(`13091830918239182390183091830912830918310938109381093809328`);
+
+      // Create a new
+      const worker = new Worker('../mutual-fund.worker.ts', {type: 'module'});
+      worker.onmessage = ({data}) => {
+        console.log(`MUTUALFUND COMPONENT page got message: ${data}`);
+      };
+      worker.postMessage('hello');
+    } else {
+      // Web workers are not supported in this environment.
+      // You should add a fallback so that your program still executes correctly.
+    }
+  }
+
   doFiltering(data) {
     // return sub category list
     // this.dataHolder.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
@@ -70,6 +86,7 @@ export class MutualFundComponent implements OnInit {
       this.isLoading = false;
 
       this.mfData = data;
+      this.asyncFilter(data);
     }
     this.isLoading = false;
   }
