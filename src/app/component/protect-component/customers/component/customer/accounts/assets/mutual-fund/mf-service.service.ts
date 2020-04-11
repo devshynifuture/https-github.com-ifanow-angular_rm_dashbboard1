@@ -1,29 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MfServiceService {
-  filteredArray: any[];
-  amtInvested: any;
-  currentValue: any;
-  unrealizedGainLoss: any;
-  absReturn: any;
-  xirr: any;
-  withdrawals: any;
-  balanceUnit: any;
-  divPayout: any;
-  sip: any;
-  totalObj: any;
-  totalTransactionAmt: number;
-  totalUnit: number;
-  totalNav: number;
-  dividendPayout: any;
-  dividendReinvest: any;
-  totalAmount: any;
-  totalGain: any;
-  allocationPer: any;
-
   constructor() {
   }
 
@@ -40,88 +20,121 @@ export class MfServiceService {
         });
       });
     }
-    this.filteredArray = finalDataSource; // final dataSource Value
-    return this.filteredArray;
+    return finalDataSource;
   }
 
   initializeValues() {
-    this.amtInvested = 0;
-    this.currentValue = 0;
-    this.unrealizedGainLoss = 0;
-    this.absReturn = 0;
-    this.xirr = 0;
-    this.withdrawals = 0;
-    this.balanceUnit = 0;
-    this.divPayout = 0;
-    this.sip = 0;
-    this.totalTransactionAmt = 0;
-    this.totalUnit = 0;
-    this.totalNav = 0;
-    this.dividendPayout = 0;
-    this.dividendReinvest = 0;
-    this.totalAmount = 0;
-    this.totalGain = 0;
-    this.allocationPer = 0;
+    // this.amtInvested = 0;
+    // this.currentValue = 0;
+    // this.unrealizedGainLoss = 0;
+    // this.absReturn = 0;
+    // this.xirr = 0;
+    // this.withdrawals = 0;
+    // this.balanceUnit = 0;
+    // this.divPayout = 0;
+    // this.sip = 0;
+    // this.totalTransactionAmt = 0;
+    // this.totalUnit = 0;
+    // this.totalNav = 0;
+    // this.dividendPayout = 0;
+    // this.dividendReinvest = 0;
+    // this.totalAmount = 0;
+    // this.totalGain = 0;
+    // this.allocationPer = 0;
   }
 
   calculateTotalValue(data) {// for getting total value as per category in Summary
-    this.amtInvested += (data.amountInvested) ? data.amountInvested : 0;
-    this.currentValue += (data.currentValue) ? data.currentValue : 0;
-    this.unrealizedGainLoss += (data.unrealizedGain) ? data.unrealizedGain : 0;
-    this.absReturn += (data.absoluteReturn) ? data.absoluteReturn : 0;
-    this.xirr += (data.xirr) ? data.xirr : 0;
-    this.divPayout += (data.dividendPayout) ? data.dividendPayout : 0;
-    this.withdrawals += (data.switchOut) ? data.switchOut : 0;
-    this.balanceUnit += (data.balanceUnit) ? data.switchOut : 0;
-    this.sip += (data.sipAmount) ? data.sipAmount : 0;
+    let amtInvested = 0;
+    let currentValue = 0;
+    let unrealizedGainLoss = 0;
+    let absReturn = 0;
+    let xirr = 0;
+    let withdrawals = 0;
+    let balanceUnit = 0;
+    let divPayout = 0;
+    let sip = 0;
+    amtInvested += (data.amountInvested) ? data.amountInvested : 0;
+    currentValue += (data.currentValue) ? data.currentValue : 0;
+    unrealizedGainLoss += (data.unrealizedGain) ? data.unrealizedGain : 0;
+    absReturn += (data.absoluteReturn) ? data.absoluteReturn : 0;
+    xirr += (data.xirr) ? data.xirr : 0;
+    divPayout += (data.dividendPayout) ? data.dividendPayout : 0;
+    withdrawals += (data.switchOut) ? data.switchOut : 0;
+    balanceUnit += (data.balanceUnit) ? data.switchOut : 0;
+    sip += (data.sipAmount) ? data.sipAmount : 0;
     const obj = {
       schemeName: 'Total',
-      totalAmountInvested: this.amtInvested,
-      totalCurrentValue: this.currentValue,
-      totalUnrealizedGain: this.unrealizedGainLoss,
-      totalAbsoluteReturn: this.absReturn,
-      totalXirr: this.xirr,
-      totalDividendPayout: this.divPayout,
-      totalSwitchOut: this.withdrawals,
-      totalBalanceUnit: this.balanceUnit,
-      totalSipAmount: this.sip
+      totalAmountInvested: amtInvested,
+      totalCurrentValue: currentValue,
+      totalUnrealizedGain: unrealizedGainLoss,
+      totalAbsoluteReturn: absReturn,
+      totalXirr: xirr,
+      totalDividendPayout: divPayout,
+      totalSwitchOut: withdrawals,
+      totalBalanceUnit: balanceUnit,
+      totalSipAmount: sip
     };
-    this.totalObj = obj;
-    return this.totalObj;
+    // this.totalObj = obj;
+    return obj;
+  }
+
+  addTwoObjectValues(primaryObject, secondary, exceptionKeys) {
+    for (const [key, value] of Object.entries(primaryObject)) {
+      if (exceptionKeys[key]) {
+      } else {
+        if (primaryObject[key] && secondary[key]) {
+          primaryObject[key] = value + secondary[key];
+        }
+      }
+      console.log(key, value);
+    }
+    return primaryObject;
   }
 
   getEachTotalValue(data) { // get total value as per category for transaction
+    let currentValue = 0;
+    let absReturn = 0;
+    let xirr = 0;
+    let balanceUnit = 0;
+    let totalTransactionAmt = 0;
+    let totalUnit = 0;
+    let totalNav = 0;
+    let dividendPayout = 0;
+    let dividendReinvest = 0;
+    let totalAmount = 0;
+    let totalGain = 0;
+    let allocationPer = 0;
     data.mutualFundTransactions.forEach(ele => {
-      this.totalTransactionAmt += (ele.amount) ? ele.amount : 0;
-      this.totalUnit += (ele.unit) ? ele.unit : 0;
-      this.totalNav += (ele.transactionNav) ? ele.transactionNav : 0;
-      this.balanceUnit += (ele.balanceUnits) ? ele.balanceUnits : 0;
-      this.currentValue += (ele.currentValue) ? ele.currentValue : 0;
-      this.dividendPayout += (ele.dividendPayout) ? ele.dividendPayout : 0;
-      this.dividendReinvest += (ele.dividendReinvest) ? ele.dividendReinvest : 0;
-      this.totalAmount += (ele.totalAmount) ? ele.totalAmount : 0;
-      this.totalGain += (ele.gain) ? ele.gain : 0;
-      this.absReturn += (ele.absReturn) ? ele.absReturn : 0;
-      this.xirr += (ele.xirr) ? ele.xirr : 0;
-      this.allocationPer += (ele.allocationPercent) ? ele.allocationPercent : 0;
+      totalTransactionAmt += (ele.amount) ? ele.amount : 0;
+      totalUnit += (ele.unit) ? ele.unit : 0;
+      totalNav += (ele.transactionNav) ? ele.transactionNav : 0;
+      balanceUnit += (ele.balanceUnits) ? ele.balanceUnits : 0;
+      currentValue += (ele.currentValue) ? ele.currentValue : 0;
+      dividendPayout += (ele.dividendPayout) ? ele.dividendPayout : 0;
+      dividendReinvest += (ele.dividendReinvest) ? ele.dividendReinvest : 0;
+      totalAmount += (ele.totalAmount) ? ele.totalAmount : 0;
+      totalGain += (ele.gain) ? ele.gain : 0;
+      absReturn += (ele.absReturn) ? ele.absReturn : 0;
+      xirr += (ele.xirr) ? ele.xirr : 0;
+      allocationPer += (ele.allocationPercent) ? ele.allocationPercent : 0;
     });
     const obj = {
       total: 'Total',
-      totalTransactionAmt: this.totalTransactionAmt,
-      totalUnit: this.totalUnit,
-      totalNav: this.totalNav,
-      totalBalanceUnit: this.balanceUnit,
-      currentValue: this.currentValue,
-      dividendPayout: this.dividendPayout,
-      dividendReinvest: this.dividendReinvest,
-      totalAmount: this.totalAmount,
-      totalGain: this.totalGain,
-      absReturn: this.absReturn,
-      xirr: this.xirr,
-      allocationPer: this.allocationPer
+      totalTransactionAmt,
+      totalUnit,
+      totalNav,
+      totalBalanceUnit: balanceUnit,
+      currentValue,
+      dividendPayout,
+      dividendReinvest,
+      totalAmount,
+      totalGain,
+      absReturn,
+      xirr,
+      allocationPer
     };
-    this.totalObj = obj;
-    return this.totalObj;
+    // this.totalObj = obj;
+    return obj;
   }
 
   categoryFilter(data, type) {
@@ -185,13 +198,14 @@ export class MfServiceService {
     };
     return sendData;
   }
+
   filterFinalData(mfData, dataForFilter) {
-    let family_member_list = this.filterArray(mfData.family_member_list, 'id', dataForFilter.familyMember, 'familyMemberId');
-    let category = this.filterArray(mfData.mutualFundCategoryMastersList, 'id', dataForFilter.category, 'categoryId');
-    let subCategoryData = this.filter(mfData.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
-    let schemeWiseFilter = this.filter(subCategoryData, 'mutualFundSchemeMaster');
-    let schemeWise = this.filterArray(schemeWiseFilter, 'amc_id', dataForFilter.amc, 'amc_id');
-    let mutualFundListFilter = this.filter(schemeWiseFilter, 'mutualFund');
+    const family_member_list = this.filterArray(mfData.family_member_list, 'id', dataForFilter.familyMember, 'familyMemberId');
+    const category = this.filterArray(mfData.mutualFundCategoryMastersList, 'id', dataForFilter.category, 'categoryId');
+    const subCategoryData = this.filter(mfData.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+    const schemeWiseFilter = this.filter(subCategoryData, 'mutualFundSchemeMaster');
+    const schemeWise = this.filterArray(schemeWiseFilter, 'amc_id', dataForFilter.amc, 'amc_id');
+    const mutualFundListFilter = this.filter(schemeWiseFilter, 'mutualFund');
     let mutualFundList = this.filterArray(mutualFundListFilter, 'folioNumber', dataForFilter.folio, 'folioNumber');
     if (dataForFilter.showFolio == 2) {
       mutualFundList = mutualFundList.filter((item: any) =>
@@ -210,29 +224,30 @@ export class MfServiceService {
         element.mutualFundTransactions = element.mutualFundTransactions.filter((item: any) =>
           item.transactionDate >= dataForFilter.fromDate && item.transactionDate <= dataForFilter.toDate
         );
-      })
+      });
     }
-    var sendData = {
-      family_member_list: family_member_list,
-      category: category,
-      schemeWise: schemeWise,
-      mutualFundList: mutualFundList,
+    const sendData = {
+      family_member_list,
+      category,
+      schemeWise,
+      mutualFundList,
       reportAsOn: dataForFilter.reportAsOn,
-      fromDate : dataForFilter.fromDate,
-      toDate : dataForFilter.toDate,
+      fromDate: dataForFilter.fromDate,
+      toDate: dataForFilter.toDate,
       showFolio: dataForFilter.showFolio,
       reportType: dataForFilter.reportType,
       transactionView: dataForFilter.transactionView,
-      mfData: mfData,
-    }
+      mfData,
+    };
     return sendData;
   }
+
   filterArray(data, dataKey, filterData, filterDataKey) {
-    let filter = [];
+    const filter = [];
     filterData.forEach(ele => {
       data.forEach(element => {
         if (element[dataKey] == ele[filterDataKey]) {
-          filter.push(element)
+          filter.push(element);
         }
       });
     });
