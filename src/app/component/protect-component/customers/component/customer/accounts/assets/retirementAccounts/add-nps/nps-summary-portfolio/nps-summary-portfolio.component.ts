@@ -9,6 +9,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 @Component({
   selector: 'app-nps-summary-portfolio',
   templateUrl: './nps-summary-portfolio.component.html',
@@ -19,6 +20,21 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
   ],
 })
 export class NpsSummaryPortfolioComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   validatorType = ValidatorType
   myControl = new FormControl();
   ownerName: any;
@@ -428,6 +444,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.summaryNPS}
         nomineeList: this.summaryNPS.value.getNomineeName,
         id: this.summaryNPS.controls.id.value
       }
+      this.barButtonOptions.active = true;
       // this.nominee.value.forEach(element => {
       //   if (element.sharePercentage == null && element.name == null) {
       //     this.nominee.removeAt(0);
@@ -448,29 +465,49 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.summaryNPS}
       }
       if (this.summaryNPS.controls.id.value == undefined && this.flag != 'adviceNPSSummary') {
         this.custumService.addNPS(obj).subscribe(
-          data => this.addNPSRes(data)
+          data =>{
+            this.barButtonOptions.active = false;
+            this.addNPSRes(data)
+          },
+          err =>{
+            this.barButtonOptions.active = false;
+          } 
         );
       } else if (this.flag == 'adviceNPSSummary') {
         this.custumService.getAdviceNps(adviceObj).subscribe(
-          data => this.getAdviceNscSummaryRes(data),
+          data =>{
+            this.barButtonOptions.active = false;
+            this.getAdviceNscSummaryRes(data)
+          },
+          err =>{
+            this.barButtonOptions.active = false;
+          }
         );
       } else {
         //edit call
         this.custumService.editNPS(obj).subscribe(
-          data => this.editNPSRes(data)
+          data =>{
+            this.editNPSRes(data);
+          },
+          err =>{
+            this.barButtonOptions.active = false;
+          }
         );
       }
     }
   }
   getAdviceNscSummaryRes(data) {
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('NSC added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
   addNPSRes(data) {
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
   editNPSRes(data) {
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
