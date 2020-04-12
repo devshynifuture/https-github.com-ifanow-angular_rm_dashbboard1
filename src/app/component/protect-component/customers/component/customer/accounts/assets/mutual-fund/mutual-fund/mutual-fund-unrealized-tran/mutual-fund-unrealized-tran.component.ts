@@ -5,6 +5,7 @@ import {MatTableDataSource} from '@angular/material';
 import {MfServiceService} from '../../mf-service.service';
 import {RightFilterComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
 import {ExcelGenService} from 'src/app/services/excel-gen.service';
+import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 
 @Component({
   selector: 'app-mutual-fund-unrealized-tran',
@@ -20,12 +21,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   // schemeWise: any[];
   mutualFundList: any[];
   isLoading;
-  dataSource = new MatTableDataSource<any>([{}]);
+  dataSource = new TableVirtualScrollDataSource([]);
   grandTotal: any;
   schemeWiseForFilter: any;
   mutualFundListFilter: any[];
   rightFilterData: any;
-  customDataSource = new MatTableDataSource<any>([{}]);
+  customDataSource = new TableVirtualScrollDataSource([]);
   @ViewChild('tableEl', {static: false}) tableEl;
 
   constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -55,7 +56,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       const prev = JSON.stringify(chng.previousValue);
       console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
     }
-    if(changes.mutualFund && !changes.currentValue) {
+    if(changes.mutualFund && !!changes.mutualFund.currentValue) {
       this.mutualFundList = this.mutualFund.mutualFundList;
       this.asyncFilter(this.mutualFundList);
     }
@@ -72,9 +73,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       // Create a new
       const worker = new Worker('./mutual-fund-unrealized.worker.ts', {type: 'module'});
       worker.onmessage = ({data}) => {
-        this.dataSource.data = data.dataSourceData;
         this.grandTotal = data.totalValue;
-        this.customDataSource.data = data.customDataSourceData;
+        this.dataSource = new TableVirtualScrollDataSource(data.dataSourceData);
+        this.customDataSource = new TableVirtualScrollDataSource(data.customDataSourceData);
         console.log(`MUTUALFUND COMPONENT page got message:`, data);
       };
       worker.postMessage(input);
@@ -136,34 +137,34 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
     );
   }
 
-  isGroup(index, item): boolean {// group category wise
-    return item.groupName;
-  }
+  isGroup = (index, item) => item.groupName;// group category wise
+  //   return item.groupName;
+  // }
 
-  isGroup2(index, item): boolean {// for grouping schme name
-    return item.schemeName;
-    // return item.nav;
-  }
+  isGroup2 = (index, item) => item.schemeName;// for grouping schme name
+  //   return item.schemeName;
+  //   return item.nav;
+  // }
 
-  isGroup3(index, item): boolean {// for grouping family member name
-    return item.name;
-    // return item.pan;
-    // return item.folio;
-  }
+  isGroup3 = (index, item) => item.name;// for grouping family member name
+  //   return item.name;
+  //   return item.pan;
+  //   return item.folio;
+  // }
 
-  isGroup4(index, item) {// for getting total of each scheme
-    return item.total;
-    // return item.totalTransactionAmt;
-    // return item.totalUnit;
-    // return item.totalNav;
-    // return item.totalCurrentValue;
-    // return item.dividendPayout;
-    // return item.divReinvestment;
-    // return item.totalAmount;
-    // return item.gain;
-    // return item.absReturn;
-    // return item.xirr;
-  }
+  isGroup4 = (index, item) => item.total;// for getting total of each scheme
+  //   return item.total;
+  //   return item.totalTransactionAmt;
+  //   return item.totalUnit;
+  //   return item.totalNav;
+  //   return item.totalCurrentValue;
+  //   return item.dividendPayout;
+  //   return item.divReinvestment;
+  //   return item.totalAmount;
+  //   return item.gain;
+  //   return item.absReturn;
+  //   return item.xirr;
+  // }
 
   generatePdf() {
     const para = document.getElementById('template');
