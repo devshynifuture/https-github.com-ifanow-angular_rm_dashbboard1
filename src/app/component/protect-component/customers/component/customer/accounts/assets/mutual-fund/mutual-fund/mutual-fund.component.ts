@@ -32,6 +32,7 @@ export class MutualFundComponent implements OnInit {
 
   ngOnInit() {
     this.viewMode = 'All Transactions';
+
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getMutualFund();
@@ -52,32 +53,7 @@ export class MutualFundComponent implements OnInit {
     );
   }
 
-  asyncFilter(mutualFund) {
-    if (typeof Worker !== 'undefined') {
-      console.log(`13091830918239182390183091830912830918310938109381093809328`);
-      const input = {
-        mutualFundList: mutualFund,
-        type: '',
-        // mfService: this.mfService
-      };
-      // Create a new
-      const worker = new Worker('../mutual-fund.worker.ts', {type: 'module'});
-      worker.onmessage = ({data}) => {
-        console.log(`MUTUALFUND COMPONENT page got message:`, data);
-      };
-      worker.postMessage(input);
-    } else {
-      // Web workers are not supported in this environment.
-      // You should add a fallback so that your program still executes correctly.
-    }
-  }
-
   doFiltering(data) {
-    // return sub category list
-    // this.dataHolder.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
-    // this.dataHolder.schemeWise = this.mfService.filter(this.dataHolder.subCategoryData, 'mutualFundSchemeMaster');
-    // this.dataHolder.mutualFundList = this.mfService.filter(this.dataHolder.schemeWise, 'mutualFund');
-
     data.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
     data.schemeWise = this.mfService.filter(data.subCategoryData, 'mutualFundSchemeMaster');
     data.mutualFundList = this.mfService.filter(data.schemeWise, 'mutualFund');
@@ -88,9 +64,8 @@ export class MutualFundComponent implements OnInit {
   getMutualFundResponse(data) {
     if (data) {
       this.isLoading = false;
-
       this.mfData = data;
-      this.asyncFilter(data.mutualFundList);
+      this.mfData.viewMode = this.viewMode;
     }
     this.isLoading = false;
   }
@@ -99,7 +74,12 @@ export class MutualFundComponent implements OnInit {
     this.mfDataUnrealised = this.mfData;
   }
 
-
+  changeViewMode(data) {
+    if (this.mfData) {
+      this.mfData.viewMode = data;
+      this.viewMode = data;
+    }
+  }
 }
 
 

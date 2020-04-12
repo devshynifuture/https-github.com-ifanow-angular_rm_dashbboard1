@@ -142,27 +142,27 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
 
   isGroup2(index, item): boolean {// for grouping schme name
     return item.schemeName;
-    return item.nav;
+    // return item.nav;
   }
 
   isGroup3(index, item): boolean {// for grouping family member name
     return item.name;
-    return item.pan;
-    return item.folio;
+    // return item.pan;
+    // return item.folio;
   }
 
   isGroup4(index, item) {// for getting total of each scheme
     return item.total;
-    return item.totalTransactionAmt;
-    return item.totalUnit;
-    return item.totalNav;
-    return item.totalCurrentValue;
-    return item.dividendPayout;
-    return item.divReinvestment;
-    return item.totalAmount;
-    return item.gain;
-    return item.absReturn;
-    return item.xirr;
+    // return item.totalTransactionAmt;
+    // return item.totalUnit;
+    // return item.totalNav;
+    // return item.totalCurrentValue;
+    // return item.dividendPayout;
+    // return item.divReinvestment;
+    // return item.totalAmount;
+    // return item.gain;
+    // return item.absReturn;
+    // return item.xirr;
   }
 
   generatePdf() {
