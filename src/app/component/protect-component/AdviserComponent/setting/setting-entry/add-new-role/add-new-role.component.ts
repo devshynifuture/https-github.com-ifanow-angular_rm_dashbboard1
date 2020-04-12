@@ -173,14 +173,14 @@ export class AddNewRoleComponent implements OnInit {
           featureToCapabilitiesList: this.mergeAllCapabilitiesAndFilterEnabled(),
         };
         console.log(dataObj)
-        // this.settingsService.editRole(dataObj).subscribe((res) => {
-        //   if(res) {
-        //     this.eventService.openSnackBar("Role Modified Successfully");
-        //     this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
-        //   }
-        // }, err => {
-        //   this.eventService.openSnackBar("Error Occured");
-        // })
+        this.settingsService.editRole(dataObj).subscribe((res) => {
+          if(res) {
+            this.eventService.openSnackBar("Role Modified Successfully");
+            this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
+          }
+        }, err => {
+          this.eventService.openSnackBar("Error Occured");
+        })
       }
     }
   }

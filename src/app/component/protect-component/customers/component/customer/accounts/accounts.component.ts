@@ -3,6 +3,7 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { RoutingState } from '../../../../../../services/routing-state.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { slideInAnimation } from '../../../../../../animation/router.animation';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-accounts',
@@ -13,6 +14,7 @@ import { slideInAnimation } from '../../../../../../animation/router.animation';
   ]
 })
 export class AccountsComponent implements OnInit {
+  clientData: any;
 
   set value(value: number) {
     console.log('now value is ->>>>', value);
@@ -48,6 +50,7 @@ export class AccountsComponent implements OnInit {
     this.selected = 1;
     this._value = 1;
     this.loading = false;
+    this.clientData = AuthService.getClientData();
     console.log('this is child url now->>>>>', this.router.url.split('/')[3]);
     var roterName = this.router.url.split('/')[3]
     if (roterName === 'summary') {

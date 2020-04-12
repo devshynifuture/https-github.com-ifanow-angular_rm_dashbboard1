@@ -20,12 +20,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
 
-        <table mat-table [dataSource]="shortTerm" id="table-low" class="mt-20">
-            <ng-container matColumnDef="disclaimer">
-                <td mat-header-cell *matHeaderCellDef colspan="2" class="text-primitive f-14 f-400 bg-white pl-12">
-                    Asset class
-                </td>
-            </ng-container>
+        <table mat-table [dataSource]="shortTermAsset" id="table-low" class="mt-20" multiTemplateDataRows>
             <ng-container matColumnDef="position">
                 <th mat-header-cell class="br t-70" *matHeaderCellDef>SHORT TERM </th>
                 <td mat-cell class="br" *matCellDef="let element"> {{element.class}} </td>
@@ -34,35 +29,33 @@
                 <th mat-header-cell class="br t-70" *matHeaderCellDef>Assumption </th>
                 <td mat-cell class="text-center br" *matCellDef="let element"> {{element.inflation_rate}} </td>
             </ng-container>
+            <ng-container matColumnDef="disclaimer">
+                <th mat-header-cell class="br t-70" *matHeaderCellDef></th>
+                <td mat-cell class="text-primitive f-14 f-400 bg-white pl-12" *matCellDef="let element" colspan="2"> {{element.type}} </td>
+            </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
-            <tr mat-header-row *matHeaderRowDef="['disclaimer']"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['disclaimer']; when: isExtendedRow"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-
     </div>
 
     <div class="col-md-4">
-        <table mat-table [dataSource]="dataSource4" id="table-low">
-            <ng-container matColumnDef="disclaimer">
-                <td mat-header-cell *matHeaderCellDef colspan="2" class="text-primitive f-14 f-400 bg-white pl-12">
-                    Asset class
-                </td>
-            </ng-container>
+        <table mat-table [dataSource]="dataSource" id="table-low">
             <ng-container matColumnDef="position">
-                <th mat-header-cell class="br t-70" *matHeaderCellDef>SHORT TERM </th>
+                <th class="br t-70" mat-header-cell *matHeaderCellDef>LONG TERM </th>
                 <td mat-cell class="br" *matCellDef="let element"> {{element.position}} </td>
             </ng-container>
             <ng-container matColumnDef="name">
-                <th mat-header-cell class="br t-70" *matHeaderCellDef>Assumption </th>
+                <th mat-header-cell *matHeaderCellDef>Assumption </th>
                 <td mat-cell class="text-center br" *matCellDef="let element"> {{element.name}} </td>
             </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>
-            <tr mat-header-row *matHeaderRowDef="['disclaimer']"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <table mat-table [dataSource]="longTerm" id="table-low" class="mt-20">
+        <table mat-table [dataSource]="longTermAsset" id="table-low" class="mt-20" multiTemplateDataRows>
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell class="br t-70" *matHeaderCellDef>LONG TERM</th>
@@ -72,9 +65,14 @@
                 <th mat-header-cell class="br t-70" *matHeaderCellDef>Assumption </th>
                 <td mat-cell class="text-center br" *matCellDef="let element"> {{element.inflation_rate}} </td>
             </ng-container>
+            <ng-container matColumnDef="disclaimer">
+                <th mat-header-cell class="br t-70" *matHeaderCellDef></th>
+                <td mat-cell class="text-primitive f-14 f-400 bg-white pl-12" *matCellDef="let element" colspan="2"> {{element.type}} </td>
+            </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['disclaimer']; when: isExtendedRow"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
     </div>
     <div class="col-md-4"></div>

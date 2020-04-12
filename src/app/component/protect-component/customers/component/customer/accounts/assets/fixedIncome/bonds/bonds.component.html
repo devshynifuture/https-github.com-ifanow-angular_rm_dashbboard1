@@ -182,8 +182,7 @@
                     <mat-option value="4">Half yearly </mat-option>
                     <mat-option value="5">Yearly</mat-option>
                 </mat-select>
-                <mat-error class="f-12 pt-4"
-                    [ngClass]="{'v-h':!(isCompound && getFormControl().compound.invalid || getFormControl().compound.touched && getFormControl().compound.invalid)}">
+                <mat-error class="f-12 pt-4">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -340,7 +339,8 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveBonds()">Save</button>
+            <app-progress-button (btnClick)="saveBonds()" [options]="barButtonOptions" >
+            </app-progress-button>
         </div>
     </div>
 </div>

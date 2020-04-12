@@ -63,7 +63,7 @@ export class ExcelGenService {
     let titleRow = worksheet.addRow([title]);
     titleRow.font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true }
     worksheet.addRow([]);
-    let subTitleRow = worksheet.addRow(['Date :', this.datePipe.transform(new Date(), 'medium')])
+    // let subTitleRow = worksheet.addRow(['Date :', this.datePipe.transform(new Date(), 'medium')])
 
    worksheet.addRow(['Adviser:', this.advisor.name]);
    worksheet.addRow(['Client:', this.client.name]);

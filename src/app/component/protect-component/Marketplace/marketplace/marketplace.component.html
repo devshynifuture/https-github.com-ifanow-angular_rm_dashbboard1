@@ -1,0 +1,106 @@
+<div id="marketplave-header">
+  <div class="row ">
+    <div class="col-md-2 p-0 pt-8 pb-8">
+      <img src="assets/images/ifa-logo.png" class="w-100">
+    </div>
+    <div class="col-md-10 pr-0">
+      <div class="row pt-18 pb-18">
+        <div class="col-5">
+          <div class="form-group">
+            <mat-form-field class="example-full-width">
+              <input type="text"
+              aria-label="Number"
+              matInput
+              [formControl]="myControl"
+              [matAutocomplete]="auto" class="form-control">
+              <mat-autocomplete #auto="matAutocomplete">
+                <div class="row pt-10 pb-10">
+                  <div class="col-md-12">
+                    <p class="text-primary roboto f-500 m-0">Registered Investment Advisors (RIA)</p>
+                  </div>
+                </div>
+                <mat-option>
+                  <div class="row">
+                    <div class="col-md-1 pl-0">
+                      <img src="/assets/images/deepesh.png" class="pt-2">
+                    </div>
+                    <div class="col-md-11 pt-6">
+                      <p class="m-0 f-500 roboto">Deepesh Raghaw</p>
+                      <p class="m-0 f-12 text-custom roboto">Deepesh Raghaw</p>
+                    </div>
+                  </div>
+                </mat-option>
+                <mat-option>
+                  <div class="row">
+                    <div class="col-md-1 pl-0">
+                      <img src="/assets/images/deepesh.png" class="pt-2">
+                    </div>
+                    <div class="col-md-11 pt-6 pb-6">
+                      <p class="m-0 f-500 roboto">Deepesh Raghaw</p>
+                      <p class="m-0 f-12 text-custom roboto">Deepesh Raghaw</p>
+                    </div>
+                  </div>
+                </mat-option>
+                <div class="row pt-16 pb-10">
+                  <div class="col-md-12">
+                    <p class="text-primary roboto f-500 m-0">AMFI certified Mutual Fund distributors</p>
+                  </div>
+                </div>
+                <mat-option>
+                  <div class="row">
+                    <div class="col-md-1 pl-0">
+                      <img src="/assets/images/deepesh.png" class="pt-2">
+                    </div>
+                    <div class="col-md-11 pt-6 pb-6">
+                      <p class="m-0 f-500 roboto">Deepesh Raghaw</p>
+                      <p class="m-0 f-12 text-custom roboto">Deepesh Raghaw</p>
+                    </div>
+                  </div>
+                </mat-option>
+               <!--  <div class="row bg-grey lter">
+                  <div class="col-md-2">
+                    <button mat-stroked-button class="up-down-buttons"><span class="material-icons text-white">
+                    arrow_downward
+                    </span></button>
+                    <button mat-stroked-button class="up-down-buttons"><span class="material-icons text-white">
+                    arrow_upward
+                    </span></button>
+                  </div>
+                  <div class="col-md-2">
+                    <p class="m-0 text-custom">to enter</p>
+                  </div>
+                  <div class="col-md-2">
+                    <p class="m-0 text-custom">to enter</p>
+                  </div>
+                  <div class="col-md-6 text-right">
+                    <p class="m-0 text-custom">All shortcuts</p>
+                  </div>
+                </div> -->
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="row pt-4">
+            <div class="col-md-4">
+              <a mat-stroked-button routerLink=".">EXPERTS</a>
+            </div>
+            <div class="col-md-4 pr-0 text-center">
+              <a mat-stroked-button routerLink="." class="">CHAT</a>
+            </div>
+            <div class="col-md-4">
+              <a mat-stroked-button routerLink=".">LEARN</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-2">
+          <button mat-stroked-button class="f-400">Login / Signup</button>
+        </div>
+        <div class="col-2 pt-4">
+          <a mat-stroked-button routerLink=".">For Advisors</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

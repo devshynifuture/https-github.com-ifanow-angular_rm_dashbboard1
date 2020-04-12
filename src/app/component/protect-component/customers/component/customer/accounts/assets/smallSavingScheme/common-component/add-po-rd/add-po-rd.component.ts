@@ -123,7 +123,7 @@ get getCoOwner() {
 
 addNewCoOwner(data) {
   this.getCoOwner.push(this.fb.group({
-    name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+    name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
   }));
   if (data) {
     setTimeout(() => {
@@ -191,7 +191,7 @@ removeNewNominee(item) {
 
 addNewNominee(data) {
   this.getNominee.push(this.fb.group({
-    name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0]
+    name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
   }));
   if (!data || this.getNominee.value.length < 1) {
     for (let e in this.getNominee.controls) {
@@ -241,15 +241,16 @@ checkValue(){
       // ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
       getCoOwnerName: this.fb.array([this.fb.group({
         name: ['',[Validators.required]],
-        share: ['',[Validators.required]],
+        share: [0,[Validators.required]],
         familyMemberId: 0,
-        id:0
+        id: 0,
+        isClient:0
       })]),
       monthlyContribution: [data.monthlyContribution, [Validators.required, Validators.min(10)]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       tenure: [(data.tenure) ? data.tenure : 5, [Validators.required]],
       ownership: [(data.ownerTypeId) ? String(data.ownerTypeId) : '1', [Validators.required]],
-      interestRate: [!data.interestRate ? '7.2' : data.interestRate, [Validators.required]],
+      interestRate: [!data.interestRate ? '' : data.interestRate],
       compound: [(!data.compound) ? '3' : data.compound, [Validators.required]],
       rdNum: [data.rdNumber],
       poBranch: [data.postOfficeBranch],
@@ -331,7 +332,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.PORDForm}
         postOfficeBranch: this.PORDForm.get('poBranch').value,
         nominees: this.nominees,
         description: this.PORDForm.get('description').value,
-        interestRate: this.PORDForm.get('interestRate').value,
+        // interestRate: this.PORDForm.get('interestRate').value,
         ownerTypeId: this.PORDForm.get('ownership').value,
         interestCompounding: this.PORDForm.get('compound').value,
         linkedBankAccount: this.PORDForm.get('linkedBankAcc').value,

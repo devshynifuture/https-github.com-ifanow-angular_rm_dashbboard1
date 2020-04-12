@@ -63,14 +63,14 @@ export class AddCamsFundsnetComponent implements OnInit {
     const secretQuestionsArr = this.camsFundFG.controls.rtaCamsFundNetSecurityQuestionsList as FormArray;
 
     questions.forEach(question => {
-      secretQuestionsArr.push(this.secretQuestionsFG(question.questionId, ''));
+      secretQuestionsArr.push(this.secretQuestionsFG(question.id, ''));
     })
   }
 
   secretQuestionsFG(questionId = '', answer = ''){
-    let qObj = {value: questionId, disabled: !!questionId};
+    // let qObj = {value: questionId, disabled: !!questionId};
     return this.fb.group({
-      questionId: [qObj, [Validators.required]],
+      questionId: [questionId, [Validators.required]],
       answer: [answer, [Validators.required]],
     });
   }

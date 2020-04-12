@@ -499,6 +499,10 @@ export const appConfig = {
   BACKOFFICE_SIP_STP: 'backoffice/file-upload/uploaded/sip/list/get',
   BACKOFFICE_FOLIO: 'backoffice/file-upload/uploaded/folio-master/list/get',
   BACKOFFICE_SUCCESS_FILE_UPLOAD: 'backoffice/file-upload/success',
+  GET_DAILY_SERVICES_STATUS_REPORT: 'rmdashboard/dashboard/daily/services/status/get',
+  GET_DAILY_FILES: 'rmdashboard/dashboard/daily-file/get',
+  FILTER_HISTORICAL_REPORT: 'rmdashboard/dashboard/historic/files/filter/get',
+  GET_IFA_MATRIC_DATA: 'rmdashboard/dashboard/ifas/metric/get',
 
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',

@@ -4,11 +4,11 @@
             <div class="row">
                 <div class="col-md-6 pl-32">
                     <p class="f-12 roboto mb-10 mt-20">MY IFAs</p>
-                    <h5 class="f-32 m-0">128</h5>
+                    <h5 *ngIf="ifaCountData" class="f-32 m-0">{{ifaCountData.myIfas}}%</h5>
                 </div>
                 <div class="col-md-6">
                     <p class="f-12 roboto mb-10 mt-20">ACTIVE</p>
-                    <h5 class="f-32 m-0 text-success">91%</h5>
+                    <h5 *ngIf="ifaCountData" class="f-32 m-0 text-success">{{ifaCountData.activeIfas}}%</h5>
                 </div>
             </div>
 
@@ -21,19 +21,18 @@
             <div class="row">
                 <div class="col-md-4 pl-10">
                     <p class="f-12 roboto mb-10">TODAY</p>
-                    <h5 class="f-20 m-0">2</h5>
+                    <h5 *ngIf="ifaCountData" class="f-20 m-0">{{ifaCountData.ifasAdditionsToday}}</h5>
                 </div>
                 <div class="col-md-4 pl-0">
                     <p class="f-12 roboto mb-10">YESTERDAY</p>
-                    <h5 class="f-20 m-0">1</h5>
+                    <h5 *ngIf="ifaCountData" class="f-20 m-0">{{ifaCountData.ifasAdditionsYesterday}}</h5>
                 </div>
                 <div class="col-md-4 pl-10 pr-0 ">
                     <p class="f-12 roboto mb-10">THIS MTH</p>
-                    <h5 class="f-20 d-flex align-items-center m-0">27
+                    <h5 *ngIf="ifaCountData" class="f-20 d-flex align-items-center m-0">
+                        {{ifaCountData.ifasAdditionsThisMonth.thisMonth}}
                         <span class="f-12 d-flex text-success">
-                            <i class="material-icons f-12">
-                                arrow_upward
-                            </i> 53%
+                            {{ifaCountData.ifasAdditionsThisMonth.percentageIncreaseOrDecrease}}%
                         </span>
                     </h5>
                 </div>
@@ -90,7 +89,7 @@
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="col-md-12 f-14">
                                         CAMS
                                     </div>
@@ -99,7 +98,48 @@
                                     <div class="col-md-12 p-0">
                                         <img class="width200" src="assets/images/svg/backoffice-pie-chart.svg">
                                     </div>
-                                </div>
+                                </div> -->
+                                <!-- <div>
+                                    <table id="container">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Jane</th>
+                                                <th>John</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th>Apples</th>
+                                                <td>3</td>
+                                                <td>4</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Pears</th>
+                                                <td>2</td>
+                                                <td>0</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Plums</th>
+                                                <td>5</td>
+                                                <td>11</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Bananas</th>
+                                                <td>1</td>
+                                                <td>1</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Oranges</th>
+                                                <td>2</td>
+                                                <td>4</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div> -->
+                                <highcharts-chart [Highcharts]="highcharts" [options]="chartOptions"
+                                    style="width: 100%; height: 400px; display: block;">
+                                </highcharts-chart>
                                 <div class="row">
                                     <div class="col-md-12 f-14">
                                         Karvy
@@ -278,123 +318,47 @@
                                     </div>
                                     <div class="col-md-5 pl-10 paddRight10">
                                         <mat-form-field>
-                                            <mat-select class="form-control">
-                                                <mat-option>
-                                                    All files
-                                                </mat-option>
+                                            <mat-select [(ngModel)]="historicalFileValue"
+                                                (selectionChange)="filterHistoricalFileData($event)"
+                                                class="form-control">
+                                                <mat-option value="0">All files</mat-option>
+                                                <mat-option value="1">KARVY</mat-option>
+                                                <mat-option value="2">CAMS</mat-option>
+                                                <mat-option value="3">FRANKLIN_TEMPLETON</mat-option>
+                                                <mat-option value="4">SUNDARAM</mat-option>
+                                                <mat-option value="5">PRUDENT</mat-option>
+                                                <mat-option value="8">IFANOW</mat-option>
+                                                <mat-option value="10">NJ</mat-option>
+                                                <mat-option value="12">IFAST</mat-option>
                                             </mat-select>
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <div class="pl-10 pb-10 paddRight10">
+                                <div *ngFor="let singleFile of historicalFileData" class="pl-10 pb-10 paddRight10">
                                     <div class="row">
                                         <div class="col-md-12 pb-8 p-0 f-14">
-                                            Sonesh Dedhia - 21/01 11:30
+                                            {{singleFile.name}} - {{singleFile.created_date | date:'dd/MM h:mm '}}
                                         </div>
                                     </div>
                                     <div class="row b-b">
                                         <div class="col-md-3 pl-0">
                                             <p class="f-12 text-primitive mb-5">Total</p>
-                                            <h3 class="mb-8 text-primary">592</h3>
+                                            <h3 class="mb-8 text-primary">{{singleFile.total_files_orders}}</h3>
                                         </div>
 
                                         <div class="col-md-3 pl-10">
                                             <p class="f-12 text-primitive mb-5">Ordered</p>
-                                            <h3 class="mb-8 text-primary">240</h3>
+                                            <h3 class="mb-8 text-primary">{{singleFile.ordered}}</h3>
                                         </div>
 
                                         <div class="col-md-3 pl-10">
                                             <p class="f-12 text-primitive mb-5">Failed</p>
-                                            <h3 class="mb-8 orengeColor">3</h3>
+                                            <h3 class="mb-8 orengeColor">{{singleFile.failed}}</h3>
                                         </div>
 
                                         <div class="col-md-3 pl-0">
                                             <p class="f-12 text-primitive mb-5">Uploaded</p>
-                                            <h3 class="mb-8 greenColor">311</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="pl-10 pb-10 paddRight10">
-                                    <div class="row">
-                                        <div class="col-md-12 pb-8 p-0 f-14">
-                                            Vivek Shah - 21/01 10:46
-                                        </div>
-                                    </div>
-                                    <div class="row b-b">
-                                        <div class="col-md-3 pl-0">
-                                            <p class="f-12 text-primitive mb-5">Total</p>
-                                            <h3 class="mb-8 text-primary">592</h3>
-                                        </div>
-
-                                        <div class="col-md-3 pl-10">
-                                            <p class="f-12 text-primitive mb-5">Ordered</p>
-                                            <h3 class="mb-8 text-primary">240</h3>
-                                        </div>
-
-                                        <div class="col-md-3 pl-10">
-                                            <p class="f-12 text-primitive mb-5">Failed</p>
-                                            <h3 class="mb-8 orengeColor">3</h3>
-                                        </div>
-
-                                        <div class="col-md-3 pl-0">
-                                            <p class="f-12 text-primitive mb-5">Uploaded</p>
-                                            <h3 class="mb-8 greenColor">311</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="pl-10 pb-10 paddRight10">
-                                    <div class="row">
-                                        <div class="col-md-12 pb-8 p-0 f-14">
-                                            Right horizons Financial Planners
-                                        </div>
-                                    </div>
-                                    <div class="row b-b">
-                                        <div class="col-md-3 pl-0">
-                                            <p class="f-12 text-primitive mb-5">Total</p>
-                                            <h3 class="mb-8 text-primary">592</h3>
-                                        </div>
-
-                                        <div class="col-md-3 pl-10">
-                                            <p class="f-12 text-primitive mb-5">Ordered</p>
-                                            <h3 class="mb-8 text-primary">240</h3>
-                                        </div>
-
-                                        <div class="col-md-3 pl-10">
-                                            <p class="f-12 text-primitive mb-5">Failed</p>
-                                            <h3 class="mb-8 orengeColor">3</h3>
-                                        </div>
-
-                                        <div class="col-md-3 pl-0">
-                                            <p class="f-12 text-primitive mb-5">Uploaded</p>
-                                            <h3 class="mb-8 greenColor">311</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="pl-10 paddRight10">
-                                    <div class="row">
-                                        <div class="col-md-12 pb-8 p-0 f-14">
-                                            Sanjay Ladha - 21/01 10:12
-                                        </div>
-                                    </div>
-                                    <div class="row ">
-                                        <div class="col-md-3 pl-0">
-                                            <p class="f-12 text-primitive mb-5">Total</p>
-                                            <h3 class="mb-8 text-primary">592</h3>
-                                        </div>
-
-                                        <div class="col-md-3 pl-10">
-                                            <p class="f-12 text-primitive mb-5">Ordered</p>
-                                            <h3 class="mb-8 text-primary">240</h3>
-                                        </div>
-
-                                        <div class="col-md-3 pl-10">
-                                            <p class="f-12 text-primitive mb-5">Failed</p>
-                                            <h3 class="mb-8 orengeColor">3</h3>
-                                        </div>
-
-                                        <div class="col-md-3 pl-0">
-                                            <p class="f-12 text-primitive mb-5">Uploaded</p>
-                                            <h3 class="mb-8 greenColor">311</h3>
+                                            <h3 class="mb-8 greenColor">{{singleFile.uploaded}}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -474,27 +438,31 @@
             <div class="col-md-3 pt-20 pr-0 pl-10">
 
                 <h3 class="f-16 m-0 mb-20 roboto">Running services</h3>
-                <div class="boxColorGreen">
+                <div *ngFor="let singleService of serviceStatusData"
+                    [ngClass]="{'boxColorOrenge': singleService.service_status=='Not Updated'||singleService.service_status=='Not Working'}"
+                    class="boxColorGreen">
                     <div class="row">
                         <div class="col-md-10 p-0">
-                            <h4 class="f-14">Mutual fund NAV</h4>
+                            <h4 class="f-14">{{singleService.service_name}}</h4>
                         </div>
                         <div class="col-md-2 p-0">
-                            <i class="material-icons f-30 greenColor">
+                            <i class="material-icons f-30 greenColor"
+                                [ngClass]="{'orengeColor': singleService.service_status=='Not Updated' ||singleService.service_status=='Not Working'}">
                                 check_circle
                             </i>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6 f-12 p-0 greenColor">
-                            UPDATED
+                        <div class="col-md-6 f-12 p-0 greenColor"
+                            [ngClass]="{'orengeColor': singleService.service_status=='Not Updated' ||singleService.service_status=='Not Working'}">
+                            {{singleService.service_status}}
                         </div>
                         <div class="col-md-6 p-0 text-primitive text-right f-12">
-                            27/01 05:03AM
+                            {{singleService.created_date | date:'dd/MM h:mm a'}}
                         </div>
                     </div>
                 </div>
-                <div class="boxColorOrenge">
+                <!-- <div class="boxColorOrenge">
                     <div class="row">
                         <div class="col-md-10 p-0">
                             <h4 class="f-14">Stock prices</h4>
@@ -573,7 +541,7 @@
                             25/01 05:03AM
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <h4 class="f-16 f-600 mt-32">Scheme mapping</h4>
                 <div class="row">
