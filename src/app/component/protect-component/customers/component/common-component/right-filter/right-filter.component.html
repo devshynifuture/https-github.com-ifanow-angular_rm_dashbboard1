@@ -13,11 +13,12 @@
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h5 class="m-0">Family members<span class="text-right f-14 pl-12">{{countFamily}} of {{familyMember.length}}
-              selected</span></h5>
+            selected</span></h5>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div>
-        <mat-checkbox (change)="selectAll($event,familyMember,'countFamily')" name="selectAll">select/unselect All</mat-checkbox>
+        <mat-checkbox (change)="selectAll($event,familyMember,'countFamily')" name="selectAll">select/unselect All
+        </mat-checkbox>
         <mat-list-item role="listitem" *ngFor="let item of familyMember">
           <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterFamily()">{{item.name}}</mat-checkbox>
         </mat-list-item>
@@ -41,8 +42,8 @@
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h5 class="m-0">Schemes<span class="text-right f-14 pl-12">{{countScheme}} of {{scheme.length}}
-              selected</span></h5>
-      </mat-panel-title>
+            selected</span></h5>
+        </mat-panel-title>
       </mat-expansion-panel-header>
       <div>
         <mat-checkbox (change)="selectAll($event,scheme,'countScheme')" name="selectAll">select/unselect All
@@ -62,7 +63,8 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div>
-        <mat-checkbox (change)="selectAll($event,folio,'countFolio')" name="selectAll">select/unselect All</mat-checkbox>
+        <mat-checkbox (change)="selectAll($event,folio,'countFolio')" name="selectAll">select/unselect All
+        </mat-checkbox>
         <mat-list-item role="listitem" *ngFor="let item of folio">
           <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterFolio()">{{item.folioNumber}}
           </mat-checkbox>
@@ -74,13 +76,15 @@
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h5 class="m-0">Transaction view <span class="text-right f-14 pl-12">{{countTranView}} of
-              {{transactionView.length}} selected</span></h5>
+            {{transactionView.length}} selected</span></h5>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div>
-        <mat-checkbox (change)="selectAll($event,transactionView,'countTranView')" name="selectAll">select/unselect All</mat-checkbox>
-        <mat-list-item role="listitem" *ngFor="let item of transactionView">
-          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect()">{{item.displayName}}</mat-checkbox>
+        <mat-checkbox (change)="selectAll($event,transactionView,'countTranView')" name="selectAll">select/unselect
+          All
+        </mat-checkbox>
+        <mat-list-item role="listitem" *ngFor="let item of transactionView let i = index;">
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect(item,i)">{{item.displayName}}</mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>
@@ -89,12 +93,12 @@
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h5 class="m-0">Report Type <span class="text-right f-14 pl-12">{{countReport}} of {{reportType.length}}
-              selected</span></h5>
+            selected</span></h5>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div>
         <mat-list-item role="listitem" *ngFor="let item of reportType">
-          <mat-checkbox [(ngModel)]="item.selected"  (change)="changeReportFilter(item)">{{item.name}}</mat-checkbox>
+          <mat-checkbox [(ngModel)]="item.selected" (change)="changeReportFilter(item)">{{item.name}}</mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>
@@ -103,22 +107,24 @@
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h5 class="m-0">Categories<span class="text-right f-14 pl-12">{{countCategory}} of {{category.length}}
-              selected</span></h5>
+            selected</span></h5>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div>
-        <mat-checkbox (change)="selectAll($event,category,'countCategory')" name="selectAll">select/unselect All</mat-checkbox>
+        <mat-checkbox (change)="selectAll($event,category,'countCategory')" name="selectAll">select/unselect All
+        </mat-checkbox>
         <mat-list-item role="listitem" *ngFor="let item of category">
           <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterCategory(this.category)">{{item.category}}
           </mat-checkbox>
         </mat-list-item>
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngIf="_data.name!='SUMMARY REPORT'">
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                         *ngIf="_data.name!='SUMMARY REPORT'">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h5 class="m-0">Transaction Period<span class="text-right f-14 pl-12">{{countCategory}} of {{category.length}}
-              selected</span></h5>
+            selected</span></h5>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div>
@@ -146,7 +152,7 @@
 
       </div>
     </div>
-    <div class="row" *ngIf="transactionPeriod == true">
+    <div class="row" *ngIf="transactionPeriod == true ">
       <div class="col-md-6 p-0">
         <h5 class="m-0 pb-8">From date</h5>
         <div class="col-md-8 pl-0">
@@ -158,7 +164,7 @@
               This field is required
             </mat-error>
           </mat-form-field>
-  
+
         </div>
       </div>
       <div class="col-md-6 p-0">
@@ -172,7 +178,7 @@
               This field is required
             </mat-error>
           </mat-form-field>
-  
+
         </div>
       </div>
     </div>

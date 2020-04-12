@@ -60,6 +60,10 @@ export const appConfig = {
   WBR_FOLIO_PAN_COUNT: 'backoffice/folio/pan/count/get',
   SIP_APPLICANT_LIST: 'backoffice/sip/applicant/list/get',
   SIP_FOLIO_LIST: 'backoffice/sip/applicant/scheme/folio/list/get',
+
+  ///////////////////////////// rm dashboard ///////////////////////////////////////////
+  RM_DASHBOARD_RM_MASTER_USER_GET: 'rmdashboard/dashboard/rm-master/user/get',
+
   ///////////////////////////// back office/////////////////////////////////////////////
 
 
@@ -497,6 +501,8 @@ export const appConfig = {
   BACKOFFICE_SUCCESS_FILE_UPLOAD: 'backoffice/file-upload/success',
   GET_DAILY_SERVICES_STATUS_REPORT: 'rmdashboard/dashboard/daily/services/status/get',
   GET_DAILY_FILES: 'rmdashboard/dashboard/daily-file/get',
+  FILTER_HISTORICAL_REPORT: 'rmdashboard/dashboard/historic/files/filter/get',
+  GET_IFA_MATRIC_DATA: 'rmdashboard/dashboard/ifas/metric/get',
 
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',

@@ -2,6 +2,7 @@ import { ELEMENT_DATA1 } from './../../customers/component/customer/plan/cashflo
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSort } from '@angular/material';
+import { ReconciliationService } from '../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 
 @Component({
   selector: 'app-support-aum-reconciliation',
@@ -10,14 +11,15 @@ import { MatSort } from '@angular/material';
 })
 export class SupportAumReconciliationComponent implements OnInit {
 
-  constructor(private router: Router) {
-
-  }
-
-
+  constructor(
+    private router: Router,
+    private reconService: ReconciliationService
+  ) { }
 
   ngOnInit() {
-    this.router.navigate(['/support/aum-reconciliation/all-rta'])
+
+    this.router.navigate(['/support/aum-reconciliation/all-rta']);
+
   }
 
 }

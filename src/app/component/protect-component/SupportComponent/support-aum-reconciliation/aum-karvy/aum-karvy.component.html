@@ -10,12 +10,13 @@
 
 <div class="row">
     <div class="col-md-12 overflow-hidden back-office-table">
-        <table mat-table id="table-low" [dataSource]="dataSource" class="mt-8" matSort>
+        <table mat-table id="table-low" [dataSource]="dataSource" class="mt-8" matSort appSkeletonLoading
+            [appSkeletonLoading]="isLoading">
             <!-- admin name Column -->
-            <ng-container matColumnDef="rt">
+            <ng-container matColumnDef="rtId">
                 <th mat-header-cell *matHeaderCellDef class="b-a" mat-sort-header="rt"> RT </th>
                 <td mat-cell *matCellDef="let element" class="b-a">
-                    <div class="bar"> {{element.rt}} </div>
+                    <div class="bar"> {{element.rtId}} </div>
                 </td>
             </ng-container>
 
@@ -53,41 +54,44 @@
             </ng-container>
 
             <!-- acc Status column -->
-            <ng-container matColumnDef="total">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header="total" class="b-a"> Total </th>
+            <ng-container matColumnDef="totalFolioCount">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="totalFolioCount" class="b-a"> Total </th>
                 <td mat-cell *matCellDef="let element" class="b-a fc-yellow">
-                    <div class="bar"> {{element.total}} </div>
+                    <div class="bar"> {{element.totalFolioCount}} </div>
                 </td>
             </ng-container>
-            <ng-container matColumnDef="before">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header="before" class="b-a"> Before </th>
+            <ng-container matColumnDef="unmatchedCountBeforeRecon">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="unmatchedCountBeforeRecon" class="b-a"> Before
+                </th>
                 <td mat-cell *matCellDef="let element" class="b-a">
-                    <div class="bar"> {{element.before}} </div>
+                    <div class="bar"> {{element.unmatchedCountBeforeRecon}} </div>
                 </td>
             </ng-container>
-            <ng-container matColumnDef="after">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header="after" class="b-a"> After</th>
+            <ng-container matColumnDef="unmatchedCountAfterRecon">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="unmatchedCountAfterRecon" class="b-a"> After</th>
                 <td mat-cell *matCellDef="let element" class="b-a">
-                    <div class="bar"> {{element.after}} </div>
+                    <div class="bar"> {{element.unmatchedCountAfterRecon}} </div>
                 </td>
             </ng-container>
-            <ng-container matColumnDef="aumBalance">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header="aumBalance" class="b-a"> AUM Balance</th>
+            <ng-container matColumnDef="aumBalanceDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="aumBalanceDate" class="b-a"> AUM Balance Date
+                </th>
                 <td mat-cell *matCellDef="let element" class="b-a">
-                    <div class="bar"> {{element.aumBalance}} </div>
+                    <div class="bar"> {{element.aumBalanceDate | date:'short'}} </div>
                 </td>
             </ng-container>
-            <ng-container matColumnDef="transaction">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header="transaction" class="b-a"> Transaction </th>
+            <ng-container matColumnDef="transactionDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header="transactionDate" class="b-a"> Transaction Date
+                </th>
                 <td mat-cell *matCellDef="let element" class="b-a">
-                    <div class="bar"> {{element.transaction}} </div>
+                    <div class="bar"> {{element.transactionDate | date:'short'}} </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="report">
                 <th mat-header-cell *matHeaderCellDef class="b-a">Report</th>
                 <td mat-cell *matCellDef="let element" class="b-a">
                     <div class="bar">
-                        <button (click)="openUpperModule('clients',element)" mat-stroked-button
+                        <button (click)="openUpperModule('report',element)" mat-stroked-button
                             class="bg-primary text-white">
                             Report
                         </button> </div>

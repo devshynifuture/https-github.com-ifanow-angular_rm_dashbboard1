@@ -140,11 +140,13 @@
 
                 <div class="row pt-60 pb-28">
                     <div class="col-md-12 p-0">
-                        <button class="text-primary br-0" mat-button (click)="setSubTabState(1)">All
+                        <button class="br-0" [ngClass]="subTabState === 1 ?'text-primary':''" mat-button
+                            (click)="setSubTabState(1)">All
                             folios
                         </button>
 
-                        <button class="br-0" mat-button (click)="setSubTabState(2)">Folios with
+                        <button class="br-0" mat-button [ngClass]="subTabState === 2 ?'text-primary':''"
+                            (click)="setSubTabState(2)">Folios with
                             duplicate entries</button>
                     </div>
                 </div>

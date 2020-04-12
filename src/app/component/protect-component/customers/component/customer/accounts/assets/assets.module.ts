@@ -29,6 +29,8 @@ import { PoMisSchemeComponent } from './smallSavingScheme/po-mis-scheme/po-mis-s
 import { MaterialModule } from 'src/app/material/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { TableVirtualScrollModule } from 'ng-table-virtual-scroll';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 
 @NgModule({
@@ -65,7 +67,9 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    CustomDirectiveModule
+    CustomDirectiveModule,
+    TableVirtualScrollModule,
+    ScrollingModule,
   ]
 })
 export class AssetsModule { }

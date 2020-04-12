@@ -43,7 +43,7 @@ export class MutualFundOverviewComponent implements OnInit {
 
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
   displayedColumns1 = ['data', 'amts'];
-  datasource1 = ELEMENT_DATA1;
+  datasource1 = [{},{},{}];
   @ViewChild('mfOverviewTemplate', {static: false}) mfOverviewTemplate: ElementRef;
 
   // @Input() mutualFund;
@@ -68,10 +68,9 @@ export class MutualFundOverviewComponent implements OnInit {
     );
   }
   getMutualFundResponse(data) {
-    this.isLoading = false
-
-    console.log(data);
     this.mfData = data;
+    this.isLoading = false;
+    console.log(data);
     this.calculatePercentage(data); // for Calculating MF categories percentage
     this.pieChart('piechartMutualFund'); // pie chart data after calculating percentage
     this.dataSource4 = data.mutualFundCategoryMastersList; // category wise allocation
@@ -108,39 +107,18 @@ export class MutualFundOverviewComponent implements OnInit {
   }
   getCashFlowStatus() {
     // Used for cashFlow status
-    this.datasource1.forEach(element => {
-      switch (element.data) {
-        case ('a. Investment'):
-          element.amts = this.mfData.total_amount_inv;
-          break;
-        case ('b. Switch In'):
-          element.amts = this.mfData.total_switch_in;
-          break;
-        case ('c. Switch Out'):
-          element.amts = this.mfData.total_switch_out;
-          break;
-        case ('d. Redemption'):
-          element.amts = this.mfData.total_redemption;
-          break;
-        case ('e. Dividend Payout'):
-          element.amts = this.mfData.total_dividend_payout;
-          break;
-        case ('f. Net Investment (a+b-c-d-e)'):
-          element.amts = this.mfData.total_net_investment;
-          break;
-        case ('g. Market Value'):
-          element.amts = this.mfData.total_market_value;
-          break;
-        case ('h. Net Gain (g-f)'):
-          element.amts = this.mfData.total_unrealized_gain;
-          break;
-        case ('i. Realized XIRR (All Transactions)'):
-          element.amts = this.mfData.total_xirr;
-          break;
-        default:
-          return;
-      }
-    });
+    this.datasource1=[
+      { data: 'a. Investment', amts: this.mfData.total_amount_inv },
+      { data: 'b. Switch In', amts: this.mfData.total_switch_in },
+      { data: 'c. Switch Out', amts: this.mfData.total_switch_out },
+      { data: 'd. Redemption', amts: this.mfData.total_redemption },
+      { data: 'e. Dividend Payout', amts: this.mfData.total_dividend_payout },
+      { data: 'f. Net Investment (a+b-c-d-e)', amts: this.mfData.total_net_investment },
+      { data: 'g. Market Value', amts: this.mfData.total_market_value },
+      { data: 'h. Net Gain (g-f)', amts: this.mfData.total_unrealized_gain },
+      { data: 'i. Realized XIRR (All Transactions)', amts: this.mfData.total_xirr },
+    
+    ];
   }
   getsubCategorywiseAllocation(data) {
     this.filteredArray = this.MfServiceService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
@@ -308,15 +286,4 @@ export interface PeriodicElement1 {
   data: string;
   amts: string;
 }
-const ELEMENT_DATA1: PeriodicElement1[] = [
-  { data: 'a. Investment', amts: '0' },
-  { data: 'b. Switch In', amts: '0' },
-  { data: 'c. Switch Out', amts: '0' },
-  { data: 'd. Redemption', amts: '0' },
-  { data: 'e. Dividend Payout', amts: '0' },
-  { data: 'f. Net Investment (a+b-c-d-e)', amts: '0' },
-  { data: 'g. Market Value', amts: '0' },
-  { data: 'h. Net Gain (g-f)', amts: '0' },
-  { data: 'i. Realized XIRR (All Transactions)', amts: '0' },
 
-];

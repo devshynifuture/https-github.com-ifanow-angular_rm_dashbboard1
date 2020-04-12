@@ -32,6 +32,7 @@ export class MutualFundComponent implements OnInit {
 
   ngOnInit() {
     this.viewMode = 'All Transactions';
+
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getMutualFund();
@@ -53,11 +54,6 @@ export class MutualFundComponent implements OnInit {
   }
 
   doFiltering(data) {
-    // return sub category list
-    // this.dataHolder.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
-    // this.dataHolder.schemeWise = this.mfService.filter(this.dataHolder.subCategoryData, 'mutualFundSchemeMaster');
-    // this.dataHolder.mutualFundList = this.mfService.filter(this.dataHolder.schemeWise, 'mutualFund');
-
     data.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
     data.schemeWise = this.mfService.filter(data.subCategoryData, 'mutualFundSchemeMaster');
     data.mutualFundList = this.mfService.filter(data.schemeWise, 'mutualFund');
@@ -68,8 +64,8 @@ export class MutualFundComponent implements OnInit {
   getMutualFundResponse(data) {
     if (data) {
       this.isLoading = false;
-
       this.mfData = data;
+      this.mfData.viewMode = this.viewMode;
     }
     this.isLoading = false;
   }
@@ -78,7 +74,12 @@ export class MutualFundComponent implements OnInit {
     this.mfDataUnrealised = this.mfData;
   }
 
-
+  changeViewMode(data) {
+    if (this.mfData) {
+      this.mfData.viewMode = data;
+      this.viewMode = data;
+    }
+  }
 }
 
 
