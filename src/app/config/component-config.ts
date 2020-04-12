@@ -26,20 +26,20 @@ export const appConfig = {
   GET_AMC_WISE: 'backoffice/mis/aum/amcWise/get',
   GET_APPLICANT_NAME: 'backoffice/mis/aum/amcWise/applicantName/get',
   ADVISOR_TAG_GET: '/advisor/tag/get',
-  AUM_GRAPH_GET:'backoffice/aum/graph/details/get',
-  ARN_RIA_LIST:'backoffice/arn/ria/list/get',
-///////////////////foliodetails///////////////////////////
-  FOLIO_GROUP_HEAD_SEARCH:'backoffice/folio/search/by/groupHead/get',
-  FOLIO_INVESTOR_SEARCH:'backoffice/folio/search/by/investorName/get',
-  FOLIO_PAN_SEARCH:'backoffice/folio/search/by/pan/get',
-  FOLIO_FOLIO_NO__SEARCH:'backoffice/folio/search/by/folioNumber/get',
-  FOLIO_GROUP_HEAD_LIST:'backoffice/foliowise/groupHead/list/get',
-  FOLIO_APPLICANT_NAME_LIST:'backoffice/foliowise/applicaName/list/get',
+  AUM_GRAPH_GET: 'backoffice/aum/graph/details/get',
+  ARN_RIA_LIST: 'backoffice/arn/ria/list/get',
+  ///////////////////foliodetails///////////////////////////
+  FOLIO_GROUP_HEAD_SEARCH: 'backoffice/folio/search/by/groupHead/get',
+  FOLIO_INVESTOR_SEARCH: 'backoffice/folio/search/by/investorName/get',
+  FOLIO_PAN_SEARCH: 'backoffice/folio/search/by/pan/get',
+  FOLIO_FOLIO_NO__SEARCH: 'backoffice/folio/search/by/folioNumber/get',
+  FOLIO_GROUP_HEAD_LIST: 'backoffice/foliowise/groupHead/list/get',
+  FOLIO_APPLICANT_NAME_LIST: 'backoffice/foliowise/applicaName/list/get',
 
 
   /////////////////////// sip api call//////////////////////////////////
-  GET_NEW_SIP:'backoffice/sip/new/sip/get',
-  GET_CEASE_SIP:'backoffice/sip/ceased/sip/get',
+  GET_NEW_SIP: 'backoffice/sip/new/sip/get',
+  GET_CEASE_SIP: 'backoffice/sip/ceased/sip/get',
   GET_EXPIRING: 'backoffice/sip/expiring/get',
   GET_expired: 'backoffice/sip/expired/get',
   GET_SIP_REJECTION: 'backoffice/sip/sipRejection/get',
@@ -60,6 +60,10 @@ export const appConfig = {
   WBR_FOLIO_PAN_COUNT: 'backoffice/folio/pan/count/get',
   SIP_APPLICANT_LIST: 'backoffice/sip/applicant/list/get',
   SIP_FOLIO_LIST: 'backoffice/sip/applicant/scheme/folio/list/get',
+
+  ///////////////////////////// rm dashboard ///////////////////////////////////////////
+  RM_DASHBOARD_RM_MASTER_USER_GET: 'rmdashboard/dashboard/rm-master/user/get',
+
   ///////////////////////////// back office/////////////////////////////////////////////
 
 
@@ -161,7 +165,7 @@ export const appConfig = {
   DELETE_FOLDER: 'document/account/document/all-file/folder/trash',
   SEARCH_FILE: 'document/account/document/all-file/search',
   STAR_FILE: 'document/document/all-file/star',
-  SEND_SHAREBLE_LINK:'pdfAndEmail/email-only/send',
+  SEND_SHAREBLE_LINK: 'pdfAndEmail/email-only/send',
   VIEW_ACTIVITY_FILE: 'document/account/document/all-file/file/view-activity/get',
   VIEW_ACTIVITY_FOLDER: 'document/account/document/all-file/folder/view-activity/get',
   DELETE_FIXED_DEPOSITE: 'account/asset/fixed-income/fixed-deposit/delete',
@@ -178,7 +182,7 @@ export const appConfig = {
   DELETE_OTHERS: 'account/asset/commodity/other/delete',
   GLOBAL_LIABILITIES: 'account/liability/global/get',
   UPLOAD_FILE: 'document/account/document/all-file/file/put',
-  GET_COUNT_DOCS:'document/account/document/all-file/count/get',
+  GET_COUNT_DOCS: 'document/account/document/all-file/count/get',
   CLIENT_UPLOAD_FILE: 'document/upload/pre-signed-url/get',
   SAVE_CLIENT_UPLOAD_FILE: 'user/document/mapping/save',
   DELETE_CLIENT_UPLOAD_FILE: 'user/document/mapping/delete',

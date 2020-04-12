@@ -4,6 +4,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { UpperSliderBackofficeComponent } from '../../common-component/upper-slider-backoffice/upper-slider-backoffice.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
+import { ReconciliationService } from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 
 @Component({
   selector: 'app-aum-cams',
@@ -13,20 +14,100 @@ import { UtilService } from 'src/app/services/util.service';
 export class AumCamsComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   isLoading = false;
-  displayedColumns = ['rt', 'advisorName', 'arnria', 'doneOn', 'doneBy', 'total', 'before', 'after', 'aumBalance', 'transaction', 'report']
+  displayedColumns = ['rtId', 'advisorName', 'arnria', 'doneOn', 'doneBy', 'totalFolioCount', 'unmatchedCountBeforeRecon', 'unmatchedCountAfterRecon', 'aumBalanceDate', 'transactionDate', 'report']
   dataSource = new MatTableDataSource<AumCamsI>(ELEMENT_DATA);
+  rtId;
 
-  constructor(public eventService: EventService, ) { }
+  constructor(
+    public eventService: EventService,
+    private reconService: ReconciliationService
+  ) { }
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
+    this.isLoading = true;
+    this.reconService.getRTListValues({})
+      .subscribe(res => {
+        if (res) {
+          res.forEach(element => {
+            if (element.name === "FRANKLIN_TEMPLETON") {
+              this.rtId = element.id;
+            }
+          });
+          this.getAumHistoryData();
+
+          // this.supportAumReconService.getRmUserInfo({})
+          //   .subscribe(res=>{
+          //     console.log(res);
+          //     if(res){
+          //       res.forEach(element => {
+          //         if(element.id === 1){
+
+          //         }
+          //       });
+          //     }
+          //   });
+        }
+      }, err => {
+        console.error(err);
+      });
+
+
+  }
+
+  getAumHistoryData() {
+    const data = {
+      advisorId: 0,
+      brokerId: 0,
+      // rtId: this.rtId,
+      // need to work on this after completing rm login to fetch rmId form localStorage
+      rtId: 0,
+      rmId: 3
+    }
+
+    this.reconService.getAumReconHistoryDataValues(data)
+      .subscribe(res => {
+        console.log('aum History values::', res);
+        if (res) {
+          let tableData = [];
+          res.forEach(element => {
+            tableData.push({
+              id: element.id,
+              rmId: element.rmId,
+              advisorId: element.advisorId,
+              brokerId: 4,
+              orderTypeId: element.orderTypeId,
+              matchedCount: element.matchedCount,
+              rtId: element.rtId,
+              advisorName: '---',
+              arnria: '---',
+              doneOn: element.doneOn,
+              doneBy: element.doneBy,
+              totalFolioCount: element.totalFolioCount,
+              unmatchedCountBeforeRecon: element.unmatchedCountBeforeRecon,
+              unmatchedCountAfterRecon: element.unmatchedCountAfterRecon,
+              aumBalanceDate: element.aumBalanceDate,
+              transactionDate: element.transactionDate,
+              report: '',
+              orderSuccess: element.orderSuccess,
+              orderFailed: element.orderFailed,
+              reordered: element.reordered,
+              deleted: element.deleted,
+              startRecon: false,
+              flag: "report"
+            })
+          });
+
+          this.dataSource.data = tableData;
+          this.isLoading = false;
+        }
+      })
   }
 
   openUpperModule(flag, data) {
-    data.flag = flag
     console.log('hello mf button clicked');
     const fragmentData = {
-      flag: 'clietns',
+      flag,
       id: 1,
       data,
       direction: 'top',
@@ -50,23 +131,22 @@ export class AumCamsComponent implements OnInit {
 
 
 export interface AumCamsI {
-  rt: string;
+  rtId: string;
   advisorName: string;
-  arnria: number;
+  arnria: string;
   doneOn: string;
   doneBy: string;
-  total: string;
-  before: string;
-  after: string;
-  aumBalance: string;
-  transaction: string;
+  totalFolioCount: string;
+  unmatchedCountBeforeRecon: string;
+  unmatchedCountAfterRecon: string;
+  aumBalanceDate: string;
+  transactionDate: string;
   report: string;
 }
 
 const ELEMENT_DATA: AumCamsI[] = [
-  { rt: 'CAMS', advisorName: 'Admin Name', arnria: 1.0079, doneOn: 'H', doneBy: '30 mins ago', total: 'active', before: 'planName', after: '18/03/2020', aumBalance: '3', transaction: '1', report: '' },
-  { rt: 'CAMS', advisorName: 'Rahul Jain', arnria: 4.0026, doneOn: 'He', doneBy: '30 mins ago', total: 'active', before: 'planName', after: '18/03/2020', aumBalance: '3', transaction: '1', report: '' },
-  { rt: 'CAMS', advisorName: 'weruibnkc', arnria: 4.0026, doneOn: 'He', doneBy: '30 mins ago', total: 'active', before: 'planName', after: '18/03/2020', aumBalance: '3', transaction: '1', report: '' },
-  { rt: 'CAMS', advisorName: 'Admin Name', arnria: 1.0079, doneOn: 'H', doneBy: '30 mins ago', total: 'active', before: 'planName', after: '18/03/2020', aumBalance: '3', transaction: '1', report: '' },
+  { rtId: '', advisorName: '', arnria: '', doneOn: '', doneBy: '', totalFolioCount: '', unmatchedCountBeforeRecon: '', unmatchedCountAfterRecon: '', aumBalanceDate: '', transactionDate: '', report: '' },
+  { rtId: '', advisorName: '', arnria: '', doneOn: '', doneBy: '', totalFolioCount: '', unmatchedCountBeforeRecon: '', unmatchedCountAfterRecon: '', aumBalanceDate: '', transactionDate: '', report: '' },
+  { rtId: '', advisorName: '', arnria: '', doneOn: '', doneBy: '', totalFolioCount: '', unmatchedCountBeforeRecon: '', unmatchedCountAfterRecon: '', aumBalanceDate: '', transactionDate: '', report: '' },
 
 ];
