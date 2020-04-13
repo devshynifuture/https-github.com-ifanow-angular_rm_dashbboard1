@@ -50,11 +50,11 @@ export class SetNewPasswordComponent implements OnInit {
             this.authService.setToken('authTokenInLoginComponnennt');
             if (this.userData.userType == 1) {
               // data.advisorId = data.userId;
+              this.authService.setClientData(this.userData);
               this.authService.setUserInfo(this.userData);
               this.router.navigate(['admin', 'subscription', 'dashboard']);
             } else {
               this.authService.setToken('authTokenInLoginComponnennt');
-
               this.userData.id = this.userData.clientId;
               this.authService.setClientData(this.userData);
               this.authService.setUserInfo(this.userData);
