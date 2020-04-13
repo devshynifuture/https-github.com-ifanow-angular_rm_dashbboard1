@@ -209,58 +209,63 @@ export class UpperSliderBackofficeComponent implements OnInit {
       }
     }
     this.isLoading = true;
-    this.reconService.getDuplicateFolioDataValues(data)
-      .subscribe(res => {
-        this.isLoading = false;
-        if (res) {
-          console.log("this is some duplicate values:::::::::", res, this.aumList);
-          let filteredArrValue = [];
-          let arrValue = [];
-          if (this.data.flag === 'report') {
-            res.forEach(element => {
-              filteredArrValue = this.aumListReportValue.filter(item => {
-                return item.mutualFundId === element.id ? item : null;
+    if (this.didAumReportListGot) {
+      this.reconService.getDuplicateFolioDataValues(data)
+        .subscribe(res => {
+          this.isLoading = false;
+          if (res) {
+            console.log("this is some duplicate values:::::::::", res, this.aumList);
+            let filteredArrValue = [];
+            let arrValue = [];
+            if (this.data.flag === 'report') {
+              res.forEach(element => {
+                filteredArrValue = this.aumListReportValue.filter(item => {
+                  return item.mutualFundId === element.id ? item : null;
+                });
               });
-            });
+            } else {
+              res.forEach(element => {
+                filteredArrValue = this.aumList.filter(item => {
+                  return item.mutualFundId === element.id ? item : null;
+                });
+              });
+            }
+
+
+            console.log("htis is filered value::::", filteredArrValue);
+            filteredArrValue.forEach(item => {
+              arrValue.push({
+                id: item.id,
+                name: item.shemeName,
+                folioNumber: item.folioNumber,
+                mutualFundId: item.mutualFundId,
+                advisorId: item.advisorId,
+                brokerId: item.broker_id,
+                unitsRta: (item.aumUnits).toFixed(3),
+                unitsIfanow: (item.calculatedUnits).toFixed(3),
+                difference: (item.calculatedUnits - item.aumUnits).toFixed(3),
+                freezeDate: item.freezeDate ? item.freezeDate : null,
+                isMapped: item.isMapped,
+                aumDate: item.aumDate,
+                brokerCode: item.brokerCode,
+                schemeCode: item.schemeCode,
+                mutualFundTransaction: item.mutualFundTransaction,
+                transactions: ''
+              })
+            })
+            this.isLoading = false;
+            this.dataSource2.data = arrValue;
           } else {
-            res.forEach(element => {
-              filteredArrValue = this.aumList.filter(item => {
-                return item.mutualFundId === element.id ? item : null;
-              });
-            });
+            this.dataSource2.data = null;
           }
 
-
-          console.log("htis is filered value::::", filteredArrValue);
-          filteredArrValue.forEach(item => {
-            arrValue.push({
-              id: item.id,
-              name: item.shemeName,
-              folioNumber: item.folioNumber,
-              mutualFundId: item.mutualFundId,
-              advisorId: item.advisorId,
-              brokerId: item.broker_id,
-              unitsRta: (item.aumUnits).toFixed(3),
-              unitsIfanow: (item.calculatedUnits).toFixed(3),
-              difference: (item.calculatedUnits - item.aumUnits).toFixed(3),
-              freezeDate: item.freezeDate ? item.freezeDate : null,
-              isMapped: item.isMapped,
-              aumDate: item.aumDate,
-              brokerCode: item.brokerCode,
-              schemeCode: item.schemeCode,
-              mutualFundTransaction: item.mutualFundTransaction,
-              transactions: ''
-            })
-          })
-          this.isLoading = false;
-          this.dataSource2.data = arrValue;
-        } else {
-          this.dataSource2.data = null;
-        }
-
-      }, err => {
-        console.error(err);
-      });
+        }, err => {
+          console.error(err);
+        });
+    } else {
+      this.eventService.openSnackBar("No Aum Report List Found", "DISMISS");
+      this.dataSource2.data = null;
+    }
   }
 
   retryFileOrder() {
@@ -405,10 +410,12 @@ export class UpperSliderBackofficeComponent implements OnInit {
           ]
           excelData.push(Object.assign(data))
         });
+        ExcelService.exportExcel(headerData, header, excelData, footer, value);
+      } else {
+        this.eventService.openSnackBar("No Aum Report List Found", "DISMISS")
       }
     }
 
-    ExcelService.exportExcel(headerData, header, excelData, footer, value);
   }
 
   openReconciliationDetails(value, data, tableType, index, freezeDate) {
@@ -503,23 +510,29 @@ export class UpperSliderBackofficeComponent implements OnInit {
     };
     this.reconService.getAumReportListValues(data)
       .subscribe(res => {
-        this.didAumReportListGot = true;
         console.log("this is aum report list get:::", res);
-        let arrayValue = [];
-        this.aumListReportValue = res;
-        res.forEach(element => {
-          arrayValue.push({
-            name: element.shemeName,
-            folioNumber: element.folioNumber,
-            unitsIfanow: element.calculatedUnits.toFixed(3),
-            unitsRta: (element.aumUnits).toFixed(3),
-            difference: (element.calculatedUnits - element.aumUnits).toFixed(3),
-            transaction: '',
-            mutualFundId: element.mutualFundId,
-            canDeleteTransaction: new Date(element.transactionDate).getTime() > new Date(element.freezeDate).getTime()
+        if (res) {
+          this.didAumReportListGot = true;
+          console.log("this is aum report list get:::", res);
+          let arrayValue = [];
+          this.aumListReportValue = res;
+          res.forEach(element => {
+            arrayValue.push({
+              name: element.shemeName,
+              folioNumber: element.folioNumber,
+              unitsIfanow: element.calculatedUnits.toFixed(3),
+              unitsRta: (element.aumUnits).toFixed(3),
+              difference: (element.calculatedUnits - element.aumUnits).toFixed(3),
+              transaction: '',
+              mutualFundId: element.mutualFundId,
+              canDeleteTransaction: new Date(element.transactionDate).getTime() > new Date(element.freezeDate).getTime()
+            });
           });
-        });
-        this.dataSource1.data = arrayValue;
+          this.dataSource1.data = arrayValue;
+        } else {
+          this.didAumReportListGot = false;
+          this.dataSource1.data = null;
+        }
       }, err => {
         console.error(err)
       })
@@ -628,8 +641,8 @@ interface PeriodicElement1 {
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  { name: 'IIFL Dividend Opportunities Index Fund - Growth', folioNumber: '7716853/43	', unitsIfanow: '0', unitsRta: '463.820', difference: '463.82', transactions: '5' },
-  { name: 'IIFL Dividend Opportunities Index Fund - Growth', folioNumber: '7716853/43	', unitsIfanow: '0', unitsRta: '463.820', difference: '463.82', transactions: '5' },
+  { name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '' },
+  { name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '' },
 ];
 
 const ELEMENT_DATA2: PeriodicElement1[] = [

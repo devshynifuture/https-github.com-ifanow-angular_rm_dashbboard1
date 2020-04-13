@@ -26,7 +26,7 @@ export class AuthService {
 
   static getClientId() {
     const clientData = this.getClientData();
-    return clientData ? clientData.id : undefined;
+    return clientData.id ? clientData.id : clientData.clientId;
   }
 
   setToken(token: string) {

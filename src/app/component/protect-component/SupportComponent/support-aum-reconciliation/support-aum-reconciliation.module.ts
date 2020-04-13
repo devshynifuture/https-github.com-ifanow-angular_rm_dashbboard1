@@ -8,6 +8,7 @@ import { AumKarvyComponent } from './aum-karvy/aum-karvy.component';
 import { AumFranklinComponent } from './aum-franklin/aum-franklin.component';
 import { SupportAumReconciliationComponent } from './support-aum-reconciliation.component';
 import { MaterialModule } from 'src/app/material/material';
+import { CustomDirectiveModule } from '../../../../common/directives/common-directive.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { MaterialModule } from 'src/app/material/material';
   imports: [
     CommonModule,
     SupportAumReconciliationRoutingModule,
-    MaterialModule
+    MaterialModule,
+    CustomDirectiveModule
   ]
 })
 export class SupportAumReconciliationModule { }

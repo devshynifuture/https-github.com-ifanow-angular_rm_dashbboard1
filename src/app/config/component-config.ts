@@ -60,6 +60,10 @@ export const appConfig = {
   WBR_FOLIO_PAN_COUNT: 'backoffice/folio/pan/count/get',
   SIP_APPLICANT_LIST: 'backoffice/sip/applicant/list/get',
   SIP_FOLIO_LIST: 'backoffice/sip/applicant/scheme/folio/list/get',
+
+  ///////////////////////////// rm dashboard ///////////////////////////////////////////
+  RM_DASHBOARD_RM_MASTER_USER_GET: 'rmdashboard/dashboard/rm-master/user/get',
+
   ///////////////////////////// back office/////////////////////////////////////////////
 
 
