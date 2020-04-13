@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from '../login.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-sign-up',
@@ -15,7 +17,7 @@ export class SignUpComponent implements OnInit {
   clientSignUp = false;
 
   constructor(private fb: FormBuilder, private authService: AuthService, public routerActive: ActivatedRoute,
-    private router: Router, private loginService: LoginService, private eventService: EventService) {
+    private router: Router, private loginService: LoginService, private eventService: EventService, public dialog: MatDialog) {
   }
 
   signUpForm;
@@ -62,7 +64,7 @@ export class SignUpComponent implements OnInit {
         data => {
           console.log(data);
           if (data == 400) {
-            confirm("Your contact details are already registered under username ABCD. How would you like to proceed?")
+            this.deleteModal();
             return;
           }
           const forgotPassObjData = {
@@ -95,5 +97,32 @@ export class SignUpComponent implements OnInit {
         err => this.eventService.openSnackBar(err, 'Dismiss')
       );
     }
+  }
+  deleteModal() {
+    const dialogData = {
+      header: 'REGISTER',
+      body: 'Your contact details are already registered under username ABCD. How would you like to proceed?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'REGISTER',
+      positiveMethod: () => {
+        this.createAccount();
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 }
