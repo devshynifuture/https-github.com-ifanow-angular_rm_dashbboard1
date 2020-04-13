@@ -10,7 +10,7 @@
     </div>
     <div class="col-md-3 text-right">
         <!-- ng build prod issue expected argument added empty strings  -->
-        <button mat-stroked-button class="btn-primary pl-8" (click)="addNewTaskTemplate()"> ADD NEW</button>
+        <button mat-stroked-button class="btn-primary " (click)="addNewTaskTemplate()"> ADD NEW</button>
     </div>
     <div class="col-md-12" [hidden]="taskList.length == 0">
         <table mat-table [dataSource]="taskList" class="mt-8 skeletonAnimation" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
