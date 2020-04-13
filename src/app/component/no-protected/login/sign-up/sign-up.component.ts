@@ -66,7 +66,7 @@ export class SignUpComponent implements OnInit {
         data => {
           console.log(data);
           if (data == 400) {
-            this.deleteModal();
+            this.confirmModal(null);
             return;
           }
           const forgotPassObjData = {
@@ -96,16 +96,18 @@ export class SignUpComponent implements OnInit {
             this.router.navigate(['/login/forgotpassword'], { state: forgotPassObjData });
           }
         },
-        err => this.eventService.openSnackBar(err, 'Dismiss')
+        err => {
+          this.confirmModal(err.message)
+        }
       );
     }
   }
-  deleteModal() {
+  confirmModal(errorMsg) {
     const dialogData = {
       header: 'REGISTER',
-      body: 'Your contact details are already registered under username ABCD. How would you like to proceed?',
+      body: errorMsg + '. How would you like to proceed?',
       body2: 'This cannot be undone.',
-      btnYes: 'CANCEL',
+      btnYes: 'LOGIN',
       btnNo: 'REGISTER',
       positiveMethod: () => {
         this.duplicateTableDtaFlag = true;
@@ -114,6 +116,7 @@ export class SignUpComponent implements OnInit {
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
+        this.router.navigate(['login'])
       }
     };
     console.log(dialogData + '11111111111111');
