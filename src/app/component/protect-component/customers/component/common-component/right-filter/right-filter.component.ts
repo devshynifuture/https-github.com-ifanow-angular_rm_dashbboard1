@@ -465,19 +465,12 @@ export class RightFilterComponent implements OnInit {
   }
 
   generateReport() {
-    if (this.transactionPeriod == true) {
-      if (this.summaryFilerForm.get('fromDate').invalid) {
-        this.summaryFilerForm.get('fromDate').markAsTouched();
-        return;
-      } else if (this.summaryFilerForm.get('toDate').invalid) {
-        this.summaryFilerForm.get('toDate').markAsTouched();
-      }
-    } else {
+    var todayDate = new Date().toISOString().slice(0,10);
+   
       if (this.summaryFilerForm.get('reportAsOn').invalid) {
         this.summaryFilerForm.get('reportAsOn').markAsTouched();
         return;
       }
-    }
     this.dataToSend = {
       familyMember: (this.familyMemObj) ? this.familyMemObj : this.familyMember,
       amc: (this.amcObj) ? this.amcObj : this.amc,
@@ -500,7 +493,25 @@ export class RightFilterComponent implements OnInit {
     console.log('this.sendTransactionView ====', this.finalFilterData);
     this.Close(this.finalFilterData);
     console.log(this.finalFilterData);
+    // if(this._data.name=='UNREALIZED TRANSACTION REPORT'){
+    //   this.custumService.getMutualFund(this.finalFilterData.mutualFundList).subscribe(
+    //     data => {
+    //         console.log(data);
+    //       }
+    //   )
+    // }
+    // if(this.dataToSend.toDate!=todayDate){
+    //   let MfList=Object.assign(this.finalFilterData.mutualFundList, {fromDate: this.dataToSend.toDate});
+    //   this.custumService.getMutualFund(MfList).subscribe(
+    //     data => {
+    //         console.log(data);
+    //       }
+    //   )
+    // }
+    
   }
+
+  
 
   Close(data) {
     this.subInjectService.changeNewRightSliderState({state: 'close', data: data});
