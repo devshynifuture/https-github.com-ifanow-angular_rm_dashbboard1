@@ -87,16 +87,21 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   saveTeamMember(){
     let obj = {
       id: this.data.id,
-      ChildId: 2809, //this.data.ChildId, // suchendra currently requires it as hardcoded
+      ChildId: this.data.childId, // suchendra currently requires it as hardcoded
       emailId: this.selectedMember.email,
       mobileNo: this.selectedMember.mobile,
       parentName: this.selectedMember.fullName,
-      parentId: 2808, //this.selectedMember.adminAdvisorId, // suchendra currently requires it as hardcoded
+      parentId: this.selectedMember.adminAdvisorId, // suchendra currently requires it as hardcoded
       roleName: this.selectedMember.role.roleName,
     }
     this.orgSetting.updateAccessControl(obj).subscribe((res) => {
       console.log('team member details', res)
       this.teamMembers = res;
+      this.eventService.openSnackBar("Reporting Manager Updated Successfully");
+      this.close(true);
+    }, (err) => {
+      console.error(err);
+      this.eventService.openSnackBar("Error occured.");
     });
   }
   // mat auto complete search
