@@ -1,19 +1,19 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {BackOfficeService} from '../../protect-component/AdviserComponent/backOffice/back-office.service';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {MatProgressButtonOptions} from '../../../common/progress-button/progress-button.component';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {LoginService} from './login.service';
-import {PeopleService} from '../../protect-component/PeopleComponent/people.service';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { BackOfficeService } from '../../protect-component/AdviserComponent/backOffice/back-office.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MatProgressButtonOptions } from '../../../common/progress-button/progress-button.component';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { LoginService } from './login.service';
+import { PeopleService } from '../../protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login-new.component.html',
- //templateUrl: './login-mobile.component.html',
+  //templateUrl: './login-mobile.component.html',
   styleUrls: ['./login.component.scss'],
   animations: [
     trigger('btnProgress', [
@@ -124,6 +124,9 @@ export class LoginComponent implements OnInit {
       );
     }
   }
+  getOtpOnEnter(event) {
+    (event.keyCode == 13) ? this.getOtp() : ''
+  }
 
   getOtpResponse(data) {
     if (data.emailList && data.emailList.length > 0) {
@@ -137,11 +140,11 @@ export class LoginComponent implements OnInit {
     console.log(this.verifyResponseData);
     if (this.verifyResponseData.email) {
       this.verifyFlag = 'Email';
-      const obj = {email: data.email};
+      const obj = { email: data.email };
       this.loginUsingCredential(obj);
     } else {
       this.verifyFlag = 'mobile';
-      const obj = {mobileNo: data.mobileNo};
+      const obj = { mobileNo: data.mobileNo };
       this.loginUsingCredential(obj);
     }
   }
