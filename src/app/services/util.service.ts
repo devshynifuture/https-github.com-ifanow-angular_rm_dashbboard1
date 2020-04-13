@@ -1,9 +1,12 @@
-import { Injectable, ElementRef } from '@angular/core';
-import { DatePipe, DecimalPipe } from '@angular/common';
-import { EventService } from '../Data-service/event.service';
-import { HttpClient } from '@angular/common/http';
-import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import { FormGroup } from '@angular/forms';
+// tslint:disable:radix
+// tslint:disable:triple-equals
+
+import {ElementRef, Injectable} from '@angular/core';
+import {DatePipe, DecimalPipe} from '@angular/common';
+import {EventService} from '../Data-service/event.service';
+import {HttpClient} from '@angular/common/http';
+import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import {FormGroup} from '@angular/forms';
 
 
 @Injectable({
@@ -12,8 +15,8 @@ import { FormGroup } from '@angular/forms';
 export class UtilService {
 
   constructor(
-    private eventService: EventService, 
-    private http: HttpClient, 
+    private eventService: EventService,
+    private http: HttpClient,
     private subService: SubscriptionService,
   ) {}
 
@@ -124,13 +127,13 @@ export class UtilService {
   }
 
   setSubscriptionStepData(data) {
-    this.subscriptionStepData = data
+    this.subscriptionStepData = data;
   }
 
   checkSubscriptionastepData(stepNo) {
     let tempData;
-    tempData = Object.assign([], this.subscriptionStepData)
-    tempData = tempData.filter(element => element.stepTypeId == stepNo)
+    tempData = Object.assign([], this.subscriptionStepData);
+    tempData = tempData.filter(element => element.stepTypeId == stepNo);
     if (tempData.length != 0) {
       return tempData[0].completed;
     }
@@ -161,18 +164,18 @@ export class UtilService {
       const today = new Date();
       const birthDate = new Date(element.dateOfBirth);
       let age = today.getFullYear() - birthDate.getFullYear();
-      var m = today.getMonth() - birthDate.getMonth();
+      const m = today.getMonth() - birthDate.getMonth();
       if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
         age--;
       }
-      element['age'] = age;
+      element.age = age;
       return element;
     });
   }
 
   formValidations(whichTable) {
     // console.log("this is formGroup::::::::::", whichTable);
-    for (let key in whichTable.controls) {
+    for (const key in whichTable.controls) {
       if (whichTable.get(key).invalid) {
         whichTable.get(key).markAsTouched();
         return false;
@@ -233,15 +236,15 @@ export class UtilService {
 
   areTwoObjectsSame(a: {}, b: {}): boolean {
 
-    let aProps = Object.getOwnPropertyNames(a);
-    let bProps = Object.getOwnPropertyNames(b);
+    const aProps = Object.getOwnPropertyNames(a);
+    const bProps = Object.getOwnPropertyNames(b);
 
     if (aProps.length != bProps.length) {
       return false;
     }
 
     for (let i = 0; i < aProps.length; i++) {
-      let propName = aProps[i];
+      const propName = aProps[i];
 
       if (a[propName] !== b[propName]) {
         return false;
@@ -285,16 +288,17 @@ export class UtilService {
 
     // convert base64/URLEncoded data component to raw binary data held in a string
     let byteString;
-    if (dataURI.split(',')[0].indexOf('base64') >= 0)
+    if (dataURI.split(',')[0].indexOf('base64') >= 0) {
       byteString = atob(dataURI.split(',')[1]);
-    else
+    } else {
       byteString = unescape(dataURI.split(',')[1]);
+    }
 
     // separate out the mime component
     const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
 
     // write the bytes of the string to a typed array
-    let ia = new Uint8Array(byteString.length);
+    const ia = new Uint8Array(byteString.length);
     for (let i = 0; i < byteString.length; i++) {
       ia[i] = byteString.charCodeAt(i);
     }
@@ -337,9 +341,6 @@ export class ValidatorType {
   static ALPHA_NUMERIC_WITH_SLASH = new RegExp(/^[A-Z0-9//]+$/);
   static TEN_DIGITS = new RegExp(/^\d{10}$/);
   static PAN = new RegExp(/^[a-zA-Z0-9]{10,}$/);
-  // static EMAIL = new RegExp(/^[a-z0-9!#$%&'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/);
-  // static EMAIL_ONLY = new RegExp(/\b[\w.!#$%&’*+\/=?^`{|}~-]+@[\w-]+(?:\.[\w-]+)*\b/);
-  // static EMAIL_ONLY = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 }
 
 // Escape characters that have a special meaning in Regular Expressions

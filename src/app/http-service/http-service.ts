@@ -9,8 +9,8 @@ import 'rxjs-compat/add/operator/map';
 import {catchError} from 'rxjs/operators';
 import {EmailUtilService} from '../services/email-util.service';
 
+// declare var require: any;
 const Buffer = require('buffer/').Buffer;
-declare var require: any;
 const DEFAULT_AGE = 10000;
 
 export class CacheEntry {

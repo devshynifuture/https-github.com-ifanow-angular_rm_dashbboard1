@@ -4,8 +4,8 @@ import {AfterViewInit, Directive, ElementRef, Input} from '@angular/core';
   selector: '[appFormatNumber]'
 })
 export class FormatNumberDirective implements AfterViewInit {
-  @Input('formatNumber') locale = 'en-IN';
-  @Input('shouldRoundOff') shouldRoundOff = true;
+  @Input() locale = 'en-IN';
+  @Input() shouldRoundOff = true;
 
   @Input() set value(value) {
 
@@ -46,7 +46,7 @@ export class FormatNumberDirective implements AfterViewInit {
 
       }
     } else {
-      if (text != 0) {
+      if (text !== 0) {
         text = '';
       }
     }
