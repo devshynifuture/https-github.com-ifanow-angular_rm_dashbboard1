@@ -65,7 +65,7 @@
                                     <div class="familyList">
                                         <h4 class="f-12 m-0">{{singleMembers.displayName}}</h4>
                                         <p class="f-12 m-0 text-primitive">{{singleMembers.name}} </p>
-                                        <p class="f-12 m-0 text-primitive">35</p>
+                                        <p class="f-12 m-0 text-primitive">{{singleMembers.age}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -180,7 +180,7 @@
                         <div class="row">
 
                             <div *ngIf="addressList==undefined" class="col-md-12 addAddressClass">
-                                <button (click)="openAddEdit(clientOverviewData,null,'Address','Edit')"
+                                <button (click)="openAddEdit(clientOverviewData,null,'Address','Add')"
                                     class="btn-primary br-0" mat-stroked-button> ADD ADDRESS</button>
                             </div>
 

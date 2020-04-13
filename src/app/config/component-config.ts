@@ -581,6 +581,7 @@ export const appConfig = {
   GET_ADDRESS_LIST: 'user/address/list/get',
   GET_DEMAT_LIST: 'user/bank/demat/list/get',
   GET_BANK_LIST: 'user/bank/list/get',
+  SEND_WELCOME_EMAIL: 'user/advisor/welcome/email/send',
   // LOGIN_WITH_PASSWORD: 'user/login/with/password',
 
   //////////////////////////////Login///////////////////////////////////

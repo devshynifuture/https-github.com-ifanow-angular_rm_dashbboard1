@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {HttpService} from 'src/app/http-service/http-service';
-import {apiConfig} from 'src/app/config/main-config';
-import {appConfig} from 'src/app/config/component-config';
+import { Injectable } from '@angular/core';
+import { HttpService } from 'src/app/http-service/http-service';
+import { apiConfig } from 'src/app/config/main-config';
+import { appConfig } from 'src/app/config/component-config';
 
 @Injectable({
   providedIn: 'root'
@@ -41,4 +41,8 @@ export class LoginService {
   loginWithPassword(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.LOGIN_WITH_PASSWORD, data, 1);
   }
+  sendWelcomeEmail(data) {
+    return this.http.postEncoded(apiConfig.USER + appConfig.SEND_WELCOME_EMAIL, data);
+  }
 }
+
