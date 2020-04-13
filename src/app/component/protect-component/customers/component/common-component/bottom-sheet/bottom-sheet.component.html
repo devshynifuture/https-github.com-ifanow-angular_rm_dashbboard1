@@ -23,6 +23,8 @@
 
     <div class="row p-8 mb-8"  *ngIf="data.flag!='uploadFolder'">
         <div class="col-md-10" *ngFor="let item of fileData">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+
             <img class="mr-8" src="/assets/images/svg/xlsx-icon.svg">{{item.name}}
         </div>
         <div class="col-md-2 text-right">

@@ -19,7 +19,8 @@
                 <h5 class="mb-8 ">Link</h5>
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #interestRate matInput type="email" [(ngModel)]="link" formControlName="link" class="form-control br-0 ">
+                        <input matInput #interestRate matInput type="email" 
+                        id = "myInput" [(ngModel)]="link" formControlName="link" class="form-control br-0 ">
                     </mat-form-field>
                 </div>
             </div>
@@ -47,7 +48,7 @@
         <button class="br-0 text-inherit f-14" mat-button [mat-dialog-close]="data.investor">
             CANCEL
         </button>
-        <button class="btn-primary f-14 ml-12" (click)="onNoClick()" mat-button mat-raised-button cdkFocusInitial>COPY</button>
+        <button class="btn-primary f-14 ml-12" (click)="onNoClick('copy')" mat-button mat-raised-button cdkFocusInitial>COPY</button>
     </div>
 </div>
 <div class="row pt-16 pb-16" *ngIf="flag == 'share'">
@@ -55,6 +56,6 @@
         <button class="br-0 text-inherit f-14" mat-button [mat-dialog-close]="data.investor">
             CANCEL
         </button>
-        <button class="btn-primary f-14 ml-12" (click)="onNoClick()" mat-button mat-raised-button cdkFocusInitial (click)="saveEmail()">SEND</button>
+        <button class="btn-primary f-14 ml-12" (click)="onNoClick('sendEmail')" mat-button mat-raised-button cdkFocusInitial (click)="saveEmail()">SEND</button>
     </div>
 </div>

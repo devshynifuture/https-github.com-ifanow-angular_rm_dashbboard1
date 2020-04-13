@@ -46,19 +46,28 @@ export class SetNewPasswordComponent implements OnInit {
         data => {
           console.log(data);
           if (data == 1) {
-            data = this.userData
+            let obj =
+            {
+              advisorId: this.userData.advisorId
+            }
+            this.loginService.sendWelcomeEmail(obj).subscribe(
+              data => {
+                console.log(data)
+              },
+              err => this.eventService.openSnackBar(err, "Dismiss")
+            )
             // this.authService.setToken(data.token);
             this.authService.setToken('authTokenInLoginComponnennt');
-            if (data.userType == 1) {
+            if (this.userData.userType == 1) {
               // data.advisorId = data.userId;
-              this.authService.setUserInfo(data);
+              this.authService.setClientData(this.userData);
+              this.authService.setUserInfo(this.userData);
               this.router.navigate(['admin', 'subscription', 'dashboard']);
             } else {
               this.authService.setToken('authTokenInLoginComponnennt');
-
-              data.id = data.clientId;
-              this.authService.setClientData(data);
-              this.authService.setUserInfo(data);
+              this.userData.id = this.userData.clientId;
+              this.authService.setClientData(this.userData);
+              this.authService.setUserInfo(this.userData);
               this.router.navigate(['customer', 'detail', 'overview', 'myfeed']);
             }
           } else {

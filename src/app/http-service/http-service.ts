@@ -70,9 +70,9 @@ export class HttpService {
           const resData = this.changeBase64ToString(res);
           // console.log('resData: decoded ', resData);
           return resData;
-        } else if (res.status === 304 || 204) {
+        }/* else if (res.status === 304 || 204) {
           return res.status;
-        } else {
+        } */ else {
 
           // this._router.navigate(['login']);
           throw new Error(res.message);
@@ -115,9 +115,9 @@ export class HttpService {
           const resData = this.changeBase64ToString(res);
           // console.log('resData: decoded ', resData);
           return resData;
-        } else if (res.status === 304 || 204) {
+        }/* else if (res.status === 304 || 204) {
           return res.status;
-        } else {
+        }*/ else {
 
           // this._router.navigate(['login']);
           throw new Error(res.message);
@@ -160,9 +160,9 @@ export class HttpService {
           const resData = this.changeBase64ToString(res);
           // console.log('resData: decoded ', resData);
           return resData;
-        } else if (res.status === 304 || 204) {
+        }/* else if (res.status === 304 || 204) {
           return res.status;
-        } else {
+        }*/ else {
 
           // this._router.navigate(['login']);
           throw new Error(res.message);
@@ -190,9 +190,10 @@ export class HttpService {
         })
       )
       .map((res: any) => {
-        if (res.status === 200) {
+        if (res == null) {
+          return res;
+        } else if (res.status === 200) {
           const resData = this.changeBase64ToString(res);
-          // console.log(resData);
           return resData;
         } else {
           const err = new Error(res.message);
@@ -321,11 +322,11 @@ export class HttpService {
           const resData = this.changeBase64ToString(res);
           // console.log('decoded resData', resData);
           return resData;
-        } else if (res.status === 304) {
+        } /*else if (res.status === 304) {
           throwError(new Error(res.message));
-        } else {
+        }*/ else {
           // this._router.navigate(['login']);
-          return;
+          throw new Error(res.message);
         }
       });
   }
@@ -371,11 +372,11 @@ export class HttpService {
           const resData = this.changeBase64ToString(res);
           // console.log('decoded resData', resData);
           return resData;
-        } else if (res.status === 304) {
+        } /*else if (res.status === 304) {
           return res.status;
-        } else {
+        } */ else {
           // this._router.navigate(['login']);
-          return;
+          throw new Error(res.message);
         }
       });
   }
