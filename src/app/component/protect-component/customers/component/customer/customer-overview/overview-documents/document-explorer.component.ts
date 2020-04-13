@@ -580,7 +580,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   starFiles(element, flag) {
     this.getCount()
-    this.isLoading = true
+    // this.isLoading = true
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
@@ -597,9 +597,9 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     console.log(data);
     if (data) {
       this.getCount()
-      //this.getAllFileList(this.valueTab);
+    this.getAllFileList(this.valueTab);
     }
-    this.isLoading = false
+    // this.isLoading = false
   }
 
   viewActivities(element) {
