@@ -118,8 +118,8 @@ export class RightFilterComponent implements OnInit {
   showSummaryFilterForm(data) {
     this.summaryFilerForm = this.fb.group({
       reportAsOn: [(data.reportAsOn == undefined) ? null : new Date(data.reportAsOn), [Validators.required]],
-      fromDate: [(data.fromDate == undefined) ? null : new Date(data.fromDate), [Validators.required]],
-      toDate: [(data.toDate == undefined) ? null : new Date(data.toDate), [Validators.required]],
+      fromDate: [(data.fromDate == undefined) ? null : new Date(data.fromDate)],
+      toDate: [(data.toDate == undefined) ? null : new Date(data.toDate)],
       showFolios: [(data.showFolio) ? data.showFolio : '2', [Validators.required]],
     });
   }

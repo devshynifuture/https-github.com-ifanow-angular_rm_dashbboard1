@@ -90,9 +90,9 @@
                         Amount invested</th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar"> <span appFormatNumber
-                                *ngIf="element.amountInvested">{{element.amountInvested}}</span>
+                                *ngIf="element.amountInvested">{{(element.amountInvested)?element.amountInvested:0}}</span>
                             <span appFormatNumber class="f-700"
-                                *ngIf="element.totalAmountInvested">{{element.totalAmountInvested}}</span>
+                                *ngIf="element.totalAmountInvested">{{(element.totalAmountInvested)?element.totalAmountInvested:0}}</span>
                         </div>
                     </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
@@ -107,9 +107,9 @@
                         Current value</th>
                     <td class="br text-left" mat-cell *matCellDef="let element">
                         <div class="bar"><span appFormatNumber
-                                *ngIf="element.currentValue">{{element.currentValue}}</span>
+                                *ngIf="element.currentValue">{{(element.currentValue)?element.currentValue:0}}</span>
                             <span appFormatNumber class="f-700"
-                                *ngIf="element.totalCurrentValue">{{element.totalCurrentValue}}</span>
+                                *ngIf="element.totalCurrentValue">{{(element.totalCurrentValue)?element.totalCurrentValue:0}}</span>
                         </div>
                     </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
@@ -125,9 +125,9 @@
                         Unrealized profit (loss) </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar"><span appFormatNumber
-                                *ngIf="element.unrealizedGain">{{element.unrealizedGain}}</span>
+                                *ngIf="element.unrealizedGain">{{(element.unrealizedGain)?element.unrealizedGain:0}}</span>
                             <span appFormatNumber class="f-700"
-                                *ngIf="element.totalUnrealizedGain">{{element.totalUnrealizedGain}}</span>
+                                *ngIf="element.totalUnrealizedGain">{{(element.totalUnrealizedGain)?element.totalUnrealizedGain:0}}</span>
                         </div>
                     </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
@@ -142,9 +142,9 @@
                         Ret %</th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar"><span appFormatNumber
-                                *ngIf="element.absoluteReturn">{{element.absoluteReturn}}</span>
+                                *ngIf="element.absoluteReturn">{{(element.absoluteReturn)?element.absoluteReturn:0}}</span>
                             <span appFormatNumber class="f-700"
-                                *ngIf="element.totalAbsoluteReturn">{{element.totalAbsoluteReturn}}</span>
+                                *ngIf="element.totalAbsoluteReturn">{{(element.totalAbsoluteReturn)?element.totalAbsoluteReturn:0}}</span>
                         </div>
                     </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
@@ -157,8 +157,8 @@
                 <ng-container matColumnDef="xirr">
                     <th class="br text-right" mat-sort-header="xirr" mat-header-cell *matHeaderCellDef>XIRR % </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"> <span appFormatNumber *ngIf="element.xirr">{{element.xirr}}</span>
-                            <span appFormatNumber class="f-700" *ngIf="element.totalXirr">{{element.totalXirr}}</span>
+                        <div class="bar"> <span appFormatNumber *ngIf="element.xirr">{{(element.xirr)?element.xirr:0}}</span>
+                            <span appFormatNumber class="f-700" *ngIf="element.totalXirr">{{(element.totalXirr)?element.totalXirr:0}}</span>
                         </div>
                     </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
@@ -174,9 +174,9 @@
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         {{element.dividendPayout}}
                         <div class="bar"><span appFormatNumber
-                                *ngIf="element.dividendPayout">{{element.dividendPayout}}</span>
+                                *ngIf="element.dividendPayout">{{(element.dividendPayout)?element.dividendPayout:0}}</span>
                             <span appFormatNumber class="f-700"
-                                *ngIf="element.totalDividendPayout">{{element.totalDividendPayout}}</span>
+                                *ngIf="element.totalDividendPayout">{{(element.totalDividendPayout)?element.totalDividendPayout:0}}</span>
                         </div>
                     </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
@@ -190,9 +190,9 @@
                     <th class="br text-right" mat-sort-header="switchOut" mat-header-cell *matHeaderCellDef>
                         Withdrawals Switch outs </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"><span appFormatNumber *ngIf="element.switchOut">{{element.switchOut}}</span>
+                        <div class="bar"><span appFormatNumber *ngIf="element.switchOut">{{(element.switchOut)?element.switchOut:0}}</span>
                             <span appFormatNumber class="f-700"
-                                *ngIf="element.totalSwitchOut">{{element.totalSwitchOut}}</span>
+                                *ngIf="element.totalSwitchOut">{{(element.totalSwitchOut)?element.totalSwitchOut:0}}</span>
                         </div>
                     </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
@@ -208,13 +208,13 @@
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         {{element.balanceUnit}}
                         <div class="bar"><span appFormatNumber
-                                *ngIf="element.balanceUnit">{{element.balanceUnit}}</span>
+                                *ngIf="element.balanceUnit">{{(element.balanceUnit)?element.balanceUnit:0}}</span>
                             <span appFormatNumber class="f-700"
-                                *ngIf="element.totalBalanceUnit">{{element.totalBalanceUnit}}</span>
+                                *ngIf="element.totalBalanceUnit">{{(element.totalBalanceUnit)?element.totalBalanceUnit:0}}</span>
                         </div>
                     </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                        <div class="bar"> {{(mutualFund)?mutualFund.balanceUnit:'0'}}
+                        <div class="bar"> {{(mutualFund || mutualFund.balanceUnit)?mutualFund.balanceUnit:'0'}}
                         </div>
                     </td>
 
@@ -224,9 +224,9 @@
                     <th class="br text-right" mat-sort-header="navDate" mat-header-cell *matHeaderCellDef>NAV Date
                     </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"><span  *ngIf="element.navDate">{{element.navDate}} </span>
+                        <div class="bar"><span  *ngIf="element.navDate">{{(element.navDate)?element.navDate:'-'}} </span>
                             <span  class="f-700"
-                                *ngIf="element.navDate">{{element.navDate}}</span>
+                                *ngIf="element.navDate">{{(element.navDate)?element.navDate:'-'}}</span>
                         </div> </td>
                     <td *matFooterCellDef  class="br f-600 text-right" mat-footer-cell>
                         <div class="bar">{{(mutualFund)?mutualFund.navDate:'0'}}
@@ -238,13 +238,13 @@
                     <th class="br text-right" mat-sort-header="sipAmount" mat-header-cell *matHeaderCellDef> SIP
                     </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"><span appFormatNumber *ngIf="element.sipAmount">{{element.sipAmount}}</span>
+                        <div class="bar"><span appFormatNumber *ngIf="element.sipAmount">{{(element.sipAmount)?element.sipAmount:0}}</span>
                             <span appFormatNumber class="f-700"
-                                *ngIf="element.totalSipAmount">{{element.totalSipAmount}}</span>
+                                *ngIf="element.totalSipAmount">{{(element.totalSipAmount)?element.totalSipAmount:0}}</span>
                         </div>
                     </td>
                     <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                        <div class="bar"> {{(mutualFund)?mutualFund.totalSipAmount:'0'}}
+                        <div class="bar"> {{(mutualFund || mutualFund.totalSipAmount)?mutualFund.totalSipAmount:'0'}}
                         </div>
                     </td>
                 </ng-container>
