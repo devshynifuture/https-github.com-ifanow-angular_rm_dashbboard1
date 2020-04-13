@@ -176,6 +176,7 @@ export class BankAccountsComponent implements OnInit {
   }
 
   removeNewNominee(item) {
+  this.disabledMember(null, null);
     this.getNominee.removeAt(item);
     if (this.bankAccounts.value.getNomineeName.length == 1) {
       this.getNominee.controls['0'].get('sharePercentage').setValue('100');

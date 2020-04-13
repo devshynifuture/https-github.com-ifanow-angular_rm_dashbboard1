@@ -137,6 +137,7 @@ addNewCoOwner(data) {
 }
 
 removeCoOwner(item) {
+  this.disabledMember(null, null);
   this.getCoOwner.removeAt(item);
   if (this.POTDForm.value.getCoOwnerName.length == 1) {
     this.getCoOwner.controls['0'].get('share').setValue('100');
@@ -151,7 +152,6 @@ removeCoOwner(item) {
       }
     }
   }
-  this.disabledMember(null, null);
 }
 /***owner***/ 
 
@@ -162,6 +162,7 @@ get getNominee() {
 }
 
 removeNewNominee(item) {
+  this.disabledMember(null, null);
   this.getNominee.removeAt(item);
   if (this.POTDForm.value.getNomineeName.length == 1) {
     this.getNominee.controls['0'].get('sharePercentage').setValue('100');
