@@ -1,0 +1,25 @@
+<div class="wrapper-24">
+    <h3 class="m-0 pb-16 f-500">{{dialogData.header}} {{dialogData.data}}</h3>
+    <p class="pt-16 pb-16 mb-0 text-black l-21  f-16">{{dialogData.body}} </p>
+    <p class="mb-0 text-black f-16">{{dialogData.body2}}</p>
+
+    <div>
+        <mat-form-field [floatLabel]="'never'">
+          <mat-label>Handover to user</mat-label>
+          <mat-select [formControl]="user" required>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let user of dialogData.userList" [value]="user.id">
+              {{user.fullName}}
+            </mat-option>
+          </mat-select>
+          <mat-error>This field is required</mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="row pt-36">
+        <div class="col-md-12 pr-0 right text-right">
+            <button mat-button class="text-custom f-500 c-p" (click)="clickYes()">{{dialogData.btnYes}}</button>
+            <button mat-button class="text-danger f-500 c-p" (click)="clickNo()">{{dialogData.btnNo}}</button>
+        </div>
+    </div>
+</div>

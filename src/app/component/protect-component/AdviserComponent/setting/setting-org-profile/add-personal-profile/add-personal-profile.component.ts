@@ -88,10 +88,6 @@ export class AddPersonalProfileComponent implements OnInit {
     }
   }
 
-  addEditBillerForm() {
-    throw new Error("Method not implemented.");
-  }
-
   showCroppedImage(imageAsBase64) {
     this.finalImage = imageAsBase64;
   }
@@ -120,7 +116,7 @@ export class AddPersonalProfileComponent implements OnInit {
       name: [(!data) ? '' : (data.fullName), [Validators.required, Validators.maxLength(80)]],
       emailId: [(!data) ? '' : data.emailId, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
       mobileNo: [(!data) ? '' : data.mobileNo, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(ValidatorType.NUMBER_ONLY)]],
-      // userName: [(!data) ? '' : data.userName, [Validators.required]],
+      userName: [(!data) ? '' : data.userName, [Validators.required]],
     });
   }
 

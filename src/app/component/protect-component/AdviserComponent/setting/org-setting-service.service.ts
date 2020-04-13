@@ -64,6 +64,9 @@ export class OrgSettingServiceService {
   getRetuns(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_RETURNS, data);
   }
+  updateReturns(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_RETURNS_AND_INFLATIONS, data);
+  }
   getKeyAndParameters(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_KEY_PARAMETERS, data);
   }

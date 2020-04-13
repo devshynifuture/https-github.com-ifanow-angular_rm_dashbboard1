@@ -14,7 +14,6 @@ import { PlanService } from 'src/app/component/protect-component/customers/compo
   styleUrls: ['./plan-gallery.component.scss']
 })
 export class PlanGalleryComponent implements OnInit {
-  element: any;
   advisorId: any;
   defaultGallery: any;
   userId: any;
@@ -28,9 +27,7 @@ export class PlanGalleryComponent implements OnInit {
 
   ngOnInit() {
     this.getDefault()
-
   }
-
 
   getDefault() {
     let advisorObj = {
@@ -53,22 +50,9 @@ export class PlanGalleryComponent implements OnInit {
       data: { bank: gallery, animal: '' }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result == undefined) {
-        return
+      if (result) {
+        this.getDefault()
       }
-      console.log('The dialog was closed');
-      this.getDefault()
-      this.element = result;
-      console.log('result -==', this.element)
-      let obj = {
-        emailAddress: this.element,
-        userId: this.userId
-      }
-      // this.orgSetting.addEmailVerfify(obj).subscribe(
-      //   data => this.addEmailVerfifyRes(data),
-      //   err => this.eventService.openSnackBar(err, "Dismiss")
-      // );
-      //  this.bankDetailsSend.emit(result);
     });
   }
 }

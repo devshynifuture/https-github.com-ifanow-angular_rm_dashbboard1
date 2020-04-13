@@ -1,6 +1,18 @@
 <div class="row pb-20">
-    <div class="col-md-12 p-0">
+    <div class="col-md-8 p-0">
         <h4 class="m-0 text-black">Returns & inflation</h4>
+    </div>
+    <div class="col-md-4 text-right p-0">
+        <button mat-stroked-button class="greryColorBg" class="btn-primary" *ngIf="!editMode" (click)="toggleEditMode()">
+            <span class="tableValue">
+                EDIT MODE
+            </span>
+        </button>
+        <button mat-stroked-button class="greryColorBg" class="btn-primary" *ngIf="editMode" (click)="save()">
+            <span class="inputValue">
+                SAVE
+            </span>
+        </button>
     </div>
 </div>
 <div class="row plan-returnsinflation">
@@ -12,26 +24,30 @@
             </ng-container>
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>Assumption </th>
-                <td mat-cell class="text-center br" *matCellDef="let element"> {{element.name}} </td>
+                <td mat-cell class="text-center br" *matCellDef="let element"> 
+                    <div class="bar" *ngIf="!editMode">{{element.name}}</div>
+                    <input class="form-control" type="text" *ngIf="editMode" [(ngModel)]="element.name" [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="100" appInputValueValidation (change)="element.edited = true">    
+                </td>
             </ng-container>
-
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
 
-        <table mat-table [dataSource]="shortTermAsset" id="table-low" class="mt-20" multiTemplateDataRows>
+        <table mat-table [dataSource]="shortTerm" id="table-low" class="mt-20" multiTemplateDataRows>
             <ng-container matColumnDef="position">
                 <th mat-header-cell class="br t-70" *matHeaderCellDef>SHORT TERM </th>
                 <td mat-cell class="br" *matCellDef="let element"> {{element.class}} </td>
             </ng-container>
             <ng-container matColumnDef="name">
                 <th mat-header-cell class="br t-70" *matHeaderCellDef>Assumption </th>
-                <td mat-cell class="text-center br" *matCellDef="let element"> {{element.inflation_rate}} </td>
+                <td mat-cell class="text-center br" *matCellDef="let element">
+                    <div class="bar" *ngIf="!editMode">{{element.inflation_rate}}</div>
+                    <input class="form-control" type="text" *ngIf="editMode" [(ngModel)]="element.inflation_rate" [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="100" appInputValueValidation (change)="element.edited = true">
+                </td>
             </ng-container>
             <ng-container matColumnDef="disclaimer">
                 <th mat-header-cell class="br t-70" *matHeaderCellDef></th>
-                <td mat-cell class="text-primitive f-14 f-400 bg-white pl-12" *matCellDef="let element" colspan="2"> {{element.type}} </td>
+                <td mat-cell class="text-primitive f-14 f-400 bg-white pl-12" *matCellDef="let element" colspan="2"> {{element.type_name}} </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -48,14 +64,17 @@
             </ng-container>
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>Assumption </th>
-                <td mat-cell class="text-center br" *matCellDef="let element"> {{element.name}} </td>
+                <td mat-cell class="text-center br" *matCellDef="let element">
+                    <div class="bar" *ngIf="!editMode">{{element.name}}</div>
+                    <input class="form-control" type="text" *ngIf="editMode" #equity1 [(ngModel)]="element.name" [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="100" appInputValueValidation (change)="element.edited = true">
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <table mat-table [dataSource]="longTermAsset" id="table-low" class="mt-20" multiTemplateDataRows>
+        <table mat-table [dataSource]="longTerm" id="table-low" class="mt-20" multiTemplateDataRows>
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell class="br t-70" *matHeaderCellDef>LONG TERM</th>
@@ -63,11 +82,14 @@
             </ng-container>
             <ng-container matColumnDef="name">
                 <th mat-header-cell class="br t-70" *matHeaderCellDef>Assumption </th>
-                <td mat-cell class="text-center br" *matCellDef="let element"> {{element.inflation_rate}} </td>
+                <td mat-cell class="text-center br" *matCellDef="let element"> 
+                    <div class="bar" *ngIf="!editMode">{{element.inflation_rate}}</div>
+                    <input class="form-control" type="text" *ngIf="editMode" [(ngModel)]="element.inflation_rate" [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="100" appInputValueValidation (change)="element.edited = true"> 
+                </td>
             </ng-container>
             <ng-container matColumnDef="disclaimer">
                 <th mat-header-cell class="br t-70" *matHeaderCellDef></th>
-                <td mat-cell class="text-primitive f-14 f-400 bg-white pl-12" *matCellDef="let element" colspan="2"> {{element.type}} </td>
+                <td mat-cell class="text-primitive f-14 f-400 bg-white pl-12" *matCellDef="let element" colspan="2"> {{element.type_name}} </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
