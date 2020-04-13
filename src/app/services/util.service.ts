@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ElementRef } from '@angular/core';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { EventService } from '../Data-service/event.service';
 import { HttpClient } from '@angular/common/http';
 import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { FormGroup } from '@angular/forms';
 
 
 @Injectable({
@@ -10,8 +11,11 @@ import { SubscriptionService } from '../component/protect-component/AdviserCompo
 })
 export class UtilService {
 
-  constructor(private eventService: EventService, private http: HttpClient, private subService: SubscriptionService) {
-  }
+  constructor(
+    private eventService: EventService, 
+    private http: HttpClient, 
+    private subService: SubscriptionService,
+  ) {}
 
   private static decimalPipe = new DecimalPipe('en-US');
   advisorId: any;
@@ -296,6 +300,21 @@ export class UtilService {
     }
     const imageBlob = new Blob([ia], { type: mimeString });
     return new File([imageBlob], imageName, { type: 'image/png' });
+  }
+
+  /**
+   * Focuses on the first invalid option
+   * @param fg - FormGroup instance of the form you would like to make the focus on
+   * @param el - viewchild ElementRef of the form
+   */
+  focusOnInvalid(fg: FormGroup, el: ElementRef) {
+    for (const key of Object.keys(fg.controls)) {
+      if (fg.controls[key].invalid) {
+        const invalidControl = el.nativeElement.querySelector('[formcontrolname="' + key + '"]');
+        invalidControl.focus();
+        break;
+      }
+    }
   }
 }
 

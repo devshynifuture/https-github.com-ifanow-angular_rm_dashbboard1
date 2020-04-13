@@ -393,6 +393,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       this.noResult = true;
     } else {
       this.isLoading = true;
+      this.noResult = false;
       this.commonFileFolders.data = [{}, {}, {}];
       this.commonFileFolders = new MatTableDataSource(this.data);
       this.getAllFilesRes(obj, value);

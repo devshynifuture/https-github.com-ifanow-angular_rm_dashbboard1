@@ -19,8 +19,10 @@
             <div class="col-md-9">
                 <p *ngIf="this.emailData" class="m-0 text-black">
                     {{(this.emailData) ? this.emailData.fromEmail : 'support@futurewise.co.in'}}</p>
-                <input class="form-control" *ngIf="showfromEmail == true" [(ngModel)]="_inputData.fromEmail"
-                    type="text" placeholder="example@email.com">
+                <mat-select [(ngModel)]="_inputData.fromEmail">
+                    <mat-option value="" disabled>Select Email</mat-option>
+                    <mat-option *ngFor="let verifiedEmail of verifiedEmailsList" [value]="verifiedEmail.emailAddress">{{verifiedEmail.emailAddress}}</mat-option>
+                </mat-select>
             </div>
         </div>
     </div>
@@ -46,17 +48,17 @@
         </div>
     </div>
     <div class="wrapper-16 pt-0 pb-0">
-        <div class="row" *ngIf="showfromEmail == false">
+        <div class="row">
             <div class="col-md-1 pl-0">
                 <p class="m-0 text-custom pt-8 pb-8 pl-8">Subject</p>
             </div>
             <div class="col-md-11">
-                <input [(ngModel)]="subject" class="form-control pl-0 f-14 br-0 b-0" type="text">
+                <input [(ngModel)]="_inputData.subject" class="form-control" type="text" [readonly]="_inputData.subjectChange">
             </div>
         </div>
 
         <div class="form-group mb-0 mt-8">
-            <app-froala [(model)]="emailBody" modelChange="saveData($event)"></app-froala>
+            <app-froala [(model)]="emailBody" modelChange="saveData($event)" [readonly]="_inputData.bodyChange"></app-froala>
         </div>
     </div>
 

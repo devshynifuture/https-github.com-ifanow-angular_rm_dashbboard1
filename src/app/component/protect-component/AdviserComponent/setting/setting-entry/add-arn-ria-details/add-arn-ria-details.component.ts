@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SettingsService } from '../../settings.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ValidatorType } from 'src/app/services/util.service';
+import { ValidatorType, UtilService } from 'src/app/services/util.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth-service/authService';
 import { DatePipe } from '@angular/common';
@@ -21,6 +21,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
   arnRiaFG:FormGroup;
   subscriber = new Subscription();
   advisorId:any;
+  @ViewChild('arnForm', {static: true}) arnForm: ElementRef;
 
   constructor(
     private subInjectService: SubscriptionInject, 
@@ -28,6 +29,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
     private settingService: SettingsService,
     private fb: FormBuilder,
     private datePipe: DatePipe,
+    private utils: UtilService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -98,6 +100,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
   save(){
     if(this.arnRiaFG.invalid) {
       this.arnRiaFG.markAllAsTouched();
+      this.utils.focusOnInvalid(this.arnRiaFG, this.arnForm);
     } else {
       const jsonObj = {
         ...this.data.mainData,

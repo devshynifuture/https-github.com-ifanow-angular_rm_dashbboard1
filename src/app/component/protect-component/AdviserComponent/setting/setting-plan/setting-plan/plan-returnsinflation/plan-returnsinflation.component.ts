@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrgSettingServiceService } from '../../../org-setting-service.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { ValidatorType } from 'src/app/services/util.service';
 
 
 @Component({
@@ -13,137 +14,89 @@ export class PlanReturnsinflationComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name'];
   dataSource = ELEMENT_DATA;
   advisorId: any;
+  longTerm: any[] = [];
+  showErrImg:boolean = false;
+  shortTerm: any[] = [];
+  editMode: boolean = false;
+  validatorType = ValidatorType;
   constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) { 
     this.advisorId = AuthService.getAdvisorId()
   }
 
-  shortTermAsset =  [
-      {
-        "inflation_rate": 7,
-        "class": "Debt Asset Class",
-        "type": "Asset Class",
-        extend: true 
-      },
-      {
-        "inflation_rate": 12,
-        "class": "Equity Asset Class"
-      },
-      {
-        "inflation_rate": 7,
-        "class": "Debt Funds",
-        "type": "Mutual funds",
-        extend: true 
-      },
-      {
-        "inflation_rate": 12,
-        "class": "Equity Funds"
-      },
-      {
-        "inflation_rate": 8,
-        "class": "Balanced Funds"
-      },
-      {
-        "type": "Other Assets",
-        extend: true ,
-        "inflation_rate": 14,
-        "class": "Stocks"
-      },
-      {
-        "inflation_rate": 9,
-        "class": "Real Estates"
-      },
-      {
-        "inflation_rate": 4,
-        "class": "Bank Accounts Saving"
-      },
-      {
-        "inflation_rate": 7,
-        "class": "Commodities - Gold"
-      },
-      {
-        "inflation_rate": 7,
-        "class": "Commodities- Others"
-      }
-    ]
-
-  longTermAsset = [
-    {
-      "type": "Asset Class",
-      extend: true, 
-      "inflation_rate": 6,
-      "class": "Debt Asset Class"
-    },
-    {
-      "inflation_rate": 10,
-      "class": "Equity Asset Class"
-    },
-    {
-      "inflation_rate": 6,
-      "class": "Debt Funds",
-      "type": "Mutual funds",
-      extend: true 
-    },
-    {
-      "inflation_rate": 10,
-      "class": "Equity Funds"
-    },
-    {
-      "inflation_rate": 7,
-      "class": "Balanced Funds"
-    },
-    {
-      "inflation_rate": 12,
-      "class": "Stocks",
-      "type": "Other Assets",
-      extend: true 
-    },
-    {
-      "inflation_rate": 8,
-      "class": "Real Estates"
-    },
-    {
-      "inflation_rate": 3,
-      "class": "Bank Accounts Saving"
-    },
-    {
-      "inflation_rate": 6,
-      "class": "Commodities - Gold"
-    },
-    {
-      "inflation_rate": 6,
-      "class": "Commodities- Others"
-    }
-  ]
-
   isExtendedRow = (index, item) => item.extend;
 
   ngOnInit() {
-    // this.getAssetAllocationReturns()
+    this.getAssetAllocationReturns()
+  }
+  toggleEditMode() {
+    this.editMode = !this.editMode;
   }
 
-  // getAssetAllocationReturns() {
-  //   let obj = {
-  //     advisorId: this.advisorId
-  //   }
-  //   this.orgSetting.getRetuns(obj).subscribe(
-  //     data => this.getReturnsRes(data),
-  //     err => this.eventService.openSnackBar(err, "Dismiss")
-  //   );
-  // }
-  // getReturnsRes(data){
-  //   console.log('getReturnsRes',data)
-  //   this.shortTerm = data.short_term
-  //   this.longTerm =data.long_term
-  // }
+  getAssetAllocationReturns() {
+    let obj = {
+      advisorId: this.advisorId
+    }
+    this.orgSetting.getRetuns(obj).subscribe(
+      data => this.getReturnsRes(data),
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+        this.showErrImg = true;
+      }
+    );
+  }
+  
+  getReturnsRes(data){
+    this.setTableExtensions(data.short_term);
+    this.setTableExtensions(data.long_term);
+    this.shortTerm = data.short_term;
+    this.longTerm = data.long_term;
+  }
+
+  setTableExtensions(arr:any[]) {
+    arr.forEach(data => {
+      switch (data.category_id) {
+        case 1:
+          data['extend'] = true;
+          data['type_name'] = "Asset Class";
+          break;
+        case 3:
+          data['extend'] = true;
+          data['type_name'] = "Mutual funds";
+          break;
+        case 5:
+          data['extend'] = true;
+          data['type_name'] = "Other Assets";
+          break;
+      }
+    })
+  }
+
+  getPostDataFormat(arr:any[]){
+    let editedData = arr.filter(obj => obj.edited);
+    return editedData.map(data => {
+      return {
+        id: data.id,
+        advisorId: this.advisorId,
+        inflationRate: parseInt(data.inflation_rate) || 0,
+        type: data.type,
+        categoryId: data.category_id
+      };
+    });
+  }
+
+  save(){
+    let obj = [ this.getPostDataFormat(this.shortTerm), this.getPostDataFormat(this.longTerm)].flat();
+    this.orgSetting.updateReturns(obj).subscribe(res => {
+      this.eventService.openSnackBar("Data Updated Successfully");
+      this.toggleEditMode();
+    }, err => {
+      this.eventService.openSnackBar("Error Occured");
+    })
+
+  }
 
 }
-export interface PeriodicElement {
-
-  position: string;
-  name: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
+const ELEMENT_DATA = [
   { position: 'Inflation rate', name: '7%' },
 
 ];

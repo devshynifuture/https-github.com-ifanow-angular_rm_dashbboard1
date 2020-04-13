@@ -33,12 +33,23 @@ export class FroalaComponent implements ControlValueAccessor, OnInit {
     this._model = model;
   }
 
+  @Input() readonly: boolean = false;
+
   ngOnInit(): void {
     // var editor = new FroalaEditor('#example')
 
     // const froalaComponent = new FroalaEditor('div#froala-editor', {
     //   toolbarButtons: ['getPDF']
     // });
+    this.config = {
+      events : {
+        'froalaEditor.initialized' : function(e, editor) {
+          if(this.readonly) {
+            editor.edit.off();
+          }
+        }
+      }
+    }
   }
 
   // Begin ControlValueAccesor methods.

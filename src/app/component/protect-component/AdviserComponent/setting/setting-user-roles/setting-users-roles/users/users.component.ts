@@ -133,6 +133,36 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  reactivateUser(user) {
+    const dialogData = {
+      header: 'REACTIVATE',
+      body: 'Are you sure you want to reactivate this user?',
+      body2: 'This cannot be undone.',
+      btnNo: 'REACTIVATE',
+      btnYes: 'CANCEL',
+      negativeMethod: () => {
+        console.log('aborted');
+      },
+      positiveMethod: () => {
+        const deleteFromTrashSubscription = this.settingsService.suspendMember(user.id)
+          .subscribe(response => {
+            this.eventService.openSnackBar("User reactivated");
+            deleteFromTrashSubscription.unsubscribe();
+            this.loadUsers();
+            dialog.close();
+          }, error => {
+            dialog.close();
+            console.error(error);
+            this.eventService.openSnackBar("Error occured");
+          });
+      }
+    }
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+    });
+  }
   loader(countAdder) {
     this.counter += countAdder;
     if (this.counter == 0) {

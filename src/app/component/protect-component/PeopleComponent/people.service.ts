@@ -91,4 +91,8 @@ export class PeopleService {
   updateClientStatus(data) {
     return this.http.putEncoded(apiConfig.USER + appConfig.UPDATE_CLIENT_STATUS, data)
   }
+
+  getAdvisorFromEmailAndMobileData(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_ADVISOR_FROM_EMAIL_MOBILE, data, 1);
+  }
 }
