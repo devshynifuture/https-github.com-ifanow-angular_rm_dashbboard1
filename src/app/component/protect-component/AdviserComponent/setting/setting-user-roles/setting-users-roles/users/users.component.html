@@ -28,6 +28,7 @@
                             <mat-menu #menu="matMenu">
                                 <button mat-menu-item (click)="addEditTeamMember(user, false)">Edit</button>
                                 <button mat-menu-item (click)="suspendUser(user)" *ngIf="user.isSuspended == 0">Suspend</button>
+                                <button mat-menu-item (click)="reactivateUser(user)" *ngIf="user.isSuspended == 1">Reactivate</button>
                                 <!-- <button mat-menu-item (click)="deleteUser(user)">Delete</button> -->
                             </mat-menu>
                         </div>

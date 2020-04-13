@@ -165,14 +165,14 @@
                                     <ng-container matColumnDef="position">
                                         <th mat-header-cell class="br w-23" *matHeaderCellDef> Type </th>
                                         <td mat-cell class="br w-23" *matCellDef="let element">
-                                            <div class="bar" [innerHTML]="element.subject"></div>
+                                            <div class="bar" [innerHTML]="element.emailType"></div>
                                         </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="name">
                                         <th mat-header-cell class="br" *matHeaderCellDef> Description </th>
                                         <td mat-cell class="br" *matCellDef="let element">
-                                            <div class="bar" [innerHTML]="element.body"></div>
+                                            <div class="bar" [innerHTML]="element.description"></div>
                                         </td>
                                     </ng-container>
 

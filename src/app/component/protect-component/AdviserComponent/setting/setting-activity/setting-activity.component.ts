@@ -47,7 +47,6 @@ export class SettingActivityComponent implements OnInit {
 
   getTaskTemplateRes(data) {
     this.isLoading = false
-    console.log('getTaskTemplateRes == ', data)
     if (data) {
       this.taskList = data
     }

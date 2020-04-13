@@ -49,7 +49,6 @@ export class MfRtaDetailsComponent implements OnInit {
   initializeData() {
     this.settingsService.getArnGlobalData().subscribe((res) => {
       this.globalData = res;
-      console.log(res);
     });
     this.getArnDetails();
     this.loadRTAList();
@@ -66,7 +65,6 @@ export class MfRtaDetailsComponent implements OnInit {
     this.settingsService.getMFRTAList(jsonData).subscribe((res) => {
       this.mfRTAlist = res || [];
       this.createDataSource();
-      console.log(res);
     })
   }
 
@@ -134,7 +132,6 @@ export class MfRtaDetailsComponent implements OnInit {
       positiveMethod: () => {
         this.settingsService.deleteMFRTA(data.id)
           .subscribe(response => {
-            console.log(response);
             this.eventService.openSnackBar("Data has been deleted successfully");
             this.loadRTAList();
             dialogRef.close();

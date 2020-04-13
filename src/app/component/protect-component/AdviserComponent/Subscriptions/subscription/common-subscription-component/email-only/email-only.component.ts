@@ -27,12 +27,13 @@ export class EmailOnlyComponent implements OnInit {
 
   model: any;
   showfromEmail: any;
+  userId: any;
+  verifiedEmailsList: any[] = [];
 
   @Input() set data(inputData) {
     const obj = [];
     this.doc = inputData.documentList;
     this.showfromEmail = inputData.showfromEmail
-    console.log('check flag *******', this.showfromEmail)
     if (inputData.isInv) {
       this.doc.forEach(element => {
         if (element) {
@@ -98,10 +99,25 @@ export class EmailOnlyComponent implements OnInit {
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
     public subscription: SubscriptionService, private orgSetting: OrgSettingServiceService) {
     this.advisorId = AuthService.getAdvisorId();
+    this.userId = AuthService.getUserId()
   }
 
   ngOnInit() {
     // this.getEmailTemplate();
+    this.getAllEmails();
+  }
+
+  getAllEmails(){
+    let obj = {
+      userId: this.userId,
+      // advisorId: this.advisorId
+    }
+    this.orgSetting.getEmailVerification(obj).subscribe(
+      data => {
+        this.verifiedEmailsList = data.listItems.filter(data => data.emailVerificationStatus == 1);
+      },
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    );
   }
 
   // Begin ControlValueAccesor methods.
