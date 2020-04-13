@@ -125,8 +125,6 @@ export class MfRtaDetailsComponent implements OnInit {
   }
 
   deleteRTA(data) {
-
-
     const dialogData = {
       header: 'DELETE',
       body: 'Are you sure you want to delete?',

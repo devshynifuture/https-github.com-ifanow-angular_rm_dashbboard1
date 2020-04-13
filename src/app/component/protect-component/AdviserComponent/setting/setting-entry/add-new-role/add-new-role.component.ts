@@ -151,18 +151,14 @@ export class AddNewRoleComponent implements OnInit {
     } else {
       if (this.data.is_add_flag) {
         let dataObj = {
-          // "advisorOrClientRole": [1,2,3].includes(this.data.roleType)? 1 : 2,
           "advisorOrClientRole": this.data.roleType,
           "systemGeneratedOrCustomRole": 2,
           ...this.rolesFG.value,
           featureToCapabilitiesList: this.mergeAllCapabilitiesAndFilterEnabled(),
         };
-        console.log(dataObj)
         this.settingsService.addRole(dataObj).subscribe((res) => {
-          if (res) {
-            this.eventService.openSnackBar("Role Added Successfully");
-            this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
-          }
+          this.eventService.openSnackBar("Role Added Successfully");
+          this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
         }, err => {
           this.eventService.openSnackBar("Error Occured");
         })
@@ -174,10 +170,8 @@ export class AddNewRoleComponent implements OnInit {
         };
         console.log(dataObj)
         this.settingsService.editRole(dataObj).subscribe((res) => {
-          if(res) {
-            this.eventService.openSnackBar("Role Modified Successfully");
-            this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
-          }
+          this.eventService.openSnackBar("Role Modified Successfully");
+          this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
         }, err => {
           this.eventService.openSnackBar("Error Occured");
         })
