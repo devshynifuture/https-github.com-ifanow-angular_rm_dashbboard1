@@ -135,7 +135,7 @@ export class CompanyMoreInfoComponent implements OnInit {
       genderId: this.moreInfoForm.value.gender,
       aadhaarNumber: this.moreInfoForm.controls.adhaarNo.value,
       dateOfBirth: this.datePipe.transform(this.moreInfoForm.value.dateOfBirth._d, 'dd/MM/yyyy'),
-      // userId: this.moreInfoData.clientId ? this.moreInfoData.clientId : this.prevData.clientId,
+      userId: this.moreInfoData.clientId ? this.moreInfoData.clientId : this.prevData.clientId,
       mobileList,
       name: this.moreInfoForm.value.name,
       bioRemarkId: this.moreInfoData.bioRemarkId,
