@@ -52,12 +52,12 @@
                         </div>
                         <div class="col-md-6 p-0 d-flex justify-content-end">
                             <div class="input_class">
-                                <input (keyup)="keyPress($event.target.value)" class="b-a bg-grey lter mr-8" matInput value="">
+                                <input (keyup)="keyPress($event.target.value,valueTab)" class="b-a bg-grey lter mr-8" matInput value="">
                                 <img src="assets/images/svg/document-search-icon.svg">
                             </div>
                             <!-- <img src="assets/images/svg/grid.svg" class="c-p gridIcon mr-12"> -->
                             <button class="text-custom br-0 mr-12" mat-stroked-button> HELP</button>
-                            <button [matMenuTriggerFor]="menu1" class="btn-primary br-0 pl-8" mat-stroked-button> ADD
+                            <button *ngIf="valueTab == 1" [matMenuTriggerFor]="menu1" class="btn-primary br-0 pl-8" mat-stroked-button> ADD
                                 NEW
                             </button>
                             <mat-menu #menu1="matMenu">
@@ -251,7 +251,7 @@
                             </div>
                             <div *ngIf="noResult == true">
                                 <img src="assets/images/svg/document-search-icon.svg"> No result found<br>
-                                <p class="m-0 f-12 text-custom">Try a diffrent search</p>
+                                <p class="m-0 f-12 text-custom">Try a different search</p>
                             </div>
                         </div>
                     </div>

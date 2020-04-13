@@ -16,7 +16,7 @@
             <button class="text-custom f-500 c-p" mat-button (click)="close(false,'null')">
                 CANCEL
             </button>
-            <button class="text-danger f-500 c-p" mat-button (click)="createNewFolder(nameFolder)"> {{folderUpload}}
+            <button class="text-danger f-500 c-p" *ngIf="nameFolder" mat-button (click)="createNewFolder(nameFolder)"> {{folderUpload}}
             </button>
         </div>
 
