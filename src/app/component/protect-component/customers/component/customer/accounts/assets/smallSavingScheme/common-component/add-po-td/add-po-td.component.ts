@@ -8,6 +8,7 @@ import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { AssetValidationService } from './../../../asset-validation.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-po-td',
@@ -18,6 +19,21 @@ import { AssetValidationService } from './../../../asset-validation.service';
   ]
 })
 export class AddPoTdComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   validatorType = ValidatorType
   maxDate = new Date();
   inputData: any;
@@ -308,6 +324,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.POTDForm}
       this.POTDForm.markAllAsTouched();
     }
     else {
+      this.barButtonOptions.active =true;
         let obj = {
           "advisorId": this.advisorId,
           "clientId": this.clientId,
@@ -344,28 +361,39 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.POTDForm}
 
         this.cusService.editPOTD(obj).subscribe(
           data => this.response(data),
-          error => this.eventService.showErrorMessage(error)
+          error =>{
+            this.barButtonOptions.active =false;
+            this.eventService.showErrorMessage(error)
+          } 
         )
       }
       else if (this.flag == 'advicePOTD') {
       this.cusService.getAdvicePord(adviceObj).subscribe(
         data => this.getAdvicePotdRes(data),
-        err => this.eventService.openSnackBar(err, "Dismiss")
+        error =>{
+          this.barButtonOptions.active =false;
+          this.eventService.showErrorMessage(error)
+        }
       );
       } else {
         this.cusService.addPOTD(obj).subscribe(
           data => this.response(data),
-          error => this.eventService.showErrorMessage(error)
+          error => {
+            this.barButtonOptions.active =false;
+            this.eventService.showErrorMessage(error)
+          }
         )
       }
     }
   }
   getAdvicePotdRes(data) {
+    this.barButtonOptions.active =false;
     this.eventService.openSnackBar("PO_TD is added", "added");
     this.close(true);
 
   }
   response(data) {
+    this.barButtonOptions.active =false;
     (this.editApi) ? this.eventService.openSnackBar("Updated successfully!", "Dismiss") : this.eventService.openSnackBar("Added successfully!", "added")
     console.log(data)
     this.close(true);

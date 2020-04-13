@@ -8,6 +8,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { DatePipe } from '@angular/common';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-nsc',
@@ -19,6 +20,21 @@ import { DatePipe } from '@angular/common';
   ]
 })
 export class AddNscComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   validatorType = ValidatorType
   maxDate = new Date();
   advisorId: any;
@@ -324,6 +340,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
       this.nscFormField.markAllAsTouched();
     }
     else {
+      this.barButtonOptions.active = true;
       if (this.flag == "editNSC") {
         let obj =
         {
@@ -376,12 +393,18 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
         if (this.flag == 'adviceNSC') {
           this.cusService.getAdviceNsc(adviceObj).subscribe(
             data => this.getAdviceNscRes(data),
-            err => this.eventService.openSnackBar(err, "Dismiss")
+            err =>{
+              this.barButtonOptions.active = false;
+              this.eventService.openSnackBar(err, "Dismiss");
+            }
           );
         } else {
           this.cusService.addNSCScheme(obj).subscribe(
             data => this.addNSCResponse(data),
-            error => this.eventService.showErrorMessage(error)
+            error =>{
+              this.barButtonOptions.active = false;
+              this.eventService.showErrorMessage(error)
+            }
           )
         }
       }
@@ -389,10 +412,12 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
   }
   getAdviceNscRes(data) {
     console.log(data);
+    this.barButtonOptions.active = false;
     this.eventService.openSnackBar("NSC is added", "ok")
     this.close(true);
   }
   addNSCResponse(data) {
+    this.barButtonOptions.active = false;
     (this.editApi) ? this.eventService.openSnackBar("Updated successfully!", "Dismiss") : this.eventService.openSnackBar("Added successfully!", "Dismiss")
     console.log(data)
     this.close(true)

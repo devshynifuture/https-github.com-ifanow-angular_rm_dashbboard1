@@ -18,7 +18,7 @@
 
         <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS</button>
-        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOMIS('Add')"> ADD NEW</button>
+        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOMIS()"> ADD NEW</button>
     </div>
 </div>
 <div [ngClass]="{'table-scroll':isLoading==false }" class="overflow-hidden mt-8 col-md-12 p-0 real-estate">
@@ -157,7 +157,7 @@
     <div *ngIf="datasource.filteredData.length == 0" class="d-flex flex-column align-items-center">
         <img class="width300" src="assets/images/svg/noDataFound.svg">
         <h4 class="text-center pt-12">No PO MIS found</h4>
-        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOMIS('Add')"> ADD NEW</button>
+        <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddPOMIS( )"> ADD NEW</button>
     </div>
 
 </div>

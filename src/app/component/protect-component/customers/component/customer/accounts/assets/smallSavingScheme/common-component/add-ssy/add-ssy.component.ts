@@ -8,6 +8,7 @@ import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { DatePipe } from '@angular/common';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-ssy',
@@ -19,6 +20,21 @@ import { DatePipe } from '@angular/common';
   ]
 })
 export class AddSsyComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   validatorType = ValidatorType;
   maxDate = new Date();
   inputData: any;
@@ -330,7 +346,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ssySchemeForm}
       return;
     }
     else {
-      
+        this.barButtonOptions.active = true;
         let obj = {
           "id": this.editApi? this.editApi.id : 0,
           "familyMemberId": this.familyMemberId,
@@ -370,18 +386,27 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ssySchemeForm}
       if(this.flag == 'editSSY') { 
         this.cusService.editSSYData(obj).subscribe(
           data => this.addSSYSchemeResponse(data),
-          error => this.eventService.showErrorMessage(error)
+          error =>{
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(error)
+          } 
         )
       }
       else if (this.flag == 'addSSY') {
          this.cusService.addSSYScheme(obj).subscribe(
            data => this.addSSYSchemeResponse(data),
-           error => this.eventService.showErrorMessage(error)
+           error =>{
+             this.barButtonOptions.active = false;
+             this.eventService.showErrorMessage(error)
+           } 
          )
        } else {
          this.cusService.getAdviceSsy(adviceObj).subscribe(
            data => this.getAdviceSsyRes(data),
-           err => this.eventService.openSnackBar(err, "Dismiss")
+           err =>{
+            this.barButtonOptions.active = false;
+             this.eventService.openSnackBar(err, "Dismiss")
+           } 
          );
        }
         // let obj =
@@ -412,12 +437,14 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ssySchemeForm}
     }
   }
   getAdviceSsyRes(data) {
+    this.barButtonOptions.active = false;
     console.log(data);
     this.eventService.openSnackBar("SSY is added", "Dismiss");
     this.close(true)
 
   }
   addSSYSchemeResponse(data) {
+    this.barButtonOptions.active = false;
     (this.editApi) ? this.eventService.openSnackBar("Updated successfully!", "Dismiss") : this.eventService.openSnackBar("Added successfully!", "added")
     console.log(data)
     this.close(true)

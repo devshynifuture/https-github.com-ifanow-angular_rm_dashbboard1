@@ -7,6 +7,7 @@ import { CustomerService } from '../../../../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-ppf',
@@ -17,6 +18,21 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
   ]
 })
 export class AddPpfComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   validatorType = ValidatorType
   maxDate = new Date();
   isOptionalField: boolean;
@@ -368,7 +384,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ppfSchemeForm}
         'nomineeList': this.optionalppfSchemeForm.value.getNomineeName,
         "publicprovidendfundtransactionlist": finalTransctList,
       }
-
+      this.barButtonOptions.active = true;
       obj.nomineeList.forEach((element, index) => {
         if(element.name == ''){
           this.removeNewNominee(index);
@@ -385,24 +401,34 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ppfSchemeForm}
       if (this.flag == 'advicePPF') {
         this.cusService.getAdvicePpf(adviceObj).subscribe(
           data => this.getAdvicePpfRes(data),
-          err => this.eventService.openSnackBar(err, "Dismiss")
+          err => {
+            this.barButtonOptions.active = false;
+            this.eventService.openSnackBar(err, "Dismiss")
+          }
         );
       } else if (this.editApi != undefined && this.editApi != 'advicePPF') {
         obj['id'] = this.editApi.id
         this.cusService.editPPF(obj).subscribe(
           data => this.addPPFResponse(data),
-          error => this.eventService.showErrorMessage(error)
+          error =>{
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(error)
+          }
         )
       }
       else {
         this.cusService.addPPFScheme(obj).subscribe(
           data => this.addPPFResponse(data),
-          error => this.eventService.showErrorMessage(error)
+          error =>{
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(error);
+          }
         )
       }
     }
   }
   getAdvicePpfRes(data) {
+    this.barButtonOptions.active = false;
     console.log(data)
     this.eventService.openSnackBar("PPF is added", "Dismiss")
     this.close(true);
@@ -410,6 +436,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ppfSchemeForm}
   }
 
   isFormValuesForAdviceValid() {
+    
     if (this.ppfSchemeForm.valid ||
       (this.ppfSchemeForm.valid && this.optionalppfSchemeForm.valid) ||
       (this.ppfSchemeForm.valid && this.optionalppfSchemeForm.valid && this.nomineesList.length !== 0 && this.transactionData.length !== 0)) {
@@ -420,6 +447,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ppfSchemeForm}
   }
 
   addPPFResponse(data) {
+    this.barButtonOptions.active = false;
     (this.editApi) ? this.eventService.openSnackBar("Updated successfully!", "Dismiss") : this.eventService.openSnackBar("Added successfully!", "Dismiss")
     console.log(data)
     this.close(true);

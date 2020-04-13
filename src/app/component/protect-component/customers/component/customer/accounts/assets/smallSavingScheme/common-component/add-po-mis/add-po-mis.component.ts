@@ -9,6 +9,7 @@ import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { AssetValidationService } from '../../../asset-validation.service';
 import { MatInput } from '@angular/material';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-po-mis',
@@ -19,6 +20,21 @@ import { MatInput } from '@angular/material';
   ],
 })
 export class AddPoMisComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   validatorType = ValidatorType
   maxDate = new Date();
   show: boolean;
@@ -308,7 +324,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.pomisForm}
       this.inputs.find(input => !input.ngControl.valid).focus();
       this.pomisForm.markAllAsTouched();
     } else {
-      
+        this.barButtonOptions.active = true;
         const obj = {
           id: this._inputData.id,
           clientId: this.clientId,
@@ -344,19 +360,29 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.pomisForm}
 
         if (this.editApi != 'Add' && this.editApi != 'advicePOMIS') {
         this.custumService.editPOMIS(obj).subscribe(
-          data => this.editPOMISRes(data)
+          data => this.editPOMISRes(data),
+        err => {
+          this.barButtonOptions.active = false;
+          this.eventService.openSnackBar(err, "Dismiss")
+        }
         );
       } 
       else if (this.flag == 'advicePOMIS') {
           this.custumService.getAdvicePomis(adviceObj).subscribe(
             data => this.getAdvicePomisRes(data),
-            err => this.eventService.openSnackBar(err, "Dismiss")
+            err =>{
+              this.barButtonOptions.active = false;
+              this.eventService.openSnackBar(err, "Dismiss")
+            }
           );
         } 
       else {
         this.custumService.addPOMIS(obj).subscribe(
           data => this.addPOMISRes(data),
-          err => this.eventService.openSnackBar(err, "Dismiss")
+          err => {
+            this.barButtonOptions.active = false;
+            this.eventService.openSnackBar(err, "Dismiss")
+          }
         );
       }
     }
@@ -364,6 +390,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.pomisForm}
   getAdvicePomisRes(data) {
     this.eventService.openSnackBar('Pomis added successfully', 'OK');
     this.close(true);
+    this.barButtonOptions.active = false;
   }
   addPOMISRes(data) {
     console.log(data);
@@ -371,10 +398,12 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.pomisForm}
       console.log(data);
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
       this.eventService.openSnackBar('Added successfully!', 'OK');
+      
     } else {
       this.eventService.openSnackBar('Error', 'Dismiss');
 
     }
+    this.barButtonOptions.active = false;
   }
 
   editPOMISRes(data) {
@@ -386,6 +415,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.pomisForm}
     } else {
       this.eventService.openSnackBar('Error', 'Dismiss');
     }
+    this.barButtonOptions.active = false;
   }
 
   showMore() {
