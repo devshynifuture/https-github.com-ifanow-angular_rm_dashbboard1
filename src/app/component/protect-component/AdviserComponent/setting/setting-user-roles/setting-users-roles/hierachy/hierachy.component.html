@@ -44,7 +44,8 @@
     <ng-container matColumnDef="report">
         <th mat-header-cell *matHeaderCellDef class="br"> Access to </th>
         <td (click)="assignTeamMember(null, element)" mat-cell *matCellDef="let element" class="br c-p">
-            <div class="bar"> {{(element.parentName) ? element.parentName : '+ ADD TEAM MEMBER'}}</div>
+            <div class="bar" *ngIf="element.parentName"> {{element.parentName}}</div>
+            <button *ngIf="!element.parentName">+ ADD TEAM MEMBER</button>
         </td>
     </ng-container>
     <ng-container matColumnDef="icons">
