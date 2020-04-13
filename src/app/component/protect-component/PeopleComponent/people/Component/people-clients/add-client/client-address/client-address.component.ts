@@ -54,6 +54,7 @@ export class ClientAddressComponent implements OnInit {
       this.getAddressList(data);
     }
     else {
+      this.barButtonOptions.text = "SAVE & CLOSE";
       this.createAddressForm(this.userData.addressData);
     }
   }

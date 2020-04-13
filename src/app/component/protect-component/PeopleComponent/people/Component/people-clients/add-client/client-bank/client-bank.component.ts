@@ -52,8 +52,14 @@ export class ClientBankComponent implements OnInit {
     this.fieldFlag;
     this.createBankForm(data);
     (this.userData.bankData) ? this.bankList = this.userData.bankData : '';
-    (this.userData.bankData == undefined && this.fieldFlag) ? this.getBankList(data) : this.createBankForm(this.userData.bankData);
-
+    if (this.userData.bankData == undefined && this.fieldFlag) {
+      this.getBankList(data)
+    }
+    else {
+      (this.userData.bankData) ? this.bankList = this.userData.bankData : this.bankList = {}
+      this.barButtonOptions.text = "SAVE & CLOSE";
+      this.createBankForm(this.userData.bankData);
+    }
   }
   getBankList(data) {
     let obj =
