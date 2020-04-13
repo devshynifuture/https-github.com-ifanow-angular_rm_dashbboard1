@@ -73,11 +73,11 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
     private custumService: CustomerService, public subInjectService: SubscriptionInject,
-    public utils: UtilService, public dialog: MatDialog,private authService: AuthService) {
-      this.advisorId = AuthService.getAdvisorId();
-      this.clientId = AuthService.getClientId();
-      this.getUserInfo = AuthService.getUserInfo()
-      console.log('thiss.getUserInfo',this.getUserInfo)
+    public utils: UtilService, public dialog: MatDialog, private authService: AuthService) {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.getUserInfo = AuthService.getUserInfo()
+    console.log('thiss.getUserInfo', this.getUserInfo)
   }
 
   showDots = false;
@@ -107,7 +107,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     this.getAllFileList(tabValue);
     this.getCount()
   }
-  getCount(){ 
+  getCount() {
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
@@ -126,7 +126,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     this.selectedFolder = element
     const dialogRef = this.dialog.open(DocumentNewFolderComponent, {
       width: '30%',
-      data: { name: value, animal: element,parentId:this.parentId }
+      data: { name: value, animal: element, parentId: this.parentId }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -135,23 +135,23 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       // if (element == 'CREATE') {
       //   this.createFolder(this.getInnerDoc);
       // }
-  
-      if(element=='RENAME'){
+
+      if (element == 'RENAME') {
         if (this.getInnerDoc.rename.flag == 'fileName') {
           this.renameFile(this.getInnerDoc);
         } else {
           this.renameFolders(this.getInnerDoc);
         }
       }
-      if(result.isRefreshRequired){
+      if (result.isRefreshRequired) {
         this.getAllFileList(this.valueTab)
       }
 
     });
 
   }
-  getSharebleLink(element,flag) {
-    this.downlodFiles(element,flag);
+  getSharebleLink(element, flag) {
+    this.downlodFiles(element, flag);
   }
   // openDocumentPreview() {
 
@@ -271,7 +271,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   newFolderRes(data) {
-    if(data==204){
+    if (data == 204) {
       this.eventService.openSnackBar('Folder name already exist', 'Ok');
     }
     console.log('newFolderRes', data);
@@ -299,6 +299,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   getAllFileList(tabValue) {
     tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : 4;
     this.valueTab = tabValue;
+    this.isLoading = true;
     this.backUpfiles = [];
     this.commonFileFolders.data = [];
     this.openFolderName = [];
@@ -308,7 +309,6 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       docGetFlag: tabValue,
       folderParentId: (this.parentId) ? this.parentId : 0,
     };
-    this.isLoading = true;
     this.commonFileFolders.data = [{}, {}, {}];
     this.commonFileFolders = new MatTableDataSource(this.data);
     this.custumService.getAllFiles(obj).subscribe(
@@ -364,7 +364,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     console.log('sorted', this.commonFileFolders);
   }
 
-  keyPress(event) {
+  keyPress(event, tabValue) {
     if (event == ' ') {
       this.reset();
     } else {
@@ -372,7 +372,8 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       const obj = {
         clientId: this.clientId,
         advisorId: this.advisorId,
-        search: event
+        search: event,
+        flag: tabValue
       };
       if (event.length > 2) {
         this.custumService.searchFile(obj).subscribe(
@@ -463,7 +464,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     }
   }
 
-  downlodFiles(element,value) {
+  downlodFiles(element, value) {
     this.isLoading = true
     const obj = {
       clientId: this.clientId,
@@ -472,22 +473,22 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       fileName: element.fileName
     };
     this.custumService.downloadFile(obj).subscribe(
-      data => this.downloadFileRes(data,value)
+      data => this.downloadFileRes(data, value)
     );
   }
 
-  downloadFileRes(data,value) {
+  downloadFileRes(data, value) {
     this.isLoading = false
 
     console.log(data);
-    if(value == 'shareLink' || value == 'share'){
-      console.log('shareLink',data)
-      this.verifyEmail(data,value)
-    }else{
+    if (value == 'shareLink' || value == 'share') {
+      console.log('shareLink', data)
+      this.verifyEmail(data, value)
+    } else {
       window.open(data);
     }
   }
-  verifyEmail(value,flag) {
+  verifyEmail(value, flag) {
     const dialogRef = this.dialog.open(GetSharebleLinkComponent, {
       width: '400px',
       data: { bank: value, flag: flag }
@@ -500,10 +501,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       this.element = result;
       console.log('result -==', this.element)
       let obj = {
-        fromEmail : "support@futurewise.co.in",
+        fromEmail: "support@futurewise.co.in",
         toEmail: this.element.email,
-        emailSubject:"Share link",
-        messageBody:this.element.link
+        emailSubject: "Share link",
+        messageBody: this.element.link
       }
       this.custumService.sendSharebleLink(obj).subscribe(
         data => this.sendSharebleLinkRes(data),
@@ -511,7 +512,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       );
     });
   }
-  sendSharebleLinkRes(data){
+  sendSharebleLinkRes(data) {
 
   }
   deleteModal(flag, data) {
@@ -539,7 +540,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
               this.eventService.openSnackBar('Deleted', 'Dismiss');
               dialogRef.close();
               this.getCount()
-             this.reset();
+              this.reset();
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -555,7 +556,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
               this.eventService.openSnackBar('Deleted', 'Dismiss');
               dialogRef.close();
               this.getCount()
-             this.reset();
+              this.reset();
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -577,9 +578,9 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     });
   }
 
-  starFiles(element,flag) {
+  starFiles(element, flag) {
     this.getCount()
-    this.isLoading = true
+    // this.isLoading = true
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
@@ -594,11 +595,11 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   starFileRes(data) {
     console.log(data);
-    if(data){
+    if (data) {
       this.getCount()
-      //this.getAllFileList(this.valueTab);
+    this.getAllFileList(this.valueTab);
     }
-    this.isLoading = false
+    // this.isLoading = false
   }
 
   viewActivities(element) {
@@ -609,7 +610,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         advisorId: this.advisorId,
         fileId: (element.folderName == undefined) ? element.id : null,
       };
-      console.log('activity obj',obj)
+      console.log('activity obj', obj)
       this.custumService.viewActivityFile(obj).subscribe(
         data => this.viewActivityFileRes(data)
       );
@@ -629,7 +630,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   viewActivityFolderRes(data) {
     console.log(data);
     this.isLoading = false
-    if(data){
+    if (data) {
       this.openActivity(data);
     }
   }
@@ -671,10 +672,14 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       this.uploadFile(this.parentId, this.filenm);
     });
     console.log(this.myFiles);
+    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
+      data: this.myFiles,
+    });
+    console.log('dfh hfdgj  hhgj gfdgh hjhg  hh gfh', bottomSheetRef);
   }
 
   uploadDocumentFolder(data) {
-    this.countFile=0;
+    this.countFile = 0;
     this.myFiles = [];
     const array = [];
     this.viewFolder = [];
@@ -700,7 +705,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       uploadFolder: this.uploadFolder,
       flag: 'uploadFolder',
       viewFolder: this.viewFolder,
-      countFiles:this.countFile++
+      countFiles: this.countFile++
 
     };
     console.log(this.myFiles);
@@ -735,11 +740,14 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     };
     this.http.put(fileuploadurl, fileName, httpOptions).subscribe((responseData) => {
       console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
+      if (responseData == null) {
+        this._bottomSheet.dismiss()
+        this.eventService.openSnackBar('Uploaded successfully', 'Dismiss');
+        this.reset()
+      }
 
     });
-    this.getAllFileList(this.valueTab);
-    this._bottomSheet.dismiss()
-    this.eventService.openSnackBar('Uploaded successfully', 'Dismiss');
+
   }
 }
 

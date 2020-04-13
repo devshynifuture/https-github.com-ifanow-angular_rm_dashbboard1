@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
-import {Observable, of, throwError} from 'rxjs';
-import {Router} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 // import 'rxjs/Rx';
-import {AuthService} from '../auth-service/authService';
+import { AuthService } from '../auth-service/authService';
 import 'rxjs-compat/add/observable/of';
 import 'rxjs-compat/add/operator/map';
-import {catchError} from 'rxjs/operators';
-import {EmailUtilService} from '../services/email-util.service';
+import { catchError } from 'rxjs/operators';
+import { EmailUtilService } from '../services/email-util.service';
 
 const Buffer = require('buffer/').Buffer;
 declare var require: any;
@@ -94,7 +94,7 @@ export class HttpService {
       }
     }
 
-    const inputData = {query: this.changeBase64Data(body)};
+    const inputData = { query: this.changeBase64Data(body) };
 
     return this._http
       .post(this.baseUrl + url, inputData, httpOptions).pipe(
@@ -139,7 +139,7 @@ export class HttpService {
       }
     }
 
-    const inputData = {query: this.changeBase64Data(body)};
+    const inputData = { query: this.changeBase64Data(body) };
 
     return this._http
       .put(this.baseUrl + url, inputData, httpOptions).pipe(
@@ -190,9 +190,10 @@ export class HttpService {
         })
       )
       .map((res: any) => {
-        if (res.status === 200) {
+        if (res == null) {
+          return res
+        } else if (res.status === 200) {
           const resData = this.changeBase64ToString(res);
-          // console.log(resData);
           return resData;
         } else {
           const err = new Error(res.message);
@@ -251,7 +252,7 @@ export class HttpService {
     console.log('HttpService put request url... ', url);
 
     return this._http
-      .request('delete', url, {body: body}).pipe(
+      .request('delete', url, { body: body }).pipe(
         catchError(err => {
           console.log('Handling error locally and rethrowing it...', err);
           return throwError(err);
