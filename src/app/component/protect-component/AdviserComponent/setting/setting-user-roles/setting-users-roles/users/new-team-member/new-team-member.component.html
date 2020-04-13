@@ -11,13 +11,12 @@
 <div class="pt-90 pl-28 pr-28" [formGroup]="teamMemberFG">
     <div class="row pt-28">
         <div class="col-md-3 text-right pr-0">
-            <h5 class="m-0 pt-12">Full name</h5>
+            <h5 class="m-0 pt-20">Full name</h5>
         </div>
         <div class="col-md-7 pr-0">
             <div class="form-group">
-                <mat-form-field [floatLabel]="'never'">
-                    <input matInput formControlName="fullName" class="form-control" [readonly]="!data.is_add_call"
-                        [inputValidator]="validatorType.PERSON_NAME" [maxValue]="50" appInputValueValidation>
+                <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
+                    <input matInput formControlName="fullName" class="form-control" [readonly]="!data.is_add_call" [inputValidator]="validatorType.PERSON_NAME" [maxValue]="50" appInputValueValidation>
                     <mat-hint align="end">{{teamMemberFG.get('fullName').value.length}}/50</mat-hint>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -27,11 +26,11 @@
     </div>
     <div class="row pt-28">
         <div class="col-md-3 text-right pr-0">
-            <h5 class="m-0 pt-12">Email</h5>
+            <h5 class="m-0 pt-20">Email</h5>
         </div>
         <div class="col-md-7 pr-0">
             <div class="form-group">
-                <mat-form-field [floatLabel]="'never'">
+                <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                     <input matInput formControlName="emailId" class="form-control" [readonly]="!data.is_add_call">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -41,15 +40,13 @@
     </div>
     <div class="row pt-28">
         <div class="col-md-3 text-right pr-0">
-            <h5 class="m-0 pt-12">Mobile</h5>
+            <h5 class="m-0 pt-20">Mobile</h5>
         </div>
         <div class="col-md-7 pr-0">
             <div class="form-group">
-                <mat-form-field [floatLabel]="'never'">
-                    <input matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="10" appInputValueValidation
-                        #mobileNo formControlName="mobileNo" class="form-control" [readonly]="!data.is_add_call">
-                    <mat-error
-                        *ngIf="teamMemberFG.get('mobileNo').errors?.minlength || teamMemberFG.get('mobileNo').errors?.maxlength">
+                <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
+                    <input matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="10" appInputValueValidation #mobileNo formControlName="mobileNo" class="form-control" [readonly]="!data.is_add_call">
+                    <mat-error *ngIf="teamMemberFG.get('mobileNo').errors?.minlength || teamMemberFG.get('mobileNo').errors?.maxlength">
                         Enter Valid Mobile number</mat-error>
                     <mat-error *ngIf="teamMemberFG.get('mobileNo').errors?.required">This field is required</mat-error>
                     <mat-hint align="end">{{mobileNo.value.length}}/10</mat-hint>
@@ -59,11 +56,11 @@
     </div>
     <div class="row pt-28">
         <div class="col-md-3 text-right pr-0">
-            <h5 class="m-0 pt-12">Role</h5>
+            <h5 class="m-0 pt-20">Role</h5>
         </div>
         <div class="col-md-7 pr-0">
             <div class="form-group">
-                <mat-form-field>
+                <mat-form-field floatLabel="never" appearance="standard">
                     <mat-select class="form-control" formControlName="roleId">
                         <mat-option value="">Select Role</mat-option>
                         <mat-option *ngFor="let role of roles" [value]="role.id">{{role.roleName}}</mat-option>
