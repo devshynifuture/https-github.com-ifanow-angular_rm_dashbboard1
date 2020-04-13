@@ -717,11 +717,14 @@
             </button> -->
         </div>
         <div *ngIf="fieldFlag=='familyMember'" class="col-md-8 right text-right">
-            <button mat-raised-button (click)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
-            </button>
-            <button mat-stroked-button (click)="saveNextFamilyMember('close')" class="btn-bottom br-0 text-inherit">SAVE
+            <!-- <button mat-raised-button (click)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
+            </button> -->
+            <app-progress-button (btnClick)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12"
+                [options]="barButtonOptions" [logEvent]="passEvent">
+            </app-progress-button>
+            <!-- <button mat-stroked-button (click)="saveNextFamilyMember('close')" class="btn-bottom br-0 text-inherit">SAVE
                 & CLOSE
-            </button>
+            </button> -->
         </div>
     </div>
 </div>

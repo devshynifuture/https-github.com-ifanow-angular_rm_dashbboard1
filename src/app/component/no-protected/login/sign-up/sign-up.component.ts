@@ -7,6 +7,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-sign-up',
@@ -23,7 +24,21 @@ export class SignUpComponent implements OnInit {
 
   signUpForm;
   validatorType = ValidatorType;
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Create account',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   ngOnInit() {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('advisorId')) {
@@ -44,6 +59,7 @@ export class SignUpComponent implements OnInit {
       console.log('Error');
       this.signUpForm.markAllAsTouched();
     } else {
+      this.barButtonOptions.active = true;
       const obj = {
         emailList: [
           {
@@ -66,9 +82,11 @@ export class SignUpComponent implements OnInit {
         data => {
           console.log(data);
           if (data == 400) {
+            this.barButtonOptions.active = false;
             this.confirmModal(null);
             return;
           }
+          this.barButtonOptions.active = false;
           const forgotPassObjData = {
             mobileNo: this.signUpForm.get('mobile').value,
             email: this.signUpForm.get('email').value,
@@ -97,6 +115,7 @@ export class SignUpComponent implements OnInit {
           }
         },
         err => {
+          this.barButtonOptions.active = false;
           this.confirmModal(err.message)
         }
       );

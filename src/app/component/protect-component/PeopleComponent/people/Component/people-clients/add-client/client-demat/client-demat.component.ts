@@ -5,6 +5,7 @@ import { ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-client-demat',
@@ -21,7 +22,21 @@ export class ClientDematComponent implements OnInit {
   userData;
   dematList: any;
   holdingMode: string;
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & NEXT',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
     private eventService: EventService) {
@@ -301,6 +316,7 @@ export class ClientDematComponent implements OnInit {
           });
         });
       }
+      this.barButtonOptions.active = true;
       let obj =
       {
         "depositoryParticipantName": this.dematForm.get('depositoryPartName').value,
@@ -330,9 +346,13 @@ export class ClientDematComponent implements OnInit {
       this.peopleService.addEditClientDemat(obj).subscribe(
         data => {
           console.log(data);
+          this.barButtonOptions.active = false;
           (flag == 'Next') ? this.tabChange.emit(1) : this.close();
         },
-        err => this.eventService.openSnackBar(err, 'Dismiss')
+        err => {
+          this.eventService.openSnackBar(err, 'Dismiss')
+          this.barButtonOptions.active = false;
+        }
       );
 
     }

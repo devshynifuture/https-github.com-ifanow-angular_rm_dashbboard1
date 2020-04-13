@@ -14,7 +14,7 @@
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-8">IFSC code</h5>
         </div>
-        <div class="col-md-3 p-0">
+        <div class="col-md-2 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input autocomplete="off" (focusout)="getBankAddress(ifcCode.value)" appInputValueValidation
@@ -23,6 +23,9 @@
                     <mat-hint align="end" class="f-12">{{ifcCode.value.length}}/12</mat-hint>
                 </mat-form-field>
             </div>
+        </div>
+        <div class="col-md-1">
+            <mat-spinner *ngIf="isIfsc==true" [diameter]="30"></mat-spinner>
         </div>
     </div>
     <div class="row pt-44">
@@ -120,16 +123,18 @@
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-8">Branch pin code</h5>
         </div>
-        <div class="col-md-3 p-0">
+        <div class="col-md-2 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input autocomplete="off" [maxLength]="6" (focusout)="getPostalPin($event.target.value)"
                         formControlName="branchPinCode" #branchCode matInput appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" class="form-control">
                     <mat-hint align="end" class="f-12">{{branchCode.value.length}}/6</mat-hint>
-
                 </mat-form-field>
             </div>
+        </div>
+        <div class="col-md-1">
+            <mat-spinner *ngIf="isPostal==true" [diameter]="30"></mat-spinner>
         </div>
     </div>
     <div class="row pt-44">
@@ -187,11 +192,14 @@
             <h5 (click)="close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-raised-button *ngIf="fieldFlag!=undefined" (click)="saveNext('Next')"
+            <!-- <button mat-raised-button *ngIf="fieldFlag!=undefined" (click)="saveNext('Next')"
                 class="br-0 text-inherit mr-12">SAVE & NEXT
-            </button>
-            <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
-            </button>
+            </button> -->
+            <!-- <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
+            </button> -->
+            <app-progress-button (btnClick)="saveNext('Save')" class="br-0 text-inherit mr-12"
+                [options]="barButtonOptions" [logEvent]="passEvent">
+            </app-progress-button>
         </div>
 
     </div>
