@@ -8,6 +8,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-gold',
@@ -19,6 +20,21 @@ import { EventService } from 'src/app/Data-service/event.service';
   ],
 })
 export class GoldComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   validatorType = ValidatorType
   maxDate = new Date();
   inputData: any;
@@ -305,6 +321,7 @@ export class GoldComponent implements OnInit {
     if (this.gold.invalid) {
       this.gold.markAllAsTouched();
     } else {
+      this.barButtonOptions.active = true;
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
@@ -337,12 +354,14 @@ export class GoldComponent implements OnInit {
       if (this.flag == "addGOLD") {
         this.custumService.addGold(obj).subscribe(
           data => this.addGoldRes(data), (error) => {
+            this.barButtonOptions.active = false;
             this.eventService.showErrorMessage(error);
           }
         );
       } else if (this.flag == 'adviceGOLD') {
         this.custumService.getAdviceGold(adviceObj).subscribe(
           data => this.getAdviceGoldRes(data), (error) => {
+            this.barButtonOptions.active = false;
             this.eventService.showErrorMessage(error);
           }
         );
@@ -351,6 +370,7 @@ export class GoldComponent implements OnInit {
         obj['id'] = this.editData.id
         this.custumService.editGold(obj).subscribe(
           data => this.editGoldRes(data), (error) => {
+            this.barButtonOptions.active = false;
             this.eventService.showErrorMessage(error);
           }
         );
@@ -358,16 +378,19 @@ export class GoldComponent implements OnInit {
     }
   }
   getAdviceGoldRes(data) {
+    this.barButtonOptions.active = false;
     this.eventService.openSnackBar('Gold added successfully', 'OK');
     this.subInjectService.changeNewRightSliderState({ flag: 'addedGold', state: 'close', data, refreshRequired: true })
   }
   addGoldRes(data) {
+    this.barButtonOptions.active = false;
     console.log('addrecuringDepositRes', data)
     this.subInjectService.changeNewRightSliderState({ flag: 'addedGold', state: 'close', data, refreshRequired: true })
     this.eventService.openSnackBar('Added successfully!', 'OK');
 
   }
   editGoldRes(data) {
+    this.barButtonOptions.active = false;
     this.subInjectService.changeNewRightSliderState({ flag: 'addedGold', state: 'close', data, refreshRequired: true })
     this.eventService.openSnackBar('Updated successfully!', 'OK');
 

@@ -8,6 +8,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-cash-in-hand',
@@ -19,6 +20,21 @@ import { EventService } from 'src/app/Data-service/event.service';
   ],
 })
 export class CashInHandComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   validatorType = ValidatorType
   inputData: any;
   ownerName: any;
@@ -283,6 +299,7 @@ export class CashInHandComponent implements OnInit {
       this.inputs.find(input => !input.ngControl.valid).focus();
       this.cashInHand.markAllAsTouched();
     } else {
+      this.barButtonOptions.active = true;
       const obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
@@ -310,12 +327,14 @@ export class CashInHandComponent implements OnInit {
       if (this.flag == "addCASHINHAND") {
         this.custumService.addCashInHand(obj).subscribe(
           data => this.addCashInHandRes(data), (error) => {
+            this.barButtonOptions.active = false;
             this.eventService.showErrorMessage(error);
           }
         );
       } else if (this.flag == 'adviceCashInHand') {
         this.custumService.getAdviceCashInHand(adviceObj).subscribe(
           data => this.getAdviceCashInHandRes(data), (error) => {
+            this.barButtonOptions.active = false;
             this.eventService.showErrorMessage(error);
           }
         );
@@ -324,6 +343,7 @@ export class CashInHandComponent implements OnInit {
         obj['id'] = this.editData.id;
         this.custumService.editCashInHand(obj).subscribe(
           data => this.editCashInHandRes(data), (error) => {
+            this.barButtonOptions.active = false;
             this.eventService.showErrorMessage(error);
           }
         );
@@ -331,11 +351,13 @@ export class CashInHandComponent implements OnInit {
     }
   }
   getAdviceCashInHandRes(data) {
+    this.barButtonOptions.active = false;
     this.eventService.openSnackBar('Cash in hand added successfully', 'OK');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
 
   }
   addCashInHandRes(data) {
+    this.barButtonOptions.active = false;
     console.log('addrecuringDepositRes', data);
     this.subInjectService.changeNewRightSliderState({ state: 'close', data: 2, refreshRequired: true });
     this.eventService.openSnackBar('Cash in hand added successfully', 'OK');
@@ -343,6 +365,7 @@ export class CashInHandComponent implements OnInit {
   }
 
   editCashInHandRes(data) {
+    this.barButtonOptions.active = false;
     this.subInjectService.changeNewRightSliderState({ state: 'close', data: 2, refreshRequired: true });
     this.eventService.openSnackBar('Cash in hand edited successfully', 'OK');
 

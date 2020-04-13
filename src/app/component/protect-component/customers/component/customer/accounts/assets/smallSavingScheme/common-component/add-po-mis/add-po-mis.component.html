@@ -87,12 +87,21 @@
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
-                <mat-form-field class="ba-date">
-                    <input autocomplete="off" matInput (click)="KVPpicker.open()" [matDatepicker]="KVPpicker"
+                <!-- <mat-form-field class="ba-date">
+                    <input matInput autocomplete="off"  (click)="KVPpicker.open()" [matDatepicker]="KVPpicker"
                         [max]="maxDate" class="form-control br-0 b-0" formControlName="commencementdate" readonly>
                     <mat-datepicker-toggle matSuffix [for]="KVPpicker"></mat-datepicker-toggle>
                     <mat-datepicker #KVPpicker></mat-datepicker>
                     <mat-error class="f-12">
+                        This field is required
+                    </mat-error>
+                </mat-form-field> -->
+                <mat-form-field class="ba-date">
+                    <input matInput autocomplete="off" (focus)="picker.open()" formControlName="commencementdate"
+                        class="form-control br-0 b-0" [max]="maxDate" [matDatepicker]="picker" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error class="f-12" >
                         This field is required
                     </mat-error>
                 </mat-form-field>

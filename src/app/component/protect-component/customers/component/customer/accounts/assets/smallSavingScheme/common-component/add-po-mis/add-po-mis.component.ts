@@ -5,10 +5,11 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { CustomerService } from '../../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { MAT_DATE_FORMATS } from '@angular/material/core';
+// import { MAT_DATE_FORMATS, MatInput } from '@angular/material/core';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { DatePipe } from '@angular/common';
 import { AssetValidationService } from '../../../asset-validation.service';
-import { MatInput } from '@angular/material';
+import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
@@ -16,6 +17,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
   templateUrl: './add-po-mis.component.html',
   styleUrls: ['./add-po-mis.component.scss'],
   providers: [
+    [DatePipe],
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
