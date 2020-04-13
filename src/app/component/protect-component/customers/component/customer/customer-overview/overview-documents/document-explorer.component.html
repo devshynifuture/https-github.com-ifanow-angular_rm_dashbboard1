@@ -57,7 +57,7 @@
                             </div>
                             <!-- <img src="assets/images/svg/grid.svg" class="c-p gridIcon mr-12"> -->
                             <button class="text-custom br-0 mr-12" mat-stroked-button> HELP</button>
-                            <button *ngIf="valueTab == 1" [matMenuTriggerFor]="menu1" class="btn-primary br-0 pl-8" mat-stroked-button> ADD
+                            <button *ngIf="valueTab == 1" [matMenuTriggerFor]="menu1" class="btn-primary br-0  " mat-stroked-button> ADD
                                 NEW
                             </button>
                             <mat-menu #menu1="matMenu">
@@ -150,6 +150,7 @@
                                     <ng-container matColumnDef="icons">
                                         <th *matHeaderCellDef class="t-2" mat-header-cell></th>
                                         <td *matCellDef="let element" class="t-2" mat-cell>
+                                            <div *ngIf="valueTab != 4">
                                             <i [matMenuTriggerFor]="menu4" class="material-icons c-p text-black">
                                                 more_vert
                                             </i>
@@ -199,6 +200,7 @@
                                                         src="assets/images/svg/delete-icon.svg">Delete
                                                 </button>
                                             </mat-menu>
+                                        </div>
                                         </td>
                                     </ng-container>
                                     <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
@@ -207,7 +209,7 @@
                             </div>
 
                         </div>
-                        <div class="col-md-3 pr-0" *ngIf="showMsg == false">
+                        <div class="col-md-3 pr-0" *ngIf="showMsg == false && noResult == false">
                             <div class="bg-grey lter mb-16 boxGrey f-14">
                                 <p class="selectMoreDetails">
                                     Select a file to see more details
@@ -218,33 +220,14 @@
                                     <div class="col-md-6">
                                         <!-- <p class="f-12">Bajaj Allizan critical care</p> -->
                                     </div>
-                                    <!-- <div class="row">
-                                <div class="col">
-                                    <ul class="d-block options">
-                                        <li class="p-0">
-                                            <input (change)="getFileDetails($event)" class="inputfile inputfile-3" id="file-3" multiple type="file">
-                                            <label class="uploadLabel c-p text-primary f-14 c-p" for="file-3">
-                                                <img class="mr-8" src="/assets/images/svg/upload-document-icon.svg">
-                                                <span>Upload file</span></label></li>
 
-                                        <li class="p-0">
-                                            <input (change)="uploadDocumentFolder($event)" class="inputfile inputfile-4 " directory id="file-4" multiple type="file" webkitdirectory>
-                                            <label class="uploadLabel text-primary f-14 c-p pl-4 " for="file-4"><img
-                                                    src="/assets/images/svg/upload-folder-document-icon.svg"><span>
-                                                    Upload folder</span></label></li>
-
-                                        <li class="p-0">
-                                            <p (click)="openDialog('CREATE','')" class="text-primary pt-8 f-14 c-p">
-                                                <img class="mr-8" src="/assets/images/svg/new-folder-document.svg">New folder
-                                            </p>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div> -->
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-9 d-flex justify-content-center  flex-column align-items-center">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 d-flex justify-content-center  flex-column align-items-center">
                             <div *ngIf="showMsg == true">
                                 <img class="mr-12" src="/assets/images/svg/folder-icon.svg"> Folder is empty<br>
                                 <p class="m-0 f-12 text-custom">Drop files here</p>

@@ -1,8 +1,8 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {SubscriptionService} from '../../AdviserComponent/Subscriptions/subscription.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from 'src/app/auth-service/authService';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { SubscriptionService } from '../../AdviserComponent/Subscriptions/subscription.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-confirm-dialog',
@@ -24,8 +24,8 @@ export class ConfirmDialogComponent implements OnInit {
   advisorId;
 
   constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public dialogData: any, private subscription: SubscriptionService,
-              public eventService: EventService) {
+    @Inject(MAT_DIALOG_DATA) public dialogData: any, private subscription: SubscriptionService,
+    public eventService: EventService) {
     this.dataToshow = dialogData.dataToShow;
   }
 
@@ -37,19 +37,19 @@ export class ConfirmDialogComponent implements OnInit {
     this.btn1NoData = this.dialogData.btnNo;
     this.btn2YesData = this.dialogData.btnYes;
     this.data = this.dialogData.data;
-    this.advisorId = AuthService.getAdvisorId();
+    // this.advisorId = AuthService.getAdvisorId();
 
   }
 
   clickButton2() {
     console.log('invoice deleted successfully.', this.dialogData);
 
-    if(this.dialogData.dataToShow != undefined){
+    if (this.dialogData.dataToShow != undefined) {
       let list = [this.dialogData.dataToShow];
       this.subscription.deleteInvoices(list).subscribe((data) => {
-          this.dialogRef.close('close');
-          this.eventService.openSnackBar('invoice deleted successfully.', 'Dismiss');
-        },
+        this.dialogRef.close('close');
+        this.eventService.openSnackBar('invoice deleted successfully.', 'Dismiss');
+      },
         error => this.eventService.showErrorMessage(error));
     }
     if (this.dialogData.positiveMethod() != undefined) {
@@ -87,7 +87,7 @@ export class ConfirmDialogComponent implements OnInit {
   deletedData(data) {
     if (data == true) {
       this.dialogRef.close();
-      this.eventService.changeUpperSliderState({state: 'close'});
+      this.eventService.changeUpperSliderState({ state: 'close' });
       this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
     }
   }

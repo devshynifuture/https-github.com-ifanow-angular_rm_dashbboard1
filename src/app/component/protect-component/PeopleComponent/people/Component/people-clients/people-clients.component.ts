@@ -58,7 +58,6 @@ export class PeopleClientsComponent implements OnInit {
         this.clientDatasource.data = data;
       },
       err => {
-        this.eventService.openSnackBar(err, 'dismiss');
         this.clientDatasource.data = [];
       }
     );

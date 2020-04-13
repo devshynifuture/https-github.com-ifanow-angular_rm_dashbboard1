@@ -7,6 +7,7 @@ import { PostalService } from 'src/app/services/postal.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-client-bank',
@@ -18,7 +19,21 @@ export class ClientBankComponent implements OnInit {
   userData: any;
   holderList: any;
   bankList: any;
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & NEXT',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   constructor(private cusService: CustomerService, private eventService: EventService,
     private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private subService: SubscriptionService, private postalService: PostalService,
@@ -26,6 +41,8 @@ export class ClientBankComponent implements OnInit {
   }
 
   bankForm;
+  isIfsc;
+  isPostal;
   validatorType = ValidatorType;
   @Output() tabChange = new EventEmitter();
   @Input() fieldFlag;
@@ -51,10 +68,11 @@ export class ClientBankComponent implements OnInit {
           this.bankList = data[0];
           this.createBankForm(this.bankList)
         }
-        else {
-          this.bankList = {};
-        }
-      }, err => this.eventService.openSnackBar(err, "Dismiss")
+      },
+      err => {
+        this.bankList = {};
+      }
+      // this.eventService.openSnackBar(err, "Dismiss")
     )
   }
   createBankForm(data) {
@@ -62,7 +80,7 @@ export class ClientBankComponent implements OnInit {
     this.bankForm = this.fb.group({
       ifscCode: [data.ifscCode, [Validators.required]],
       bankName: [data.bankName, [Validators.required]],
-      micrName: [data.micrNo, [Validators.required]],
+      micrName: [data.micrNo],
       accNumber: [data.accountNumber, [Validators.required]],
       accType: [(data.accountType) ? data.accountType : '1', [Validators.required]],
       branchName: [data.branchName, [Validators.required]],
@@ -85,6 +103,7 @@ export class ClientBankComponent implements OnInit {
     console.log('ifsc 121221', obj);
 
     if (ifsc != '') {
+      this.isIfsc = true;
       this.subService.getBankAddress(obj).subscribe(data => {
         console.log('postal 121221', data);
         this.bankData(data);
@@ -100,6 +119,7 @@ export class ClientBankComponent implements OnInit {
 
   bankData(data) {
     (data == undefined) ? data = {} : '';
+    this.isIfsc = false;
     console.log(data, 'bank data');
     this.bankDetail = data;
     this.bankForm.get('bankName').setValue(data.bank);
@@ -116,6 +136,7 @@ export class ClientBankComponent implements OnInit {
     };
     console.log(value, 'check value');
     if (value != '') {
+      this.isPostal = true;
       this.postalService.getPostalPin(value).subscribe(data => {
         console.log('postal 121221', data);
         this.PinData(data);
@@ -124,6 +145,7 @@ export class ClientBankComponent implements OnInit {
   }
 
   PinData(data) {
+    this.isPostal = false
     const pincodeData = (data == undefined) ? data = {} : data[0].PostOffice;
     this.bankForm.get('branchCity').setValue(pincodeData[0].District);
     this.bankForm.get('branchState').setValue(pincodeData[0].State);
@@ -154,6 +176,7 @@ export class ClientBankComponent implements OnInit {
           });
         });
       }
+      this.barButtonOptions.active = true;
       const obj = {
         branchCode: (this.bankList) ? this.bankList.branchCode : this.bankDetail.branchCode,
         branchName: this.bankForm.get('branchName').value,
@@ -184,9 +207,13 @@ export class ClientBankComponent implements OnInit {
       this.peopleService.addEditClientBankDetails(obj).subscribe(
         data => {
           console.log(data);
+          this.barButtonOptions.active = false;
           (flag == 'Next') ? this.tabChange.emit(1) : this.close();
         },
-        err => this.eventService.openSnackBar(err, 'Dismiss')
+        err => {
+          this.eventService.openSnackBar(err, 'Dismiss');
+          this.barButtonOptions.active = false;
+        }
       );
     }
   }

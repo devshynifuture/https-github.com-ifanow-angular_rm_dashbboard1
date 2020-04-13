@@ -44,7 +44,7 @@
     <div class="individualBox">
         <div class="row pt-20">
             <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-20">Full name</h5>
+                <h5 class="mb-0 mt-20">Full name</h5>
             </div>
             <div class="col-md-6 p-0">
                 <div class="form-group mb-0">
@@ -120,7 +120,7 @@
             <div class="col-md-4 text-right">
                 <h5 class="m-0 pt-32">Date of birth</h5>
             </div>
-            <div class="col-md-3 pr-7 pl-0">
+            <div class="col-md-6 pr-7 pl-0">
                 <p class="m-0 roboto">As per records</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
@@ -132,18 +132,17 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-3 pl-7 pr-0">
+            <!-- <div class="col-md-3 pl-7 pr-0">
                 <p class="m-0 roboto">Actual</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input [matDatepicker]="dobActual" (click)="dobActual.open()" class="form-control br-0 b-0"
-                            formControlName="dobActual" matInput readonly>
+                        <input [matDatepicker]="dobActual" (click)="dobActual.open()" class="form-control br-0 b-0" formControlName="dobActual" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="dobActual"></mat-datepicker-toggle>
                         <mat-datepicker #dobActual></mat-datepicker>
                         <mat-hint>Optional</mat-hint>
                     </mat-form-field>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="row pt-60">
             <div class="col-md-4 text-right">
@@ -252,7 +251,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-44 pb-60">
+        <div *ngIf="fieldFlag!='familyMember'" class="row pt-44 pb-60">
             <div class="col-md-4 text-right">
                 <h5 class="m-0 pt-4">Role</h5>
                 <p class="m-0 f-12 text-custom">The selected role decides<br> what access the client has
@@ -297,7 +296,7 @@
             <div class="col-md-4 text-right">
                 <h5 class="m-0 pt-32">Minor’s date of birth</h5>
             </div>
-            <div class="col-md-3 p-0">
+            <div class="col-md-6 p-0">
                 <p class="m-0 roboto">As per records</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
@@ -309,7 +308,7 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
                 <p class="m-0 roboto">Actual</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
@@ -320,7 +319,7 @@
                         <mat-hint>Optional</mat-hint>
                     </mat-form-field>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <div class="row pt-60">
@@ -360,7 +359,7 @@
             <div class="col-md-4 text-right">
                 <h5 class="m-0 pt-32">Guardian’s date of birth</h5>
             </div>
-            <div class="col-md-3 p-0">
+            <div class="col-md-6 p-0">
                 <p class="m-0 roboto">As per records</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
@@ -372,7 +371,7 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
                 <p class="m-0 roboto">Actual</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
@@ -382,9 +381,8 @@
                         <mat-datepicker #gDobActual></mat-datepicker>
                         <mat-hint>Optional</mat-hint>
                     </mat-form-field>
-
                 </div>
-            </div>
+            </div> -->
         </div>
 
 
@@ -697,7 +695,7 @@
     </div>
 </div>
 
-<div class="bottom-fixed wrapper-12 w-50 -m-28">
+<div class="bottom-fixed wrapper-12 w-50 ">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close('close')">Cancel</h5>
@@ -719,11 +717,14 @@
             </button> -->
         </div>
         <div *ngIf="fieldFlag=='familyMember'" class="col-md-8 right text-right">
-            <button mat-raised-button (click)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
-            </button>
-            <button mat-stroked-button (click)="saveNextFamilyMember('close')" class="btn-bottom br-0 text-inherit">SAVE
+            <!-- <button mat-raised-button (click)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
+            </button> -->
+            <app-progress-button (btnClick)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12"
+                [options]="barButtonOptions" [logEvent]="passEvent">
+            </app-progress-button>
+            <!-- <button mat-stroked-button (click)="saveNextFamilyMember('close')" class="btn-bottom br-0 text-inherit">SAVE
                 & CLOSE
-            </button>
+            </button> -->
         </div>
     </div>
 </div>
