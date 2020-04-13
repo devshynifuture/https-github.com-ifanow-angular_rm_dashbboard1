@@ -269,7 +269,6 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['admin', 'subscription', 'dashboard']);
           } else {
             this.authService.setToken('authTokenInLoginComponnennt');
-
             data.id = data.clientId;
             this.authService.setClientData(data);
             this.authService.setUserInfo(data);
