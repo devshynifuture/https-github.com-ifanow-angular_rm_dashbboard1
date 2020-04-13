@@ -66,7 +66,7 @@ export class SignUpComponent implements OnInit {
         data => {
           console.log(data);
           if (data == 400) {
-            this.deleteModal();
+            this.confirmModal(null);
             return;
           }
           const forgotPassObjData = {
@@ -96,11 +96,13 @@ export class SignUpComponent implements OnInit {
             this.router.navigate(['/login/forgotpassword'], { state: forgotPassObjData });
           }
         },
-        err => this.eventService.openSnackBar(err, 'Dismiss')
+        err => {
+          this.confirmModal(err.message)
+        }
       );
     }
   }
-  deleteModal(errorMsg) {
+  confirmModal(errorMsg) {
     const dialogData = {
       header: 'REGISTER',
       body: errorMsg + '. How would you like to proceed?',
