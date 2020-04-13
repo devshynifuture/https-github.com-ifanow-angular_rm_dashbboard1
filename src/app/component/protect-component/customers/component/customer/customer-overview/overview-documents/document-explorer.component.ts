@@ -647,7 +647,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       flag: 'addSchemeHolding',
       data,
       id: 1,
-      state: 'open35',
+      state: 'open50',
       componentName: ViewActivityComponent
     };
 
