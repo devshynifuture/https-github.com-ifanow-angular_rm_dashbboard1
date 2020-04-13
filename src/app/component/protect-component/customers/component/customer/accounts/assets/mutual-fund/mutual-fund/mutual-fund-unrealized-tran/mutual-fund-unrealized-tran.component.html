@@ -59,7 +59,7 @@
                   Amount invested
                 </th>
                 <td class="br text-left" mat-cell *matCellDef="let element" >
-                  <div class="bar"><span appFormatNumber>{{(element.totalTransactionAmt)?element.totalTransactionAmt:0}}</span></div>
+                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.totalTransactionAmt)?element.totalTransactionAmt:0)}}</span></div>
                 </td>
                 <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                   {{(grandTotal) ? grandTotal.totalTransactionAmt : '0'}}</td>
@@ -71,7 +71,7 @@
                   Current value
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber>{{(element.currentValue)?element.currentValue:0}}</span></div>
+                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.currentValue)?element.currentValue:0)}}</span></div>
                 </td>
                 <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                   {{(grandTotal) ? grandTotal.currentValue : '0'}}</td>
@@ -82,7 +82,7 @@
                   Dividend payout
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber>{{(element.dividendPayout)?element.dividendPayout:0}}</span></div>
+                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.dividendPayout)?element.dividendPayout:0)}}</span></div>
                 </td>
                 <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                   {{(grandTotal) ? grandTotal.dividendPayout : '0'}}</td>
@@ -94,7 +94,7 @@
                   Dividend reinvestment
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber>{{(element.dividendReinvest)?element.dividendReinvest:0}}</span></div>
+                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.dividendReinvest)?element.dividendReinvest:0)}}</span></div>
                 </td>
                 <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                   {{(grandTotal) ? grandTotal.dividendReinvest : '0'}}</td>
@@ -106,7 +106,7 @@
                   Gain
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber>{{(element.gain)?element.gain:0}}</span></div>
+                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.gain)?element.gain:0)}}</span></div>
                 </td>
                 <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                   {{(grandTotal) ? grandTotal.totalGain : '0'}}</td>
@@ -118,7 +118,7 @@
                   Absolute Return%
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber>{{(element.absReturn)?element.absReturn:0}}</span></div>
+                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.absReturn)?element.absReturn:0)}}</span></div>
                 </td>
                 <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                   {{(grandTotal) ? grandTotal.totalGain : '0'}}</td>
@@ -130,7 +130,7 @@
                   Xirr%
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber>{{(element.xirr)?element.xirr:0}}</span></div>
+                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.xirr)?element.xirr:0)}}</span></div>
                 </td>
                 <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                   {{(grandTotal) ? grandTotal.xirr : '0'}}</td>
@@ -142,7 +142,7 @@
                   Allocation%
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber>{{(element.allocation)?element.allocation:0}}</span></div>
+                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.allocation)?element.allocation:0)}}</span></div>
                 </td>
                 <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                   {{(grandTotal) ? grandTotal.allocationPer : '0'}}</td>
@@ -193,7 +193,7 @@
                   Transaction date
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar">{{(element.transactionDate)?element.transactionDate:'-'}} </div>
+                  <div class="bar">{{isLoading ? '':((element.transactionDate)?element.transactionDate:'-')}} </div>
                 </td>
                 <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
                 </td>
@@ -205,9 +205,9 @@
                   Transaction amount
                 </th>
                 <td class="br text-left" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber *ngIf="element.amount">{{(element.amount)?element.amount:0}}</span>
+                  <div class="bar"><span appFormatNumber *ngIf="element.amount">{{isLoading ? '':((element.amount)?element.amount:0)}}</span>
                     <span appFormatNumber class="f-700"
-                      *ngIf="element.totalTransactionAmt">{{(element.totalTransactionAmt)?element.totalTransactionAmt:0}}</span>
+                      *ngIf="element.totalTransactionAmt">{{isLoading ? '':((element.totalTransactionAmt)?element.totalTransactionAmt:0)}}</span>
                   </div>
                 </td>
                 <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
@@ -223,8 +223,8 @@
                   Transaction NAV
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber *ngIf="element.amount">{{(element.transactionNav)?element.transactionNav:'0'}}</span>
-                    <span appFormatNumber class="f-700" *ngIf="element.totalNav">{{(element.totalNav)?element.totalNav:0}}</span>
+                  <div class="bar"><span appFormatNumber *ngIf="element.amount">{{isLoading ? '':((element.transactionNav)?element.transactionNav:'0')}}</span>
+                    <span appFormatNumber class="f-700" *ngIf="element.totalNav">{{isLoading ? '':((element.totalNav)?element.totalNav:0)}}</span>
                   </div>
                 </td>
                 <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
@@ -237,8 +237,8 @@
               <ng-container matColumnDef="units">
                 <th class="br text-right" mat-sort-header="units" mat-header-cell *matHeaderCellDef>Units</th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber *ngIf="element.unit">{{(element.unit)?element.unit:0}}</span>
-                    <span appFormatNumber class="f-700" *ngIf="element.totalUnit">{{(element.totalUnit)?element.totalUnit:0}}</span>
+                  <div class="bar"><span appFormatNumber *ngIf="element.unit">{{isLoading ? '':((element.unit)?element.unit:0)}}</span>
+                    <span appFormatNumber class="f-700" *ngIf="element.totalUnit">{{isLoading ? '':((element.totalUnit)?element.totalUnit:0)}}</span>
                   </div>
                 </td>
                 <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
@@ -251,7 +251,7 @@
                   Current value
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber>{{(element.currentValue)?element.currentValue:0}}</span></div>
+                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.currentValue)?element.currentValue:0)}}</span></div>
                 </td>
                 <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                   {{(grandTotal) ? grandTotal.currentValue : '0'}}</td>
@@ -262,7 +262,7 @@
                   Dividend payout
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber>{{(element.dividendPayout)?element.dividendPayout:0}}</span></div>
+                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.dividendPayout)?element.dividendPayout:0)}}</span></div>
                 </td>
                 <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                   {{(grandTotal) ? grandTotal.dividendPayout : '0'}}</td>
@@ -284,7 +284,7 @@
                   Total amount
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber>{{(element.totalAmount)?element.totalAmount:0}}</span></div>
+                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.totalAmount)?element.totalAmount:0)}}</span></div>
                 </td>
                 <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                   {{(grandTotal) ? grandTotal.totalAmount : '0'}}</td>
@@ -296,7 +296,7 @@
                   Gain
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber> {{(element.gain)?element.gain:0}}</span></div>
+                  <div class="bar"><span appFormatNumber> {{isLoading ? '':((element.gain)?element.gain:0)}}</span></div>
                 </td>
                 <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                   {{(grandTotal) ? grandTotal.totalGain : '0'}}</td>
@@ -308,7 +308,7 @@
                   Absolute Return%
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber>{{(element.absReturn)?element.absReturn:0}}</span></div>
+                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.absReturn)?element.absReturn:0)}}</span></div>
                 </td>
                 <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                   {{(grandTotal) ? grandTotal.absReturn : '0'}}</td>
@@ -320,7 +320,7 @@
                   Xirr%
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element" >
-                  <div class="bar"><span appFormatNumber>{{(element.xirr)?element.xirr:0}}</span>
+                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.xirr)?element.xirr:0)}}</span>
                   </div>
                 </td>
                 <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
