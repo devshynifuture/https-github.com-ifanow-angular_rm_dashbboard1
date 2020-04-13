@@ -2,10 +2,11 @@
     list-style-type: none;
     position: relative;
 }
+
 .timeline:before {
-    
     content: ' ';
-    background: #008FFF;;
+    background: #008FFF;
+    ;
     display: inline-block;
     position: absolute;
     left: 29px;
@@ -14,11 +15,13 @@
     z-index: 400;
     top: 35%;
 }
-.timeline > li {
+
+.timeline>li {
     margin: 40px 0;
-    padding-left: 50px;
+    padding-left: 70px;
 }
-.timeline > li:before {
+
+.timeline>li:before {
     content: url(/assets/images/svg/activity-icons.svg);
     background: white;
     display: inline-block;
@@ -30,14 +33,15 @@
     height: 15px;
     z-index: 400;
 }
-span{
-  font-size: 12px !important;
-  font-family: "Roboto",sans-serif;
-font-style: italic;
-font-weight: normal;
-font-size: 14px;
-line-height: 16px;
-color: #83959D;
-float: left;
-padding-top: 8px;
+
+span {
+    font-size: 12px !important;
+    font-family: "Roboto", sans-serif;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    color: #83959D;
+    float: left;
+    padding-top: 3px;
 }
