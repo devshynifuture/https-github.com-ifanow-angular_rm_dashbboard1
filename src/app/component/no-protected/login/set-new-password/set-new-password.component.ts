@@ -46,6 +46,16 @@ export class SetNewPasswordComponent implements OnInit {
         data => {
           console.log(data);
           if (data == 1) {
+            let obj =
+            {
+              advisorId: this.userData.advisorId
+            }
+            this.loginService.sendWelcomeEmail(obj).subscribe(
+              data => {
+                console.log(data)
+              },
+              err => this.eventService.openSnackBar(err, "Dismiss")
+            )
             // this.authService.setToken(data.token);
             this.authService.setToken('authTokenInLoginComponnennt');
             if (this.userData.userType == 1) {

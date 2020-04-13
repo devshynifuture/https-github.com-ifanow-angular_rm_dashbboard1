@@ -84,7 +84,9 @@ export class ForgotPasswordComponent implements OnInit {
       value.srcElement.nextElementSibling.focus();
     }
   }
-
+  verifyUsernameOnEnter(event) {
+    (event.keyCode == 13) ? this.verifyUsername() : '';
+  }
   verifyUsername() {   //////////// username///////////////////
     const obj = {
       userName: this.userName.value
@@ -93,6 +95,7 @@ export class ForgotPasswordComponent implements OnInit {
       data => {
         console.log(data);
         if (data) {
+          data['buttonFlag'] = "reset";
           this.saveVerifyData.userData = data;
           this.hideNumEmailFromUser(this.saveVerifyData);
           this.userNameVerifyResponse = data;

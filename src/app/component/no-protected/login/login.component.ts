@@ -112,6 +112,7 @@ export class LoginComponent implements OnInit {
       this.loginService.getUsernameData(obj).subscribe(
         data => {
           if (data) {
+            this.userName.disable();
             console.log(data);
             this.userData = data;
             this.getOtpResponse(data);

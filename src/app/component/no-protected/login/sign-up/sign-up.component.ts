@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material';
 })
 export class SignUpComponent implements OnInit {
   clientSignUp = false;
+  duplicateTableDtaFlag: boolean;
 
   constructor(private fb: FormBuilder, private authService: AuthService, public routerActive: ActivatedRoute,
     private router: Router, private loginService: LoginService, private eventService: EventService, public dialog: MatDialog) {
@@ -58,7 +59,8 @@ export class SignUpComponent implements OnInit {
             mobileNo: this.signUpForm.get('mobile').value,
           }
         ],
-        userType: 1
+        userType: 1,
+        forceRegistration: (this.duplicateTableDtaFlag == true) ? true : null
       };
       this.loginService.register(obj, this.clientSignUp).subscribe(
         data => {
@@ -106,7 +108,9 @@ export class SignUpComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'REGISTER',
       positiveMethod: () => {
+        this.duplicateTableDtaFlag = true;
         this.createAccount();
+        dialogRef.close();
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
