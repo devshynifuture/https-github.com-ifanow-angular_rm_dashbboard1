@@ -21,6 +21,7 @@
                         [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="ifscCode" #ifcCode
                         [maxLength]="12" matInput class="form-control">
                     <mat-hint align="end" class="f-12">{{ifcCode.value.length}}/12</mat-hint>
+                    <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -38,6 +39,7 @@
                     <input autocomplete="off" [maxLength]="50" #bankName appInputValueValidation
                         [inputValidator]="validatorType.TEXT_ONLY" formControlName="bankName" matInput
                         class="form-control">
+                    <mat-error>This field is required</mat-error>
                     <mat-hint align="end">{{bankName.value.length}}/50</mat-hint>
                 </mat-form-field>
             </div>
@@ -68,6 +70,7 @@
                     <input autocomplete="off" #accNum [maxLength]="16" formControlName="accNumber" matInput
                         appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control">
                     <mat-hint align="end">{{accNum.value.length}} / 16</mat-hint>
+                    <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -102,6 +105,7 @@
                 <mat-form-field>
                     <input #branchName autocomplete="off" formControlName="branchName" appInputValueValidation
                         [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" matInput class="form-control">
+                    <mat-error>This field is required</mat-error>
                     <mat-hint align="end">{{branchName.value.length}}/50</mat-hint>
                 </mat-form-field>
             </div>
@@ -115,6 +119,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input autocomplete="off" formControlName="branchCountry" matInput class="form-control">
+                    <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -129,6 +134,7 @@
                     <input autocomplete="off" [maxLength]="6" (focusout)="getPostalPin($event.target.value)"
                         formControlName="branchPinCode" #branchCode matInput appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" class="form-control">
+                    <mat-error>This field is required</mat-error>
                     <mat-hint align="end" class="f-12">{{branchCode.value.length}}/6</mat-hint>
                 </mat-form-field>
             </div>
@@ -145,6 +151,8 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input autocomplete="off" formControlName="branchAddressLine1" matInput class="form-control">
+
+                    <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -157,6 +165,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input autocomplete="off" formControlName="branchAddressLine2" matInput class="form-control">
+                    <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -169,6 +178,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input autocomplete="off" formControlName="branchCity" matInput class="form-control">
+                    <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -181,6 +191,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input autocomplete="off" formControlName="branchState" matInput class="form-control">
+                    <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
@@ -197,7 +208,7 @@
             </button> -->
             <!-- <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
             </button> -->
-            <app-progress-button (btnClick)="saveNext('Save')" class="br-0 text-inherit mr-12"
+            <app-progress-button (btnClick)="saveNext('Next')" class="br-0 text-inherit mr-12"
                 [options]="barButtonOptions" [logEvent]="passEvent">
             </app-progress-button>
         </div>

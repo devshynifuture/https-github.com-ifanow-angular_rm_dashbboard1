@@ -183,6 +183,7 @@ export class LoginComponent implements OnInit {
   }
 
   verifyWithOtpResponse() {
+    this.barButtonOptions.active = true;
     const otpString = this.otpData.toString().replace(/,/g, '');
     if (this.otpData.length == 6 && this.otpResponse == otpString) {
       this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');

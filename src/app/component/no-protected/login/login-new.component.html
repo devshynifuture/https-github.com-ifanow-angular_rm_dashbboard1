@@ -187,12 +187,15 @@
               </div>
 
               <div class="mobilebuttonColor col-md-12 p-0">
-                <button (click)="verifyWithOtpResponse()" class="mt-20 mb-28 bg-primary f-16  text-white w-100 br-4 "
+                <!-- <button (click)="verifyWithOtpResponse()" class="mt-20 mb-28 bg-primary f-16  text-white w-100 br-4 "
                   mat-button>
                   <img class="iconPosition mobileNone" src="assets/images/svg/login-btn-icon.svg">
                   Login to your
                   account
-                </button>
+                </button> -->
+                <app-progress-button (btnClick)="verifyWithOtpResponse()" [logEvent]="passEvent"
+                  [options]="barButtonOptions" class="">
+                </app-progress-button>
               </div>
 
               <div class="mobileCenter ds-none">

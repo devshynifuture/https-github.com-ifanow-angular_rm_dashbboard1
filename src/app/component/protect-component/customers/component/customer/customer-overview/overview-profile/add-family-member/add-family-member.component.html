@@ -360,9 +360,12 @@
                 <button class="btn-bottom br-0 text-inherit" *ngIf="step==2" (click)="createFamilyMember()"
                     mat-button>Next
                 </button>
-                <button class="btn-bottom br-0 text-inherit" *ngIf="step==3" (click)="saveFamilyMembers()"
+                <!-- <button class="btn-bottom br-0 text-inherit" *ngIf="step==3" (click)="saveFamilyMembers()"
                     mat-button>Save
-                </button>
+                </button> -->
+                <app-progress-button *ngIf="step==3" (btnClick)="saveFamilyMembers()" class="br-0 text-inherit mr-12"
+                    [options]="barButtonOptions" [logEvent]="passEvent">
+                </app-progress-button>
             </div>
         </div>
     </div>

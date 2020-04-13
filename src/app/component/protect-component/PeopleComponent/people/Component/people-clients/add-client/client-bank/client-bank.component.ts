@@ -158,12 +158,9 @@ export class ClientBankComponent implements OnInit {
   }
 
   saveNext(flag) {
-    if (this.holderList.invalid) {
-      this.holderList.markAllAsTouched();
-      return;
-    }
-    else if (this.bankForm.invalid) {
+    if (this.bankForm.invalid) {
       this.bankForm.markAllAsTouched();
+      this.holderList.markAllAsTouched();
       return;
     }
     else {

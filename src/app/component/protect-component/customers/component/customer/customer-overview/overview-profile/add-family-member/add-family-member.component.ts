@@ -6,6 +6,7 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
 import { ValidatorType } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { DatePipe } from '@angular/common';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-family-member',
@@ -35,7 +36,21 @@ export class AddFamilyMemberComponent implements OnInit {
     ]
   }
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService, private peopleService: PeopleService) { }
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   ngOnInit() {
     this.createFamily = this.fb.group({
       familyMemberList: new FormArray([])
@@ -57,6 +72,7 @@ export class AddFamilyMemberComponent implements OnInit {
       this.createFamily.markAllAsTouched();
     }
     else {
+      this.barButtonOptions.active = true;
       let arrayObj = [];
       this.getFamilyListList.controls.forEach(element => {
         arrayObj.push({
@@ -127,8 +143,12 @@ export class AddFamilyMemberComponent implements OnInit {
         data => {
           console.log(data),
             this.close();
+          this.barButtonOptions.active = false;
         },
-        err => this.eventService.openSnackBar(err, "Dismiss")
+        err => {
+          this.eventService.openSnackBar(err, "Dismiss");
+          this.barButtonOptions.active = false;
+        }
       )
     }
   }

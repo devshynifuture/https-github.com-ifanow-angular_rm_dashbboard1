@@ -97,7 +97,7 @@ export class SetNewPasswordComponent implements OnInit {
             //   opacity: this.errorMsg ? '1' : '0',
             // };
             // this.barButtonOptions.active = false;
-            this.barButtonOptions.active = true;
+            this.barButtonOptions.active = false;
           }
         })
     }
