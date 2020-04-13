@@ -24,7 +24,7 @@ export class FormatNumberDirective implements AfterViewInit {
   }
 
   formatAndRoundOffNumber(text) {
-    console.log('FormatNumberDirective ', text, this.locale, this.shouldRoundOff);
+    // console.log('FormatNumberDirective ', text, this.locale, this.shouldRoundOff);
 
     if (typeof (text) === 'string') {
       if (text.includes(',')) {
@@ -34,7 +34,7 @@ export class FormatNumberDirective implements AfterViewInit {
     // if (!this.locale) {
     //   this.locale = 'en-IN';
     // }
-    console.log('FormatNumberDirective ', text, this.locale, this.shouldRoundOff);
+    // console.log('FormatNumberDirective ', text, this.locale, this.shouldRoundOff);
     if (text && text !== '') {
       if (!isNaN(text)) {
         let numberValue: number = parseFloat(text);
