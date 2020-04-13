@@ -2,11 +2,9 @@
     <div class="col-md-8 p-0">
         <h4 class="m-0 text-black">MF RTA details </h4>
     </div>
-    <div class="col-md-4 p-0 text-right">
-        <button class="btn-primary pl-8" mat-stroked-button [matMenuTriggerFor]="menu">
-            <i class="material-icons text-white pr-8">
-                add
-            </i> ADD NEW
+    <div class="col-md-4 text-right">
+        <button class="btn-primary " mat-stroked-button [matMenuTriggerFor]="menu">
+            ADD NEW
         </button>
         <mat-menu #menu="matMenu">
             <button mat-menu-item *ngFor="let rta_type of globalData.rta_type_master_list" (click)="openInSideBar(rta_type.id,'','')">{{rta_type.type}}</button>
@@ -194,7 +192,8 @@
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar">
                         <ng-container>
-                            <ng-template *ngTemplateOutlet="templateRef; context:{element :element.mailbackPassword, toggle: true}"></ng-template>
+                            <ng-template *ngTemplateOutlet="templateRef; context:{element :element.mailbackPassword, toggle: true}">
+                            </ng-template>
                         </ng-container>
                     </div>
                 </td>
@@ -297,6 +296,8 @@
 
 <ng-container>
     <ng-template #templateRef let-toggle="toggle" let-element="element">
-        {{(toggleVisibility(element, toggle))}} <mat-icon (click)="toggle = !toggle">{{toggle ? 'visibility' : 'visibility_off'}}</mat-icon>
-      </ng-template>
+        {{(toggleVisibility(element, toggle))}}
+        <mat-icon (click)="toggle = !toggle">
+            {{toggle ? 'visibility' : 'visibility_off'}}</mat-icon>
+    </ng-template>
 </ng-container>

@@ -9,6 +9,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-superannuation',
@@ -20,6 +21,21 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
   ],
 })
 export class AddSuperannuationComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   validatorType = ValidatorType
   maxDate = new Date();
   showHide = false;
@@ -162,6 +178,7 @@ get getNominee() {
 }
 
 removeNewNominee(item) {
+  this.disabledMember(null, null);
   this.getNominee.removeAt(item);
   if (this.superannuation.value.getNomineeName.length == 1) {
     this.getNominee.controls['0'].get('sharePercentage').setValue('100');
@@ -314,6 +331,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.superannuation
         nomineeList: this.superannuation.value.getNomineeName,
         id: this.superannuation.controls.id.value
       }
+      this.barButtonOptions.active =true;
       obj.nomineeList.forEach((element, index) => {
         if(element.name == ''){
           this.removeNewNominee(index);
@@ -330,12 +348,14 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.superannuation
       if (this.superannuation.controls.id.value == undefined && this.flag != 'adviceSuperAnnuation') {
         this.custumService.addSuperannuation(obj).subscribe(
           data => this.addSuperannuationRes(data), (error) => {
+            this.barButtonOptions.active =false;
             this.event.showErrorMessage(error);
           }
         );
       } else if (this.flag == 'adviceSuperAnnuation') {
         this.custumService.getAdviceSuperannuation(adviceObj).subscribe(
           data => this.getAdviceSuperAnnuationRes(data), (error) => {
+            this.barButtonOptions.active =false;
             this.event.showErrorMessage(error);
           }
         );
@@ -343,6 +363,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.superannuation
         //edit call
         this.custumService.editSuperannuation(obj).subscribe(
           data => this.editSuperannuationRes(data), (error) => {
+            this.barButtonOptions.active =false;
             this.event.showErrorMessage(error);
           }
         );
@@ -350,16 +371,19 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.superannuation
     }
   }
   getAdviceSuperAnnuationRes(data) {
-    this.event.openSnackBar('Superannuation added successfully!', 'Dismiss');
+            this.barButtonOptions.active =false;
+            this.event.openSnackBar('Superannuation added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'addedSuperannuation', state: 'close', data, refreshRequired: true })
   }
   addSuperannuationRes(data) {
-    console.log('addrecuringDepositRes', data)
+            this.barButtonOptions.active =false;
+            console.log('addrecuringDepositRes', data)
     this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'addedSuperannuation', state: 'close', data, refreshRequired: true })
   }
   editSuperannuationRes(data) {
-    this.event.openSnackBar('Updated successfully!', 'Dismiss');
+            this.barButtonOptions.active =false;
+            this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'addedSuperannuation', state: 'close', data, refreshRequired: true })
   }
 }

@@ -184,7 +184,6 @@
 
                 <h5 class="mb-0">Didn’t receive? <span (click)="getOtp()" class="lightRead c-p"> Resend
                   </span></h5>
-
               </div>
 
               <div class="mobilebuttonColor col-md-12 p-0">
@@ -213,10 +212,10 @@
                   class="text-primary c-p"> Sign up </span></h5>
             </div>
             <div *ngIf="!otpNumber">
-              <button class="mt-20 mb-28 bg-primary f-16  text-white w-100 br-4 " mat-button>
+              <!-- <button class="mt-20 mb-28 bg-primary f-16  text-white w-100 br-4 " mat-button>
                 <img class="iconPosition" src="assets/images/svg/login-btn-icon.svg"> Login to your
                 account
-              </button>
+              </button> -->
               <h5 [routerLink]="['/login']" class="mt-20 text-primary c-p f-600">Login with password</h5>
 
               <h5 class="mt-32 mb-24">Don’t have an account? <span [routerLink]="['/login/signup']"

@@ -8,6 +8,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-bank-accounts',
@@ -20,6 +21,21 @@ import { EventService } from 'src/app/Data-service/event.service';
 })
 export class BankAccountsComponent implements OnInit {
   validatorType = ValidatorType
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   ownerName: any;
   inputData: any;
   familyMemberId: any;
@@ -160,6 +176,7 @@ export class BankAccountsComponent implements OnInit {
   }
 
   removeNewNominee(item) {
+  this.disabledMember(null, null);
     this.getNominee.removeAt(item);
     if (this.bankAccounts.value.getNomineeName.length == 1) {
       this.getNominee.controls['0'].get('sharePercentage').setValue('100');
@@ -306,6 +323,7 @@ export class BankAccountsComponent implements OnInit {
       this.bankAccounts.markAllAsTouched();
 
     } else {
+      this.barButtonOptions.active = true;
       this.nominees = []
       if (this.nomineesList) {
 
@@ -352,12 +370,14 @@ export class BankAccountsComponent implements OnInit {
         this.custumService.addBankAccounts(obj).subscribe(
           data => this.addBankAccountsRes(data), (error) => {
             this.eventService.showErrorMessage(error);
+            this.barButtonOptions.active = false;
           }
         );
       } else if (this.flag == 'adviceBankAccount') {
         this.custumService.getAdviceBankAccount(adviceObj).subscribe(
           data => this.getAdviceBankAccountRes(data), (error) => {
             this.eventService.showErrorMessage(error);
+            this.barButtonOptions.active = false;
           }
         );
       } else {
@@ -366,6 +386,7 @@ export class BankAccountsComponent implements OnInit {
           this.custumService.editBankAcounts(obj).subscribe(
             data => this.editBankAcountsRes(data), (error) => {
               this.eventService.showErrorMessage(error);
+              this.barButtonOptions.active = false;
             }
           );
       }
@@ -381,16 +402,19 @@ export class BankAccountsComponent implements OnInit {
   }
 
   getAdviceBankAccountRes(data) {
+    this.barButtonOptions.active = false;
     this.eventService.openSnackBar('Bank account added successfully', 'OK');
     this.subInjectService.changeNewRightSliderState({ flag: 'addedbankAc', state: 'close', data, refreshRequired: true })
   }
   addBankAccountsRes(data) {
+    this.barButtonOptions.active = false;
     console.log('addrecuringDepositRes', data)
     this.subInjectService.changeNewRightSliderState({ flag: 'addedbankAc', state: 'close', data: 1, refreshRequired: true })
     this.eventService.openSnackBar('Added successfully!', 'OK');
 
   }
   editBankAcountsRes(data) {
+    this.barButtonOptions.active = false;
     this.subInjectService.changeNewRightSliderState({ flag: 'editedbankAc', state: 'close', data: 1, refreshRequired: true })
     this.eventService.openSnackBar('Updated successfully!', 'OK');
 

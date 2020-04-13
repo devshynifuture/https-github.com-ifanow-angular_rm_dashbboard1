@@ -51,6 +51,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   invTypeCategory;
   invTaxStatus;
   clientRoles: any = [];
+  minAge: any;
 
   // advisorId;
 
@@ -88,8 +89,12 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.getClientOrLeadData(this.basicDetailsData);
     }
     console.log(data);
+    this.setMinDateForAge();
   }
-
+  setMinDateForAge() {
+    this.minAge = new Date();
+    console.log(this.minAge)
+  }
   createIndividualForm(data) {
     this.selectedClientOwner = '1';
     (data == undefined) ? data = {} : '';
@@ -393,6 +398,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.minorForm.markAllAsTouched();
       return;
     }
+    this.barButtonOptions.active = true;
     const obj = {
       familyMemberId: this.basicDetailsData.familyMemberId,
       clientId: this.basicDetailsData.clientId,
@@ -429,11 +435,15 @@ export class ClientBasicDetailsComponent implements OnInit {
     obj['displayName'] = this.basicDetailsData.displayName;
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {
+        this.barButtonOptions.active = false;
         data.invTypeCategory = this.invTypeCategory;
         data.categoryTypeflag = 'familyMinor';
         (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(data);
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        this.barButtonOptions.active = false;
+        this.eventService.openSnackBar(err, 'Dismiss')
+      }
     );
   }
 
