@@ -57,7 +57,7 @@
                             </div>
                             <!-- <img src="assets/images/svg/grid.svg" class="c-p gridIcon mr-12"> -->
                             <button class="text-custom br-0 mr-12" mat-stroked-button> HELP</button>
-                            <button *ngIf="valueTab == 1" [matMenuTriggerFor]="menu1" class="btn-primary br-0 pl-8" mat-stroked-button> ADD
+                            <button *ngIf="valueTab == 1" [matMenuTriggerFor]="menu1" class="btn-primary br-0  " mat-stroked-button> ADD
                                 NEW
                             </button>
                             <mat-menu #menu1="matMenu">
@@ -150,6 +150,7 @@
                                     <ng-container matColumnDef="icons">
                                         <th *matHeaderCellDef class="t-2" mat-header-cell></th>
                                         <td *matCellDef="let element" class="t-2" mat-cell>
+                                            <div *ngIf="valueTab != 4">
                                             <i [matMenuTriggerFor]="menu4" class="material-icons c-p text-black">
                                                 more_vert
                                             </i>
@@ -199,6 +200,7 @@
                                                         src="assets/images/svg/delete-icon.svg">Delete
                                                 </button>
                                             </mat-menu>
+                                        </div>
                                         </td>
                                     </ng-container>
                                     <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>

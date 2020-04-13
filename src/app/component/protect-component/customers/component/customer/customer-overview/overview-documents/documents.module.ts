@@ -16,7 +16,7 @@ import { DocumentExplorerComponent } from './document-explorer.component';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    CustomDirectiveModule
+    CustomDirectiveModule,
   ]
 })
 export class DocumentsModule { }
