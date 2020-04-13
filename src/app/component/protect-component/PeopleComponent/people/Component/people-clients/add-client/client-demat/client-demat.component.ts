@@ -55,6 +55,8 @@ export class ClientDematComponent implements OnInit {
       this.getDematList(data);
     }
     else {
+      (this.userData.dematData) ? this.dematList = this.userData.dematData : this.dematList = {};
+      this.barButtonOptions.text = "SAVE & CLOSE";
       this.createDematForm(this.userData.dematData);
     }
   }

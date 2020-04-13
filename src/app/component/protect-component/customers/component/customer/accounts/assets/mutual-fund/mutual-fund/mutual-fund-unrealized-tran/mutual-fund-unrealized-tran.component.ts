@@ -20,13 +20,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   // subCategoryData: any[];
   // schemeWise: any[];
   mutualFundList: any[];
-  isLoading;
-  dataSource = new TableVirtualScrollDataSource([]);
+  isLoading=false;
+  dataSource = new TableVirtualScrollDataSource([{},{},{}]);
   grandTotal: any = {};
   schemeWiseForFilter: any;
   mutualFundListFilter: any[];
   rightFilterData: any;
-  customDataSource = new TableVirtualScrollDataSource([]);
+  customDataSource = new TableVirtualScrollDataSource([{},{},{}]);
   @ViewChild('tableEl', {static: false}) tableEl;
 
   constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -36,6 +36,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   @Input() mutualFund;
 
   ngOnInit() {
+    this.isLoading=true;
     console.log('this.mutualFund == ', this.mutualFund);
     if (this.mutualFund) {
       // this.getSubCategoryWise(this.mutualFund);
@@ -50,6 +51,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+
     for (const propName in changes) {
       const chng = changes[propName];
       const cur = JSON.stringify(chng.currentValue);
@@ -73,6 +75,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       // Create a new
       const worker = new Worker('./mutual-fund-unrealized.worker.ts', {type: 'module'});
       worker.onmessage = ({data}) => {
+        this.isLoading=false;
         this.grandTotal = data.totalValue;
         this.dataSource = new TableVirtualScrollDataSource(data.dataSourceData);
         this.customDataSource = new TableVirtualScrollDataSource(data.customDataSourceData);
