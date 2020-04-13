@@ -200,7 +200,7 @@ export class ClientDematComponent implements OnInit {
       modeOfHolding: [(data.modeOfHolding) ? String(data.modeOfHolding) : '1'],
       depositoryPartName: [data.depositoryParticipantName, [Validators.required]],
       depositoryPartId: [data.depositoryParticipantId, [Validators.required]],
-      clientId: [data.dematClientId, [Validators.required]],
+      dematClientId: [data.dematClientId, [Validators.required]],
       brekerName: [data.brokerName],
       brokerAddress: [data.brokerAddress],
       linkedBankAccount: [data.linkedBankAccount],
@@ -257,10 +257,9 @@ export class ClientDematComponent implements OnInit {
           this.dematList = data[0];
           this.createDematForm(this.dematList)
         }
-        else {
-          this.dematList = {};
-        }
-      }, err => this.eventService.openSnackBar(err, "Dismiss")
+      }, err => {
+        this.dematList = {};
+      }
     )
   }
   ngOnInit() {
@@ -326,7 +325,7 @@ export class ClientDematComponent implements OnInit {
         ],
         "userType": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
         "brokerName": this.dematForm.get('brekerName').value,
-        "dematClientId": this.dematForm.get('clientId').value
+        "dematClientId": this.dematForm.get('dematClientId').value
       }
       this.peopleService.addEditClientDemat(obj).subscribe(
         data => {

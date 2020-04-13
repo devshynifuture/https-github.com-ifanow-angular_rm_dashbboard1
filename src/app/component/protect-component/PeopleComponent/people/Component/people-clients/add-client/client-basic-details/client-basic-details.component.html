@@ -8,7 +8,8 @@
                 <p class="m-0 roboto">Category</p>
                 <div *ngIf="fieldFlag=='client' || fieldFlag=='lead'" class="form-group">
                     <mat-form-field>
-                        <mat-select [(ngModel)]="invTypeCategory" (selectionChange)="changeInvestorType($event)" class="form-control">
+                        <mat-select [(ngModel)]="invTypeCategory" (selectionChange)="changeInvestorType($event)"
+                            class="form-control">
                             <mat-option value='1'>Individual</mat-option>
                             <mat-option value='2'>Non-individual</mat-option>
                         </mat-select>
@@ -16,7 +17,8 @@
                 </div>
                 <div class="form-group" *ngIf="fieldFlag=='familyMember'">
                     <mat-form-field>
-                        <mat-select [(ngModel)]="invTypeCategory" (selectionChange)="changeInvestorType($event)" class="form-control">
+                        <mat-select [(ngModel)]="invTypeCategory" (selectionChange)="changeInvestorType($event)"
+                            class="form-control">
                             <mat-option value='1'>Individual</mat-option>
                             <mat-option value='2'>Minor</mat-option>
                         </mat-select>
@@ -27,7 +29,8 @@
                 <p class="m-0 roboto">Tax status</p>
                 <div class="form-group">
                     <mat-form-field>
-                        <mat-select (selectionChange)="changeTaxStatus($event)" [(ngModel)]="invTaxStatus" class="form-control">
+                        <mat-select (selectionChange)="changeTaxStatus($event)" [(ngModel)]="invTaxStatus"
+                            class="form-control">
                             <mat-option value="1">Resident</mat-option>
                             <mat-option value="2">Non-resident</mat-option>
                         </mat-select>
@@ -46,7 +49,9 @@
             <div class="col-md-6 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field floatLabel="never" appearance="standard">
-                        <input autocomplete="off" #fullName appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" formControlName="fullName" matInput placeholder="Enter Name" class="form-control">
+                        <input autocomplete="off" #fullName appInputValueValidation
+                            [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" formControlName="fullName"
+                            matInput placeholder="Enter Name" class="form-control">
                         <mat-error>This field is required</mat-error>
                         <mat-hint align="end">{{fullName.value.length}}/50</mat-hint>
                     </mat-form-field>
@@ -60,7 +65,8 @@
             <div class="col-md-6 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field floatLabel="never" appearance="standard">
-                        <input autocomplete="off" formControlName="email" matInput placeholder="Enter Email" class="form-control">
+                        <input autocomplete="off" formControlName="email" matInput placeholder="Enter Email"
+                            class="form-control">
                         <mat-hint>Optional</mat-hint>
                         <mat-error *ngIf="basicDetails.get('email').errors?.pattern">Email is not valid</mat-error>
                     </mat-form-field>
@@ -68,7 +74,8 @@
                 </div>
             </div>
         </div>
-        <app-add-number [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag" (numberArray)="getNumberDetails($event)"></app-add-number>
+        <app-add-number [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag"
+            (numberArray)="getNumberDetails($event)"></app-add-number>
         <div class="row pt-44">
             <div class="col-md-4 text-right">
                 <h5 class="m-0 pt-12">PAN</h5>
@@ -76,7 +83,9 @@
             <div class="col-md-3 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" #pan appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="pan" maxlength="10" matInput class="form-control">
+                        <input autocomplete="off" #pan appInputValueValidation
+                            [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="pan" maxlength="10" matInput
+                            class="form-control">
                         <mat-error *ngIf="basicDetails.get('pan').errors?.required">This Field is required</mat-error>
                         <mat-error *ngIf="basicDetails.get('pan').errors?.pattern">Pan must be 10 digits</mat-error>
                         <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
@@ -97,7 +106,9 @@
             <div class="col-md-6 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" #username appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="username" matInput class="form-control">
+                        <input autocomplete="off" #username appInputValueValidation
+                            [inputValidator]="validatorType.TEXT_ONLY" formControlName="username" matInput
+                            class="form-control">
                         <mat-hint align="end">{{username.value.length}}/ 50</mat-hint>
                         <mat-error>This field is required</mat-error>
                         <mat-hint>Optional</mat-hint>
@@ -109,18 +120,19 @@
             <div class="col-md-4 text-right">
                 <h5 class="m-0 pt-32">Date of birth</h5>
             </div>
-            <div class="col-md-3 pr-7 pl-0">
+            <div class="col-md-6 pr-7 pl-0">
                 <p class="m-0 roboto">As per records</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input [matDatepicker]="dobAsPerRecord" (click)="dobAsPerRecord.open()" class="form-control br-0 b-0" formControlName="dobAsPerRecord" matInput readonly>
+                        <input [matDatepicker]="dobAsPerRecord" (click)="dobAsPerRecord.open()"
+                            class="form-control br-0 b-0" formControlName="dobAsPerRecord" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord"></mat-datepicker-toggle>
                         <mat-datepicker #dobAsPerRecord></mat-datepicker>
                         <mat-hint>Optional</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-3 pl-7 pr-0">
+            <!-- <div class="col-md-3 pl-7 pr-0">
                 <p class="m-0 roboto">Actual</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
@@ -130,7 +142,7 @@
                         <mat-hint>Optional</mat-hint>
                     </mat-form-field>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="row pt-60">
             <div class="col-md-4 text-right">
@@ -138,9 +150,15 @@
             </div>
             <div class="col-md-7 p-0">
                 <mat-radio-group formControlName="gender" aria-label="Select an option" class="d-block">
-                    <mat-radio-button value="1" [ngClass]="{'bu-primary': basicDetails.get('gender').value=='1','borderRadio':basicDetails.get('gender').value!='1'}" class="bu-primary">Male</mat-radio-button>
-                    <mat-radio-button value="2" [ngClass]="{'bu-primary': basicDetails.get('gender').value=='2','borderRadio':basicDetails.get('gender').value!='2'}" class="borderRadio">Female </mat-radio-button>
-                    <mat-radio-button value="3" [ngClass]="{'bu-primary': basicDetails.get('gender').value=='3','borderRadio':basicDetails.get('gender').value!='3'}" class="borderRadio">Other</mat-radio-button>
+                    <mat-radio-button value="1"
+                        [ngClass]="{'bu-primary': basicDetails.get('gender').value=='1','borderRadio':basicDetails.get('gender').value!='1'}"
+                        class="bu-primary">Male</mat-radio-button>
+                    <mat-radio-button value="2"
+                        [ngClass]="{'bu-primary': basicDetails.get('gender').value=='2','borderRadio':basicDetails.get('gender').value!='2'}"
+                        class="borderRadio">Female </mat-radio-button>
+                    <mat-radio-button value="3"
+                        [ngClass]="{'bu-primary': basicDetails.get('gender').value=='3','borderRadio':basicDetails.get('gender').value!='3'}"
+                        class="borderRadio">Other</mat-radio-button>
                 </mat-radio-group>
             </div>
         </div>
@@ -152,7 +170,8 @@
             <div class="col-md-5 p-0">
                 <div class="form-group m-0">
                     <mat-form-field>
-                        <mat-select [(ngModel)]="selectedClientOwner" formControlName="clientOwner" class="form-control">
+                        <mat-select [(ngModel)]="selectedClientOwner" formControlName="clientOwner"
+                            class="form-control">
                             <mat-option value="1">Select option</mat-option>
                             <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
                                 {{singleClient.name}}
@@ -172,7 +191,9 @@
             <div class="col-md-5 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" #leadSource appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="leadSource" matInput class="form-control">
+                        <input autocomplete="off" #leadSource appInputValueValidation
+                            [inputValidator]="validatorType.TEXT_ONLY" formControlName="leadSource" matInput
+                            class="form-control">
                         <mat-hint align="end">{{leadSource.value.length}}/ 50</mat-hint>
                         <mat-error>This field is required</mat-error>
                         <!-- <mat-select formControlName="leadSource" class="form-control">
@@ -230,7 +251,7 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-44 pb-60">
+        <div *ngIf="fieldFlag!='familyMember'" class="row pt-44 pb-60">
             <div class="col-md-4 text-right">
                 <h5 class="m-0 pt-4">Role</h5>
                 <p class="m-0 f-12 text-custom">The selected role decides<br> what access the client has
@@ -261,7 +282,9 @@
             <div class="col-md-5 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field floatLabel="never" appearance="standard">
-                        <input matInput appInputValueValidation [maxLength]="50" #mFullName [inputValidator]="validatorType.PERSON_NAME" formControlName="minorFullName" placeholder="Enter Name" class="form-control">
+                        <input matInput appInputValueValidation [maxLength]="50" #mFullName
+                            [inputValidator]="validatorType.PERSON_NAME" formControlName="minorFullName"
+                            placeholder="Enter Name" class="form-control">
                         <mat-hint align="end" class="f-12">{{mFullName.value.length}}/50</mat-hint>
                         <mat-error>This field is required</mat-error>
                     </mat-form-field>
@@ -273,28 +296,30 @@
             <div class="col-md-4 text-right">
                 <h5 class="m-0 pt-32">Minor’s date of birth</h5>
             </div>
-            <div class="col-md-3 p-0">
+            <div class="col-md-6 p-0">
                 <p class="m-0 roboto">As per records</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input [matDatepicker]="dobAsPerRecord" (click)="dobAsPerRecord.open()" class="form-control br-0 b-0" formControlName="dobAsPerRecord" matInput readonly>
+                        <input [matDatepicker]="dobAsPerRecord" (click)="dobAsPerRecord.open()"
+                            class="form-control br-0 b-0" formControlName="dobAsPerRecord" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord"></mat-datepicker-toggle>
                         <mat-datepicker #dobAsPerRecord></mat-datepicker>
                         <mat-hint>Optional</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
                 <p class="m-0 roboto">Actual</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input formControlName="dobActual" (click)="dobActual.open()" class="form-control br-0 b-0" formControlName="dobActual" matInput readonly>
+                        <input formControlName="dobActual" (click)="dobActual.open()" class="form-control br-0 b-0"
+                            formControlName="dobActual" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="dobActual"></mat-datepicker-toggle>
                         <mat-datepicker #dobActual></mat-datepicker>
                         <mat-hint>Optional</mat-hint>
                     </mat-form-field>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <div class="row pt-60">
@@ -303,9 +328,12 @@
             </div>
             <div class="col-md-7 p-0">
                 <mat-radio-group aria-label="Select an option" formControlName="gender" class="d-block">
-                    <mat-radio-button value="1" [ngClass]="{'bu-primary':minorForm.get('gender').value=='1'}" class="borderRadio">Male</mat-radio-button>
-                    <mat-radio-button value="2" [ngClass]="{'bu-primary':minorForm.get('gender').value=='2'}" class="borderRadio">Female </mat-radio-button>
-                    <mat-radio-button value="3" [ngClass]="{'bu-primary':minorForm.get('gender').value=='3'}" class="borderRadio">Other</mat-radio-button>
+                    <mat-radio-button value="1" [ngClass]="{'bu-primary':minorForm.get('gender').value=='1'}"
+                        class="borderRadio">Male</mat-radio-button>
+                    <mat-radio-button value="2" [ngClass]="{'bu-primary':minorForm.get('gender').value=='2'}"
+                        class="borderRadio">Female </mat-radio-button>
+                    <mat-radio-button value="3" [ngClass]="{'bu-primary':minorForm.get('gender').value=='3'}"
+                        class="borderRadio">Other</mat-radio-button>
                 </mat-radio-group>
             </div>
         </div>
@@ -317,7 +345,9 @@
             <div class="col-md-5 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field floatLabel="never" appearance="standard">
-                        <input #gFullName matInput placeholder="Enter Name" appInputValueValidation [maxLength]="50" [inputValidator]="validatorType.PERSON_NAME" formControlName="gFullName" class="form-control">
+                        <input #gFullName matInput placeholder="Enter Name" appInputValueValidation [maxLength]="50"
+                            [inputValidator]="validatorType.PERSON_NAME" formControlName="gFullName"
+                            class="form-control">
                         <mat-error>This field is required</mat-error>
                         <mat-hint align="end" class="f-12">{{gFullName.value.length}}/50</mat-hint>
                     </mat-form-field>
@@ -329,29 +359,30 @@
             <div class="col-md-4 text-right">
                 <h5 class="m-0 pt-32">Guardian’s date of birth</h5>
             </div>
-            <div class="col-md-3 p-0">
+            <div class="col-md-6 p-0">
                 <p class="m-0 roboto">As per records</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input [matDatepicker]="gDobAsPerRecord" (click)="gDobAsPerRecord.open()" class="form-control br-0 b-0" formControlName="gDobAsPerRecord" matInput readonly>
+                        <input [matDatepicker]="gDobAsPerRecord" (click)="gDobAsPerRecord.open()"
+                            class="form-control br-0 b-0" formControlName="gDobAsPerRecord" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="gDobAsPerRecord"></mat-datepicker-toggle>
                         <mat-datepicker #gDobAsPerRecord></mat-datepicker>
                         <mat-hint>Optional</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
                 <p class="m-0 roboto">Actual</p>
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input formControlName="gDobActual" [matDatepicker]="gDobActual" (click)="gDobActual.open()" class="form-control br-0 b-0" matInput readonly>
+                        <input formControlName="gDobActual" [matDatepicker]="gDobActual" (click)="gDobActual.open()"
+                            class="form-control br-0 b-0" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="gDobActual"></mat-datepicker-toggle>
                         <mat-datepicker #gDobActual></mat-datepicker>
                         <mat-hint>Optional</mat-hint>
                     </mat-form-field>
-
                 </div>
-            </div>
+            </div> -->
         </div>
 
 
@@ -361,9 +392,12 @@
             </div>
             <div class="col-md-7 p-0">
                 <mat-radio-group formControlName="gGender" aria-label="Select an option" class="d-block">
-                    <mat-radio-button value="1" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='1'}" class="borderRadio">Male</mat-radio-button>
-                    <mat-radio-button value="2" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='2'}" class="borderRadio">Female </mat-radio-button>
-                    <mat-radio-button value="3" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='3'}" class="borderRadio">Other</mat-radio-button>
+                    <mat-radio-button value="1" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='1'}"
+                        class="borderRadio">Male</mat-radio-button>
+                    <mat-radio-button value="2" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='2'}"
+                        class="borderRadio">Female </mat-radio-button>
+                    <mat-radio-button value="3" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='3'}"
+                        class="borderRadio">Other</mat-radio-button>
                 </mat-radio-group>
             </div>
         </div>
@@ -403,7 +437,8 @@
                 </div>
             </div>
         </div>
-        <app-add-number [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag" (numberArray)="getNumberDetails($event)"></app-add-number>
+        <app-add-number [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag"
+            (numberArray)="getNumberDetails($event)"></app-add-number>
         <div class="row pt-44">
             <div class="col-md-4 text-right">
                 <h5 class="m-0 pt-12">PAN</h5>
@@ -493,7 +528,8 @@
             <div class="col-md-5 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input formControlName="comName" #cname appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" matInput class="form-control">
+                        <input formControlName="comName" #cname appInputValueValidation
+                            [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" matInput class="form-control">
                         <mat-hint align="end">{{cname.value.length}}/50</mat-hint>
                         <mat-error>This field is required</mat-error>
                     </mat-form-field>
@@ -508,7 +544,8 @@
             <div class="col-md-3 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input (click)="picker.open()" formControlName="dateOfIncorporation" matInput class="form-control b-0" [matDatepicker]="picker">
+                        <input (click)="picker.open()" formControlName="dateOfIncorporation" matInput
+                            class="form-control b-0" [matDatepicker]="picker">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-hint>Optional</mat-hint>
@@ -549,7 +586,8 @@
             </div>
         </div>
 
-        <app-add-number *ngIf="basicDetailsData" [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag" (numberArray)="getNumberDetails($event)"></app-add-number>
+        <app-add-number *ngIf="basicDetailsData" [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag"
+            (numberArray)="getNumberDetails($event)"></app-add-number>
 
         <div class="row pt-44">
             <div class="col-md-4 text-right">
@@ -605,7 +643,8 @@
             <div class="col-md-5 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput #username formControlName="username" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" class="form-control">
+                        <input matInput #username formControlName="username" appInputValueValidation
+                            [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" class="form-control">
                         <mat-hint align="end">{{username.value.length}}/ 50</mat-hint>
                         <mat-error>This field is required</mat-error>
                     </mat-form-field>
@@ -670,7 +709,8 @@
             <!--  -->
             <!-- ================= ERROR ======================= -->
 
-            <app-progress-button (btnClick)="saveNextClient('Next')" class="br-0 text-inherit mr-12" [options]="barButtonOptions" [logEvent]="passEvent">
+            <app-progress-button (btnClick)="saveNextClient('Next')" class="br-0 text-inherit mr-12"
+                [options]="barButtonOptions" [logEvent]="passEvent">
             </app-progress-button>
             <!-- <button mat-stroked-button (click)="saveNextClient('close')" class="btn-bottom br-0 text-inherit">SAVE &
                 CLOSE

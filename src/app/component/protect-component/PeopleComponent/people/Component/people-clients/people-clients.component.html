@@ -3,7 +3,7 @@
         <h4 class="m-0">Clients</h4>
     </div>
     <div class="col-md-8">
-        <div *ngIf="clientDatasource.data" class="col-md-8 p-0 right text-right">
+        <div *ngIf="clientDatasource.data.length>0" class="col-md-8 p-0 right text-right">
             <img src="assets/images/svg/download-bordered.svg" class="c-p">
             <img src="assets/images/svg/up-down.svg" class="">
             <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
@@ -18,8 +18,8 @@
         </div>
     </div>
     <div class="col-md-12 people-clients">
-        <table *ngIf="clientDatasource.data" mat-table [dataSource]="clientDatasource" id="table-low" appSkeletonLoading
-            [appSkeletonLoading]="isLoading" class="skeletonAnimation mt-8">
+        <table *ngIf="clientDatasource.data.length>0" mat-table [dataSource]="clientDatasource" id="table-low"
+            appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation mt-8">
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef class="br w-20"> Group head name </th>
                 <td (click)="selectClient(element)" mat-cell *matCellDef="let element" class="br">
@@ -98,7 +98,7 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <div *ngIf="clientDatasource.data==undefined" class="d-flex flex-column align-items-center">
+        <div *ngIf="clientDatasource.data.length==0" class="d-flex flex-column align-items-center">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
             <h4 class="pt-12">No Clients found</h4>
             <button (click)="addClient(null)" class="btn-primary addon v-middle  " mat-stroked-button>
