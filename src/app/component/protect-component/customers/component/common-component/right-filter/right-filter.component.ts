@@ -4,11 +4,18 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {CustomerService} from '../../customer/customer.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MfServiceService} from '../../customer/accounts/assets/mutual-fund/mf-service.service';
+import { DatePipe } from '@angular/common';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 
 @Component({
   selector: 'app-right-filter',
   templateUrl: './right-filter.component.html',
-  styleUrls: ['./right-filter.component.scss']
+  styleUrls: ['./right-filter.component.scss'],
+  providers: [
+    [DatePipe],
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+  ],
 })
 export class RightFilterComponent implements OnInit {
   panelOpenState = true;
@@ -45,7 +52,7 @@ export class RightFilterComponent implements OnInit {
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
               private custumService: CustomerService, private eventService: EventService,
-              private mfService: MfServiceService) {
+              private mfService: MfServiceService,private datePipe: DatePipe,) {
   }
 
   @Input()
@@ -466,11 +473,13 @@ export class RightFilterComponent implements OnInit {
 
   generateReport() {
     var todayDate = new Date().toISOString().slice(0,10);
-   
+
+    if (this.transactionPeriod == false) {
       if (this.summaryFilerForm.get('reportAsOn').invalid) {
         this.summaryFilerForm.get('reportAsOn').markAsTouched();
         return;
       }
+    } 
     this.dataToSend = {
       familyMember: (this.familyMemObj) ? this.familyMemObj : this.familyMember,
       amc: (this.amcObj) ? this.amcObj : this.amc,
@@ -479,12 +488,9 @@ export class RightFilterComponent implements OnInit {
       category: (this.categoryObj) ? this.categoryObj : this.category,
       reportType: (this.reportTypeobj) ? this.reportTypeobj : this.reportType,
       transactionView: this.transactionView,
-      reportAsOn: (this.summaryFilerForm.controls.reportAsOn.value) ?
-        this.summaryFilerForm.controls.reportAsOn.value.toISOString().slice(0, 10) : null,
-      fromDate: (this.summaryFilerForm.controls.fromDate.value) ?
-        this.summaryFilerForm.controls.fromDate.value.toISOString().slice(0, 10) : null,
-      toDate: (this.summaryFilerForm.controls.toDate.value) ?
-        this.summaryFilerForm.controls.toDate.value.toISOString().slice(0, 10) : null,
+      reportAsOn:  this.datePipe.transform(this.summaryFilerForm.controls.reportAsOn.value, 'yyyy-MM-dd'),
+      fromDate: this.datePipe.transform(this.summaryFilerForm.controls.fromDate.value, 'yyyy-MM-dd'),
+      toDate:   this.datePipe.transform(this.summaryFilerForm.controls.toDate.value, 'yyyy-MM-dd'),
       showFolio: parseInt(this.summaryFilerForm.controls.showFolios.value),
     };
     console.log('dataToSend---------->', this.dataToSend);
@@ -501,7 +507,7 @@ export class RightFilterComponent implements OnInit {
     //   )
     // }
     // if(this.dataToSend.toDate!=todayDate){
-    //   let MfList=Object.assign(this.finalFilterData.mutualFundList, {fromDate: this.dataToSend.toDate});
+    //   let MfList=Object.assign(this.finalFilterData.mutualFundList, {toDate: this.dataToSend.toDate});
     //   this.custumService.getMutualFund(MfList).subscribe(
     //     data => {
     //         console.log(data);
