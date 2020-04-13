@@ -158,11 +158,11 @@
                                                     <img class="mr-20" src="assets/images/svg/preview.svg">
                                                     Preview
                                                 </button> -->
-                                                <button (click)="getSharebleLink(element,'share')" class="f-14" mat-menu-item>
+                                                <button *ngIf="element.folderName == undefined" (click)="getSharebleLink(element,'share')" class="f-14" mat-menu-item>
                                                     <img class="mr-20" src="assets/images/svg/share.svg">
                                                     Share
                                                 </button>
-                                                <button class="f-14" mat-menu-item (click)="getSharebleLink(element,'shareLink')">
+                                                <button *ngIf="element.folderName == undefined" class="f-14" mat-menu-item (click)="getSharebleLink(element,'shareLink')">
                                                     <img class="mr-20" src="assets/images/svg/shareable.svg">
                                                     Get shareable link
                                                 </button>
