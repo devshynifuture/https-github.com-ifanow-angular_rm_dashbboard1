@@ -33,7 +33,7 @@ export class ClientAddressComponent implements OnInit {
     this.userData = data;
     (this.userData.addressData) ? this.addressList = this.userData.addressData : ''
     this.proofType = (this.userData.addressData) ? String(this.userData.addressData.addressType) : '1';
-    if (this.userData.addressData == undefined) {
+    if (this.userData.addressData == undefined && this.fieldFlag) {
       this.createAddressForm(null);
       this.getAddressList(data);
     }

@@ -29,7 +29,7 @@ export class GetSharebleLinkComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   constructor(public dialogRef: MatDialogRef<GetSharebleLinkComponent>, private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,private eventService :EventService) { }
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,private eventService :EventService,) { }
 
 
   isLoading = false
@@ -59,9 +59,24 @@ export class GetSharebleLinkComponent implements OnInit {
     }
     this.dialogRef.close(obj);
   }
-  onNoClick(): void {
-   
+  onNoClick(value): void {
+   if(value == 'sendEmail'){
     this.dialogRef.close(this.link);
+   }else{
+    let selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = this.link;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+     console.log('37563756 link ==',this.link)
+    this.dialogRef.close('');
+   }
   }
   add(event: MatChipInputEvent): void {
     const input = event.input;

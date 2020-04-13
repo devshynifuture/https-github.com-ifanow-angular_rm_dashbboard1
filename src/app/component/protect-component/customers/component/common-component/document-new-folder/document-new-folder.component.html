@@ -1,6 +1,6 @@
 <div class="newFolderBox">
-    <div class="p-24 mb-40">
-        <h4 class="f-20 roboto f-500 mb-12">{{folderUpload}} FOLDER</h4>
+    <div class="p-24 mb-28">
+        <h4 class="f-20 roboto f-500 mb-28">{{folderUpload}} FOLDER</h4>
         <div class="form-group">
             <mat-form-field class="createTextBox">
                 <input type="text" matInput class="form-control   br-0" [(ngModel)]="nameFolder" maxlength="">
@@ -16,7 +16,7 @@
             <button class="text-custom f-500 c-p" mat-button (click)="close(false,'null')">
                 CANCEL
             </button>
-            <button class="text-danger f-500 c-p" mat-button (click)="createNewFolder(nameFolder)"> {{folderUpload}}
+            <button class="text-danger f-500 c-p" *ngIf="nameFolder" mat-button (click)="createNewFolder(nameFolder)"> {{folderUpload}}
             </button>
         </div>
 

@@ -33,7 +33,7 @@ export class OverviewProfileComponent implements OnInit {
   // clientData;
 
   constructor(private peopleService: PeopleService, private authService: AuthService, public dialog: MatDialog, public subInjectService: SubscriptionInject,
-    private cusService: CustomerService, private eventService: EventService) {
+    private cusService: CustomerService, private eventService: EventService, private utils: UtilService) {
   }
 
   ngOnInit() {
@@ -71,7 +71,8 @@ export class OverviewProfileComponent implements OnInit {
     this.cusService.getFamilyMembers(obj).subscribe(
       data => {
         this.familyMemberList = data;
-        console.log(data);
+        this.familyMemberList = this.utils.calculateAgeFromCurrentDate(data);
+        console.log(this.familyMemberList);
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
     );

@@ -5,7 +5,7 @@ import {MatTableDataSource} from '@angular/material';
 import {MfServiceService} from '../../mf-service.service';
 import {RightFilterComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
 import {ExcelGenService} from 'src/app/services/excel-gen.service';
-import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
+import {TableVirtualScrollDataSource} from 'ng-table-virtual-scroll';
 
 @Component({
   selector: 'app-mutual-fund-unrealized-tran',
@@ -58,7 +58,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       const prev = JSON.stringify(chng.previousValue);
       console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
     }
-    if(changes.mutualFund && !!changes.mutualFund.currentValue) {
+    if (changes.mutualFund && !!changes.mutualFund.currentValue) {
       this.mutualFundList = this.mutualFund.mutualFundList;
       this.asyncFilter(this.mutualFundList);
     }

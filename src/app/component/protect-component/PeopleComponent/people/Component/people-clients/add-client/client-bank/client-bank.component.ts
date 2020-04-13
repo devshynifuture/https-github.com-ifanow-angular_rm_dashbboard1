@@ -35,7 +35,7 @@ export class ClientBankComponent implements OnInit {
     this.fieldFlag;
     this.createBankForm(data);
     (this.userData.bankData) ? this.bankList = this.userData.bankData : '';
-    (this.userData.bankData == undefined) ? this.getBankList(data) : this.createBankForm(this.userData.bankData);
+    (this.userData.bankData == undefined && this.fieldFlag) ? this.getBankList(data) : this.createBankForm(this.userData.bankData);
 
   }
   getBankList(data) {
@@ -51,10 +51,11 @@ export class ClientBankComponent implements OnInit {
           this.bankList = data[0];
           this.createBankForm(this.bankList)
         }
-        else {
-          this.bankList = {};
-        }
-      }, err => this.eventService.openSnackBar(err, "Dismiss")
+      },
+      err => {
+        this.bankList = {};
+      }
+      // this.eventService.openSnackBar(err, "Dismiss")
     )
   }
   createBankForm(data) {
@@ -62,7 +63,7 @@ export class ClientBankComponent implements OnInit {
     this.bankForm = this.fb.group({
       ifscCode: [data.ifscCode, [Validators.required]],
       bankName: [data.bankName, [Validators.required]],
-      micrName: [data.micrNo, [Validators.required]],
+      micrName: [data.micrNo],
       accNumber: [data.accountNumber, [Validators.required]],
       accType: [(data.accountType) ? data.accountType : '1', [Validators.required]],
       branchName: [data.branchName, [Validators.required]],

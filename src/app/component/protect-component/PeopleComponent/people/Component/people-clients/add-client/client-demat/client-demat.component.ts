@@ -35,7 +35,7 @@ export class ClientDematComponent implements OnInit {
     this.userData = data;
     (this.userData.dematData) ? this.dematList = this.userData.dematData : '';
     this.holdingMode = (this.userData.dematData) ? String(this.userData.dematData.modeOfHolding) : '1';
-    if (this.userData.dematData == undefined) {
+    if (this.userData.dematData == undefined && this.fieldFlag) {
       this.createDematForm(null);
       this.getDematList(data);
     }
@@ -99,7 +99,7 @@ export class ClientDematComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
     }));
     if (data) {
       setTimeout(() => {
@@ -169,7 +169,7 @@ export class ClientDematComponent implements OnInit {
 
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -200,7 +200,7 @@ export class ClientDematComponent implements OnInit {
       modeOfHolding: [(data.modeOfHolding) ? String(data.modeOfHolding) : '1'],
       depositoryPartName: [data.depositoryParticipantName, [Validators.required]],
       depositoryPartId: [data.depositoryParticipantId, [Validators.required]],
-      clientId: [data.dematClientId, [Validators.required]],
+      dematClientId: [data.dematClientId, [Validators.required]],
       brekerName: [data.brokerName],
       brokerAddress: [data.brokerAddress],
       linkedBankAccount: [data.linkedBankAccount],
@@ -257,10 +257,9 @@ export class ClientDematComponent implements OnInit {
           this.dematList = data[0];
           this.createDematForm(this.dematList)
         }
-        else {
-          this.dematList = {};
-        }
-      }, err => this.eventService.openSnackBar(err, "Dismiss")
+      }, err => {
+        this.dematList = {};
+      }
     )
   }
   ngOnInit() {
@@ -326,7 +325,7 @@ export class ClientDematComponent implements OnInit {
         ],
         "userType": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
         "brokerName": this.dematForm.get('brekerName').value,
-        "dematClientId": this.dematForm.get('clientId').value
+        "dematClientId": this.dematForm.get('dematClientId').value
       }
       this.peopleService.addEditClientDemat(obj).subscribe(
         data => {

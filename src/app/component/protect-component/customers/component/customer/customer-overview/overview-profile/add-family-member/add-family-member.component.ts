@@ -29,9 +29,9 @@ export class AddFamilyMemberComponent implements OnInit {
       { name: 'Mother', imgUrl: '/assets/images/svg/mother-profile.svg', selected: false, relationshipTypeId: 5 }
     ],
     'thirdRow': [
-      { name: 'Son', imgUrl: '/assets/images/svg/son-profile.svg', selected: false, count: 0, relationshipTypeId: 3 },
-      { name: 'Daughter', imgUrl: '/assets/images/svg/daughter-profile.svg', selected: false, count: 0, relationshipTypeId: 4 },
-      { name: 'Others', imgUrl: '/assets/images/svg/man-profile.svg', selected: false, count: 0, relationshipTypeId: 7 }
+      { name: 'Son', imgUrl: '/assets/images/svg/son-profile.svg', selected: false, count: 1, relationshipTypeId: 3 },
+      { name: 'Daughter', imgUrl: '/assets/images/svg/daughter-profile.svg', selected: false, count: 1, relationshipTypeId: 4 },
+      { name: 'Others', imgUrl: '/assets/images/svg/man-profile.svg', selected: false, count: 1, relationshipTypeId: 7 }
     ]
   }
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService, private peopleService: PeopleService) { }
@@ -133,10 +133,7 @@ export class AddFamilyMemberComponent implements OnInit {
     }
   }
   selectFamilyMembers(selectedFamilyMember) {
-    if (selectedFamilyMember.name == "You") {
-      return;
-    }
-    else if (selectedFamilyMember.selected) {
+    if (selectedFamilyMember.selected) {
       selectedFamilyMember.selected = false;
       this.selectedCount--;
     }
@@ -146,7 +143,7 @@ export class AddFamilyMemberComponent implements OnInit {
     }
   }
   remove(selectedMember) {
-    (selectedMember.count > 0) ? selectedMember.count-- : '';
+    (selectedMember.count > 1) ? selectedMember.count-- : '';
   }
   add(selectedMember) {
     selectedMember.count++;

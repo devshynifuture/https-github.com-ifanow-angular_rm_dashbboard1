@@ -345,6 +345,8 @@ export class SettingPreferenceComponent implements OnInit {
       id: data.id,
       subject: data.subject,
       emailTemplateTypeId: data.emailTemplateTypeId,
+      subjectChange: !data.subjectEditable,
+      bodyChange: !data.bodyEditable,
       component_type: 'email_template',
     }
     const fragmentData = {

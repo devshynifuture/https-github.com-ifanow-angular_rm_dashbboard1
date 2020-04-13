@@ -234,8 +234,6 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
       jsonObj.taskDescription = this.globalData.system_generated_advice_map_key.find(obj => obj.id == jsonObj.adviceTypeId).name;
     }
     this.setNullForEmptyValues(jsonObj);
-    console.log(jsonObj);
-
     this.orgSetting.editTaskTemplate(jsonObj).subscribe(
       data => {
         this.event.openSnackBar('Modified successfully!', 'Dismiss');
@@ -255,7 +253,6 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
       jsonObj.taskDescription = this.globalData.system_generated_advice_map_key.find(obj => obj.id == jsonObj.adviceTypeId).name;
     }
     this.setNullForEmptyValues(jsonObj);
-    console.log(jsonObj);
     this.orgSetting.addTaskTemplate(jsonObj).subscribe(
       data => {
         this.event.openSnackBar('Added successfully!', 'Dismiss');

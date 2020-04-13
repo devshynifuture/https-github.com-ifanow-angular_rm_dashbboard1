@@ -49,6 +49,7 @@
                 <mat-form-field>
                     <input #micr autocomplete="off" [maxLength]="9" formControlName="micrName" matInput
                         class="form-control">
+                    <mat-hint>Optional</mat-hint>
                     <mat-hint align="end">{{micr.value.length}} / 9</mat-hint>
                 </mat-form-field>
             </div>
@@ -73,13 +74,16 @@
             <h5 class="m-0 pt-8">Account type</h5>
         </div>
         <div class="col-md-8 p-0 account-type">
-            <mat-radio-group formControlName="accType" aria-label="Select an option">
-                <mat-radio-button value="1" [ngClass]="{'bu-primary': bankForm.get('accType').value==1}"
-                    class="borderRadio">Savings</mat-radio-button>
-                <mat-radio-button value="2" [ngClass]="{'bu-primary': bankForm.get('accType').value==2}"
+            <mat-radio-group class="radioWidth110" formControlName="accType" aria-label="Select an option">
+                <mat-radio-button value="1"
+                    [ngClass]="{'bu-primary': bankForm.get('accType').value=='1','borderRadio':bankForm.get('accType').value!='1'}"
+                    class="bu-primary">Savings</mat-radio-button>
+                <mat-radio-button value="2"
+                    [ngClass]="{'bu-primary': bankForm.get('accType').value=='2','borderRadio':bankForm.get('accType').value!='2'}"
                     class="borderRadio">Current</mat-radio-button>
-                <mat-radio-button value="3" [ngClass]="{'bu-primary': bankForm.get('accType').value==3}"
-                    class="borderRadio">Cash credit</mat-radio-button>
+                <mat-radio-button value="3"
+                    [ngClass]="{'bu-primary': bankForm.get('accType').value=='3','borderRadio':bankForm.get('accType').value!='3'}"
+                    class="borderRadio pr-8">Cash credit</mat-radio-button>
             </mat-radio-group>
         </div>
     </div>
@@ -177,7 +181,7 @@
         </div>
     </div>
 </div>
-<div class="bottom-fixed wrapper-12 w-50 -m-28">
+<div class="bottom-fixed wrapper-12 w-50 ">
     <div class="row">
         <div class="col-md-4">
             <h5 (click)="close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>

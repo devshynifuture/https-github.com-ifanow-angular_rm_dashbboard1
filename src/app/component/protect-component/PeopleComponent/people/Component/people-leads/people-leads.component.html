@@ -2,7 +2,7 @@
     <div class="col-md-4 d-flex align-items-center">
         <h3 class="m-0">Leads</h3>
     </div>
-    <div *ngIf="leadDataSource.data" class="col-md-8">
+    <div *ngIf="leadDataSource.data.length>0" class="col-md-8">
         <div class="col-md-8 p-0 right text-right">
             <img src="assets/images/svg/download-bordered.svg" class="c-p">
             <img src="assets/images/svg/up-down.svg" class="">
@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="col-md-12 people-leads">
-        <table mat-table *ngIf="leadDataSource.data" [dataSource]="leadDataSource" appSkeletonLoading
+        <table mat-table *ngIf="leadDataSource.data.length>0" [dataSource]="leadDataSource" appSkeletonLoading
             [appSkeletonLoading]="isLoading" class="skeletonAnimation" class="mt-8" id="table-low">
 
             <ng-container matColumnDef="position">
@@ -86,7 +86,7 @@
                         <button (click)="open(element,'convertLead')" mat-menu-item>
                             <span>Convert to client</span>
                         </button>
-                        <button mat-menu-item>
+                        <button (click)="deleteModal('LEAD',element)" mat-menu-item>
                             <span>Delete</span>
                         </button>
                     </mat-menu>
@@ -95,7 +95,7 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <div *ngIf="leadDataSource.data==undefined" class="d-flex flex-column align-items-center">
+        <div *ngIf="leadDataSource.data.length==0" class="d-flex flex-column align-items-center">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
             <h4 class="pt-12">No Leads found</h4>
             <button mat-stroked-button class="btn-primary addon v-middle  " (click)="open(null,'lead')">
