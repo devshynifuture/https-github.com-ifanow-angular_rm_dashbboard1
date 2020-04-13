@@ -64,7 +64,7 @@ export class ForgotPasswordComponent implements OnInit {
     if (userData.mobileList && userData.mobileList.length > 0) {
       userData.mobileNo = userData.mobileList[0].mobileNo;
       data.mobileNo = userData.mobileNo;
-      this.verifyData.mobileNo = UtilService.obfuscateEmail(String(data.mobileNo));
+      this.verifyData.mobileNo = UtilService.obfuscateMobile(String(data.mobileNo));
     }
   }
 
