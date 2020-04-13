@@ -63,9 +63,19 @@ export class GetSharebleLinkComponent implements OnInit {
    if(value == 'sendEmail'){
     this.dialogRef.close(this.link);
    }else{
+    let selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = this.link;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
      console.log('37563756 link ==',this.link)
     this.dialogRef.close('');
-
    }
   }
   add(event: MatChipInputEvent): void {
