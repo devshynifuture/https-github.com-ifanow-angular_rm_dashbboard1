@@ -347,7 +347,8 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveSchemeHolding()">Save</button>
+            <app-progress-button (btnClick)="saveSchemeHolding()" [options]="barButtonOptions" >
+            </app-progress-button>
         </div>
     </div>
 </div>

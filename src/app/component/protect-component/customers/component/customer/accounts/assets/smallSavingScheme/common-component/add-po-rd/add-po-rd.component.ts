@@ -7,6 +7,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-po-rd',
@@ -17,6 +18,21 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
   ]
 })
 export class AddPoRdComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   validatorType = ValidatorType
   maxDate = new Date();
   isOptionalField: any;
@@ -171,6 +187,7 @@ get getNominee() {
 }
 
 removeNewNominee(item) {
+  this.disabledMember(null, null);
   this.getNominee.removeAt(item);
   if (this.PORDForm.value.getNomineeName.length == 1) {
     this.getNominee.controls['0'].get('sharePercentage').setValue('100');
@@ -222,6 +239,7 @@ checkValue(){
   }
   else{
     this.PORDForm.get('tenure').setErrors({incorrect: false});
+    this.PORDForm.get('tenure').updateValueAndValidity();
   }
 }
   getFormDataNominee(data) {
@@ -265,7 +283,6 @@ checkValue(){
       })])
     });
     
-
     // ==============owner-nominee Data ========================\\
   /***owner***/ 
   if(this.PORDForm.value.getCoOwnerName.length == 1){
@@ -305,6 +322,8 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.PORDForm}
 
   addPORD() {
     this.nominees = []
+    this.checkValue();
+  
     if (this.nomineesList) {
 
       this.nomineesList.forEach(element => {
@@ -320,6 +339,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.PORDForm}
     if (this.PORDForm.invalid) {
       this.PORDForm.markAllAsTouched();
     } else {
+      this.barButtonOptions.active = true;
       const obj = {
         clientId: this.clientId,
         advisorId: this.advisorId,
@@ -351,7 +371,10 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.PORDForm}
         obj['id'] = this.editApi.id;
         this.cusService.editPORD(obj).subscribe(
           data => this.addPORDResponse(data),
-          error => this.eventService.showErrorMessage(error)
+          error =>{
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(error)
+          } 
         );
       } else {
         if (this.flag == 'advicePORD') {
@@ -363,22 +386,30 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.PORDForm}
           }
           this.cusService.getAdvicePord(adviceObj).subscribe(
             data => this.getAdvicePordRes(data),
-            err => this.eventService.openSnackBar(err, "Dismiss")
+            err =>{
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(err)
+          } 
           );
         } else {
           this.cusService.addPORDScheme(obj).subscribe(
             data => this.addPORDResponse(data),
-            error => this.eventService.showErrorMessage(error)
+            error =>{
+              this.barButtonOptions.active = false;
+              this.eventService.showErrorMessage(error)
+            }
           );
         }
       }
     }
   }
   getAdvicePordRes(data) {
+    this.barButtonOptions.active = false;
     this.eventService.openSnackBar('PO_RD is added', 'added');
     this.close(true);
   }
   addPORDResponse(data) {
+    this.barButtonOptions.active = false;
     (this.flag = "editPORD") ? this.eventService.openSnackBar('Updated successfully!', 'Dismiss') : this.eventService.openSnackBar('Added successfully!', 'Dismiss');
     console.log(data);
     this.close(true);

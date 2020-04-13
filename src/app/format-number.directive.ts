@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, Input } from '@angular/core';
+import {AfterViewInit, Directive, ElementRef, Input} from '@angular/core';
 
 @Directive({
   selector: '[appFormatNumber]'
@@ -8,21 +8,24 @@ export class FormatNumberDirective implements AfterViewInit {
   @Input('shouldRoundOff') shouldRoundOff = true;
 
   @Input() set value(value) {
-    
+
     // console.log('FormatNumberDirective ', this.locale, this.shouldRoundOff);
-    // console.log('this.el.nativeElement.innerText ', this.el.nativeElement.innerText)
     this.el.nativeElement.innerText = this.formatAndRoundOffNumber(value);
+
   }
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef) {
+  }
 
   ngAfterViewInit() {
     /* this.el.nativeElement.innerText = */
-    
+
     this.el.nativeElement.innerText = this.formatAndRoundOffNumber(this.el.nativeElement.innerText);
   }
 
   formatAndRoundOffNumber(text) {
+    console.log('FormatNumberDirective ', text, this.locale, this.shouldRoundOff);
+
     if (typeof (text) === 'string') {
       if (text.includes(',')) {
         return text;
@@ -31,17 +34,19 @@ export class FormatNumberDirective implements AfterViewInit {
     // if (!this.locale) {
     //   this.locale = 'en-IN';
     // }
-    // console.log('FormatNumberDirective ', this.locale, this.shouldRoundOff);
-    if (text && text !== "") {
+    console.log('FormatNumberDirective ', text, this.locale, this.shouldRoundOff);
+    if (text && text !== '') {
       if (!isNaN(text)) {
         let numberValue: number = parseFloat(text);
         if (this.shouldRoundOff) { // true
           numberValue = Math.round(numberValue);
         }
         text = numberValue.toLocaleString(this.locale);
+      } else {
+
       }
     } else {
-      if(text != 0){
+      if (text != 0) {
         text = '';
       }
     }

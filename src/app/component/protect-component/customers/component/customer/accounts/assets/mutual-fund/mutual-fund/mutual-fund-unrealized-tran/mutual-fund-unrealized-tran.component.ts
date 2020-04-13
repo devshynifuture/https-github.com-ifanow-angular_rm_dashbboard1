@@ -22,7 +22,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   mutualFundList: any[];
   isLoading=false;
   dataSource = new TableVirtualScrollDataSource([{},{},{}]);
-  grandTotal={};
+  grandTotal: any = {};
   schemeWiseForFilter: any;
   mutualFundListFilter: any[];
   rightFilterData: any;

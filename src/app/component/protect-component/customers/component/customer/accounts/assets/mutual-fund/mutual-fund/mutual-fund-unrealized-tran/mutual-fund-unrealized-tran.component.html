@@ -41,7 +41,8 @@
         <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8">
           <cdk-virtual-scroll-viewport tvsItemSize class="wrapper mat-elevation-z2">
             <table #tableEl1 matSort mat-table [dataSource]="dataSource" id="tbs"
-              class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                   class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
+                   [appSkeletonLoading]="isLoading">
               <ng-container matColumnDef="categoryName" sticky>
                 <th class="br" mat-sort-header="categoryName" mat-header-cell *matHeaderCellDef>
                   Sub category name
@@ -61,8 +62,9 @@
                 <td class="br text-left" mat-cell *matCellDef="let element" >
                   <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.totalTransactionAmt)?element.totalTransactionAmt:0)}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                  {{(grandTotal) ? grandTotal.totalTransactionAmt : '0'}}</td>
+                <td class="br f-600 text-right" mat-footer-cell *matFooterCellDef >
+                  <div appFormatNumber [value]="grandTotal.totalTransactionAmt"></div>
+                </td>
 
               </ng-container>
 
@@ -73,8 +75,9 @@
                 <td class="br text-right" mat-cell *matCellDef="let element">
                   <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.currentValue)?element.currentValue:0)}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                  {{(grandTotal) ? grandTotal.currentValue : '0'}}</td>
+                <td *matFooterCellDef appFormatNumber [value]="grandTotal.currentValue" class="br f-600 text-right" mat-footer-cell>
+<!--                  <div>{{ grandTotal.currentValue }}</div>-->
+                </td>
 
               </ng-container>
               <ng-container matColumnDef="dividendPayout">
@@ -84,8 +87,9 @@
                 <td class="br text-right" mat-cell *matCellDef="let element">
                   <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.dividendPayout)?element.dividendPayout:0)}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                  {{(grandTotal) ? grandTotal.dividendPayout : '0'}}</td>
+                <td *matFooterCellDef appFormatNumber [value]="grandTotal.dividendPayout" class="br f-600 text-right" mat-footer-cell>
+<!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
+                </td>
 
               </ng-container>
 
@@ -96,8 +100,9 @@
                 <td class="br text-right" mat-cell *matCellDef="let element">
                   <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.dividendReinvest)?element.dividendReinvest:0)}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                  {{(grandTotal) ? grandTotal.dividendReinvest : '0'}}</td>
+                <td *matFooterCellDef appFormatNumber [value]="grandTotal.dividendReinvest" class="br f-600 text-right" mat-footer-cell>
+<!--                  <div> {{ grandTotal.dividendReinvest}}</div>-->
+                </td>
 
               </ng-container>
 
@@ -108,8 +113,9 @@
                 <td class="br text-right" mat-cell *matCellDef="let element">
                   <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.gain)?element.gain:0)}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                  {{(grandTotal) ? grandTotal.totalGain : '0'}}</td>
+                <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalGain" class="br f-600 text-right" mat-footer-cell>
+<!--                  <div>{{ grandTotal.totalGain}}</div>-->
+                </td>
 
               </ng-container>
 
@@ -120,8 +126,9 @@
                 <td class="br text-right" mat-cell *matCellDef="let element">
                   <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.absReturn)?element.absReturn:0)}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                  {{(grandTotal) ? grandTotal.totalGain : '0'}}</td>
+                <td *matFooterCellDef appFormatNumber [value]="grandTotal.absReturn" class="br f-600 text-right" mat-footer-cell>
+<!--                  {{ grandTotal.totalGain}}-->
+                </td>
 
               </ng-container>
 
@@ -132,8 +139,9 @@
                 <td class="br text-right" mat-cell *matCellDef="let element">
                   <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.xirr)?element.xirr:0)}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                  {{(grandTotal) ? grandTotal.xirr : '0'}}</td>
+                <td *matFooterCellDef appFormatNumber [value]="grandTotal.xirr" class="br f-600 text-right" mat-footer-cell>
+<!--                  {{ grandTotal.xirr }}-->
+                </td>
 
               </ng-container>
 
@@ -144,8 +152,9 @@
                 <td class="br text-right" mat-cell *matCellDef="let element">
                   <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.allocation)?element.allocation:0)}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                  {{(grandTotal) ? grandTotal.allocationPer : '0'}}</td>
+                <td *matFooterCellDef appFormatNumber [value]="grandTotal.allocationPer" class="br f-600 text-right" mat-footer-cell>
+<!--                  {{ grandTotal.allocationPer }}-->
+                </td>
 
               </ng-container>
               <tr mat-header-row *matHeaderRowDef="displayedColumns2; sticky: true"></tr>
@@ -165,7 +174,8 @@
         <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 pl-0 mb-8">
           <cdk-virtual-scroll-viewport tvsItemSize class="wrapper mat-elevation-z2">
             <table #tableEl matSort mat-table [dataSource]="customDataSource"
-              class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                   class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
+                   [appSkeletonLoading]="isLoading">
               <ng-container matColumnDef="no" sticky>
                 <th mat-header-cell *matHeaderCellDef class="br">Sr no.</th>
                 <td mat-cell *matCellDef="let element;index as i" class="br">
@@ -210,9 +220,9 @@
                       *ngIf="element.totalTransactionAmt">{{isLoading ? '':((element.totalTransactionAmt)?element.totalTransactionAmt:0)}}</span>
                   </div>
                 </td>
-                <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                  <div class="bar"> {{(grandTotal) ? grandTotal.totalTransactionAmt : '0'}}
-                  </div>
+                <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalTransactionAmt" class="br f-600 text-right" mat-footer-cell>
+<!--                  <div class="bar"> {{ grandTotal.totalTransactionAmt }}-->
+<!--                  </div>-->
                 </td>
 
               </ng-container>
@@ -227,9 +237,9 @@
                     <span appFormatNumber class="f-700" *ngIf="element.totalNav">{{isLoading ? '':((element.totalNav)?element.totalNav:0)}}</span>
                   </div>
                 </td>
-                <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                  <div class="bar">{{(grandTotal) ? grandTotal.totalNav : '0'}}
-                  </div>
+                <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalNav" class="br f-600 text-right" mat-footer-cell>
+<!--                  <div class="bar">{{ grandTotal.totalNav }}-->
+<!--                  </div>-->
                 </td>
 
               </ng-container>
@@ -241,8 +251,9 @@
                     <span appFormatNumber class="f-700" *ngIf="element.totalUnit">{{isLoading ? '':((element.totalUnit)?element.totalUnit:0)}}</span>
                   </div>
                 </td>
-                <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                  {{(grandTotal) ? grandTotal.finalTotalUnit : '0'}}</td>
+                <td *matFooterCellDef appFormatNumber [value]="grandTotal.finalTotalUnit" class="br f-600 text-right" mat-footer-cell>
+<!--                  {{ grandTotal.finalTotalUnit }}-->
+                </td>
 
               </ng-container>
 
@@ -253,8 +264,9 @@
                 <td class="br text-right" mat-cell *matCellDef="let element">
                   <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.currentValue)?element.currentValue:0)}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                  {{(grandTotal) ? grandTotal.currentValue : '0'}}</td>
+                <td *matFooterCellDef appFormatNumber [value]="grandTotal.currentValue" class="br f-600 text-right" mat-footer-cell>
+<!--                  {{ grandTotal.currentValue }}-->
+                </td>
 
               </ng-container>
               <ng-container matColumnDef="dividendPayout">
@@ -264,8 +276,9 @@
                 <td class="br text-right" mat-cell *matCellDef="let element">
                   <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.dividendPayout)?element.dividendPayout:0)}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                  {{(grandTotal) ? grandTotal.dividendPayout : '0'}}</td>
+                <td *matFooterCellDef appFormatNumber [value]="grandTotal.dividendPayout" class="br f-600 text-right" mat-footer-cell>
+<!--                  {{ grandTotal.dividendPayout }}-->
+                </td>
 
               </ng-container>
               <ng-container matColumnDef="dividendReinvest">
@@ -275,8 +288,9 @@
                 <td class="br text-right" mat-cell *matCellDef="let element">
                   <div class="bar"><span appFormatNumber>{{element.dividendReinvest}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                  {{(grandTotal) ? grandTotal.dividendReinvest : '0'}}</td>
+                <td *matFooterCellDef appFormatNumber [value]="grandTotal.dividendReinvest" class="br f-600 text-right" mat-footer-cell>
+<!--                  {{ grandTotal.dividendReinvest }}-->
+                </td>
 
               </ng-container>
               <ng-container matColumnDef="totalAmount">
@@ -286,8 +300,9 @@
                 <td class="br text-right" mat-cell *matCellDef="let element">
                   <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.totalAmount)?element.totalAmount:0)}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                  {{(grandTotal) ? grandTotal.totalAmount : '0'}}</td>
+                <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalAmount" class="br f-600 text-right" mat-footer-cell>
+<!--                  {{ grandTotal.totalAmount }}-->
+                </td>
 
               </ng-container>
 
@@ -298,8 +313,9 @@
                 <td class="br text-right" mat-cell *matCellDef="let element">
                   <div class="bar"><span appFormatNumber> {{isLoading ? '':((element.gain)?element.gain:0)}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                  {{(grandTotal) ? grandTotal.totalGain : '0'}}</td>
+                <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalGain" class="br f-600 text-right" mat-footer-cell>
+<!--                  {{ grandTotal.totalGain }}-->
+                </td>
 
               </ng-container>
 
@@ -310,8 +326,9 @@
                 <td class="br text-right" mat-cell *matCellDef="let element">
                   <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.absReturn)?element.absReturn:0)}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                  {{(grandTotal) ? grandTotal.absReturn : '0'}}</td>
+                <td *matFooterCellDef appFormatNumber [value]="grandTotal.absReturn" class="br f-600 text-right" mat-footer-cell>
+<!--                  {{ grandTotal.absReturn }}-->
+                </td>
 
               </ng-container>
 
@@ -323,8 +340,9 @@
                   <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.xirr)?element.xirr:0)}}</span>
                   </div>
                 </td>
-                <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                  {{(grandTotal) ? grandTotal.xirr : '0'}}</td>
+                <td *matFooterCellDef appFormatNumber [value]="grandTotal.xirr" class="br f-600 text-right" mat-footer-cell>
+<!--                  {{ grandTotal.xirr }}-->
+                </td>
 
               </ng-container>
 

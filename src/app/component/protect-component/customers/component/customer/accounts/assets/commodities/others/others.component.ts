@@ -8,6 +8,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-others',
@@ -18,6 +19,21 @@ import { EventService } from 'src/app/Data-service/event.service';
   ],
 })
 export class OthersComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   validatorType = ValidatorType
   inputData: any;
   ownerName: any;
@@ -163,6 +179,7 @@ export class OthersComponent implements OnInit {
   }
 
   removeNewNominee(item) {
+  this.disabledMember(null, null);
     this.getNominee.removeAt(item);
     if (this.others.value.getNomineeName.length == 1) {
       this.getNominee.controls['0'].get('sharePercentage').setValue('100');
@@ -308,6 +325,7 @@ export class OthersComponent implements OnInit {
       this.others.markAllAsTouched();
       return;
     } else {
+      this.barButtonOptions.active = true;
       const obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
@@ -337,12 +355,14 @@ export class OthersComponent implements OnInit {
       if (this.flag == "addOTHERS") {
         this.custumService.addOthers(obj).subscribe(
           data => this.addOthersRes(data), (error) => {
+            this.barButtonOptions.active = false;
             this.eventService.showErrorMessage(error);
           }
         );
       } else if (this.flag == 'adviceOTHERS') {
         this.custumService.getAdviceOthers(adviceObj).subscribe(
           data => this.getAdviceOthersRes(data), (error) => {
+            this.barButtonOptions.active = false;
             this.eventService.showErrorMessage(error);
           }
         );
@@ -351,6 +371,7 @@ export class OthersComponent implements OnInit {
         obj['id'] = this.editData.id;
         this.custumService.editOthers(obj).subscribe(
           data => this.editOthersRes(data), (error) => {
+            this.barButtonOptions.active = false;
             this.eventService.showErrorMessage(error);
           }
         );
@@ -358,17 +379,20 @@ export class OthersComponent implements OnInit {
     }
   }
   getAdviceOthersRes(data) {
+    this.barButtonOptions.active = false;
     this.eventService.openSnackBar('Others added successfully', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
 
   }
   addOthersRes(data) {
+    this.barButtonOptions.active = false;
     console.log('addrecuringDepositRes', data);
     this.eventService.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 
   editOthersRes(data) {
+    this.barButtonOptions.active = false;
     this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
