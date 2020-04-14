@@ -103,4 +103,12 @@ export class GetSharebleLinkComponent implements OnInit {
     this.docObj.splice(singleEmail, 1);
 
   }
+
+  removeEmailId(index) {
+    // const index = this.emailIdList.indexOf(singleEmail);
+
+    // if (index >= 0) {
+    this.emailIdList.splice(index, 1);
+    // }
+  }
 }

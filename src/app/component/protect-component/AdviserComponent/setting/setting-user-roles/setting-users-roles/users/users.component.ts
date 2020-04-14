@@ -91,7 +91,6 @@ export class UsersComponent implements OnInit {
         const replaceUser = {
           deleteUserId: user.id,
           replaceUserId: result,
-          advisorId: this.advisorId,
         }
         this.settingsService.deleteTeamMember(replaceUser).subscribe(res => {
           this.eventService.openSnackBar("User deleted successfully");

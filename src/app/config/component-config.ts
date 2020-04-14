@@ -408,7 +408,7 @@ export const appConfig = {
   GET_EXISTING_SCHEMES: 'mutual-fund/existing/search',
   GET_SCHEME_DETAILS: 'mutual-fund/product-limit/get',
   GET_FAMILY_MEMBER: 'family/name/get',
-  GET_DEFAULT_DETAILS: '/user/family-member/transaction-setting/default',
+  GET_DEFAULT_DETAILS: 'user/family-member/transaction-setting/default',
   PURCHASE: 'bse/order/bse/order/create',
   GET_AMCWISE_FOLIO: 'mutual-fund/folios/amc-wise/get',
   GET_SCHEMEWISE_FOLIO: 'mutual-fund/folios/scheme-wise/get',
@@ -427,7 +427,7 @@ export const appConfig = {
   GETIIN_DETAILS: 'nse/iin/detail/get',
   GET_FOLIO_MAPPED: '/mutual-fund/folios/mapped/get',
   GET_FOLIO_UNMAPPED: '/mutual-fund/folios/unmapped/get',
-  GET_CLIENT_CODE: '/user/family-member/client-code',
+  GET_CLIENT_CODE: 'user/family-member/client-code',
   GET_EMPANELLED_AMC: 'mutual-fund/hidden-amc/amc-wise/get',
   ADD_HIDDEN_AMC: 'mutual-fund/hidden-amc/add',
   DELETE_HIDDEN_AMC: 'mutual-fund/hidden-amc/delete',
@@ -642,6 +642,7 @@ export const appConfig = {
   EDIT_TEAM_MEMBER: 'setting/users/team-member/edit',
   DELETE_TEAM_MEMBER: 'setting/users/team-member/delete',
   SUSPEND_TEAM_MEMBER: 'setting/users/team-member/suspend',
+  REACTIVATE_TEAM_MEMBER: 'setting/users/team-member/resume',
   HAND_OVER_TEAM_MEMBER: 'setting/users/team-member/hand-over/get',
 
 

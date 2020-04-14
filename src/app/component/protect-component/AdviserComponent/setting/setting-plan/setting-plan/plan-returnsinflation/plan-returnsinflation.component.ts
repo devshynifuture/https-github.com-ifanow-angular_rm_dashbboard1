@@ -86,6 +86,9 @@ export class PlanReturnsinflationComponent implements OnInit {
 
   save(){
     let obj = [ this.getPostDataFormat(this.shortTerm), this.getPostDataFormat(this.longTerm)].flat();
+    if(obj.length == 0) {
+      return;
+    }
     this.orgSetting.updateReturns(obj).subscribe(res => {
       this.eventService.openSnackBar("Data Updated Successfully");
       this.toggleEditMode();

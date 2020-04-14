@@ -97,7 +97,9 @@ export class CompanyMoreInfoComponent implements OnInit {
           this.createMoreInfoForm(this.moreInfoData);
         }
         console.log(responseData);
-      }, err => this.eventService.openSnackBar(err, 'Dismiss')
+      }, err => {
+      console.error(err)
+    }
     );
   }
 
