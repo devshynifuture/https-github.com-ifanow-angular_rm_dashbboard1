@@ -146,7 +146,7 @@ export class UsersComponent implements OnInit {
         console.log('aborted');
       },
       positiveMethod: () => {
-        const deleteFromTrashSubscription = this.settingsService.suspendMember(user.id)
+        const deleteFromTrashSubscription = this.settingsService.reactivateMember(user.id)
           .subscribe(response => {
             this.eventService.openSnackBar("User reactivated");
             deleteFromTrashSubscription.unsubscribe();

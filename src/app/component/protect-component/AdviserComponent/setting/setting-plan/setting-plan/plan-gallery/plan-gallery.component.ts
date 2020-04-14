@@ -7,6 +7,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PlanService } from 'src/app/component/protect-component/customers/component/customer/plan/plan.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-plan-gallery',
@@ -53,6 +54,35 @@ export class PlanGalleryComponent implements OnInit {
       if (result) {
         this.getDefault()
       }
+    });
+  }
+
+  resetGallery(data) {
+    const dialogData = {
+      data: 'Gallary',
+      header: 'RESET',
+      body: 'Are you sure you want to reset this image?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'RESET',
+      positiveMethod: () => {
+        this.orgSetting.resetGallery({id:data.id,advisorId:this.advisorId,imageURL:null,goalTypeId:data.goalTypeId}).subscribe(
+          data => {
+            this.eventService.openSnackBar("Image resetted successfully!", "Dismiss");
+            this.getDefault()
+            dialogRef.close();
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+      },
+      negativeMethod: () => {
+      }
+    };
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
     });
   }
 }
