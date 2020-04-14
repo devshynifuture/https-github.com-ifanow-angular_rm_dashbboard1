@@ -83,22 +83,22 @@ export class ForgotPasswordComponent implements OnInit {
     }
   }
 
-  enterOtp(value) {
-    if (value.code.substring(0, value.code.length - 1) == 'Key' || value.code == 'Backspace') {
-      if (value.srcElement.previousElementSibling == undefined) {
-        return;
-      }
-      value.srcElement.previousElementSibling.focus();
-      this.otpData.pop();
-    } else {
-      if (value.srcElement.nextElementSibling == undefined) {
-        this.otpData.push(parseInt(value.key));
-        return;
-      }
-      this.otpData.push(parseInt(value.key));
-      value.srcElement.nextElementSibling.focus();
-    }
-  }
+  // enterOtp(value) {
+  //   if (value.code.substring(0, value.code.length - 1) == 'Key' || value.code == 'Backspace') {
+  //     if (value.srcElement.previousElementSibling == undefined) {
+  //       return;
+  //     }
+  //     value.srcElement.previousElementSibling.focus();
+  //     this.otpData.pop();
+  //   } else {
+  //     if (value.srcElement.nextElementSibling == undefined) {
+  //       this.otpData.push(parseInt(value.key));
+  //       return;
+  //     }
+  //     this.otpData.push(parseInt(value.key));
+  //     value.srcElement.nextElementSibling.focus();
+  //   }
+  // }
   verifyUsernameOnEnter(event) {
     (event.keyCode == 13) ? this.verifyUsername() : '';
   }
@@ -172,7 +172,10 @@ export class ForgotPasswordComponent implements OnInit {
       err => this.eventService.openSnackBar(err, 'Dismiss')
     );
   }
-
+  getOtpData(outputData) {
+    console.log("forgot password", outputData)
+    this.otpData = outputData;
+  }
   verifyWithOtpResponse(flag) {  ///// check user filled otp is correct or not
     const otpString = this.otpData.toString().replace(/,/g, '');
 

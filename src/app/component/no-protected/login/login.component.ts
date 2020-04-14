@@ -128,7 +128,10 @@ export class LoginComponent implements OnInit {
   getOtpOnEnter(event) {
     (event.keyCode == 13) ? this.getOtp() : ''
   }
-
+  getOtpData(outputData) {
+    console.log("login with otp", outputData)
+    this.otpData = outputData;
+  }
   getOtpResponse(data) {
     if (data.emailList && data.emailList.length > 0) {
       data.email = data.emailList[0].email;
@@ -162,24 +165,6 @@ export class LoginComponent implements OnInit {
 
   otpClick() {
     (this.otpNumber) ? this.otpNumber = false : this.otpNumber = true;
-  }
-
-  enterOtp(value) {
-    if (value.code.substring(0, value.code.length - 1) == 'Key' || value.code == 'Backspace') {
-      if (value.srcElement.previousElementSibling == undefined) {
-        this.otpData.pop();
-        return;
-      }
-      value.srcElement.previousElementSibling.focus();
-      this.otpData.pop();
-    } else {
-      if (value.srcElement.nextElementSibling == undefined) {
-        this.otpData.push(value.key);
-        return;
-      }
-      this.otpData.push(value.key);
-      value.srcElement.nextElementSibling.focus();
-    }
   }
 
   verifyWithOtpResponse() {
