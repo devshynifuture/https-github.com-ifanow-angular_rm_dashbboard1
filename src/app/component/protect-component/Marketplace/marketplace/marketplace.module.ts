@@ -7,6 +7,7 @@ import { MarketplaceRoutingModule } from './marketplace-routing.module';
 import { MarketplaceComponent } from './marketplace.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
      MatButtonModule,
      FormsModule,
      MatAutocompleteModule,
-     MatInputModule
+     MatInputModule,
+     MatSelectModule
   
   ]
 })
