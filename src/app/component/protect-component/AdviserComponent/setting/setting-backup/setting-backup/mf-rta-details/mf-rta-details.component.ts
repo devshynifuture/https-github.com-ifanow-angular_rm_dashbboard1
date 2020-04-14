@@ -78,7 +78,7 @@ export class MfRtaDetailsComponent implements OnInit {
     this.fundsDS = new MatTableDataSource(this.mfRTAlist.filter((data) => data.rtTypeMasterid == 4));
   }
 
-  openInSideBar(componentID, data, flag) {
+  openInSideBar(componentID, data, isAddFlag) {
 
     if (this.arnList.length == 0) {
       this.eventService.openSnackBar('Kindly add ARN details to proceed');
@@ -90,12 +90,13 @@ export class MfRtaDetailsComponent implements OnInit {
       arnData: this.arnList,
       mainData: data || {},
       rtType: componentID,
+      is_add_call: isAddFlag,
     };
     const fragmentData: any = {
-      flag,
+      flag:'',
       data: fullData,
       id: 1,
-      state: (flag == 'detailedNsc') ? 'open50' : 'open50',
+      state: 'open50',
     };
 
     switch (componentID) {
