@@ -56,6 +56,7 @@ export class OverviewProfileComponent implements OnInit {
         if (data == undefined) {
           return;
         } else {
+          this.authService.setClientData(data);
           this.clientOverviewData = data;
           this.calculateAge(this.clientOverviewData.dateOfBirth);
         }
@@ -235,10 +236,9 @@ export class OverviewProfileComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          if (sideBarData.clientData) {
-            this.authService.setClientData(sideBarData.clientData);
-            this.clientOverviewData = sideBarData.clientData;
-          }
+          this.getClientData(this.clientOverviewData)
+          // this.authService.setClientData(sideBarData.clientData);
+          // this.clientOverviewData = sideBarData.clientData;
           this.getFamilyMembersList(this.clientData);
           if (UtilService.isRefreshRequired(sideBarData)) {
           }
