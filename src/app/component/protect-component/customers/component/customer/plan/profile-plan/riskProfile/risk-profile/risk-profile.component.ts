@@ -68,7 +68,7 @@ export class RiskProfileComponent implements OnInit {
         tickWidth: 4,
         lineColor: '#999',
         lineWidth: 1,
-        labels: { style: { fontWeight: 'bold' } }
+        labels: { style: { fontWeight: 'bold' } },
       },
 
       yAxis: {

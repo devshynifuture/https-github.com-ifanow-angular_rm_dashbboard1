@@ -275,7 +275,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       this.eventService.openSnackBar('Folder name already exist', 'Ok');
     }
     console.log('newFolderRes', data);
-    this.reset();
+    this.getAllFileList(this.tabValue);
   }
 
   openBottomSheet(): void {
