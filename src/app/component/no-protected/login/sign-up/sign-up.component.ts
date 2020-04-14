@@ -17,6 +17,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 export class SignUpComponent implements OnInit {
   clientSignUp = false;
   duplicateTableDtaFlag: boolean;
+  termsAndCondition: any;
 
   constructor(private fb: FormBuilder, private authService: AuthService, public routerActive: ActivatedRoute,
     private router: Router, private loginService: LoginService, private eventService: EventService, public dialog: MatDialog) {
@@ -50,7 +51,7 @@ export class SignUpComponent implements OnInit {
       email: [, [Validators.required,
       Validators.pattern(this.validatorType.EMAIL)]],
       mobile: [, [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
-      termsAgreement: [, [Validators.required]]
+      termsAgreement: [false, [Validators.required]]
     });
   }
 
@@ -58,7 +59,13 @@ export class SignUpComponent implements OnInit {
     if (this.signUpForm.invalid) {
       console.log('Error');
       this.signUpForm.markAllAsTouched();
-    } else {
+      return;
+    }
+    else if (this.signUpForm.value.termsAgreement == false) {
+      this.eventService.openSnackBar("Please accept terms and conditions!", "Dismiss")
+      return;
+    }
+    else {
       this.barButtonOptions.active = true;
       const obj = {
         emailList: [
