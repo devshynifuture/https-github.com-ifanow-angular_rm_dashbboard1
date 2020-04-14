@@ -1,6 +1,6 @@
 <div class="row bb-1 popup-header-fix-60">
     <div class="col-md-8 p-0">
-        <h4 class="mb-0 l-22 wrapper-20">Add ARN/RIA details</h4>
+        <h4 class="mb-0 l-22 wrapper-20">{{data.is_add_call ? 'Add' : 'Edit'}} ARN/RIA details</h4>
     </div>
     <div class="col-md-2 text-right">
         <i (click)="Close(false)" class="material-icons pt-16 c-p pr-16">
@@ -11,38 +11,37 @@
 
 
 <div [formGroup]="arnRiaFG" #arnForm>
-    <div class="row pt-90">
-        <div class="col-md-4 pr-0">
-            <h5 class="m-0 text-right pt-8">ARN/RIA</h5>
-        </div>
-        <div class="col-md-3">
-            <div class=" form-group mb-0">
-                <mat-form-field>
-                    <mat-select class=" form-control br-0" formControlName="arnOrRia">
-                        <mat-option value="" selected disabled>Select Type</mat-option>
-                        <mat-option [value]="option.id" *ngFor="let option of data.globalData.arn_type_list">
-                            {{option.type}}</mat-option>
-                    </mat-select>
-                    <mat-error>This field is required</mat-error>
-                </mat-form-field>
-            </div>
-        </div>
+  <div class="row pt-90">
+    <div class="col-md-4 pr-0">
+      <h5 class="m-0 text-right pt-8">ARN/RIA</h5>
     </div>
+    <div class="col-md-3">
+      <div class=" form-group mb-0">
+        <mat-form-field>
+          <mat-select class=" form-control br-0" formControlName="arnOrRia">
+            <mat-option value="" selected disabled>Select Type</mat-option>
+            <mat-option *ngFor="let option of data.globalData.arn_type_list" [value]="option.id">
+              {{option.type}}</mat-option>
+          </mat-select>
+          <mat-error>This field is required</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
 
 
-
-    <div class="row pt-44">
-        <div class="col-md-4 pr-0">
-            <h5 class="m-0 text-right pt-8">ARN/RIA type</h5>
-        </div>
-        <div class="col-md-5">
-            <div class="mb-0 form-group">
-                <mat-form-field>
-                    <mat-select class="form-control br-0" formControlName="typeId">
-                        <mat-option value="" selected disabled>Select Option</mat-option>
-                        <mat-option [value]="option.id" *ngFor="let option of data.globalData.arn_type_master_list">
-                            {{option.type}}</mat-option>
-                    </mat-select>
+  <div class="row pt-44">
+    <div class="col-md-4 pr-0">
+      <h5 class="m-0 text-right pt-8">ARN/RIA type</h5>
+    </div>
+    <div class="col-md-5">
+      <div class="mb-0 form-group">
+        <mat-form-field>
+          <mat-select class="form-control br-0" formControlName="typeId">
+            <mat-option value="" selected disabled>Select Option</mat-option>
+            <mat-option [value]="option.id" *ngFor="let option of data.globalData.arn_type_master_list">
+              {{option.type}}</mat-option>
+          </mat-select>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -133,13 +132,13 @@
         </div>
         <div class="col-md-5">
             <div class="form-group p-0">
-                <mat-form-field>
-                    <input matInput type="text" formControlName="registeredEmail" class="form-control br-0">
-                    <mat-hint>Optional</mat-hint>
-                    <mat-error *ngIf="arnRiaFG.get('registeredEmail').errors?.required">This field is required
-                    </mat-error>
-                    <mat-error *ngIf="arnRiaFG.get('registeredEmail').errors?.pattern">Email is not valid</mat-error>
-                </mat-form-field>
+              <mat-form-field>
+                <input matInput type="text" formControlName="registeredEmail" class="form-control br-0">
+                <mat-hint>Optional</mat-hint>
+                <mat-error *ngIf="arnRiaFG.get('registeredEmail').errors?.required">This field is required
+                </mat-error>
+                <mat-error *ngIf="arnRiaFG.get('registeredEmail').errors?.pattern">Email is not valid</mat-error>
+              </mat-form-field>
             </div>
         </div>
     </div>

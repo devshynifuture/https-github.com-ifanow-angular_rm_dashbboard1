@@ -190,7 +190,7 @@
                                                 <button (click)="openDialogCopy(element, 'Copy')" *ngIf="element.folderName == undefined" class="f-14" mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/file-copy.svg">Copy to
                                                 </button>
-                                                <button (click)="downlodFiles(element)" *ngIf="element.folderName == undefined" class="f-14" mat-menu-item><img class="mr-20"
+                                                <button (click)="downlodFiles(element, '')" *ngIf="element.folderName == undefined" class="f-14" mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/download-icon.svg">Download
                                                 </button>
                                                 <button (click)="deleteModal('FILE',element)" *ngIf="element.folderName == undefined" class="f-14" mat-menu-item><img class="mr-20"

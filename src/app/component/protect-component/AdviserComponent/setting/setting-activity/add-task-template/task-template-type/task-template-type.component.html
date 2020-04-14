@@ -13,8 +13,11 @@
         <div class="col-md-12 p-0">
             <h5 class="m-0 pb-12">Select an option below to add a task template...</h5>
             <mat-radio-group class="taskTemplatesRadio" formControlName="type">
-                <mat-radio-button [value]="1" checked [ngClass]="taskTemplateType.get('type').value == 1 ? 'text-primary b-a-custom': 'text-primitive'">
-                    Create a linked task</mat-radio-button>
+                <mat-radio-button
+                  [ngClass]="taskTemplateType.get('type').value == 1 ? 'text-primary b-a-custom': 'text-primitive'"
+                  [value]="1" checked>
+                  Create a linked task
+                </mat-radio-button>
                 <mat-radio-button [value]="2" [ngClass]="taskTemplateType.get('type').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
                     Create a non-linked task
                 </mat-radio-button>

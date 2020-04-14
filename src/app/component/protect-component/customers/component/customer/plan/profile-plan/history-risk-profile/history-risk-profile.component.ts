@@ -15,8 +15,9 @@ export class HistoryRiskProfileComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   advisorId: any;
   clientId: any;
-  dataSourceHistory: any;
-  storeResult: any;
+  dataSourceHistory:  Array<any> = [{}, {}, {}];
+  storeResult:any;
+  isLoading = false;
 
   constructor(private subInjectService: SubscriptionInject, public planService: PlanService, ) { }
   ngOnInit() {
@@ -25,6 +26,7 @@ export class HistoryRiskProfileComponent implements OnInit {
     this.riskHistory();
   }
   riskHistory() {
+    this.isLoading = true
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
@@ -42,11 +44,13 @@ export class HistoryRiskProfileComponent implements OnInit {
       });
   }
   getResultRiskRes(data) {
+    this.isLoading = false
     console.log(data);
     this.storeResult = data;
     this.Close(data);
   }
   getRiskHistoryRes(data) {
+    this.isLoading = false
     console.log('getRiskHistoryRes', data);
     this.dataSourceHistory = data.clientRiskProfileList;
   }
