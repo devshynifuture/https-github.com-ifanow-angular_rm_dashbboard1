@@ -13,7 +13,7 @@
         <button mat-stroked-button class="btn-primary " (click)="addNewTaskTemplate()"> ADD NEW</button>
     </div>
     <div class="col-md-12" [hidden]="linkedTaskList.length == 0">
-        <div>LINKED TASK TEMPLATES</div>
+        <div>Linked task template</div>
         <table mat-table [dataSource]="linkedTaskList" class="mt-8 skeletonAnimation" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
             <ng-container matColumnDef="position">
@@ -77,7 +77,7 @@
         </table>
     </div>
     <div class="col-md-12 pt-20" [hidden]="unlinkedTaskList.length == 0">
-        <div>UNLINKED TASK TEMPLATES</div>
+        <div>Non linked task template</div>
         <table mat-table [dataSource]="unlinkedTaskList" class="mt-8 skeletonAnimation" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="symbol1">
                 <th mat-header-cell *matHeaderCellDef class="br"> Task template </th>
