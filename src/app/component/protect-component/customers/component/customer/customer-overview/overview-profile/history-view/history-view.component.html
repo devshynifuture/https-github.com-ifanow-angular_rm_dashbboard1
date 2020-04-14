@@ -15,7 +15,7 @@
 
     <div class="row">
         <div class="col-md-12 historyTable">
-            <table mat-table [dataSource]="dataSource" [appSkeletonLoading]="isLoading" appSkeletonLoading
+            <table mat-table [dataSource]="dataSource" [appSkeletonLoading]="false" appSkeletonLoading
                 class="skeletonAnimation" id="table-low">
                 <ng-container matColumnDef="date">
                     <th mat-header-cell class="br" *matHeaderCellDef>Date </th>

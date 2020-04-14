@@ -186,7 +186,7 @@
                     <div class="image-cropper">
                         <app-image-cropper [imageChangedEvent]="imageUploadEvent" [aspectRatio]="256/64" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)"></app-image-cropper>
                     </div>
-                    <div class="profile-img" [hidden]="!showCropper">
+                    <div class="profile-web-app-img" [hidden]="!showCropper">
                         <img [src]="finalImage" alt="cropped Image" class="w-100">
                     </div>
                     <div class="row pt-24">
@@ -197,7 +197,7 @@
                     <input type="file" #chooseImage (change)="uploadImageForCorping($event)" hidden>
                 </div>
                 <div class="col-md-5" *ngIf="!cropImage">
-                    <div class="profile-img">
+                    <div class="profile-web-app-img">
                         <img [src]="profileImg" class="w-100">
                     </div>
                     <div class="row pt-24">
@@ -219,7 +219,7 @@
                         <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)"></app-image-cropper>
                     </div>
                     <div class="profile-img" [hidden]="!showCropper">
-                        <img [src]="finalImage" alt="cropped Image" class="w-100">
+                        <img [src]="finalImage" alt="cropped Image">
                     </div>
                     <div class="row pt-24">
                     </div>
@@ -230,7 +230,7 @@
                 </div>
                 <div class="col-md-5" *ngIf="!cropImage">
                     <div class="profile-img">
-                        <img [src]="reportImg" class="w-100">
+                        <img [src]="reportImg">
                     </div>
                     <div class="row pt-24">
                         <button mat-stroked-button class="btn-primary" (click)="cropImage = true">EDIT IMAGE</button>
