@@ -52,7 +52,7 @@ export class NewTeamMemberComponent implements OnInit {
       adminAdvisorId: [this.data.mainData.adminAdvisorId || this.advisorId],
       fullName: [this.data.mainData.fullName || '', [Validators.required, Validators.maxLength(50), Validators.pattern(ValidatorType.PERSON_NAME)]],
       emailId: [this.data.mainData.email || '', [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
-      mobileNo: [this.data.mainData.mobile || '', [Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern(ValidatorType.NUMBER_ONLY)]],
+      mobileNo: [this.data.mainData.mobile || '', [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
       roleId: [roleId, [Validators.required]],
     });
   }

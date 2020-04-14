@@ -247,7 +247,10 @@ export class OverviewProfileComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getClientData(this.clientOverviewData)
+          this.getClientData(this.clientOverviewData);
+          this.getAddressList(this.clientData);
+          this.getBankList(this.clientData);
+          this.getDematList(this.clientData);
           // this.authService.setClientData(sideBarData.clientData);
           // this.clientOverviewData = sideBarData.clientData;
           this.getFamilyMembersList(this.clientData);
