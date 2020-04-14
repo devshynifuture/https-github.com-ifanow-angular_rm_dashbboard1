@@ -9,7 +9,7 @@
         <div *ngIf="fieldFlag=='client' || fieldFlag=='lead'" class="form-group">
           <mat-form-field>
             <mat-select [(ngModel)]="invTypeCategory" (selectionChange)="changeInvestorType($event)"
-                        class="form-control">
+              class="form-control">
               <mat-option value='1'>Individual</mat-option>
               <mat-option value='2'>Non-individual</mat-option>
             </mat-select>
@@ -18,7 +18,7 @@
         <div class="form-group" *ngIf="fieldFlag=='familyMember'">
           <mat-form-field>
             <mat-select [(ngModel)]="invTypeCategory" (selectionChange)="changeInvestorType($event)"
-                        class="form-control">
+              class="form-control">
               <mat-option value='1'>Individual</mat-option>
               <mat-option value='2'>Minor</mat-option>
             </mat-select>
@@ -49,7 +49,7 @@
         <div class="form-group mb-0">
           <mat-form-field floatLabel="never" appearance="standard">
             <input #fullName [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" appInputValueValidation
-                   autocomplete="off" class="form-control" formControlName="fullName" matInput placeholder="Enter Name">
+              autocomplete="off" class="form-control" formControlName="fullName" matInput placeholder="Enter Name">
             <mat-error>This field is required</mat-error>
             <mat-hint align="end">{{fullName.value.length}}/50</mat-hint>
           </mat-form-field>
@@ -72,7 +72,7 @@
       </div>
     </div>
     <app-add-number [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag"
-                    (numberArray)="getNumberDetails($event)"></app-add-number>
+      (numberArray)="getNumberDetails($event)"></app-add-number>
     <div class="row pt-44">
       <div class="col-md-4 text-right">
         <h5 class="m-0 pt-12">PAN</h5>
@@ -81,7 +81,7 @@
         <div class="form-group mb-0">
           <mat-form-field>
             <input #pan [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation autocomplete="off"
-                   class="form-control" formControlName="pan" matInput maxlength="10">
+              class="form-control" formControlName="pan" matInput maxlength="10">
             <mat-error *ngIf="basicDetails.get('pan').errors?.required">This Field is required</mat-error>
             <mat-error *ngIf="basicDetails.get('pan').errors?.pattern">Pan must be 10 digits</mat-error>
             <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
@@ -103,7 +103,7 @@
         <div class="form-group mb-0">
           <mat-form-field>
             <input #username [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation autocomplete="off"
-                   class="form-control" formControlName="username" matInput>
+              class="form-control" formControlName="username" matInput>
             <mat-hint align="end">{{username.value.length}}/ 50</mat-hint>
             <mat-error>This field is required</mat-error>
             <mat-hint>Optional</mat-hint>
@@ -120,7 +120,7 @@
         <div class="form-group mb-0">
           <mat-form-field class="ba-date">
             <input (click)="dobAsPerRecord.open()" [matDatepicker]="dobAsPerRecord" [max]="maxDateForAdultDob"
-                   class="form-control br-0 b-0" formControlName="dobAsPerRecord" matInput readonly>
+              class="form-control br-0 b-0" formControlName="dobAsPerRecord" matInput readonly>
             <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord"></mat-datepicker-toggle>
             <mat-datepicker #dobAsPerRecord></mat-datepicker>
             <mat-hint>Optional</mat-hint>
@@ -146,16 +146,16 @@
       <div class="col-md-7 p-0">
         <mat-radio-group formControlName="gender" aria-label="Select an option" class="d-block">
           <mat-radio-button value="1"
-                            [ngClass]="{'bu-primary': basicDetails.get('gender').value=='1','borderRadio':basicDetails.get('gender').value!='1'}"
-                            class="bu-primary">Male
+            [ngClass]="{'bu-primary': basicDetails.get('gender').value=='1','borderRadio':basicDetails.get('gender').value!='1'}"
+            class="bu-primary">Male
           </mat-radio-button>
           <mat-radio-button value="2"
-                            [ngClass]="{'bu-primary': basicDetails.get('gender').value=='2','borderRadio':basicDetails.get('gender').value!='2'}"
-                            class="borderRadio">Female
+            [ngClass]="{'bu-primary': basicDetails.get('gender').value=='2','borderRadio':basicDetails.get('gender').value!='2'}"
+            class="borderRadio">Female
           </mat-radio-button>
           <mat-radio-button value="3"
-                            [ngClass]="{'bu-primary': basicDetails.get('gender').value=='3','borderRadio':basicDetails.get('gender').value!='3'}"
-                            class="borderRadio">Other
+            [ngClass]="{'bu-primary': basicDetails.get('gender').value=='3','borderRadio':basicDetails.get('gender').value!='3'}"
+            class="borderRadio">Other
           </mat-radio-button>
         </mat-radio-group>
       </div>
@@ -189,7 +189,7 @@
         <div class="form-group mb-0">
           <mat-form-field>
             <input #leadSource [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation autocomplete="off"
-                   class="form-control" formControlName="leadSource" matInput>
+              class="form-control" formControlName="leadSource" matInput>
             <mat-hint align="end">{{leadSource.value.length}}/ 50</mat-hint>
             <mat-error>This field is required</mat-error>
             <!-- <mat-select formControlName="leadSource" class="form-control">
@@ -279,8 +279,8 @@
         <div class="form-group mb-0">
           <mat-form-field floatLabel="never" appearance="standard">
             <input matInput appInputValueValidation [maxLength]="50" #mFullName
-                   [inputValidator]="validatorType.PERSON_NAME" class="form-control" formControlName="minorFullName"
-                   placeholder="Enter Name">
+              [inputValidator]="validatorType.PERSON_NAME" class="form-control" formControlName="minorFullName"
+              placeholder="Enter Name">
             <mat-hint align="end" class="f-12">{{mFullName.value.length}}/50</mat-hint>
             <mat-error>This field is required</mat-error>
           </mat-form-field>
@@ -297,7 +297,7 @@
         <div class="form-group mb-0">
           <mat-form-field class="ba-date">
             <input (click)="dobAsPerRecord.open()" [matDatepicker]="dobAsPerRecord" class="form-control br-0 b-0"
-                   formControlName="dobAsPerRecord" matInput readonly>
+              formControlName="dobAsPerRecord" matInput readonly>
             <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord"></mat-datepicker-toggle>
             <mat-datepicker #dobAsPerRecord></mat-datepicker>
             <mat-hint>Optional</mat-hint>
@@ -345,7 +345,7 @@
         <div class="form-group mb-0">
           <mat-form-field floatLabel="never" appearance="standard">
             <input #gFullName matInput placeholder="Enter Name" appInputValueValidation [maxLength]="50"
-                   [inputValidator]="validatorType.PERSON_NAME" class="form-control" formControlName="gFullName">
+              [inputValidator]="validatorType.PERSON_NAME" class="form-control" formControlName="gFullName">
             <mat-error>This field is required</mat-error>
             <mat-hint align="end" class="f-12">{{gFullName.value.length}}/50</mat-hint>
           </mat-form-field>
@@ -362,7 +362,7 @@
         <div class="form-group mb-0">
           <mat-form-field class="ba-date">
             <input (click)="gDobAsPerRecord.open()" [matDatepicker]="gDobAsPerRecord" [max]="maxDateForAdultDob"
-                   class="form-control br-0 b-0" formControlName="gDobAsPerRecord" matInput readonly>
+              class="form-control br-0 b-0" formControlName="gDobAsPerRecord" matInput readonly>
             <mat-datepicker-toggle matSuffix [for]="gDobAsPerRecord"></mat-datepicker-toggle>
             <mat-datepicker #gDobAsPerRecord></mat-datepicker>
             <mat-hint>Optional</mat-hint>
@@ -391,13 +391,13 @@
       <div class="col-md-7 p-0">
         <mat-radio-group formControlName="gGender" aria-label="Select an option" class="d-block">
           <mat-radio-button value="1" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='1'}"
-                            class="borderRadio">Male
+            class="borderRadio">Male
           </mat-radio-button>
           <mat-radio-button value="2" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='2'}"
-                            class="borderRadio">Female
+            class="borderRadio">Female
           </mat-radio-button>
           <mat-radio-button value="3" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='3'}"
-                            class="borderRadio">Other
+            class="borderRadio">Other
           </mat-radio-button>
         </mat-radio-group>
       </div>
@@ -438,7 +438,7 @@
       </div>
     </div>
     <app-add-number [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag"
-                    (numberArray)="getNumberDetails($event)"></app-add-number>
+      (numberArray)="getNumberDetails($event)"></app-add-number>
     <div class="row pt-44">
       <div class="col-md-4 text-right">
         <h5 class="m-0 pt-12">PAN</h5>
@@ -529,7 +529,7 @@
         <div class="form-group mb-0">
           <mat-form-field>
             <input #cname [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" appInputValueValidation
-                   class="form-control" formControlName="comName" matInput>
+              class="form-control" formControlName="comName" matInput>
             <mat-hint align="end">{{cname.value.length}}/50</mat-hint>
             <mat-error>This field is required</mat-error>
           </mat-form-field>
@@ -545,8 +545,7 @@
         <div class="form-group mb-0">
           <mat-form-field class="ba-date">
             <input (click)="picker.open()" [matDatepicker]="picker" class="form-control b-0"
-                   formControlName="dateOfIncorporation"
-                   matInput>
+              formControlName="dateOfIncorporation" matInput>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-hint>Optional</mat-hint>
@@ -587,8 +586,8 @@
       </div>
     </div>
 
-    <app-add-number *ngIf="basicDetailsData" [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag"
-                    (numberArray)="getNumberDetails($event)"></app-add-number>
+    <app-add-number [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag"
+      (numberArray)="getNumberDetails($event)"></app-add-number>
 
     <div class="row pt-44">
       <div class="col-md-4 text-right">
@@ -644,7 +643,7 @@
         <div class="form-group mb-0">
           <mat-form-field>
             <input matInput #username formControlName="username" appInputValueValidation
-                   [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" class="form-control">
+              [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" class="form-control">
             <mat-hint align="end">{{username.value.length}}/ 50</mat-hint>
             <mat-error>This field is required</mat-error>
           </mat-form-field>
@@ -710,7 +709,7 @@
       <!-- ================= ERROR ======================= -->
 
       <app-progress-button (btnClick)="saveNextClient('Next')" class="br-0 text-inherit mr-12"
-                           [options]="barButtonOptions">
+        [options]="barButtonOptions">
       </app-progress-button>
       <!-- <button mat-stroked-button (click)="saveNextClient('close')" class="btn-bottom br-0 text-inherit">SAVE &
           CLOSE
@@ -720,7 +719,7 @@
       <!-- <button mat-raised-button (click)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
       </button> -->
       <app-progress-button (btnClick)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12"
-                           [options]="barButtonOptions">
+        [options]="barButtonOptions">
       </app-progress-button>
       <!-- <button mat-stroked-button (click)="saveNextFamilyMember('close')" class="btn-bottom br-0 text-inherit">SAVE
           & CLOSE
