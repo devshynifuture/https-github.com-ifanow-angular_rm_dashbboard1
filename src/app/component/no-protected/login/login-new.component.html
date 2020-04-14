@@ -168,20 +168,8 @@
               <div class="col-md-12 p-0">
                 <h5 class="pt-12">Verify OTP</h5>
                 <div class="form-group d-flex">
-                  <input (keyup)="enterOtp($event)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                    autocomplete="off" class="form-control verifyDiv br-0" matInput maxlength="1">
-                  <input (keyup)="enterOtp($event)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                    autocomplete="off" class="form-control verifyDiv br-0" matInput maxlength="1">
-                  <input (keyup)="enterOtp($event)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                    autocomplete="off" class="form-control verifyDiv br-0" matInput maxlength="1">
-                  <input (keyup)="enterOtp($event)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                    autocomplete="off" class="form-control verifyDiv br-0" matInput maxlength="1">
-                  <input (keyup)="enterOtp($event)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                    autocomplete="off" class="form-control verifyDiv br-0" matInput maxlength="1">
-                  <input (keyup)="enterOtp($event)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                    autocomplete="off" class="form-control verifyDiv br-0" matInput maxlength="1">
+                  <app-otp-verify [otpData]="otpData" (otpDataEvent)="getOtpData($event)"></app-otp-verify>
                 </div>
-
                 <h5 class="mb-0">Didn’t receive? <span (click)="getOtp()" class="lightRead c-p"> Resend
                   </span></h5>
               </div>

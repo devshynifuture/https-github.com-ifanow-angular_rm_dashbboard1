@@ -39,7 +39,7 @@
                     <div class="bar d-flex justify-content-between">
                         <ng-container>
                             <ng-template
-                              *ngTemplateOutlet="templateRef; context:{element :element.mailbackPassword, toggleValue: true}">
+                              *ngTemplateOutlet="visibilityRef; context:{element :element.mailbackPassword, toggleValue: true}">
                             </ng-template>
                         </ng-container>
                     </div>
@@ -97,7 +97,7 @@
                     <div class="bar">
                         <ng-container>
                           <ng-template
-                            *ngTemplateOutlet="templateRef; context:{element :element.loginPassword, toggleValue: true}">
+                            *ngTemplateOutlet="visibilityRef; context:{element :element.loginPassword, toggleValue: true}">
                           </ng-template>
                         </ng-container>
                     </div>
@@ -119,7 +119,7 @@
                     <div class="bar d-flex justify-content-between">
                         <ng-container>
                           <ng-template
-                            *ngTemplateOutlet="templateRef; context:{element :element.mailbackPassword, toggleValue: true}">
+                            *ngTemplateOutlet="visibilityRef; context:{element :element.mailbackPassword, toggleValue: true}">
                           </ng-template>
                         </ng-container>
                     </div>
@@ -178,7 +178,7 @@
 
                     <ng-container>
                       <ng-template
-                        *ngTemplateOutlet="templateRef; context:{element :element.loginPassword, toggleValue: true}">
+                        *ngTemplateOutlet="visibilityRef; context:{element :element.loginPassword, toggleValue: true}">
                       </ng-template>
                     </ng-container>
                 </td>
@@ -197,7 +197,7 @@
                     <div class="bar">
                         <ng-container>
                           <ng-template
-                            *ngTemplateOutlet="templateRef; context:{element :element.mailbackPassword, toggleValue: true}">
+                            *ngTemplateOutlet="visibilityRef; context:{element :element.mailbackPassword, toggleValue: true}">
                           </ng-template>
                         </ng-container>
                     </div>
@@ -249,7 +249,7 @@
                     <div class="bar">
                         <ng-container>
                           <ng-template
-                            *ngTemplateOutlet="templateRef; context:{element :element.loginPassword, toggleValue: true}">
+                            *ngTemplateOutlet="visibilityRef; context:{element :element.loginPassword, toggleValue: true}">
                           </ng-template>
                         </ng-container>
                     </div>
@@ -258,10 +258,10 @@
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="email">
-                <th mat-header-cell *matHeaderCellDef class="br"> Secret Question </th>
+                <th mat-header-cell *matHeaderCellDef class="br p-5"> Secret Question </th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar">
-                        <div *ngFor="let questionSet of element.rtaCamsFundNetSecurityQuestionsList">
+                        <div *ngFor="let questionSet of element.rtaCamsFundNetSecurityQuestionsList" class="p-5">
                             {{getQuestion(questionSet.questionId)}}
                         </div>
                     </div>
@@ -274,7 +274,7 @@
                         <div *ngFor="let questionSet of element.rtaCamsFundNetSecurityQuestionsList">
                             <ng-container>
                               <ng-template
-                                *ngTemplateOutlet="templateRef; context:{element :questionSet.answer, toggleValue: true}">
+                                *ngTemplateOutlet="visibilityRef; context:{element :questionSet.answer, toggleValue: true}">
                               </ng-template>
                             </ng-container>
                         </div>
@@ -301,10 +301,8 @@
 </div>
 
 
-<ng-container>
-  <ng-template #templateRef let-element="element" let-toggleValue="toggleValue">
+<ng-template #visibilityRef let-element="element">
     {{(toggleVisibility(element, toggleValue))}}
     <mat-icon (click)="toggleValue = !toggleValue">
-      {{toggleValue ? 'visibility' : 'visibility_off'}}</mat-icon>
-  </ng-template>
-</ng-container>
+        {{toggleValue ? 'visibility' : 'visibility_off'}}</mat-icon>
+</ng-template>

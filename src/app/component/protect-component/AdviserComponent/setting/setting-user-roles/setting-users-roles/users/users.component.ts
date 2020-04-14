@@ -89,7 +89,7 @@ export class UsersComponent implements OnInit {
       if(result) {
         this.loader(1);
         const replaceUser = {
-          deleteUserId: user.id,
+          deleteUserId: user.adminAdvisorId,
           replaceUserId: result,
         }
         this.settingsService.deleteTeamMember(replaceUser).subscribe(res => {
