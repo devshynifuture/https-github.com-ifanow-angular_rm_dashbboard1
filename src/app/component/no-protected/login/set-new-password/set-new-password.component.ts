@@ -63,7 +63,6 @@ export class SetNewPasswordComponent implements OnInit {
       this.loginService.savePassword(obj).subscribe(
         data => {
           console.log(data);
-          this.barButtonOptions.active = false;
           if (data == 1) {
             let obj =
             {
@@ -71,6 +70,7 @@ export class SetNewPasswordComponent implements OnInit {
             }
             this.loginService.sendWelcomeEmail(obj).subscribe(
               data => {
+                this.barButtonOptions.active = false;
                 console.log(data)
               },
               err => this.eventService.openSnackBar(err, "Dismiss")
