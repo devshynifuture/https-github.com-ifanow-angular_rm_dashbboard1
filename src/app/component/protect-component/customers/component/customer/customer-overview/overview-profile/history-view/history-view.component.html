@@ -15,28 +15,37 @@
 
     <div class="row">
         <div class="col-md-12 historyTable">
-            <table mat-table [dataSource]="dataSource" class=" " id="table-low">
+            <table mat-table [dataSource]="dataSource" [appSkeletonLoading]="isLoading" appSkeletonLoading
+                class="skeletonAnimation" id="table-low">
                 <ng-container matColumnDef="date">
                     <th mat-header-cell class="br" *matHeaderCellDef>Date </th>
-                    <td mat-cell class="br" *matCellDef="let element"> {{element.date}} </td>
+                    <td mat-cell class="br" *matCellDef="let element">
+                        <div class="bar">{{element.date}} </div>
+                    </td>
                 </ng-container>
 
 
                 <ng-container matColumnDef="rstatus">
                     <th mat-header-cell class="br" *matHeaderCellDef> Risk status </th>
-                    <td mat-cell class="br" *matCellDef="let element"> {{element.rstatus}} </td>
+                    <td mat-cell class="br" *matCellDef="let element">
+                        <div class="bar">{{element.rstatus}} </div>
+                    </td>
                 </ng-container>
 
 
                 <ng-container matColumnDef="rscore">
                     <th mat-header-cell class="br" *matHeaderCellDef> Risk score </th>
-                    <td mat-cell class="br" *matCellDef="let element"> {{element.rscore}} </td>
+                    <td mat-cell class="br" *matCellDef="let element">
+                        <div class="bar">{{element.rscore}} </div>
+                    </td>
                 </ng-container>
 
 
                 <ng-container matColumnDef="empty">
                     <th mat-header-cell class="br" *matHeaderCellDef> </th>
-                    <td mat-cell class="br text-primary c-p" *matCellDef="let element"> {{element.empty}} </td>
+                    <td mat-cell class="br text-primary c-p" *matCellDef="let element">
+                        <div class="bar">{{element.empty}} </div>
+                    </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
