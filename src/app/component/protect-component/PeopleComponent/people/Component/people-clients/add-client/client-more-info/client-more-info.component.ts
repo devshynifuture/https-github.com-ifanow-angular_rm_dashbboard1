@@ -76,7 +76,6 @@ export class ClientMoreInfoComponent implements OnInit {
     this.moreInfoForm = this.fb.group({
       displayName: [data.displayName],
       adhaarNo: [data.aadhaarNumber],
-      taxStatus: [],
       occupation: [(data.occupationId == 0) ? '1' : String(data.occupationId)],
       maritalStatus: [(data.martialStatusId) ? String(data.martialStatusId) : '1'],
       anniversaryDate: [String(data.anniversaryDate)],
