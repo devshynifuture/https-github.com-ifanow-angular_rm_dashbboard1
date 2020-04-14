@@ -135,7 +135,6 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       // if (element == 'CREATE') {
       //   this.createFolder(this.getInnerDoc);
       // }
-
       if (element == 'RENAME') {
         if (this.getInnerDoc.rename.flag == 'fileName') {
           this.renameFile(this.getInnerDoc);
@@ -144,7 +143,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         }
       }
       if (result.isRefreshRequired) {
-        this.getAllFileList(this.valueTab)
+        this.reset()
       }
 
     });
@@ -275,7 +274,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       this.eventService.openSnackBar('Folder name already exist', 'Ok');
     }
     console.log('newFolderRes', data);
-    this.reset();
+    this.reset()
   }
 
   openBottomSheet(): void {
@@ -451,7 +450,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       const obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
-        docGetFlag: this.valueTab,
+        docGetFlag: 1,
         folderParentId: (value.id == undefined) ? 0 : value.id,
       };
       console.log('this.parentId', this.parentId);
@@ -541,7 +540,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
               this.eventService.openSnackBar('Deleted', 'Dismiss');
               dialogRef.close();
               this.getCount()
-              this.reset();
+              this.getAllFileList(this.tabValue);
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -557,7 +556,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
               this.eventService.openSnackBar('Deleted', 'Dismiss');
               dialogRef.close();
               this.getCount()
-              this.reset();
+              this.getAllFileList(this.tabValue);
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -742,6 +741,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     this.http.put(fileuploadurl, fileName, httpOptions).subscribe((responseData) => {
       console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
       if (responseData == null) {
+        this.reset()
         this._bottomSheet.dismiss()
         this.eventService.openSnackBar('Uploaded successfully', 'Dismiss');
         this.reset()

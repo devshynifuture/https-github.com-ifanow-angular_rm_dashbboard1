@@ -40,11 +40,12 @@ export class ArnRiaDetailsComponent implements OnInit {
     });
   }
 
-  openArnDetails(value, data) {
+  openArnDetails(value, data, isAddFlag) {
     let popupHeaderText = !!data ? 'Edit Fixed deposit' : 'Add Fixed deposit';
     let fullData = {
       globalData: this.globalData,
-      mainData: data || {}
+      mainData: data || {},
+      is_add_call: isAddFlag,
     }
 
     const fragmentData = {

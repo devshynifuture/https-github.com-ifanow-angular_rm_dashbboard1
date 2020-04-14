@@ -7,7 +7,7 @@
         <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
 
             <mat-select class="form-control" placeholder="Handover to user" [formControl]="user" required>
-                <mat-option *ngFor="let user of dialogData.userList" [value]="user.id">
+                <mat-option *ngFor="let user of dialogData.userList" [value]="user.adminAdvisorId">
                     {{user.fullName}}
                 </mat-option>
             </mat-select>

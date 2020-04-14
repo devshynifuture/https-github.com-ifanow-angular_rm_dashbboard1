@@ -1,6 +1,6 @@
 <div class="row bb-1 popup-header-fix w-70">
     <div class="col-md-10 p-0">
-        <h4 class="mb-0 l-22 wrapper-20">ORGANIZATION PROFILE</h4>
+        <h4 class="mb-0 l-22 wrapper-20">Organization profile</h4>
     </div>
     <div class="col-md-2 text-right">
         <i class="material-icons pt-20 c-p pr-16" (click)="Close(null)">
@@ -186,7 +186,7 @@
                     <div class="image-cropper">
                         <app-image-cropper [imageChangedEvent]="imageUploadEvent" [aspectRatio]="256/64" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)"></app-image-cropper>
                     </div>
-                    <div class="profile-img" [hidden]="!showCropper">
+                    <div class="profile-web-app-img" [hidden]="!showCropper">
                         <img [src]="finalImage" alt="cropped Image" class="w-100">
                     </div>
                     <div class="row pt-24">
@@ -197,7 +197,7 @@
                     <input type="file" #chooseImage (change)="uploadImageForCorping($event)" hidden>
                 </div>
                 <div class="col-md-5" *ngIf="!cropImage">
-                    <div class="profile-img">
+                    <div class="profile-web-app-img">
                         <img [src]="profileImg" class="w-100">
                     </div>
                     <div class="row pt-24">
@@ -219,7 +219,7 @@
                         <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)"></app-image-cropper>
                     </div>
                     <div class="profile-img" [hidden]="!showCropper">
-                        <img [src]="finalImage" alt="cropped Image" class="w-100">
+                        <img [src]="finalImage" alt="cropped Image">
                     </div>
                     <div class="row pt-24">
                     </div>
@@ -230,7 +230,7 @@
                 </div>
                 <div class="col-md-5" *ngIf="!cropImage">
                     <div class="profile-img">
-                        <img [src]="reportImg" class="w-100">
+                        <img [src]="reportImg">
                     </div>
                     <div class="row pt-24">
                         <button mat-stroked-button class="btn-primary" (click)="cropImage = true">EDIT IMAGE</button>
@@ -245,9 +245,10 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(null)">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveCurrentPage()">SAVE & {{selectedTab == 2 ? 'CLOSE' : 'NEXT'}}
-            </button>
-        </div>
+      <div class="col-md-8 right text-right">
+        <button (click)="saveCurrentPage()" class="btn-bottom br-0 text-inherit" mat-button>SAVE &
+          {{selectedTab == 2 ? 'CLOSE' : 'NEXT'}}
+        </button>
+      </div>
     </div>
 </div>

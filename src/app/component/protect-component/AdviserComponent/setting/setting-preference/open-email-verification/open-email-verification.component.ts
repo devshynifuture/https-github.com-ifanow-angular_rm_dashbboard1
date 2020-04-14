@@ -48,6 +48,9 @@ export class OpenEmailVerificationComponent implements OnInit {
       emailAddress : this.emailVierify.controls.emailId.value,
       id : this.emailDetails.id
     }
+    if(obj.emailAddress == undefined){
+      obj = undefined
+    }
     this.dialogRef.close(obj);
   }
 

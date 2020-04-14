@@ -111,11 +111,10 @@ export class ClientAddressComponent implements OnInit {
           this.addressList = data[0];
           this.createAddressForm(this.addressList)
         }
-        else {
-          this.addressList = {};
-        }
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        this.addressList = {};
+      }
     );
   }
 

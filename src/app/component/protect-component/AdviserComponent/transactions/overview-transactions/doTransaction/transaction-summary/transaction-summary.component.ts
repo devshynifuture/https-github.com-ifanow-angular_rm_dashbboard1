@@ -1,18 +1,17 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ProcessTransactionService } from '../process-transaction.service';
-import { OnlineTransactionService } from '../../../online-transaction.service';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { PopUpComponent } from '../pop-up/pop-up.component';
-import { MatDialog } from '@angular/material';
-import { of } from 'rxjs';
-import { PlatformPopUpComponent } from '../platform-pop-up/platform-pop-up.component';
-import { EuinSelectPopUpComponent } from '../euin-select-pop-up/euin-select-pop-up.component';
-import { BankSelectPopUpComponent } from '../bank-select-pop-up/bank-select-pop-up.component';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { UmrnPopUpComponent } from '../umrn-pop-up/umrn-pop-up.component';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ProcessTransactionService} from '../process-transaction.service';
+import {OnlineTransactionService} from '../../../online-transaction.service';
+import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
+import {PopUpComponent} from '../pop-up/pop-up.component';
+import {MatDialog} from '@angular/material';
+import {PlatformPopUpComponent} from '../platform-pop-up/platform-pop-up.component';
+import {EuinSelectPopUpComponent} from '../euin-select-pop-up/euin-select-pop-up.component';
+import {BankSelectPopUpComponent} from '../bank-select-pop-up/bank-select-pop-up.component';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {UmrnPopUpComponent} from '../umrn-pop-up/umrn-pop-up.component';
+import {AuthService} from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-transaction-summary',
@@ -20,15 +19,15 @@ import { AuthService } from 'src/app/auth-service/authService';
   styleUrls: ['./transaction-summary.component.scss']
 })
 export class TransactionSummaryComponent implements OnInit {
-  selectedPlatform
+  selectedPlatform;
   selectedInvestor: any;
   showInvestor = false;
-  showbank = false
+  showbank = false;
   investorList: void;
   inputData: any;
   isViewInitCalled: any;
   selectedFamilyMember: any;
-  platformType
+  platformType;
   transactionSummary: any;
   defaultCredential: any;
   defaultClient: any;
@@ -37,7 +36,7 @@ export class TransactionSummaryComponent implements OnInit {
   bankDetails: any;
   achMandateNSE: any;
   showBankEdit = false;
-  showEuin = false
+  showEuin = false;
   value: any;
   element: any;
   subBrokerCredList: any;
@@ -47,14 +46,16 @@ export class TransactionSummaryComponent implements OnInit {
   }, {
     value: 2,
     platform: 'BSE'
-  }]
+  }];
   checkAlert: any;
   changeDetails: any;
   advisorId: any;
-  clientId: any;
 
   constructor(private onlineTransact: OnlineTransactionService, private processTransaction: ProcessTransactionService,
-    private subInjectService: SubscriptionInject, public dialog: MatDialog, private customerService: CustomerService, private eventService: EventService, ) { }
+              private subInjectService: SubscriptionInject, public dialog: MatDialog,
+              private customerService: CustomerService, private eventService: EventService,) {
+  }
+
   showPlatform = false;
 
   @Output() defaultDetails = new EventEmitter();
@@ -63,178 +64,192 @@ export class TransactionSummaryComponent implements OnInit {
 
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
     this.inputData = data;
-    this.transactionSummary = data
-    console.log('This is Input data of FixedDepositComponent ', data);
+    this.transactionSummary = data;
+    console.log('This is Input data of TransactionSummaryComponent ', data);
     this.getDefaultDetails(this.transactionSummary.aggregatorType);
-    this.checkAlert = this.transactionSummary.tpUserCredFamilyMappingId
+    this.checkAlert = this.transactionSummary.tpUserCredFamilyMappingId;
   }
 
   get data() {
     return this.inputData;
   }
+
   ngOnInit() {
-    this.investorList = this.processTransaction.getIINList()
-    console.log('iinList == ', this.investorList)
-    this.transactionSummary = this.inputData
-    console.log('transactionSummary', this.transactionSummary)
-    //this.getDefaultDetails(null);
+    this.investorList = this.processTransaction.getIINList();
+    console.log('iinList == ', this.investorList);
+    this.transactionSummary = this.inputData;
+    console.log('transactionSummary', this.transactionSummary);
+    // this.getDefaultDetails(null);
   }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(PopUpComponent, {
       width: '470px',
-      data: { investor: this.clientDataList, animal: this.element }
+      data: {investor: this.clientDataList, animal: this.element}
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       if (result == undefined) {
-        return
+        return;
       }
       this.element = result;
-      this.selectedInvestor = result
-      this.defaultClient = result
-      this.allData.defaultClient = this.selectedInvestor
+      this.selectedInvestor = result;
+      this.defaultClient = result;
+      this.allData.defaultClient = this.selectedInvestor;
       this.defaultDetails.emit(this.allData);
     });
   }
+
   openEuin(): void {
     const dialogRef = this.dialog.open(EuinSelectPopUpComponent, {
       width: '470px',
-      data: { subBroker: this.subBrokerCredList, animal: this.element }
+      data: {subBroker: this.subBrokerCredList, animal: this.element}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
-        return
+        return;
       }
       console.log('The dialog was closed');
       this.element = result;
-      this.allData.euin = result
+      this.allData.euin = result;
       this.defaultDetails.emit(this.allData);
     });
   }
+
   openPlatform(): void {
     this.showPlatform = false;
     const dialogRef = this.dialog.open(PlatformPopUpComponent, {
       width: '470px',
-      data: { platform: this.platForm, animal: this.element }
+      data: {platform: this.platForm, animal: this.element}
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       if (result == undefined) {
-        this.showPlatform = false
-        return
+        this.showPlatform = false;
+        return;
       }
       this.element = result;
-      this.selectedPlatform = (result == undefined) ? this.selectedPlatform : result.value
-      this.showPlatform = false
-      this.getDefaultDetails(this.selectedPlatform)
+      this.selectedPlatform = (result == undefined) ? this.selectedPlatform : result.value;
+      this.showPlatform = false;
+      this.getDefaultDetails(this.selectedPlatform);
     });
   }
+
   openBank(): void {
     const dialogRef = this.dialog.open(BankSelectPopUpComponent, {
       width: '470px',
-      data: { bank: this.bankDetails, animal: this.element }
+      data: {bank: this.bankDetails, animal: this.element}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
-        return
+        return;
       }
       console.log('The dialog was closed');
       this.element = result;
       this.bankDetailsSend.emit(result);
     });
   }
+
   openUmrn(): void {
-    this.getNSEAchmandate()
+    this.getNSEAchmandate();
     const dialogRef = this.dialog.open(UmrnPopUpComponent, {
       width: '470px',
-      data: { mandate: this.achMandateNSE, animal: this.element }
+      data: {mandate: this.achMandateNSE, animal: this.element}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
-        return
+        return;
       }
       console.log('The dialog was closed');
       this.element = result;
       this.bankDetailsSend.emit(result);
     });
   }
+
   getNSEAchmandate() {
-    let obj1 = {
+    const obj1 = {
       tpUserCredFamilyMappingId: this.defaultClient.tpUserCredFamilyMappingId
-    }
+    };
     this.onlineTransact.getNSEAchmandate(obj1).subscribe(
       data => this.getNSEAchmandateRes(data), (error) => {
         this.eventService.showErrorMessage(error);
       }
     );
   }
+
   getNSEAchmandateRes(data) {
-    console.log('getNSEAchmandateRes', data)
-    this.achMandateNSE = data
+    console.log('getNSEAchmandateRes', data);
+    this.achMandateNSE = data;
   }
+
   getBankDetails() {
-    let obj = {
+    const obj = {
       tpUserCredFamilyMappingId: this.defaultClient.tpUserCredFamilyMappingId
-    }
+    };
     this.onlineTransact.getBankDetailsNSE(obj).subscribe(
       data => this.getBankDetailsNSERes(data), (error) => {
         this.eventService.showErrorMessage(error);
       }
     );
   }
+
   getBankDetailsNSERes(data) {
-    console.log('bank res', data)
-    this.bankDetails = data
+    console.log('bank res', data);
+    this.bankDetails = data;
     this.bankDetailsSend.emit(this.bankDetails);
     if (this.bankDetails.length > 1) {
-      this.showBankEdit = true
+      this.showBankEdit = true;
     }
 
   }
+
   selectBank(bank) {
     this.bankDetailsSend.emit(bank);
   }
 
   getDefaultDetails(platform) {
-    let obj = {
+    console.log('transactionSummaryComponent transactionSummary: ', this.transactionSummary);
+
+    const obj = {
       advisorId: this.advisorId,
-      familyMemberId: 112166,
+      familyMemberId: this.transactionSummary.familyMemberId,
       clientId: this.transactionSummary.clientId,
       aggregatorType: platform,
       mutualFundId: this.transactionSummary.mutualFundId
-    }
+    };
     this.onlineTransact.getDefaultDetails(obj).subscribe(
       data => this.getDefaultDetailsRes(data), (error) => {
         this.eventService.showErrorMessage(error);
       }
     );
   }
+
   getDefaultDetailsRes(data) {
-    console.log('deault', data)
+    console.log('deault', data);
     if (data == undefined) {
-      return
+      return;
     }
-    this.changeDetails = data
+    this.changeDetails = data;
     if (this.transactionSummary.allEdit == true && this.changeDetails.noAlert == undefined) {
       if (this.checkAlert && this.checkAlert != data.defaultClient.tpUserCredFamilyMappingId) {
-        this.alertModal(data, null)
-        return
+        this.alertModal(data, null);
+        return;
       }
     }
     data.euin = data.subBrokerCredList[0];
     this.defaultDetails.emit(data);
-    this.allData = data
-    this.clientDataList = data.clientDataList
-    this.defaultCredential = data.defaultCredential
-    this.defaultClient = data.defaultClient
-    this.subBrokerCredList = data.subBrokerCredList
-    this.selectedPlatform = this.defaultCredential.aggregatorType
+    this.allData = data;
+    this.clientDataList = data.clientDataList;
+    this.defaultCredential = data.defaultCredential;
+    this.defaultClient = data.defaultClient;
+    this.subBrokerCredList = data.subBrokerCredList;
+    this.selectedPlatform = this.defaultCredential.aggregatorType;
     if (this.selectedPlatform == 1) {
-      this.getBankDetails()
+      this.getBankDetails();
     }
   }
+
   alertModal(value, data) {
     const dialogData = {
       data: '',
@@ -245,8 +260,8 @@ export class TransactionSummaryComponent implements OnInit {
       btnNo: 'OK, PROCEED',
       positiveMethod: () => {
         this.eventService.openSnackBar('Holding nature changed sucessfully', 'Dismiss');
-        this.changeDetails.noAlert = true
-        this.getDefaultDetailsRes(this.changeDetails)
+        this.changeDetails.noAlert = true;
+        this.getDefaultDetailsRes(this.changeDetails);
         dialogRef.close();
       },
       negativeMethod: () => {

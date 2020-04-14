@@ -97,7 +97,7 @@ export class AddFamilyMemberComponent implements OnInit {
           "id": 0,
           "dematList": null,
           "pan": null,
-          "familyMemberType": 0,
+          "familyMemberType": (element.get('relationTypeId').value == 3 || element.get('relationTypeId').value == 4) ? 2 : 1,
           "clientId": AuthService.getClientData().clientId,
           "genderId": 0,
           "dateOfBirth": this.datePipe.transform(element.get('date').value._d, 'dd/MM/yyyy'),
