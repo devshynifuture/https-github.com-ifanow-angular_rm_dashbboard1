@@ -540,7 +540,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
               this.eventService.openSnackBar('Deleted', 'Dismiss');
               dialogRef.close();
               this.getCount()
-              this.reset();
+              this.getAllFileList(this.tabValue);
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -556,7 +556,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
               this.eventService.openSnackBar('Deleted', 'Dismiss');
               dialogRef.close();
               this.getCount()
-              this.reset();
+              this.getAllFileList(this.tabValue);
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -741,6 +741,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     this.http.put(fileuploadurl, fileName, httpOptions).subscribe((responseData) => {
       console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
       if (responseData == null) {
+        this.reset()
         this._bottomSheet.dismiss()
         this.eventService.openSnackBar('Uploaded successfully', 'Dismiss');
         this.reset()
