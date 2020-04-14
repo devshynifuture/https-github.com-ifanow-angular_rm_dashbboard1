@@ -264,10 +264,10 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <textarea autocomplete="off" formControlName="bio" maxlength="200" #bio matInput
-                        class="form-control" rows="5"></textarea>
+                    <textarea autocomplete="off" formControlName="bio" maxlength="50" #bio matInput class="form-control"
+                        rows="5"></textarea>
                     <mat-hint>optional</mat-hint>
-                    <mat-hint align="end">{{bio.value.length}}/200</mat-hint>
+                    <mat-hint align="end">{{bio.value.length}}/50</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -280,10 +280,10 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <textarea #myNotes formControlName="myNotes" autocomplete="off" matInput class="form-control"
-                        rows="5"></textarea>
+                    <textarea #myNotes formControlName="myNotes" maxlength="100" autocomplete="off" matInput
+                        class="form-control" rows="5"></textarea>
                     <mat-hint>optional</mat-hint>
-                    <mat-hint align="end">{{myNotes.value.length}}/200</mat-hint>
+                    <mat-hint align="end">{{myNotes.value.length}}/100</mat-hint>
                 </mat-form-field>
             </div>
         </div>

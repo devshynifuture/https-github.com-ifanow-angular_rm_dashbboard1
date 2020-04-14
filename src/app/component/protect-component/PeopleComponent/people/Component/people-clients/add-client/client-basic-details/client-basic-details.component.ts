@@ -74,7 +74,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     if (data.fieldFlag == 'familyMember') {
       this.basicDetailsData = data;
       this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
-      this.invTypeCategory = (this.basicDetailsData.familyMemberType == 0) ? '1' : String(this.basicDetailsData.familyMemberType);
+      this.invTypeCategory = String(this.basicDetailsData.familyMemberType);
       (this.basicDetailsData.familyMemberType == 1 || this.basicDetailsData.familyMemberType == 0) ? this.createIndividualForm(this.basicDetailsData) : this.createMinorForm(this.basicDetailsData);
     } else {
       this.getClientList();
@@ -85,19 +85,18 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.createIndividualForm(null);
         return;
       } else {
-        this.invTaxStatus = (this.basicDetailsData.familyMembtaxStatusIderType == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
+        this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
       }
       (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
       this.getClientOrLeadData(this.basicDetailsData);
     }
     console.log(data);
-    this.setMinDateForAge();
   }
 
-  setMinDateForAge() {
-    this.minAge = new Date();
-    console.log(this.minAge);
-  }
+  // setMinDateForAge() {
+  //   this.minAge = new Date();
+  //   console.log(this.minAge);
+  // }
 
   createIndividualForm(data) {
     this.selectedClientOwner = '1';
@@ -111,7 +110,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       dobActual: [],
       gender: ['1'],
       leadSource: [data.leadSource],
-      leaadStatus: [],
+      leaadStatus: ['0'],
       leadRating: [(data.leadRating) ? String(data.leadRating) : '0'],
       leadOwner: [],
       clientOwner: ['1'],
@@ -146,6 +145,9 @@ export class ClientBasicDetailsComponent implements OnInit {
       comPan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       comOccupation: [(data.occupationId == 0) ? '1' : String(data.occupationId)],
       username: [{ value: data.userName, disabled: true }],
+      leadSource: [data.leadSource],
+      leaadStatus: ['0'],
+      leadRating: [(data.leadRating) ? String(data.leadRating) : '0'],
       leadOwner: ['0'],
       role: [(data.roleId) ? data.roleId : '0']
     });
@@ -277,9 +279,9 @@ export class ClientBasicDetailsComponent implements OnInit {
         userType: 2,
         remarks: null,
         status: (this.fieldFlag == 'client') ? 1 : 2,
-        leadSource: (this.fieldFlag == 'lead') ? this.basicDetails.value.leadSource : null,
-        leadRating: (this.fieldFlag == 'lead') ? this.basicDetails.value.leadRating : null,
-        leadStatus: (this.fieldFlag == 'lead') ? this.basicDetails.value.leaadStatus : null
+        leadSource: (this.fieldFlag == 'lead' && this.invTypeCategory == '1') ? this.basicDetails.value.leadSource : (this.fieldFlag == 'lead' && this.invTypeCategory == '2') ? this.nonIndividualForm.value.leadSource : null,
+        leadRating: (this.fieldFlag == 'lead' && this.invTypeCategory == '1') ? this.basicDetails.value.leadRating : (this.fieldFlag == 'lead' && this.invTypeCategory == '2') ? this.nonIndividualForm.value.leadRating : null,
+        leadStatus: (this.fieldFlag == 'lead' && this.invTypeCategory == '1') ? this.basicDetails.value.leaadStatus : (this.fieldFlag == 'lead' && this.invTypeCategory == '2') ? this.nonIndividualForm.value.leadStatus : null
       };
       if (this.basicDetailsData.userId == null) {
         // if (this.invTypeCategory == '2') {

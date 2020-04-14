@@ -72,8 +72,10 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" matInput formControlName="addressLine1" class="form-control">
+                    <input autocomplete="off" #add1 maxlength="100" matInput formControlName="addressLine1"
+                        class="form-control">
                     <mat-error>This field is required</mat-error>
+                    <mat-hint align="end">{{add1.value.length}}/100</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -85,8 +87,10 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" matInput formControlName="addressLine2" class="form-control">
+                    <input autocomplete="off" #add2 matInput maxlength="100" formControlName="addressLine2"
+                        class="form-control">
                     <mat-error>This field is required</mat-error>
+                    <mat-hint align="end">{{add2.value.length}}/100</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -168,10 +172,10 @@
                 <!-- <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
                 </button> -->
                 <app-progress-button *ngIf="fieldFlag==undefined" (btnClick)="saveNext('Save')"
-                                     [options]="barButtonOptions" class="br-0 text-inherit mr-12">
+                    [options]="barButtonOptions" class="br-0 text-inherit mr-12">
                 </app-progress-button>
                 <app-progress-button (btnClick)="saveNext('Next')" class="br-0 text-inherit mr-12"
-                                     [options]="barButtonOptions">
+                    [options]="barButtonOptions">
                 </app-progress-button>
             </div>
 
