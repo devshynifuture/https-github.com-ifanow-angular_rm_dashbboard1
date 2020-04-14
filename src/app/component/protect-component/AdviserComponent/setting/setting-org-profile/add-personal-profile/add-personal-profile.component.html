@@ -82,7 +82,7 @@
                         <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)"></app-image-cropper>
                     </div>
                     <div class="profile-img" [hidden]="!showCropper">
-                        <img [src]="finalImage" alt="cropped Image" class="w-100">
+                        <img [src]="finalImage" alt="cropped Image">
                     </div>
                     <div class="row pt-24">
                     </div>
@@ -93,7 +93,7 @@
                 </div>
                 <div class="col-md-5" *ngIf="!cropImage">
                     <div class="profile-img">
-                        <img [src]="imgURL" class="w-100">
+                        <img [src]="imgURL">
                     </div>
                     <div class="row pt-24">
                         <button mat-stroked-button class="btn-primary" (click)="cropImage = true">EDIT IMAGE</button>
