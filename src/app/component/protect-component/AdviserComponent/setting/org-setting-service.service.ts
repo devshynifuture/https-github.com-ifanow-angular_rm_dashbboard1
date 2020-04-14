@@ -122,6 +122,9 @@ export class OrgSettingServiceService {
   updateAccessControl(data){
     return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_ACCESS_CONTROL, data);
   }
+  resetGallery(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.RESET_GALLARY, data);
+  }
   alterTable(table: (UpperTableBox | Group)[], field: string, value: string, index: number): (UpperTableBox | Group)[] {
     table[index][field]['value'] = value;
 

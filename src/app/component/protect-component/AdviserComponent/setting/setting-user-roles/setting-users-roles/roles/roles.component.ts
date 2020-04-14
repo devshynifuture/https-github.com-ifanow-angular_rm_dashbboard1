@@ -5,7 +5,8 @@ import {UtilService} from 'src/app/services/util.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SettingsService} from '../../../settings.service';
 import {AuthService} from 'src/app/auth-service/authService';
-import {MatTableDataSource} from '@angular/material';
+import {MatTableDataSource, MatDialog} from '@angular/material';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-roles',
@@ -23,6 +24,7 @@ export class RolesComponent implements OnInit {
   constructor(
     private eventService: EventService,
     private settingsService: SettingsService,
+    private dialog: MatDialog,
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -68,21 +70,32 @@ export class RolesComponent implements OnInit {
       }
     );
   }
+  deleteRole( data) {
+    const dialogData = {
+      data: 'Galary',
+      header: 'Delete',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        this.loader(1);
+        dialogRef.close();
+        this.settingsService.deleteRole(data.id).subscribe((res) => {
+          this.getAllRoles();
+          this.loader(-1);
+        },
+        error => this.eventService.showErrorMessage(error));
+      },
+      negativeMethod: () => {
+        dialogRef.close();
+      }
+    };
 
-  // This api is commented as we need to show popup on clone
-  // cloneRole(data) {
-  //   this.loader(1);
-  //   this.settingsService.cloneRole({id: data.id}).subscribe((res) => {
-  //     this.getAllRoles();
-  //     this.loader(-1);
-  //   });
-  // }
-
-  deleteRole(data) {
-    this.loader(1);
-    this.settingsService.deleteRole(data.id).subscribe((res) => {
-      this.getAllRoles();
-      this.loader(-1);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
     });
   }
 

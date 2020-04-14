@@ -537,6 +537,7 @@ export const appConfig = {
   OWNER_TASK_UPDATE: 'setting/task/sub-task/owner/update',
   GET_TEAM_MEMBER: 'setting/users/team-members/get',
   UPDATE_ACCESS_CONTROL: 'setting/users-roles/access-rights/update',
+  RESET_GALLARY: 'goal-planning/goal-gallery/reset',
   UPDATE_RETURNS_AND_INFLATIONS: 'plan/config/return-inflation/put',
 
   // gmail
