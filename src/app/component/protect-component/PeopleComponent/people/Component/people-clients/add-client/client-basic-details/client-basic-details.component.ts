@@ -112,7 +112,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       leadSource: [data.leadSource],
       leaadStatus: ['0'],
       leadRating: [(data.leadRating) ? String(data.leadRating) : '0'],
-      leadOwner: [],
+      leadOwner: ['0'],
       clientOwner: ['1'],
       role: [(data.roleId) ? data.roleId : '0'],
     });
