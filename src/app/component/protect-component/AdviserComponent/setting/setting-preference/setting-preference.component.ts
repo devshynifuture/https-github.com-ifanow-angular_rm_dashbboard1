@@ -248,6 +248,10 @@ export class SettingPreferenceComponent implements OnInit {
     this.getEmailVerification()
   }
   deleteEmailModal(value, data) {
+    if(data.defaultFlag == 1) {
+      this.eventService.openSnackBar("Email dependency found!", "Dismiss");
+      return;
+    }
     const dialogData = {
       data: value,
       header: 'DELETE',

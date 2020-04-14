@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {AddCamsDetailsComponent} from '../../../setting-entry/add-cams-details/add-cams-details.component';
 import {EventService} from 'src/app/Data-service/event.service';
 import {UtilService} from 'src/app/services/util.service';
@@ -22,7 +22,6 @@ export class MfRtaDetailsComponent implements OnInit {
   displayedColumns1: string[] = ['position', 'name', 'weight', 'email', 'mail', 'use', 'icons'];
   displayedColumns2: string[] = ['position', 'name', 'weight', 'email', 'mail', 'icons'];
 
-  toggleValue = true;
   camsDS: MatTableDataSource<any>;
   karvyDS: MatTableDataSource<any>;
   frankDS: MatTableDataSource<any>;
@@ -34,6 +33,7 @@ export class MfRtaDetailsComponent implements OnInit {
   arnList: any[] = [{}];
   spans: any[] = [];
   isLoading = false;
+  @ViewChild('visibilityRef', {static: true}) visibilityRef: TemplateRef<any>;
 
   constructor(
     private eventService: EventService,
@@ -165,14 +165,21 @@ export class MfRtaDetailsComponent implements OnInit {
     return '';
   }
 
-  toggleVisibility(data, toggle) {
+  toggleVisibility(data, elem) {
     if (data) {
-      if (toggle) {
+      if (!elem.toggle) {
         const copy = data.toString();
         return copy.replace(/./g, '').replace('', '********');
       } else {
         return data;
       }
     }
+  }
+
+  changeToggle(elem) {
+    if(elem.toggle) 
+      elem.toggle = false
+    else
+      elem.toggle = true
   }
 }
