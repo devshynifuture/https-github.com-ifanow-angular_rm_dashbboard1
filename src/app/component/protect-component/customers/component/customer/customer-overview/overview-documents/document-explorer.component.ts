@@ -135,7 +135,6 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       // if (element == 'CREATE') {
       //   this.createFolder(this.getInnerDoc);
       // }
-
       if (element == 'RENAME') {
         if (this.getInnerDoc.rename.flag == 'fileName') {
           this.renameFile(this.getInnerDoc);
@@ -144,7 +143,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         }
       }
       if (result.isRefreshRequired) {
-        this.getAllFileList(this.valueTab)
+        this.reset()
       }
 
     });
@@ -275,7 +274,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       this.eventService.openSnackBar('Folder name already exist', 'Ok');
     }
     console.log('newFolderRes', data);
-    this.getAllFileList(this.tabValue);
+    this.reset()
   }
 
   openBottomSheet(): void {
