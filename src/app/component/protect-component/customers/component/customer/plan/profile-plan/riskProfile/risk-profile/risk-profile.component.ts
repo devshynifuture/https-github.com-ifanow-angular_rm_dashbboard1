@@ -266,7 +266,6 @@ export class RiskProfileComponent implements OnInit {
   }
 
   submitRiskAnalysis(data) {
-    this.isLoading = true
     this.clientRiskAssessmentResults = [];
     const obj = {
       riskAssessmentId: 1,
@@ -275,9 +274,8 @@ export class RiskProfileComponent implements OnInit {
       clientRiskAssessmentResults: []
     };
     this.riskAssessmentQuestionList.forEach(element => {
-      if (element.selectedChoiceId) {
+      if (element.selectedChoiceId == undefined) {
         this.showErrorMsg = true
-        return
       } else {
         this.clientRiskAssessmentResults.push({
           riskAssessmentQuestionId: element.id,
@@ -289,13 +287,13 @@ export class RiskProfileComponent implements OnInit {
     if (this.showErrorMsg = false) {
       obj.clientRiskAssessmentResults = this.clientRiskAssessmentResults;
       console.log('RiskProfileComponent submitRiskAnalysis solutionList : ', obj);
+      this.planService.submitRisk(obj).subscribe(
+        data => this.submitRiskRes(data), error => {
+          this.showErrorMsg = true
+          //this.submitRiskRes(data);
+        }
+      );
     }
-    this.planService.submitRisk(obj).subscribe(
-      data => this.submitRiskRes(data), error => {
-        this.showErrorMsg = true
-        //this.submitRiskRes(data);
-      }
-    );
   }
 
   submitRiskRes(data) {
