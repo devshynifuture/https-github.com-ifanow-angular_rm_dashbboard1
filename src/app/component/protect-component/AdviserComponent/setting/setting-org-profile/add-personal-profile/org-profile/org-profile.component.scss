@@ -1,0 +1,11 @@
+.profile-web-app-img {
+    border: 2px solid rgba(25, 25, 25, 0.32);
+    height: 56px;
+    width: 256px;
+    display: flex;
+}
+.profile-img {
+    img {
+        max-width: 100%;
+    }
+}
