@@ -1,3 +1,12 @@
+.review-start{
+      border:1px solid #008FFF !important;
+      border-radius: 4px !important;
+      height: 30px !important;
+      line-height: 30px !important;
+      color: #008FFF !important;
+      padding-right:8px !important;
+      padding-left:8px !important;
+   }
 #marketplave-header {
    position: fixed;
    width: 100%;
@@ -199,14 +208,18 @@ z-index: 9;
 }
 
    }
-   .review-start{
-      border:1px solid #008FFF !important;
-      border-radius: 4px !important;
-      height: 30px !important;
-      line-height: 30px;
-      color: #008FFF !important;
-      padding-right:8px !important;
-      padding-left:8px !important;
-   }
+   
   
+}
+#marketplace-advisors-details{
+   padding-top:70px;
+   ul.d-block{
+      li{
+         text-align: left !important;
+         padding-top:10px !important;
+         color: #484848 !important;
+         font-family: roboto;
+         font-size: 14px;
+      }
+   }
 }
