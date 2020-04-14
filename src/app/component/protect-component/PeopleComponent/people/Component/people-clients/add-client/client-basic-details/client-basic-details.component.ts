@@ -1,13 +1,13 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {ValidatorType} from 'src/app/services/util.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {DatePipe} from '@angular/common';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ValidatorType } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { DatePipe } from '@angular/common';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 const moment = require('moment');
 
 @Component({
@@ -40,7 +40,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   clientOwnerList: any;
   selectedClientOwner: any;
   maxDateForAdultDob = moment().subtract(18, 'years');
-    // new Date(.date());
+  // new Date(.date());
   mobileNumberFlag = 'Mobile number';
 
   basicDetails;
@@ -58,8 +58,8 @@ export class ClientBasicDetailsComponent implements OnInit {
   // advisorId;
 
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
-              private subInjectService: SubscriptionInject, private peopleService: PeopleService,
-              private eventService: EventService, private datePipe: DatePipe) {
+    private subInjectService: SubscriptionInject, private peopleService: PeopleService,
+    private eventService: EventService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
@@ -106,7 +106,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       fullName: [data.name, [Validators.required]],
       email: [(data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
-      username: [{value: data.userName, disabled: true}],
+      username: [{ value: data.userName, disabled: true }],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       dobActual: [],
       gender: ['1'],
@@ -145,7 +145,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       comEmail: [(data.emailList) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
       comPan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       comOccupation: [(data.occupationId == 0) ? '1' : String(data.occupationId)],
-      username: [{value: data.userName, disabled: true}],
+      username: [{ value: data.userName, disabled: true }],
       leadOwner: ['0'],
       role: [(data.roleId) ? data.roleId : '0']
     });
@@ -169,7 +169,9 @@ export class ClientBasicDetailsComponent implements OnInit {
 
         }
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        console.error(err);
+      }
     );
   }
 
@@ -347,7 +349,9 @@ export class ClientBasicDetailsComponent implements OnInit {
         console.log(data);
         this.clientOwnerList = data;
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        console.error(err);
+      }
     );
   }
 
@@ -450,7 +454,7 @@ export class ClientBasicDetailsComponent implements OnInit {
 
   // }
   close(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', clientData: data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
   }
 
 }

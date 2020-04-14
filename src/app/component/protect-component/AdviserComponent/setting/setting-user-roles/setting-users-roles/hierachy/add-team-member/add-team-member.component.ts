@@ -15,7 +15,7 @@ import { OrgSettingServiceService } from '../../../../org-setting-service.servic
 })
 export class AddTeamMemberComponent implements OnInit, OnDestroy {
   usersForm: FormGroup;
-  subscription: Subscription;
+  subscription: Subscription = new Subscription();
   isLoading: boolean;
   filteredUsers: any;
   selectedUser: any = {};
@@ -87,11 +87,11 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   saveTeamMember(){
     let obj = {
       id: this.data.id,
-      ChildId: this.data.childId, // suchendra currently requires it as hardcoded
+      ChildId: this.data.childId,
       emailId: this.selectedMember.email,
       mobileNo: this.selectedMember.mobile,
       parentName: this.selectedMember.fullName,
-      parentId: this.selectedMember.adminAdvisorId, // suchendra currently requires it as hardcoded
+      parentId: this.selectedMember.adminAdvisorId,
       roleName: this.selectedMember.role.roleName,
     }
     this.orgSetting.updateAccessControl(obj).subscribe((res) => {
@@ -104,54 +104,9 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
       this.eventService.openSnackBar("Error occured.");
     });
   }
-  // mat auto complete search
-  // subscribeValueChange() {
-  //   this.subscription = this.usersForm
-  //     .get('userInput')
-  //     .valueChanges
-  //     .pipe(
-  //       debounceTime(300),
-  //       tap(() => {
-  //         this.isLoading = true;
-  //         this.selectedUser = {};
-  //       }),
-  //       switchMap(value => this.settingsService.searchTeamMember({ user: value })
-  //         .pipe(
-  //           finalize(() => this.isLoading = false),
-  //         )
-  //       )
-  //     )
-  //     .subscribe(users => this.filteredUsers = users.results);
-  // }
-
-  // when user chooses an option from the auto complete dropdown
+  
   chooseUser() {
     this.selectedUser = this.usersForm.get('userInput').value;
-  }
-
-  save() {
-    if (!this.selectedUser.id) {
-      this.eventService.openSnackBar("No User Selected");
-    } else {
-      let dataObj = {
-        ...this.data.mainData,
-      };
-      const obj = {
-        "childId": 0,
-        "emailId": "string",
-        "mobileNo": "string",
-        "name": "string",
-        "parentId": 0,
-        "roleName": "string"
-      };
-      this.settingsService.editAccessRightOfUser(dataObj).subscribe((res) => {
-        this.close(true);
-        this.eventService.openSnackBar("Reporting Manager Updated Successfully");
-      }, (err) => {
-        console.error(err);
-        this.eventService.openSnackBar("Error occured.");
-      });
-    }
   }
 
   close(status = false){
