@@ -182,7 +182,7 @@
       width: 100%;
       background: #214B75;
 box-shadow: 5px 1px 10px rgba(0, 0, 0, 0.2), 3px 4px 5px rgba(0, 0, 0, 0.12), 2px 2px 4px rgba(0, 0, 0, 0.14);
-
+z-index: 9;
 .mat-select-arrow-wrapper{
    height: 35px;
    padding-right: 4px;
@@ -199,4 +199,14 @@ box-shadow: 5px 1px 10px rgba(0, 0, 0, 0.2), 3px 4px 5px rgba(0, 0, 0, 0.12), 2p
 }
 
    }
+   .review-start{
+      border:1px solid #008FFF !important;
+      border-radius: 4px !important;
+      height: 30px !important;
+      line-height: 30px;
+      color: #008FFF !important;
+      padding-right:8px !important;
+      padding-left:8px !important;
+   }
+  
 }
