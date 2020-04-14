@@ -9,6 +9,8 @@ import { ViewActivityComponent } from './overview-documents/view-activity/view-a
 import { DocumentNewFolderComponent } from '../../common-component/document-new-folder/document-new-folder.component';
 import { PeopleEntryModule } from 'src/app/component/protect-component/PeopleComponent/people/people-entry-module';
 import { BottomSheetComponent } from '../../common-component/bottom-sheet/bottom-sheet.component';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 
 export const componentList = [AddFamilyMemberComponent, HistoryViewComponent, ViewActivityComponent, DocumentNewFolderComponent];
@@ -20,6 +22,8 @@ export const componentList = [AddFamilyMemberComponent, HistoryViewComponent, Vi
         ChartModule,
         FormsModule,
         ReactiveFormsModule,
+        CustomDirectiveModule,
+        CustomCommonModule,
         PeopleEntryModule
     ],
     entryComponents: [componentList]

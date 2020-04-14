@@ -61,11 +61,22 @@
                             <div class="memberSlider">
                                 <div (click)="open('edit',singleMembers)" *ngFor="let singleMembers of familyMemberList"
                                     class="memberList primary-border c-p">
-                                    <img src="/assets/images/svg/women-profile-icon.svg">
+                                    <img *ngIf="singleMembers.relationshipId==2"
+                                        src="/assets/images/svg/women-profile-icon.svg">
+                                    <img *ngIf="singleMembers.relationshipId==3"
+                                        src="/assets/images/svg/son-profile.svg">
+                                    <img *ngIf="singleMembers.relationshipId==4"
+                                        src="/assets/images/svg/daughter-profile.svg">
+                                    <img *ngIf="singleMembers.relationshipId==5"
+                                        src="/assets/images/svg/mother-profile.svg">
+                                    <img *ngIf="singleMembers.relationshipId==6"
+                                        src="/assets/images/svg/father-profile.svg">
+                                    <img *ngIf="singleMembers.relationshipId==7"
+                                        src="/assets/images/svg/man-profile.svg">
                                     <div class="familyList">
                                         <h4 class="f-12 m-0">{{singleMembers.displayName}}</h4>
                                         <p class="f-12 m-0 text-primitive">{{singleMembers.name}} </p>
-                                        <p class="f-12 m-0 text-primitive">35</p>
+                                        <p class="f-12 m-0 text-primitive">{{singleMembers.age}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -180,7 +191,7 @@
                         <div class="row">
 
                             <div *ngIf="addressList==undefined" class="col-md-12 addAddressClass">
-                                <button (click)="openAddEdit(clientOverviewData,null,'Address','Edit')"
+                                <button (click)="openAddEdit(clientOverviewData,null,'Address','Add')"
                                     class="btn-primary br-0" mat-stroked-button> ADD ADDRESS</button>
                             </div>
 
@@ -265,7 +276,7 @@
                                 </h5>
                                 <div *ngIf="dematList.length>1"
                                     class=" col-md-5 p-0 d-flex align-items-center justify-content-end ">
-                                    <span class=" f-12 text-primitive ">1 of 2</span>
+                                    <span class=" f-12 text-primitive ">{{i+1}} of {{dematList.length}}</span>
                                     <span class=" arrow-primitive arrowSlider c-p ">
                                         <i (click)="previous('demat',i)" class=" material-icons f-17 text-primitive ">
                                             chevron_left

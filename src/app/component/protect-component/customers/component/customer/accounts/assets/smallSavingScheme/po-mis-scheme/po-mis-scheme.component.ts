@@ -187,7 +187,7 @@ export class PoMisSchemeComponent implements OnInit {
   }
 
   openAddPOMIS(data) {
-    let popupHeaderText = !!data ? 'Edit Post office monthly income scheme (PO MIS)' : 'Add Post office monthly income scheme (PO MIS)';
+    let popupHeaderText = data ? 'Edit Post office monthly income scheme (PO MIS)' : 'Add Post office monthly income scheme (PO MIS)';
     const fragmentData = {
       flag: 'addPOMIS',
       data,

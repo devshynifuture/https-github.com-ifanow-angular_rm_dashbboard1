@@ -5,6 +5,7 @@ import { ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-client-demat',
@@ -21,7 +22,21 @@ export class ClientDematComponent implements OnInit {
   userData;
   dematList: any;
   holdingMode: string;
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & NEXT',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
     private eventService: EventService) {
@@ -35,11 +50,13 @@ export class ClientDematComponent implements OnInit {
     this.userData = data;
     (this.userData.dematData) ? this.dematList = this.userData.dematData : '';
     this.holdingMode = (this.userData.dematData) ? String(this.userData.dematData.modeOfHolding) : '1';
-    if (this.userData.dematData == undefined) {
+    if (this.userData.dematData == undefined && this.fieldFlag) {
       this.createDematForm(null);
       this.getDematList(data);
     }
     else {
+      (this.userData.dematData) ? this.dematList = this.userData.dematData : this.dematList = {};
+      this.barButtonOptions.text = "SAVE & CLOSE";
       this.createDematForm(this.userData.dematData);
     }
   }
@@ -99,7 +116,7 @@ export class ClientDematComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
     }));
     if (data) {
       setTimeout(() => {
@@ -149,6 +166,7 @@ export class ClientDematComponent implements OnInit {
   }
 
   removeNewNominee(item) {
+    this.disabledMember(null, null);
     this.getNominee.removeAt(item);
     if (this.dematForm.value.getNomineeName.length == 1) {
       this.getNominee.controls['0'].get('sharePercentage').setValue('100');
@@ -169,7 +187,7 @@ export class ClientDematComponent implements OnInit {
 
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -200,7 +218,7 @@ export class ClientDematComponent implements OnInit {
       modeOfHolding: [(data.modeOfHolding) ? String(data.modeOfHolding) : '1'],
       depositoryPartName: [data.depositoryParticipantName, [Validators.required]],
       depositoryPartId: [data.depositoryParticipantId, [Validators.required]],
-      clientId: [data.dematClientId, [Validators.required]],
+      dematClientId: [data.dematClientId, [Validators.required]],
       brekerName: [data.brokerName],
       brokerAddress: [data.brokerAddress],
       linkedBankAccount: [data.linkedBankAccount],
@@ -257,10 +275,9 @@ export class ClientDematComponent implements OnInit {
           this.dematList = data[0];
           this.createDematForm(this.dematList)
         }
-        else {
-          this.dematList = {};
-        }
-      }, err => this.eventService.openSnackBar(err, "Dismiss")
+      }, err => {
+        this.dematList = {};
+      }
     )
   }
   ngOnInit() {
@@ -278,6 +295,7 @@ export class ClientDematComponent implements OnInit {
 
   saveNext(flag) {
     if (this.dematForm.invalid) {
+      this.holderList.markAllAsTouched();
       this.dematForm.markAllAsTouched();
       return;
     } else {
@@ -302,6 +320,7 @@ export class ClientDematComponent implements OnInit {
           });
         });
       }
+      this.barButtonOptions.active = true;
       let obj =
       {
         "depositoryParticipantName": this.dematForm.get('depositoryPartName').value,
@@ -326,14 +345,18 @@ export class ClientDematComponent implements OnInit {
         ],
         "userType": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
         "brokerName": this.dematForm.get('brekerName').value,
-        "dematClientId": this.dematForm.get('clientId').value
+        "dematClientId": this.dematForm.get('dematClientId').value
       }
       this.peopleService.addEditClientDemat(obj).subscribe(
         data => {
           console.log(data);
+          this.barButtonOptions.active = false;
           (flag == 'Next') ? this.tabChange.emit(1) : this.close();
         },
-        err => this.eventService.openSnackBar(err, 'Dismiss')
+        err => {
+          this.eventService.openSnackBar(err, 'Dismiss')
+          this.barButtonOptions.active = false;
+        }
       );
 
     }

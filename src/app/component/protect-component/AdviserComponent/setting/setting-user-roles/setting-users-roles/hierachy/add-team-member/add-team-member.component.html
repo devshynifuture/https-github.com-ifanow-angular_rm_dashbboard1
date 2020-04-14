@@ -1,14 +1,14 @@
 <div class="popup-header-fix-45">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">ADD REPORTING MANAGER</h4>
+            <h4 class="mb-0 wrapper-20"> Add Reporting manager</h4>
         </div>
-        <div class="col-md-4 text-right">
-            <div class="wrapper-12">
-                <i class="material-icons pt-20 c-p pr-16" (click)="Close(null)">
-                    clear
-                </i>
-            </div>
+        <div class="col-md-4 text-right d-flex align-items-center justify-content-end">
+
+            <i class="material-icons c-p" (click)="Close(null)">
+                clear
+            </i>
+
         </div>
     </div>
 </div>
@@ -16,33 +16,30 @@
 <div class="wrapper-16 pt-90 pb-44 mb-44" [formGroup]="teamMember">
     <div class="row">
         <div class="col-md-11 p-0">
-            <h5>Select a team member from the search box below...</h5>
+            <h5 class="m-0">Select a team member from the search box below...</h5>
             <div class="from-group">
-                <mat-form-field>
-                    <input [matAutocomplete]="auto1"
-                        aria-label="client" class="form-control br-0 pl-8" formControlName="userInput" matInput>
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input [matAutocomplete]="auto1" aria-label="client" class="form-control br-0 pl-8" formControlName="userInput" matInput>
                     <mat-autocomplete #auto1="matAutocomplete">
-                        <mat-option  *ngFor="let c of teamMembers" (click)="selectTeamMember(c)"
-                            [value]="c.fullName">
+                        <mat-option *ngFor="let c of teamMembers" (click)="selectTeamMember(c)" [value]="c.fullName">
                             <span>{{c.fullName}}</span>
                         </mat-option>
                     </mat-autocomplete>
-                    <mat-error
-                        class="f-12">
+                    <mat-error class="f-12">
                         This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
         </div>
-        <div class="col-md-1" *ngIf="showSpinner == true">
-            <mat-spinner class="mt-8"></mat-spinner>
+        <div class="col-md-1 d-flex align-items-center " *ngIf="showSpinner == true">
+            <mat-spinner class="mt-28"></mat-spinner>
         </div>
     </div>
 
-<div *ngIf="selectedMember">
-    <h3 class="roboto f-16 f-500 mt-60 mb-10">Following are the details of {{selectedMember.fullName}}</h3>
-</div>
-   
+    <div *ngIf="selectedMember">
+        <h3 class="roboto f-16 f-500 mt-60 mb-10">Following are the details of {{selectedMember.fullName}}</h3>
+    </div>
+
 
     <div class="detailsBorder" *ngIf="selectedMember">
         <div class="row borderBtm">

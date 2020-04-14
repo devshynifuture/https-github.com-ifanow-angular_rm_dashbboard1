@@ -9,6 +9,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-nps-scheme-holding',
@@ -21,6 +22,21 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
 })
 export class NpsSchemeHoldingComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   validatorType = ValidatorType
   inputData: any;
   familyMemberId: any;
@@ -390,6 +406,7 @@ get getNominee() {
 }
 
 removeNewNominee(item) {
+  this.disabledMember(null, null);
   this.getNominee.removeAt(item);
   if (this.schemeHoldingsNPS.value.getNomineeName.length == 1) {
     this.getNominee.controls['0'].get('sharePercentage').setValue('100');
@@ -460,6 +477,7 @@ addNewNominee(data) {
         description: this.schemeHoldingsNPS.controls.description.value,
         id: this.schemeHoldingsNPS.controls.id.value
       }
+      this.barButtonOptions.active = true;
       // this.nominee.value.forEach(element => {
       //   if (element.sharePercentage == null && element.name == null) {
       //     this.nominee.removeAt(0);
@@ -474,29 +492,41 @@ addNewNominee(data) {
       }
       if (this.schemeHoldingsNPS.controls.id.value == undefined && this.flag != 'adviceNPSSchemeHolding') {
         this.custumService.addNPS(obj).subscribe(
-          data => this.addNPSRes(data)
+          data => this.addNPSRes(data),
+          err=>{
+            this.barButtonOptions.active = false;
+          }
         );
       } else if (this.flag == 'adviceNPSSchemeHolding') {
         this.custumService.getAdviceNps(adviceObj).subscribe(
           data => this.getAdviceNscSchemeLevelRes(data),
+          err =>{
+            this.barButtonOptions.active = false;
+          }
         );
       } else {
         //edit call
         this.custumService.editNPS(obj).subscribe(
-          data => this.editNPSRes(data)
+          data => this.editNPSRes(data),
+          err=>{
+              this.barButtonOptions.active = false;
+          }
         );
       }
     }
   }
   getAdviceNscSchemeLevelRes(data) {
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('NPS added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
   addNPSRes(data) {
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
   editNPSRes(data) {
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }

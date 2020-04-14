@@ -13,11 +13,12 @@ import { ImageCropperComponent } from './image-cropper/image-cropper.component';
 // import { OwnerNomineeComponent } from './owner-nominee/owner-nominee.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { ReplaceUserComponent } from './replace-user/replace-user.component';
 
 @NgModule({
   declarations: [
-    FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, ImageCropperComponent, WelcomePageComponent],
-  exports: [FroalaComponent, ConfirmDialogComponent, ImageCropperComponent],
+    FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, ImageCropperComponent, WelcomePageComponent, ReplaceUserComponent],
+  exports: [FroalaComponent, ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent],
   imports: [
     MaterialModule,
     CommonModule,
@@ -29,7 +30,7 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
     FileUploadModule
     // AppModule
   ],
-  entryComponents: [ConfirmDialogComponent, ImageCropperComponent]
+  entryComponents: [ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent]
 })
 export class CommonComponentModule {
 }

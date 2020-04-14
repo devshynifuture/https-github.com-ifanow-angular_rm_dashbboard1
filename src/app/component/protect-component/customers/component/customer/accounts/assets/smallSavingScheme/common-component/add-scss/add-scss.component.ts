@@ -8,6 +8,7 @@ import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { AssetValidationService } from './../../../asset-validation.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-scss',
@@ -18,6 +19,21 @@ import { AssetValidationService } from './../../../asset-validation.service';
   ]
 })
 export class AddScssComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   validatorType = ValidatorType
   maxDate = new Date();
   inputData: any;
@@ -159,6 +175,7 @@ get getNominee() {
 }
 
 removeNewNominee(item) {
+  this.disabledMember(null, null);
   this.getNominee.removeAt(item);
   if (this.scssSchemeForm.value.getNomineeName.length == 1) {
     this.getNominee.controls['0'].get('sharePercentage').setValue('100');
@@ -290,6 +307,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.scssSchemeForm
     if (this.scssSchemeForm.invalid) {
       this.scssSchemeForm.markAllAsTouched();
     } else {
+      this.barButtonOptions.active = true;
       const obj = {
         id: 0,
         clientId: this.clientId,
@@ -320,28 +338,39 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.scssSchemeForm
       if (this.flag == 'adviceSCSS') {
         this.cusService.getAdviceScss(adviceObj).subscribe(
           data => this.getAdviceScssRes(data),
-          err => this.eventService.openSnackBar(err, "Dismiss")
+          err =>{
+            this.barButtonOptions.active = false;
+            this.eventService.openSnackBar(err, "Dismiss")
+          } 
         );
       } else if (this.flag == "editSCSS") {
         obj.id = this.editApi.id;
         this.cusService.editSCSSData(obj).subscribe(
           data => this.addScssResponse(data),
-          error => this.eventService.showErrorMessage(error)
+          error =>{
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(error)
+          } 
         );
       } else {
         this.cusService.addSCSSScheme(obj).subscribe(
           data => this.addScssResponse(data),
-          error => this.eventService.showErrorMessage(error)
+          error =>{
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(error)
+          } 
         );
       }
     }
   }
   getAdviceScssRes(data) {
+    this.barButtonOptions.active = false;
     this.eventService.openSnackBar('Scss is added', "Dismiss");
     this.close(true);
 
   }
   addScssResponse(data) {
+    this.barButtonOptions.active = false;
     console.log(data);
     this.close(true);
   }

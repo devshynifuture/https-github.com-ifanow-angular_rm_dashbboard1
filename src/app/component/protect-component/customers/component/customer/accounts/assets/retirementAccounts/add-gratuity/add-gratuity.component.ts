@@ -8,6 +8,7 @@ import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-gratuity',
@@ -19,6 +20,21 @@ import { EventService } from 'src/app/Data-service/event.service';
   ],
 })
 export class AddGratuityComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   validatorType = ValidatorType
   gratuity: any;
   ownerData: any;
@@ -164,6 +180,7 @@ get getNominee() {
 }
 
 removeNewNominee(item) {
+  this.disabledMember(null, null);
   this.getNominee.removeAt(item);
   if (this.gratuity.value.getNomineeName.length == 1) {
     this.getNominee.controls['0'].get('sharePercentage').setValue('100');
@@ -298,7 +315,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.gratuity}
         nomineeList: this.gratuity.value.getNomineeName,
         id: this.gratuity.controls.id.value
       }
-
+      this.barButtonOptions.active =true;
       obj.nomineeList.forEach((element, index) => {
         if(element.name == ''){
           this.removeNewNominee(index);
@@ -315,12 +332,14 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.gratuity}
       if (this.gratuity.controls.id.value == undefined && this.flag != 'adviceGratuity') {
         this.custumService.addGratuity(obj).subscribe(
           data => this.addGratuityRes(data), (error) => {
+            this.barButtonOptions.active =false;
             this.event.showErrorMessage(error);
           }
         );
       } else if (this.flag == 'adviceGratuity') {
         this.custumService.getAdviceGratuity(adviceObj).subscribe(
           data => this.getAdviceGratuityRes(data), (error) => {
+            this.barButtonOptions.active =false;
             this.event.showErrorMessage(error);
           }
         );
@@ -328,6 +347,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.gratuity}
         //edit call
         this.custumService.editGratuity(obj).subscribe(
           data => this.editGratuityRes(data), (error) => {
+            this.barButtonOptions.active =false;
             this.event.showErrorMessage(error);
           }
         );
@@ -335,16 +355,19 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.gratuity}
     }
   }
   getAdviceGratuityRes(data) {
+    this.barButtonOptions.active =false;
     this.event.openSnackBar('Gratuity added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'addedGratuity', state: 'close', data, refreshRequired: true })
 
   }
   addGratuityRes(data) {
-    console.log('addrecuringDepositRes', data)
+      this.barButtonOptions.active =false;
+      console.log('addrecuringDepositRes', data)
     this.subInjectService.changeNewRightSliderState({ flag: 'addedGratuity', state: 'close', data, refreshRequired: true })
     this.event.openSnackBar('Added successfully!', 'Dismiss');
   }
   editGratuityRes(data) {
+    this.barButtonOptions.active =false;
     this.subInjectService.changeNewRightSliderState({ flag: 'addedGratuity', state: 'close', data, refreshRequired: true })
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
 

@@ -8,6 +8,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { AssetValidationService } from './../../../asset-validation.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-po-saving',
@@ -18,6 +19,21 @@ import { AssetValidationService } from './../../../asset-validation.service';
   ]
 })
 export class AddPoSavingComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   validatorType = ValidatorType
   isOptionalField: any;
   advisorId: any;
@@ -148,6 +164,7 @@ get getNominee() {
 }
 
 removeNewNominee(item) {
+  this.disabledMember(null, null);
   this.getNominee.removeAt(item);
   if (this.poSavingForm.value.getNomineeName.length == 1) {
     this.getNominee.controls['0'].get('sharePercentage').setValue('100');
@@ -299,6 +316,7 @@ addNewNominee(data) {
     if (this.poSavingForm.invalid) {
       this.poSavingForm.markAllAsTouched();
     } else {
+      this.barButtonOptions.active = true;
       if (this.flag == "editPOSAVING") {
         const obj = {
           id: this.editApi.id,
@@ -312,11 +330,14 @@ addNewNominee(data) {
           nominees: this.nominees,
           acNumber: this.poSavingForm.get('bankAccNo').value,
           description: this.poSavingForm.get('description').value,
-          ownerName: (this.ownerName == undefined) ? this.poSavingForm.controls.ownerName.value : this.ownerName.userName
+          // ownerName: (this.ownerName == undefined) ? this.poSavingForm.controls.ownerName.value : this.ownerName.userName
         };
         this.cusService.editPOSAVINGData(obj).subscribe(
           data => this.addPOSavingResponse(data),
-          error => this.eventService.showErrorMessage(error)
+          error =>{
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(error)
+          } 
         );
       } else {
         const obj = {
@@ -326,7 +347,7 @@ addNewNominee(data) {
           balanceAsOn: this.poSavingForm.get('balAsOn').value,
           accountBalance: this.poSavingForm.get('accBal').value,
           postOfficeBranch: this.poSavingForm.get('poBranch').value,
-          ownerTypeId: this.poSavingForm.get('ownershipType').value,
+          // ownerTypeId: this.poSavingForm.get('ownershipType').value,
           ownerList: this.poSavingForm.value.getCoOwnerName,
           nomineeList: this.poSavingForm.value.getNomineeName,
           nominees: this.nominees,
@@ -348,22 +369,30 @@ addNewNominee(data) {
         if (this.flag == 'advicePoSaving') {
           this.cusService.getAdvicePoSaving(adviceObj).subscribe(
             data => this.getAdvicePosavingRes(data),
-            err => this.eventService.openSnackBar(err, "Dismiss")
+            err => {
+              this.barButtonOptions.active = false;
+              this.eventService.openSnackBar(err, "Dismiss")
+            }
           );
         } else {
           this.cusService.addPOSAVINGScheme(obj).subscribe(
             data => this.addPOSavingResponse(data),
-            error => this.eventService.showErrorMessage(error)
+            error =>{
+              this.barButtonOptions.active = false;
+              this.eventService.showErrorMessage(error)
+            }
           );
         }
       }
     }
   }
   getAdvicePosavingRes(data) {
+    this.barButtonOptions.active = false;
     this.eventService.openSnackBar('PO_SAVING is edited', 'added');
     this.close(true);
   }
   addPOSavingResponse(data) {
+    this.barButtonOptions.active = false;
     this.close(true);
     console.log(data);
     (this.flag == "editPOSAVING") ? this.eventService.openSnackBar('Updated successfully!', 'Dismiss') : this.eventService.openSnackBar('Added successfully!', 'Dismiss');

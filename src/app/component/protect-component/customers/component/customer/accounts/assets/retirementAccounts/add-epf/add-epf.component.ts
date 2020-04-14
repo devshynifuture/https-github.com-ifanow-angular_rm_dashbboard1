@@ -9,6 +9,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 @Component({
   selector: 'app-add-epf',
   templateUrl: './add-epf.component.html',
@@ -19,6 +20,21 @@ import { EventService } from 'src/app/Data-service/event.service';
   ],
 })
 export class AddEPFComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   validatorType = ValidatorType
   maxDate = new Date();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -190,6 +206,7 @@ get getNominee() {
 }
 
 removeNewNominee(item) {
+  this.disabledMember(null, null);
   this.getNominee.removeAt(item);
   if (this.epf.value.getNomineeName.length == 1) {
     this.getNominee.controls['0'].get('sharePercentage').setValue('100');
@@ -308,7 +325,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.epf}
       this.epf.markAllAsTouched();
       return;
     } else {
-
+      this.barButtonOptions.active = true;
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
@@ -346,6 +363,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.epf}
       if (this.epf.controls.id.value == undefined && this.flag != 'adviceEPF') {
         this.custumService.addEPF(obj).subscribe(
           data => this.addEPFRes(data), (error) => {
+            this.barButtonOptions.active = false;
             this.event.showErrorMessage(error);
           }
         );
@@ -353,6 +371,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.epf}
       else if (this.flag == 'adviceEPF') {
         this.custumService.getAdviceEpf(adviceObj).subscribe(
           data => this.getAdviceEpfRes(data), (error) => {
+            this.barButtonOptions.active = false;
             this.event.showErrorMessage(error);
           }
         );
@@ -360,6 +379,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.epf}
         //edit call
         this.custumService.editEPF(obj).subscribe(
           data => this.editEPFRes(data), (error) => {
+            this.barButtonOptions.active = false;
             this.event.showErrorMessage(error);
           }
         );
@@ -367,16 +387,19 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.epf}
     }
   }
   getAdviceEpfRes(data) {
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('EPF added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
 
   }
   addEPFRes(data) {
+    this.barButtonOptions.active = false;
     console.log('Added successfully!', data)
     this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }
   editEPFRes(data) {
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true })
   }

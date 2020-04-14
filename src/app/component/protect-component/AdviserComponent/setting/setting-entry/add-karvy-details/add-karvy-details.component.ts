@@ -37,7 +37,7 @@ export class AddKarvyDetailsComponent implements OnInit {
       advisorId: [this.advisorId],
       arnRiaDetailsId: [this.data.mainData.arnRiaDetailsId, [Validators.required]],
       arnOrRia: [this.data.mainData.arnOrRia],
-      rtTypeMasterid: [this.data.mainData.rtType],
+      rtTypeMasterid: [this.data.rtType],
       loginId: [this.data.mainData.loginId, [Validators.required]],
       loginPassword: [this.data.mainData.loginPassword, [Validators.required]],
       rtExtTypeId: [2], // dbf file extension

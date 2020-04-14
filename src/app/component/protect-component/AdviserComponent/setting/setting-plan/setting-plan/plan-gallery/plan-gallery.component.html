@@ -6,14 +6,13 @@
     </div>
     <div class="row">
         <div class="col-md-3 mb-20" *ngFor="let gallery of defaultGallery">
-
-            <img src="/assets/images/svg/pencil-action.svg" class="plan-action" (click)="openGallery(gallery)">
-
-            <img src="/assets/images/svg/refresh-icon.svg" class="plan-refresh">
-
-
             <div class="galleryView">
-                <img mat-card-image src="{{gallery.imageUrl}}">
+                <img src="/assets/images/svg/pencil-action.svg" class="plan-action" (click)="openGallery(gallery)">
+                <img src="/assets/images/svg/refresh-icon.svg" class="plan-refresh">
+
+                <div class="photoView">
+                    <img mat-card-image src="{{gallery.imageUrl}}">
+                </div>
             </div>
             <h5 class="mb-0 mt-12 text-black text-center">{{gallery.name}}</h5>
 

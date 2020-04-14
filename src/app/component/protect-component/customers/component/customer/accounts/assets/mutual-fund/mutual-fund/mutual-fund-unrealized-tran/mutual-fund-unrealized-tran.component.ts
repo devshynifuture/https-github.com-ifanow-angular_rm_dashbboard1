@@ -5,7 +5,7 @@ import {MatTableDataSource} from '@angular/material';
 import {MfServiceService} from '../../mf-service.service';
 import {RightFilterComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
 import {ExcelGenService} from 'src/app/services/excel-gen.service';
-import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
+import {TableVirtualScrollDataSource} from 'ng-table-virtual-scroll';
 
 @Component({
   selector: 'app-mutual-fund-unrealized-tran',
@@ -20,13 +20,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   // subCategoryData: any[];
   // schemeWise: any[];
   mutualFundList: any[];
-  isLoading;
-  dataSource = new TableVirtualScrollDataSource([]);
-  grandTotal: any;
+  isLoading=false;
+  dataSource = new TableVirtualScrollDataSource([{},{},{}]);
+  grandTotal: any = {};
   schemeWiseForFilter: any;
   mutualFundListFilter: any[];
   rightFilterData: any;
-  customDataSource = new TableVirtualScrollDataSource([]);
+  customDataSource = new TableVirtualScrollDataSource([{},{},{}]);
   @ViewChild('tableEl', {static: false}) tableEl;
 
   constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -36,6 +36,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   @Input() mutualFund;
 
   ngOnInit() {
+    this.isLoading=true;
     console.log('this.mutualFund == ', this.mutualFund);
     if (this.mutualFund) {
       // this.getSubCategoryWise(this.mutualFund);
@@ -50,13 +51,14 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+
     for (const propName in changes) {
       const chng = changes[propName];
       const cur = JSON.stringify(chng.currentValue);
       const prev = JSON.stringify(chng.previousValue);
       console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
     }
-    if(changes.mutualFund && !!changes.mutualFund.currentValue) {
+    if (changes.mutualFund && !!changes.mutualFund.currentValue) {
       this.mutualFundList = this.mutualFund.mutualFundList;
       this.asyncFilter(this.mutualFundList);
     }
@@ -73,6 +75,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       // Create a new
       const worker = new Worker('./mutual-fund-unrealized.worker.ts', {type: 'module'});
       worker.onmessage = ({data}) => {
+        this.isLoading=false;
         this.grandTotal = data.totalValue;
         this.dataSource = new TableVirtualScrollDataSource(data.dataSourceData);
         this.customDataSource = new TableVirtualScrollDataSource(data.customDataSourceData);

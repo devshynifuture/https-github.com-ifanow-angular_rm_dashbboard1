@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, EventEmitter, HostListener, Input, Output, OnInit } from '@angular/core';
-import { ProgressSpinnerMode, ThemePalette } from '@angular/material';
+import {AfterViewInit, Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
+import {ProgressSpinnerMode, ThemePalette} from '@angular/material';
 
 // import { MatProgressButtonOptions } from '../../mat-progress-buttons.interface';
 
@@ -9,36 +9,38 @@ import { ProgressSpinnerMode, ThemePalette } from '@angular/material';
   styleUrls: ['./progress-button.component.scss']
 })
 export class ProgressButtonComponent implements AfterViewInit, OnInit {
-  islogBut:boolean = false;
+  islogBut = false;
   @Input() options: MatProgressButtonOptions;
-  
+
   @Output() btnClick: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
 
   _logEvent: any;
+
+  @Input() set disabled(disabled) {
+    this.options.disabled = disabled;
+  }
+
+  get logEvent() {
+    return this._logEvent;
+  }
+
   @Input() set logEvent(logEvent) {
     this._logEvent = logEvent;
     if (this._logEvent == 13) {
 
       this.onClick(null);
-      console.log(this._logEvent, "event hostlistner 2");
+      console.log(this._logEvent, 'event hostlistner 2');
     }
   }
-
-  @Input() set disabled(disabled){
-    this.options.disabled = disabled;
-  };
 
   ngOnInit() {
-    if(this.options.text.trim() == "Login to your account"){
+    if (this.options.text.trim() == 'Login to your account') {
       this.islogBut = true;
     }
-   console.log(this.islogBut, this.options.customClass, "logbutton 123");
-   
+    console.log(this.islogBut, this.options.customClass, 'logbutton 123');
+
   }
 
-  get logEvent() {
-    return this._logEvent
-  }
   /*@ViewChild('progressBar', {
     static: false, read: ElementRef,
   }) progressBar: ElementRef;*/
@@ -47,7 +49,7 @@ export class ProgressButtonComponent implements AfterViewInit, OnInit {
 
   @HostListener('click', ['$event'])
   public onClick(event: MouseEvent) {
-    console.log(event, "event hostlistner");
+    console.log(event, 'event hostlistner');
 
     if (!this.options.disabled && !this.options.active) {
       this.btnClick.emit(event);

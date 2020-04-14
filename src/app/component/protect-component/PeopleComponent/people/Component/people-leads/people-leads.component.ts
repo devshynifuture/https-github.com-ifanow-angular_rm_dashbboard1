@@ -1,12 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {LeadsClientsComponent} from './leads-clients/leads-clients.component';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {AddClientComponent} from '../people-clients/add-client/add-client.component';
-import {AuthService} from 'src/app/auth-service/authService';
-import {PeopleService} from '../../../people.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatTableDataSource} from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { LeadsClientsComponent } from './leads-clients/leads-clients.component';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { AddClientComponent } from '../people-clients/add-client/add-client.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PeopleService } from '../../../people.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatTableDataSource, MatDialog } from '@angular/material';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-people-leads',
@@ -19,7 +20,7 @@ export class PeopleLeadsComponent implements OnInit {
   leadDataSource = new MatTableDataSource();
   isLoading: boolean;
   advisorId: any;
-  constructor(public eventService: EventService, private subInjectService: SubscriptionInject, private peopleService: PeopleService) { }
+  constructor(public dialog: MatDialog, public eventService: EventService, private subInjectService: SubscriptionInject, private peopleService: PeopleService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -48,14 +49,16 @@ export class PeopleLeadsComponent implements OnInit {
         }
         this.leadDataSource.data = data;
       },
-      err => this.eventService.openSnackBar(err, 'dismiss')
+      err => {
+        this.leadDataSource.data = [];
+      }
     );
   }
   open(data, flag) {
     let component;
     if (flag == 'lead') {
       if (data == null) {
-        data = {flag: 'Add lead', fieldFlag: 'lead'};
+        data = { flag: 'Add lead', fieldFlag: 'lead' };
       } else {
         data.flag = 'Edit lead';
         data.fieldFlag = 'lead';
@@ -83,5 +86,43 @@ export class PeopleLeadsComponent implements OnInit {
       }
     );
   }
+  deleteModal(value, data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        const obj = {
+          clientId: data.clientId,
+          userType: 2
+        };
+        this.peopleService.deleteClient(obj).subscribe(
+          responseData => {
+            this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
+            dialogRef.close();
+            this.getLeadList();
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
 
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
 }

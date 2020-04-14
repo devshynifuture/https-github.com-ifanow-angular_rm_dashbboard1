@@ -1,6 +1,6 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { FormBuilder, FormArray, Validators } from '@angular/forms';
-import { ValidatorType } from 'src/app/services/util.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormArray, FormBuilder, Validators} from '@angular/forms';
+import {ValidatorType} from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-holder-names',
@@ -10,44 +10,57 @@ import { ValidatorType } from 'src/app/services/util.service';
 export class AddHolderNamesComponent implements OnInit {
   holderListResponse: any;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder) {
+  }
+
   holderNamesForm;
   validatorType = ValidatorType;
   @Output() holderList = new EventEmitter;
+
   @Input() set holderListInput(data) {
     console.log(data);
     this.holderNamesForm = this.fb.group({
       holderNameList: new FormArray([])
-    })
+    });
     if (data == undefined || data.length == 0) {
       data = {};
       this.addHolders(data);
       this.holderListResponse = data;
       return;
-    }
-    else {
+    } else {
       this.holderListResponse = data;
       data.forEach(element => {
         this.addHolders(element);
-      })
+      });
     }
   }
+
   ngOnInit() {
   }
-  get getHolderForm() { return this.holderNamesForm.controls };
-  get holderNameList() { return this.getHolderForm.holderNameList as FormArray };
+
+  get getHolderForm() {
+    return this.holderNamesForm.controls;
+  };
+
+  get holderNameList() {
+    return this.getHolderForm.holderNameList as FormArray;
+  };
+
   addHolders(data) {
     if (this.holderNameList.length == 3) {
       return;
     }
-    (data == undefined) ? data = {} : data;
+    if (!data) {
+      data = {};
+    }
     this.holderNameList.push(this.fb.group({
       name: [data.name, [Validators.required]],
       id: [data.id]
     }));
     this.holderList.emit(this.holderNameList);
   }
+
   removeHolders(index) {
-    this.holderNamesForm.controls.holderNameList.removeAt(index)
+    this.holderNamesForm.controls.holderNameList.removeAt(index);
   }
 }

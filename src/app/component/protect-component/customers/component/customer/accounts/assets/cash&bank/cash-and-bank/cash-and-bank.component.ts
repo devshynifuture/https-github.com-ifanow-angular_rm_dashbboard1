@@ -21,10 +21,9 @@ import { PdfGenService } from 'src/app/services/pdf-gen.service';
   styleUrls: ['./cash-and-bank.component.scss']
 })
 export class CashAndBankComponent implements OnInit {
+  
   showRequring: string;
   advisorId: any;
-
-
   clientId: any;
   totalAccountBalance: any;
   sumOfCashValue: any;
@@ -216,7 +215,7 @@ export class CashAndBankComponent implements OnInit {
     this.isLoading = false;
     console.log('getBankAccountsRes ####', data);
     this.isLoading = false;
-    if (data.cashInBankAccounts.length != 0) {
+    if (data != undefined) {
       this.bankAccountList.data = data.cashInBankAccounts;
       this.bankAccountList.sort = this.bankAccountListTableSort;
       this.totalAccountBalance = data.totalAccountBalance;

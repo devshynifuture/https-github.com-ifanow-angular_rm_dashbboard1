@@ -6,6 +6,7 @@ import { PostalService } from 'src/app/services/postal.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-client-address',
@@ -18,7 +19,22 @@ export class ClientAddressComponent implements OnInit {
   addressList: any;
   addressData: void;
   proofType: string;
-
+  isLoading: boolean;
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & NEXT',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private postalService: PostalService,
     private peopleService: PeopleService, private eventService: EventService) {
@@ -33,11 +49,12 @@ export class ClientAddressComponent implements OnInit {
     this.userData = data;
     (this.userData.addressData) ? this.addressList = this.userData.addressData : ''
     this.proofType = (this.userData.addressData) ? String(this.userData.addressData.addressType) : '1';
-    if (this.userData.addressData == undefined) {
+    if (this.userData.addressData == undefined && this.fieldFlag) {
       this.createAddressForm(null);
       this.getAddressList(data);
     }
     else {
+      this.barButtonOptions.text = "SAVE & CLOSE";
       this.createAddressForm(this.userData.addressData);
     }
   }
@@ -66,6 +83,7 @@ export class ClientAddressComponent implements OnInit {
     };
     console.log(value, 'check value');
     if (value != '') {
+      this.isLoading = true;
       this.postalService.getPostalPin(value).subscribe(data => {
         console.log('postal 121221', data);
         this.PinData(data);
@@ -74,6 +92,7 @@ export class ClientAddressComponent implements OnInit {
   }
 
   PinData(data) {
+    this.isLoading = false;
     const pincodeData = (data == undefined) ? data = {} : data[0].PostOffice;
     this.addressForm.get('city').setValue(pincodeData[0].District);
     this.addressForm.get('state').setValue(pincodeData[0].State);
@@ -109,7 +128,7 @@ export class ClientAddressComponent implements OnInit {
       this.addressForm.markAllAsTouched();
       return;
     } else {
-
+      this.barButtonOptions.active = true;
       const obj = {
         address1: this.addressForm.get('addressLine1').value,
         address2: this.addressForm.get('addressLine2').value,
@@ -130,10 +149,13 @@ export class ClientAddressComponent implements OnInit {
 
       this.peopleService.addEditClientAddress(obj).subscribe(
         data => {
-          console.log(data);
+          console.log(data); this.barButtonOptions.active = false;
           (flag == 'Next') ? this.tabChange.emit(1) : this.close();
         },
-        err => this.eventService.openSnackBar(err, 'Dismiss')
+        err => {
+          this.eventService.openSnackBar(err, 'Dismiss')
+          this.barButtonOptions.active = false;
+        }
       );
     }
   }

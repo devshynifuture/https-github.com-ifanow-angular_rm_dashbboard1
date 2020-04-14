@@ -3,13 +3,13 @@
         <h4 class="m-0 text-black">Team members</h4>
     </div>
     <div class="col-md-6 text-right">
-        <button (click)="addEditTeamMember(null, true)" mat-stroked-button class="btn-primary pl-8">
-            <i class="material-icons pr-8 text-white">add</i>ADD NEW
+        <button *ngIf="userList" (click)="addEditTeamMember(null, true)" mat-stroked-button class="btn-primary">
+            ADD NEW
         </button>
     </div>
 </div>
 <div class="row pt-20">
-    <div class="col-md-3 mb-20 pl-0" *ngFor="let user of userList">
+    <div class="col-md-3 mb-16 pl-0" *ngFor="let user of userList">
         <mat-card class="b-a p-9 br-4">
             <div class="row">
                 <div class="col-md-4 p-0">
@@ -28,7 +28,8 @@
                             <mat-menu #menu="matMenu">
                                 <button mat-menu-item (click)="addEditTeamMember(user, false)">Edit</button>
                                 <button mat-menu-item (click)="suspendUser(user)" *ngIf="user.isSuspended == 0">Suspend</button>
-                                <!-- <button mat-menu-item (click)="deleteUser(user)">Delete</button> -->
+                                <button mat-menu-item (click)="reactivateUser(user)" *ngIf="user.isSuspended == 1">Reactivate</button>
+                                <button mat-menu-item (click)="deleteUser(user)">Delete</button>
                             </mat-menu>
                         </div>
 
@@ -39,4 +40,11 @@
             </div>
         </mat-card>
     </div>
+</div>
+<div *ngIf="userList==undefined" class="d-flex flex-column align-items-center">
+    <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="pt-12">No Team members found</h4>
+    <button (click)="addEditTeamMember(null, true)" class="btn-primary addon v-middle  " mat-stroked-button>
+        ADD NEW
+    </button>
 </div>
