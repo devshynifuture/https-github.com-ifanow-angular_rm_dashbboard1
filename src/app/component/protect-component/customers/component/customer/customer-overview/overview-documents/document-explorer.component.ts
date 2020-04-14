@@ -451,7 +451,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       const obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
-        docGetFlag: this.valueTab,
+        docGetFlag: 1,
         folderParentId: (value.id == undefined) ? 0 : value.id,
       };
       console.log('this.parentId', this.parentId);
