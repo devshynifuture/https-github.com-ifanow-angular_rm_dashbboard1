@@ -20,7 +20,7 @@
             <div class="form-group m-0">
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="clientOwner">
-                      <mat-option *ngFor="let client of clientOwnerList" [value]="client">{{client.name}}</mat-option>
+                        <mat-option *ngFor="let client of clientOwnerList" [value]="client">{{client.name}}</mat-option>
                     </mat-select>
                     <mat-error>This Field is required</mat-error>
                 </mat-form-field>
@@ -59,17 +59,17 @@
             </p>
         </div>
     </div>
-  <!-- <div class="row">
+    <!-- <div class="row">
        <div class="col-md-12 roboto f-14 p-0">
            <mat-checkbox> </mat-checkbox> Automatically generate a password
        </div>
    </div>-->
 
     <div class="row pt-24">
-      <div class="col-md-12 roboto f-14 p-0">
-        <mat-checkbox formControlName="sendEmailFlag"></mat-checkbox>
-        Send welcome email
-      </div>
+        <div class="col-md-12 roboto f-14 p-0">
+            <mat-checkbox formControlName="sendEmailFlag"></mat-checkbox>
+            Send welcome email
+        </div>
         <div class="col-md-12 pl-20 pr-0">
             <p class="f-12 l-18 m-0 text-primitive">
                 If opted, an email window will show up once you click on the Convert button below. You can customize the
@@ -89,9 +89,12 @@
         </div>
         <div class="col-md-8 right text-right">
 
-            <button *ngIf="convertClientForm.valid" mat-stroked-button class="btn-bottom br-0 text-inherit"
+            <!-- <button *ngIf="convertClientForm.valid" mat-stroked-button class="btn-bottom br-0 text-inherit"
                 (click)="convertIntoLead()">CONVERT
-            </button>
+            </button> -->
+            <app-progress-button *ngIf="convertClientForm.valid" (btnClick)="convertIntoLead()"
+                class="br-0 text-inherit mr-12" [options]="barButtonOptions" [logEvent]="passEvent">
+            </app-progress-button>
         </div>
     </div>
 </div>
