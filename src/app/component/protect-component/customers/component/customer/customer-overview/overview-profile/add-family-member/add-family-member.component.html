@@ -95,11 +95,11 @@
                     <div *ngIf="singleMember.selected">
                         <div class="d-flex mt-8 align-items-center justify-content-center">
                             <button (click)="remove(singleMember)" [disabled]="!singleMember.selected" class="btn24 mr-4 c-p" mat-button>
-                <i class="material-icons text-black f-20">remove</i>
-              </button>
+                                <i class="material-icons text-black f-20">remove</i>
+                            </button>
                             <p class="mb-0 ml-8 mr-8  ">{{singleMember.count}}</p>
                             <button (click)="add(singleMember)" [disabled]="!singleMember.selected" class="btn24 ml-4 c-p" mat-button>
-                <i class="material-icons f-20 text-black">add</i></button>
+                                <i class="material-icons f-20 text-black">add</i></button>
                         </div>
                     </div>
                 </div>
@@ -126,8 +126,8 @@
             </div>
             <div [formGroup]="createFamily">
                 <div *ngFor="let singleMember of getFamilyListList.controls;index as i" [formGroup]="singleMember" class="row mbottom-30">
-                    <div class="col-md-2 pr-0 d-flex align-items-center justify-content-end">
-                        <h5 class="m-0 text-right">{{familyMemberNameList[i]}}</h5>
+                    <div class="col-md-2 pr-0">
+                        <h5 class="m-0 pt-12 text-right">{{familyMemberNameList[i]}}</h5>
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
@@ -338,11 +338,11 @@
             </div>
             <div class="col-md-8 right text-right">
                 <button (click)="selectFamilyMembersCount()" *ngIf="step==1 && typeOfFamilyMemberAdd=='1'" class="btn-bottom br-0 text-inherit" mat-button>Proceed
-        </button>
+                </button>
                 <button (click)="next()" *ngIf="step==1 && typeOfFamilyMemberAdd=='2'" class="btn-bottom br-0 text-inherit" mat-button>Proceed
-        </button>
+                </button>
                 <button (click)="createFamilyMember()" *ngIf="step==2" class="btn-bottom br-0 text-inherit" mat-button>Next
-        </button>
+                </button>
                 <!-- <button class="btn-bottom br-0 text-inherit" *ngIf="step==3" (click)="saveFamilyMembers()"
             mat-button>Save
         </button> -->
