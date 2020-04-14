@@ -284,7 +284,7 @@ export class RiskProfileComponent implements OnInit {
         });
       }
     });
-    if (this.showErrorMsg = false) {
+    if (this.showErrorMsg == false) {
       obj.clientRiskAssessmentResults = this.clientRiskAssessmentResults;
       console.log('RiskProfileComponent submitRiskAnalysis solutionList : ', obj);
       this.planService.submitRisk(obj).subscribe(
