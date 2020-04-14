@@ -1,202 +1,231 @@
 #marketplave-header {
-   position: fixed;
-   width: 100%;
-   height: 70px;
-   border-bottom: 1px solid #ddd;
-   float: right;
-   width: 100%;
-   padding-right: 0px;
-   z-index: 101;
-   background: #fff !important;
-   // box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2), 0px 1px 0px rgba(0, 0, 0, 0.12), 
-   // 0px 3px 3px rgba(0, 0, 0, 0.14);
-   .mat-stroked-button {
-      padding: 0 5px;
-   }
-   .custom-input-market {
-      background: #F1F3F4;
-      font-size: 14px;
-      border: 0px !important;
-      color: #83959D;
-   }
-   a,
-   button {
-      font-family: Roboto;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 16px;
-      text-align: center;
-      letter-spacing: 0.75px;
-      text-transform: uppercase;
-      color: #595252;
-      border: 0px !important;
-   }
-   .mat-button-focus-overlay {
-      background-color: transparent !important;
-   }
-   button {
-      border: 1px solid #83959D !important;
-      box-sizing: border-box;
-      border-radius: 2px !important;
-      font-size: 13px !important;
-      line-height: 16px;
-      height: 30px !important;
-      letter-spacing: 0.4px;
-      color: #83959D !important;
-   }
+  position: fixed;
+  width: 100%;
+  height: 70px;
+  border-bottom: 1px solid #ddd;
+  float: right;
+  width: 100%;
+  padding-right: 0px;
+  z-index: 101;
+  background: #fff !important;
+  // box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2), 0px 1px 0px rgba(0, 0, 0, 0.12),
+  // 0px 3px 3px rgba(0, 0, 0, 0.14);
+  .mat-stroked-button {
+    padding: 0 5px;
+  }
+
+  .custom-input-market {
+    background: #F1F3F4;
+    font-size: 14px;
+    border: 0px !important;
+    color: #83959D;
+  }
+
+  a,
+  button {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    letter-spacing: 0.75px;
+    text-transform: uppercase;
+    color: #595252;
+    border: 0px !important;
+  }
+
+  .mat-button-focus-overlay {
+    background-color: transparent !important;
+  }
+
+  button {
+    border: 1px solid #83959D !important;
+    box-sizing: border-box;
+    border-radius: 2px !important;
+    font-size: 13px !important;
+    line-height: 16px;
+    height: 30px !important;
+    letter-spacing: 0.4px;
+    color: #83959D !important;
+  }
 }
 
 #marketplace-content {
-   h4,
-   h5 {
-      color: #484848;
-      font-family: roboto;
-   }
-   .spaceing {
-      padding: 95px 60px;
-   }
-   .bg-1 {
-      background: rgba(88, 191, 194, 0.4);
-   }
-   .bg-2 {
-      background: rgba(88, 191, 194, 0.4);
-   }
-   .bg-3 {
-      background: rgba(132, 189, 243, 0.2);
-   }
-   .bg-4 {
-      background: rgba(253, 175, 64, 0.2);
-   }
-   .bg-5 {
-      background: rgba(93, 198, 68, 0.2);
-   }
-   .bg-6 {
-      background: rgba(253, 175, 64, 0.7);
-      .col-md-12 {
-         p:nth-child(1) {
-            border: 1px solid #A25F00;
-            border-radius: 50%;
-            height: 50px;
-            width: 50px;
-            font-size: 16px;
-            padding-top: 15px;
-            font-family: roboto;
-            text-align: center;
-            color: #A25F00;
-         }
+  h4,
+  h5 {
+    color: #484848;
+    font-family: roboto;
+  }
+
+  .spaceing {
+    padding: 95px 60px;
+  }
+
+  .bg-1 {
+    background: rgba(88, 191, 194, 0.4);
+  }
+
+  .bg-2 {
+    background: rgba(88, 191, 194, 0.4);
+  }
+
+  .bg-3 {
+    background: rgba(132, 189, 243, 0.2);
+  }
+
+  .bg-4 {
+    background: rgba(253, 175, 64, 0.2);
+  }
+
+  .bg-5 {
+    background: rgba(93, 198, 68, 0.2);
+  }
+
+  .bg-6 {
+    background: rgba(253, 175, 64, 0.7);
+
+    .col-md-12 {
+      p:nth-child(1) {
+        border: 1px solid #A25F00;
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+        font-size: 16px;
+        padding-top: 15px;
+        font-family: roboto;
+        text-align: center;
+        color: #A25F00;
       }
-      h2,
-      h1 {
-         color: #A15F00;
+    }
+
+    h2,
+    h1 {
+      color: #A15F00;
+    }
+  }
+
+  .bg-7 {
+    background: rgba(132, 189, 243, 0.7);
+
+    .col-md-12 {
+      p:nth-child(1) {
+        border: 1px solid #3A79B6;
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+        font-size: 16px;
+        padding-top: 15px;
+        font-family: roboto;
+        text-align: center;
+        color: #3A79B6;
       }
-   }
-   .bg-7 {
-      background: rgba(132, 189, 243, 0.7);
-      .col-md-12 {
-         p:nth-child(1) {
-            border: 1px solid #3A79B6;
-            border-radius: 50%;
-            height: 50px;
-            width: 50px;
-            font-size: 16px;
-            padding-top: 15px;
-            font-family: roboto;
-            text-align: center;
-            color: #3A79B6;
-         }
+    }
+
+    h2,
+    h1 {
+      color: #3A79B6;
+    }
+  }
+
+  .bg-8 {
+    background: rgba(93, 198, 68, 0.7);
+
+    .col-md-12 {
+      p:nth-child(1) {
+        border: 1px solid #2E6F1F;
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+        font-size: 16px;
+        padding-top: 15px;
+        font-family: roboto;
+        text-align: center;
+        color: #2E6F1F;
       }
-      h2,
-      h1 {
-         color: #3A79B6;
-      }
-   }
-   .bg-8 {
-      background: rgba(93, 198, 68, 0.7);
-      .col-md-12 {
-         p:nth-child(1) {
-            border: 1px solid #2E6F1F;
-            border-radius: 50%;
-            height: 50px;
-            width: 50px;
-            font-size: 16px;
-            padding-top: 15px;
-            font-family: roboto;
-            text-align: center;
-            color: #2E6F1F;
-         }
-      }
-      h2,
-      h1 {
-         color: #2E6F1F;
-      }
-   }
-   .ba-1 {
-      border: 1px solid #43ABAE;
-      display: unset;
-   }
-   .btn-financial-expert {
+    }
+
+    h2,
+    h1 {
+      color: #2E6F1F;
+    }
+  }
+
+  .ba-1 {
+    border: 1px solid #43ABAE;
+    display: unset;
+  }
+
+  .btn-financial-expert {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px !important;
+    line-height: 19px !important;
+    background: #43ABAE !important;
+    border-radius: 4px !important;
+    color: #fff;
+    margin-top: 32px !important;
+  }
+
+  .articles {
+    padding-top: 10px;
+
+    img {
+      width: 100%;
+      border: 0.5px solid #83959D;
+      cursor: pointer;
+    }
+
+    h5 {
+      font-family: Georgia;
+      font-style: normal;
+      font-weight: normal;
+      color: #000000;
+      line-height: 18px;
+      letter-spacing: 0.2px;
+      cursor: pointer;
+    }
+
+    p {
       font-family: Roboto;
       font-style: normal;
       font-weight: normal;
-      font-size: 16px !important;
-      line-height: 19px !important;
-      background: #43ABAE !important;
-      border-radius: 4px !important;
-      color: #fff;
-      margin-top: 32px !important;
-   }
-   .articles{
-      padding-top:10px;
-      img{
-         width: 100%;
-         border: 0.5px solid #83959D;
-         cursor: pointer;
-      }
-      h5{
-         font-family: Georgia;
-         font-style: normal;
-         font-weight: normal;
-         color: #000000;
-         line-height: 18px;
-         letter-spacing: 0.2px;
-         cursor: pointer;
-      }
-      p{
-         font-family: Roboto;
-         font-style: normal;
-         font-weight: normal;
-         font-size: 14px;
-         line-height: 16px;
-         letter-spacing: 0.2px;
-         color: #83959D;
-         cursor: pointer;
-      }
-   }
+      font-size: 14px;
+      line-height: 16px;
+      letter-spacing: 0.2px;
+      color: #83959D;
+      cursor: pointer;
+    }
+  }
 }
 
-#marketplace-advisors{
-   padding-top:70px;
-   .selected-filters{
-      position:fixed;
-      width: 100%;
-      background: #214B75;
-box-shadow: 5px 1px 10px rgba(0, 0, 0, 0.2), 3px 4px 5px rgba(0, 0, 0, 0.12), 2px 2px 4px rgba(0, 0, 0, 0.14);
+#marketplace-advisors {
+  padding-top: 70px;
 
-.mat-select-arrow-wrapper{
-   height: 35px;
-   padding-right: 4px;
-   .mat-select-arrow{
+  .selected-filters {
+    position: fixed;
+    width: 100%;
+    background: #214B75;
+    box-shadow: 5px 1px 10px rgba(0, 0, 0, 0.2), 3px 4px 5px rgba(0, 0, 0, 0.12), 2px 2px 4px rgba(0, 0, 0, 0.14);
+
+    .mat-select-arrow-wrapper {
+      height: 35px;
+      padding-right: 4px;
+
+      .mat-select-arrow {
+        color: #fff !important;
+      }
+    }
+
+    .mat-option.mat-active {
+      background-color: #214B75 !important;
       color: #fff !important;
-   }
-}
-.mat-option.mat-active{
-   background-color:#214B75 !important;
-   color: #fff !important; 
-}
-.mat-select{
-   border:1px solid #fff !important;
-}
+    }
 
-   }
+    .mat-select {
+      border: 1px solid #fff !important;
+    }
+
+  }
 }

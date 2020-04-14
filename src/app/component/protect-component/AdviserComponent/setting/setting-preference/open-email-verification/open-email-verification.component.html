@@ -1,28 +1,29 @@
 <div class="popup-header-fix-30">
     <div class="row bb-1">
-        <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">ADD EMAIL</h4>
+      <div class="col-md-8 d-flex align-items-center">
+        <h4 class="mb-0">Add Email</h4>
+      </div>
+      <div class="col-md-4 text-right">
+        <div class="wrapper-16 pr-0">
+          <i (click)="onNoClick()" class="material-icons c-p  v-middle"> clear</i>
         </div>
-        <div class="col-md-4 text-right">
-            <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="onNoClick()"> clear</i>
-            </div>
-        </div>
+      </div>
     </div>
 </div>
 <div [formGroup]="emailVierify">
     <div class="row pt-12">
-        <div class="col-md-12 iconPetage">
-            <h5 class="mb-8 ">Email Id</h5>
-            <div class="form-group matFormPadding mb-0">
-                <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                    <input matInput #interestRate matInput type="email" formControlName="emailId" class="form-control br-0 " placeholder="email@example.com">
-                    <mat-error class="f-12 pt-4">
-                        This field is required
-                    </mat-error>
-                </mat-form-field>
-            </div>
+      <div class="col-md-16 iconPetage">
+        <h5 class="mb-8 ">Email Id</h5>
+        <div class="form-group matFormPadding mb-0">
+          <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
+            <input matInput #interestRate matInput type="email" formControlName="emailId" class="form-control br-0 "
+                   placeholder="email@example.com">
+            <mat-error class="f-12 pt-4">
+              This field is required
+            </mat-error>
+          </mat-form-field>
         </div>
+      </div>
     </div>
 </div>
 <div class="row pt-16 pb-16">
