@@ -336,6 +336,7 @@
             <div class="col-md-4">
                 <h5 (click)="close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
             </div>
+
             <div class="col-md-8 right text-right">
                 <button (click)="selectFamilyMembersCount()" *ngIf="step==1 && typeOfFamilyMemberAdd=='1'" class="btn-bottom br-0 text-inherit" mat-button>Proceed
                 </button>
@@ -343,11 +344,10 @@
                 </button>
                 <button (click)="createFamilyMember()" *ngIf="step==2" class="btn-bottom br-0 text-inherit" mat-button>Next
                 </button>
-                <!-- <button class="btn-bottom br-0 text-inherit" *ngIf="step==3" (click)="saveFamilyMembers()"
-            mat-button>Save
-        </button> -->
+
                 <app-progress-button (btnClick)="saveFamilyMembers()" *ngIf="step==3" [options]="barButtonOptions" class="br-0 text-inherit mr-12">
                 </app-progress-button>
+
             </div>
         </div>
     </div>

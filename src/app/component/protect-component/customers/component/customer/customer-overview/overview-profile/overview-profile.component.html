@@ -181,7 +181,14 @@
                         <div class="row">
 
                             <div *ngIf="addressList==undefined" class="col-md-12 addAddressClass">
-                                <button (click)="openAddEdit(clientOverviewData,null,'Address','Add')" class="btn-primary br-0" mat-stroked-button> ADD ADDRESS</button>
+
+                                <div class="d-flex flex-column align-items-center">
+                                    <!-- <img class="width150" src="assets/images/svg/noDataFound.svg"> -->
+                                    <h4 class="text-center pt-12">No data Found</h4>
+                                    <button (click)="openAddEdit(clientOverviewData,null,'Address','Add')" class="btn-primary br-0" mat-stroked-button> ADD ADDRESS</button>
+                                </div>
+
+
                             </div>
 
 
@@ -200,9 +207,15 @@
 
                     <div class=" col-md-3 pl-20 ">
                         <div class="row">
-                            <div *ngIf="bankList==undefined || bankList.length==0" class="col-md-12 text-center">
-                                <button (click)="openAddEdit(clientOverviewData,null,'Bank','Add')" class="btn-primary br-0 " mat-stroked-button> ADD BANK </button>
+                            <div *ngIf="bankList==undefined || bankList.length==0" class="col-md-12 mb-20 text-left">
+                                <h5 class=" headingDetails "> Bank </h5>
+                                <div class="d-flex flex-column align-items-center">
+                                    <!-- <img class="width150" src="assets/images/svg/noDataFound.svg"> -->
+                                    <h4 class="text-center pt-12">No data Found</h4>
+                                    <button (click)="openAddEdit(clientOverviewData,null,'Bank','Add')" class="btn-primary br-0 " mat-stroked-button> ADD BANK </button>
+                                </div>
                             </div>
+
                             <div *ngFor="let singleBank of bankList;index as i" class="col-md-12">
                                 <div *ngIf="selectedBankData===singleBank" class=" row ">
                                     <div class=" col-md-6 ">
@@ -237,11 +250,18 @@
                                     </div>
                                 </div>
                             </div>
+
+
                         </div>
                         <hr class=" bb-primitive hrMargin ">
-                        <div *ngIf="dematList==undefined || dematList.length==0" class="col-md-12 addDenmatClass">
-                            <button (click)="openAddEdit(clientOverviewData,null,'Demat','Add')" class="btn-primary br-0 " mat-stroked-button> ADD DEMAT </button>
+                        <div *ngIf="dematList==undefined || dematList.length==0" class="col-md-12 p-0 ">
+                            <h5 class=" headingDetails "> Demat </h5>
+                            <div class="d-flex addDenmatClass flex-column align-items-center">
+                                <h4 class="text-center pt-12">No data Found</h4>
+                                <button (click)="openAddEdit(clientOverviewData,null,'Demat','Add')" class="btn-primary br-0 " mat-stroked-button> ADD DEMAT </button>
+                            </div>
                         </div>
+
                         <div *ngFor="let singleDemat of dematList;index as i">
                             <div *ngIf="selectedDemat===singleDemat">
                                 <h5 class=" headingDetails "> Demat
