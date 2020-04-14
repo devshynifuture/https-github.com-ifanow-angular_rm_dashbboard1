@@ -3,8 +3,8 @@
         <h4 class="m-0 text-black">Roles</h4>
     </div>
     <div class="col-md-6 text-right p-0">
-        <button [matMenuTriggerFor]="menu" mat-stroked-button class="btn-primary addBtnclass">
-            ADD NEW
+        <button [matMenuTriggerFor]="menu" class="btn-primary" mat-stroked-button>
+          ADD NEW
         </button>
         <mat-menu #menu="matMenu">
             <button class="roboto" mat-menu-item (click)="addEditNewRoles(1, true, null)">Admin</button>

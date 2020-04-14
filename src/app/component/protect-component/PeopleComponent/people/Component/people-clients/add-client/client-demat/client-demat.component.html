@@ -233,10 +233,10 @@
             <!-- <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
             </button> -->
             <app-progress-button *ngIf="fieldFlag==undefined" (btnClick)="saveNext('Save')"
-                                 [options]="barButtonOptions" class="br-0 text-inherit mr-12">
+                class="br-0 text-inherit mr-12" [options]="barButtonOptions">
             </app-progress-button>
             <app-progress-button (btnClick)="saveNext('Next')" class="br-0 text-inherit mr-12"
-                                 [options]="barButtonOptions">
+                [options]="barButtonOptions">
             </app-progress-button>
         </div>
     </div>

@@ -29,8 +29,7 @@
         <p class="m-0 roboto">Tax status</p>
         <div class="form-group">
           <mat-form-field>
-            <mat-select (selectionChange)="changeTaxStatus($event)" [(ngModel)]="invTaxStatus"
-                        class="form-control">
+            <mat-select (selectionChange)="changeTaxStatus($event)" [(ngModel)]="invTaxStatus" class="form-control">
               <mat-option value="1">Resident</mat-option>
               <mat-option value="2">Non-resident</mat-option>
             </mat-select>
@@ -49,9 +48,8 @@
       <div class="col-md-6 p-0">
         <div class="form-group mb-0">
           <mat-form-field floatLabel="never" appearance="standard">
-            <input autocomplete="off" #fullName appInputValueValidation
-                   [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" formControlName="fullName"
-                   matInput placeholder="Enter Name" class="form-control">
+            <input #fullName [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" appInputValueValidation
+                   autocomplete="off" class="form-control" formControlName="fullName" matInput placeholder="Enter Name">
             <mat-error>This field is required</mat-error>
             <mat-hint align="end">{{fullName.value.length}}/50</mat-hint>
           </mat-form-field>
@@ -65,8 +63,7 @@
       <div class="col-md-6 p-0">
         <div class="form-group mb-0">
           <mat-form-field floatLabel="never" appearance="standard">
-            <input autocomplete="off" formControlName="email" matInput placeholder="Enter Email"
-                   class="form-control">
+            <input autocomplete="off" class="form-control" formControlName="email" matInput placeholder="Enter Email">
             <mat-hint>Optional</mat-hint>
             <mat-error *ngIf="basicDetails.get('email').errors?.pattern">Email is not valid</mat-error>
           </mat-form-field>
@@ -83,9 +80,8 @@
       <div class="col-md-3 p-0">
         <div class="form-group mb-0">
           <mat-form-field>
-            <input autocomplete="off" #pan appInputValueValidation
-                   [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="pan" maxlength="10" matInput
-                   class="form-control">
+            <input #pan [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation autocomplete="off"
+                   class="form-control" formControlName="pan" matInput maxlength="10">
             <mat-error *ngIf="basicDetails.get('pan').errors?.required">This Field is required</mat-error>
             <mat-error *ngIf="basicDetails.get('pan').errors?.pattern">Pan must be 10 digits</mat-error>
             <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
@@ -106,9 +102,8 @@
       <div class="col-md-6 p-0">
         <div class="form-group mb-0">
           <mat-form-field>
-            <input autocomplete="off" #username appInputValueValidation
-                   [inputValidator]="validatorType.TEXT_ONLY" formControlName="username" matInput
-                   class="form-control">
+            <input #username [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation autocomplete="off"
+                   class="form-control" formControlName="username" matInput>
             <mat-hint align="end">{{username.value.length}}/ 50</mat-hint>
             <mat-error>This field is required</mat-error>
             <mat-hint>Optional</mat-hint>
@@ -124,11 +119,10 @@
         <p class="m-0 roboto">As per records</p>
         <div class="form-group mb-0">
           <mat-form-field class="ba-date">
-            <input [matDatepicker]="dobAsPerRecord" (click)="dobAsPerRecord.open()"
-                   class="form-control br-0 b-0" formControlName="dobAsPerRecord" [max]="maxDateForAdultDob" matInput
-                   readonly>
+            <input (click)="dobAsPerRecord.open()" [matDatepicker]="dobAsPerRecord" [max]="maxDateForAdultDob"
+                   class="form-control br-0 b-0" formControlName="dobAsPerRecord" matInput readonly>
             <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord"></mat-datepicker-toggle>
-            <mat-datepicker  #dobAsPerRecord></mat-datepicker>
+            <mat-datepicker #dobAsPerRecord></mat-datepicker>
             <mat-hint>Optional</mat-hint>
           </mat-form-field>
         </div>
@@ -174,8 +168,7 @@
       <div class="col-md-5 p-0">
         <div class="form-group m-0">
           <mat-form-field>
-            <mat-select [(ngModel)]="selectedClientOwner" formControlName="clientOwner"
-                        class="form-control">
+            <mat-select [(ngModel)]="selectedClientOwner" class="form-control" formControlName="clientOwner">
               <mat-option value="1">Select option</mat-option>
               <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
                 {{singleClient.name}}
@@ -195,9 +188,8 @@
       <div class="col-md-5 p-0">
         <div class="form-group mb-0">
           <mat-form-field>
-            <input autocomplete="off" #leadSource appInputValueValidation
-                   [inputValidator]="validatorType.TEXT_ONLY" formControlName="leadSource" matInput
-                   class="form-control">
+            <input #leadSource [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation autocomplete="off"
+                   class="form-control" formControlName="leadSource" matInput>
             <mat-hint align="end">{{leadSource.value.length}}/ 50</mat-hint>
             <mat-error>This field is required</mat-error>
             <!-- <mat-select formControlName="leadSource" class="form-control">
@@ -287,8 +279,8 @@
         <div class="form-group mb-0">
           <mat-form-field floatLabel="never" appearance="standard">
             <input matInput appInputValueValidation [maxLength]="50" #mFullName
-                   [inputValidator]="validatorType.PERSON_NAME" formControlName="minorFullName"
-                   placeholder="Enter Name" class="form-control">
+                   [inputValidator]="validatorType.PERSON_NAME" class="form-control" formControlName="minorFullName"
+                   placeholder="Enter Name">
             <mat-hint align="end" class="f-12">{{mFullName.value.length}}/50</mat-hint>
             <mat-error>This field is required</mat-error>
           </mat-form-field>
@@ -304,8 +296,8 @@
         <p class="m-0 roboto">As per records</p>
         <div class="form-group mb-0">
           <mat-form-field class="ba-date">
-            <input [matDatepicker]="dobAsPerRecord" (click)="dobAsPerRecord.open()"
-                   class="form-control br-0 b-0" formControlName="dobAsPerRecord" matInput readonly>
+            <input (click)="dobAsPerRecord.open()" [matDatepicker]="dobAsPerRecord" class="form-control br-0 b-0"
+                   formControlName="dobAsPerRecord" matInput readonly>
             <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord"></mat-datepicker-toggle>
             <mat-datepicker #dobAsPerRecord></mat-datepicker>
             <mat-hint>Optional</mat-hint>
@@ -332,14 +324,14 @@
       </div>
       <div class="col-md-7 p-0">
         <mat-radio-group aria-label="Select an option" formControlName="gender" class="d-block">
-          <mat-radio-button value="1" [ngClass]="{'bu-primary':minorForm.get('gender').value=='1'}"
-                            class="borderRadio">Male
+          <mat-radio-button [ngClass]="{'bu-primary':minorForm.get('gender').value=='1'}" class="borderRadio" value="1">
+            Male
           </mat-radio-button>
-          <mat-radio-button value="2" [ngClass]="{'bu-primary':minorForm.get('gender').value=='2'}"
-                            class="borderRadio">Female
+          <mat-radio-button [ngClass]="{'bu-primary':minorForm.get('gender').value=='2'}" class="borderRadio" value="2">
+            Female
           </mat-radio-button>
-          <mat-radio-button value="3" [ngClass]="{'bu-primary':minorForm.get('gender').value=='3'}"
-                            class="borderRadio">Other
+          <mat-radio-button [ngClass]="{'bu-primary':minorForm.get('gender').value=='3'}" class="borderRadio" value="3">
+            Other
           </mat-radio-button>
         </mat-radio-group>
       </div>
@@ -353,8 +345,7 @@
         <div class="form-group mb-0">
           <mat-form-field floatLabel="never" appearance="standard">
             <input #gFullName matInput placeholder="Enter Name" appInputValueValidation [maxLength]="50"
-                   [inputValidator]="validatorType.PERSON_NAME" formControlName="gFullName"
-                   class="form-control">
+                   [inputValidator]="validatorType.PERSON_NAME" class="form-control" formControlName="gFullName">
             <mat-error>This field is required</mat-error>
             <mat-hint align="end" class="f-12">{{gFullName.value.length}}/50</mat-hint>
           </mat-form-field>
@@ -370,8 +361,8 @@
         <p class="m-0 roboto">As per records</p>
         <div class="form-group mb-0">
           <mat-form-field class="ba-date">
-            <input [matDatepicker]="gDobAsPerRecord" (click)="gDobAsPerRecord.open()"
-                   class="form-control br-0 b-0" [max]="maxDateForAdultDob"  formControlName="gDobAsPerRecord" matInput readonly>
+            <input (click)="gDobAsPerRecord.open()" [matDatepicker]="gDobAsPerRecord" [max]="maxDateForAdultDob"
+                   class="form-control br-0 b-0" formControlName="gDobAsPerRecord" matInput readonly>
             <mat-datepicker-toggle matSuffix [for]="gDobAsPerRecord"></mat-datepicker-toggle>
             <mat-datepicker #gDobAsPerRecord></mat-datepicker>
             <mat-hint>Optional</mat-hint>
@@ -528,7 +519,7 @@
 
   </div>
 </div>
-<div *ngIf="fieldFlag=='client' || fieldFlag=='laed'">
+<div *ngIf="fieldFlag=='client' || fieldFlag=='lead'">
   <div *ngIf="invTypeCategory=='2'" [formGroup]="nonIndividualForm" class="non-individualBox">
     <div class="row pt-40">
       <div class="col-md-4 text-right">
@@ -537,8 +528,8 @@
       <div class="col-md-5 p-0">
         <div class="form-group mb-0">
           <mat-form-field>
-            <input formControlName="comName" #cname appInputValueValidation
-                   [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" matInput class="form-control">
+            <input #cname [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" appInputValueValidation
+                   class="form-control" formControlName="comName" matInput>
             <mat-hint align="end">{{cname.value.length}}/50</mat-hint>
             <mat-error>This field is required</mat-error>
           </mat-form-field>
@@ -553,8 +544,9 @@
       <div class="col-md-3 p-0">
         <div class="form-group mb-0">
           <mat-form-field class="ba-date">
-            <input (click)="picker.open()" formControlName="dateOfIncorporation" matInput
-                   class="form-control b-0" [matDatepicker]="picker">
+            <input (click)="picker.open()" [matDatepicker]="picker" class="form-control b-0"
+                   formControlName="dateOfIncorporation"
+                   matInput>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-hint>Optional</mat-hint>

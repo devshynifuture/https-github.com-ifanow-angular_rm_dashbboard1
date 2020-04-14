@@ -1,6 +1,6 @@
 <div class="row bb-1 popup-header-fix w-70">
     <div class="col-md-10 p-0">
-        <h4 class="mb-0 l-22 wrapper-20">ORGANIZATION PROFILE</h4>
+        <h4 class="mb-0 l-22 wrapper-20">Organization profile</h4>
     </div>
     <div class="col-md-2 text-right">
         <i class="material-icons pt-20 c-p pr-16" (click)="Close(null)">
@@ -245,9 +245,10 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(null)">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveCurrentPage()">SAVE & {{selectedTab == 2 ? 'CLOSE' : 'NEXT'}}
-            </button>
-        </div>
+      <div class="col-md-8 right text-right">
+        <button (click)="saveCurrentPage()" class="btn-bottom br-0 text-inherit" mat-button>SAVE &
+          {{selectedTab == 2 ? 'CLOSE' : 'NEXT'}}
+        </button>
+      </div>
     </div>
 </div>

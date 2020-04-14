@@ -4,14 +4,13 @@
       <img src="assets/images/ifa-logo.png" class="w-100">
     </div>
     <div class="col-md-10 pr-0">
-      <div class="row pt-18 pb-18">
+      <div class="row pt-16 pb-16">
         <div class="col-5">
-          <div class="form-group">
-            <mat-form-field class="example-full-width">
-              <input type="text"
-              aria-label="Number"
-              matInput
-              [matAutocomplete]="auto" class="form-control">
+          <div class="form-group mb-0">
+            <mat-form-field>
+              <input [matAutocomplete]="auto" aria-label="Number"
+                     class="form-control custom-input-market" matInput
+                     type="text" value="Find an expert by pin code, area, expertise (E.g. mutual funds or 400001)">
               <mat-autocomplete #auto="matAutocomplete">
                 <div class="row pt-10 pb-10">
                   <div class="col-md-12">
@@ -56,31 +55,36 @@
                     </div>
                   </div>
                 </mat-option>
-               <!--  <div class="row bg-grey lter">
-                  <div class="col-md-2">
-                    <button mat-stroked-button class="up-down-buttons"><span class="material-icons text-white">
-                    arrow_downward
-                    </span></button>
-                    <button mat-stroked-button class="up-down-buttons"><span class="material-icons text-white">
-                    arrow_upward
-                    </span></button>
+                <div class="row bg-grey lter pt-12 pb-12">
+                  <div class="col-md-2 pr-8 pl-8 d-flex">
+                    <button class="up-down-buttons mr-8" mat-stroked-button><span
+                      class="material-icons text-white f-14">
+                        arrow_downward
+                      </span></button>
+                    <button class="up-down-buttons" mat-stroked-button><span class="material-icons text-white f-14">
+                        arrow_upward
+                      </span></button>
                   </div>
-                  <div class="col-md-2">
-                    <p class="m-0 text-custom">to enter</p>
+                  <div class="col-md-3 p-0">
+                    <p class="m-0 text-custom">to navigate</p>
                   </div>
-                  <div class="col-md-2">
-                    <p class="m-0 text-custom">to enter</p>
+                  <div class="col-md-3 p-0 d-flex">
+                    <button class="up-down-buttons mr-8" mat-stroked-button><span
+                      class="material-icons text-white f-14">
+                        subdirectory_arrow_left
+                      </span></button>
+                    <p class="m-0 text-custom text-center">to enter</p>
                   </div>
-                  <div class="col-md-6 text-right">
+                  <div class="col-md-4 text-right">
                     <p class="m-0 text-custom">All shortcuts</p>
                   </div>
-                </div> -->
+                </div>
               </mat-autocomplete>
             </mat-form-field>
           </div>
         </div>
         <div class="col-3">
-          <div class="row pt-4">
+          <div class="row pt-8">
             <div class="col-md-4">
               <a mat-stroked-button routerLink=".">EXPERTS</a>
             </div>
@@ -92,10 +96,10 @@
             </div>
           </div>
         </div>
-        <div class="col-2">
+        <div class="col-2 pt-8">
           <button mat-stroked-button class="f-400">Login / Signup</button>
         </div>
-        <div class="col-2 pt-4">
+        <div class="col-2 pt-8">
           <a mat-stroked-button routerLink=".">For Advisors</a>
         </div>
       </div>
