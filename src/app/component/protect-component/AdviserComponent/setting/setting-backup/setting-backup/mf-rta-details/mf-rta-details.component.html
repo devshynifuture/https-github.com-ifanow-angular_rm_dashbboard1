@@ -7,7 +7,7 @@
             ADD NEW
         </button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item *ngFor="let rta_type of globalData.rta_type_master_list" (click)="openInSideBar(rta_type.id,'','')">{{rta_type.type}}</button>
+            <button mat-menu-item *ngFor="let rta_type of globalData.rta_type_master_list" (click)="openInSideBar(rta_type.id,'',true)">{{rta_type.type}}</button>
         </mat-menu>
     </div>
 </div>
@@ -53,7 +53,7 @@
                     <ng-container>
                         <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="openInSideBar(1, element, '')">Edit</button>
+                            <button mat-menu-item (click)="openInSideBar(1, element, false)">Edit</button>
                             <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
                         </mat-menu>
                     </ng-container>
@@ -139,7 +139,7 @@
                     <ng-container>
                         <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="openInSideBar(2, element, '')">Edit</button>
+                            <button mat-menu-item (click)="openInSideBar(2, element, false)">Edit</button>
                             <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
                         </mat-menu>
                     </ng-container>
@@ -210,7 +210,7 @@
                     <ng-container>
                         <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="openInSideBar(3, element, '')">Edit</button>
+                            <button mat-menu-item (click)="openInSideBar(3, element, false)">Edit</button>
                             <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
                         </mat-menu>
                     </ng-container>
@@ -288,7 +288,7 @@
                     <ng-container>
                         <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="openInSideBar(4, element, '')">Edit</button>
+                            <button mat-menu-item (click)="openInSideBar(4, element, false)">Edit</button>
                             <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
                         </mat-menu>
                     </ng-container>

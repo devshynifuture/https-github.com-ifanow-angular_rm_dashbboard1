@@ -57,9 +57,10 @@
             </div>
         </div>
 
-        <div class="form-group mb-0 mt-8">
-            <app-froala [(model)]="emailBody" modelChange="saveData($event)" [readonly]="_inputData.bodyChange"></app-froala>
+        <div class="form-group mb-0 mt-8" *ngIf="_inputData.bodyChange">
+            <app-froala [(model)]="emailBody" modelChange="saveData($event)"></app-froala>
         </div>
+        <div *ngIf="!_inputData.bodyChange" class="col-md-11" [innerHTML]="emailBody" style="min-height: 550px;"></div>
     </div>
 
     <div class="row">
