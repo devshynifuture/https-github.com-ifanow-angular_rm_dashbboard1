@@ -37,11 +37,11 @@ export class RiskProfileComponent implements OnInit {
     alert(referenceKeyName1.id);
   }
   constructor(private fb: FormBuilder, public planService: PlanService, private subInjectService: SubscriptionInject) {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
   }
 
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
     this.getRiskProfileList();
     this.getdataForm('');
     this.sendRiskList = [];
@@ -161,37 +161,37 @@ export class RiskProfileComponent implements OnInit {
       yAxis: {
         plotBands: [{
           from: 1,
-          to: 40,
+          to: 120,
           color: '#02B875',
           thickness: '30%'
         }, {
-          from: 41,
-          to: 80,
+          from: 121,
+          to: 240,
           color: '#5DC644',
           thickness: '30%'
         }, {
-          from: 81,
-          to: 120,
+          from: 241,
+          to: 360,
           color: '#FFC100',
           thickness: '30%'
         },
         {
-          from: 121,
-          to: 160,
+          from: 361,
+          to: 480,
           color: '#FDAF40',
           thickness: '30%'
         }, {
-          from: 161,
-          to: 200,
+          from: 481,
+          to: 600,
           color: '#FF7272',
           thickness: '30%'
         }],
         lineWidth: 0,
         minorTickInterval: 1,
-        tickPositions: [1, 200],
+        tickPositions: [1, 600],
         tickAmount: 1,
         min: 0,
-        max: 200,
+        max: 600,
         title: {
           y: -70
         },
@@ -240,7 +240,7 @@ export class RiskProfileComponent implements OnInit {
     // this.statusArray = _.uniqBy(this.statusArray, function (e) {
     //   return e.id;
     // });
-    this.progressBar = this.statusArray.length * 20
+    this.progressBar = this.statusArray.length * 7
   }
   getdataForm(data) {
     if (data == undefined) {
