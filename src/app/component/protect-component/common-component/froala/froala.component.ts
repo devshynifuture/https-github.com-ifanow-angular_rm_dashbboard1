@@ -18,6 +18,7 @@ export class FroalaComponent implements ControlValueAccessor, OnInit {
   _model;
 
   config: Object = {
+    attribution: false,
     charCounterCount: false,
     // toolbarButtons: ['getPDF']
 

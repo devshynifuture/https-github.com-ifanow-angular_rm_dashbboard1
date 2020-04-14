@@ -302,7 +302,7 @@
 
 
 <ng-container>
-  <ng-template #templateRef let-element="element">
+  <ng-template #templateRef let-element="element" let-toggleValue="toggleValue">
     {{(toggleVisibility(element, toggleValue))}}
     <mat-icon (click)="toggleValue = !toggleValue">
       {{toggleValue ? 'visibility' : 'visibility_off'}}</mat-icon>

@@ -8,7 +8,7 @@
         <div class="col-md-3 mb-20" *ngFor="let gallery of defaultGallery">
             <div class="galleryView">
                 <img src="/assets/images/svg/pencil-action.svg" class="plan-action" (click)="openGallery(gallery)">
-                <img src="/assets/images/svg/refresh-icon.svg" class="plan-refresh">
+                <img src="/assets/images/svg/refresh-icon.svg" class="plan-refresh" (click)="resetGallery(gallery)">
 
                 <div class="photoView">
                     <img mat-card-image src="{{gallery.imageUrl}}">
