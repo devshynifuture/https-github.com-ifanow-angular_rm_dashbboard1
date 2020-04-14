@@ -61,7 +61,9 @@ export class OverviewProfileComponent implements OnInit {
           this.calculateAge(this.clientOverviewData.dateOfBirth);
         }
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        console.error(err)
+      }
     );
   }
   getFamilyMembersList(data) {
@@ -75,7 +77,9 @@ export class OverviewProfileComponent implements OnInit {
         this.familyMemberList = this.utils.calculateAgeFromCurrentDate(data);
         console.log(this.familyMemberList);
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        console.error(err)
+      }
     );
   }
 
@@ -89,7 +93,9 @@ export class OverviewProfileComponent implements OnInit {
         console.log(data);
         this.addressList = data;
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        console.error(err)
+      }
     );
   }
 
@@ -105,7 +111,9 @@ export class OverviewProfileComponent implements OnInit {
           this.dematList = data;
           this.selectedDemat = data[0];
         }
-      }, err => this.eventService.openSnackBar(err, 'Dismiss')
+      }, err => {
+        console.error(err)
+      }
     );
   }
   calculateAge(data) {
@@ -135,7 +143,10 @@ export class OverviewProfileComponent implements OnInit {
           });
           this.selectedBankData = data[0];
         }
-      }, err => this.eventService.openSnackBar(err, 'Dismiss')
+      },
+      err => {
+        console.error(err)
+      }
     );
   }
 
