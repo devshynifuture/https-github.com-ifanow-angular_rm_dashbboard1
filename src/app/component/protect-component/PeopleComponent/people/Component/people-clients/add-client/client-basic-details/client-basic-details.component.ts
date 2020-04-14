@@ -110,7 +110,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       dobActual: [],
       gender: ['1'],
       leadSource: [data.leadSource],
-      leaadStatus: ['0'],
+      // leaadStatus: ['0'],
       leadRating: [(data.leadRating) ? String(data.leadRating) : '0'],
       leadOwner: ['0'],
       clientOwner: ['1'],
@@ -146,7 +146,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       comOccupation: [(data.occupationId == 0) ? '1' : String(data.occupationId)],
       username: [{ value: data.userName, disabled: true }],
       leadSource: [data.leadSource],
-      leaadStatus: ['0'],
+      // leaadStatus: ['0'],
       leadRating: [(data.leadRating) ? String(data.leadRating) : '0'],
       leadOwner: ['0'],
       role: [(data.roleId) ? data.roleId : '0']
@@ -281,7 +281,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         status: (this.fieldFlag == 'client') ? 1 : 2,
         leadSource: (this.fieldFlag == 'lead' && this.invTypeCategory == '1') ? this.basicDetails.value.leadSource : (this.fieldFlag == 'lead' && this.invTypeCategory == '2') ? this.nonIndividualForm.value.leadSource : null,
         leadRating: (this.fieldFlag == 'lead' && this.invTypeCategory == '1') ? this.basicDetails.value.leadRating : (this.fieldFlag == 'lead' && this.invTypeCategory == '2') ? this.nonIndividualForm.value.leadRating : null,
-        leadStatus: (this.fieldFlag == 'lead' && this.invTypeCategory == '1') ? this.basicDetails.value.leaadStatus : (this.fieldFlag == 'lead' && this.invTypeCategory == '2') ? this.nonIndividualForm.value.leadStatus : null
+        // leadStatus: (this.fieldFlag == 'lead' && this.invTypeCategory == '1') ? this.basicDetails.value.leaadStatus : (this.fieldFlag == 'lead' && this.invTypeCategory == '2') ? this.nonIndividualForm.value.leadStatus : null
       };
       if (this.basicDetailsData.userId == null) {
         // if (this.invTypeCategory == '2') {

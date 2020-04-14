@@ -1,4 +1,4 @@
-<div>
+<div >
   <div class="wrapper-8">
     <!-- <div class="row">
                 <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
@@ -36,7 +36,7 @@
         </button>
       </div>
     </div>
-    <div #unrealizedTranTemplate id="template">
+    <div  >
       <div class="row">
         <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8">
           <cdk-virtual-scroll-viewport tvsItemSize class="wrapper mat-elevation-z2">
@@ -62,8 +62,8 @@
                 <td class="br text-left" mat-cell *matCellDef="let element" >
                   <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.totalTransactionAmt)?element.totalTransactionAmt:0)}}</span></div>
                 </td>
-                <td class="br f-600 text-right" mat-footer-cell *matFooterCellDef >
-                  <div appFormatNumber [value]="grandTotal.totalTransactionAmt"></div>
+                <td *matFooterCellDef  appFormatNumber [value]="grandTotal.totalTransactionAmt" class="br f-600 text-right" mat-footer-cell  >
+                  <!-- <div appFormatNumber [value]="grandTotal.totalTransactionAmt"></div> -->
                 </td>
 
               </ng-container>
@@ -111,7 +111,7 @@
                   Gain
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.gain)?element.gain:0)}}</span></div>
+                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.totalGain)?(element.totalGain | number:'1.2-2'):0)}}</span></div>
                 </td>
                 <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalGain" class="br f-600 text-right" mat-footer-cell>
 <!--                  <div>{{ grandTotal.totalGain}}</div>-->
@@ -124,7 +124,7 @@
                   Absolute Return%
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.absReturn)?element.absReturn:0)}}</span></div>
+                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.absReturn)?(element.absReturn | number:'1.2-2'):0)}}</span></div>
                 </td>
                 <td *matFooterCellDef appFormatNumber [value]="grandTotal.absReturn" class="br f-600 text-right" mat-footer-cell>
 <!--                  {{ grandTotal.totalGain}}-->
@@ -137,7 +137,7 @@
                   Xirr%
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.xirr)?element.xirr:0)}}</span></div>
+                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.xirr)?(element.xirr | number:'1.2-2'):0)}}</span></div>
                 </td>
                 <td *matFooterCellDef appFormatNumber [value]="grandTotal.xirr" class="br f-600 text-right" mat-footer-cell>
 <!--                  {{ grandTotal.xirr }}-->
@@ -150,7 +150,7 @@
                   Allocation%
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.allocation)?element.allocation:0)}}</span></div>
+                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.allocationPer)?(element.allocationPer | number:'1.2-2'):0)}}</span></div>
                 </td>
                 <td *matFooterCellDef appFormatNumber [value]="grandTotal.allocationPer" class="br f-600 text-right" mat-footer-cell>
 <!--                  {{ grandTotal.allocationPer }}-->
@@ -193,8 +193,8 @@
                     <span *ngIf="element.fwTransactionType">{{element.fwTransactionType}}</span>
                   </div>
                 </td>
-                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left">Grand Total
-                </td>
+                <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-left">Grand Total
+                </td> -->
 
               </ng-container>
 
@@ -205,8 +205,8 @@
                 <td class="br text-right" mat-cell *matCellDef="let element">
                   <div class="bar">{{isLoading ? '':((element.transactionDate)?element.transactionDate:'-')}} </div>
                 </td>
-                <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
-                </td>
+                <!-- <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
+                </td> -->
 
               </ng-container>
 
@@ -220,10 +220,10 @@
                       *ngIf="element.totalTransactionAmt">{{isLoading ? '':((element.totalTransactionAmt)?element.totalTransactionAmt:0)}}</span>
                   </div>
                 </td>
-                <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalTransactionAmt" class="br f-600 text-right" mat-footer-cell>
+                <!-- <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalTransactionAmt" class="br f-600 text-right" mat-footer-cell> -->
 <!--                  <div class="bar"> {{ grandTotal.totalTransactionAmt }}-->
 <!--                  </div>-->
-                </td>
+                <!-- </td> -->
 
               </ng-container>
 
@@ -237,10 +237,10 @@
                     <span appFormatNumber class="f-700" *ngIf="element.totalNav">{{isLoading ? '':((element.totalNav)?element.totalNav:0)}}</span>
                   </div>
                 </td>
-                <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalNav" class="br f-600 text-right" mat-footer-cell>
+                <!-- <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalNav" class="br f-600 text-right" mat-footer-cell> -->
 <!--                  <div class="bar">{{ grandTotal.totalNav }}-->
 <!--                  </div>-->
-                </td>
+                <!-- </td> -->
 
               </ng-container>
 
@@ -251,9 +251,9 @@
                     <span appFormatNumber class="f-700" *ngIf="element.totalUnit">{{isLoading ? '':((element.totalUnit)?element.totalUnit:0)}}</span>
                   </div>
                 </td>
-                <td *matFooterCellDef appFormatNumber [value]="grandTotal.finalTotalUnit" class="br f-600 text-right" mat-footer-cell>
+                <!-- <td *matFooterCellDef appFormatNumber [value]="grandTotal.finalTotalUnit" class="br f-600 text-right" mat-footer-cell> -->
 <!--                  {{ grandTotal.finalTotalUnit }}-->
-                </td>
+                <!-- </td> -->
 
               </ng-container>
 
@@ -264,9 +264,9 @@
                 <td class="br text-right" mat-cell *matCellDef="let element">
                   <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.currentValue)?element.currentValue:0)}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber [value]="grandTotal.currentValue" class="br f-600 text-right" mat-footer-cell>
+                <!-- <td *matFooterCellDef appFormatNumber [value]="grandTotal.currentValue" class="br f-600 text-right" mat-footer-cell> -->
 <!--                  {{ grandTotal.currentValue }}-->
-                </td>
+                <!-- </td> -->
 
               </ng-container>
               <ng-container matColumnDef="dividendPayout">
@@ -276,9 +276,9 @@
                 <td class="br text-right" mat-cell *matCellDef="let element">
                   <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.dividendPayout)?element.dividendPayout:0)}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber [value]="grandTotal.dividendPayout" class="br f-600 text-right" mat-footer-cell>
+                <!-- <td *matFooterCellDef appFormatNumber [value]="grandTotal.dividendPayout" class="br f-600 text-right" mat-footer-cell> -->
 <!--                  {{ grandTotal.dividendPayout }}-->
-                </td>
+                <!-- </td> -->
 
               </ng-container>
               <ng-container matColumnDef="dividendReinvest">
@@ -288,9 +288,9 @@
                 <td class="br text-right" mat-cell *matCellDef="let element">
                   <div class="bar"><span appFormatNumber>{{element.dividendReinvest}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber [value]="grandTotal.dividendReinvest" class="br f-600 text-right" mat-footer-cell>
+                <!-- <td *matFooterCellDef appFormatNumber [value]="grandTotal.dividendReinvest" class="br f-600 text-right" mat-footer-cell> -->
 <!--                  {{ grandTotal.dividendReinvest }}-->
-                </td>
+                <!-- </td> -->
 
               </ng-container>
               <ng-container matColumnDef="totalAmount">
@@ -300,9 +300,9 @@
                 <td class="br text-right" mat-cell *matCellDef="let element">
                   <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.totalAmount)?element.totalAmount:0)}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalAmount" class="br f-600 text-right" mat-footer-cell>
+                <!-- <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalAmount" class="br f-600 text-right" mat-footer-cell> -->
 <!--                  {{ grandTotal.totalAmount }}-->
-                </td>
+                <!-- </td> -->
 
               </ng-container>
 
@@ -313,9 +313,9 @@
                 <td class="br text-right" mat-cell *matCellDef="let element">
                   <div class="bar"><span appFormatNumber> {{isLoading ? '':((element.gain)?element.gain:0)}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalGain" class="br f-600 text-right" mat-footer-cell>
+                <!-- <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalGain" class="br f-600 text-right" mat-footer-cell> -->
 <!--                  {{ grandTotal.totalGain }}-->
-                </td>
+                <!-- </td> -->
 
               </ng-container>
 
@@ -326,9 +326,9 @@
                 <td class="br text-right" mat-cell *matCellDef="let element">
                   <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.absReturn)?element.absReturn:0)}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber [value]="grandTotal.absReturn" class="br f-600 text-right" mat-footer-cell>
+                <!-- <td *matFooterCellDef appFormatNumber [value]="grandTotal.absReturn" class="br f-600 text-right" mat-footer-cell> -->
 <!--                  {{ grandTotal.absReturn }}-->
-                </td>
+                <!-- </td> -->
 
               </ng-container>
 
@@ -340,9 +340,9 @@
                   <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.xirr)?element.xirr:0)}}</span>
                   </div>
                 </td>
-                <td *matFooterCellDef appFormatNumber [value]="grandTotal.xirr" class="br f-600 text-right" mat-footer-cell>
+                <!-- <td *matFooterCellDef appFormatNumber [value]="grandTotal.xirr" class="br f-600 text-right" mat-footer-cell> -->
 <!--                  {{ grandTotal.xirr }}-->
-                </td>
+                <!-- </td> -->
 
               </ng-container>
 
@@ -372,7 +372,7 @@
               <tr *matRowDef="let row; columns: ['groupHeader2']; when: isGroup2" mat-row></tr>
               <tr *matRowDef="let row; columns: ['groupHeader3']; when: isGroup3" mat-row></tr>
               <!-- <tr *matRowDef="let row; columns: ['groupHeader4']; when: isGroup4" mat-row></tr> -->
-              <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
+              <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr> -->
 
             </table>
           </cdk-virtual-scroll-viewport>
@@ -384,4 +384,144 @@
       </div>
     </div>
   </div>
+</div>
+<div #unrealizedTranTemplate id="template" class="hide">
+  <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
+    <tr colspan="12">
+      <td style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">Mutual fund  {{(this.mutualFund)?this.mutualFund.viewMode:'Transactions'}}</td>
+    </tr>
+    <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"> Sub category name </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"> Amount invested </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"> Current value </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"> Dividend payout </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"> Dividend reinvestment </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"> Gain </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"> Absolute Return% </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  Xirr%  </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;">  Allocation% </td>
+    </tr>
+    <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;" *ngFor="let item of dataSource.data">
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">{{item.categoryName}}</td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" appFormatNumber>{{(item.totalTransactionAmt)?item.totalTransactionAmt:0}}</td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{(item.currentValue)?item.currentValue:0}}</td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{(item.dividendPayout)?item.dividendPayout:0}}</td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{(item.dividendReinvest)?item.dividendReinvest:0}}</td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">{{(item.totalGain)?(item.totalGain | number:'1.2-2'):0}}</td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">{{(item.absReturn)?(item.absReturn | number:'1.2-2'):0}}</td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">{{(item.xirr)?(item.xirr | number:'1.2-2'):0}}</td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">{{(item.allocationPer)?(item.allocationPer | number:'1.2-2'):0}}</td>
+    </tr>
+      <tr style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">Grand Total </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" appFormatNumber [value]="grandTotal.totalTransactionAmt"></td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber [value]="grandTotal.currentValue"></td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"appFormatNumber [value]="grandTotal.dividendPayout" ></td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber [value]="grandTotal.dividendReinvest"></td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber [value]="grandTotal.totalGain"></td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">{{(grandTotal.absReturn)?(grandTotal.absReturn | number:'1.2-2'):0}}</td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">{{(grandTotal.xirr)?(grandTotal.xirr | number:'1.2-2'):0}}</td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">{{(grandTotal.allocationPer)?(grandTotal.allocationPer | number:'1.2-2'):0}}</td>
+    </tr>
+  </table>
+  
+  <br><br><br><br><br>
+  
+  <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;" >
+    <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"> Sr no. </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  Transaction Type  </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  Transaction date  </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  Transaction amount  </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  Transaction NAV  </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"> Units </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  Current value </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   Dividend payout   </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   Dividend reinvestment  </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   Total amount   </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">    Gain </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">    Absolute Return% </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;">    Xirr% </td>
+    </tr>
+  </table>
+    <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;" *ngFor="let item of customDataSource.data ;index as i">
+
+    <!-- <tr>
+      <td colspan="13" style="color: #008FFF;text-align: center; padding: 12px 8px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">{{item.groupName}}</td>
+    </tr> -->
+    <div style="width: 99.85%;text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;" *ngIf="item.groupName">
+    {{item.groupName}}
+    </div>
+    <!-- <tr>
+      <td colspan="10" style="color: #212121;text-align: left; padding: 12px 8px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0; ">{{item.schemeName}}</td>
+      <td colspan="3" style="border-right: 1px solid #DADCE0;">Current NAV:{{item.nav}}</td>
+    </tr> -->
+    <div style="width: 100%;" *ngIf="item.schemeName || item.nav">
+      <div style="width: 66%;float:left;text-align: center;color: #008FFF;text-align: center;  padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left:1px solid  #DADCE0;font-family: Roboto,sans-serif;">
+        {{item.schemeName}}
+      </div>
+      <div style="width: 28%;float: right; border-right:1px solid  #DADCE0;border-left:1px solid  #DADCE0;padding-top: 12px !important;padding-bottom: 12px !important;padding-left: 20px;font-family: Roboto,sans-serif;">
+        Current NAV:{{item.nav}}
+      </div>
+      </div>
+  <tr style="height: 40px;border: 1px solid #DADCE0;" *ngIf="item.fwTransactionType || item.category">
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">{{i + 1}}</td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"> <span *ngIf="item.fwTransactionType"> {{(item.fwTransactionType)?item.fwTransactionType:'-'}} </span></td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  {{(item.transactionDate)?item.transactionDate:'-'}} </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"><span appFormatNumber *ngIf="item.amount">{{(item.amount)?item.amount:0}}</span></td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"><span appFormatNumber *ngIf="item.transactionNav">{{(item.transactionNav)?item.transactionNav:'0'}}</span></td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"><span appFormatNumber *ngIf="item.unit">{{(item.unit)?item.unit:0}}</span></td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" appFormatNumber>  {{(item.currentValue)?item.currentValue:0}} </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" appFormatNumber>   {{(item.dividendPayout)?item.dividendPayout:0}} </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" appFormatNumber>   {{(item.dividendReinvest)?item.dividendReinvest:0}} </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" appFormatNumber>   {{(item.totalAmount)?item.totalAmount:0}} </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   {{(item.gain)?item.gain:0}} </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   {{(item.absReturn)?item.absReturn:0}} </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   {{(item.xirr)?item.xirr:0}} </td>
+    </tr>
+    <tr style="height: 40px;border: 1px solid #DADCE0;" *ngIf="item.total">
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" class="f-700">Total</td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" class="f-700"></td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" class="f-700"><span appFormatNumber class="f-700" *ngIf="item.totalTransactionAmt">{{(item.totalTransactionAmt)?item.totalTransactionAmt:0}}</span></td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" class="f-700"> <span appFormatNumber class="f-700" *ngIf="item.totalNav">{{(item.totalNav)?item.totalNav:0}}</span></td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" class="f-700"><span appFormatNumber class="f-700" *ngIf="item.totalUnit">{{(item.totalUnit)?item.totalUnit:0}}</span></td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" appFormatNumber class="f-700">  {{(item.currentValue)?item.currentValue:0}} </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" appFormatNumber class="f-700">   {{(item.dividendPayout)?item.dividendPayout:0}} </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" appFormatNumber class="f-700">   {{(item.dividendReinvest)?item.dividendReinvest:0}} </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" appFormatNumber class="f-700">   {{(item.totalAmount)?item.totalAmount:0}} </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" class="f-700">   {{(item.totalGain)?item.totalGain:0}} </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" class="f-700">   {{(item.absReturn)?item.absReturn:0}} </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" class="f-700">   {{(item.xirr)?item.xirr:0}} </td>
+    </tr>
+    </table>
+    <!-- <tr style="height: 40px;border: 1px solid #DADCE0;">
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"> 2 </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  Redemption  </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  - </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  5,000</td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  0 </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"> 0 </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  223 </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
+    </tr> -->
+    <!-- <tr style="height: 40px;border: 1px solid #DADCE0;font-weight:700;">
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  Total  </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  - </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  10,581</td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"> 446 </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  0 </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
+    </tr> -->
 </div>
