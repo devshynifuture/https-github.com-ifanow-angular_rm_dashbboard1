@@ -164,7 +164,7 @@
               <p *ngIf="verifyFlag=='Email'" class="text-danger mb-0 f-12">6 digit OTP has been sent to
                 your email no. {{verifyResponseData.email}}</p>
               <p *ngIf="verifyFlag=='mobile'" class="text-danger mb-0 f-12">6 digit OTP has been sent to
-                your mobile {{verifyResponseData.mobile}}</p>
+                your mobile {{verifyResponseData.mobileNo}}</p>
               <div class="col-md-12 p-0">
                 <h5 class="pt-12">Verify OTP</h5>
                 <div class="form-group d-flex">
@@ -184,16 +184,18 @@
 
                 <h5 class="mb-0">Didn’t receive? <span (click)="getOtp()" class="lightRead c-p"> Resend
                   </span></h5>
-
               </div>
 
               <div class="mobilebuttonColor col-md-12 p-0">
-                <button (click)="verifyWithOtpResponse()" class="mt-20 mb-28 bg-primary f-16  text-white w-100 br-4 "
+                <!-- <button (click)="verifyWithOtpResponse()" class="mt-20 mb-28 bg-primary f-16  text-white w-100 br-4 "
                   mat-button>
                   <img class="iconPosition mobileNone" src="assets/images/svg/login-btn-icon.svg">
                   Login to your
                   account
-                </button>
+                </button> -->
+                <app-progress-button (btnClick)="verifyWithOtpResponse()" [logEvent]="passEvent"
+                  [options]="barButtonOptions" class="">
+                </app-progress-button>
               </div>
 
               <div class="mobileCenter ds-none">
@@ -213,10 +215,10 @@
                   class="text-primary c-p"> Sign up </span></h5>
             </div>
             <div *ngIf="!otpNumber">
-              <button class="mt-20 mb-28 bg-primary f-16  text-white w-100 br-4 " mat-button>
+              <!-- <button class="mt-20 mb-28 bg-primary f-16  text-white w-100 br-4 " mat-button>
                 <img class="iconPosition" src="assets/images/svg/login-btn-icon.svg"> Login to your
                 account
-              </button>
+              </button> -->
               <h5 [routerLink]="['/login']" class="mt-20 text-primary c-p f-600">Login with password</h5>
 
               <h5 class="mt-32 mb-24">Don’t have an account? <span [routerLink]="['/login/signup']"

@@ -3,17 +3,19 @@
         <h4 class="m-0 text-black">Roles</h4>
     </div>
     <div class="col-md-6 text-right p-0">
-        <button [matMenuTriggerFor]="menu" mat-stroked-button class="btn-primary addBtnclass">
-            <i class="material-icons text-white"> add </i>ADD NEW
+        <button [matMenuTriggerFor]="menu" mat-stroked-button class="btn-primary">
+            ADD NEW
         </button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="addEditNewRoles(1, true, null)">Admin</button>
-            <button mat-menu-item (click)="addEditNewRoles(2, true, null)">Back office</button>
-            <button mat-menu-item (click)="addEditNewRoles(3, true, null)">Planner</button>
-            <button mat-menu-item (click)="addEditNewRoles(4, true, null)">Mutual fund only</button>
-            <button mat-menu-item (click)="addEditNewRoles(5, true, null)">MF + Multi asset</button>
-            <button mat-menu-item (click)="addEditNewRoles(6, true, null)">MF + Multi asset + Basic Plan</button>
-            <button mat-menu-item (click)="addEditNewRoles(7, true, null)">MF + Multi asset + Advanced Plan</button>
+            <button class="roboto" mat-menu-item (click)="addEditNewRoles(1, true, null)">Admin</button>
+            <button class="roboto" mat-menu-item (click)="addEditNewRoles(2, true, null)">Back office</button>
+            <button class="roboto" mat-menu-item (click)="addEditNewRoles(3, true, null)">Planner</button>
+            <button class="roboto" mat-menu-item (click)="addEditNewRoles(4, true, null)">Mutual fund only</button>
+            <button class="roboto" mat-menu-item (click)="addEditNewRoles(5, true, null)">MF + Multi asset</button>
+            <button class="roboto" mat-menu-item (click)="addEditNewRoles(6, true, null)">MF + Multi asset + Basic
+                Plan</button>
+            <button class="roboto" mat-menu-item (click)="addEditNewRoles(7, true, null)">MF + Multi asset + Advanced
+                Plan</button>
         </mat-menu>
     </div>
 </div>

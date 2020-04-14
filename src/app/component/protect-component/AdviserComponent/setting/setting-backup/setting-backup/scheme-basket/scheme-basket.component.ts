@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { SettingSchemeDetailsComponent } from '../../../setting-entry/setting-scheme-details/setting-scheme-details.component';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import {Component, OnInit} from '@angular/core';
+import {SettingSchemeDetailsComponent} from '../../../setting-entry/setting-scheme-details/setting-scheme-details.component';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-scheme-basket',
@@ -11,8 +11,11 @@ import { SubscriptionInject } from '../../../../Subscriptions/subscription-injec
 export class SchemeBasketComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'ldate', 'rdate', 'status', 'icons'];
   dataSource = ELEMENT_DATA;
-  constructor(private subInjectService: SubscriptionInject) { }
 
+  constructor(private subInjectService: SubscriptionInject) {
+  }
+
+  isLoading = false;
   ngOnInit() {
   }
 

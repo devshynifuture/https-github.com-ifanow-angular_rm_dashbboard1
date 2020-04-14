@@ -387,6 +387,7 @@ export class RetirementAccountComponent implements OnInit {
             data => {
               dialogRef.close();
               this.getListEPF();
+              this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -395,6 +396,7 @@ export class RetirementAccountComponent implements OnInit {
             data => {
               dialogRef.close();
               this.getListNPS();
+              this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -403,6 +405,7 @@ export class RetirementAccountComponent implements OnInit {
             data => {
               dialogRef.close();
               this.getListGratuity();
+              this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -411,6 +414,7 @@ export class RetirementAccountComponent implements OnInit {
             data => {
               dialogRef.close();
               this.getListSuperannuation();
+              this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -419,11 +423,11 @@ export class RetirementAccountComponent implements OnInit {
             data => {
               dialogRef.close();
               this.getListEPS();
+              this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             },
             error => this.eventService.showErrorMessage(error)
           );
         }
-        this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
       },
       negativeMethod: () => {
       }
@@ -494,16 +498,14 @@ export class RetirementAccountComponent implements OnInit {
   }
   getGrauityRes(data) {
     this.isLoading = false;
-    this.sumOfAmountReceived = data.sumOfAmountReceived;
-    if (data == undefined) {
-      this.noData = 'No gratuity found';
-      this.dataSource.data = []
-    }
-    else if (data.gratuityList) {
-      console.log('getGrauityRes =', data);
-      this.dataSource.data = data.gratuityList;
-      this.dataSource.sort = this.gratuityListTableSort;
-      UtilService.checkStatusId(this.dataSource.filteredData);
+    if (data != undefined) {
+      this.sumOfAmountReceived = data.sumOfAmountReceived;
+      if (data.gratuityList) {
+        console.log('getGrauityRes =', data);
+        this.dataSource.data = data.gratuityList;
+        this.dataSource.sort = this.gratuityListTableSort;
+        UtilService.checkStatusId(this.dataSource.filteredData);
+      }
     }
     else {
       this.noData = "No gratuity found";
@@ -547,7 +549,7 @@ export class RetirementAccountComponent implements OnInit {
     const obj = this.getObject;
     this.dataSource.data = [{}, {}, {}];
     this.custumService.getSuperannuation(obj).subscribe(
-      data => this.getSuperannuationRes(data), (error) => {
+      data => this.getSuperannuationRes(data)   , (error) => {
         this.eventService.showErrorMessage(error);
         this.dataSource.data = [];
         this.isLoading = false;
@@ -556,22 +558,20 @@ export class RetirementAccountComponent implements OnInit {
   }
   getSuperannuationRes(data) {
     this.isLoading = false;
-    this.sumOfAnnualEmployeeContribution = data.sumOfAnnualEmployeeContribution;
-    this.sumOfAnnualEmployerContribution = data.sumOfAnnualEmployerContribution;
-    if (data == undefined) {
-      this.noData = 'No superannuation found';
-      this.dataSource.data = []
-    } else if (data.superannuationList) {
-      console.log('getSuperannuationRes =', data);
-      this.dataSource.data = data.superannuationList;
-      this.dataSource.sort = this.superAnnuationListTableSort;
-      UtilService.checkStatusId(this.dataSource.filteredData);
+    if (data != undefined) {
+      this.sumOfAnnualEmployeeContribution = data.sumOfAnnualEmployeeContribution;
+      this.sumOfAnnualEmployerContribution = data.sumOfAnnualEmployerContribution;
+      if (data.superannuationList) {
+        console.log('getSuperannuationRes =', data);
+        this.dataSource.data = data.superannuationList;
+        this.dataSource.sort = this.superAnnuationListTableSort;
+        UtilService.checkStatusId(this.dataSource.filteredData);
+      }
     }
     else {
       this.noData = "No superannuation found";
       this.dataSource.data = [];
     }
-
   }
   getListEPS() {
     this.isLoading = true;
@@ -587,22 +587,21 @@ export class RetirementAccountComponent implements OnInit {
   }
   getEPSRes(data) {
     this.isLoading = false;
-    this.totalNotionalValue = data.totalNotionalValue;
-    this.totalPensionAmount = data.totalPensionAmount;
-    if (data == undefined) {
-      this.noData = 'No EPS found';
-      this.dataSource.data = []
-    } else if (data.epsList) {
-      console.log('getEPSRes =', data);
-      this.dataSource.data = data.epsList;
-      this.dataSource.sort = this.epsListTableSort;
-      UtilService.checkStatusId(this.dataSource.filteredData);
+    
+    if (data != undefined) {
+      this.totalNotionalValue = data.totalNotionalValue;
+      this.totalPensionAmount = data.totalPensionAmount;
+      if (data.epsList) {
+        console.log('getEPSRes =', data);
+        this.dataSource.data = data.epsList;
+        this.dataSource.sort = this.epsListTableSort;
+        UtilService.checkStatusId(this.dataSource.filteredData);
+      }
     }
     else {
       this.noData = "No EPS found";
       this.dataSource.data = [];
     }
-
   }
 }
 export interface PeriodicElement11 {

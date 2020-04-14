@@ -90,7 +90,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date"> <input [max]="maxDate" autocomplete="off" matInput formControlName="balAsOn"
-                            (focus)="balanceAsOn.open()" matInput class="form-control b-0 br-0"
+                            (focus)="balanceAsOn.open()" (click)="balanceAsOn.open()" class="form-control b-0 br-0"
                             [matDatepicker]="balanceAsOn" readonly>
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
@@ -231,8 +231,9 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">Cancel</h5>
         </div>
-        <div (click)="addPOSaving()" class="col-md-8 right text-right"> <button mat-button
-                class="btn-bottom br-0 text-inherit">Save</button>
+        <div class="col-md-8 right text-right">
+            <app-progress-button (btnClick)="addPOSaving()" [options]="barButtonOptions" >
+            </app-progress-button>
         </div>
     </div>
 </div>

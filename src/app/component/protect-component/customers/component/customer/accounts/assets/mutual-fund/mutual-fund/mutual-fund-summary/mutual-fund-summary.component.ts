@@ -46,7 +46,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
   ngOnInit() {
     if (this.mutualFund.mutualFundList) {
-      this.isLoading=false;
+      this.isLoading=true;
       this.mutualFundList = this.mutualFund.mutualFundList;
       // this.getSubCategoryWise(this.mutualFund); // get subCategoryWise list
       // this.getSchemeWise(); // get scheme wise list
@@ -69,6 +69,7 @@ export class MutualFundSummaryComponent implements OnInit {
       // Create a new
       const worker = new Worker('../../mutual-fund.worker.ts', {type: 'module'});
       worker.onmessage = ({data}) => {
+        this.isLoading=false;
         this.customDataSource.data = data.customDataSourceData;
         console.log(`MUTUALFUNDSummary COMPONENT page got message:`, data);
       };

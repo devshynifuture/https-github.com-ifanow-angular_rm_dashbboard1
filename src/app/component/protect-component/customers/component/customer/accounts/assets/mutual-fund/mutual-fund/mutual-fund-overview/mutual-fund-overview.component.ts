@@ -121,8 +121,8 @@ export class MutualFundOverviewComponent implements OnInit {
     ];
   }
   getsubCategorywiseAllocation(data) {
-    this.filteredArray = this.MfServiceService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
     this.isLoading = true
+    this.filteredArray = this.MfServiceService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
     if(this.dataSource3.length > 0){
       this.dataSource3 = new MatTableDataSource(this.filteredArray);
       this.isLoading = false

@@ -8,6 +8,7 @@ import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-eps',
@@ -19,7 +20,22 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
   ],
 })
 export class AddEPSComponent implements OnInit {
-  validatorType = ValidatorType
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
+  validatorType = ValidatorType;
   maxDate = new Date();
   inputData: any;
   advisorId: any;
@@ -165,6 +181,7 @@ get getNominee() {
 }
 
 removeNewNominee(item) {
+  this.disabledMember(null, null);
   this.getNominee.removeAt(item);
   if (this.eps.value.getNomineeName.length == 1) {
     this.getNominee.controls['0'].get('sharePercentage').setValue('100');
@@ -304,7 +321,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.eps}
         nomineeList: this.eps.value.getNomineeName,
         id: this.eps.controls.id.value
       }
-
+      this.barButtonOptions.active = true;
       obj.nomineeList.forEach((element, index) => {
         if(element.name == ''){
           this.removeNewNominee(index);
@@ -320,35 +337,38 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.eps}
       if (this.flag == "addEPS") {
         this.custumService.addEPS(obj).subscribe(
           data => this.addEPSRes(data), (error) => {
-            this.event.showErrorMessage(error);
+            this.event.showErrorMessage(error);this.barButtonOptions.active = false;
           }
         );
       } else if (this.flag == 'adviceEPS') {
         this.custumService.getAdviceEps(adviceObj).subscribe(
           data => this.getAdviceEpsRes(data), (error) => {
-            this.event.showErrorMessage(error);
+            this.event.showErrorMessage(error);this.barButtonOptions.active = false;
           }
         );
       } else {
         //edit call
         this.custumService.editEPS(obj).subscribe(
           data => this.editEPSRes(data), (error) => {
-            this.event.showErrorMessage(error);
+            this.event.showErrorMessage(error);this.barButtonOptions.active = false;
           }
         );
       }
     }
   }
   getAdviceEpsRes(data) {
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('EPS added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'addedEps', state: 'close', data, refreshRequired: true })
   }
   addEPSRes(data) {
+    this.barButtonOptions.active = false;
     console.log('addrecuringDepositRes', data)
     this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'addedEps', state: 'close', data, refreshRequired: true })
   }
   editEPSRes(data) {
+    this.barButtonOptions.active = false;
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'addedEps', state: 'close', data, refreshRequired: true })
   }

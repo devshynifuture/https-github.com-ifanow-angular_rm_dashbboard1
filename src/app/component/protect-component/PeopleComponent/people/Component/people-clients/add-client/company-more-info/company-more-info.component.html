@@ -177,11 +177,14 @@
             <h5 (click)="close('close')" class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-raised-button (click)="saveNext('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
-            </button>
-            <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE &
+            <!-- <button mat-raised-button (click)="saveNext('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
+            </button> -->
+            <app-progress-button (btnClick)="saveNext('Next')" class="br-0 text-inherit mr-12"
+                [options]="barButtonOptions">
+            </app-progress-button>
+            <!-- <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE &
                 CLOSE
-            </button>
+            </button> -->
         </div>
     </div>
 </div>

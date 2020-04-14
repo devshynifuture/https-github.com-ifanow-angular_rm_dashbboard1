@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, OnInit} from '@angular/core';
+import {EventService} from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-plan-goals',
@@ -8,7 +8,9 @@ import { EventService } from 'src/app/Data-service/event.service';
 })
 export class PlanGoalsComponent implements OnInit {
 
-  constructor(private eventService: EventService) { }
+  constructor(private eventService: EventService) {
+  }
+
   isLoading = false;
   displayedColumns: string[] = ['details', 'value', 'monthly', 'lumpsum'];
   dataSource = ELEMENT_DATA;
@@ -24,6 +26,7 @@ export class PlanGoalsComponent implements OnInit {
 
   ngOnInit() {
   }
+
   close() {
     const fragmentData = {
       direction: 'top',
@@ -43,14 +46,13 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { details: " ", value: '48,13,000', monthly: '25,600', lumpsum: '25,88,500' },
-  { details: " ", value: '48,13,000', monthly: '25,600', lumpsum: '25,88,500' },
-  { details: " ", value: '48,13,000', monthly: '25,600', lumpsum: '25,88,500' },
-  { details: " ", value: '48,13,000', monthly: '25,600', lumpsum: '25,88,500' },
+  {details: ' ', value: '48,13,000', monthly: '25,600', lumpsum: '25,88,500'},
+  {details: ' ', value: '48,13,000', monthly: '25,600', lumpsum: '25,88,500'},
+  {details: ' ', value: '48,13,000', monthly: '25,600', lumpsum: '25,88,500'},
+  {details: ' ', value: '48,13,000', monthly: '25,600', lumpsum: '25,88,500'},
 
 
 ];
-
 
 
 export interface PeriodicElement1 {
@@ -66,12 +68,28 @@ export interface PeriodicElement1 {
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  { name: "Basic liquidity ratio", description: 'This ratio indicates ones ability to meet mandatory monthly expenses & other emergency needs.', derived: ' ', adverse: '< 3', moderate: '3 - 6', optimum: '6 - 15', radioOne: '55.8', radioTwo: '62.3' },
-  { name: "Expanded liquidity ratio", description: ' Your ability to meet emergencies when it may not be possible to convert assets into cash.', derived: ' ', adverse: '< 3', moderate: '3 - 6', optimum: '6 - 15', radioOne: '55.8', radioTwo: '62.3' },
+  {
+    name: 'Basic liquidity ratio',
+    description: 'This ratio indicates ones ability to meet mandatory monthly expenses & other emergency needs.',
+    derived: ' ',
+    adverse: '< 3',
+    moderate: '3 - 6',
+    optimum: '6 - 15',
+    radioOne: '55.8',
+    radioTwo: '62.3'
+  },
+  {
+    name: 'Expanded liquidity ratio',
+    description: ' Your ability to meet emergencies when it may not be possible to convert assets into cash.',
+    derived: ' ',
+    adverse: '< 3',
+    moderate: '3 - 6',
+    optimum: '6 - 15',
+    radioOne: '55.8',
+    radioTwo: '62.3'
+  },
 
 ];
-
-
 
 
 export interface PeriodicElement2 {
@@ -84,10 +102,10 @@ export interface PeriodicElement2 {
 }
 
 const ELEMENT_DATA2: PeriodicElement2[] = [
-  { particulars: "Gross life insurance required (1 + 2 +3)", amountOne: '12,00,000', amountTwo: '12,00,000', emptybox: '' },
-  { particulars: "Liabilities", amountOne: '12,00,000', amountTwo: '12,00,000', emptybox: '' },
-  { particulars: "Less : Existing life insurance (sum assured)", amountOne: '12,00,000', amountTwo: '12,00,000', emptybox: '' },
-  { particulars: "Additional life insurance required (4 - 5 - 6 - 7)", amountOne: '12,00,000', amountTwo: '12,00,000', emptybox: '' },
+  {particulars: 'Gross life insurance required (1 + 2 +3)', amountOne: '12,00,000', amountTwo: '12,00,000', emptybox: ''},
+  {particulars: 'Liabilities', amountOne: '12,00,000', amountTwo: '12,00,000', emptybox: ''},
+  {particulars: 'Less : Existing life insurance (sum assured)', amountOne: '12,00,000', amountTwo: '12,00,000', emptybox: ''},
+  {particulars: 'Additional life insurance required (4 - 5 - 6 - 7)', amountOne: '12,00,000', amountTwo: '12,00,000', emptybox: ''},
 
 
 ];
@@ -105,8 +123,20 @@ export interface PeriodicElement3 {
 }
 
 const ELEMENT_DATA3: PeriodicElement3[] = [
-  { description: "A.   Income from salary / pension", actualOne: '8,50,000', applicableOne: '8,50,000', actualTwo: '8,50,000', applicableTwo: '8,50,000', emptybox: '' },
-  { description: "B.   Income (Profits) from business / profession", actualOne: '8,50,000', applicableOne: '8,50,000', actualTwo: '8,50,000', applicableTwo: '8,50,000', emptybox: '' },
-
-
+  {
+    description: 'A.   Income from salary / pension',
+    actualOne: '8,50,000',
+    applicableOne: '8,50,000',
+    actualTwo: '8,50,000',
+    applicableTwo: '8,50,000',
+    emptybox: ''
+  },
+  {
+    description: 'B.   Income (Profits) from business / profession',
+    actualOne: '8,50,000',
+    applicableOne: '8,50,000',
+    actualTwo: '8,50,000',
+    applicableTwo: '8,50,000',
+    emptybox: ''
+  }
 ];
