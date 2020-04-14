@@ -17,17 +17,20 @@
                         <mat-radio-group aria-label="Select an option" id="custom-radio">
                             <mat-radio-button *ngFor="let choice of item.riskAssessmentChoices; let i = index"
                                 [checked]="choice.selected" [value]="choice"
-                                (click)="item.selectedChoiceId = choice.id;item.weight = choice.weight;checkState(item)">
+                                (click)="item.selectedChoiceId = choice.id;item.weight = choice.weight;checkState(item,i)">
                                 {{choice.choice}}<br></mat-radio-button>
                         </mat-radio-group>
                     </mat-expansion-panel>
                 </mat-accordion>
             </div>
-            <div *ngIf="showErrorMsg == true" class="text-danger">{{showErrorMsg}} please complete all questions for
+            <div *ngIf="showErrorMsg == true" class="text-danger"> please complete all questions for
                 test result
             </div>
             <button *ngIf="showButton == true" mat-stroked-button class="btn-primary mt-20 br-0 right"
                 (click)="submitRiskAnalysis(item)">SUBMIT</button>
+                <div *ngIf="isLoading == true">
+                    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+                </div>
         </div>
         <div class="col-md-3 pr-0">
             <!-- <button mat-raised-button color="primary" (click)="open('riskProfile', null)">History</button> -->

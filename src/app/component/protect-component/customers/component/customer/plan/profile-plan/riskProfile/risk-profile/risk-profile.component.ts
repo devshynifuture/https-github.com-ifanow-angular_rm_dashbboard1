@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {PlanService} from '../../../plan.service';
-import {FormBuilder} from '@angular/forms';
-import {UtilService} from 'src/app/services/util.service';
+import { Component, OnInit } from '@angular/core';
+import { PlanService } from '../../../plan.service';
+import { FormBuilder } from '@angular/forms';
+import { UtilService } from 'src/app/services/util.service';
 import * as Highcharts from 'highcharts';
-import {AuthService} from 'src/app/auth-service/authService';
-import {HistoryRiskProfileComponent} from '../../history-risk-profile/history-risk-profile.component';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { HistoryRiskProfileComponent } from '../../history-risk-profile/history-risk-profile.component';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import more from 'highcharts/highcharts-more';
 more(Highcharts);
 
@@ -29,6 +29,7 @@ export class RiskProfileComponent implements OnInit {
   clickMessage = '';
   name = 'Angular';
   showLoader: boolean;
+  isLoading = false
 
   onClickMe(referenceKeyName) {
     alert(referenceKeyName.id);
@@ -235,11 +236,8 @@ export class RiskProfileComponent implements OnInit {
 
     }));
   }
-  checkState(item) {
+  checkState(item, i) {
     this.statusArray.push(item)
-    // this.statusArray = _.uniqBy(this.statusArray, function (e) {
-    //   return e.id;
-    // });
     this.progressBar = this.statusArray.length * 7
   }
   getdataForm(data) {
@@ -268,6 +266,7 @@ export class RiskProfileComponent implements OnInit {
   }
 
   submitRiskAnalysis(data) {
+    this.isLoading = true
     this.clientRiskAssessmentResults = [];
     const obj = {
       riskAssessmentId: 1,
@@ -276,15 +275,21 @@ export class RiskProfileComponent implements OnInit {
       clientRiskAssessmentResults: []
     };
     this.riskAssessmentQuestionList.forEach(element => {
-      this.clientRiskAssessmentResults.push({
-        riskAssessmentQuestionId: element.id,
-        riskAssessmentChoiceId: element.selectedChoiceId,
-        weight: element.weight
-      });
+      if (element.selectedChoiceId) {
+        this.showErrorMsg = true
+        return
+      } else {
+        this.clientRiskAssessmentResults.push({
+          riskAssessmentQuestionId: element.id,
+          riskAssessmentChoiceId: element.selectedChoiceId,
+          weight: element.weight
+        });
+      }
     });
-    obj.clientRiskAssessmentResults = this.clientRiskAssessmentResults;
-    console.log('RiskProfileComponent submitRiskAnalysis solutionList : ', obj);
-
+    if (this.showErrorMsg = false) {
+      obj.clientRiskAssessmentResults = this.clientRiskAssessmentResults;
+      console.log('RiskProfileComponent submitRiskAnalysis solutionList : ', obj);
+    }
     this.planService.submitRisk(obj).subscribe(
       data => this.submitRiskRes(data), error => {
         this.showErrorMsg = true
@@ -294,6 +299,8 @@ export class RiskProfileComponent implements OnInit {
   }
 
   submitRiskRes(data) {
+    this.isLoading = false
+
     this.showRisk = true;
     setTimeout(() => {
       this.guageFun('Gauge');
