@@ -68,11 +68,15 @@ export class ReconciliationService {
     }
 
     getGroupHeadNameValues(data) {
-        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_GROUP_HEAD_NAME_LIST, data);
+        return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_GROUP_HEAD_LIST, data);
     }
 
     getInvestorNameValues(data) {
-        return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_INVESTOR_NAME_LIST, data);
+        return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_APPLICANT_NAME_LIST, data);
+    }
+
+    getTeamMemberListValues(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TEAM_MEMBER, data);
     }
 
     // post functions
