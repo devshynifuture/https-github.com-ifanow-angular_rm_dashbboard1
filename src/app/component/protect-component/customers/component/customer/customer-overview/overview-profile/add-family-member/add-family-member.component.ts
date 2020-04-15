@@ -7,6 +7,7 @@ import { ValidatorType } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { DatePipe } from '@angular/common';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-add-family-member',
@@ -21,6 +22,7 @@ export class AddFamilyMemberComponent implements OnInit {
   step = 1;
   validatorType = ValidatorType
   createFamily: any;
+  maxDateForAdultDob = moment().subtract(18, 'years');
   familyMemberList = {
     'firstRow': [
       { name: 'Wife', imgUrl: '/assets/images/svg/wife-profile.svg', selected: false, relationshipTypeId: 2 }
@@ -183,7 +185,8 @@ export class AddFamilyMemberComponent implements OnInit {
           this.fb.group({
             name: [, [Validators.required]],
             date: [, [Validators.required]],
-            relationTypeId: [element.relationshipTypeId]
+            relationTypeId: [element.relationshipTypeId],
+            maxDateValue: [this.maxDateForAdultDob]
           }))
         this.familyMemberNameList.push(element.name)
       }
@@ -193,7 +196,8 @@ export class AddFamilyMemberComponent implements OnInit {
         this.getFamilyListList.push(this.fb.group({
           name: [, [Validators.required]],
           date: [, [Validators.required]],
-          relationTypeId: [element.relationshipTypeId]
+          relationTypeId: [element.relationshipTypeId],
+          maxDateValue: [this.maxDateForAdultDob]
         }))
         this.familyMemberNameList.push(element.name)
       }
@@ -203,7 +207,8 @@ export class AddFamilyMemberComponent implements OnInit {
         this.getFamilyListList.push(this.fb.group({
           name: [, [Validators.required]],
           date: [, [Validators.required]],
-          relationTypeId: [element.relationshipTypeId]
+          relationTypeId: [element.relationshipTypeId],
+          maxDateValue: [new Date()]
         }))
         this.familyMemberNameList.push(element.name)
         element.count--;

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { ValidatorType } from 'src/app/services/util.service';
+import { ValidatorType, UtilService } from 'src/app/services/util.service';
 import { PostalService } from 'src/app/services/postal.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -86,6 +86,9 @@ export class ClientAddressComponent implements OnInit {
     else {
       this.addressForm.get('proofIdNum').setValue('');
     }
+  }
+  toUpperCase(event) {
+    event = UtilService.toUpperCase(event);
   }
   getPostalPin(value) {
     const obj = {

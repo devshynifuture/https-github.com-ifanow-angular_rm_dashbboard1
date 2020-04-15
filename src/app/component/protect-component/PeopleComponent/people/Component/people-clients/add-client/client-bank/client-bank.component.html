@@ -17,7 +17,7 @@
         <div class="col-md-2 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" (focusout)="getBankAddress(ifcCode.value)" appInputValueValidation
+                    <input autocomplete="off" (input)="toUpperCase($event)" appInputValueValidation
                         [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="ifscCode" #ifcCode
                         [maxLength]="12" matInput class="form-control">
                     <mat-hint align="end" class="f-12">{{ifcCode.value.length}}/12</mat-hint>

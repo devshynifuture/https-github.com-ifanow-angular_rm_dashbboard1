@@ -60,7 +60,9 @@
         <div class="col-md-4 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" matInput formControlName="proofIdNum" class="form-control">
+                    <input (input)="toUpperCase($event)" appInputValueValidation
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" autocomplete="off" matInput
+                        formControlName="proofIdNum" class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
