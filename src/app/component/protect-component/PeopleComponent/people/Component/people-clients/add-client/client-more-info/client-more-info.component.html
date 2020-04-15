@@ -141,7 +141,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input autocomplete="off" #adhaarMinor appInputValueValidation
-                        [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="adhaarMinor" matInput
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="adhaarNo" matInput
                         [maxLength]="10" class="form-control">
                     <mat-hint align="end">{{adhaarMinor.value.length}}/10</mat-hint>
                     <mat-hint>Optional</mat-hint>
