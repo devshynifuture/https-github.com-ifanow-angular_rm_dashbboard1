@@ -3,7 +3,9 @@ import { OrderHistoricalFileComponent } from './../order-historical-file/order-h
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { AdminDetailsComponent } from './admin-details/admin-details.component';
-import { MatSort } from '@angular/material';
+import { MatSort, MatTableDataSource } from '@angular/material';
+import { SupportService } from '../support.service';
+import { EventService } from '../../../../Data-service/event.service';
 
 @Component({
   selector: 'app-ifa-onboarding',
@@ -13,14 +15,72 @@ import { MatSort } from '@angular/material';
 export class IfaOnboardingComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   isLoading = false;
+  stagesArray: any;
+  constructor(
+    private subInjectService: SubscriptionInject,
+    private supportService: SupportService,
+    private eventService: EventService
+  ) { }
 
-
-  constructor(private subInjectService: SubscriptionInject) { }
-
-  dataSource = ELEMENT_DATA;
+  dataSource = new MatTableDataSource<any>(ELEMENT_DATA);
   displayedColumns = ['adminName', 'email', 'mobile', 'rmName', 'stage', 'usingSince', 'plan', 'team', 'arn', 'menu']
 
   ngOnInit() {
+    this.getStagesFromBackend();
+
+  }
+
+  getStagesFromBackend() {
+    this.isLoading = true;
+    this.supportService.getOnboardingTaskGlobal({})
+      .subscribe(data => {
+        if (data) {
+          this.stagesArray = data;
+          console.log("stages array::", data);
+          this.getMyIfaDetail();
+        }
+      },
+        err => this.eventService.openSnackBar(err, "DISMISS")
+      )
+  }
+
+  getMyIfaDetail() {
+    let obj = {};
+    this.supportService.getMyIFAValues(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data && data.length !== 0) {
+          this.isLoading = false;
+          let tableArray = [];
+          data.forEach((element, index) => {
+            tableArray.push({
+              adminName: element.name,
+              email: element.email_id,
+              mobile: element.mobile_number,
+              rmName: element.rm_name ? element.rm_name : ' - ',
+              stage: element.task_id ? this.getStageName(element.task_id) : '-',
+              usingSince: element.using_since_year + "Y " + element.using_since_month + "M",
+              plan: element.plan ? element.plan : ' - ',
+              team: element.team_count,
+              arn: element.arn_ria_count,
+              menu: ''
+            })
+          });
+          this.dataSource.data = tableArray;
+          this.isLoading = false;
+        }
+      },
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+
+  getStageName(id) {
+    for (let index = 0; index < this.stagesArray.length; index++) {
+      const element = this.stagesArray[index];
+      if (id === element.id) {
+        return element.name;
+      }
+    }
   }
 
   someFunction() {
@@ -84,13 +144,7 @@ export class IfaOnboardingComponent implements OnInit {
 
 
 const ELEMENT_DATA = [
-  { adminName: 'Sonesh Dedhia', email: 'sonesh.dedhia@manek.com', mobile: 9322574914, rmName: 'Nita Shinde', stage: 'Auto forward setup', usingSince: '7 Days', plan: 'Power + WL + OT', team: '3', arn: '1', menu: '' },
-  { adminName: 'Sonesh Dedhia', email: 'sonesh.dedhia@manek.com', mobile: 9322574914, rmName: 'Nita Shinde', stage: 'Auto forward setup', usingSince: '7 Days', plan: 'Power + WL + OT', team: '3', arn: '1', menu: '' },
-  { adminName: 'Sonesh Dedhia', email: 'sonesh.dedhia@manek.com', mobile: 9322574914, rmName: 'Nita Shinde', stage: 'Auto forward setup', usingSince: '7 Days', plan: 'Power + WL + OT', team: '3', arn: '1', menu: '' },
-  { adminName: 'Sonesh Dedhia', email: 'sonesh.dedhia@manek.com', mobile: 9322574914, rmName: 'Nita Shinde', stage: 'Auto forward setup', usingSince: '7 Days', plan: 'Power + WL + OT', team: '3', arn: '1', menu: '' },
-  { adminName: 'Sonesh Dedhia', email: 'sonesh.dedhia@manek.com', mobile: 9322574914, rmName: 'Nita Shinde', stage: 'Auto forward setup', usingSince: '7 Days', plan: 'Power + WL + OT', team: '3', arn: '1', menu: '' },
-  { adminName: 'Sonesh Dedhia', email: 'sonesh.dedhia@manek.com', mobile: 9322574914, rmName: 'Nita Shinde', stage: 'Auto forward setup', usingSince: '7 Days', plan: 'Power + WL + OT', team: '3', arn: '1', menu: '' },
-  { adminName: 'Sonesh Dedhia', email: 'sonesh.dedhia@manek.com', mobile: 9322574914, rmName: 'Nita Shinde', stage: 'Auto forward setup', usingSince: '7 Days', plan: 'Power + WL + OT', team: '3', arn: '1', menu: '' },
-  { adminName: 'Sonesh Dedhia', email: 'sonesh.dedhia@manek.com', mobile: 9322574914, rmName: 'Nita Shinde', stage: 'Auto forward setup', usingSince: '7 Days', plan: 'Power + WL + OT', team: '3', arn: '1', menu: '' },
-
+  { adminName: '', email: '', mobile: '', rmName: '', stage: '', usingSince: '', plan: '', team: '', arn: '', menu: '' },
+  { adminName: '', email: '', mobile: '', rmName: '', stage: '', usingSince: '', plan: '', team: '', arn: '', menu: '' },
+  { adminName: '', email: '', mobile: '', rmName: '', stage: '', usingSince: '', plan: '', team: '', arn: '', menu: '' },
 ];

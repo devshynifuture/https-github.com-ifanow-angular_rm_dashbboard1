@@ -14,8 +14,16 @@ export class SupportService {
 
   private subject = new BehaviorSubject<any>('');
 
+  getOnboardingTaskGlobal(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ONBOARDING_TASK_GLOBAL, data);
+  }
+
+  getFileTypeOrder(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FILE_TYPE_ORDER, data);
+  }
+
   getMyIFAValues(data) {
-    return null;
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MY_IFA_DETAILS, data);
   }
 
   getBackofficeAumOrderListValues(data) {
