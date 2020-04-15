@@ -1,14 +1,14 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {BackOfficeService} from '../../protect-component/AdviserComponent/backOffice/back-office.service';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {MatProgressButtonOptions} from '../../../common/progress-button/progress-button.component';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {LoginService} from './login.service';
-import {PeopleService} from '../../protect-component/PeopleComponent/people.service';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { BackOfficeService } from '../../protect-component/AdviserComponent/backOffice/back-office.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MatProgressButtonOptions } from '../../../common/progress-button/progress-button.component';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { LoginService } from './login.service';
+import { PeopleService } from '../../protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-login',
@@ -38,6 +38,21 @@ export class LoginComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'Login to your account',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
+  getOtpBtnOption: MatProgressButtonOptions = {
+    active: false,
+    text: '****  GET OTP',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -106,6 +121,7 @@ export class LoginComponent implements OnInit {
       this.userName.markAsTouched();
       return;
     } else {
+      this.getOtpBtnOption.active = true;
       const obj = {
         userName: this.userName.value
       };
@@ -117,11 +133,16 @@ export class LoginComponent implements OnInit {
             this.userData = data;
             this.getOtpResponse(data);
             this.getOtpFlag = true;
+            this.getOtpBtnOption.active = false;
           } else {
+            this.getOtpBtnOption.active = false;
             this.eventService.openSnackBar('error found', 'Dismiss');
           }
         },
-        err => this.eventService.openSnackBar(err, 'Dismiss')
+        err => {
+          this.getOtpBtnOption.active = false;
+          this.eventService.openSnackBar(err, 'Dismiss')
+        }
       );
     }
   }
@@ -147,11 +168,11 @@ export class LoginComponent implements OnInit {
     console.log(this.verifyResponseData);
     if (this.verifyResponseData.email) {
       this.verifyFlag = 'Email';
-      const obj = {email: data.email};
+      const obj = { email: data.email };
       this.loginUsingCredential(obj);
     } else {
       this.verifyFlag = 'Mobile';
-      const obj = {mobileNo: data.mobileNo};
+      const obj = { mobileNo: data.mobileNo };
       this.loginUsingCredential(obj);
     }
   }
