@@ -6,26 +6,26 @@
         <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter">
             <ul class="vertical-menu">
                 <li (click)="viewMode ='tab1'" [ngClass]="{'activeColor':viewMode =='tab1'}" class="activeColor c-p">
-                    <div (click)="tabValue = 'Documents';getAllFileList(tabValue)" class="row">
+                    <div (click)="tabValue = 'Documents';getAllFileList(tabValue,'refresh')" class="row">
                         <div class="col-md-12 p-0"><img class="mr-8" src="assets/images/svg/document-file-icon.svg"> All files
                         </div>
                     </div>
                 </li>
                 <li (click)="viewMode ='tab2'" [ngClass]="{'activeColor':viewMode =='tab2'}" class="c-p">
-                    <div (click)="tabValue = 'Recents';getAllFileList(tabValue)" class="row">
+                    <div (click)="tabValue = 'Recents';getAllFileList(tabValue,'refresh')" class="row">
                         <div class="col-md-12 p-0"><img class="mr-8" src="assets/images/svg/recent-document.svg"> Recents
                         </div>
                     </div>
                 </li>
                 <li (click)="viewMode ='tab3'" [ngClass]="{'activeColor':viewMode =='tab3'}" class="c-p">
-                    <div (click)="tabValue = 'Starred';getAllFileList(tabValue)" class="row">
+                    <div (click)="tabValue = 'Starred';getAllFileList(tabValue,'refresh')" class="row">
                         <div class="col-md-11 p-0"><img class="mr-8" src="assets/images/svg/star-menu-documents.svg"> Starred
                         </div>
                         <div *ngIf="countDocs" class="col-md-1 p-0 text-custom">{{countDocs.starredFiles}}</div>
                     </div>
                 </li>
                 <li (click)="viewMode ='tab4'" [ngClass]="{'activeColor':viewMode =='tab4'}" class=" c-p">
-                    <div (click)="tabValue = 'Deleted files';getAllFileList(tabValue)" class="row">
+                    <div (click)="tabValue = 'Deleted files';getAllFileList(tabValue,'refresh')" class="row">
                         <div class="col-md-11 p-0"><img class="mr-8" src="assets/images/svg/remove-documents.svg"> Deleted files
                         </div>
                         <div *ngIf="countDocs" class="col-md-1 p-0 text-custom">{{countDocs.trashedFiles}}</div>
