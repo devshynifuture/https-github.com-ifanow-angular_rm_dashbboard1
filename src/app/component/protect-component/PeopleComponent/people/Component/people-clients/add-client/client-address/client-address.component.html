@@ -38,7 +38,8 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select formControlName="addProofType" class="form-control">
+                    <mat-select (selectionChange)="changeAddrProofNumber($event)" formControlName="addProofType"
+                        class="form-control">
                         <mat-option value="Select proof type">Select proof type</mat-option>
                         <mat-option value="1">Passport</mat-option>
                         <mat-option value="2">Aadhaar</mat-option>

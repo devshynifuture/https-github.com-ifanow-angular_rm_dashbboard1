@@ -87,6 +87,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.createIndividualForm(null);
         return;
       } else {
+        this.invTypeCategory = (data.clientType == 1 || data.clientType == 0) ? '1' : String(data.clientType);
         this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
       }
       (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);

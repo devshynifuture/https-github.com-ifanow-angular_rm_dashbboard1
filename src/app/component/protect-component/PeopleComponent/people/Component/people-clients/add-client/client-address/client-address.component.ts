@@ -67,7 +67,7 @@ export class ClientAddressComponent implements OnInit {
     this.addressForm = this.fb.group({
       addressType: [(data.addressType) ? String(data.addressType) : '1'],
       addProofType: [(data.proofType) ? String(data.proofType) : '1'],
-      proofIdNum: [(data.proofType == 2) ? this.userData.aadhaarNumber : data.proofIdNumber, [Validators.required]],
+      proofIdNum: [data.proofIdNumber, [Validators.required]],
       addressLine1: [data.address1, [Validators.required]],
       addressLine2: [data.address2, [Validators.required]],
       pinCode: [data.pinCode, [Validators.required]],
@@ -76,7 +76,14 @@ export class ClientAddressComponent implements OnInit {
       country: [data.country, [Validators.required]]
     });
   }
-
+  changeAddrProofNumber(data) {
+    console.log(data);
+    switch (true) {
+      case (data.value == '2'):
+        this.addressForm.get('proofIdNum').setValue(this.userData.aadhaarNumber)
+        break;
+    }
+  }
   getPostalPin(value) {
     const obj = {
       zipCode: value
