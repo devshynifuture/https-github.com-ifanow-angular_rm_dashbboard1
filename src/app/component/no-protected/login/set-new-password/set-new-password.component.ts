@@ -19,11 +19,14 @@ export class SetNewPasswordComponent implements OnInit {
     upperCase: false,
     lowerCase: false,
     specialCharacter: false
-  }
+  };
   hide1 = true;
   hide2 = true;
   userData: any;
-  constructor(private authService: AuthService, private fb: FormBuilder, private loginService: LoginService, private router: Router, private eventService: EventService) { }
+
+  constructor(private authService: AuthService, private fb: FormBuilder, private loginService: LoginService, private router: Router, private eventService: EventService) {
+  }
+
   setNewPasswordForm;
   validatorType = ValidatorType;
   barButtonOptions: MatProgressButtonOptions = {
@@ -41,54 +44,41 @@ export class SetNewPasswordComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+
   ngOnInit() {
     this.userData = window.history.state.userData;
-    (this.userData.buttonFlag) ? this.barButtonOptions.text = "Reset Password" : this.barButtonOptions.text = "Set Password"
+    (this.userData.buttonFlag) ? this.barButtonOptions.text = 'Reset Password' : this.barButtonOptions.text = 'Set Password';
     this.setNewPasswordForm = this.fb.group({
       newPassword: [, [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX), this.checkUpperCase(), this.checkLowerCase(), this.checkSpecialCharacter()]],
       confirmPassword: [, [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX)]]
     });
   }
+
   setNewPassword() {
     if (this.setNewPasswordForm.invalid) {
       return;
-    }
-    else {
+    } else {
       this.barButtonOptions.active = true;
-      let obj =
-      {
-        "password": this.setNewPasswordForm.controls.confirmPassword.value,
-        "userId": this.userData.userId
-      }
+      const obj = {
+        password: this.setNewPasswordForm.controls.confirmPassword.value,
+        userId: this.userData.userId
+      };
       this.loginService.savePassword(obj).subscribe(
         data => {
           console.log(data);
           if (data == 1) {
-            let obj =
-            {
+            const obj = {
               advisorId: this.userData.advisorId
-            }
+            };
             this.loginService.sendWelcomeEmail(obj).subscribe(
               data => {
                 this.barButtonOptions.active = false;
                 console.log(data);
               },
-              err => this.eventService.openSnackBar(err, "Dismiss")
-            )
+              err => this.eventService.openSnackBar(err, 'Dismiss')
+            );
             // this.authService.setToken(data.token);
-            this.authService.setToken('authTokenInLoginComponnennt');
-            if (this.userData.userType == 1) {
-              // data.advisorId = data.userId;
-              this.authService.setClientData(this.userData);
-              this.authService.setUserInfo(this.userData);
-              this.router.navigate(['admin', 'subscription', 'dashboard']);
-            } else {
-              this.authService.setToken('authTokenInLoginComponnennt');
-              this.userData.id = this.userData.clientId;
-              this.authService.setClientData(this.userData);
-              this.authService.setUserInfo(this.userData);
-              this.router.navigate(['customer', 'detail', 'overview', 'myfeed']);
-            }
+            this.loginService.handleUserData(this.authService, this.router, this.userData);
           } else {
             // this.passEvent = '';
             // this.errorMsg = true;
@@ -99,9 +89,10 @@ export class SetNewPasswordComponent implements OnInit {
             // this.barButtonOptions.active = false;
             this.barButtonOptions.active = false;
           }
-        })
+        });
     }
   }
+
   checkUpperCase() {
 
     return (control: AbstractControl): ValidationErrors | null => {
@@ -111,8 +102,9 @@ export class SetNewPasswordComponent implements OnInit {
       }
       this.passwordStregth.upperCase = false;
       return;
-    }
+    };
   }
+
   checkLowerCase() {
     return (control: AbstractControl): ValidationErrors | null => {
       if (new RegExp(/(?=.*[a-z])/).test(control.value) && control.value != null) {
@@ -121,7 +113,7 @@ export class SetNewPasswordComponent implements OnInit {
       }
       this.passwordStregth.lowerCase = false;
       return;
-    }
+    };
   }
 
   checkSpecialCharacter() {
@@ -132,17 +124,17 @@ export class SetNewPasswordComponent implements OnInit {
       }
       this.passwordStregth.specialCharacter = false;
       return;
-    }
+    };
   }
 
   checkPassword() {
     const password = this.setNewPasswordForm.get('newPassword').value;
     const confirm_new_password = this.setNewPasswordForm.get('confirmPassword').value;
     this.newPasswordLength = (password != null) ? password.length : 0;
-    console.log(this.newPasswordLength)
-    if (password !== "" && confirm_new_password !== "") {
+    console.log(this.newPasswordLength);
+    if (password !== '' && confirm_new_password !== '') {
       if (confirm_new_password !== password) {
-        this.setNewPasswordForm.get('confirmPassword').setErrors({ mismatch: true });
+        this.setNewPasswordForm.get('confirmPassword').setErrors({mismatch: true});
       } else {
         this.setNewPasswordForm.get('confirmPassword').setErrors(null);
       }

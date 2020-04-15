@@ -12,7 +12,7 @@ import { PeopleService } from '../../protect-component/PeopleComponent/people.se
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login-new.component.html',
+  templateUrl: './login.component.html',
   //templateUrl: './login-mobile.component.html',
   styleUrls: ['./login.component.scss'],
   animations: [
@@ -38,6 +38,21 @@ export class LoginComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'Login to your account',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
+  getOtpBtnOption: MatProgressButtonOptions = {
+    active: false,
+    text: '****  GET OTP',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -106,6 +121,7 @@ export class LoginComponent implements OnInit {
       this.userName.markAsTouched();
       return;
     } else {
+      this.getOtpBtnOption.active = true;
       const obj = {
         userName: this.userName.value
       };
@@ -117,21 +133,29 @@ export class LoginComponent implements OnInit {
             this.userData = data;
             this.getOtpResponse(data);
             this.getOtpFlag = true;
+            this.getOtpBtnOption.active = false;
           } else {
+            this.getOtpBtnOption.active = false;
             this.eventService.openSnackBar('error found', 'Dismiss');
           }
         },
-        err => this.eventService.openSnackBar(err, 'Dismiss')
+        err => {
+          this.getOtpBtnOption.active = false;
+          this.eventService.openSnackBar(err, 'Dismiss')
+        }
       );
     }
   }
+
   getOtpOnEnter(event) {
-    (event.keyCode == 13) ? this.getOtp() : ''
+    (event.keyCode == 13) ? this.getOtp() : '';
   }
+
   getOtpData(outputData) {
-    console.log("login with otp", outputData)
+    console.log('login with otp', outputData);
     this.otpData = outputData;
   }
+
   getOtpResponse(data) {
     if (data.emailList && data.emailList.length > 0) {
       data.email = data.emailList[0].email;
@@ -147,7 +171,7 @@ export class LoginComponent implements OnInit {
       const obj = { email: data.email };
       this.loginUsingCredential(obj);
     } else {
-      this.verifyFlag = 'mobile';
+      this.verifyFlag = 'Mobile';
       const obj = { mobileNo: data.mobileNo };
       this.loginUsingCredential(obj);
     }
@@ -170,35 +194,57 @@ export class LoginComponent implements OnInit {
   verifyWithOtpResponse() {
     this.barButtonOptions.active = true;
     const otpString = this.otpData.toString().replace(/,/g, '');
-    if (this.otpData.length == 6 && this.otpResponse == otpString) {
-      this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
-      // this.router.navigate(['/admin/subscription/dashboard']);
-      if (this.userData) {
-        // this.authService.setToken(data.token);
-        this.authService.setToken('authTokenInLoginComponnennt');
-        if (this.userData.userType == 1) {
-          // data.advisorId = data.userId;
-          this.authService.setUserInfo(this.userData);
-          this.router.navigate(['admin', 'subscription', 'dashboard']);
-        } else {
-          this.authService.setToken('authTokenInLoginComponnennt');
+    console.log('LoginComponent verifyWithOtpResponse data; ', this.userData);
+    console.log('LoginComponent verifyWithOtpResponse otpData; ', this.otpData);
+    console.log('LoginComponent verifyWithOtpResponse verifyFlag; ', this.verifyFlag);
 
-          this.userData.id = this.userData.clientId;
-          this.authService.setClientData(this.userData);
-          this.authService.setUserInfo(this.userData);
-          this.router.navigate(['customer', 'detail', 'overview', 'myfeed']);
-        }
+    console.log('LoginComponent verifyWithOtpResponse otpString; ', otpString);
+    console.log('LoginComponent verifyWithOtpResponse verifyResponseData; ', this.verifyResponseData);
+    console.log('LoginComponent verifyWithOtpResponse this.otpResponse; ', this.otpResponse);
+
+
+    if (this.userData) {
+
+      if (this.verifyFlag == 'Email' && this.otpData.length == 4 && this.otpResponse == otpString) {
+        const obj = {
+          email: this.userData.email,
+          userId: (this.userData.clientId) ? (this.userData.clientId > 0) ?
+            this.userData.clientId : this.userData.advisorId : this.userData.advisorId,
+          userType: this.userData.userType
+        };
+        this.saveAfterVerifyCredential(obj);
+
+        this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
+        this.loginService.handleUserData(this.authService, this.router, this.userData);
+      } else if (this.verifyFlag == 'Mobile' && this.otpData.length == 4) {
+        const obj = {
+          mobileNo: this.userData.mobileNo,
+          userId: (this.userData.clientId) ? (this.userData.clientId > 0) ?
+            this.userData.clientId : this.userData.advisorId : this.userData.advisorId,
+          userType: this.userData.userType,
+          otp: otpString
+        };
+        this.loginService.saveAfterVerification(obj).subscribe(
+          data => {
+            if (data) {
+              this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
+              this.loginService.handleUserData(this.authService, this.router, this.userData);
+            } else {
+              this.barButtonOptions.active = false;
+            }
+          },
+          err => {
+            console.error(err);
+            this.eventService.openSnackBar(err, 'Dismiss');
+            this.barButtonOptions.active = false;
+          }
+        );
       } else {
-        // this.passEvent = '';
-        // this.errorMsg = true;
-        // this.errorStyle = {
-        //   visibility: this.errorMsg ? 'visible' : 'hidden',
-        //   opacity: this.errorMsg ? '1' : '0',
-        // };
-        // this.barButtonOptions.active = false;
+        this.eventService.openSnackBar('Wrong OTP');
+        this.barButtonOptions.active = false;
       }
     } else {
-      this.eventService.openSnackBar('Wrong OTP');
+      this.barButtonOptions.active = false;
     }
   }
 
@@ -248,18 +294,8 @@ export class LoginComponent implements OnInit {
         console.log('data: ', data);
         if (data) {
           // this.authService.setToken(data.token);
-          this.authService.setToken('authTokenInLoginComponnennt');
-          if (data.userType == 1) {
-            // data.advisorId = data.userId;
-            this.authService.setUserInfo(data);
-            this.router.navigate(['admin', 'subscription', 'dashboard']);
-          } else {
-            this.authService.setToken('authTokenInLoginComponnennt');
-            data.id = data.clientId;
-            this.authService.setClientData(data);
-            this.authService.setUserInfo(data);
-            this.router.navigate(['customer', 'detail', 'overview', 'myfeed']);
-          }
+          this.loginService.handleUserData(this.authService, this.router, data);
+
         } else {
           this.passEvent = '';
           this.errorMsg = true;
@@ -334,18 +370,6 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['admin', 'subscription', 'dashboard']);
   }
 
-  closeDialog(data) {
-    const loginData = data;
-    console.log(data);
-    if (data.status === 200) {
-      this.authService.setToken(loginData.payLoad);
-      this.eventService.openSnackBar('Login successFully ', 'Dismiss');
-      this.router.navigate(['/admin/service']);
-    } else {
-      this.eventService.openSnackBar(loginData.message, 'Dismiss');
-    }
-  }
-
   progressButtonClick(event) {
     console.log(this.loginForm.value, 'this.loginForm.value.name');
     if (this.loginForm.value.name != '' && this.loginForm.value.password != '') {
@@ -364,6 +388,16 @@ export class LoginComponent implements OnInit {
     }
   }
 
-
+  saveAfterVerifyCredential(obj) {    ////// save verified email or mobileNo in the table
+    this.loginService.saveAfterVerification(obj).subscribe(
+      data => {
+        console.log(data);
+        (this.verifyFlag == 'Email') ? this.verifyFlag = 'Mobile' : '';
+      },
+      err => {
+        // this.eventService.openSnackBar(err, 'Dismiss');
+      }
+    );
+  }
 }
 

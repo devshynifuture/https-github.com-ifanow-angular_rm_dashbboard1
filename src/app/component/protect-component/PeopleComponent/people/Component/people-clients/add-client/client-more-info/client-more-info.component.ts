@@ -85,7 +85,6 @@ export class ClientMoreInfoComponent implements OnInit {
       email: [data.email, [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
       gender: ['1'],
-      adhaarMinor: [data.aadhaarNumber, Validators.pattern(this.validatorType.ADHAAR)],
       adhharGuardian: [(data.guardianData) ? data.guardianData.aadhaarNumber : '', Validators.pattern(this.validatorType.ADHAAR)]
     });
   }
