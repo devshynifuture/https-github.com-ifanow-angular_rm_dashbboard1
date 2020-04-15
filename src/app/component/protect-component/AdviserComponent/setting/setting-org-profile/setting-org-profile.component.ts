@@ -32,8 +32,6 @@ export class SettingOrgProfileComponent implements OnInit {
     this.getPersonalProfiles()
     this.getOrgProfiles()
     this.orgProfile = false
-    this.isLoading = false
-    this.userList = []
   }
 
   getPersonalProfiles() {
@@ -43,13 +41,15 @@ export class SettingOrgProfileComponent implements OnInit {
     }
     this.settingsService.getPersonalProfile(obj).subscribe(
       data => this.getPersonalProfileRes(data),
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+        this.userList = undefined;
+        this.loader(-1);
+      }
     );
   }
   getPersonalProfileRes(data) {
-    if (data) {
-      this.userList = data
-    }
+    this.userList = data
     this.loader(-1);
   }
   getOrgProfiles() {
@@ -59,7 +59,11 @@ export class SettingOrgProfileComponent implements OnInit {
     }
     this.settingsService.getOrgProfile(obj).subscribe(
       data => this.getOrgProfileRes(data),
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+        this.orgDetails = undefined;
+        this.loader(-1);
+      }
     );
   }
   getOrgProfileRes(data) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { OrgSettingServiceService } from '../org-setting-service.service';
@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './setting-preference.component.html',
   styleUrls: ['./setting-preference.component.scss']
 })
-export class SettingPreferenceComponent implements OnInit {
+export class SettingPreferenceComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['position', 'name', 'weight'];
   displayedColumns1: string[] = ['position', 'name', 'weight', 'symbol'];
   subcription = new Subscription();
@@ -52,6 +52,7 @@ export class SettingPreferenceComponent implements OnInit {
   brandVisible: any;
   counter: number = 0;
   appearanceFG:FormGroup;
+  appearanceUpdateFlag: boolean;
   constructor(private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, ) {
       
@@ -66,6 +67,7 @@ export class SettingPreferenceComponent implements OnInit {
     this.planSection = []
     this.emailTemplateList = []
     this.createAppearanceForm();
+    this.addAppearanceFormListener();
   }
   getdataForm(data) {
     this.domainS = this.fb.group({
@@ -385,14 +387,13 @@ export class SettingPreferenceComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId
     }
+    this.appearanceUpdateFlag = false;
     this.orgSetting.getAppearancePreference(obj).subscribe(
       data => {
-        this.appearanceFG = this.fb.group({
-          portfolioOpt: data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation,
-          financialOpt: data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation,
-          clientOpt: data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation,
-        })
-        this.addAppearanceFormListener();
+        this.appearanceFG.controls.portfolioOpt.setValue(data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation);
+        this.appearanceFG.controls.financialOpt.setValue(data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation);
+        this.appearanceFG.controls.clientOpt.setValue(data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation);
+        this.appearanceUpdateFlag = true;
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
     );
@@ -408,20 +409,26 @@ export class SettingPreferenceComponent implements OnInit {
 
   addAppearanceFormListener(){
     this.subcription.add(
-      this.appearanceFG.valueChanges.subscribe((value)=>{
-        let updateObj = {
-          advisorId: this.advisorId,
-          appearanceOptionId: 1,
-          advisorOrOrganisation: value
+      this.appearanceFG.valueChanges.subscribe(value => {
+        let jsonArr = [];
+        let counter = 0;
+        for(let k in value) {
+          counter++;
+          jsonArr.push({
+            advisorId: this.advisorId,
+            appearanceOptionId: counter,
+            advisorOrOrganisation: value[k]
+          })
         }
-        console.log('something to check');
+
+        if(this.appearanceUpdateFlag)
+          this.orgSetting.updateAppearancePreferance(jsonArr).subscribe();
       })
-    )
+    );
   }
 
   changeView(tab) {
     this.viewMode = tab;
-    this.subcription.unsubscribe();
     switch(tab) {
       case 'tab1': 
         this.getPortfolio();
@@ -459,5 +466,9 @@ export class SettingPreferenceComponent implements OnInit {
         this.getAppearance();
         break;
     }
+  }
+
+  ngOnDestroy(){
+    this.subcription.unsubscribe();
   }
 }
