@@ -17,23 +17,22 @@
 </div>
 <div class="row plan-returnsinflation">
     <div class="col-md-4 pl-0">
-        <table mat-table [dataSource]="dataSource" id="table-low">
+        <table mat-table [dataSource]="shortDS" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="position">
                 <th class="br t-70" mat-header-cell *matHeaderCellDef>SHORT TERM </th>
-                <td mat-cell class="br" *matCellDef="let element"> {{element.position}} </td>
+                <td mat-cell class="br" *matCellDef="let element"> {{element.class}} </td>
             </ng-container>
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>Assumption </th>
                 <td mat-cell class="text-center br" *matCellDef="let element"> 
-                    <div class="bar" *ngIf="!editMode">{{element.name}}</div>
-                    <input class="form-control" type="text" *ngIf="editMode" [(ngModel)]="element.name" [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="100" appInputValueValidation (change)="element.edited = true">    
+                    <div class="bar">{{element.inflation_rate}}</div>
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
 
-        <table mat-table [dataSource]="shortTerm" id="table-low" class="mt-20" multiTemplateDataRows>
+        <table mat-table [dataSource]="shortTerm" id="table-low" class="mt-20" multiTemplateDataRows appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="position">
                 <th mat-header-cell class="br t-70" *matHeaderCellDef>SHORT TERM </th>
                 <td mat-cell class="br" *matCellDef="let element"> {{element.class}} </td>
@@ -57,16 +56,15 @@
     </div>
 
     <div class="col-md-4">
-        <table mat-table [dataSource]="dataSource" id="table-low">
+        <table mat-table [dataSource]="longDS" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="position">
                 <th class="br t-70" mat-header-cell *matHeaderCellDef>LONG TERM </th>
-                <td mat-cell class="br" *matCellDef="let element"> {{element.position}} </td>
+                <td mat-cell class="br" *matCellDef="let element"> {{element.class}} </td>
             </ng-container>
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>Assumption </th>
                 <td mat-cell class="text-center br" *matCellDef="let element">
-                    <div class="bar" *ngIf="!editMode">{{element.name}}</div>
-                    <input class="form-control" type="text" *ngIf="editMode" #equity1 [(ngModel)]="element.name" [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="100" appInputValueValidation (change)="element.edited = true">
+                    <div class="bar">{{element.inflation_rate}}</div>
                 </td>
             </ng-container>
 
@@ -74,7 +72,7 @@
 
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <table mat-table [dataSource]="longTerm" id="table-low" class="mt-20" multiTemplateDataRows>
+        <table mat-table [dataSource]="longTerm" id="table-low" class="mt-20" multiTemplateDataRows appSkeletonLoading [appSkeletonLoading]="isLoading">
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell class="br t-70" *matHeaderCellDef>LONG TERM</th>

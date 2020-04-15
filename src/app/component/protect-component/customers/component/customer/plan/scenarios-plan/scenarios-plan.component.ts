@@ -41,7 +41,7 @@ export class ScenariosPlanComponent implements OnInit {
       },
 
       xAxis: {
-        categories: []
+        categories: [],
       },
       yAxis: {
         allowDecimals: false,
@@ -53,24 +53,27 @@ export class ScenariosPlanComponent implements OnInit {
       plotOptions: {
         column: {
           stacking: 'normal',
-          pointWidth: 6
+          pointWidth: 12
         }
       },
       series: [{
         name: 'John',
         data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
           27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54],
-        color: '#69A901'
+        color: '#69A901',
+        pointWidth: 12
       } as SeriesColumnOptions, {
         name: 'Jane',
         data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
           27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54],
-        color: '#08CCB4'
+        color: '#08CCB4',
+        pointWidth: 12
       } as SeriesColumnOptions, {
         name: 'Joe',
         data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
           27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54],
-        color: '#B19D74'
+        color: '#B19D74',
+        pointWidth: 12
       } as SeriesColumnOptions]
     });
   }
@@ -79,7 +82,7 @@ export class ScenariosPlanComponent implements OnInit {
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: 0,
-        plotShadow: false
+        plotShadow: false,
       },
       title: {
         text: '',
@@ -147,7 +150,8 @@ export class ScenariosPlanComponent implements OnInit {
               enabled: false
             }
           }
-        ]
+        ],
+        pointWidth: 12
       }]
     });
   }
