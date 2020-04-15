@@ -91,6 +91,12 @@
     display: none;
 }
 
+.matErrorCss {
+    font-size: 75%;
+    color: #f44336;
+    font-weight: 600;
+}
+
 @media screen and (max-width: 767px) {
     .imgLogin {
         // width: 295px;
