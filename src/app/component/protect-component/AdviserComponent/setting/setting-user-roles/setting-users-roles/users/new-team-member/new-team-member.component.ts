@@ -89,7 +89,7 @@ export class NewTeamMemberComponent implements OnInit {
 
     this.settingsService.editTeamMember(dataObj).subscribe((res) => {
       this.close(true);
-      this.eventService.openSnackBar('Invitation sent successfully');
+      this.eventService.openSnackBar('Member data updated');
     }, (err) => {
       console.error(err);
       this.eventService.openSnackBar('Error occured.');

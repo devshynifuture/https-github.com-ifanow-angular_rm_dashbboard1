@@ -56,7 +56,7 @@ export class SettingsService {
 
   getTeamMembers(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ALL_TEAM_MEMEBERS, httpParams);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ALL_TEAM_MEMBERS, httpParams);
   }
 
   addTeamMember(data) {

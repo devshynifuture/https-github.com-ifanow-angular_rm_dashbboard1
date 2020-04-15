@@ -645,7 +645,7 @@ export const appConfig = {
   GET_USER_ACCESS_RIGHTS_LIST: 'setting/users-roles/access-rights/get',
   UPDATE_USER_ACCESS_RIGHTS: 'setting/users-roles/access-rights/update',
 
-  GET_ALL_TEAM_MEMEBERS: 'setting/users/team-members/get',
+  GET_ALL_TEAM_MEMBERS: 'setting/users/team-members/get',
   ADD_TEAM_MEMBER: 'setting/users/team-member/add',
   EDIT_TEAM_MEMBER: 'setting/users/team-member/edit',
   DELETE_TEAM_MEMBER: 'setting/users/team-member/delete',
