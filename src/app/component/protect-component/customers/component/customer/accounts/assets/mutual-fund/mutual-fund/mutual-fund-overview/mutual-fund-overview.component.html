@@ -68,24 +68,24 @@
                         <div class="col-md-12 p-0">
                             <p class="m-0 text-custom pt-20 pl-8">Current value</p>
                             <h2 class="m-0 f-300 text-black pt-4 pl-8 pb-16">
-                                <span appFormatNumber *ngIf="mfData">{{(mfData)?(mfData.total_current_value):0}}</span></h2>
+                                <span appFormatNumber *ngIf="mfData.total_current_value">{{(mfData.total_current_value)?(mfData.total_current_value):0}}</span></h2>
                         </div>
                         <div class="col-md-12 p-0">
                             <div class="row bg-light lter pt-16 pb-16 bt-1">
                                 <div class="col-md-4 pr-0 pl-12">
                                     <p class="text-custom m-0">Amount invested</p>
                                     <h5 class="m-0 text-black">
-                                        <span appFormatNumber *ngIf="mfData"> {{(mfData)?(mfData.total_amount_invested):0}}</span>
+                                        <span appFormatNumber *ngIf="mfData.total_amount_invested"> {{(mfData)?(mfData.total_amount_invested):0}}</span>
                                     </h5>
                                 </div>
                                 <div class="col-md-4 pr-0 pl-12">
                                     <p class="text-custom m-0">Unrealized gain/loss</p>
                                     <h5 class="m-0 text-success">
-                                        <span appFormatNumber *ngIf="mfData">{{(mfData)?(mfData.total_unrealized_gain):0}}</span></h5>
+                                        <span appFormatNumber *ngIf="mfData.total_unrealized_gain">{{(mfData.total_unrealized_gain)?(mfData.total_unrealized_gain):0}}</span></h5>
                                 </div>
                                 <div class="col-md-4 pr-0 pl-12">
                                     <p class="text-custom m-0">Returns</p>
-                                    <h5 class="m-0 text-success"><span *ngIf="mfData">{{mfData.total_xirr | number:'1.2-2'}}</span>% <i class="material-icons f-14 f-700">
+                                    <h5 class="m-0 text-success"><span *ngIf="mfData.total_xirr">{{mfData.total_xirr | number:'1.2-2'}}</span>% <i class="material-icons f-14 f-700">
                       arrow_upward
                     </i>
                                     </h5>
@@ -611,10 +611,10 @@
                 <img  style="width: 200px;" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
             </td>
             <td style="text-align: right;">
-                <p style="margin: 0px; font-weight: 600;">Gayatri</p>
+                <p style="margin: 0px; font-weight: 600;">Sher Khan</p>
                 <p style="margin: 0px; font-size: 14px;">Himachal Pradesh</p>
                 <p style="margin: 0px; font-size: 14px;"> <strong> Number: </strong> 123456789</p>
-                <p style="margin: 0px; font-size: 14px;"> <strong> Email : </strong>  gayatri@futurewise.co.in</p>
+                <p style="margin: 0px; font-size: 14px;"> <strong> Email : </strong>  sherKhan@gmail.com</p>
             </td>
         </tr>
 
@@ -634,7 +634,7 @@
                     <tr>
                         <td style=" padding-top: 15px; padding-bottom: 10px; padding-left: 15px; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">
                             <p style="font-size: 14px; margin: 0px;">Current value </p>
-                            <h2 style="margin: 0px; font-size: 24px; color: #000000;" appFormatNumber>{{mfData.total_current_value}}
+                            <h2 style="margin: 0px; font-size: 24px; color: #000000;" > <span appFormatNumber *ngIf="mfData.total_current_value">{{(mfData)?(mfData.total_current_value):0}}</span>
                             </h2>
 
                         </td>
@@ -646,20 +646,20 @@
                                 <tr>
                                     <td valign="top">
                                         <p style="font-size: 14px; color: #757575; margin: 0px;">Amount invested</p>
-                                        <h2 style="margin: 0px; font-size: 24px; color: #000000;" appFormatNumber>
-                                            {{mfData.total_amount_invested}}</h2>
+                                        <h2 style="margin: 0px; font-size: 24px; color: #000000;">
+                                            <span appFormatNumber *ngIf="mfData.total_amount_invested"> {{(mfData.total_amount_invested)?(mfData.total_amount_invested):0}}</span></h2>
                                     </td>
 
                                     <td valign="top">
                                         <p style="font-size: 14px; color: #757575; margin: 0px;">Unrealized gain/loss
                                         </p>
-                                        <h2 style="margin: 0px; font-size: 24px; color: #000000;" appFormatNumber>
-                                            {{mfData.total_unrealized_gain}}</h2>
+                                        <h2 style="margin: 0px; font-size: 24px; color: #000000;" >
+                                           <span appFormatNumber *ngIf="mfData.total_unrealized_gain">{{(mfData.total_unrealized_gain)?(mfData.total_unrealized_gain):0}}</span></h2>
                                     </td>
 
                                     <td valign="top">
                                         <p style="font-size: 14px; color: #757575; margin: 0px;">Returns</p>
-                                        <h2 style="margin: 0px; font-size: 24px; color: #000000;">{{mfData.total_xirr | number:'1.2-2'}}
+                                        <h2 style="margin: 0px; font-size: 24px; color: #000000;"><span *ngIf="mfData.total_xirr">{{mfData.total_xirr | number:'1.2-2'}}</span>%
                                         </h2>
                                     </td>
                                 </tr>
@@ -765,14 +765,14 @@
                     <tr>
                         <td style="text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">Total
                         </td>
-                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber>
-                            {{mfData.total_amount_invested}}</td>
-                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber>{{mfData.total_current_value}}
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;"  appFormatNumber [value]="mfData.total_amount_invested">
+                        </td>
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber [value]="mfData.total_current_value">
                         </td>
                         <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
                             {{mfData.total_absolute_return | number:'1.2-2'}}</td>
                         <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">{{mfData.total_xirr | number:'1.2-2'}}</td>
-                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">{{1.02}}</td>
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">{{60.72}}</td>
                     </tr>
 
                 </table>
@@ -892,17 +892,16 @@
                     </tr>
 
                     <tr>
-                        <td style="text-align: left; font-size: 13px; padding: 8px;border-left: 1px solid #dee5e7; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; font-weight: 500;">Total
+                        <td style="text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">Total
                         </td>
-                        <td style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber>
-                            {{mfData.total_amount_invested}}</td>
-                        <td style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber>
-                            {{mfData.total_current_value}}</td>
-                        <td style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; font-weight: 500;">
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;"  appFormatNumber [value]="mfData.total_amount_invested">
+                        </td>
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber [value]="mfData.total_current_value">
+                        </td>
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
                             {{mfData.total_absolute_return | number:'1.2-2'}}</td>
-                        <td style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; font-weight: 500;">{{mfData.total_xirr | number:'1.2-2'}}
-                        </td>
-                        <td style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; font-weight: 500;">{{1.02}}</td>
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">{{mfData.total_xirr | number:'1.2-2'}}</td>
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">{{60.72}}</td>
                     </tr>
 
 
@@ -936,24 +935,23 @@
                     <tr *ngFor="let item of dataSource.data">
                         <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; border-left: 1px solid #dee5e7;">{{item.name}}</td>
                         <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;" appFormatNumber>{{item.amountInv}}</td>
-                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;" appFormatNumber>{{item.value}}</td>
+                        <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;" appFormatNumber>{{item.currentValue}}</td>
                         <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;"> {{item.absoluteReturn | number:'1.2-2'}}</td>
                         <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">{{item.xirr | number:'1.2-2'}}</td>
                         <td style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7;">{{item.allocatedPercentage | number:'1.2-2' }}</td>
                     </tr>
 
-                    <tr>
-                        <td style="text-align: left; font-size: 13px; padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; border-left: 1px solid #dee5e7; font-weight: 500; ">Total
+                      <tr>
+                        <td style="text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">Total
                         </td>
-                        <td style="text-align: left; font-size: 13px; padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber>
-                            {{mfData.total_amount_invested}}</td>
-                        <td style="text-align: left; font-size: 13px; padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber>
-                            {{mfData.total_current_value}}</td>
-                        <td style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; font-weight: 500;">
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;"  appFormatNumber [value]="mfData.total_amount_invested">
+                        </td>
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber [value]="mfData.total_current_value">
+                        </td>
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
                             {{mfData.total_absolute_return | number:'1.2-2'}}</td>
-                        <td style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; font-weight: 500;">{{mfData.total_xirr | number:'1.2-2'}}
-                        </td>
-                        <td style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; font-weight: 500;">{{1.02}}</td>
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">{{mfData.total_xirr | number:'1.2-2'}}</td>
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">{{60.72}}</td>
                     </tr>
 
 
@@ -993,16 +991,16 @@
                     </tr>
 
                     <tr>
-                        <td style="text-align: left; font-size: 13px; padding: 8px;border-left: 1px solid #dee5e7;  border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; font-weight: 500;">Total
+                        <td style="text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">Total
                         </td>
-                        <td style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber>
-                            {{mfData.total_amount_invested}}</td>
-                        <td style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber>
-                            {{mfData.total_current_value}}</td>
-                        <td style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; font-weight: 500;">
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;"  appFormatNumber [value]="mfData.total_amount_invested">
+                        </td>
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber [value]="mfData.total_current_value">
+                        </td>
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
                             {{mfData.total_absolute_return | number:'1.2-2'}}</td>
-                        <td style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; font-weight: 500;">{{mfData.total_xirr | number:'1.2-2'}}</td>
-                        <td style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-bottom: 1px solid #dee5e7; font-weight: 500;">{{1.02}}</td>
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">{{mfData.total_xirr | number:'1.2-2'}}</td>
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">{{60.72}}</td>
                     </tr>
 
 

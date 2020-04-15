@@ -361,8 +361,24 @@
 
 
 <div class="hide" #summaryTemplate id="template">
+  <tr>
+            <td style="text-align: left;">
+                <img  style="width: 200px;" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+            </td>
+            <td style="text-align: right;">
+                <p style="margin: 0px; font-weight: 600;">Sher Khan</p>
+                <p style="margin: 0px; font-size: 14px;">Himachal Pradesh</p>
+                <p style="margin: 0px; font-size: 14px;"> <strong> Number: </strong> 123456789</p>
+                <p style="margin: 0px; font-size: 14px;"> <strong> Email : </strong> sherKhan@gmail.com</p>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="padding: 10px;"></td>
+        </tr>
 
     <table cellpadding="0" width="100%" cellspacing="0" border="0" style="font-family: 'Roboto', sans-serif; margin: 0px auto;" align="center">
+
         <tr>
             <td>
                 <table cellpadding="0" cellspacing="0" border="0" bordercolor="#DADCE0" width="100%">
@@ -405,13 +421,15 @@
                     <tr>
                         <td colspan="11">
                             <table cellpadding="0" cellspacing="0" border="0" width="100%" bordercolor="#DADCE0" *ngFor="let item of customDataSource.data">
-                                <tr *ngIf="item.groupName && item.schemeName!='Total' ">
+                                <!-- <tr *ngIf="item.groupName && item.schemeName!='Total' ">
                                     <td style="color: #008FFF; text-align: center; padding: 8px; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-left: 1px solid #dee5e7; " colspan="11">
                                         {{item.groupName}}
                                     </td>
-                                </tr>
-
-                                <tr *ngIf="item.schemeName!='Total'">
+                                </tr> -->
+                            <div style="width: 99.85%;text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;" *ngIf="item.groupName">
+                                {{item.groupName}}
+                                </div>
+                                <tr *ngIf="item.id">
 
                                     <td valign="top" style="width: 20%;font-size: 13px; padding: 8px;  border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                                         {{item.schemeName}}
@@ -502,26 +520,18 @@
                     <tr>
                         <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                             Grand Total</td>
-                        <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
-                            {{(mutualFund)?mutualFund.total_amount_invested:'0'}} </td>
-                        <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
-                            {{(mutualFund)?mutualFund.total_current_value:'0'}} </td>
-                        <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
-                            {{(mutualFund)?mutualFund.total_unrealized_gain:'0'}} </td>
+                        <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber [value]="grandTotal.totalTransactionAmt"></td>
+                        <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber [value]="grandTotal.currentValue"></td>
+                        <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber  [value]="grandTotal.totalGain"></td>
                         <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;">
-                            {{(mutualFund)?(mutualFund.total_absolute_return | number:'1.2-2'):'0'}} </td>
+                            {{(grandTotal.absReturn)?(grandTotal.absReturn | number:'1.2-2'):'0'}} </td>
                         <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                            {{(mutualFund)?(mutualFund.total_xirr | number:'1.2-2'):'0'}} </td>
-                        <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
-                            {{(mutualFund)?mutualFund.total_dividend_payout:'0'}} </td>
-                        <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
-                            {{(mutualFund)?mutualFund.total_switch_out:'0'}} </td>
-                        <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
-                            {{(mutualFund)?mutualFund.balanceUnit:'0'}} </td>
-                        <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                            {{(mutualFund)?mutualFund.navDate:'0'}} </td>
-                        <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber>
-                            {{(mutualFund)?mutualFund.totalSipAmount:'0'}} </td>
+                            {{(grandTotal.xirr)?(grandTotal.xirr | number:'1.2-2'):'0'}} </td>
+                        <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber [value]="grandTotal.dividendPayout"></td>
+                        <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber [value]="grandTotal.withdrawals"></td>
+                        <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber [value]="grandTotal.totalBalanceUnit"></td>
+                        <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber [value]="grandTotal.totalNav"></td>
+                        <td valign="top" style="width: 20%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;" appFormatNumber [value]="grandTotal.sip"></td>
                     </tr>
 
 
