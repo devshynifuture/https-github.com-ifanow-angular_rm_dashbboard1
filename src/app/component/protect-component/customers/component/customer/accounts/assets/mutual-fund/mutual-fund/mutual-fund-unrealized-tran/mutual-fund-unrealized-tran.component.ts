@@ -155,7 +155,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   //   return item.nav;
   // }
 
-  isGroup3 = (index, item) => item.name;// for grouping family member name
+  isGroup3 = (index, item) => item.pan;// for grouping family member name
   //   return item.name;
   //   return item.pan;
   //   return item.folio;
