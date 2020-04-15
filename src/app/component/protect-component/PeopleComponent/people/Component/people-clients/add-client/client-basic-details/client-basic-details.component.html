@@ -80,8 +80,9 @@
       <div class="col-md-3 p-0">
         <div class="form-group mb-0">
           <mat-form-field>
-            <input #pan [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation autocomplete="off"
-              class="form-control" formControlName="pan" matInput maxlength="10">
+            <input #pan (input)="toUpperCase($event)" [inputValidator]="validatorType.ALPHA_NUMERIC"
+              appInputValueValidation autocomplete="off" class="form-control" formControlName="pan" matInput
+              maxlength="10">
             <mat-error *ngIf="basicDetails.get('pan').errors?.required">This Field is required</mat-error>
             <mat-error *ngIf="basicDetails.get('pan').errors?.pattern">Pan must be 10 digits</mat-error>
             <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
@@ -449,7 +450,8 @@
       <div class="col-md-3 p-0">
         <div class="form-group mb-0">
           <mat-form-field>
-            <input [maxLength]="10" formControlName="pan" #pan matInput class="form-control">
+            <input [maxLength]="10" (input)="toUpperCase($event)" formControlName="pan" #pan matInput
+              class="form-control" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation>
             <mat-error *ngIf="minorForm.get('pan').errors?.pattern">Pan must be 10 digits</mat-error>
             <mat-hint>Optional</mat-hint>
             <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
@@ -607,7 +609,8 @@
       <div class="col-md-3 p-0">
         <div class="form-group mb-0">
           <mat-form-field>
-            <input formControlName="comPan" #cpan maxlength="10" matInput class="form-control">
+            <input [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation formControlName="comPan"
+              (input)="toUpperCase($event)" #cpan maxlength="10" matInput class="form-control">
             <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.required">This Field is required
             </mat-error>
             <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.pattern">Pan must be 10 digits
