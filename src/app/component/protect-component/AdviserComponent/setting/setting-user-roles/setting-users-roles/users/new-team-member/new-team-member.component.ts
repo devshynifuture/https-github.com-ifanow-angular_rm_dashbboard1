@@ -5,6 +5,7 @@ import {AuthService} from 'src/app/auth-service/authService';
 import {ValidatorType} from 'src/app/services/util.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {MatProgressButtonOptions} from '../../../../../../../../common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-new-team-member',
@@ -19,6 +20,21 @@ export class NewTeamMemberComponent implements OnInit {
   counter = 0;
   isLoading = true;
   validatorType = ValidatorType;
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Login to your account',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -62,10 +78,14 @@ export class NewTeamMemberComponent implements OnInit {
     if (this.teamMemberFG.invalid) {
       this.teamMemberFG.markAllAsTouched();
     } else {
-      if (this.data.is_add_call) {
-        this.addTeamMember();
+      if (this.barButtonOptions.active) {
       } else {
-        this.editTeamMember();
+        this.barButtonOptions.active = true;
+        if (this.data.is_add_call) {
+          this.addTeamMember();
+        } else {
+          this.editTeamMember();
+        }
       }
     }
   }
@@ -77,6 +97,7 @@ export class NewTeamMemberComponent implements OnInit {
       this.eventService.openSnackBar('Invitation sent successfully');
     }, (err) => {
       console.error(err);
+      this.barButtonOptions.active = false;
       this.eventService.openSnackBar('Error occured.');
     });
   }
@@ -92,6 +113,7 @@ export class NewTeamMemberComponent implements OnInit {
       this.eventService.openSnackBar('Member data updated');
     }, (err) => {
       console.error(err);
+      this.barButtonOptions.active = true;
       this.eventService.openSnackBar('Error occured.');
     });
   }
@@ -104,9 +126,11 @@ export class NewTeamMemberComponent implements OnInit {
     this.counter += countAdder;
     if (this.counter == 0) {
       this.isLoading = false;
-      if (this.data.is_add_call) {
-        this.checkIfRoleExists();
-      }
+      this.checkIfRoleExists();
+      // if (this.data.is_add_call) {
+      // }else {
+      //
+      // }
     } else {
       this.isLoading = true;
     }
@@ -114,7 +138,18 @@ export class NewTeamMemberComponent implements OnInit {
 
   checkIfRoleExists() {
     const teamMemberRoleId = this.teamMemberFG.get('roleId') as FormControl;
-    const roleExist = this.roles.find(role => role.id == teamMemberRoleId.value);
+    const roleExist = this.roles.find((role) => {
+      console.log('checkIfRoleExists role: ', role);
+      console.log('checkIfRoleExists teamMemberRoleId.value: ', teamMemberRoleId.value);
+      if (role.roleMasterId == teamMemberRoleId.value) {
+        teamMemberRoleId.setValue(role.id);
+        return true;
+      } else {
+        return false;
+      }
+    });
+    console.log('2345467t8y9u0 checkIfRoleExists roleExist: ', roleExist);
+
     if (!roleExist) {
       teamMemberRoleId.setValue('');
       this.teamMemberFG.updateValueAndValidity();
