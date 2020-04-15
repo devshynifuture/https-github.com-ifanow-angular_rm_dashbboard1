@@ -1,20 +1,20 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ValidatorType} from '../../../../../../../../services/util.service';
-import {DatePipe} from '@angular/common';
-import {EventEmitter, Output} from '@angular/core/src/metadata/*';
-import {AuthService} from '../../../../../../../../auth-service/authService';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ValidatorType } from '../../../../../../../../services/util.service';
+import { DatePipe } from '@angular/common';
+import { EventEmitter, Output } from '@angular/core/src/metadata/*';
+import { AuthService } from '../../../../../../../../auth-service/authService';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-company-more-info',
   templateUrl: './company-more-info.component.html',
   styleUrls: ['./company-more-info.component.scss']
 })
-export class CompanyMoreInfoComponent implements OnInit, OnChanges {
+export class CompanyMoreInfoComponent implements OnInit {
   moreInfoData: any = {};
   advisorId: any;
   mobileNumberFlag = 'Mobile';
@@ -42,18 +42,14 @@ export class CompanyMoreInfoComponent implements OnInit, OnChanges {
   @Output() tabChange = new EventEmitter();
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
-              private peopleService: PeopleService, private eventService: EventService,
-              private datePipe: DatePipe) {
+    private peopleService: PeopleService, private eventService: EventService,
+    private datePipe: DatePipe) {
   }
 
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
-    this.prevData = data;
-    if (!data) {
-      this.prevData = {};
-    }
-    console.log(data);
-
+    this.createMoreInfoForm(null);
+    this.getCompanyDetails(data);
   }
 
 
@@ -61,7 +57,7 @@ export class CompanyMoreInfoComponent implements OnInit, OnChanges {
     (data == undefined) ? data = {} : data;
     this.moreInfoForm = this.fb.group({
       displayName: [data.displayName],
-      adhaarNo: [data.aadhaarNumber, [this.validatorType.ADHAAR]],
+      adhaarNo: [data.aadhaarNumber, [Validators.pattern(this.validatorType.ADHAAR)]],
       maritalStatus: [(data.martialStatusId) ? String(data.martialStatusId) : '1'],
       dateOfBirth: [new Date(data.dateOfBirth)],
       bio: [data.bio],
@@ -72,11 +68,10 @@ export class CompanyMoreInfoComponent implements OnInit, OnChanges {
       designation: [(data.occupationId) ? String(data.occupationId) : '1'],
       gender: [(data.genderId) ? data.genderId : '1'],
     });
+    console.log(this.moreInfoForm)
   }
 
   ngOnInit() {
-    this.getCompanyDetails(this.prevData);
-    this.createMoreInfoForm(null);
   }
 
   getNumberDetails(data) {
@@ -179,13 +174,13 @@ export class CompanyMoreInfoComponent implements OnInit, OnChanges {
   }
 
   close(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', clientData: data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.data && !!changes.data.currentValue) {
-      this.getCompanyDetails(changes.data);
-      this.createMoreInfoForm(null);
-    }
-  }
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   if (changes.data && !!changes.data.currentValue) {
+  //     this.getCompanyDetails(changes.data);
+  //     this.createMoreInfoForm(null);
+  //   }
+  // }
 }
