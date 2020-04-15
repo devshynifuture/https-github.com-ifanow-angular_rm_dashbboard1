@@ -24,7 +24,7 @@ export class PlanAssetallocationComponent implements OnInit {
   editMode: boolean = false;
   dataToMap: any = [];
   onlyNumbers: string;
-  staticAllocationData: any;
+  staticAllocationData: any[] = [{}, {}, {}];
   secondValue: any;
   obj: any;
   obj1: any;

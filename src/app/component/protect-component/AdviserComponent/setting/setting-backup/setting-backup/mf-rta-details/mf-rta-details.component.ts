@@ -22,10 +22,10 @@ export class MfRtaDetailsComponent implements OnInit {
   displayedColumns1: string[] = ['position', 'name', 'weight', 'email', 'mail', 'use', 'icons'];
   displayedColumns2: string[] = ['position', 'name', 'weight', 'email', 'mail', 'icons'];
 
-  camsDS: MatTableDataSource<any>;
-  karvyDS: MatTableDataSource<any>;
-  frankDS: MatTableDataSource<any>;
-  fundsDS: MatTableDataSource<any>;
+  camsDS: MatTableDataSource<any> = new MatTableDataSource([{}, {}, {}]);
+  karvyDS: MatTableDataSource<any> = new MatTableDataSource([{}, {}, {}]);
+  frankDS: MatTableDataSource<any> = new MatTableDataSource([{}, {}, {}]);
+  fundsDS: MatTableDataSource<any> = new MatTableDataSource([{}, {}, {}]);
 
   advisorId: any;
   globalData: any = {};
@@ -64,6 +64,7 @@ export class MfRtaDetailsComponent implements OnInit {
 
   loadRTAList() {
     const jsonData = {advisorId: this.advisorId};
+    this.isLoading = true;
     this.settingsService.getMFRTAList(jsonData).subscribe((res) => {
       this.mfRTAlist = res || [];
       this.createDataSource();
@@ -74,8 +75,8 @@ export class MfRtaDetailsComponent implements OnInit {
     this.camsDS = new MatTableDataSource(this.mfRTAlist.filter((data) => data.rtTypeMasterid == 1));
     this.karvyDS = new MatTableDataSource(this.mfRTAlist.filter((data) => data.rtTypeMasterid == 2));
     this.frankDS = new MatTableDataSource(this.mfRTAlist.filter((data) => data.rtTypeMasterid == 3));
-
     this.fundsDS = new MatTableDataSource(this.mfRTAlist.filter((data) => data.rtTypeMasterid == 4));
+    this.isLoading = false;
   }
 
   openInSideBar(componentID, data, isAddFlag) {
