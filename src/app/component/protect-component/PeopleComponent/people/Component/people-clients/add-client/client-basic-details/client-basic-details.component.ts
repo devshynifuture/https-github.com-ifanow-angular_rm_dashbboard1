@@ -125,13 +125,11 @@ export class ClientBasicDetailsComponent implements OnInit {
     this.minorForm = this.fb.group({
       minorFullName: [data.name, [Validators.required]],
       dobAsPerRecord: [new Date(data.dateOfBirth)],
-      dobActual: [],
       gender: [(data.genderId) ? String(data.genderId) : '1'],
       gFullName: [(data.guardianData) ? data.guardianData.name : '', [Validators.required]],
       gDobAsPerRecord: [(data.guardianData) ? new Date(data.guardianData.birthDate) : ''],
-      gDobActual: [],
       gGender: [(data.guardianData) ? String(data.genderId) : '1'],
-      relationWithMinor: [String(data.relationshipId)],
+      relationWithMinor: [(data.guardianData) ? String(data.guardianData.relationshipId) : ''],
       gEmail: [(data && data.emailList.length > 0) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]]
     });
@@ -382,7 +380,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         birthDate: (this.invTypeCategory == '2') ? this.datePipe.transform(this.minorForm.value.gDobAsPerRecord, 'dd/MM/yyyy') : null,
         pan: 'pan',
         genderId: (this.invTypeCategory == '2') ? this.minorForm.value.gGender : null,
-        relationshipId: 1,
+        relationshipId: this.minorForm.value.relationWithMinor,
         aadhaarNumber: null,
         occupationId: 1,
         martialStatusId: 1,

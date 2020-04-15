@@ -167,6 +167,10 @@ export class ClientMoreInfoComponent implements OnInit {
       this.moreInfoData.guardianData['aadhaarNumber'] = this.moreInfoForm.value.adhharGuardian;
       this.moreInfoData.guardianData['birthDate'] = this.datePipe.transform(this.moreInfoData.guardianData.birthDate, 'dd/MM/yyyy')
     }
+    if (this.moreInfoForm.invalid) {
+      this.moreInfoForm.markAllAsTouched();
+      return;
+    }
     this.barButtonOptions.active = true;
     const obj = {
       isKycCompliant: this.moreInfoData.isKycCompliant,
