@@ -35,6 +35,7 @@ export class ClientAddressComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  permanentAddFlag: boolean;
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private postalService: PostalService,
     private peopleService: PeopleService, private eventService: EventService) {
@@ -47,6 +48,7 @@ export class ClientAddressComponent implements OnInit {
 
   @Input() set data(data) {
     this.userData = data;
+    (this.fieldFlag != 'familyMember' && this.userData.clientType == 1) ? this.permanentAddFlag = false : this.permanentAddFlag = true;
     (this.userData.addressData) ? this.addressList = this.userData.addressData : ''
     this.proofType = (this.userData.addressData) ? String(this.userData.addressData.addressType) : '1';
     if (this.userData.addressData == undefined && this.fieldFlag) {
@@ -75,6 +77,7 @@ export class ClientAddressComponent implements OnInit {
       state: [data.state, [Validators.required]],
       country: [data.country, [Validators.required]]
     });
+    this.changeAddrProofNumber({ value: String(data.proofType) });
   }
   changeAddrProofNumber(data) {
     if (data.value == '2') {
