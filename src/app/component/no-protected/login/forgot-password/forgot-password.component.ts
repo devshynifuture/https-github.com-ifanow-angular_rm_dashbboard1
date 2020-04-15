@@ -36,14 +36,6 @@ export class ForgotPasswordComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  verifyForm = this.fb.group({
-    no1: [],
-    no2: [],
-    no3: [],
-    no4: [],
-    no5: [],
-    no6: []
-  });
   userNameVerifyResponse: any;
 
   constructor(private loginService: LoginService, private eventService: EventService,
@@ -117,7 +109,7 @@ export class ForgotPasswordComponent implements OnInit {
         console.log(data);
         if (data) {
           this.barButtonOptions.active = false;
-          data['buttonFlag'] = 'reset';
+          data.buttonFlag = 'reset';
           this.saveVerifyData.userData = data;
           this.hideNumEmailFromUser(this.saveVerifyData);
           this.userNameVerifyResponse = data;
@@ -182,13 +174,12 @@ export class ForgotPasswordComponent implements OnInit {
   verifyWithOtpResponse(flag) {  ///// check user filled otp is correct or not
     const otpString = this.otpData.toString().replace(/,/g, '');
 
-    if (flag == 'Email' && this.otpData.length == 6 && this.otpResponse == otpString) {
+    if (flag == 'Email' && this.otpData.length == 4 && this.otpResponse == otpString) {
       const obj = {
         email: this.saveVerifyData.email,
         userId: this.saveVerifyData.userId,
         userType: this.saveVerifyData.userType
       };
-      this.verifyForm.reset();
       this.otpData = [];
       this.saveAfterVerifyCredential(obj);
       this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
@@ -200,17 +191,30 @@ export class ForgotPasswordComponent implements OnInit {
       }
       this.verify('Mobile');
       this.verifyFlag = 'Mobile';
-    } else if (flag == 'Mobile' && this.otpData.length == 6 && this.otpResponse == otpString) {
-      const obj = {
-        userId: this.saveVerifyData.userId,
-        userType: this.saveVerifyData.userType,
-        mobileNo: this.saveVerifyData.mobileNo
-      };
-      this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
-      this.saveAfterVerifyCredential(obj);
-      this.router.navigate(['/login/setpassword'], {state: {userData: this.saveVerifyData.userData}});
+    } else if (flag == 'Mobile' && this.otpData.length == 4) {
+      this.loginService.verifyOtp({
+        mobileNo: this.saveVerifyData.mobileNo,
+        otp: otpString
+      }).subscribe((responseData) => {
+        if (responseData && responseData.type == 'success') {
+          const obj = {
+            userId: this.saveVerifyData.userId,
+            userType: this.saveVerifyData.userType,
+            mobileNo: this.saveVerifyData.mobileNo
+          };
+          this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
+          this.saveAfterVerifyCredential(obj);
+          this.router.navigate(['/login/setpassword'], {state: {userData: this.saveVerifyData.userData}});
+        } else {
+          this.eventService.openSnackBar(responseData ? responseData.message : 'Something went wrong', 'Dismiss');
+        }
+      }, error => {
+        this.eventService.openSnackBar(error, 'Dismiss');
+
+      });
     } else {
       this.eventService.openSnackBar('OTP is incorrect', 'Dismiss');
     }
   }
+
 }

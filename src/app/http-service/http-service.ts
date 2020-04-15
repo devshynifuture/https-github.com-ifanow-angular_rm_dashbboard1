@@ -437,6 +437,25 @@ export class HttpService {
       );
   }
 
+  getExternal(url: string, options?): Observable<any> {
+    let httpOptions = {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+    };
+    if (options != undefined) {
+      httpOptions = options;
+    }
+    console.log('HttpService postExternal options : ', options);
+    return this._http
+      .get(url, httpOptions).pipe(
+        catchError(err => of([]))
+
+        // catchError(err => {
+        //   console.log('Handling error locally and rethrowing it...', err);
+        //
+        //   // return throwError(err);
+        // })
+      );
+  }
 
   //    delete(url:string, params?){
   //      let httpOptions = {

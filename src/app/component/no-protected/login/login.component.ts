@@ -1,18 +1,18 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { BackOfficeService } from '../../protect-component/AdviserComponent/backOffice/back-office.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatProgressButtonOptions } from '../../../common/progress-button/progress-button.component';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { LoginService } from './login.service';
-import { PeopleService } from '../../protect-component/PeopleComponent/people.service';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {BackOfficeService} from '../../protect-component/AdviserComponent/backOffice/back-office.service';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {MatProgressButtonOptions} from '../../../common/progress-button/progress-button.component';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {LoginService} from './login.service';
+import {PeopleService} from '../../protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login-new.component.html',
+  templateUrl: './login.component.html',
   //templateUrl: './login-mobile.component.html',
   styleUrls: ['./login.component.scss'],
   animations: [
@@ -125,13 +125,16 @@ export class LoginComponent implements OnInit {
       );
     }
   }
+
   getOtpOnEnter(event) {
-    (event.keyCode == 13) ? this.getOtp() : ''
+    (event.keyCode == 13) ? this.getOtp() : '';
   }
+
   getOtpData(outputData) {
-    console.log("login with otp", outputData)
+    console.log('login with otp', outputData);
     this.otpData = outputData;
   }
+
   getOtpResponse(data) {
     if (data.emailList && data.emailList.length > 0) {
       data.email = data.emailList[0].email;
@@ -142,13 +145,14 @@ export class LoginComponent implements OnInit {
       this.verifyResponseData.mobileNo = UtilService.obfuscateEmail(String(data.mobileNo));
     }
     console.log(this.verifyResponseData);
-    if (this.verifyResponseData.email) {
-      this.verifyFlag = 'Email';
-      const obj = { email: data.email };
-      this.loginUsingCredential(obj);
-    } else {
-      this.verifyFlag = 'mobile';
-      const obj = { mobileNo: data.mobileNo };
+    /* if (this.verifyResponseData.email) {
+       this.verifyFlag = 'Email';
+       const obj = {email: data.email};
+       this.loginUsingCredential(obj);
+     } else*/
+    {
+      this.verifyFlag = 'Mobile';
+      const obj = {mobileNo: data.mobileNo};
       this.loginUsingCredential(obj);
     }
   }
@@ -170,35 +174,57 @@ export class LoginComponent implements OnInit {
   verifyWithOtpResponse() {
     this.barButtonOptions.active = true;
     const otpString = this.otpData.toString().replace(/,/g, '');
-    if (this.otpData.length == 6 && this.otpResponse == otpString) {
-      this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
-      // this.router.navigate(['/admin/subscription/dashboard']);
-      if (this.userData) {
-        // this.authService.setToken(data.token);
-        this.authService.setToken('authTokenInLoginComponnennt');
-        if (this.userData.userType == 1) {
-          // data.advisorId = data.userId;
-          this.authService.setUserInfo(this.userData);
-          this.router.navigate(['admin', 'subscription', 'dashboard']);
-        } else {
-          this.authService.setToken('authTokenInLoginComponnennt');
+    console.log('LoginComponent verifyWithOtpResponse data; ', this.userData);
+    console.log('LoginComponent verifyWithOtpResponse otpData; ', this.otpData);
+    console.log('LoginComponent verifyWithOtpResponse verifyFlag; ', this.verifyFlag);
 
-          this.userData.id = this.userData.clientId;
-          this.authService.setClientData(this.userData);
-          this.authService.setUserInfo(this.userData);
-          this.router.navigate(['customer', 'detail', 'overview', 'myfeed']);
-        }
+    console.log('LoginComponent verifyWithOtpResponse otpString; ', otpString);
+    console.log('LoginComponent verifyWithOtpResponse verifyResponseData; ', this.verifyResponseData);
+    console.log('LoginComponent verifyWithOtpResponse this.otpResponse; ', this.otpResponse);
+
+
+    if (this.userData) {
+
+      if (this.verifyFlag == 'Email' && this.otpData.length == 4 && this.otpResponse == otpString) {
+        const obj = {
+          email: this.userData.email,
+          userId: (this.userData.clientId) ? (this.userData.clientId > 0) ?
+            this.userData.clientId : this.userData.advisorId : this.userData.advisorId,
+          userType: this.userData.userType
+        };
+        this.saveAfterVerifyCredential(obj);
+
+        this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
+        this.loginService.handleUserData(this.authService, this.router, this.userData);
+      } else if (this.verifyFlag == 'Mobile' && this.otpData.length == 4) {
+        this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
+        this.loginService.verifyOtp({
+          mobileNo: this.userData.mobileNo,
+          otp: otpString
+        }).subscribe((responseData) => {
+          if (responseData && responseData.type == 'success') {
+            const obj = {
+              mobileNo: this.userData.mobileNo,
+              userId: (this.userData.clientId) ? (this.userData.clientId > 0) ?
+                this.userData.clientId : this.userData.advisorId : this.userData.advisorId,
+              userType: this.userData.userType
+            };
+            this.saveAfterVerifyCredential(obj);
+            this.loginService.handleUserData(this.authService, this.router, this.userData);
+          } else {
+            this.barButtonOptions.active = false;
+            this.eventService.openSnackBar(responseData ? responseData.message : 'Something went wrong', 'Dismiss');
+          }
+        }, error => {
+          this.eventService.openSnackBar(error, 'Dismiss');
+          this.barButtonOptions.active = false;
+        });
       } else {
-        // this.passEvent = '';
-        // this.errorMsg = true;
-        // this.errorStyle = {
-        //   visibility: this.errorMsg ? 'visible' : 'hidden',
-        //   opacity: this.errorMsg ? '1' : '0',
-        // };
-        // this.barButtonOptions.active = false;
+        this.eventService.openSnackBar('Wrong OTP');
+        this.barButtonOptions.active = false;
       }
     } else {
-      this.eventService.openSnackBar('Wrong OTP');
+      this.barButtonOptions.active = false;
     }
   }
 
@@ -248,18 +274,8 @@ export class LoginComponent implements OnInit {
         console.log('data: ', data);
         if (data) {
           // this.authService.setToken(data.token);
-          this.authService.setToken('authTokenInLoginComponnennt');
-          if (data.userType == 1) {
-            // data.advisorId = data.userId;
-            this.authService.setUserInfo(data);
-            this.router.navigate(['admin', 'subscription', 'dashboard']);
-          } else {
-            this.authService.setToken('authTokenInLoginComponnennt');
-            data.id = data.clientId;
-            this.authService.setClientData(data);
-            this.authService.setUserInfo(data);
-            this.router.navigate(['customer', 'detail', 'overview', 'myfeed']);
-          }
+          this.loginService.handleUserData(this.authService, this.router, data);
+
         } else {
           this.passEvent = '';
           this.errorMsg = true;
@@ -334,18 +350,6 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['admin', 'subscription', 'dashboard']);
   }
 
-  closeDialog(data) {
-    const loginData = data;
-    console.log(data);
-    if (data.status === 200) {
-      this.authService.setToken(loginData.payLoad);
-      this.eventService.openSnackBar('Login successFully ', 'Dismiss');
-      this.router.navigate(['/admin/service']);
-    } else {
-      this.eventService.openSnackBar(loginData.message, 'Dismiss');
-    }
-  }
-
   progressButtonClick(event) {
     console.log(this.loginForm.value, 'this.loginForm.value.name');
     if (this.loginForm.value.name != '' && this.loginForm.value.password != '') {
@@ -364,6 +368,16 @@ export class LoginComponent implements OnInit {
     }
   }
 
-
+  saveAfterVerifyCredential(obj) {    ////// save verified email or mobileNo in the table
+    this.loginService.saveAfterVerification(obj).subscribe(
+      data => {
+        console.log(data);
+        (this.verifyFlag == 'Email') ? this.verifyFlag = 'Mobile' : '';
+      },
+      err => {
+        // this.eventService.openSnackBar(err, 'Dismiss');
+      }
+    );
+  }
 }
 
