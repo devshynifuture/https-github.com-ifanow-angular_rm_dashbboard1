@@ -12,7 +12,7 @@
         <!-- ng build prod issue expected argument added empty strings  -->
         <button mat-stroked-button class="btn-primary " (click)="addNewTaskTemplate()"> ADD NEW</button>
     </div>
-    <div class="col-md-12" [hidden]="linkedTaskList.length == 0">
+    <div class="col-md-12">
         <div>Linked task template</div>
         <table mat-table [dataSource]="linkedTaskList" class="mt-8 skeletonAnimation" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
@@ -27,7 +27,7 @@
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef class="br"> Category </th>
                 <td mat-cell *matCellDef="let element;let i = index" class="br">
-                    <div class="bar">{{element.categoryName}} </div>
+                    <div class="bar">{{element.subCategoryName}} </div>
                 </td>
             </ng-container>
 
@@ -35,7 +35,7 @@
             <ng-container matColumnDef="weight">
                 <th mat-header-cell *matHeaderCellDef class="br"> Sub category </th>
                 <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">{{element.subCategoryName}} </div>
+                    <div class="bar">{{element.subSubCategoryName}} </div>
                 </td>
             </ng-container>
 
@@ -76,7 +76,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
     </div>
-    <div class="col-md-12 pt-20" [hidden]="unlinkedTaskList.length == 0">
+    <div class="col-md-12 pt-20">
         <div>Non linked task template</div>
         <table mat-table [dataSource]="unlinkedTaskList" class="mt-8 skeletonAnimation" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="symbol1">
@@ -116,7 +116,7 @@
         </table>
     </div>
 </div>
-<div *ngIf="taskList.length == 0" class="d-flex flex-column align-items-center">
+<div *ngIf="taskList == undefined && !isLoading" class="d-flex flex-column align-items-center">
     <img class="width300" src="assets/images/svg/noDataFound.svg">
     <h4 class="text-center pt-12">No task template found</h4>
 </div>

@@ -113,7 +113,7 @@ export class AddPersonalProfileComponent implements OnInit {
   }
   getdataForm(data) {
     this.personalProfile = this.fb.group({
-      name: [(!data) ? '' : (data.fullName), [Validators.required, Validators.maxLength(80)]],
+      name: [(!data) ? '' : (data.fullName), [Validators.required, Validators.maxLength(40)]],
       emailId: [(!data) ? '' : data.emailId, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
       mobileNo: [(!data) ? '' : data.mobileNo, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(ValidatorType.NUMBER_ONLY)]],
       userName: [(!data) ? '' : data.userName, [Validators.required]],
