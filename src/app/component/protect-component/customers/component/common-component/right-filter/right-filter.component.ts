@@ -123,8 +123,9 @@ export class RightFilterComponent implements OnInit {
   }
 
   showSummaryFilterForm(data) {
+    var todayDate = new Date().toISOString().slice(0,10);
     this.summaryFilerForm = this.fb.group({
-      reportAsOn: [(data.reportAsOn == undefined) ? null : new Date(data.reportAsOn), [Validators.required]],
+      reportAsOn: [new Date(todayDate), [Validators.required]],
       fromDate: [(data.fromDate == undefined) ? null : new Date(data.fromDate)],
       toDate: [(data.toDate == undefined) ? null : new Date(data.toDate)],
       showFolios: [(data.showFolio) ? data.showFolio : '2', [Validators.required]],
@@ -384,7 +385,7 @@ export class RightFilterComponent implements OnInit {
     if (data.selected == true) {
       this.sendTransactionView.push(i);
     } else if (data.selected == false) {
-      this.sendTransactionView.pop(i);
+      this.sendTransactionView.splice(i,1);
     }
     console.log('data ==', this.sendTransactionView);
     if (this.familyMember != undefined) {

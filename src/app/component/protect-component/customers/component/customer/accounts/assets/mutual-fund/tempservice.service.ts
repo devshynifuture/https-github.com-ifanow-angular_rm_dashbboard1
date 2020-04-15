@@ -148,7 +148,7 @@ export class TempserviceService {
     xirr += (data.xirr) ? data.xirr : 0;
     divPayout += (data.dividendPayout) ? data.dividendPayout : 0;
     withdrawals += (data.switchOut) ? data.switchOut : 0;
-    balanceUnit += (data.balanceUnit) ? data.switchOut : 0;
+    balanceUnit += (data.balanceUnit) ? data.balanceUnit : 0;
     sip += (data.sipAmount) ? data.sipAmount : 0;
     const obj = {
       schemeName: 'Total',
@@ -192,6 +192,8 @@ export class TempserviceService {
     let totalAmount = 0;
     let totalGain = 0;
     let allocationPer = 0;
+    let withdrawals = 0;
+    let sip = 0;
     if(!isSummaryTabValues){
       data.mutualFundTransactions.forEach(ele => {
         totalTransactionAmt += (ele.amount) ? ele.amount : 0;
@@ -211,7 +213,7 @@ export class TempserviceService {
       totalTransactionAmt += (data.amountInvested) ? data.amountInvested : 0;
       totalUnit += (data.unit) ? data.unit : 0;
       totalNav += (data.transactionNav) ? data.transactionNav : 0;
-      balanceUnit += (data.balanceUnits) ? data.balanceUnits : 0;
+      balanceUnit += (data.balanceUnit) ? data.balanceUnit : 0;
       currentValue += (data.currentValue) ? data.currentValue : 0;
       dividendPayout += (data.dividendPayout) ? data.dividendPayout : 0;
       dividendReinvest += (data.dividendReinvest) ? data.dividendReinvest : 0;
@@ -220,6 +222,8 @@ export class TempserviceService {
       absReturn += (data.absoluteReturn) ? data.absoluteReturn : 0;
       xirr += (data.xirr || data.xirr==0)?data.xirr:0;
       allocationPer += (data.allocatedPercentage) ? data.allocatedPercentage : 0;
+      withdrawals += (data.switchOut) ? data.switchOut : 0;
+      sip += (data.sipAmount) ? data.sipAmount : 0;
     }
   
     const obj = {
@@ -235,7 +239,9 @@ export class TempserviceService {
       totalGain,
       absReturn,
       xirr,
-      allocationPer
+      allocationPer,
+      withdrawals,
+      sip
     };
     // this.totalObj = obj;
     return obj;

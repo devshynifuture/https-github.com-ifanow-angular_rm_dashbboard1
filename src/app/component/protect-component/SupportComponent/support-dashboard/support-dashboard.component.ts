@@ -61,6 +61,8 @@ export class SupportDashboardComponent implements OnInit {
   historicalFileData: any;
   historicalFileValue: string;
   ifaCountData: any;
+  previousWeek: any;
+  currentWeek: any;
   constructor(
     private eventService: EventService,
     private subInjectService: SubscriptionInject,
@@ -162,7 +164,7 @@ export class SupportDashboardComponent implements OnInit {
         text: ''
       },
       xAxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr',],
+        categories: ['M','T','W','T','F','S','S'],
         crosshair: true,    },
       yAxis:
       {
@@ -210,6 +212,11 @@ export class SupportDashboardComponent implements OnInit {
         console.log(data);
         if (data) {
           this.dailyData = data;
+          console.log('getDailyFiles',this.dailyData)
+          this.previousWeek = this.dailyData.previousWeek[0]
+          this.currentWeek = this.dailyData.currentWeek[0]
+          console.log('previousWeek',this.previousWeek)
+          console.log('currentWeek',this.currentWeek)
         }
       }
       , err => this.eventService.openSnackBar(err, "Dismiss")
