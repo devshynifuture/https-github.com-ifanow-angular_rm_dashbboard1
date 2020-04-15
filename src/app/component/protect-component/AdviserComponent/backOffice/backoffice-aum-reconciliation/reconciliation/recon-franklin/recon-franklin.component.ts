@@ -13,7 +13,9 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./recon-franklin.component.scss']
 })
 export class ReconFranklinComponent implements OnInit {
-
+  adminAdvisorIds: any[] = [];
+  adminId: number = AuthService.getAdminId();
+  parentId = AuthService.getParentId();
 
   constructor(
     private reconService: ReconciliationService,
@@ -36,7 +38,22 @@ export class ReconFranklinComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new MatTableDataSource<ElementI>(ELEMENT_DATA);
     this.getBrokerList();
+    this.teamMemberListGet();
     console.log('my id is ::', this.rtId);
+  }
+
+  teamMemberListGet() {
+    this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
+      .subscribe(data => {
+        if (data && data.length !== 0) {
+          data.forEach(element => {
+            this.adminAdvisorIds.push(element.adminAdvisorId);
+          });
+        } else {
+          this.adminAdvisorIds = [...this.advisorId];
+          this.eventService.openSnackBar('No Team Member Found', 'DISMISS');
+        }
+      });
   }
 
   getBrokerList() {
@@ -51,10 +68,11 @@ export class ReconFranklinComponent implements OnInit {
       this.isLoading = true;
       this.isBrokerSelected = true;
       const data = {
-        advisorId: this.advisorId,
+        advisorIds: [...this.adminAdvisorIds],
         brokerId: this.selectBrokerForm.get('selectBrokerId').value,
         rmId: 0,
-        rtId: this.rtId
+        rtId: this.rtId,
+        parentId: this.adminId == 0 ? this.advisorId : this.parentId
       }
       this.reconService.getAumReconHistoryDataValues(data)
         .subscribe(res => {
@@ -87,7 +105,7 @@ export class ReconFranklinComponent implements OnInit {
         if (UtilService.isDialogClose(upperSliderData)) {
           if (UtilService.isRefreshRequired(upperSliderData)) {
             // call history get
-            this.getAumReconHistoryData()
+            this.getAumReconHistoryData();
           }
           // this.getClientSubscriptionList();
           subscription.unsubscribe();

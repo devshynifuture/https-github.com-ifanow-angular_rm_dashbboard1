@@ -41,6 +41,9 @@ export class UpperSliderBackofficeComponent implements OnInit {
   rtId: any;
   didAumReportListGot: boolean = false;
   aumListReportValue: any[] = [];
+  adminAdvisorIds: any[] = [];
+  adminId = AuthService.getAdminId();
+  parentId = AuthService.getParentId();
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -52,6 +55,11 @@ export class UpperSliderBackofficeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.teamMemberListGet();
+
+  }
+
+  handlingDataVariable() {
     if (this.data) {
       this.aumReconId = this.data.id;
       this.brokerId = this.data.brokerId;
@@ -75,7 +83,22 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
     }
     console.log("this is data that we got from franklin:::::::", this.data);
+  }
 
+  teamMemberListGet() {
+    this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
+      .subscribe(data => {
+        if (data && data.length !== 0) {
+          data.forEach(element => {
+            this.adminAdvisorIds.push(element.adminAdvisorId);
+          });
+
+          this.handlingDataVariable();
+        } else {
+          this.adminAdvisorIds = [...this.advisorId];
+          this.eventService.openSnackBar('No Team Member Found', "DISMISS");
+        }
+      })
   }
 
   bindDataWithSummaryTable() {
@@ -113,9 +136,10 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   getBackofficeAumReconListSummary(doStartRecon) {
     const data = {
-      advisorId: this.advisorId,
+      advisorIds: [...this.adminAdvisorIds],
       brokerId: this.brokerId,
-      rt: this.data.rtId
+      rt: this.data.rtId,
+      parentId: this.adminId == 0 ? this.advisorId : this.parentId
     }
     // 
     this.supportService.getAumReconListGetValues(data)
@@ -204,7 +228,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       }
     } else {
       data = {
-        advisorId: this.advisorId,
+        advisorIds: [... this.adminAdvisorIds],
         folio: this.mutualFundIds
       }
     }

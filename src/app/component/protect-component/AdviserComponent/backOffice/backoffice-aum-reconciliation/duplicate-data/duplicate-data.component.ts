@@ -16,6 +16,7 @@ export class DuplicateDataComponent implements OnInit {
   brokerId: any;
   rtId: any;
   mutualFundTransactions: any;
+  adminAdvisorIds: any[] = [];
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -25,16 +26,29 @@ export class DuplicateDataComponent implements OnInit {
 
   advisorId = AuthService.getAdvisorId();
 
-
-
   displayedColumns: string[] = ['arnRia', 'name', 'folioNumber', 'unitsIfanow', 'unitsRta', 'difference', 'transactions'];
   dataSource;
   isLoading: boolean = false;
   aumList: [] = [];
   duplicateDataList: DuplicateI[] = [];
   ngOnInit() {
+    this.teamMemberListGet();
     this.dataSource = new MatTableDataSource<DuplicateI>(ELEMENT_DATA);
-    this.duplicateFolioData();
+  }
+
+  teamMemberListGet() {
+    this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
+      .subscribe(data => {
+        if (data && data.length !== 0) {
+          data.forEach(element => {
+            this.adminAdvisorIds.push(element.adminAdvisorId);
+          });
+          this.duplicateFolioData();
+        } else {
+          this.adminAdvisorIds = [...this.advisorId];
+          this.eventService.openSnackBar("No Team Member Found", "DISMISS");
+        }
+      })
   }
 
   openReconciliationDetails(value, data, tableType) {
@@ -72,7 +86,7 @@ export class DuplicateDataComponent implements OnInit {
   duplicateFolioData() {
     this.isLoading = true;
     const data = {
-      advisorId: this.advisorId,
+      advisorIds: [...this.adminAdvisorIds],
     }
     this.reconService.getDuplicateDataValues(data)
       .subscribe(res => {

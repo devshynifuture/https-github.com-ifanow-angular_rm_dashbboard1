@@ -13,6 +13,9 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./recon-karvy.component.scss']
 })
 export class ReconKarvyComponent implements OnInit {
+  adminAdvisorIds: any[] = [];
+  adminId = AuthService.getAdminId();
+  parentId = AuthService.getParentId();
 
 
   constructor(
@@ -36,7 +39,22 @@ export class ReconKarvyComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new MatTableDataSource<ElementI>(ELEMENT_DATA);
     this.getBrokerList();
+    this.teamMemberListGet();
     console.log('my id is ::', this.rtId);
+  }
+
+  teamMemberListGet() {
+    this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
+      .subscribe(data => {
+        if (data && data.length !== 0) {
+          data.forEach(element => {
+            this.adminAdvisorIds.push(element.adminAdvisorId);
+          });
+        } else {
+          this.adminAdvisorIds = [...this.advisorId];
+          this.eventService.openSnackBar('No Team Member Found', 'DISMISS');
+        }
+      });
   }
 
 
@@ -54,11 +72,13 @@ export class ReconKarvyComponent implements OnInit {
       this.isBrokerSelected = true;
 
       const data = {
-        advisorId: this.advisorId,
+        advisorIds: [...this.adminAdvisorIds],
         brokerId: this.selectBrokerForm.get('selectBrokerId').value,
         rmId: 0,
-        rtId: this.rtId
+        rtId: this.rtId,
+        parentId: this.adminId == 0 ? this.advisorId : this.parentId
       }
+      console.log("this is what i am sending::", data);
       this.reconService.getAumReconHistoryDataValues(data)
         .subscribe(res => {
           this.isLoading = false;
