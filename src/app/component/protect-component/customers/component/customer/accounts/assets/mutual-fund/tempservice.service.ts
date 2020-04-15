@@ -148,7 +148,7 @@ export class TempserviceService {
     xirr += (data.xirr) ? data.xirr : 0;
     divPayout += (data.dividendPayout) ? data.dividendPayout : 0;
     withdrawals += (data.switchOut) ? data.switchOut : 0;
-    balanceUnit += (data.balanceUnit) ? data.switchOut : 0;
+    balanceUnit += (data.balanceUnit) ? data.balanceUnit : 0;
     sip += (data.sipAmount) ? data.sipAmount : 0;
     const obj = {
       schemeName: 'Total',
@@ -213,7 +213,7 @@ export class TempserviceService {
       totalTransactionAmt += (data.amountInvested) ? data.amountInvested : 0;
       totalUnit += (data.unit) ? data.unit : 0;
       totalNav += (data.transactionNav) ? data.transactionNav : 0;
-      balanceUnit += (data.balanceUnits) ? data.balanceUnits : 0;
+      balanceUnit += (data.balanceUnit) ? data.balanceUnit : 0;
       currentValue += (data.currentValue) ? data.currentValue : 0;
       dividendPayout += (data.dividendPayout) ? data.dividendPayout : 0;
       dividendReinvest += (data.dividendReinvest) ? data.dividendReinvest : 0;

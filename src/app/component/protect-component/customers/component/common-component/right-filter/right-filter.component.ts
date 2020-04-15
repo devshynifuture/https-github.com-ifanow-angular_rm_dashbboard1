@@ -385,7 +385,7 @@ export class RightFilterComponent implements OnInit {
     if (data.selected == true) {
       this.sendTransactionView.push(i);
     } else if (data.selected == false) {
-      this.sendTransactionView.pop(i);
+      this.sendTransactionView.splice(i,1);
     }
     console.log('data ==', this.sendTransactionView);
     if (this.familyMember != undefined) {

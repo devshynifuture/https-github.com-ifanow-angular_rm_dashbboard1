@@ -207,7 +207,6 @@
                     <th class="br text-right" mat-sort-header="balanceUnit" mat-header-cell *matHeaderCellDef>
                         Balance Unit </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        {{element.balanceUnit}}
                         <div class="bar"><span appFormatNumber *ngIf="element.balanceUnit">{{(element.balanceUnit)?element.balanceUnit:0}}</span>
                             <span appFormatNumber class="f-700" *ngIf="element.totalBalanceUnit">{{(element.totalBalanceUnit)?element.totalBalanceUnit:0}}</span>
                         </div>
