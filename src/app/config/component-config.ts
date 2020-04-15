@@ -402,13 +402,13 @@ export const appConfig = {
   GIVE_ADVICE_ON_REAL_ESTATE: 'advice/asset/real-estate/advice/post',
   ////////////////////////////////////OnlineTransaction///////////////////////////////////////
   ADD_BSE_CREDENTIALS: 'user/save',
-  GET_BSE_CREDENTIALS: '/user/view',
+  GET_BSE_CREDENTIALS: 'user/view',
   GET_BSE_SUB_BROKER_CREDENTIALS: '/user/sub-broker/view',
   GET_NEW_SCHEMES: 'mutual-fund/search',
   GET_EXISTING_SCHEMES: 'mutual-fund/existing/search',
   GET_SCHEME_DETAILS: 'mutual-fund/product-limit/get',
   GET_FAMILY_MEMBER: 'family/name/get',
-  GET_DEFAULT_DETAILS: '/user/family-member/transaction-setting/default',
+  GET_DEFAULT_DETAILS: 'user/family-member/transaction-setting/default',
   PURCHASE: 'bse/order/bse/order/create',
   GET_AMCWISE_FOLIO: 'mutual-fund/folios/amc-wise/get',
   GET_SCHEMEWISE_FOLIO: 'mutual-fund/folios/scheme-wise/get',
@@ -427,7 +427,7 @@ export const appConfig = {
   GETIIN_DETAILS: 'nse/iin/detail/get',
   GET_FOLIO_MAPPED: '/mutual-fund/folios/mapped/get',
   GET_FOLIO_UNMAPPED: '/mutual-fund/folios/unmapped/get',
-  GET_CLIENT_CODE: '/user/family-member/client-code',
+  GET_CLIENT_CODE: 'user/family-member/client-code',
   GET_EMPANELLED_AMC: 'mutual-fund/hidden-amc/amc-wise/get',
   ADD_HIDDEN_AMC: 'mutual-fund/hidden-amc/add',
   DELETE_HIDDEN_AMC: 'mutual-fund/hidden-amc/delete',
@@ -537,6 +537,7 @@ export const appConfig = {
   OWNER_TASK_UPDATE: 'setting/task/sub-task/owner/update',
   GET_TEAM_MEMBER: 'setting/users/team-members/get',
   UPDATE_ACCESS_CONTROL: 'setting/users-roles/access-rights/update',
+  RESET_GALLARY: 'goal-planning/goal-gallery/reset',
   UPDATE_RETURNS_AND_INFLATIONS: 'plan/config/return-inflation/put',
 
   // gmail
@@ -642,6 +643,7 @@ export const appConfig = {
   EDIT_TEAM_MEMBER: 'setting/users/team-member/edit',
   DELETE_TEAM_MEMBER: 'setting/users/team-member/delete',
   SUSPEND_TEAM_MEMBER: 'setting/users/team-member/suspend',
+  REACTIVATE_TEAM_MEMBER: 'setting/users/team-member/resume',
   HAND_OVER_TEAM_MEMBER: 'setting/users/team-member/hand-over/get',
 
 

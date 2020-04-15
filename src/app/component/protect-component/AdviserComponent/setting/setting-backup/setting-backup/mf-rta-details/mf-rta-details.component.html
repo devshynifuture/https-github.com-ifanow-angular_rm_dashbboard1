@@ -7,7 +7,7 @@
             ADD NEW
         </button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item *ngFor="let rta_type of globalData.rta_type_master_list" (click)="openInSideBar(rta_type.id,'','')">{{rta_type.type}}</button>
+            <button mat-menu-item *ngFor="let rta_type of globalData.rta_type_master_list" (click)="openInSideBar(rta_type.id,'',true)">{{rta_type.type}}</button>
         </mat-menu>
     </div>
 </div>
@@ -37,11 +37,9 @@
                 <th mat-header-cell *matHeaderCellDef class="br"> Mailback password </th>
                 <td mat-cell *matCellDef="let element" class="br  ">
                     <div class="bar d-flex justify-content-between">
-                        <ng-container>
-                            <ng-template
-                              *ngTemplateOutlet="templateRef; context:{element :element.mailbackPassword, toggleValue: true}">
-                            </ng-template>
-                        </ng-container>
+                        {{(toggleVisibility(element.mailbackPassword, element))}}
+                        <mat-icon (click)="changeToggle(element)">{{element.toggle ? 'visibility' : 'visibility_off'}}
+                        </mat-icon>
                     </div>
                 </td>
             </ng-container>
@@ -53,7 +51,7 @@
                     <ng-container>
                         <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="openInSideBar(1, element, '')">Edit</button>
+                            <button mat-menu-item (click)="openInSideBar(1, element, false)">Edit</button>
                             <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
                         </mat-menu>
                     </ng-container>
@@ -95,11 +93,9 @@
                 <th mat-header-cell *matHeaderCellDef class="br"> Login password </th>
                 <td mat-cell *matCellDef="let element" class="br d-flex justify-content-between">
                     <div class="bar">
-                        <ng-container>
-                          <ng-template
-                            *ngTemplateOutlet="templateRef; context:{element :element.loginPassword, toggleValue: true}">
-                          </ng-template>
-                        </ng-container>
+                        {{(toggleVisibility(element.loginPassword, element))}}
+                        <mat-icon (click)="changeToggle(element)">{{element.toggle ? 'visibility' : 'visibility_off'}}
+                        </mat-icon>
                     </div>
                 </td>
             </ng-container>
@@ -117,11 +113,9 @@
                 <th mat-header-cell *matHeaderCellDef class="br"> Mailback password</th>
                 <td mat-cell *matCellDef="let element" class="br  ">
                     <div class="bar d-flex justify-content-between">
-                        <ng-container>
-                          <ng-template
-                            *ngTemplateOutlet="templateRef; context:{element :element.mailbackPassword, toggleValue: true}">
-                          </ng-template>
-                        </ng-container>
+                        {{(toggleVisibility(element.mailbackPassword, element))}}
+                        <mat-icon (click)="changeToggle(element)">{{element.toggle ? 'visibility' : 'visibility_off'}}
+                        </mat-icon>
                     </div>
                 </td>
             </ng-container>
@@ -139,7 +133,7 @@
                     <ng-container>
                         <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="openInSideBar(2, element, '')">Edit</button>
+                            <button mat-menu-item (click)="openInSideBar(2, element, false)">Edit</button>
                             <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
                         </mat-menu>
                     </ng-container>
@@ -175,12 +169,9 @@
             <ng-container matColumnDef="weight">
                 <th mat-header-cell *matHeaderCellDef class="br"> Login password </th>
                 <td mat-cell *matCellDef="let element" class="br d-flex justify-content-between">
-
-                    <ng-container>
-                      <ng-template
-                        *ngTemplateOutlet="templateRef; context:{element :element.loginPassword, toggleValue: true}">
-                      </ng-template>
-                    </ng-container>
+                    {{(toggleVisibility(element.loginPassword, element))}}
+                    <mat-icon (click)="changeToggle(element)">
+                        {{element.toggle ? 'visibility' : 'visibility_off'}}</mat-icon>
                 </td>
             </ng-container>
 
@@ -195,22 +186,20 @@
                 <th mat-header-cell *matHeaderCellDef class="br"> Mailback password</th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar">
-                        <ng-container>
-                          <ng-template
-                            *ngTemplateOutlet="templateRef; context:{element :element.mailbackPassword, toggleValue: true}">
-                          </ng-template>
-                        </ng-container>
+                        {{(toggleVisibility(element.mailbackPassword, element))}}
+                        <mat-icon (click)="changeToggle(element)">{{element.toggle ? 'visibility' : 'visibility_off'}}
+                        </mat-icon>
                     </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="icons">
                 <th mat-header-cell *matHeaderCellDef> </th>
-                <td mat-cell *matCellDef="let element">
+                <td mat-cell class="text-center" *matCellDef="let element">
                     <ng-container>
                         <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="openInSideBar(3, element, '')">Edit</button>
+                            <button mat-menu-item (click)="openInSideBar(3, element, false)">Edit</button>
                             <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
                         </mat-menu>
                     </ng-container>
@@ -229,7 +218,7 @@
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
-                <td mat-cell *matCellDef="let element" class="br">
+                <td valign="top" mat-cell *matCellDef="let element" class="br">
                     <div class="bar"> {{getARNId(element.arnRiaDetailsId)}} </div>
                 </td>
             </ng-container>
@@ -237,7 +226,7 @@
             <!-- Name Column -->
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef class="br"> Login ID </th>
-                <td mat-cell *matCellDef="let element" class="br">
+                <td valign="top" mat-cell *matCellDef="let element" class="br">
                     <div class="bar"> {{element.loginId}} </div>
                 </td>
             </ng-container>
@@ -245,23 +234,21 @@
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
                 <th mat-header-cell *matHeaderCellDef class="br"> Login password </th>
-                <td mat-cell *matCellDef="let element" class="br">
+                <td valign="top" mat-cell *matCellDef="let element" class="br">
                     <div class="bar">
-                        <ng-container>
-                          <ng-template
-                            *ngTemplateOutlet="templateRef; context:{element :element.loginPassword, toggleValue: true}">
-                          </ng-template>
-                        </ng-container>
+                        {{(toggleVisibility(element.loginPassword, element))}}
+                        <mat-icon (click)="changeToggle(element)">{{element.toggle ? 'visibility' : 'visibility_off'}}
+                        </mat-icon>
                     </div>
                 </td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="email">
-                <th mat-header-cell *matHeaderCellDef class="br"> Secret Question </th>
+                <th mat-header-cell *matHeaderCellDef class="br p-5"> Secret Question </th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar">
-                        <div *ngFor="let questionSet of element.rtaCamsFundNetSecurityQuestionsList">
+                        <div *ngFor="let questionSet of element.rtaCamsFundNetSecurityQuestionsList" class="p-5">
                             {{getQuestion(questionSet.questionId)}}
                         </div>
                     </div>
@@ -269,14 +256,12 @@
             </ng-container>
             <ng-container matColumnDef="mail">
                 <th mat-header-cell *matHeaderCellDef class="br"> Answer </th>
-                <td mat-cell *matCellDef="let element" class="br d-flex justify-content-between">
+                <td valign="top" mat-cell *matCellDef="let element" class="br d-flex justify-content-between">
                     <div class="bar">
                         <div *ngFor="let questionSet of element.rtaCamsFundNetSecurityQuestionsList">
-                            <ng-container>
-                              <ng-template
-                                *ngTemplateOutlet="templateRef; context:{element :questionSet.answer, toggleValue: true}">
-                              </ng-template>
-                            </ng-container>
+                            {{(toggleVisibility(questionSet.answer, questionSet))}}
+                            <mat-icon (click)="changeToggle(questionSet)">
+                                {{questionSet.toggle ? 'visibility' : 'visibility_off'}}</mat-icon>
                         </div>
                     </div>
                 </td>
@@ -284,11 +269,11 @@
 
             <ng-container matColumnDef="icons">
                 <th mat-header-cell *matHeaderCellDef> </th>
-                <td mat-cell *matCellDef="let element">
+                <td valign="top" mat-cell *matCellDef="let element">
                     <ng-container>
                         <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="openInSideBar(4, element, '')">Edit</button>
+                            <button mat-menu-item (click)="openInSideBar(4, element, false)">Edit</button>
                             <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
                         </mat-menu>
                     </ng-container>
@@ -299,12 +284,3 @@
         </table>
     </div>
 </div>
-
-
-<ng-container>
-  <ng-template #templateRef let-element="element">
-    {{(toggleVisibility(element, toggleValue))}}
-    <mat-icon (click)="toggleValue = !toggleValue">
-      {{toggleValue ? 'visibility' : 'visibility_off'}}</mat-icon>
-  </ng-template>
-</ng-container>

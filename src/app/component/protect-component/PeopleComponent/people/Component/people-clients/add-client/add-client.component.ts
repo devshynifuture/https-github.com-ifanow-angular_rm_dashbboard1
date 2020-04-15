@@ -20,7 +20,7 @@ export class AddClientComponent implements OnInit {
   }
   selected = 0;
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: this.tabData });
   }
   getTabData(data) {
     console.log(data);

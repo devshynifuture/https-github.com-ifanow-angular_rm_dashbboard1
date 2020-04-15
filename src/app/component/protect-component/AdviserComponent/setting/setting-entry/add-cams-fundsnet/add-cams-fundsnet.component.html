@@ -1,11 +1,11 @@
 <div class="row bb-1 popup-header-fix-50">
     <div class="col-md-10 p-0">
-        <h4 class="mb-0 l-22 wrapper-20">ADD CAMS FUNDSNET DETAILS</h4>
+        <h4 class="mb-0 l-22 wrapper-20">{{data.is_add_call ? 'Add' : 'Edit'}} CAMS Fundsnet details</h4>
     </div>
     <div class="col-md-2 text-right" (click)="Close(false)">
         <i class="material-icons pt-20 c-p pr-16">
-            clear
-        </i>
+      clear
+    </i>
     </div>
 </div>
 
@@ -14,9 +14,9 @@
         <div class="col-md-4 pr-0">
             <h5 class="m-0 text-right pt-20">ARN/RIA number</h5>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="form-group b-0">
-                <mat-form-field floatLabel="never" appearance="standard">
+                <mat-form-field appearance="standard" floatLabel="never">
                     <mat-select class="form-control br-0" formControlName="arnRiaDetailsId">
                         <mat-option value="" selected disabled>Select Option</mat-option>
                         <mat-option [value]="arnData.id" *ngFor="let arnData of data.arnData">
@@ -33,7 +33,7 @@
         </div>
         <div class="col-md-5">
             <div class="form-group mb-0">
-                <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
+                <mat-form-field [floatLabel]="'never'" appearance="standard" floatLabel="never">
                     <input type="text" matInput formControlName="loginId" class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -46,7 +46,7 @@
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
-                <mat-form-field floatLabel="never" appearance="standard">
+                <mat-form-field appearance="standard" floatLabel="never">
                     <input type="text" formControlName="loginPassword" matInput class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -73,7 +73,7 @@
                 <div class="col-md-2 pl-0">
                     <div class="form-group mb-24">
                         <mat-form-field>
-                            <input type="text" [formControlName]="'answer'" matInput class="form-control">
+                            <input [formControlName]="'answer'" class="form-control" matInput type="text">
                             <mat-error>This field is required</mat-error>
                         </mat-form-field>
                     </div>

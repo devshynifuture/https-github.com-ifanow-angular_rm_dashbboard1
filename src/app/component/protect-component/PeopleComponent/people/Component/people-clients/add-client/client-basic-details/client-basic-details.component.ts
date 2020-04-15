@@ -1,13 +1,13 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {ValidatorType} from 'src/app/services/util.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {DatePipe} from '@angular/common';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ValidatorType } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { DatePipe } from '@angular/common';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 const moment = require('moment');
 
 @Component({
@@ -40,7 +40,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   clientOwnerList: any;
   selectedClientOwner: any;
   maxDateForAdultDob = moment().subtract(18, 'years');
-    // new Date(.date());
+  // new Date(.date());
   mobileNumberFlag = 'Mobile number';
 
   basicDetails;
@@ -58,8 +58,8 @@ export class ClientBasicDetailsComponent implements OnInit {
   // advisorId;
 
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
-              private subInjectService: SubscriptionInject, private peopleService: PeopleService,
-              private eventService: EventService, private datePipe: DatePipe) {
+    private subInjectService: SubscriptionInject, private peopleService: PeopleService,
+    private eventService: EventService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
@@ -74,7 +74,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     if (data.fieldFlag == 'familyMember') {
       this.basicDetailsData = data;
       this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
-      this.invTypeCategory = (this.basicDetailsData.familyMemberType == 0) ? '1' : String(this.basicDetailsData.familyMemberType);
+      this.invTypeCategory = String(this.basicDetailsData.familyMemberType);
       (this.basicDetailsData.familyMemberType == 1 || this.basicDetailsData.familyMemberType == 0) ? this.createIndividualForm(this.basicDetailsData) : this.createMinorForm(this.basicDetailsData);
     } else {
       this.getClientList();
@@ -85,19 +85,18 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.createIndividualForm(null);
         return;
       } else {
-        this.invTaxStatus = (this.basicDetailsData.familyMembtaxStatusIderType == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
+        this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
       }
       (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
       this.getClientOrLeadData(this.basicDetailsData);
     }
     console.log(data);
-    this.setMinDateForAge();
   }
 
-  setMinDateForAge() {
-    this.minAge = new Date();
-    console.log(this.minAge);
-  }
+  // setMinDateForAge() {
+  //   this.minAge = new Date();
+  //   console.log(this.minAge);
+  // }
 
   createIndividualForm(data) {
     this.selectedClientOwner = '1';
@@ -106,14 +105,14 @@ export class ClientBasicDetailsComponent implements OnInit {
       fullName: [data.name, [Validators.required]],
       email: [(data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
-      username: [{value: data.userName, disabled: true}],
+      username: [{ value: data.userName, disabled: true }],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       dobActual: [],
       gender: ['1'],
       leadSource: [data.leadSource],
-      leaadStatus: [],
+      // leaadStatus: ['0'],
       leadRating: [(data.leadRating) ? String(data.leadRating) : '0'],
-      leadOwner: [],
+      leadOwner: ['0'],
       clientOwner: ['1'],
       role: [(data.roleId) ? data.roleId : '0'],
     });
@@ -145,7 +144,10 @@ export class ClientBasicDetailsComponent implements OnInit {
       comEmail: [(data.emailList) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
       comPan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       comOccupation: [(data.occupationId == 0) ? '1' : String(data.occupationId)],
-      username: [{value: data.userName, disabled: true}],
+      username: [{ value: data.userName, disabled: true }],
+      leadSource: [data.leadSource],
+      // leaadStatus: ['0'],
+      leadRating: [(data.leadRating) ? String(data.leadRating) : '0'],
       leadOwner: ['0'],
       role: [(data.roleId) ? data.roleId : '0']
     });
@@ -169,7 +171,9 @@ export class ClientBasicDetailsComponent implements OnInit {
 
         }
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        console.error(err);
+      }
     );
   }
 
@@ -275,9 +279,9 @@ export class ClientBasicDetailsComponent implements OnInit {
         userType: 2,
         remarks: null,
         status: (this.fieldFlag == 'client') ? 1 : 2,
-        leadSource: (this.fieldFlag == 'lead') ? this.basicDetails.value.leadSource : null,
-        leadRating: (this.fieldFlag == 'lead') ? this.basicDetails.value.leadRating : null,
-        leadStatus: (this.fieldFlag == 'lead') ? this.basicDetails.value.leaadStatus : null
+        leadSource: (this.fieldFlag == 'lead' && this.invTypeCategory == '1') ? this.basicDetails.value.leadSource : (this.fieldFlag == 'lead' && this.invTypeCategory == '2') ? this.nonIndividualForm.value.leadSource : null,
+        leadRating: (this.fieldFlag == 'lead' && this.invTypeCategory == '1') ? this.basicDetails.value.leadRating : (this.fieldFlag == 'lead' && this.invTypeCategory == '2') ? this.nonIndividualForm.value.leadRating : null,
+        // leadStatus: (this.fieldFlag == 'lead' && this.invTypeCategory == '1') ? this.basicDetails.value.leaadStatus : (this.fieldFlag == 'lead' && this.invTypeCategory == '2') ? this.nonIndividualForm.value.leadStatus : null
       };
       if (this.basicDetailsData.userId == null) {
         // if (this.invTypeCategory == '2') {
@@ -347,7 +351,9 @@ export class ClientBasicDetailsComponent implements OnInit {
         console.log(data);
         this.clientOwnerList = data;
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        console.error(err);
+      }
     );
   }
 
@@ -450,7 +456,7 @@ export class ClientBasicDetailsComponent implements OnInit {
 
   // }
   close(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', clientData: data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
   }
 
 }

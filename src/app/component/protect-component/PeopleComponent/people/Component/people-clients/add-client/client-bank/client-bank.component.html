@@ -150,8 +150,9 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="branchAddressLine1" matInput class="form-control">
-
+                    <input autocomplete="off" maxlength="100" #bAdd1 formControlName="branchAddressLine1" matInput
+                        class="form-control">
+                    <mat-hint align="end">{{bAdd1.value.length}}/100</mat-hint>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -164,8 +165,10 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="branchAddressLine2" matInput class="form-control">
+                    <input autocomplete="off" #bAdd2 maxlength="100" formControlName="branchAddressLine2" matInput
+                        class="form-control">
                     <mat-error>This field is required</mat-error>
+                    <mat-hint align="end">{{bAdd2.value.length}}/100</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -208,11 +211,11 @@
             </button> -->
             <!-- <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
             </button> -->
-            <app-progress-button *ngIf="fieldFlag==undefined" (btnClick)="saveNext('Save')"
-                class="br-0 text-inherit mr-12" [options]="barButtonOptions" [logEvent]="passEvent">
+            <app-progress-button *ngIf="fieldFlag==undefined" (btnClick)="saveNext('Save')" [options]="barButtonOptions"
+                class="br-0 text-inherit mr-12">
             </app-progress-button>
             <app-progress-button (btnClick)="saveNext('Next')" class="br-0 text-inherit mr-12"
-                                 [options]="barButtonOptions">
+                [options]="barButtonOptions">
             </app-progress-button>
         </div>
 

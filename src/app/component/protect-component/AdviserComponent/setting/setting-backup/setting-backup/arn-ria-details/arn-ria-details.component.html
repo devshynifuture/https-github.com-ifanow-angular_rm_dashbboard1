@@ -3,7 +3,7 @@
         <h4 class="m-0 text-black pt-8">ARN/RIA details</h4>
     </div>
     <div class="col-md-6 text-right ">
-        <button (click)="openArnDetails(null, null)" class="btn-primary " mat-stroked-button>
+        <button (click)="openArnDetails(null, null, true)" class="btn-primary " mat-stroked-button>
             ADD NEW
         </button>
     </div>
@@ -26,7 +26,7 @@
                             <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
 
                             <mat-menu #menu="matMenu">
-                                <button mat-menu-item (click)="openArnDetails(null, arn)">Edit</button>
+                                <button mat-menu-item (click)="openArnDetails(null, arn, false)">Edit</button>
                             </mat-menu>
                         </ng-container>
                     </div>

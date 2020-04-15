@@ -17,8 +17,7 @@ import { MfServiceService } from '../../mf-service.service';
   styleUrls: ['./mutual-fund-overview.component.scss']
 })
 export class MutualFundOverviewComponent implements OnInit {
-
-  mfData: any;
+  mfData: any = {};
   equityPercentage: any;
   debtPercentage: any;
   hybridPercenatge: any;

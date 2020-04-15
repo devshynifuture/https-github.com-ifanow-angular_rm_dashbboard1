@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ValidatorType } from 'src/app/services/util.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { LoginService } from '../login.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {ValidatorType} from 'src/app/services/util.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {LoginService} from '../login.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-sign-up',
@@ -17,9 +17,10 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 export class SignUpComponent implements OnInit {
   clientSignUp = false;
   duplicateTableDtaFlag: boolean;
+  termsAndCondition: any;
 
   constructor(private fb: FormBuilder, private authService: AuthService, public routerActive: ActivatedRoute,
-    private router: Router, private loginService: LoginService, private eventService: EventService, public dialog: MatDialog) {
+              private router: Router, private loginService: LoginService, private eventService: EventService, public dialog: MatDialog) {
   }
 
   signUpForm;
@@ -39,6 +40,7 @@ export class SignUpComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+
   ngOnInit() {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('advisorId')) {
@@ -48,9 +50,9 @@ export class SignUpComponent implements OnInit {
     this.signUpForm = this.fb.group({
       fullName: [, [Validators.required]],
       email: [, [Validators.required,
-      Validators.pattern(this.validatorType.EMAIL)]],
+        Validators.pattern(this.validatorType.EMAIL)]],
       mobile: [, [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
-      termsAgreement: [, [Validators.required]]
+      termsAgreement: [false, [Validators.required, Validators.requiredTrue]]
     });
   }
 
@@ -58,6 +60,10 @@ export class SignUpComponent implements OnInit {
     if (this.signUpForm.invalid) {
       console.log('Error');
       this.signUpForm.markAllAsTouched();
+      return;
+    } else if (this.signUpForm.value.termsAgreement == false) {
+      // this.eventService.openSnackBar('Please accept terms and conditions!', 'Dismiss');
+      return;
     } else {
       this.barButtonOptions.active = true;
       const obj = {
@@ -111,16 +117,17 @@ export class SignUpComponent implements OnInit {
             });
             this.router.navigate(['customer', 'detail', 'overview', 'myfeed']);
           } else {
-            this.router.navigate(['/login/forgotpassword'], { state: forgotPassObjData });
+            this.router.navigate(['/login/forgotpassword'], {state: forgotPassObjData});
           }
         },
         err => {
           this.barButtonOptions.active = false;
-          this.confirmModal(err.message)
+          this.confirmModal(err.message);
         }
       );
     }
   }
+
   confirmModal(errorMsg) {
     const dialogData = {
       header: 'REGISTER',
@@ -135,7 +142,7 @@ export class SignUpComponent implements OnInit {
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
-        this.router.navigate(['login'])
+        this.router.navigate(['login']);
       }
     };
     console.log(dialogData + '11111111111111');

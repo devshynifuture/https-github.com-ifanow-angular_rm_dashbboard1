@@ -89,9 +89,8 @@ export class UsersComponent implements OnInit {
       if(result) {
         this.loader(1);
         const replaceUser = {
-          deleteUserId: user.id,
+          deleteUserId: user.adminAdvisorId,
           replaceUserId: result,
-          advisorId: this.advisorId,
         }
         this.settingsService.deleteTeamMember(replaceUser).subscribe(res => {
           this.eventService.openSnackBar("User deleted successfully");
@@ -147,7 +146,7 @@ export class UsersComponent implements OnInit {
         console.log('aborted');
       },
       positiveMethod: () => {
-        const deleteFromTrashSubscription = this.settingsService.suspendMember(user.id)
+        const deleteFromTrashSubscription = this.settingsService.reactivateMember(user.id)
           .subscribe(response => {
             this.eventService.openSnackBar("User reactivated");
             deleteFromTrashSubscription.unsubscribe();

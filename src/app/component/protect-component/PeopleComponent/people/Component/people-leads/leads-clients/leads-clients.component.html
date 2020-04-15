@@ -59,24 +59,24 @@
             </p>
         </div>
     </div>
-    <!-- <div class="row">
-       <div class="col-md-12 roboto f-14 p-0">
-           <mat-checkbox> </mat-checkbox> Automatically generate a password
-       </div>
-   </div>-->
+  <!-- <div class="row">
+     <div class="col-md-12 roboto f-14 p-0">
+         <mat-checkbox> </mat-checkbox> Automatically generate a password
+     </div>
+ </div>-->
 
-    <div class="row pt-24">
-        <div class="col-md-12 roboto f-14 p-0">
-            <mat-checkbox formControlName="sendEmailFlag"></mat-checkbox>
-            Send welcome email
-        </div>
-        <div class="col-md-12 pl-20 pr-0">
-            <p class="f-12 l-18 m-0 text-primitive">
-                If opted, an email window will show up once you click on the Convert button below. You can customize the
-                email content from here.
-            </p>
-        </div>
+  <div class="row pt-24">
+    <div class="col-md-12 roboto f-14 p-0">
+      <mat-checkbox formControlName="sendEmailFlag"></mat-checkbox>
+      Send welcome email
     </div>
+    <div class="col-md-12 pl-20 pr-0">
+      <p class="f-12 l-18 m-0 text-primitive">
+        If opted, an email window will show up once you click on the Convert button below. You can customize the
+        email content from here.
+      </p>
+    </div>
+  </div>
 
 
 </div>
@@ -87,14 +87,14 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right">
+      <div class="col-md-8 right text-right">
 
-            <!-- <button *ngIf="convertClientForm.valid" mat-stroked-button class="btn-bottom br-0 text-inherit"
-                (click)="convertIntoLead()">CONVERT
-            </button> -->
-            <app-progress-button *ngIf="convertClientForm.valid" (btnClick)="convertIntoLead()"
-                class="br-0 text-inherit mr-12" [options]="barButtonOptions" [logEvent]="passEvent">
-            </app-progress-button>
-        </div>
+        <!-- <button *ngIf="convertClientForm.valid" mat-stroked-button class="btn-bottom br-0 text-inherit"
+            (click)="convertIntoLead()">CONVERT
+        </button> -->
+        <app-progress-button (btnClick)="convertIntoLead()" *ngIf="convertClientForm.valid"
+                             [options]="barButtonOptions" class="br-0 text-inherit mr-12">
+        </app-progress-button>
+      </div>
     </div>
 </div>
