@@ -171,7 +171,6 @@
           <mat-form-field>
             <mat-select [(ngModel)]="selectedClientOwner" class="form-control" formControlName="clientOwner">
               <mat-option *ngIf="clientOwnerList==undefined" value="1">{{advisorData.name}}</mat-option>
-              <mat-option *ngIf="clientOwnerList" value="1">Select Option</mat-option>
               <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
                 {{singleClient.name}}
               </mat-option>
