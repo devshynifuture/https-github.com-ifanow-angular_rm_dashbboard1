@@ -208,19 +208,26 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.basicDetails.get('clientOwner').setValidators([Validators.required]);
         this.basicDetails.get('clientOwner').updateValueAndValidity();
       } else {
+        this.nonIndividualForm.get('clientOwner').setValidators([Validators.required]);
+        this.nonIndividualForm.get('clientOwner').updateValueAndValidity();
+      }
+    } else {
+      (this.invTypeCategory == '1') ? this.basicDetails.get('clientOwner').setValidators(null) : this.nonIndividualForm.get('clientOwner').setValidators(null);
+    }
+    if (this.fieldFlag == 'lead' && this.basicDetailsData.userId == null) {
+      if (this.invTypeCategory == '1') {
+        this.basicDetails.get('leadOwner').setValidators([Validators.required]);
+        this.basicDetails.get('leadOwner').updateValueAndValidity();
+      }
+      else {
         this.nonIndividualForm.get('leadOwner').setValidators([Validators.required]);
         this.nonIndividualForm.get('leadOwner').updateValueAndValidity();
       }
-    } else {
-      this.basicDetails.get('leadOwner').setValidators(null);
     }
-    if (this.fieldFlag == 'lead' && this.basicDetailsData.userId == null) {
-      this.basicDetails.get('leadOwner').setValidators([Validators.required]);
-      this.basicDetails.get('leadOwner').updateValueAndValidity();
-    } else {
-      this.basicDetails.get('leadOwner').setValidators(null);
+    else {
+      (this.invTypeCategory == '1') ? this.basicDetails.get('leadOwner').setValidators(null) : this.nonIndividualForm.get('leadOwner').setValidators(null);
     }
-    if (this.basicDetails.invalid && this.invTypeCategory == '1') {
+    if (this.invTypeCategory == '1' && this.basicDetails.invalid) {
       this.basicDetails.markAllAsTouched();
       return;
     }
@@ -269,7 +276,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         clientId: (this.basicDetailsData == null) ? null : this.basicDetailsData.clientId,
         kycComplaint: 0,
         roleId: (this.invTypeCategory == '1') ? this.basicDetails.value.role : this.nonIndividualForm.value.role,
-        genderId: parseInt(this.basicDetails.controls.gender.value),
+        genderId: (this.invTypeCategory == '1') ? parseInt(this.basicDetails.controls.gender.value) : null,
         dateOfBirth: this.datePipe.transform((this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value :
           this.nonIndividualForm.value.dateOfIncorporation, 'dd/MM/yyyy'),
         userName: (this.invTypeCategory == '1') ? this.basicDetails.controls.username.value : this.nonIndividualForm.value.username,
