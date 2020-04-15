@@ -1,20 +1,20 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ValidatorType } from '../../../../../../../../services/util.service';
-import { DatePipe } from '@angular/common';
-import { EventEmitter, Output } from '@angular/core/src/metadata/*';
-import { AuthService } from '../../../../../../../../auth-service/authService';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ValidatorType} from '../../../../../../../../services/util.service';
+import {DatePipe} from '@angular/common';
+import {EventEmitter, Output} from '@angular/core/src/metadata/*';
+import {AuthService} from '../../../../../../../../auth-service/authService';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-company-more-info',
   templateUrl: './company-more-info.component.html',
   styleUrls: ['./company-more-info.component.scss']
 })
-export class CompanyMoreInfoComponent implements OnInit {
+export class CompanyMoreInfoComponent implements OnInit, OnChanges {
   moreInfoData: any = {};
   advisorId: any;
   mobileNumberFlag = 'Mobile';
@@ -41,7 +41,9 @@ export class CompanyMoreInfoComponent implements OnInit {
   @Input() fieldFlag;
   @Output() tabChange = new EventEmitter();
 
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService, private datePipe: DatePipe) {
+  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
+              private peopleService: PeopleService, private eventService: EventService,
+              private datePipe: DatePipe) {
   }
 
   @Input() set data(data) {
@@ -51,9 +53,9 @@ export class CompanyMoreInfoComponent implements OnInit {
       this.prevData = {};
     }
     console.log(data);
-    this.getCompanyDetails(data);
-    this.createMoreInfoForm(null);
+
   }
+
 
   createMoreInfoForm(data) {
     (data == undefined) ? data = {} : data;
@@ -73,7 +75,8 @@ export class CompanyMoreInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.getCompanyDetails(this.prevData);
+    this.createMoreInfoForm(null);
   }
 
   getNumberDetails(data) {
@@ -98,7 +101,7 @@ export class CompanyMoreInfoComponent implements OnInit {
         }
         console.log(responseData);
       }, err => {
-        console.error(err)
+        console.error(err);
       }
     );
   }
@@ -176,6 +179,13 @@ export class CompanyMoreInfoComponent implements OnInit {
   }
 
   close(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
+    this.subInjectService.changeNewRightSliderState({state: 'close', clientData: data});
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.data && !!changes.data.currentValue) {
+      this.getCompanyDetails(changes.data);
+      this.createMoreInfoForm(null);
+    }
   }
 }
