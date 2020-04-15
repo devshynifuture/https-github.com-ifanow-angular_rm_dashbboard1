@@ -57,6 +57,10 @@ export class DuplicateDataComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+            this.dataSource.data = ELEMENT_DATA;
+            this.duplicateDataList = [];
+
+            this.duplicateFolioData();
           }
           rightSideDataSub.unsubscribe();
         }
@@ -74,10 +78,10 @@ export class DuplicateDataComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           console.log("this is duplicate data values:::::::", res);
-
           res.forEach(item => {
             this.brokerId = item.brokerId;
             this.mutualFundTransactions = item.mutualFundTransactions;
+
             this.duplicateDataList.push({
               arnRia: item.brokerCode,
               name: item.schemeName,

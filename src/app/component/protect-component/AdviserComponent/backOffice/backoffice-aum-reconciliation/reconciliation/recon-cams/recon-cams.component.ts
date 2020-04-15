@@ -44,7 +44,6 @@ export class ReconCamsComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.brokerList = res;
-          this.isBrokerSelected = true;
         }
       });
   }
@@ -55,6 +54,7 @@ export class ReconCamsComponent implements OnInit {
     // make separate function for toggling the same
     if (this.selectBrokerForm.get('selectBrokerId').value) {
       this.isLoading = true;
+      this.isBrokerSelected = true;
       const data = {
         advisorId: this.advisorId,
         brokerId: this.selectBrokerForm.get('selectBrokerId').value,
@@ -90,6 +90,10 @@ export class ReconCamsComponent implements OnInit {
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
+          if (UtilService.isRefreshRequired(upperSliderData)) {
+            // call history get
+            this.getAumReconHistoryData()
+          }
           // this.getClientSubscriptionList();
           subscription.unsubscribe();
         }

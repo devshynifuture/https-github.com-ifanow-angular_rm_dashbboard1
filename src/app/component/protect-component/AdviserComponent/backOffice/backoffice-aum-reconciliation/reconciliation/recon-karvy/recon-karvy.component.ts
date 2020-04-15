@@ -44,26 +44,28 @@ export class ReconKarvyComponent implements OnInit {
     this.reconService.getBrokerListValues({ advisorId: this.advisorId })
       .subscribe(res => {
         this.brokerList = res;
-        this.isBrokerSelected = true;
       });
   }
 
 
-  getAumReconHistoryData(event) {
-    this.isLoading = true;
-    console.log(event);
-    const data = {
-      advisorId: this.advisorId,
-      brokerId: this.selectBrokerForm.get('selectBrokerId').value,
-      rmId: 0,
-      rtId: this.rtId
+  getAumReconHistoryData() {
+    if (this.selectBrokerForm.get('selectBrokerId').value) {
+      this.isLoading = true;
+      this.isBrokerSelected = true;
+
+      const data = {
+        advisorId: this.advisorId,
+        brokerId: this.selectBrokerForm.get('selectBrokerId').value,
+        rmId: 0,
+        rtId: this.rtId
+      }
+      this.reconService.getAumReconHistoryDataValues(data)
+        .subscribe(res => {
+          this.isLoading = false;
+          console.log("this is some values ::::::::::", res);
+          this.dataSource.data = res;
+        })
     }
-    this.reconService.getAumReconHistoryDataValues(data)
-      .subscribe(res => {
-        this.isLoading = false;
-        console.log("this is some values ::::::::::", res);
-        this.dataSource.data = res;
-      })
   }
 
   openAumReconciliation(flag, data) {
@@ -87,6 +89,9 @@ export class ReconKarvyComponent implements OnInit {
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           // this.getClientSubscriptionList();
+          if (UtilService.isRefreshRequired(upperSliderData)) {
+            this.getAumReconHistoryData()
+          }
           subscription.unsubscribe();
         }
       }

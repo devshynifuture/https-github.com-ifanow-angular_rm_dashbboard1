@@ -303,8 +303,10 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   getBackofficeAumFileOrderListDeleteReorder() {
+    this.isLoading = true;
     this.supportService.getBackofficeAumOrderListValues({ aumReconId: this.aumReconId })
       .subscribe(res => {
+        this.isLoading = false;
         console.log(res);
         if (res) {
           res.map(element => {
@@ -454,7 +456,6 @@ export class UpperSliderBackofficeComponent implements OnInit {
           }
           rightSideDataSub.unsubscribe();
         }
-
       }
     );
   }
@@ -570,7 +571,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
     // post call
     this.postReqForBackOfficeUnmatchedFolios();
 
-    this.eventService.changeUpperSliderState({ state: 'close' });
+    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
   }
 
   setSubTabState(state) {
