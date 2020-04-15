@@ -424,7 +424,7 @@ export class HttpService {
     if (options != undefined) {
       httpOptions = options;
     }
-    console.log('HttpService postExternal options : ', options);
+    console.log('HttpService postExternal options : ', httpOptions);
     return this._http
       .post(url, body, httpOptions).pipe(
         catchError(err => of([]))
@@ -440,11 +440,12 @@ export class HttpService {
   getExternal(url: string, options?): Observable<any> {
     let httpOptions = {
       headers: new HttpHeaders().set('Content-Type', 'application/json')
+        .set('Access-Control-Allow-Origin', 'http://localhost:4200')
     };
     if (options != undefined) {
       httpOptions = options;
     }
-    console.log('HttpService postExternal options : ', options);
+    console.log('HttpService postExternal options : ', httpOptions);
     return this._http
       .get(url, httpOptions).pipe(
         catchError(err => of([]))

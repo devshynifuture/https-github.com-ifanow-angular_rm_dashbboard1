@@ -192,26 +192,19 @@ export class ForgotPasswordComponent implements OnInit {
       this.verify('Mobile');
       this.verifyFlag = 'Mobile';
     } else if (flag == 'Mobile' && this.otpData.length == 4) {
-      this.loginService.verifyOtp({
+      const obj = {
+        userId: this.saveVerifyData.userId,
+        userType: this.saveVerifyData.userType,
         mobileNo: this.saveVerifyData.mobileNo,
         otp: otpString
-      }).subscribe((responseData) => {
-        if (responseData && responseData.type == 'success') {
-          const obj = {
-            userId: this.saveVerifyData.userId,
-            userType: this.saveVerifyData.userType,
-            mobileNo: this.saveVerifyData.mobileNo
-          };
+      };
+      this.loginService.saveAfterVerification(obj).subscribe(
+        data => {
           this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
-          this.saveAfterVerifyCredential(obj);
           this.router.navigate(['/login/setpassword'], {state: {userData: this.saveVerifyData.userData}});
-        } else {
-          this.eventService.openSnackBar(responseData ? responseData.message : 'Something went wrong', 'Dismiss');
-        }
-      }, error => {
-        this.eventService.openSnackBar(error, 'Dismiss');
-
-      });
+        },
+        err => this.eventService.openSnackBar(err, 'Dismiss')
+      );
     } else {
       this.eventService.openSnackBar('OTP is incorrect', 'Dismiss');
     }

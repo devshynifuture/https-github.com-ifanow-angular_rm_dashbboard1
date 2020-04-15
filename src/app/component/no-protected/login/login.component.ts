@@ -145,12 +145,11 @@ export class LoginComponent implements OnInit {
       this.verifyResponseData.mobileNo = UtilService.obfuscateEmail(String(data.mobileNo));
     }
     console.log(this.verifyResponseData);
-    /* if (this.verifyResponseData.email) {
-       this.verifyFlag = 'Email';
-       const obj = {email: data.email};
-       this.loginUsingCredential(obj);
-     } else*/
-    {
+    if (this.verifyResponseData.email) {
+      this.verifyFlag = 'Email';
+      const obj = {email: data.email};
+      this.loginUsingCredential(obj);
+    } else {
       this.verifyFlag = 'Mobile';
       const obj = {mobileNo: data.mobileNo};
       this.loginUsingCredential(obj);
@@ -197,28 +196,28 @@ export class LoginComponent implements OnInit {
         this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
         this.loginService.handleUserData(this.authService, this.router, this.userData);
       } else if (this.verifyFlag == 'Mobile' && this.otpData.length == 4) {
-        this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
-        this.loginService.verifyOtp({
+        const obj = {
           mobileNo: this.userData.mobileNo,
+          userId: (this.userData.clientId) ? (this.userData.clientId > 0) ?
+            this.userData.clientId : this.userData.advisorId : this.userData.advisorId,
+          userType: this.userData.userType,
           otp: otpString
-        }).subscribe((responseData) => {
-          if (responseData && responseData.type == 'success') {
-            const obj = {
-              mobileNo: this.userData.mobileNo,
-              userId: (this.userData.clientId) ? (this.userData.clientId > 0) ?
-                this.userData.clientId : this.userData.advisorId : this.userData.advisorId,
-              userType: this.userData.userType
-            };
-            this.saveAfterVerifyCredential(obj);
-            this.loginService.handleUserData(this.authService, this.router, this.userData);
-          } else {
+        };
+        this.loginService.saveAfterVerification(obj).subscribe(
+          data => {
+            if (data) {
+              this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
+              this.loginService.handleUserData(this.authService, this.router, this.userData);
+            } else {
+              this.barButtonOptions.active = false;
+            }
+          },
+          err => {
+            console.error(err);
+            this.eventService.openSnackBar(err, 'Dismiss');
             this.barButtonOptions.active = false;
-            this.eventService.openSnackBar(responseData ? responseData.message : 'Something went wrong', 'Dismiss');
           }
-        }, error => {
-          this.eventService.openSnackBar(error, 'Dismiss');
-          this.barButtonOptions.active = false;
-        });
+        );
       } else {
         this.eventService.openSnackBar('Wrong OTP');
         this.barButtonOptions.active = false;
