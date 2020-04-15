@@ -90,11 +90,14 @@
                             <span appFormatNumber class="f-700" *ngIf="element.totalAmountInvested">{{(element.totalAmountInvested)?element.totalAmountInvested:0}}</span>
                         </div>
                     </td>
-                    <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
+                    <!-- <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                         <div class="bar"> {{(mutualFund)?mutualFund.total_amount_invested:'0'}}
                         </div>
-                    </td>
-
+                    </td> -->
+                    <td *matFooterCellDef  appFormatNumber [value]="grandTotal.totalTransactionAmt" class="br f-600 text-right" mat-footer-cell  >
+                        <!-- <div appFormatNumber [value]="grandTotal.totalTransactionAmt"></div> -->
+                        <!-- {{(grandTotal.totalTransactionAmt)?grandTotal.totalTransactionAmt:0}} -->
+                      </td>
                 </ng-container>
 
                 <ng-container matColumnDef="currentValue">
@@ -105,9 +108,12 @@
                             <span appFormatNumber class="f-700" *ngIf="element.totalCurrentValue">{{(element.totalCurrentValue)?element.totalCurrentValue:0}}</span>
                         </div>
                     </td>
-                    <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
+                    <!-- <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                         <div class="bar"> {{(mutualFund)?mutualFund.total_current_value:'0'}}
                         </div>
+                    </td> -->
+                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.currentValue" class="br f-600 text-right" mat-footer-cell>
+                        <!--                  <div>{{ grandTotal.currentValue }}</div>-->
                     </td>
 
                 </ng-container>
@@ -121,11 +127,13 @@
                             <span appFormatNumber class="f-700" *ngIf="element.totalUnrealizedGain">{{(element.totalUnrealizedGain)?element.totalUnrealizedGain:0}}</span>
                         </div>
                     </td>
-                    <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
+                    <!-- <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                         <div class="bar"> {{(mutualFund)?mutualFund.total_unrealized_gain:'0'}}
                         </div>
-                    </td>
-
+                    </td> -->
+                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalGain" class="br f-600 text-right" mat-footer-cell>
+                        <!--                  <div>{{ grandTotal.totalGain}}</div>-->
+                                        </td>
                 </ng-container>
 
                 <ng-container matColumnDef="absoluteReturn">
@@ -135,11 +143,13 @@
                             <span appFormatNumber class="f-700" *ngIf="element.totalAbsoluteReturn">{{(element.totalAbsoluteReturn)?element.totalAbsoluteReturn:0}}</span>
                         </div>
                     </td>
-                    <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
+                    <!-- <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                         <div class="bar"> {{(mutualFund)?mutualFund.total_absolute_return:'0'}}
                         </div>
+                    </td> -->
+                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.absReturn" class="br f-600 text-right" mat-footer-cell>
+                        <!--                  {{ grandTotal.totalGain}}-->
                     </td>
-
                 </ng-container>
 
                 <ng-container matColumnDef="xirr">
@@ -149,11 +159,13 @@
                             <span appFormatNumber class="f-700" *ngIf="element.totalXirr">{{(element.totalXirr)?element.totalXirr:0}}</span>
                         </div>
                     </td>
-                    <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
+                    <!-- <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                         <div class="bar">{{(mutualFund)?mutualFund.total_xirr:'0'}}
                         </div>
-                    </td>
-
+                    </td> -->
+                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.xirr" class="br f-600 text-right" mat-footer-cell>
+                        <!--                  {{ grandTotal.xirr }}-->
+                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="dividendPayout">
@@ -165,11 +177,13 @@
                             <span appFormatNumber class="f-700" *ngIf="element.totalDividendPayout">{{(element.totalDividendPayout)?element.totalDividendPayout:0}}</span>
                         </div>
                     </td>
-                    <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
+                    <!-- <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                         <div class="bar"> {{(mutualFund)?mutualFund.total_dividend_payout:'0'}}
                         </div>
-                    </td>
-
+                    </td> -->
+                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.dividendPayout" class="br f-600 text-right" mat-footer-cell>
+                        <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
+                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="switchOut">
@@ -180,11 +194,13 @@
                             <span appFormatNumber class="f-700" *ngIf="element.totalSwitchOut">{{(element.totalSwitchOut)?element.totalSwitchOut:0}}</span>
                         </div>
                     </td>
-                    <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
+                    <!-- <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                         <div class="bar"> {{(mutualFund)?mutualFund.total_switch_out:'0'}}
                         </div>
-                    </td>
-
+                    </td> -->
+                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.withdrawals" class="br f-600 text-right" mat-footer-cell>
+                        <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
+                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="balanceUnit">
@@ -196,11 +212,13 @@
                             <span appFormatNumber class="f-700" *ngIf="element.totalBalanceUnit">{{(element.totalBalanceUnit)?element.totalBalanceUnit:0}}</span>
                         </div>
                     </td>
-                    <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
+                    <!-- <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                         <div class="bar"> {{(mutualFund || mutualFund.balanceUnit)?mutualFund.balanceUnit:'0'}}
                         </div>
-                    </td>
-
+                    </td> -->
+                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalBalanceUnit" class="br f-600 text-right" mat-footer-cell>
+                        <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
+                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="navDate">
@@ -211,11 +229,13 @@
                             <span class="f-700" *ngIf="element.navDate">{{(element.navDate)?element.navDate:'-'}}</span>
                         </div>
                     </td>
-                    <td *matFooterCellDef class="br f-600 text-right" mat-footer-cell>
+                    <!-- <td *matFooterCellDef class="br f-600 text-right" mat-footer-cell>
                         <div class="bar">{{(mutualFund)?mutualFund.navDate:'0'}}
                         </div>
-                    </td>
-
+                    </td> -->
+                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalNav" class="br f-600 text-right" mat-footer-cell>
+                        <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
+                     </td>
                 </ng-container>
                 <ng-container matColumnDef="sipAmount">
                     <th class="br text-right" mat-sort-header="sipAmount" mat-header-cell *matHeaderCellDef> SIP
@@ -225,10 +245,13 @@
                             <span appFormatNumber class="f-700" *ngIf="element.totalSipAmount">{{(element.totalSipAmount)?element.totalSipAmount:0}}</span>
                         </div>
                     </td>
-                    <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
+                    <!-- <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
                         <div class="bar"> {{(mutualFund || mutualFund.totalSipAmount)?mutualFund.totalSipAmount:'0'}}
                         </div>
-                    </td>
+                    </td> -->
+                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.sip" class="br f-600 text-right" mat-footer-cell>
+                        <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
+                     </td>
                 </ng-container>
                 <ng-container matColumnDef="groupHeader">
                     <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="text-center text-primary">

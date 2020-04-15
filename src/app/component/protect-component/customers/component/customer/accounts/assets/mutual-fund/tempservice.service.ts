@@ -192,6 +192,8 @@ export class TempserviceService {
     let totalAmount = 0;
     let totalGain = 0;
     let allocationPer = 0;
+    let withdrawals = 0;
+    let sip = 0;
     if(!isSummaryTabValues){
       data.mutualFundTransactions.forEach(ele => {
         totalTransactionAmt += (ele.amount) ? ele.amount : 0;
@@ -220,6 +222,8 @@ export class TempserviceService {
       absReturn += (data.absoluteReturn) ? data.absoluteReturn : 0;
       xirr += (data.xirr || data.xirr==0)?data.xirr:0;
       allocationPer += (data.allocatedPercentage) ? data.allocatedPercentage : 0;
+      withdrawals += (data.switchOut) ? data.switchOut : 0;
+      sip += (data.sipAmount) ? data.sipAmount : 0;
     }
   
     const obj = {
@@ -235,7 +239,9 @@ export class TempserviceService {
       totalGain,
       absReturn,
       xirr,
-      allocationPer
+      allocationPer,
+      withdrawals,
+      sip
     };
     // this.totalObj = obj;
     return obj;
