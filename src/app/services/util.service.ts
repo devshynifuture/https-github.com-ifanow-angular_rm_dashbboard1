@@ -1,12 +1,12 @@
 // tslint:disable:radix
 // tslint:disable:triple-equals
 
-import {ElementRef, Injectable} from '@angular/core';
-import {DatePipe, DecimalPipe} from '@angular/common';
-import {EventService} from '../Data-service/event.service';
-import {HttpClient} from '@angular/common/http';
-import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import {FormGroup} from '@angular/forms';
+import { ElementRef, Injectable } from '@angular/core';
+import { DatePipe, DecimalPipe } from '@angular/common';
+import { EventService } from '../Data-service/event.service';
+import { HttpClient } from '@angular/common/http';
+import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { FormGroup } from '@angular/forms';
 
 
 @Injectable({
@@ -18,7 +18,7 @@ export class UtilService {
     private eventService: EventService,
     private http: HttpClient,
     private subService: SubscriptionService,
-  ) {}
+  ) { }
 
   private static decimalPipe = new DecimalPipe('en-US');
   advisorId: any;
@@ -341,6 +341,7 @@ export class ValidatorType {
   static ALPHA_NUMERIC_WITH_SLASH = new RegExp(/^[A-Z0-9//]+$/);
   static TEN_DIGITS = new RegExp(/^\d{10}$/);
   static PAN = new RegExp(/^[a-zA-Z0-9]{10,}$/);
+  static ADHAAR = new RegExp(/^[a-zA-Z0-9]{12,}$/);
 }
 
 // Escape characters that have a special meaning in Regular Expressions

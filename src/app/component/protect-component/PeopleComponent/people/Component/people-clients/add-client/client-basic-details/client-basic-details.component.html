@@ -169,7 +169,7 @@
         <div class="form-group m-0">
           <mat-form-field>
             <mat-select [(ngModel)]="selectedClientOwner" class="form-control" formControlName="clientOwner">
-              <mat-option value="1">Select option</mat-option>
+              <mat-option *ngIf="clientOwnerList==undefined" value="1">{{advisorData.name}}</mat-option>
               <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
                 {{singleClient.name}}
               </mat-option>
@@ -191,7 +191,7 @@
             <input #leadSource [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation autocomplete="off"
               class="form-control" formControlName="leadSource" matInput>
             <mat-hint align="end">{{leadSource.value.length}}/ 50</mat-hint>
-            <mat-error>This field is required</mat-error>
+            <mat-hint>Optional</mat-hint>
             <!-- <mat-select formControlName="leadSource" class="form-control">
                 <mat-option value="option">Option</mat-option>
             </mat-select> -->
@@ -200,7 +200,7 @@
       </div>
     </div>
 
-    <!-- <div *ngIf="fieldFlag=='lead'" class="row pt-44">
+    <div *ngIf="fieldFlag=='lead'" class="row pt-44">
       <div class="col-md-4 text-right">
         <h5 class="m-0 pt-12">Lead status</h5>
       </div>
@@ -208,12 +208,13 @@
         <div class="form-group mb-0">
           <mat-form-field>
             <mat-select formControlName="leaadStatus" class="form-control">
-              <mat-option value="1">Option</mat-option>
+              <mat-option value="1">Select lead status</mat-option>
             </mat-select>
+            <mat-hint>Optional</mat-hint>
           </mat-form-field>
         </div>
       </div>
-    </div> -->
+    </div>
     <div *ngIf="fieldFlag=='lead'" class="row pt-44">
       <div class="col-md-4 text-right">
         <h5 class="m-0 pt-12">Lead rating</h5>
@@ -222,10 +223,11 @@
         <div class="form-group mb-0">
           <mat-form-field>
             <mat-select formControlName="leadRating" class="form-control">
-              <mat-option value="0">Select option</mat-option>
+              <mat-option value="0">Select lead rating</mat-option>
               <mat-option value="1">Cold</mat-option>
               <mat-option value="2">Hot</mat-option>
             </mat-select>
+            <mat-hint>Optional</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -238,6 +240,7 @@
         <div class="form-group mb-0">
           <mat-form-field>
             <mat-select [(ngModel)]="selectedClientOwner" formControlName="leadOwner" class="form-control">
+              <mat-option *ngIf="clientOwnerList==undefined" value="1">{{advisorData.name}}</mat-option>
               <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
                 {{singleClient.name}}
               </mat-option>
@@ -257,12 +260,12 @@
         <div class="form-group m-0">
           <mat-form-field>
             <mat-select formControlName="role" class="form-control">
-              <mat-option value="0">Select option</mat-option>
+              <mat-option *ngIf="clientRoles==undefined" value="0">No roles found</mat-option>
+              <mat-option *ngIf="clientRoles" value="0">Select roles</mat-option>
               <mat-option [value]="role.clientRoleId" *ngFor="let role of clientRoles">
                 {{role.clientRoleName}}</mat-option>
             </mat-select>
-            <mat-error class="f-12">This field is required
-            </mat-error>
+            <mat-error>This Field is required</mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -563,7 +566,15 @@
         <div class="form-group mb-0">
           <mat-form-field>
             <mat-select formControlName="comStatus" class="form-control">
-              <mat-option value="option">Option</mat-option>
+              <mat-option value="0">Select option</mat-option>
+              <mat-option value="1">Private limited</mat-option>
+              <mat-option value="2">Public limited</mat-option>
+              <mat-option value="3">Partnership/LLP</mat-option>
+              <mat-option value="4">Trust</mat-option>
+              <mat-option value="5">Society</mat-option>
+              <mat-option value="6"> Association of persons</mat-option>
+              <mat-option value="7">Hindu undivided family (HUF)</mat-option>
+              <mat-option value="8"> Body of individuals</mat-option>
             </mat-select>
             <mat-error>This field is required</mat-error>
           </mat-form-field>
@@ -623,7 +634,7 @@
               <mat-option value="1">Goverment</mat-option>
               <mat-option value="2">Service</mat-option>
               <mat-option value="3">Private sector</mat-option>
-              <mat-option value="4">Buisness</mat-option>
+              <mat-option value="4">business</mat-option>
             </mat-select>
             <mat-hint>Optional</mat-hint>
           </mat-form-field>
@@ -660,12 +671,12 @@
             <input #leadSource [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation autocomplete="off"
               class="form-control" formControlName="leadSource" matInput>
             <mat-hint align="end">{{leadSource.value.length}}/ 50</mat-hint>
-            <mat-error>This field is required</mat-error>
+            <mat-hint>Optional</mat-hint>
           </mat-form-field>
         </div>
       </div>
     </div>
-    <!-- 
+
     <div *ngIf="fieldFlag=='lead'" class="row pt-44">
       <div class="col-md-4 text-right">
         <h5 class="m-0 pt-12">Lead status</h5>
@@ -674,12 +685,13 @@
         <div class="form-group mb-0">
           <mat-form-field>
             <mat-select formControlName="leaadStatus" class="form-control">
-              <mat-option value="1">Option</mat-option>
+              <mat-option value="1">Select lead status</mat-option>
             </mat-select>
+            <mat-hint>Optional</mat-hint>
           </mat-form-field>
         </div>
       </div>
-    </div> -->
+    </div>
     <div *ngIf="fieldFlag=='lead'" class="row pt-44">
       <div class="col-md-4 text-right">
         <h5 class="m-0 pt-12">Lead rating</h5>
@@ -688,10 +700,11 @@
         <div class="form-group mb-0">
           <mat-form-field>
             <mat-select formControlName="leadRating" class="form-control">
-              <mat-option value="0">Select option</mat-option>
+              <mat-option value="0">Select lead rating</mat-option>
               <mat-option value="1">Cold</mat-option>
               <mat-option value="2">Hot</mat-option>
             </mat-select>
+            <mat-hint>Optional</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -705,7 +718,7 @@
         <div class="form-group mb-0">
           <mat-form-field>
             <mat-select [(ngModel)]="selectedClientOwner" formControlName="leadOwner" class="form-control">
-              <mat-option value="0">Select option</mat-option>
+              <mat-option *ngIf="clientOwnerList==undefined" value="1">{{advisorData.name}}</mat-option>
               <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
                 {{singleClient.name}}
               </mat-option>
@@ -727,7 +740,8 @@
         <div class="form-group m-0">
           <mat-form-field>
             <mat-select formControlName="role" class="form-control">
-              <mat-option value="0">Select option</mat-option>
+              <mat-option *ngIf="clientRoles==undefined" value="0">No roles found</mat-option>
+              <mat-option *ngIf="clientRoles" value="0">Select roles</mat-option>
               <mat-option [value]="role.clientRoleId" *ngFor="let role of clientRoles">
                 {{role.clientRoleName}}</mat-option>
             </mat-select>

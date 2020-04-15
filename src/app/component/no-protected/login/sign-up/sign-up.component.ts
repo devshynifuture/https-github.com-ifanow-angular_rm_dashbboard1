@@ -99,23 +99,25 @@ export class SignUpComponent implements OnInit {
             flag: true,
             userType: data.userType,
             userId: data.userId,
+            clientId: data.clientId,
+            advisorId: data.advisorId,
             userData: data
           };
           if (this.clientSignUp) {
-            const jsonData = {
-              advisorId: 2808,
-              clientId: 2978,
-              emailId: 'gaurav@futurewise.co.in',
-              authToken: 'data',
-              imgUrl: 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'
-            };
+            /*  const jsonData = {
+                advisorId: 2808,
+                clientId: 2978,
+                emailId: 'gaurav@futurewise.co.in',
+                authToken: 'data',
+                imgUrl: 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'
+              };
 
-            this.authService.setToken('data');
-            this.authService.setUserInfo(jsonData);
-            this.authService.setClientData({
-              id: 2978, name: 'Aryendra Kumar Saxena'
-            });
-            this.router.navigate(['customer', 'detail', 'overview', 'myfeed']);
+              this.authService.setToken('data');
+              this.authService.setUserInfo(jsonData);
+              this.authService.setClientData({
+                id: 2978, name: 'Aryendra Kumar Saxena'
+              });
+              this.router.navigate(['customer', 'detail', 'overview', 'myfeed']);*/
           } else {
             this.router.navigate(['/login/forgotpassword'], {state: forgotPassObjData});
           }

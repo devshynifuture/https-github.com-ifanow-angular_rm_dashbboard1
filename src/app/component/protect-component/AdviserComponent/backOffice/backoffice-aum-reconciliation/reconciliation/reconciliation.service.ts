@@ -22,7 +22,7 @@ export class ReconciliationService {
             .subscribe(res => {
                 res.forEach(item => {
                     const { id } = item;
-                    const { brokerCode } = item;
+                    let brokerCode = item.arnOrRia === 1 ? 'ARN - ' + item.number : item.arnOrRia === 2 ? 'RIA - ' + item.number : null;
                     let brokerListArr = [];
                     brokerListArr.push({
                         id,
@@ -110,7 +110,7 @@ export class ReconciliationService {
         return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_FOLIO, data);
     }
 
-    successBackOfficeFileToUpload(data){
+    successBackOfficeFileToUpload(data) {
         return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_SUCCESS_FILE_UPLOAD, data)
     }
 
