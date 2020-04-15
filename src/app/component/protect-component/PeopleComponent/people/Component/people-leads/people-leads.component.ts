@@ -9,6 +9,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
 
 @Component({
   selector: 'app-people-leads',
@@ -22,7 +23,7 @@ export class PeopleLeadsComponent implements OnInit {
   isLoading: boolean;
   advisorId: any;
   @ViewChild('tableEl', { static: false }) tableEl;
-  constructor(private excel: ExcelGenService, public dialog: MatDialog, public eventService: EventService, private subInjectService: SubscriptionInject, private peopleService: PeopleService) { }
+  constructor(private pdfGen: PdfGenService, private excel: ExcelGenService, public dialog: MatDialog, public eventService: EventService, private subInjectService: SubscriptionInject, private peopleService: PeopleService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -59,6 +60,10 @@ export class PeopleLeadsComponent implements OnInit {
   Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows, tableTitle)
+  }
+  pdf(tableTitle) {
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.pdfGen.generatePdf(rows, tableTitle);
   }
   open(data, flag) {
     let component;

@@ -6,7 +6,7 @@
         <div *ngIf="clientDatasource.data.length>0" class="col-md-8 p-0 right text-right">
             <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
             <mat-menu #menu5="matMenu">
-                <!-- <button (click)="pdf('Fixed deposit')" mat-menu-item>PDF</button> -->
+                <button (click)="pdf('Client')" mat-menu-item>PDF</button>
                 <button (click)="Excel('Client')" mat-menu-item>XLS</button>
             </mat-menu>
             <img src="assets/images/svg/up-down.svg" class="">

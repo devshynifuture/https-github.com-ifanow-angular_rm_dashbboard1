@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
 
 @Component({
   selector: 'app-people-clients',
@@ -27,7 +28,7 @@ export class PeopleClientsComponent implements OnInit {
 
   constructor(private authService: AuthService, private ngZone: NgZone, private router: Router,
     private subInjectService: SubscriptionInject, public eventService: EventService,
-    private peopleService: PeopleService, public dialog: MatDialog, private excel: ExcelGenService) {
+    private peopleService: PeopleService, public dialog: MatDialog, private excel: ExcelGenService, private pdfGen: PdfGenService) {
   }
 
   ngOnInit() {
@@ -70,6 +71,10 @@ export class PeopleClientsComponent implements OnInit {
   Excel(tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows, tableTitle)
+  }
+  pdf(tableTitle) {
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.pdfGen.generatePdf(rows, tableTitle);
   }
   addClient(data) {
     if (data == null) {
