@@ -241,7 +241,7 @@
         <div class="form-group mb-0">
           <mat-form-field>
             <mat-select [(ngModel)]="selectedClientOwner" formControlName="leadOwner" class="form-control">
-              <mat-option *ngIf="clientOwnerList==undefined" value="1">{{advisorData.name}}</mat-option>
+              <mat-option *ngIf="clientOwnerList==undefined">{{advisorData.name}}</mat-option>
               <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
                 {{singleClient.name}}
               </mat-option>
@@ -721,7 +721,7 @@
         <div class="form-group mb-0">
           <mat-form-field>
             <mat-select [(ngModel)]="selectedClientOwner" formControlName="leadOwner" class="form-control">
-              <mat-option *ngIf="clientOwnerList==undefined" value="1">{{advisorData.name}}</mat-option>
+              <mat-option *ngIf="clientOwnerList==undefined">{{advisorData.name}}</mat-option>
               <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
                 {{singleClient.name}}
               </mat-option>

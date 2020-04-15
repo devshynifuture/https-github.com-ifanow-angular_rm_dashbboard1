@@ -117,8 +117,8 @@ export class ClientBasicDetailsComponent implements OnInit {
       leadSource: [data.leadSource],
       leaadStatus: ['1'],
       leadRating: [(data.leadRating) ? String(data.leadRating) : '0'],
-      leadOwner: ['1'],
-      clientOwner: ['1'],
+      leadOwner: [],
+      clientOwner: [],
       role: [(data.roleId) ? data.roleId : '0', Validators.required],
     });
   }
@@ -151,7 +151,8 @@ export class ClientBasicDetailsComponent implements OnInit {
       leadSource: [data.leadSource],
       leaadStatus: ['1'],
       leadRating: [(data.leadRating) ? String(data.leadRating) : '0'],
-      leadOwner: ['1'],
+      leadOwner: [],
+      clientOwner: [],
       role: [(data.roleId) ? data.roleId : '0', Validators.required]
     });
   }
