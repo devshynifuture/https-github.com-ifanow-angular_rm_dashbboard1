@@ -229,7 +229,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select [(ngModel)]="selectedClientOwner" formControlName="leadOwner" class="form-control">
-                            <mat-option *ngIf="clientOwnerList==undefined" value="1">{{advisorData.name}}</mat-option>
+                            <mat-option *ngIf="clientOwnerList==undefined">{{advisorData.name}}</mat-option>
                             <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
                                 {{singleClient.name}}
                             </mat-option>
@@ -260,40 +260,39 @@
             </div>
         </div>
     </div>
-</div>
-<div *ngIf="fieldFlag=='familyMember'">
-    <div *ngIf="invTypeCategory=='2'" [formGroup]="minorForm" class="minorBox">
-        <div class=" row pt-20">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-20">Minor’s full name</h5>
-            </div>
-            <div class="col-md-6 p-0">
-                <div class="form-group mb-0">
-                    <mat-form-field floatLabel="never" appearance="standard">
-                        <input matInput appInputValueValidation [maxLength]="50" #mFullName [inputValidator]="validatorType.PERSON_NAME" class="form-control" formControlName="minorFullName" placeholder="Enter Name">
-                        <mat-hint align="end" class="f-12">{{mFullName.value.length}}/50</mat-hint>
-                        <mat-error>This field is required</mat-error>
-                    </mat-form-field>
+    <div *ngIf="fieldFlag=='familyMember'">
+        <div *ngIf="invTypeCategory=='2'" [formGroup]="minorForm" class="minorBox">
+            <div class=" row pt-20">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-20">Minor’s full name</h5>
+                </div>
+                <div class="col-md-6 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field floatLabel="never" appearance="standard">
+                            <input matInput appInputValueValidation [maxLength]="50" #mFullName [inputValidator]="validatorType.PERSON_NAME" class="form-control" formControlName="minorFullName" placeholder="Enter Name">
+                            <mat-hint align="end" class="f-12">{{mFullName.value.length}}/50</mat-hint>
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row pt-32">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-32">Minor’s date of birth</h5>
-            </div>
-            <div class="col-md-6 p-0">
-                <p class="m-0 roboto">As per records</p>
-                <div class="form-group mb-0">
-                    <mat-form-field class="ba-date">
-                        <input (click)="dobAsPerRecord.open()" [matDatepicker]="dobAsPerRecord" class="form-control br-0 b-0" formControlName="dobAsPerRecord" matInput readonly>
-                        <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord"></mat-datepicker-toggle>
-                        <mat-datepicker #dobAsPerRecord></mat-datepicker>
-                        <mat-hint>Optional</mat-hint>
-                    </mat-form-field>
+            <div class="row pt-32">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-32">Minor’s date of birth</h5>
                 </div>
-            </div>
-            <!-- <div class="col-md-4">
+                <div class="col-md-6 p-0">
+                    <p class="m-0 roboto">As per records</p>
+                    <div class="form-group mb-0">
+                        <mat-form-field class="ba-date">
+                            <input (click)="dobAsPerRecord.open()" [matDatepicker]="dobAsPerRecord" class="form-control br-0 b-0" formControlName="dobAsPerRecord" matInput readonly>
+                            <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord"></mat-datepicker-toggle>
+                            <mat-datepicker #dobAsPerRecord></mat-datepicker>
+                            <mat-hint>Optional</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- <div class="col-md-4">
           <p class="m-0 roboto">Actual</p>
           <div class="form-group mb-0">
               <mat-form-field class="ba-date">
@@ -305,58 +304,58 @@
               </mat-form-field>
           </div>
       </div> -->
-        </div>
+            </div>
 
-        <div class="row pt-60">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-8">Gender</h5>
-            </div>
-            <div class="col-md-7 p-0">
-                <mat-radio-group aria-label="Select an option" formControlName="gender" class="d-block">
-                    <mat-radio-button [ngClass]="{'bu-primary':minorForm.get('gender').value=='1'}" class="borderRadio" value="1">
-                        Male
-                    </mat-radio-button>
-                    <mat-radio-button [ngClass]="{'bu-primary':minorForm.get('gender').value=='2'}" class="borderRadio" value="2">
-                        Female
-                    </mat-radio-button>
-                    <mat-radio-button [ngClass]="{'bu-primary':minorForm.get('gender').value=='3'}" class="borderRadio" value="3">
-                        Other
-                    </mat-radio-button>
-                </mat-radio-group>
-            </div>
-        </div>
-
-        <div class="row pt-44">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-20">Guardian’s full name</h5>
-            </div>
-            <div class="col-md-5 p-0">
-                <div class="form-group mb-0">
-                    <mat-form-field floatLabel="never" appearance="standard">
-                        <input #gFullName matInput placeholder="Enter Name" appInputValueValidation [maxLength]="50" [inputValidator]="validatorType.PERSON_NAME" class="form-control" formControlName="gFullName">
-                        <mat-error>This field is required</mat-error>
-                        <mat-hint align="end" class="f-12">{{gFullName.value.length}}/50</mat-hint>
-                    </mat-form-field>
+            <div class="row pt-60">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-8">Gender</h5>
+                </div>
+                <div class="col-md-7 p-0">
+                    <mat-radio-group aria-label="Select an option" formControlName="gender" class="d-block">
+                        <mat-radio-button [ngClass]="{'bu-primary':minorForm.get('gender').value=='1'}" class="borderRadio" value="1">
+                            Male
+                        </mat-radio-button>
+                        <mat-radio-button [ngClass]="{'bu-primary':minorForm.get('gender').value=='2'}" class="borderRadio" value="2">
+                            Female
+                        </mat-radio-button>
+                        <mat-radio-button [ngClass]="{'bu-primary':minorForm.get('gender').value=='3'}" class="borderRadio" value="3">
+                            Other
+                        </mat-radio-button>
+                    </mat-radio-group>
                 </div>
             </div>
-        </div>
 
-        <div class="row pt-32">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-32">Guardian’s date of birth</h5>
-            </div>
-            <div class="col-md-6 p-0">
-                <p class="m-0 roboto">As per records</p>
-                <div class="form-group mb-0">
-                    <mat-form-field class="ba-date">
-                        <input (click)="gDobAsPerRecord.open()" [matDatepicker]="gDobAsPerRecord" [max]="maxDateForAdultDob" class="form-control br-0 b-0" formControlName="gDobAsPerRecord" matInput readonly>
-                        <mat-datepicker-toggle matSuffix [for]="gDobAsPerRecord"></mat-datepicker-toggle>
-                        <mat-datepicker #gDobAsPerRecord></mat-datepicker>
-                        <mat-hint>Optional</mat-hint>
-                    </mat-form-field>
+            <div class="row pt-44">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-20">Guardian’s full name</h5>
+                </div>
+                <div class="col-md-5 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field floatLabel="never" appearance="standard">
+                            <input #gFullName matInput placeholder="Enter Name" appInputValueValidation [maxLength]="50" [inputValidator]="validatorType.PERSON_NAME" class="form-control" formControlName="gFullName">
+                            <mat-error>This field is required</mat-error>
+                            <mat-hint align="end" class="f-12">{{gFullName.value.length}}/50</mat-hint>
+                        </mat-form-field>
+                    </div>
                 </div>
             </div>
-            <!-- <div class="col-md-4">
+
+            <div class="row pt-32">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-32">Guardian’s date of birth</h5>
+                </div>
+                <div class="col-md-6 p-0">
+                    <p class="m-0 roboto">As per records</p>
+                    <div class="form-group mb-0">
+                        <mat-form-field class="ba-date">
+                            <input (click)="gDobAsPerRecord.open()" [matDatepicker]="gDobAsPerRecord" [max]="maxDateForAdultDob" class="form-control br-0 b-0" formControlName="gDobAsPerRecord" matInput readonly>
+                            <mat-datepicker-toggle matSuffix [for]="gDobAsPerRecord"></mat-datepicker-toggle>
+                            <mat-datepicker #gDobAsPerRecord></mat-datepicker>
+                            <mat-hint>Optional</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- <div class="col-md-4">
           <p class="m-0 roboto">Actual</p>
           <div class="form-group mb-0">
               <mat-form-field class="ba-date">
@@ -368,81 +367,81 @@
               </mat-form-field>
           </div>
       </div> -->
-        </div>
-
-
-        <div class="row pt-60">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-8">Guardian’s gender</h5>
             </div>
-            <div class="col-md-7 p-0">
-                <mat-radio-group formControlName="gGender" aria-label="Select an option" class="d-block">
-                    <mat-radio-button value="1" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='1'}" class="borderRadio">Male
-                    </mat-radio-button>
-                    <mat-radio-button value="2" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='2'}" class="borderRadio">Female
-                    </mat-radio-button>
-                    <mat-radio-button value="3" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='3'}" class="borderRadio">Other
-                    </mat-radio-button>
-                </mat-radio-group>
-            </div>
-        </div>
 
 
-        <div class="row pt-44">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-20"> Relation with minor</h5>
-            </div>
-            <div class="col-md-3 p-0">
-                <div class="form-group mb-0">
-                    <mat-form-field floatLabel="never" appearance="standard">
-                        <mat-select formControlName="relationWithMinor" class="form-control">
-                            <mat-option value="6">Father</mat-option>
-                            <mat-option value="2">Mother</mat-option>
-                            <mat-option value="7">Court appointed</mat-option>
-                        </mat-select>
-                        <mat-hint>Optional</mat-hint>
-                    </mat-form-field>
+            <div class="row pt-60">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-8">Guardian’s gender</h5>
+                </div>
+                <div class="col-md-7 p-0">
+                    <mat-radio-group formControlName="gGender" aria-label="Select an option" class="d-block">
+                        <mat-radio-button value="1" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='1'}" class="borderRadio">Male
+                        </mat-radio-button>
+                        <mat-radio-button value="2" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='2'}" class="borderRadio">Female
+                        </mat-radio-button>
+                        <mat-radio-button value="3" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='3'}" class="borderRadio">Other
+                        </mat-radio-button>
+                    </mat-radio-group>
                 </div>
             </div>
-        </div>
 
-        <div class="row pt-44">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-20"> Email</h5>
-                <p class="m-0 f-12 text-custom">Guardian</p>
-            </div>
-            <div class="col-md-3 p-0">
-                <div class="form-group mb-0">
-                    <mat-form-field floatLabel="never" appearance="standard">
-                        <input matInput placeholder="Enter Name" formControlName="gEmail" class="form-control">
-                        <mat-hint>Optional</mat-hint>
-                        <mat-error *ngIf="minorForm.get('gEmail').errors?.pattern">Email invalid</mat-error>
-                    </mat-form-field>
+
+            <div class="row pt-44">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-20"> Relation with minor</h5>
+                </div>
+                <div class="col-md-3 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field floatLabel="never" appearance="standard">
+                            <mat-select formControlName="relationWithMinor" class="form-control">
+                                <mat-option value="6">Father</mat-option>
+                                <mat-option value="2">Mother</mat-option>
+                                <mat-option value="7">Court appointed</mat-option>
+                            </mat-select>
+                            <mat-hint>Optional</mat-hint>
+                        </mat-form-field>
+                    </div>
                 </div>
             </div>
-        </div>
-        <app-add-number [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag" (numberArray)="getNumberDetails($event)"></app-add-number>
-        <div class="row pt-44">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-20">PAN</h5>
-            </div>
-            <div class="col-md-3 p-0">
-                <div class="form-group mb-0">
-                    <mat-form-field floatLabel="never" appearance="standard">
-                        <input [maxLength]="10" placeholder="Enter PAN" (input)="toUpperCase($event)" formControlName="pan" #pan matInput class="form-control" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation>
-                        <mat-error *ngIf="minorForm.get('pan').errors?.pattern">Pan must be 10 digits</mat-error>
-                        <mat-hint>Optional</mat-hint>
-                        <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
-                    </mat-form-field>
+
+            <div class="row pt-44">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-20"> Email</h5>
+                    <p class="m-0 f-12 text-custom">Guardian</p>
+                </div>
+                <div class="col-md-3 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field floatLabel="never" appearance="standard">
+                            <input matInput placeholder="Enter Name" formControlName="gEmail" class="form-control">
+                            <mat-hint>Optional</mat-hint>
+                            <mat-error *ngIf="minorForm.get('gEmail').errors?.pattern">Email invalid</mat-error>
+                        </mat-form-field>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4 d-flex align-items-center">
-                <p class="m-0 d-flex roboto text-primary f-400 c-p">
-                    <i class="material-icons mr-4"> check_circle </i> KYC compliant</p>
+            <app-add-number [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag" (numberArray)="getNumberDetails($event)"></app-add-number>
+            <div class="row pt-44">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-20">PAN</h5>
+                </div>
+                <div class="col-md-3 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field floatLabel="never" appearance="standard">
+                            <input [maxLength]="10" placeholder="Enter PAN" (input)="toUpperCase($event)" formControlName="pan" #pan matInput class="form-control" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation>
+                            <mat-error *ngIf="minorForm.get('pan').errors?.pattern">Pan must be 10 digits</mat-error>
+                            <mat-hint>Optional</mat-hint>
+                            <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex align-items-center">
+                    <p class="m-0 d-flex roboto text-primary f-400 c-p">
+                        <i class="material-icons mr-4"> check_circle </i> KYC compliant</p>
+                </div>
             </div>
-        </div>
 
-        <!--
+            <!--
     <div class="row pt-44">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-12">Username</h5>
@@ -500,262 +499,263 @@
 
 -->
 
-    </div>
-</div>
-<div *ngIf="fieldFlag=='client' || fieldFlag=='lead'">
-    <div *ngIf="invTypeCategory=='2'" [formGroup]="nonIndividualForm" class="non-individualBox">
-        <div class="row pt-32">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-12">Company name</h5>
-            </div>
-            <div class="col-md-6 p-0">
-                <div class="form-group mb-0">
-                    <mat-form-field appearance="standard" floatLabel="never">
-                        <input #cname placeholder="Enter Company name" [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" appInputValueValidation class="form-control" formControlName="comName" matInput>
-                        <mat-hint align="end">{{cname.value.length}}/50</mat-hint>
-                        <mat-error>This field is required</mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
-
-        <div class="row pt-40">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-12">Date of incorporation</h5>
-            </div>
-            <div class="col-md-3 p-0">
-                <div class="form-group mb-0">
-                    <mat-form-field class="ba-date">
-                        <input (click)="picker.open()" [matDatepicker]="picker" class="form-control b-0" formControlName="dateOfIncorporation" matInput>
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                        <mat-hint>Optional</mat-hint>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="row pt-40">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-12">Company status</h5>
-            </div>
-            <div class="col-md-5 p-0">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select formControlName="comStatus" class="form-control">
-                            <mat-option value="0">Select option</mat-option>
-                            <mat-option value="1">Private limited</mat-option>
-                            <mat-option value="2">Public limited</mat-option>
-                            <mat-option value="3">Partnership/LLP</mat-option>
-                            <mat-option value="4">Trust</mat-option>
-                            <mat-option value="5">Society</mat-option>
-                            <mat-option value="6"> Association of persons</mat-option>
-                            <mat-option value="7">Hindu undivided family (HUF)</mat-option>
-                            <mat-option value="8"> Body of individuals</mat-option>
-                        </mat-select>
-                        <mat-error>This field is required</mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
-
-        <div class="row pt-40">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-12">Company email</h5>
-            </div>
-            <div class="col-md-5 p-0">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput formControlName="comEmail" class="form-control">
-                        <mat-error *ngIf="nonIndividualForm.get('comEmail').errors?.pattern">Email not valid</mat-error>
-                        <mat-hint>Optional</mat-hint>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
-
-        <app-add-number [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag" (numberArray)="getNumberDetails($event)"></app-add-number>
-
-        <div class="row pt-44">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-12">Company PAN</h5>
-            </div>
-            <div class="col-md-3 p-0">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation formControlName="comPan" (input)="toUpperCase($event)" #cpan maxlength="10" matInput class="form-control">
-                        <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.required">This Field is required
-                        </mat-error>
-                        <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.pattern">Pan must be 10 digits
-                        </mat-error>
-                        <mat-hint align="end">{{cpan.value.length}} / 10</mat-hint>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="col-md-4 d-flex align-items-center">
-                <p class="m-0 d-flex roboto text-primary f-400 c-p">
-                    <i class="material-icons mr-4"> check_circle </i> KYC compliant</p>
-            </div>
-        </div>
-
-
-        <div class="row pt-44">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-12">Company Occupation</h5>
-            </div>
-            <div class="col-md-5 p-0">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select formControlName="comOccupation" class="form-control">
-                            <mat-option value="1">Government</mat-option>
-                            <mat-option value="2">Service</mat-option>
-                            <mat-option value="3">Private sector</mat-option>
-                            <mat-option value="4">Business</mat-option>
-                        </mat-select>
-                        <mat-hint>Optional</mat-hint>
-                    </mat-form-field>
-                </div>
-            </div>
-
-        </div>
-
-
-        <div *ngIf="basicDetailsData.userId" class="row pt-44">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-12">Username</h5>
-                <p class="m-0 f-12 text-custom">This will be the login ID By <br> default.email is username
-                </p>
-            </div>
-            <div class="col-md-5 p-0">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput #username formControlName="username" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" class="form-control">
-                        <mat-hint align="end">{{username.value.length}}/ 50</mat-hint>
-                        <mat-error>This field is required</mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
-        <div *ngIf="fieldFlag=='lead'" class="row pt-44">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-12">Lead source</h5>
-            </div>
-            <div class="col-md-5 p-0">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input #leadSource [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation autocomplete="off" class="form-control" formControlName="leadSource" matInput>
-                        <mat-hint align="end">{{leadSource.value.length}}/ 50</mat-hint>
-                        <mat-hint>Optional</mat-hint>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
-
-        <div *ngIf="fieldFlag=='lead'" class="row pt-44">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-12">Lead status</h5>
-            </div>
-            <div class="col-md-5 p-0">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select formControlName="leaadStatus" class="form-control">
-                            <mat-option value="1">Select lead status</mat-option>
-                        </mat-select>
-                        <mat-hint>Optional</mat-hint>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
-        <div *ngIf="fieldFlag=='lead'" class="row pt-44">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-12">Lead rating</h5>
-            </div>
-            <div class="col-md-5 p-0">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select formControlName="leadRating" class="form-control">
-                            <mat-option value="0">Select lead rating</mat-option>
-                            <mat-option value="1">Cold</mat-option>
-                            <mat-option value="2">Hot</mat-option>
-                        </mat-select>
-                        <mat-hint>Optional</mat-hint>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
-        <div *ngIf="basicDetailsData.userId==null" class="row pt-44">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-12">Lead Owner</h5>
-                <p class="m-0 f-12 text-custom">Team member</p>
-            </div>
-            <div class="col-md-5 p-0">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select [(ngModel)]="selectedClientOwner" formControlName="leadOwner" class="form-control">
-                            <mat-option *ngIf="clientOwnerList==undefined" value="1">{{advisorData.name}}</mat-option>
-                            <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
-                                {{singleClient.name}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error>This field is required</mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="row pt-44 pb-60">
-            <div class="col-md-4 text-right">
-                <h5 class="m-0 pt-4">Role</h5>
-                <p class="m-0 f-12 text-custom">The selected role decides<br> what access the client has
-                </p>
-            </div>
-            <div class="col-md-5 p-0">
-                <div class="form-group m-0">
-                    <mat-form-field>
-                        <mat-select formControlName="role" class="form-control">
-                            <mat-option *ngIf="clientRoles==undefined" value="0">No roles found</mat-option>
-                            <mat-option *ngIf="clientRoles" value="0">Select roles</mat-option>
-                            <mat-option [value]="role.clientRoleId" *ngFor="let role of clientRoles">
-                                {{role.clientRoleName}}</mat-option>
-                        </mat-select>
-                        <mat-error>This field is required</mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
         </div>
     </div>
-</div>
+    <div *ngIf="fieldFlag=='client' || fieldFlag=='lead'">
+        <div *ngIf="invTypeCategory=='2'" [formGroup]="nonIndividualForm" class="non-individualBox">
+            <div class="row pt-32">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-12">Company name</h5>
+                </div>
+                <div class="col-md-6 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input #cname placeholder="Enter Company name" [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" appInputValueValidation class="form-control" formControlName="comName" matInput>
+                            <mat-hint align="end">{{cname.value.length}}/50</mat-hint>
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
 
-<div class="bottom-fixed wrapper-12 w-50 ">
-    <div class="row">
-        <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="close('close')">Cancel</h5>
+            <div class="row pt-40">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-12">Date of incorporation</h5>
+                </div>
+                <div class="col-md-3 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field class="ba-date">
+                            <input (click)="picker.open()" [matDatepicker]="picker" class="form-control b-0" formControlName="dateOfIncorporation" matInput>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-hint>Optional</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row pt-40">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-12">Company status</h5>
+                </div>
+                <div class="col-md-5 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <mat-select formControlName="comStatus" class="form-control">
+                                <mat-option value="0">Select option</mat-option>
+                                <mat-option value="1">Private limited</mat-option>
+                                <mat-option value="2">Public limited</mat-option>
+                                <mat-option value="3">Partnership/LLP</mat-option>
+                                <mat-option value="4">Trust</mat-option>
+                                <mat-option value="5">Society</mat-option>
+                                <mat-option value="6"> Association of persons</mat-option>
+                                <mat-option value="7">Hindu undivided family (HUF)</mat-option>
+                                <mat-option value="8"> Body of individuals</mat-option>
+                            </mat-select>
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row pt-40">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-12">Company email</h5>
+                </div>
+                <div class="col-md-5 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput formControlName="comEmail" class="form-control">
+                            <mat-error *ngIf="nonIndividualForm.get('comEmail').errors?.pattern">Email not valid
+                            </mat-error>
+                            <mat-hint>Optional</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <app-add-number [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag" (numberArray)="getNumberDetails($event)"></app-add-number>
+
+            <div class="row pt-44">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-12">Company PAN</h5>
+                </div>
+                <div class="col-md-3 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation formControlName="comPan" (input)="toUpperCase($event)" #cpan maxlength="10" matInput class="form-control">
+                            <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.required">This Field is required
+                            </mat-error>
+                            <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.pattern">Pan must be 10 digits
+                            </mat-error>
+                            <mat-hint align="end">{{cpan.value.length}} / 10</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex align-items-center">
+                    <p class="m-0 d-flex roboto text-primary f-400 c-p">
+                        <i class="material-icons mr-4"> check_circle </i> KYC compliant</p>
+                </div>
+            </div>
+
+
+            <div class="row pt-44">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-12">Company Occupation</h5>
+                </div>
+                <div class="col-md-5 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <mat-select formControlName="comOccupation" class="form-control">
+                                <mat-option value="1">Government</mat-option>
+                                <mat-option value="2">Service</mat-option>
+                                <mat-option value="3">Private sector</mat-option>
+                                <mat-option value="4">Business</mat-option>
+                            </mat-select>
+                            <mat-hint>Optional</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div *ngIf="basicDetailsData.userId" class="row pt-44">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-12">Username</h5>
+                    <p class="m-0 f-12 text-custom">This will be the login ID By <br> default.email is username
+                    </p>
+                </div>
+                <div class="col-md-5 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput #username formControlName="username" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" class="form-control">
+                            <mat-hint align="end">{{username.value.length}}/ 50</mat-hint>
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="fieldFlag=='lead'" class="row pt-44">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-12">Lead source</h5>
+                </div>
+                <div class="col-md-5 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input #leadSource [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation autocomplete="off" class="form-control" formControlName="leadSource" matInput>
+                            <mat-hint align="end">{{leadSource.value.length}}/ 50</mat-hint>
+                            <mat-hint>Optional</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="fieldFlag=='lead'" class="row pt-44">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-12">Lead status</h5>
+                </div>
+                <div class="col-md-5 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <mat-select formControlName="leaadStatus" class="form-control">
+                                <mat-option value="1">Select lead status</mat-option>
+                            </mat-select>
+                            <mat-hint>Optional</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="fieldFlag=='lead'" class="row pt-44">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-12">Lead rating</h5>
+                </div>
+                <div class="col-md-5 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <mat-select formControlName="leadRating" class="form-control">
+                                <mat-option value="0">Select lead rating</mat-option>
+                                <mat-option value="1">Cold</mat-option>
+                                <mat-option value="2">Hot</mat-option>
+                            </mat-select>
+                            <mat-hint>Optional</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="basicDetailsData.userId==null" class="row pt-44">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-12">Client Owner</h5>
+                    <p class="m-0 f-12 text-custom">Team member</p>
+                </div>
+                <div class="col-md-5 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <mat-select [(ngModel)]="selectedClientOwner" formControlName="leadOwner" class="form-control">
+                                <mat-option *ngIf="clientOwnerList==undefined">{{advisorData.name}}</mat-option>
+                                <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
+                                    {{singleClient.name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row pt-44 pb-60">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-4">Role</h5>
+                    <p class="m-0 f-12 text-custom">The selected role decides<br> what access the client has
+                    </p>
+                </div>
+                <div class="col-md-5 p-0">
+                    <div class="form-group m-0">
+                        <mat-form-field>
+                            <mat-select formControlName="role" class="form-control">
+                                <mat-option *ngIf="clientRoles==undefined" value="0">No roles found</mat-option>
+                                <mat-option *ngIf="clientRoles" value="0">Select roles</mat-option>
+                                <mat-option [value]="role.clientRoleId" *ngFor="let role of clientRoles">
+                                    {{role.clientRoleName}}</mat-option>
+                            </mat-select>
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div *ngIf="fieldFlag=='client' || fieldFlag=='lead'" class="col-md-8 right text-right">
+    </div>
 
-            <!-- <button mat-raised-button (click)="saveNextClient('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
+    <div class="bottom-fixed wrapper-12 w-50 ">
+        <div class="row">
+            <div class="col-md-4">
+                <h5 class="mb-0 pt-8 text-white c-p" (click)="close('close')">Cancel</h5>
+            </div>
+            <div *ngIf="fieldFlag=='client' || fieldFlag=='lead'" class="col-md-8 right text-right">
+
+                <!-- <button mat-raised-button (click)="saveNextClient('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
       </button> -->
-            <!-- ================= ERROR ======================= -->
-            <!-- options not defined in ts and causing error on loading ui -->
-            <!--  -->
-            <!-- ================= ERROR ======================= -->
+                <!-- ================= ERROR ======================= -->
+                <!-- options not defined in ts and causing error on loading ui -->
+                <!--  -->
+                <!-- ================= ERROR ======================= -->
 
-            <app-progress-button (btnClick)="saveNextClient('Next')" class="br-0 text-inherit mr-12" [options]="barButtonOptions">
-            </app-progress-button>
-            <!-- <button mat-stroked-button (click)="saveNextClient('close')" class="btn-bottom br-0 text-inherit">SAVE &
+                <app-progress-button (btnClick)="saveNextClient('Next')" class="br-0 text-inherit mr-12" [options]="barButtonOptions">
+                </app-progress-button>
+                <!-- <button mat-stroked-button (click)="saveNextClient('close')" class="btn-bottom br-0 text-inherit">SAVE &
           CLOSE
       </button> -->
-        </div>
-        <div *ngIf="fieldFlag=='familyMember'" class="col-md-8 right text-right">
-            <!-- <button mat-raised-button (click)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
+            </div>
+            <div *ngIf="fieldFlag=='familyMember'" class="col-md-8 right text-right">
+                <!-- <button mat-raised-button (click)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
       </button> -->
-            <app-progress-button (btnClick)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12" [options]="barButtonOptions">
-            </app-progress-button>
-            <!-- <button mat-stroked-button (click)="saveNextFamilyMember('close')" class="btn-bottom br-0 text-inherit">SAVE
+                <app-progress-button (btnClick)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12" [options]="barButtonOptions">
+                </app-progress-button>
+                <!-- <button mat-stroked-button (click)="saveNextFamilyMember('close')" class="btn-bottom br-0 text-inherit">SAVE
           & CLOSE
       </button> -->
+            </div>
         </div>
     </div>
-</div>
