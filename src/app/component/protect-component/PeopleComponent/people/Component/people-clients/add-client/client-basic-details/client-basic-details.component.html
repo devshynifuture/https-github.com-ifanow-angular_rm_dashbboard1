@@ -169,7 +169,7 @@
         <div class="form-group m-0">
           <mat-form-field>
             <mat-select [(ngModel)]="selectedClientOwner" class="form-control" formControlName="clientOwner">
-              <mat-option value="1">Select option</mat-option>
+              <mat-option *ngIf="clientOwnerList==undefined" value="1">{{advisorData.name}}</mat-option>
               <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
                 {{singleClient.name}}
               </mat-option>
@@ -238,6 +238,7 @@
         <div class="form-group mb-0">
           <mat-form-field>
             <mat-select [(ngModel)]="selectedClientOwner" formControlName="leadOwner" class="form-control">
+              <mat-option *ngIf="clientOwnerList==undefined" value="1">{{advisorData.name}}</mat-option>
               <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
                 {{singleClient.name}}
               </mat-option>
@@ -563,7 +564,15 @@
         <div class="form-group mb-0">
           <mat-form-field>
             <mat-select formControlName="comStatus" class="form-control">
-              <mat-option value="option">Option</mat-option>
+              <mat-option value="0">Select option</mat-option>
+              <mat-option value="1">Private limited</mat-option>
+              <mat-option value="2">Public limited</mat-option>
+              <mat-option value="3">Partnership/LLP</mat-option>
+              <mat-option value="4">Trust</mat-option>
+              <mat-option value="5">Society</mat-option>
+              <mat-option value="6"> Association of persons</mat-option>
+              <mat-option value="7">Hindu undivided family (HUF)</mat-option>
+              <mat-option value="8"> Body of individuals</mat-option>
             </mat-select>
             <mat-error>This field is required</mat-error>
           </mat-form-field>
@@ -623,7 +632,7 @@
               <mat-option value="1">Goverment</mat-option>
               <mat-option value="2">Service</mat-option>
               <mat-option value="3">Private sector</mat-option>
-              <mat-option value="4">Buisness</mat-option>
+              <mat-option value="4">business</mat-option>
             </mat-select>
             <mat-hint>Optional</mat-hint>
           </mat-form-field>
@@ -705,7 +714,7 @@
         <div class="form-group mb-0">
           <mat-form-field>
             <mat-select [(ngModel)]="selectedClientOwner" formControlName="leadOwner" class="form-control">
-              <mat-option value="0">Select option</mat-option>
+              <mat-option *ngIf="clientOwnerList==undefined" value="1">{{advisorData.name}}</mat-option>
               <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
                 {{singleClient.name}}
               </mat-option>
