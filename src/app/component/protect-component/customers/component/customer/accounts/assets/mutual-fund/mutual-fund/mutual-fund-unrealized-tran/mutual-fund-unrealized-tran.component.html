@@ -460,14 +460,20 @@
       <td colspan="10" style="color: #212121;text-align: left; padding: 12px 8px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0; ">{{item.schemeName}}</td>
       <td colspan="3" style="border-right: 1px solid #DADCE0;">Current NAV:{{item.nav}}</td>
     </tr> -->
-    <div style="width: 100%;" *ngIf="item.schemeName || item.nav">
+   <!--  <div style="width: 100%;" *ngIf="item.schemeName || item.nav">
       <div style="width: 66%;float:left;text-align: center;color: #008FFF;text-align: center;  padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left:1px solid  #DADCE0;font-family: Roboto,sans-serif;">
         {{item.schemeName}}
       </div>
       <div style="width: 28%;float: right; border-right:1px solid  #DADCE0;border-left:1px solid  #DADCE0;padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;padding-left: 20px;font-family: Roboto,sans-serif;">
         Current NAV:{{item.nav}}
       </div>
-      </div>
+      </div> -->
+      <table style="width: 100%;border-bottom: 1px solid #DADCE0;border-collapse: collapse;font-family: Roboto,sans-serif;" *ngIf="item.schemeName || item.nav">
+    <tr>
+    <td colspan="6" style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;" class="f-700">{{item.schemeName}}</td>
+    <td colspan="5" style="padding: 7px 8px;border-right: 1px solid #DADCE0;font-size: 13px !important;line-height: 16px !important;color: #202020;" class="f-700">Current NAV:{{item.nav}}</td>
+      </tr>
+</table>
       <div style="width: 99.85%;text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;" *ngIf="item.name || item.pan || item.folio">
         {{item.groupName}}(PAN:{{item.pan}})|{{item.folio}}
         </div>
