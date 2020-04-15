@@ -21,6 +21,7 @@
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                                 <input matInput formControlName="companyName" class="form-control" placeholder="Example Inc.">
+                                <mat-hint align="end" class="f-12">{{orgProfile.get('companyName').value.length}}/50</mat-hint>
                                 <mat-error class="f-12 pt-4">
                                     This field is required
                                 </mat-error>
@@ -50,6 +51,7 @@
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                                 <input matInput formControlName="mobileNo" class="form-control" placeholder="Enter mobile no">
+                                <mat-hint align="end" class="f-12">{{orgProfile.get('mobileNo').value.length}}/10</mat-hint>
                                 <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('mobileNo').errors?.required">This field is required</mat-error>
                                 <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('mobileNo').errors?.pattern || orgProfile.get('mobileNo').errors?.minlength || orgProfile.get('mobileNo').errors?.maxlength">
                                     Please enter valid mobile number</mat-error>
@@ -131,8 +133,7 @@
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                                 <input (focusout)="getPostalPin($event.target.value)" class="form-control br-0 text-left" formControlName="pincode" matInput type="text" placeholder="Enter pin code">
-                                <mat-hint align="end" class="f-12">{{orgProfile.get('pincode').value.length}}/6
-                                </mat-hint>
+                                <mat-hint align="end" class="f-12">{{orgProfile.get('pincode').value.length}}/6</mat-hint>
                                 <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('pincode').errors?.required">This field is required</mat-error>
                                 <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('pincode').errors?.pattern || orgProfile.get('pincode').errors?.minlength || orgProfile.get('pincode').errors?.maxlength">
                                     Please enter valid pincode number</mat-error>

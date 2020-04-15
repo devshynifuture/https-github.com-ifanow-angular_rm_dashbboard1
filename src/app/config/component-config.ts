@@ -402,7 +402,7 @@ export const appConfig = {
   GIVE_ADVICE_ON_REAL_ESTATE: 'advice/asset/real-estate/advice/post',
   ////////////////////////////////////OnlineTransaction///////////////////////////////////////
   ADD_BSE_CREDENTIALS: 'user/save',
-  GET_BSE_CREDENTIALS: '/user/view',
+  GET_BSE_CREDENTIALS: 'user/view',
   GET_BSE_SUB_BROKER_CREDENTIALS: '/user/sub-broker/view',
   GET_NEW_SCHEMES: 'mutual-fund/search',
   GET_EXISTING_SCHEMES: 'mutual-fund/existing/search',
@@ -468,7 +468,7 @@ export const appConfig = {
   BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ: 'backoffice/get/unmapped/njschemes',
   BACKOFFICE_GET_UNMAPPED_SCHEMES_PRUDENT: 'backoffice/get/unmapped/prudentschemes',
   BACKOFFICE_GET_FILTERED_SCHEMES: 'backoffice/get/filtered/shemes',
-  BACKOFFICE_ADV_GET_BROKER_LIST: 'backoffice/broker/list/get',
+  BACKOFFICE_ADV_GET_BROKER_LIST: 'setting/arn-ria/list/get',
   BACKOFFICE_GET_RT_LIST: 'backoffice/rt/list/get',
   BACKOFFICE_GET_AUM_RECON_HISTORY_LIST: 'backoffice/aum/recon/history/get',
   BACKOFFICE_GET_AUM_ORDER_LIST: 'backoffice/aum/file/order/list/get',
@@ -499,10 +499,15 @@ export const appConfig = {
   BACKOFFICE_SIP_STP: 'backoffice/file-upload/uploaded/sip/list/get',
   BACKOFFICE_FOLIO: 'backoffice/file-upload/uploaded/folio-master/list/get',
   BACKOFFICE_SUCCESS_FILE_UPLOAD: 'backoffice/file-upload/success',
+
   GET_DAILY_SERVICES_STATUS_REPORT: 'rmdashboard/dashboard/daily/services/status/get',
   GET_DAILY_FILES: 'rmdashboard/dashboard/daily-file/get',
   FILTER_HISTORICAL_REPORT: 'rmdashboard/dashboard/historic/files/filter/get',
   GET_IFA_MATRIC_DATA: 'rmdashboard/dashboard/ifas/metric/get',
+  GET_MY_IFA_DETAILS: 'rmdashboard/myifas/dashboard/details/get',
+  GET_ONBOARDING_TASK_GLOBAL: 'rmdashboard/ifa/onboarding/task/global/get',
+  POST_HISTORICAL_FILE_ORDER: 'fileorder/historical/order',
+  GET_FILE_TYPE_ORDER: 'fileorder/file-type/list/get',
 
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',

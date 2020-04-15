@@ -59,7 +59,7 @@ export class CompanyMoreInfoComponent implements OnInit {
     (data == undefined) ? data = {} : data;
     this.moreInfoForm = this.fb.group({
       displayName: [data.displayName],
-      adhaarNo: [data.aadhaarNumber],
+      adhaarNo: [data.aadhaarNumber, [this.validatorType.ADHAAR]],
       maritalStatus: [(data.martialStatusId) ? String(data.martialStatusId) : '1'],
       dateOfBirth: [new Date(data.dateOfBirth)],
       bio: [data.bio],
@@ -98,8 +98,8 @@ export class CompanyMoreInfoComponent implements OnInit {
         }
         console.log(responseData);
       }, err => {
-      console.error(err)
-    }
+        console.error(err)
+      }
     );
   }
 

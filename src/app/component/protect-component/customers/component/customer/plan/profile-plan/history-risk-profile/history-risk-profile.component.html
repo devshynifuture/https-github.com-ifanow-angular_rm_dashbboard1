@@ -19,7 +19,7 @@
         <ng-container matColumnDef="position">
           <th mat-header-cell *matHeaderCellDef> Date </th>
           <td mat-cell *matCellDef="let element"> 
-            <div class="bar">{{isLoading ? '' : element.riskAssessmentDate}} </div></td>
+            <div class="bar">{{isLoading ? '' : element.riskAssessmentDate  | date:'dd/MM/yyyy'}} </div></td>
         </ng-container>
       
         <ng-container matColumnDef="name">

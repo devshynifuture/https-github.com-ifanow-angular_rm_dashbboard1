@@ -15,13 +15,13 @@
                 </div>
                 <div class="col-md-2">
                     <!-- <button mat-stroked-button class="btn-default br-0 help-btn">ARN-83865</button> -->
-                    <mat-select class="b-a" formControlName="selectBrokerId" placeholder="Select broker"
-                        (selectionChange)="getAumReconHistoryData($event)">
-                        <mat-option value="">
+                    <mat-select class="b-a" formControlName="selectBrokerId" placeholder="Select broker">
+                        <mat-option>
                             Select Option
                         </mat-option>
-                        <mat-option *ngFor="let broker of brokerList" [value]="broker.id">
-                            {{ broker.brokerCode }}
+                        <mat-option *ngFor="let broker of brokerList" [value]="broker.id"
+                                    (click)="getAumReconHistoryData(null)">
+                          {{ broker.brokerCode }}
                         </mat-option>
                     </mat-select>
                 </div>
