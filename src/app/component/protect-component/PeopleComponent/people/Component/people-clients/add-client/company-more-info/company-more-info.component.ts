@@ -68,7 +68,7 @@ export class CompanyMoreInfoComponent implements OnInit {
       email: [data.email, [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
       designation: [(data.occupationId) ? String(data.occupationId) : '1'],
-      gender: ['1'],
+      gender: [(data.genderId) ? data.genderId : '1'],
     });
   }
 
