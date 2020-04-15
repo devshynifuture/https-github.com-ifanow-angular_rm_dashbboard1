@@ -12,7 +12,7 @@
     </div>
 </div>
 
-<div class="row pt-40 pb-20" id="ui-setting-profile" *ngIf="orgProfile == false">
+<div class="row pt-40 pb-20" id="ui-setting-profile" *ngIf="userList && !isLoading">
     <div class="col-xl-1"></div>
     <div class="col-xl-10">
         <mat-card class="b-a p-0 br-4">
@@ -69,13 +69,13 @@
 </div>
 
 <!-- Organization profile -->
-<div class="row pt-28" *ngIf="orgProfile == true">
+<div class="row pt-28" *ngIf="orgDetails && !isLoading && orgProfile">
     <div class="col-md-12">
         <h4 class="m-0">Organization profile</h4>
     </div>
 </div>
 
-<div class="row pt-40 pb-20" id="ui-setting-profile" *ngIf="orgProfile == true">
+<div class="row pt-40 pb-20" id="ui-setting-profile" *ngIf="orgDetails && !isLoading">
     <div class="col-xl-1"></div>
     <div class="col-xl-10">
         <mat-card class="b-a p-0 br-4">
@@ -181,12 +181,7 @@
     </div>
     <div class="col-xl-1"></div>
 </div>
-
-<div *ngIf="orgDetails == undefined && orgProfile == true" class="d-flex flex-column align-items-center">
+<div *ngIf="orgDetails == undefined && !isLoading" class="d-flex flex-column align-items-center">
     <img class="width300" src="assets/images/svg/noDataFound.svg">
-    <h4 class="text-center pt-12">No organization profile found</h4>
-</div>
-<div *ngIf="userList == undefined && orgProfile == false" class="d-flex flex-column align-items-center">
-    <img class="width300" src="assets/images/svg/noDataFound.svg">
-    <h4 class="text-center pt-12">No personal profile found</h4>
+    <h4 class="text-center pt-12">No {{orgProfile ? 'organization' : 'personal'}} profile found</h4>
 </div>
