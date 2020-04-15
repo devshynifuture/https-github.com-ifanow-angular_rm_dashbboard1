@@ -124,15 +124,22 @@ export class OrgProfileComponent implements OnInit {
   subscribeToGSTTypeValueChange() {
     this.subscription.add(
       this.orgProfile.controls.gstTreatment.valueChanges.subscribe(value => {
-        if(value == 4) {
-          this.orgProfile.controls.gstNumber.setValidators([Validators.required, Validators.maxLength(15), Validators.minLength(15)]);
-        } else {
-          this.orgProfile.controls.gstNumber.setValue('');
-          this.orgProfile.controls.gstNumber.clearValidators();
-        }
-        this.orgProfile.updateValueAndValidity();
+        // for some weird reason validation is not happening the first time hence kept it twice
+        this.doSomething(value);
+        this.doSomething(value);
       })
     )
+  }
+
+  doSomething(value){
+    if(value == 4) {
+      this.orgProfile.get('gstNumber').setValidators([Validators.required, Validators.maxLength(15), Validators.minLength(15)]);
+    } else {
+      this.orgProfile.get('gstNumber').setValue('');
+      this.orgProfile.get('gstNumber').clearValidators();
+    }
+    this.orgProfile.updateValueAndValidity();
+
   }
 
   getFormControl(): any {
@@ -146,16 +153,16 @@ export class OrgProfileComponent implements OnInit {
     }
     let obj = {
       advisorId:this.advisorId,
-      companyName: this.orgProfile.controls.companyName.value,
-      email:this.orgProfile.controls.emailId.value ,
-      mobileNumber: this.orgProfile.controls.mobileNo.value,
-      website:this.orgProfile.controls.website.value ,
-      billerAddress:this.orgProfile.controls.address.value ,
-      city: this.orgProfile.controls.city.value,
-      state:this.orgProfile.controls.state.value ,
-      zipCode:this.orgProfile.controls.pincode.value ,
-      gstTreatmentId:this.orgProfile.controls.gstTreatment.value ,
-      gstin: this.orgProfile.controls.gstNumber.value,
+      companyName: this.orgProfile.controls.companyName.value || '',
+      email:this.orgProfile.controls.emailId.value || '',
+      mobileNumber: this.orgProfile.controls.mobileNo.value || '',
+      website:this.orgProfile.controls.website.value || '',
+      billerAddress:this.orgProfile.controls.address.value || '',
+      city: this.orgProfile.controls.city.value || '',
+      state:this.orgProfile.controls.state.value || '',
+      zipCode:this.orgProfile.controls.pincode.value || '',
+      gstTreatmentId:this.orgProfile.controls.gstTreatment.value || '',
+      gstin: this.orgProfile.controls.gstNumber.value || '',
     }
     this.settingsService.editOrgProfile(obj).subscribe(
       data => {
