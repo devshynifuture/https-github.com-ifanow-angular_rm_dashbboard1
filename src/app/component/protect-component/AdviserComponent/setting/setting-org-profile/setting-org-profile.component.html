@@ -2,8 +2,8 @@
     <div class="col-md-12 text-right">
         <button mat-button [ngClass]="orgProfile == false ? 'active-btn'  : ''" (click)="openOrg(false)">
             Personal profile</button>
-        <button mat-button [ngClass]="orgProfile == true ? 'active-btn'  : ''" (click)="openOrg(true)">Organization
-            profile</button>
+        <button mat-button [ngClass]="orgProfile == true ? 'active-btn'  : ''" (click)="openOrg(true)">
+            Organization profile</button>
     </div>
 </div>
 <div class="row pt-28" *ngIf="orgProfile == false">
@@ -181,6 +181,7 @@
     </div>
     <div class="col-xl-1"></div>
 </div>
+
 <div *ngIf="orgDetails == undefined && orgProfile == true" class="d-flex flex-column align-items-center">
     <img class="width300" src="assets/images/svg/noDataFound.svg">
     <h4 class="text-center pt-12">No organization profile found</h4>
