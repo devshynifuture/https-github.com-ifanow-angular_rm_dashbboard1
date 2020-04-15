@@ -123,14 +123,13 @@
                          *ngIf="_data.name!='SUMMARY REPORT'">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <h5 class="m-0">Transaction Period<span class="text-right f-14 pl-12">{{countCategory}} of {{category.length}}
-            selected</span></h5>
+          <h5 class="m-0">Transaction Period</h5>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div>
         <mat-list-item role="listitem">
           <mat-checkbox [(ngModel)]="transactionPeriodCheck" (change)="changeFilterPeriod(transactionPeriodCheck)">
-          </mat-checkbox>
+          </mat-checkbox>Show transaction period?
         </mat-list-item>
       </div>
     </mat-expansion-panel>

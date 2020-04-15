@@ -23,16 +23,17 @@ export class MutualFundSummaryComponent implements OnInit {
   displayedColumns: string[] = ['schemeName', 'amountInvested', 'currentValue', 'unrealizedProfit', 'absoluteReturn',
     'xirr', 'dividendPayout', 'switchOut', 'balanceUnit', 'navDate', 'sipAmount', 'icons'];
   mfData: any;
+  grandTotal: any = {};
   // subCategoryData: any[];
   // schemeWise: any[];
   mutualFundList: any[];
+  rightFilterData : any = { reportType : ''};
   totalObj: any;
   customDataSource = new MatTableDataSource([{}, {}, {}]);
   catObj: {};
   isLoading = false; // added for prod build
   // schemeWiseForFilter: any[];
   // mutualFundListFilter: any[];
-  rightFilterData: any;
   @ViewChild('tableEl', {static: false}) tableEl;
 
 
@@ -45,7 +46,7 @@ export class MutualFundSummaryComponent implements OnInit {
   @ViewChild('summaryTemplate', {static: false}) summaryTemplate: ElementRef;
 
   ngOnInit() {
-    if (this.mutualFund.mutualFundList) {
+    if (this.mutualFund.mutualFundList.length>0) {
       this.isLoading=true;
       this.mutualFundList = this.mutualFund.mutualFundList;
       // this.getSubCategoryWise(this.mutualFund); // get subCategoryWise list
@@ -54,22 +55,31 @@ export class MutualFundSummaryComponent implements OnInit {
       // for displaying table values as per category
       // this.customDataSource.data = this.subCatArrayForSummary(this.mutualFund.mutualFundList, '', this.mfService);
       // this.getDataForRightFilter();
-      const input = {
-        mutualFundList: this.mutualFundList,
-        type: '',
+      // const input = {
+      //   mutualFundList: this.mutualFundList,
+      //   type: '',
         // mfService: this.mfService
-      };
-      this.asyncFilter(input);
+      // };
+      this.asyncFilter(this.mutualFundList);
+    }else{
+      this.isLoading=false;
+      this.customDataSource.data=[];
     }
   }
 
-  asyncFilter(input) {
+  asyncFilter(mutualFund) {
     if (typeof Worker !== 'undefined') {
       console.log(`13091830918239182390183091830912830918310938109381093809328`);
+      const input = {
+        mutualFundList: mutualFund,
+        type:(this.rightFilterData.reportType)?this.rightFilterData.reportType:'',
+        // mfService: this.mfService
+      };
       // Create a new
       const worker = new Worker('../../mutual-fund.worker.ts', {type: 'module'});
       worker.onmessage = ({data}) => {
         this.isLoading=false;
+        this.grandTotal = data.totalValue;
         this.customDataSource.data = data.customDataSourceData;
         console.log(`MUTUALFUNDSummary COMPONENT page got message:`, data);
       };
@@ -150,8 +160,8 @@ export class MutualFundSummaryComponent implements OnInit {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           if (sideBarData.data) {
             this.rightFilterData = sideBarData.data;
-            this.customDataSource.data = this.subCatArrayForSummary(this.rightFilterData.mutualFundList,
-              this.rightFilterData.reportType, this.mfService);
+            this.asyncFilter(this.rightFilterData.mutualFundList);
+
           }
           rightSideDataSub.unsubscribe();
         }

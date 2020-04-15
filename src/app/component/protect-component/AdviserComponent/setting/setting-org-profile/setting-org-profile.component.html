@@ -6,13 +6,13 @@
             profile</button>
     </div>
 </div>
-<div class="row pt-28" *ngIf="orgProfile == false">
+<div class="row pt-28" *ngIf="!orgProfile">
     <div class="col-md-12">
         <h4 class="m-0">Personal profile</h4>
     </div>
 </div>
 
-<div class="row pt-40 pb-20" id="ui-setting-profile" *ngIf="userList && !isLoading">
+<div class="row pt-40 pb-20" id="ui-setting-profile" *ngIf="userList && !isLoading && !orgProfile">
     <div class="col-xl-1"></div>
     <div class="col-xl-10">
         <mat-card class="b-a p-0 br-4">
@@ -75,7 +75,7 @@
     </div>
 </div>
 
-<div class="row pt-40 pb-20" id="ui-setting-profile" *ngIf="orgDetails && !isLoading">
+<div class="row pt-40 pb-20" id="ui-setting-profile" *ngIf="orgDetails && !isLoading && orgProfile">
     <div class="col-xl-1"></div>
     <div class="col-xl-10">
         <mat-card class="b-a p-0 br-4">
