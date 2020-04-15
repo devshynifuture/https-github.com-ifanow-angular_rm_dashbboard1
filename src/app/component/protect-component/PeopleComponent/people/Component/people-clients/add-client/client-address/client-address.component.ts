@@ -77,11 +77,11 @@ export class ClientAddressComponent implements OnInit {
     });
   }
   changeAddrProofNumber(data) {
-    console.log(data);
-    switch (true) {
-      case (data.value == '2'):
-        this.addressForm.get('proofIdNum').setValue(this.userData.aadhaarNumber)
-        break;
+    if (data.value == '2') {
+      this.addressForm.get('proofIdNum').setValue(this.userData.aadhaarNumber);
+    }
+    else {
+      this.addressForm.get('proofIdNum').setValue('');
     }
   }
   getPostalPin(value) {
