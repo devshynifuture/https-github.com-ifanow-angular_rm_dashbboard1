@@ -69,7 +69,7 @@
 
     <div class="row">
         <div [ngClass]="isLoading ? '': 'table-scroll'" class="col-md-12 p-0 mb-8">
-            <table #tableEl matSort mat-table [dataSource]="customDataSource" id="tbs" class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <table #tableEl matSort mat-table [dataSource]="customDataSource" id="tbs" class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="customDataSource.data.length>0">
 
                 <ng-container matColumnDef="schemeName" sticky>
                     <th class="br" mat-sort-header="schemeName" mat-header-cell *matHeaderCellDef> Scheme name </th>

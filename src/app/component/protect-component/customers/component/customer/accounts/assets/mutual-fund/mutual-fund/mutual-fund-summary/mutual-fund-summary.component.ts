@@ -45,7 +45,7 @@ export class MutualFundSummaryComponent implements OnInit {
   @ViewChild('summaryTemplate', {static: false}) summaryTemplate: ElementRef;
 
   ngOnInit() {
-    if (this.mutualFund.mutualFundList) {
+    if (this.mutualFund.mutualFundList.length>0) {
       this.isLoading=true;
       this.mutualFundList = this.mutualFund.mutualFundList;
       // this.getSubCategoryWise(this.mutualFund); // get subCategoryWise list
@@ -60,6 +60,9 @@ export class MutualFundSummaryComponent implements OnInit {
         // mfService: this.mfService
       };
       this.asyncFilter(input);
+    }else{
+      this.isLoading=false;
+      this.customDataSource.data=[];
     }
   }
 

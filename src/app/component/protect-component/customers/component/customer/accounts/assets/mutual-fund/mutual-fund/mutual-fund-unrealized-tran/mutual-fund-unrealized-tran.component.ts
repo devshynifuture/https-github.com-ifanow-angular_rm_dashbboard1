@@ -25,7 +25,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   grandTotal: any = {};
   schemeWiseForFilter: any;
   mutualFundListFilter: any[];
-  rightFilterData: any;
+  rightFilterData : any = { reportType : ''};
   customDataSource = new TableVirtualScrollDataSource([{},{},{}]);
   @ViewChild('tableEl', {static: false}) tableEl;
 
@@ -59,8 +59,14 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
     }
     if (changes.mutualFund && !!changes.mutualFund.currentValue) {
-      this.mutualFundList = this.mutualFund.mutualFundList;
-      this.asyncFilter(this.mutualFundList);
+      if(this.mutualFund.mutualFundList.length>0){
+        this.mutualFundList = this.mutualFund.mutualFundList;
+        this.asyncFilter(this.mutualFundList);
+      }else{
+        this.dataSource.data=[];
+        this.customDataSource.data=[];
+      }
+     
     }
   }
 
@@ -69,7 +75,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       console.log(`13091830918239182390183091830912830918310938109381093809328`);
       const input = {
         mutualFundList: mutualFund,
-        type: '',
+        type:(this.rightFilterData.reportType)?this.rightFilterData.reportType:'',
         // mfService: this.mfService
       };
       // Create a new
