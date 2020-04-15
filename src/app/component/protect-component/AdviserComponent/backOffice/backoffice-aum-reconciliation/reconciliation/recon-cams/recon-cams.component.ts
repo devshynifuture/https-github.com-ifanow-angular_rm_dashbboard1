@@ -49,13 +49,12 @@ export class ReconCamsComponent implements OnInit {
       });
   }
 
-  getAumReconHistoryData(event) {
+  getAumReconHistoryData() {
     // check whether selectedBrokerid is selected 
 
     // make separate function for toggling the same
     if (this.selectBrokerForm.get('selectBrokerId').value) {
       this.isLoading = true;
-      console.log(event);
       const data = {
         advisorId: this.advisorId,
         brokerId: this.selectBrokerForm.get('selectBrokerId').value,
