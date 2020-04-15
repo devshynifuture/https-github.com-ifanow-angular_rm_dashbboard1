@@ -125,27 +125,12 @@ export class OrgSettingServiceService {
   resetGallery(data){
     return this.http.put(apiConfig.MAIN_URL + appConfig.RESET_GALLARY, data);
   }
-  alterTable(table: (UpperTableBox | Group)[], field: string, value: string, index: number): (UpperTableBox | Group)[] {
-    table[index][field]['value'] = value;
 
-    console.log('value field index', value, field, index);
-    console.log('table :', table);
-    console.log('table index: ', table[index]);
-    console.log('table index field', table[index][field])
-    console.log('table index field value', table[index][field]['value']);
-
-    table[index][field]['isAdHocChangesDone'] = true;
-    this.updateTotal(table[index]);
-    return table;
+  getAppearancePreference(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_APPEARANCE_SETTING, data);
   }
 
-  updateTotal(object: UpperTableBox | Group) {
-    // let sum = 0;
-    // for (let i = 1; i <= 12; i++) {
-    //     if (object[`month${i}`].value !== '') {
-    //         sum = sum + parseInt(object[`month${i}`].value);
-    //     }
-    // }
-    // object['total'] = String(sum);
+  updateAppearancePreferance(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_APPEARANCE_SETTING, data);
   }
 }

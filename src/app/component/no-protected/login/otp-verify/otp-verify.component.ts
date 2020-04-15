@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, EventEmitter, Output, Input } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-otp-verify',
@@ -8,18 +8,11 @@ import { Component, OnInit, ViewChild, EventEmitter, Output, Input } from '@angu
 export class OtpVerifyComponent implements OnInit {
   otp: any;
   @Output() otpDataEvent = new EventEmitter();
-  @Input() set otpData(data) {
-    if (data.length == 0 && this.ngOtpInput.otpForm) {
-      console.log(this.ngOtpInput.otpForm.reset())
-    }
-  }
-  constructor() { }
-  ngOnInit() {
-  }
-  @ViewChild('ngOtpInput', { static: true }) ngOtpInput: any;
+
+  @ViewChild('ngOtpInput', {static: true}) ngOtpInput: any;
   config = {
     allowNumbersOnly: true,
-    length: 6,
+    length: 4,
     isPasswordInput: false,
     disableAutoFocus: false,
     placeholder: '',
@@ -28,9 +21,22 @@ export class OtpVerifyComponent implements OnInit {
       'height': '40px'
     }
   };
+
+  ngOnInit() {
+  }
+
+  constructor() {
+  }
+
+  @Input() set otpData(data) {
+    if (data.length == 0 && this.ngOtpInput.otpForm) {
+      console.log(this.ngOtpInput.otpForm.reset());
+    }
+  }
+
   onOtpChange(otp) {
     this.otp = otp;
-    if (this.otp.length > 5) {
+    if (this.otp.length == this.config.length) {
       this.otpDataEvent.emit(this.otp);
       this.config.placeholder = '';
     }

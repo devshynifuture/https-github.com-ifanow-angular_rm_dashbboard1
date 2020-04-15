@@ -85,7 +85,6 @@ export class ClientMoreInfoComponent implements OnInit {
       email: [data.email, [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
       gender: ['1'],
-      adhaarMinor: [data.aadhaarNumber, Validators.pattern(this.validatorType.ADHAAR)],
       adhharGuardian: [(data.guardianData) ? data.guardianData.aadhaarNumber : '', Validators.pattern(this.validatorType.ADHAAR)]
     });
   }
@@ -167,6 +166,10 @@ export class ClientMoreInfoComponent implements OnInit {
     if (this.moreInfoData.guardianData) {
       this.moreInfoData.guardianData['aadhaarNumber'] = this.moreInfoForm.value.adhharGuardian;
       this.moreInfoData.guardianData['birthDate'] = this.datePipe.transform(this.moreInfoData.guardianData.birthDate, 'dd/MM/yyyy')
+    }
+    if (this.moreInfoForm.invalid) {
+      this.moreInfoForm.markAllAsTouched();
+      return;
     }
     this.barButtonOptions.active = true;
     const obj = {

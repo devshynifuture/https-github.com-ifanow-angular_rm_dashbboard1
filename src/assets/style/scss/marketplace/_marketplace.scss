@@ -7,6 +7,17 @@
       padding-right:8px !important;
       padding-left:8px !important;
    }
+   .fixed-fees{
+    position: fixed;
+    width: 375px;
+   }
+   .mobile-isd{
+  .mat-select-arrow-wrapper{
+        padding-top: 14px !important;
+    padding-right: 2px !important;
+  }
+}
+
 #marketplave-header {
   position: fixed;
   width: 100%;
@@ -237,10 +248,25 @@ z-index: 9;
    ul.d-block{
       li{
          text-align: left !important;
-         padding-top:10px !important;
+         padding-top:10px;
          color: #484848 !important;
          font-family: roboto;
          font-size: 14px;
       }
    }
+   .chief-manger{
+    ul{
+      padding-top:10px;
+      list-style: disc;
+    }
+    li{
+         text-align: left !important;
+         padding-top:0px !important;
+         font-family: roboto;
+         font-size: 13px;
+      }
+   }
+   .mat-progress-bar-fill::after {
+    background-color: #0092ff;
+}
 }

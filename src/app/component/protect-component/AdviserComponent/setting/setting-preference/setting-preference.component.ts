@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { OrgSettingServiceService } from '../org-setting-service.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -10,27 +10,29 @@ import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
 import { ConfirmDialogComponent } from '../../../common-component/confirm-dialog/confirm-dialog.component';
 import { EmailOnlyComponent } from '../../Subscriptions/subscription/common-subscription-component/email-only/email-only.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-setting-preference',
   templateUrl: './setting-preference.component.html',
   styleUrls: ['./setting-preference.component.scss']
 })
-export class SettingPreferenceComponent implements OnInit {
+export class SettingPreferenceComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['position', 'name', 'weight'];
   displayedColumns1: string[] = ['position', 'name', 'weight', 'symbol'];
+  subcription = new Subscription();
   viewMode = 'tab1';
   advisorId: any;
   portfolio: any;
-  mutualFund: any;
-  mutualFund2: any;
-  mutualFund3: any;
+  mutualFund: any = {};
+  mutualFund2: any = {};
+  mutualFund3: any = {};
   factSheet: any;
   planSec1: any;
-  planSection: any;
-  domainSetting: any;
-  updateDomain: any;
-  emailDetails: any;
+  planSection: any = {};
+  domainSetting: any = {};
+  updateDomain: any = {};
+  emailDetails: any = {};
   element: any;
   emailList: any;
   normalDomain: any;
@@ -48,6 +50,9 @@ export class SettingPreferenceComponent implements OnInit {
   brandVisibility: any;
   showUpdateBrand: boolean = false;
   brandVisible: any;
+  counter: number = 0;
+  appearanceFG:FormGroup;
+  appearanceUpdateFlag: boolean;
   constructor(private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, ) {
       
@@ -56,13 +61,13 @@ export class SettingPreferenceComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('3456893469 ===', this.userId)
     this.getPortfolio()
     this.getdataForm('')
-    this.isLoading = false
     this.emailList = []
     this.planSection = []
     this.emailTemplateList = []
+    this.createAppearanceForm();
+    this.addAppearanceFormListener();
   }
   getdataForm(data) {
     this.domainS = this.fb.group({
@@ -76,6 +81,7 @@ export class SettingPreferenceComponent implements OnInit {
     return this.domainS.controls;
   }
   getDomain() {
+    this.loader(1);
     let obj = {
       advisorId: this.advisorId
     }
@@ -85,7 +91,7 @@ export class SettingPreferenceComponent implements OnInit {
     );
   }
   getDomainSettingRes(data) {
-    console.log(data)
+    this.loader(-1);
     this.domainSetting = data
     this.normalDomain = this.domainSetting.filter(element => element.domainOptionId == 1)
     this.whiteLabledDomain = this.domainSetting.filter(element => element.domainOptionId == 2)
@@ -96,11 +102,9 @@ export class SettingPreferenceComponent implements OnInit {
     this.domainS.controls.normalLable.setValue(this.normalLable)
     this.domainS.controls.whiteLable.setValue(this.whiteLable)
     this.domainS.controls.brandVisible.setValue(this.brandVisible)
-    console.log('normalDomain', this.normalDomain)
-    console.log('whiteLabled', this.whiteLabledDomain)
   }
+
   updateDomainSetting(event, value) {
-    console.log(event)
     this.domainSetting.forEach(element => {
       if (element.domainOptionId == value.domainOptionId) {
         if (value.domainOptionId == 1) {
@@ -118,11 +122,12 @@ export class SettingPreferenceComponent implements OnInit {
       err => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
+
   updateDomainSettingRes(data) {
-    console.log(data)
     this.updateDomain = data
     this.getDomain()
   }
+
   editDomain(flag, event, value) {
     if (flag == true) {
       if (event == 'white') {
@@ -144,8 +149,9 @@ export class SettingPreferenceComponent implements OnInit {
       this.updateDomainSetting(event, value)
     }
   }
+
   getPortfolio() {
-    this.isLoading = true;
+    this.loader(1);
     let obj = {
       advisorId: this.advisorId
     }
@@ -155,8 +161,7 @@ export class SettingPreferenceComponent implements OnInit {
     );
   }
   getPortfolioRes(data) {
-    this.isLoading = false
-    console.log('getPortfolioReslase == ', data)
+    this.loader(-1);
     this.portfolio = data
     this.mutualFund = this.portfolio.find(element => element.portfolioOptionId == 1)
     this.mutualFund2 = this.portfolio.find(element => element.portfolioOptionId == 2)
@@ -164,7 +169,7 @@ export class SettingPreferenceComponent implements OnInit {
   }
 
   getPlan() {
-    this.isLoading = true
+    this.loader(1);
     let obj = {
       advisorId: this.advisorId
     }
@@ -228,9 +233,7 @@ export class SettingPreferenceComponent implements OnInit {
       if (result == undefined) {
         return
       }
-      console.log('The dialog was closed');
       this.element = result;
-      console.log('result -==', this.element)
       let obj = {
         id: this.element.id,
         emailAddress: this.element.emailAddress,
@@ -282,21 +285,18 @@ export class SettingPreferenceComponent implements OnInit {
     });
   }
   getPlanRes(data) {
-    this.isLoading = false
-    console.log('getPortfolioRes == ', data)
     if (data) {
       this.planSection = data
       this.planSec1 = this.planSection.filter(element => element.planOptionId == 1)
-      this.planSec1 = this.planSec1[0]
-      console.log('planSec1 ', this.planSec1)
+      this.planSec1 = this.planSec1[0];
     } else {
-      this.isLoading = false
       this.planSection = []
     }
-
+    this.loader(-1);
   }
+
   getEmailVerification() {
-    this.isLoading = true
+    this.loader(1);
     let obj = {
       userId: this.userId,
       // advisorId: this.advisorId
@@ -307,18 +307,16 @@ export class SettingPreferenceComponent implements OnInit {
     );
   }
   getEmailVerificationRes(data) {
-    this.isLoading = false
-    console.log('email verify == get', data)
     if (data) {
       this.emailDetails = data
       this.emailList = data.listItems
     } else {
       this.emailList = []
     }
-
+    this.loader(-1);
   }
   getEmailTemplate() {
-    this.isLoading = true
+    this.loader(1);
     let obj = {
       advisorId: this.advisorId
     }
@@ -328,14 +326,13 @@ export class SettingPreferenceComponent implements OnInit {
     );
   }
   getEmailTempalatRes(data) {
-    this.isLoading = false
     if (data) {
       console.log('emailTemplate', data)
       this.emailTemplateList = data
     } else {
       this.emailTemplateList = []
     }
-
+    this.loader(-1);
   }
   OpenEmail(value, data) {
     if (this.isLoading) {
@@ -374,5 +371,104 @@ export class SettingPreferenceComponent implements OnInit {
         }
       }
     );
+  }
+
+  loader(increament) {
+    this.counter += increament;
+    if(this.counter == 0) {
+      this.isLoading = false;
+    } else {
+      this.isLoading = true;
+    }
+  }
+
+  getAppearance(){
+    this.loader(1);
+    let obj = {
+      advisorId: this.advisorId
+    }
+    this.appearanceUpdateFlag = false;
+    this.orgSetting.getAppearancePreference(obj).subscribe(
+      data => {
+        this.appearanceFG.controls.portfolioOpt.setValue(data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation);
+        this.appearanceFG.controls.financialOpt.setValue(data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation);
+        this.appearanceFG.controls.clientOpt.setValue(data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation);
+        this.appearanceUpdateFlag = true;
+      },
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    );
+  }
+
+  createAppearanceForm() {
+    this.appearanceFG = this.fb.group({
+      portfolioOpt: '',
+      financialOpt: '',
+      clientOpt: '',
+    })
+  }
+
+  addAppearanceFormListener(){
+    this.subcription.add(
+      this.appearanceFG.valueChanges.subscribe(value => {
+        let jsonArr = [];
+        let counter = 0;
+        for(let k in value) {
+          counter++;
+          jsonArr.push({
+            advisorId: this.advisorId,
+            appearanceOptionId: counter,
+            advisorOrOrganisation: value[k]
+          })
+        }
+
+        if(this.appearanceUpdateFlag)
+          this.orgSetting.updateAppearancePreferance(jsonArr).subscribe();
+      })
+    );
+  }
+
+  changeView(tab) {
+    this.viewMode = tab;
+    switch(tab) {
+      case 'tab1': 
+        this.getPortfolio();
+        break;
+        
+      case 'tab2': 
+        this.getPlan();
+        break;
+        
+      // case 'tab3': 
+      //   this.getPortfolio();
+      //   break;
+        
+      case 'tab4': 
+        this.getEmailVerification();
+        break;
+      
+      case 'tab5': 
+        this.getEmailTemplate();
+        break;
+        
+      // case 'tab6': 
+      //   this.getPortfolio();
+      //   break;
+      
+      case 'tab7': 
+        this.getDomain();
+        break;
+        
+      // case 'tab8': 
+      //   this.getPortfolio();
+      //   break;
+        
+      case 'tab9': 
+        this.getAppearance();
+        break;
+    }
+  }
+
+  ngOnDestroy(){
+    this.subcription.unsubscribe();
   }
 }

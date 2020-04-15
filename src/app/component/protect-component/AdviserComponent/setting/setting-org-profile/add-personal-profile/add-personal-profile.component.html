@@ -19,8 +19,9 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                            <input matInput formControlName="name" class="form-control" placeholder="Joe Smith">
-                            <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('name').errors?.required">This field is required</mat-error>
+                            <input matInput formControlName="name" class="form-control" placeholder="Joe Smith" [maxLength]="40" [inputValidator]="validatorType.PERSON_NAME" appInputValueValidation>
+                                <mat-hint align="end" class="f-12">{{personalProfile.get('name').value.length}}/40</mat-hint>
+                                <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('name').errors?.required">This field is required</mat-error>
                             <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('name').errors?.maxlength">Character limit exceeded</mat-error>
                         </mat-form-field>
                     </div>
@@ -47,8 +48,9 @@
                 <div class="col-md-3">
                     <div class="form-group mb-0">
                         <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                            <input matInput formControlName="mobileNo" class="form-control" placeholder="9878523691">
-                            <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('mobileNo').errors?.required">This field is required</mat-error>
+                            <input matInput formControlName="mobileNo" class="form-control" placeholder="9878523691" [maxLength]="10" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation>
+                                <mat-hint align="end" class="f-12">{{personalProfile.get('mobileNo').value.length}}/10</mat-hint>
+                                <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('mobileNo').errors?.required">This field is required</mat-error>
                             <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('mobileNo').errors?.maxlength || personalProfile.get('mobileNo').errors?.minlength || personalProfile.get('mobileNo').errors?.pattern">
                                 Please enter valid mobile number</mat-error>
                         </mat-form-field>
