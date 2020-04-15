@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
       // if (state && state.url === '/login') {
       //   this.myRoute.navigate(['admin', 'subscription', 'dashboard']);
       // }
-      if (state && state.url === '/login') {
+      if (state && state.url.includes('/login')) {
         // TODO comment for old login
         if (this.authService.isAdvisor()) {
           this.myRoute.navigate(['admin', 'subscription', 'dashboard']);
@@ -37,7 +37,7 @@ export class AuthGuard implements CanActivate {
     } else {
       console.log('AuthGuard failed: ', next, state);
 
-      if (state && state.url === '/login') {
+      if (state && state.url.includes('/login')) {
         return true;
       }
       this.myRoute.navigate(['/login']);
