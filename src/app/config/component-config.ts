@@ -468,7 +468,7 @@ export const appConfig = {
   BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ: 'backoffice/get/unmapped/njschemes',
   BACKOFFICE_GET_UNMAPPED_SCHEMES_PRUDENT: 'backoffice/get/unmapped/prudentschemes',
   BACKOFFICE_GET_FILTERED_SCHEMES: 'backoffice/get/filtered/shemes',
-  BACKOFFICE_ADV_GET_BROKER_LIST: 'backoffice/broker/list/get',
+  BACKOFFICE_ADV_GET_BROKER_LIST: 'setting/arn-ria/list/get',
   BACKOFFICE_GET_RT_LIST: 'backoffice/rt/list/get',
   BACKOFFICE_GET_AUM_RECON_HISTORY_LIST: 'backoffice/aum/recon/history/get',
   BACKOFFICE_GET_AUM_ORDER_LIST: 'backoffice/aum/file/order/list/get',
@@ -499,10 +499,15 @@ export const appConfig = {
   BACKOFFICE_SIP_STP: 'backoffice/file-upload/uploaded/sip/list/get',
   BACKOFFICE_FOLIO: 'backoffice/file-upload/uploaded/folio-master/list/get',
   BACKOFFICE_SUCCESS_FILE_UPLOAD: 'backoffice/file-upload/success',
+
   GET_DAILY_SERVICES_STATUS_REPORT: 'rmdashboard/dashboard/daily/services/status/get',
   GET_DAILY_FILES: 'rmdashboard/dashboard/daily-file/get',
   FILTER_HISTORICAL_REPORT: 'rmdashboard/dashboard/historic/files/filter/get',
   GET_IFA_MATRIC_DATA: 'rmdashboard/dashboard/ifas/metric/get',
+  GET_MY_IFA_DETAILS: 'rmdashboard/myifas/dashboard/details/get',
+  GET_ONBOARDING_TASK_GLOBAL: 'rmdashboard/ifa/onboarding/task/global/get',
+  POST_HISTORICAL_FILE_ORDER: 'fileorder/historical/order',
+  GET_FILE_TYPE_ORDER: 'fileorder/file-type/list/get',
 
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',
@@ -539,6 +544,8 @@ export const appConfig = {
   UPDATE_ACCESS_CONTROL: 'setting/users-roles/access-rights/update',
   RESET_GALLARY: 'goal-planning/goal-gallery/reset',
   UPDATE_RETURNS_AND_INFLATIONS: 'plan/config/return-inflation/put',
+  GET_APPEARANCE_SETTING: 'setting/preferences/appearance/get',
+  UPDATE_APPEARANCE_SETTING: 'setting/preferences/appearance/update',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',

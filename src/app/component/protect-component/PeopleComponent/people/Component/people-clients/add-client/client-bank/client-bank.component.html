@@ -82,13 +82,13 @@
         <div class="col-md-8 p-0 account-type">
             <mat-radio-group class="radioWidth110" formControlName="accType" aria-label="Select an option">
                 <mat-radio-button value="1"
-                    [ngClass]="{'bu-primary': bankForm.get('accType').value=='1','borderRadio':bankForm.get('accType').value!='1'}"
+                    [ngClass]="{'bu-primary': bankForm.get('accType').value=='1','borderRadio':bankForm.get('accType').value!='1','text-primary': bankForm.get('accType').value=='1','text-custom':bankForm.get('accType').value!='1'}"
                     class="bu-primary">Savings</mat-radio-button>
                 <mat-radio-button value="2"
-                    [ngClass]="{'bu-primary': bankForm.get('accType').value=='2','borderRadio':bankForm.get('accType').value!='2'}"
+                    [ngClass]="{'bu-primary': bankForm.get('accType').value=='2','borderRadio':bankForm.get('accType').value!='2','text-primary': bankForm.get('accType').value=='2','text-custom':bankForm.get('accType').value!='2'}"
                     class="borderRadio">Current</mat-radio-button>
                 <mat-radio-button value="3"
-                    [ngClass]="{'bu-primary': bankForm.get('accType').value=='3','borderRadio':bankForm.get('accType').value!='3'}"
+                    [ngClass]="{'bu-primary': bankForm.get('accType').value=='3','borderRadio':bankForm.get('accType').value!='3','text-primary': bankForm.get('accType').value=='3','text-custom':bankForm.get('accType').value!='3'}"
                     class="borderRadio pr-8">Cash credit</mat-radio-button>
             </mat-radio-group>
         </div>

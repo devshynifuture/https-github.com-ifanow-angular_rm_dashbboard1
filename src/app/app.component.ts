@@ -56,7 +56,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   private loadingBarInterceptor(event: Event) {
-    console.log('appComponent loadingBar event : ', event);
+    // console.log('appComponent loadingBar event : ', event);
     if (event instanceof NavigationStart) {
       this.lBar.start();
       // console.log('Performance navigation start', performance.getEntriesByType('navigation'));

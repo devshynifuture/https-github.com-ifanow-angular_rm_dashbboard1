@@ -5,6 +5,7 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 import { ReconciliationDetailsViewComponent } from 'src/app/component/protect-component/SupportComponent/common-component/reconciliation-details-view/reconciliation-details-view.component';
 import { UtilService } from 'src/app/services/util.service';
 import { ReconciliationService } from '../reconciliation/reconciliation.service';
+import { EventService } from '../../../../../../Data-service/event.service';
 
 @Component({
   selector: 'app-duplicate-data',
@@ -18,7 +19,8 @@ export class DuplicateDataComponent implements OnInit {
 
   constructor(
     private subInjectService: SubscriptionInject,
-    private reconService: ReconciliationService
+    private reconService: ReconciliationService,
+    private eventService: EventService
   ) { }
 
   advisorId = AuthService.getAdvisorId();
@@ -91,8 +93,9 @@ export class DuplicateDataComponent implements OnInit {
           this.dataSource.data = this.duplicateDataList;
           this.isLoading = false;
         } else {
+          this.isLoading = false;
+          this.eventService.openSnackBar("No Duplicate Data Found!!!", "DISMISS");
           this.dataSource.data = null;
-
         }
       })
   }

@@ -43,8 +43,11 @@
 </div>
 <div class="pt-32 pb-44" *ngIf="showRisk == true">
     <div class="row">
-        <div class="col-md-12 mb-16 text-right">
+        <div class="col-md-6 mb-16 text-right">
             <button mat-raised-button color="primary" (click)="open('riskProfile', null)">History</button>
+        </div>
+        <div class="col-md-6 mb-16 text-right">
+            <button mat-raised-button color="primary">Risk assessment</button>
         </div>
     </div>
 
@@ -56,7 +59,7 @@
                     <h5 class="m-0 f-500 text-black">Your risk score</h5>
                     <div class="ba-3x text-center p-24 mt-12">
                         <h1 class="f-48 m-0">{{score}}</h1>
-                        <p class="m-0 text-custom f-12 ">Max: 70</p>
+                        <p class="m-0 text-custom f-12 ">Max: 600</p>
                     </div>
                 </div>
             </div>

@@ -61,8 +61,8 @@
                             <div class="memberSlider">
                                 <div (click)="open('edit',singleMembers)" *ngFor="let singleMembers of familyMemberList" class="memberList primary-border c-p">
                                     <img width="48px" *ngIf="singleMembers.relationshipId==2" src="/assets/images/svg/women-profile-icon.svg">
-                                    <img width="48px" *ngIf="singleMembers.relationshipId==3" src="/assets/images/svg/son-profile.svg">
-                                    <img width="48px" *ngIf="singleMembers.relationshipId==4" src="/assets/images/svg/daughter-profile.svg">
+                                    <img width="36px" style="margin-right: 10px;" *ngIf="singleMembers.relationshipId==3" src="/assets/images/svg/son-profile.svg">
+                                    <img width="39px" style="margin-right: 10px;" *ngIf="singleMembers.relationshipId==4" src="/assets/images/svg/daughter-profile.svg">
                                     <img width="48px" *ngIf="singleMembers.relationshipId==5" src="/assets/images/svg/mother-profile.svg">
                                     <img width="48px" *ngIf="singleMembers.relationshipId==6" src="/assets/images/svg/father-profile.svg">
                                     <img width="48px" *ngIf="singleMembers.relationshipId==7" src="/assets/images/svg/man-profile.svg">
