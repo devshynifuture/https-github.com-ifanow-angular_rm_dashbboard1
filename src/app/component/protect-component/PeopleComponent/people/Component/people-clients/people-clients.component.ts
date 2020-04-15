@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -9,6 +9,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { MatDialog } from '@angular/material';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
 
 @Component({
   selector: 'app-people-clients',
@@ -22,10 +23,11 @@ export class PeopleClientsComponent implements OnInit {
   advisorId: any;
   clientDatasource = new MatTableDataSource();
   isLoading: boolean;
+  @ViewChild('tableEl', { static: false }) tableEl;
 
   constructor(private authService: AuthService, private ngZone: NgZone, private router: Router,
     private subInjectService: SubscriptionInject, public eventService: EventService,
-    private peopleService: PeopleService, public dialog: MatDialog) {
+    private peopleService: PeopleService, public dialog: MatDialog, private excel: ExcelGenService) {
   }
 
   ngOnInit() {
@@ -65,6 +67,10 @@ export class PeopleClientsComponent implements OnInit {
     // commented code closed which are giving errors ====>>>>>>>>>>>>>>.
   }
 
+  Excel(tableTitle) {
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows, tableTitle)
+  }
   addClient(data) {
     if (data == null) {
       data = { flag: 'Add client', fieldFlag: 'client' };

@@ -141,6 +141,7 @@ export class ClientBankComponent implements OnInit {
       address2 = adderessData.substring(addressMidLength, adderessData.length);
       pincode = adderessData.match(/\d/g);
       pincode = pincode.join("");
+      address2 = address2.replace(pincode, '');
     }
     (data == undefined) ? data = {} : '';
     this.isIfsc = false;

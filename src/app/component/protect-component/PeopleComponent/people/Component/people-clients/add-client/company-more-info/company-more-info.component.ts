@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { ValidatorType } from '../../../../../../../../services/util.service';
+import { ValidatorType, UtilService } from '../../../../../../../../services/util.service';
 import { DatePipe } from '@angular/common';
 import { EventEmitter, Output } from '@angular/core/src/metadata/*';
 import { AuthService } from '../../../../../../../../auth-service/authService';
@@ -51,7 +51,9 @@ export class CompanyMoreInfoComponent implements OnInit {
     this.createMoreInfoForm(null);
     this.getCompanyDetails(data);
   }
-
+  toUpperCase(event) {
+    event = UtilService.toUpperCase(event);
+  }
 
   createMoreInfoForm(data) {
     (data == undefined) ? data = {} : data;
