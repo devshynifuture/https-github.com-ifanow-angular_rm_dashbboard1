@@ -16,6 +16,7 @@ export class DuplicateDataComponent implements OnInit {
   brokerId: any;
   rtId: any;
   mutualFundTransactions: any;
+  adminAdvisorIds: any[] = [];
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -25,16 +26,29 @@ export class DuplicateDataComponent implements OnInit {
 
   advisorId = AuthService.getAdvisorId();
 
-
-
   displayedColumns: string[] = ['arnRia', 'name', 'folioNumber', 'unitsIfanow', 'unitsRta', 'difference', 'transactions'];
   dataSource;
   isLoading: boolean = false;
   aumList: [] = [];
   duplicateDataList: DuplicateI[] = [];
   ngOnInit() {
+    this.teamMemberListGet();
     this.dataSource = new MatTableDataSource<DuplicateI>(ELEMENT_DATA);
-    this.duplicateFolioData();
+  }
+
+  teamMemberListGet() {
+    this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
+      .subscribe(data => {
+        if (data && data.length !== 0) {
+          data.forEach(element => {
+            this.adminAdvisorIds.push(element.adminAdvisorId);
+          });
+          this.duplicateFolioData();
+        } else {
+          this.adminAdvisorIds = [...this.advisorId];
+          this.eventService.openSnackBar("No Team Member Found", "DISMISS");
+        }
+      })
   }
 
   openReconciliationDetails(value, data, tableType) {
@@ -57,6 +71,10 @@ export class DuplicateDataComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+            this.dataSource.data = ELEMENT_DATA;
+            this.duplicateDataList = [];
+
+            this.duplicateFolioData();
           }
           rightSideDataSub.unsubscribe();
         }
@@ -68,16 +86,16 @@ export class DuplicateDataComponent implements OnInit {
   duplicateFolioData() {
     this.isLoading = true;
     const data = {
-      advisorId: this.advisorId,
+      advisorIds: [...this.adminAdvisorIds],
     }
     this.reconService.getDuplicateDataValues(data)
       .subscribe(res => {
         if (res) {
           console.log("this is duplicate data values:::::::", res);
-
           res.forEach(item => {
             this.brokerId = item.brokerId;
             this.mutualFundTransactions = item.mutualFundTransactions;
+
             this.duplicateDataList.push({
               arnRia: item.brokerCode,
               name: item.schemeName,

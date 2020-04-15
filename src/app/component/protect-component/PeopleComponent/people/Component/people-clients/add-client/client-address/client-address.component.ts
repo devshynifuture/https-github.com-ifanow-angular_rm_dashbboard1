@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { ValidatorType } from 'src/app/services/util.service';
+import { ValidatorType, UtilService } from 'src/app/services/util.service';
 import { PostalService } from 'src/app/services/postal.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -35,6 +35,7 @@ export class ClientAddressComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  permanentAddFlag: boolean;
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private postalService: PostalService,
     private peopleService: PeopleService, private eventService: EventService) {
@@ -47,6 +48,7 @@ export class ClientAddressComponent implements OnInit {
 
   @Input() set data(data) {
     this.userData = data;
+    (this.fieldFlag != 'familyMember' && this.userData.clientType == 1) ? this.permanentAddFlag = false : this.permanentAddFlag = true;
     (this.userData.addressData) ? this.addressList = this.userData.addressData : ''
     this.proofType = (this.userData.addressData) ? String(this.userData.addressData.addressType) : '1';
     if (this.userData.addressData == undefined && this.fieldFlag) {
@@ -67,7 +69,7 @@ export class ClientAddressComponent implements OnInit {
     this.addressForm = this.fb.group({
       addressType: [(data.addressType) ? String(data.addressType) : '1'],
       addProofType: [(data.proofType) ? String(data.proofType) : '1'],
-      proofIdNum: [(data.proofType == 2) ? this.userData.aadhaarNumber : data.proofIdNumber, [Validators.required]],
+      proofIdNum: [data.proofIdNumber, [Validators.required]],
       addressLine1: [data.address1, [Validators.required]],
       addressLine2: [data.address2, [Validators.required]],
       pinCode: [data.pinCode, [Validators.required]],
@@ -75,8 +77,19 @@ export class ClientAddressComponent implements OnInit {
       state: [data.state, [Validators.required]],
       country: [data.country, [Validators.required]]
     });
+    this.changeAddrProofNumber({ value: String(data.proofType) });
   }
-
+  changeAddrProofNumber(data) {
+    if (data.value == '2') {
+      this.addressForm.get('proofIdNum').setValue(this.userData.aadhaarNumber);
+    }
+    else {
+      this.addressForm.get('proofIdNum').setValue('');
+    }
+  }
+  toUpperCase(event) {
+    event = UtilService.toUpperCase(event);
+  }
   getPostalPin(value) {
     const obj = {
       zipCode: value

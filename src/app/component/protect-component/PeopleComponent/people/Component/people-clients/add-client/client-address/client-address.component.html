@@ -10,7 +10,7 @@
 </div>
 <div [ngClass]="{'pt-90': fieldFlag==undefined}" [formGroup]="addressForm">
     <h4 class="f-500 text-black pt-20 pl-20 m-0">Permanent address</h4>
-    <div class="row pt-24">
+    <div *ngIf="permanentAddFlag" class="row pt-24">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-8">Permanent address</h5>
         </div>
@@ -38,7 +38,8 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select formControlName="addProofType" class="form-control">
+                    <mat-select (selectionChange)="changeAddrProofNumber($event)" formControlName="addProofType"
+                        class="form-control">
                         <mat-option value="Select proof type">Select proof type</mat-option>
                         <mat-option value="1">Passport</mat-option>
                         <mat-option value="2">Aadhaar</mat-option>
@@ -59,7 +60,9 @@
         <div class="col-md-4 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" matInput formControlName="proofIdNum" class="form-control">
+                    <input (input)="toUpperCase($event)" appInputValueValidation
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" autocomplete="off" matInput
+                        formControlName="proofIdNum" class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>

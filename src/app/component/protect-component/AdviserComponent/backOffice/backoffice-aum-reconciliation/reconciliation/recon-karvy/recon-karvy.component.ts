@@ -13,6 +13,9 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./recon-karvy.component.scss']
 })
 export class ReconKarvyComponent implements OnInit {
+  adminAdvisorIds: any[] = [];
+  adminId = AuthService.getAdminId();
+  parentId = AuthService.getParentId();
 
 
   constructor(
@@ -36,7 +39,22 @@ export class ReconKarvyComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new MatTableDataSource<ElementI>(ELEMENT_DATA);
     this.getBrokerList();
+    this.teamMemberListGet();
     console.log('my id is ::', this.rtId);
+  }
+
+  teamMemberListGet() {
+    this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
+      .subscribe(data => {
+        if (data && data.length !== 0) {
+          data.forEach(element => {
+            this.adminAdvisorIds.push(element.adminAdvisorId);
+          });
+        } else {
+          this.adminAdvisorIds = [...this.advisorId];
+          this.eventService.openSnackBar('No Team Member Found', 'DISMISS');
+        }
+      });
   }
 
 
@@ -44,26 +62,30 @@ export class ReconKarvyComponent implements OnInit {
     this.reconService.getBrokerListValues({ advisorId: this.advisorId })
       .subscribe(res => {
         this.brokerList = res;
-        this.isBrokerSelected = true;
       });
   }
 
 
-  getAumReconHistoryData(event) {
-    this.isLoading = true;
-    console.log(event);
-    const data = {
-      advisorId: this.advisorId,
-      brokerId: this.selectBrokerForm.get('selectBrokerId').value,
-      rmId: 0,
-      rtId: this.rtId
+  getAumReconHistoryData() {
+    if (this.selectBrokerForm.get('selectBrokerId').value) {
+      this.isLoading = true;
+      this.isBrokerSelected = true;
+
+      const data = {
+        advisorIds: [...this.adminAdvisorIds],
+        brokerId: this.selectBrokerForm.get('selectBrokerId').value,
+        rmId: 0,
+        rtId: this.rtId,
+        parentId: this.adminId == 0 ? this.advisorId : this.parentId
+      }
+      console.log("this is what i am sending::", data);
+      this.reconService.getAumReconHistoryDataValues(data)
+        .subscribe(res => {
+          this.isLoading = false;
+          console.log("this is some values ::::::::::", res);
+          this.dataSource.data = res;
+        })
     }
-    this.reconService.getAumReconHistoryDataValues(data)
-      .subscribe(res => {
-        this.isLoading = false;
-        console.log("this is some values ::::::::::", res);
-        this.dataSource.data = res;
-      })
   }
 
   openAumReconciliation(flag, data) {
@@ -87,6 +109,9 @@ export class ReconKarvyComponent implements OnInit {
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           // this.getClientSubscriptionList();
+          if (UtilService.isRefreshRequired(upperSliderData)) {
+            this.getAumReconHistoryData()
+          }
           subscription.unsubscribe();
         }
       }

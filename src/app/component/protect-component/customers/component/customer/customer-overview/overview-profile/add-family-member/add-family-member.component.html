@@ -18,15 +18,19 @@
 
         <div class="row pt-20 c-p">
             <div class="col-md-3 pr-0 ">
-                <div (click)="addFamilyType('1')" [ngClass]="{'profileBorder-primary': typeOfFamilyMemberAdd=='1','profileBorder': typeOfFamilyMemberAdd=='2' || typeOfFamilyMemberAdd==null}" class="manuallyBox profileBorder">
+                <div (click)="addFamilyType('1')"
+                    [ngClass]="{'profileBorder-primary': typeOfFamilyMemberAdd=='1','profileBorder': typeOfFamilyMemberAdd=='2' || typeOfFamilyMemberAdd==null}"
+                    class="manuallyBox profileBorder">
                     <mat-radio-group [(ngModel)]="typeOfFamilyMemberAdd" aria-label="Select an option">
                         <mat-radio-button class="f-14 text-light " value="1">Manually</mat-radio-button>
                     </mat-radio-group>
                 </div>
             </div>
             <div (click)="addFamilyType('1')" class="col-md-8 pl-0 ">
-                <div [ngClass]="{'profileBorder-primary': typeOfFamilyMemberAdd=='1','profileBorder': typeOfFamilyMemberAdd=='2' || typeOfFamilyMemberAdd==null}" class="contentHeight profileBorder">
-                    <p class="text-light f-14 m-0">Chose this option if the family member hasn’t invested through you before and so the member’s data isn’t currently present in the system.</p>
+                <div [ngClass]="{'profileBorder-primary': typeOfFamilyMemberAdd=='1','profileBorder': typeOfFamilyMemberAdd=='2' || typeOfFamilyMemberAdd==null}"
+                    class="contentHeight profileBorder">
+                    <p class="text-light f-14 m-0">Chose this option if the family member hasn’t invested through you
+                        before and so the member’s data isn’t currently present in the system.</p>
                 </div>
 
             </div>
@@ -34,7 +38,9 @@
 
         <div class="row pt-20 c-p">
             <div class="col-md-3 pr-0">
-                <div (click)="addFamilyType('2')" [ngClass]="{'profileBorder-primary': typeOfFamilyMemberAdd=='2','profileBorder': typeOfFamilyMemberAdd=='1' || typeOfFamilyMemberAdd==null }" class="manuallyBox profileBorder">
+                <div (click)="addFamilyType('2')"
+                    [ngClass]="{'profileBorder-primary': typeOfFamilyMemberAdd=='2','profileBorder': typeOfFamilyMemberAdd=='1' || typeOfFamilyMemberAdd==null }"
+                    class="manuallyBox profileBorder">
                     <mat-radio-group [(ngModel)]="typeOfFamilyMemberAdd" aria-label="Select an option">
                         <mat-radio-button class="f-14 text-light l-18" value="2">Merge from <br> existing
                         </mat-radio-button>
@@ -43,9 +49,11 @@
 
             </div>
             <div (click)="addFamilyType('2')" class="col-md-8 pl-0 ">
-                <div [ngClass]="{'profileBorder-primary': typeOfFamilyMemberAdd=='2','profileBorder': typeOfFamilyMemberAdd=='1' || typeOfFamilyMemberAdd==null}" class="contentHeight profileBorder">
+                <div [ngClass]="{'profileBorder-primary': typeOfFamilyMemberAdd=='2','profileBorder': typeOfFamilyMemberAdd=='1' || typeOfFamilyMemberAdd==null}"
+                    class="contentHeight profileBorder">
                     <p class="text-light f-14 m-0">
-                        If the family member has previously invested through you then the member is likely to be already present in the system as a client. You can merge the member into this group.
+                        If the family member has previously invested through you then the member is likely to be already
+                        present in the system as a client. You can merge the member into this group.
                     </p>
                 </div>
 
@@ -58,7 +66,8 @@
         <h5 class="mb-44 roboto"> Who’s in your family?</h5>
         <div class="photoFamily">
             <div class="row justify-content-center">
-                <div (click)="selectFamilyMembers(singleMember)" *ngFor="let singleMember of familyMemberList.firstRow" class="col-md-4">
+                <div (click)="selectFamilyMembers(singleMember)" *ngFor="let singleMember of familyMemberList.firstRow"
+                    class="col-md-4">
                     <div class="profilePhoto text-center">
                         <div [ngClass]="{'profileBorder-primary':singleMember.selected}" class="borderPhoto ">
                             <mat-checkbox [checked]="singleMember.selected" class="posCheckBox"></mat-checkbox>
@@ -71,7 +80,8 @@
 
 
             <div class="row justify-content-center">
-                <div (click)="selectFamilyMembers(singleMember)" *ngFor="let singleMember of familyMemberList.secondRow" class="col-md-4">
+                <div (click)="selectFamilyMembers(singleMember)" *ngFor="let singleMember of familyMemberList.secondRow"
+                    class="col-md-4">
                     <div class="profilePhoto text-center">
                         <div [ngClass]="{'profileBorder-primary':singleMember.selected}" class="borderPhoto">
                             <mat-checkbox [checked]="singleMember.selected" class="posCheckBox"></mat-checkbox>
@@ -94,11 +104,13 @@
                     </div>
                     <div *ngIf="singleMember.selected">
                         <div class="d-flex mt-8 align-items-center justify-content-center">
-                            <button (click)="remove(singleMember)" [disabled]="!singleMember.selected" class="btn24 mr-4 c-p" mat-button>
+                            <button (click)="remove(singleMember)" [disabled]="!singleMember.selected"
+                                class="btn24 mr-4 c-p" mat-button>
                                 <i class="material-icons text-black f-20">remove</i>
                             </button>
                             <p class="mb-0 ml-8 mr-8  ">{{singleMember.count}}</p>
-                            <button (click)="add(singleMember)" [disabled]="!singleMember.selected" class="btn24 ml-4 c-p" mat-button>
+                            <button (click)="add(singleMember)" [disabled]="!singleMember.selected"
+                                class="btn24 ml-4 c-p" mat-button>
                                 <i class="material-icons f-20 text-black">add</i></button>
                         </div>
                     </div>
@@ -125,7 +137,8 @@
                 </div>
             </div>
             <div [formGroup]="createFamily">
-                <div *ngFor="let singleMember of getFamilyListList.controls;index as i" [formGroup]="singleMember" class="row mbottom-30">
+                <div *ngFor="let singleMember of getFamilyListList.controls;index as i" [formGroup]="singleMember"
+                    class="row mbottom-30">
                     <div class="col-md-2 pr-0">
                         <h5 class="m-0 pt-12 text-right">{{familyMemberNameList[i]}}</h5>
                     </div>
@@ -139,7 +152,8 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <mat-form-field class="ba-date">
-                                <input (click)="picker.open()" [matDatepicker]="picker" class="form-control b-0" formControlName="date" matInput>
+                                <input (click)="picker.open()" [max]="singleMember.get('maxDateValue').value"
+                                    [matDatepicker]="picker" class="form-control b-0" formControlName="date" matInput>
                                 <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
                                 <mat-error>This field is required</mat-error>
@@ -338,14 +352,18 @@
             </div>
 
             <div class="col-md-8 right text-right">
-                <button (click)="selectFamilyMembersCount()" *ngIf="step==1 && typeOfFamilyMemberAdd=='1'" class="btn-bottom br-0 text-inherit" mat-button>Proceed
+                <button (click)="selectFamilyMembersCount()" *ngIf="step==1 && typeOfFamilyMemberAdd=='1'"
+                    class="btn-bottom br-0 text-inherit" mat-button>Proceed
                 </button>
-                <button (click)="next()" *ngIf="step==1 && typeOfFamilyMemberAdd=='2'" class="btn-bottom br-0 text-inherit" mat-button>Proceed
+                <button (click)="next()" *ngIf="step==1 && typeOfFamilyMemberAdd=='2'"
+                    class="btn-bottom br-0 text-inherit" mat-button>Proceed
                 </button>
-                <button (click)="createFamilyMember()" *ngIf="step==2" class="btn-bottom br-0 text-inherit" mat-button>Next
+                <button (click)="createFamilyMember()" *ngIf="step==2" class="btn-bottom br-0 text-inherit"
+                    mat-button>Next
                 </button>
 
-                <app-progress-button (btnClick)="saveFamilyMembers()" *ngIf="step==3" [options]="barButtonOptions" class="br-0 text-inherit mr-12">
+                <app-progress-button (btnClick)="saveFamilyMembers()" *ngIf="step==3" [options]="barButtonOptions"
+                    class="br-0 text-inherit mr-12">
                 </app-progress-button>
 
             </div>

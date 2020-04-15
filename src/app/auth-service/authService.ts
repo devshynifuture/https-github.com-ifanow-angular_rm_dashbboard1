@@ -15,6 +15,14 @@ export class AuthService {
     return this.getUserInfo().advisorId;
   }
 
+  static getParentId() {
+    return this.getUserInfo().parentId;
+  }
+
+  static getAdminId() {
+    return this.getUserInfo().adminId;
+  }
+
   static getUserId() {
     return this.getUserInfo().userId;
   }

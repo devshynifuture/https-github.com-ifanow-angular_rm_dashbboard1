@@ -140,7 +140,7 @@
             <p class="m-0 roboto">Minor</p>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" #adhaarMinor appInputValueValidation
+                    <input autocomplete="off" (input)="toUpperCase($event)" #adhaarMinor appInputValueValidation
                         [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="adhaarNo" matInput
                         [maxLength]="12" class="form-control">
                     <mat-error *ngIf="moreInfoForm.get('adhaarNo').errors?.pattern">Adhaar must be 12 digits</mat-error>
@@ -153,7 +153,7 @@
             <p class="m-0 roboto">Guardian</p>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" #adhharGuardian appInputValueValidation
+                    <input autocomplete="off" #adhharGuardian (input)="toUpperCase($event)" appInputValueValidation
                         [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="adhharGuardian" matInput
                         [maxLength]="12" class="form-control">
                     <mat-hint align="end">{{adhharGuardian.value.length}}/12</mat-hint>
@@ -171,7 +171,7 @@
         <div class="col-md-4 p-0">
             <div class="form-group">
                 <mat-form-field>
-                    <input autocomplete="off" [maxLength]="12" appInputValueValidation
+                    <input autocomplete="off" (input)="toUpperCase($event)" [maxLength]="12" appInputValueValidation
                         [inputValidator]="validatorType.ALPHA_NUMERIC" #adharNum formControlName="adhaarNo" matInput
                         class="form-control">
                     <mat-hint>Optional</mat-hint>
@@ -208,7 +208,7 @@
                         <mat-option value="1">Goverment</mat-option>
                         <mat-option value="2">Service</mat-option>
                         <mat-option value="3">Private sector</mat-option>
-                        <mat-option value="4">Buisness</mat-option>
+                        <mat-option value="4">Business</mat-option>
                     </mat-select>
                     <mat-hint>Optional</mat-hint>
                 </mat-form-field>

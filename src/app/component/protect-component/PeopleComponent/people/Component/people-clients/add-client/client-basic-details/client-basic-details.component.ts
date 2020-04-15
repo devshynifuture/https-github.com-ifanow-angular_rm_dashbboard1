@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ValidatorType } from 'src/app/services/util.service';
+import { ValidatorType, UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
@@ -87,6 +87,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.createIndividualForm(null);
         return;
       } else {
+        this.invTypeCategory = (data.clientType == 1 || data.clientType == 0) ? '1' : String(data.clientType);
         this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
       }
       (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
@@ -94,7 +95,9 @@ export class ClientBasicDetailsComponent implements OnInit {
     }
     console.log(data);
   }
-
+  toUpperCase(event) {
+    event = UtilService.toUpperCase(event);
+  }
   // setMinDateForAge() {
   //   this.minAge = new Date();
   //   console.log(this.minAge);
