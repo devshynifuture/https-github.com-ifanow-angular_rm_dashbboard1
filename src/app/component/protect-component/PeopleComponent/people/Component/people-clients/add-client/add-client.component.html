@@ -8,10 +8,11 @@
         </i>
     </div>
 </div>
-<div class="pt-90 pl-28 pr-28 pb-100 ">
+<div class="pt-90  pb-100 ">
     <div class="row">
         <div class="col-md-12 p-0">
-            <mat-tab-group [(selectedIndex)]="selected" animationDuration="0ms" id="ui-add-client">
+            <mat-tab-group [(selectedIndex)]="selected" animationDuration="0ms" class="tabHeaderPadding"
+                id="ui-add-client">
                 <mat-tab label="Basic details">
                     <app-client-basic-details (clientData)="getTabData($event)" (tabChange)="changeTab($event)"
                         [data]="headingData" [fieldFlag]="headingData.fieldFlag">

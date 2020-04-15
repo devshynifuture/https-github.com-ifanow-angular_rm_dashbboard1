@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { PeopleService } from '../../../../people.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {PeopleService} from '../../../../people.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-leads-clients',
@@ -14,10 +15,23 @@ export class LeadsClientsComponent implements OnInit {
   clientOwnerList: any;
   flag: any;
   clientData: any;
-
   selectedClient;
-
   convertClientForm;
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & NEXT',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
 
   constructor(private fb: FormBuilder, private peopleService: PeopleService, private subInjectService: SubscriptionInject, private eventService: EventService) {
   }
@@ -53,6 +67,7 @@ export class LeadsClientsComponent implements OnInit {
       this.convertClientForm.markAllAsTouched();
       return true;
     }
+    this.barButtonOptions.active = true;
     const obj = {
       clientId: this.clientData.clientId,
       roleId: parseInt(this.convertClientForm.get('confirmRole').value),
@@ -64,8 +79,12 @@ export class LeadsClientsComponent implements OnInit {
       data => {
         console.log(data);
         this.close();
+        this.barButtonOptions.active = false;
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+        this.barButtonOptions.active = false;
+      }
     );
   }
 

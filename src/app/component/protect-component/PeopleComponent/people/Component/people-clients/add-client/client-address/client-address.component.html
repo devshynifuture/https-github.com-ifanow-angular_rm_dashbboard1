@@ -18,7 +18,7 @@
             <div class="form-group m-0 p-address">
                 <mat-radio-group [(ngModel)]="proofType" aria-label="Select an option" formControlName="addressType">
                     <mat-radio-button [checked]="proofType=='1'" value="1"
-                        [ngClass]="{'bu-primary':proofType=='1','text-primary':proofType=='1'}"
+                        [ngClass]="{'bu-primary':proofType=='1','text-primary':proofType=='1' }"
                         class="borderRadio text-custom">
                         Residential
                     </mat-radio-button>
@@ -72,8 +72,10 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" matInput formControlName="addressLine1" class="form-control">
+                    <input autocomplete="off" #add1 maxlength="100" matInput formControlName="addressLine1"
+                        class="form-control">
                     <mat-error>This field is required</mat-error>
+                    <mat-hint align="end">{{add1.value.length}}/100</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -85,8 +87,10 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" matInput formControlName="addressLine2" class="form-control">
+                    <input autocomplete="off" #add2 matInput maxlength="100" formControlName="addressLine2"
+                        class="form-control">
                     <mat-error>This field is required</mat-error>
+                    <mat-hint align="end">{{add2.value.length}}/100</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -95,7 +99,7 @@
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-8">Pin code</h5>
         </div>
-        <div class="col-md-3 p-0">
+        <div class="col-md-2 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input autocomplete="off" [maxLength]="6" #pinCode (focusout)="getPostalPin($event.target.value)"
@@ -105,6 +109,9 @@
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
+        </div>
+        <div class="col-md-1 p-0">
+            <mat-spinner *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
         </div>
     </div>
     <div class="row pt-44">
@@ -153,17 +160,23 @@
             </div>
         </div>
     </div>
-    <div class="bottom-fixed wrapper-12 w-50 -m-28">
+    <div class="bottom-fixed wrapper-12 w-50">
         <div class="row">
             <div class="col-md-4">
                 <h5 (click)="close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
             </div>
             <div class="col-md-8 right text-right">
-                <button *ngIf="fieldFlag!=undefined" mat-raised-button (click)="saveNext('Next')"
+                <!-- <button *ngIf="fieldFlag!=undefined" mat-raised-button (click)="saveNext('Next')"
                     class="br-0 text-inherit mr-12">SAVE & NEXT
-                </button>
-                <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
-                </button>
+                </button> -->
+                <!-- <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
+                </button> -->
+                <app-progress-button *ngIf="fieldFlag==undefined" (btnClick)="saveNext('Save')"
+                    [options]="barButtonOptions" class="br-0 text-inherit mr-12">
+                </app-progress-button>
+                <app-progress-button (btnClick)="saveNext('Next')" class="br-0 text-inherit mr-12"
+                    [options]="barButtonOptions">
+                </app-progress-button>
             </div>
 
         </div>

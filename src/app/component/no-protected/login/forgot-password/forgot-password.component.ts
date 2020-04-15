@@ -4,6 +4,7 @@ import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {LoginService} from '../login.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {Router} from '@angular/router';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-forgot-password',
@@ -20,6 +21,21 @@ export class ForgotPasswordComponent implements OnInit {
   otpResponse: any;
   verifyData: any;
   saveVerifyData: any;
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'VERIFY',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   verifyForm = this.fb.group({
     no1: [],
     no2: [],
@@ -42,7 +58,6 @@ export class ForgotPasswordComponent implements OnInit {
     }
     if (this.verifyData.flag) {
       this.hideNumEmailFromUser(this.saveVerifyData);
-
       this.isVerify = true;
       this.verify('Email');
       this.verifyFlag = 'Email';
@@ -64,28 +79,36 @@ export class ForgotPasswordComponent implements OnInit {
     if (userData.mobileList && userData.mobileList.length > 0) {
       userData.mobileNo = userData.mobileList[0].mobileNo;
       data.mobileNo = userData.mobileNo;
-      this.verifyData.mobileNo = UtilService.obfuscateEmail(String(data.mobile));
+      this.verifyData.mobileNo = UtilService.obfuscateMobile(String(data.mobileNo));
     }
   }
 
-  enterOtp(value) {
-    if (value.code.substring(0, value.code.length - 1) == 'Key' || value.code == 'Backspace') {
-      if (value.srcElement.previousElementSibling == undefined) {
-        return;
-      }
-      value.srcElement.previousElementSibling.focus();
-      this.otpData.pop();
-    } else {
-      if (value.srcElement.nextElementSibling == undefined) {
-        this.otpData.push(parseInt(value.key));
-        return;
-      }
-      this.otpData.push(parseInt(value.key));
-      value.srcElement.nextElementSibling.focus();
-    }
+  // enterOtp(value) {
+  //   if (value.code.substring(0, value.code.length - 1) == 'Key' || value.code == 'Backspace') {
+  //     if (value.srcElement.previousElementSibling == undefined) {
+  //       return;
+  //     }
+  //     value.srcElement.previousElementSibling.focus();
+  //     this.otpData.pop();
+  //   } else {
+  //     if (value.srcElement.nextElementSibling == undefined) {
+  //       this.otpData.push(parseInt(value.key));
+  //       return;
+  //     }
+  //     this.otpData.push(parseInt(value.key));
+  //     value.srcElement.nextElementSibling.focus();
+  //   }
+  // }
+  verifyUsernameOnEnter(event) {
+    (event.keyCode == 13) ? this.verifyUsername() : '';
   }
 
-  verifyUsername() {   //////////// username///////////////////
+  verifyUsername() {
+    if (this.userName.invalid) {
+      this.userName.markAsTouched();
+      return;
+    }   //////////// username///////////////////
+    this.barButtonOptions.active = true;
     const obj = {
       userName: this.userName.value
     };
@@ -93,6 +116,8 @@ export class ForgotPasswordComponent implements OnInit {
       data => {
         console.log(data);
         if (data) {
+          this.barButtonOptions.active = false;
+          data['buttonFlag'] = 'reset';
           this.saveVerifyData.userData = data;
           this.hideNumEmailFromUser(this.saveVerifyData);
           this.userNameVerifyResponse = data;
@@ -112,7 +137,10 @@ export class ForgotPasswordComponent implements OnInit {
         }
       }
       ,
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+        this.barButtonOptions.active = false;
+      }
     );
   }
 
@@ -123,9 +151,11 @@ export class ForgotPasswordComponent implements OnInit {
     this.verifyWithCredential(verifyObj);   //// verify Email Address
   }
 
-  verifyWithCredential(obj) {    //// verify email or mobileNo with credentials
+  verifyWithCredential(obj) {
+    this.barButtonOptions.active = true;    //// verify email or mobileNo with credentials
     this.loginService.generateOtp(obj).subscribe(
       data => {
+        this.barButtonOptions.active = false;
         console.log(data);
         this.otpResponse = data;
         this.isVerify = true;
@@ -137,12 +167,16 @@ export class ForgotPasswordComponent implements OnInit {
   saveAfterVerifyCredential(obj) {    ////// save verified email or mobileNo in the table
     this.loginService.saveAfterVerification(obj).subscribe(
       data => {
-
         console.log(data);
         (this.verifyFlag == 'Email') ? this.verifyFlag = 'Mobile' : '';
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
     );
+  }
+
+  getOtpData(outputData) {
+    console.log('forgot password', outputData);
+    this.otpData = outputData;
   }
 
   verifyWithOtpResponse(flag) {  ///// check user filled otp is correct or not

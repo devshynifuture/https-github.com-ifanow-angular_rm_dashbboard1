@@ -12,54 +12,54 @@ export class EnumDataService {
   }
 
   proofType = [
-    {proofId:1, proofType:"Personal Pan"},
-    {proofId:2, proofType:"Company Pan"},
-    {proofId:3, proofType:"Passport"},
-    {proofId:4, proofType:"Aadhaar"},
-    {proofId:5, proofType:"Driving licence"},
-    {proofId:6, proofType:"Voter's ID card"},
-    {proofId:7, proofType:"NREGA job card"},
-    {proofId:8, proofType:"Bank passbook"},
-    {proofId:9, proofType:"Bank Statement"},
-    {proofId:10, proofType:"cancel cheque"},
-    {proofId:11, proofType:"others"},
-  ]
-
-  public getProofType(){
-    this.enumService.proofType(this.proofType);
-  }
+    {proofId: 1, proofType: 'Personal Pan'},
+    {proofId: 2, proofType: 'Company Pan'},
+    {proofId: 3, proofType: 'Passport'},
+    {proofId: 4, proofType: 'Aadhaar'},
+    {proofId: 5, proofType: 'Driving licence'},
+    {proofId: 6, proofType: 'Voter\'s ID card'},
+    {proofId: 7, proofType: 'NREGA job card'},
+    {proofId: 8, proofType: 'Bank passbook'},
+    {proofId: 9, proofType: 'Bank Statement'},
+    {proofId: 10, proofType: 'cancel cheque'},
+    {proofId: 11, proofType: 'others'},
+  ];
 
   roleList = [
-    {roleTypeId: 1, roleTypeName: "Admin"},
-    {roleTypeId: 2, roleTypeName: "Para planner"},
-    {roleTypeId: 3, roleTypeName: "Relationship manager"},
-    {roleTypeId: 4, roleTypeName: "Operations"},
-  ]
+    {roleTypeId: 1, roleTypeName: 'Admin'},
+    {roleTypeId: 2, roleTypeName: 'Para planner'},
+    {roleTypeId: 3, roleTypeName: 'Relationship manager'},
+    {roleTypeId: 4, roleTypeName: 'Operations'},
+  ];
+
+  clientRoleList = [
+    {clientRoleId: 1, clientRoleName: 'Mutual Fund (MF) only'},
+    {clientRoleId: 2, clientRoleName: 'MF + Multi asset'},
+    {clientRoleId: 3, clientRoleName: 'MF + Multi asset + Basic Plan'},
+    {clientRoleId: 4, clientRoleName: 'MF + Multi asset + Advanced Plan'},
+  ];
+
+  bankList = [
+    {bankId: 1, bankName: 'HDFC'},
+    {bankId: 2, bankName: 'SBI'},
+  ];
+
+  public getProofType() {
+    this.enumService.proofType(this.proofType);
+  }
 
   public getRoles() {
     this.enumService.addRoles(this.roleList);
   }
 
-  clientRoleList = [
-    {clientRoleId: 1, clientRoleName: "Mutual Fund (MF) only"},
-    {clientRoleId: 2, clientRoleName: "MF + Multi asset"},
-    {clientRoleId: 3, clientRoleName: "MF + Multi asset + Basic Plan"},
-    {clientRoleId: 4, clientRoleName: "MF + Multi asset + Advanced Plan"},
-  ]
-
   public getClientRole() {
     this.enumService.addClientRole(this.clientRoleList);
   }
 
-  bankList = [
-    {bankId:1, bankName:"HDFC"},
-    {bankId:2, bankName:"SBI"},
-  ]
-  public getBank(){
+  public getBank() {
     this.enumService.addBank(this.bankList);
   }
 
-  
 
   public getDataForSubscriptionEnumService() {
     const obj = {};

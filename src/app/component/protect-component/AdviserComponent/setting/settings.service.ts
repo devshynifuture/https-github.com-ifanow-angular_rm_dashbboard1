@@ -62,6 +62,9 @@ export class SettingsService {
   suspendMember(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.SUSPEND_TEAM_MEMBER, data);
   }
+  reactivateMember(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.REACTIVATE_TEAM_MEMBER, data);
+  }
   
   getAllRoles(data) {
     let httpParams = new HttpParams().set('advisorId', data.advisorId)

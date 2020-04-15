@@ -78,19 +78,27 @@
 
             <div class="row">
               <div class="col-md-12 mb-16 mt-10 p-0 f-14">
-                <mat-checkbox formControlName="termsAgreement"></mat-checkbox>
-                I accept the <span class="text-primary c-p"> terms of service
+                <!--                <mat-form-field>-->
+                <mat-checkbox formControlName="termsAgreement">
+                  I accept the <span class="text-primary c-p"> terms of service
                 </span> & <span class="c-p text-primary"> privacy policy </span>
+                </mat-checkbox>
 
+                <mat-error *ngIf="!signUpForm.value.termsAgreement&&signUpForm.controls.termsAgreement.touched">Please
+                  accept terms and conditions
+                </mat-error>
+                <!--                </mat-form-field>-->
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-12 p-0">
-                <button (click)="createAccount()" class="  bg-primary f-16  text-white w-100 br-4 " mat-button>
+                <!-- <button (click)="createAccount()" class="  bg-primary f-16  text-white w-100 br-4 " mat-button>
                   <img class="iconPosition mobileNone" src="assets/images/svg/login-btn-icon.svg">
                   Create account
-                </button>
+                </button> -->
+                <app-progress-button (btnClick)="createAccount()" class="w-100 br-4" [options]="barButtonOptions">
+                </app-progress-button>
               </div>
             </div>
 

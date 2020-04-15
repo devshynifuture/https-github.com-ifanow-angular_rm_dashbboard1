@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { ValidatorType } from 'src/app/services/util.service';
-import { LoginService } from '../login.service';
-import { Router } from '@angular/router';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, OnInit} from '@angular/core';
+import {AbstractControl, FormBuilder, ValidationErrors, Validators} from '@angular/forms';
+import {ValidatorType} from 'src/app/services/util.service';
+import {LoginService} from '../login.service';
+import {Router} from '@angular/router';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-set-new-password',
@@ -24,9 +25,25 @@ export class SetNewPasswordComponent implements OnInit {
   userData: any;
   constructor(private authService: AuthService, private fb: FormBuilder, private loginService: LoginService, private router: Router, private eventService: EventService) { }
   setNewPasswordForm;
-  validatorType = ValidatorType
+  validatorType = ValidatorType;
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: '',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   ngOnInit() {
     this.userData = window.history.state.userData;
+    (this.userData.buttonFlag) ? this.barButtonOptions.text = "Reset Password" : this.barButtonOptions.text = "Set Password"
     this.setNewPasswordForm = this.fb.group({
       newPassword: [, [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX), this.checkUpperCase(), this.checkLowerCase(), this.checkSpecialCharacter()]],
       confirmPassword: [, [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX)]]
@@ -37,6 +54,7 @@ export class SetNewPasswordComponent implements OnInit {
       return;
     }
     else {
+      this.barButtonOptions.active = true;
       let obj =
       {
         "password": this.setNewPasswordForm.controls.confirmPassword.value,
@@ -46,19 +64,29 @@ export class SetNewPasswordComponent implements OnInit {
         data => {
           console.log(data);
           if (data == 1) {
-            data = this.userData
+            let obj =
+            {
+              advisorId: this.userData.advisorId
+            }
+            this.loginService.sendWelcomeEmail(obj).subscribe(
+              data => {
+                this.barButtonOptions.active = false;
+                console.log(data);
+              },
+              err => this.eventService.openSnackBar(err, "Dismiss")
+            )
             // this.authService.setToken(data.token);
             this.authService.setToken('authTokenInLoginComponnennt');
-            if (data.userType == 1) {
+            if (this.userData.userType == 1) {
               // data.advisorId = data.userId;
-              this.authService.setUserInfo(data);
+              this.authService.setClientData(this.userData);
+              this.authService.setUserInfo(this.userData);
               this.router.navigate(['admin', 'subscription', 'dashboard']);
             } else {
               this.authService.setToken('authTokenInLoginComponnennt');
-
-              data.id = data.clientId;
-              this.authService.setClientData(data);
-              this.authService.setUserInfo(data);
+              this.userData.id = this.userData.clientId;
+              this.authService.setClientData(this.userData);
+              this.authService.setUserInfo(this.userData);
               this.router.navigate(['customer', 'detail', 'overview', 'myfeed']);
             }
           } else {
@@ -69,6 +97,7 @@ export class SetNewPasswordComponent implements OnInit {
             //   opacity: this.errorMsg ? '1' : '0',
             // };
             // this.barButtonOptions.active = false;
+            this.barButtonOptions.active = false;
           }
         })
     }

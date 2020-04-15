@@ -105,7 +105,6 @@
                                 <p class="mb-0 text-custom l-18 roboto mt-12">Tip: You can have different email for different purpose. E.g. for welcome email, for sending reports, taking cosent on advice, transaction confirmation etc.</p>
                                 <div class="col-md-12 p-0 mt-24 text-right">
                                     <button mat-stroked-button class="btn-primary btnNewEmail" (click)="verifyEmail('')">
-                                        <i class="material-icons text-white"> add</i>
                                         ADD NEW
                                     </button>
 
@@ -123,7 +122,7 @@
                                     <ng-container matColumnDef="name">
                                         <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
                                         <td mat-cell *matCellDef="let element" class="br">
-                                            <div class="bar">
+                                            <div class="bar" [ngClass]="{'text-danger': element.emailVerificationStatus == 3, 'text-warning': element.emailVerificationStatus == 2, 'text-success': element.emailVerificationStatus == 1}">
                                                 {{isLoading ? '' : (element.emailVerificationStatus == 2)?'Verification pending':(element.emailVerificationStatus == 1)?'Verified':'Verification failed'}}
                                             </div>
                                         </td>
@@ -165,14 +164,14 @@
                                     <ng-container matColumnDef="position">
                                         <th mat-header-cell class="br w-23" *matHeaderCellDef> Type </th>
                                         <td mat-cell class="br w-23" *matCellDef="let element">
-                                            <div class="bar" [innerHTML]="element.subject"></div>
+                                            <div class="bar" [innerHTML]="element.title"></div>
                                         </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="name">
                                         <th mat-header-cell class="br" *matHeaderCellDef> Description </th>
                                         <td mat-cell class="br" *matCellDef="let element">
-                                            <div class="bar" [innerHTML]="element.body"></div>
+                                            <div class="bar" [innerHTML]="element.description"></div>
                                         </td>
                                     </ng-container>
 

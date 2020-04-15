@@ -7,6 +7,7 @@ import { CustomerService } from '../../../../../customer.service';
 import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-kvp',
@@ -17,6 +18,21 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
   ]
 })
 export class AddKvpComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   validatorType = ValidatorType
   maxDate = new Date();
   inputData: any;
@@ -153,6 +169,7 @@ get getNominee() {
 }
 
 removeNewNominee(item) {
+  this.disabledMember(null, null);
   this.getNominee.removeAt(item);
   if (this.KVPFormScheme.value.getNomineeName.length == 1) {
     this.getNominee.controls['0'].get('sharePercentage').setValue('100');
@@ -289,6 +306,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.KVPFormScheme}
       return;
     }
     else {
+      this.barButtonOptions.active = true;
       let obj =
       {
         "clientId": this.clientId,
@@ -322,29 +340,40 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.KVPFormScheme}
       if (this.flag == 'adviceKVP') {
         this.cusService.getAdviceKvp(adviceObj).subscribe(
           data => this.getAdviceKvpRes(data),
-          err => this.eventService.openSnackBar(err, "Dismiss")
+          err =>{
+            this.barButtonOptions.active = false;
+            this.eventService.openSnackBar(err, "Dismiss")
+          }
         );
       } else if (this.flag == 'editKVP') {
         obj['id'] = this.editApi.id
         this.cusService.editKVP(obj).subscribe(
           data => this.addKVPResponse(data),
-          error => this.eventService.showErrorMessage(error)
+          error =>{
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(error)
+          }
         )
       }
       else {
         this.cusService.addKVP(obj).subscribe(
           data => this.addKVPResponse(data),
-          error => this.eventService.showErrorMessage(error)
+          error =>{
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(error)
+          } 
         )
       }
     }
   }
   getAdviceKvpRes(data) {
+    this.barButtonOptions.active = false;
     console.log(data);
     this.eventService.openSnackBar("KVP is added", "ok")
     this.close(true);
   }
   addKVPResponse(data) {
+    this.barButtonOptions.active = false;
     (this.editApi) ? this.eventService.openSnackBar("Updated successfully!", "Dismiss") : this.eventService.openSnackBar("Added successfully!", "added")
     console.log(data)
     this.close(true);

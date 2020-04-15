@@ -7,6 +7,7 @@ import {AuthService} from 'src/app/auth-service/authService';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MatDialog} from '@angular/material';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { ReplaceUserComponent } from 'src/app/component/protect-component/common-component/replace-user/replace-user.component';
 
 @Component({
   selector: 'app-users',
@@ -70,34 +71,35 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(user) {
+    const newUserList = this.userList.filter(nUser => nUser.id != user.id);
     const dialogData = {
       header: 'DELETE',
       body: 'Are you sure you want to delete this user?',
       body2: 'This cannot be undone.',
-      btnNo: 'DELETE',
-      btnYes: 'CANCEL',
-      negativeMethod: () => {
-        console.log('aborted');
-      },
-      positiveMethod: () => {
-        const deleteFromTrashSubscription = this.settingsService.deleteTeamMember(user.id)
-          .subscribe(response => {
-            console.log(response);
-            this.eventService.openSnackBar("User Deleted");
-            deleteFromTrashSubscription.unsubscribe();
-            this.loadUsers();
-            dialog.close();
-          }, error => {
-            dialog.close();
-            console.error(error)
-            this.eventService.openSnackBar("Error occured");
-          });
-      }
+      userList: newUserList,
+      btnNo: 'CANCEL',
+      btnYes: 'DELETE',
     }
-    const dialog = this.dialog.open(ConfirmDialogComponent, {
+    const dialog = this.dialog.open(ReplaceUserComponent, {
       width: '400px',
       data: dialogData,
       autoFocus: false,
+    });
+    dialog.afterClosed().subscribe(result => {
+      if(result) {
+        this.loader(1);
+        const replaceUser = {
+          deleteUserId: user.adminAdvisorId,
+          replaceUserId: result,
+        }
+        this.settingsService.deleteTeamMember(replaceUser).subscribe(res => {
+          this.eventService.openSnackBar("User deleted successfully");
+          this.loadUsers();
+          this.loader(-1);
+        }, err => {
+          this.eventService.openSnackBar("Error occured");
+        })
+      }
     });
   }
 
@@ -133,6 +135,36 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  reactivateUser(user) {
+    const dialogData = {
+      header: 'REACTIVATE',
+      body: 'Are you sure you want to reactivate this user?',
+      body2: 'This cannot be undone.',
+      btnNo: 'REACTIVATE',
+      btnYes: 'CANCEL',
+      negativeMethod: () => {
+        console.log('aborted');
+      },
+      positiveMethod: () => {
+        const deleteFromTrashSubscription = this.settingsService.reactivateMember(user.id)
+          .subscribe(response => {
+            this.eventService.openSnackBar("User reactivated");
+            deleteFromTrashSubscription.unsubscribe();
+            this.loadUsers();
+            dialog.close();
+          }, error => {
+            dialog.close();
+            console.error(error);
+            this.eventService.openSnackBar("Error occured");
+          });
+      }
+    }
+    const dialog = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+    });
+  }
   loader(countAdder) {
     this.counter += countAdder;
     if (this.counter == 0) {

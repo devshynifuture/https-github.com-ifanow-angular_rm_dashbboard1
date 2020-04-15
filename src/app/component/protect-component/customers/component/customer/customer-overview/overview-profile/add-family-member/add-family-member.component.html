@@ -1,11 +1,11 @@
 <div class="popup-header-fix-50">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20"> ADD FAMILY MEMBERS </h4>
+            <h4 class="mb-0 wrapper-20"> Add Family member</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
+                <i (click)="close()" class="material-icons c-p pt-8 v-middle"> clear</i>
             </div>
         </div>
     </div>
@@ -13,23 +13,20 @@
 
 <div class="pt-80 pb-90 ">
     <!-- add family member -->
-    <div class="pl-20" *ngIf="step==1">
+    <div *ngIf="step==1" class="pl-20">
         <h5 class=" roboto">How would you like to add the family member? </h5>
 
         <div class="row pt-20 c-p">
             <div class="col-md-3 pr-0 ">
-                <div [ngClass]="{'profileBorder-primary': typeOfFamilyMemberAdd=='1','profileBorder': typeOfFamilyMemberAdd=='2' || typeOfFamilyMemberAdd==null}"
-                    class="manuallyBox profileBorder" (click)="addFamilyType('1')">
+                <div (click)="addFamilyType('1')" [ngClass]="{'profileBorder-primary': typeOfFamilyMemberAdd=='1','profileBorder': typeOfFamilyMemberAdd=='2' || typeOfFamilyMemberAdd==null}" class="manuallyBox profileBorder">
                     <mat-radio-group [(ngModel)]="typeOfFamilyMemberAdd" aria-label="Select an option">
                         <mat-radio-button class="f-14 text-light " value="1">Manually</mat-radio-button>
                     </mat-radio-group>
                 </div>
             </div>
-            <div class="col-md-8 pl-0 " (click)="addFamilyType('1')">
-                <div [ngClass]="{'profileBorder-primary': typeOfFamilyMemberAdd=='1','profileBorder': typeOfFamilyMemberAdd=='2' || typeOfFamilyMemberAdd==null}"
-                    class="contentHeight profileBorder">
-                    <p class="text-light f-14 m-0">Chose this option if the family member hasn’t invested through you
-                        before and so the member’s data isn’t currently present in the system.</p>
+            <div (click)="addFamilyType('1')" class="col-md-8 pl-0 ">
+                <div [ngClass]="{'profileBorder-primary': typeOfFamilyMemberAdd=='1','profileBorder': typeOfFamilyMemberAdd=='2' || typeOfFamilyMemberAdd==null}" class="contentHeight profileBorder">
+                    <p class="text-light f-14 m-0">Chose this option if the family member hasn’t invested through you before and so the member’s data isn’t currently present in the system.</p>
                 </div>
 
             </div>
@@ -37,9 +34,7 @@
 
         <div class="row pt-20 c-p">
             <div class="col-md-3 pr-0">
-                <div class="manuallyBox profileBorder"
-                    [ngClass]="{'profileBorder-primary': typeOfFamilyMemberAdd=='2','profileBorder': typeOfFamilyMemberAdd=='1' || typeOfFamilyMemberAdd==null }"
-                    (click)="addFamilyType('2')">
+                <div (click)="addFamilyType('2')" [ngClass]="{'profileBorder-primary': typeOfFamilyMemberAdd=='2','profileBorder': typeOfFamilyMemberAdd=='1' || typeOfFamilyMemberAdd==null }" class="manuallyBox profileBorder">
                     <mat-radio-group [(ngModel)]="typeOfFamilyMemberAdd" aria-label="Select an option">
                         <mat-radio-button class="f-14 text-light l-18" value="2">Merge from <br> existing
                         </mat-radio-button>
@@ -47,12 +42,10 @@
                 </div>
 
             </div>
-            <div class="col-md-8 pl-0 " (click)="addFamilyType('2')">
-                <div class="contentHeight profileBorder"
-                    [ngClass]="{'profileBorder-primary': typeOfFamilyMemberAdd=='2','profileBorder': typeOfFamilyMemberAdd=='1' || typeOfFamilyMemberAdd==null}">
+            <div (click)="addFamilyType('2')" class="col-md-8 pl-0 ">
+                <div [ngClass]="{'profileBorder-primary': typeOfFamilyMemberAdd=='2','profileBorder': typeOfFamilyMemberAdd=='1' || typeOfFamilyMemberAdd==null}" class="contentHeight profileBorder">
                     <p class="text-light f-14 m-0">
-                        If the family member has previously invested through you then the member is likely to be already
-                        present in the system as a client. You can merge the member into this group.
+                        If the family member has previously invested through you then the member is likely to be already present in the system as a client. You can merge the member into this group.
                     </p>
                 </div>
 
@@ -61,12 +54,11 @@
     </div>
 
     <!-- family list -->
-    <div class="pl-20" *ngIf="typeOfFamilyMemberAdd=='1' && step==2">
-        <h5 class="mb-44 roboto">Great! Who’s in your family, Rahul?</h5>
+    <div *ngIf="typeOfFamilyMemberAdd=='1' && step==2" class="pl-20">
+        <h5 class="mb-44 roboto"> Who’s in your family?</h5>
         <div class="photoFamily">
             <div class="row justify-content-center">
-                <div *ngFor="let singleMember of familyMemberList.firstRow" (click)="selectFamilyMembers(singleMember)"
-                    class="col-md-4">
+                <div (click)="selectFamilyMembers(singleMember)" *ngFor="let singleMember of familyMemberList.firstRow" class="col-md-4">
                     <div class="profilePhoto text-center">
                         <div [ngClass]="{'profileBorder-primary':singleMember.selected}" class="borderPhoto ">
                             <mat-checkbox [checked]="singleMember.selected" class="posCheckBox"></mat-checkbox>
@@ -79,8 +71,7 @@
 
 
             <div class="row justify-content-center">
-                <div *ngFor="let singleMember of familyMemberList.secondRow" (click)="selectFamilyMembers(singleMember)"
-                    class="col-md-4">
+                <div (click)="selectFamilyMembers(singleMember)" *ngFor="let singleMember of familyMemberList.secondRow" class="col-md-4">
                     <div class="profilePhoto text-center">
                         <div [ngClass]="{'profileBorder-primary':singleMember.selected}" class="borderPhoto">
                             <mat-checkbox [checked]="singleMember.selected" class="posCheckBox"></mat-checkbox>
@@ -90,7 +81,6 @@
                     </div>
                 </div>
             </div>
-
 
 
             <div class="row justify-content-center">
@@ -104,13 +94,11 @@
                     </div>
                     <div *ngIf="singleMember.selected">
                         <div class="d-flex mt-8 align-items-center justify-content-center">
-                            <button class="btn24 mr-4 c-p" [disabled]="!singleMember.selected" mat-button
-                                (click)="remove(singleMember)">
+                            <button (click)="remove(singleMember)" [disabled]="!singleMember.selected" class="btn24 mr-4 c-p" mat-button>
                                 <i class="material-icons text-black f-20">remove</i>
                             </button>
                             <p class="mb-0 ml-8 mr-8  ">{{singleMember.count}}</p>
-                            <button class="btn24 ml-4 c-p" [disabled]="!singleMember.selected" mat-button
-                                (click)="add(singleMember)">
+                            <button (click)="add(singleMember)" [disabled]="!singleMember.selected" class="btn24 ml-4 c-p" mat-button>
                                 <i class="material-icons f-20 text-black">add</i></button>
                         </div>
                     </div>
@@ -122,7 +110,7 @@
 
     </div>
     <!-- family list name -->
-    <div class="pl-20" *ngIf="typeOfFamilyMemberAdd=='1' && step==3">
+    <div *ngIf="typeOfFamilyMemberAdd=='1' && step==3" class="pl-20">
         <h5 class="mb-44 roboto">Thanks, just a bit more info and we’re done.</h5>
 
         <div class="dateFamilyMember">
@@ -137,14 +125,13 @@
                 </div>
             </div>
             <div [formGroup]="createFamily">
-                <div [formGroup]="singleMember" *ngFor="let singleMember of getFamilyListList.controls;index as i"
-                    class="row mbottom-30">
-                    <div class="col-md-2 pr-0 d-flex align-items-center justify-content-end">
-                        <h5 class="m-0 text-right">{{familyMemberNameList[i]}}</h5>
+                <div *ngFor="let singleMember of getFamilyListList.controls;index as i" [formGroup]="singleMember" class="row mbottom-30">
+                    <div class="col-md-2 pr-0">
+                        <h5 class="m-0 pt-12 text-right">{{familyMemberNameList[i]}}</h5>
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input maxlength="50" #name formControlName="name" matInput class="form-control">
+                            <input #name class="form-control" formControlName="name" matInput maxlength="50">
                             <mat-error>This field is required</mat-error>
                             <mat-hint align="end" class="f-12">{{name.value.length}}/50</mat-hint>
                         </mat-form-field>
@@ -152,9 +139,8 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <mat-form-field class="ba-date">
-                                <input matInput formControlName="date" (click)="picker.open()" class="form-control b-0"
-                                    [matDatepicker]="picker">
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <input (click)="picker.open()" [matDatepicker]="picker" class="form-control b-0" formControlName="date" matInput>
+                                <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
                                 <mat-error>This field is required</mat-error>
                             </mat-form-field>
@@ -166,12 +152,12 @@
 
     </div>
     <!-- family list table -->
-    <div class="pl-20" *ngIf="typeOfFamilyMemberAdd=='2' && step==2">
+    <div *ngIf="typeOfFamilyMemberAdd=='2' && step==2" class="pl-20">
         <div class="row">
             <div class="col-md-8 p-0">
                 <h5 class=" roboto">How would you like to add the family member? </h5>
                 <mat-form-field>
-                    <input type="text" class="form-control" matInput>
+                    <input class="form-control" matInput type="text">
                 </mat-form-field>
             </div>
         </div>
@@ -184,51 +170,51 @@
 
         <div class="row">
             <div class="col-md-12 mamberDetailsTable pl-0">
-                <table mat-table [dataSource]="dataSource" id="table-low" class=" ">
+                <table [dataSource]="dataSource" class=" " id="table-low" mat-table>
 
                     <ng-container matColumnDef="details">
-                        <th mat-header-cell class="br" *matHeaderCellDef> Member details </th>
-                        <td mat-cell class="br" *matCellDef="let element"> {{element.details}} </td>
+                        <th *matHeaderCellDef class="br" mat-header-cell> Member details</th>
+                        <td *matCellDef="let element" class="br" mat-cell> {{element.details}} </td>
                     </ng-container>
 
 
                     <ng-container matColumnDef="status">
-                        <th mat-header-cell class="br" *matHeaderCellDef> Tax status </th>
-                        <td mat-cell class="br" *matCellDef="let element"> {{element.status}} </td>
+                        <th *matHeaderCellDef class="br" mat-header-cell> Tax status</th>
+                        <td *matCellDef="let element" class="br" mat-cell> {{element.status}} </td>
                     </ng-container>
 
 
                     <ng-container matColumnDef="pan">
-                        <th mat-header-cell class="br" *matHeaderCellDef> PAN </th>
-                        <td mat-cell class="br" *matCellDef="let element"> {{element.pan}} </td>
+                        <th *matHeaderCellDef class="br" mat-header-cell> PAN</th>
+                        <td *matCellDef="let element" class="br" mat-cell> {{element.pan}} </td>
                     </ng-container>
 
 
                     <ng-container matColumnDef="relation">
-                        <th mat-header-cell class="br" *matHeaderCellDef> Relation </th>
-                        <td mat-cell class="br" *matCellDef="let element"> {{element.relation}} </td>
+                        <th *matHeaderCellDef class="br" mat-header-cell> Relation</th>
+                        <td *matCellDef="let element" class="br" mat-cell> {{element.relation}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="gender">
-                        <th mat-header-cell class="br" *matHeaderCellDef> Gender </th>
-                        <td mat-cell class="br" *matCellDef="let element"> {{element.gender}} </td>
+                        <th *matHeaderCellDef class="br" mat-header-cell> Gender</th>
+                        <td *matCellDef="let element" class="br" mat-cell> {{element.gender}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="add">
-                        <th mat-header-cell class="br" *matHeaderCellDef> Add </th>
-                        <td mat-cell class="text-primary br" *matCellDef="let element"> {{element.add}} </td>
+                        <th *matHeaderCellDef class="br" mat-header-cell> Add</th>
+                        <td *matCellDef="let element" class="text-primary br" mat-cell> {{element.add}} </td>
                     </ng-container>
 
 
                     <ng-container matColumnDef="remove">
-                        <th mat-header-cell class="br" *matHeaderCellDef> Remove </th>
-                        <td mat-cell class="br text-center" *matCellDef="let element">
+                        <th *matHeaderCellDef class="br" mat-header-cell> Remove</th>
+                        <td *matCellDef="let element" class="br text-center" mat-cell>
                             <img src="/assets/images/svg/cancel-icon.svg">
                         </td>
                     </ng-container>
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
                 </table>
 
             </div>
@@ -238,131 +224,131 @@
     <!-- family member family details -->
 
     <!-- <div class="row">
-        <div class="col-md-8 pl-0">
-            <p class="f-500 mt-40 mb-4 f-16 roboto">Following are the details of Aditya Rahul Jain</p>
+      <div class="col-md-8 pl-0">
+          <p class="f-500 mt-40 mb-4 f-16 roboto">Following are the details of Aditya Rahul Jain</p>
 
-            <ul class="detalisUl">
-                <li class="row bb">
-                    <div class="col-md-6 p-0 text-left">
-                        <p class="m-0 f-14"> Full name </p>
-                    </div>
+          <ul class="detalisUl">
+              <li class="row bb">
+                  <div class="col-md-6 p-0 text-left">
+                      <p class="m-0 f-14"> Full name </p>
+                  </div>
 
-                    <div class="col-md-6 p-0 text-right">
-                        <p class="m-0 f-14"> Aditya Rahul Jain </p>
-                    </div>
-                </li>
+                  <div class="col-md-6 p-0 text-right">
+                      <p class="m-0 f-14"> Aditya Rahul Jain </p>
+                  </div>
+              </li>
 
-                <li class="row bb">
-                    <div class="col-md-6 p-0 text-left">
-                        <p class="m-0 f-14"> Tax status </p>
-                    </div>
+              <li class="row bb">
+                  <div class="col-md-6 p-0 text-left">
+                      <p class="m-0 f-14"> Tax status </p>
+                  </div>
 
-                    <div class="col-md-6 p-0 text-right">
-                        <p class="m-0 f-14"> Individual </p>
-                    </div>
-                </li>
-
-
-                <li class="row bb">
-                    <div class="col-md-6 p-0 text-left">
-                        <p class="m-0 f-14"> Date of birth </p>
-                    </div>
-
-                    <div class="col-md-6 p-0 text-right">
-                        <p class="m-0 f-14"> 23/09/2010 </p>
-                    </div>
-                </li>
+                  <div class="col-md-6 p-0 text-right">
+                      <p class="m-0 f-14"> Individual </p>
+                  </div>
+              </li>
 
 
-                <li class="row bb">
-                    <div class="col-md-6 p-0 text-left">
-                        <p class="m-0 f-14"> PAN </p>
-                    </div>
+              <li class="row bb">
+                  <div class="col-md-6 p-0 text-left">
+                      <p class="m-0 f-14"> Date of birth </p>
+                  </div>
 
-                    <div class="col-md-6 p-0 text-right">
-                        <p class="m-0 f-14"> AANDH9075G </p>
-                    </div>
-                </li>
-
-
-                <li class="row bb">
-                    <div class="col-md-6 p-0 text-left">
-                        <p class="m-0 f-14"> Mobile number </p>
-                    </div>
-
-                    <div class="col-md-6 p-0 text-right">
-                        <p class="m-0 f-14"> - </p>
-                    </div>
-                </li>
+                  <div class="col-md-6 p-0 text-right">
+                      <p class="m-0 f-14"> 23/09/2010 </p>
+                  </div>
+              </li>
 
 
-                <li class="row bb">
-                    <div class="col-md-6 p-0 text-left">
-                        <p class="m-0 f-14"> Email </p>
-                    </div>
+              <li class="row bb">
+                  <div class="col-md-6 p-0 text-left">
+                      <p class="m-0 f-14"> PAN </p>
+                  </div>
 
-                    <div class="col-md-6 p-0 text-right">
-                        <p class="m-0 f-14"> - </p>
-                    </div>
-                </li>
-            </ul>
+                  <div class="col-md-6 p-0 text-right">
+                      <p class="m-0 f-14"> AANDH9075G </p>
+                  </div>
+              </li>
 
-        </div>
-    </div> -->
+
+              <li class="row bb">
+                  <div class="col-md-6 p-0 text-left">
+                      <p class="m-0 f-14"> Mobile number </p>
+                  </div>
+
+                  <div class="col-md-6 p-0 text-right">
+                      <p class="m-0 f-14"> - </p>
+                  </div>
+              </li>
+
+
+              <li class="row bb">
+                  <div class="col-md-6 p-0 text-left">
+                      <p class="m-0 f-14"> Email </p>
+                  </div>
+
+                  <div class="col-md-6 p-0 text-right">
+                      <p class="m-0 f-14"> - </p>
+                  </div>
+              </li>
+          </ul>
+
+      </div>
+  </div> -->
 
 
     <!-- <p class="text-danger f-16 mt-20">
-        What is Aditya’s relationship with Rahul Jain?
-    </p>
+      What is Aditya’s relationship with Rahul Jain?
+  </p>
 
 
-    <div class="row">
-        <div class="col-md-3 form-group pl-0">
-            <mat-form-field>
-                <mat-select class="form-control">
-                    <mat-option>
-                        Son
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-    </div>
+  <div class="row">
+      <div class="col-md-3 form-group pl-0">
+          <mat-form-field>
+              <mat-select class="form-control">
+                  <mat-option>
+                      Son
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
+      </div>
+  </div>
 
 
-    <div class="row">
-        <div class="col-md-3 form-group pl-0">
-            <mat-form-field>
-                <mat-select class="form-control">
-                    <mat-option>
-                        Male
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-    </div>
+  <div class="row">
+      <div class="col-md-3 form-group pl-0">
+          <mat-form-field>
+              <mat-select class="form-control">
+                  <mat-option>
+                      Male
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
+      </div>
+  </div>
 
 </div>
 
- -->
+-->
 
     <div class="bottom-fixed-50 wrapper-12">
         <div class="row">
             <div class="col-md-4">
-                <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
+                <h5 (click)="close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
             </div>
+
             <div class="col-md-8 right text-right">
-                <button class="btn-bottom br-0 text-inherit" *ngIf="step==1 && typeOfFamilyMemberAdd=='1'"
-                    (click)="selectFamilyMembersCount()" mat-button>Proceed
+                <button (click)="selectFamilyMembersCount()" *ngIf="step==1 && typeOfFamilyMemberAdd=='1'" class="btn-bottom br-0 text-inherit" mat-button>Proceed
                 </button>
-                <button class="btn-bottom br-0 text-inherit" *ngIf="step==1 && typeOfFamilyMemberAdd=='2'"
-                    (click)="next()" mat-button>Proceed
+                <button (click)="next()" *ngIf="step==1 && typeOfFamilyMemberAdd=='2'" class="btn-bottom br-0 text-inherit" mat-button>Proceed
                 </button>
-                <button class="btn-bottom br-0 text-inherit" *ngIf="step==2" (click)="createFamilyMember()"
-                    mat-button>Next
+                <button (click)="createFamilyMember()" *ngIf="step==2" class="btn-bottom br-0 text-inherit" mat-button>Next
                 </button>
-                <button class="btn-bottom br-0 text-inherit" *ngIf="step==3" (click)="saveFamilyMembers()"
-                    mat-button>Save
-                </button>
+
+                <app-progress-button (btnClick)="saveFamilyMembers()" *ngIf="step==3" [options]="barButtonOptions" class="br-0 text-inherit mr-12">
+                </app-progress-button>
+
             </div>
         </div>
     </div>
+</div>

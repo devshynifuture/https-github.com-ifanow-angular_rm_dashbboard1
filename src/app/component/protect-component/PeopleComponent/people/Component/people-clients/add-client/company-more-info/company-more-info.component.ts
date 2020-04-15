@@ -7,6 +7,7 @@ import { ValidatorType } from '../../../../../../../../services/util.service';
 import { DatePipe } from '@angular/common';
 import { EventEmitter, Output } from '@angular/core/src/metadata/*';
 import { AuthService } from '../../../../../../../../auth-service/authService';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-company-more-info',
@@ -21,7 +22,21 @@ export class CompanyMoreInfoComponent implements OnInit {
   invCategory = '1';
   validatorType = ValidatorType;
   prevData;
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & NEXT',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   moreInfoForm;
   @Input() fieldFlag;
   @Output() tabChange = new EventEmitter();
@@ -82,7 +97,9 @@ export class CompanyMoreInfoComponent implements OnInit {
           this.createMoreInfoForm(this.moreInfoData);
         }
         console.log(responseData);
-      }, err => this.eventService.openSnackBar(err, 'Dismiss')
+      }, err => {
+      console.error(err)
+    }
     );
   }
 
@@ -105,6 +122,7 @@ export class CompanyMoreInfoComponent implements OnInit {
         email: emailId
       });
     }
+    this.barButtonOptions.active = true;
     const obj = {
       emailList,
       displayName: this.moreInfoForm.controls.displayName.value,
@@ -118,16 +136,18 @@ export class CompanyMoreInfoComponent implements OnInit {
       roleId: 0,
       genderId: this.moreInfoForm.value.gender,
       aadhaarNumber: this.moreInfoForm.controls.adhaarNo.value,
-      dateOfBirth: this.datePipe.transform(this.moreInfoForm.value.dateOfBirth, 'dd/MM/yyyy'),
+      dateOfBirth: this.datePipe.transform(this.moreInfoForm.value.dateOfBirth._d, 'dd/MM/yyyy'),
       userId: this.moreInfoData.clientId ? this.moreInfoData.clientId : this.prevData.clientId,
       mobileList,
       name: this.moreInfoForm.value.name,
       bioRemarkId: this.moreInfoData.bioRemarkId,
       remarks: this.moreInfoForm.controls.myNotes.value,
     };
+    this.barButtonOptions.active = true;
     if (this.moreInfoData.companyPersonDetailId) {
       this.peopleService.updateCompanyPersonDetail(obj).subscribe(
         data => {
+          this.barButtonOptions.active = false;
           console.log(data);
           if (data) {
             (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
@@ -135,15 +155,22 @@ export class CompanyMoreInfoComponent implements OnInit {
             this.eventService.openSnackBar('Unknown error', 'Dismiss');
           }
         },
-        err => this.eventService.openSnackBar(err, 'Dismiss')
+        err => {
+          this.eventService.openSnackBar(err, 'Dismiss');
+          this.barButtonOptions.active = false;
+        }
       );
     } else {
       this.peopleService.saveCompanyPersonDetail(obj).subscribe(
         data => {
           console.log(data);
+          this.barButtonOptions.active = false;
           (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
         },
-        err => this.eventService.openSnackBar(err, 'Dismiss')
+        err => {
+          this.eventService.openSnackBar(err, 'Dismiss');
+          this.barButtonOptions.active = false;
+        }
       );
     }
   }

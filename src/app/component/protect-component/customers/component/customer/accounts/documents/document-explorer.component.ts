@@ -1,20 +1,20 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatBottomSheet, MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
-import { EventService } from 'src/app/Data-service/event.service';
-import { Router } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { CustomerService } from '../../customer.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { HttpHeaders } from '@angular/common/http';
-import { DocumentNewFolderComponent } from '../../../common-component/document-new-folder/document-new-folder.component';
-import { HttpService } from 'src/app/http-service/http-service';
-import { CopyDocumentsComponent } from '../../../common-component/copy-documents/copy-documents.component';
-import { ViewActivityComponent } from './view-activity/view-activity.component';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { EmailQuotationComponent } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/email-quotation/email-quotation.component';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {MatBottomSheet, MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {BottomSheetComponent} from '../../../common-component/bottom-sheet/bottom-sheet.component';
+import {EventService} from 'src/app/Data-service/event.service';
+import {Router} from '@angular/router';
+import {FormBuilder} from '@angular/forms';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {CustomerService} from '../../customer.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {HttpHeaders} from '@angular/common/http';
+import {DocumentNewFolderComponent} from '../../../common-component/document-new-folder/document-new-folder.component';
+import {HttpService} from 'src/app/http-service/http-service';
+import {CopyDocumentsComponent} from '../../../common-component/copy-documents/copy-documents.component';
+import {ViewActivityComponent} from './view-activity/view-activity.component';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {EmailQuotationComponent} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/email-quotation/email-quotation.component';
 
 @Component({
   selector: 'app-document-explorer',
@@ -24,21 +24,21 @@ import { EmailQuotationComponent } from 'src/app/component/protect-component/Adv
 
 export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
   fileType = [
-    { id: 1, name: 'PDF' },
-    { id: 2, name: 'DOC' },
-    { id: 3, name: 'XLSX' },
-    { id: 4, name: 'MP3' },
-    { id: 5, name: 'MP4' },
-    { id: 6, name: 'WAV' },
-    { id: 7, name: 'ZIP' },
-    { id: 8, name: 'BIN' },
-    { id: 9, name: 'ISO' },
-    { id: 10, name: 'JPEG' },
-    { id: 11, name: 'JPG' },
-    { id: 12, name: 'TXT' },
-    { id: 13, name: 'HTML' },
+    {id: 1, name: 'PDF'},
+    {id: 2, name: 'DOC'},
+    {id: 3, name: 'XLSX'},
+    {id: 4, name: 'MP3'},
+    {id: 5, name: 'MP4'},
+    {id: 6, name: 'WAV'},
+    {id: 7, name: 'ZIP'},
+    {id: 8, name: 'BIN'},
+    {id: 9, name: 'ISO'},
+    {id: 10, name: 'JPEG'},
+    {id: 11, name: 'JPG'},
+    {id: 12, name: 'TXT'},
+    {id: 13, name: 'HTML'},
   ];
   displayedColumns: string[] = ['emptySpace', 'name', 'lastModi', 'type', 'size', 'icons'];
   dataSource = ELEMENT_DATA;
@@ -68,9 +68,9 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   countFile: any;
 
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
-    private event: EventService, private router: Router, private fb: FormBuilder,
-    private custumService: CustomerService, public subInjectService: SubscriptionInject,
-    public utils: UtilService, public dialog: MatDialog) {
+              private event: EventService, private router: Router, private fb: FormBuilder,
+              private custumService: CustomerService, public subInjectService: SubscriptionInject,
+              public utils: UtilService, public dialog: MatDialog) {
   }
 
   showDots = false;
@@ -102,10 +102,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   openDialog(element, value): void {
-    this.selectedFolder = element
+    this.selectedFolder = element;
     const dialogRef = this.dialog.open(DocumentNewFolderComponent, {
       width: '30%',
-      data: { name: value, animal: element }
+      data: {name: value, animal: element}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -128,9 +128,11 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     });
 
   }
+
   getSharebleLink(element) {
-    this.downlodFiles(element,'getSharebleLink');
+    this.downloadFiles(element, 'getSharebleLink');
   }
+
   // openDocumentPreview() {
   //   // const obj = {
   //   //   documentRepositoryId: this._upperData.documentData.documentRepositoryId
@@ -171,27 +173,30 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   // }
   copyFilesRes(data) {
     this.eventService.openSnackBar('copy file successfully', 'Dismiss');
-    this.reset()
+    this.reset();
   }
+
   moveFilesRes(data) {
     this.eventService.openSnackBar('move file successfully', 'Dismiss');
-    this.getAllFileList('Documents')
-    this.reset()
+    this.getAllFileList('Documents');
+    this.reset();
   }
+
   moveFolderRes(data) {
     this.eventService.openSnackBar('move folder successfully', 'Dismiss');
-    this.getAllFileList('Documents')
-    this.reset()
+    this.getAllFileList('Documents');
+    this.reset();
   }
+
   openDialogCopy(element, value): void {
     const dialogRef = this.dialog.open(CopyDocumentsComponent, {
       width: '40%',
-      data: { name: value, animal: element }
+      data: {name: value, animal: element}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
-        return
+        return;
       }
       console.log('The dialog was closed', element);
       this.getInnerDoc = result;
@@ -266,7 +271,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   newFolderRes(data) {
-    console.log('helooooo')
+    console.log('helooooo');
     // if(data==204){
     //   this.eventService.openSnackBar('Folder name already exist', 'Ok');
     // }
@@ -329,8 +334,8 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     this.getSort = this.dataToCommon;
     this.dataToCommon.push.apply(this.dataToCommon, this.allFiles);
     if (this.dataToCommon.openFolderId == undefined || this.openFolderName.length == 0) {
-      Object.assign(this.dataToCommon, { openFolderNm: value.folderName });
-      Object.assign(this.dataToCommon, { openFolderId: value.id });
+      Object.assign(this.dataToCommon, {openFolderNm: value.folderName});
+      Object.assign(this.dataToCommon, {openFolderId: value.id});
       this.parentId = (value.id == undefined) ? 0 : value.id;
       this.openFolderName.push(this.dataToCommon);
       this.valueFirst = this.openFolderName[0];
@@ -339,7 +344,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         this.dataToCommon.forEach(element => {
           if (element.fileName) {
             var type = /^.+\.([^.]+)$/.exec(element.fileName);
-            element.fileType = (type == null) ? "" : type[1];
+            element.fileType = (type == null) ? '' : type[1];
           }
         });
         this.commonFileFolders = this.dataToCommon;
@@ -382,8 +387,8 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     this.showResult = true;
     const obj = [];
     console.log(data);
-    Object.assign(obj, { files: data.SEARCHED_FILE });
-    Object.assign(obj, { folders: data.SEARCHED_FOLDER });
+    Object.assign(obj, {files: data.SEARCHED_FILE});
+    Object.assign(obj, {folders: data.SEARCHED_FOLDER});
     if (data.SEARCHED_FILE.length == 0 && data.SEARCHED_FILE.length == 0) {
       this.noResult = true;
     } else {
@@ -459,7 +464,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     }
   }
 
-  downlodFiles(element,value) {
+  downloadFiles(element, value) {
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
@@ -467,15 +472,15 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       fileName: element.fileName
     };
     this.custumService.downloadFile(obj).subscribe(
-      data => this.downloadFileRes(data,value)
+      data => this.downloadFileRes(data, value)
     );
   }
 
-  downloadFileRes(data,value) {
+  downloadFileRes(data, value) {
     console.log(data);
-    if(value == 'getSharebleLink'){
-      console.log('getSharebleLink',data)
-    }else{
+    if (value == 'getSharebleLink') {
+      console.log('getSharebleLink', data);
+    } else {
       window.open(data);
     }
   }
@@ -720,7 +725,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
     });
     this.getAllFileList(this.valueTab);
-    this._bottomSheet.dismiss()
+    this._bottomSheet.dismiss();
     this.eventService.openSnackBar('Uploaded successfully', 'Dismiss');
   }
 }
@@ -735,10 +740,10 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { emptySpace: '', name: 'Identity & address proofs', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
-  { emptySpace: '', name: 'Accounts', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
-  { emptySpace: '', name: 'Planning', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
-  { emptySpace: '', name: 'Transaction', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
-  { emptySpace: '', name: 'Agreements & invoices', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-' },
+  {emptySpace: '', name: 'Identity & address proofs', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
+  {emptySpace: '', name: 'Accounts', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
+  {emptySpace: '', name: 'Planning', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
+  {emptySpace: '', name: 'Transaction', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
+  {emptySpace: '', name: 'Agreements & invoices', lastModi: '21/08/2019 12:35 PM', type: '-', size: '-'},
 
 ];

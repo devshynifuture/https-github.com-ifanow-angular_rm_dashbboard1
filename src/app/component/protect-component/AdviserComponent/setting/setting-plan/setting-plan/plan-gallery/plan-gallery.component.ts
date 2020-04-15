@@ -7,6 +7,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PlanService } from 'src/app/component/protect-component/customers/component/customer/plan/plan.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-plan-gallery',
@@ -14,7 +15,6 @@ import { PlanService } from 'src/app/component/protect-component/customers/compo
   styleUrls: ['./plan-gallery.component.scss']
 })
 export class PlanGalleryComponent implements OnInit {
-  element: any;
   advisorId: any;
   defaultGallery: any;
   userId: any;
@@ -28,9 +28,7 @@ export class PlanGalleryComponent implements OnInit {
 
   ngOnInit() {
     this.getDefault()
-
   }
-
 
   getDefault() {
     let advisorObj = {
@@ -53,22 +51,38 @@ export class PlanGalleryComponent implements OnInit {
       data: { bank: gallery, animal: '' }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result == undefined) {
-        return
+      if (result) {
+        this.getDefault()
       }
-      console.log('The dialog was closed');
-      this.getDefault()
-      this.element = result;
-      console.log('result -==', this.element)
-      let obj = {
-        emailAddress: this.element,
-        userId: this.userId
+    });
+  }
+
+  resetGallery(data) {
+    const dialogData = {
+      data: 'Gallery',
+      header: 'RESET',
+      body: 'Are you sure you want to reset this image?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'RESET',
+      positiveMethod: () => {
+        this.orgSetting.resetGallery({id:data.id,advisorId:this.advisorId,imageURL:null,goalTypeId:data.goalTypeId}).subscribe(
+          data => {
+            this.eventService.openSnackBar("Image resetted successfully!", "Dismiss");
+            this.getDefault()
+            dialogRef.close();
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+      },
+      negativeMethod: () => {
       }
-      // this.orgSetting.addEmailVerfify(obj).subscribe(
-      //   data => this.addEmailVerfifyRes(data),
-      //   err => this.eventService.openSnackBar(err, "Dismiss")
-      // );
-      //  this.bankDetailsSend.emit(result);
+    };
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
     });
   }
 }

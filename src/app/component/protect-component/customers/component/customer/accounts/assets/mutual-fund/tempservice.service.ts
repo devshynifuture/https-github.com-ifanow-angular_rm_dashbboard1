@@ -23,6 +23,7 @@ export class TempserviceService {
   }
 
   getCategoryForTransaction(mutualFundList, type) { // first table category wise
+    let isSummaryTabValues=true;
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ?
       reportType = 'subCategoryName' : (type[0].name == 'Category wise') ?
@@ -35,7 +36,7 @@ export class TempserviceService {
       let totalObj: any = {};
       catObj[key].forEach((singleData) => {
         // this.totalObj = this.this.getEachTotalValue(singleData);
-        totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData), totalObj, {total: true});
+        totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData,isSummaryTabValues), totalObj, {total: true});
         Object.assign(totalObj, {categoryName: key});
       });
       newArray.push(totalObj);
@@ -77,7 +78,7 @@ export class TempserviceService {
         singleData.mutualFundTransactions.forEach((ele) => {
           filteredData.push(ele);
         });
-        totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData), totalObj, {total: true});
+        totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData,false), totalObj, {total: true});
         filteredData.push(totalObj);
       });
     });
@@ -89,7 +90,7 @@ export class TempserviceService {
   getFinalTotalValue(data) { // grand total values
     let totalValue: any = {};
     data.forEach(element => {
-      totalValue = this.addTwoObjectValues(this.getEachTotalValue(element), totalValue, {total: true});
+      totalValue = this.addTwoObjectValues(this.getEachTotalValue(element,true), totalValue, {total: true});
     });
 
     return totalValue;
@@ -169,7 +170,7 @@ export class TempserviceService {
     for (const [key, value] of Object.entries(primaryObject)) {
       if (exceptionKeys[key]) {
       } else {
-        if (primaryObject[key] && secondary[key]) {
+        if ((primaryObject[key] || primaryObject[key]==0) && (secondary[key]) || secondary[key]==0) {
           primaryObject[key] = value + secondary[key];
         }
       }
@@ -178,7 +179,7 @@ export class TempserviceService {
     return primaryObject;
   }
 
-  getEachTotalValue(data) { // get total value as per category for transaction
+  getEachTotalValue(data,isSummaryTabValues) { // get total value as per category for transaction
     let currentValue = 0;
     let absReturn = 0;
     let xirr = 0;
@@ -191,20 +192,36 @@ export class TempserviceService {
     let totalAmount = 0;
     let totalGain = 0;
     let allocationPer = 0;
-    data.mutualFundTransactions.forEach(ele => {
-      totalTransactionAmt += (ele.amount) ? ele.amount : 0;
-      totalUnit += (ele.unit) ? ele.unit : 0;
-      totalNav += (ele.transactionNav) ? ele.transactionNav : 0;
-      balanceUnit += (ele.balanceUnits) ? ele.balanceUnits : 0;
-      currentValue += (ele.currentValue) ? ele.currentValue : 0;
-      dividendPayout += (ele.dividendPayout) ? ele.dividendPayout : 0;
-      dividendReinvest += (ele.dividendReinvest) ? ele.dividendReinvest : 0;
-      totalAmount += (ele.totalAmount) ? ele.totalAmount : 0;
-      totalGain += (ele.gain) ? ele.gain : 0;
-      absReturn += (ele.absReturn) ? ele.absReturn : 0;
-      xirr += (ele.xirr) ? ele.xirr : 0;
-      allocationPer += (ele.allocationPercent) ? ele.allocationPercent : 0;
-    });
+    if(!isSummaryTabValues){
+      data.mutualFundTransactions.forEach(ele => {
+        totalTransactionAmt += (ele.amount) ? ele.amount : 0;
+        totalUnit += (ele.unit) ? ele.unit : 0;
+        totalNav += (ele.transactionNav) ? ele.transactionNav : 0;
+        balanceUnit += (ele.balanceUnits) ? ele.balanceUnits : 0;
+        currentValue += (ele.currentValue) ? ele.currentValue : 0;
+        dividendPayout += (ele.dividendPayout) ? ele.dividendPayout : 0;
+        dividendReinvest += (ele.dividendReinvest) ? ele.dividendReinvest : 0;
+        totalAmount += (ele.totalAmount) ? ele.totalAmount : 0;
+        totalGain += (ele.gain) ? ele.gain : 0;
+        absReturn += (ele.absReturn) ? ele.absReturn : 0;
+        xirr += (ele.xirr) ? ele.xirr : 0;
+        allocationPer += (ele.allocationPercent) ? ele.allocationPercent : 0;
+      });
+    }else{
+      totalTransactionAmt += (data.amountInvested) ? data.amountInvested : 0;
+      totalUnit += (data.unit) ? data.unit : 0;
+      totalNav += (data.transactionNav) ? data.transactionNav : 0;
+      balanceUnit += (data.balanceUnits) ? data.balanceUnits : 0;
+      currentValue += (data.currentValue) ? data.currentValue : 0;
+      dividendPayout += (data.dividendPayout) ? data.dividendPayout : 0;
+      dividendReinvest += (data.dividendReinvest) ? data.dividendReinvest : 0;
+      totalAmount += (data.totalAmount) ? data.totalAmount : 0;
+      totalGain += (data.unrealizedGain) ? data.unrealizedGain : 0;
+      absReturn += (data.absoluteReturn) ? data.absoluteReturn : 0;
+      xirr += (data.xirr || data.xirr==0)?data.xirr:0;
+      allocationPer += (data.allocatedPercentage) ? data.allocatedPercentage : 0;
+    }
+  
     const obj = {
       total: 'Total',
       totalTransactionAmt,

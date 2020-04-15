@@ -1,6 +1,6 @@
 <div class="row bb-1 popup-header-fix w-70">
     <div class="col-md-10 p-0">
-        <h4 class="mb-0 l-22 wrapper-20">ORGANIZATION PROFILE</h4>
+        <h4 class="mb-0 l-22 wrapper-20">Organization profile</h4>
     </div>
     <div class="col-md-2 text-right">
         <i class="material-icons pt-20 c-p pr-16" (click)="Close(null)">
@@ -21,6 +21,7 @@
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                                 <input matInput formControlName="companyName" class="form-control" placeholder="Example Inc.">
+                                <mat-hint align="end" class="f-12">{{orgProfile.get('companyName').value.length}}/50</mat-hint>
                                 <mat-error class="f-12 pt-4">
                                     This field is required
                                 </mat-error>
@@ -50,6 +51,7 @@
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                                 <input matInput formControlName="mobileNo" class="form-control" placeholder="Enter mobile no">
+                                <mat-hint align="end" class="f-12">{{orgProfile.get('mobileNo').value.length}}/10</mat-hint>
                                 <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('mobileNo').errors?.required">This field is required</mat-error>
                                 <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('mobileNo').errors?.pattern || orgProfile.get('mobileNo').errors?.minlength || orgProfile.get('mobileNo').errors?.maxlength">
                                     Please enter valid mobile number</mat-error>
@@ -131,8 +133,7 @@
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                                 <input (focusout)="getPostalPin($event.target.value)" class="form-control br-0 text-left" formControlName="pincode" matInput type="text" placeholder="Enter pin code">
-                                <mat-hint align="end" class="f-12">{{orgProfile.get('pincode').value.length}}/6
-                                </mat-hint>
+                                <mat-hint align="end" class="f-12">{{orgProfile.get('pincode').value.length}}/6</mat-hint>
                                 <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('pincode').errors?.required">This field is required</mat-error>
                                 <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('pincode').errors?.pattern || orgProfile.get('pincode').errors?.minlength || orgProfile.get('pincode').errors?.maxlength">
                                     Please enter valid pincode number</mat-error>
@@ -186,7 +187,7 @@
                     <div class="image-cropper">
                         <app-image-cropper [imageChangedEvent]="imageUploadEvent" [aspectRatio]="256/64" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)"></app-image-cropper>
                     </div>
-                    <div class="profile-img" [hidden]="!showCropper">
+                    <div class="profile-web-app-img" [hidden]="!showCropper">
                         <img [src]="finalImage" alt="cropped Image" class="w-100">
                     </div>
                     <div class="row pt-24">
@@ -197,7 +198,7 @@
                     <input type="file" #chooseImage (change)="uploadImageForCorping($event)" hidden>
                 </div>
                 <div class="col-md-5" *ngIf="!cropImage">
-                    <div class="profile-img">
+                    <div class="profile-web-app-img">
                         <img [src]="profileImg" class="w-100">
                     </div>
                     <div class="row pt-24">
@@ -219,7 +220,7 @@
                         <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)"></app-image-cropper>
                     </div>
                     <div class="profile-img" [hidden]="!showCropper">
-                        <img [src]="finalImage" alt="cropped Image" class="w-100">
+                        <img [src]="finalImage" alt="cropped Image">
                     </div>
                     <div class="row pt-24">
                     </div>
@@ -230,7 +231,7 @@
                 </div>
                 <div class="col-md-5" *ngIf="!cropImage">
                     <div class="profile-img">
-                        <img [src]="reportImg" class="w-100">
+                        <img [src]="reportImg">
                     </div>
                     <div class="row pt-24">
                         <button mat-stroked-button class="btn-primary" (click)="cropImage = true">EDIT IMAGE</button>
@@ -245,9 +246,10 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(null)">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveCurrentPage()">SAVE & {{selectedTab == 2 ? 'CLOSE' : 'NEXT'}}
-            </button>
-        </div>
+      <div class="col-md-8 right text-right">
+        <button (click)="saveCurrentPage()" class="btn-bottom br-0 text-inherit" mat-button>SAVE &
+          {{selectedTab == 2 ? 'CLOSE' : 'NEXT'}}
+        </button>
+      </div>
     </div>
 </div>

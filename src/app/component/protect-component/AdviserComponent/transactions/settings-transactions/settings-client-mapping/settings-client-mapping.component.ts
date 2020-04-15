@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { AddClientMappingComponent } from './add-client-mapping/add-client-mapping.component';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
-import { OnlineTransactionService } from '../../online-transaction.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatTableDataSource, MatSort } from '@angular/material';
-import { AuthService } from 'src/app/auth-service/authService';
-import { TransactionEnumService } from '../../transaction-enum.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {AddClientMappingComponent} from './add-client-mapping/add-client-mapping.component';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
+import {OnlineTransactionService} from '../../online-transaction.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {AuthService} from 'src/app/auth-service/authService';
+import {TransactionEnumService} from '../../transaction-enum.service';
 
 @Component({
   selector: 'app-settings-client-mapping',
@@ -33,90 +33,97 @@ export class SettingsClientMappingComponent implements OnInit {
   isLoading: any;
   advisorId: any;
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
 
-  constructor(public dialog: MatDialog, private onlineTransact: OnlineTransactionService, private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) { }
+  constructor(public dialog: MatDialog, private onlineTransact: OnlineTransactionService, private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) {
+  }
 
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId()
+    this.advisorId = AuthService.getAdvisorId();
     this.dataSource.data = [{}, {}, {}];
     this.isLoading = true;
     this.getFilterOptionData();
   }
+
   getFilterOptionData() {
     let obj = {
       advisorId: this.advisorId,
       onlyBrokerCred: true
-    }
-    console.log('encode', obj)
+    };
+    console.log('encode', obj);
     this.onlineTransact.getBSECredentials(obj).subscribe(
       data => this.getFilterOptionDataRes(data)
     );
   }
+
   getFilterOptionDataRes(data) {
     console.log(data);
-    if(data){
+    if (data) {
       this.filterData = TransactionEnumService.setPlatformEnum(data);
       this.type = '1';
       this.selectedBrokerCode = data[0];
       this.selectedPlatform = data[0];
       this.dataSource.data = [{}, {}, {}];
       this.sortDataFilterWise();
-    }else{
+    } else {
       this.isLoading = false;
       this.dataSource.data = [];
     }
-   
+
   }
 
   getMappedData() {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     let obj =
-    {
-      advisorId: this.advisorId,
-      tpUserCredentialId: this.selectedBrokerCode.id,
-      aggregatorType: this.selectedPlatform.aggregatorType
-    }
+      {
+        advisorId: this.advisorId,
+        tpUserCredentialId: this.selectedBrokerCode.id,
+        aggregatorType: this.selectedPlatform.aggregatorType
+      };
     this.tranService.getMapppedClients(obj).subscribe(
       data => {
         console.log(data);
         if (data) {
           this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
           this.dataSource.sort = this.sort;
-        }else{
+        } else {
           this.isLoading = false;
-         this.dataSource.data = [];
+          this.dataSource.data = [];
         }
         this.isLoading = false;
       },
       err => {
         this.isLoading = false;
       }
-    )
+    );
   }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.dataSource.sort = this.sort;
   }
+
   chnageBrokerCode(value) {
     this.selectedPlatform = value;
     this.sortDataFilterWise();
   }
+
   changePlatform(value) {
-    this.selectedBrokerCode = value
+    this.selectedBrokerCode = value;
     this.sortDataFilterWise();
   }
+
   getUnmappedData() {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     let obj =
-    {
-      advisorId: this.advisorId,
-      tpUserCredentialId: this.selectedBrokerCode.id,
-      aggregatorType: this.selectedPlatform.aggregatorType
-    }
+      {
+        advisorId: this.advisorId,
+        tpUserCredentialId: this.selectedBrokerCode.id,
+        aggregatorType: this.selectedPlatform.aggregatorType
+      };
     this.tranService.getUnmappedClients(obj).subscribe(
       data => {
         console.log(data);
@@ -129,8 +136,9 @@ export class SettingsClientMappingComponent implements OnInit {
       err => {
         this.isLoading = false;
       }
-    )
+    );
   }
+
   unmapClient(value, data) {
     const dialogData = {
       data: data,
@@ -141,11 +149,11 @@ export class SettingsClientMappingComponent implements OnInit {
       btnNo: 'UNMAP',
       positiveMethod: () => {
         let obj =
-        {
-          tpUserCredentialId: this.selectedBrokerCode.id,
-          tpUserCredFamilyMappingId: value.tpUserCredFamilyMappingId,
-          aggregatorType: this.selectedPlatform.aggregatorType
-        }
+          {
+            tpUserCredentialId: this.selectedBrokerCode.id,
+            tpUserCredFamilyMappingId: value.tpUserCredFamilyMappingId,
+            aggregatorType: this.selectedPlatform.aggregatorType
+          };
         this.onlineTransact.unmapMappedClient(obj).subscribe(
           data => {
             console.log(data);
@@ -153,7 +161,7 @@ export class SettingsClientMappingComponent implements OnInit {
             dialogRef.close();
           },
           err => this.eventService.openSnackBar(err, 'Dismiss')
-        )
+        );
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -172,31 +180,34 @@ export class SettingsClientMappingComponent implements OnInit {
 
     });
   }
-  getDefaultDetails(platform) {
-    let obj = {
-      advisorId: this.advisorId,
-      familyMemberId: 112166,
-      clientId: 53637,
-      aggregatorType: platform
-    }
-    this.tranService.getDefaultDetails(obj).subscribe(
-      data => this.getDefaultDetailsRes(data)
-    );
-  }
+
+  // getDefaultDetails(platform) {
+  //   let obj = {
+  //     advisorId: this.advisorId,
+  //     familyMemberId: 112166,
+  //     clientId: 53637,
+  //     aggregatorType: platform
+  //   }
+  //   this.tranService.getDefaultDetails(obj).subscribe(
+  //     data => this.getDefaultDetailsRes(data)
+  //   );
+  // }
   getDefaultDetailsRes(data) {
-    console.log('deault', data)
-    this.allData = data
-    this.brokerCodeList = data.credentialList
+    console.log('deault', data);
+    this.allData = data;
+    this.brokerCodeList = data.credentialList;
     // this.clientDataList = data.clientDataList
     // this.defaultCredential = data.defaultCredential
     // this.defaultClient = data.defaultClient
     // this.selectedPlatform = this.defaultCredential.aggregatorType
   }
+
   sortDataFilterWise() {
     (this.type == '1') ? this.getMappedData() : this.getUnmappedData();
   }
+
   openAddMappiing(data, flag) {
-    data['flag'] = "client";
+    data['flag'] = 'client';
     data.selectedBroker = this.selectedBrokerCode;
 
     const fragmentData = {

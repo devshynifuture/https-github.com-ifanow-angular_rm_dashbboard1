@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {PlanService} from '../../../plan.service';
-import {FormBuilder} from '@angular/forms';
-import {UtilService} from 'src/app/services/util.service';
+import { Component, OnInit } from '@angular/core';
+import { PlanService } from '../../../plan.service';
+import { FormBuilder } from '@angular/forms';
+import { UtilService } from 'src/app/services/util.service';
 import * as Highcharts from 'highcharts';
-import {AuthService} from 'src/app/auth-service/authService';
-import {HistoryRiskProfileComponent} from '../../history-risk-profile/history-risk-profile.component';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { HistoryRiskProfileComponent } from '../../history-risk-profile/history-risk-profile.component';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import more from 'highcharts/highcharts-more';
 more(Highcharts);
 
@@ -29,6 +29,7 @@ export class RiskProfileComponent implements OnInit {
   clickMessage = '';
   name = 'Angular';
   showLoader: boolean;
+  isLoading = false
 
   onClickMe(referenceKeyName) {
     alert(referenceKeyName.id);
@@ -37,11 +38,11 @@ export class RiskProfileComponent implements OnInit {
     alert(referenceKeyName1.id);
   }
   constructor(private fb: FormBuilder, public planService: PlanService, private subInjectService: SubscriptionInject) {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
   }
 
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
     this.getRiskProfileList();
     this.getdataForm('');
     this.sendRiskList = [];
@@ -68,7 +69,7 @@ export class RiskProfileComponent implements OnInit {
         tickWidth: 4,
         lineColor: '#999',
         lineWidth: 1,
-        labels: { style: { fontWeight: 'bold' } }
+        labels: { style: { fontWeight: 'bold' } },
       },
 
       yAxis: {
@@ -161,37 +162,37 @@ export class RiskProfileComponent implements OnInit {
       yAxis: {
         plotBands: [{
           from: 1,
-          to: 40,
+          to: 120,
           color: '#02B875',
           thickness: '30%'
         }, {
-          from: 41,
-          to: 80,
+          from: 121,
+          to: 240,
           color: '#5DC644',
           thickness: '30%'
         }, {
-          from: 81,
-          to: 120,
+          from: 241,
+          to: 360,
           color: '#FFC100',
           thickness: '30%'
         },
         {
-          from: 121,
-          to: 160,
+          from: 361,
+          to: 480,
           color: '#FDAF40',
           thickness: '30%'
         }, {
-          from: 161,
-          to: 200,
+          from: 481,
+          to: 600,
           color: '#FF7272',
           thickness: '30%'
         }],
         lineWidth: 0,
         minorTickInterval: 1,
-        tickPositions: [1, 200],
+        tickPositions: [1, 600],
         tickAmount: 1,
         min: 0,
-        max: 200,
+        max: 600,
         title: {
           y: -70
         },
@@ -235,12 +236,9 @@ export class RiskProfileComponent implements OnInit {
 
     }));
   }
-  checkState(item) {
+  checkState(item, i) {
     this.statusArray.push(item)
-    // this.statusArray = _.uniqBy(this.statusArray, function (e) {
-    //   return e.id;
-    // });
-    this.progressBar = this.statusArray.length * 20
+    this.progressBar = this.statusArray.length * 7
   }
   getdataForm(data) {
     if (data == undefined) {
@@ -276,24 +274,31 @@ export class RiskProfileComponent implements OnInit {
       clientRiskAssessmentResults: []
     };
     this.riskAssessmentQuestionList.forEach(element => {
-      this.clientRiskAssessmentResults.push({
-        riskAssessmentQuestionId: element.id,
-        riskAssessmentChoiceId: element.selectedChoiceId,
-        weight: element.weight
-      });
-    });
-    obj.clientRiskAssessmentResults = this.clientRiskAssessmentResults;
-    console.log('RiskProfileComponent submitRiskAnalysis solutionList : ', obj);
-
-    this.planService.submitRisk(obj).subscribe(
-      data => this.submitRiskRes(data), error => {
+      if (element.selectedChoiceId == undefined) {
         this.showErrorMsg = true
-        //this.submitRiskRes(data);
+      } else {
+        this.clientRiskAssessmentResults.push({
+          riskAssessmentQuestionId: element.id,
+          riskAssessmentChoiceId: element.selectedChoiceId,
+          weight: element.weight
+        });
       }
-    );
+    });
+    if (this.showErrorMsg == false) {
+      obj.clientRiskAssessmentResults = this.clientRiskAssessmentResults;
+      console.log('RiskProfileComponent submitRiskAnalysis solutionList : ', obj);
+      this.planService.submitRisk(obj).subscribe(
+        data => this.submitRiskRes(data), error => {
+          this.showErrorMsg = true
+          //this.submitRiskRes(data);
+        }
+      );
+    }
   }
 
   submitRiskRes(data) {
+    this.isLoading = false
+
     this.showRisk = true;
     setTimeout(() => {
       this.guageFun('Gauge');

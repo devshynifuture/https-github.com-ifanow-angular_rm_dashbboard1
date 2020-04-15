@@ -48,6 +48,7 @@
             justify-content: center;
             position: relative;
             .posCheckBox {
+                pointer-events: none;
                 position: absolute;
                 top: -7px;
                 right: 0px;

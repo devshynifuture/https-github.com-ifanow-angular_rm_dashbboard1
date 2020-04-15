@@ -75,7 +75,6 @@ export class OpenGalleryPlanComponent implements OnInit {
               this.showSpinner = false
               this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
               this.Close(this.anyDetailsChanged);
-              this.dialogRef.close(this.anyDetailsChanged);
             });
           }
         });
@@ -84,7 +83,8 @@ export class OpenGalleryPlanComponent implements OnInit {
     }
   }
   Close(flag: boolean) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+    // this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+    this.dialogRef.close(flag);
   }
   addEditBillerForm() {
     throw new Error("Method not implemented.");

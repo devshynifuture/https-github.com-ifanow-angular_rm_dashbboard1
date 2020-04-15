@@ -8,6 +8,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { DatePipe } from '@angular/common';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+const moment = require('moment');
 
 @Component({
   selector: 'app-client-basic-details',
@@ -38,7 +39,8 @@ export class ClientBasicDetailsComponent implements OnInit {
   categoryList: any[];
   clientOwnerList: any;
   selectedClientOwner: any;
-
+  maxDateForAdultDob = moment().subtract(18, 'years');
+  // new Date(.date());
   mobileNumberFlag = 'Mobile number';
 
   basicDetails;
@@ -51,6 +53,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   invTypeCategory;
   invTaxStatus;
   clientRoles: any = [];
+  minAge: any;
 
   // advisorId;
 
@@ -71,7 +74,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     if (data.fieldFlag == 'familyMember') {
       this.basicDetailsData = data;
       this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
-      this.invTypeCategory = (this.basicDetailsData.familyMemberType == 0) ? '1' : String(this.basicDetailsData.familyMemberType);
+      this.invTypeCategory = String(this.basicDetailsData.familyMemberType);
       (this.basicDetailsData.familyMemberType == 1 || this.basicDetailsData.familyMemberType == 0) ? this.createIndividualForm(this.basicDetailsData) : this.createMinorForm(this.basicDetailsData);
     } else {
       this.getClientList();
@@ -82,13 +85,18 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.createIndividualForm(null);
         return;
       } else {
-        this.invTaxStatus = (this.basicDetailsData.familyMembtaxStatusIderType == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
+        this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
       }
       (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
       this.getClientOrLeadData(this.basicDetailsData);
     }
     console.log(data);
   }
+
+  // setMinDateForAge() {
+  //   this.minAge = new Date();
+  //   console.log(this.minAge);
+  // }
 
   createIndividualForm(data) {
     this.selectedClientOwner = '1';
@@ -102,9 +110,9 @@ export class ClientBasicDetailsComponent implements OnInit {
       dobActual: [],
       gender: ['1'],
       leadSource: [data.leadSource],
-      leaadStatus: [],
+      // leaadStatus: ['0'],
       leadRating: [(data.leadRating) ? String(data.leadRating) : '0'],
-      leadOwner: [],
+      leadOwner: ['0'],
       clientOwner: ['1'],
       role: [(data.roleId) ? data.roleId : '0'],
     });
@@ -137,6 +145,9 @@ export class ClientBasicDetailsComponent implements OnInit {
       comPan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       comOccupation: [(data.occupationId == 0) ? '1' : String(data.occupationId)],
       username: [{ value: data.userName, disabled: true }],
+      leadSource: [data.leadSource],
+      // leaadStatus: ['0'],
+      leadRating: [(data.leadRating) ? String(data.leadRating) : '0'],
       leadOwner: ['0'],
       role: [(data.roleId) ? data.roleId : '0']
     });
@@ -160,7 +171,9 @@ export class ClientBasicDetailsComponent implements OnInit {
 
         }
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        console.error(err);
+      }
     );
   }
 
@@ -190,20 +203,17 @@ export class ClientBasicDetailsComponent implements OnInit {
       if (this.invTypeCategory == '1') {
         this.basicDetails.get('clientOwner').setValidators([Validators.required]);
         this.basicDetails.get('clientOwner').updateValueAndValidity();
-      }
-      else {
+      } else {
         this.nonIndividualForm.get('leadOwner').setValidators([Validators.required]);
         this.nonIndividualForm.get('leadOwner').updateValueAndValidity();
       }
-    }
-    else {
+    } else {
       this.basicDetails.get('leadOwner').setValidators(null);
     }
     if (this.fieldFlag == 'lead' && this.basicDetailsData.userId == null) {
       this.basicDetails.get('leadOwner').setValidators([Validators.required]);
       this.basicDetails.get('leadOwner').updateValueAndValidity();
-    }
-    else {
+    } else {
       this.basicDetails.get('leadOwner').setValidators(null);
     }
     if (this.basicDetails.invalid && this.invTypeCategory == '1') {
@@ -228,7 +238,7 @@ export class ClientBasicDetailsComponent implements OnInit {
           }
         });
       }
-      var advisorId;
+      let advisorId;
       if (this.selectedClientOwner && this.selectedClientOwner.advisorId) {
         advisorId = this.selectedClientOwner.advisorId;
       } else if (this.basicDetailsData && this.basicDetailsData.advisorId) {
@@ -244,7 +254,7 @@ export class ClientBasicDetailsComponent implements OnInit {
           email: emailId
         });
       }
-      const obj = {
+      const obj: any = {
         advisorId,
         taxStatusId: parseInt(this.invTaxStatus),
         emailList,
@@ -269,9 +279,9 @@ export class ClientBasicDetailsComponent implements OnInit {
         userType: 2,
         remarks: null,
         status: (this.fieldFlag == 'client') ? 1 : 2,
-        leadSource: (this.fieldFlag == 'lead') ? this.basicDetails.value.leadSource : null,
-        leadRating: (this.fieldFlag == 'lead') ? this.basicDetails.value.leadRating : null,
-        leadStatus: (this.fieldFlag == 'lead') ? this.basicDetails.value.leaadStatus : null
+        leadSource: (this.fieldFlag == 'lead' && this.invTypeCategory == '1') ? this.basicDetails.value.leadSource : (this.fieldFlag == 'lead' && this.invTypeCategory == '2') ? this.nonIndividualForm.value.leadSource : null,
+        leadRating: (this.fieldFlag == 'lead' && this.invTypeCategory == '1') ? this.basicDetails.value.leadRating : (this.fieldFlag == 'lead' && this.invTypeCategory == '2') ? this.nonIndividualForm.value.leadRating : null,
+        // leadStatus: (this.fieldFlag == 'lead' && this.invTypeCategory == '1') ? this.basicDetails.value.leaadStatus : (this.fieldFlag == 'lead' && this.invTypeCategory == '2') ? this.nonIndividualForm.value.leadStatus : null
       };
       if (this.basicDetailsData.userId == null) {
         // if (this.invTypeCategory == '2') {
@@ -282,7 +292,7 @@ export class ClientBasicDetailsComponent implements OnInit {
             this.barButtonOptions.active = false;
             console.log(data);
             data.invCategory = this.invTypeCategory;
-            (this.invTypeCategory == '2') ? data.categoryTypeflag = 'Individual' : data.categoryTypeflag = "clientNonIndividual";
+            (this.invTypeCategory == '2') ? data.categoryTypeflag = 'Individual' : data.categoryTypeflag = 'clientNonIndividual';
             this.eventService.openSnackBar('Added successfully!', 'Dismiss');
             (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
           },
@@ -309,11 +319,11 @@ export class ClientBasicDetailsComponent implements OnInit {
         // );
         // }
       } else {
-        obj['bio'] = this.basicDetailsData.bio;
-        obj['remarks'] = this.basicDetailsData.remarks;
-        obj['aadhaarNumber'] = this.basicDetailsData.aadhaarNumber;
-        obj['martialStatusId'] = this.basicDetailsData.martialStatusId;
-        obj['occupationId'] = this.basicDetailsData.occupationId;
+        obj.bio = this.basicDetailsData.bio;
+        obj.remarks = this.basicDetailsData.remarks;
+        obj.aadhaarNumber = this.basicDetailsData.aadhaarNumber;
+        obj.martialStatusId = this.basicDetailsData.martialStatusId;
+        obj.occupationId = this.basicDetailsData.occupationId;
         this.peopleService.editClient(obj).subscribe(
           data => {
             this.barButtonOptions.active = false;
@@ -341,7 +351,9 @@ export class ClientBasicDetailsComponent implements OnInit {
         console.log(data);
         this.clientOwnerList = data;
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        console.error(err);
+      }
     );
   }
 
@@ -360,10 +372,10 @@ export class ClientBasicDetailsComponent implements OnInit {
         verificationStatus: 0
       });
     });
+
     let gardianObj;
     if (this.invTypeCategory == '2') {
-      gardianObj =
-      {
+      gardianObj = {
         name: (this.invTypeCategory == '2') ? this.minorForm.value.gFullName : null,
         birthDate: (this.invTypeCategory == '2') ? this.datePipe.transform(this.minorForm.value.gDobAsPerRecord, 'dd/MM/yyyy') : null,
         pan: 'pan',
@@ -381,7 +393,7 @@ export class ClientBasicDetailsComponent implements OnInit {
             verificationStatus: 0
           }
         ]
-      }
+      };
     } else {
       gardianObj = null;
     }
@@ -393,6 +405,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.minorForm.markAllAsTouched();
       return;
     }
+    this.barButtonOptions.active = true;
     const obj = {
       familyMemberId: this.basicDetailsData.familyMemberId,
       clientId: this.basicDetailsData.clientId,
@@ -421,19 +434,23 @@ export class ClientBasicDetailsComponent implements OnInit {
       invTypeCategory: 0,
       categoryTypeflag: null
     };
-    obj['bio'] = this.basicDetailsData.bio;
-    obj['remarks'] = this.basicDetailsData.remarks;
-    obj['aadhaarNumber'] = this.basicDetailsData.aadhaarNumber;
-    obj['martialStatusId'] = this.basicDetailsData.martialStatusId;
-    obj['occupationId'] = this.basicDetailsData.occupationId;
-    obj['displayName'] = this.basicDetailsData.displayName;
+    obj.bio = this.basicDetailsData.bio;
+    obj.remarks = this.basicDetailsData.remarks;
+    obj.aadhaarNumber = this.basicDetailsData.aadhaarNumber;
+    obj.martialStatusId = this.basicDetailsData.martialStatusId;
+    obj.occupationId = this.basicDetailsData.occupationId;
+    obj.displayName = this.basicDetailsData.displayName;
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {
+        this.barButtonOptions.active = false;
         data.invTypeCategory = this.invTypeCategory;
         data.categoryTypeflag = 'familyMinor';
         (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(data);
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        this.barButtonOptions.active = false;
+        this.eventService.openSnackBar(err, 'Dismiss');
+      }
     );
   }
 

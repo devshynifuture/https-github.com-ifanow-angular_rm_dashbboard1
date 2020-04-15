@@ -1,19 +1,19 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {BackOfficeService} from '../../protect-component/AdviserComponent/backOffice/back-office.service';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {MatProgressButtonOptions} from '../../../common/progress-button/progress-button.component';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {LoginService} from './login.service';
-import {PeopleService} from '../../protect-component/PeopleComponent/people.service';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { BackOfficeService } from '../../protect-component/AdviserComponent/backOffice/back-office.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MatProgressButtonOptions } from '../../../common/progress-button/progress-button.component';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { LoginService } from './login.service';
+import { PeopleService } from '../../protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login-new.component.html',
- //templateUrl: './login-mobile.component.html',
+  //templateUrl: './login-mobile.component.html',
   styleUrls: ['./login.component.scss'],
   animations: [
     trigger('btnProgress', [
@@ -112,6 +112,7 @@ export class LoginComponent implements OnInit {
       this.loginService.getUsernameData(obj).subscribe(
         data => {
           if (data) {
+            this.userName.disable();
             console.log(data);
             this.userData = data;
             this.getOtpResponse(data);
@@ -124,7 +125,13 @@ export class LoginComponent implements OnInit {
       );
     }
   }
-
+  getOtpOnEnter(event) {
+    (event.keyCode == 13) ? this.getOtp() : ''
+  }
+  getOtpData(outputData) {
+    console.log("login with otp", outputData)
+    this.otpData = outputData;
+  }
   getOtpResponse(data) {
     if (data.emailList && data.emailList.length > 0) {
       data.email = data.emailList[0].email;
@@ -137,11 +144,11 @@ export class LoginComponent implements OnInit {
     console.log(this.verifyResponseData);
     if (this.verifyResponseData.email) {
       this.verifyFlag = 'Email';
-      const obj = {email: data.email};
+      const obj = { email: data.email };
       this.loginUsingCredential(obj);
     } else {
       this.verifyFlag = 'mobile';
-      const obj = {mobileNo: data.mobileNo};
+      const obj = { mobileNo: data.mobileNo };
       this.loginUsingCredential(obj);
     }
   }
@@ -160,25 +167,8 @@ export class LoginComponent implements OnInit {
     (this.otpNumber) ? this.otpNumber = false : this.otpNumber = true;
   }
 
-  enterOtp(value) {
-    if (value.code.substring(0, value.code.length - 1) == 'Key' || value.code == 'Backspace') {
-      if (value.srcElement.previousElementSibling == undefined) {
-        this.otpData.pop();
-        return;
-      }
-      value.srcElement.previousElementSibling.focus();
-      this.otpData.pop();
-    } else {
-      if (value.srcElement.nextElementSibling == undefined) {
-        this.otpData.push(value.key);
-        return;
-      }
-      this.otpData.push(value.key);
-      value.srcElement.nextElementSibling.focus();
-    }
-  }
-
   verifyWithOtpResponse() {
+    this.barButtonOptions.active = true;
     const otpString = this.otpData.toString().replace(/,/g, '');
     if (this.otpData.length == 6 && this.otpResponse == otpString) {
       this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
@@ -265,7 +255,6 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['admin', 'subscription', 'dashboard']);
           } else {
             this.authService.setToken('authTokenInLoginComponnennt');
-
             data.id = data.clientId;
             this.authService.setClientData(data);
             this.authService.setUserInfo(data);

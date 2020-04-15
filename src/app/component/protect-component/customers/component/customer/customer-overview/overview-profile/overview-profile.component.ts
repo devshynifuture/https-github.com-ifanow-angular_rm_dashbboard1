@@ -33,7 +33,7 @@ export class OverviewProfileComponent implements OnInit {
   // clientData;
 
   constructor(private peopleService: PeopleService, private authService: AuthService, public dialog: MatDialog, public subInjectService: SubscriptionInject,
-    private cusService: CustomerService, private eventService: EventService) {
+    private cusService: CustomerService, private eventService: EventService, private utils: UtilService) {
   }
 
   ngOnInit() {
@@ -56,11 +56,14 @@ export class OverviewProfileComponent implements OnInit {
         if (data == undefined) {
           return;
         } else {
+          this.authService.setClientData(data);
           this.clientOverviewData = data;
           this.calculateAge(this.clientOverviewData.dateOfBirth);
         }
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        console.error(err)
+      }
     );
   }
   getFamilyMembersList(data) {
@@ -71,9 +74,12 @@ export class OverviewProfileComponent implements OnInit {
     this.cusService.getFamilyMembers(obj).subscribe(
       data => {
         this.familyMemberList = data;
-        console.log(data);
+        this.familyMemberList = this.utils.calculateAgeFromCurrentDate(data);
+        console.log(this.familyMemberList);
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        console.error(err)
+      }
     );
   }
 
@@ -87,7 +93,9 @@ export class OverviewProfileComponent implements OnInit {
         console.log(data);
         this.addressList = data;
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        console.error(err)
+      }
     );
   }
 
@@ -103,7 +111,9 @@ export class OverviewProfileComponent implements OnInit {
           this.dematList = data;
           this.selectedDemat = data[0];
         }
-      }, err => this.eventService.openSnackBar(err, 'Dismiss')
+      }, err => {
+        console.error(err)
+      }
     );
   }
   calculateAge(data) {
@@ -133,7 +143,10 @@ export class OverviewProfileComponent implements OnInit {
           });
           this.selectedBankData = data[0];
         }
-      }, err => this.eventService.openSnackBar(err, 'Dismiss')
+      },
+      err => {
+        console.error(err)
+      }
     );
   }
 
@@ -234,10 +247,12 @@ export class OverviewProfileComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          if (sideBarData.clientData) {
-            this.authService.setClientData(sideBarData.clientData);
-            this.clientOverviewData = sideBarData.clientData;
-          }
+          this.getClientData(this.clientOverviewData);
+          this.getAddressList(this.clientData);
+          this.getBankList(this.clientData);
+          this.getDematList(this.clientData);
+          // this.authService.setClientData(sideBarData.clientData);
+          // this.clientOverviewData = sideBarData.clientData;
           this.getFamilyMembersList(this.clientData);
           if (UtilService.isRefreshRequired(sideBarData)) {
           }

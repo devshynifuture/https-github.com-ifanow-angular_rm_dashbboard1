@@ -6,6 +6,7 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { DatePipe } from '@angular/common';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-client-more-info',
@@ -20,7 +21,21 @@ export class ClientMoreInfoComponent implements OnInit {
   mobileData: any;
   invCategory = '1';
   validatorType = ValidatorType;
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & NEXT',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   moreInfoForm;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
@@ -61,7 +76,6 @@ export class ClientMoreInfoComponent implements OnInit {
     this.moreInfoForm = this.fb.group({
       displayName: [data.displayName],
       adhaarNo: [data.aadhaarNumber],
-      taxStatus: [],
       occupation: [(data.occupationId == 0) ? '1' : String(data.occupationId)],
       maritalStatus: [(data.martialStatusId) ? String(data.martialStatusId) : '1'],
       anniversaryDate: [String(data.anniversaryDate)],
@@ -112,6 +126,7 @@ export class ClientMoreInfoComponent implements OnInit {
         });
       });
     }
+    this.barButtonOptions.active = true;
     const obj = {
       advisorId: this.moreInfoData.advisorId,
       emailList: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.emailList : this.moreInfoForm.value.email,
@@ -144,10 +159,14 @@ export class ClientMoreInfoComponent implements OnInit {
       if (this.moreInfoData.invCategory == '1') {
         this.peopleService.editClient(obj).subscribe(
           data => {
+            this.barButtonOptions.active = false;
             console.log(data);
             (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
           },
-          err => this.eventService.openSnackBar(err, 'Dismiss')
+          err => {
+            this.eventService.openSnackBar(err, 'Dismiss')
+            this.barButtonOptions.active = false
+          }
         );
       }
       // else {
@@ -167,6 +186,7 @@ export class ClientMoreInfoComponent implements OnInit {
       this.moreInfoData.guardianData['aadhaarNumber'] = this.moreInfoForm.value.adhharGuardian;
       this.moreInfoData.guardianData['birthDate'] = this.datePipe.transform(this.moreInfoData.guardianData.birthDate, 'dd/MM/yyyy')
     }
+    this.barButtonOptions.active = true;
     const obj = {
       isKycCompliant: this.moreInfoData.isKycCompliant,
       taxStatusId: this.moreInfoData.taxStatusId,
@@ -215,9 +235,13 @@ export class ClientMoreInfoComponent implements OnInit {
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {
         console.log(data);
+        this.barButtonOptions.active = false;
         (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss')
+        this.barButtonOptions.active = false;
+      }
     );
   }
 

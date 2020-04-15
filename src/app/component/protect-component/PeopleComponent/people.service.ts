@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {HttpService} from 'src/app/http-service/http-service';
-import {apiConfig} from 'src/app/config/main-config';
-import {appConfig} from 'src/app/config/component-config';
+import { Injectable } from '@angular/core';
+import { HttpService } from 'src/app/http-service/http-service';
+import { apiConfig } from 'src/app/config/main-config';
+import { appConfig } from 'src/app/config/component-config';
 
 @Injectable({
   providedIn: 'root'
@@ -90,5 +90,9 @@ export class PeopleService {
 
   updateClientStatus(data) {
     return this.http.putEncoded(apiConfig.USER + appConfig.UPDATE_CLIENT_STATUS, data)
+  }
+
+  getAdvisorFromEmailAndMobileData(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_ADVISOR_FROM_EMAIL_MOBILE, data, 1);
   }
 }

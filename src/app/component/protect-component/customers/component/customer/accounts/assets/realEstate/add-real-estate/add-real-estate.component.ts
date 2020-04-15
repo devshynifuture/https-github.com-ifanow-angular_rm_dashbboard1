@@ -6,6 +6,7 @@ import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { MatInput } from '@angular/material';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-real-estate',
@@ -13,6 +14,21 @@ import { MatInput } from '@angular/material';
   styleUrls: ['./add-real-estate.component.scss']
 })
 export class AddRealEstateComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   validatorType = ValidatorType
   addrealEstateForm: any;
   ownerData: any;
@@ -214,6 +230,7 @@ export class AddRealEstateComponent implements OnInit {
   }
 
   removeNewNominee(item) {
+  this.disabledMember(null, null);
     this.getNominee.removeAt(item);
     if (this.addrealEstateForm.value.getNomineeName.length == 1) {
       this.getNominee.controls['0'].get('sharePercentage').setValue('100');
@@ -482,7 +499,7 @@ export class AddRealEstateComponent implements OnInit {
       return;
     }
     else {
-
+      this.barButtonOptions.active = true;
       const obj = {
         // ownerName: this.ownerName,
         // familyMemeberId:this.familyMemberId,
@@ -548,6 +565,7 @@ export class AddRealEstateComponent implements OnInit {
         console.log(obj);
         this.custumService.addRealEstate(obj).subscribe(
           data => this.addRealEstateRes(data), (error) => {
+            this.barButtonOptions.active = false;
             this.eventService.showErrorMessage(error);
           }
         );
@@ -560,6 +578,7 @@ export class AddRealEstateComponent implements OnInit {
         }
         this.custumService.getAdviceRealEstate(adviceObj).subscribe(
           data => this.getAdviceRealEstateRes(data), (error) => {
+            this.barButtonOptions.active = false;
             this.eventService.showErrorMessage(error);
           }
         );
@@ -567,6 +586,7 @@ export class AddRealEstateComponent implements OnInit {
         console.log(obj);
         this.custumService.editRealEstate(obj).subscribe(
           data => this.editRealEstateRes(data), (error) => {
+            this.barButtonOptions.active = false;
             this.eventService.showErrorMessage(error);
           }
         );
@@ -574,6 +594,7 @@ export class AddRealEstateComponent implements OnInit {
     }
   }
   getAdviceRealEstateRes(data) {
+    this.barButtonOptions.active = false;
     this.eventService.openSnackBar('Real estate added successfully', 'OK');
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true })
   }
@@ -587,6 +608,8 @@ export class AddRealEstateComponent implements OnInit {
       this.eventService.openSnackBar('Error', 'Dismiss');
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true })
     }
+    this.barButtonOptions.active = false;
+
   }
   editRealEstateRes(data) {
     console.log(data);
@@ -597,5 +620,6 @@ export class AddRealEstateComponent implements OnInit {
     } else {
       this.eventService.openSnackBar('Error', 'Dismiss');
     }
+    this.barButtonOptions.active = false;
   }
 }
