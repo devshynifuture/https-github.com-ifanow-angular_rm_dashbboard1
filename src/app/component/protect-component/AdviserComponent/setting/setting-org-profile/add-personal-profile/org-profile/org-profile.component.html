@@ -20,7 +20,7 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input matInput formControlName="companyName" class="form-control" placeholder="Example Inc.">
+                                <input matInput formControlName="companyName" class="form-control" placeholder="Example Inc." [maxLength]="50" appInputValueValidation>
                                 <mat-hint align="end" class="f-12">{{orgProfile.get('companyName').value.length}}/50</mat-hint>
                                 <mat-error class="f-12 pt-4">
                                     This field is required
@@ -50,7 +50,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input matInput formControlName="mobileNo" class="form-control" placeholder="Enter mobile no">
+                                <input matInput formControlName="mobileNo" class="form-control" placeholder="Enter mobile no" [maxLength]="10" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation>
                                 <mat-hint align="end" class="f-12">{{orgProfile.get('mobileNo').value.length}}/10</mat-hint>
                                 <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('mobileNo').errors?.required">This field is required</mat-error>
                                 <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('mobileNo').errors?.pattern || orgProfile.get('mobileNo').errors?.minlength || orgProfile.get('mobileNo').errors?.maxlength">
@@ -117,7 +117,8 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input matInput formControlName="gstNumber" class="form-control" placeholder="9876542583697741">
+                                <input matInput formControlName="gstNumber" class="form-control" placeholder="9876542583697741" [maxLength]="15" appInputValueValidation>
+                                <mat-hint align="end" class="f-12">{{orgProfile.get('gstNumber').value.length}}/30</mat-hint>
                                 <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('gstNumber').errors?.required">This field is required</mat-error>
                                 <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('gstNumber').errors?.pattern || orgProfile.get('gstNumber').errors?.minlength || orgProfile.get('gstNumber').errors?.maxlength">
                                     Please enter valid GSTIN number</mat-error>
@@ -132,7 +133,7 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input (focusout)="getPostalPin($event.target.value)" class="form-control br-0 text-left" formControlName="pincode" matInput type="text" placeholder="Enter pin code">
+                                <input (focusout)="getPostalPin($event.target.value)" class="form-control br-0 text-left" formControlName="pincode" matInput type="text" placeholder="Enter pin code" [maxLength]="6" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation>
                                 <mat-hint align="end" class="f-12">{{orgProfile.get('pincode').value.length}}/6</mat-hint>
                                 <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('pincode').errors?.required">This field is required</mat-error>
                                 <mat-error class="f-12 pt-4" *ngIf="orgProfile.get('pincode').errors?.pattern || orgProfile.get('pincode').errors?.minlength || orgProfile.get('pincode').errors?.maxlength">

@@ -539,6 +539,8 @@ export const appConfig = {
   UPDATE_ACCESS_CONTROL: 'setting/users-roles/access-rights/update',
   RESET_GALLARY: 'goal-planning/goal-gallery/reset',
   UPDATE_RETURNS_AND_INFLATIONS: 'plan/config/return-inflation/put',
+  GET_APPEARANCE_SETTING: 'setting/preferences/appearance/get',
+  UPDATE_APPEARANCE_SETTING: 'setting/preferences/appearance/update',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
