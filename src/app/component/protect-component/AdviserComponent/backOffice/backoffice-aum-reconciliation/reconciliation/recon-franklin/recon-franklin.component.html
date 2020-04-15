@@ -20,8 +20,8 @@
                             Select Option
                         </mat-option>
                         <mat-option *ngFor="let broker of brokerList" [value]="broker.id"
-                            (click)="getAumReconHistoryData()">
-                            {{ broker.brokerCode }}
+                                    (click)="getAumReconHistoryData(null)">
+                          {{ broker.brokerCode }}
                         </mat-option>
                     </mat-select>
                 </div>
