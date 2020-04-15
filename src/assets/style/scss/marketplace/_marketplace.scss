@@ -1,3 +1,12 @@
+.review-start{
+      border:1px solid #008FFF !important;
+      border-radius: 4px !important;
+      height: 30px !important;
+      line-height: 30px !important;
+      color: #008FFF !important;
+      padding-right:8px !important;
+      padding-left:8px !important;
+   }
 #marketplave-header {
   position: fixed;
   width: 100%;
@@ -200,26 +209,18 @@
   }
 }
 
-#marketplace-advisors {
-  padding-top: 70px;
-
-  .selected-filters {
-    position: fixed;
-    width: 100%;
-    background: #214B75;
-    box-shadow: 5px 1px 10px rgba(0, 0, 0, 0.2), 3px 4px 5px rgba(0, 0, 0, 0.12), 2px 2px 4px rgba(0, 0, 0, 0.14);
-
-    .mat-select-arrow-wrapper {
-      height: 35px;
-      padding-right: 4px;
-
-      .mat-select-arrow {
-        color: #fff !important;
-      }
-    }
-
-    .mat-option.mat-active {
-      background-color: #214B75 !important;
+#marketplace-advisors{
+   padding-top:70px;
+   .selected-filters{
+      position:fixed;
+      width: 100%;
+      background: #214B75;
+box-shadow: 5px 1px 10px rgba(0, 0, 0, 0.2), 3px 4px 5px rgba(0, 0, 0, 0.12), 2px 2px 4px rgba(0, 0, 0, 0.14);
+z-index: 9;
+.mat-select-arrow-wrapper{
+   height: 35px;
+   padding-right: 4px;
+   .mat-select-arrow{
       color: #fff !important;
     }
 
@@ -227,5 +228,19 @@
       border: 1px solid #fff !important;
     }
 
-  }
+   }
+   
+   }
+}
+#marketplace-advisors-details{
+   padding-top:70px;
+   ul.d-block{
+      li{
+         text-align: left !important;
+         padding-top:10px !important;
+         color: #484848 !important;
+         font-family: roboto;
+         font-size: 14px;
+      }
+   }
 }

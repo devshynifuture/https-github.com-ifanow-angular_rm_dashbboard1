@@ -402,7 +402,7 @@ export const appConfig = {
   GIVE_ADVICE_ON_REAL_ESTATE: 'advice/asset/real-estate/advice/post',
   ////////////////////////////////////OnlineTransaction///////////////////////////////////////
   ADD_BSE_CREDENTIALS: 'user/save',
-  GET_BSE_CREDENTIALS: '/user/view',
+  GET_BSE_CREDENTIALS: 'user/view',
   GET_BSE_SUB_BROKER_CREDENTIALS: '/user/sub-broker/view',
   GET_NEW_SCHEMES: 'mutual-fund/search',
   GET_EXISTING_SCHEMES: 'mutual-fund/existing/search',

@@ -12,37 +12,36 @@
             </div>
         </div>
     </div>
-    <div class="wrapper-8 pt-12">
+    <div class="pl-16 pb-12 pt-12">
         <div class="row">
-            <div class="col-md-1">
+            <div class="col-md-1 d-flex align-items-center">
                 <p class="m-0 text-custom">From</p>
             </div>
             <div class="col-md-9">
                 <p *ngIf="this.emailData" class="m-0 text-black">
                     {{(this.emailData) ? this.emailData.fromEmail : 'support@futurewise.co.in'}}</p>
-                <mat-select [(ngModel)]="_inputData.fromEmail">
+                <mat-select class="form-control" [(ngModel)]="_inputData.fromEmail">
                     <mat-option value="" disabled>Select Email</mat-option>
-                    <mat-option *ngFor="let verifiedEmail of verifiedEmailsList" [value]="verifiedEmail.emailAddress">{{verifiedEmail.emailAddress}}</mat-option>
+                    <mat-option *ngFor="let verifiedEmail of verifiedEmailsList" [value]="verifiedEmail.emailAddress">
+                        {{verifiedEmail.emailAddress}}</mat-option>
                 </mat-select>
             </div>
         </div>
     </div>
-    <div class="wrapper-8 pt-0" *ngIf="showfromEmail == false">
+    <div class="pl-16 pb-12 pt-12" *ngIf="showfromEmail == false">
         <div class="row">
-            <div class="col-md-1">
-                <p class="m-0 text-custom pt-12">To</p>
+            <div class="col-md-1 d-flex align-items-center">
+                <p class="m-0 text-custom ">To</p>
             </div>
 
             <div class="col-md-11">
                 <mat-form-field class="heightAuto">
                     <mat-chip-list #chipListEmail>
-                        <mat-chip [removable]="true" *ngFor="let singleEmailId of emailIdList; let i = index"
-                            [selectable]="false" (removed)="removeEmailId(i)">
+                        <mat-chip [removable]="true" *ngFor="let singleEmailId of emailIdList; let i = index" [selectable]="false" (removed)="removeEmailId(i)">
                             {{singleEmailId.emailAddress}}
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
-                        <input [matChipInputFor]="chipListEmail" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                            [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event)" [autofocus]="true">
+                        <input [matChipInputFor]="chipListEmail" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event)" [autofocus]="true">
                     </mat-chip-list>
                 </mat-form-field>
             </div>
@@ -50,8 +49,8 @@
     </div>
     <div class="wrapper-16 pt-0 pb-0">
         <div class="row">
-            <div class="col-md-1 pl-0">
-                <p class="m-0 text-custom pt-8 pb-8 pl-8">Subject</p>
+            <div class="col-md-1 d-flex align-items-center pl-0">
+                <p class="m-0 text-custom ">Subject</p>
             </div>
             <div class="col-md-11">
                 <input [(ngModel)]="_inputData.subject" class="form-control" type="text" [readonly]="_inputData.subjectChange">
@@ -61,7 +60,7 @@
         <div class="form-group mb-0 mt-8" *ngIf="!_inputData.bodyChange">
             <app-froala [(model)]="emailBody" modelChange="saveData($event)"></app-froala>
         </div>
-        <div *ngIf="_inputData.bodyChange" class="col-md-11 pt-20" [innerHTML]="emailBody" style="min-height: 550px;"></div>
+        <div *ngIf="_inputData.bodyChange" class="col-md-12 pl-0 pr-0 mt-16 pt-16 b-t" [innerHTML]="emailBody" style="min-height: 550px;"></div>
     </div>
 
     <div class="row">
