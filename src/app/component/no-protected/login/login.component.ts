@@ -1,14 +1,14 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {BackOfficeService} from '../../protect-component/AdviserComponent/backOffice/back-office.service';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {MatProgressButtonOptions} from '../../../common/progress-button/progress-button.component';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {LoginService} from './login.service';
-import {PeopleService} from '../../protect-component/PeopleComponent/people.service';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { BackOfficeService } from '../../protect-component/AdviserComponent/backOffice/back-office.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MatProgressButtonOptions } from '../../../common/progress-button/progress-button.component';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { LoginService } from './login.service';
+import { PeopleService } from '../../protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-login',
@@ -293,9 +293,15 @@ export class LoginComponent implements OnInit {
       this.peopleService.loginWithPassword(loginData).subscribe(data => {
         console.log('data: ', data);
         if (data) {
+          if (data.forceResetPassword) {
+            data['buttonFlag'] = "reset";
+            this.router.navigate(['/login/setpassword'],
+              { state: { userData: data } });
+          }
+          else {
+            this.loginService.handleUserData(this.authService, this.router, data);
+          }
           // this.authService.setToken(data.token);
-          this.loginService.handleUserData(this.authService, this.router, data);
-
         } else {
           this.passEvent = '';
           this.errorMsg = true;

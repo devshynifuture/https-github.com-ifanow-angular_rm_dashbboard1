@@ -132,20 +132,20 @@ export class ClientBankComponent implements OnInit {
 
   bankData(data) {
     console.log(data, 'bank data');
-
+    this.isIfsc = false;
     let address1, address2, pincode, adderessData;
     if (data.address) {
       adderessData = data.address.trim();
       pincode = adderessData.substring(adderessData.length - 6);
       adderessData = adderessData.replace(pincode, '');
       let addressMidLength = adderessData.length / 2;
+      address1 = adderessData.substring(0, addressMidLength);
       address2 = adderessData.substring(addressMidLength, adderessData.length);
       address1 = address1.concat(address2.substr(0, address2.indexOf(' ')));
       address2 = address2.concat(address2.substr(address2.indexOf(' '), address2.length))
       // pincode = pincode.join("");
     }
     (data == undefined) ? data = {} : '';
-    this.isIfsc = false;
     this.bankDetail = data;
     this.bankForm.get('bankName').setValue(data.bank);
     this.bankForm.get('branchCity').setValue(data.city);
