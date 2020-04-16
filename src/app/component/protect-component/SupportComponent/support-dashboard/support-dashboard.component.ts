@@ -18,51 +18,16 @@ export class SupportDashboardComponent implements OnInit {
   serviceStatusData: any;
   dailyData: any;
   highcharts = Highcharts;
-  // chartOptions = {
-  //   title: {
-  //     text: 'Cams'
-  //   },
-  //   chart: {
-  //     type: 'column'
-  //   },
-  //   xAxis: {
-  //     categories: ['Jan', 'Feb', 'Mar', 'Apr',],
-  //     crosshair: true,    },
-  //   yAxis:
-  //   {
-  //   },
-  //   tooltip: {
-  //     headerFormat: '<span style = "font-size:10px"></span><table>',
-  //     pointFormat: '<tr><td style = "color:{series.color};padding:0"> </td>' +
-  //       '<td style = "padding:0"><b>{point.y:.1f} mm</b></td></tr>', footerFormat: '</table>', shared: true, useHTML: true
-  //   },
-  //   plotOptions: {
-  //     column: {
-  //       pointPadding: 0.2,
-  //       borderWidth: 0
-        
-  //     }
-  //   },
-  //   series: [{
-  //     data: [49.9, 71.5, 106.4, 129.2,],
-  //     color: '#4790ff',
-  //     name: 'This week',
-  //      pointWidth: 12,
-
-  //   },
-  //   {
-  //     data: [83.6, 78.8, 98.5, 93.4],
-  //     color: '#49b875',
-  //     name: 'Last week',
-  //      pointWidth: 12
-
-  //   }]
-  // }
   historicalFileData: any;
   historicalFileValue: string;
   ifaCountData: any;
   previousWeek: any;
   currentWeek: any;
+  previousWeekCams: any;
+  previousWeekKarvy: any;
+  currentWeekCams: any;
+  previousWeekFrankline: any;
+  currentWeekKarvy: any;
   constructor(
     private eventService: EventService,
     private subInjectService: SubscriptionInject,
@@ -70,17 +35,17 @@ export class SupportDashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.flowCash('')
-    this.flowCash2('')
-    this.flowCash3('')
+    // this.flowCash('')
+    //this.flowCash2('')
+    //this.flowCash3('')
     this.historicalFileValue = '0'
     this.getDailyServicesStatusReport();
     this.getDailyFiles();
     this.getIfaMatricData();
     this.filterHistoricalFileData({ value: this.historicalFileValue });
   }
-  flowCash(id) {
-    var chart1 = new Highcharts.Chart('flowCash', {
+  flowCash(previous,current,id) {
+    var chart1 = new Highcharts.Chart(id, {
       chart: {
         type: 'column'
       },
@@ -88,15 +53,16 @@ export class SupportDashboardComponent implements OnInit {
         text: ''
       },
       xAxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr',],
-        crosshair: true,    },
+        categories: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+        crosshair: true,
+      },
       yAxis:
       {
       },
       tooltip: {
         headerFormat: '<span style = "font-size:10px"></span><table>',
         pointFormat: '<tr><td style = "color:{series.color};padding:0"> </td>' +
-          '<td style = "padding:0"><b>{point.y:.1f} mm</b></td></tr>', footerFormat: '</table>', shared: true, useHTML: true
+          '<td style = "padding:0"><b>{point.y:.1f} files</b></td></tr>', footerFormat: '</table>', shared: true, useHTML: true
       },
       plotOptions: {
         column: {
@@ -105,91 +71,15 @@ export class SupportDashboardComponent implements OnInit {
         }
       },
       series: [{
-        data: [49.9, 71.5, 106.4, 129.2,],
+        data: [current],
         color: '#4790ff',
         name: 'This week',
         pointWidth: 12
       } as SeriesColumnOptions, {
-        data: [83.6, 78.8, 98.5, 93.4],
+        data: [previous],
         color: '#49b875',
         name: 'Last week',
-         pointWidth: 12
-      } as SeriesColumnOptions]
-    });
-  }
-  flowCash2(id) {
-    var chart1 = new Highcharts.Chart('flowCash2', {
-      chart: {
-        type: 'column'
-      },
-      title: {
-        text: ''
-      },
-      xAxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr',],
-        crosshair: true,    },
-      yAxis:
-      {
-      },
-      tooltip: {
-        headerFormat: '<span style = "font-size:10px"></span><table>',
-        pointFormat: '<tr><td style = "color:{series.color};padding:0"> </td>' +
-          '<td style = "padding:0"><b>{point.y:.1f} mm</b></td></tr>', footerFormat: '</table>', shared: true, useHTML: true
-      },
-      plotOptions: {
-        column: {
-          pointPadding: 0.2,
-          borderWidth: 0
-        }
-      },
-      series: [{
-        data: [150.9, 91.5, 106.4, 129.2,],
-        color: '#4790ff',
-        name: 'This week',
         pointWidth: 12
-      } as SeriesColumnOptions, {
-        data: [200, 178.8, 98.5, 93.4],
-        color: '#49b875',
-        name: 'Last week',
-         pointWidth: 12
-      } as SeriesColumnOptions]
-    });
-  }
-  flowCash3(id) {
-    var chart1 = new Highcharts.Chart('flowCash3', {
-      chart: {
-        type: 'column'
-      },
-      title: {
-        text: ''
-      },
-      xAxis: {
-        categories: ['M','T','W','T','F','S','S'],
-        crosshair: true,    },
-      yAxis:
-      {
-      },
-      tooltip: {
-        headerFormat: '<span style = "font-size:10px"></span><table>',
-        pointFormat: '<tr><td style = "color:{series.color};padding:0"> </td>' +
-          '<td style = "padding:0"><b>{point.y:.1f} mm</b></td></tr>', footerFormat: '</table>', shared: true, useHTML: true
-      },
-      plotOptions: {
-        column: {
-          pointPadding: 0.2,
-          borderWidth: 0
-        }
-      },
-      series: [{
-        data: [49.9, 71.5, 106.4, 129.2,],
-        color: '#4790ff',
-        name: 'This week',
-        pointWidth: 12
-      } as SeriesColumnOptions, {
-        data: [83.6, 78.8, 98.5, 93.4],
-        color: '#49b875',
-        name: 'Last week',
-         pointWidth: 12
       } as SeriesColumnOptions]
     });
   }
@@ -212,11 +102,36 @@ export class SupportDashboardComponent implements OnInit {
         console.log(data);
         if (data) {
           this.dailyData = data;
-          console.log('getDailyFiles',this.dailyData)
-          this.previousWeek = this.dailyData.previousWeek[0]
-          this.currentWeek = this.dailyData.currentWeek[0]
-          console.log('previousWeek',this.previousWeek)
-          console.log('currentWeek',this.currentWeek)
+          console.log('getDailyFiles', this.dailyData)
+          this.previousWeekCams = []
+          this.currentWeekCams = []
+          this.previousWeekKarvy = []
+          this.currentWeekKarvy = []
+          this.previousWeekFrankline = []
+          this.dailyData.previousWeek[1].forEach(element => {
+            this.previousWeekCams.push(element.fileCount)
+          });
+          this.dailyData.currentWeek[1].forEach(element => {
+            this.currentWeekCams.push(element.fileCount)
+          });
+          this.dailyData.previousWeek[2].forEach(element => {
+            this.previousWeekKarvy.push(element.fileCount)
+          });
+          this.dailyData.currentWeek[2].forEach(element => {
+            this.currentWeekKarvy.push(element.fileCount)
+          });
+          this.dailyData.previousWeek[3].forEach(element => {
+            this.previousWeekFrankline.push(element.fileCount)
+          });
+          console.log(this.previousWeekCams)
+          console.log(this.currentWeekCams)
+          console.log(this.previousWeekKarvy)
+          console.log(this.currentWeekKarvy)
+          console.log(this.previousWeekFrankline)
+          //  this.currentWeekFrankline = this.dailyData.currentWeek[0]
+          this.flowCash(this.previousWeekCams,this.currentWeekCams,'flowCash')
+          this.flowCash(this.previousWeekKarvy,this.currentWeekKarvy,'flowCash2')
+          this.flowCash(this.previousWeekFrankline,'','flowCash3')
         }
       }
       , err => this.eventService.openSnackBar(err, "Dismiss")

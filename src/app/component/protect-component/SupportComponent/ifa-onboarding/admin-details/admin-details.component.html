@@ -18,109 +18,64 @@
             <mat-tab label="Overview">
                 <div class="row">
                     <div class="col-md-9 pl-0 miscellaneousBox">
-                        <mat-form-field class="example-full-width">
-                            <textarea matInput class="form-control height160"></textarea>
-                            <button mat-button
-                                class=" bg-primary text-white right br-0 text-inherit mt-12">EDIT</button>
+                        <mat-form-field class="example-full-width" *ngIf="getOverview">
+                            <textarea matInput class="form-control height160"
+                            [disabled] = "overviewDesc" [(ngModel)]="getOverview.description"></textarea>
+                            <button mat-button *ngIf="overviewDesc == true"
+                                class=" bg-primary text-white right br-0 text-inherit mt-12" (click)="overviewDesc = false">EDIT</button>
+                                <button mat-button *ngIf="overviewDesc == false"
+                                class=" bg-primary text-white right br-0 text-inherit mt-12" (click)="overviewDesc = true;updateIFAOnboardingOverview()">SAVE</button>
                         </mat-form-field>
                     </div>
+                </div>
+                <div class="row" *ngIf="isSuccess">
+                    <mat-spinner class="loader text-center" [diameter]="30"></mat-spinner>
                 </div>
             </mat-tab>
 
 
-            <mat-tab label="Onboarding activity">
+            <mat-tab label="Onboarding activity" (click)="getIFAActivity()">
                 <h3 class="f-500">
                     Stages
                 </h3>
                 <div class="cardList" [formGroup]="onboardingActivityForm">
                     <div class="row pt-10 pb-10 bb">
-                        <div class="col-md-8 f-14">
-                            <mat-checkbox class="mr-8" formControlName="firstCall"> </mat-checkbox>
+                        <div class="col-md-8 f-14" *ngFor="let stage of stageList">
+                            <mat-checkbox class="mr-8" [value]="stage.isComplete" [checked]="(stage.isComplete == 1)? true:false"
+                            (change)="updateActivityCompleteness(stage,$event)"> </mat-checkbox>
                             <span
                                 [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('firstCall').value == true ? 'line-through': 'initial' }">
-                                First call
+                                {{stage.taskName}}
                             </span>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
-
-                    <div class="row pt-10 pb-10 bb">
-                        <div class="col-md-8 f-14">
-                            <mat-checkbox class="mr-8" formControlName="autoForwardStep"> </mat-checkbox>
-                            <span
-                                [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('autoForwardStep').value == true ? 'line-through': 'initial' }">
-                                Auto forward setup
-                            </span>
-                        </div>
-                        <div class="col-md-4"></div>
-                    </div>
-
-                    <div class="row pt-10 pb-10 bb">
-                        <div class="col-md-8 f-14">
-                            <mat-checkbox class="mr-8" formControlName="dataUploadAndAumReconciliation"> </mat-checkbox>
-                            <span
-                                [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('dataUploadAndAumReconciliation').value == true ? 'line-through': 'initial' }">
-                                Data upload and AUM reconciliation
-                            </span>
-                        </div>
-                        <div class="col-md-4"></div>
-                    </div>
-
-                    <div class="row pt-10 pb-10 bb">
-                        <div class="col-md-8 f-14">
-                            <mat-checkbox class="mr-8" formControlName="dailyScheduleNCamsExpiryDateAdd">
-                            </mat-checkbox>
-                            <span
-                                [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('dailyScheduleNCamsExpiryDateAdd').value == true ? 'line-through': 'initial' }">
-                                Daily schedule & CAMS expiry date addition
-                            </span>
-                        </div>
-                        <div class="col-md-4"></div>
-                    </div>
-
-                    <div class="row pt-10 pb-10 bb">
-                        <div class="col-md-8 f-14">
-                            <mat-checkbox class="mr-8" formControlName="demoAndHandover"> </mat-checkbox>
-                            <span
-                                [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('demoAndHandover').value == true ? 'line-through': 'initial' }">
-                                Demo and handover
-                            </span>
-                        </div>
-                        <div class="col-md-4"></div>
-                    </div>
-
-                    <div class="row pt-10 pb-10 bb">
-                        <div class="col-md-8 f-14">
-                            <mat-checkbox class="mr-8" formControlName="done"> </mat-checkbox>
-                            <span
-                                [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('done').value == true ? 'line-through': 'initial' }">
-                                Done
-                            </span>
-                        </div>
-                        <div class="col-md-4"></div>
-                    </div>
-
 
                 </div>
 
                 <div class="bg-grey lter mt-44 p-20">
                     <h4 class="f-14 f-500">Comments</h4>
-                    <div class="row pb-20">
+                    <div class="row pb-20" *ngFor="let activity of activityCommentList">
                         <div class="col-md-1 text-center p-0">
                             <img src="/assets/images/svg/comment-icon.svg">
                         </div>
                         <div class="col-md-9 pl-0">
-                            <h4 class="f-14">Ronak Hindocha <span class="text-primitive">a minute ago </span> </h4>
-                            <p>This is a test comment. All comments related to tasks come here. This is second line of
-                                the comment.</p>
+                            <h4 class="f-14">{{activity.name}} <span class="text-primitive">a minute ago </span> </h4>
+                            <p  *ngIf="activity.isEdit == true">{{activity.commentMsg}}</p>
+                            <div *ngIf="activity.isEdit == false">
+                                <mat-form-field>
+                                <input matInput type="text" maxlength="10" [(ngModel)]="activity.commentMsg" class="form-control br-0">
+                                </mat-form-field>
+                            </div>
                         </div>
                         <div class="col-md-2 p-0 text-right">
-                            <p class="f-12 c-p mr-8 d-inline-block"> Edit </p>
+                            <p *ngIf="activity.isEdit == true" class="f-12 c-p mr-8 d-inline-block"(click)='activityCommentFun(activity,false)'> Edit </p>
+                            <p *ngIf="activity.isEdit == false" class="f-12 c-p mr-8 d-inline-block"(click)='activityCommentFun(activity,true)'> Save </p>
                             <p class="f-12 c-p d-inline-block"> Delete </p>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-md-1 text-center p-0">
                             <img src="/assets/images/svg/comment-icon.svg">
                         </div>
@@ -133,7 +88,7 @@
                             <p class="f-12 text_underLine c-p mr-8 d-inline-block"> Edit </p>
                             <p class="f-12 text_underLine c-p d-inline-block"> Delete </p>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="bg-grey shadow lter p-20">
@@ -141,10 +96,13 @@
                         <div class="col-md-1 text-center p-0">
                             <img src="/assets/images/svg/comment-icon.svg">
                         </div>
-                        <div class="col-md-11 p-0">
+                        <div class="col-md-9 p-0">
                             <mat-form-field>
-                                <input matInput type="text" maxlength="10" class="form-control br-0">
+                                <input matInput type="text" [(ngModel)]="Comment" maxlength="10" class="form-control br-0">
                             </mat-form-field>
+                        </div>
+                        <div class="col-md-2 p-0 text-right">
+                            <p class="f-12 c-p mr-8 d-inline-block"(click)='makeComment(Comment,false)'> Comment </p>
                         </div>
                     </div>
                 </div>
