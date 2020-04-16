@@ -13,7 +13,7 @@ import { PeopleService } from '../../protect-component/PeopleComponent/people.se
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  //templateUrl: './login-mobile.component.html',
+  // templateUrl: './login-mobile.component.html',
   styleUrls: ['./login.component.scss'],
   animations: [
     trigger('btnProgress', [
@@ -293,9 +293,15 @@ export class LoginComponent implements OnInit {
       this.peopleService.loginWithPassword(loginData).subscribe(data => {
         console.log('data: ', data);
         if (data) {
+          if (data.forceResetPassword) {
+            data['buttonFlag'] = "reset";
+            this.router.navigate(['/login/setpassword'],
+              { state: { userData: data } });
+          }
+          else {
+            this.loginService.handleUserData(this.authService, this.router, data);
+          }
           // this.authService.setToken(data.token);
-          this.loginService.handleUserData(this.authService, this.router, data);
-
         } else {
           this.passEvent = '';
           this.errorMsg = true;
@@ -308,7 +314,7 @@ export class LoginComponent implements OnInit {
       }, err => {
         this.isLoading = false;
         this.barButtonOptions.active = false;
-        console.log('error on login: ', err);
+        console.log('error on login: ', err.message);
         this.eventService.openSnackBar(err, 'Dismiss');
       });
       // this.backOfficeService.loginApi(loginData).subscribe(

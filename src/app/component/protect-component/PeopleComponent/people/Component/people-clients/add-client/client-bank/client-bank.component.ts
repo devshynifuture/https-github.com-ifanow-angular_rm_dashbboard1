@@ -132,27 +132,27 @@ export class ClientBankComponent implements OnInit {
 
   bankData(data) {
     console.log(data, 'bank data');
-
-    let address1, address2, pincode;
+    this.isIfsc = false;
+    let address1, address2, pincode, adderessData;
     if (data.address) {
-      let adderessData = data.address.trim();
+      adderessData = data.address.trim();
+      pincode = adderessData.substring(adderessData.length - 6);
+      adderessData = adderessData.replace(pincode, '');
       let addressMidLength = adderessData.length / 2;
       address1 = adderessData.substring(0, addressMidLength);
       address2 = adderessData.substring(addressMidLength, adderessData.length);
       address1 = address1.concat(address2.substr(0, address2.indexOf(' ')));
-      pincode = adderessData.match(/\d/g);
-      pincode = pincode.join("");
-      address2 = address2.replace(pincode, '');
+      address2 = address2.concat(address2.substr(address2.indexOf(' '), address2.length))
+      // pincode = pincode.join("");
     }
     (data == undefined) ? data = {} : '';
-    this.isIfsc = false;
     this.bankDetail = data;
     this.bankForm.get('bankName').setValue(data.bank);
     this.bankForm.get('branchCity').setValue(data.city);
     this.bankForm.get('branchState').setValue(data.state);
     this.bankForm.get('branchName').setValue(data.centre);
     this.bankForm.get('branchCountry').setValue('India');
-    this.bankForm.get('branchAddressLine1').setValue(address1);
+    this.bankForm.get('branchAddressLine1').setValue(adderessData);
     this.bankForm.get('branchAddressLine2').setValue(address2);
     this.bankForm.get('branchPinCode').setValue(pincode)
   }

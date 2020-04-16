@@ -21,6 +21,8 @@ export class UtilService {
   ) { }
 
   private static decimalPipe = new DecimalPipe('en-US');
+  private counter:number = 0;
+  public isLoading = false;
   advisorId: any;
 
   subscriptionStepData;
@@ -325,6 +327,17 @@ export class UtilService {
       }
     }
   }
+
+  loader(increament:number) {
+    if(increament === 0)
+      this.counter = 0;
+    this.counter += increament;
+    if(this.counter == 0) {
+      this.isLoading = false;
+    } else {
+      this.isLoading = true;
+    }
+  }
 }
 
 export class ValidatorType {
@@ -346,7 +359,8 @@ export class ValidatorType {
   static ALPHA_NUMERIC_WITH_SLASH = new RegExp(/^[A-Z0-9//]+$/);
   static TEN_DIGITS = new RegExp(/^\d{10}$/);
   static PAN = new RegExp(/^[a-zA-Z0-9]{10,}$/);
-  static ADHAAR = new RegExp(/^[a-zA-Z0-9]{12,}$/);
+  static ADHAAR = new RegExp(/^[0-9]{12,}$/);
+  static ALPHA_NUMERIC_WITH_SPEC_CHAR = new RegExp(/^[ A-Za-z0-9_@./#&+-]*$/);
 }
 
 // Escape characters that have a special meaning in Regular Expressions

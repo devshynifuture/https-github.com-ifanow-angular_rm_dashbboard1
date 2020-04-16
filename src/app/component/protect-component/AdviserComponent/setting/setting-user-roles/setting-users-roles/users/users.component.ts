@@ -20,6 +20,7 @@ export class UsersComponent implements OnInit {
   roles: any[];
   isLoading: boolean = true;
   counter = 0;
+  hasError = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -43,6 +44,9 @@ export class UsersComponent implements OnInit {
       this.loader(-1);
       console.log('team member details', res);
       this.userList = res;
+    }, err=> {
+      this.eventService.openSnackBar(err, "Dismiss");
+      this.hasError = true;
     });
   }
 
