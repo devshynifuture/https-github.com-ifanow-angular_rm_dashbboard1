@@ -1,6 +1,12 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, Input } from '@angular/core';
 import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormBuilder } from '@angular/forms';
+import { SupportService } from '../../support.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { timingSafeEqual } from 'crypto';
+import { SettingsService } from '../../../AdviserComponent/setting/settings.service';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-admin-details',
@@ -8,11 +14,40 @@ import { FormBuilder } from '@angular/forms';
   styleUrls: ['./admin-details.component.scss']
 })
 export class AdminDetailsComponent implements OnInit {
+  advisorId: any;
+  getOverview: any;
+  inputData: any;
+  overviewDesc = true
+  stageList: any;
+  activityCommentList: any;
+  activityComment = true
+  isSuccess = false
+  rtaDetails: any;
+  camsDS: MatTableDataSource<unknown>;
+  karvyDS: MatTableDataSource<unknown>;
+  frankDS: MatTableDataSource<unknown>;
+  fundsDS: MatTableDataSource<unknown>;
+  @Input()
+  set data(data) {
+    window.screenTop;
+    this.inputData = data;
+    this.getOverviewIFAOnbording(this.inputData)
+    this.getIFAActivity()
+    this.getRTADetails()
+  }
 
+  get data() {
+    return this.inputData;
+  }
   constructor(
     public subInjectService: SubscriptionInject,
-    private fb: FormBuilder
-  ) { }
+    private fb: FormBuilder,
+    private supportService: SupportService,
+    private eventService: EventService,
+    private settingsService : SettingsService
+  ) {
+    this.advisorId = AuthService.getAdvisorId()
+  }
   displayedColumns: string[] = ['name', 'email', 'mobile', 'role'];
   dataSource = ELEMENT_DATA;
 
@@ -38,10 +73,122 @@ export class AdminDetailsComponent implements OnInit {
   })
 
   ngOnInit() {
+    this.overviewDesc = true
+
   }
+  getRTADetails(){
+    const jsonData = {advisorId: this.inputData.adminAdvisorId};
 
-
-
+    this.settingsService.getMFRTAList(jsonData).subscribe((res) => {
+      console.log('res == ',res)
+     this.rtaDetails = res
+     this.createDataSource()
+    });
+  }
+  createDataSource() {
+    this.camsDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 1));
+    this.karvyDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 2));
+    this.frankDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 3));
+    this.fundsDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 4));
+  }
+  activityCommentFun(value, flag) {
+    value.isEdit = flag
+    if(flag == true){
+      this.activityCommentList.forEach(element => {
+        if(element.id == value.id){
+          element.id =value.id,
+          element.commentMsg =  value.commentMsg,
+          element.activityId = value.activityId
+        }
+      });
+      this.supportService.activityCommentUpdate(this.activityCommentList).subscribe(
+        data => {
+          console.log('getOverviewIFAOnbording', data);
+          if (data) {
+            // this.getOverview = data.stageList;
+          }
+        }
+        , err => this.eventService.openSnackBar(err, "Dismiss")
+      )
+    }
+  }
+  getOverviewIFAOnbording(data) {
+    let obj = {
+      adminAdvisorId: data.adminAdvisorId
+    }
+    this.supportService.getOverviewIFAOnboarding(obj).subscribe(
+      data => {
+        console.log('getOverviewIFAOnbording', data);
+        if (data) {
+          this.getOverview = data[0];
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+  updateActivityCompleteness(stage,event) {
+    // let obj = {
+    //   id:stage.id,
+    //   isComplete : (event.checked == true)? 1:0,
+    //   activityId : stage.activityId
+    // }
+    this.stageList.forEach(element => {
+      if(element.id == stage.id){
+        element.id = stage.id
+        element.isComplete = (event.checked == true)? 1:0,
+        element.activityId = stage.activityId
+      }
+    });
+    this.supportService.editActivity(this.stageList).subscribe(
+      data => {
+        console.log('getOverviewIFAOnbording', data);
+        if (data) {
+         console.log(data)
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+  getIFAActivity() {
+    this.isSuccess = true
+    let obj = {
+      advisorId: this.inputData.adminAdvisorId
+    }
+    this.supportService.getOnboardingActivity(obj).subscribe(
+      data => {
+        console.log('getOverviewIFAOnbording', data);
+        this.isSuccess = false
+        if (data) {
+          this.stageList = data.stageList;
+          this.activityCommentList = data.activityCommentList
+          this.activityCommentList.forEach(element => {
+            element.isEdit = true
+          });
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+  updateIFAOnboardingOverview() {
+    let obj = {
+      id: this.getOverview.id,
+      description: this.getOverview.description
+    }
+    this.supportService.updateOverviewIFAOnboarding(obj).subscribe(
+      data => {
+        console.log('getOverviewIFAOnbording', data);
+        if (data) {
+          // this.getOverview = data.stageList;
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+  makeComment(comment,flag){
+    console.log('comment',comment)
+    
+  }
+  update
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }

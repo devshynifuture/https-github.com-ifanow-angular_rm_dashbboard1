@@ -509,7 +509,13 @@ export const appConfig = {
   GET_ONBOARDING_TASK_GLOBAL: 'rmdashboard/ifa/onboarding/task/global/get',
   POST_HISTORICAL_FILE_ORDER: 'fileorder/historical/order',
   GET_FILE_TYPE_ORDER: 'fileorder/file-type/list/get',
-
+  GET_IFA_ONBOARDING_OVERVIEW :'rmdashboard/ifa/onboard/overview/get',
+  UPDATE_IFA_ONBOARDING_OVERVIEW:'rmdashboard/ifa/onboard/overview/update',
+  GET_IFA_ONBOARDING_ACTIVITY:'rmdashboard/dashboard/ifa-onboard/advisor-id/get',
+  EDIT_ACTIVITY:'rmdashboard/dashboard/ifa-onboard/advisor-id/task/put',
+  ACTIVITY_ADD_COMMENT:'',
+  ACTIVITY_UPDATE_COMMENT:'rmdashboard/dashboard/ifa-onboard/activity/chat/edit',
+  ACTIVITY_DELETECOMMENT:'rmdashboard/dashboard/ifa-onboard/activity/chat/delete',
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',
   GET_PLANS: 'setting/preferences/plan/get',
