@@ -516,6 +516,10 @@ export const appConfig = {
   ACTIVITY_ADD_COMMENT:'',
   ACTIVITY_UPDATE_COMMENT:'rmdashboard/dashboard/ifa-onboard/activity/chat/edit',
   ACTIVITY_DELETECOMMENT:'rmdashboard/dashboard/ifa-onboard/activity/chat/delete',
+  GET_STAGE_COMMENT:'rmdashboard/dashboard/ifa-onboard/stages/chat/get',
+  EDIT_STAGE_COMMENT:'rmdashboard/dashboard/ifa-onboard/stages/chat/edit',
+  DELETE_STAGE_COMMENT:'rmdashboard/dashboard/ifa-onboard/stages/chat/delete',
+
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',
   GET_PLANS: 'setting/preferences/plan/get',

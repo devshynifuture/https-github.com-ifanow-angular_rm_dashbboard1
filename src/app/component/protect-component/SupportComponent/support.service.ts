@@ -77,6 +77,15 @@ export class SupportService {
   getIfaMatricData(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_IFA_MATRIC_DATA, data);
   }
+  getStageComments(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_STAGE_COMMENT, data);
+  }
+  deleteCommentStage(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_STAGE_COMMENT , data);
+  }
+  editStageComment(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_STAGE_COMMENT , data);
+  }
   // observable data sending
 
   sendDataThroughObs(value) {

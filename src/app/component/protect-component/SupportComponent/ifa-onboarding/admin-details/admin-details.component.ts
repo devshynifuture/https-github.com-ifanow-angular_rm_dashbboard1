@@ -25,6 +25,7 @@ export class AdminDetailsComponent implements OnInit {
   isSuccess = false
   rtaDetails: any;
   isLoading = false
+  stageComment: any;
   @Input()
   set data(data) {
     window.screenTop;
@@ -43,15 +44,15 @@ export class AdminDetailsComponent implements OnInit {
     private supportService: SupportService,
     private eventService: EventService,
     public utilservice: UtilService,
-    private settingsService : SettingsService
+    private settingsService: SettingsService
   ) {
     this.advisorId = AuthService.getAdvisorId()
   }
 
   tabIndex = 0;
 
-  isRTALoaded:boolean = false;
-  isTeamLoaded:boolean = false;
+  isRTALoaded: boolean = false;
+  isTeamLoaded: boolean = false;
 
   camsDS: MatTableDataSource<any> = new MatTableDataSource([{}, {}, {}]);
   karvyDS: MatTableDataSource<any> = new MatTableDataSource([{}, {}, {}]);
@@ -59,8 +60,8 @@ export class AdminDetailsComponent implements OnInit {
   fundsDS: MatTableDataSource<any> = new MatTableDataSource([{}, {}, {}]);
   userList: MatTableDataSource<any> = new MatTableDataSource([{}, {}, {}]);
 
-  rtaAPIError:boolean = false;
-  teamAPIError:boolean = false;
+  rtaAPIError: boolean = false;
+  teamAPIError: boolean = false;
 
   displayedColumns: string[] = ['name', 'email', 'mobile', 'role'];
   displayedColumns1: string[] = ['arn', 'regEmailId', 'scheduleExp'];
@@ -81,13 +82,13 @@ export class AdminDetailsComponent implements OnInit {
     this.overviewDesc = true
 
   }
-  getRTADetails(){
-    const jsonData = {advisorId: this.inputData.adminAdvisorId};
+  getRTADetails() {
+    const jsonData = { advisorId: this.inputData.adminAdvisorId };
 
     this.settingsService.getMFRTAList(jsonData).subscribe((res) => {
-      console.log('res == ',res)
-     this.rtaDetails = res
-     this.createDataSource()
+      console.log('res == ', res)
+      this.rtaDetails = res
+      this.createDataSource()
     });
   }
   createDataSource() {
@@ -98,25 +99,55 @@ export class AdminDetailsComponent implements OnInit {
   }
   activityCommentFun(value, flag) {
     value.isEdit = flag
-    if(flag == true){
-      this.activityCommentList.forEach(element => {
-        if(element.id == value.id){
-          element.id =value.id,
-          element.commentMsg =  value.commentMsg,
-          element.activityId = value.activityId
-        }
-      });
-      this.supportService.activityCommentUpdate(this.activityCommentList).subscribe(
-        data => {
-          console.log('getOverviewIFAOnbording', data);
-          if (data) {
-            // this.getOverview = data.stageList;
-          }
-        }
-        , err => this.eventService.openSnackBar(err, "Dismiss")
-      )
+    let obj = {
+      id: value.id,
+      commentMsg: value.commentMsg,
     }
+    this.supportService.activityCommentUpdate(obj).subscribe(
+      data => {
+        console.log('getOverviewIFAOnbording', data);
+        if (data) {
+          // this.getOverview = data.stageList;
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
   }
+  activityCommentFunStage() {
+
+  }
+  getstageComment() {
+    let obj = {
+
+    }
+    this.supportService.getStageComments(obj).subscribe(
+      data => {
+        console.log('getOverviewIFAOnbording', data);
+        if (data) {
+          this.stageComment = data;
+          this.stageComment.forEach(element => {
+            element.isEditStage = true
+          });
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+  editStageComment() {
+    let obj = {
+
+    }
+    this.supportService.editStageComment(obj).subscribe(
+      data => {
+        console.log('getOverviewIFAOnbording', data);
+        if (data) {
+          console.log(data)
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+
   getOverviewIFAOnbording(data) {
     let obj = {
       adminAdvisorId: data.adminAdvisorId
@@ -131,24 +162,27 @@ export class AdminDetailsComponent implements OnInit {
       , err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
-  updateActivityCompleteness(stage,event) {
-    // let obj = {
-    //   id:stage.id,
-    //   isComplete : (event.checked == true)? 1:0,
-    //   activityId : stage.activityId
-    // }
+  showComment(stage,flag){
+    if (stage.isShowComment == true) {
+      stage.isShowComment = false
+    } else {
+      stage.isShowComment = true
+    }
+  }
+  updateActivityCompleteness(stage, event) {
+   
     this.stageList.forEach(element => {
-      if(element.id == stage.id){
+      if (element.id == stage.id) {
         element.id = stage.id
-        element.isComplete = (event.checked == true)? 1:0,
-        element.activityId = stage.activityId
+        element.isComplete = (event.checked == true) ? 1 : 0,
+          element.activityId = stage.activityId
       }
     });
     this.supportService.editActivity(this.stageList).subscribe(
       data => {
         console.log('getOverviewIFAOnbording', data);
         if (data) {
-         console.log(data)
+          console.log(data)
         }
       }
       , err => this.eventService.openSnackBar(err, "Dismiss")
@@ -165,6 +199,9 @@ export class AdminDetailsComponent implements OnInit {
         this.isSuccess = false
         if (data) {
           this.stageList = data.stageList;
+          this.stageList.forEach(element => {
+            element.isShowComment = false
+          });
           this.activityCommentList = data.activityCommentList
           this.activityCommentList.forEach(element => {
             element.isEdit = true
@@ -190,22 +227,22 @@ export class AdminDetailsComponent implements OnInit {
       , err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
-  makeComment(comment,flag){
-    console.log('comment',comment)
-    
+  makeComment(comment, flag) {
+    console.log('comment', comment)
+
   }
 
 
   changeTab(index) {
     switch (index) {
       case 2:
-        if(!this.isRTALoaded) {
+        if (!this.isRTALoaded) {
           this.loadRTAList()
         }
         break;
 
       case 3:
-        if(!this.isTeamLoaded) {
+        if (!this.isTeamLoaded) {
           this.loadUsers()
         }
 
@@ -213,7 +250,7 @@ export class AdminDetailsComponent implements OnInit {
   }
 
   loadRTAList() {
-    const jsonData = {advisorId: this.data.advisorId};
+    const jsonData = { advisorId: this.data.advisorId };
     this.utilservice.loader(1)
     this.rtaAPIError = false;
     this.settingsService.getMFRTAList(jsonData).subscribe((res) => {
@@ -240,7 +277,7 @@ export class AdminDetailsComponent implements OnInit {
       this.userList = new MatTableDataSource(res);
       this.utilservice.loader(-1);
       this.isTeamLoaded = true;
-    }, err=> {
+    }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
       this.teamAPIError = true;
       this.utilservice.loader(-1);
