@@ -408,8 +408,8 @@
   <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
 
 
-    <tr colspan="12">
-      <td style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">Mutual fund  {{(this.mutualFund)?this.mutualFund.viewMode:'Transactions'}}</td>
+    <tr >
+      <td colspan="12" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">Mutual fund  {{(this.mutualFund)?this.mutualFund.viewMode:'Transactions'}}</td>
     </tr>
     <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
       <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"> Sub category name </td>
@@ -420,7 +420,7 @@
       <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"> Gain </td>
       <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"> Absolute Return% </td>
       <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  Xirr%  </td>
-      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;">  Allocation% </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  Allocation% </td>
     </tr>
     <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;" *ngFor="let item of dataSource.data">
       <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">{{item.categoryName}}</td>
@@ -450,19 +450,19 @@
   
   <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;" >
     <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
-      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 5%;"> Sr no. </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 4%;"> Sr no. </td>
       <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 17%;">  Transaction Type  </td>
       <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 10%;">  Transaction date  </td>
       <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 7%;">  Transaction amount  </td>
-      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  Transaction NAV  </td>
-      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"> Units </td>
-      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  Current value </td>
-      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   Dividend payout   </td>
-      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   Dividend reinvestment  </td>
-      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   Total amount   </td>
-      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">    Gain </td>
-      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">    Absolute Return% </td>
-      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;">    Xirr% </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 4%;">  Transaction NAV  </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;"> Units </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">  Current value </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">   Dividend payout   </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">   Dividend reinvestment  </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">   Total amount   </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">    Gain </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">    Absolute Return% </td>
+      <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;width: 6%;">    Xirr% </td>
     </tr>
   </table>
     <table style="width: 100%;font-family: Roboto,sans-serif;border-collapse: collapse;" *ngFor="let item of customDataSource.data ;index as i">
@@ -487,11 +487,11 @@
       </div> -->
       <table style="width: 100%;border-bottom: 1px solid #DADCE0;border-collapse: collapse;font-family: Roboto,sans-serif;" *ngIf="item.schemeName || item.nav">
     <tr>
-    <td colspan="6" style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;" class="f-700">{{item.schemeName}}</td>
-    <td colspan="5" style="padding: 7px 8px;border-right: 1px solid #DADCE0;font-size: 13px !important;line-height: 16px !important;color: #202020;" class="f-700">Current NAV:{{item.nav}}</td>
+    <td colspan="8" style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;" class="f-700">{{item.schemeName}}</td>
+    <td colspan="5" style="padding: 12px;border-right: 1px solid #DADCE0;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: center;" class="f-700">Current NAV:{{item.nav}}</td>
       </tr>
 </table>
-      <div style="width: 99.85%;text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;" *ngIf="item.name || item.pan || item.folio">
+      <div style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;" *ngIf="item.name || item.pan || item.folio">
         {{item.groupName}}(PAN:{{item.pan}})|{{item.folio}}
         </div>
   <tr style="height: 40px;border-bottom:1px solid #DADCE0; " *ngIf="item.fwTransactionType || item.category">
@@ -506,15 +506,17 @@
       <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" appFormatNumber>   {{(item.dividendReinvest)?item.dividendReinvest:0}} </td>
       <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" appFormatNumber>   {{(item.totalAmount)?item.totalAmount:0}} </td>
       <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">   {{(item.gain)?item.gain:0}} </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   {{(item.absReturn)?item.absReturn:0}} </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">   {{(item.absReturn)?item.absReturn:0}} </td>
       <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-right: 1px solid #DADCE0;width: 6%;">   {{(item.xirr)?item.xirr:0}} </td>
     </tr>
     <tr style="height: 40px;border-bottom:1px solid #DADCE0;" *ngIf="item.total">
       <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-left: 1px solid #DADCE0;width: 4%;" class="f-700"></td>
       <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-left: 1px solid #DADCE0;width: 17%" class="f-700">Total</td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 10%;" class="f-700"><span appFormatNumber class="f-700" *ngIf="item.totalTransactionAmt">{{(item.totalTransactionAmt)?item.totalTransactionAmt:0}}</span></td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 7%;" class="f-700"> <span appFormatNumber class="f-700" *ngIf="item.totalNav">{{(item.totalNav)?item.totalNav:0}}</span></td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 4%;" class="f-700"><span appFormatNumber class="f-700" *ngIf="item.totalUnit">{{(item.totalUnit)?item.totalUnit:0}}</span></td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-right: 1px solid #DADCE0;width: 10%;" class="f-700">    </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 7%;" class="f-700" appFormatNumber *ngIf="item.totalTransactionAmt">{{(item.totalTransactionAmt)?item.totalTransactionAmt:0}}</td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-left: 1px solid #DADCE0;width: 4%;" class="f-700"></td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 4%;" class="f-700" *ngIf="item.totalNav">{{(item.totalNav)?item.totalNav:0}}</td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" appFormatNumber class="f-700" *ngIf="item.totalUnit">{{(item.totalUnit)?item.totalUnit:0}}</td>
       <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" appFormatNumber class="f-700">  {{(item.currentValue)?item.currentValue:0}} </td>
       <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" appFormatNumber class="f-700">   {{(item.dividendPayout)?item.dividendPayout:0}} </td>
       <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" appFormatNumber class="f-700">   {{(item.dividendReinvest)?item.dividendReinvest:0}} </td>
