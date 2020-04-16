@@ -45,6 +45,8 @@ export class ClientMoreInfoComponent implements OnInit {
 
   @Input() fieldFlag;
   @Output() tabChange = new EventEmitter();
+  @Output() clientData = new EventEmitter();
+
 
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
@@ -154,6 +156,7 @@ export class ClientMoreInfoComponent implements OnInit {
         data => {
           this.barButtonOptions.active = false;
           console.log(data);
+          this.clientData.emit(data);
           (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
         },
         err => {
@@ -222,6 +225,7 @@ export class ClientMoreInfoComponent implements OnInit {
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {
         console.log(data);
+        this.clientData.emit(data);
         this.barButtonOptions.active = false;
         (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
       },

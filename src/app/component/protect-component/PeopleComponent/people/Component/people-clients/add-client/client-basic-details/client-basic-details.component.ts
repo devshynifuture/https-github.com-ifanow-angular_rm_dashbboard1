@@ -55,7 +55,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   clientRoles: any = [];
   minAge: any;
   advisorData: any;
-
+  maxDate = new Date();
   // advisorId;
 
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
@@ -205,11 +205,11 @@ export class ClientBasicDetailsComponent implements OnInit {
   saveNextClient(flag) {
     if (this.fieldFlag == 'client' && this.basicDetailsData.userId == null) {
       if (this.invTypeCategory == '1') {
-        this.basicDetails.get("clientOwner").setValue(null);
+        // this.basicDetails.get("clientOwner").setValue(null);
         this.basicDetails.get('clientOwner').setValidators([Validators.required]);
         this.basicDetails.get('clientOwner').updateValueAndValidity();
       } else {
-        this.nonIndividualForm.get("clientOwner").setValue(null);
+        // this.nonIndividualForm.get("clientOwner").setValue(null);
         this.nonIndividualForm.get('clientOwner').setValidators([Validators.required]);
         this.nonIndividualForm.get('clientOwner').updateValueAndValidity();
       }
@@ -218,12 +218,12 @@ export class ClientBasicDetailsComponent implements OnInit {
     }
     if (this.fieldFlag == 'lead' && this.basicDetailsData.userId == null) {
       if (this.invTypeCategory == '1') {
-        this.basicDetails.get("leadOwner").setValue(null);
+        // this.basicDetails.get("leadOwner").setValue(null);
         this.basicDetails.get('leadOwner').setValidators([Validators.required]);
         this.basicDetails.get('leadOwner').updateValueAndValidity();
       }
       else {
-        this.nonIndividualForm.get("leadOwner").setValue(null);
+        // this.nonIndividualForm.get("leadOwner").setValue(null);
         this.nonIndividualForm.get('leadOwner').setValidators([Validators.required]);
         this.nonIndividualForm.get('leadOwner').updateValueAndValidity();
       }
