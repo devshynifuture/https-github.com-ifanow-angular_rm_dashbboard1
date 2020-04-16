@@ -1,19 +1,19 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { BackOfficeService } from '../../protect-component/AdviserComponent/backOffice/back-office.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatProgressButtonOptions } from '../../../common/progress-button/progress-button.component';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { LoginService } from './login.service';
-import { PeopleService } from '../../protect-component/PeopleComponent/people.service';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {BackOfficeService} from '../../protect-component/AdviserComponent/backOffice/back-office.service';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {MatProgressButtonOptions} from '../../../common/progress-button/progress-button.component';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {LoginService} from './login.service';
+import {PeopleService} from '../../protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  //templateUrl: './login-mobile.component.html',
+  // templateUrl: './login-mobile.component.html',
   styleUrls: ['./login.component.scss'],
   animations: [
     trigger('btnProgress', [
@@ -308,7 +308,7 @@ export class LoginComponent implements OnInit {
       }, err => {
         this.isLoading = false;
         this.barButtonOptions.active = false;
-        console.log('error on login: ', err);
+        console.log('error on login: ', err.message);
         this.eventService.openSnackBar(err, 'Dismiss');
       });
       // this.backOfficeService.loginApi(loginData).subscribe(
