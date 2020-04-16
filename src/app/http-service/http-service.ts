@@ -1,18 +1,19 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { Router } from '@angular/router';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
+import {Observable, of, throwError} from 'rxjs';
+import {Router} from '@angular/router';
 // import 'rxjs/Rx';
-import { AuthService } from '../auth-service/authService';
+import {AuthService} from '../auth-service/authService';
 import 'rxjs-compat/add/observable/of';
 import 'rxjs-compat/add/operator/map';
-import { catchError } from 'rxjs/operators';
-import { EmailUtilService } from '../services/email-util.service';
+import {catchError} from 'rxjs/operators';
+import {EmailUtilService} from '../services/email-util.service';
 
 // declare var require: any;
 const Buffer = require('buffer/').Buffer;
 const DEFAULT_AGE = 10000;
 
+// tslint:disable:triple-equals
 export class CacheEntry {
   url: string;
   request: string;
@@ -23,6 +24,18 @@ export class CacheEntry {
 @Injectable()
 
 export class HttpService {
+
+  errorObservable = catchError(err => {
+    if (err.error) {
+      if (err.error.message) {
+        return throwError(err.error.message);
+      } else {
+        return throwError(err.error);
+      }
+    } else {
+      return throwError(err);
+    }
+  });
 
   authToken: any = '';
   private baseUrl = '';
@@ -52,15 +65,7 @@ export class HttpService {
     console.log('HttpService post body : ', body);
 
     return this._http
-      .post(this.baseUrl + url, body, httpOptions).pipe(
-        catchError(err => of([]))
-
-        // catchError(err => {
-        //   console.log('Handling error locally and rethrowing it...', err);
-        //
-        //   // return throwError(err);
-        // })
-      )
+      .post(this.baseUrl + url, body, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
         // console.log('resData: undecoded ', res);
 
@@ -94,30 +99,17 @@ export class HttpService {
       }
     }
 
-    const inputData = { query: this.changeBase64Data(body) };
+    const inputData = {query: this.changeBase64Data(body)};
 
     return this._http
-      .post(this.baseUrl + url, inputData, httpOptions).pipe(
-        catchError(err => of([]))
-
-        // catchError(err => {
-        //   console.log('Handling error locally and rethrowing it...', err);
-        //
-        //   // return throwError(err);
-        // })
-      )
+      .post(this.baseUrl + url, inputData, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
         // console.log('resData: undecoded ', res);
 
         if (res.status === 200 || res.status === 201) {
-          // console.log('resData: decoded ', res);
-
           const resData = this.changeBase64ToString(res);
-          // console.log('resData: decoded ', resData);
           return resData;
-        }/* else if (res.status === 304 || 204) {
-          return res.status;
-        }*/ else {
+        } else {
 
           // this._router.navigate(['login']);
           throw new Error(res.message);
@@ -139,18 +131,10 @@ export class HttpService {
       }
     }
 
-    const inputData = { query: this.changeBase64Data(body) };
+    const inputData = {query: this.changeBase64Data(body)};
 
     return this._http
-      .put(this.baseUrl + url, inputData, httpOptions).pipe(
-        catchError(err => of([]))
-
-        // catchError(err => {
-        //   console.log('Handling error locally and rethrowing it...', err);
-        //
-        //   // return throwError(err);
-        // })
-      )
+      .put(this.baseUrl + url, inputData, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
         // console.log('resData: undecoded ', res);
 
@@ -160,9 +144,7 @@ export class HttpService {
           const resData = this.changeBase64ToString(res);
           // console.log('resData: decoded ', resData);
           return resData;
-        }/* else if (res.status === 304 || 204) {
-          return res.status;
-        }*/ else {
+        } else {
 
           // this._router.navigate(['login']);
           throw new Error(res.message);
@@ -183,12 +165,7 @@ export class HttpService {
     // console.log('HttpService put request url... ', url);
 
     return this._http
-      .put(this.baseUrl + url, body, httpOptions).pipe(
-        catchError(err => {
-          console.log('Handling error locally and rethrowing it...', err);
-          return throwError(err);
-        })
-      )
+      .put(this.baseUrl + url, body, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
         if (res == null) {
           return res;
@@ -198,7 +175,6 @@ export class HttpService {
         } else {
           const err = new Error(res.message);
           throwError(err);
-
           // this._router.navigate(['login']);
         }
       });
@@ -218,31 +194,14 @@ export class HttpService {
     console.log('HttpService put request url...', this._http);
 
     return this._http
-      .put(this.baseUrl + url, body, httpOptions).pipe(
-        catchError(err => {
-          console.log('Handling error locally and rethrowing it...', err);
-          return throwError(err);
-        })
-      );/*
-      .map((res: any) => {
-        if (res.status === 200) {
-          const resData = this.changeBase64ToString(res);
-          // console.log(resData);
-          return resData;
-        } else {
-          const err = new Error(res.message);
-          throwError(err);
-
-          // this._router.navigate(['login']);
-        }
-      });*/
+      .put(this.baseUrl + url, body, httpOptions).pipe(this.errorObservable);
   }
 
   delete(url: string, body, options?): Observable<any> {
     let httpOptions = {
       headers: new HttpHeaders().set('authToken', this._userService.getToken())
         .set('Content-Type', 'application/json'),
-      body: body
+      body
     };
     if (options != undefined) {
       httpOptions = options;
@@ -252,12 +211,7 @@ export class HttpService {
     console.log('HttpService put request url... ', url);
 
     return this._http
-      .request('delete', url, { body: body }).pipe(
-        catchError(err => {
-          console.log('Handling error locally and rethrowing it...', err);
-          return throwError(err);
-        })
-      )
+      .request('delete', url, {body}).pipe(this.errorObservable)
       .map((res: any) => {
         if (res.status === 200) {
           const resData = this.changeBase64ToString(res);
@@ -298,7 +252,7 @@ export class HttpService {
     console.log(objJson64);
     let httpParams = new HttpParams();
     httpParams = httpParams.append('query', objJson64);
-    var httpHeader: HttpHeaders;
+    let httpHeader: HttpHeaders;
     if (this._userService.getToken()) {
       httpHeader = new HttpHeaders().set('authToken', this._userService.getToken())
         .set('Content-Type', 'application/json');
@@ -311,20 +265,13 @@ export class HttpService {
     };
     url = url.trim();
     return this._http
-      .get(this.baseUrl + url, httpOptions).pipe(
-        catchError(err => {
-          console.log('Handling error locally and rethrowing it...', err);
-          return throwError(err);
-        })
-      )
+      .get(this.baseUrl + url, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
         if (res.status === 200 || res.status === 201 || res.status === 202) {
           const resData = this.changeBase64ToString(res);
           // console.log('decoded resData', resData);
           return resData;
-        } /*else if (res.status === 304) {
-          throwError(new Error(res.message));
-        }*/ else {
+        } else {
           // this._router.navigate(['login']);
           throw new Error(res.message);
         }
@@ -361,24 +308,15 @@ export class HttpService {
       params
     };
     url = url.trim();
-    return this.getHttpClient(this.baseUrl + url, httpOptions).pipe(
-      catchError(err => {
-        console.log('Handling error locally and rethrowing it...', err);
-        return throwError(err);
-      })
-    )
+    return this.getHttpClient(this.baseUrl + url, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
         if (res.status === 200) {
           const resData = this.changeBase64ToString(res);
           // console.log('decoded resData', resData);
           return resData;
-        } /*else if (res.status === 304) {
-          return res.status;
-          } */
-        else if (res.status === 204) {
+        } else if (res.status === 204) {
           return null;
-        }
-        else {
+        } else {
           // this._router.navigate(['login']);
           throw new Error(res.message);
         }
