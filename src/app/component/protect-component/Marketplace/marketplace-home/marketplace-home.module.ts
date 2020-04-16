@@ -4,9 +4,10 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatInputModule} from '@angular/material';
-
+import {MatListModule} from '@angular/material/list';
 import {MarketplaceHomeRoutingModule} from './marketplace-home-routing.module';
 import {MarketplaceHomeComponent} from './marketplace-home.component';
+import {MatIconModule} from '@angular/material/icon';
 
 
 @NgModule({
@@ -17,7 +18,9 @@ import {MarketplaceHomeComponent} from './marketplace-home.component';
     MatSelectModule,
     MatButtonModule,
     MatProgressBarModule,
-    MatInputModule
+    MatInputModule,
+    MatListModule,
+    MatIconModule
   ]
 })
 export class MarketplaceHomeModule { }
