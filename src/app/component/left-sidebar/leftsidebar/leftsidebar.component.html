@@ -424,7 +424,10 @@
                     </mat-menu>
                 </a>
                 <a class="sidenav-link" mat-list-item>
-                    <img src="assets/images/img1.jpg" class="c-p header-img" (click)="logout()">
+                    <img src="assets/images/img1.jpg" [matMenuTriggerFor]="menu" class="c-p header-img">
+                    <mat-menu #menu="matMenu">
+                        <button (click)="logout()" mat-menu-item>Logout</button>
+                    </mat-menu>
                 </a>
             </div>
 

@@ -38,7 +38,7 @@
                             <div *ngIf="clientOverviewData" class="col-md-10 pl-12">
                                 <div class="profileDetails">
                                     <h1 class="f-26 roboto f-500">{{clientOverviewData.name}}</h1>
-                                    <h5>{{clientOverviewData.bio}} | {{clientOverviewData.age}} Years</h5>
+                                    <h5>{{clientOverviewData.bio}} <span *ngIf="clientOverviewData.bio">|</span> {{clientOverviewData.age}} Years</h5>
                                     <p class="roboto l-18 f-14 text-primitive">{{clientOverviewData.remarks}}</p>
                                 </div>
                             </div>

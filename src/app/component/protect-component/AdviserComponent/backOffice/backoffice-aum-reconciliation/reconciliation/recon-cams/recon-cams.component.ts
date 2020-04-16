@@ -29,14 +29,33 @@ export class ReconCamsComponent implements OnInit {
   });
 
   isBrokerSelected: boolean = false;
+  parentId = AuthService.getParentId();
+  adminId = AuthService.getAdminId();
+  adminAdvisorIds: any[] = [];
 
   @Input() rtId;
   displayedColumns: string[] = ['doneOn', 'doneBy', 'totalFolioCount', 'unmatchedCountBeforeRecon', 'unmatchedCountAfterRecon', 'aumBalanceDate', 'transactionDate', 'deleted', 'reordered', 'orderSuccess', 'orderFailed', 'action']
 
   ngOnInit() {
+    console.log("this is parent and adminId ", this.parentId, this.adminId);
     this.dataSource = new MatTableDataSource<ElementI>(ELEMENT_DATA);
     this.getBrokerList();
+    this.teamMemberListGet()
     console.log('my id is ::', this.rtId);
+  }
+
+  teamMemberListGet() {
+    this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
+      .subscribe(data => {
+        if (data && data.length !== 0) {
+          data.forEach(element => {
+            this.adminAdvisorIds.push(element.adminAdvisorId);
+          });
+        } else {
+          this.adminAdvisorIds = [...this.advisorId];
+          this.eventService.openSnackBar('No Team Member Found', 'DISMISS');
+        }
+      });
   }
 
   getBrokerList() {
@@ -44,7 +63,6 @@ export class ReconCamsComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.brokerList = res;
-          this.isBrokerSelected = true;
         }
       });
   }
@@ -55,11 +73,13 @@ export class ReconCamsComponent implements OnInit {
     // make separate function for toggling the same
     if (this.selectBrokerForm.get('selectBrokerId').value) {
       this.isLoading = true;
+      this.isBrokerSelected = true;
       const data = {
-        advisorId: this.advisorId,
+        advisorIds: [...this.adminAdvisorIds],
         brokerId: this.selectBrokerForm.get('selectBrokerId').value,
         rmId: 0,
-        rtId: this.rtId
+        rtId: this.rtId,
+        parentId: this.adminId == 0 ? this.advisorId : this.parentId
       }
       this.reconService.getAumReconHistoryDataValues(data)
         .subscribe(res => {
@@ -90,6 +110,10 @@ export class ReconCamsComponent implements OnInit {
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
+          if (UtilService.isRefreshRequired(upperSliderData)) {
+            // call history get
+            this.getAumReconHistoryData()
+          }
           // this.getClientSubscriptionList();
           subscription.unsubscribe();
         }

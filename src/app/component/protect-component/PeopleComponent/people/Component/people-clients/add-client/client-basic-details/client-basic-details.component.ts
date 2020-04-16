@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ValidatorType } from 'src/app/services/util.service';
+import { ValidatorType, UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
@@ -87,6 +87,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.createIndividualForm(null);
         return;
       } else {
+        this.invTypeCategory = (data.clientType == 1 || data.clientType == 0) ? '1' : String(data.clientType);
         this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
       }
       (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
@@ -94,7 +95,9 @@ export class ClientBasicDetailsComponent implements OnInit {
     }
     console.log(data);
   }
-
+  toUpperCase(event) {
+    event = UtilService.toUpperCase(event);
+  }
   // setMinDateForAge() {
   //   this.minAge = new Date();
   //   console.log(this.minAge);
@@ -114,8 +117,8 @@ export class ClientBasicDetailsComponent implements OnInit {
       leadSource: [data.leadSource],
       leaadStatus: ['1'],
       leadRating: [(data.leadRating) ? String(data.leadRating) : '0'],
-      leadOwner: ['1'],
-      clientOwner: ['1'],
+      leadOwner: [],
+      clientOwner: [],
       role: [(data.roleId) ? data.roleId : '0', Validators.required],
     });
   }
@@ -148,7 +151,8 @@ export class ClientBasicDetailsComponent implements OnInit {
       leadSource: [data.leadSource],
       leaadStatus: ['1'],
       leadRating: [(data.leadRating) ? String(data.leadRating) : '0'],
-      leadOwner: ['1'],
+      leadOwner: [],
+      clientOwner: [],
       role: [(data.roleId) ? data.roleId : '0', Validators.required]
     });
   }
@@ -201,22 +205,33 @@ export class ClientBasicDetailsComponent implements OnInit {
   saveNextClient(flag) {
     if (this.fieldFlag == 'client' && this.basicDetailsData.userId == null) {
       if (this.invTypeCategory == '1') {
+        this.basicDetails.get("clientOwner").setValue(null);
         this.basicDetails.get('clientOwner').setValidators([Validators.required]);
         this.basicDetails.get('clientOwner').updateValueAndValidity();
       } else {
+        this.nonIndividualForm.get("clientOwner").setValue(null);
+        this.nonIndividualForm.get('clientOwner').setValidators([Validators.required]);
+        this.nonIndividualForm.get('clientOwner').updateValueAndValidity();
+      }
+    } else {
+      (this.invTypeCategory == '1') ? this.basicDetails.get('clientOwner').setValidators(null) : this.nonIndividualForm.get('clientOwner').setValidators(null);
+    }
+    if (this.fieldFlag == 'lead' && this.basicDetailsData.userId == null) {
+      if (this.invTypeCategory == '1') {
+        this.basicDetails.get("leadOwner").setValue(null);
+        this.basicDetails.get('leadOwner').setValidators([Validators.required]);
+        this.basicDetails.get('leadOwner').updateValueAndValidity();
+      }
+      else {
+        this.nonIndividualForm.get("leadOwner").setValue(null);
         this.nonIndividualForm.get('leadOwner').setValidators([Validators.required]);
         this.nonIndividualForm.get('leadOwner').updateValueAndValidity();
       }
-    } else {
-      this.basicDetails.get('leadOwner').setValidators(null);
     }
-    if (this.fieldFlag == 'lead' && this.basicDetailsData.userId == null) {
-      this.basicDetails.get('leadOwner').setValidators([Validators.required]);
-      this.basicDetails.get('leadOwner').updateValueAndValidity();
-    } else {
-      this.basicDetails.get('leadOwner').setValidators(null);
+    else {
+      (this.invTypeCategory == '1') ? this.basicDetails.get('leadOwner').setValidators(null) : this.nonIndividualForm.get('leadOwner').setValidators(null);
     }
-    if (this.basicDetails.invalid && this.invTypeCategory == '1') {
+    if (this.invTypeCategory == '1' && this.basicDetails.invalid) {
       this.basicDetails.markAllAsTouched();
       return;
     }
@@ -265,7 +280,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         clientId: (this.basicDetailsData == null) ? null : this.basicDetailsData.clientId,
         kycComplaint: 0,
         roleId: (this.invTypeCategory == '1') ? this.basicDetails.value.role : this.nonIndividualForm.value.role,
-        genderId: parseInt(this.basicDetails.controls.gender.value),
+        genderId: (this.invTypeCategory == '1') ? parseInt(this.basicDetails.controls.gender.value) : null,
         dateOfBirth: this.datePipe.transform((this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value :
           this.nonIndividualForm.value.dateOfIncorporation, 'dd/MM/yyyy'),
         userName: (this.invTypeCategory == '1') ? this.basicDetails.controls.username.value : this.nonIndividualForm.value.username,

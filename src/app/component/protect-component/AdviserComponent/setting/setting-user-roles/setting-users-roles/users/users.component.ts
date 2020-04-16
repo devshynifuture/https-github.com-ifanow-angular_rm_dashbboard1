@@ -7,7 +7,7 @@ import {AuthService} from 'src/app/auth-service/authService';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MatDialog} from '@angular/material';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { ReplaceUserComponent } from 'src/app/component/protect-component/common-component/replace-user/replace-user.component';
+import {ReplaceUserComponent} from 'src/app/component/protect-component/common-component/replace-user/replace-user.component';
 
 @Component({
   selector: 'app-users',
@@ -18,14 +18,14 @@ export class UsersComponent implements OnInit {
   advisorId: any;
   userList: any[];
   roles: any[];
-  isLoading: boolean;
+  isLoading: boolean = true;
   counter = 0;
 
   constructor(
     private subInjectService: SubscriptionInject,
     private settingsService: SettingsService,
     private eventService: EventService,
-    private dialog:MatDialog,
+    private dialog: MatDialog,
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -38,19 +38,19 @@ export class UsersComponent implements OnInit {
     this.loader(1);
     const dataObj = {
       advisorId: this.advisorId
-    }
+    };
     this.settingsService.getTeamMembers(dataObj).subscribe((res) => {
       this.loader(-1);
-      console.log('team member details',res)
+      console.log('team member details', res);
       this.userList = res;
     });
   }
 
   addEditTeamMember(data, add_flag) {
-    let dataObj = {
+    const dataObj = {
       mainData: data || {},
       is_add_call: add_flag,
-    }
+    };
     const fragmentData = {
       flag: 'add-ARI-RIA-details',
       data: dataObj,
@@ -63,7 +63,7 @@ export class UsersComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData) && UtilService.isRefreshRequired(sideBarData)) {
           this.loadUsers();
         }
-        if(UtilService.isDialogClose(sideBarData)) {
+        if (UtilService.isDialogClose(sideBarData)) {
           sidebar.unsubscribe();
         }
       }
@@ -79,26 +79,26 @@ export class UsersComponent implements OnInit {
       userList: newUserList,
       btnNo: 'CANCEL',
       btnYes: 'DELETE',
-    }
+    };
     const dialog = this.dialog.open(ReplaceUserComponent, {
       width: '400px',
       data: dialogData,
       autoFocus: false,
     });
     dialog.afterClosed().subscribe(result => {
-      if(result) {
+      if (result) {
         this.loader(1);
         const replaceUser = {
           deleteUserId: user.adminAdvisorId,
           replaceUserId: result,
-        }
+        };
         this.settingsService.deleteTeamMember(replaceUser).subscribe(res => {
-          this.eventService.openSnackBar("User deleted successfully");
+          this.eventService.openSnackBar('User deleted successfully');
           this.loadUsers();
           this.loader(-1);
         }, err => {
-          this.eventService.openSnackBar("Error occured");
-        })
+          this.eventService.openSnackBar('Error occured');
+        });
       }
     });
   }
@@ -117,17 +117,17 @@ export class UsersComponent implements OnInit {
         const deleteFromTrashSubscription = this.settingsService.suspendMember(user.id)
           .subscribe(response => {
             console.log(response);
-            this.eventService.openSnackBar("User Suspended");
+            this.eventService.openSnackBar('User Suspended');
             deleteFromTrashSubscription.unsubscribe();
             this.loadUsers();
             dialog.close();
           }, error => {
             dialog.close();
-            console.error(error)
-            this.eventService.openSnackBar("Error occured");
+            console.error(error);
+            this.eventService.openSnackBar('Error occured');
           });
       }
-    }
+    };
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: dialogData,
@@ -148,23 +148,24 @@ export class UsersComponent implements OnInit {
       positiveMethod: () => {
         const deleteFromTrashSubscription = this.settingsService.reactivateMember(user.id)
           .subscribe(response => {
-            this.eventService.openSnackBar("User reactivated");
+            this.eventService.openSnackBar('User reactivated');
             deleteFromTrashSubscription.unsubscribe();
             this.loadUsers();
             dialog.close();
           }, error => {
             dialog.close();
             console.error(error);
-            this.eventService.openSnackBar("Error occured");
+            this.eventService.openSnackBar('Error occured');
           });
       }
-    }
+    };
     const dialog = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: dialogData,
       autoFocus: false,
     });
   }
+
   loader(countAdder) {
     this.counter += countAdder;
     if (this.counter == 0) {

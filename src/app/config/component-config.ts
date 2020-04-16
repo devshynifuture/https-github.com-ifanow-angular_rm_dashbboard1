@@ -489,8 +489,8 @@ export const appConfig = {
   BACKOFFICE_POST_UNMATCHED_FOLIOS_ADD: 'backoffice/aum/recon/unmatched/folios/add',
   BACKOFFICE_GET_AUM_REPORT_LIST: 'backoffice/aum/reconciliation/report/get',
   BACKOFFICE_GET_FOLIO_BASED_SEARCH_LIST: 'backoffice/folio/based/on/search/list/get',
-  BACKOFFICE_GET_GROUP_HEAD_NAME_LIST: 'backoffice/foliowise/groupHead/list/get',
-  BACKOFFICE_GET_INVESTOR_NAME_LIST: 'backoffice/foliowise/applicaName/list/get',
+  // BACKOFFICE_GET_GROUP_HEAD_NAME_LIST: 'backoffice/foliowise/groupHead/list/get',
+  // BACKOFFICE_GET_INVESTOR_NAME_LIST: 'backoffice/foliowise/applicaName/list/get',
   BACKOFFICE_PUT_DELETE_UNFREEZE_TRANSACTION: 'backoffice/delete/unfreeze/transaction',
 
   BACKOFFICE_FILE_UPLOAD_TYPE: 'backoffice/file-upload/types/get',
@@ -646,7 +646,7 @@ export const appConfig = {
   GET_USER_ACCESS_RIGHTS_LIST: 'setting/users-roles/access-rights/get',
   UPDATE_USER_ACCESS_RIGHTS: 'setting/users-roles/access-rights/update',
 
-  GET_ALL_TEAM_MEMEBERS: 'setting/users/team-members/get',
+  GET_ALL_TEAM_MEMBERS: 'setting/users/team-members/get',
   ADD_TEAM_MEMBER: 'setting/users/team-member/add',
   EDIT_TEAM_MEMBER: 'setting/users/team-member/edit',
   DELETE_TEAM_MEMBER: 'setting/users/team-member/delete',

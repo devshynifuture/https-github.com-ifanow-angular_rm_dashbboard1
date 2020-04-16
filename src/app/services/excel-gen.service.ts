@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {Workbook} from 'exceljs';
+import { Injectable } from '@angular/core';
+import { Workbook } from 'exceljs';
 import * as fs from 'file-saver';
-import {DatePipe} from '@angular/common';
-import {AuthService} from '../auth-service/authService';
+import { DatePipe } from '@angular/common';
+import { AuthService } from '../auth-service/authService';
 // import * as logoFile from './carlogo.js';
 // import { DatePipe } from '../../node_modules/@angular/common';
 @Injectable({
@@ -61,12 +61,12 @@ export class ExcelGenService {
 
     // Add Row and formatting
     const titleRow = worksheet.addRow([title]);
-    titleRow.font = {name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true};
+    titleRow.font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true };
     worksheet.addRow([]);
     // let subTitleRow = worksheet.addRow(['Date :', this.datePipe.transform(new Date(), 'medium')])
 
     worksheet.addRow(['Adviser:', this.advisor.name]);
-    worksheet.addRow(['Client:', this.client.name]);
+    worksheet.addRow(['Client:', (this.client) ? this.client.name : '']);
 
     // Add Image
     // let logo = workbook.addImage({
@@ -90,29 +90,29 @@ export class ExcelGenService {
       cell.fill = {
         type: 'pattern',
         pattern: 'solid',
-        fgColor: {argb: 'FFFFFF00'},
-        bgColor: {argb: 'FF0000FF'}
+        fgColor: { argb: 'FFFFFF00' },
+        bgColor: { argb: 'FF0000FF' }
       };
-      cell.border = {top: {style: 'thin'}, left: {style: 'thin'}, bottom: {style: 'thin'}, right: {style: 'thin'}};
+      cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
     });
     // worksheet.addRows(data);
 
 
     // Add Data and Conditional Formatting
     data.forEach(d => {
-        const row = worksheet.addRow(d);
-        // let qty = row.getCell(5);
-        const color = 'FF99FF99';
-        // if (+qty.value < 500) {
-        //   color = 'FF9999'
-        // }
+      const row = worksheet.addRow(d);
+      // let qty = row.getCell(5);
+      const color = 'FF99FF99';
+      // if (+qty.value < 500) {
+      //   color = 'FF9999'
+      // }
 
-        // qty.fill = {
-        //   type: 'pattern',
-        //   pattern: 'solid',
-        //   fgColor: { argb: color }
-        // }
-      }
+      // qty.fill = {
+      //   type: 'pattern',
+      //   pattern: 'solid',
+      //   fgColor: { argb: color }
+      // }
+    }
     );
 
     worksheet.getColumn(2).width = 30;
@@ -134,16 +134,16 @@ export class ExcelGenService {
       footerRow.fill = {
         type: 'pattern',
         pattern: 'solid',
-        fgColor: {argb: 'FFCCFFE5'}
+        fgColor: { argb: 'FFCCFFE5' }
       };
-      cell.border = {top: {style: 'thin'}, left: {style: 'thin'}, bottom: {style: 'thin'}, right: {style: 'thin'}};
+      cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
     });
     // Merge Cells
     // worksheet.mergeCells(`A${footerRow.number}:F${footerRow.number}`);
 
     // Generate Excel File with given name
     workbook.xlsx.writeBuffer().then((data) => {
-      const blob = new Blob([data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+      const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       fs.saveAs(blob, title + '.xlsx');
     });
 

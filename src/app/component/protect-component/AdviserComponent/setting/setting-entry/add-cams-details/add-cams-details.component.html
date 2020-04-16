@@ -4,54 +4,53 @@
     </div>
     <div class="col-md-2 text-right" (click)="Close(false)">
         <i class="material-icons pt-20 c-p pr-16">
-            clear
-        </i>
+      clear
+    </i>
     </div>
 </div>
 
 <div [formGroup]="camsFG">
     <div class="row pt-100">
         <div class="col-md-4 pr-0">
-          <h5 class="m-0 text-right pt-20">ARN/RIA number</h5>
+            <h5 class="m-0 text-right pt-20">ARN/RIA number</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
-              <mat-form-field appearance="standard" floatLabel="never">
-                <mat-select class="form-control br-0" formControlName="arnRiaDetailsId">
-                  <mat-option value="" selected disabled>Select Option</mat-option>
-                  <mat-option [value]="arnData.id" *ngFor="let arnData of data.arnData">
-                    {{arnData.nameOfTheHolder}} - {{arnData.number}}</mat-option>
-                </mat-select>
-                <mat-error>This field is required</mat-error>
-              </mat-form-field>
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <mat-select class="form-control br-0" formControlName="arnRiaDetailsId">
+                        <mat-option value="" selected disabled>Select Option</mat-option>
+                        <mat-option [value]="arnData.id" *ngFor="let arnData of data.arnData">
+                            {{arnData.nameOfTheHolder}} - {{arnData.number}}</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required</mat-error>
+                </mat-form-field>
             </div>
         </div>
     </div>
     <div class="row pt-44">
         <div class="col-md-4 pr-0">
-          <h5 class="m-0 text-right pt-20">Registered email</h5>
+            <h5 class="m-0 text-right pt-20">Registered email</h5>
         </div>
         <div class="col-md-5">
             <div class="form-group mb-0">
-              <mat-form-field [floatLabel]="'never'" appearance="standard" floatLabel="never">
-                <input type="text" matInput formControlName="registeredEmail" class="form-control"
-                       placeholder="example@email.com">
-                <mat-error *ngIf="camsFG.get('registeredEmail').errors?.required">This field is required</mat-error>
-                <mat-error *ngIf="camsFG.get('registeredEmail').errors?.pattern">Email is not valid</mat-error>
-              </mat-form-field>
+                <mat-form-field [floatLabel]="'never'" appearance="standard" floatLabel="never">
+                    <input type="text" matInput formControlName="registeredEmail" class="form-control" placeholder="Enter Registered email">
+                    <mat-error *ngIf="camsFG.get('registeredEmail').errors?.required">This field is required</mat-error>
+                    <mat-error *ngIf="camsFG.get('registeredEmail').errors?.pattern">Email is not valid</mat-error>
+                </mat-form-field>
             </div>
         </div>
     </div>
     <div class="row pt-44">
         <div class="col-md-4 pr-0">
-          <h5 class="m-0 text-right pt-20">Mailback password</h5>
+            <h5 class="m-0 text-right pt-20">Mailback password</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0">
-              <mat-form-field appearance="standard" floatLabel="never">
-                <input type="text" matInput formControlName="mailbackPassword" class="form-control">
-                <mat-error>This field is required</mat-error>
-              </mat-form-field>
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <input type="text" placeholder="Enter password" matInput formControlName="mailbackPassword" class="form-control">
+                    <mat-error>This field is required</mat-error>
+                </mat-form-field>
             </div>
         </div>
     </div>

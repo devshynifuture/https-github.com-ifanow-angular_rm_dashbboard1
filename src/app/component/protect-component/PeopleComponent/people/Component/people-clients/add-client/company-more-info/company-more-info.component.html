@@ -39,8 +39,9 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="pan" #pan appInputValueValidation
-                        [inputValidator]="validatorType.ALPHA_NUMERIC" maxlength="10" matInput class="form-control">
+                    <input autocomplete="off" (input)="toUpperCase($event)" formControlName="pan" #pan
+                        appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" maxlength="10" matInput
+                        class="form-control">
                     <mat-hint>Optional</mat-hint>
                     <mat-error *ngIf="moreInfoForm.get('pan').errors?.pattern">Pan must be 10 digits</mat-error>
                     <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
@@ -59,7 +60,8 @@
         <div class="col-md-4 p-0">
             <div class="form-group">
                 <mat-form-field>
-                    <input autocomplete="off" formControlName="adhaarNo" [maxLength]="12" #adharNum matInput
+                    <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC"
+                        (input)=" toUpperCase($event)" formControlName="adhaarNo" [maxLength]="12" #adharNum matInput
                         class="form-control">
                     <mat-hint>Optional</mat-hint>
                     <mat-error *ngIf="moreInfoForm.get('adhaarNo').errors?.pattern">Adhaar must be 12 digits</mat-error>
@@ -80,7 +82,7 @@
                         <mat-option value="1">Goverment</mat-option>
                         <mat-option value="2">Service</mat-option>
                         <mat-option value="3">Private sector</mat-option>
-                        <mat-option value="4">business</mat-option>
+                        <mat-option value="4">Business</mat-option>
                     </mat-select>
                     <mat-hint>Optional</mat-hint>
                 </mat-form-field>
