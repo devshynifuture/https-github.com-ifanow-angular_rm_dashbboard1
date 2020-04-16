@@ -157,15 +157,24 @@
                 <div class="row">
                     <div class="back-office-table col-md-12 overflow-hidden">
                         <h3 class="f-16">CAMS</h3>
-                        <table id="table-low" mat-table [dataSource]="camsDS" appSkeletonLoading [appSkeletonLoading]="utilservice.isLoading">
+                        <table id="table-low" mat-table [dataSource]="camsDS" appSkeletonLoading
+                            [appSkeletonLoading]="utilservice.isLoading">
                             <ng-container matColumnDef="arn">
                                 <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
-                                <td class="br" mat-cell *matCellDef="let element"> {{element.arn}} </td>
+                                <td class="br" mat-cell *matCellDef="let element">
+                                    <div class="bar">
+                                        {{element.arnRiaDetailsId}}
+                                    </div>
+                                </td>
                             </ng-container>
 
                             <ng-container matColumnDef="regEmailId">
                                 <th class="br" mat-header-cell *matHeaderCellDef> Registered email ID </th>
-                                <td class="br" mat-cell *matCellDef="let element"> {{element.registeredEmail}} </td>
+                                <td class="br" mat-cell *matCellDef="let element">
+                                    <div class="bar">
+                                        {{element.registeredEmail}}
+                                    </div>
+                                </td>
                             </ng-container>
 
                             <ng-container matColumnDef="scheduleExp">
@@ -182,25 +191,42 @@
                 <div class="row pt-16">
                     <div class="back-office-table col-md-12 overflow-hidden">
                         <h3 class="f-16">Karvy (KFintech)</h3>
-                        <table id="table-low" mat-table [dataSource]="karvyDS" appSkeletonLoading [appSkeletonLoading]="utilservice.isLoading">
+                        <table id="table-low" mat-table [dataSource]="karvyDS" appSkeletonLoading
+                            [appSkeletonLoading]="utilservice.isLoading">
                             <ng-container matColumnDef="arn">
                                 <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
-                                <td class="br" mat-cell *matCellDef="let element"> {{element.arn}} </td>
+                                <td class="br" mat-cell *matCellDef="let element">
+                                    <div class="bar">
+                                        {{element.arnRiaDetailsId}}
+                                    </div>
+                                </td>
                             </ng-container>
 
                             <ng-container matColumnDef="loginId">
                                 <th class="br" mat-header-cell *matHeaderCellDef> Login ID </th>
-                                <td class="br" mat-cell *matCellDef="let element"> {{element.loginId}} </td>
+                                <td class="br" mat-cell *matCellDef="let element">
+                                    <div class="bar">
+                                        {{element.loginId}}
+                                    </div>
+                                </td>
                             </ng-container>
 
                             <ng-container matColumnDef="registeredId">
                                 <th class="br" mat-header-cell *matHeaderCellDef> Registered email ID </th>
-                                <td class="br" mat-cell *matCellDef="let element"> {{element.registeredId}} </td>
+                                <td class="br" mat-cell *matCellDef="let element">
+                                    <div class="bar">
+                                        {{element.registeredEmail}}
+                                    </div>
+                                </td>
                             </ng-container>
 
                             <ng-container matColumnDef="userOrdering">
                                 <th class="br" mat-header-cell *matHeaderCellDef> Use for file ordering? </th>
-                                <td class="br" mat-cell *matCellDef="let element"> {{element.userOrdering}} </td>
+                                <td class="br" mat-cell *matCellDef="let element">
+                                    <div class="bar">
+                                        <span *ngIf="!utilservice.isLoading">{{element.fileOrderingUseabilityStatusId == 1 ? 'Yes' : 'No'}}</span>
+                                    </div>
+                                </td>
                             </ng-container>
 
                             <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
@@ -212,20 +238,33 @@
                 <div class="row pt-16">
                     <div class="back-office-table col-md-12 overflow-hidden">
                         <h3 class="f-16"> Franklin Templeton </h3>
-                        <table id="table-low" mat-table [dataSource]="frankDS" appSkeletonLoading [appSkeletonLoading]="utilservice.isLoading">
+                        <table id="table-low" mat-table [dataSource]="frankDS" appSkeletonLoading
+                            [appSkeletonLoading]="utilservice.isLoading">
                             <ng-container matColumnDef="arn">
                                 <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
-                                <td class="br" mat-cell *matCellDef="let element"> {{element.arn}} </td>
+                                <td class="br" mat-cell *matCellDef="let element">
+                                    <div class="bar">
+                                        {{element.arnRiaDetailsId}}
+                                    </div>
+                                </td>
                             </ng-container>
 
                             <ng-container matColumnDef="loginId">
                                 <th class="br" mat-header-cell *matHeaderCellDef> Login ID </th>
-                                <td class="br" mat-cell *matCellDef="let element"> {{element.loginId}} </td>
+                                <td class="br" mat-cell *matCellDef="let element">
+                                    <div class="bar">
+                                        {{element.loginId}}
+                                    </div>
+                                </td>
                             </ng-container>
 
                             <ng-container matColumnDef="registeredId">
                                 <th class="br" mat-header-cell *matHeaderCellDef> Registered email ID </th>
-                                <td class="br" mat-cell *matCellDef="let element"> {{element.registeredId}} </td>
+                                <td class="br" mat-cell *matCellDef="let element">
+                                    <div class="bar">
+                                        {{element.registeredEmail}}
+                                    </div>
+                                </td>
                             </ng-container>
 
                             <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
@@ -238,15 +277,24 @@
                 <div class="row pt-16">
                     <div class="back-office-table col-md-12 overflow-hidden">
                         <h3 class="f-16"> CAMS Fundsnet </h3>
-                        <table id="table-low" mat-table [dataSource]="fundsDS" appSkeletonLoading [appSkeletonLoading]="utilservice.isLoading">
+                        <table id="table-low" mat-table [dataSource]="fundsDS" appSkeletonLoading
+                            [appSkeletonLoading]="utilservice.isLoading">
                             <ng-container matColumnDef="arn">
                                 <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
-                                <td class="br" mat-cell *matCellDef="let element"> {{element.arn}} </td>
+                                <td class="br" mat-cell *matCellDef="let element">
+                                    <div class="bar">
+                                        {{element.arnRiaDetailsId}}
+                                    </div>
+                                </td>
                             </ng-container>
 
                             <ng-container matColumnDef="loginId">
                                 <th class="br" mat-header-cell *matHeaderCellDef> Login ID </th>
-                                <td class="br" mat-cell *matCellDef="let element"> {{element.loginId}} </td>
+                                <td class="br" mat-cell *matCellDef="let element">
+                                    <div class="bar">
+                                        {{element.loginId}}
+                                    </div>
+                                </td>
                             </ng-container>
 
                             <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>
@@ -255,31 +303,44 @@
                     </div>
                 </div>
 
+                <div *ngIf="rtaAPIError && !utilservice.isLoading" class="d-flex flex-column align-items-center">
+                    <img class="width300" src="assets/images/svg/noDataFound.svg">
+                    <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
+                </div>
             </mat-tab>
 
             <mat-tab label="Team members">
                 <div class="row pt-16">
                     <div class="back-office-table col-md-12 overflow-hidden">
-                        <table id="table-low" mat-table [dataSource]="dataSource" class=" ">
+                        <table id="table-low" mat-table [dataSource]="userList" appSkeletonLoading
+                        [appSkeletonLoading]="utilservice.isLoading">
 
                             <ng-container matColumnDef="name">
                                 <th class="br" mat-header-cell *matHeaderCellDef> Name </th>
-                                <td class="br" mat-cell *matCellDef="let element"> {{element.name}} </td>
+                                <td class="br" mat-cell *matCellDef="let element">
+                                    <div class="bar">{{element.fullName}}</div>
+                                </td>
                             </ng-container>
 
                             <ng-container matColumnDef="email">
                                 <th class="br" mat-header-cell *matHeaderCellDef> Email </th>
-                                <td class="br" mat-cell *matCellDef="let element"> {{element.email}} </td>
+                                <td class="br" mat-cell *matCellDef="let element">
+                                    <div class="bar">{{element.email}}</div>
+                                </td>
                             </ng-container>
 
                             <ng-container matColumnDef="mobile">
                                 <th class="br" mat-header-cell *matHeaderCellDef> Mobile </th>
-                                <td class="br" mat-cell *matCellDef="let element"> {{element.mobile}} </td>
+                                <td class="br" mat-cell *matCellDef="let element">
+                                    <div class="bar">{{element.mobile}}</div>
+                                </td>
                             </ng-container>
 
                             <ng-container matColumnDef="role">
                                 <th class="br" mat-header-cell *matHeaderCellDef> Role </th>
-                                <td class="br" mat-cell *matCellDef="let element"> {{element.role}} </td>
+                                <td class="br" mat-cell *matCellDef="let element">
+                                    <div class="bar">{{element.role?.roleName}}</div>
+                                </td>
                             </ng-container>
 
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -290,6 +351,10 @@
                     </div>
                 </div>
 
+                <div *ngIf="teamAPIError && !utilservice.isLoading" class="d-flex flex-column align-items-center">
+                    <img class="width300" src="assets/images/svg/noDataFound.svg">
+                    <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
+                </div>
 
             </mat-tab>
 
