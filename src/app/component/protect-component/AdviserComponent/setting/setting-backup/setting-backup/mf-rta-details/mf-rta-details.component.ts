@@ -166,9 +166,9 @@ export class MfRtaDetailsComponent implements OnInit {
     return '';
   }
 
-  toggleVisibility(data, elem) {
+  toggleVisibility(data, toggle) {
     if (data) {
-      if (!elem.toggle) {
+      if (toggle) {
         const copy = data.toString();
         return copy.replace(/./g, '').replace('', '********');
       } else {
