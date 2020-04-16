@@ -600,7 +600,6 @@ export const appConfig = {
   GET_BANK_LIST: 'user/bank/list/get',
   SEND_WELCOME_EMAIL: 'user/advisor/welcome/email/send',
   CREATE_TEAM_MEMBER: '/user/advisor/team-member/sign-up',
-  // LOGIN_WITH_PASSWORD: 'user/login/with/password',
 
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/otp',
