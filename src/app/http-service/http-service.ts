@@ -134,19 +134,7 @@ export class HttpService {
     const inputData = {query: this.changeBase64Data(body)};
 
     return this._http
-      .put(this.baseUrl + url, inputData, httpOptions).pipe(
-        catchError(err => {
-          if (err.error) {
-            if (err.error.message) {
-              return throwError(err.error.message);
-            } else {
-              return throwError(err.error);
-            }
-          } else {
-            return throwError(err);
-          }
-        })
-      )
+      .put(this.baseUrl + url, inputData, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
         // console.log('resData: undecoded ', res);
 
@@ -177,12 +165,7 @@ export class HttpService {
     // console.log('HttpService put request url... ', url);
 
     return this._http
-      .put(this.baseUrl + url, body, httpOptions).pipe(
-        catchError(err => {
-          console.log('Handling error locally and rethrowing it...', err);
-          return throwError(err);
-        })
-      )
+      .put(this.baseUrl + url, body, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
         if (res == null) {
           return res;
@@ -192,7 +175,6 @@ export class HttpService {
         } else {
           const err = new Error(res.message);
           throwError(err);
-
           // this._router.navigate(['login']);
         }
       });
@@ -212,12 +194,7 @@ export class HttpService {
     console.log('HttpService put request url...', this._http);
 
     return this._http
-      .put(this.baseUrl + url, body, httpOptions).pipe(
-        catchError(err => {
-          console.log('Handling error locally and rethrowing it...', err);
-          return throwError(err);
-        })
-      );
+      .put(this.baseUrl + url, body, httpOptions).pipe(this.errorObservable);
   }
 
   delete(url: string, body, options?): Observable<any> {
@@ -234,12 +211,7 @@ export class HttpService {
     console.log('HttpService put request url... ', url);
 
     return this._http
-      .request('delete', url, {body}).pipe(
-        catchError(err => {
-          console.log('Handling error locally and rethrowing it...', err);
-          return throwError(err);
-        })
-      )
+      .request('delete', url, {body}).pipe(this.errorObservable)
       .map((res: any) => {
         if (res.status === 200) {
           const resData = this.changeBase64ToString(res);
@@ -293,12 +265,7 @@ export class HttpService {
     };
     url = url.trim();
     return this._http
-      .get(this.baseUrl + url, httpOptions).pipe(
-        catchError(err => {
-          console.log('Handling error locally and rethrowing it...', err);
-          return throwError(err);
-        })
-      )
+      .get(this.baseUrl + url, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
         if (res.status === 200 || res.status === 201 || res.status === 202) {
           const resData = this.changeBase64ToString(res);
@@ -341,12 +308,7 @@ export class HttpService {
       params
     };
     url = url.trim();
-    return this.getHttpClient(this.baseUrl + url, httpOptions).pipe(
-      catchError(err => {
-        console.log('Handling error locally and rethrowing it...', err);
-        return throwError(err);
-      })
-    )
+    return this.getHttpClient(this.baseUrl + url, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
         if (res.status === 200) {
           const resData = this.changeBase64ToString(res);
