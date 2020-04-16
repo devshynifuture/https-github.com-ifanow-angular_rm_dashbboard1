@@ -13,7 +13,7 @@
 
 <div class="row pt-28">
     <div class="col-md-12">
-        <mat-tab-group id="ui-backoffice-tabs">
+        <mat-tab-group id="ui-backoffice-tabs" (selectedIndexChange)="changeTab($event)">
 
             <mat-tab label="Overview">
                 <div class="row">
@@ -157,7 +157,7 @@
                 <div class="row">
                     <div class="back-office-table col-md-12 overflow-hidden">
                         <h3 class="f-16">CAMS</h3>
-                        <table id="table-low" mat-table [dataSource]="dataSource1" class=" ">
+                        <table id="table-low" mat-table [dataSource]="camsDS" appSkeletonLoading [appSkeletonLoading]="utilservice.isLoading">
                             <ng-container matColumnDef="arn">
                                 <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
                                 <td class="br" mat-cell *matCellDef="let element"> {{element.arn}} </td>
@@ -165,7 +165,7 @@
 
                             <ng-container matColumnDef="regEmailId">
                                 <th class="br" mat-header-cell *matHeaderCellDef> Registered email ID </th>
-                                <td class="br" mat-cell *matCellDef="let element"> {{element.regEmailId}} </td>
+                                <td class="br" mat-cell *matCellDef="let element"> {{element.registeredEmail}} </td>
                             </ng-container>
 
                             <ng-container matColumnDef="scheduleExp">
@@ -182,7 +182,7 @@
                 <div class="row pt-16">
                     <div class="back-office-table col-md-12 overflow-hidden">
                         <h3 class="f-16">Karvy (KFintech)</h3>
-                        <table id="table-low" mat-table [dataSource]="dataSource2" class=" ">
+                        <table id="table-low" mat-table [dataSource]="karvyDS" appSkeletonLoading [appSkeletonLoading]="utilservice.isLoading">
                             <ng-container matColumnDef="arn">
                                 <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
                                 <td class="br" mat-cell *matCellDef="let element"> {{element.arn}} </td>
@@ -212,7 +212,7 @@
                 <div class="row pt-16">
                     <div class="back-office-table col-md-12 overflow-hidden">
                         <h3 class="f-16"> Franklin Templeton </h3>
-                        <table id="table-low" mat-table [dataSource]="dataSource3" class=" ">
+                        <table id="table-low" mat-table [dataSource]="frankDS" appSkeletonLoading [appSkeletonLoading]="utilservice.isLoading">
                             <ng-container matColumnDef="arn">
                                 <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
                                 <td class="br" mat-cell *matCellDef="let element"> {{element.arn}} </td>
@@ -238,7 +238,7 @@
                 <div class="row pt-16">
                     <div class="back-office-table col-md-12 overflow-hidden">
                         <h3 class="f-16"> CAMS Fundsnet </h3>
-                        <table id="table-low" mat-table [dataSource]="dataSource4" class=" ">
+                        <table id="table-low" mat-table [dataSource]="fundsDS" appSkeletonLoading [appSkeletonLoading]="utilservice.isLoading">
                             <ng-container matColumnDef="arn">
                                 <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
                                 <td class="br" mat-cell *matCellDef="let element"> {{element.arn}} </td>

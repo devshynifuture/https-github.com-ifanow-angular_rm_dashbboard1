@@ -15,7 +15,7 @@ import { SettingsService } from '../settings.service';
 export class SettingOrgProfileComponent implements OnInit {
   advisorId: any;
   orgProfile = false;
-  userList: any = {};
+  userList: any = undefined;
   orgDetails: any = {};
   isLoading = true
   counter: number = 0;

@@ -1,6 +1,9 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, Input } from '@angular/core';
 import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormBuilder } from '@angular/forms';
+import { UtilService } from 'src/app/services/util.service';
+import { SettingsService } from '../../../AdviserComponent/setting/settings.service';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-admin-details',
@@ -9,24 +12,31 @@ import { FormBuilder } from '@angular/forms';
 })
 export class AdminDetailsComponent implements OnInit {
 
+  @Input() data:any = {};
+  globalData: any = {};
+  mfRTAlist: any[] = [{}];
+  tabIndex = 0;
+
+  isRTALoaded:boolean = false;
+
+  camsDS: MatTableDataSource<any> = new MatTableDataSource([{}, {}, {}]);
+  karvyDS: MatTableDataSource<any> = new MatTableDataSource([{}, {}, {}]);
+  frankDS: MatTableDataSource<any> = new MatTableDataSource([{}, {}, {}]);
+  fundsDS: MatTableDataSource<any> = new MatTableDataSource([{}, {}, {}]);
+
   constructor(
     public subInjectService: SubscriptionInject,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private utilservice: UtilService,
+    private settingsService: SettingsService,
   ) { }
   displayedColumns: string[] = ['name', 'email', 'mobile', 'role'];
   dataSource = ELEMENT_DATA;
 
   displayedColumns1: string[] = ['arn', 'regEmailId', 'scheduleExp'];
-  dataSource1 = ELEMENT_DATA1;
-
   displayedColumns2: string[] = ['arn', 'loginId', 'registeredId', 'userOrdering'];
-  dataSource2 = ELEMENT_DATA2;
-
   displayedColumns3: string[] = ['arn', 'loginId', 'registeredId'];
-  dataSource3 = ELEMENT_DATA3;
-
   displayedColumns4: string[] = ['arn', 'loginId'];
-  dataSource4 = ELEMENT_DATA4;
 
   onboardingActivityForm = this.fb.group({
     "firstCall": [,],
@@ -38,14 +48,36 @@ export class AdminDetailsComponent implements OnInit {
   })
 
   ngOnInit() {
+    this.utilservice.loader(0);
   }
 
+  changeTab(index) {
+    switch (index) {
+      case 2:
+        if(!this.isRTALoaded) {
+          this.loadRTAList()
+        }
+        break;
+    }
+  }
 
+  loadRTAList() {
+    const jsonData = {advisorId: this.data.advisorId};
+    this.utilservice.loader(1)
+    this.settingsService.getMFRTAList(jsonData).subscribe((res) => {
+      this.mfRTAlist = res || [];
+      this.camsDS = new MatTableDataSource(this.mfRTAlist.filter((data) => data.rtTypeMasterid == 1));
+      this.karvyDS = new MatTableDataSource(this.mfRTAlist.filter((data) => data.rtTypeMasterid == 2));
+      this.frankDS = new MatTableDataSource(this.mfRTAlist.filter((data) => data.rtTypeMasterid == 3));
+      this.fundsDS = new MatTableDataSource(this.mfRTAlist.filter((data) => data.rtTypeMasterid == 4));
+      this.isRTALoaded = true;
+      this.utilservice.loader(-1);
+    });
+  }
 
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
-
 }
 
 
@@ -62,55 +94,3 @@ const ELEMENT_DATA: PeriodicElement[] = [
   { name: 'Atul Shah', email: 'atul@manekfinancial.com', mobile: '9879879878', role: 'Team member' },
   { name: 'Atul Shah', email: 'atul@manekfinancial.com', mobile: '9879879878', role: 'Team member' },
 ];
-
-
-export interface PeriodicElement1 {
-  arn: string;
-  regEmailId: string;
-  scheduleExp: string;
-}
-const ELEMENT_DATA1: PeriodicElement1[] = [
-  { arn: 'Atul Shah', regEmailId: 'atul@manekfinancial.com', scheduleExp: '9879879878' },
-
-];
-
-
-export interface PeriodicElement2 {
-  arn: string;
-  loginId: string;
-  registeredId: string;
-  userOrdering: string;
-}
-const ELEMENT_DATA2: PeriodicElement2[] = [
-  { arn: 'ARN-83866', loginId: 'abcconsult', registeredId: 'firstname.lastname@abcconsultants.com', userOrdering: "Yes" },
-  { arn: 'RIA-INA000004409', loginId: 'riaconsult', registeredId: 'ria@abcconsultants.com,secondemail@abcconsults.com', userOrdering: "Yes" },
-
-];
-
-
-
-export interface PeriodicElement3 {
-  arn: string;
-  loginId: string;
-  registeredId: string;
-
-}
-const ELEMENT_DATA3: PeriodicElement3[] = [
-  { arn: 'ARN-83866', loginId: 'abcconsult', registeredId: 'firstname.lastname@abcconsultants.com' },
-  { arn: 'RIA-INA000004409', loginId: 'riaconsult', registeredId: 'ria@abcconsultants.com,secondemail@abcconsults.com' },
-
-];
-
-
-
-export interface PeriodicElement4 {
-  arn: string;
-  loginId: string;
-
-}
-const ELEMENT_DATA4: PeriodicElement4[] = [
-  { arn: 'ARN-83866', loginId: 'abcconsult', },
-  { arn: 'ARN-83866', loginId: 'abcconsult', },
-
-];
-
