@@ -1,12 +1,12 @@
 <div class="row bb-1 popup-header-fix w-60">
-  <div class="col-md-10 p-0">
-    <h4 class="mb-0 l-22 wrapper-20">Personal profile</h4>
-  </div>
-  <div class="col-md-2 text-right">
-    <i class="material-icons pt-20 c-p pr-16" (click)="Close(null)">
-      clear
-    </i>
-  </div>
+    <div class="col-md-10 p-0">
+        <h4 class="mb-0 l-22 wrapper-20">Personal profile</h4>
+    </div>
+    <div class="col-md-2 text-right">
+        <i class="material-icons pt-20 c-p pr-16" (click)="Close(null)">
+            clear
+        </i>
+    </div>
 </div>
 
 <div [formGroup]="personalProfile" class="pt-90 pl-40 pr-40 " id="ui-add-personal-profile">
@@ -19,10 +19,11 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                            <input matInput formControlName="name" class="form-control" placeholder="Joe Smith" [maxLength]="40" [inputValidator]="validatorType.PERSON_NAME" appInputValueValidation>
-                                <mat-hint align="end" class="f-12">{{personalProfile.get('name').value.length}}/40</mat-hint>
-                                <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('name').errors?.required">This field is required</mat-error>
-                            <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('name').errors?.maxlength">Character limit exceeded</mat-error>
+                            <input matInput formControlName="name" class="form-control" placeholder="Enter Name" [maxLength]="40" [inputValidator]="validatorType.PERSON_NAME" appInputValueValidation>
+                            <mat-hint align="end" class="">{{personalProfile.get('name').value.length}}/40</mat-hint>
+                            <mat-error class=" pt-4" *ngIf="personalProfile.get('name').errors?.required">This field is required
+                            </mat-error>
+                            <mat-error class=" pt-4" *ngIf="personalProfile.get('name').errors?.maxlength">Character limit exceeded</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -34,9 +35,9 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                            <input matInput formControlName="emailId" class="form-control" placeholder="example@email.com">
-                            <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('emailId').errors?.required">This field is required</mat-error>
-                            <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('emailId').errors?.pattern">Please enter valid email</mat-error>
+                            <input matInput formControlName="emailId" class="form-control" placeholder="Enter Email ID">
+                            <mat-error class=" pt-4" *ngIf="personalProfile.get('emailId').errors?.required">This field is required</mat-error>
+                            <mat-error class=" pt-4" *ngIf="personalProfile.get('emailId').errors?.pattern">Please enter valid email</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -48,10 +49,11 @@
                 <div class="col-md-3">
                     <div class="form-group mb-0">
                         <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                            <input matInput formControlName="mobileNo" class="form-control" placeholder="9878523691" [maxLength]="10" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation>
-                                <mat-hint align="end" class="f-12">{{personalProfile.get('mobileNo').value.length}}/10</mat-hint>
-                                <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('mobileNo').errors?.required">This field is required</mat-error>
-                            <mat-error class="f-12 pt-4" *ngIf="personalProfile.get('mobileNo').errors?.maxlength || personalProfile.get('mobileNo').errors?.minlength || personalProfile.get('mobileNo').errors?.pattern">
+                            <input matInput formControlName="mobileNo" class="form-control" placeholder="Enter Mobile No" [maxLength]="10" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation>
+                            <mat-hint align="end" class="">{{personalProfile.get('mobileNo').value.length}}/10
+                            </mat-hint>
+                            <mat-error class=" pt-4" *ngIf="personalProfile.get('mobileNo').errors?.required">This field is required</mat-error>
+                            <mat-error class=" pt-4" *ngIf="personalProfile.get('mobileNo').errors?.maxlength || personalProfile.get('mobileNo').errors?.minlength || personalProfile.get('mobileNo').errors?.pattern">
                                 Please enter valid mobile number</mat-error>
                         </mat-form-field>
                     </div>
@@ -110,10 +112,10 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(null)">Cancel</h5>
         </div>
-      <div class="col-md-8 right text-right">
-        <button (click)="saveCurrentPage()" class="btn-bottom br-0 text-inherit" mat-button>SAVE &
-          {{selectedTab == 1 ? 'CLOSE' : 'NEXT'}}
-        </button>
-      </div>
+        <div class="col-md-8 right text-right">
+            <button (click)="saveCurrentPage()" class="btn-bottom br-0 text-inherit" mat-button>SAVE &
+                {{selectedTab == 1 ? 'CLOSE' : 'NEXT'}}
+            </button>
+        </div>
     </div>
 </div>

@@ -164,14 +164,18 @@
                                     <ng-container matColumnDef="position">
                                         <th mat-header-cell class="br w-23" *matHeaderCellDef> Type </th>
                                         <td mat-cell class="br w-23" *matCellDef="let element">
-                                            <div class="bar" [innerHTML]="element.title"></div>
+                                            <div class="bar">
+                                                <span class="m-0" [innerHTML]="element.title"> </span>
+                                            </div>
                                         </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="name">
                                         <th mat-header-cell class="br" *matHeaderCellDef> Description </th>
                                         <td mat-cell class="br" *matCellDef="let element">
-                                            <div class="bar" [innerHTML]="element.description"></div>
+                                            <div class="bar">
+                                                <span [innerHTML]="element.description"></span>
+                                            </div>
                                         </td>
                                     </ng-container>
 
@@ -361,45 +365,53 @@
                         </div>
 
                         <div class="col-md-12 p-0" [formGroup]="appearanceFG">
-                            <h5 class="m-0 pb-12">Select an option below to add a task template...</h5>
-                            <div class="row">
-                                Portfolio
-                                <mat-radio-group class="taskTemplatesRadio" formControlName="portfolioOpt">
-                                    <mat-radio-button
-                                      [ngClass]="appearanceFG.get('portfolioOpt').value == 1 ? 'text-primary b-a-custom': 'text-primitive'"
-                                      [value]="1">
-                                      Advisor Details
-                                    </mat-radio-button>
-                                    <mat-radio-button [value]="2" [ngClass]="appearanceFG.get('portfolioOpt').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
-                                        Company details
-                                    </mat-radio-button>
-                                </mat-radio-group>
+                            <h5 class="m-0 pb-20">Select an option below to add a task template...</h5>
+                            <div class="row pb-20">
+                                <div class="col-md-3 text-right d-flex align-items-center justify-content-end">
+                                    <h5 class="m-0"> Portfolio </h5>
+                                </div>
+                                <div class="col-md-8 pl-0">
+                                    <mat-radio-group class="taskTemplatesRadio" formControlName="portfolioOpt">
+                                        <mat-radio-button [ngClass]="appearanceFG.get('portfolioOpt').value == 1 ? 'text-primary b-a-custom': 'text-primitive'" [value]="1">
+                                            Advisor Details
+                                        </mat-radio-button>
+                                        <mat-radio-button [value]="2" class="pr-10" [ngClass]="appearanceFG.get('portfolioOpt').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
+                                            Company details
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
                             </div>
-                            <div class="row">
-                                Financial Plan
-                                <mat-radio-group class="taskTemplatesRadio" formControlName="financialOpt">
-                                    <mat-radio-button
-                                      [ngClass]="appearanceFG.get('financialOpt').value == 1 ? 'text-primary b-a-custom': 'text-primitive'"
-                                      [value]="1">
-                                      Advisor Details
-                                    </mat-radio-button>
-                                    <mat-radio-button [value]="2" [ngClass]="appearanceFG.get('financialOpt').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
-                                        Company details
-                                    </mat-radio-button>
-                                </mat-radio-group>
+                            <div class="row pb-20">
+                                <div class="col-md-3 text-right d-flex align-items-center justify-content-end">
+                                    <h4 class="m-0">Financial Plan</h4>
+                                </div>
+                                <div class="col-md-8 pl-0">
+                                    <mat-radio-group class="taskTemplatesRadio" formControlName="financialOpt">
+                                        <mat-radio-button [ngClass]="appearanceFG.get('financialOpt').value == 1 ? 'text-primary b-a-custom': 'text-primitive'" [value]="1">
+                                            Advisor Details
+                                        </mat-radio-button>
+                                        <mat-radio-button [value]="2" class="pr-10" [ngClass]="appearanceFG.get('financialOpt').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
+                                            Company details
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+
                             </div>
-                            <div class="row">
-                                Client Dashboard
-                                <mat-radio-group class="taskTemplatesRadio" formControlName="clientOpt">
-                                    <mat-radio-button
-                                      [ngClass]="appearanceFG.get('clientOpt').value == 1 ? 'text-primary b-a-custom': 'text-primitive'"
-                                      [value]="1">
-                                      Advisor Details
-                                    </mat-radio-button>
-                                    <mat-radio-button [value]="2" [ngClass]="appearanceFG.get('clientOpt').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
-                                        Company details
-                                    </mat-radio-button>
-                                </mat-radio-group>
+                            <div class="row pb-20">
+                                <div class="col-md-3 text-right d-flex align-items-center justify-content-end">
+                                    <h4 class="m-0"> Client Dashboard</h4>
+                                </div>
+                                <div class="col-md-8 pl-0">
+                                    <mat-radio-group class="taskTemplatesRadio" formControlName="clientOpt">
+                                        <mat-radio-button [ngClass]="appearanceFG.get('clientOpt').value == 1 ? 'text-primary b-a-custom': 'text-primitive'" [value]="1">
+                                            Advisor Details
+                                        </mat-radio-button>
+                                        <mat-radio-button [value]="2" class="pr-10" [ngClass]="appearanceFG.get('clientOpt').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
+                                            Company details
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+
                             </div>
                         </div>
                     </div>

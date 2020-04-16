@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {AddNewRoleComponent} from '../../../setting-entry/add-new-role/add-new-role.component';
-import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
 import {UtilService} from 'src/app/services/util.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SettingsService} from '../../../settings.service';
 import {AuthService} from 'src/app/auth-service/authService';
-import {MatTableDataSource, MatDialog} from '@angular/material';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatTableDataSource} from '@angular/material';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-roles',
@@ -18,7 +17,7 @@ export class RolesComponent implements OnInit {
   dataSource: any;
   advisorId: any;
   isLoading: boolean;
-  globalData:any[] = [];
+  globalData: any[] = [];
   counter = 0;
 
   constructor(
@@ -37,20 +36,20 @@ export class RolesComponent implements OnInit {
     this.loader(1);
     const obj = {
       advisorId: this.advisorId
-    }
+    };
 
     this.settingsService.getAllRoles(obj).subscribe((res) => {
       this.dataSource = new MatTableDataSource(res);
       this.loader(-1);
-    })
+    });
   }
 
   addEditNewRoles(roleType, is_add_flag, data) {
     const dataObj = {
       mainData: data || {},
-      roleType: roleType,
-      is_add_flag: is_add_flag,
-    }
+      roleType,
+      is_add_flag,
+    };
     const fragmentData = {
       flag: 'app-upper-setting',
       id: 1,
@@ -62,7 +61,7 @@ export class RolesComponent implements OnInit {
     const rightSideDataSub = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
-          if(UtilService.isRefreshRequired(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
             this.getAllRoles();
           }
           rightSideDataSub.unsubscribe();

@@ -500,13 +500,28 @@ export class RightFilterComponent implements OnInit {
     console.log('this.sendTransactionView ====', this.finalFilterData);
     this.Close(this.finalFilterData);
     console.log(this.finalFilterData);
-    // if(this._data.name=='UNREALIZED TRANSACTION REPORT'){
-    //   this.custumService.getMutualFund(this.finalFilterData.mutualFundList).subscribe(
-    //     data => {
-    //         console.log(data);
-    //       }
-    //   )
-    // }
+    if(this._data.name=='UNREALIZED TRANSACTION REPORT'){
+      // this.custumService.getMfUnrealizedTransactions(this.finalFilterData.mutualFundList).subscribe(
+      //   data => {
+      //       console.log(data);
+      //     }cus
+      // )
+        // this.custumService.getMfUnrealizedTransactions(this.finalFilterData.mutualFundList).subscribe(
+        // data =>{
+        //   console.log(data)
+        // }
+        let mutualFund=this.finalFilterData.mutualFundList[0];
+         const obj={
+          mutualFund:mutualFund,
+        }
+          this.custumService.getMfUnrealizedTransactions(obj).subscribe(
+      data => {
+        console.log(data);
+      }    
+      );
+
+      }
+    }
     // if(this.dataToSend.toDate!=todayDate){
     //   let MfList=Object.assign(this.finalFilterData.mutualFundList, {toDate: this.dataToSend.toDate});
     //   this.custumService.getMutualFund(MfList).subscribe(
@@ -516,7 +531,7 @@ export class RightFilterComponent implements OnInit {
     //   )
     // }
     
-  }
+  
 
   
 

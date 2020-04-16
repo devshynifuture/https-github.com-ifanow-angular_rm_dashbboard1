@@ -253,6 +253,11 @@ export class UtilService {
     return true;
   }
 
+  static toUpperCase(event) {
+    console.log(event);
+    event.target.value = event.target.value.toUpperCase();
+    return event;
+  }
 
   htmlToPdf(inputData, pdfName) {
     const obj = {

@@ -8,18 +8,16 @@
         </i>
     </div>
 </div>
-<div [formGroup]="bankForm">
+<div class="pb-12" [formGroup]="bankForm">
     <div [ngClass]="{'pt-90': fieldFlag==undefined}" class="row pt-44">
         <!-- vaibhav -->
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">IFSC code</h5>
+            <h5 class="m-0 pt-20">IFSC code</h5>
         </div>
         <div class="col-md-2 p-0">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input autocomplete="off" (focusout)="getBankAddress(ifcCode.value)" appInputValueValidation
-                        [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="ifscCode" #ifcCode
-                        [maxLength]="12" matInput class="form-control">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter IFSC   " autocomplete="off" (input)="toUpperCase($event)" appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="ifscCode" #ifcCode [maxLength]="12" matInput class="form-control">
                     <mat-hint align="end" class="f-12">{{ifcCode.value.length}}/12</mat-hint>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -31,14 +29,12 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">Bank name</h5>
+            <h5 class="m-0 pt-20">Bank name</h5>
         </div>
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input autocomplete="off" [maxLength]="50" #bankName appInputValueValidation
-                        [inputValidator]="validatorType.TEXT_ONLY" formControlName="bankName" matInput
-                        class="form-control">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter your Bank name" autocomplete="off" [maxLength]="50" #bankName appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="bankName" matInput class="form-control">
                     <mat-error>This field is required</mat-error>
                     <mat-hint align="end">{{bankName.value.length}}/50</mat-hint>
                 </mat-form-field>
@@ -47,13 +43,12 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">MICR code</h5>
+            <h5 class="m-0 pt-20">MICR code</h5>
         </div>
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input #micr autocomplete="off" [maxLength]="9" formControlName="micrName" matInput
-                        class="form-control">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input #micr autocomplete="off" [maxLength]="9" placeholder="Enter MICR code" formControlName="micrName" matInput class="form-control">
                     <mat-hint>Optional</mat-hint>
                     <mat-hint align="end">{{micr.value.length}} / 9</mat-hint>
                 </mat-form-field>
@@ -62,13 +57,12 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">Account number</h5>
+            <h5 class="m-0 pt-20">Account number</h5>
         </div>
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input autocomplete="off" #accNum [maxLength]="16" formControlName="accNumber" matInput
-                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input autocomplete="off" placeholder="Enter Account number" #accNum [maxLength]="16" formControlName="accNumber" matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control">
                     <mat-hint align="end">{{accNum.value.length}} / 16</mat-hint>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -81,30 +75,22 @@
         </div>
         <div class="col-md-8 p-0 account-type">
             <mat-radio-group class="radioWidth110" formControlName="accType" aria-label="Select an option">
-                <mat-radio-button value="1"
-                    [ngClass]="{'bu-primary': bankForm.get('accType').value=='1','borderRadio':bankForm.get('accType').value!='1','text-primary': bankForm.get('accType').value=='1','text-custom':bankForm.get('accType').value!='1'}"
-                    class="bu-primary">Savings</mat-radio-button>
-                <mat-radio-button value="2"
-                    [ngClass]="{'bu-primary': bankForm.get('accType').value=='2','borderRadio':bankForm.get('accType').value!='2','text-primary': bankForm.get('accType').value=='2','text-custom':bankForm.get('accType').value!='2'}"
-                    class="borderRadio">Current</mat-radio-button>
-                <mat-radio-button value="3"
-                    [ngClass]="{'bu-primary': bankForm.get('accType').value=='3','borderRadio':bankForm.get('accType').value!='3','text-primary': bankForm.get('accType').value=='3','text-custom':bankForm.get('accType').value!='3'}"
-                    class="borderRadio pr-8">Cash credit</mat-radio-button>
+                <mat-radio-button value="1" [ngClass]="{'bu-primary': bankForm.get('accType').value=='1','borderRadio':bankForm.get('accType').value!='1','text-primary': bankForm.get('accType').value=='1','text-custom':bankForm.get('accType').value!='1'}" class="bu-primary">Savings</mat-radio-button>
+                <mat-radio-button value="2" [ngClass]="{'bu-primary': bankForm.get('accType').value=='2','borderRadio':bankForm.get('accType').value!='2','text-primary': bankForm.get('accType').value=='2','text-custom':bankForm.get('accType').value!='2'}" class="borderRadio">Current</mat-radio-button>
+                <mat-radio-button value="3" [ngClass]="{'bu-primary': bankForm.get('accType').value=='3','borderRadio':bankForm.get('accType').value!='3','text-primary': bankForm.get('accType').value=='3','text-custom':bankForm.get('accType').value!='3'}" class="borderRadio pr-8">Cash credit</mat-radio-button>
             </mat-radio-group>
         </div>
     </div>
-    <app-add-holder-names *ngIf="bankList" [holderListInput]="bankList.holderNameList"
-        (holderList)="getHolderList($event)">
+    <app-add-holder-names *ngIf="bankList" [holderListInput]="bankList.holderNameList" (holderList)="getHolderList($event)">
     </app-add-holder-names>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">Branch name</h5>
+            <h5 class="m-0 pt-20">Branch name</h5>
         </div>
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input #branchName autocomplete="off" formControlName="branchName" appInputValueValidation
-                        [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" matInput class="form-control">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter Branch name" #branchName autocomplete="off" formControlName="branchName" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" matInput class="form-control">
                     <mat-error>This field is required</mat-error>
                     <mat-hint align="end">{{branchName.value.length}}/50</mat-hint>
                 </mat-form-field>
@@ -113,12 +99,12 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">Branch country</h5>
+            <h5 class="m-0 pt-20">Branch country</h5>
         </div>
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input autocomplete="off" formControlName="branchCountry" matInput class="form-control">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter your Branch country" autocomplete="off" formControlName="branchCountry" matInput class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -126,14 +112,12 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">Branch pin code</h5>
+            <h5 class="m-0 pt-20">Branch pin code</h5>
         </div>
         <div class="col-md-2 p-0">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input autocomplete="off" [maxLength]="6" (focusout)="getPostalPin($event.target.value)"
-                        formControlName="branchPinCode" #branchCode matInput appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" class="form-control">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter pin code" autocomplete="off" [maxLength]="6" (focusout)="getPostalPin($event.target.value)" formControlName="branchPinCode" #branchCode matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control">
                     <mat-error>This field is required</mat-error>
                     <mat-hint align="end" class="f-12">{{branchCode.value.length}}/6</mat-hint>
                 </mat-form-field>
@@ -145,13 +129,12 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">Branch address line 1</h5>
+            <h5 class="m-0 pt-20">Branch address line 1</h5>
         </div>
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input autocomplete="off" maxlength="100" #bAdd1 formControlName="branchAddressLine1" matInput
-                        class="form-control">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter Branch address 1" autocomplete="off" maxlength="100" #bAdd1 formControlName="branchAddressLine1" matInput class="form-control">
                     <mat-hint align="end">{{bAdd1.value.length}}/100</mat-hint>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -160,13 +143,12 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">Branch address line 2</h5>
+            <h5 class="m-0 pt-20">Branch address line 2</h5>
         </div>
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input autocomplete="off" #bAdd2 maxlength="100" formControlName="branchAddressLine2" matInput
-                        class="form-control">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter Branch address 1" autocomplete="off" #bAdd2 maxlength="100" formControlName="branchAddressLine2" matInput class="form-control">
                     <mat-error>This field is required</mat-error>
                     <mat-hint align="end">{{bAdd2.value.length}}/100</mat-hint>
                 </mat-form-field>
@@ -175,12 +157,12 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">Branch city</h5>
+            <h5 class="m-0 pt-20">Branch city</h5>
         </div>
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input autocomplete="off" formControlName="branchCity" matInput class="form-control">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter Branch city" autocomplete="off" formControlName="branchCity" matInput class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -188,12 +170,12 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">Branch state</h5>
+            <h5 class="m-0 pt-20">Branch state</h5>
         </div>
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input autocomplete="off" formControlName="branchState" matInput class="form-control">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter Branch state" autocomplete="off" formControlName="branchState" matInput class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -211,11 +193,9 @@
             </button> -->
             <!-- <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
             </button> -->
-            <app-progress-button *ngIf="fieldFlag==undefined" (btnClick)="saveNext('Save')" [options]="barButtonOptions"
-                class="br-0 text-inherit mr-12">
+            <app-progress-button *ngIf="fieldFlag==undefined" (btnClick)="saveNext('Save')" [options]="barButtonOptions" class="br-0 text-inherit mr-12">
             </app-progress-button>
-            <app-progress-button (btnClick)="saveNext('Next')" class="br-0 text-inherit mr-12"
-                [options]="barButtonOptions">
+            <app-progress-button (btnClick)="saveNext('Next')" class="br-0 text-inherit mr-12" [options]="barButtonOptions">
             </app-progress-button>
         </div>
 

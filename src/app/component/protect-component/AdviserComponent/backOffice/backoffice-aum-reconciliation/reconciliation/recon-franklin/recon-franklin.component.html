@@ -20,7 +20,7 @@
                             Select Option
                         </mat-option>
                         <mat-option *ngFor="let broker of brokerList" [value]="broker.id"
-                                    (click)="getAumReconHistoryData(null)">
+                                    (click)="getAumReconHistoryData()">
                           {{ broker.brokerCode }}
                         </mat-option>
                     </mat-select>
@@ -139,7 +139,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
         </div>
-        <div class="col-md-12" *ngIf="dataSource.data === undefined">
+        <div class="col-md-12" *ngIf="dataSource.data === null">
             <h4 class="d-flex justify-content-center b-a p-44">
                 No Data Found
             </h4>

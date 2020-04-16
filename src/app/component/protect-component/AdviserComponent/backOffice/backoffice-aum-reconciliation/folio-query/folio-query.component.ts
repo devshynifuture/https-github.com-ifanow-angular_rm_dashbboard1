@@ -111,14 +111,20 @@ export class FolioQueryComponent implements OnInit {
 
   getGroupHeadNameList(value) {
     const data = {
-      clientName: value
+      advisorId: this.advisorId,
+      clientName: value,
+      arnRiaDetailsId: -1,
+      parentId: -1
     }
     return this.reconService.getGroupHeadNameValues(data);
   }
 
   getInvestorNameList(value) {
     const data = {
-      familyMemberName: value
+      advisorId: this.advisorId,
+      familyMemberName: value,
+      arnRiaDetailsId: -1,
+      parentId: -1
     }
     return this.reconService.getInvestorNameValues(data);
   }
