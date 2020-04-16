@@ -1,16 +1,16 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {AddCamsDetailsComponent} from '../../../setting-entry/add-cams-details/add-cams-details.component';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
-import {AddKarvyDetailsComponent} from '../../../setting-entry/add-karvy-details/add-karvy-details.component';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AddCamsDetailsComponent } from '../../../setting-entry/add-cams-details/add-cams-details.component';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import { AddKarvyDetailsComponent } from '../../../setting-entry/add-karvy-details/add-karvy-details.component';
 // tslint:disable:max-line-length
-import {AddFranklinTempletionDetailsComponent} from '../../../setting-entry/add-franklin-templetion-details/add-franklin-templetion-details.component';
-import {AddCamsFundsnetComponent} from '../../../setting-entry/add-cams-fundsnet/add-cams-fundsnet.component';
-import {SettingsService} from '../../../settings.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {MatDialog, MatTableDataSource} from '@angular/material';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { AddFranklinTempletionDetailsComponent } from '../../../setting-entry/add-franklin-templetion-details/add-franklin-templetion-details.component';
+import { AddCamsFundsnetComponent } from '../../../setting-entry/add-cams-fundsnet/add-cams-fundsnet.component';
+import { SettingsService } from '../../../settings.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MatDialog, MatTableDataSource } from '@angular/material';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-mf-rta-details',
@@ -33,7 +33,7 @@ export class MfRtaDetailsComponent implements OnInit {
   arnList: any[] = [{}];
   spans: any[] = [];
   isLoading = false;
-  @ViewChild('visibilityRef', {static: true}) visibilityRef: TemplateRef<any>;
+  @ViewChild('visibilityRef', { static: true }) visibilityRef: TemplateRef<any>;
 
   constructor(
     private eventService: EventService,
@@ -57,13 +57,13 @@ export class MfRtaDetailsComponent implements OnInit {
   }
 
   getArnDetails() {
-    this.settingsService.getArnlist({advisorId: this.advisorId}).subscribe((data) => {
+    this.settingsService.getArnlist({ advisorId: this.advisorId }).subscribe((data) => {
       this.arnList = data || [];
     });
   }
 
   loadRTAList() {
-    const jsonData = {advisorId: this.advisorId};
+    const jsonData = { advisorId: this.advisorId };
     this.isLoading = true;
     this.settingsService.getMFRTAList(jsonData).subscribe((res) => {
       this.mfRTAlist = res || [];
@@ -94,7 +94,7 @@ export class MfRtaDetailsComponent implements OnInit {
       is_add_call: isAddFlag,
     };
     const fragmentData: any = {
-      flag:'',
+      flag: '',
       data: fullData,
       id: 1,
       state: 'open50',
@@ -128,8 +128,8 @@ export class MfRtaDetailsComponent implements OnInit {
 
   deleteRTA(data) {
     const dialogData = {
-      header: 'DELETE',
-      body: 'Are you sure you want to delete?',
+      header: 'DELETE RTA',
+      body: 'Are you sure you want to delete this RTA?',
       body2: 'This cannot be undone.',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
@@ -166,9 +166,9 @@ export class MfRtaDetailsComponent implements OnInit {
     return '';
   }
 
-  toggleVisibility(data, elem) {
+  toggleVisibility(data, toggle) {
     if (data) {
-      if (!elem.toggle) {
+      if (toggle) {
         const copy = data.toString();
         return copy.replace(/./g, '').replace('', '********');
       } else {
@@ -178,7 +178,7 @@ export class MfRtaDetailsComponent implements OnInit {
   }
 
   changeToggle(elem) {
-    if(elem.toggle) 
+    if (elem.toggle)
       elem.toggle = false
     else
       elem.toggle = true

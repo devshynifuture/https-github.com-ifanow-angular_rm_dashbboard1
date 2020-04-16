@@ -62,6 +62,10 @@ const routes: Routes = [
       {
         path: 'setting',
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/setting/setting.module').then(m => m.SettingModule)
+      },
+      {
+        path: 'advisor-marketplace',
+        loadChildren: () => import('src/app/component/protect-component/Advisor-Marketplace/advisor-marketplce.module').then(m => m.AdvisorMarketplceModule),
       }
     ]
   }
