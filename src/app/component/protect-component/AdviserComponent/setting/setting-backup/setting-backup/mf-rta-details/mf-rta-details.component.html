@@ -38,9 +38,11 @@
                 <td mat-cell *matCellDef="let element" class="br  ">
                     <div class="bar">
                         <div *ngIf="!isLoading" class="d-flex justify-content-between">
-                            {{(toggleVisibility(element.mailbackPassword, element))}}
-                            <mat-icon (click)="changeToggle(element)">{{element.toggle ? 'visibility' : 'visibility_off'}}
-                            </mat-icon>
+                            <ng-container>
+                              <ng-template
+                                *ngTemplateOutlet="templateRef; context:{element :{element:element.mailbackPassword, toggleValue: true}}">
+                              </ng-template>
+                            </ng-container>
                         </div>
                     </div>
                 </td>
@@ -95,9 +97,11 @@
                 <th mat-header-cell *matHeaderCellDef class="br"> Login password </th>
                 <td mat-cell *matCellDef="let element" class="br d-flex justify-content-between">
                     <div class="bar" *ngIf="!isLoading">
-                        {{(toggleVisibility(element.loginPassword, element))}}
-                        <mat-icon (click)="changeToggle(element)">{{element.toggle ? 'visibility' : 'visibility_off'}}
-                        </mat-icon>
+                        <ng-container>
+                          <ng-template
+                            *ngTemplateOutlet="templateRef; context:{element :{element:element.loginPassword, toggleValue: true}}">
+                          </ng-template>
+                        </ng-container>
                     </div>
                 </td>
             </ng-container>
@@ -116,9 +120,11 @@
                 <td mat-cell *matCellDef="let element" class="br  ">
                     <div class="bar">
                         <div class="d-flex justify-content-between" *ngIf="!isLoading">
-                            {{(toggleVisibility(element.mailbackPassword, element))}}
-                            <mat-icon (click)="changeToggle(element)">{{element.toggle ? 'visibility' : 'visibility_off'}}
-                            </mat-icon>
+                            <ng-container>
+                              <ng-template
+                                *ngTemplateOutlet="templateRef; context:{element :{element:element.mailbackPassword, toggleValue: true}}">
+                              </ng-template>
+                            </ng-container>
                         </div>
                     </div>
                 </td>
@@ -175,9 +181,11 @@
                 <td mat-cell *matCellDef="let element" class="br d-flex justify-content-between">
                     <div class="bar">
                         <div *ngIf="!isLoading">
-                            {{(toggleVisibility(element.loginPassword, element))}}
-                            <mat-icon (click)="changeToggle(element)">
-                                {{element.toggle ? 'visibility' : 'visibility_off'}}</mat-icon>
+                            <ng-container>
+                              <ng-template
+                                *ngTemplateOutlet="templateRef; context:{element :{element:element.loginPassword, toggleValue: true}}">
+                              </ng-template>
+                            </ng-container>
                         </div>
                     </div>
                 </td>
@@ -195,9 +203,11 @@
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar">
                         <div *ngIf="!isLoading">
-                            {{(toggleVisibility(element.mailbackPassword, element))}}
-                            <mat-icon (click)="changeToggle(element)">{{element.toggle ? 'visibility' : 'visibility_off'}}
-                            </mat-icon>
+                            <ng-container>
+                              <ng-template
+                                *ngTemplateOutlet="templateRef; context:{element :{element:element.mailbackPassword, toggleValue: true}}">
+                              </ng-template>
+                            </ng-container>
                         </div>
                     </div>
                 </td>
@@ -247,9 +257,11 @@
                 <td valign="top" mat-cell *matCellDef="let element" class="br">
                     <div class="bar">
                         <div *ngIf="!isLoading">
-                            {{(toggleVisibility(element.loginPassword, element))}}
-                            <mat-icon (click)="changeToggle(element)">{{element.toggle ? 'visibility' : 'visibility_off'}}
-                            </mat-icon>
+                            <ng-container>
+                              <ng-template
+                                *ngTemplateOutlet="templateRef; context:{element :{element:element.loginPassword, toggleValue: true}}">
+                              </ng-template>
+                            </ng-container>
                         </div>
                     </div>
                 </td>
@@ -272,9 +284,11 @@
                     <div class="bar">
                         <div *ngIf="!isLoading">
                             <div *ngFor="let questionSet of element.rtaCamsFundNetSecurityQuestionsList">
-                                {{(toggleVisibility(questionSet.answer, questionSet))}}
-                                <mat-icon (click)="changeToggle(questionSet)">
-                                    {{questionSet.toggle ? 'visibility' : 'visibility_off'}}</mat-icon>
+                                <ng-container>
+                                  <ng-template
+                                    *ngTemplateOutlet="templateRef; context:{element :{element:questionSet.answer, toggleValue: true}}">
+                                  </ng-template>
+                                </ng-container>
                             </div>
                         </div>
                     </div>
@@ -298,3 +312,11 @@
         </table>
     </div>
 </div>
+<ng-container>
+    <ng-template #templateRef let-element="element">
+      {{(toggleVisibility(element.element, element.toggleValue))}}
+      <mat-icon (click)="element.toggleValue = !element.toggleValue">
+        {{element.toggleValue ? 'visibility' : 'visibility_off'}}</mat-icon>
+    </ng-template>
+  </ng-container>
+  <ng-container>
