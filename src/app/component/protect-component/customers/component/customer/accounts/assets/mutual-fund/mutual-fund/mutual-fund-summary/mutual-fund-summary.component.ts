@@ -32,6 +32,7 @@ export class MutualFundSummaryComponent implements OnInit {
   customDataSource = new MatTableDataSource([{}, {}, {}]);
   catObj: {};
   isLoading = false; // added for prod build
+  displayColumnsPDf:any;
   // schemeWiseForFilter: any[];
   // mutualFundListFilter: any[];
   @ViewChild('tableEl', {static: false}) tableEl;
@@ -49,6 +50,7 @@ export class MutualFundSummaryComponent implements OnInit {
     if (this.mutualFund.mutualFundList.length>0) {
       this.isLoading=true;
       this.mutualFundList = this.mutualFund.mutualFundList;
+      // this.getListForPdf(this.displayedColumns);
       // this.getSubCategoryWise(this.mutualFund); // get subCategoryWise list
       // this.getSchemeWise(); // get scheme wise list
       // this.mfSchemes(); // get mutualFund list
@@ -66,7 +68,42 @@ export class MutualFundSummaryComponent implements OnInit {
       this.customDataSource.data=[];
     }
   }
+  getListForPdf(columns){
+    // this.displayColumnsPDf[0].name=(columns[0] = 'schemeName')?this.displayColumnsPDf.push('Scheme name'):null;
+    // this.displayColumnsPDf[1].name=(columns[1] = 'amountInvested')?'Amount invested':null;
+    // this.displayColumnsPDf[2].name=(columns[2] = 'currentValue')?'Current value':null;
+    // this.displayColumnsPDf[3].name=(columns[3] = 'unrealizedProfit')?'Unrealized profit (loss)':null;
+    // this.displayColumnsPDf[4].name=(columns[4] = 'absoluteReturn')?'Abs Ret %':null;
+    // this.displayColumnsPDf[5].name=(columns[5] = 'xirr')?'XIRR %':null;
+    // this.displayColumnsPDf[6].name=(columns[6] = 'dividendPayout')?'Dividend payout':null;
+    // this.displayColumnsPDf[7].name=(columns[7] = 'switchOut')?'Withdrawals Switch outs':null;
+    // this.displayColumnsPDf[8].name=(columns[8] = 'balanceUnit')?'Balance Unit':null;
+    // this.displayColumnsPDf[9].name=(columns[9] = 'navDate')?'NAV Date':null;
+    // this.displayColumnsPDf[10].name=(columns[10] = 'sipAmount')?' SIP':null;
+        let  filterArray=[]
+        var name;
+    columns.forEach(element => {
+ 
+       if(element == 'schemeName'){name='Scheme name'};
+      if(element == 'amountInvested'){name='Amount invested'};
+      if(element== 'currentValue'){name='Current value'};
+   if(element == 'unrealizedProfit'){name='Unrealized profit (loss)'};
+    if(element == 'absoluteReturn'){name='Abs Ret %'};
+    if(element == 'xirr'){name='XIRR %'};
+    if(element == 'dividendPayout'){name='Dividend payout'};
+    if(element == 'switchOut'){name='Withdrawals Switch outs'};
+    if(element == 'balanceUnit'){name='Balance Unit'};
+    if(element == 'navDate'){name='NAV Date'};
+    if(element== 'sipAmount'){name='SIP'};
+  
+      const obj={
+        name:name
+      }
+      filterArray.push(obj)
+    });
+    this.displayColumnsPDf=filterArray;
 
+  }
   asyncFilter(mutualFund) {
     if (typeof Worker !== 'undefined') {
       console.log(`13091830918239182390183091830912830918310938109381093809328`);
@@ -161,7 +198,7 @@ export class MutualFundSummaryComponent implements OnInit {
           if (sideBarData.data) {
             this.rightFilterData = sideBarData.data;
             this.asyncFilter(this.rightFilterData.mutualFundList);
-
+            // this.getListForPdf(this.rightFilterData.transactionView);
           }
           rightSideDataSub.unsubscribe();
         }

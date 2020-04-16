@@ -45,7 +45,7 @@
                    [appSkeletonLoading]="isLoading">
               <ng-container matColumnDef="categoryName" sticky>
                 <th class="br" mat-sort-header="categoryName" mat-header-cell *matHeaderCellDef>
-                  {{(rightFilterData.reportType=='Sub Category wise' || rightFilterData.reportType=='')?'Sub category name':(rightFilterData.reportType=='Category wise')?'Category name':'Family member name'}}
+                  {{(type.name=='Sub Category wise' || type.name=='')?'Sub category name':(type.name=='Category wise')?'Category name':(type.name=='Investor wise')?'Family member name':'Sub Category wise'}}
                 </th>
                 <td class="br" mat-cell *matCellDef="let element">
                   <div class="bar">{{element.categoryName}}</div>
@@ -203,7 +203,7 @@
                   Transaction date
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar">{{isLoading ? '':((element.transactionDate)?element.transactionDate:'-')}} </div>
+                  <div class="bar">{{isLoading ? '':((element.transactionDate)?(element.transactionDate | date:'dd/MM/yyyy'):'-')}} </div>
                 </td>
                 <!-- <td *matFooterCellDef appFormatNumber class="br text-right" mat-footer-cell>
                 </td> -->
@@ -497,7 +497,7 @@
   <tr style="height: 40px;border-bottom:1px solid #DADCE0; " *ngIf="item.fwTransactionType || item.category">
       <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-left: 1px solid #DADCE0;width: 4%;">{{i + 1}}</td>
       <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 17%;"> <span *ngIf="item.fwTransactionType"> {{(item.fwTransactionType)?item.fwTransactionType:'-'}} </span></td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 10%">  {{(item.transactionDate)?item.transactionDate:'-'}} </td>
+      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 10%">  {{(item.transactionDate)?(item.transactionDate | date:'dd/MM/yyyy'):'-'}} </td>
       <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 7%;"><span appFormatNumber *ngIf="item.amount">{{(item.amount)?item.amount:0}}</span></td>
       <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 4%;"><span appFormatNumber *ngIf="item.transactionNav">{{(item.transactionNav)?item.transactionNav:'0'}}</span></td>
       <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;"><span appFormatNumber *ngIf="item.unit">{{(item.unit)?item.unit:0}}</span></td>

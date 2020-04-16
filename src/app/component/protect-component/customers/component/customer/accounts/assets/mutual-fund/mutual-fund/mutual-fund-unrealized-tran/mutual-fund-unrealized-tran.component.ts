@@ -6,6 +6,7 @@ import {MfServiceService} from '../../mf-service.service';
 import {RightFilterComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
 import {ExcelGenService} from 'src/app/services/excel-gen.service';
 import {TableVirtualScrollDataSource} from 'ng-table-virtual-scroll';
+import { CustomerService } from '../../../../../customer.service';
 
 @Component({
   selector: 'app-mutual-fund-unrealized-tran',
@@ -25,12 +26,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   grandTotal: any = {};
   schemeWiseForFilter: any;
   mutualFundListFilter: any[];
-  rightFilterData : any = { reportType : ''};
+  type : any = { name : ''};
   customDataSource = new TableVirtualScrollDataSource([{},{},{}]);
   @ViewChild('tableEl', {static: false}) tableEl;
+  rightFilterData: any ={reportType :'' };
 
   constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
-              private mfService: MfServiceService, private excel: ExcelGenService) {
+              private mfService: MfServiceService, private excel: ExcelGenService,private custumService:CustomerService) {
   }
 
   @Input() mutualFund;
@@ -39,6 +41,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
     this.isLoading=true;
     console.log('this.mutualFund == ', this.mutualFund);
     if (this.mutualFund) {
+    if(this.mutualFund.viewMode=='UNREALIZED TRANSACTION REPORT')
+    {
+        
+    }
       // this.getSubCategoryWise(this.mutualFund);
       // this.getSchemeWise();
       // this.mfSchemes();
@@ -60,8 +66,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
     }
     if (changes.mutualFund && !!changes.mutualFund.currentValue) {
       if(this.mutualFund.mutualFundList.length>0){
+        if(this.mutualFund.viewMode=='Unrealized Transactions'){
+          this.getUnrealizedData();
+           this.asyncFilter(this.mutualFundList);
+        }else{
         this.mutualFundList = this.mutualFund.mutualFundList;
         this.asyncFilter(this.mutualFundList);
+        }
       }else{
         this.dataSource.data=[];
         this.customDataSource.data=[];
@@ -69,6 +80,19 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
      
     }
   }
+ 
+  getUnrealizedData(){
+    const obj={
+          mutualFundList:this.mutualFund.mutualFundList
+        }
+         this.custumService.getMfUnrealizedTransactions(obj).subscribe(
+      data => {
+        console.log(data);
+        this.mutualFundList=data;
+      }    
+      );
+  }
+
 
   asyncFilter(mutualFund) {
     if (typeof Worker !== 'undefined') {
@@ -133,6 +157,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           if (sideBarData.data) {
             this.rightFilterData = sideBarData.data;
+            this.type=this.rightFilterData.reportType[0];
             this.asyncFilter(this.rightFilterData.mutualFundList);
             // this.dataSource.data = this.getCategory(this.rightFilterData.mutualFundList,
             // this.rightFilterData.reportType, this.mfService);

@@ -498,30 +498,27 @@ export class RightFilterComponent implements OnInit {
     this.finalFilterData = this.mfService.filterFinalData(this._data.mfData, this.dataToSend);
     this.finalFilterData.transactionView = this.sendTransactionView;
     console.log('this.sendTransactionView ====', this.finalFilterData);
-    this.Close(this.finalFilterData);
     console.log(this.finalFilterData);
     if(this._data.name=='UNREALIZED TRANSACTION REPORT'){
-      // this.custumService.getMfUnrealizedTransactions(this.finalFilterData.mutualFundList).subscribe(
-      //   data => {
-      //       console.log(data);
-      //     }cus
-      // )
-        // this.custumService.getMfUnrealizedTransactions(this.finalFilterData.mutualFundList).subscribe(
-        // data =>{
-        //   console.log(data)
-        // }
-        let mutualFund=this.finalFilterData.mutualFundList[0];
-         const obj={
-          mutualFund:mutualFund,
+        let mutualFund=this.finalFilterData.mutualFundList; 
+        this.obj={
+          mutualFundList:mutualFund
         }
-          this.custumService.getMfUnrealizedTransactions(obj).subscribe(
+         this.custumService.getMfUnrealizedTransactions(this.obj).subscribe(
       data => {
         console.log(data);
+        this.finalFilterData.mutualFundList=data;
+        this.Close(this.finalFilterData);
       }    
       );
 
+        }else{
+          this.Close(this.finalFilterData);
+        }
+             
+
       }
-    }
+    
     // if(this.dataToSend.toDate!=todayDate){
     //   let MfList=Object.assign(this.finalFilterData.mutualFundList, {toDate: this.dataToSend.toDate});
     //   this.custumService.getMutualFund(MfList).subscribe(
@@ -532,9 +529,6 @@ export class RightFilterComponent implements OnInit {
     // }
     
   
-
-  
-
   Close(data) {
     this.subInjectService.changeNewRightSliderState({state: 'close', data: data});
   }
