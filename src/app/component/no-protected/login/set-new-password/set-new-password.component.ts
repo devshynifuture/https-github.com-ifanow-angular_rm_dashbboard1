@@ -67,16 +67,18 @@ export class SetNewPasswordComponent implements OnInit {
         data => {
           console.log(data);
           if (data == 1) {
-            const obj = {
-              advisorId: this.userData.advisorId
-            };
-            this.loginService.sendWelcomeEmail(obj).subscribe(
-              data => {
-                this.barButtonOptions.active = false;
-                console.log(data);
-              },
-              err => { console.log(err) }
-            );
+            if (!this.userData.buttonFlag) {
+              const obj = {
+                advisorId: this.userData.advisorId
+              };
+              this.loginService.sendWelcomeEmail(obj).subscribe(
+                data => {
+                  this.barButtonOptions.active = false;
+                  console.log(data);
+                },
+                err => { console.log(err) }
+              );
+            }
             // this.authService.setToken(data.token);
             this.loginService.handleUserData(this.authService, this.router, this.userData);
           } else {
