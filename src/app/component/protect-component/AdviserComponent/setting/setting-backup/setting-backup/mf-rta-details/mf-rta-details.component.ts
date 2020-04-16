@@ -128,8 +128,8 @@ export class MfRtaDetailsComponent implements OnInit {
 
   deleteRTA(data) {
     const dialogData = {
-      header: 'DELETE',
-      body: 'Are you sure you want to delete?',
+      header: 'DELETE RTA',
+      body: 'Are you sure you want to delete this RTA?',
       body2: 'This cannot be undone.',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
@@ -166,9 +166,9 @@ export class MfRtaDetailsComponent implements OnInit {
     return '';
   }
 
-  toggleVisibility(data, elem) {
+  toggleVisibility(data, toggle) {
     if (data) {
-      if (!elem.toggle) {
+      if (toggle) {
         const copy = data.toString();
         return copy.replace(/./g, '').replace('', '********');
       } else {

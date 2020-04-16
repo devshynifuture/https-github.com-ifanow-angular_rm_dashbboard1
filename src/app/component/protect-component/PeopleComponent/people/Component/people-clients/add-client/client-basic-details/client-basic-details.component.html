@@ -198,13 +198,21 @@
                 <div class="col-md-5 p-0">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input #leadSource [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
+                            <!-- <input #leadSource [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
                                 autocomplete="off" class="form-control" formControlName="leadSource" matInput>
                             <mat-hint align="end">{{leadSource.value.length}}/ 50</mat-hint>
+                            <mat-hint>Optional</mat-hint> -->
+                            <mat-select formControlName="leadSource" class="form-control">
+                                <mat-option value="0">Select option</mat-option>
+                                <mat-option value="1">Search engine</mat-option>,
+                                <mat-option value="2">Website</mat-option>
+                                <mat-option value="3">Refrerals from existing clients</mat-option>
+                                <mat-option value="4">Refrerals from existing friends</mat-option>
+                                <mat-option value="5">Refrerals from existing relatives</mat-option>
+                                <mat-option value="6">Linkdin</mat-option>
+                                <mat-option value="7">Others</mat-option>
+                            </mat-select>
                             <mat-hint>Optional</mat-hint>
-                            <!-- <mat-select formControlName="leadSource" class="form-control">
-                <mat-option value="option">Option</mat-option>
-            </mat-select> -->
                         </mat-form-field>
                     </div>
                 </div>
@@ -219,6 +227,8 @@
                         <mat-form-field>
                             <mat-select formControlName="leaadStatus" class="form-control">
                                 <mat-option value="1">Select lead status</mat-option>
+                                <mat-option value="2">New</mat-option>
+                                <mat-option value="3">In progress</mat-option>
                             </mat-select>
                             <mat-hint>Optional</mat-hint>
                         </mat-form-field>
@@ -692,9 +702,19 @@
                 <div class="col-md-5 p-0">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input #leadSource [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
+                            <!-- <input #leadSource [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
                                 autocomplete="off" class="form-control" formControlName="leadSource" matInput>
-                            <mat-hint align="end">{{leadSource.value.length}}/ 50</mat-hint>
+                            <mat-hint align="end">{{leadSource.value.length}}/ 50</mat-hint> -->
+                            <mat-select formControlName="leadSource" class="form-control">
+                                <mat-option value="0">Select option</mat-option>
+                                <mat-option value="1">Search engine</mat-option>,
+                                <mat-option value="2">Website</mat-option>
+                                <mat-option value="3">Refrerals from existing clients</mat-option>
+                                <mat-option value="4">Refrerals from existing friends</mat-option>
+                                <mat-option value="5">Refrerals from existing relatives</mat-option>
+                                <mat-option value="6">Linkdin</mat-option>
+                                <mat-option value="7">Others</mat-option>
+                            </mat-select>
                             <mat-hint>Optional</mat-hint>
                         </mat-form-field>
                     </div>
@@ -710,6 +730,8 @@
                         <mat-form-field>
                             <mat-select formControlName="leaadStatus" class="form-control">
                                 <mat-option value="1">Select lead status</mat-option>
+                                <mat-option value="2">New</mat-option>
+                                <mat-option value="3">In progress</mat-option>
                             </mat-select>
                             <mat-hint>Optional</mat-hint>
                         </mat-form-field>

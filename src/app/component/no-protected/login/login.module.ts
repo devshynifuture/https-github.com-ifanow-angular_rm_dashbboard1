@@ -16,6 +16,7 @@ import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { OtpVerifyComponent } from './otp-verify/otp-verify.component';
 // import { OtpInputComponent } from './otp-input/otp-input.component';
 import { NgOtpInputModule } from 'ng-otp-input';
+import { SignupTeamMemberComponent } from './signup-team-member/signup-team-member.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { NgOtpInputModule } from 'ng-otp-input';
     SetNewPasswordComponent,
     VerifyOtpComponent,
     OtpVerifyComponent,
+    SignupTeamMemberComponent,
     // OtpInputComponent,
   ],
   imports: [

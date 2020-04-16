@@ -391,8 +391,8 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     this.orgSetting.getAppearancePreference(obj).subscribe(
       data => {
         this.appearanceFG.controls.portfolioOpt.setValue(data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation);
-        this.appearanceFG.controls.financialOpt.setValue(data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation);
-        this.appearanceFG.controls.clientOpt.setValue(data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation);
+        this.appearanceFG.controls.financialOpt.setValue(data.find(data => data.appearanceOptionId == 2).advisorOrOrganisation);
+        this.appearanceFG.controls.clientOpt.setValue(data.find(data => data.appearanceOptionId == 3).advisorOrOrganisation);
         this.appearanceUpdateFlag = true;
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
