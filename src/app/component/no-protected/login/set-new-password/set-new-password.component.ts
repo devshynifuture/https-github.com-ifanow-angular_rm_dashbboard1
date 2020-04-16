@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, ValidationErrors, Validators} from '@angular/forms';
-import {ValidatorType} from 'src/app/services/util.service';
-import {LoginService} from '../login.service';
-import {Router} from '@angular/router';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, ValidationErrors, Validators } from '@angular/forms';
+import { ValidatorType } from 'src/app/services/util.service';
+import { LoginService } from '../login.service';
+import { Router } from '@angular/router';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-set-new-password',
@@ -75,7 +75,7 @@ export class SetNewPasswordComponent implements OnInit {
                 this.barButtonOptions.active = false;
                 console.log(data);
               },
-              err => this.eventService.openSnackBar(err, 'Dismiss')
+              err => { console.log(err) }
             );
             // this.authService.setToken(data.token);
             this.loginService.handleUserData(this.authService, this.router, this.userData);
@@ -134,7 +134,7 @@ export class SetNewPasswordComponent implements OnInit {
     console.log(this.newPasswordLength);
     if (password !== '' && confirm_new_password !== '') {
       if (confirm_new_password !== password) {
-        this.setNewPasswordForm.get('confirmPassword').setErrors({mismatch: true});
+        this.setNewPasswordForm.get('confirmPassword').setErrors({ mismatch: true });
       } else {
         this.setNewPasswordForm.get('confirmPassword').setErrors(null);
       }
