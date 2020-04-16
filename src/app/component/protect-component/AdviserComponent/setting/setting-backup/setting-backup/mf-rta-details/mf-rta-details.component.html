@@ -50,13 +50,15 @@
             <ng-container matColumnDef="symbol">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell *matCellDef="let element" class="text-center">
-                    <ng-container>
-                        <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
-                        <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="openInSideBar(1, element, false)">Edit</button>
-                            <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
-                        </mat-menu>
-                    </ng-container>
+                    <div class="bar">
+                        <ng-container *ngIf="!isLoading">
+                            <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="openInSideBar(1, element, false)">Edit</button>
+                                <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
+                            </mat-menu>
+                        </ng-container>
+                    </div>
                 </td>
             </ng-container>
 
@@ -136,13 +138,15 @@
             <ng-container matColumnDef="icons">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td class="text-center" mat-cell *matCellDef="let element">
-                    <ng-container>
-                        <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
-                        <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="openInSideBar(2, element, false)">Edit</button>
-                            <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
-                        </mat-menu>
-                    </ng-container>
+                    <div class="bar">
+                        <ng-container *ngIf="!isLoading">
+                            <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="openInSideBar(2, element, false)">Edit</button>
+                                <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
+                            </mat-menu>
+                        </ng-container>
+                    </div>
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
@@ -208,13 +212,15 @@
             <ng-container matColumnDef="icons">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell class="text-center" *matCellDef="let element">
-                    <ng-container>
-                        <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
-                        <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="openInSideBar(3, element, false)">Edit</button>
-                            <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
-                        </mat-menu>
-                    </ng-container>
+                    <div class="bar">
+                        <ng-container *ngIf="!isLoading">
+                            <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="openInSideBar(3, element, false)">Edit</button>
+                                <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
+                            </mat-menu>
+                        </ng-container>
+                    </div>
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
@@ -288,13 +294,15 @@
             <ng-container matColumnDef="icons">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td valign="top" mat-cell *matCellDef="let element">
-                    <ng-container>
-                        <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
-                        <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="openInSideBar(4, element, false)">Edit</button>
-                            <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
-                        </mat-menu>
-                    </ng-container>
+                    <div class="bar">
+                        <ng-container *ngIf="!isLoading">
+                            <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="openInSideBar(4, element, false)">Edit</button>
+                                <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
+                            </mat-menu>
+                        </ng-container>
+                    </div>
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>

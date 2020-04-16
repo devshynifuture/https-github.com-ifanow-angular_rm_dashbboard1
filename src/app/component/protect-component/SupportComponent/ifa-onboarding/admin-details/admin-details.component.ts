@@ -27,7 +27,7 @@ export class AdminDetailsComponent implements OnInit {
   constructor(
     public subInjectService: SubscriptionInject,
     private fb: FormBuilder,
-    private utilservice: UtilService,
+    public utilservice: UtilService,
     private settingsService: SettingsService,
   ) { }
   displayedColumns: string[] = ['name', 'email', 'mobile', 'role'];
