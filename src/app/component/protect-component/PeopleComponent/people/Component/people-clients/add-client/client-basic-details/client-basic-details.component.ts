@@ -55,7 +55,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   clientRoles: any = [];
   minAge: any;
   advisorData: any;
-
+  maxDate = new Date();
   // advisorId;
 
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,

@@ -551,9 +551,9 @@
                 <div class="col-md-6 p-0">
                     <div class="form-group mb-0">
                         <mat-form-field appearance="standard" floatLabel="never">
-                            <input #cname placeholder="Enter Company name" [inputValidator]="validatorType.TEXT_ONLY"
-                                [maxLength]="50" appInputValueValidation class="form-control" formControlName="comName"
-                                matInput>
+                            <input #cname placeholder="Enter Company name"
+                                [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR" [maxLength]="50"
+                                appInputValueValidation class="form-control" formControlName="comName" matInput>
                             <mat-hint align="end">{{cname.value.length}}/50</mat-hint>
                             <mat-error>This field is required</mat-error>
                         </mat-form-field>
@@ -568,8 +568,8 @@
                 <div class="col-md-3 p-0">
                     <div class="form-group mb-0">
                         <mat-form-field class="ba-date">
-                            <input (click)="picker.open()" [matDatepicker]="picker" class="form-control b-0"
-                                formControlName="dateOfIncorporation" matInput>
+                            <input (click)="picker.open()" [max]="maxDate" [matDatepicker]="picker"
+                                class="form-control b-0" formControlName="dateOfIncorporation" matInput>
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                             <mat-hint>Optional</mat-hint>
@@ -742,7 +742,8 @@
                         <mat-form-field>
                             <mat-select [(ngModel)]="selectedClientOwner" formControlName="leadOwner"
                                 class="form-control">
-                                <mat-option *ngIf="clientOwnerList==undefined" value='1'>{{advisorData.name}}
+                                <mat-option selected>Select option</mat-option>
+                                <mat-option *ngIf="clientOwnerList==undefined" selected>{{advisorData.name}}
                                 </mat-option>
                                 <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
                                     {{singleClient.name}}
@@ -761,7 +762,7 @@
                 <div class="col-md-5 p-0">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <mat-select [(ngModel)]="selectedClientOwner" formControlName="leadOwner"
+                            <mat-select [(ngModel)]="selectedClientOwner" formControlName="clientOwner"
                                 class="form-control">
                                 <mat-option *ngIf="clientOwnerList==undefined" value="1">{{advisorData.name}}
                                 </mat-option>

@@ -347,6 +347,7 @@ export class ValidatorType {
   static TEN_DIGITS = new RegExp(/^\d{10}$/);
   static PAN = new RegExp(/^[a-zA-Z0-9]{10,}$/);
   static ADHAAR = new RegExp(/^[a-zA-Z0-9]{12,}$/);
+  static ALPHA_NUMERIC_WITH_SPEC_CHAR = new RegExp(/^[ A-Za-z0-9_@./#&+-]*$/);
 }
 
 // Escape characters that have a special meaning in Regular Expressions
