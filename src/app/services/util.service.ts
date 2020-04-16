@@ -21,6 +21,8 @@ export class UtilService {
   ) { }
 
   private static decimalPipe = new DecimalPipe('en-US');
+  private counter:number = 0;
+  public isLoading = false;
   advisorId: any;
 
   subscriptionStepData;
@@ -323,6 +325,17 @@ export class UtilService {
         invalidControl.focus();
         break;
       }
+    }
+  }
+
+  loader(increament:number) {
+    if(increament === 0)
+      this.counter = 0;
+    this.counter += increament;
+    if(this.counter == 0) {
+      this.isLoading = false;
+    } else {
+      this.isLoading = true;
     }
   }
 }

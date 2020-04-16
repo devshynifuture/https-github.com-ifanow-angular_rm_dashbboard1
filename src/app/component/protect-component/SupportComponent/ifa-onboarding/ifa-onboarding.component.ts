@@ -63,7 +63,8 @@ export class IfaOnboardingComponent implements OnInit {
               plan: element.plan ? element.plan : ' - ',
               team: element.team_count,
               arn: element.arn_ria_count,
-              menu: ''
+              menu: '',
+              advisorId: element.admin_advisor_id,
             })
           });
           this.dataSource.data = tableArray;
