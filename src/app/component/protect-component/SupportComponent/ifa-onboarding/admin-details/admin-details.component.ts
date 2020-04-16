@@ -164,6 +164,7 @@ export class AdminDetailsComponent implements OnInit {
           this.activityCommentList.forEach(element => {
             element.isEdit = true
           });
+          this.isSuccess = false
         }
       }
       , err => this.eventService.openSnackBar(err, "Dismiss")
