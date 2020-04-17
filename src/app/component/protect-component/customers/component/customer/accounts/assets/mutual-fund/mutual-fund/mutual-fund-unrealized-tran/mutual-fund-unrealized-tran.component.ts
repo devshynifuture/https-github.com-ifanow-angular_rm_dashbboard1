@@ -6,6 +6,7 @@ import {MfServiceService} from '../../mf-service.service';
 import {RightFilterComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
 import {ExcelGenService} from 'src/app/services/excel-gen.service';
 import {TableVirtualScrollDataSource} from 'ng-table-virtual-scroll';
+import { CustomerService } from '../../../../../customer.service';
 
 @Component({
   selector: 'app-mutual-fund-unrealized-tran',
@@ -25,12 +26,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   grandTotal: any = {};
   schemeWiseForFilter: any;
   mutualFundListFilter: any[];
-  rightFilterData : any = { reportType : ''};
+  type : any = { name : ''};
   customDataSource = new TableVirtualScrollDataSource([{},{},{}]);
   @ViewChild('tableEl', {static: false}) tableEl;
+  rightFilterData: any ={reportType :'' };
 
   constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
-              private mfService: MfServiceService, private excel: ExcelGenService) {
+              private mfService: MfServiceService, private excel: ExcelGenService,private custumService:CustomerService) {
   }
 
   @Input() mutualFund;
@@ -60,8 +62,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
     }
     if (changes.mutualFund && !!changes.mutualFund.currentValue) {
       if(this.mutualFund.mutualFundList.length>0){
+        if(this.mutualFund.viewMode=='Unrealized Transactions'){
+          this.getUnrealizedData();
+        }else{
         this.mutualFundList = this.mutualFund.mutualFundList;
         this.asyncFilter(this.mutualFundList);
+        }
       }else{
         this.dataSource.data=[];
         this.customDataSource.data=[];
@@ -69,6 +75,21 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
      
     }
   }
+ 
+  getUnrealizedData(){
+    const obj={
+          mutualFundList:this.mutualFund.mutualFundList
+        }
+         this.custumService.getMfUnrealizedTransactions(obj).subscribe(
+      data => {
+        console.log(data);
+        this.mutualFundList=data;
+        this.asyncFilter(this.mutualFundList);
+
+      }    
+      );
+  }
+
 
   asyncFilter(mutualFund) {
     if (typeof Worker !== 'undefined') {
@@ -118,7 +139,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       componentName: RightFilterComponent
     };
     fragmentData.data = {
-      name: 'UNREALIZED TRANSACTION REPORT',
+      name: (this.mutualFund.viewMode=='Unrealized Transactions') ? 'UNREALIZED TRANSACTION REPORT' : 'ALL TRANSACTION REPORT',
       mfData: this.mutualFund,
       folioWise: this.mutualFund.mutualFundList,
       schemeWise: this.mutualFund.schemeWise,
@@ -131,8 +152,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          if (sideBarData.data) {
+          if (sideBarData.data!='Close') {
+            this.dataSource = new TableVirtualScrollDataSource([{},{},{}]);
+            this.customDataSource = new TableVirtualScrollDataSource([{},{},{}]);
+            this.isLoading=true;
             this.rightFilterData = sideBarData.data;
+            this.type=this.rightFilterData.reportType[0];
             this.asyncFilter(this.rightFilterData.mutualFundList);
             // this.dataSource.data = this.getCategory(this.rightFilterData.mutualFundList,
             // this.rightFilterData.reportType, this.mfService);
