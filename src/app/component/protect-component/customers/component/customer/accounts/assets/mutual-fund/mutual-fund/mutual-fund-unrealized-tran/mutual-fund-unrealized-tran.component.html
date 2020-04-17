@@ -45,7 +45,7 @@
                    [appSkeletonLoading]="isLoading">
               <ng-container matColumnDef="categoryName" sticky>
                 <th class="br" mat-sort-header="categoryName" mat-header-cell *matHeaderCellDef>
-                  {{(type.name=='Sub Category wise' || type.name=='')?'Sub category name':(type.name=='Category wise')?'Category name':(type.name=='Investor wise')?'Family member name':'Sub Category wise'}}
+                  {{(type.name=='Sub Category wise' || type.name=='')?'Sub category name':(type.name=='Category wise')?'Category name':(type.name=='Investor wise')?'Family member name': (type.name=='Scheme wise') ? 'Scheme name' : 'Sub Category wise'}}
                 </th>
                 <td class="br" mat-cell *matCellDef="let element">
                   <div class="bar">{{element.categoryName}}</div>
@@ -124,10 +124,11 @@
                   Absolute Return%
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.absReturn)?(element.absReturn | number:'1.2-2'):0)}}</span></div>
+                  <div class="bar"><span>{{isLoading ? '':((element.absReturn)?(element.absReturn | number:'1.2-2'):0)}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber [value]="grandTotal.absReturn" class="br f-600 text-right" mat-footer-cell>
-<!--                  {{ grandTotal.totalGain}}-->
+                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
+                                <div class="bar">{{(grandTotal.absReturn) ? (grandTotal.absReturn | number:'1.2-2') : 0}}
+                                </div>
                 </td>
 
               </ng-container>
@@ -137,12 +138,12 @@
                   Xirr%
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.xirr)?(element.xirr | number:'1.2-2'):0)}}</span></div>
+                  <div class="bar"><span>{{isLoading ? '':((element.xirr || element.xirr == 0)?(element.xirr | number:'1.2-2'):0)}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber [value]="grandTotal.xirr" class="br f-600 text-right" mat-footer-cell>
-<!--                  {{ grandTotal.xirr }}-->
+                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
+                                <div class="bar">{{(grandTotal.xirr) ? (grandTotal.xirr | number:'1.2-2') : 0}}
+                                </div>
                 </td>
-
               </ng-container>
 
               <ng-container matColumnDef="allocation" sticky>
@@ -150,12 +151,12 @@
                   Allocation%
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.allocationPer)?(element.allocationPer | number:'1.2-2'):0)}}</span></div>
+                  <div class="bar"><span>{{isLoading ? '':((element.allocationPer)?(element.allocationPer | number:'1.2-2'):0)}}</span></div>
                 </td>
-                <td *matFooterCellDef appFormatNumber [value]="grandTotal.allocationPer" class="br f-600 text-right" mat-footer-cell>
-<!--                  {{ grandTotal.allocationPer }}-->
+                <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
+                                <div class="bar">{{(grandTotal.allocationPer) ? (grandTotal.allocationPer | number:'1.2-2') : 0}}
+                                </div>
                 </td>
-
               </ng-container>
               <tr mat-header-row *matHeaderRowDef="displayedColumns2; sticky: true"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
@@ -233,8 +234,8 @@
                   Transaction NAV
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber *ngIf="element.amount">{{isLoading ? '':((element.transactionNav)?element.transactionNav:'0')}}</span>
-                    <span appFormatNumber class="f-700" *ngIf="element.totalNav">{{isLoading ? '':((element.totalNav)?element.totalNav:0)}}</span>
+                  <div class="bar"><span appFormatNumber *ngIf="!element.totalNav" >{{isLoading ? '':((element.transactionNav) ? element.transactionNav : '0')}}</span>
+                    <span appFormatNumber class="f-700" *ngIf="element.totalNav || element.totalNav == 0">{{isLoading ? '' : ((element.totalNav) ? element.totalNav : 0)}}</span>
                   </div>
                 </td>
                 <!-- <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalNav" class="br f-600 text-right" mat-footer-cell> -->
@@ -286,7 +287,7 @@
                   Dividend reinvestment
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
-                  <div class="bar"><span appFormatNumber>{{element.dividendReinvest}}</span></div>
+                  <div class="bar"><span appFormatNumber >{{isLoading ? '' :((element.dividendReinvest) ? element.dividendReinvest : 0)}}</span></div>
                 </td>
                 <!-- <td *matFooterCellDef appFormatNumber [value]="grandTotal.dividendReinvest" class="br f-600 text-right" mat-footer-cell> -->
 <!--                  {{ grandTotal.dividendReinvest }}-->

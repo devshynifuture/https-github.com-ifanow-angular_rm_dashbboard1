@@ -41,10 +41,6 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
     this.isLoading=true;
     console.log('this.mutualFund == ', this.mutualFund);
     if (this.mutualFund) {
-    if(this.mutualFund.viewMode=='UNREALIZED TRANSACTION REPORT')
-    {
-        
-    }
       // this.getSubCategoryWise(this.mutualFund);
       // this.getSchemeWise();
       // this.mfSchemes();
@@ -68,7 +64,6 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       if(this.mutualFund.mutualFundList.length>0){
         if(this.mutualFund.viewMode=='Unrealized Transactions'){
           this.getUnrealizedData();
-           this.asyncFilter(this.mutualFundList);
         }else{
         this.mutualFundList = this.mutualFund.mutualFundList;
         this.asyncFilter(this.mutualFundList);
@@ -89,6 +84,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       data => {
         console.log(data);
         this.mutualFundList=data;
+        this.asyncFilter(this.mutualFundList);
+
       }    
       );
   }
@@ -142,7 +139,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       componentName: RightFilterComponent
     };
     fragmentData.data = {
-      name: 'UNREALIZED TRANSACTION REPORT',
+      name: (this.mutualFund.viewMode=='Unrealized Transactions') ? 'UNREALIZED TRANSACTION REPORT' : 'ALL TRANSACTION REPORT',
       mfData: this.mutualFund,
       folioWise: this.mutualFund.mutualFundList,
       schemeWise: this.mutualFund.schemeWise,
@@ -155,7 +152,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          if (sideBarData.data) {
+          if (sideBarData.data!='Close') {
+            this.dataSource = new TableVirtualScrollDataSource([{},{},{}]);
+            this.customDataSource = new TableVirtualScrollDataSource([{},{},{}]);
+            this.isLoading=true;
             this.rightFilterData = sideBarData.data;
             this.type=this.rightFilterData.reportType[0];
             this.asyncFilter(this.rightFilterData.mutualFundList);

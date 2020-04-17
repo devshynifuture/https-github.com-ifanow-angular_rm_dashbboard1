@@ -195,7 +195,9 @@ export class MutualFundSummaryComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          if (sideBarData.data) {
+          if (sideBarData.data != 'Close') {
+            this.customDataSource = new MatTableDataSource([{}, {}, {}]);
+            this.isLoading = true;
             this.rightFilterData = sideBarData.data;
             this.asyncFilter(this.rightFilterData.mutualFundList);
             // this.getListForPdf(this.rightFilterData.transactionView);

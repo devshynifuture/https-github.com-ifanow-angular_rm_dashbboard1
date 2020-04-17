@@ -17,8 +17,8 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div>
-        <mat-checkbox (change)="selectAll($event,familyMember,'countFamily')" name="selectAll">select/unselect All
-        </mat-checkbox>
+        <!-- <mat-checkbox (change)="selectAll($event,familyMember,'countFamily')" name="selectAll">select/unselect All
+        </mat-checkbox> -->
         <mat-list-item role="listitem" *ngFor="let item of familyMember">
           <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterFamily()">{{item.name}}</mat-checkbox>
         </mat-list-item>
@@ -31,7 +31,7 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div>
-        <mat-checkbox (change)="selectAll($event,amc,'countAmc')" name="selectAll">select/unselect All</mat-checkbox>
+        <!-- <mat-checkbox (change)="selectAll($event,amc,'countAmc')" name="selectAll">select/unselect All</mat-checkbox> -->
         <mat-list-item role="listitem" *ngFor="let item of amc">
           <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterAmc()">{{item.amc_name}}</mat-checkbox>
         </mat-list-item>
@@ -46,8 +46,8 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div>
-        <mat-checkbox (change)="selectAll($event,scheme,'countScheme')" name="selectAll">select/unselect All
-        </mat-checkbox>
+        <!-- <mat-checkbox (change)="selectAll($event,scheme,'countScheme')" name="selectAll">select/unselect All
+        </mat-checkbox> -->
         <mat-list-item role="listitem" *ngFor="let item of scheme">
           <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterScheme()" class="wb">{{item.schemeName}}
           </mat-checkbox>
@@ -63,8 +63,8 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div>
-        <mat-checkbox (change)="selectAll($event,folio,'countFolio')" name="selectAll">select/unselect All
-        </mat-checkbox>
+        <!-- <mat-checkbox (change)="selectAll($event,folio,'countFolio')" name="selectAll">select/unselect All
+        </mat-checkbox> -->
         <mat-list-item role="listitem" *ngFor="let item of folio">
           <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterFolio()">{{item.folioNumber}}
           </mat-checkbox>
@@ -80,9 +80,9 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div>
-        <mat-checkbox (change)="selectAll($event,transactionView,'countTranView')" name="selectAll">select/unselect
+        <!-- <mat-checkbox (change)="selectAll($event,transactionView,'countTranView')" name="selectAll">select/unselect
           All
-        </mat-checkbox>
+        </mat-checkbox> -->
         <mat-list-item role="listitem" *ngFor="let item of transactionView let i = index;">
           <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect(item,i)">{{item.displayName}}</mat-checkbox>
         </mat-list-item>
@@ -92,8 +92,7 @@
     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <h5 class="m-0">Report Type <span class="text-right f-14 pl-12">{{countReport}} of {{reportType.length}}
-            selected</span></h5>
+          <h5 class="m-0">Report Type <span class="text-right f-14 pl-12"></span></h5>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div>
@@ -111,8 +110,8 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div>
-        <mat-checkbox (change)="selectAll($event,category,'countCategory')" name="selectAll">select/unselect All
-        </mat-checkbox>
+        <!-- <mat-checkbox (change)="selectAll($event,category,'countCategory')" name="selectAll">select/unselect All
+        </mat-checkbox> -->
         <mat-list-item role="listitem" *ngFor="let item of category">
           <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterCategory(this.category)">{{item.category}}
           </mat-checkbox>
@@ -264,7 +263,9 @@
       <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('Close')">Cancel</h5>
     </div>
     <div class="col-md-8 right text-right">
-      <button mat-button class="btn-bottom br-0 text-inherit" (click)="generateReport()">GENERATE REPORT</button>
+      <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="generateReport()">GENERATE REPORT</button> -->
+      <app-progress-button class="mb-0 pt-8 text-white c-p" (click)="Close('Close')" [options]="barButtonOptions" >
+      </app-progress-button>
     </div>
   </div>
 </div>
