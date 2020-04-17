@@ -109,4 +109,8 @@ export class SupportService {
     return this.subject.asObservable();
   }
 
+  getBulkFilesData(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BULK_FILE_ORDER_LIST, data);
+  }
+
 }
