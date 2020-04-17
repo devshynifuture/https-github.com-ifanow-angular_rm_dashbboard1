@@ -513,12 +513,13 @@ export const appConfig = {
   UPDATE_IFA_ONBOARDING_OVERVIEW:'rmdashboard/ifa/onboard/overview/update',
   GET_IFA_ONBOARDING_ACTIVITY:'rmdashboard/dashboard/ifa-onboard/advisor-id/get',
   EDIT_ACTIVITY:'rmdashboard/dashboard/ifa-onboard/advisor-id/task/put',
-  ACTIVITY_ADD_COMMENT:'',
+  ACTIVITY_ADD_COMMENT:'rmdashboard/dashboard/ifa-onboard/activity/chat/post',
   ACTIVITY_UPDATE_COMMENT:'rmdashboard/dashboard/ifa-onboard/activity/chat/edit',
   ACTIVITY_DELETECOMMENT:'rmdashboard/dashboard/ifa-onboard/activity/chat/delete',
   GET_STAGE_COMMENT:'rmdashboard/dashboard/ifa-onboard/stages/chat/get',
   EDIT_STAGE_COMMENT:'rmdashboard/dashboard/ifa-onboard/stages/chat/edit',
   DELETE_STAGE_COMMENT:'rmdashboard/dashboard/ifa-onboard/stages/chat/delete',
+  ADD_STAGE_COMMENT:'rmdashboard/dashboard/ifa-onboard/stages/chat/post',
 
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',

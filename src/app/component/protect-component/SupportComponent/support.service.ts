@@ -86,6 +86,9 @@ export class SupportService {
   editStageComment(data){
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_STAGE_COMMENT , data);
   }
+  addStageComment(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_STAGE_COMMENT , data);
+  }
   // observable data sending
 
   sendDataThroughObs(value) {
