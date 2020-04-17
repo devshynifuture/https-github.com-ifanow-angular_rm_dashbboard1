@@ -499,6 +499,7 @@ export const appConfig = {
   BACKOFFICE_SIP_STP: 'backoffice/file-upload/uploaded/sip/list/get',
   BACKOFFICE_FOLIO: 'backoffice/file-upload/uploaded/folio-master/list/get',
   BACKOFFICE_SUCCESS_FILE_UPLOAD: 'backoffice/file-upload/success',
+  GET_BACKOFFICE_ADVISOR_SEARCH_NAME: 'backoffice/advisor/search/name',
 
   GET_DAILY_SERVICES_STATUS_REPORT: 'rmdashboard/dashboard/daily/services/status/get',
   GET_DAILY_FILES: 'rmdashboard/dashboard/daily-file/get',
@@ -508,6 +509,9 @@ export const appConfig = {
   GET_ONBOARDING_TASK_GLOBAL: 'rmdashboard/ifa/onboarding/task/global/get',
   POST_HISTORICAL_FILE_ORDER: 'fileorder/historical/order',
   GET_FILE_TYPE_ORDER: 'fileorder/file-type/list/get',
+  GET_BULK_FILE_ORDER_LIST: 'fileorder/bulk/list/get',
+
+  GET_FILE_ORDER_HISTORICAL_LIST_DATA: "fileorder/historical/advisor/list/get",
 
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',

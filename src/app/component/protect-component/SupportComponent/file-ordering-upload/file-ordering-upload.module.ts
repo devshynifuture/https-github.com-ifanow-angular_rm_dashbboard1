@@ -6,6 +6,7 @@ import { FileOrderingHistoricalComponent } from './file-ordering-historical/file
 import { FileOrderingBulkComponent } from './file-ordering-bulk/file-ordering-bulk.component';
 import { FileOrderingUploadComponent } from './file-ordering-upload.component';
 import { MaterialModule } from 'src/app/material/material';
+import { CustomDirectiveModule } from '../../../../common/directives/common-directive.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { MaterialModule } from 'src/app/material/material';
   imports: [
     CommonModule,
     FileOrderingUploadRoutingModule,
-    MaterialModule
+    MaterialModule,
+    CustomDirectiveModule
   ]
 })
 export class FileOrderingUploadModule { }
