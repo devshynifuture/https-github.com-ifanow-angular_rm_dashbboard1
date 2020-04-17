@@ -140,7 +140,7 @@
 
                         <div *ngIf="getOtpFlag==false" class="row">
                             <div class="col-md-12 mobileFlex p-0">
-                                <div (click)="getOtp()" class="otpBox c-p">
+                                <div (click)="getOtp(false)" class="otpBox c-p">
                                     <span class="mt-8">* * * *</span>
                                     <span class="mt-2">GET OTP</span>
                                 </div>
@@ -181,7 +181,7 @@
                                 </div>
                                 <!-- <h5 class="mb-0">Didn’t receive? <span (click)="getOtp()" class="lightRead c-p"> Resend
                                     </span></h5> -->
-                                <h5 class="mb-24">Didn’t receive? <span (click)="getOtp()"
+                                <h5 class="mb-24">Didn’t receive? <span (click)="getOtp(true)"
                                         [ngClass]="{'disbleResend': showTimeRemaing>0,'lightRead':showTimeRemaing==0}"
                                         class="c-p">Resend</span>
                                     <span *ngIf="showTimeRemaing>0">0.<span

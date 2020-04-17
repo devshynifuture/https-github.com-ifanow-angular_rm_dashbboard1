@@ -99,6 +99,7 @@ export class LoginComponent implements OnInit {
 
   isLoading = false;
   showTimeRemaing: number;
+  resendOtpFlag: any;
 
   constructor(
     private formBuilder: FormBuilder, private eventService: EventService,
@@ -118,7 +119,8 @@ export class LoginComponent implements OnInit {
     this.btnProgressData = 'state1';
   }
 
-  getOtp() {
+  getOtp(resendFlag) {
+    this.resendOtpFlag = resendFlag;
     if (this.userName.invalid) {
       this.userName.markAsTouched();
       return;
@@ -132,6 +134,9 @@ export class LoginComponent implements OnInit {
       this.loginService.getUsernameData(obj).subscribe(
         data => {
           if (data) {
+            if (this.resendOtpFlag) {
+              this.eventService.openSnackBar("OTP sent successfully", "Dismiss");
+            }
             this.userName.disable();
             console.log(data);
             this.userData = data;
@@ -152,7 +157,7 @@ export class LoginComponent implements OnInit {
   }
 
   getOtpOnEnter(event) {
-    (event.keyCode == 13) ? this.getOtp() : '';
+    (event.keyCode == 13) ? this.getOtp(false) : '';
   }
 
   getOtpData(outputData) {
@@ -239,12 +244,13 @@ export class LoginComponent implements OnInit {
           },
           err => {
             console.error(err);
-            this.eventService.openSnackBar(err, 'Dismiss');
+            // this.eventService.openSnackBar(err, 'Dismiss');
+            (this.resendOtpFlag) ? this.eventService.openSnackBar('OTP has expired', 'Dismiss') : this.eventService.openSnackBar('Otp is incorrect', 'Dismiss');
             this.barButtonOptions.active = false;
           }
         );
       } else {
-        this.eventService.openSnackBar('Wrong OTP');
+        (this.resendOtpFlag) ? this.eventService.openSnackBar('OTP has expired', 'Dismiss') : this.eventService.openSnackBar('Otp is incorrect', 'Dismiss');
         this.barButtonOptions.active = false;
       }
     } else {

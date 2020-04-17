@@ -134,7 +134,8 @@ export class ForgotPasswordComponent implements OnInit {
       }
       ,
       err => {
-        this.eventService.openSnackBar(err, 'Dismiss');
+        // this.eventService.openSnackBar(err, 'Dismiss');
+        this.userName.setErrors({ incorrect: true });
         this.barButtonOptions.active = false;
       }
     );

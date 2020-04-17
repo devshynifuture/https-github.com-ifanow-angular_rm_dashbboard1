@@ -40,9 +40,7 @@ export class SignupTeamMemberComponent implements OnInit {
 
   ngOnInit() {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
-      if (queryParamMap.has('advisorId')) {
-        // this.clientSignUp = true;
-      }
+
     });
     this.signUpForm = this.fb.group({
       fullName: [, [Validators.required]],
