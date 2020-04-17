@@ -4,7 +4,7 @@
     </div>
 </div>
 
-<div class="row pb-44" [formGroup]="keyParameter"  *ngIf="allParameters">
+<div class="row pb-44" [formGroup]="keyParameter" *ngIf="!hasError">
     <div class="col-md-4 pl-0">
         <h5 class="m-0 pb-12">Saving type</h5>
         <div class="form-control w-80" appSkeletonLoading [appSkeletonLoading]="isLoading">
@@ -89,7 +89,7 @@
         </p>
     </div>
 </div>
-<div *ngIf="allParameters == undefined" class="d-flex flex-column align-items-center">
+<div *ngIf="hasError" class="d-flex flex-column align-items-center">
     <img class="width300" src="assets/images/svg/noDataFound.svg">
-    <h4 class="text-center pt-12">No key parameters found</h4>
+    <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
 </div>

@@ -34,40 +34,60 @@ export class MfRtaDetailsComponent implements OnInit {
   spans: any[] = [];
   isLoading = false;
   @ViewChild('visibilityRef', { static: true }) visibilityRef: TemplateRef<any>;
+  hasError: boolean = false;
 
   constructor(
     private eventService: EventService,
     private subInjectService: SubscriptionInject,
     private settingsService: SettingsService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public utilService: UtilService
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
 
   ngOnInit() {
+    this.utilService.loader(0);
     this.initializeData();
   }
 
   initializeData() {
+    this.utilService.loader(1);
     this.settingsService.getArnGlobalData().subscribe((res) => {
       this.globalData = res;
+      this.utilService.loader(-1);
+    }, err=> {
+      this.hasError=true;
+      this.eventService.openSnackBar(err, "Dismiss");
+      this.utilService.loader(-1);
     });
     this.getArnDetails();
     this.loadRTAList();
   }
 
   getArnDetails() {
+    this.utilService.loader(1);
     this.settingsService.getArnlist({ advisorId: this.advisorId }).subscribe((data) => {
       this.arnList = data || [];
+      this.utilService.loader(-1);
+    }, err=> {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss");
+      this.utilService.loader(-1);
     });
   }
 
   loadRTAList() {
+    this.utilService.loader(1);
     const jsonData = { advisorId: this.advisorId };
-    this.isLoading = true;
     this.settingsService.getMFRTAList(jsonData).subscribe((res) => {
       this.mfRTAlist = res || [];
       this.createDataSource();
+      this.utilService.loader(-1);
+    }, err=> {
+      this.hasError = true;
+      this.utilService.loader(-1);
+      this.eventService.openSnackBar(err, "Dismiss");
     });
   }
 
@@ -175,12 +195,5 @@ export class MfRtaDetailsComponent implements OnInit {
         return data;
       }
     }
-  }
-
-  changeToggle(elem) {
-    if (elem.toggle)
-      elem.toggle = false
-    else
-      elem.toggle = true
   }
 }

@@ -30,7 +30,7 @@ export class RiskProfileComponent implements OnInit {
   name = 'Angular';
   showLoader: boolean;
   isLoading = false
-
+  checkFamilyMem;
   onClickMe(referenceKeyName) {
     alert(referenceKeyName.id);
   }
@@ -237,8 +237,19 @@ export class RiskProfileComponent implements OnInit {
     }));
   }
   checkState(item, i) {
-    this.statusArray.push(item)
-    this.progressBar = this.statusArray.length * 7
+    if(this.statusArray.length > 0){
+      this.statusArray.forEach(element => {
+        this.checkFamilyMem = item.question.includes(element.question);
+        console.log(this.checkFamilyMem)
+      });
+      if( this.checkFamilyMem == false){
+        this.statusArray.push(item)
+        this.progressBar = this.statusArray.length * 7
+      }
+    }else{
+      this.statusArray.push(item)
+      this.progressBar = this.statusArray.length * 7
+    }
   }
   getdataForm(data) {
     if (data == undefined) {

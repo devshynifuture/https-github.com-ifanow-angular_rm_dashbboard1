@@ -110,6 +110,7 @@
 
                                 </div>
 
+                                <div *ngIf="emailList.length > 0"></div>
                                 <table mat-table [dataSource]="emailList" id="table-low" class="skeletonAnimation mt-8" appSkeletonLoading [appSkeletonLoading]="isLoading">
                                     <ng-container matColumnDef="position">
                                         <th mat-header-cell *matHeaderCellDef class="br"> Email </th>
@@ -132,15 +133,18 @@
                                     <ng-container matColumnDef="weight">
                                         <th mat-header-cell *matHeaderCellDef> </th>
                                         <td mat-cell class="text-center" *matCellDef="let element">
-                                            <img class="c-p" [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg">
-                                            <mat-menu #menu="matMenu">
-                                                <!-- <button mat-menu-item (click)="verifyEmail(element)">
-                                                    <span>Edit</span>
-                                                </button> -->
-                                                <button mat-menu-item (click)="deleteEmailModal('EMAIL',element)">
-                                                    <span>Delete</span>
-                                                </button>
-                                            </mat-menu>
+                                            <div class="bar"></div>
+                                            <div *ngIf="!isLoading">
+                                                <img class="c-p" [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg">
+                                                <mat-menu #menu="matMenu">
+                                                    <!-- <button mat-menu-item (click)="verifyEmail(element)">
+                                                        <span>Edit</span>
+                                                    </button> -->
+                                                    <button mat-menu-item (click)="deleteEmailModal('EMAIL',element)">
+                                                        <span>Delete</span>
+                                                    </button>
+                                                </mat-menu>
+                                            </div>
                                         </td>
                                     </ng-container>
 
@@ -150,16 +154,16 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="emailList == undefined && !isLoading" class="d-flex flex-column align-items-center">
+                    <div *ngIf="emailList.length == 0 && !isLoading" class="d-flex flex-column align-items-center">
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
-                        <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
+                        <h4 class="text-center pt-12">No data found</h4>
                     </div>
                 </div>
                 <div appSkeletonLoading [appSkeletonLoading]="isLoading" *ngSwitchCase="'tab5'">
                     <div class="p-20">
                         <h5 class="m-0 pb-8 text-black">Email templates</h5>
                         <div class="row">
-                            <div class="col-md-11 pl-0">
+                            <div class="col-md-11 pl-0" *ngIf="emailTemplateList.length > 0">
                                 <table mat-table [dataSource]="emailTemplateList" class="mt-8" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                                     <ng-container matColumnDef="position">
                                         <th mat-header-cell class="br w-23" *matHeaderCellDef> Type </th>
@@ -189,15 +193,18 @@
                                     <ng-container matColumnDef="symbol">
                                         <th mat-header-cell class="br w-3" *matHeaderCellDef> </th>
                                         <td mat-cell class="br w-3" *matCellDef="let element">
-                                            <img class="c-p" [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg">
-                                            <mat-menu #menu="matMenu">
-                                                <button mat-menu-item (click)="OpenEmail('emailTemp',element)">
-                                                    <span>Edit</span>
-                                                </button>
-                                                <!-- <button mat-menu-item (click)="deleteModal('template',element)">
-                                                    <span>Delete</span>
-                                                </button> -->
-                                            </mat-menu>
+                                            <div class="bar"></div>
+                                            <div class="!isLoading">
+                                                <img class="c-p" [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg">
+                                                <mat-menu #menu="matMenu">
+                                                    <button mat-menu-item (click)="OpenEmail('emailTemp',element)">
+                                                        <span>Edit</span>
+                                                    </button>
+                                                    <!-- <button mat-menu-item (click)="deleteModal('template',element)">
+                                                        <span>Delete</span>
+                                                    </button> -->
+                                                </mat-menu>
+                                            </div>
                                         </td>
                                     </ng-container>
 
@@ -209,9 +216,9 @@
 
 
                     </div>
-                    <div *ngIf="emailTemplateList == undefined && !isLoading" class="d-flex flex-column align-items-center">
+                    <div *ngIf="emailTemplateList.length == 0 && !isLoading" class="d-flex flex-column align-items-center">
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
-                        <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
+                        <h4 class="text-center pt-12">No data found.</h4>
                     </div>
                 </div>
                 <div *ngSwitchCase="'tab6'">

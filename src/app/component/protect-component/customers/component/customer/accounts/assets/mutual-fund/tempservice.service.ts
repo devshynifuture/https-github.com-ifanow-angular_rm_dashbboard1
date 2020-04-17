@@ -27,7 +27,7 @@ export class TempserviceService {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ?
       reportType = 'subCategoryName' : (type[0].name == 'Category wise') ?
-      reportType = 'categoryName' : reportType = 'name';
+      reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : reportType = 'name';
     let catObj = {};
     const newArray = [];
 
@@ -52,7 +52,7 @@ export class TempserviceService {
   getSubCategoryArrayForTransaction(mutualFundList, type) {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
-      (type[0].name == 'Category wise') ? reportType = 'categoryName' : reportType = 'name';
+      (type[0].name == 'Category wise') ? reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : reportType = 'name';
     // const dataArray = [];
     const filteredData = [];
     let catObj;
@@ -62,8 +62,11 @@ export class TempserviceService {
       // this.initializeValues(); // for initializing total values object
       let totalObj: any = {};
 
-      filteredData.push({groupName: key});
       catObj[key].forEach((singleData) => {
+        if(singleData.mutualFundTransactions.length>0){
+          if(reportType != 'schemeName'){
+            filteredData.push({groupName: key});
+          }
         const obj = {
           schemeName: singleData.schemeName,
           nav: singleData.nav
@@ -80,6 +83,7 @@ export class TempserviceService {
         });
         totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData,false), totalObj, {total: true});
         filteredData.push(totalObj);
+        }
       });
     });
     // console.log(customDataSource)
