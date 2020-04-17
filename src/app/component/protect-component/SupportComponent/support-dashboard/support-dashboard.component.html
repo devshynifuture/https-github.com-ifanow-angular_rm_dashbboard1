@@ -49,8 +49,8 @@
         </div>
 
     </div>
-    <div class="col-md-10 pl-0 b-l ">
-        <div class="row">
+    <div class="col-md-10 pl-0 b-l">
+        <div class="row" [formGroup]="dashFG">
             <div class="col-md-9 p-0 br">
                 <div class="row b-b p-12">
                     <div class="col-md-9 pl-10 d-flex align-items-center">
@@ -171,133 +171,45 @@
                                         <h3 class="f-16 roboto">Bulk files </h3>
                                     </div>
                                     <div class="col-md-1 p-0">
-                                        <i class="material-icons">
+                                        <i class="material-icons" (click)="loadBulkFilesData()">
                                             refresh
                                         </i>
                                     </div>
                                     <div class="col-md-5 pl-10 paddRight10">
                                         <mat-form-field>
-                                            <mat-select class="form-control">
-                                                <mat-option>
-                                                    All files
+                                            <mat-select class="form-control" formControlName="bulkOptRtId">
+                                                <mat-option *ngFor="let fileFilter of dropDownData" [value]="fileFilter.id">
+                                                    {{fileFilter.name}}
                                                 </mat-option>
                                             </mat-select>
                                         </mat-form-field>
                                     </div>
                                 </div>
-
-                                <div class="pl-10 pb-10 paddRight10">
+                                <div *ngFor="let singleFile of bulkData" class="pl-10 pb-10 paddRight10">
                                     <div class="row">
                                         <div class="col-md-12 pb-8 p-0 f-14">
-                                            C: Transactions #136 - 21/01 11:30
+                                            {{getRTCode(singleFile.rtId)}}: {{singleFile.description}} - {{singleFile.startedOn | date:'dd/MM h:mm '}}
                                         </div>
                                     </div>
                                     <div class="row b-b">
                                         <div class="col-md-3 pl-0">
                                             <p class="f-12 text-primitive mb-5">Total</p>
-                                            <h3 class="mb-8 text-primary">592</h3>
+                                            <h3 class="mb-8 text-primary">{{singleFile.totalFiles}}</h3>
                                         </div>
 
                                         <div class="col-md-3 pl-10">
                                             <p class="f-12 text-primitive mb-5">Ordered</p>
-                                            <h3 class="mb-8 text-primary">240</h3>
+                                            <h3 class="mb-8 text-primary">{{singleFile.ordered}}</h3>
                                         </div>
 
                                         <div class="col-md-3 pl-10">
                                             <p class="f-12 text-primitive mb-5">Failed</p>
-                                            <h3 class="mb-8 orengeColor">3</h3>
+                                            <h3 class="mb-8 orengeColor">{{singleFile.failed}}</h3>
                                         </div>
 
                                         <div class="col-md-3 pl-0">
                                             <p class="f-12 text-primitive mb-5">Uploaded</p>
-                                            <h3 class="mb-8 greenColor">311</h3>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="pl-10 pb-10 paddRight10">
-                                    <div class="row">
-                                        <div class="col-md-12 pb-8 p-0 f-14">
-                                            C: Transactions #136 - 21/01 11:30
-                                        </div>
-                                    </div>
-                                    <div class="row b-b">
-                                        <div class="col-md-3 pl-0">
-                                            <p class="f-12 text-primitive mb-5">Total</p>
-                                            <h3 class="mb-8 text-primary">592</h3>
-                                        </div>
-
-                                        <div class="col-md-3 pl-10">
-                                            <p class="f-12 text-primitive mb-5">Ordered</p>
-                                            <h3 class="mb-8 text-primary">240</h3>
-                                        </div>
-
-                                        <div class="col-md-3 pl-10">
-                                            <p class="f-12 text-primitive mb-5">Failed</p>
-                                            <h3 class="mb-8 orengeColor">3</h3>
-                                        </div>
-
-                                        <div class="col-md-3 pl-0">
-                                            <p class="f-12 text-primitive mb-5">Uploaded</p>
-                                            <h3 class="mb-8 greenColor">311</h3>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="pl-10 pb-10 paddRight10">
-                                    <div class="row">
-                                        <div class="col-md-12 pb-8 p-0 f-14">
-                                            C: Transactions #136 - 21/01 11:30
-                                        </div>
-                                    </div>
-                                    <div class="row b-b">
-                                        <div class="col-md-3 pl-0">
-                                            <p class="f-12 text-primitive mb-5">Total</p>
-                                            <h3 class="mb-8 text-primary">592</h3>
-                                        </div>
-
-                                        <div class="col-md-3 pl-10">
-                                            <p class="f-12 text-primitive mb-5">Ordered</p>
-                                            <h3 class="mb-8 text-primary">240</h3>
-                                        </div>
-
-                                        <div class="col-md-3 pl-10">
-                                            <p class="f-12 text-primitive mb-5">Failed</p>
-                                            <h3 class="mb-8 orengeColor">3</h3>
-                                        </div>
-
-                                        <div class="col-md-3 pl-0">
-                                            <p class="f-12 text-primitive mb-5">Uploaded</p>
-                                            <h3 class="mb-8 greenColor">311</h3>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="pl-10 paddRight10">
-                                    <div class="row">
-                                        <div class="col-md-12 pb-8 p-0 f-14">
-                                            C: Transactions #136 - 21/01 11:30
-                                        </div>
-                                    </div>
-                                    <div class="row ">
-                                        <div class="col-md-3 pl-0">
-                                            <p class="f-12 text-primitive mb-5">Total</p>
-                                            <h3 class="mb-8 text-primary">592</h3>
-                                        </div>
-
-                                        <div class="col-md-3 pl-10">
-                                            <p class="f-12 text-primitive mb-5">Ordered</p>
-                                            <h3 class="mb-8 text-primary">240</h3>
-                                        </div>
-
-                                        <div class="col-md-3 pl-10">
-                                            <p class="f-12 text-primitive mb-5">Failed</p>
-                                            <h3 class="mb-8 orengeColor">3</h3>
-                                        </div>
-
-                                        <div class="col-md-3 pl-0">
-                                            <p class="f-12 text-primitive mb-5">Uploaded</p>
-                                            <h3 class="mb-8 greenColor">311</h3>
+                                            <h3 class="mb-8 greenColor">{{singleFile.uploaded}}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -318,18 +230,10 @@
                                     </div>
                                     <div class="col-md-5 pl-10 paddRight10">
                                         <mat-form-field>
-                                            <mat-select [(ngModel)]="historicalFileValue"
-                                                (selectionChange)="filterHistoricalFileData($event)"
-                                                class="form-control">
-                                                <mat-option value="0">All files</mat-option>
-                                                <mat-option value="1">KARVY</mat-option>
-                                                <mat-option value="2">CAMS</mat-option>
-                                                <mat-option value="3">FRANKLIN_TEMPLETON</mat-option>
-                                                <mat-option value="4">SUNDARAM</mat-option>
-                                                <mat-option value="5">PRUDENT</mat-option>
-                                                <mat-option value="8">IFANOW</mat-option>
-                                                <mat-option value="10">NJ</mat-option>
-                                                <mat-option value="12">IFAST</mat-option>
+                                            <mat-select formControlName="historicalFileOptId" class="form-control">
+                                                <mat-option *ngFor="let fileFilter of dropDownData" [value]="fileFilter.id">
+                                                    {{fileFilter.name}}
+                                                </mat-option>
                                             </mat-select>
                                         </mat-form-field>
                                     </div>

@@ -112,8 +112,8 @@ export class OrgProfileComponent implements OnInit {
       address: [(!data) ? '' : data.billerAddress, [Validators.required]],
       gstTreatment:  ['', [Validators.required]],
       gstNumber: [(!data) ? '' : data.gstin],
-      city: [(!data) ? '' :data.city, [Validators.required, Validators.maxLength(30), Validators.pattern(ValidatorType.TEXT_ONLY)]],
-      state: [(!data) ? '' :data.state, [Validators.required, Validators.maxLength(30), Validators.pattern(ValidatorType.TEXT_ONLY)]],
+      city: [(!data) ? '' :data.city, [Validators.required, Validators.pattern(ValidatorType.TEXT_ONLY)]],
+      state: [(!data) ? '' :data.state, [Validators.required, Validators.pattern(ValidatorType.TEXT_ONLY)]],
       pincode: [(!data) ? '' :data.zipCode, [Validators.required, Validators.minLength(6), Validators.maxLength(6), Validators.pattern(ValidatorType.NUMBER_ONLY)]],
     });
 
