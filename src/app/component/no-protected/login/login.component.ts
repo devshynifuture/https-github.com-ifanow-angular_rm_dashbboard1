@@ -9,6 +9,7 @@ import { MatProgressButtonOptions } from '../../../common/progress-button/progre
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { LoginService } from './login.service';
 import { PeopleService } from '../../protect-component/PeopleComponent/people.service';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -97,6 +98,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
   isLoading = false;
+  showTimeRemaing: number;
 
   constructor(
     private formBuilder: FormBuilder, private eventService: EventService,
@@ -121,6 +123,8 @@ export class LoginComponent implements OnInit {
       this.userName.markAsTouched();
       return;
     } else {
+      this.showTimeRemaing = 30;
+      this.otpResendCountDown();
       this.getOtpBtnOption.active = true;
       const obj = {
         userName: this.userName.value
@@ -163,16 +167,16 @@ export class LoginComponent implements OnInit {
     }
     if (data.mobileList && data.mobileList.length > 0) {
       data.mobileNo = data.mobileList[0].mobileNo;
-      this.verifyResponseData.mobileNo = UtilService.obfuscateEmail(String(data.mobileNo));
+      this.verifyResponseData.mobileNo = UtilService.obfuscateMobile(String(data.mobileNo));
     }
     console.log(this.verifyResponseData);
-    if (this.verifyResponseData.email) {
-      this.verifyFlag = 'Email';
-      const obj = { email: data.email };
-      this.loginUsingCredential(obj);
-    } else {
+    if (this.verifyResponseData.mobileNo) {
       this.verifyFlag = 'Mobile';
       const obj = { mobileNo: data.mobileNo };
+      this.loginUsingCredential(obj);
+    } else {
+      this.verifyFlag = 'Email';
+      const obj = { email: data.email };
       this.loginUsingCredential(obj);
     }
   }
@@ -247,7 +251,18 @@ export class LoginComponent implements OnInit {
       this.barButtonOptions.active = false;
     }
   }
-
+  otpResendCountDown() {
+    let timeLeft = 30;
+    let intervallTimer = interval(1000).subscribe(
+      data => {
+        if (data == 31) {
+          intervallTimer.unsubscribe();
+        } else {
+          this.showTimeRemaing = timeLeft--;
+        }
+      }
+    )
+  }
   private createForm() {
     this.loginForm = this.formBuilder.group({
       name: new FormControl('', {

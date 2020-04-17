@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
-import {LoginService} from '../login.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {Router} from '@angular/router';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { LoginService } from '../login.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { Router } from '@angular/router';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { setInterval } from 'timers';
+import { Observable, interval } from 'rxjs';
 
 @Component({
   selector: 'app-forgot-password',
@@ -37,9 +39,11 @@ export class ForgotPasswordComponent implements OnInit {
     // }
   };
   userNameVerifyResponse: any;
-
+  showTimeRemaing: number;
+  @ViewChild('countDown', { static: true }) elemRef: ElementRef;
+  resendOtpFlag: boolean = false;
   constructor(private loginService: LoginService, private eventService: EventService,
-              private router: Router, private fb: FormBuilder) {
+    private router: Router, private fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -51,7 +55,7 @@ export class ForgotPasswordComponent implements OnInit {
     if (this.verifyData.flag) {
       this.hideNumEmailFromUser(this.saveVerifyData);
       this.isVerify = true;
-      this.verify('Email');
+      this.verify('Email', false);
       this.verifyFlag = 'Email';
     } else {
       this.isVerify = false;
@@ -119,10 +123,10 @@ export class ForgotPasswordComponent implements OnInit {
           this.isVerify = true;
           if (this.saveVerifyData.email) {
             this.verifyFlag = 'Email';
-            this.verify('Email');
+            this.verify('Email', false);
           } else if (this.saveVerifyData.mobileNo != 0) {
             this.verifyFlag = 'Mobile';
-            this.verify('Mobile');
+            this.verify('Mobile', false);
           } else {
             this.eventService.openSnackBar('Please contact your advisor for more details');
           }
@@ -137,13 +141,19 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   ///////////////////////////////////// signup process///////////////////////////////
-  verify(flag) {
+  verify(flag, resendFlag) {
     let verifyObj;
-    (flag == 'Email') ? verifyObj = {email: this.saveVerifyData.email} : verifyObj = {mobileNo: this.saveVerifyData.mobileNo};
-    this.verifyWithCredential(verifyObj);   //// verify Email Address
+    (flag == 'Email') ? verifyObj = { email: this.saveVerifyData.email } : verifyObj = { mobileNo: this.saveVerifyData.mobileNo };
+    this.verifyWithCredential(verifyObj, resendFlag);   //// verify Email Address
   }
 
-  verifyWithCredential(obj) {
+  verifyWithCredential(obj, flag) {
+    this.resendOtpFlag = flag;
+    this.showTimeRemaing = 30;
+    this.otpResendCountDown();
+    if (this.resendOtpFlag) {
+      this.eventService.openSnackBar("OTP sent successfully", "Dismiss");
+    }
     this.barButtonOptions.active = true;    //// verify email or mobileNo with credentials
     this.loginService.generateOtp(obj).subscribe(
       data => {
@@ -156,6 +166,18 @@ export class ForgotPasswordComponent implements OnInit {
     );
   }
 
+  otpResendCountDown() {
+    let timeLeft = 30;
+    let intervallTimer = interval(1000).subscribe(
+      data => {
+        if (data == 31) {
+          intervallTimer.unsubscribe();
+        } else {
+          this.showTimeRemaing = timeLeft--;
+        }
+      }
+    )
+  }
   saveAfterVerifyCredential(obj) {    ////// save verified email or mobileNo in the table
     this.loginService.saveAfterVerification(obj).subscribe(
       data => {
@@ -173,7 +195,10 @@ export class ForgotPasswordComponent implements OnInit {
 
   verifyWithOtpResponse(flag) {  ///// check user filled otp is correct or not
     const otpString = this.otpData.toString().replace(/,/g, '');
-
+    if (otpString == '') {
+      this.eventService.openSnackBar("Please enter Otp", "Dismiss");
+      return;
+    }
     if (flag == 'Email' && this.otpData.length == 4 && this.otpResponse == otpString) {
       const obj = {
         email: this.saveVerifyData.email,
@@ -185,11 +210,11 @@ export class ForgotPasswordComponent implements OnInit {
       this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
       if (this.userNameVerifyResponse != undefined) {
         this.router.navigate(['/login/setpassword'],
-          {state: {userData: this.saveVerifyData.userData}});
+          { state: { userData: this.saveVerifyData.userData } });
         /////// check wheather user came from forgot password or sign-up Process
         return;
       }
-      this.verify('Mobile');
+      this.verify('Mobile', false);
       this.verifyFlag = 'Mobile';
     } else if (flag == 'Mobile' && this.otpData.length == 4) {
       const obj = {
@@ -201,12 +226,12 @@ export class ForgotPasswordComponent implements OnInit {
       this.loginService.saveAfterVerification(obj).subscribe(
         data => {
           this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
-          this.router.navigate(['/login/setpassword'], {state: {userData: this.saveVerifyData.userData}});
+          this.router.navigate(['/login/setpassword'], { state: { userData: this.saveVerifyData.userData } });
         },
         err => this.eventService.openSnackBar(err, 'Dismiss')
       );
     } else {
-      this.eventService.openSnackBar('OTP is incorrect', 'Dismiss');
+      (this.resendOtpFlag) ? this.eventService.openSnackBar('OTP has expired', 'Dismiss') : this.eventService.openSnackBar('Otp is incorrect', 'Dismiss');
     }
   }
 
