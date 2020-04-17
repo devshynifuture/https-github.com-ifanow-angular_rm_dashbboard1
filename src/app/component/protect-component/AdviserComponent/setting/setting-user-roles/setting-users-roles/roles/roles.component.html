@@ -20,7 +20,7 @@
     </div>
 </div>
 
-<div class="row" *ngIf="dataSource.data.length > 0 && !hasError">
+<div class="row pb-20" *ngIf="dataSource.data.length > 0 && !hasError">
     <div class="col-md-12 overflow-hidden roleSetting-table p-0">
         <table mat-table [dataSource]="dataSource" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="utilService.isLoading" id="table-low">
             <ng-container matColumnDef="position">
