@@ -9,6 +9,7 @@ import { MatProgressButtonOptions } from '../../../common/progress-button/progre
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { LoginService } from './login.service';
 import { PeopleService } from '../../protect-component/PeopleComponent/people.service';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -97,6 +98,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
   isLoading = false;
+  showTimeRemaing: number;
+  resendOtpFlag: any;
 
   constructor(
     private formBuilder: FormBuilder, private eventService: EventService,
@@ -116,11 +119,14 @@ export class LoginComponent implements OnInit {
     this.btnProgressData = 'state1';
   }
 
-  getOtp() {
+  getOtp(resendFlag) {
+    this.resendOtpFlag = resendFlag;
     if (this.userName.invalid) {
       this.userName.markAsTouched();
       return;
     } else {
+      this.showTimeRemaing = 30;
+      this.otpResendCountDown();
       this.getOtpBtnOption.active = true;
       const obj = {
         userName: this.userName.value
@@ -128,6 +134,9 @@ export class LoginComponent implements OnInit {
       this.loginService.getUsernameData(obj).subscribe(
         data => {
           if (data) {
+            if (this.resendOtpFlag) {
+              this.eventService.openSnackBar("OTP sent successfully", "Dismiss");
+            }
             this.userName.disable();
             console.log(data);
             this.userData = data;
@@ -148,7 +157,7 @@ export class LoginComponent implements OnInit {
   }
 
   getOtpOnEnter(event) {
-    (event.keyCode == 13) ? this.getOtp() : '';
+    (event.keyCode == 13) ? this.getOtp(false) : '';
   }
 
   getOtpData(outputData) {
@@ -163,16 +172,16 @@ export class LoginComponent implements OnInit {
     }
     if (data.mobileList && data.mobileList.length > 0) {
       data.mobileNo = data.mobileList[0].mobileNo;
-      this.verifyResponseData.mobileNo = UtilService.obfuscateEmail(String(data.mobileNo));
+      this.verifyResponseData.mobileNo = UtilService.obfuscateMobile(String(data.mobileNo));
     }
     console.log(this.verifyResponseData);
-    if (this.verifyResponseData.email) {
-      this.verifyFlag = 'Email';
-      const obj = { email: data.email };
-      this.loginUsingCredential(obj);
-    } else {
+    if (this.verifyResponseData.mobileNo) {
       this.verifyFlag = 'Mobile';
       const obj = { mobileNo: data.mobileNo };
+      this.loginUsingCredential(obj);
+    } else {
+      this.verifyFlag = 'Email';
+      const obj = { email: data.email };
       this.loginUsingCredential(obj);
     }
   }
@@ -235,19 +244,31 @@ export class LoginComponent implements OnInit {
           },
           err => {
             console.error(err);
-            this.eventService.openSnackBar(err, 'Dismiss');
+            // this.eventService.openSnackBar(err, 'Dismiss');
+            (this.resendOtpFlag) ? this.eventService.openSnackBar('OTP has expired', 'Dismiss') : this.eventService.openSnackBar('Otp is incorrect', 'Dismiss');
             this.barButtonOptions.active = false;
           }
         );
       } else {
-        this.eventService.openSnackBar('Wrong OTP');
+        (this.resendOtpFlag) ? this.eventService.openSnackBar('OTP has expired', 'Dismiss') : this.eventService.openSnackBar('Otp is incorrect', 'Dismiss');
         this.barButtonOptions.active = false;
       }
     } else {
       this.barButtonOptions.active = false;
     }
   }
-
+  otpResendCountDown() {
+    let timeLeft = 30;
+    let intervallTimer = interval(1000).subscribe(
+      data => {
+        if (data == 31) {
+          intervallTimer.unsubscribe();
+        } else {
+          this.showTimeRemaing = timeLeft--;
+        }
+      }
+    )
+  }
   private createForm() {
     this.loginForm = this.formBuilder.group({
       name: new FormControl('', {

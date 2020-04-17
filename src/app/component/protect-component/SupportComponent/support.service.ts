@@ -95,6 +95,9 @@ export class SupportService {
   editStageComment(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_STAGE_COMMENT, data);
   }
+  addStageComment(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_STAGE_COMMENT , data);
+  }
   // observable data sending
 
   sendDataThroughObs(value) {
@@ -104,6 +107,10 @@ export class SupportService {
   // get Observable Data
   getDataThroughObs(): Observable<any> {
     return this.subject.asObservable();
+  }
+
+  getBulkFilesData(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BULK_FILE_ORDER_LIST, data);
   }
 
 }
