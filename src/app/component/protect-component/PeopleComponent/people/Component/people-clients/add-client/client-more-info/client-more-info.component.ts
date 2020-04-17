@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { ValidatorType } from 'src/app/services/util.service';
+import { ValidatorType, UtilService } from 'src/app/services/util.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -45,6 +45,8 @@ export class ClientMoreInfoComponent implements OnInit {
 
   @Input() fieldFlag;
   @Output() tabChange = new EventEmitter();
+  @Output() clientData = new EventEmitter();
+
 
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
@@ -97,7 +99,9 @@ export class ClientMoreInfoComponent implements OnInit {
     console.log(data);
     this.mobileData = data;
   }
-
+  toUpperCase(event) {
+    event = UtilService.toUpperCase(event);
+  }
   // getCompanyDetails(data) {
   //   const obj = {
   //     userId: data.userId,
@@ -152,6 +156,7 @@ export class ClientMoreInfoComponent implements OnInit {
         data => {
           this.barButtonOptions.active = false;
           console.log(data);
+          this.clientData.emit(data);
           (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
         },
         err => {
@@ -220,6 +225,7 @@ export class ClientMoreInfoComponent implements OnInit {
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {
         console.log(data);
+        this.clientData.emit(data);
         this.barButtonOptions.active = false;
         (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
       },

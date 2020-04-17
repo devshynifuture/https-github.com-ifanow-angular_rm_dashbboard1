@@ -32,17 +32,6 @@ export class MyIfasComponent implements OnInit {
     this.getMyIfasList();
   }
 
-  // admin_advisor_id: 2808
-  // name: "shubh"
-  // email_id: "chetan@futurewise.co.in"
-  // mobile_number: 75489512
-  // using_since_year: 0
-  // using_since_month: 0
-  // task_id: 1
-  // rm_name: "Avi"
-  // team_count: 12
-  // arn_ria_count: 12
-
   getMyIfasList() {
     let obj = {};
     this.isLoading = true;
@@ -65,6 +54,7 @@ export class MyIfasComponent implements OnInit {
               team: element.team_count,
               arn: element.arn_ria_count,
               logout: element.logout ? element.logout : ' - ',
+              adminAdvisorId: element.admin_advisor_id,
               menu: ''
             })
           });

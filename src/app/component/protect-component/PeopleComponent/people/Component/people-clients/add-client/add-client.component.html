@@ -1,55 +1,54 @@
 <div class="row bb-1 popup-header-fix-50">
-  <div class="col-md-10 p-0">
-    <h4 class="mb-0 l-22 wrapper-20">{{headingData.flag}}</h4>
-  </div>
-  <div class="col-md-2 text-right">
-    <i (click)="close()" class="material-icons pt-20 c-p pr-16">
-      clear
-    </i>
-  </div>
+    <div class="col-md-10 p-0">
+        <h4 class="mb-0 l-22 wrapper-20">{{headingData.flag}}</h4>
+    </div>
+    <div class="col-md-2 text-right">
+        <i (click)="close()" class="material-icons pt-20 c-p pr-16">
+            clear
+        </i>
+    </div>
 </div>
 <div class="pt-90  pb-100 ">
-  <div class="row">
-    <div class="col-md-12 p-0">
-      <mat-tab-group [(selectedIndex)]="selected" animationDuration="0ms" class="tabHeaderPadding"
-                     id="ui-add-client">
-        <mat-tab label="Basic details">
-          <app-client-basic-details (clientData)="getTabData($event)" (tabChange)="changeTab($event)"
-                                    [data]="headingData" [fieldFlag]="headingData.fieldFlag">
-          </app-client-basic-details>
-        </mat-tab>
-        <!-- [disabled]="tabData.id==undefined" -->
-        <mat-tab [disabled]="tabData.clientId==undefined&&tabData.familyMemberId==undefined" label=" More info">
-          <app-client-more-info (tabChange)="changeTab($event)"
-                                *ngIf="!tabData.clientType || tabData.clientType!='2'" [data]="tabData"
-                                [fieldFlag]="headingData.fieldFlag">
-          </app-client-more-info>
-          <app-company-more-info (tabChange)="changeTab($event)"
-                                 *ngIf="tabData.clientType && tabData.clientType=='2'"
-                                 [data]="tabData"
-                                 [fieldFlag]="headingData.fieldFlag">
-          </app-company-more-info>
-        </mat-tab>
-        <mat-tab [disabled]="tabData.userId==undefined" label=" Address">
-          <app-client-address (tabChange)="changeTab($event)" [data]="tabData"
-                              [fieldFlag]="headingData.fieldFlag"></app-client-address>
-        </mat-tab>
-        <mat-tab [disabled]="tabData.userId==undefined" label=" Bank">
-          <app-client-bank (tabChange)="changeTab($event)" [data]="tabData"
-                           [fieldFlag]="headingData.fieldFlag"></app-client-bank>
-        </mat-tab>
-        <mat-tab [disabled]="tabData.userId==undefined" label=" Demat">
-          <app-client-demat (tabChange)="changeTab($event)" [data]="tabData"
-                            [fieldFlag]="headingData.fieldFlag"></app-client-demat>
-        </mat-tab>
-        <!-- [disabled]="tabData.userId==undefined" -->
-        <mat-tab [disabled]="tabData.userId==undefined" label=" Upload">
-          <app-client-upload (tabChange)="changeTab($event)" [data]="tabData"
-                             [fieldFlag]="headingData.fieldFlag"></app-client-upload>
-        </mat-tab>
-      </mat-tab-group>
+    <div class="row">
+        <div class="col-md-12 p-0">
+            <mat-tab-group [(selectedIndex)]="selected" animationDuration="0ms" class="tabHeaderPadding"
+                id="ui-add-client">
+                <mat-tab label="Basic details">
+                    <app-client-basic-details (clientData)="getTabData($event)" (tabChange)="changeTab($event)"
+                        [data]="headingData" [fieldFlag]="headingData.fieldFlag">
+                    </app-client-basic-details>
+                </mat-tab>
+                <!-- [disabled]="tabData.id==undefined" -->
+                <mat-tab [disabled]="tabData.clientId==undefined&&tabData.familyMemberId==undefined" label=" More info">
+                    <app-client-more-info (clientData)="getTabData($event)" (tabChange)="changeTab($event)"
+                        *ngIf="!tabData.clientType || tabData.clientType!='2'" [data]="tabData"
+                        [fieldFlag]="headingData.fieldFlag">
+                    </app-client-more-info>
+                    <app-company-more-info (tabChange)="changeTab($event)"
+                        *ngIf="tabData.clientType && tabData.clientType=='2'" [data]="tabData"
+                        [fieldFlag]="headingData.fieldFlag">
+                    </app-company-more-info>
+                </mat-tab>
+                <mat-tab [disabled]="tabData.userId==undefined" label=" Address">
+                    <app-client-address (tabChange)="changeTab($event)" [data]="tabData"
+                        [fieldFlag]="headingData.fieldFlag"></app-client-address>
+                </mat-tab>
+                <mat-tab [disabled]="tabData.userId==undefined" label=" Bank">
+                    <app-client-bank (tabChange)="changeTab($event)" [data]="tabData"
+                        [fieldFlag]="headingData.fieldFlag"></app-client-bank>
+                </mat-tab>
+                <mat-tab [disabled]="tabData.userId==undefined" label=" Demat">
+                    <app-client-demat (tabChange)="changeTab($event)" [data]="tabData"
+                        [fieldFlag]="headingData.fieldFlag"></app-client-demat>
+                </mat-tab>
+                <!-- [disabled]="tabData.userId==undefined" -->
+                <mat-tab [disabled]="tabData.userId==undefined" label=" Upload">
+                    <app-client-upload (tabChange)="changeTab($event)" [data]="tabData"
+                        [fieldFlag]="headingData.fieldFlag"></app-client-upload>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
     </div>
-  </div>
 </div>
 <!-- <div *ngIf="headingData.fieldFlag=='lead' || headingData.fieldFlag=='familyMember'" class="pt-90 pl-28 pr-28 pb-100 ">
     <div class="row">

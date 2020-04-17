@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 import { UpperSliderBackofficeComponent } from '../../common-component/upper-slider-backoffice/upper-slider-backoffice.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
+import { SupportService } from '../../support.service';
 
 @Component({
   selector: 'app-ifas-details',
@@ -32,12 +33,14 @@ export class IfasDetailsComponent implements OnInit {
   displayedColumns5: string[] = ['invoice', 'sentDate', 'status', 'dueDate', 'amount', 'balance'];
   dataSource5 = ELEMENT_DATA5;
   ifasData: any;
+  getOverview: any;
 
 
 
   constructor(public subInjectService: SubscriptionInject,
     public dialog: MatDialog,
-    private eventService: EventService) { }
+    private eventService: EventService,
+    private supportService :SupportService) { }
 
   isInEditMode: boolean = false;
   reconSummaryList;
@@ -51,6 +54,7 @@ export class IfasDetailsComponent implements OnInit {
   toggleEditMode() {
     this.isInEditMode = !this.isInEditMode;
   }
+
   getReconSummaryList() {
     this.reconSummaryList = [
       { name: 'CAMS' },
@@ -122,29 +126,6 @@ export class IfasDetailsComponent implements OnInit {
   }
 
 
-  // openFragment(flag, data) {
-  //   this.location.replaceState('/subscription-upper');
-  //   data.flag = flag
-  //   console.log('hello mf button clicked');
-  //   const fragmentData = {
-  //     flag: 'clietns',
-  //     id: 1,
-  //     data,
-  //     direction: 'top',
-  //     componentName: SubscriptionUpperSliderComponent,
-  //     state: 'open'
-  //   };
-
-  //   AuthService.setSubscriptionUpperSliderData(fragmentData);
-  //   const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-  //     upperSliderData => {
-  //       if (UtilService.isDialogClose(upperSliderData)) {
-
-  //         subscription.unsubscribe();
-  //       }
-  //     }
-  //   );
-  // }
 
 
 

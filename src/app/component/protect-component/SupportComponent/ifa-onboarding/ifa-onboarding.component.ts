@@ -6,6 +6,7 @@ import { AdminDetailsComponent } from './admin-details/admin-details.component';
 import { MatSort, MatTableDataSource } from '@angular/material';
 import { SupportService } from '../support.service';
 import { EventService } from '../../../../Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-ifa-onboarding',
@@ -16,11 +17,15 @@ export class IfaOnboardingComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   isLoading = false;
   stagesArray: any;
+  getOverview: any;
+  advisorId: any;
   constructor(
     private subInjectService: SubscriptionInject,
     private supportService: SupportService,
     private eventService: EventService
-  ) { }
+  ) { 
+    this.advisorId = AuthService.getAdvisorId()
+  }
 
   dataSource = new MatTableDataSource<any>(ELEMENT_DATA);
   displayedColumns = ['adminName', 'email', 'mobile', 'rmName', 'stage', 'usingSince', 'plan', 'team', 'arn', 'menu']
@@ -43,7 +48,20 @@ export class IfaOnboardingComponent implements OnInit {
         err => this.eventService.openSnackBar(err, "DISMISS")
       )
   }
-
+  getOverviewIFAOnbording() {
+    let obj = {
+      adminAdvisorId : this.advisorId
+    }
+    this.supportService.getOverviewIFAOnboarding(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data) {
+          this.getOverview = data;
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
   getMyIfaDetail() {
     let obj = {};
     this.supportService.getMyIFAValues(obj).subscribe(
@@ -63,7 +81,9 @@ export class IfaOnboardingComponent implements OnInit {
               plan: element.plan ? element.plan : ' - ',
               team: element.team_count,
               arn: element.arn_ria_count,
-              menu: ''
+              adminAdvisorId : element.admin_advisor_id,
+              menu: '',
+              advisorId: element.admin_advisor_id,
             })
           });
           this.dataSource.data = tableArray;
@@ -113,7 +133,7 @@ export class IfaOnboardingComponent implements OnInit {
 
 
 
-  openAdminDetails(value, data) {
+  openAdminDetails(data,value) {
     const fragmentData = {
       flag: value,
       data,

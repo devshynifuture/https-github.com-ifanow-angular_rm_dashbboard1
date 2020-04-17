@@ -109,6 +109,11 @@
                         <img src="assets/images/svg/file-lines.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Documents</span>
                     </a>
+                    <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
+                        routerLink="./advisor-marketplace">
+                        <img src="assets/images/svg/file-lines.svg">
+                        <span *ngIf="showTabs" class="title" mat-line>Marketplace</span>
+                    </a>
                     <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item>
                         <img src="assets/images/svg/secure.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Compliance</span>
@@ -374,7 +379,6 @@
                                     </p>
                                 </div>
                             </div>
-                            markAllAsTouched
                             <div class="row c-p" [routerLink]="['/admin/setting/preference']">
                                 <div class="col-md-2">
                                     <img src="/assets/images/svg/settings-gear-menu/preferences.svg" class="v-super">
@@ -450,7 +454,10 @@
                     </mat-menu>
                 </a>
                 <a class="sidenav-link" mat-list-item>
-                    <img src="assets/images/img1.jpg" class="c-p header-img" (click)="logout()">
+                    <img src="assets/images/img1.jpg" [matMenuTriggerFor]="menu" class="c-p header-img">
+                    <mat-menu #menu="matMenu">
+                        <button (click)="logout()" mat-menu-item>Logout</button>
+                    </mat-menu>
                 </a>
             </div>
 

@@ -7,6 +7,7 @@ import {MfServiceService} from '../../customer/accounts/assets/mutual-fund/mf-se
 import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-right-filter',
@@ -18,6 +19,21 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
   ],
 })
 export class RightFilterComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'GENERATE REPORT',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   panelOpenState = true;
   _data: any;
   familyMember: any;
@@ -173,7 +189,11 @@ export class RightFilterComponent implements OnInit {
   }
 
   getReportType() {
+    if(this._data.name=='SUMMARY REPORT'){
     this.reportType = ['Investor wise', 'Category wise', 'Sub Category wise'];
+    } else{
+    this.reportType = ['Investor wise', 'Category wise', 'Sub Category wise', 'Scheme wise'];
+    }
     const filterData = [];
     this.reportType.filter(function(element) {
       const obj = {
@@ -473,6 +493,7 @@ export class RightFilterComponent implements OnInit {
   }
 
   generateReport() {
+    this.barButtonOptions.active = true;
     var todayDate = new Date().toISOString().slice(0,10);
 
     if (this.transactionPeriod == false) {
@@ -498,15 +519,29 @@ export class RightFilterComponent implements OnInit {
     this.finalFilterData = this.mfService.filterFinalData(this._data.mfData, this.dataToSend);
     this.finalFilterData.transactionView = this.sendTransactionView;
     console.log('this.sendTransactionView ====', this.finalFilterData);
-    this.Close(this.finalFilterData);
     console.log(this.finalFilterData);
-    // if(this._data.name=='UNREALIZED TRANSACTION REPORT'){
-    //   this.custumService.getMutualFund(this.finalFilterData.mutualFundList).subscribe(
-    //     data => {
-    //         console.log(data);
-    //       }
-    //   )
-    // }
+    if(this._data.name=='UNREALIZED TRANSACTION REPORT'){
+        let mutualFund=this.finalFilterData.mutualFundList; 
+        this.obj={
+          mutualFundList:mutualFund
+        }
+         this.custumService.getMfUnrealizedTransactions(this.obj).subscribe(
+      data => {
+        console.log(data);
+        this.barButtonOptions.active = false;
+        this.finalFilterData.mutualFundList=data;
+        this.Close(this.finalFilterData);
+      }    
+      );
+
+        }else{
+          this.barButtonOptions.active = false;
+          this.Close(this.finalFilterData);
+        }
+             
+
+      }
+    
     // if(this.dataToSend.toDate!=todayDate){
     //   let MfList=Object.assign(this.finalFilterData.mutualFundList, {toDate: this.dataToSend.toDate});
     //   this.custumService.getMutualFund(MfList).subscribe(
@@ -516,10 +551,7 @@ export class RightFilterComponent implements OnInit {
     //   )
     // }
     
-  }
-
   
-
   Close(data) {
     this.subInjectService.changeNewRightSliderState({state: 'close', data: data});
   }

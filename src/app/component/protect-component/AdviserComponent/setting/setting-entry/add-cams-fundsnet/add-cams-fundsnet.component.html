@@ -4,8 +4,8 @@
     </div>
     <div class="col-md-2 text-right" (click)="Close(false)">
         <i class="material-icons pt-20 c-p pr-16">
-      clear
-    </i>
+            clear
+        </i>
     </div>
 </div>
 
@@ -34,7 +34,7 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field [floatLabel]="'never'" appearance="standard" floatLabel="never">
-                    <input type="text" matInput formControlName="loginId" class="form-control">
+                    <input type="text" placeholder="Enter Login ID" matInput formControlName="loginId" class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -47,7 +47,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <input type="text" formControlName="loginPassword" matInput class="form-control">
+                    <input type="text" placeholder="Enter password" formControlName="loginPassword" matInput class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>

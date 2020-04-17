@@ -8,23 +8,19 @@
         </i>
     </div>
 </div>
-<div [ngClass]="{'pt-90': fieldFlag==undefined}" [formGroup]="addressForm">
+<div class="pb-12" [ngClass]="{'pt-90': fieldFlag==undefined}" [formGroup]="addressForm">
     <h4 class="f-500 text-black pt-20 pl-20 m-0">Permanent address</h4>
-    <div class="row pt-24">
+    <div *ngIf="permanentAddFlag" class="row pt-24">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-8">Permanent address</h5>
         </div>
         <div class="col-md-6 p-0">
             <div class="form-group m-0 p-address">
                 <mat-radio-group [(ngModel)]="proofType" aria-label="Select an option" formControlName="addressType">
-                    <mat-radio-button [checked]="proofType=='1'" value="1"
-                        [ngClass]="{'bu-primary':proofType=='1','text-primary':proofType=='1','borderRadio':proofType=='2','text-custom':proofType=='2' }"
-                        class="borderRadio text-custom">
+                    <mat-radio-button [checked]="proofType=='1'" value="1" [ngClass]="{'bu-primary':proofType=='1','text-primary':proofType=='1','borderRadio':proofType=='2','text-custom':proofType=='2' }" class="borderRadio text-custom">
                         Residential
                     </mat-radio-button>
-                    <mat-radio-button value="2" [checked]="proofType=='2'"
-                        [ngClass]="{'bu-primary':proofType=='2','text-primary':proofType=='2','borderRadio':proofType=='1','text-custom':proofType=='1'}"
-                        class="borderRadio text-custom">
+                    <mat-radio-button value="2" [checked]="proofType=='2'" [ngClass]="{'bu-primary':proofType=='2','text-primary':proofType=='2','borderRadio':proofType=='1','text-custom':proofType=='1'}" class="borderRadio text-custom">
                         Business
                     </mat-radio-button>
                 </mat-radio-group>
@@ -38,7 +34,7 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select formControlName="addProofType" class="form-control">
+                    <mat-select (selectionChange)="changeAddrProofNumber($event)" formControlName="addProofType" class="form-control">
                         <mat-option value="Select proof type">Select proof type</mat-option>
                         <mat-option value="1">Passport</mat-option>
                         <mat-option value="2">Aadhaar</mat-option>
@@ -54,12 +50,12 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">Proof ID number</h5>
+            <h5 class="m-0 pt-20">Proof ID number</h5>
         </div>
         <div class="col-md-4 p-0">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input autocomplete="off" matInput formControlName="proofIdNum" class="form-control">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter ID Proof" (input)="toUpperCase($event)" appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" autocomplete="off" matInput formControlName="proofIdNum" class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -67,13 +63,12 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">Address line 1</h5>
+            <h5 class="m-0 pt-20">Address line 1</h5>
         </div>
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input autocomplete="off" #add1 maxlength="100" matInput formControlName="addressLine1"
-                        class="form-control">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter Address 1" autocomplete="off" #add1 maxlength="100" matInput formControlName="addressLine1" class="form-control">
                     <mat-error>This field is required</mat-error>
                     <mat-hint align="end">{{add1.value.length}}/100</mat-hint>
                 </mat-form-field>
@@ -82,13 +77,12 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">Address line 2</h5>
+            <h5 class="m-0 pt-20">Address line 2</h5>
         </div>
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input autocomplete="off" #add2 matInput maxlength="100" formControlName="addressLine2"
-                        class="form-control">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter Address 2" autocomplete="off" #add2 matInput maxlength="100" formControlName="addressLine2" class="form-control">
                     <mat-error>This field is required</mat-error>
                     <mat-hint align="end">{{add2.value.length}}/100</mat-hint>
                 </mat-form-field>
@@ -97,14 +91,12 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">Pin code</h5>
+            <h5 class="m-0 pt-20">Pin code</h5>
         </div>
         <div class="col-md-2 p-0">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input autocomplete="off" [maxLength]="6" #pinCode (focusout)="getPostalPin($event.target.value)"
-                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" matInput
-                        formControlName="pinCode" class="form-control">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input autocomplete="off" placeholder="Enter Pin Code" [maxLength]="6" #pinCode (focusout)="getPostalPin($event.target.value)" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" matInput formControlName="pinCode" class="form-control">
                     <mat-hint align="end" class="f-12">{{pinCode.value.length}}/6</mat-hint>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -116,13 +108,12 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">City</h5>
+            <h5 class="m-0 pt-20">City</h5>
         </div>
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input autocomplete="off" #city matInput formControlName="city" appInputValueValidation
-                        [inputValidator]="validatorType.TEXT_ONLY" maxlength="30" class="form-control">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter Your City" autocomplete="off" #city matInput formControlName="city" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" maxlength="30" class="form-control">
                     <mat-error>This field is required</mat-error>
                     <mat-hint align="end" class="f-12">{{city.value.length}}/6</mat-hint>
                 </mat-form-field>
@@ -131,14 +122,12 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">State</h5>
+            <h5 class="m-0 pt-20">State</h5>
         </div>
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input autocomplete="off" #state matInput appInputValueValidation
-                        [inputValidator]="validatorType.TEXT_ONLY" maxlength="30" formControlName="state"
-                        class="form-control">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter Your State" autocomplete="off" #state matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" maxlength="30" formControlName="state" class="form-control">
                     <mat-error>This field is required</mat-error>
                     <mat-hint align="end" class="f-12">{{state.value.length}}/30</mat-hint>
                 </mat-form-field>
@@ -147,13 +136,12 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">Country</h5>
+            <h5 class="m-0 pt-20">Country</h5>
         </div>
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input autocomplete="off" #country matInput formControlName="country" appInputValueValidation
-                        [inputValidator]="validatorType.TEXT_ONLY" maxlength="30" class="form-control">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input autocomplete="off" placeholder="Enter Your Country" #country matInput formControlName="country" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" maxlength="30" class="form-control">
                     <mat-error>This field is required</mat-error>
                     <mat-hint align="end" class="f-12">{{country.value.length}}/30</mat-hint>
                 </mat-form-field>
@@ -171,11 +159,9 @@
                 </button> -->
                 <!-- <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
                 </button> -->
-                <app-progress-button *ngIf="fieldFlag==undefined" (btnClick)="saveNext('Save')"
-                    [options]="barButtonOptions" class="br-0 text-inherit mr-12">
+                <app-progress-button *ngIf="fieldFlag==undefined" (btnClick)="saveNext('Save')" [options]="barButtonOptions" class="br-0 text-inherit mr-12">
                 </app-progress-button>
-                <app-progress-button (btnClick)="saveNext('Next')" class="br-0 text-inherit mr-12"
-                    [options]="barButtonOptions">
+                <app-progress-button (btnClick)="saveNext('Next')" class="br-0 text-inherit mr-12" [options]="barButtonOptions">
                 </app-progress-button>
             </div>
 
