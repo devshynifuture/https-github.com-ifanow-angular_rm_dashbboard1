@@ -53,9 +53,38 @@ export class SupportService {
   getHistoricFilesReport(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.FILTER_HISTORICAL_REPORT, data);
   }
-
+  getOverviewIFAOnboarding(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_IFA_ONBOARDING_OVERVIEW, data);
+  }
+  updateOverviewIFAOnboarding(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_IFA_ONBOARDING_OVERVIEW, data);
+  }
+  getOnboardingActivity(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_IFA_ONBOARDING_ACTIVITY, data);
+  }
+  editActivity(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_ACTIVITY, data);
+  }
+  activityCommentUpdate(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.ACTIVITY_UPDATE_COMMENT, data);
+  }
+  activityAddComment(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ACTIVITY_ADD_COMMENT, data);
+  }
+  activityDeleteComment(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.ACTIVITY_DELETECOMMENT, data);
+  }
   getIfaMatricData(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_IFA_MATRIC_DATA, data);
+  }
+  getStageComments(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_STAGE_COMMENT, data);
+  }
+  deleteCommentStage(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_STAGE_COMMENT , data);
+  }
+  editStageComment(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_STAGE_COMMENT , data);
   }
   // observable data sending
 
@@ -67,4 +96,5 @@ export class SupportService {
   getDataThroughObs(): Observable<any> {
     return this.subject.asObservable();
   }
+
 }

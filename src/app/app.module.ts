@@ -53,8 +53,7 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
     // AddLiabilitiesComponent,
     // AddInsuranceComponent
     FormTestComponent,
-    BackofficeDashboardComponent
-
+    BackofficeDashboardComponent,
   ],
   imports: [
     // CalendarModule,

@@ -201,7 +201,7 @@ export const appConfig = {
   MUTUAL_FUND_GET: 'mutual-fund/mutualfund/list/get',
   FOLIO_MASTER_DETAILS: 'mutual-fund/folioMasterDetails/list/get',
   SIP_DETAILS: 'mutual-fund/sipDetails/list/get',
-  UNREALIZED_TRANSACTION_GET:'mutual-fund/unrealized/transaction/list/get',
+  UNREALIZED_TRANSACTION_GET: 'mutual-fund/unrealized/transaction/list/get',
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
@@ -509,6 +509,16 @@ export const appConfig = {
   GET_ONBOARDING_TASK_GLOBAL: 'rmdashboard/ifa/onboarding/task/global/get',
   POST_HISTORICAL_FILE_ORDER: 'fileorder/historical/order',
   GET_FILE_TYPE_ORDER: 'fileorder/file-type/list/get',
+  GET_IFA_ONBOARDING_OVERVIEW :'rmdashboard/ifa/onboard/overview/get',
+  UPDATE_IFA_ONBOARDING_OVERVIEW:'rmdashboard/ifa/onboard/overview/update',
+  GET_IFA_ONBOARDING_ACTIVITY:'rmdashboard/dashboard/ifa-onboard/advisor-id/get',
+  EDIT_ACTIVITY:'rmdashboard/dashboard/ifa-onboard/advisor-id/task/put',
+  ACTIVITY_ADD_COMMENT:'',
+  ACTIVITY_UPDATE_COMMENT:'rmdashboard/dashboard/ifa-onboard/activity/chat/edit',
+  ACTIVITY_DELETECOMMENT:'rmdashboard/dashboard/ifa-onboard/activity/chat/delete',
+  GET_STAGE_COMMENT:'rmdashboard/dashboard/ifa-onboard/stages/chat/get',
+  EDIT_STAGE_COMMENT:'rmdashboard/dashboard/ifa-onboard/stages/chat/edit',
+  DELETE_STAGE_COMMENT:'rmdashboard/dashboard/ifa-onboard/stages/chat/delete',
 
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',
@@ -593,7 +603,7 @@ export const appConfig = {
   GET_DEMAT_LIST: 'user/bank/demat/list/get',
   GET_BANK_LIST: 'user/bank/list/get',
   SEND_WELCOME_EMAIL: 'user/advisor/welcome/email/send',
-  // LOGIN_WITH_PASSWORD: 'user/login/with/password',
+  CREATE_TEAM_MEMBER: '/user/advisor/team-member/sign-up',
 
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/otp',

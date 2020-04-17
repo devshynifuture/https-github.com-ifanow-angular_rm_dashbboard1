@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {HttpService} from 'src/app/http-service/http-service';
-import {apiConfig} from 'src/app/config/main-config';
-import {appConfig} from 'src/app/config/component-config';
-import {AuthService} from '../../../auth-service/authService';
-import {Router} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { HttpService } from 'src/app/http-service/http-service';
+import { apiConfig } from 'src/app/config/main-config';
+import { appConfig } from 'src/app/config/component-config';
+import { AuthService } from '../../../auth-service/authService';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +48,9 @@ export class LoginService {
     return this.http.postEncoded(apiConfig.USER + appConfig.SEND_WELCOME_EMAIL, data);
   }
 
+  createTeamMember(data) {
+    return this.http.putEncoded(apiConfig.USER + appConfig.CREATE_TEAM_MEMBER, data);
+  }
   verifyOtp(data) {
     const url = 'https://api.msg91.com/api/v5/otp/verify?mobile=' + data.mobileNo +
       '&otp=' + data.otp + '&authkey=' + '299688ARWCWf9dMo5daa04d8';
