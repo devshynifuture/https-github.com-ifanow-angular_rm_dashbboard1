@@ -346,7 +346,7 @@ export class OrderHistoricalFileComponent implements OnInit {
       // api call
       console.log('must be closed', this.orderHistoryFileForm.value);
       this.calculateDateAndObject();
-      this.dialogClose(false);
+      this.dialogClose(true);
     } else {
       this.formValidationFalseCount++;
       this.eventService.openSnackBar("Must fill required field", "Dismiss");
@@ -666,7 +666,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                     rmId: this.rmId,
                     rtId,
                     arnRiaDetailId: this.arnRiaDetails,
-                    fromDate: typeof (fromDateIter) === 'object' ? this.util.addZeroBeforeNumber(fromDateIter.getFullYear(), 2) + "-" + this.util.addZeroBeforeNumber((fromDateIter.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(fromDateIter.getDate(), 2) : fromDateIter,
+                    fromDate: typeof (fromDateIter) === 'object' ? fromDateIter.getFullYear() + "-" + this.util.addZeroBeforeNumber((fromDateIter.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(fromDateIter.getDate(), 2) : fromDateIter,
                     toDate: typeof (toDateIter) === 'object' ? toDateIter.getFullYear() + "-" + this.util.addZeroBeforeNumber((toDateIter.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(toDateIter.getDate(), 2) : toDateIter,
                     fileTypeId: fileTypeId,
                     orderingFrequency: this.orderHistoryFileForm.get('orderingFreq').value
