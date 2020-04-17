@@ -210,23 +210,22 @@ export class AdminDetailsComponent implements OnInit {
     this.getstageComment(stage, flag)
   }
   updateActivityCompleteness(stage, event) {
-
-    this.stageList.forEach(element => {
-      if (element.id == stage.id) {
-        element.id = stage.id
-        element.isComplete = (event.checked == true) ? 1 : 0,
-          element.activityId = stage.activityId
-      }
-    });
-    this.supportService.editActivity(this.stageList).subscribe(
-      data => {
-        console.log('getOverviewIFAOnbording', data);
-        if (data) {
-          console.log(data)
+    let obj = {
+      id: stage.id,
+      isComplete: (event.checked == true) ? 1 : 0,
+      activityId: stage.activityId,
+    }
+    if(event.checked == true){
+      this.supportService.editActivity(obj).subscribe(
+        data => {
+          console.log('getOverviewIFAOnbording', data);
+          if (data) {
+            console.log(data)
+          }
         }
-      }
-      , err => this.eventService.openSnackBar(err, "Dismiss")
-    )
+        , err => this.eventService.openSnackBar(err, "Dismiss")
+      )
+    }
   }
   getIFAActivity() {
     this.isSuccess = true
