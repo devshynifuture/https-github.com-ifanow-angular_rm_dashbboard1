@@ -27,7 +27,7 @@ export class TempserviceService {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ?
       reportType = 'subCategoryName' : (type[0].name == 'Category wise') ?
-      reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : reportType = 'name';
+      reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : (type == 'id') ? reportType = 'id': reportType = 'name';
     let catObj = {};
     const newArray = [];
 

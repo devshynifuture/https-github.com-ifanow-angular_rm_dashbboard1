@@ -1,9 +1,9 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {CustomerService} from '../../customer/customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MfServiceService} from '../../customer/accounts/assets/mutual-fund/mf-service.service';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { CustomerService } from '../../customer/customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MfServiceService } from '../../customer/accounts/assets/mutual-fund/mf-service.service';
 import { DatePipe } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
@@ -67,8 +67,8 @@ export class RightFilterComponent implements OnInit {
   transactionPeriodCheck = true;
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private custumService: CustomerService, private eventService: EventService,
-              private mfService: MfServiceService,private datePipe: DatePipe,) {
+    private custumService: CustomerService, private eventService: EventService,
+    private mfService: MfServiceService, private datePipe: DatePipe, ) {
   }
 
   @Input()
@@ -81,7 +81,7 @@ export class RightFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    (this._data.name=='SUMMARY REPORT')?this.transactionPeriod=false:this.transactionPeriod=true;
+    (this._data.name == 'SUMMARY REPORT') ? this.transactionPeriod = false : this.transactionPeriod = true;
     this.transactionPeriodCheck = true
     this.amc = this._data.schemeWise;//amc wise data 
     this.folio = this._data.folioWise;//for getting all folios
@@ -139,7 +139,7 @@ export class RightFilterComponent implements OnInit {
   }
 
   showSummaryFilterForm(data) {
-    var todayDate = new Date().toISOString().slice(0,10);
+    var todayDate = new Date().toISOString().slice(0, 10);
     this.summaryFilerForm = this.fb.group({
       reportAsOn: [new Date(todayDate), [Validators.required]],
       fromDate: [(data.fromDate == undefined) ? null : new Date(data.fromDate)],
@@ -150,7 +150,7 @@ export class RightFilterComponent implements OnInit {
 
   getSchemeWise(data) {
     const filterData = [];
-    data.filter(function(element) {
+    data.filter(function (element) {
       const obj = {
         id: element.id,
         schemeName: element.schemeName,
@@ -179,7 +179,7 @@ export class RightFilterComponent implements OnInit {
 
   getTransactionView(data) {
     const filterData = [];
-    data.filter(function(element) {
+    data.filter(function (element) {
       const obj = {
         displayName: element,
       };
@@ -189,13 +189,13 @@ export class RightFilterComponent implements OnInit {
   }
 
   getReportType() {
-    if(this._data.name=='SUMMARY REPORT'){
-    this.reportType = ['Investor wise', 'Category wise', 'Sub Category wise'];
-    } else{
-    this.reportType = ['Investor wise', 'Category wise', 'Sub Category wise', 'Scheme wise'];
+    if (this._data.name == 'SUMMARY REPORT') {
+      this.reportType = ['Investor wise', 'Category wise', 'Sub Category wise'];
+    } else {
+      this.reportType = ['Investor wise', 'Category wise', 'Sub Category wise', 'Scheme wise'];
     }
     const filterData = [];
-    this.reportType.filter(function(element) {
+    this.reportType.filter(function (element) {
       const obj = {
         name: element,
         selected: false
@@ -246,10 +246,10 @@ export class RightFilterComponent implements OnInit {
     const filterData1 = [];
     const filterData2 = [];
     const filterData3 = [];
-    this.familyMember.filter(function(element) {
+    this.familyMember.filter(function (element) {
       if (element.selected == true) {
-        filterData.filter(function(amc) {
-          amc.mutualFund.forEach(function(mf) {
+        filterData.filter(function (amc) {
+          amc.mutualFund.forEach(function (mf) {
             if (mf.familyMemberId == element.familyMemberId) {
               const obj = {
                 amc_name: amc.amc_name,
@@ -288,10 +288,10 @@ export class RightFilterComponent implements OnInit {
     const filterData1 = [];
     const filterData2 = [];
     const filterData3 = [];
-    data.filter(function(element) {
+    data.filter(function (element) {
       if (element.selected == true) {
-        filterData.filter(function(amc) {
-          amc.mutualFund.forEach(function(mf) {
+        filterData.filter(function (amc) {
+          amc.mutualFund.forEach(function (mf) {
             if (mf.categoryId == element.categoryId) {
               const obj = {
                 amc_name: amc.amc_name,
@@ -331,7 +331,7 @@ export class RightFilterComponent implements OnInit {
     const filterData2 = this._data.schemeWise;
     const filterData1 = [];
     const filterData3 = [];
-    this.folio.filter(function(element) {
+    this.folio.filter(function (element) {
       if (element.selected == true) {
         filterData2.forEach(amc => {
           amc.mutualFund.forEach(mf => {
@@ -399,13 +399,13 @@ export class RightFilterComponent implements OnInit {
     this.changeSelect('', '');
   }
 
-  changeSelect = function(data, i) {
+  changeSelect = function (data, i) {
     this.sendTransactionView = this._data.transactionView;
     console.log('transaction ==', this._data.transactionView);
     if (data.selected == true) {
       this.sendTransactionView.push(i);
     } else if (data.selected == false) {
-      this.sendTransactionView.splice(i,1);
+      this.sendTransactionView.splice(i, 1);
     }
     console.log('data ==', this.sendTransactionView);
     if (this.familyMember != undefined) {
@@ -494,14 +494,14 @@ export class RightFilterComponent implements OnInit {
 
   generateReport() {
     this.barButtonOptions.active = true;
-    var todayDate = new Date().toISOString().slice(0,10);
+    var todayDate = new Date().toISOString().slice(0, 10);
 
     if (this.transactionPeriod == false) {
       if (this.summaryFilerForm.get('reportAsOn').invalid) {
         this.summaryFilerForm.get('reportAsOn').markAsTouched();
         return;
       }
-    } 
+    }
     this.dataToSend = {
       familyMember: (this.familyMemObj) ? this.familyMemObj : this.familyMember,
       amc: (this.amcObj) ? this.amcObj : this.amc,
@@ -510,9 +510,9 @@ export class RightFilterComponent implements OnInit {
       category: (this.categoryObj) ? this.categoryObj : this.category,
       reportType: (this.reportTypeobj) ? this.reportTypeobj : this.reportType,
       transactionView: this.transactionView,
-      reportAsOn:  this.datePipe.transform(this.summaryFilerForm.controls.reportAsOn.value, 'yyyy-MM-dd'),
+      reportAsOn: this.datePipe.transform(this.summaryFilerForm.controls.reportAsOn.value, 'yyyy-MM-dd'),
       fromDate: this.datePipe.transform(this.summaryFilerForm.controls.fromDate.value, 'yyyy-MM-dd'),
-      toDate:   this.datePipe.transform(this.summaryFilerForm.controls.toDate.value, 'yyyy-MM-dd'),
+      toDate: this.datePipe.transform(this.summaryFilerForm.controls.toDate.value, 'yyyy-MM-dd'),
       showFolio: parseInt(this.summaryFilerForm.controls.showFolios.value),
     };
     console.log('dataToSend---------->', this.dataToSend);
@@ -520,39 +520,59 @@ export class RightFilterComponent implements OnInit {
     this.finalFilterData.transactionView = this.sendTransactionView;
     console.log('this.sendTransactionView ====', this.finalFilterData);
     console.log(this.finalFilterData);
-    if(this._data.name=='UNREALIZED TRANSACTION REPORT'){
-        let mutualFund=this.finalFilterData.mutualFundList; 
-        this.obj={
-          mutualFundList:mutualFund
-        }
-         this.custumService.getMfUnrealizedTransactions(this.obj).subscribe(
-      data => {
-        console.log(data);
-        this.barButtonOptions.active = false;
-        this.finalFilterData.mutualFundList=data;
-        this.Close(this.finalFilterData);
-      }    
-      );
-
-        }else{
+    if (this._data.name == 'UNREALIZED TRANSACTION REPORT') {
+      let mutualFund = this.finalFilterData.mutualFundList;
+     ( this.dataToSend.toDate != todayDate) ? Object.assign(mutualFund, {toDate : this.dataToSend.toDate}) : null;
+      this.obj = {
+        mutualFundList: mutualFund
+      }
+      this.custumService.getMfUnrealizedTransactions(this.obj).subscribe(
+        data => {
+          console.log(data);
           this.barButtonOptions.active = false;
+          this.finalFilterData.mutualFundList = data;
           this.Close(this.finalFilterData);
         }
-             
+      );
 
-      }
-    
-    // if(this.dataToSend.toDate!=todayDate){
-    //   let MfList=Object.assign(this.finalFilterData.mutualFundList, {toDate: this.dataToSend.toDate});
-    //   this.custumService.getMutualFund(MfList).subscribe(
-    //     data => {
-    //         console.log(data);
-    //       }
-    //   )
-    // }
-    
+    } else if(this._data.name == 'ALL TRANSACTION REPORT' && this.dataToSend.toDate != todayDate){
+      let catObj : any ;
+      catObj = this.mfService.categoryFilter(this.finalFilterData.mutualFundList, 'id');
+      Object.keys(catObj).map(key => {
+        catObj[key].forEach((singleData) => {
+          let singleDataTransaction = singleData;
+          singleData={};
+          catObj[key] = [];
+          singleDataTransaction.mutualFundTransactions.forEach((ele) => {
+            const singleData = {
+              unit : ele.unit,
+              transactionDate : ele.transactionDate,
+              schemeCode : singleDataTransaction.schemeCode,
+              effect : ele.effect,
+            }
+            catObj[key].push(singleData);
+          });
+        });
+        
+      });
+        catObj.toDate = this.dataToSend.toDate;
+        console.log(catObj.toDate);
+        this.custumService.getMfUnrealizedTransactions(catObj).subscribe(
+          data => {
+            console.log(data);
+          }
+        );
+    } else{
+      this.barButtonOptions.active = false;
+      this.Close(this.finalFilterData);
+    }
   
+  }
+
+
+
+
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', data: data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data: data });
   }
 }
