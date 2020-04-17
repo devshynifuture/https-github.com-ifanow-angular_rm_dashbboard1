@@ -45,9 +45,34 @@ export class RolesComponent implements OnInit {
   }
 
   addEditNewRoles(roleType, is_add_flag, data) {
+    let roleTypeText = '';
+    switch (roleType) {
+      case 1:
+        roleTypeText = 'Admin';
+        break;
+      case 2:
+        roleTypeText = 'Back office';
+        break;
+      case 3:
+        roleTypeText = 'Planner';
+        break;
+      case 4:
+        roleTypeText = 'Mutual fund only';
+        break;
+      case 5:
+        roleTypeText = 'MF + Multi asset';
+        break;
+      case 6:
+        roleTypeText = 'MF + Multi asset + Basic Plan';
+        break;
+      case 7:
+        roleTypeText = 'MF + Multi asset + Advanced Plan';
+        break;
+    }
     const dataObj = {
       mainData: data || {},
       roleType,
+      roleTypeText,
       is_add_flag,
     };
     const fragmentData = {
@@ -71,9 +96,9 @@ export class RolesComponent implements OnInit {
   }
   deleteRole( data) {
     const dialogData = {
-      data: 'Galary',
+      data: 'Role',
       header: 'Delete',
-      body: 'Are you sure you want to delete?',
+      body: 'Are you sure you want to delete this role?',
       body2: 'This cannot be undone.',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',

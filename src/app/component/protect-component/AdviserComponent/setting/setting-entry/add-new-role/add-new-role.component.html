@@ -14,12 +14,12 @@
 
 <div class="row pt-100 pb-90">
     <div class="col-md-3" [formGroup]="rolesFG">
-        <!-- <h5 class="m-0 pt-12">Role Type</h5>
+        <h5 class="m-0 pt-12">Role Type</h5>
         <div class="form-group mb-0">
             <mat-form-field>
-                <input matInput class="form-control" readonly>
+                <input matInput class="form-control" readonly [value]="data.roleTypeText">
             </mat-form-field>
-        </div> -->
+        </div>
         <h5 class="m-0 pt-12">Role name</h5>
         <p class="m-0 text-custom roboto f-12 pb-4">E.g. para planner, relationship manager</p>
         <div class="form-group mb-0">
