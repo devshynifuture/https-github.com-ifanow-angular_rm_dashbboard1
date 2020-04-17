@@ -59,7 +59,7 @@ export class PlanGalleryComponent implements OnInit {
 
   resetGallery(data) {
     const dialogData = {
-      data: 'Gallery',
+      data: 'Gallary',
       header: 'RESET',
       body: 'Are you sure you want to reset this image?',
       body2: 'This cannot be undone.',

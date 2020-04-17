@@ -12,7 +12,7 @@
         <!-- ng build prod issue expected argument added empty strings  -->
         <button mat-stroked-button class="btn-primary " (click)="addNewTaskTemplate()"> ADD NEW</button>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-12" *ngIf="taskList && !isLoading">
         <div>Linked task template</div>
         <table mat-table [dataSource]="linkedTaskList" class="mt-8 skeletonAnimation" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
@@ -76,7 +76,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
     </div>
-    <div class="col-md-12 pt-20">
+    <div class="col-md-12 pt-20" *ngIf="taskList && !isLoading">
         <div>Non linked task template</div>
         <table mat-table [dataSource]="unlinkedTaskList" class="mt-8 skeletonAnimation" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="symbol1">

@@ -14,33 +14,40 @@ import {ConfirmDialogComponent} from 'src/app/component/protect-component/common
 })
 export class RolesComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'del'];
-  dataSource: any;
+  dataSource: any = new MatTableDataSource([{}, {}, {}]);
   advisorId: any;
   isLoading: boolean;
   globalData: any[] = [];
   counter = 0;
+  hasError = false;
 
   constructor(
     private eventService: EventService,
     private settingsService: SettingsService,
+    public utilService: UtilService,
     private dialog: MatDialog,
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
 
   ngOnInit() {
+    this.utilService.loader(0);
     this.getAllRoles();
   }
 
   getAllRoles() {
-    this.loader(1);
+    this.utilService.loader(1);
     const obj = {
       advisorId: this.advisorId
     };
 
     this.settingsService.getAllRoles(obj).subscribe((res) => {
       this.dataSource = new MatTableDataSource(res);
-      this.loader(-1);
+      this.utilService.loader(-1);
+    }, err => {
+      this.eventService.openSnackBar(err, "Dismiss");
+      this.utilService.loader(-1);
+      this.hasError = true;
     });
   }
 
@@ -96,20 +103,23 @@ export class RolesComponent implements OnInit {
   }
   deleteRole( data) {
     const dialogData = {
-      data: 'Role',
+      data: 'role',
       header: 'Delete',
       body: 'Are you sure you want to delete this role?',
       body2: 'This cannot be undone.',
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.loader(1);
+        this.utilService.loader(1);
         dialogRef.close();
         this.settingsService.deleteRole(data.id).subscribe((res) => {
           this.getAllRoles();
-          this.loader(-1);
+          this.utilService.loader(-1);
         },
-        error => this.eventService.showErrorMessage(error));
+        error => {
+          this.eventService.showErrorMessage(error);
+          this.utilService.loader(-1);
+        });
       },
       negativeMethod: () => {
         dialogRef.close();
