@@ -134,8 +134,8 @@ export class ForgotPasswordComponent implements OnInit {
       }
       ,
       err => {
-        // this.eventService.openSnackBar(err, 'Dismiss');
-        this.userName.setErrors({ incorrect: true });
+        this.eventService.openSnackBar(err, 'Dismiss');
+        // this.userName.setErrors({ incorrect: true });
         this.barButtonOptions.active = false;
       }
     );
@@ -232,6 +232,7 @@ export class ForgotPasswordComponent implements OnInit {
         err => this.eventService.openSnackBar(err, 'Dismiss')
       );
     } else {
+      // err => this.eventService.openSnackBar(err, 'Dismiss');
       (this.resendOtpFlag) ? this.eventService.openSnackBar('OTP has expired', 'Dismiss') : this.eventService.openSnackBar('Otp is incorrect', 'Dismiss');
     }
   }
