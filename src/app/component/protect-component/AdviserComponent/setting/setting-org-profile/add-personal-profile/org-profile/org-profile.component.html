@@ -154,10 +154,7 @@
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard">
                                 <input #city class="form-control br-0" formControlName="city" type="text" matInput readonly placeholder="Mumbai">
-                                <mat-hint align="end" class="">{{city.value.length}}/30</mat-hint>
-                                <mat-error class=" pt-4" *ngIf="orgProfile.get('city').errors?.required">This field is required
-                                </mat-error>
-                                <!-- <mat-error class=" pt-4" *ngIf="orgProfile.get('city').errors?.pattern || orgProfile.get('city').errors?.minlength || orgProfile.get('city').errors?.maxlength">Please enter valid city name</mat-error> -->
+                                <mat-error class=" pt-4">This field is required</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -170,10 +167,7 @@
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard">
                                 <input #state class="form-control br-0" type="text" formControlName="state" matInput readonly placeholder="Maharashtra">
-                                <mat-hint align="end" class="">{{state.value.length}}/30</mat-hint>
-                                <mat-error class=" pt-4" *ngIf="orgProfile.get('state').errors?.required">This field is required
-                                </mat-error>
-                                <!-- <mat-error class=" pt-4" *ngIf="orgProfile.get('state').errors?.pattern || orgProfile.get('state').errors?.minlength || orgProfile.get('state').errors?.maxlength">Please enter valid state name</mat-error> -->
+                                <mat-error class=" pt-4">This field is required</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
