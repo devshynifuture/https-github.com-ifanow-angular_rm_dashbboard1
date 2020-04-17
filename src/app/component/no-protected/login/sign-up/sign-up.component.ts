@@ -174,4 +174,7 @@ export class SignUpComponent implements OnInit {
 
     });
   }
+  showTermsAndConditions() {
+    this.router.navigate(['/terms-condition']);
+  }
 }

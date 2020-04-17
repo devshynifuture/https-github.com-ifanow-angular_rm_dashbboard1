@@ -100,8 +100,10 @@
                             <div class="col-md-12 mb-16 mt-10 p-0 f-14">
                                 <!--                <mat-form-field>-->
                                 <mat-checkbox formControlName="termsAgreement">
-                                    I accept the <span class="text-primary c-p"> terms of service
-                                    </span> & <span class="c-p text-primary"> privacy policy </span>
+                                    I accept the <span (click)="showTermsAndConditions()" class="text-primary c-p">
+                                        terms of service
+                                    </span> & <span (click)="showTermsAndConditions()" class="c-p text-primary"> privacy
+                                        policy </span>
                                 </mat-checkbox>
 
                                 <mat-error class="matErrorCss"
