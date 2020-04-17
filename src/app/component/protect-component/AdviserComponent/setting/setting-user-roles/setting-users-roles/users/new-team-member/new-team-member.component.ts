@@ -55,10 +55,10 @@ export class NewTeamMemberComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId
     };
-    this.settingsService.getAllRoles(obj).subscribe((res) => {
+    this.settingsService.getUserRolesGlobalData(obj).subscribe((res) => {
       this.roles = res;
       this.loader(-1);
-    });
+    }, err => {this.eventService.openSnackBar(err, "Dismiss")});
   }
 
   createForm() {

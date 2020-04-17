@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
 import { FileOrderingUpperComponent } from './file-ordering-upper/file-ordering-upper.component';
+import { FileOrderingUploadService } from './file-ordering-upload.service';
 
 @Component({
   selector: 'app-file-ordering-upload',
@@ -12,7 +13,7 @@ import { FileOrderingUpperComponent } from './file-ordering-upper/file-ordering-
 export class FileOrderingUploadComponent implements OnInit {
 
   constructor(
-    private eventService: EventService
+    private eventService: EventService,
   ) { }
 
   ngOnInit() {

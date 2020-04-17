@@ -2,12 +2,12 @@ import { Component, OnInit, ElementRef, Input } from '@angular/core';
 import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormBuilder } from '@angular/forms';
 import { SupportService } from '../../support.service';
-import { AuthService } from 'src/app/auth-service/authService';
 import { timingSafeEqual } from 'crypto';
 import { UtilService } from 'src/app/services/util.service';
 import { SettingsService } from '../../../AdviserComponent/setting/settings.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from '../../../common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-admin-details',
@@ -15,7 +15,6 @@ import { EventService } from 'src/app/Data-service/event.service';
   styleUrls: ['./admin-details.component.scss']
 })
 export class AdminDetailsComponent implements OnInit {
-  advisorId: any;
   getOverview: any;
   inputData: any;
   overviewDesc = true
@@ -25,13 +24,13 @@ export class AdminDetailsComponent implements OnInit {
   isSuccess = false
   rtaDetails: any;
   isLoading = false
-  stageComment: any;
+  stageComment: any[] = [{}];
   @Input()
   set data(data) {
     window.screenTop;
     this.inputData = data;
     this.getOverviewIFAOnbording(this.inputData)
-    this.getIFAActivity()
+    // this.getIFAActivity()
     this.getRTADetails()
   }
 
@@ -44,16 +43,18 @@ export class AdminDetailsComponent implements OnInit {
     private supportService: SupportService,
     private eventService: EventService,
     public utilservice: UtilService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    public dialog: MatDialog
   ) {
-    this.advisorId = AuthService.getAdvisorId()
+    //this.advisorId = AuthService.getAdvisorId()
   }
 
   tabIndex = 0;
 
   isRTALoaded: boolean = false;
   isTeamLoaded: boolean = false;
-
+  isOverview = false
+  isActivity = false
   camsDS: MatTableDataSource<any> = new MatTableDataSource([{}, {}, {}]);
   karvyDS: MatTableDataSource<any> = new MatTableDataSource([{}, {}, {}]);
   frankDS: MatTableDataSource<any> = new MatTableDataSource([{}, {}, {}]);
@@ -105,7 +106,7 @@ export class AdminDetailsComponent implements OnInit {
     }
     this.supportService.activityCommentUpdate(obj).subscribe(
       data => {
-        console.log('getOverviewIFAOnbording', data);
+        console.log('activityCommentUpdate', data);
         if (data) {
           // this.getOverview = data.stageList;
         }
@@ -113,25 +114,63 @@ export class AdminDetailsComponent implements OnInit {
       , err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
-  activityCommentFunStage() {
-
-  }
-  getstageComment() {
+  activityCommentFunStage(value, flag) {
+    value.isEditStage = flag
     let obj = {
-
+      id: value.id,
+      commentMsg: value.commentMsg,
     }
-    this.supportService.getStageComments(obj).subscribe(
+    if (flag == true) {
+      this.supportService.editStageComment(obj).subscribe(
+        data => {
+          console.log('editStageComment', data);
+          if (data) {
+            // this.getOverview = data.stageList;
+          }
+        }
+        , err => this.eventService.openSnackBar(err, "Dismiss")
+      )
+    }
+  }
+  addStageComment(value, stage) {
+    let obj =
+    {
+      id: stage.id,
+      commentMsg: value,
+      rmId: 3,
+    }
+    this.supportService.addStageComment(obj).subscribe(
       data => {
-        console.log('getOverviewIFAOnbording', data);
-        if (data) {
-          this.stageComment = data;
-          this.stageComment.forEach(element => {
-            element.isEditStage = true
-          });
+        console.log('editStageComment', data);
+        if (data == null) {
+          // this.getOverview = data.stageList;
+          this.getstageComment(stage, true)
         }
       }
       , err => this.eventService.openSnackBar(err, "Dismiss")
     )
+  }
+  getstageComment(stage, flag) {
+    this.isLoading = true
+    let obj = {
+      advisorId: this.inputData.adminAdvisorId,
+      stageChatId: stage.taskLevelId
+    }
+    if (flag == true) {
+      this.supportService.getStageComments(obj).subscribe(
+        data => {
+          console.log('getOverviewIFAOnbording', data);
+          this.isLoading = false
+          if (data) {
+            this.stageComment = data;
+            this.stageComment.forEach(element => {
+              element.isEditStage = true
+            });
+          }
+        }
+        , err => this.eventService.openSnackBar(err, "Dismiss")
+      )
+    }
   }
   editStageComment() {
     let obj = {
@@ -162,15 +201,16 @@ export class AdminDetailsComponent implements OnInit {
       , err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
-  showComment(stage,flag){
+  showComment(stage, flag) {
     if (stage.isShowComment == true) {
       stage.isShowComment = false
     } else {
       stage.isShowComment = true
     }
+    this.getstageComment(stage, flag)
   }
   updateActivityCompleteness(stage, event) {
-   
+
     this.stageList.forEach(element => {
       if (element.id == stage.id) {
         element.id = stage.id
@@ -198,6 +238,7 @@ export class AdminDetailsComponent implements OnInit {
         console.log('getOverviewIFAOnbording', data);
         this.isSuccess = false
         if (data) {
+          this.isActivity = true
           this.stageList = data.stageList;
           this.stageList.forEach(element => {
             element.isShowComment = false
@@ -221,20 +262,81 @@ export class AdminDetailsComponent implements OnInit {
       data => {
         console.log('getOverviewIFAOnbording', data);
         if (data) {
-          // this.getOverview = data.stageList;
+
         }
       }
       , err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
-  makeComment(comment, flag) {
+  makeComment(comment, stage) {
     console.log('comment', comment)
+    let obj =
+    {
+      activityId: stage.id,
+      commentMsg: comment,
+      rmId: 3,
+    }
+    this.supportService.addStageComment(obj).subscribe(
+      data => {
+        console.log('editStageComment', data);
+        if (data) {
 
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
   }
+  deleteModal(value, data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        if (value == 'commentStage') {
+          this.supportService.deleteCommentStage(data.id).subscribe(
+            data => {
+              dialogRef.close();
+              this.getstageComment(data, true);
+            },
+            error => this.eventService.showErrorMessage(error)
+          );
+        } else {
+          this.supportService.activityDeleteComment(data.id).subscribe(
+            data => {
+              dialogRef.close();
+              this.getIFAActivity();
+            },
+            error => this.eventService.showErrorMessage(error)
+          );
+        }
 
+        this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
+      },
+      negativeMethod: () => {
+      }
+    };
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
 
   changeTab(index) {
     switch (index) {
+      case 1:
+        if (!this.isActivity) {
+          this.getIFAActivity()
+        }
+        break;
       case 2:
         if (!this.isRTALoaded) {
           this.loadRTAList()
