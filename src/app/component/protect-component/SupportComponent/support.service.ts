@@ -18,6 +18,10 @@ export class SupportService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ONBOARDING_TASK_GLOBAL, data);
   }
 
+  getBackofficeAdvisorSearchByName(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BACKOFFICE_ADVISOR_SEARCH_NAME, data);
+  }
+
   getFileTypeOrder(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FILE_TYPE_ORDER, data);
   }
@@ -77,14 +81,19 @@ export class SupportService {
   getIfaMatricData(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_IFA_MATRIC_DATA, data);
   }
-  getStageComments(data){
+
+  postFileOrderingData(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.POST_HISTORICAL_FILE_ORDER, data);
+  }
+
+  getStageComments(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_STAGE_COMMENT, data);
   }
-  deleteCommentStage(data){
-    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_STAGE_COMMENT , data);
+  deleteCommentStage(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_STAGE_COMMENT, data);
   }
-  editStageComment(data){
-    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_STAGE_COMMENT , data);
+  editStageComment(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_STAGE_COMMENT, data);
   }
   // observable data sending
 
