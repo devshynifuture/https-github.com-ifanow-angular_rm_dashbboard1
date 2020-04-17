@@ -59,9 +59,9 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
     };
     this.orgSetting.getTeamMemberList(obj).subscribe(
       data => {
-        this.changeLoadCounter(-1);
-        this.teamMemberList = data;
+        this.teamMemberList = data || [];
         this.teamMemberList.unshift(this.user);
+        this.changeLoadCounter(-1);
       },
       err => this.event.openSnackBar(err, 'Dismiss')
     );
@@ -76,9 +76,6 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
       },
       err => this.event.openSnackBar(err, 'Dismiss')
     );
-  }
-
-  selectedSubcategory(value) {
   }
 
   createTaskTemplateForm() {
@@ -98,7 +95,6 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
 
     // assign validators based on template type
     if (this.taskTemplate.controls.templateType.value == 1) {
-
       this.taskTemplate.controls.categoryId.setValue(this.data.categoryId || 1);
       this.taskTemplate.controls.categoryId.setValidators([Validators.required]);
       this.taskTemplate.controls.subcategoryId.setValidators([Validators.required]);

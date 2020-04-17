@@ -14,15 +14,16 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class HierachyComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'role', 'report'];
-  dataSource:MatTableDataSource<any>;
-  advisorId:any;
-  counter: any;
+  dataSource = new MatTableDataSource([{}, {}, {}]);
+  advisorId: any;
   isLoading: boolean = false;
+  hasError: boolean = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
     private eventService: EventService,
     private settingsService: SettingsService,
+    public utilService: UtilService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -32,18 +33,17 @@ export class HierachyComponent implements OnInit {
   }
 
   getAccessRightsList() {
-    //this.loader(1);
+    this.utilService.loader(1);
     const dataObj = {
       advisorId: this.advisorId
     }
     this.settingsService.getAccessRightsList(dataObj).subscribe((res) => {
-     // this.loader(-1);
-      console.log(res);
-      this.dataSource = new MatTableDataSource(res);
+      this.utilService.loader(-1);
+      this.dataSource = new MatTableDataSource(res || []);
     }, err => {
-      console.error(err);
-     // this.loader(-1);
-      this.eventService.openSnackBar("Error occured");
+      this.utilService.loader(-1);
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss");
     })
   }
 
@@ -57,25 +57,13 @@ export class HierachyComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getAccessRightsList();
           }
           rightSideDataSub.unsubscribe();
         }
-
       }
     );
   }
-
-  loader(countAdder) {
-    this.counter += countAdder;
-    if (this.counter == 0) {
-      this.isLoading = false;
-    } else {
-      this.isLoading = true;
-    }
-  }
-
 }
