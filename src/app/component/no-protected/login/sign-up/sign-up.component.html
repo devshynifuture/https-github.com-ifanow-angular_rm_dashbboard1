@@ -30,7 +30,10 @@
                             </p>
                         </div>
                     </div>
-
+                    <mat-radio-group [(ngModel)]="typeOfRegister" (change)="resetForm()" aria-label="Select an option">
+                        <mat-radio-button value="1">Individual</mat-radio-button>
+                        <mat-radio-button value="2">Non-individual</mat-radio-button>
+                    </mat-radio-group>
                     <div [formGroup]="signUpForm" class="form_container_new_wrapper">
                         <div class="row">
                             <div class="col-md-12 form-group p-0">
@@ -43,7 +46,17 @@
                                 </mat-form-field>
                             </div>
                         </div>
-
+                        <div *ngIf="typeOfRegister=='2'" class="row">
+                            <div class="col-md-12 form-group p-0">
+                                <h5 class="pt-12 mobileNone mb-4">Company name</h5>
+                                <mat-form-field appearance="standard" floatLabel="never">
+                                    <input #comName [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR" [maxLength]="40" appInputValueValidation class="form-control" formControlName="companyName" matInput placeholder="Enter company name" tabindex="1">
+                                    <mat-hint align="end" class="f-12 mobileNone">{{comName.value.length}}/40
+                                    </mat-hint>
+                                    <mat-error align="end">Company name required</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-12 form-group p-0">
                                 <h5 class="pt-12 mobileNone mb-4">Email</h5>
@@ -74,10 +87,12 @@
                         <div class="row">
                             <div class="col-md-12 mb-16 mt-10 p-0 f-14">
                                 <!--                <mat-form-field>-->
-                                <mat-checkbox formControlName="termsAgreement"> </mat-checkbox>
-                                I accept the <span class="text-primary c-p"> terms of service
-                                </span> & <span class="c-p text-primary"> privacy policy </span>
-
+                                <mat-checkbox formControlName="termsAgreement">
+                                    I accept the <span (click)="showTermsAndConditions()" class="text-primary c-p">
+                                        terms of service
+                                    </span> & <span (click)="showTermsAndConditions()" class="c-p text-primary"> privacy
+                                        policy </span>
+                                </mat-checkbox>
 
                                 <mat-error class="matErrorCss" *ngIf="!signUpForm.value.termsAgreement&&signUpForm.controls.termsAgreement.touched">
                                     Please accept terms and conditions

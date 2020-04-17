@@ -307,6 +307,7 @@ export class ClientDematComponent implements OnInit {
           mobileList.push({
             "id": 0,
             "mobileNo": element.get('number').value,
+            ifscCode: 73
           });
         });
       }

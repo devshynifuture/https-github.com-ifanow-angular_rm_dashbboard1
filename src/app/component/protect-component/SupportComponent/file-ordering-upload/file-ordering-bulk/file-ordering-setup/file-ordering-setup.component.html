@@ -1,26 +1,22 @@
-<div class="popup-header-fix-35">
+<div class="popup-header-fix-40">
     <div class="row bb-1">
-        <div class="col-md-10 p-0">
-            <h4 class="mb-0 wrapper-20">
-                Historical File Ordering Setup
-            </h4>
+        <div class="col-md-8 p-0">
+            <h4 class="mb-0 wrapper-20"> Bulk file ordering setup</h4>
         </div>
-        <div class="col-md-2 text-left">
+        <div class="col-md-4 text-right">
             <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="dialogClose()"> clear</i>
+                <i class="material-icons c-p pt-8 v-middle" (click)="dialogClose(false)"> clear</i>
             </div>
         </div>
     </div>
 </div>
 
-<div class="p-44" [formGroup]="historicalFileBulkOrderingForm">
-    <div class="row pt-44">
-        <div class="col-lg-5 text-right">
-            <h5 class="f-500">
-                Select RTA
-            </h5>
+<div class="pb-100 order-historical" [formGroup]="historicalFileBulkOrderingForm">
+    <div class="row pt-28">
+        <div class="col-md-5 pr-0">
+            <h5 class="text-right pt-12 mb-0">Select RTA</h5>
         </div>
-        <div class="col-lg-7">
+        <div class="col-md-7">
             <mat-select formControlName="selectRta" (selectionChange)="setDateValidation()">
                 <mat-option>
                     None
@@ -42,11 +38,9 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-5 text-right">
-            <h5 class="f-500">
-                File Type
-            </h5>
+    <div class="row pt-24">
+        <div class="col-lg-5 pr-0">
+            <h5 class="text-right pt-12 mb-0">File Type</h5>
         </div>
         <div class="col-lg-7">
             <mat-select formControlName="fileType">
@@ -70,11 +64,9 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-5 text-right">
-            <h5 class="f-500">
-                From Date
-            </h5>
+    <div class="row pt-24">
+        <div class="col-lg-5 pr-0">
+            <h5 class="text-right pt-12 mb-0">From Date</h5>
             <p class="text-primitive">
                 The date from which you want bulk ordering to be done
             </p>
@@ -94,11 +86,9 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-5 text-right">
-            <h5 class="f-500">
-                To Date
-            </h5>
+    <div class="row pt-24">
+        <div class="col-lg-5 pr-0">
+            <h5 class="text-right pt-12 mb-0">To Date</h5>
             <p class="text-primitive">
                 The date to which you want bulk ordering to be done
             </p>
@@ -119,13 +109,12 @@
     </div>
 </div>
 
-<div class="bottom-fixed wrapper-12 pt-16 w-45">
+<div class="bottom-fixed wrapper-12 pt-16 w-50">
     <div class="row">
-        <div class="col-lg-4">
-            <!-- (click)="Close(false)" removed for prod build -->
+        <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose()">Cancel</h5>
         </div>
-        <div class="col-lg-8 right text-right">
+        <div class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit" (click)="requestForBulkFileOrdering()">Save</button>
         </div>
     </div>

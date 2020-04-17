@@ -140,7 +140,7 @@
 
                         <div *ngIf="getOtpFlag==false" class="row">
                             <div class="col-md-12 mobileFlex p-0">
-                                <div (click)="getOtp()" class="otpBox c-p">
+                                <div (click)="getOtp(false)" class="otpBox c-p">
                                     <span class="mt-8">* * * *</span>
                                     <span class="mt-2">GET OTP</span>
                                 </div>
@@ -170,7 +170,7 @@
 
                         <div *ngIf="getOtpFlag" class="row">
                             <p *ngIf="verifyFlag=='Email'" class="text-danger mb-0 f-12">4 digit OTP has been sent to
-                                your email no. {{verifyResponseData.email}}</p>
+                                your email {{verifyResponseData.email}}</p>
                             <p *ngIf="verifyFlag=='Mobile'" class="text-danger mb-0 f-12">4 digit OTP has been sent to
                                 your mobile {{verifyResponseData.mobileNo}}</p>
                             <div class="col-md-12 p-0">
@@ -179,8 +179,14 @@
                                     <app-otp-verify (otpDataEvent)="getOtpData($event)" [otpData]="otpData">
                                     </app-otp-verify>
                                 </div>
-                                <h5 class="mb-0">Didn’t receive? <span (click)="getOtp()" class="lightRead c-p"> Resend
-                                    </span></h5>
+                                <!-- <h5 class="mb-0">Didn’t receive? <span (click)="getOtp()" class="lightRead c-p"> Resend
+                                    </span></h5> -->
+                                <h5 class="mb-24">Didn’t receive? <span (click)="getOtp(true)"
+                                        [ngClass]="{'disbleResend': showTimeRemaing>0,'lightRead':showTimeRemaing==0}"
+                                        class="c-p">Resend</span>
+                                    <span *ngIf="showTimeRemaing>0">0.<span
+                                            *ngIf="showTimeRemaing<10">0</span>{{showTimeRemaing}}</span>
+                                </h5>
                             </div>
 
                             <div class="mobilebuttonColor col-md-12 p-0">
