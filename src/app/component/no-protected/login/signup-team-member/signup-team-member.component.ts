@@ -46,7 +46,7 @@ export class SignupTeamMemberComponent implements OnInit {
     });
     this.signUpForm = this.fb.group({
       fullName: [, [Validators.required]],
-      email: [{ value: '', disabled: true }, [Validators.required,
+      email: [/*{ value: '', disabled: true }*/, [Validators.required,
       Validators.pattern(this.validatorType.EMAIL)]],
       mobile: [, [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
       termsAgreement: [false, [Validators.required, Validators.requiredTrue]]
@@ -62,32 +62,15 @@ export class SignupTeamMemberComponent implements OnInit {
       return;
     } else {
       this.barButtonOptions.active = true;
-      const obj = {
-        emailList: [
-          {
-            userType: 1,
-            email: this.signUpForm.get('email').value
-          }
-        ],
-        name: this.signUpForm.get('fullName').value,
-        displayName: this.signUpForm.get('fullName').value,
-        mobileList: [
-          {
-            userType: 1,
-            mobileNo: this.signUpForm.get('mobile').value,
-          }
-        ],
-        userType: 1,
-        forceRegistration: (this.duplicateTableDtaFlag == true) ? true : null
-      };
-      this.loginService.register(obj, this.clientSignUp).subscribe(
+      let obj = {
+        "advisorId": 3001,
+        "mobileNo": this.signUpForm.get('mobile').value,
+        "name": this.signUpForm.get('fullName').value,
+        "email": this.signUpForm.get('email').value
+      }
+      this.loginService.createTeamMember(obj).subscribe(
         data => {
           console.log(data);
-          if (data == 400) {
-            this.barButtonOptions.active = false;
-            this.confirmModal(null);
-            return;
-          }
           this.barButtonOptions.active = false;
           const forgotPassObjData = {
             mobileNo: this.signUpForm.get('mobile').value,
@@ -120,43 +103,13 @@ export class SignupTeamMemberComponent implements OnInit {
         },
         err => {
           this.barButtonOptions.active = false;
-          this.confirmModal(err.message);
+          this.eventService.openSnackBar(err, 'Dismiss');
+          // this.confirmModal(err.message);
         }
       );
     }
   }
   clientSignUp(obj: { emailList: { userType: number; email: any; }[]; name: any; displayName: any; mobileList: { userType: number; mobileNo: any; }[]; userType: number; forceRegistration: boolean; }, clientSignUp: any) {
     throw new Error("Method not implemented.");
-  }
-
-  confirmModal(errorMsg) {
-    const dialogData = {
-      header: 'REGISTER',
-      body: errorMsg + '. How would you like to proceed?',
-      body2: 'This cannot be undone.',
-      btnYes: 'LOGIN',
-      btnNo: 'REGISTER',
-      positiveMethod: () => {
-        this.duplicateTableDtaFlag = true;
-        this.createAccount();
-        dialogRef.close();
-      },
-      negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
-        this.router.navigate(['login']);
-      }
-    };
-    console.log(dialogData + '11111111111111');
-
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '400px',
-      data: dialogData,
-      autoFocus: false,
-
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-
-    });
   }
 }
