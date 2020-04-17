@@ -46,7 +46,7 @@ export class SignupTeamMemberComponent implements OnInit {
     });
     this.signUpForm = this.fb.group({
       fullName: [, [Validators.required]],
-      email: [/*{ value: '', disabled: true }*/, [Validators.required,
+      email: [{ value: '', disabled: true }, [Validators.required,
       Validators.pattern(this.validatorType.EMAIL)]],
       mobile: [, [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
       termsAgreement: [false, [Validators.required, Validators.requiredTrue]]
