@@ -150,10 +150,10 @@ export class SignUpComponent implements OnInit {
       body: errorMsg + '. How would you like to proceed?',
       body2: 'This cannot be undone.',
       btnYes: 'LOGIN',
-      btnNo: 'REGISTER',
+      btnNo: 'CANCEL',
       positiveMethod: () => {
         this.duplicateTableDtaFlag = true;
-        this.createAccount();
+        // this.createAccount();
         dialogRef.close();
       },
       negativeMethod: () => {

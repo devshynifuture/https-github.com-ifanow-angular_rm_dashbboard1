@@ -203,33 +203,37 @@ export class ClientBasicDetailsComponent implements OnInit {
   }
 
   saveNextClient(flag) {
-    if (this.fieldFlag == 'client' && this.basicDetailsData.userId == null) {
-      if (this.invTypeCategory == '1') {
-        // this.basicDetails.get("clientOwner").setValue(null);
-        this.basicDetails.get('clientOwner').setValidators([Validators.required]);
-        this.basicDetails.get('clientOwner').updateValueAndValidity();
-      } else {
-        // this.nonIndividualForm.get("clientOwner").setValue(null);
-        this.nonIndividualForm.get('clientOwner').setValidators([Validators.required]);
-        this.nonIndividualForm.get('clientOwner').updateValueAndValidity();
-      }
-    } else {
-      (this.invTypeCategory == '1') ? this.basicDetails.get('clientOwner').setValidators(null) : this.nonIndividualForm.get('clientOwner').setValidators(null);
-    }
-    if (this.fieldFlag == 'lead' && this.basicDetailsData.userId == null) {
-      if (this.invTypeCategory == '1') {
-        // this.basicDetails.get("leadOwner").setValue(null);
-        this.basicDetails.get('leadOwner').setValidators([Validators.required]);
-        this.basicDetails.get('leadOwner').updateValueAndValidity();
-      }
-      else {
-        // this.nonIndividualForm.get("leadOwner").setValue(null);
-        this.nonIndividualForm.get('leadOwner').setValidators([Validators.required]);
-        this.nonIndividualForm.get('leadOwner').updateValueAndValidity();
-      }
+    // if (this.fieldFlag == 'client' && this.basicDetailsData.userId == null) {
+    //   if (this.invTypeCategory == '1') {
+    //     this.basicDetails.get('clientOwner').setValidators([Validators.required]);
+    //     this.basicDetails.get('clientOwner').updateValueAndValidity();
+    //   } else {
+    //     this.nonIndividualForm.get('clientOwner').setValidators([Validators.required]);
+    //     this.nonIndividualForm.get('clientOwner').updateValueAndValidity();
+    //   }
+    // } else {
+    //   (this.invTypeCategory == '1') ? this.basicDetails.get('clientOwner').setValidators(null) : this.nonIndividualForm.get('clientOwner').setValidators(null);
+    // }
+    // if (this.fieldFlag == 'lead' && this.basicDetailsData.userId == null) {
+    //   if (this.invTypeCategory == '1') {
+    //     this.basicDetails.get('leadOwner').setValidators([Validators.required]);
+    //     this.basicDetails.get('leadOwner').updateValueAndValidity();
+    //   }
+    //   else {
+    //     this.nonIndividualForm.get('leadOwner').setValidators([Validators.required]);
+    //     this.nonIndividualForm.get('leadOwner').updateValueAndValidity();
+    //   }
+    // }
+    // else {
+    //   (this.invTypeCategory == '1') ? this.basicDetails.get('leadOwner').setValidators(null) : this.nonIndividualForm.get('leadOwner').setValidators(null);
+    // }
+    if (this.invTypeCategory == '1') {
+      this.basicDetails.get('email').setValidators([Validators.required]);
+      this.basicDetails.get('email').updateValueAndValidity();
     }
     else {
-      (this.invTypeCategory == '1') ? this.basicDetails.get('leadOwner').setValidators(null) : this.nonIndividualForm.get('leadOwner').setValidators(null);
+      this.nonIndividualForm.get('comEmail').setValidators([Validators.required]);
+      this.nonIndividualForm.get('comEmail').updateValueAndValidity();
     }
     if (this.invTypeCategory == '1' && this.basicDetails.invalid) {
       this.basicDetails.markAllAsTouched();
@@ -249,6 +253,7 @@ export class ClientBasicDetailsComponent implements OnInit {
             mobileList.push({
               userType: 2,
               mobileNo: element.get('number').value,
+              ifscCode: 73
             });
           }
         });
@@ -384,10 +389,14 @@ export class ClientBasicDetailsComponent implements OnInit {
       console.log(element);
       mobileList.push({
         mobileNo: element.get('number').value,
-        verificationStatus: 0
+        verificationStatus: 0,
+        ifscCode: 73
       });
     });
-
+    if (this.invTypeCategory == '1') {
+      this.basicDetails.get('email').setValidators([Validators.required]);
+      this.basicDetails.get('email').updateValueAndValidity();
+    }
     let gardianObj;
     if (this.invTypeCategory == '2') {
       gardianObj = {
