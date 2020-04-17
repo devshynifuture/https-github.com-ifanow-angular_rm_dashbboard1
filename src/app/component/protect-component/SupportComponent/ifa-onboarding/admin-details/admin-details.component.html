@@ -19,16 +19,18 @@
                 <div class="row">
                     <div class="col-md-9 pl-0 miscellaneousBox">
                         <mat-form-field class="example-full-width" *ngIf="getOverview">
-                            <textarea matInput class="form-control height160"
-                            [disabled] = "overviewDesc" [(ngModel)]="getOverview.description"></textarea>
+                            <textarea matInput class="form-control height160" [disabled]="overviewDesc"
+                                [(ngModel)]="getOverview.description"></textarea>
                             <button mat-button *ngIf="overviewDesc == true"
-                                class=" bg-primary text-white right br-0 text-inherit mt-12" (click)="overviewDesc = false">EDIT</button>
-                                <button mat-button *ngIf="overviewDesc == false"
-                                class=" bg-primary text-white right br-0 text-inherit mt-12" (click)="overviewDesc = true;updateIFAOnboardingOverview()">SAVE</button>
+                                class=" bg-primary text-white right br-0 text-inherit mt-12"
+                                (click)="overviewDesc = false">EDIT</button>
+                            <button mat-button *ngIf="overviewDesc == false"
+                                class=" bg-primary text-white right br-0 text-inherit mt-12"
+                                (click)="overviewDesc = true;updateIFAOnboardingOverview()">SAVE</button>
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row" *ngIf="isSuccess">
+                <div class="row" *ngIf="isSuccess == false">
                     <mat-spinner class="loader text-center" [diameter]="30"></mat-spinner>
                 </div>
             </mat-tab>
@@ -41,12 +43,57 @@
                 <div class="cardList" [formGroup]="onboardingActivityForm">
                     <div class="row pt-10 pb-10 bb">
                         <div class="col-md-8 f-14" *ngFor="let stage of stageList">
-                            <mat-checkbox class="mr-8" [value]="stage.isComplete" [checked]="(stage.isComplete == 1)? true:false"
-                            (change)="updateActivityCompleteness(stage,$event)"> </mat-checkbox>
-                            <span
+                            <mat-checkbox class="mr-8" [value]="stage.isComplete" *ngIf="stage.isShowComment == false"
+                                [checked]="(stage.isComplete == 1)? true:false"
+                                (change)="updateActivityCompleteness(stage,$event)"> </mat-checkbox>
+                            <span (click)="showComment(stage,true)"
                                 [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('firstCall').value == true ? 'line-through': 'initial' }">
                                 {{stage.taskName}}
                             </span>
+                            <div class="bg-grey lter mt-44 p-20" *ngIf="stage.isShowComment == true">
+                                <h4 class="f-14 f-500">Comments</h4>
+                                <div class="row pb-20" *ngFor="let activityStage of activityCommentListStage">
+                                    <div class="col-md-1 text-center p-0">
+                                        <img src="/assets/images/svg/comment-icon.svg">
+                                    </div>
+                                    <div class="col-md-9 pl-0">
+                                        <h4 class="f-14">{{activityStage.name}} <span class="text-primitive">a minute ago
+                                            </span> </h4>
+                                        <p *ngIf="activityStage.isShowComment == true">{{activityStage.commentMsg}}</p>
+                                        <div *ngIf="activityStage.isShowComment == false">
+                                            <mat-form-field>
+                                                <input matInput type="text" maxlength="10"
+                                                    [(ngModel)]="activityStage.commentMsg" class="form-control br-0">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 p-0 text-right">
+                                        <p *ngIf="activityStage.isShowComment == true" class="f-12 c-p mr-8 d-inline-block"
+                                            (click)='activityCommentFunStage(activityStage,false)'> Edit </p>
+                                        <p *ngIf="activityStage.isShowComment == false" class="f-12 c-p mr-8 d-inline-block"
+                                            (click)='activityCommentFunStage(activityStage,true)'> Save </p>
+                                        <p class="f-12 c-p d-inline-block"> Delete </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-grey shadow lter p-20" *ngIf="stage.isShowComment == true">
+                                <div class="row">
+                                    <div class="col-md-1 text-center p-0">
+                                        <img src="/assets/images/svg/comment-icon.svg">
+                                    </div>
+                                    <div class="col-md-9 p-0">
+                                        <mat-form-field>
+                                            <input matInput type="text" [(ngModel)]="Comment" maxlength="10"
+                                                class="form-control br-0">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-2 p-0 text-right">
+                                        <p class="f-12 c-p mr-8 d-inline-block" (click)='makeComment(Comment,false)'>
+                                            Comment </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
@@ -61,34 +108,22 @@
                         </div>
                         <div class="col-md-9 pl-0">
                             <h4 class="f-14">{{activity.name}} <span class="text-primitive">a minute ago </span> </h4>
-                            <p  *ngIf="activity.isEdit == true">{{activity.commentMsg}}</p>
+                            <p *ngIf="activity.isEdit == true">{{activity.commentMsg}}</p>
                             <div *ngIf="activity.isEdit == false">
                                 <mat-form-field>
-                                <input matInput type="text" maxlength="10" [(ngModel)]="activity.commentMsg" class="form-control br-0">
+                                    <input matInput type="text" maxlength="10" [(ngModel)]="activity.commentMsg"
+                                        class="form-control br-0">
                                 </mat-form-field>
                             </div>
                         </div>
                         <div class="col-md-2 p-0 text-right">
-                            <p *ngIf="activity.isEdit == true" class="f-12 c-p mr-8 d-inline-block"(click)='activityCommentFun(activity,false)'> Edit </p>
-                            <p *ngIf="activity.isEdit == false" class="f-12 c-p mr-8 d-inline-block"(click)='activityCommentFun(activity,true)'> Save </p>
+                            <p *ngIf="activity.isEdit == true" class="f-12 c-p mr-8 d-inline-block"
+                                (click)='activityCommentFun(activity,false)'> Edit </p>
+                            <p *ngIf="activity.isEdit == false" class="f-12 c-p mr-8 d-inline-block"
+                                (click)='activityCommentFun(activity,true)'> Save </p>
                             <p class="f-12 c-p d-inline-block"> Delete </p>
                         </div>
                     </div>
-
-                    <!-- <div class="row">
-                        <div class="col-md-1 text-center p-0">
-                            <img src="/assets/images/svg/comment-icon.svg">
-                        </div>
-                        <div class="col-md-9 pl-0">
-                            <h4 class="f-14">Nita Shinde <span class="text-primitive">30 minutes ago </span> </h4>
-                            <p>This is a test comment. All comments related to tasks come here. This is second line of
-                                the comment.</p>
-                        </div>
-                        <div class="col-md-2 p-0 text-right">
-                            <p class="f-12 text_underLine c-p mr-8 d-inline-block"> Edit </p>
-                            <p class="f-12 text_underLine c-p d-inline-block"> Delete </p>
-                        </div>
-                    </div> -->
                 </div>
 
                 <div class="bg-grey shadow lter p-20">
@@ -98,11 +133,12 @@
                         </div>
                         <div class="col-md-9 p-0">
                             <mat-form-field>
-                                <input matInput type="text" [(ngModel)]="Comment" maxlength="10" class="form-control br-0">
+                                <input matInput type="text" [(ngModel)]="Comment" maxlength="10"
+                                    class="form-control br-0">
                             </mat-form-field>
                         </div>
                         <div class="col-md-2 p-0 text-right">
-                            <p class="f-12 c-p mr-8 d-inline-block"(click)='makeComment(Comment,false)'> Comment </p>
+                            <p class="f-12 c-p mr-8 d-inline-block" (click)='makeComment(Comment,false)'> Comment </p>
                         </div>
                     </div>
                 </div>
@@ -182,7 +218,8 @@
                                 <th class="br" mat-header-cell *matHeaderCellDef> Use for file ordering? </th>
                                 <td class="br" mat-cell *matCellDef="let element">
                                     <div class="bar">
-                                        <span *ngIf="!utilservice.isLoading">{{element.fileOrderingUseabilityStatusId == 1 ? 'Yes' : 'No'}}</span>
+                                        <span
+                                            *ngIf="!utilservice.isLoading">{{element.fileOrderingUseabilityStatusId == 1 ? 'Yes' : 'No'}}</span>
                                     </div>
                                 </td>
                             </ng-container>
@@ -271,7 +308,7 @@
                 <div class="row pt-16">
                     <div class="back-office-table col-md-12 overflow-hidden">
                         <table id="table-low" mat-table [dataSource]="userList" appSkeletonLoading
-                        [appSkeletonLoading]="utilservice.isLoading">
+                            [appSkeletonLoading]="utilservice.isLoading">
 
                             <ng-container matColumnDef="name">
                                 <th class="br" mat-header-cell *matHeaderCellDef> Name </th>
