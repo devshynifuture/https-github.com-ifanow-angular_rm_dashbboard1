@@ -235,7 +235,7 @@
                 </th>
                 <td class="br text-right" mat-cell *matCellDef="let element">
                   <div class="bar"><span appFormatNumber *ngIf="!element.totalNav" >{{isLoading ? '':((element.transactionNav) ? element.transactionNav : '0')}}</span>
-                    <span appFormatNumber class="f-700" *ngIf="element.totalNav || element.totalNav == 0">{{isLoading ? '' : ((element.totalNav) ? element.totalNav : 0)}}</span>
+                    <span appFormatNumber class="f-700" *ngIf="element.totalNav">{{isLoading ? '' : ((element.totalNav) ? element.totalNav : 0)}}</span>
                   </div>
                 </td>
                 <!-- <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalNav" class="br f-600 text-right" mat-footer-cell> -->
