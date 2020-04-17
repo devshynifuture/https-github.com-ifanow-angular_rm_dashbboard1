@@ -3,11 +3,12 @@ import { OrderHistoricalFileComponent } from './../../order-historical-file/orde
 import { EventService } from './../../../../../Data-service/event.service';
 import { Component, OnInit } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatChipInputEvent } from '@angular/material';
+import { MatTableDataSource } from '@angular/material';
 import { UpperSliderBackofficeComponent } from '../../common-component/upper-slider-backoffice/upper-slider-backoffice.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
 import { FileOrderingUpperComponent } from '../file-ordering-upper/file-ordering-upper.component';
+import { FileOrderingUploadService } from '../file-ordering-upload.service';
 
 @Component({
   selector: 'app-file-ordering-historical',
@@ -15,29 +16,173 @@ import { FileOrderingUpperComponent } from '../file-ordering-upper/file-ordering
   styleUrls: ['./file-ordering-historical.component.scss']
 })
 export class FileOrderingHistoricalComponent implements OnInit {
+  searchByName: { value: any; type: string; };
 
   constructor(
     private eventService: EventService,
-    private subInjectService: SubscriptionInject
+    private subInjectService: SubscriptionInject,
+    private fileOrderingUploadService: FileOrderingUploadService
   ) { }
+
+  isLoading = false;
   displayedColumns: string[] = ['advisorName', 'rta', 'orderedby', 'startedOn', 'totalfiles', 'queue', 'ordering', 'ordered', 'failed', 'uploaded', 'refresh', 'empty'];
-  dataSource = ELEMENT_DATA;
-
-  ngOnInit() {
-  }
-
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  rmList: any[] = [];
   visible = true;
   selectable = true;
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   filterBy = [];
+  periodList = [
+    {
+      name: "Last 7 Days",
+      value: 7,
+      type: 'period'
+    },
+    {
+      name: "Last month",
+      value: 30,
+      type: 'period'
+    },
+    {
+      name: "Last year",
+      value: 365,
+      type: 'period'
+    }
+  ];
 
-  add(event: MatChipInputEvent): void {
+  rtaList = [
+    {
+      name: 'ALL RTA',
+      value: 0,
+      type: 'rta'
+    },
+    {
+      name: 'CAMS',
+      value: 1,
+      type: 'rta'
+    },
+    {
+      name: 'KARVY',
+      value: 2,
+      type: 'rta'
+    },
+    {
+      name: 'FRANKLIN',
+      value: 3,
+      type: 'rta'
+    },
+  ];
+
+
+  days = 2;
+  rtId = 0;
+
+  ngOnInit() {
+    this.getRmMasterDetails();
+
+    this.fileOrderHistoryListGet({
+      days: this.days,
+      rtId: this.rtId,
+    });
+  }
+
+  getRmMasterDetails() {
+    this.fileOrderingUploadService.getRmMasterUserData({})
+      .subscribe(data => {
+        if (data && data.length !== 0) {
+          data.forEach(element => {
+            element.type = 'rm';
+          });
+          this.rmList = data;
+        } else {
+          this.eventService.openSnackBar("No Rm Data Found!", "DISMISS");
+        }
+      });
+  }
+
+  fileOrderHistoryListGet(data) {
+    this.isLoading = true;
+    this.fileOrderingUploadService.getFileOrderHistoryListData(data)
+      .subscribe(data => {
+        if (data) {
+          this.isLoading = false;
+          let tableData = [];
+          console.log("this is what i got:", data);
+          data.forEach(element => {
+            tableData.push({
+              advisorName: element.advisorName,
+              rta: element.rta === 0 ? "ALL-RTA" : element.rta === 1 ? "CAMS" : element.rta === 2 ? "KARVY" : element.rta === 3 ? "FRANKLIN" : null,
+              orderedBy: "-",
+              startedOn: element.startedOn ? element.startedOn : '-',
+              totalFiles: element.totalFiles,
+              queue: element.inqueue,
+              ordering: element.orderingFrequency,
+              ordered: element.ordered,
+              failed: element.failed ? element.failed : '-',
+              uploaded: element.uploaded,
+              refresh: element.refresh ? element.refresh : '-',
+              empty: element.empty ? element.empty : '-'
+            })
+          });
+
+          this.dataSource.data = tableData;
+
+        } else {
+          this.eventService.openSnackBar("No Data Found", "DISMISS");
+          this.dataSource.data = null;
+        }
+      });
+  }
+
+
+  maniputateEventObjForName(event) {
+    let name = event.value;
+    event.value = {
+      type: 'name',
+      name
+    }
+    this.add(event);
+  }
+
+  add(event): void {
     const input = event.input;
-    const value = event.value;
+    const value = event.value['name'];
+    console.log("add event", event);
 
-    console.log("this some event:::::::", event.value);
+    if (event.value['type'] == 'rm') {
+      // console.log("yo");
+      this.fileOrderHistoryListGet({
+        days: this.days,
+        rtId: this.rtId,
+        rmId: event.value['id']
+      });
+    } else if (event.value['type'] == 'rta') {
+      // console.log("yo");
+      this.rtId = event.value['value'];
+      this.fileOrderHistoryListGet({
+        days: this.days,
+        rtId: event.value['value'],
+      });
+    } else if (event.value['type'] === 'period') {
+      // console.log("yo");
+      this.days = event.value['value'];
+      this.fileOrderHistoryListGet({
+        days: this.days,
+        rtId: this.rtId,
+      });
+    }
+    else if (event.value['type'] === 'name') {
+      this.fileOrderHistoryListGet({
+        days: this.days ? this.days : 2,
+        rtId: this.rtId,
+        advisorName: event.value['name']
+      })
+
+      console.log(event.value);
+    }
+    // filter get api usng
 
     // Add our filterBy
     if ((value || '').trim()) {
@@ -141,6 +286,8 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { advisorName: 'Vivek Shah', rta: 'Franklin', orderedby: 'Satish Patel', startedOn: '08/01/2020 11:32', totalfiles: '1', queue: '5', ordering: '5', ordered: '58', failed: '51', uploaded: 'sa', refresh: '54', empty: '' },
+  { advisorName: '', rta: '', orderedby: '', startedOn: '', totalfiles: '', queue: '', ordering: '', ordered: '', failed: '', uploaded: '', refresh: '', empty: '' },
+  { advisorName: '', rta: '', orderedby: '', startedOn: '', totalfiles: '', queue: '', ordering: '', ordered: '', failed: '', uploaded: '', refresh: '', empty: '' },
+  { advisorName: '', rta: '', orderedby: '', startedOn: '', totalfiles: '', queue: '', ordering: '', ordered: '', failed: '', uploaded: '', refresh: '', empty: '' },
 
 ];
