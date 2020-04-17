@@ -61,6 +61,7 @@ export class RightFilterComponent implements OnInit {
   mfData: any;
   finalFilterData: any;
   reportTypeobj: any;
+  overviewFilter:any;
   selectedTransactionView;
   sendTransactionView;
   transactionPeriod = true;
@@ -92,6 +93,7 @@ export class RightFilterComponent implements OnInit {
     this.getFamilyMember(this._data.folioWise);//for family memeber
     this.getTransactionView(this._data.transactionView);//for displaying how many columns to show in table
     this.getReportType();//get type of report categorywise,investor,sub category wise
+    this.getOverviewFilter();//used for overview filter to show specific tables
     this.setDefaultFilters();//setting default selected in each above array
     this.amc = this._data.schemeWise; // amc wise data
     this.folio = this._data.folioWise; // for getting all folios
@@ -203,6 +205,14 @@ export class RightFilterComponent implements OnInit {
       filterData.push(obj);
     });
     this.reportType = filterData;
+  }
+  getOverviewFilter(){
+    this.overviewFilter = [{name: 'Summary bar',selected: true},
+    {name: 'Scheme wise allocation',selected: true},
+    {name: 'Cashflow Status',selected: true},
+    {name: 'Family Member wise allocation',selected: true},
+    {name: 'Category wise allocation', selected: true},
+    {name: 'Sub Category wise allocation', selected: true}];
   }
 
   changeFilterPeriod(value) {
@@ -480,6 +490,14 @@ export class RightFilterComponent implements OnInit {
       });
       this.reportTypeobj = filter;
     }
+    if (this.overviewFilter != undefined) {
+      this.overviewFilterCount = 0;
+      this.overviewFilter.forEach(item => {
+        if (item.selected) {
+          this.overviewFilterCount++;
+        }
+      });
+    }
   };
 
   selectAll(event, array, someString) {
@@ -509,6 +527,7 @@ export class RightFilterComponent implements OnInit {
       folio: (this.folioObj) ? this.folioObj : this.folio,
       category: (this.categoryObj) ? this.categoryObj : this.category,
       reportType: (this.reportTypeobj) ? this.reportTypeobj : this.reportType,
+      overviewFilter: this.overviewFilter,
       transactionView: this.transactionView,
       reportAsOn: this.datePipe.transform(this.summaryFilerForm.controls.reportAsOn.value, 'yyyy-MM-dd'),
       fromDate: this.datePipe.transform(this.summaryFilerForm.controls.fromDate.value, 'yyyy-MM-dd'),
