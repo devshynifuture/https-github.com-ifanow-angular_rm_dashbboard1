@@ -14,6 +14,39 @@
 <div class="pb-100 order-historical" [formGroup]="orderHistoryFileForm">
     <div class="row pt-28">
         <div class="col-md-5 pr-0">
+            <h5 class="text-right pt-12 mb-0">Search Advisor</h5>
+        </div>
+        <div class="col-md-7">
+            <mat-form-field [formGroup]="searchAdvisorForm">
+                <input matInput placeholder="Search" aria-label="State" [matAutocomplete]="auto1" #advisorRef
+                    formControlName="searchAdvisor" [value]="advisorNameInput">
+                <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn">
+                    <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...
+                    </mat-option>
+                    <ng-container *ngIf="!isLoadingForDropDown">
+                        <mat-option *ngFor="let advisor of arrayOfAdvisorName"
+                            (click)="setAdvisorId(advisor, advisorRef)" [value]="advisor.name"
+                            [matTooltip]="advisor.name" matTooltipPosition="after">
+                            <span>
+                                <b>
+                                    {{advisor.name}}
+                                </b>
+                            </span>
+                        </mat-option>
+                    </ng-container>
+                </mat-autocomplete>
+
+            </mat-form-field>
+            <br>
+            <ng-container *ngIf="arrayAdvisorNameError">
+                <span class="f-12">
+                    {{errorMsg}}
+                </span>
+            </ng-container>
+        </div>
+    </div>
+    <div class="row pt-24">
+        <div class="col-md-5 pr-0">
             <h5 class="text-right pt-12 mb-0">Select RTA</h5>
         </div>
         <div class="col-md-7">

@@ -75,10 +75,13 @@ export class AddNewRoleComponent implements OnInit {
       edit: data.find((permission) => permission.capabilityName == 'Edit'),
       delete: data.find((permission) => permission.capabilityName == 'Delete'),
     }
-    permissions_json.add.featureId = featureId;
-    permissions_json.edit.featureId = featureId;
-    permissions_json.view.featureId = featureId;
-    permissions_json.delete.featureId = featureId;
+    for (let k in permissions_json) {
+      if(permissions_json[k]) {
+        permissions_json[k].featureId = featureId;
+      } else {
+        delete permissions_json[k];
+      }
+    }
     let advanced_permissions = data.filter((permission) => permission.basicOrAdvanceCapability == 2);
     advanced_permissions.forEach((permission) => {
       permission.featureId = featureId;
@@ -120,7 +123,7 @@ export class AddNewRoleComponent implements OnInit {
         capabilityList.push(submodule.advanced_permissions);
       });
     }
-    capabilityList = capabilityList.flat().filter(permission => permission.enabledOrDisabled);
+    capabilityList = capabilityList.flat().filter(Boolean).filter(permission => permission.enabledOrDisabled);
     let featureList = capabilityList.map(feature => {
       return {
         enabledOrDisabled: feature.enabledOrDisabled ? 1 : 2,
@@ -133,10 +136,9 @@ export class AddNewRoleComponent implements OnInit {
   }
 
   convertEnabledOrDisabledAsBoolean(segregatedPermissions) {
-    segregatedPermissions.permissions.view.enabledOrDisabled = segregatedPermissions.permissions.view.enabledOrDisabled == 1 ? true : false;
-    segregatedPermissions.permissions.add.enabledOrDisabled = segregatedPermissions.permissions.add.enabledOrDisabled == 1 ? true : false;
-    segregatedPermissions.permissions.edit.enabledOrDisabled = segregatedPermissions.permissions.edit.enabledOrDisabled == 1 ? true : false;
-    segregatedPermissions.permissions.delete.enabledOrDisabled = segregatedPermissions.permissions.delete.enabledOrDisabled == 1 ? true : false;
+    for (let k in segregatedPermissions.permissions) {
+      segregatedPermissions.permissions[k].enabledOrDisabled = segregatedPermissions.permissions[k].enabledOrDisabled == 1 ? true : false;
+    }
 
     segregatedPermissions.advanced_permissions.forEach((permission) => {
       permission.enabledOrDisabled = permission.enabledOrDisabled == 1 ? true : false;

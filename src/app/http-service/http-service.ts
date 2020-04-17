@@ -267,7 +267,7 @@ export class HttpService {
     return this._http
       .get(this.baseUrl + url, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
-        if (res.status === 200 || res.status === 201 || res.status === 202) {
+        if ([200, 201, 202, 204].includes(res.status)) {
           const resData = this.changeBase64ToString(res);
           // console.log('decoded resData', resData);
           return resData;
