@@ -32,7 +32,6 @@ export class AdminDetailsComponent implements OnInit {
     this.inputData = data;
     this.getOverviewIFAOnbording(this.inputData)
     this.getIFAActivity()
-    this.getRTADetails()
   }
 
   get data() {
@@ -80,23 +79,23 @@ export class AdminDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.overviewDesc = true
-
   }
-  getRTADetails() {
-    const jsonData = { advisorId: this.inputData.adminAdvisorId };
 
+  getRTADetails() {
+    const jsonData = { advisorId: this.data.adminAdvisorId };
     this.settingsService.getMFRTAList(jsonData).subscribe((res) => {
-      console.log('res == ', res)
       this.rtaDetails = res
       this.createDataSource()
     });
   }
+
   createDataSource() {
     this.camsDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 1));
     this.karvyDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 2));
     this.frankDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 3));
     this.fundsDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 4));
   }
+
   activityCommentFun(value, flag) {
     value.isEdit = flag
     let obj = {
@@ -113,9 +112,11 @@ export class AdminDetailsComponent implements OnInit {
       , err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
+
   activityCommentFunStage() {
 
   }
+
   getstageComment() {
     let obj = {
 
@@ -133,6 +134,7 @@ export class AdminDetailsComponent implements OnInit {
       , err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
+
   editStageComment() {
     let obj = {
 
@@ -162,6 +164,7 @@ export class AdminDetailsComponent implements OnInit {
       , err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
+
   showComment(stage,flag){
     if (stage.isShowComment == true) {
       stage.isShowComment = false
@@ -169,6 +172,7 @@ export class AdminDetailsComponent implements OnInit {
       stage.isShowComment = true
     }
   }
+
   updateActivityCompleteness(stage, event) {
    
     this.stageList.forEach(element => {
@@ -188,6 +192,7 @@ export class AdminDetailsComponent implements OnInit {
       , err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
+
   getIFAActivity() {
     this.isSuccess = true
     let obj = {
@@ -212,6 +217,7 @@ export class AdminDetailsComponent implements OnInit {
       , err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
+
   updateIFAOnboardingOverview() {
     let obj = {
       id: this.getOverview.id,
@@ -227,6 +233,7 @@ export class AdminDetailsComponent implements OnInit {
       , err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
+
   makeComment(comment, flag) {
     console.log('comment', comment)
 
@@ -245,7 +252,6 @@ export class AdminDetailsComponent implements OnInit {
         if (!this.isTeamLoaded) {
           this.loadUsers()
         }
-
     }
   }
 
@@ -267,6 +273,7 @@ export class AdminDetailsComponent implements OnInit {
       this.utilservice.loader(-1);
     });
   }
+  
   loadUsers() {
     this.utilservice.loader(1);
     const dataObj = {

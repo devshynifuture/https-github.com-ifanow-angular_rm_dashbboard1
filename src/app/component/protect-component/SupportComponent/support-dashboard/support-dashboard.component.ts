@@ -31,13 +31,15 @@ export class SupportDashboardComponent implements OnInit {
   constructor(
     private eventService: EventService,
     private subInjectService: SubscriptionInject,
-    private supportService: SupportService
+    private supportService: SupportService,
+    public utilsService: UtilService,
   ) { }
 
   ngOnInit() {
     // this.flowCash('')
     //this.flowCash2('')
     //this.flowCash3('')
+    this.utilsService.loader(0);
     this.historicalFileValue = '0'
     this.getDailyServicesStatusReport();
     this.getDailyFiles();
@@ -218,6 +220,10 @@ export class SupportDashboardComponent implements OnInit {
         }
       }
     );
+  }
+
+  getFilesData(){
+
   }
 
 }
