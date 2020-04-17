@@ -8,8 +8,8 @@
             <div class="row ds-none">
                 <div class="col-md-12">
                     <i [routerLink]="[ '/login']" class="material-icons f-20 mt-20">
-            arrow_back
-          </i>
+                        arrow_back
+                    </i>
                 </div>
             </div>
             <div class="mobileUserBox">
@@ -62,7 +62,8 @@
                                 <h5 class="pt-12 mobileNone mb-4">Mobile</h5>
                                 <mat-form-field appearance="standard" floatLabel="never">
                                     <input #mobNo [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="off" class="form-control" formControlName="mobile" matInput maxlength="10" placeholder="Enter mobile" tabindex="1">
-                                    <mat-error *ngIf="signUpForm.get('mobile').errors?.required" align="end">Mobile required</mat-error>
+                                    <mat-error *ngIf="signUpForm.get('mobile').errors?.required" align="end">Mobile required
+                                    </mat-error>
                                     <mat-error *ngIf="signUpForm.get('mobile').errors?.pattern">Mobile number must be 10 digits
                                     </mat-error>
                                     <mat-hint align="end" class="f-12 mobileNone">{{mobNo.value.length}}/10</mat-hint>
@@ -73,12 +74,13 @@
                         <div class="row">
                             <div class="col-md-12 mb-16 mt-10 p-0 f-14">
                                 <!--                <mat-form-field>-->
-                                <mat-checkbox formControlName="termsAgreement">
-                                    I accept the <span class="text-primary c-p"> terms of service
-                  </span> & <span class="c-p text-primary"> privacy policy </span>
-                                </mat-checkbox>
+                                <mat-checkbox formControlName="termsAgreement"> </mat-checkbox>
+                                I accept the <span class="text-primary c-p"> terms of service
+                                </span> & <span class="c-p text-primary"> privacy policy </span>
 
-                                <mat-error class="matErrorCss" *ngIf="!signUpForm.value.termsAgreement&&signUpForm.controls.termsAgreement.touched">Please accept terms and conditions
+
+                                <mat-error class="matErrorCss" *ngIf="!signUpForm.value.termsAgreement&&signUpForm.controls.termsAgreement.touched">
+                                    Please accept terms and conditions
                                 </mat-error>
                                 <!--                </mat-form-field>-->
                             </div>
