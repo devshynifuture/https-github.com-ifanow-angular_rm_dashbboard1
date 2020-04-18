@@ -45,7 +45,12 @@ export class ForgotPasswordComponent implements OnInit {
   constructor(private loginService: LoginService, private eventService: EventService,
     private router: Router, private fb: FormBuilder) {
   }
-
+  signUpBarList = [
+    { name: "CREATE ACCOUNT", flag: true },
+    { name: "VERIFY EMAIL", flag: false },
+    { name: "VERIFY MOBILE", flag: false },
+    { name: "SET PASSWORD", flag: false }
+  ]
   ngOnInit() {
     this.verifyData = window.history.state;
     this.saveVerifyData = Object.assign({}, window.history.state);
@@ -208,6 +213,7 @@ export class ForgotPasswordComponent implements OnInit {
       };
       this.otpData = [];
       this.saveAfterVerifyCredential(obj);
+      this.signUpBarList[1].flag = true;
       this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
       if (this.userNameVerifyResponse != undefined) {
         this.router.navigate(['/login/setpassword'],
@@ -218,6 +224,7 @@ export class ForgotPasswordComponent implements OnInit {
       this.verify('Mobile', false);
       this.verifyFlag = 'Mobile';
     } else if (flag == 'Mobile' && this.otpData.length == 4) {
+      this.signUpBarList[2].flag = true;
       const obj = {
         userId: this.saveVerifyData.userId,
         userType: this.saveVerifyData.userType,
