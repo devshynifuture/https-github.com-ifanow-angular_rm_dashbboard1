@@ -28,6 +28,7 @@ export class AdminDetailsComponent implements OnInit {
   CommentStage:any;
   Comment:any;
   activityId: any;
+  stage: any;
   @Input()
   set data(data) {
     window.screenTop;
@@ -122,7 +123,7 @@ export class AdminDetailsComponent implements OnInit {
   activityCommentFunStage(value, flag) {
     value.isEditStage = flag
     let obj = {
-      id: value.id,
+      id: value.activityCommentFunStage,
       commentMsg: value.commentMsg,
     }
     if (flag == true) {
@@ -140,7 +141,7 @@ export class AdminDetailsComponent implements OnInit {
   addStageComment(value, stage) {
     let obj =
     {
-      id: stage.id,
+      id: stage.taskLevelId,
       commentMsg: value,
       rmId: 3,
     }
@@ -148,6 +149,7 @@ export class AdminDetailsComponent implements OnInit {
       data => {
         console.log('editStageComment', data);
         this.getstageComment(stage, true)
+        this.CommentStage = ''
         if (data == null) {
           // this.getOverview = data.stageList;
         }
@@ -286,6 +288,7 @@ export class AdminDetailsComponent implements OnInit {
     this.supportService.activityAddComment(obj).subscribe(
       data => {
         this.getIFAActivity()
+        this.Comment =''
         console.log('editStageComment', data);
         if (data) {
         }
@@ -293,7 +296,8 @@ export class AdminDetailsComponent implements OnInit {
       , err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
-  deleteModal(value, data) {
+  deleteModal(value, element,event) {
+    this.stage = element
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -303,15 +307,15 @@ export class AdminDetailsComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         if (value == 'commentStage') {
-          this.supportService.deleteCommentStage(data.id).subscribe(
+          this.supportService.deleteCommentStage(event.id).subscribe(
             data => {
               dialogRef.close();
-              this.getstageComment(data, true);
+              this.getstageComment(this.stage, true);
             },
             error => this.eventService.showErrorMessage(error)
           );
         } else {
-          this.supportService.activityDeleteComment(data.id).subscribe(
+          this.supportService.activityDeleteComment(element.id).subscribe(
             data => {
               dialogRef.close();
               this.getIFAActivity();
