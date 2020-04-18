@@ -1,41 +1,41 @@
 <div class="row" id="ui-plan-secondhead">
-    <div class="col-md-2 d-flex align-items-center">
-        <button *ngIf="clientData.userType==2" (click)="goToAdvisorHome()"
+  <div class="col-md-2 d-flex align-items-center">
+    <button (click)="goToAdvisorHome()" *ngIf="authService.isAdvisor()"
             class="btn-warning-outline advisorHomeBtn br-2" mat-stroked-button>
-            <i class="material-icons"> keyboard_backspace</i>
-            ADVISOR HOME
-        </button>
-    </div>
-    <div class="col-md-8 p-0">
-        <nav mat-align-tabs="center" mat-tab-nav-bar>
-            <a [routerLink]="['/customer/detail/plan/summary']" mat-tab-link routerLinkActive="active">SUMMARY</a>
-            <a [routerLink]="['/customer/detail/plan/profile']" mat-tab-link routerLinkActive="active">PROFILE</a>
-            <a class="width110" [routerLink]="['/customer/detail/plan/insurance']" mat-tab-link
-                routerLinkActive="active">INSURANCE</a>
-            <a class="width70" [routerLink]="['/customer/detail/plan/goals']" mat-tab-link
-                routerLinkActive="active">GOALS</a>
-            <a class="width70" [routerLink]="['/customer/detail/plan/taxes']" mat-tab-link
-                routerLinkActive="active">TAXES</a>
-            <a class="width120" [routerLink]="['/customer/detail/plan/cash-flow']" mat-tab-link
-                routerLinkActive="active">CASH
-                FLOWS</a>
-            <!-- <a class="width120" [routerLink]="['/customer/detail/plan/investments']" mat-tab-link routerLinkActive="active">DEPLOYMENTS</a> -->
-            <a class="width110" [routerLink]="['/customer/detail/plan/scenarios']" mat-tab-link
-                routerLinkActive="active">SCENARIOS</a>
-        </nav>
-    </div>
-    <div class="col-md-2 d-flex align-items-center borderLeft">
-        <p class="m-0 f-14 text-white d-flex align-items-center">Ronak Hasmukh Hindocha
-            <i class="material-icons f-14 ml-4">
-                keyboard_arrow_down
-            </i>
-        </p>
-    </div>
+      <i class="material-icons"> keyboard_backspace</i>
+      ADVISOR HOME
+    </button>
+  </div>
+  <div class="col-md-8 p-0">
+    <nav mat-align-tabs="center" mat-tab-nav-bar>
+      <a [routerLink]="['/customer/detail/plan/summary']" mat-tab-link routerLinkActive="active">SUMMARY</a>
+      <a [routerLink]="['/customer/detail/plan/profile']" mat-tab-link routerLinkActive="active">PROFILE</a>
+      <a [routerLink]="['/customer/detail/plan/insurance']" class="width110" mat-tab-link
+         routerLinkActive="active">INSURANCE</a>
+      <a [routerLink]="['/customer/detail/plan/goals']" class="width70" mat-tab-link
+         routerLinkActive="active">GOALS</a>
+      <a [routerLink]="['/customer/detail/plan/taxes']" class="width70" mat-tab-link
+         routerLinkActive="active">TAXES</a>
+      <a [routerLink]="['/customer/detail/plan/cash-flow']" class="width120" mat-tab-link
+         routerLinkActive="active">CASH
+        FLOWS</a>
+      <!-- <a class="width120" [routerLink]="['/customer/detail/plan/investments']" mat-tab-link routerLinkActive="active">DEPLOYMENTS</a> -->
+      <a [routerLink]="['/customer/detail/plan/scenarios']" class="width110" mat-tab-link
+         routerLinkActive="active">SCENARIOS</a>
+    </nav>
+  </div>
+  <div class="col-md-2 d-flex align-items-center borderLeft">
+    <p class="m-0 f-14 text-white d-flex align-items-center">Ronak Hasmukh Hindocha
+      <i class="material-icons f-14 ml-4">
+        keyboard_arrow_down
+      </i>
+    </p>
+  </div>
 
 </div>
 
 <div class="row">
-    <div class="col-md-12 p-0">
-        <router-outlet></router-outlet>
-    </div>
+  <div class="col-md-12 p-0">
+    <router-outlet></router-outlet>
+  </div>
 </div>
