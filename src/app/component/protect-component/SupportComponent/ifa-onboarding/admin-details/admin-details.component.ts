@@ -195,6 +195,7 @@ export class AdminDetailsComponent implements OnInit {
   }
 
   getOverviewIFAOnbording(data) {
+    this.isSuccess = true
     let obj = {
       adminAdvisorId: data.adminAdvisorId
     }
@@ -202,6 +203,7 @@ export class AdminDetailsComponent implements OnInit {
       data => {
         console.log('getOverviewIFAOnbording', data);
         if (data) {
+          this.isSuccess = false
           this.getOverview = data[0];
         }
       }
@@ -220,7 +222,7 @@ export class AdminDetailsComponent implements OnInit {
     let obj = {
       id: stage.id,
       isComplete: (event.checked == true) ? 1 : 0,
-      activityId: stage.activityId,
+      activityId: this.activityId,
     }
     let obj1 = []
     obj1.push(obj)
@@ -237,7 +239,7 @@ export class AdminDetailsComponent implements OnInit {
     }
   }
   getIFAActivity() {
-    this.isSuccess = true
+    this.isLoading = true
     let obj = {
       advisorId: this.inputData.adminAdvisorId
     }
@@ -246,6 +248,7 @@ export class AdminDetailsComponent implements OnInit {
         console.log('getOverviewIFAOnbording', data);
         this.isSuccess = false
         if (data) {
+          this.isLoading = false
           this.isActivity = true
           this.stageList = data.stageList;
           this.activityId = data.activityId;
