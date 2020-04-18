@@ -77,7 +77,10 @@ export class MutualFundOverviewComponent implements OnInit {
       worker.onmessage = ({data}) => {
         this.totalValue = data.totalValue;
          this.calculatePercentage(categoryList); // for Calculating MF categories percentage
-    this.pieChart('piechartMutualFund'); // pie chart data after calculating percentage
+        this.pieChart('piechartMutualFund'); // pie chart data after calculating percentage
+        this.getCashFlowStatus();
+        this.isLoading = false;
+
         console.log(`MUTUALFUNDSummary COMPONENT page got message:`, data);
       };
       worker.postMessage(input);
@@ -104,13 +107,13 @@ export class MutualFundOverviewComponent implements OnInit {
     let filterData =  this.MfServiceService.doFiltering(data);
     this.asyncFilter(filterData.mutualFundList,filterData.mutualFundCategoryMastersList)
     this.mfData = data;
-    this.isLoading = false;
     console.log(data);
     this.dataSource4 = data.mutualFundCategoryMastersList; // category wise allocation
-    this.getCashFlowStatus(); // Used for cashFlow status
     this.getsubCategorywiseAllocation(data); // For subCategoryWiseAllocation
     this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
     this.schemeWiseAllocation(data); // for shemeWiseAllocation
+    this.isLoading = false;
+
    
   }
   calculatePercentage(data) {// function for calculating percentage
@@ -151,15 +154,15 @@ export class MutualFundOverviewComponent implements OnInit {
   getCashFlowStatus() {
     // Used for cashFlow status
     this.datasource1=[
-      { data: 'a. Investment', amts: this.totalValue.totalTransactionAmt },
-      { data: 'b. Switch In', amts: this.totalValue.switchIn },
-      { data: 'c. Switch Out', amts: this.totalValue.withdrawals },
-      { data: 'd. Redemption', amts: this.totalValue.redemption },
-      { data: 'e. Dividend Payout', amts: this.totalValue.dividendPayout },
-      { data: 'f. Net Investment (a+b-c-d-e)', amts: this.totalValue.netInvestment },
-      { data: 'g. Market Value', amts: this.totalValue.marketValue },
-      { data: 'h. Net Gain (g-f)', amts: this.totalValue.netGain },
-      { data: 'i. Realized XIRR (All Transactions)', amts: this.totalValue.xirr },
+      { data: 'a. Investment', amts: (this.totalValue.totalTransactionAmt) ? this.totalValue.totalTransactionAmt : 0 },
+      { data: 'b. Switch In', amts: (this.totalValue.switchIn) ? this.totalValue.switchIn : 0 },
+      { data: 'c. Switch Out', amts: (this.totalValue.withdrawals) ? this.totalValue.withdrawals : 0 },
+      { data: 'd. Redemption', amts: (this.totalValue.redemption) ? this.totalValue.redemption : 0 },
+      { data: 'e. Dividend Payout', amts: (this.totalValue.dividendPayout) ? this.totalValue.dividendPayout : 0 },
+      { data: 'f. Net Investment (a+b-c-d-e)', amts: (this.totalValue.netInvestment) ? this.totalValue.netInvestment : 0 },
+      { data: 'g. Market Value', amts: (this.totalValue.marketValue) ? this.totalValue.marketValue : 0 },
+      { data: 'h. Net Gain (g-f)', amts: (this.totalValue.netGain) ? this.totalValue.netGain : 0 },
+      { data: 'i. Realized XIRR (All Transactions)', amts: (this.totalValue.xirr) ? this.totalValue.xirr : 0 },
     
     ];
   }
@@ -357,12 +360,12 @@ export class MutualFundOverviewComponent implements OnInit {
             this.dataSource.data = this.rightFilterData.family_member_list;
             this.dataSource3.data= this.rightFilterData.subCategoryData;
             this.showHideTable = this.rightFilterData.overviewFilter;
-              (this.showHideTable[0].name == 'Summary bar' && this.showHideTable[0].selected == true) ? this.showSummaryBar = true : this.showSummaryBar = false;  
-              (this.showHideTable[1].name == 'Scheme wise allocation' && this.showHideTable[1].selected == true) ?this.showSchemeWise = true : this.showSchemeWise = false;
-              (this.showHideTable[2].name == 'Cashflow Status' && this.showHideTable[2].selected == true) ? this.showCashFlow = true : this.showCashFlow = false;
-              (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true) ? this.showFamilyMember = true : this.showFamilyMember = false; 
-              (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true) ? this.showCategory = true : this.showCategory = false; 
-              (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true) ? this.showSubCategory = true : this.showSubCategory = false;
+              (this.showHideTable[0].name == 'Summary bar' && this.showHideTable[0].selected == true) ? this.showSummaryBar = true : (this.showSummaryBar = false);  
+              (this.showHideTable[1].name == 'Scheme wise allocation' && this.showHideTable[1].selected == true) ?this.showSchemeWise = true : (this.showSchemeWise = false);
+              (this.showHideTable[2].name == 'Cashflow Status' && this.showHideTable[2].selected == true) ? this.showCashFlow = true : (this.showCashFlow = false);
+              (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true) ? this.showFamilyMember = true : (this.showFamilyMember = false); 
+              (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true) ? this.showCategory = true : (this.showCategory = false); 
+              (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true) ? this.showSubCategory = true : (this.showSubCategory = false);
 
 
             this.isLoading = false;

@@ -255,7 +255,12 @@ export class TempserviceService {
       xirr,
       allocationPer,
       withdrawals,
-      sip
+      sip,
+      netGain,
+      marketValue,
+      netInvestment,
+      redemption,
+      switchIn
     };
     // this.totalObj = obj;
     return obj;
