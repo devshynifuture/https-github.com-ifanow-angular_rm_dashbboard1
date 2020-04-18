@@ -61,7 +61,7 @@ export class RightFilterComponent implements OnInit {
   mfData: any;
   finalFilterData: any;
   reportTypeobj: any;
-  overviewFilter:any;
+  overviewFilter: any;
   selectedTransactionView;
   sendTransactionView;
   transactionPeriod = true;
@@ -206,13 +206,13 @@ export class RightFilterComponent implements OnInit {
     });
     this.reportType = filterData;
   }
-  getOverviewFilter(){
-    this.overviewFilter = [{name: 'Summary bar',selected: true},
-    {name: 'Scheme wise allocation',selected: true},
-    {name: 'Cashflow Status',selected: true},
-    {name: 'Family Member wise allocation',selected: true},
-    {name: 'Category wise allocation', selected: true},
-    {name: 'Sub Category wise allocation', selected: true}];
+  getOverviewFilter() {
+    this.overviewFilter = [{ name: 'Summary bar', selected: true },
+    { name: 'Scheme wise allocation', selected: true },
+    { name: 'Cashflow Status', selected: true },
+    { name: 'Family Member wise allocation', selected: true },
+    { name: 'Category wise allocation', selected: true },
+    { name: 'Sub Category wise allocation', selected: true }];
   }
 
   changeFilterPeriod(value) {
@@ -412,12 +412,23 @@ export class RightFilterComponent implements OnInit {
   changeSelect = function (data, i) {
     this.sendTransactionView = this._data.transactionView;
     console.log('transaction ==', this._data.transactionView);
-    if (data.selected == true) {
-      this.sendTransactionView.push(i);
-    } else if (data.selected == false) {
-      this.sendTransactionView.splice(i, 1);
+    if (data.filterName == 'overView') {
+      if (this.overviewFilter != undefined) {
+        this.overviewFilterCount = 0;
+        this.overviewFilter.forEach(item => {
+          if (item.selected) {
+            this.overviewFilterCount++;
+          }
+        });
+      }
+    } else {
+      if (data.selected == true) {
+        this.sendTransactionView.push(i);
+      } else if (data.selected == false) {
+        this.sendTransactionView.splice(i, 1);
+      }
+      console.log('data ==', this.sendTransactionView);
     }
-    console.log('data ==', this.sendTransactionView);
     if (this.familyMember != undefined) {
       const filter = [];
       this.countFamily = 0;
@@ -490,14 +501,6 @@ export class RightFilterComponent implements OnInit {
       });
       this.reportTypeobj = filter;
     }
-    if (this.overviewFilter != undefined) {
-      this.overviewFilterCount = 0;
-      this.overviewFilter.forEach(item => {
-        if (item.selected) {
-          this.overviewFilterCount++;
-        }
-      });
-    }
   };
 
   selectAll(event, array, someString) {
@@ -541,7 +544,7 @@ export class RightFilterComponent implements OnInit {
     console.log(this.finalFilterData);
     if (this._data.name == 'UNREALIZED TRANSACTION REPORT') {
       let mutualFund = this.finalFilterData.mutualFundList;
-     ( this.dataToSend.toDate != todayDate) ? Object.assign(mutualFund, {toDate : this.dataToSend.toDate}) : null;
+      (this.dataToSend.toDate != todayDate) ? Object.assign(mutualFund, { toDate: this.dataToSend.toDate }) : null;
       this.obj = {
         mutualFundList: mutualFund
       }
@@ -554,38 +557,38 @@ export class RightFilterComponent implements OnInit {
         }
       );
 
-    } else if(this._data.name == 'ALL TRANSACTION REPORT' && this.dataToSend.toDate != todayDate){
-      let catObj : any ;
+    } else if (this._data.name == 'ALL TRANSACTION REPORT' && this.dataToSend.toDate != todayDate) {
+      let catObj: any;
       catObj = this.mfService.categoryFilter(this.finalFilterData.mutualFundList, 'id');
       Object.keys(catObj).map(key => {
         catObj[key].forEach((singleData) => {
           let singleDataTransaction = singleData;
-          singleData={};
+          singleData = {};
           catObj[key] = [];
           singleDataTransaction.mutualFundTransactions.forEach((ele) => {
             const singleData = {
-              unit : ele.unit,
-              transactionDate : ele.transactionDate,
-              schemeCode : singleDataTransaction.schemeCode,
-              effect : ele.effect,
+              unit: ele.unit,
+              transactionDate: ele.transactionDate,
+              schemeCode: singleDataTransaction.schemeCode,
+              effect: ele.effect,
             }
             catObj[key].push(singleData);
           });
         });
-        
+
       });
-        catObj.toDate = this.dataToSend.toDate;
-        console.log(catObj.toDate);
-        this.custumService.getMfUnrealizedTransactions(catObj).subscribe(
-          data => {
-            console.log(data);
-          }
-        );
-    } else{
+      catObj.toDate = this.dataToSend.toDate;
+      console.log(catObj.toDate);
+      this.custumService.getMfUnrealizedTransactions(catObj).subscribe(
+        data => {
+          console.log(data);
+        }
+      );
+    } else {
       this.barButtonOptions.active = false;
       this.Close(this.finalFilterData);
     }
-  
+
   }
 
 
