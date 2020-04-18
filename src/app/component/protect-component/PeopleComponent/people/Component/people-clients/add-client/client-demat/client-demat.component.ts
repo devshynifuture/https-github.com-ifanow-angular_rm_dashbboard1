@@ -216,6 +216,7 @@ export class ClientDematComponent implements OnInit {
     (data == undefined) ? data = {} : data;
     this.dematForm = this.fb.group({
       modeOfHolding: [(data.modeOfHolding) ? String(data.modeOfHolding) : '1'],
+      holderName: [(data.holderNameList && data.holderNameList.length > 0) ? data.holderNameList[0].name : ''],
       depositoryPartName: [data.depositoryParticipantName, [Validators.required]],
       depositoryPartId: [data.depositoryParticipantId, [Validators.required]],
       dematClientId: [data.dematClientId, [Validators.required]],
@@ -275,6 +276,9 @@ export class ClientDematComponent implements OnInit {
           this.dematList = data[0];
           this.createDematForm(this.dematList)
         }
+        else {
+          this.dematList = {};
+        }
       }, err => {
         this.dematList = {};
       }
@@ -319,6 +323,14 @@ export class ClientDematComponent implements OnInit {
             id: element.get('id').value,
             dematId: (this.userData.dematData) ? this.userData.dematData.dematId : (this.dematList) ? this.dematList.dematId : null
           });
+        });
+      }
+      else {
+        holderList.push({
+          // fMDetailTypeId: 1,
+          name: this.dematForm.get('holderName').value,
+          id: (this.userData.dematList && this.userData.dematList.length > 0) ? this.userData.dematList[0].id : null,
+          dematId: (this.userData.dematData) ? this.userData.dematData.dematId : (this.dematList) ? this.dematList.dematId : null
         });
       }
       this.barButtonOptions.active = true;
