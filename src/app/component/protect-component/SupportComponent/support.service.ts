@@ -113,4 +113,20 @@ export class SupportService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BULK_FILE_ORDER_LIST, data);
   }
 
+  getUnmappedAdvisors() {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.UNMAPPED_ADVISOR_LIST, {});
+  }
+
+  mapAdvisors(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.MAP_ADVISOR_TO_RM, data);
+  }
+
+  getRMList() {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_RM_LIST, {});
+  }
+
+  addRm(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_RM, data);
+  }
+
 }
