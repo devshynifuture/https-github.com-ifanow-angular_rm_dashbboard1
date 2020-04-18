@@ -244,6 +244,7 @@ totalSum:any
       this.sumAmountInvestedB = data.sumAmountInvested;
       this.sumCouponAmount = data.sumCouponAmount;
       this.sumCurrentValueB = data.sumCurrentValue;
+      this.sumMaturityValue = data.sumMaturityValue;
     } else {
       this.noData = 'No scheme found';
       this.dataSource.data = [];

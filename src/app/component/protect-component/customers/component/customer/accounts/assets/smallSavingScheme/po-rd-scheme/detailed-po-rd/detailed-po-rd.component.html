@@ -14,44 +14,12 @@
     <div class="row pt-40">
         <div class="col-md-12 p-0">
             <div class="insurance-ui bt">
-                <div class="row bb p-8 b-l br" *ngFor="let obj of data.ownerList; let i = index">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
-                        {{i != 0?'Co-o' : 'O'}}wner{{i != 0?i:''}}
+                <div class="row bb p-8 b-l br" *ngFor="let owner of data.ownerList; let i = index">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        {{i != 0?'Co-o' : 'O'}}wner {{i != 0?i:''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{obj.name}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Amount invested
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{ (data.amountInvested)?data.amountInvested:'-' }}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Current value
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{(data.currentValue)?data.currentValue:'-'}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Maturity value
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{(data.maturityValue)?data.maturityValue:'-'}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Maturity date
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(data.maturityDate)?(data.maturityDate | date:'dd/MM/yyyy'):'-'}}
+                        {{owner.name}} sharing {{owner.share}}% ownership
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -81,19 +49,18 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Ownership type
+                        Tenure
                     </div>
-
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ (data.ownerTypeId==1)?'Joint':(data.ownerTypeId==2)?'Single':'-'}}
+                        {{(data.tenure)?data.tenure:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        RD number
+                        Maturity date
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ (data.rdNumber)?data.rdNumber:'-' }}
+                        {{(data.maturityDate)?(data.maturityDate | date:'dd/MM/yyyy'):'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -104,15 +71,15 @@
                         {{(data.postOfficeBranch)?data.postOfficeBranch:'-'}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br" *ngFor="let data of nominee; let i = index">
+                <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Nominee{{i+1}}
+                        RD number
                     </div>
-
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ data.name }}
+                        {{ (data.rdNumber)?data.rdNumber:'-' }}
                     </div>
                 </div>
+               
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Linked bank number
@@ -130,7 +97,8 @@
                         {{(data.description)?data.description:'-'}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br" *ngIf="!data.nomineeList">
+                
+                <div class="row bb p-8 b-l br" *ngIf="data.nomineeList.length == 0 ">
                     <div class="col-md-8 text-left f-14 roboto p-0" >
                         Nominee
                     </div>
@@ -143,7 +111,7 @@
                         Nominee {{i + 1}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{obj.name}}
+                        {{obj.name}} sharing {{obj.sharePercentage}}% Nominee share
                     </div>
                 </div>
             </div>

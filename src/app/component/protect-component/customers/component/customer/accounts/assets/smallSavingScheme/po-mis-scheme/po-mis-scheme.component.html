@@ -61,7 +61,6 @@
       </td>
     </ng-container>
 
-<<<<<<< HEAD
         <ng-container matColumnDef="mpayout">
             <th mat-sort-header="monthlyPayout" mat-header-cell *matHeaderCellDef class="br text-right textRight">
                 Monthly payout
@@ -127,69 +126,6 @@
             </td>
             <td mat-footer-cell *matFooterCellDef class="br"> </td>
         </ng-container>
-=======
-    <ng-container matColumnDef="payoutTill">
-      <th *matHeaderCellDef class="br text-right textRight" mat-header-cell mat-sort-header="TotalPayoutTillNow">
-        Payout till now
-      </th>
-      <td *matCellDef="let element" class="br text-right amt" mat-cell>
-        <div appFormatNumber class="bar"> {{element.TotalPayoutTillNow}} </div>
-      </td>
-      <td *matFooterCellDef class="br" mat-footer-cell></td>
-
-    </ng-container>
-    <ng-container matColumnDef="mpayout">
-      <th *matHeaderCellDef class="br text-right textRight" mat-header-cell mat-sort-header="monthlyPayout">
-        Monthly payout
-      </th>
-      <td *matCellDef="let element" class="br text-right amt" mat-cell>
-        <div appFormatNumber class="bar"> {{ element.monthlyPayout}} </div>
-      </td>
-      <td *matFooterCellDef [value]="sumOfMonthlyPayout" appFormatNumber class="br text-right f-600 amt p-8 "
-          mat-footer-cell>
-        <div class="bar"> {{sumOfMonthlyPayout}} </div>
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="rate">
-      <th *matHeaderCellDef class="br text-right" mat-header-cell mat-sort-header="rate"> Rate</th>
-      <td *matCellDef="let element" class="br text-left" mat-cell>
-        <div class="bar"> {{element.rate}} </div>
-      </td>
-      <td *matFooterCellDef class="br" mat-footer-cell></td>
-    </ng-container>
-    <ng-container matColumnDef="amt">
-      <th *matHeaderCellDef class="br text-right textRight" mat-header-cell mat-sort-header="amountInvested">
-        Amount invested
-      </th>
-      <td *matCellDef="let element" class="br text-right amt" mat-cell>
-        <div appFormatNumber class="bar"> {{ element.amountInvested}} </div>
-      </td>
-      <td *matFooterCellDef [value]="sumOfAmountInvested" appFormatNumber class="br text-right f-600 amt p-8"
-          mat-footer-cell>
-        <div class="bar"> {{ sumOfAmountInvested }} </div>
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="mvalue">
-      <th *matHeaderCellDef class="br text-right textRight" mat-header-cell mat-sort-header="maturityValue">
-        Maturity value
-      </th>
-      <td *matCellDef="let element" class="br text-right amt" mat-cell>
-        <div appFormatNumber class="bar"> {{ element.maturityValue }} </div>
-      </td>
-      <td *matFooterCellDef [value]="sumOfMaturityValue" appFormatNumber class="br text-right amt f-600 p-8"
-          mat-footer-cell>
-        <div class="bar"> {{ sumOfMaturityValue }} </div>
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="mdate">
-      <th *matHeaderCellDef class="br text-left" mat-header-cell mat-sort-header="maturityDate">Maturity date
-      </th>
-      <td *matCellDef="let element" class="br text-left" mat-cell>
-        <div class="bar"> {{element.maturityDate | date:'dd/MM/yyyy'}} </div>
-      </td>
-      <td *matFooterCellDef class="br" mat-footer-cell></td>
-    </ng-container>
->>>>>>> 75fd64a75660790e30d121704e7562230c56893e
 
     <ng-container matColumnDef="desc">
       <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="description"> Description</th>

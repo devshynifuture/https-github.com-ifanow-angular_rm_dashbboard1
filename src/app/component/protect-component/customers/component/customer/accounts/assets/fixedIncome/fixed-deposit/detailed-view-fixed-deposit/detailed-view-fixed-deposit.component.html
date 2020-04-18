@@ -100,14 +100,14 @@ Description description: "this is futurewise Tech" -->
                         {{(fixedDeposit.interestPayoutOption == 1)?'Cumulative':'Interest payout'}}
                     </div>
                 </div>
-                <div *ngIf="fixedDeposit.interestPayoutOption == 1" class="row bb p-8 b-l br">
+                <!-- <div *ngIf="fixedDeposit.interestPayoutOption == 1" class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Interest compounding
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{(fixedDeposit.interestCompoundingId == 2)?'Monthly':(fixedDeposit.interestCompoundingId == 3)?'Quarterly':(fixedDeposit.interestCompoundingId == 4)?'Half yearly':'Yearly'}}
                     </div>
-                </div>
+                </div> -->
                 <div *ngIf="fixedDeposit.interestPayoutOption == 2" class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Frequency of payout per year
@@ -116,21 +116,21 @@ Description description: "this is futurewise Tech" -->
                         {{(fixedDeposit.frequencyOfPayoutPerYear == 2)?'Monthly':(fixedDeposit.frequencyOfPayoutPerYear == 3)?'Quarterly':(fixedDeposit.frequencyOfPayoutPerYear == 4)?'Half yearly':'Yearly'}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br">
+                <!-- <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Ownership type
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{(fixedDeposit.ownershipType == 1)?'Joint':'Single'}}
                     </div>
-                </div>
+                </div> -->
 
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Current value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{fixedDeposit.currentValue?utils.formatter(fixedDeposit.currentValue):'-'}}
+                        ₹{{fixedDeposit.currentValue?utils.formatter(fixedDeposit.currentValue):'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -138,7 +138,15 @@ Description description: "this is futurewise Tech" -->
                         Maturity value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{fixedDeposit.maturityValue?utils.formatter(fixedDeposit.maturityValue):'-'}}
+                        ₹{{fixedDeposit.maturityValue?utils.formatter(fixedDeposit.maturityValue):'-'}}
+                    </div>
+                </div>
+                <div *ngIf="fixedDeposit.interestPayoutOption == 1" class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Total Interest earned
+                    </div>
+                    <div [value]="fixedDeposit.maturityValue - fixedDeposit.amountInvested" class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                        ₹{{fixedDeposit.maturityValue - fixedDeposit.amountInvested}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -171,6 +179,22 @@ Description description: "this is futurewise Tech" -->
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{fixedDeposit.description?fixedDeposit.description:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br" *ngIf="fixedDeposit.nomineeList.length == 0 ">
+                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                        Nominee
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        -
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br" [hidden]="!fixedDeposit.nomineeList" *ngFor="let obj of fixedDeposit.nomineeList; let i = index">
+                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                        Nominee {{i + 1}}
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{obj.name}} sharing {{obj.sharePercentage}}% Nominee share
                     </div>
                 </div>
             </div>
