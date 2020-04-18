@@ -27,6 +27,7 @@ export class AdminDetailsComponent implements OnInit {
   stageComment: any[] = [{}];
   CommentStage:any;
   Comment:any;
+  activityId: any;
   @Input()
   set data(data) {
     window.screenTop;
@@ -144,9 +145,9 @@ export class AdminDetailsComponent implements OnInit {
     this.supportService.addStageComment(obj).subscribe(
       data => {
         console.log('editStageComment', data);
+        this.getstageComment(stage, true)
         if (data == null) {
           // this.getOverview = data.stageList;
-          this.getstageComment(stage, true)
         }
       }
       , err => this.eventService.openSnackBar(err, "Dismiss")
@@ -241,6 +242,7 @@ export class AdminDetailsComponent implements OnInit {
         if (data) {
           this.isActivity = true
           this.stageList = data.stageList;
+          this.activityId = data.activityId;
           this.stageList.forEach(element => {
             element.isShowComment = false
           });
@@ -273,15 +275,15 @@ export class AdminDetailsComponent implements OnInit {
     console.log('comment', comment)
     let obj =
     {
-      activityId: stage.id,
+      activityId: this.activityId,
       commentMsg: comment,
       rmId: 3,
     }
-    this.supportService.addStageComment(obj).subscribe(
+    this.supportService.activityAddComment(obj).subscribe(
       data => {
+        this.getIFAActivity()
         console.log('editStageComment', data);
         if (data) {
-
         }
       }
       , err => this.eventService.openSnackBar(err, "Dismiss")
