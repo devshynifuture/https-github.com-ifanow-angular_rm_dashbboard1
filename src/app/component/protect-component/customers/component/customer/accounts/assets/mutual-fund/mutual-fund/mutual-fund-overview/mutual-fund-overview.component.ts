@@ -10,6 +10,8 @@ import * as Highcharts from 'highcharts';
 import { CustomerService } from '../../../../../customer.service';
 import { MatTableDataSource } from '@angular/material';
 import { MfServiceService } from '../../mf-service.service';
+import { RightFilterComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
+import { WebworkerService } from 'src/app/services/web-worker.service';
 
 @Component({
   selector: 'app-mutual-fund-overview',
@@ -36,8 +38,17 @@ export class MutualFundOverviewComponent implements OnInit {
   dataSource;
   isLoading: boolean = false;
   dataSource3;
+  rightFilterData : any;
+  showHideTable: any;
+  showSummaryBar = true;
+  showSchemeWise = true;
+  showCashFlow = true;
+  showFamilyMember = true;
+  showCategory = true;
+  showSubCategory = true;
+  totalValue: any = {};
   constructor(public subInjectService: SubscriptionInject, public UtilService: UtilService,
-    public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService) {
+    public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService) {
   }
 
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
@@ -45,7 +56,7 @@ export class MutualFundOverviewComponent implements OnInit {
   datasource1 = [{},{},{}];
   @ViewChild('mfOverviewTemplate', {static: false}) mfOverviewTemplate: ElementRef;
 
-  // @Input() mutualFund;
+   @Input() mutualFund;
 
   ngOnInit() {
     this.getMutualFundData();
@@ -53,6 +64,32 @@ export class MutualFundOverviewComponent implements OnInit {
     this.dataSource2 = [{}, {}, {}];
     this.dataSource3 = [{}, {}, {}];
   }
+  asyncFilter(mutualFund,categoryList) {
+    if (typeof Worker !== 'undefined') {
+      console.log(`13091830918239182390183091830912830918310938109381093809328`);
+      const input = {
+        mutualFundList: mutualFund,
+        type:'',
+        // mfService: this.mfService
+      };
+      // Create a new
+      const worker = new Worker('../../mutual-fund.worker.ts', {type: 'module'});
+      worker.onmessage = ({data}) => {
+        this.totalValue = data.totalValue;
+         this.calculatePercentage(categoryList); // for Calculating MF categories percentage
+        this.pieChart('piechartMutualFund'); // pie chart data after calculating percentage
+        this.getCashFlowStatus();
+        this.isLoading = false;
+
+        console.log(`MUTUALFUNDSummary COMPONENT page got message:`, data);
+      };
+      worker.postMessage(input);
+    } else {
+      // Web workers are not supported in this environment.
+      // You should add a fallback so that your program still executes correctly.
+    }
+  }
+
   getMutualFundData() {
     this.isLoading = true
 
@@ -67,39 +104,49 @@ export class MutualFundOverviewComponent implements OnInit {
     );
   }
   getMutualFundResponse(data) {
+    let filterData =  this.MfServiceService.doFiltering(data);
+    this.asyncFilter(filterData.mutualFundList,filterData.mutualFundCategoryMastersList)
     this.mfData = data;
-    this.isLoading = false;
     console.log(data);
-    this.calculatePercentage(data); // for Calculating MF categories percentage
-    this.pieChart('piechartMutualFund'); // pie chart data after calculating percentage
     this.dataSource4 = data.mutualFundCategoryMastersList; // category wise allocation
-    this.getCashFlowStatus(); // Used for cashFlow status
     this.getsubCategorywiseAllocation(data); // For subCategoryWiseAllocation
     this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
     this.schemeWiseAllocation(data); // for shemeWiseAllocation
+    this.isLoading = false;
+
+   
   }
   calculatePercentage(data) {// function for calculating percentage
-    this.categoryList = data.mutualFundCategoryMastersList;
-    this.categoryList.forEach(element => {
+    this.debtCurrentValue =0;
+    this.equityCurrentValue = 0;
+    this.hybridCurrentValue = 0;
+    this.solution_OrientedCurrentValue = 0 ;
+    this.otherCurrentValue = 0 ;
+    this.debtPercentage = 0;
+    this.equityPercentage = 0;
+    this.hybridPercenatge = 0 ;
+    this.solution_OrientedPercenatge = 0 ;
+    this.otherPercentage = 0;
+      data.forEach(element => {
       if (element.category == 'DEBT') {
         this.debtCurrentValue = element.currentValue;
-        this.debtPercentage = ((element.currentValue / data.total_current_value) * 100).toFixed(2);
+        this.debtPercentage = ((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2);
         this.debtPercentage = parseInt(this.debtPercentage);
       } else if (element.category == 'EQUITY') {
         this.equityCurrentValue = element.currentValue;
-        this.equityPercentage = ((element.currentValue / data.total_current_value) * 100).toFixed(2);
+        this.equityPercentage = ((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2);
         this.equityPercentage = parseInt(this.equityPercentage);
       } else if (element.category == 'HYBRID') {
         this.hybridCurrentValue = element.currentValue;
-        this.hybridPercenatge = ((element.currentValue / data.total_current_value) * 100).toFixed(2);
+        this.hybridPercenatge = ((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2);
         this.hybridPercenatge = parseInt(this.hybridPercenatge);
       } else if (element.category == 'SOLUTION ORIENTED') {
         this.solution_OrientedCurrentValue = element.currentValue;
-        this.solution_OrientedPercenatge = ((element.currentValue / data.total_current_value) * 100).toFixed(2);
+        this.solution_OrientedPercenatge = ((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2);
         this.solution_OrientedPercenatge = parseInt(this.solution_OrientedPercenatge);
       } else {
         this.otherCurrentValue = element.currentValue;
-        this.otherPercentage = ((element.currentValue / data.total_current_value) * 100).toFixed(2);
+        this.otherPercentage = ((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2);
         this.otherPercentage = parseInt(this.otherPercentage);
       }
     });
@@ -107,15 +154,15 @@ export class MutualFundOverviewComponent implements OnInit {
   getCashFlowStatus() {
     // Used for cashFlow status
     this.datasource1=[
-      { data: 'a. Investment', amts: this.mfData.total_amount_inv },
-      { data: 'b. Switch In', amts: this.mfData.total_switch_in },
-      { data: 'c. Switch Out', amts: this.mfData.total_switch_out },
-      { data: 'd. Redemption', amts: this.mfData.total_redemption },
-      { data: 'e. Dividend Payout', amts: this.mfData.total_dividend_payout },
-      { data: 'f. Net Investment (a+b-c-d-e)', amts: this.mfData.total_net_investment },
-      { data: 'g. Market Value', amts: this.mfData.total_market_value },
-      { data: 'h. Net Gain (g-f)', amts: this.mfData.total_unrealized_gain },
-      { data: 'i. Realized XIRR (All Transactions)', amts: this.mfData.total_xirr },
+      { data: 'a. Investment', amts: (this.totalValue.totalTransactionAmt) ? this.totalValue.totalTransactionAmt : 0 },
+      { data: 'b. Switch In', amts: (this.totalValue.switchIn) ? this.totalValue.switchIn : 0 },
+      { data: 'c. Switch Out', amts: (this.totalValue.withdrawals) ? this.totalValue.withdrawals : 0 },
+      { data: 'd. Redemption', amts: (this.totalValue.redemption) ? this.totalValue.redemption : 0 },
+      { data: 'e. Dividend Payout', amts: (this.totalValue.dividendPayout) ? this.totalValue.dividendPayout : 0 },
+      { data: 'f. Net Investment (a+b-c-d-e)', amts: (this.totalValue.netInvestment) ? this.totalValue.netInvestment : 0 },
+      { data: 'g. Market Value', amts: (this.totalValue.marketValue) ? this.totalValue.marketValue : 0 },
+      { data: 'h. Net Gain (g-f)', amts: (this.totalValue.netGain) ? this.totalValue.netGain : 0 },
+      { data: 'i. Realized XIRR (All Transactions)', amts: (this.totalValue.xirr) ? this.totalValue.xirr : 0 },
     
     ];
   }
@@ -142,6 +189,7 @@ export class MutualFundOverviewComponent implements OnInit {
       this.isLoading = false
     }
   }
+
   generatePdf() {
     let para = document.getElementById('template');
     this.UtilService.htmlToPdf(para.innerHTML, 'Test')
@@ -276,6 +324,61 @@ export class MutualFundOverviewComponent implements OnInit {
       }
     );
   }
+  openFilter() {
+    const fragmentData = {
+      flag: 'openFilter',
+      data: {},
+      id: 1,
+      state: 'open35',
+      componentName: RightFilterComponent
+    };
+    fragmentData.data = {
+      name: 'Overview Report',
+      mfData: this.mutualFund,
+      folioWise: this.mutualFund.mutualFundList,
+      schemeWise: this.mutualFund.schemeWise,
+      familyMember: this.mutualFund.family_member_list,
+      category: this.mutualFund.mutualFundCategoryMastersList,
+      transactionView: this.displayedColumns
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          if (sideBarData.data != 'Close') {
+            this.totalValue = {};
+            this.dataSource2.data = [{},{},{}]
+            this.dataSource4 = [{},{},{}]
+            this.dataSource.data = [{},{},{}]
+            this.dataSource3.data = [{},{},{}]
+             this.isLoading = true;
+            this.rightFilterData = sideBarData.data;
+            this.asyncFilter(this.rightFilterData.mutualFundList,this.rightFilterData.category);
+            this.dataSource2.data = this.rightFilterData.schemeWise;
+            this.dataSource4 = this.rightFilterData.category;
+            this.dataSource.data = this.rightFilterData.family_member_list;
+            this.dataSource3.data= this.rightFilterData.subCategoryData;
+            this.showHideTable = this.rightFilterData.overviewFilter;
+              (this.showHideTable[0].name == 'Summary bar' && this.showHideTable[0].selected == true) ? this.showSummaryBar = true : (this.showSummaryBar = false);  
+              (this.showHideTable[1].name == 'Scheme wise allocation' && this.showHideTable[1].selected == true) ?this.showSchemeWise = true : (this.showSchemeWise = false);
+              (this.showHideTable[2].name == 'Cashflow Status' && this.showHideTable[2].selected == true) ? this.showCashFlow = true : (this.showCashFlow = false);
+              (this.showHideTable[3].name == 'Family Member wise allocation' && this.showHideTable[3].selected == true) ? this.showFamilyMember = true : (this.showFamilyMember = false); 
+              (this.showHideTable[4].name == 'Category wise allocation' && this.showHideTable[4].selected == true) ? this.showCategory = true : (this.showCategory = false); 
+              (this.showHideTable[5].name == 'Sub Category wise allocation' && this.showHideTable[5].selected == true) ? this.showSubCategory = true : (this.showSubCategory = false);
+
+
+            this.isLoading = false;
+            // this.getMutualFundResponse(this.rightFilterData.mfData);
+            // this.asyncFilter(this.rightFilterData.mutualFundList);
+            // this.getListForPdf(this.rightFilterData.transactionView);
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+
 
   Excel(something) {
     

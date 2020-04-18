@@ -15,6 +15,7 @@ import { SupportEntryModule } from './support.entry.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { SupportManagementComponent } from './support-management/support-management.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
     IfaOnboardingComponent,
     SupportMiscellaneousComponent,
     SchemeMappingComponent,
+    SupportManagementComponent,
   ],
   imports: [
     CommonModule,

@@ -12,13 +12,30 @@
                     </i>
                 </div>
             </div>
+
+            <div class="row w-85">
+                <div class="col-md-12 mt-40">
+
+                    <ul class="progressbar">
+                        <li class="active">Create account</li>
+                        <li>Verify Email</li>
+                        <li>Verify Mobile</li>
+                        <li>Verify</li>
+                    </ul>
+
+                </div>
+            </div>
+
+
+
+
+
             <div class="mobileUserBox">
                 <div class="loginBoxverifyOtp">
 
 
                     <p class="f-16 mb-12 mobileNone">
-                        <img class="advisorLogo "
-                            src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                        <img class="advisorLogo " src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
                     </p>
                     <h1 class="mb-16 mobileNone f-600">Create an account</h1>
                     <p class="mb-24 mobileNone f-16">Please provide some basic details to help us create your account.
@@ -27,25 +44,33 @@
                     <div class="row ds-none">
                         <div class="col-md-12 mt-70 text-center">
                             <h4 class="f-18 mb-20">Create an account</h4>
-                            <p class="f-14 mb-16 contentText"> Please provide some basic details to help us create your
-                                account.
+                            <p class="f-14 mb-16 contentText"> Please provide some basic details to help us create your account.
                             </p>
                         </div>
                     </div>
-                    <mat-radio-group [(ngModel)]="typeOfRegister" (change)="resetForm()" aria-label="Select an option">
+
+                    <div class="row">
+                        <div class="col-md-12 mb-20 p-0">
+                            <mat-button-toggle-group class="w-80" [(ngModel)]="typeOfRegister" (change)="resetForm()" aria-label="Select an option">
+                                <mat-button-toggle class="w-50" value="1">Individual</mat-button-toggle>
+                                <mat-button-toggle class="w-50" value="2">Non-individual</mat-button-toggle>
+                            </mat-button-toggle-group>
+                        </div>
+                    </div>
+
+
+                    <!-- <mat-radio-group [(ngModel)]="typeOfRegister" (change)="resetForm()" aria-label="Select an option">
                         <mat-radio-button value="1">Individual</mat-radio-button>
                         <mat-radio-button value="2">Non-individual</mat-radio-button>
-                    </mat-radio-group>
-                    <!-- Individual <mat-slide-toggle [(ngModel)]="typeOfRegister" (change)="resetForm()">
-                    </mat-slide-toggle> Non-individual -->
+                    </mat-radio-group> -->
+
+
                     <div [formGroup]="signUpForm" class="form_container_new_wrapper">
                         <div class="row">
                             <div class="col-md-12 form-group p-0">
                                 <h5 class="pt-12 mobileNone mb-4">Full name</h5>
                                 <mat-form-field appearance="standard" floatLabel="never">
-                                    <input #fullName [inputValidator]="validatorType.PERSON_NAME" [maxLength]="40"
-                                        appInputValueValidation class="form-control" formControlName="fullName" matInput
-                                        placeholder="Enter your name" tabindex="1">
+                                    <input #fullName [inputValidator]="validatorType.PERSON_NAME" [maxLength]="40" appInputValueValidation class="form-control" formControlName="fullName" matInput placeholder="Enter your name" tabindex="1">
                                     <mat-hint align="end" class="f-12 mobileNone">{{fullName.value.length}}/40
                                     </mat-hint>
                                     <mat-error align="end">Username required</mat-error>
@@ -56,10 +81,7 @@
                             <div class="col-md-12 form-group p-0">
                                 <h5 class="pt-12 mobileNone mb-4">Company name</h5>
                                 <mat-form-field appearance="standard" floatLabel="never">
-                                    <input #comName [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR"
-                                        [maxLength]="40" appInputValueValidation class="form-control"
-                                        formControlName="companyName" matInput placeholder="Enter company name"
-                                        tabindex="1">
+                                    <input #comName [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR" [maxLength]="40" appInputValueValidation class="form-control" formControlName="companyName" matInput placeholder="Enter company name" tabindex="1">
                                     <mat-hint align="end" class="f-12 mobileNone">{{comName.value.length}}/40
                                     </mat-hint>
                                     <mat-error align="end">Company name required</mat-error>
@@ -70,12 +92,10 @@
                             <div class="col-md-12 form-group p-0">
                                 <h5 class="pt-12 mobileNone mb-4">Email</h5>
                                 <mat-form-field appearance="standard" floatLabel="never">
-                                    <input class="form-control" formControlName="email" matInput
-                                        placeholder="Enter email" tabindex="1">
+                                    <input class="form-control" formControlName="email" matInput placeholder="Enter email" tabindex="1">
                                     <mat-error *ngIf="signUpForm.get('email').errors?.pattern" align="end">Email Invalid
                                     </mat-error>
-                                    <mat-error *ngIf="signUpForm.get('email').errors?.required" align="end">Email
-                                        required
+                                    <mat-error *ngIf="signUpForm.get('email').errors?.required" align="end">Email required
                                     </mat-error>
                                 </mat-form-field>
                             </div>
@@ -85,13 +105,10 @@
                             <div class="col-md-12 form-group p-0">
                                 <h5 class="pt-12 mobileNone mb-4">Mobile</h5>
                                 <mat-form-field appearance="standard" floatLabel="never">
-                                    <input #mobNo [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                                        autocomplete="off" class="form-control" formControlName="mobile" matInput
-                                        maxlength="10" placeholder="Enter mobile" tabindex="1">
-                                    <mat-error *ngIf="signUpForm.get('mobile').errors?.required" align="end">Mobile
-                                        required</mat-error>
-                                    <mat-error *ngIf="signUpForm.get('mobile').errors?.pattern">Mobile number must be 10
-                                        digits
+                                    <input #mobNo [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="off" class="form-control" formControlName="mobile" matInput maxlength="10" placeholder="Enter mobile" tabindex="1">
+                                    <mat-error *ngIf="signUpForm.get('mobile').errors?.required" align="end">Mobile required
+                                    </mat-error>
+                                    <mat-error *ngIf="signUpForm.get('mobile').errors?.pattern">Mobile number must be 10 digits
                                     </mat-error>
                                     <mat-hint align="end" class="f-12 mobileNone">{{mobNo.value.length}}/10</mat-hint>
                                 </mat-form-field>
@@ -108,8 +125,7 @@
                                         policy </span>
                                 </mat-checkbox>
 
-                                <mat-error class="matErrorCss"
-                                    *ngIf="!signUpForm.value.termsAgreement&&signUpForm.controls.termsAgreement.touched">
+                                <mat-error class="matErrorCss" *ngIf="!signUpForm.value.termsAgreement&&signUpForm.controls.termsAgreement.touched">
                                     Please accept terms and conditions
                                 </mat-error>
                                 <!--                </mat-form-field>-->
@@ -122,28 +138,23 @@
                   <img class="iconPosition mobileNone" src="assets/images/svg/login-btn-icon.svg">
                   Create account
                 </button> -->
-                                <app-progress-button (btnClick)="createAccount()" class="w-100 br-4"
-                                    [options]="barButtonOptions">
+                                <app-progress-button (btnClick)="createAccount()" class="w-100 br-4" [options]="barButtonOptions">
                                 </app-progress-button>
                             </div>
                         </div>
 
                         <div class="mobileCenter ds-none">
-                            <h5 class="mt-20 mb-10"> Already have an account? <span [routerLink]="[ '/login']"
-                                    class="text-primary c-p"> Sign in </span>
+                            <h5 class="mt-20 mb-10"> Already have an account? <span [routerLink]="[ '/login']" class="text-primary c-p"> Sign in </span>
                             </h5>
                         </div>
 
-                        <h5 class="mt-36 mobileNone mb-36"> Already have an account? <span [routerLink]="[ '/login']"
-                                class="text-primary c-p"> Sign in </span>
+                        <h5 class="mt-36 mobileNone mb-36"> Already have an account? <span [routerLink]="[ '/login']" class="text-primary c-p"> Sign in </span>
                         </h5>
                     </div>
                 </div>
             </div>
 
-            <p class="f-12 mobileNone l-18 ml-24 text-primitive">Before logging in, please ensure that the URL on the
-                address bar starts with “https” or has a padlock icon. The communication of your private information
-                from any address beginning with "https" is encrypted and secured using SSL.</p>
+            <p class="f-12 mobileNone l-18 ml-24 text-primitive">Before logging in, please ensure that the URL on the address bar starts with “https” or has a padlock icon. The communication of your private information from any address beginning with "https" is encrypted and secured using SSL.</p>
         </div>
     </div>
 </div>

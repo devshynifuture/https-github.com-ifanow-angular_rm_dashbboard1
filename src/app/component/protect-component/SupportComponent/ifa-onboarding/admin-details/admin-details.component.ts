@@ -25,6 +25,8 @@ export class AdminDetailsComponent implements OnInit {
   rtaDetails: any;
   isLoading = false
   stageComment: any[] = [{}];
+  CommentStage:any;
+  Comment:any;
   @Input()
   set data(data) {
     window.screenTop;
