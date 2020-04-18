@@ -143,7 +143,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         }
       }
       if (result.isRefreshRequired) {
-        this.reset()
+        this.getAllFileList(1,'create')
       }
 
     });
