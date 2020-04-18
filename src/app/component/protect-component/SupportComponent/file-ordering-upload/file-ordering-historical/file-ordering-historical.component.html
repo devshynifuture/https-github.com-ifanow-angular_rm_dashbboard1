@@ -88,11 +88,11 @@
                 </td>
             </ng-container>
 
-            <ng-container matColumnDef="orderedby">
+            <ng-container matColumnDef="orderedBy">
                 <th class="br" mat-header-cell *matHeaderCellDef> Ordered by </th>
                 <td class="br" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        {{element.orderedby}}
+                        {{element.orderedBy}}
                     </div>
                 </td>
             </ng-container>
@@ -101,7 +101,7 @@
                 <th class="br" mat-header-cell *matHeaderCellDef> Started on </th>
                 <td class="br" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        {{element.startedOn}}
+                        {{element.startedOn|date:'short'}}
                     </div>
                 </td>
             </ng-container>
@@ -109,7 +109,7 @@
             <ng-container matColumnDef="totalFiles">
                 <th class="br" mat-header-cell *matHeaderCellDef> Total files </th>
                 <td class="c-p br" mat-cell *matCellDef="let element"
-                    (click)="openUpperFileOrdering('openUpperFileOrdering', element)">
+                    (click)="openUpperFileOrdering('historical', element)">
                     <div class="bar">
                         {{element.totalFiles}}
                     </div>

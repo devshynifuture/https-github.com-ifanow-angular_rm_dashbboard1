@@ -61,14 +61,14 @@ export class AumKarvyComponent implements OnInit {
     const data = {
       advisorId: 0,
       brokerId: 0,
-      // rtId: this.rtId,
-      rtId: 0,
+      rtId: this.rtId,
+      // rtId: 0,
       rmId: 3
     }
 
     this.reconService.getAumReconHistoryDataValues(data)
       .subscribe(res => {
-        console.log('aum History values::', res);
+        this.isLoading = false;
         if (res) {
           let tableData = [];
           res.forEach(element => {
@@ -98,9 +98,10 @@ export class AumKarvyComponent implements OnInit {
               flag: "report"
             })
           });
-
           this.dataSource.data = tableData;
-          this.isLoading = false;
+        } else {
+          this.dataSource.data = null;
+          this.eventService.openSnackBar("No AUM History Found", "DISMISS");
         }
       })
   }
@@ -121,6 +122,10 @@ export class AumKarvyComponent implements OnInit {
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           // this.getClientSubscriptionList();
+          if (UtilService.isRefreshRequired(upperSliderData)) {
+            this.dataSource.data = ELEMENT_DATA;
+            this.getAumHistoryData();
+          }
           subscription.unsubscribe();
         }
       }

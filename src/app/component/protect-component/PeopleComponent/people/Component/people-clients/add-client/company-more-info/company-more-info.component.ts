@@ -40,6 +40,7 @@ export class CompanyMoreInfoComponent implements OnInit {
   moreInfoForm;
   @Input() fieldFlag;
   @Output() tabChange = new EventEmitter();
+  companyIndividualData: any;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private peopleService: PeopleService, private eventService: EventService,
@@ -50,6 +51,7 @@ export class CompanyMoreInfoComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.createMoreInfoForm(null);
     this.getCompanyDetails(data);
+    this.companyIndividualData = data
   }
   toUpperCase(event) {
     event = UtilService.toUpperCase(event);
@@ -58,7 +60,7 @@ export class CompanyMoreInfoComponent implements OnInit {
   createMoreInfoForm(data) {
     (data == undefined) ? data = {} : data;
     this.moreInfoForm = this.fb.group({
-      displayName: [data.displayName],
+      displayName: [(data.displayName) ? data.displayName : (this.companyIndividualData) ? this.companyIndividualData.name : ''],
       adhaarNo: [data.aadhaarNumber, [Validators.pattern(this.validatorType.ADHAAR)]],
       maritalStatus: [(data.martialStatusId) ? String(data.martialStatusId) : '1'],
       dateOfBirth: [new Date(data.dateOfBirth)],
@@ -95,6 +97,9 @@ export class CompanyMoreInfoComponent implements OnInit {
           }
           this.moreInfoData = singleData;
           this.createMoreInfoForm(this.moreInfoData);
+        }
+        else {
+          this.moreInfoForm.get('name').setValue(this.companyIndividualData.name);
         }
         console.log(responseData);
       }, err => {

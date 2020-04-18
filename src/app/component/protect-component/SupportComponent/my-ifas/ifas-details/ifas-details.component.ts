@@ -34,6 +34,10 @@ export class IfasDetailsComponent implements OnInit {
   dataSource5 = ELEMENT_DATA5;
   ifasData: any;
   getOverview: any;
+  franklineData: any;
+  cams: any;
+  karvy: any;
+  isLoading: boolean = false;
 
 
 
@@ -45,7 +49,7 @@ export class IfasDetailsComponent implements OnInit {
   isInEditMode: boolean = false;
   reconSummaryList;
   ngOnInit() {
-    // this.getReconSummaryList();
+    this.getReconSummaryList();
   }
   @Input() set data(data) {
     this.ifasData = data;
@@ -56,11 +60,29 @@ export class IfasDetailsComponent implements OnInit {
   }
 
   getReconSummaryList() {
-    this.reconSummaryList = [
-      { name: 'CAMS' },
-      { name: 'Karvy' },
-      { name: 'Franklin Templeton' }
-    ]
+    // this.reconSummaryList = [
+    //   { name: 'CAMS' },
+    //   { name: 'Karvy' },
+    //   { name: 'Franklin Templeton' }
+    // ]
+    this.isLoading = true
+    let obj =
+    {
+      advisorId : this.ifasData.adminAdvisorId,
+    }
+    this.supportService.getMyIFAReconSummary(obj).subscribe(
+      data => {
+        console.log('editStageComment', data);
+        if (data) {
+          this.isLoading = false
+          this.reconSummaryList = data
+          this.franklineData = data.FRANKLIN_TEMPLETON
+          this.cams = data.CAMS
+          this.karvy = data.KARVY
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
   }
   getCancelSubscriptionData() {
 

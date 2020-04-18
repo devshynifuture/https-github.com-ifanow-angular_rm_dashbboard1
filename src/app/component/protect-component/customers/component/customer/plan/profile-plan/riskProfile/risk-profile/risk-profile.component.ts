@@ -30,6 +30,7 @@ export class RiskProfileComponent implements OnInit {
   name = 'Angular';
   showLoader: boolean;
   isLoading = false
+  statusArray : any;
   checkFamilyMem;
   onClickMe(referenceKeyName) {
     alert(referenceKeyName.id);
@@ -345,8 +346,13 @@ export class RiskProfileComponent implements OnInit {
 
     if (data != undefined) {
       this.showRisk = false
-      this.riskAssessmentQuestionList = data.data
-      this.showButton = false
+      if(data.refreshRequired == false){
+        this.getRiskProfileList();
+      }else{
+        this.riskAssessmentQuestionList = data.refreshRequired
+       // this.statusArray = this.riskAssessmentQuestionList
+        this.showButton = false
+      }
     }
   }
   close() {

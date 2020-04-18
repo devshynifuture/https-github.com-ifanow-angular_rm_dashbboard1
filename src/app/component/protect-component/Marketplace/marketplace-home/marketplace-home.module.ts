@@ -8,6 +8,7 @@ import {MatListModule} from '@angular/material/list';
 import {MarketplaceHomeRoutingModule} from './marketplace-home-routing.module';
 import {MarketplaceHomeComponent} from './marketplace-home.component';
 import {MatIconModule} from '@angular/material/icon';
+import {MatRadioModule} from '@angular/material/radio';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatProgressBarModule,
     MatInputModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    MatRadioModule
   ]
 })
 export class MarketplaceHomeModule { }

@@ -5,7 +5,8 @@
                 src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
         </div>
         <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
-            <p class="f-16 m-0"> Transaction #136</p>
+            <p class="f-16 m-0"> {{ data.flag === 'bulk' ? 'Transaction #136' : data.advisorName + " - " + data.rta }}
+            </p>
         </div>
         <div class="col-md-2 text-right">
             <!-- (click)="dialogClose() removed for prod build" -->
@@ -22,7 +23,7 @@
         <div class="row">
             <div class="col-lg-3 pl-0">
                 <div class="form-group">
-                    <button mat-stroked-button>
+                    <button mat-stroked-button (click)="fileOrderRetry(null)">
                         Retry Selected Files
                     </button>
                 </div>
@@ -48,12 +49,15 @@
 
             <ng-container matColumnDef="checkbox">
                 <th class="b-a" mat-header-cell *matHeaderCellDef>
-                    <mat-checkbox></mat-checkbox>
+                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                    </mat-checkbox>
                 </th>
-                <td class="b-a" mat-cell *matCellDef="let element">
-                    <div class="bar">
-                        <mat-checkbox></mat-checkbox>
-                    </div>
+                <td class="b-a" mat-cell *matCellDef="let row">
+                    <mat-checkbox (click)="$event.stopPropagation()" (change)="creatingArrayIdValue($event, row)"
+                        [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                    </mat-checkbox>
                 </td>
             </ng-container>
 
@@ -134,10 +138,10 @@
                             <button mat-menu-item class="c-p" (click)="openDetailedView(element)">
                                 Detailed View
                             </button>
-                            <button mat-menu-item>
+                            <button mat-menu-item class="c-p" (click)="fileOrderRetry(element.id)">
                                 Retry Ordering
                             </button>
-                            <button mat-menu-item>
+                            <button mat-menu-item class="c-p" (click)="refreshList()">
                                 Refresh Status
                             </button>
                         </mat-menu>
@@ -149,6 +153,11 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+        <div class="col-md-12 p-0" *ngIf="dataSource.data === null">
+            <h5 class="text-center b-a p-44">
+                No Data Found
+            </h5>
+        </div>
     </div>
     <div class="col-lg-4"></div>
 </div>

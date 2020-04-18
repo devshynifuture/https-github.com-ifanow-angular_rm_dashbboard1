@@ -7,6 +7,7 @@ import { FileOrderingDetailComponent } from '../file-ordering-detail/file-orderi
 import { UtilService } from 'src/app/services/util.service';
 import { FileOrderingUploadService } from '../file-ordering-upload.service';
 import { SupportService } from '../../support.service';
+import { SelectionModel } from '@angular/cdk/collections';
 @Component({
   selector: 'app-file-ordering-upper',
   templateUrl: './file-ordering-upper.component.html',
@@ -27,10 +28,46 @@ export class FileOrderingUpperComponent implements OnInit {
   data;
   isLoading: boolean = false;
   fileTypeList = [];
+  arrayOfIdsForRetry: any[] = [];
+
+  selection = new SelectionModel<fileOrderingUpperI>(true, []);
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  masterToggle() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      this.arrayOfIdsForRetry = [];
+    } else {
+      this.dataSource.data.forEach(row => {
+        this.selection.select(row)
+        if (!this.arrayOfIdsForRetry.includes(row['id'])) {
+          this.arrayOfIdsForRetry.push(row['id']);
+        }
+      });
+    }
+
+    console.log(this.arrayOfIdsForRetry);
+  }
+
+  checkboxLabel(row?: fileOrderingUpperI): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+  }
 
   ngOnInit() {
     this.fileTypeName();
-    this.fileOrderingListData();
+    if (this.data.flag === 'historical') {
+      this.fileOrderingListData();
+    } else if (this.data.flag === 'bulk') {
+      this.fileOrderBulkListData();
+    }
   }
 
   fileTypeName() {
@@ -40,6 +77,80 @@ export class FileOrderingUpperComponent implements OnInit {
           this.fileTypeList = res;
         }
         console.log(res);
+      })
+  }
+
+  fileOrderBulkListData() {
+    this.isLoading = true;
+    let tableData = [];
+    const reqObj = {
+      bulkFileOrderId: this.data.id
+    }
+
+    this.fileOrderingService.getFileOrderBulkUpperListData(reqObj)
+      .subscribe(res => {
+        this.isLoading = false;
+        if (res && res.length !== 0) {
+          console.log(res);
+          res.forEach((element, index) => {
+
+            this.fileTypeList.forEach(item => {
+              if (item.id === element.fileTypeId) {
+                this.fileName = item.type;
+              }
+            });
+
+            tableData.push({
+              id: element.id,
+              position: index + 1,
+              advisorName: element.advisorName,
+              arnRia: element.arnOrRia === 1 ? 'ARN' + element.arnRiaNumber : 'RIA' + element.arnRiaNumber,
+              fileType: this.fileName,
+              fileOrderTime: element.fileOrderDateTime,
+              status: element.status,
+              referenceId: element.referenceId ? element.referenceId : '-',
+              inFileOrAdded: element.totalFiles + "/" + element.transactionAdded,
+              fileName: element.fileName ? element.fileName : '-',
+              failedReason: element.failedReason ? element.failedReason : '-',
+              action: '',
+              fromDate: element.fromDate,
+              toDate: element.toDate
+            })
+          });
+          this.dataSource.data = tableData;
+        } else {
+          this.dataSource.data = null;
+          this.eventService.openSnackBar("No Data Found", "DISMISS");
+        }
+      }, err => {
+        this.eventService.openSnackBar("Something went wrong", "DISMISS");
+      })
+  }
+
+  fileOrderRetry(value) {
+    let data;
+    if (value === null) {
+      data = {
+        ids: [...this.arrayOfIdsForRetry],
+        isHistorical: this.data.flag == 'historical' ? true : false
+      }
+    } else if (value !== null) {
+      data = {
+        ids: value,
+        isHistorical: this.data.flag == 'historical' ? true : false
+      }
+    }
+    console.log(this.arrayOfIdsForRetry);
+    this.fileOrderingService.putFileOrderRetry(data)
+      .subscribe(res => {
+        if (res) {
+          console.log("this is retry files res:::", res);
+          this.dataSource.data = ELEMENT_DATA;
+          this.data.flag == 'historical' ? this.fileOrderingListData() : this.fileOrderBulkListData()
+
+        }
+      }, err => {
+        this.eventService.openSnackBar(err, "DISMISS");
       })
   }
 
@@ -57,16 +168,17 @@ export class FileOrderingUpperComponent implements OnInit {
         this.isLoading = false;
         if (res && res.length !== 0) {
           console.log(res);
-          res.forEach(element => {
+          res.forEach((element, index) => {
 
             this.fileTypeList.forEach(item => {
               if (item.id === element.fileTypeId) {
                 this.fileName = item.type;
-                console.log(this.fileName);
               }
             });
 
             tableData.push({
+              id: element.id,
+              position: index + 1,
               advisorName: this.data.advisorName,
               arnRia: element.arnOrRia === 1 ? 'ARN' + element.arnRiaNumber : 'RIA' + element.arnRiaNumber,
               fileType: this.fileName,
@@ -89,6 +201,18 @@ export class FileOrderingUpperComponent implements OnInit {
       }, err => {
         this.eventService.openSnackBar(err, "DISMISS");
       })
+
+  }
+
+  creatingArrayIdValue(event, row) {
+    if (event) {
+      this.selection.toggle(row)
+      if (!this.arrayOfIdsForRetry.includes(row.id)) {
+        this.arrayOfIdsForRetry.push(row.id);
+      }
+    }
+
+    console.log(this.arrayOfIdsForRetry);
   }
 
   dialogClose() {
@@ -96,6 +220,7 @@ export class FileOrderingUpperComponent implements OnInit {
   }
 
   refreshList() {
+    this.dataSource.data = ELEMENT_DATA;
     this.fileOrderingListData();
   }
 
@@ -123,12 +248,13 @@ export class FileOrderingUpperComponent implements OnInit {
 
 }
 const ELEMENT_DATA: fileOrderingUpperI[] = [
-  { checkbox: '', advisorName: '', arnRia: '', fileType: '', fileOrderTime: '', status: '', referenceId: '', inFileOrAdded: '', fileName: '', failedReason: '', action: '' },
-  { checkbox: '', advisorName: '', arnRia: '', fileType: '', fileOrderTime: '', status: '', referenceId: '', inFileOrAdded: '', fileName: '', failedReason: '', action: '' },
-  { checkbox: '', advisorName: '', arnRia: '', fileType: '', fileOrderTime: '', status: '', referenceId: '', inFileOrAdded: '', fileName: '', failedReason: '', action: '' }
+  { checkbox: '', position: '', advisorName: '', arnRia: '', fileType: '', fileOrderTime: '', status: '', referenceId: '', inFileOrAdded: '', fileName: '', failedReason: '', action: '' },
+  { checkbox: '', position: '', advisorName: '', arnRia: '', fileType: '', fileOrderTime: '', status: '', referenceId: '', inFileOrAdded: '', fileName: '', failedReason: '', action: '' },
+  { checkbox: '', position: '', advisorName: '', arnRia: '', fileType: '', fileOrderTime: '', status: '', referenceId: '', inFileOrAdded: '', fileName: '', failedReason: '', action: '' }
 ]
 
 export interface fileOrderingUpperI {
+  position: string;
   checkbox: string;
   advisorName: string;
   arnRia: string;

@@ -37,7 +37,7 @@ const routes: Routes = [
     component: VerifyOtpComponent
   },
   {
-    path: 'terms-condition',
+    path: 'termscondition',
     component: TermsConditionsComponent
   }
 ];

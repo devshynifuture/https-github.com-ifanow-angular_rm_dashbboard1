@@ -30,7 +30,7 @@ export class AumCamsComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           res.forEach(element => {
-            if (element.name === "FRANKLIN_TEMPLETON") {
+            if (element.name === "CAMS") {
               this.rtId = element.id;
             }
           });
@@ -59,15 +59,14 @@ export class AumCamsComponent implements OnInit {
     const data = {
       advisorId: 0,
       brokerId: 0,
-      // rtId: this.rtId,
+      rtId: this.rtId,
       // need to work on this after completing rm login to fetch rmId form localStorage
-      rtId: 0,
       rmId: 3
     }
 
     this.reconService.getAumReconHistoryDataValues(data)
       .subscribe(res => {
-        console.log('aum History values::', res);
+        this.isLoading = false;
         if (res) {
           let tableData = [];
           res.forEach(element => {
@@ -99,7 +98,9 @@ export class AumCamsComponent implements OnInit {
           });
 
           this.dataSource.data = tableData;
-          this.isLoading = false;
+        } else {
+          this.dataSource.data = null;
+          this.eventService.openSnackBar("No AUM History Found", "DISMISS");
         }
       })
   }
@@ -120,6 +121,10 @@ export class AumCamsComponent implements OnInit {
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           // this.getClientSubscriptionList();
+          if (UtilService.isRefreshRequired(upperSliderData)) {
+            this.dataSource.data = ELEMENT_DATA;
+            this.getAumHistoryData();
+          }
           subscription.unsubscribe();
         }
       }

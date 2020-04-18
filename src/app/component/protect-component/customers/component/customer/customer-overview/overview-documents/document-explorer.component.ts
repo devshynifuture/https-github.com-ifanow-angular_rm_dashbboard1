@@ -104,7 +104,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     this.backUpfiles = [];
     this.openFolderName = [];
     this.isAdvisor = this.authService.isAdvisor()
-    this.getAllFileList(tabValue,'init');
+    this.getAllFileList(tabValue, 'init');
     this.getCount()
   }
   getCount() {
@@ -143,7 +143,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         }
       }
       if (result.isRefreshRequired) {
-        this.reset()
+        this.getAllFileList(1,'create')
       }
 
     });
@@ -179,12 +179,12 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
   moveFilesRes() {
     this.eventService.openSnackBar('File moved successfully', 'Dismiss');
-    this.getAllFileList('Documents','move')
+    this.getAllFileList('Documents', 'move')
     this.reset()
   }
   moveFolderRes() {
     this.eventService.openSnackBar('Folder moved successfully', 'Dismiss');
-    this.getAllFileList('Documents','move')
+    this.getAllFileList('Documents', 'move')
     this.reset()
   }
   openDialogCopy(element, value): void {
@@ -234,7 +234,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   renameFilesRes(data) {
     console.log(data);
-    this.getAllFileList(this.valueTab,'renameFolder');
+    this.getAllFileList(this.valueTab, 'renameFolder');
   }
 
   renameFolders(element) {
@@ -251,7 +251,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   renameFolderRes(data) {
     console.log(data);
-    this.getAllFileList(this.valueTab,'renameFolder');
+    this.getAllFileList(this.valueTab, 'renameFolder');
   }
 
   createFolder(element) {
@@ -295,19 +295,19 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
 
-  getAllFileList(tabValue,flag) {
-    tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : (tabValue == 'Deleted files' || tabValue == 3)? 4: undefined;
-    if(tabValue == undefined){
+  getAllFileList(tabValue, flag) {
+    tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : (tabValue == 'Deleted files' || tabValue == 3) ? 4 : undefined;
+    if (tabValue == undefined) {
       tabValue = 1
     }
-    if(flag == 'refresh'){
+    if (flag == 'refresh') {
       this.backUpfiles = [];
       this.commonFileFolders.data = [];
       this.openFolderName = []
-    }else if(this.openFolderName.length > 0){
-     // this.parentId = 
+    } else if (this.openFolderName.length > 0) {
+      // this.parentId = 
     }
-    console.log('openfoldername',this.openFolderName)
+    console.log('openfoldername', this.openFolderName)
     this.valueTab = tabValue;
     this.isLoading = true;
     const obj = {
@@ -343,11 +343,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     if (this.dataToCommon.openFolderId == undefined || this.openFolderName.length == 0) {
       Object.assign(this.dataToCommon, { openFolderNm: value.folderName });
       Object.assign(this.dataToCommon, { openFolderId: value.id });
-      this.parentId = (value.id == undefined) ? 0 : value.id;
-      this.openFolderName.push(this.dataToCommon);
-      this.valueFirst = this.openFolderName[0];
+      this.parentId = (value.id == undefined) ? 0 : value.id; 
+        this.openFolderName.push(this.dataToCommon);
+        this.valueFirst = this.openFolderName[0];
       if (this.dataToCommon.length > 0) {
-
         this.dataToCommon.forEach(element => {
           if (element.fileName) {
             var type = /^.+\.([^.]+)$/.exec(element.fileName);
@@ -525,6 +524,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   }
   deleteModal(flag, data) {
+    this.parentId = data.parentFolderId
     const dialogData = {
       data: flag,
       header: 'DELETE',
@@ -549,7 +549,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
               this.eventService.openSnackBar('Deleted', 'Dismiss');
               dialogRef.close();
               this.getCount()
-              this.getAllFileList(this.tabValue , 'delete');
+              this.getAllFileList(1, 'uplaodFile');
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -565,7 +565,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
               this.eventService.openSnackBar('Deleted', 'Dismiss');
               dialogRef.close();
               this.getCount()
-              this.getAllFileList(this.tabValue,'delete');
+              this.getAllFileList(1, 'uplaodFile');
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -606,7 +606,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     console.log(data);
     if (data) {
       this.getCount()
-    this.getAllFileList(this.valueTab,'starred');
+      this.getAllFileList(this.valueTab, 'starred');
     }
     // this.isLoading = false
   }
@@ -729,6 +729,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   uploadFile(element, fileName) {
     this.countFile++;
+    this.parentId = element
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
@@ -750,10 +751,11 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     this.http.put(fileuploadurl, fileName, httpOptions).subscribe((responseData) => {
       console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
       if (responseData == null) {
-        //this.reset()
         this._bottomSheet.dismiss()
         this.eventService.openSnackBar('Uploaded successfully', 'Dismiss');
-       this.getAllFileList(1,'uplaodFile')
+        setTimeout(() => {
+          this.getAllFileList(1, 'uplaodFile')
+        }, 400);
       }
 
     });
