@@ -27,12 +27,15 @@ export class AdminDetailsComponent implements OnInit {
   stageComment: any[] = [{}];
   CommentStage:any;
   Comment:any;
+  activityId: any;
+  stage: any;
   @Input()
   set data(data) {
     window.screenTop;
     this.inputData = data;
     this.getOverviewIFAOnbording(this.inputData)
     // this.getIFAActivity()
+    this.getRTADetails()
   }
 
   get data() {
@@ -82,43 +85,45 @@ export class AdminDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.overviewDesc = true
-  }
 
+  }
   getRTADetails() {
-    const jsonData = { advisorId: this.data.adminAdvisorId };
+    const jsonData = { advisorId: this.inputData.adminAdvisorId };
+
     this.settingsService.getMFRTAList(jsonData).subscribe((res) => {
+      console.log('res == ', res)
       this.rtaDetails = res
       this.createDataSource()
     });
   }
-
   createDataSource() {
     this.camsDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 1));
     this.karvyDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 2));
     this.frankDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 3));
     this.fundsDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 4));
   }
-
   activityCommentFun(value, flag) {
     value.isEdit = flag
     let obj = {
       id: value.id,
       commentMsg: value.commentMsg,
     }
-    this.supportService.activityCommentUpdate(obj).subscribe(
-      data => {
-        console.log('activityCommentUpdate', data);
-        if (data) {
-          // this.getOverview = data.stageList;
+    if(flag == true){
+      this.supportService.activityCommentUpdate(obj).subscribe(
+        data => {
+          console.log('activityCommentUpdate', data);
+          if (data) {
+            // this.getOverview = data.stageList;
+          }
         }
-      }
-      , err => this.eventService.openSnackBar(err, "Dismiss")
-    )
+        , err => this.eventService.openSnackBar(err, "Dismiss")
+      )
+    }
   }
   activityCommentFunStage(value, flag) {
     value.isEditStage = flag
     let obj = {
-      id: value.id,
+      id: value.activityCommentFunStage,
       commentMsg: value.commentMsg,
     }
     if (flag == true) {
@@ -136,16 +141,17 @@ export class AdminDetailsComponent implements OnInit {
   addStageComment(value, stage) {
     let obj =
     {
-      id: stage.id,
+      id: stage.taskLevelId,
       commentMsg: value,
       rmId: 3,
     }
     this.supportService.addStageComment(obj).subscribe(
       data => {
         console.log('editStageComment', data);
+        this.getstageComment(stage, true)
+        this.CommentStage = ''
         if (data == null) {
           // this.getOverview = data.stageList;
-          this.getstageComment(stage, true)
         }
       }
       , err => this.eventService.openSnackBar(err, "Dismiss")
@@ -210,27 +216,26 @@ export class AdminDetailsComponent implements OnInit {
     }
     this.getstageComment(stage, flag)
   }
-
   updateActivityCompleteness(stage, event) {
-
-    this.stageList.forEach(element => {
-      if (element.id == stage.id) {
-        element.id = stage.id
-        element.isComplete = (event.checked == true) ? 1 : 0,
-          element.activityId = stage.activityId
-      }
-    });
-    this.supportService.editActivity(this.stageList).subscribe(
-      data => {
-        console.log('getOverviewIFAOnbording', data);
-        if (data) {
-          console.log(data)
+    let obj = {
+      id: stage.id,
+      isComplete: (event.checked == true) ? 1 : 0,
+      activityId: stage.activityId,
+    }
+    let obj1 = []
+    obj1.push(obj)
+    if(event.checked == true){
+      this.supportService.editActivity(obj1).subscribe(
+        data => {
+          console.log('getOverviewIFAOnbording', data);
+          if (data) {
+            console.log(data)
+          }
         }
-      }
-      , err => this.eventService.openSnackBar(err, "Dismiss")
-    )
+        , err => this.eventService.openSnackBar(err, "Dismiss")
+      )
+    }
   }
-
   getIFAActivity() {
     this.isSuccess = true
     let obj = {
@@ -243,6 +248,7 @@ export class AdminDetailsComponent implements OnInit {
         if (data) {
           this.isActivity = true
           this.stageList = data.stageList;
+          this.activityId = data.activityId;
           this.stageList.forEach(element => {
             element.isShowComment = false
           });
@@ -256,7 +262,6 @@ export class AdminDetailsComponent implements OnInit {
       , err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
-
   updateIFAOnboardingOverview() {
     let obj = {
       id: this.getOverview.id,
@@ -276,21 +281,23 @@ export class AdminDetailsComponent implements OnInit {
     console.log('comment', comment)
     let obj =
     {
-      activityId: stage.id,
+      activityId: this.activityId,
       commentMsg: comment,
       rmId: 3,
     }
-    this.supportService.addStageComment(obj).subscribe(
+    this.supportService.activityAddComment(obj).subscribe(
       data => {
+        this.getIFAActivity()
+        this.Comment =''
         console.log('editStageComment', data);
         if (data) {
-
         }
       }
       , err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
-  deleteModal(value, data) {
+  deleteModal(value, element,event) {
+    this.stage = element
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -300,15 +307,15 @@ export class AdminDetailsComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         if (value == 'commentStage') {
-          this.supportService.deleteCommentStage(data.id).subscribe(
+          this.supportService.deleteCommentStage(event.id).subscribe(
             data => {
               dialogRef.close();
-              this.getstageComment(data, true);
+              this.getstageComment(this.stage, true);
             },
             error => this.eventService.showErrorMessage(error)
           );
         } else {
-          this.supportService.activityDeleteComment(data.id).subscribe(
+          this.supportService.activityDeleteComment(element.id).subscribe(
             data => {
               dialogRef.close();
               this.getIFAActivity();
@@ -351,6 +358,7 @@ export class AdminDetailsComponent implements OnInit {
         if (!this.isTeamLoaded) {
           this.loadUsers()
         }
+
     }
   }
 
@@ -372,7 +380,6 @@ export class AdminDetailsComponent implements OnInit {
       this.utilservice.loader(-1);
     });
   }
-  
   loadUsers() {
     this.utilservice.loader(1);
     const dataObj = {

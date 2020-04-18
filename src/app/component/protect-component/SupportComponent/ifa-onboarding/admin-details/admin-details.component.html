@@ -86,7 +86,7 @@
                                         <p *ngIf="activityStage.isEditStage == false"
                                             class="f-12 c-p mr-8 d-inline-block"
                                             (click)='activityCommentFunStage(activityStage,true)'> Save </p>
-                                        <p class="f-12 c-p d-inline-block" (click)="deleteModal('commentStage',activityStage)"> Delete </p>
+                                        <p class="f-12 c-p d-inline-block" (click)="deleteModal('commentStage',stage,activityStage)"> Delete </p>
                                     </div>
                                 </div>
                             </div>
@@ -141,7 +141,7 @@
                                 (click)='activityCommentFun(activity,false)'> Edit </p>
                             <p *ngIf="activity.isEdit == false" class="f-12 c-p mr-8 d-inline-block"
                                 (click)='activityCommentFun(activity,true)'> Save </p>
-                            <p class="f-12 c-p d-inline-block" (click)="deleteModal('comment',activity)"> Delete </p>
+                            <p class="f-12 c-p d-inline-block" (click)="deleteModal('comment',activity,'')"> Delete </p>
                         </div>
                     </div>
                 </div>
