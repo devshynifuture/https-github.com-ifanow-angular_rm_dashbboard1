@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormArray, FormBuilder, Validators} from '@angular/forms';
-import {ValidatorType} from 'src/app/services/util.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-add-holder-names',
@@ -61,6 +61,9 @@ export class AddHolderNamesComponent implements OnInit {
   }
 
   removeHolders(index) {
+    if (this.holderNameList.length == 0) {
+      return;
+    }
     this.holderNamesForm.controls.holderNameList.removeAt(index);
   }
 }

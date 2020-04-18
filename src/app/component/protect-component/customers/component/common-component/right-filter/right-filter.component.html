@@ -141,8 +141,8 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
     <div>
-      <mat-list-item role="listitem" *ngFor="let item of overviewFilter">
-        <mat-checkbox [(ngModel)]="item.selected" (change)="item.filterName = 'overView'; changeSelect(item,i)">{{item.name}}
+      <mat-list-item role="listitem" *ngFor="let item of overviewFilter let i = index;">
+        <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect(item,i)">{{item.name}}
         </mat-checkbox>
       </mat-list-item>
     </div>
