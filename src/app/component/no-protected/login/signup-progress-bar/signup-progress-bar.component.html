@@ -1,0 +1,12 @@
+<div class="row">
+    <div class="col-md-12 p-0 mt-40">
+
+        <ul class="progressbar">
+            <li *ngFor="let step of signUpBarList" [ngClass]="{'active': step.flag}" class="active">{{step.name}}</li>
+            <!-- <li>Verify Email</li>
+            <li>Verify Mobile</li>
+            <li>Verify</li> -->
+        </ul>
+
+    </div>
+</div>

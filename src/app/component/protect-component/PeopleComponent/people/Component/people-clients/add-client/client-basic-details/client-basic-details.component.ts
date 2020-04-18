@@ -188,7 +188,10 @@ export class ClientBasicDetailsComponent implements OnInit {
 
   changeInvestorType(event) {
     (event.value == '1') ? this.createIndividualForm(this.basicDetailsData) : '';
-    if (event.value == '2' && this.fieldFlag == 'familyMember') {
+    if (event.value == '1') {
+      this.mobileNumberFlag = 'Mobile number';
+    }
+    else if (event.value == '2' && this.fieldFlag == 'familyMember') {
       this.createMinorForm(this.basicDetailsData);
       this.mobileNumberFlag = 'Mobile number';
     } else {

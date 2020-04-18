@@ -25,7 +25,7 @@ export class FileOrderingHistoricalComponent implements OnInit {
   ) { }
 
   isLoading = false;
-  displayedColumns: string[] = ['advisorName', 'rta', 'orderedby', 'startedOn', 'totalFiles', 'queue', 'ordering', 'ordered', 'failed', 'uploaded', 'refresh', 'empty'];
+  displayedColumns: string[] = ['advisorName', 'rta', 'orderedBy', 'startedOn', 'totalFiles', 'queue', 'ordering', 'ordered', 'failed', 'uploaded', 'refresh', 'empty'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   rmList: any[] = [];
   visible = true;
@@ -155,6 +155,7 @@ export class FileOrderingHistoricalComponent implements OnInit {
 
     if (event.value['type'] == 'rm') {
       // console.log("yo");
+      this.dataSource.data = ELEMENT_DATA;
       this.fileOrderHistoryListGet({
         days: this.days,
         rtId: this.rtId,
@@ -163,6 +164,8 @@ export class FileOrderingHistoricalComponent implements OnInit {
     } else if (event.value['type'] == 'rta') {
       // console.log("yo");
       this.rtId = event.value['value'];
+      this.dataSource.data = ELEMENT_DATA;
+
       this.fileOrderHistoryListGet({
         days: this.days,
         rtId: event.value['value'],
@@ -170,12 +173,16 @@ export class FileOrderingHistoricalComponent implements OnInit {
     } else if (event.value['type'] === 'period') {
       // console.log("yo");
       this.days = event.value['value'];
+      this.dataSource.data = ELEMENT_DATA;
+
       this.fileOrderHistoryListGet({
         days: this.days,
         rtId: this.rtId,
       });
     }
     else if (event.value['type'] === 'name') {
+      this.dataSource.data = ELEMENT_DATA;
+
       this.fileOrderHistoryListGet({
         days: this.days ? this.days : 2,
         rtId: this.rtId,
@@ -188,6 +195,7 @@ export class FileOrderingHistoricalComponent implements OnInit {
 
     // Add our filterBy
     if ((value || '').trim()) {
+      this.filterBy = [];
       this.filterBy.push({ name: value.trim() });
     }
 
@@ -202,6 +210,12 @@ export class FileOrderingHistoricalComponent implements OnInit {
 
     if (index >= 0) {
       this.filterBy.splice(index, 1);
+      this.dataSource.data = ELEMENT_DATA;
+
+      this.fileOrderHistoryListGet({
+        days: this.days,
+        rtId: this.rtId,
+      })
     }
   }
 
@@ -218,6 +232,7 @@ export class FileOrderingHistoricalComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
+            this.dataSource.data = ELEMENT_DATA;
             this.fileOrderHistoryListGet({
               days: this.days,
               rtId: this.rtId,
@@ -231,6 +246,7 @@ export class FileOrderingHistoricalComponent implements OnInit {
   }
 
   openUpperFileOrdering(flag, data) {
+    data.flag = flag;
     console.log('hello mf button clicked');
     const fragmentData = {
       flag,
@@ -246,6 +262,8 @@ export class FileOrderingHistoricalComponent implements OnInit {
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           if (UtilService.isRefreshRequired(upperSliderData)) {
+            this.dataSource.data = ELEMENT_DATA;
+
             this.fileOrderHistoryListGet({
               days: this.days,
               rtId: this.rtId,

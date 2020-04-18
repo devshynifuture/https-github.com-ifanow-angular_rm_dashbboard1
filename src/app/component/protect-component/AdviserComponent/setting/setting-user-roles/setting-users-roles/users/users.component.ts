@@ -81,6 +81,8 @@ export class UsersComponent implements OnInit {
       body: 'Are you sure you want to delete this user?',
       body2: 'This cannot be undone.',
       userList: newUserList,
+      selectKey: 'adminAdvisorId',
+      optionKey: 'fullName',
       btnNo: 'CANCEL',
       btnYes: 'DELETE',
     };

@@ -24,7 +24,7 @@ export class FileOrderingBulkComponent implements OnInit {
     private subInjectService: SubscriptionInject,
     private fileOrderingUploadService: FileOrderingUploadService
   ) { }
-  displayedColumns: string[] = ['rta', 'description', 'orderedby', 'startedOn', 'totalfiles', 'queue', 'ordering', 'ordered', 'failed', 'uploaded', 'refresh', 'empty'];
+  displayedColumns: string[] = ['rta', 'description', 'orderedBy', 'startedOn', 'totalFiles', 'queue', 'ordering', 'ordered', 'failed', 'uploaded', 'refresh', 'empty'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   visible = true;
   selectable = true;
@@ -112,21 +112,26 @@ export class FileOrderingBulkComponent implements OnInit {
               advisorName: element.advisorName ? element.advisorName : "-",
               rta: element.rtId === 0 ? "ALL-RTA" : element.rtId === 1 ? "CAMS" : element.rtId === 2 ? "KARVY" : element.rtId === 3 ? "FRANKLIN" : null,
               orderedBy: element.rmName ? element.rmName : '-',
-              startedOn: element.fileOrderDateTime ? element.fileOrderDateTime : '-',
+              startedOn: element.startedOn ? element.startedOn : '-',
               totalFiles: element.totalFiles ? element.totalFiles : '-',
-              queue: element.inqueue ? element.inqueue : '-',
+              queue: element.inqueue,
               ordering: element.orderingFrequency ? element.orderingFrequency : '-',
-              ordered: element.ordered ? element.ordered : '-',
-              failed: element.skipped ? element.skipped : '-',
-              uploaded: element.uploaded ? element.uploaded : '-',
-              refresh: element.refresh ? element.refresh : '-',
-              empty: element.empty ? element.empty : '-',
+              ordered: element.ordered,
+              failed: element.skipped,
+              uploaded: element.uploaded,
+              refresh: '',
               rtId: element.rtId,
               rmId: element.rmId,
               days: this.days,
               arnRiaDetailId: element.arnRiaDetailId,
+              description: element.description,
+              fromDate: element.fromDate,
+              toDate: element.toDate,
+              id: element.id
             })
           });
+
+          console.log("this is table Data", tableData)
 
           this.dataSource.data = tableData;
 
@@ -147,10 +152,10 @@ export class FileOrderingBulkComponent implements OnInit {
   }
 
   openUpperFileOrdering(flag, data) {
-    data.flag = flag
+    data.flag = flag;
     console.log('hello mf button clicked');
     const fragmentData = {
-      flag: 'clients',
+      flag,
       id: 1,
       data,
       direction: 'top',
@@ -163,6 +168,12 @@ export class FileOrderingBulkComponent implements OnInit {
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           // this.getClientSubscriptionList();
+          if (UtilService.isRefreshRequired(upperSliderData)) {
+            this.fileOrderBulkHistoryListGet({
+              days: this.days,
+              rtId: this.rtId,
+            });
+          }
           subscription.unsubscribe();
         }
       }
@@ -183,6 +194,10 @@ export class FileOrderingBulkComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
+            this.fileOrderBulkHistoryListGet({
+              days: this.days,
+              rtId: this.rtId,
+            });
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -195,11 +210,15 @@ export class FileOrderingBulkComponent implements OnInit {
 
   add(event): void {
     const input = event.input;
-    const value = event.value['name'];
+    let value;
+    if (event.value !== '') {
+      value = event.value['name'];
+    }
     console.log("add event", event);
 
     if (event.value['type'] == 'rm') {
       // console.log("yo");
+      this.dataSource.data = ELEMENT_DATA;
       this.fileOrderBulkHistoryListGet({
         days: this.days,
         rtId: this.rtId,
@@ -207,6 +226,7 @@ export class FileOrderingBulkComponent implements OnInit {
       });
     } else if (event.value['type'] == 'rta') {
       // console.log("yo");
+      this.dataSource.data = ELEMENT_DATA;
       this.rtId = event.value['value'];
       this.fileOrderBulkHistoryListGet({
         days: this.days,
@@ -214,6 +234,7 @@ export class FileOrderingBulkComponent implements OnInit {
       });
     } else if (event.value['type'] === 'period') {
       // console.log("yo");
+      this.dataSource.data = ELEMENT_DATA;
       this.days = event.value['value'];
       this.fileOrderBulkHistoryListGet({
         days: this.days,
@@ -221,6 +242,7 @@ export class FileOrderingBulkComponent implements OnInit {
       });
     }
     else if (event.value['type'] === 'name') {
+      this.dataSource.data = ELEMENT_DATA;
       this.fileOrderBulkHistoryListGet({
         days: this.days ? this.days : 2,
         rtId: this.rtId,
@@ -233,6 +255,7 @@ export class FileOrderingBulkComponent implements OnInit {
 
     // Add our filterBy
     if ((value || '').trim()) {
+      this.filterBy = [];
       this.filterBy.push({ name: value.trim() });
     }
 
@@ -269,6 +292,11 @@ export class FileOrderingBulkComponent implements OnInit {
 
     if (index >= 0) {
       this.filterBy.splice(index, 1);
+      this.dataSource.data = ELEMENT_DATA;
+      this.fileOrderBulkHistoryListGet({
+        days: this.days,
+        rtId: this.rtId
+      })
     }
   }
 

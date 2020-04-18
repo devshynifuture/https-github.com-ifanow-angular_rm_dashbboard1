@@ -42,13 +42,20 @@
                 <div class="cardList">
                     <div class="row pt-10 pb-10 bb">
                         <div class="col-md-8 f-14" *ngFor="let stage of stageList">
-                            <mat-checkbox class="mr-8" [value]="stage.isComplete" *ngIf="stage.isShowComment == false"
-                                [checked]="(stage.isComplete == 1)? true:false"
-                                (change)="updateActivityCompleteness(stage,$event)"> </mat-checkbox>
-                            <span (click)="showComment(stage,true)"
-                                [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('firstCall').value == true ? 'line-through': 'initial' }">
-                                {{stage.taskName}}
-                            </span>
+                            <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                                <div class="relClass">
+                                    <div class="bar" [ngClass]="{'height10': isLoading}">
+                                        <mat-checkbox class="mr-8" [value]="stage.isComplete"
+                                            *ngIf="stage.isShowComment == false"
+                                            [checked]="(stage.isComplete == 1)? true:false"
+                                            (change)="updateActivityCompleteness(stage,$event)"> </mat-checkbox>
+                                        <span (click)="showComment(stage,true)"
+                                            [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('firstCall').value == true ? 'line-through': 'initial' }">
+                                            {{isLoading? '': stage.taskName}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="bg-grey lter mt-44 p-20 skeletonAnimation" appSkeletonLoading
                                 [appSkeletonLoading]="isLoading" *ngIf="stage.isShowComment == true">
                                 <h4 class="f-14 f-500">Comments</h4>
@@ -86,7 +93,8 @@
                                         <p *ngIf="activityStage.isEditStage == false"
                                             class="f-12 c-p mr-8 d-inline-block"
                                             (click)='activityCommentFunStage(activityStage,true)'> Save </p>
-                                        <p class="f-12 c-p d-inline-block" (click)="deleteModal('commentStage',activityStage)"> Delete </p>
+                                        <p class="f-12 c-p d-inline-block"
+                                            (click)="deleteModal('commentStage',stage,activityStage)"> Delete </p>
                                     </div>
                                 </div>
                             </div>
@@ -141,7 +149,7 @@
                                 (click)='activityCommentFun(activity,false)'> Edit </p>
                             <p *ngIf="activity.isEdit == false" class="f-12 c-p mr-8 d-inline-block"
                                 (click)='activityCommentFun(activity,true)'> Save </p>
-                            <p class="f-12 c-p d-inline-block" (click)="deleteModal('comment',activity)"> Delete </p>
+                            <p class="f-12 c-p d-inline-block" (click)="deleteModal('comment',activity,'')"> Delete </p>
                         </div>
                     </div>
                 </div>

@@ -69,12 +69,12 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
   addFormListeners(){
     this.subscription.add(
       this.dashFG.controls.bulkOptRtId.valueChanges.subscribe(value => {
-        this.loadBulkFilesData(value);
+        this.loadBulkFilesData();
       })
     );
     this.subscription.add(
       this.dashFG.controls.historicalFileOptId.valueChanges.subscribe(value => {
-        this.filterHistoricalFileData(value);
+        this.filterHistoricalFileData();
       })
     );
   }
@@ -167,8 +167,8 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
     )
   }
 
-  filterHistoricalFileData(data) {
-    let obj = { filterId: data };
+  filterHistoricalFileData() {
+    let obj = { filterId: this.dashFG.controls.historicalFileOptId.value };
     this.utilsService.loader(1);
     this.supportService.getHistoricFilesReport(obj).subscribe(
       res => {
@@ -262,12 +262,12 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  loadBulkFilesData(value){
+  loadBulkFilesData(){
     const jsonObj = {
       days: 0,
       fileTypeId: 0,
       rmId: 2,
-      rtId: value,
+      rtId: this.dashFG.controls.bulkOptRtId.value,
       limit: 10
     }
     this.utilsService.loader(1);

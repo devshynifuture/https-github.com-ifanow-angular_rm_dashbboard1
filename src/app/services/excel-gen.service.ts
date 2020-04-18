@@ -56,7 +56,7 @@ export class ExcelGenService {
 
     // Create workbook and worksheet
     const workbook = new Workbook();
-    const worksheet = workbook.addWorksheet('Car Data');
+    const worksheet = workbook.addWorksheet(title + 'Data');
 
 
     // Add Row and formatting

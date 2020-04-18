@@ -95,7 +95,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
           this.handlingDataVariable();
         } else {
-          this.adminAdvisorIds = [...this.advisorId];
+          this.adminAdvisorIds = [this.advisorId];
           this.eventService.openSnackBar('No Team Member Found', "DISMISS");
         }
       })

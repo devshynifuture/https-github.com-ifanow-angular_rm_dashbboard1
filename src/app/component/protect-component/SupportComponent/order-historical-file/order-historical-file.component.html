@@ -25,7 +25,7 @@
                     </mat-option>
                     <ng-container *ngIf="!isLoadingForDropDown">
                         <mat-option *ngFor="let advisor of arrayOfAdvisorName"
-                            (click)="setAdvisorId(advisor, advisorRef)" [value]="advisor.name"
+                            (click)="setAdvisorId(advisor)" [value]="advisor.name"
                             [matTooltip]="advisor.name" matTooltipPosition="after">
                             <span>
                                 <b>
@@ -35,7 +35,10 @@
                         </mat-option>
                     </ng-container>
                 </mat-autocomplete>
-
+                <mat-error
+                    *ngIf="searchAdvisorForm.get('searchAdvisor').invalid && searchAdvisorForm.get('searchAdvisor').touched">
+                    This field is required
+                </mat-error>
             </mat-form-field>
             <br>
             <ng-container *ngIf="arrayAdvisorNameError">
@@ -69,21 +72,29 @@
         </div>
     </div>
 
-    <div class="row pt-24">
+    <div class="row pt-24" *ngIf="arnRiaDetailsList.length!==0">
         <div class="col-md-5 pr-0">
             <h5 class="text-right pt-12 mb-0">Select ARN/RIA</h5>
         </div>
-        <div class="col-md-6" formGroupName="selectArnRia">
-            <mat-checkbox formControlName="selectRia" class="d-block">
-                RIA-INA000004409
-            </mat-checkbox>
-            <mat-checkbox formControlName="selectArn" class="d-block">
-                ARN-83865
-            </mat-checkbox>
-            <mat-error class=" f-11 f-500" *ngIf="orderHistoryFileForm.get('selectArnRia').invalid">
-                Atleast one must be selected
-            </mat-error>
+
+        <div class="col-md-6" *ngFor="let item of arnRiaDetailsList; index as i" formArrayName="selectArnRia">
+            <div [formGroupName]="i">
+                <mat-checkbox [checked]="false" class="d-block" formControlName="selection" (click)="setArnRiaId(i)">
+                    {{ item.name }}
+                </mat-checkbox>
+            </div>
         </div>
+        <!-- <div  formArrayName="selectArnRia"
+            *ngFor="let item of orderHistoryFileForm.controls.selectArnRia?.value; index as i">
+            <div>
+                <mat-checkbox class="d-block" formControlName="i">
+                    {{ arnRiaDetailList[i].name }}
+                </mat-checkbox>
+            </div>
+        </div> -->
+        <mat-error class=" f-11 f-500" *ngIf="orderHistoryFileForm.get('selectArnRia').invalid">
+            Atleast one must be selected
+        </mat-error>
     </div>
 
     <div class="row pt-24">

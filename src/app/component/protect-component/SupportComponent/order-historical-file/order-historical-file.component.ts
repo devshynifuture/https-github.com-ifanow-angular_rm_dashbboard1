@@ -2,7 +2,7 @@ import { AuthService } from './../../../../auth-service/authService';
 import { EventService } from './../../../../Data-service/event.service';
 import { SubscriptionInject } from './../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { SupportService } from '../support.service';
 import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
@@ -26,8 +26,9 @@ export class OrderHistoricalFileComponent implements OnInit {
   dateToday: Date = new Date();
   dateYesterday: Date = new Date(new Date().setDate(new Date().getDate() - 1));
   orderingFreq: {}[] = [{ id: '1', name: 'Yearly' }, { id: '2', name: 'Monthly' }, { id: '3', name: 'All at once' }];
-
+  arnRiaIdList: any[] = [];
   fileTypeOrderList: any[] = [];
+  moreArnRiaObj: any[] = [];
   camsValueChangeSubscription: Subscription;
   karvyValueChangeSubscription: Subscription;
   franklinValueChangeSubscription: Subscription;
@@ -39,13 +40,14 @@ export class OrderHistoricalFileComponent implements OnInit {
   advisorNameInput = '';
   requestJsonForOrderingFiles: any[] = [];
   searchAdvisorForm = this.fb.group({
-    searchAdvisor: [,]
+    searchAdvisor: [, Validators.required]
   });
   errorMsg: string = '';
   arrayOfAdvisorName;
   isLoadingForDropDown: boolean = false;
   arrayAdvisorNameError: boolean;
   @ViewChild('advisorRef', { static: true }) advisorRef;
+  arnRiaDetailsList: any[] = [];
 
   constructor(
     private supportService: SupportService,
@@ -95,24 +97,53 @@ export class OrderHistoricalFileComponent implements OnInit {
     this.getArnRiaDetails();
   }
 
+  addArnRia() {
+    const arnRia = this.orderHistoryFileForm.controls.selectArnRia as FormArray;
+    this.arnRiaDetailsList.forEach(element => {
+      arnRia.push(this.fb.group({
+        selection: [element.form,]
+      }));
+    });
+
+    this.setArnRiaId(0);
+  }
+
+  setArnRiaId(index) {
+    if (index === 0) {
+      this.arnRiaDetails = this.arnRiaDetailsList[index].id;
+    } else {
+      this.arnRiaIdList.push(this.arnRiaDetailsList[index].id);
+    }
+  }
+
   getArnRiaDetails() {
     this.settingService.getArnlist({ advisorId: this.advisorId })
       .subscribe(data => {
         if (data && data.length !== 0) {
-          data.forEach(element => {
-            this.arnRiaDetails = element.id;
+          data.forEach((element, index) => {
+            if (index === 0) {
+              this.arnRiaDetails = element.id;
+            }
+            this.arnRiaDetailsList.push({
+              form: new FormControl(index === 0),
+              id: element.id,
+              arnRia: element.arnOrRia,
+              name: element.arnOrRia === 1 ? "ARN" + "-" + element.number : element.arnOrRia === 2 ? "RIA" + "-" + element.number : null
+            });
           });
           console.log("arn ria details:::", data);
+          this.addArnRia();
         }
       });
   }
 
+  hasFormControlArnRia(index) {
+    return this.arnRiaDetailsList[index].hasOwnProperty('selectArn') ? 'selectArn' : 'selectRia';
+  }
+
   orderHistoryFileForm = this.fb.group({
     "selectRta": ['1', Validators.required],
-    "selectArnRia": this.fb.group({
-      "selectArn": [,],
-      "selectRia": [,],
-    }, Validators.required),
+    "selectArnRia": this.fb.array([], Validators.required),
     "fromDate": [, Validators.required],
     "toDate": [, Validators.required],
     "asOnDate": [,],
@@ -324,16 +355,7 @@ export class OrderHistoricalFileComponent implements OnInit {
     for (let key in whichTable.controls) {
       if (key === 'selectFilesToOrder') {
         selectFileOrderValidation = this.validationOfSelectFilesToOrder(this.orderHistoryFileForm.get('selectRta').value);
-      } else if (key === 'selectArnRia') {
-        let isRiaSelected = false;
-        if (this.orderHistoryFileForm.get('selectArnRia.selectRia').value !== true) {
-          isRiaSelected = true;
-        }
-        if (this.orderHistoryFileForm.get('selectArnRia.selectArn').value !== true && isRiaSelected) {
-          this.orderHistoryFileForm.get('selectArnRia').setErrors({ error: true });
-        }
-
-      } else if (whichTable.get(key).invalid) {
+      }else if (whichTable.get(key).invalid) {
         whichTable.get(key).markAsTouched();
         return (selectFileOrderValidation && false);
       }
@@ -344,9 +366,14 @@ export class OrderHistoricalFileComponent implements OnInit {
   orderHistoricalFileSave() {
     if (this.formValidations(this.orderHistoryFileForm)) {
       // api call
-      console.log('must be closed', this.orderHistoryFileForm.value);
-      this.calculateDateAndObject();
-      this.dialogClose(true);
+      if (this.searchAdvisorForm.get('searchAdvisor').valid) {
+        console.log('must be closed', this.orderHistoryFileForm.value);
+        this.calculateDateAndObject();
+        this.dialogClose(true);
+      } else {
+        this.searchAdvisorForm.get('searchAdvisor').setErrors({ error: true });
+        this.searchAdvisorForm.get('searchAdvisor').markAsTouched();
+      }
     } else {
       this.formValidationFalseCount++;
       this.eventService.openSnackBar("Must fill required field", "Dismiss");
@@ -1181,7 +1208,27 @@ export class OrderHistoricalFileComponent implements OnInit {
         }
       }
       this.requestJsonForOrderingFiles = requestObj;
+
       console.log("this is request object:::", requestObj);
+
+      if (this.arnRiaIdList.length !== 0) {
+        this.arnRiaIdList.forEach(element1 => {
+          requestObj.forEach(element2 => {
+            this.moreArnRiaObj.push({
+              advisorId: element2.advisorId,
+              rmId: element2.rmId,
+              rtId: element2.rtId,
+              arnRiaDetailId: element1,
+              fromDate: element2.fromDate,
+              toDate: element2.toDate,
+              fileTypeId: element2.fileTypeId,
+              orderingFrequency: element2.orderingFrequency
+            })
+          });
+        });
+        requestObj = [...this.moreArnRiaObj];
+        this.requestJsonForOrderingFiles = requestObj;
+      }
 
     }
     this.postFileOrderingData();

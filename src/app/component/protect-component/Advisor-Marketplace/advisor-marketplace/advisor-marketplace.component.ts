@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdvisorMarketplaceComponent implements OnInit {
 
+  value = 0;
   constructor() { }
 
   ngOnInit() {

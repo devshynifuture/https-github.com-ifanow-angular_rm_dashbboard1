@@ -2,7 +2,7 @@
     <div class="col-md-6">
         <h5 class="m-0 text-black pb-10">Company PAN</h5>
         <input #fileComPan (change)="getFile($event, 'company-pan')" accept='image/*, .pdf' style="display: none;"
-               type="file">
+            type="file">
         <mat-card class="upload-card c-p" (click)="fileComPan.click()">
             <p *ngIf="!fileComPanImg.view" class="m-0 roboto text-black">Drag & drop file here or Browse
             </p>
@@ -23,8 +23,8 @@
     </div>
     <div class="col-md-6">
         <h5 class="m-0 text-black pb-10">Contact/Authorized person PAN</h5>
-      <input #filePerPan (change)="getFile($event, 'personal-pan')" accept='image/*, .pdf' style="display: none;"
-             type="file">
+        <input #filePerPan (change)="getFile($event, 'personal-pan')" accept='image/*, .pdf' style="display: none;"
+            type="file">
         <mat-card class="upload-card c-p" (click)="filePerPan.click()">
             <p *ngIf="!filePerPanImg.view" class="m-0 roboto text-black">Drag & drop file here or Browse
             </p>
@@ -51,7 +51,8 @@
             <div class="col-md-6 pr-8 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select class="form-control" [(ngModel)]="selectedBank" (selectionChange)="checkSelected('proof-type1', false)">
+                        <mat-select class="form-control" [(ngModel)]="selectedBank"
+                            (selectionChange)="checkSelected('proof-type1', false)">
                             <mat-option disabled value="">Select bank</mat-option>
                             <mat-option [value]="bank.bankId" *ngFor="let bank of bankLIst">{{bank.bankName}}
                             </mat-option>
@@ -62,7 +63,8 @@
             <div class="col-md-6 pr-0 pl-8">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select class="form-control" [(ngModel)]="bankProof" (selectionChange)="checkSelected('proof-type1' , false)">
+                        <mat-select class="form-control" [(ngModel)]="bankProof"
+                            (selectionChange)="checkSelected('proof-type1' , false)">
                             <mat-option disabled value="">Proof type</mat-option>
                             <mat-option [value]="proof.proofId" *ngFor="let proof of proofTypes">{{proof.proofType}}
                             </mat-option>
@@ -71,8 +73,8 @@
                 </div>
             </div>
         </div>
-      <input #fileProof1 (change)="getFile($event, 'proof-type1')" accept='image/*, .pdf' style="display: none;"
-             type="file">
+        <input #fileProof1 (change)="getFile($event, 'proof-type1')" accept='image/*, .pdf' style="display: none;"
+            type="file">
         <mat-card class="upload-card c-p h-340">
             <div *ngIf="errProof1 && !fileProof1Img.view" (click)="checkSelected('proof-type1' , true)" class="errDiv">
                 <p class="m-0 roboto text-black"><span *ngIf="showErr1" style="color: red;">please select Bank and Proof
@@ -84,6 +86,8 @@
                 <img [src]="fileProof1Img.view" class="img" *ngIf="fileProof1Img.view">
             </div>
         </mat-card>
+
+        <button mat-raised-button (click)="removeImg('proof-type1')" class="mr-0">REMOVE</button>
     </div>
     <div class="col-md-6">
         <h5 class="m-0 text-black pb-10">Address proof</h5>
@@ -91,7 +95,8 @@
             <div class="col-md-6 pr-8 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select class="form-control" (selectionChange)="checkSelected('proof-type2', false)" [(ngModel)]="addressProof">
+                        <mat-select class="form-control" (selectionChange)="checkSelected('proof-type2', false)"
+                            [(ngModel)]="addressProof">
                             <mat-option value="">Proof type</mat-option>
                             <mat-option [value]="proof.proofId" *ngFor="let proof of proofTypes">{{proof.proofType}}
                             </mat-option>
@@ -100,16 +105,19 @@
                 </div>
             </div>
             <div class="col-md-6 pr-0 pt-4">
-                <button mat-raised-button *ngIf="proofSubType == 1" class="text-primary font" (click)="getSubType(1)">Front</button>
+                <button mat-raised-button *ngIf="proofSubType == 1" class="text-primary font"
+                    (click)="getSubType(1)">Front</button>
                 <button mat-button class="p-0 back" *ngIf="proofSubType == 2" (click)="getSubType(1)">Front</button>
-                <button mat-raised-button *ngIf="proofSubType == 2" class="text-primary font" (click)="getSubType(2)">Back</button>
+                <button mat-raised-button *ngIf="proofSubType == 2" class="text-primary font"
+                    (click)="getSubType(2)">Back</button>
                 <button mat-button class="p-0 back" *ngIf="proofSubType == 1" (click)="getSubType(2)">Back</button>
             </div>
         </div>
-      <input #fileProof2 (change)="getFile($event, 'proof-type2')" accept='image/*, .pdf' style="display: none;"
-             type="file">
+        <input #fileProof2 (change)="getFile($event, 'proof-type2')" accept='image/*, .pdf' style="display: none;"
+            type="file">
         <mat-card class="upload-card c-p h-340">
-            <div *ngIf="errProof2 && (!fileProof2Img.view && !fileProof2BackImg.view)" (click)="checkSelected('proof-type2' , true)" class="errDiv">
+            <div *ngIf="errProof2 && (!fileProof2Img.view && !fileProof2BackImg.view)"
+                (click)="checkSelected('proof-type2' , true)" class="errDiv">
                 <p class="m-0 roboto text-black"><span *ngIf="showErr2" style="color: red;">please select Bank and Proof
                         type first</span><span *ngIf="!showErr2">Drag & drop file here or Browse</span></p>
             </div>
@@ -127,16 +135,18 @@
             </div>
 
         </mat-card>
+        <button mat-raised-button (click)="removeImg('proof-type2')" class="mr-0">REMOVE</button>
+
     </div>
 </div>
 <div class="bottom-fixed wrapper-12 w-50">
     <div class="row">
-      <div (click)="close()" class="col-md-4">
-        <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
-      </div>
+        <div (click)="close()" class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
+        </div>
         <div class="col-md-8 right text-right">
-            <button mat-stroked-button (click)="saveClose()" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
-            </button>
+            <app-progress-button (btnClick)="saveClose()" [options]="barButtonOptions" class="br-0 text-inherit mr-12">
+            </app-progress-button>
         </div>
     </div>
 </div>
