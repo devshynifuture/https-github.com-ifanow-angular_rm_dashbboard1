@@ -34,10 +34,10 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   updateDomain: any = {};
   emailDetails: any = {};
   element: any;
-  emailList: any;
+  emailList: any[] = [{}, {}, {}];
   normalDomain: any;
   whiteLabledDomain: any;
-  emailTemplateList: any;
+  emailTemplateList: any[] = [{}, {}, {}];
   showUpdate = false;
   normalLable;
   whiteLable;
@@ -53,6 +53,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   counter: number = 0;
   appearanceFG:FormGroup;
   appearanceUpdateFlag: boolean;
+  hasError = false;
   constructor(private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, ) {
       
@@ -63,9 +64,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getPortfolio()
     this.getdataForm('')
-    this.emailList = []
     this.planSection = []
-    this.emailTemplateList = []
     this.createAppearanceForm();
     this.addAppearanceFormListener();
   }
@@ -297,6 +296,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
 
   getEmailVerification() {
     this.loader(1);
+    this.emailList  = [{},{},{}];
     let obj = {
       userId: this.userId,
       // advisorId: this.advisorId
@@ -317,6 +317,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   }
   getEmailTemplate() {
     this.loader(1);
+    this.emailTemplateList = [{},{},{}];
     let obj = {
       advisorId: this.advisorId
     }
@@ -395,7 +396,10 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
         this.appearanceFG.controls.clientOpt.setValue(data.find(data => data.appearanceOptionId == 3).advisorOrOrganisation);
         this.appearanceUpdateFlag = true;
       },
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+        this.hasError = true;
+      }
     );
   }
 

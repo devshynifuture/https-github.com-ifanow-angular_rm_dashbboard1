@@ -2,24 +2,26 @@ import { AddLifeInsuranceMasterComponent } from './add-life-insurance-master/add
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AddStockMasterComponent } from './add-stock-master/add-stock-master.component';
 import { EventService } from './../../../../Data-service/event.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SupportUpperComponent } from './support-upper/support-upper.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SupportService } from '../support.service';
 import * as Highcharts from 'highcharts';
 import { SeriesColumnOptions } from 'highcharts';
+import { ReconciliationService } from '../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-support-dashboard',
   templateUrl: './support-dashboard.component.html',
   styleUrls: ['./support-dashboard.component.scss']
 })
-export class SupportDashboardComponent implements OnInit {
+export class SupportDashboardComponent implements OnInit, OnDestroy {
   serviceStatusData: any;
   dailyData: any;
   highcharts = Highcharts;
   historicalFileData: any;
-  historicalFileValue: string;
   ifaCountData: any;
   previousWeek: any;
   currentWeek: any;
@@ -28,22 +30,55 @@ export class SupportDashboardComponent implements OnInit {
   currentWeekCams: any;
   previousWeekFrankline: any;
   currentWeekKarvy: any;
+
+
+  subscription = new Subscription();
+  bulkData:any[] = [{},{},{}];
+  dropDownData:any[] = [];
+  hasError: boolean = false;
+  
+  dashFG: FormGroup;
   constructor(
     private eventService: EventService,
     private subInjectService: SubscriptionInject,
-    private supportService: SupportService
+    private supportService: SupportService,
+    public utilsService: UtilService,
+    private reconsilationService: ReconciliationService,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit() {
-    // this.flowCash('')
-    //this.flowCash2('')
-    //this.flowCash3('')
-    this.historicalFileValue = '0'
+    this.utilsService.loader(0);
+
+    this.createFormGroup();
+    this.addFormListeners();
+    this.loadGlobalData();
+    
     this.getDailyServicesStatusReport();
     this.getDailyFiles();
     this.getIfaMatricData();
-    this.filterHistoricalFileData({ value: this.historicalFileValue });
   }
+
+  createFormGroup(){
+    this.dashFG = this.fb.group({
+      bulkOptRtId: '',
+      historicalFileOptId: '',
+    });
+  }
+
+  addFormListeners(){
+    this.subscription.add(
+      this.dashFG.controls.bulkOptRtId.valueChanges.subscribe(value => {
+        this.loadBulkFilesData(value);
+      })
+    );
+    this.subscription.add(
+      this.dashFG.controls.historicalFileOptId.valueChanges.subscribe(value => {
+        this.filterHistoricalFileData(value);
+      })
+    );
+  }
+
   flowCash(previous,current,id) {
     var chart1 = new Highcharts.Chart(id, {
       chart: {
@@ -83,11 +118,11 @@ export class SupportDashboardComponent implements OnInit {
       } as SeriesColumnOptions]
     });
   }
+
   getDailyServicesStatusReport() {
     let obj = {};
     this.supportService.getDailyServicesStatusReport(obj).subscribe(
       data => {
-        console.log(data);
         if (data) {
           this.serviceStatusData = data.service_status;
         }
@@ -95,14 +130,13 @@ export class SupportDashboardComponent implements OnInit {
       , err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
+
   getDailyFiles() {
     let obj = {};
     this.supportService.getDailyFiles(obj).subscribe(
       data => {
-        console.log(data);
         if (data) {
           this.dailyData = data;
-          console.log('getDailyFiles', this.dailyData)
           this.previousWeekCams = []
           this.currentWeekCams = []
           this.previousWeekKarvy = []
@@ -123,11 +157,6 @@ export class SupportDashboardComponent implements OnInit {
           this.dailyData.previousWeek[3].forEach(element => {
             this.previousWeekFrankline.push(element.fileCount)
           });
-          console.log(this.previousWeekCams)
-          console.log(this.currentWeekCams)
-          console.log(this.previousWeekKarvy)
-          console.log(this.currentWeekKarvy)
-          console.log(this.previousWeekFrankline)
           //  this.currentWeekFrankline = this.dailyData.currentWeek[0]
           this.flowCash(this.previousWeekCams,this.currentWeekCams,'flowCash')
           this.flowCash(this.previousWeekKarvy,this.currentWeekKarvy,'flowCash2')
@@ -137,23 +166,25 @@ export class SupportDashboardComponent implements OnInit {
       , err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
+
   filterHistoricalFileData(data) {
-    let obj = { filterId: parseInt(data.value) };
+    let obj = { filterId: data };
+    this.utilsService.loader(1);
     this.supportService.getHistoricFilesReport(obj).subscribe(
-      data => {
-        console.log(data);
-        if (data) {
-          this.historicalFileData = data;
+      res => {
+        if (res) {
+          this.historicalFileData = res;
         }
+        this.utilsService.loader(-1);
       }
       , err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
+
   getIfaMatricData() {
     let obj = {};
     this.supportService.getIfaMatricData(obj).subscribe(
       data => {
-        console.log(data);
         if (data) {
           this.ifaCountData = data;
         }
@@ -161,6 +192,7 @@ export class SupportDashboardComponent implements OnInit {
       , err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
+
   openAddStockMaster(data) {
     const fragmentData = {
       flag: 'openAddStockMaster',
@@ -172,9 +204,7 @@ export class SupportDashboardComponent implements OnInit {
 
     const subscription = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
           subscription.unsubscribe();
         }
       }
@@ -192,9 +222,7 @@ export class SupportDashboardComponent implements OnInit {
 
     const subscription = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
           subscription.unsubscribe();
         }
       }
@@ -220,4 +248,49 @@ export class SupportDashboardComponent implements OnInit {
     );
   }
 
+  loadGlobalData(){
+    this.utilsService.loader(1);
+    this.reconsilationService.getRTListValues({}).subscribe(res => {
+      this.dropDownData = res;
+      this.dashFG.controls.bulkOptRtId.setValue(this.dropDownData[0].id);
+      this.dashFG.controls.historicalFileOptId.setValue(this.dropDownData[0].id);
+      this.utilsService.loader(-1);
+    }, err => {
+      this.hasError = true;
+      this.utilsService.loader(-1);
+      this.eventService.openSnackBar(err, "Dismiss");
+    });
+  }
+
+  loadBulkFilesData(value){
+    const jsonObj = {
+      days: 0,
+      fileTypeId: 0,
+      rmId: 2,
+      rtId: value,
+      limit: 10
+    }
+    this.utilsService.loader(1);
+    this.supportService.getBulkFilesData(jsonObj).subscribe(res => {
+      this.utilsService.loader(-1);
+      this.bulkData = res;
+    }, err => {
+      this.utilsService.loader(-1);
+      this.eventService.openSnackBar(err, "Dismiss");
+    });
+  }
+
+  getRTCode(code) {
+    if(code) {
+      const rt = this.dropDownData.find(data => data.id == code);
+      const rtCode = rt.name as string;
+      return rtCode.slice(0,2);
+    } else {
+      return '';
+    }
+  }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+  }
 }

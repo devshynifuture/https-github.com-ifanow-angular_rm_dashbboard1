@@ -68,8 +68,8 @@
                         <mat-form-field floatLabel="never" appearance="standard">
                             <input autocomplete="off" class="form-control" formControlName="email" matInput
                                 placeholder="Enter Email">
-                            <mat-hint>Optional</mat-hint>
                             <mat-error *ngIf="basicDetails.get('email').errors?.pattern">Email is not valid</mat-error>
+                            <mat-error>This field is required</mat-error>
                         </mat-form-field>
 
                     </div>
@@ -623,7 +623,7 @@
                             <input matInput formControlName="comEmail" class="form-control">
                             <mat-error *ngIf="nonIndividualForm.get('comEmail').errors?.pattern">Email not valid
                             </mat-error>
-                            <mat-hint>Optional</mat-hint>
+                            <mat-error>This field is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div>

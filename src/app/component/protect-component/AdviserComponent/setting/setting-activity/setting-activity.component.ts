@@ -44,13 +44,17 @@ export class SettingActivityComponent implements OnInit {
     }
     this.orgSetting.getTaskTemplate(obj).subscribe(
       data => this.getTaskTemplateRes(data),
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+        this.linkedTaskList = [];
+        this.unlinkedTaskList = [];
+      }
     );
   }
 
   getTaskTemplateRes(data) {
+    this.taskList = data
     if (data) {
-      this.taskList = data
       this.unlinkedTaskList = data.filter(data=> data.templateType == 2);
       this.linkedTaskList = data.filter(data=> data.templateType == 1);
     }

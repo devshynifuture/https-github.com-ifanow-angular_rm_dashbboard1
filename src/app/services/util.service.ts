@@ -21,7 +21,7 @@ export class UtilService {
   ) { }
 
   private static decimalPipe = new DecimalPipe('en-US');
-  private counter:number = 0;
+  private counter: number = 0;
   public isLoading = false;
   advisorId: any;
 
@@ -107,20 +107,9 @@ export class UtilService {
   static obfuscateEmail(email: string) {
     let tempMail: string;
     const indexOfAt = email.indexOf('@');
-
-    if (indexOfAt > 3) {
-      tempMail = email.substr(0, 3) + 'XXXXX@';
-
-    } else {
-      tempMail = email.substr(0, indexOfAt) + '@';
-    }
-
-    if ((email.length - indexOfAt) > 5) {
-      tempMail += 'XXXXXX' + email.substr(email.length - 5, email.length);
-    } else {
-      tempMail += 'XXXXXX';
-    }
-
+    email = email.replace(/\./g, '');
+    let replaceTxt = email.substr(indexOfAt + 1, email.length);
+    tempMail = email.replace(replaceTxt, 'X'.repeat(email.length - indexOfAt));
     return tempMail;
   }
 
@@ -130,6 +119,12 @@ export class UtilService {
 
   setSubscriptionStepData(data) {
     this.subscriptionStepData = data;
+  }
+
+  addZeroBeforeNumber(num, padlen, padchar?) {
+    var pad_char = typeof padchar !== 'undefined' ? padchar : '0';
+    var pad = new Array(1 + padlen).join(pad_char);
+    return (pad + num).slice(-pad.length);
   }
 
   checkSubscriptionastepData(stepNo) {
@@ -328,11 +323,11 @@ export class UtilService {
     }
   }
 
-  loader(increament:number) {
-    if(increament === 0)
+  loader(increament: number) {
+    if (increament === 0)
       this.counter = 0;
     this.counter += increament;
-    if(this.counter == 0) {
+    if (this.counter == 0) {
       this.isLoading = false;
     } else {
       this.isLoading = true;

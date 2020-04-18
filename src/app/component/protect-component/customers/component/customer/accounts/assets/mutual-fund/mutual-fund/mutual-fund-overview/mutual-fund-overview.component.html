@@ -338,7 +338,11 @@
                                 <div class="bar">{{(mfData.total_absolute_return)?(mfData.total_absolute_return | number:'1.2-2'):0}}
                                 </div>
                             </td> -->
-                            <td *matFooterCellDef  appFormatNumber [value]="mfData.total_absolute_return" class="br f-600 text-right" mat-footer-cell  >
+                            <!-- <td *matFooterCellDef  appFormatNumber [value]="mfData.total_absolute_return" class="br f-600 text-right" mat-footer-cell  >
+                            </td> -->
+                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
+                                <div class="bar">{{(mfData.total_absolute_return) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}
+                                </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="xirr">
@@ -350,8 +354,12 @@
                                 <div class="bar">{{(mfData.total_xirr)?(mfData.total_xirr | number:'1.2-2'):0.00}}
                                 </div>
                             </td> -->
-                            <td *matFooterCellDef appFormatNumber [value]="mfData.total_xirr" class="br f-600 text-right" mat-footer-cell  >
+                            <!-- <td *matFooterCellDef appFormatNumber [value]="mfData.total_xirr" class="br f-600 text-right" mat-footer-cell  >
                                 {{mfData.total_xirr | number:'1.2-2'}}
+                            </td> -->
+                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
+                                <div class="bar">{{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}
+                                </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="alloc">
@@ -424,7 +432,11 @@
                                 <div class="bar">{{(mfData.total_absolute_return)?(mfData.total_absolute_return | number:'1.2-2'):0}}
                                 </div>
                             </td> -->
-                            <td *matFooterCellDef appFormatNumber  [value]="mfData.total_absolute_return" class="br f-600 text-right" mat-footer-cell  >
+                            <!-- <td *matFooterCellDef appFormatNumber  [value]="mfData.total_absolute_return" class="br f-600 text-right" mat-footer-cell  >
+                            </td> -->
+                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
+                                <div class="bar">{{(mfData.total_absolute_return) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}
+                                </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="xirr">
@@ -436,8 +448,12 @@
                                 <div class="bar">{{(mfData.total_xirr)?(mfData.total_xirr | number:'1.2-2'):0.00}}
                                 </div>
                             </td> -->
-                            <td *matFooterCellDef appFormatNumber  [value]="mfData.total_xirr" class="br f-600 text-right" mat-footer-cell  >
+                           <!--  <td *matFooterCellDef appFormatNumber  [value]="mfData.total_xirr" class="br f-600 text-right" mat-footer-cell  >
                                 {{mfData.total_xirr | number:'1.2-2'}}
+                            </td> -->
+                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
+                                <div class="bar">{{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}
+                                </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="alloc">
@@ -510,7 +526,11 @@
                                 <div class="bar"> {{(mfData.total_absolute_return)?(mfData.total_absolute_return | number:'1.2-2'):0}}
                                 </div>
                             </td> -->
-                            <td *matFooterCellDef appFormatNumber [value]="mfData.total_absolute_return" class="br f-600 text-right" mat-footer-cell  >
+                           <!--  <td *matFooterCellDef appFormatNumber [value]="mfData.total_absolute_return" class="br f-600 text-right" mat-footer-cell  >
+                            </td> -->
+                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
+                                <div class="bar">{{(mfData.total_absolute_return) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}
+                                </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="xirr">
@@ -522,8 +542,12 @@
                                 <div class="bar"> {{(mfData.total_xirr)?(mfData.total_xirr | number:'1.2-2'):0.00}}
                                 </div>
                             </td> -->
-                            <td *matFooterCellDef appFormatNumber [value]="mfData.total_xirr" class="br f-600 text-right" mat-footer-cell  >
+                            <!-- <td *matFooterCellDef appFormatNumber [value]="mfData.total_xirr" class="br f-600 text-right" mat-footer-cell  >
                                 {{mfData.total_xirr | number:'1.2-2'}}
+                            </td> -->
+                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
+                                <div class="bar">{{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}
+                                </div>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="alloc">
@@ -603,7 +627,7 @@
 
 
 
-<div #mfOverviewTemplate id="template"  *ngIf="mfData">
+<div #mfOverviewTemplate id="template"  *ngIf="mfData" class="hide">
     <table cellpadding="0" cellspacing="0" border="0" style="width: 700px; font-family: 'Roboto', sans-serif; margin: 0px auto;" align="center">
 
         <tr>

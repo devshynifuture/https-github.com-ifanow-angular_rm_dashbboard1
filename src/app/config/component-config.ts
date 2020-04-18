@@ -500,6 +500,7 @@ export const appConfig = {
   BACKOFFICE_SIP_STP: 'backoffice/file-upload/uploaded/sip/list/get',
   BACKOFFICE_FOLIO: 'backoffice/file-upload/uploaded/folio-master/list/get',
   BACKOFFICE_SUCCESS_FILE_UPLOAD: 'backoffice/file-upload/success',
+  GET_BACKOFFICE_ADVISOR_SEARCH_NAME: 'backoffice/advisor/search/name',
 
   GET_DAILY_SERVICES_STATUS_REPORT: 'rmdashboard/dashboard/daily/services/status/get',
   GET_DAILY_FILES: 'rmdashboard/dashboard/daily-file/get',
@@ -513,12 +514,17 @@ export const appConfig = {
   UPDATE_IFA_ONBOARDING_OVERVIEW:'rmdashboard/ifa/onboard/overview/update',
   GET_IFA_ONBOARDING_ACTIVITY:'rmdashboard/dashboard/ifa-onboard/advisor-id/get',
   EDIT_ACTIVITY:'rmdashboard/dashboard/ifa-onboard/advisor-id/task/put',
-  ACTIVITY_ADD_COMMENT:'',
+  ACTIVITY_ADD_COMMENT:'rmdashboard/dashboard/ifa-onboard/activity/chat/post',
   ACTIVITY_UPDATE_COMMENT:'rmdashboard/dashboard/ifa-onboard/activity/chat/edit',
   ACTIVITY_DELETECOMMENT:'rmdashboard/dashboard/ifa-onboard/activity/chat/delete',
   GET_STAGE_COMMENT:'rmdashboard/dashboard/ifa-onboard/stages/chat/get',
   EDIT_STAGE_COMMENT:'rmdashboard/dashboard/ifa-onboard/stages/chat/edit',
   DELETE_STAGE_COMMENT:'rmdashboard/dashboard/ifa-onboard/stages/chat/delete',
+  ADD_STAGE_COMMENT:'rmdashboard/dashboard/ifa-onboard/stages/chat/post',
+  GET_BULK_FILE_ORDER_LIST: 'fileorder/bulk/list/get',
+
+  GET_FILE_ORDER_HISTORICAL_LIST_DATA: "fileorder/historical/advisor/list/get",
+  GET_FILE_ORDER_UPPER_LIST_DATA: 'fileorder/historical/list/get',
 
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',

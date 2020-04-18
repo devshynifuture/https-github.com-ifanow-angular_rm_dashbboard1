@@ -6,6 +6,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { SetNewPasswordComponent } from './set-new-password/set-new-password.component';
 import { VerifyOtpComponent } from './verify-otp/verify-otp.component';
 import { SignupTeamMemberComponent } from './signup-team-member/signup-team-member.component';
+import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 
 
 const routes: Routes = [
@@ -34,6 +35,10 @@ const routes: Routes = [
   {
     path: 'verifyotp',
     component: VerifyOtpComponent
+  },
+  {
+    path: 'terms-condition',
+    component: TermsConditionsComponent
   }
 ];
 

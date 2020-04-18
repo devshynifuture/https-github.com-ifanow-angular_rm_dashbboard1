@@ -31,7 +31,7 @@ export class MutualFundComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.viewMode = 'All Transactions';
+    this.viewMode = 'Overview Report';
 
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
