@@ -1,0 +1,17 @@
+.termsUl {
+    display: block;
+    padding-left: 20px;
+    list-style-type: disc;
+    margin-left: 20px;
+    li {
+        text-align: left;
+        list-style-type: circle;
+        margin-bottom: 10px;
+        font-size: 14px;
+        ul {
+            display: block;
+            list-style-type: disc;
+            margin-left: 40px;
+        }
+    }
+}
