@@ -1,0 +1,74 @@
+<div id="ui-subscriptions">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="m-0 pt-16"> RM management </h3>
+        </div>
+    </div>
+</div>
+
+<div class="row pt-130 mb-2">
+    <div class="col-md-8 overflow-hidden back-office-table">
+        <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonAnimation mt-8" appSkeletonLoading
+            [appSkeletonLoading]="isLoading" matSort>
+            <!-- admin name Column -->
+            <ng-container matColumnDef="adminName">
+                <th mat-header-cell *matHeaderCellDef class="b-a w-12" mat-sort-header="adminName"> Admin Name </th>
+                <td mat-cell *matCellDef="let element" class="b-a w-12 c-p" (click)="openIfaRightSilder(element)">
+                    <div class="bar"> {{element.adminName}} </div>
+                </td>
+            </ng-container>
+
+            <!-- email Column -->
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef class="b-a" mat-sort-header="email"> Email </th>
+                <td mat-cell *matCellDef="let element" class="b-a">
+                    <div class="bar">
+                        {{element.email}}
+                    </div>
+                </td>
+            </ng-container>
+
+            <!-- mobile Column -->
+            <ng-container matColumnDef="mobile">
+                <th mat-header-cell *matHeaderCellDef class="b-a" mat-sort-header="mobile"> Mobile </th>
+                <td mat-cell *matCellDef="let element" class="b-a">
+                    <div class="bar">
+                        {{element.mobile}}
+                    </div>
+                </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="plan">
+                <th mat-header-cell *matHeaderCellDef class="b-a" mat-sort-header="plan"> Plan </th>
+                <td mat-cell *matCellDef="let element" class="b-a">
+                    <div class="bar"> {{element.plan}} </div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="nextBilling">
+                <th mat-header-cell *matHeaderCellDef class="b-a" mat-sort-header="nextBilling"> Next Billing</th>
+                <td mat-cell *matCellDef="let element" class="b-a">
+                    <div class="bar"> {{element.nextBilling}} </div>
+                </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="menu">
+                <th mat-header-cell *matHeaderCellDef class="b-a"> </th>
+                <td mat-cell *matCellDef="let element" class="b-a">
+                    <div class="bar">
+                        <mat-menu #appMenu="matMenu">
+                            <button mat-menu-item>Recalculate Balance Units</button>
+                            <button mat-menu-item>Deactivate Account</button>
+                            <button mat-menu-item>Merge Scheme Code</button>
+                        </mat-menu>
+
+                        <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                    </div>
+                </td>
+            </ng-container>
+            <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
+            <tr *matRowDef=" let row; columns: displayedColumns;" mat-row></tr>
+        </table>
+    </div>
+</div>

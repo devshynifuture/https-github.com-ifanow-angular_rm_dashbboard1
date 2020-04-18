@@ -87,7 +87,7 @@
                             <input #pan placeholder="Enter PAN" (input)="toUpperCase($event)"
                                 [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
                                 autocomplete="off" class="form-control" formControlName="pan" matInput maxlength="10">
-                            <mat-error *ngIf="basicDetails.get('pan').errors?.required">This Field is required
+                            <mat-error *ngIf="basicDetails.get('pan').errors?.required">This field is required
                             </mat-error>
                             <mat-error *ngIf="basicDetails.get('pan').errors?.pattern">Pan must be 10 digits</mat-error>
                             <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
@@ -651,8 +651,8 @@
                     </div>
                 </div>
                 <div class="col-md-4 d-flex align-items-center">
-                    <p class="m-0 d-flex roboto text-primary f-400 c-p">
-                        <i class="material-icons mr-4"> check_circle </i> KYC compliant</p>
+                    <!-- <p class="m-0 d-flex roboto text-primary f-400 c-p">
+                        <i class="material-icons mr-4"> check_circle </i> KYC compliant</p> -->
                 </div>
             </div>
 
@@ -770,7 +770,7 @@
                                     {{singleClient.name}}
                                 </mat-option>
                             </mat-select>
-                            <mat-error>This Field is required</mat-error>
+                            <mat-error>This field is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
