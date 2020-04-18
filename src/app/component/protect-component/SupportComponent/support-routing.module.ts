@@ -9,6 +9,7 @@ import { FileOrderingUploadComponent } from './file-ordering-upload/file-orderin
 import { SupportReportsComponent } from './support-reports/support-reports.component';
 import { supportsPassiveEventListeners } from '@angular/cdk/platform';
 import { SupportMiscellaneousComponent } from './support-miscellaneous/support-miscellaneous.component';
+import { SupportManagementComponent } from './support-management/support-management.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: 'ifa-onboarding',
         component: IfaOnboardingComponent
+      },
+      {
+        path: 'management',
+        component: SupportManagementComponent,
       },
       {
         path: 'aum-reconciliation',
