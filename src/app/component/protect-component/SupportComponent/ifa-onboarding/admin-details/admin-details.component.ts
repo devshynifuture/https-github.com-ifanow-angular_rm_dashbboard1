@@ -107,15 +107,17 @@ export class AdminDetailsComponent implements OnInit {
       id: value.id,
       commentMsg: value.commentMsg,
     }
-    this.supportService.activityCommentUpdate(obj).subscribe(
-      data => {
-        console.log('activityCommentUpdate', data);
-        if (data) {
-          // this.getOverview = data.stageList;
+    if(flag == true){
+      this.supportService.activityCommentUpdate(obj).subscribe(
+        data => {
+          console.log('activityCommentUpdate', data);
+          if (data) {
+            // this.getOverview = data.stageList;
+          }
         }
-      }
-      , err => this.eventService.openSnackBar(err, "Dismiss")
-    )
+        , err => this.eventService.openSnackBar(err, "Dismiss")
+      )
+    }
   }
   activityCommentFunStage(value, flag) {
     value.isEditStage = flag
@@ -218,8 +220,10 @@ export class AdminDetailsComponent implements OnInit {
       isComplete: (event.checked == true) ? 1 : 0,
       activityId: stage.activityId,
     }
+    let obj1 = []
+    obj1.push(obj)
     if(event.checked == true){
-      this.supportService.editActivity(obj).subscribe(
+      this.supportService.editActivity(obj1).subscribe(
         data => {
           console.log('getOverviewIFAOnbording', data);
           if (data) {
