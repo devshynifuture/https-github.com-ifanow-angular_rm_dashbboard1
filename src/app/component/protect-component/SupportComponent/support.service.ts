@@ -98,6 +98,9 @@ export class SupportService {
   addStageComment(data){
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_STAGE_COMMENT , data);
   }
+  getMyIFAReconSummary(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MY_IFA_REC_SUMMARY, data); 
+  }
   // observable data sending
 
   sendDataThroughObs(value) {
