@@ -7,6 +7,7 @@ import { EventService } from '../Data-service/event.service';
 import { HttpClient } from '@angular/common/http';
 import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
 import { FormGroup } from '@angular/forms';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -23,6 +24,8 @@ export class UtilService {
   private static decimalPipe = new DecimalPipe('en-US');
   private counter: number = 0;
   public isLoading = false;
+  loaderObservable = new BehaviorSubject<boolean>(false);
+  isLoadingObservable = this.loaderObservable.asObservable();
   advisorId: any;
 
   subscriptionStepData;
@@ -329,8 +332,10 @@ export class UtilService {
     this.counter += increament;
     if (this.counter == 0) {
       this.isLoading = false;
+      this.loaderObservable.next(false);
     } else {
       this.isLoading = true;
+      this.loaderObservable.next(true);
     }
   }
 }
