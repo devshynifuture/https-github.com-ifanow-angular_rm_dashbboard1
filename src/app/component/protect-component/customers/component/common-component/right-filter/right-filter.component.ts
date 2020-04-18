@@ -66,7 +66,7 @@ export class RightFilterComponent implements OnInit {
   sendTransactionView;
   transactionPeriod = true;
   transactionPeriodCheck = true;
-
+  overviewFilterCount :any;
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
     private custumService: CustomerService, private eventService: EventService,
     private mfService: MfServiceService, private datePipe: DatePipe, ) {
