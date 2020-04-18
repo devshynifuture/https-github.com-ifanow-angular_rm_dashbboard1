@@ -1,3 +1,14 @@
+.star-active{
+  color: #C4C4C4;
+}
+.faq-colors{
+  background: rgba(255, 193, 0, 0.3);
+}
+.yes-no{
+  .mat-radio-button{
+    min-width: 110px !important;
+  }
+}
 .review-start{
       border:1px solid #008FFF !important;
       border-radius: 4px !important;
@@ -313,4 +324,41 @@ z-index: 9;
       margin-bottom: 20px;
     }
   }
+}
+#marketplace-article{
+  padding-top:100px !important;
+  .buttons-headers{
+  button{
+    
+    height: 33px !important;
+    line-height:33px !important;
+  }
+  .btn-actived{
+    background-color:#D9DEE1;
+    border-radius: 5px !important;
+  }
+}
+hr{
+  border-top:0px !important;
+  height: 1px;
+  background-color: #000;
+  width: 50%;
+  margin: 0;
+}
+p{
+  font-weight: normal;
+  
+}
+.authors-1{
+  background: rgba(255, 114, 114, 0.2);
+}
+.authors-2{
+  background: rgba(88, 191, 194, 0.2);
+}
+.authors-3{
+  background: rgba(93, 198, 68, 0.2);
+}
+.authors-4{
+  background: rgba(132, 189, 243, 0.2);
+}
 }
