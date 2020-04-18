@@ -523,6 +523,9 @@ export const appConfig = {
   ADD_STAGE_COMMENT:'rmdashboard/dashboard/ifa-onboard/stages/chat/post',
   GET_BULK_FILE_ORDER_LIST: 'fileorder/bulk/list/get',
   UNMAPPED_ADVISOR_LIST: 'rmdashboard/dashboard/admin/unmapped-ifas/get',
+  MAP_ADVISOR_TO_RM: 'rmdashboard/dashboard/admin/map-ifa-to-rm/post',
+  GET_RM_LIST: 'rmdashboard/dashboard/admin/rm/list/get',
+  ADD_RM: 'rmdashboard/dashboard/admin/rm/add',
 
   GET_FILE_ORDER_HISTORICAL_LIST_DATA: "fileorder/historical/advisor/list/get",
   GET_FILE_ORDER_UPPER_LIST_DATA: 'fileorder/historical/list/get',
