@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
-import {Observable, of, throwError} from 'rxjs';
-import {Router} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 // import 'rxjs/Rx';
-import {AuthService} from '../auth-service/authService';
+import { AuthService } from '../auth-service/authService';
 import 'rxjs-compat/add/observable/of';
 import 'rxjs-compat/add/operator/map';
-import {catchError} from 'rxjs/operators';
-import {EmailUtilService} from '../services/email-util.service';
+import { catchError } from 'rxjs/operators';
+import { EmailUtilService } from '../services/email-util.service';
 
 // declare var require: any;
 const Buffer = require('buffer/').Buffer;
@@ -99,7 +99,7 @@ export class HttpService {
       }
     }
 
-    const inputData = {query: this.changeBase64Data(body)};
+    const inputData = { query: this.changeBase64Data(body) };
 
     return this._http
       .post(this.baseUrl + url, inputData, httpOptions).pipe(this.errorObservable)
@@ -131,7 +131,7 @@ export class HttpService {
       }
     }
 
-    const inputData = {query: this.changeBase64Data(body)};
+    const inputData = { query: this.changeBase64Data(body) };
 
     return this._http
       .put(this.baseUrl + url, inputData, httpOptions).pipe(this.errorObservable)
@@ -211,7 +211,7 @@ export class HttpService {
     console.log('HttpService put request url... ', url);
 
     return this._http
-      .request('delete', url, {body}).pipe(this.errorObservable)
+      .request('delete', url, { body }).pipe(this.errorObservable)
       .map((res: any) => {
         if (res.status === 200) {
           const resData = this.changeBase64ToString(res);
@@ -267,7 +267,7 @@ export class HttpService {
     return this._http
       .get(this.baseUrl + url, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
-        if (res.status === 200 || res.status === 201 || res.status === 202) {
+        if ([200, 201, 202, 204].includes(res.status)) {
           const resData = this.changeBase64ToString(res);
           // console.log('decoded resData', resData);
           return resData;
@@ -338,7 +338,7 @@ export class HttpService {
   }
 
   changeBase64ToString(res) {
-    const encodedata = res.payLoad;
+    const encodedata = (res.payLoad == undefined) ? res : res.payLoad;
     try {
       const datavalue = (Buffer.from(encodedata, 'base64').toString('utf-8'));
       // console.log('datavalue helo: ', datavalue);

@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {ValidatorType} from 'src/app/services/util.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {LoginService} from '../login.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ValidatorType } from 'src/app/services/util.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LoginService } from '../login.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-sign-up',
@@ -18,9 +18,10 @@ export class SignUpComponent implements OnInit {
   clientSignUp = false;
   duplicateTableDtaFlag: boolean;
   termsAndCondition: any;
+  typeOfRegister: string;
 
   constructor(private fb: FormBuilder, private authService: AuthService, public routerActive: ActivatedRoute,
-              private router: Router, private loginService: LoginService, private eventService: EventService, public dialog: MatDialog) {
+    private router: Router, private loginService: LoginService, private eventService: EventService, public dialog: MatDialog) {
   }
 
   signUpForm;
@@ -47,16 +48,28 @@ export class SignUpComponent implements OnInit {
         // this.clientSignUp = true;
       }
     });
+    this.typeOfRegister = '1'
     this.signUpForm = this.fb.group({
       fullName: [, [Validators.required]],
+      companyName: [],
       email: [, [Validators.required,
-        Validators.pattern(this.validatorType.EMAIL)]],
+      Validators.pattern(this.validatorType.EMAIL)]],
       mobile: [, [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
       termsAgreement: [false, [Validators.required, Validators.requiredTrue]]
     });
   }
-
+  resetForm() {
+    this.signUpForm.reset();
+  }
   createAccount() {
+    if (this.typeOfRegister == '2') {
+      this.signUpForm.get('companyName').setValidators([Validators.required]);
+      this.signUpForm.get('companyName').updateValueAndValidity();
+    }
+    else {
+      this.signUpForm.get('companyName').setValidators(null);
+      this.signUpForm.get('companyName').updateValueAndValidity();
+    }
     if (this.signUpForm.invalid) {
       console.log('Error');
       this.signUpForm.markAllAsTouched();
@@ -82,6 +95,7 @@ export class SignUpComponent implements OnInit {
           }
         ],
         userType: 1,
+        companyName: (this.typeOfRegister == '2') ? this.signUpForm.get('companyName').value : null,
         forceRegistration: (this.duplicateTableDtaFlag == true) ? true : null
       };
       this.loginService.register(obj, this.clientSignUp).subscribe(
@@ -119,7 +133,7 @@ export class SignUpComponent implements OnInit {
               });
               this.router.navigate(['customer', 'detail', 'overview', 'myfeed']);*/
           } else {
-            this.router.navigate(['/login/forgotpassword'], {state: forgotPassObjData});
+            this.router.navigate(['/login/forgotpassword'], { state: forgotPassObjData });
           }
         },
         err => {
@@ -136,10 +150,10 @@ export class SignUpComponent implements OnInit {
       body: errorMsg + '. How would you like to proceed?',
       body2: 'This cannot be undone.',
       btnYes: 'LOGIN',
-      btnNo: 'REGISTER',
+      btnNo: 'CANCEL',
       positiveMethod: () => {
         this.duplicateTableDtaFlag = true;
-        this.createAccount();
+        // this.createAccount();
         dialogRef.close();
       },
       negativeMethod: () => {
@@ -159,5 +173,8 @@ export class SignUpComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+  showTermsAndConditions() {
+    this.router.navigate(['/terms-condition']);
   }
 }

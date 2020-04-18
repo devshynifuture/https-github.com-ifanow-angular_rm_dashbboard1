@@ -84,7 +84,7 @@
     <img class="width300" src="assets/images/svg/noDataFound.svg">
     <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
 </div>
-<div *ngIf="arnobjs.length == 0 && !isLoading" class="d-flex flex-column align-items-center">
+<div *ngIf="arnobjs.length == 0 && !utilService.isLoading" class="d-flex flex-column align-items-center">
     <img class="width300" src="assets/images/svg/noDataFound.svg">
     <h4 class="text-center pt-12">No ARN/RIA details found</h4>
 </div>
