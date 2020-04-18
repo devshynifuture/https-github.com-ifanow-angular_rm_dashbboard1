@@ -339,7 +339,7 @@ export class MutualFundOverviewComponent implements OnInit {
       schemeWise: this.mutualFund.schemeWise,
       familyMember: this.mutualFund.family_member_list,
       category: this.mutualFund.mutualFundCategoryMastersList,
-      transactionView: this.displayedColumns
+      transactionView: this.displayedColumns,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
