@@ -21,7 +21,6 @@ export class SignupTeamMemberComponent implements OnInit {
 
   constructor(private http: HttpService, private fb: FormBuilder, private authService: AuthService, public routerActive: ActivatedRoute,
     private router: Router, private loginService: LoginService, private eventService: EventService, public dialog: MatDialog) { }
-
   signUpForm;
   validatorType = ValidatorType;
   barButtonOptions: MatProgressButtonOptions = {
@@ -39,23 +38,38 @@ export class SignupTeamMemberComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-
+  signUpBarList = [
+    { name: "Test", flag: false },
+    { name: "Test", flag: false },
+    { name: "Test", flag: false },
+    { name: "Test", flag: false }
+  ]
   ngOnInit() {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('query')) {
-        this.paramsData = this.http.changeBase64ToString(queryParamMap.get('query'));
+        this.paramsData = this.changeBase64ToString(queryParamMap.get('query'));
         this.createForm(this.paramsData);
-        this.barButtonOptions.text = "Create account"
+      }
+      else {
+        this.createForm(null)
       }
     });
+    this.barButtonOptions.text = "Create account"
+  }
+  changeBase64ToString(data) {
+    const Buffer = require('buffer/').Buffer;
+    const encodedata = data;
+    const datavalue = (Buffer.from(encodedata, 'base64').toString('utf-8'));
+    const responseData = JSON.parse(datavalue);
+    return responseData;
   }
   createForm(data) {
     (data == undefined) ? data = {} : data
     this.signUpForm = this.fb.group({
-      fullName: [this.paramsData.name, [Validators.required]],
-      email: [{ value: this.paramsData.email, disabled: true }, [Validators.required,
+      fullName: [data.name, [Validators.required]],
+      email: [{ value: data.email, disabled: (this.paramsData) ? true : false }, [Validators.required,
       Validators.pattern(this.validatorType.EMAIL)]],
-      mobile: [this.paramsData.mobileNo, [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
+      mobile: [data.mobileNo, [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
       termsAgreement: [false, [Validators.required, Validators.requiredTrue]]
     });
   }
@@ -87,7 +101,8 @@ export class SignupTeamMemberComponent implements OnInit {
             userId: data.userId,
             clientId: data.clientId,
             advisorId: data.advisorId,
-            userData: data
+            userData: data,
+            showSignUpBar: true
           };
           if (this.clientSignUp) {
             /*  const jsonData = {

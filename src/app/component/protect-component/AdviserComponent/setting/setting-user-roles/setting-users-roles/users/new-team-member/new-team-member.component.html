@@ -35,8 +35,7 @@
                 <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                     <input placeholder="Enter Email Id" matInput formControlName="emailId" class="form-control"
                         [readonly]="!data.is_add_call">
-                    <mat-error *ngIf="teamMemberFG.get('emailId').errors?.pattern">This field
-                        is required</mat-error>
+                    <mat-error *ngIf="teamMemberFG.get('emailId').errors?.pattern">Email is invalid</mat-error>
                     <mat-error *ngIf="teamMemberFG.get('emailId').errors?.required">This field is required</mat-error>
                 </mat-form-field>
 

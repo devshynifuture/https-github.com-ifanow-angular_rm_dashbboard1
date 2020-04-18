@@ -23,7 +23,12 @@ export class SetNewPasswordComponent implements OnInit {
   hide1 = true;
   hide2 = true;
   userData: any;
-
+  signUpBarList = [
+    { name: "CREATE ACCOUNT", flag: true },
+    { name: "VERIFY EMAIL", flag: true },
+    { name: "VERIFY MOBILE", flag: true },
+    { name: "SET PASSWORD", flag: false }
+  ]
   constructor(private authService: AuthService, private fb: FormBuilder, private loginService: LoginService, private router: Router, private eventService: EventService) {
   }
 
