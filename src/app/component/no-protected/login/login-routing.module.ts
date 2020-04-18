@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { SetNewPasswordComponent } from './set-new-password/set-new-password.component';
 import { VerifyOtpComponent } from './verify-otp/verify-otp.component';
+import { SignupTeamMemberComponent } from './signup-team-member/signup-team-member.component';
+import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 
 
 const routes: Routes = [
@@ -17,8 +19,14 @@ const routes: Routes = [
     component: SignUpComponent
   },
   {
+    path: 'team-member-signup',
+    component: SignupTeamMemberComponent
+  },
+  {
     path: 'forgotpassword',
-    component: ForgotPasswordComponent
+    component: ForgotPasswordComponent,
+    // canActivate: [AuthGuard],
+
   },
   {
     path: 'setpassword',
@@ -27,6 +35,10 @@ const routes: Routes = [
   {
     path: 'verifyotp',
     component: VerifyOtpComponent
+  },
+  {
+    path: 'terms-condition',
+    component: TermsConditionsComponent
   }
 ];
 

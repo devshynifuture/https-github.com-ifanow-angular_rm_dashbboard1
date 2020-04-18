@@ -1,6 +1,13 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, Input } from '@angular/core';
 import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormBuilder } from '@angular/forms';
+import { SupportService } from '../../support.service';
+import { timingSafeEqual } from 'crypto';
+import { UtilService } from 'src/app/services/util.service';
+import { SettingsService } from '../../../AdviserComponent/setting/settings.service';
+import { MatTableDataSource, MatDialog } from '@angular/material';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from '../../../common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-admin-details',
@@ -8,25 +15,59 @@ import { FormBuilder } from '@angular/forms';
   styleUrls: ['./admin-details.component.scss']
 })
 export class AdminDetailsComponent implements OnInit {
+  getOverview: any;
+  inputData: any;
+  overviewDesc = true
+  stageList: any;
+  activityCommentList: any;
+  activityComment = true
+  isSuccess = false
+  rtaDetails: any;
+  isLoading = false
+  stageComment: any[] = [{}];
+  @Input()
+  set data(data) {
+    window.screenTop;
+    this.inputData = data;
+    this.getOverviewIFAOnbording(this.inputData)
+    // this.getIFAActivity()
+  }
 
+  get data() {
+    return this.inputData;
+  }
   constructor(
     public subInjectService: SubscriptionInject,
-    private fb: FormBuilder
-  ) { }
+    private fb: FormBuilder,
+    private supportService: SupportService,
+    private eventService: EventService,
+    public utilservice: UtilService,
+    private settingsService: SettingsService,
+    public dialog: MatDialog
+  ) {
+    //this.advisorId = AuthService.getAdvisorId()
+  }
+
+  tabIndex = 0;
+
+  isRTALoaded: boolean = false;
+  isTeamLoaded: boolean = false;
+  isOverview = false
+  isActivity = false
+  camsDS: MatTableDataSource<any> = new MatTableDataSource([{}, {}, {}]);
+  karvyDS: MatTableDataSource<any> = new MatTableDataSource([{}, {}, {}]);
+  frankDS: MatTableDataSource<any> = new MatTableDataSource([{}, {}, {}]);
+  fundsDS: MatTableDataSource<any> = new MatTableDataSource([{}, {}, {}]);
+  userList: MatTableDataSource<any> = new MatTableDataSource([{}, {}, {}]);
+
+  rtaAPIError: boolean = false;
+  teamAPIError: boolean = false;
+
   displayedColumns: string[] = ['name', 'email', 'mobile', 'role'];
-  dataSource = ELEMENT_DATA;
-
   displayedColumns1: string[] = ['arn', 'regEmailId', 'scheduleExp'];
-  dataSource1 = ELEMENT_DATA1;
-
   displayedColumns2: string[] = ['arn', 'loginId', 'registeredId', 'userOrdering'];
-  dataSource2 = ELEMENT_DATA2;
-
   displayedColumns3: string[] = ['arn', 'loginId', 'registeredId'];
-  dataSource3 = ELEMENT_DATA3;
-
   displayedColumns4: string[] = ['arn', 'loginId'];
-  dataSource4 = ELEMENT_DATA4;
 
   onboardingActivityForm = this.fb.group({
     "firstCall": [,],
@@ -38,79 +79,316 @@ export class AdminDetailsComponent implements OnInit {
   })
 
   ngOnInit() {
+    this.overviewDesc = true
   }
 
+  getRTADetails() {
+    const jsonData = { advisorId: this.data.adminAdvisorId };
+    this.settingsService.getMFRTAList(jsonData).subscribe((res) => {
+      this.rtaDetails = res
+      this.createDataSource()
+    });
+  }
 
+  createDataSource() {
+    this.camsDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 1));
+    this.karvyDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 2));
+    this.frankDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 3));
+    this.fundsDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 4));
+  }
+
+  activityCommentFun(value, flag) {
+    value.isEdit = flag
+    let obj = {
+      id: value.id,
+      commentMsg: value.commentMsg,
+    }
+    this.supportService.activityCommentUpdate(obj).subscribe(
+      data => {
+        console.log('activityCommentUpdate', data);
+        if (data) {
+          // this.getOverview = data.stageList;
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+  activityCommentFunStage(value, flag) {
+    value.isEditStage = flag
+    let obj = {
+      id: value.id,
+      commentMsg: value.commentMsg,
+    }
+    if (flag == true) {
+      this.supportService.editStageComment(obj).subscribe(
+        data => {
+          console.log('editStageComment', data);
+          if (data) {
+            // this.getOverview = data.stageList;
+          }
+        }
+        , err => this.eventService.openSnackBar(err, "Dismiss")
+      )
+    }
+  }
+  addStageComment(value, stage) {
+    let obj =
+    {
+      id: stage.id,
+      commentMsg: value,
+      rmId: 3,
+    }
+    this.supportService.addStageComment(obj).subscribe(
+      data => {
+        console.log('editStageComment', data);
+        if (data == null) {
+          // this.getOverview = data.stageList;
+          this.getstageComment(stage, true)
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+  getstageComment(stage, flag) {
+    this.isLoading = true
+    let obj = {
+      advisorId: this.inputData.adminAdvisorId,
+      stageChatId: stage.taskLevelId
+    }
+    if (flag == true) {
+      this.supportService.getStageComments(obj).subscribe(
+        data => {
+          console.log('getOverviewIFAOnbording', data);
+          this.isLoading = false
+          if (data) {
+            this.stageComment = data;
+            this.stageComment.forEach(element => {
+              element.isEditStage = true
+            });
+          }
+        }
+        , err => this.eventService.openSnackBar(err, "Dismiss")
+      )
+    }
+  }
+  editStageComment() {
+    let obj = {
+
+    }
+    this.supportService.editStageComment(obj).subscribe(
+      data => {
+        console.log('getOverviewIFAOnbording', data);
+        if (data) {
+          console.log(data)
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+
+  getOverviewIFAOnbording(data) {
+    let obj = {
+      adminAdvisorId: data.adminAdvisorId
+    }
+    this.supportService.getOverviewIFAOnboarding(obj).subscribe(
+      data => {
+        console.log('getOverviewIFAOnbording', data);
+        if (data) {
+          this.getOverview = data[0];
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+  showComment(stage, flag) {
+    if (stage.isShowComment == true) {
+      stage.isShowComment = false
+    } else {
+      stage.isShowComment = true
+    }
+    this.getstageComment(stage, flag)
+  }
+
+  updateActivityCompleteness(stage, event) {
+
+    this.stageList.forEach(element => {
+      if (element.id == stage.id) {
+        element.id = stage.id
+        element.isComplete = (event.checked == true) ? 1 : 0,
+          element.activityId = stage.activityId
+      }
+    });
+    this.supportService.editActivity(this.stageList).subscribe(
+      data => {
+        console.log('getOverviewIFAOnbording', data);
+        if (data) {
+          console.log(data)
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+
+  getIFAActivity() {
+    this.isSuccess = true
+    let obj = {
+      advisorId: this.inputData.adminAdvisorId
+    }
+    this.supportService.getOnboardingActivity(obj).subscribe(
+      data => {
+        console.log('getOverviewIFAOnbording', data);
+        this.isSuccess = false
+        if (data) {
+          this.isActivity = true
+          this.stageList = data.stageList;
+          this.stageList.forEach(element => {
+            element.isShowComment = false
+          });
+          this.activityCommentList = data.activityCommentList
+          this.activityCommentList.forEach(element => {
+            element.isEdit = true
+          });
+          this.isSuccess = false
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+
+  updateIFAOnboardingOverview() {
+    let obj = {
+      id: this.getOverview.id,
+      description: this.getOverview.description
+    }
+    this.supportService.updateOverviewIFAOnboarding(obj).subscribe(
+      data => {
+        console.log('getOverviewIFAOnbording', data);
+        if (data) {
+
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+  makeComment(comment, stage) {
+    console.log('comment', comment)
+    let obj =
+    {
+      activityId: stage.id,
+      commentMsg: comment,
+      rmId: 3,
+    }
+    this.supportService.addStageComment(obj).subscribe(
+      data => {
+        console.log('editStageComment', data);
+        if (data) {
+
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+  deleteModal(value, data) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        if (value == 'commentStage') {
+          this.supportService.deleteCommentStage(data.id).subscribe(
+            data => {
+              dialogRef.close();
+              this.getstageComment(data, true);
+            },
+            error => this.eventService.showErrorMessage(error)
+          );
+        } else {
+          this.supportService.activityDeleteComment(data.id).subscribe(
+            data => {
+              dialogRef.close();
+              this.getIFAActivity();
+            },
+            error => this.eventService.showErrorMessage(error)
+          );
+        }
+
+        this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
+      },
+      negativeMethod: () => {
+      }
+    };
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
+  changeTab(index) {
+    switch (index) {
+      case 1:
+        if (!this.isActivity) {
+          this.getIFAActivity()
+        }
+        break;
+      case 2:
+        if (!this.isRTALoaded) {
+          this.loadRTAList()
+        }
+        break;
+
+      case 3:
+        if (!this.isTeamLoaded) {
+          this.loadUsers()
+        }
+    }
+  }
+
+  loadRTAList() {
+    const jsonData = { advisorId: this.data.advisorId };
+    this.utilservice.loader(1)
+    this.rtaAPIError = false;
+    this.settingsService.getMFRTAList(jsonData).subscribe((res) => {
+      let mfRTAlist = res || [];
+      this.camsDS = new MatTableDataSource(mfRTAlist.filter((data) => data.rtTypeMasterid == 1));
+      this.karvyDS = new MatTableDataSource(mfRTAlist.filter((data) => data.rtTypeMasterid == 2));
+      this.frankDS = new MatTableDataSource(mfRTAlist.filter((data) => data.rtTypeMasterid == 3));
+      this.fundsDS = new MatTableDataSource(mfRTAlist.filter((data) => data.rtTypeMasterid == 4));
+      this.isRTALoaded = true;
+      this.utilservice.loader(-1);
+    }, err => {
+      this.eventService.openSnackBar(err, "Dismiss");
+      this.rtaAPIError = true;
+      this.utilservice.loader(-1);
+    });
+  }
+  
+  loadUsers() {
+    this.utilservice.loader(1);
+    const dataObj = {
+      advisorId: this.data.advisorId
+    };
+    this.teamAPIError = false;
+    this.settingsService.getTeamMembers(dataObj).subscribe((res) => {
+      this.userList = new MatTableDataSource(res);
+      this.utilservice.loader(-1);
+      this.isTeamLoaded = true;
+    }, err => {
+      this.eventService.openSnackBar(err, "Dismiss");
+      this.teamAPIError = true;
+      this.utilservice.loader(-1);
+    });
+  }
 
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
-
 }
-
-
-export interface PeriodicElement {
-  name: string;
-  email: string;
-  mobile: string;
-  role: string;
-
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'Atul Shah', email: 'atul@manekfinancial.com', mobile: '9879879878', role: 'Team member' },
-  { name: 'Rinku Singh', email: 'atul@manekfinancial.com', mobile: '9879879878', role: 'Team member' },
-  { name: 'Atul Shah', email: 'atul@manekfinancial.com', mobile: '9879879878', role: 'Team member' },
-  { name: 'Atul Shah', email: 'atul@manekfinancial.com', mobile: '9879879878', role: 'Team member' },
-];
-
-
-export interface PeriodicElement1 {
-  arn: string;
-  regEmailId: string;
-  scheduleExp: string;
-}
-const ELEMENT_DATA1: PeriodicElement1[] = [
-  { arn: 'Atul Shah', regEmailId: 'atul@manekfinancial.com', scheduleExp: '9879879878' },
-
-];
-
-
-export interface PeriodicElement2 {
-  arn: string;
-  loginId: string;
-  registeredId: string;
-  userOrdering: string;
-}
-const ELEMENT_DATA2: PeriodicElement2[] = [
-  { arn: 'ARN-83866', loginId: 'abcconsult', registeredId: 'firstname.lastname@abcconsultants.com', userOrdering: "Yes" },
-  { arn: 'RIA-INA000004409', loginId: 'riaconsult', registeredId: 'ria@abcconsultants.com,secondemail@abcconsults.com', userOrdering: "Yes" },
-
-];
-
-
-
-export interface PeriodicElement3 {
-  arn: string;
-  loginId: string;
-  registeredId: string;
-
-}
-const ELEMENT_DATA3: PeriodicElement3[] = [
-  { arn: 'ARN-83866', loginId: 'abcconsult', registeredId: 'firstname.lastname@abcconsultants.com' },
-  { arn: 'RIA-INA000004409', loginId: 'riaconsult', registeredId: 'ria@abcconsultants.com,secondemail@abcconsults.com' },
-
-];
-
-
-
-export interface PeriodicElement4 {
-  arn: string;
-  loginId: string;
-
-}
-const ELEMENT_DATA4: PeriodicElement4[] = [
-  { arn: 'ARN-83866', loginId: 'abcconsult', },
-  { arn: 'ARN-83866', loginId: 'abcconsult', },
-
-];
-

@@ -8,12 +8,16 @@ import { SetNewPasswordComponent } from './set-new-password/set-new-password.com
 import { VerifyOtpComponent } from './verify-otp/verify-otp.component';
 import { LoginComponent } from './login.component';
 import { MaterialModule } from 'src/app/material/material';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
+import { OtpVerifyComponent } from './otp-verify/otp-verify.component';
 // import { OtpInputComponent } from './otp-input/otp-input.component';
+import { NgOtpInputModule } from 'ng-otp-input';
+import { SignupTeamMemberComponent } from './signup-team-member/signup-team-member.component';
+import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 
 
 @NgModule({
@@ -23,6 +27,9 @@ import { CustomCommonModule } from 'src/app/common/custom.common.module';
     SignUpComponent,
     SetNewPasswordComponent,
     VerifyOtpComponent,
+    OtpVerifyComponent,
+    SignupTeamMemberComponent,
+    TermsConditionsComponent,
     // OtpInputComponent,
   ],
   imports: [
@@ -31,7 +38,9 @@ import { CustomCommonModule } from 'src/app/common/custom.common.module';
     MaterialModule,
     ReactiveFormsModule,
     CustomDirectiveModule,
-    CustomCommonModule
+    CustomCommonModule,
+    NgOtpInputModule,
+    FormsModule
   ]
 })
 export class LoginModule { }

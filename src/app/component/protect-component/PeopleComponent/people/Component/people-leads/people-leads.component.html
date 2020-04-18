@@ -4,20 +4,22 @@
     </div>
     <div *ngIf="leadDataSource.data.length>0" class="col-md-8">
         <div class="col-md-8 p-0 right text-right">
-            <img src="assets/images/svg/download-bordered.svg" class="c-p">
+            <img [matMenuTriggerFor]="menu5" src="assets/images/svg/download-bordered.svg" class="c-p">
+            <mat-menu #menu5="matMenu">
+                <button (click)="pdf('Lead')" mat-menu-item>PDF</button>
+                <button (click)="Excel('Lead')" mat-menu-item>XLS</button>
+            </mat-menu>
             <img src="assets/images/svg/up-down.svg" class="">
             <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
 
             <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                     class="material-icons">filter_list</i>FILTERS</button>
-            <button (click)="open(null,'lead')" mat-stroked-button class="btn-primary pl-8"> <i
-                    class="material-icons pr-8 v-middle">
-                    add
-                </i>ADD NEW</button>
+            <button (click)="open(null,'lead')" mat-stroked-button class="btn-primary pl-8">
+                ADD NEW</button>
         </div>
     </div>
     <div class="col-md-12 people-leads">
-        <table mat-table *ngIf="leadDataSource.data.length>0" [dataSource]="leadDataSource" appSkeletonLoading
+        <table #tableEl mat-table *ngIf="leadDataSource.data.length>0" [dataSource]="leadDataSource" appSkeletonLoading
             [appSkeletonLoading]="isLoading" class="skeletonAnimation" class="mt-8" id="table-low">
 
             <ng-container matColumnDef="position">

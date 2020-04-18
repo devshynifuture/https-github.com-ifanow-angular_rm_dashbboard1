@@ -15,9 +15,10 @@ import { SettingsService } from '../settings.service';
 export class SettingOrgProfileComponent implements OnInit {
   advisorId: any;
   orgProfile = false;
-  userList: any;
+  userList: any = undefined;
   orgDetails: any = {};
   isLoading = true
+  counter: number = 0;
 
   constructor(
     private eventService: EventService,
@@ -29,47 +30,47 @@ export class SettingOrgProfileComponent implements OnInit {
 
   ngOnInit() {
     this.getPersonalProfiles()
+    this.getOrgProfiles()
     this.orgProfile = false
-    this.isLoading = false
-    this.userList = []
   }
+
   getPersonalProfiles() {
-    this.isLoading = true
+    this.loader(1)
     let obj = {
       id: this.advisorId
     }
     this.settingsService.getPersonalProfile(obj).subscribe(
       data => this.getPersonalProfileRes(data),
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+        this.userList = undefined;
+        this.loader(-1);
+      }
     );
   }
   getPersonalProfileRes(data) {
-    if (data) {
-      this.isLoading = false
-      this.userList = data
-    } else {
-      this.isLoading = false
-      this.userList = []
-    }
+    this.userList = data
+    this.loader(-1);
   }
   getOrgProfiles() {
-    this.isLoading = true
+    this.loader(1)
     let obj = {
       advisorId: this.advisorId,
     }
     this.settingsService.getOrgProfile(obj).subscribe(
       data => this.getOrgProfileRes(data),
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+        this.orgDetails = undefined;
+        this.loader(-1);
+      }
     );
   }
   getOrgProfileRes(data) {
-
     if (data) {
-      this.isLoading = false
       this.orgDetails = data
-    } else {
-      this.isLoading = false
     }
+    this.loader(-1);
   }
 
   OpenpersonalProfile(data, flag) {
@@ -93,12 +94,11 @@ export class SettingOrgProfileComponent implements OnInit {
   openOrg(flag) {
     if (flag == true) {
       this.orgProfile = true
-      this.getOrgProfiles()
     } else {
       this.orgProfile = false
     }
-
   }
+
   OpenOrgProfile(data, flag) {
     const fragmentData = {
       flag: flag,
@@ -129,6 +129,15 @@ export class SettingOrgProfileComponent implements OnInit {
         return 'Registered Business';
       default:
         return 'NA';
+    }
+  }
+
+  loader(increamenter) {
+    this.counter += increamenter;
+    if(this.counter == 0) {
+      this.isLoading = false;
+    } else {
+      this.isLoading = true;
     }
   }
 }

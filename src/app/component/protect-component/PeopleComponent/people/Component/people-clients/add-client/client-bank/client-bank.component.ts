@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { ValidatorType } from 'src/app/services/util.service';
+import { ValidatorType, UtilService } from 'src/app/services/util.service';
 import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
 import { PostalService } from 'src/app/services/postal.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
@@ -52,8 +52,21 @@ export class ClientBankComponent implements OnInit {
     this.fieldFlag;
     this.createBankForm(data);
     (this.userData.bankData) ? this.bankList = this.userData.bankData : '';
-    (this.userData.bankData == undefined && this.fieldFlag) ? this.getBankList(data) : this.createBankForm(this.userData.bankData);
-
+    if (this.userData.bankData == undefined && this.fieldFlag) {
+      this.getBankList(data)
+    }
+    else {
+      (this.userData.bankData) ? this.bankList = this.userData.bankData : this.bankList = {}
+      this.barButtonOptions.text = "SAVE & CLOSE";
+      this.createBankForm(this.userData.bankData);
+    }
+  }
+  toUpperCase(event) {
+    event = UtilService.toUpperCase(event);
+    if (event.target.value.length == 11) {
+      this.getBankAddress(event.target.value);
+      return;
+    }
   }
   getBankList(data) {
     let obj =
@@ -118,16 +131,30 @@ export class ClientBankComponent implements OnInit {
   }
 
   bankData(data) {
-    (data == undefined) ? data = {} : '';
-    this.isIfsc = false;
     console.log(data, 'bank data');
+    this.isIfsc = false;
+    let address1, address2, pincode, adderessData;
+    if (data.address) {
+      adderessData = data.address.trim();
+      pincode = adderessData.substring(adderessData.length - 6);
+      adderessData = adderessData.replace(pincode, '');
+      let addressMidLength = adderessData.length / 2;
+      address1 = adderessData.substring(0, addressMidLength);
+      address2 = adderessData.substring(addressMidLength, adderessData.length);
+      address1 = address1.concat(address2.substr(0, address2.indexOf(' ')));
+      address2 = address2.concat(address2.substr(address2.indexOf(' '), address2.length))
+      // pincode = pincode.join("");
+    }
+    (data == undefined) ? data = {} : '';
     this.bankDetail = data;
     this.bankForm.get('bankName').setValue(data.bank);
     this.bankForm.get('branchCity').setValue(data.city);
     this.bankForm.get('branchState').setValue(data.state);
     this.bankForm.get('branchName').setValue(data.centre);
     this.bankForm.get('branchCountry').setValue('India');
-    this.bankForm.get('branchAddressLine1').setValue(data.address);
+    this.bankForm.get('branchAddressLine1').setValue(adderessData);
+    this.bankForm.get('branchAddressLine2').setValue(address2);
+    this.bankForm.get('branchPinCode').setValue(pincode)
   }
 
   getPostalPin(value) {
@@ -158,12 +185,9 @@ export class ClientBankComponent implements OnInit {
   }
 
   saveNext(flag) {
-    if (this.holderList.invalid) {
-      this.holderList.markAllAsTouched();
-      return;
-    }
-    else if (this.bankForm.invalid) {
+    if (this.bankForm.invalid) {
       this.bankForm.markAllAsTouched();
+      this.holderList.markAllAsTouched();
       return;
     }
     else {

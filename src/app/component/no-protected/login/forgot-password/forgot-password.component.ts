@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { LoginService } from '../login.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { Router } from '@angular/router';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { setInterval } from 'timers';
+import { Observable, interval } from 'rxjs';
 
 @Component({
   selector: 'app-forgot-password',
@@ -36,16 +38,10 @@ export class ForgotPasswordComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  verifyForm = this.fb.group({
-    no1: [],
-    no2: [],
-    no3: [],
-    no4: [],
-    no5: [],
-    no6: []
-  });
   userNameVerifyResponse: any;
-
+  showTimeRemaing: number;
+  @ViewChild('countDown', { static: true }) elemRef: ElementRef;
+  resendOtpFlag: boolean = false;
   constructor(private loginService: LoginService, private eventService: EventService,
     private router: Router, private fb: FormBuilder) {
   }
@@ -59,7 +55,7 @@ export class ForgotPasswordComponent implements OnInit {
     if (this.verifyData.flag) {
       this.hideNumEmailFromUser(this.saveVerifyData);
       this.isVerify = true;
-      this.verify('Email');
+      this.verify('Email', false);
       this.verifyFlag = 'Email';
     } else {
       this.isVerify = false;
@@ -83,25 +79,26 @@ export class ForgotPasswordComponent implements OnInit {
     }
   }
 
-  enterOtp(value) {
-    if (value.code.substring(0, value.code.length - 1) == 'Key' || value.code == 'Backspace') {
-      if (value.srcElement.previousElementSibling == undefined) {
-        return;
-      }
-      value.srcElement.previousElementSibling.focus();
-      this.otpData.pop();
-    } else {
-      if (value.srcElement.nextElementSibling == undefined) {
-        this.otpData.push(parseInt(value.key));
-        return;
-      }
-      this.otpData.push(parseInt(value.key));
-      value.srcElement.nextElementSibling.focus();
-    }
-  }
+  // enterOtp(value) {
+  //   if (value.code.substring(0, value.code.length - 1) == 'Key' || value.code == 'Backspace') {
+  //     if (value.srcElement.previousElementSibling == undefined) {
+  //       return;
+  //     }
+  //     value.srcElement.previousElementSibling.focus();
+  //     this.otpData.pop();
+  //   } else {
+  //     if (value.srcElement.nextElementSibling == undefined) {
+  //       this.otpData.push(parseInt(value.key));
+  //       return;
+  //     }
+  //     this.otpData.push(parseInt(value.key));
+  //     value.srcElement.nextElementSibling.focus();
+  //   }
+  // }
   verifyUsernameOnEnter(event) {
     (event.keyCode == 13) ? this.verifyUsername() : '';
   }
+
   verifyUsername() {
     if (this.userName.invalid) {
       this.userName.markAsTouched();
@@ -116,7 +113,7 @@ export class ForgotPasswordComponent implements OnInit {
         console.log(data);
         if (data) {
           this.barButtonOptions.active = false;
-          data['buttonFlag'] = "reset";
+          data.buttonFlag = 'reset';
           this.saveVerifyData.userData = data;
           this.hideNumEmailFromUser(this.saveVerifyData);
           this.userNameVerifyResponse = data;
@@ -126,10 +123,10 @@ export class ForgotPasswordComponent implements OnInit {
           this.isVerify = true;
           if (this.saveVerifyData.email) {
             this.verifyFlag = 'Email';
-            this.verify('Email');
+            this.verify('Email', false);
           } else if (this.saveVerifyData.mobileNo != 0) {
             this.verifyFlag = 'Mobile';
-            this.verify('Mobile');
+            this.verify('Mobile', false);
           } else {
             this.eventService.openSnackBar('Please contact your advisor for more details');
           }
@@ -137,20 +134,27 @@ export class ForgotPasswordComponent implements OnInit {
       }
       ,
       err => {
-        this.eventService.openSnackBar(err, 'Dismiss')
+        this.eventService.openSnackBar(err, 'Dismiss');
+        // this.userName.setErrors({ incorrect: true });
         this.barButtonOptions.active = false;
       }
     );
   }
 
   ///////////////////////////////////// signup process///////////////////////////////
-  verify(flag) {
+  verify(flag, resendFlag) {
     let verifyObj;
     (flag == 'Email') ? verifyObj = { email: this.saveVerifyData.email } : verifyObj = { mobileNo: this.saveVerifyData.mobileNo };
-    this.verifyWithCredential(verifyObj);   //// verify Email Address
+    this.verifyWithCredential(verifyObj, resendFlag);   //// verify Email Address
   }
 
-  verifyWithCredential(obj) {
+  verifyWithCredential(obj, flag) {
+    this.resendOtpFlag = flag;
+    this.showTimeRemaing = 30;
+    this.otpResendCountDown();
+    if (this.resendOtpFlag) {
+      this.eventService.openSnackBar("OTP sent successfully", "Dismiss");
+    }
     this.barButtonOptions.active = true;    //// verify email or mobileNo with credentials
     this.loginService.generateOtp(obj).subscribe(
       data => {
@@ -163,6 +167,18 @@ export class ForgotPasswordComponent implements OnInit {
     );
   }
 
+  otpResendCountDown() {
+    let timeLeft = 30;
+    let intervallTimer = interval(1000).subscribe(
+      data => {
+        if (data == 31) {
+          intervallTimer.unsubscribe();
+        } else {
+          this.showTimeRemaing = timeLeft--;
+        }
+      }
+    )
+  }
   saveAfterVerifyCredential(obj) {    ////// save verified email or mobileNo in the table
     this.loginService.saveAfterVerification(obj).subscribe(
       data => {
@@ -173,16 +189,23 @@ export class ForgotPasswordComponent implements OnInit {
     );
   }
 
+  getOtpData(outputData) {
+    console.log('forgot password', outputData);
+    this.otpData = outputData;
+  }
+
   verifyWithOtpResponse(flag) {  ///// check user filled otp is correct or not
     const otpString = this.otpData.toString().replace(/,/g, '');
-
-    if (flag == 'Email' && this.otpData.length == 6 && this.otpResponse == otpString) {
+    if (otpString == '') {
+      this.eventService.openSnackBar("Please enter Otp", "Dismiss");
+      return;
+    }
+    if (flag == 'Email' && this.otpData.length == 4 && this.otpResponse == otpString) {
       const obj = {
         email: this.saveVerifyData.email,
         userId: this.saveVerifyData.userId,
         userType: this.saveVerifyData.userType
       };
-      this.verifyForm.reset();
       this.otpData = [];
       this.saveAfterVerifyCredential(obj);
       this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
@@ -192,19 +215,26 @@ export class ForgotPasswordComponent implements OnInit {
         /////// check wheather user came from forgot password or sign-up Process
         return;
       }
-      this.verify('Mobile');
+      this.verify('Mobile', false);
       this.verifyFlag = 'Mobile';
-    } else if (flag == 'Mobile' && this.otpData.length == 6 && this.otpResponse == otpString) {
+    } else if (flag == 'Mobile' && this.otpData.length == 4) {
       const obj = {
         userId: this.saveVerifyData.userId,
         userType: this.saveVerifyData.userType,
-        mobileNo: this.saveVerifyData.mobileNo
+        mobileNo: this.saveVerifyData.mobileNo,
+        otp: otpString
       };
-      this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
-      this.saveAfterVerifyCredential(obj);
-      this.router.navigate(['/login/setpassword'], { state: { userData: this.saveVerifyData.userData } });
+      this.loginService.saveAfterVerification(obj).subscribe(
+        data => {
+          this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
+          this.router.navigate(['/login/setpassword'], { state: { userData: this.saveVerifyData.userData } });
+        },
+        err => this.eventService.openSnackBar(err, 'Dismiss')
+      );
     } else {
-      this.eventService.openSnackBar('OTP is incorrect', 'Dismiss');
+      // err => this.eventService.openSnackBar(err, 'Dismiss');
+      (this.resendOtpFlag) ? this.eventService.openSnackBar('OTP has expired', 'Dismiss') : this.eventService.openSnackBar('Otp is incorrect', 'Dismiss');
     }
   }
+
 }

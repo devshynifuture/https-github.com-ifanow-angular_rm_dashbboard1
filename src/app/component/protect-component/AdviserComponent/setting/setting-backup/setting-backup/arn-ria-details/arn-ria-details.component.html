@@ -3,7 +3,7 @@
         <h4 class="m-0 text-black pt-8">ARN/RIA details</h4>
     </div>
     <div class="col-md-6 text-right ">
-        <button (click)="openArnDetails(null, null)" class="btn-primary " mat-stroked-button>
+        <button (click)="openArnDetails(null, null, true)" class="btn-primary " mat-stroked-button>
             ADD NEW
         </button>
     </div>
@@ -26,7 +26,7 @@
                             <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
 
                             <mat-menu #menu="matMenu">
-                                <button mat-menu-item (click)="openArnDetails(null, arn)">Edit</button>
+                                <button mat-menu-item (click)="openArnDetails(null, arn, false)">Edit</button>
                             </mat-menu>
                         </ng-container>
                     </div>
@@ -46,7 +46,7 @@
                             <p class="f-12 m-0 proxima text-primitive">RENEWAL DATE</p>
                             <h5 class="m-0">{{arn.renewalDate | date : 'dd/MM/yyyy'}}</h5>
                         </div>
-                        <div class="col-md-3 p-0">
+                        <div class="col-md-3 p-0" *ngIf="arn.euin">
                             <p class="f-12 m-0 proxima text-primitive">PRIMARY EUIN</p>
                             <h5 class="m-0">{{arn.euin}}</h5>
                         </div>
@@ -78,4 +78,13 @@
         </div>
         <div class="col-md-1"></div>
     </div>
+</div>
+
+<div *ngIf="hasError" class="d-flex flex-column align-items-center">
+    <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
+</div>
+<div *ngIf="arnobjs.length == 0 && !utilService.isLoading" class="d-flex flex-column align-items-center">
+    <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="text-center pt-12">No ARN/RIA details found</h4>
 </div>

@@ -10,7 +10,7 @@
 </div>
 <div class="row pt-20">
     <div class="col-md-3 mb-16 pl-0" *ngFor="let user of userList">
-        <mat-card class="b-a p-9 br-4">
+        <mat-card class="b-a p-9 br-4" [ngClass]="{'active-class-name': user.isSuspended == 0, 'suspended-class-name': user.isSuspended == 1}">
             <div class="row">
                 <div class="col-md-4 p-0">
                     <img [src]="user.profilePicUrl" class="w-100 h-80">
@@ -41,10 +41,14 @@
         </mat-card>
     </div>
 </div>
-<div *ngIf="userList==undefined" class="d-flex flex-column align-items-center">
+<div *ngIf="userList==undefined && !isLoading && !hasError" class="d-flex flex-column align-items-center">
     <img class="width300" src="assets/images/svg/noDataFound.svg">
     <h4 class="pt-12">No Team members found</h4>
     <button (click)="addEditTeamMember(null, true)" class="btn-primary addon v-middle  " mat-stroked-button>
         ADD NEW
     </button>
+</div>
+<div *ngIf="userList==undefined && !isLoading && hasError" class="d-flex flex-column align-items-center">
+    <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
 </div>

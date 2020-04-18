@@ -31,13 +31,34 @@ export class MyIfasComponent implements OnInit {
     this.dataSource.sort = this.sort;
     this.getMyIfasList();
   }
+
   getMyIfasList() {
-    let obj = {}
+    let obj = {};
+    this.isLoading = true;
     this.supportService.getMyIFAValues(obj).subscribe(
       data => {
         console.log(data);
-        if (data) {
-
+        if (data && data.length !== 0) {
+          this.isLoading = false;
+          let tableArray = [];
+          data.forEach(element => {
+            tableArray.push({
+              adminName: element.name,
+              email: element.email_id,
+              mobile: element.mobile_number,
+              usingSince: element.using_since_year + "Y " + element.using_since_month + "M",
+              lastLogin: element.last_login ? element.last_login : ' - ',
+              accStatus: element.account_status ? element.account_status : ' - ',
+              plan: element.plan ? element.plan : ' - ',
+              nextBilling: element.next_billing ? element.next_billing : ' - ',
+              team: element.team_count,
+              arn: element.arn_ria_count,
+              logout: element.logout ? element.logout : ' - ',
+              adminAdvisorId: element.admin_advisor_id,
+              menu: ''
+            })
+          });
+          this.dataSource.data = tableArray;
         }
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
@@ -85,9 +106,7 @@ export class MyIfasComponent implements OnInit {
   }
 }
 const ELEMENT_DATA = [
-  { adminName: 'Sonesh Dedhia', email: 'sonesh.dedhia@manek.com', mobile: 9322574914, usingSince: '3Y 7M', lastLogin: '30 mins ago', accStatus: 'active', plan: 'Power + OT + WL', nextBilling: '18/03/2020', team: '3', arn: '1', logout: '', menu: '' },
-  { adminName: 'Sonesh Dedhia', email: 'sonesh.dedhia@manek.com', mobile: 9322574914, usingSince: '2Y ', lastLogin: '30 mins ago', accStatus: 'active', plan: 'Power + OT + WL', nextBilling: '18/03/2020', team: '3', arn: '1', logout: '', menu: '' },
-  { adminName: 'Sonesh Dedhia', email: 'sonesh.dedhia@manek.com', mobile: 9322574914, usingSince: '3Y 7M', lastLogin: '30 mins ago', accStatus: 'Inactive', plan: 'Power + OT + WL', nextBilling: '18/03/2020', team: '3', arn: '1', logout: '', menu: '' },
-  { adminName: 'Suchandra ', email: 'suchandra@futurewise.co.in', mobile: 9322574914, usingSince: '3Y 7M', lastLogin: '123 Days', accStatus: 'Decativated', plan: 'Power + OT + WL', nextBilling: '18/03/2020', team: '3', arn: '1', logout: '', menu: '' },
-  { adminName: 'Ajaykumar Bhanushali', email: 'ajaykumar@futurewise.co.in', mobile: 9322574914, usingSince: '3Y 7M', lastLogin: '30 mins ago', accStatus: 'active', plan: 'Power + OT + WL', nextBilling: '18/03/2020', team: '3', arn: '1', logout: '', menu: '' },
+  { adminName: '', email: '', mobile: '', usingSince: '', lastLogin: '', accStatus: '', plan: '', nextBilling: '', team: '', arn: '', logout: '', menu: '' },
+  { adminName: '', email: '', mobile: '', usingSince: '', lastLogin: '', accStatus: '', plan: '', nextBilling: '', team: '', arn: '', logout: '', menu: '' },
+  { adminName: '', email: '', mobile: '', usingSince: '', lastLogin: '', accStatus: '', plan: '', nextBilling: '', team: '', arn: '', logout: '', menu: '' },
 ]; 

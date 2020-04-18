@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { ValidatorType } from 'src/app/services/util.service';
-import { PostalService } from 'src/app/services/postal.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {PostalService} from 'src/app/services/postal.service';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-client-address',
@@ -35,9 +35,11 @@ export class ClientAddressComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  permanentAddFlag: boolean;
+
   constructor(private cusService: CustomerService, private fb: FormBuilder,
-    private subInjectService: SubscriptionInject, private postalService: PostalService,
-    private peopleService: PeopleService, private eventService: EventService) {
+              private subInjectService: SubscriptionInject, private postalService: PostalService,
+              private peopleService: PeopleService, private eventService: EventService) {
   }
 
   addressForm;
@@ -47,13 +49,14 @@ export class ClientAddressComponent implements OnInit {
 
   @Input() set data(data) {
     this.userData = data;
-    (this.userData.addressData) ? this.addressList = this.userData.addressData : ''
+    (this.fieldFlag != 'familyMember' && this.userData.clientType == 1) ? this.permanentAddFlag = false : this.permanentAddFlag = true;
+    (this.userData.addressData) ? this.addressList = this.userData.addressData : '';
     this.proofType = (this.userData.addressData) ? String(this.userData.addressData.addressType) : '1';
     if (this.userData.addressData == undefined && this.fieldFlag) {
       this.createAddressForm(null);
       this.getAddressList(data);
-    }
-    else {
+    } else {
+      this.barButtonOptions.text = 'SAVE & CLOSE';
       this.createAddressForm(this.userData.addressData);
     }
   }
@@ -64,8 +67,8 @@ export class ClientAddressComponent implements OnInit {
   createAddressForm(data) {
     (data == undefined) ? data = {} : data;
     this.addressForm = this.fb.group({
-      addressType: [(data.addressType) ? String(data.addressType) : '1', [Validators.required]],
-      addProofType: [(data.proofType) ? String(data.proofType) : '1', [Validators.required]],
+      addressType: [(data.addressType) ? String(data.addressType) : '1'],
+      addProofType: [(data.proofType) ? String(data.proofType) : '1'],
       proofIdNum: [data.proofIdNumber, [Validators.required]],
       addressLine1: [data.address1, [Validators.required]],
       addressLine2: [data.address2, [Validators.required]],
@@ -74,6 +77,23 @@ export class ClientAddressComponent implements OnInit {
       state: [data.state, [Validators.required]],
       country: [data.country, [Validators.required]]
     });
+    if (data.proofIdNumber) {
+
+    } else {
+      this.changeAddrProofNumber({value: String(data.proofType)});
+    }
+  }
+
+  changeAddrProofNumber(data) {
+    if (data.value == '2') {
+      this.addressForm.get('proofIdNum').setValue(this.userData.aadhaarNumber);
+    } else {
+      this.addressForm.get('proofIdNum').setValue('');
+    }
+  }
+
+  toUpperCase(event) {
+    event = UtilService.toUpperCase(event);
   }
 
   getPostalPin(value) {
@@ -108,13 +128,12 @@ export class ClientAddressComponent implements OnInit {
         console.log(data);
         if (data && data.length > 0) {
           this.addressList = data[0];
-          this.createAddressForm(this.addressList)
-        }
-        else {
-          this.addressList = {};
+          this.createAddressForm(this.addressList);
         }
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
+      err => {
+        this.addressList = {};
+      }
     );
   }
 
@@ -148,11 +167,12 @@ export class ClientAddressComponent implements OnInit {
 
       this.peopleService.addEditClientAddress(obj).subscribe(
         data => {
-          console.log(data); this.barButtonOptions.active = false;
+          console.log(data);
+          this.barButtonOptions.active = false;
           (flag == 'Next') ? this.tabChange.emit(1) : this.close();
         },
         err => {
-          this.eventService.openSnackBar(err, 'Dismiss')
+          this.eventService.openSnackBar(err, 'Dismiss');
           this.barButtonOptions.active = false;
         }
       );
@@ -160,6 +180,6 @@ export class ClientAddressComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 }

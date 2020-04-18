@@ -12,7 +12,7 @@ export class FileOrderingDetailComponent implements OnInit {
     private subscriptionInject: SubscriptionInject
   ) { }
 
-  data
+  data;
 
   ngOnInit() {
     console.log("file ordering detail data:::::::::::", this.data);

@@ -1,12 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { ValidatorType } from '../../../../../../../../services/util.service';
+import { ValidatorType, UtilService } from '../../../../../../../../services/util.service';
 import { DatePipe } from '@angular/common';
 import { EventEmitter, Output } from '@angular/core/src/metadata/*';
 import { AuthService } from '../../../../../../../../auth-service/authService';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-company-more-info',
@@ -21,30 +22,44 @@ export class CompanyMoreInfoComponent implements OnInit {
   invCategory = '1';
   validatorType = ValidatorType;
   prevData;
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & NEXT',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   moreInfoForm;
   @Input() fieldFlag;
   @Output() tabChange = new EventEmitter();
 
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private peopleService: PeopleService, private eventService: EventService, private datePipe: DatePipe) {
+  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
+    private peopleService: PeopleService, private eventService: EventService,
+    private datePipe: DatePipe) {
   }
 
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
-    this.prevData = data;
-    if (!data) {
-      this.prevData = {};
-    }
-    console.log(data);
-    this.getCompanyDetails(data);
     this.createMoreInfoForm(null);
+    this.getCompanyDetails(data);
+  }
+  toUpperCase(event) {
+    event = UtilService.toUpperCase(event);
   }
 
   createMoreInfoForm(data) {
     (data == undefined) ? data = {} : data;
     this.moreInfoForm = this.fb.group({
       displayName: [data.displayName],
-      adhaarNo: [data.aadhaarNumber],
+      adhaarNo: [data.aadhaarNumber, [Validators.pattern(this.validatorType.ADHAAR)]],
       maritalStatus: [(data.martialStatusId) ? String(data.martialStatusId) : '1'],
       dateOfBirth: [new Date(data.dateOfBirth)],
       bio: [data.bio],
@@ -53,12 +68,12 @@ export class CompanyMoreInfoComponent implements OnInit {
       email: [data.email, [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
       designation: [(data.occupationId) ? String(data.occupationId) : '1'],
-      gender: ['1'],
+      gender: [(data.genderId) ? data.genderId : '1'],
     });
+    console.log(this.moreInfoForm)
   }
 
   ngOnInit() {
-
   }
 
   getNumberDetails(data) {
@@ -82,7 +97,9 @@ export class CompanyMoreInfoComponent implements OnInit {
           this.createMoreInfoForm(this.moreInfoData);
         }
         console.log(responseData);
-      }, err => this.eventService.openSnackBar(err, 'Dismiss')
+      }, err => {
+        console.error(err);
+      }
     );
   }
 
@@ -94,6 +111,7 @@ export class CompanyMoreInfoComponent implements OnInit {
         mobileList.push({
           userType: 8,
           mobileNo: element.get('number').value,
+          ifscCode: 73
         });
       });
     }
@@ -105,6 +123,7 @@ export class CompanyMoreInfoComponent implements OnInit {
         email: emailId
       });
     }
+    this.barButtonOptions.active = true;
     const obj = {
       emailList,
       displayName: this.moreInfoForm.controls.displayName.value,
@@ -118,16 +137,18 @@ export class CompanyMoreInfoComponent implements OnInit {
       roleId: 0,
       genderId: this.moreInfoForm.value.gender,
       aadhaarNumber: this.moreInfoForm.controls.adhaarNo.value,
-      dateOfBirth: this.datePipe.transform(this.moreInfoForm.value.dateOfBirth, 'dd/MM/yyyy'),
+      dateOfBirth: this.datePipe.transform(this.moreInfoForm.value.dateOfBirth._d, 'dd/MM/yyyy'),
       userId: this.moreInfoData.clientId ? this.moreInfoData.clientId : this.prevData.clientId,
       mobileList,
       name: this.moreInfoForm.value.name,
       bioRemarkId: this.moreInfoData.bioRemarkId,
       remarks: this.moreInfoForm.controls.myNotes.value,
     };
+    this.barButtonOptions.active = true;
     if (this.moreInfoData.companyPersonDetailId) {
       this.peopleService.updateCompanyPersonDetail(obj).subscribe(
         data => {
+          this.barButtonOptions.active = false;
           console.log(data);
           if (data) {
             (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
@@ -135,15 +156,22 @@ export class CompanyMoreInfoComponent implements OnInit {
             this.eventService.openSnackBar('Unknown error', 'Dismiss');
           }
         },
-        err => this.eventService.openSnackBar(err, 'Dismiss')
+        err => {
+          this.eventService.openSnackBar(err, 'Dismiss');
+          this.barButtonOptions.active = false;
+        }
       );
     } else {
       this.peopleService.saveCompanyPersonDetail(obj).subscribe(
         data => {
           console.log(data);
+          this.barButtonOptions.active = false;
           (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
         },
-        err => this.eventService.openSnackBar(err, 'Dismiss')
+        err => {
+          this.eventService.openSnackBar(err, 'Dismiss');
+          this.barButtonOptions.active = false;
+        }
       );
     }
   }
@@ -151,4 +179,11 @@ export class CompanyMoreInfoComponent implements OnInit {
   close(data) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
   }
+
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   if (changes.data && !!changes.data.currentValue) {
+  //     this.getCompanyDetails(changes.data);
+  //     this.createMoreInfoForm(null);
+  //   }
+  // }
 }

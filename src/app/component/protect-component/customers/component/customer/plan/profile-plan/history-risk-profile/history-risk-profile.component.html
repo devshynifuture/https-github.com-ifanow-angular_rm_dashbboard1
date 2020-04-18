@@ -12,22 +12,26 @@
 
 
 <div class="pt-80 pr-20 pl-20">
-    <table mat-table [dataSource]="dataSourceHistory" class="mt-8" id="table-low">
+    <table mat-table [dataSource]="dataSourceHistory" [appSkeletonLoading]="isLoading" appSkeletonLoading
+     class="mt-8 skeletonAnimation" id="table-low">
 
       
         <ng-container matColumnDef="position">
           <th mat-header-cell *matHeaderCellDef> Date </th>
-          <td mat-cell *matCellDef="let element"> {{element.riskAssessmentDate}} </td>
+          <td mat-cell *matCellDef="let element"> 
+            <div class="bar">{{isLoading ? '' : element.riskAssessmentDate  | date:'dd/MM/yyyy'}} </div></td>
         </ng-container>
       
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef> Risk status </th>
-          <td mat-cell *matCellDef="let element" [ngClass]=" element.riskProfileStatus === 'Aggressive' ? 'activeColor' : element.riskProfileStatus === 'Moderate' ? 'moderate' : 'moderateCon'"> {{element.riskProfileStatus}} </td>
+          <td mat-cell *matCellDef="let element" [ngClass]=" element.riskProfileStatus === 'Aggressive' ? 'activeColor' : element.riskProfileStatus === 'Moderate' ? 'moderate' : 'moderateCon'"> 
+            <div class="bar">{{isLoading ? '' : element.riskProfileStatus}} </div></td>
         </ng-container>
       
         <ng-container matColumnDef="weight">
           <th mat-header-cell *matHeaderCellDef> score </th>
-          <td mat-cell *matCellDef="let element"> {{element.riskAssessmentScore}} </td>
+          <td mat-cell *matCellDef="let element"> 
+            <div class="bar">{{isLoading ? '' : element.riskAssessmentScore}} </div></td>
         </ng-container>
     
         <ng-container matColumnDef="symbol">

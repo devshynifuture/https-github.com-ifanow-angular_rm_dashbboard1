@@ -2,9 +2,9 @@
     <div class="col-md-6 d-flex align-items-center p-0">
         <h4 class="m-0 text-black">Roles</h4>
     </div>
-    <div class="col-md-6 text-right p-0">
-        <button [matMenuTriggerFor]="menu" mat-stroked-button class="btn-primary addBtnclass">
-            ADD NEW
+    <div class="col-md-6 text-right p-0" *ngIf="!hasError">
+        <button [matMenuTriggerFor]="menu" class="btn-primary" mat-stroked-button>
+          ADD NEW
         </button>
         <mat-menu #menu="matMenu">
             <button class="roboto" mat-menu-item (click)="addEditNewRoles(1, true, null)">Admin</button>
@@ -20,9 +20,9 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row" *ngIf="dataSource.data.length > 0 && !hasError">
     <div class="col-md-12 overflow-hidden roleSetting-table p-0">
-        <table mat-table [dataSource]="dataSource" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" id="table-low">
+        <table mat-table [dataSource]="dataSource" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="utilService.isLoading" id="table-low">
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef class="br"> Role </th>
                 <td mat-cell *matCellDef="let element" class="br">
@@ -53,7 +53,7 @@
                 <th mat-header-cell *matHeaderCellDef class="br"> Clone </th>
                 <td mat-cell *matCellDef="let element" class="br text-center">
                     <div class="bar">
-                        <button mat-stroked-button class="green-border-btn cloneBtn btn-sm" (click)="addEditNewRoles(element.advisorOrClientRole, true, element)">CLONE</button>
+                        <button mat-stroked-button class="green-border-btn cloneBtn btn-sm" (click)="addEditNewRoles(element.advisorOrClientRole, true, element)" *ngIf="!utilService.isLoading">CLONE</button>
                     </div>
                 </td>
             </ng-container>
@@ -69,4 +69,14 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
     </div>
+</div>
+
+
+<div *ngIf="hasError" class="d-flex flex-column align-items-center">
+    <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
+</div>
+<div *ngIf="dataSource.data.length == 0 && !utilService.isLoading" class="d-flex flex-column align-items-center">
+    <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="text-center pt-12">No ARN/RIA details found</h4>
 </div>

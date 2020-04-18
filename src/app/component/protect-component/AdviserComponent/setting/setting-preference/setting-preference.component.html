@@ -9,32 +9,32 @@
         <div class="row">
             <div class="col-md-2 p-0 pt-1 settingPreference">
                 <ul class="vertical-menu">
-                    <li (click)="viewMode ='tab1';getPortfolio()" [ngClass]="{'b-outline':viewMode =='tab1','':viewMode =='tab1'}" class="c-p">
+                    <li (click)="changeView('tab1')" [ngClass]="{'b-outline':viewMode =='tab1','':viewMode =='tab1'}" class="c-p">
                         Portfolio section
                     </li>
 
-                    <li (click)="viewMode ='tab2';getPlan()" [ngClass]="{'b-outline':viewMode =='tab2','':viewMode =='tab2'}" class="c-p">
+                    <li (click)="changeView('tab2')" [ngClass]="{'b-outline':viewMode =='tab2','':viewMode =='tab2'}" class="c-p">
                         Plan section
                     </li>
-                    <!-- <li (click)="viewMode ='tab3';" [ngClass]="{'b-outline':viewMode =='tab3','':viewMode =='tab3'}" class="c-p">
+                    <!-- <li (click)="changeView('tab3');" [ngClass]="{'b-outline':viewMode =='tab3','':viewMode =='tab3'}" class="c-p">
                         Activity section
                     </li> -->
-                    <li (click)="viewMode ='tab4';getEmailVerification()" [ngClass]="{'b-outline':viewMode =='tab4','':viewMode =='tab4'}" class=" c-p">
+                    <li (click)="changeView('tab4')" [ngClass]="{'b-outline':viewMode =='tab4','':viewMode =='tab4'}" class=" c-p">
                         Email verification
                     </li>
-                    <li (click)="viewMode ='tab5';getEmailTemplate()" [ngClass]="{'b-outline':viewMode =='tab5','':viewMode =='tab5'}" class=" c-p">
+                    <li (click)="changeView('tab5')" [ngClass]="{'b-outline':viewMode =='tab5','':viewMode =='tab5'}" class=" c-p">
                         Email templates
                     </li>
-                    <li (click)="viewMode ='tab6'" [ngClass]="{'b-outline':viewMode =='tab6','':viewMode =='tab6'}" class=" c-p">
+                    <li (click)="changeView('tab6')" [ngClass]="{'b-outline':viewMode =='tab6','':viewMode =='tab6'}" class=" c-p">
                         Color theme
                     </li>
-                    <li (click)="viewMode ='tab7';getDomain()" [ngClass]="{'b-outline':viewMode =='tab7','':viewMode =='tab7'}" class=" c-p">
+                    <li (click)="changeView('tab7');getDomain()" [ngClass]="{'b-outline':viewMode =='tab7','':viewMode =='tab7'}" class=" c-p">
                         Domain settings
                     </li>
-                    <li (click)="viewMode ='tab8'" [ngClass]="{'b-outline':viewMode =='tab8','':viewMode =='tab8'}" class=" c-p">
+                    <li (click)="changeView('tab8')" [ngClass]="{'b-outline':viewMode =='tab8','':viewMode =='tab8'}" class=" c-p">
                         Website integration
                     </li>
-                    <li (click)="viewMode ='tab9'" [ngClass]="{'b-outline':viewMode =='tab9','':viewMode =='tab9'}" class=" c-p">
+                    <li (click)="changeView('tab9')" [ngClass]="{'b-outline':viewMode =='tab9','':viewMode =='tab9'}" class=" c-p">
                         Appearance
                     </li>
                 </ul>
@@ -42,7 +42,7 @@
             </div>
             <div class="col-md-10 b-a p-0 min-height" [ngSwitch]="viewMode">
                 <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngSwitchCase="'tab1'">
-                    <div class="p-20" *ngIf="portfolio">
+                    <div class="p-20">
                         <div class="relClass">
                             <h5 class="mb-8 bar text-black" [ngClass]="{'height23': isLoading}">
                                 Mutual Fund
@@ -70,13 +70,13 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="portfolio == undefined" class="d-flex flex-column align-items-center">
+                    <div *ngIf="portfolio == undefined && !isLoading" class="d-flex flex-column align-items-center">
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
                         <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
                     </div>
                 </div>
-                <div *ngSwitchCase="'tab2'">
-                    <div class="p-20" *ngIf="!isLoading">
+                <div appSkeletonLoading [appSkeletonLoading]="isLoading" *ngSwitchCase="'tab2'">
+                    <div class="p-20">
                         <h5 class="mb-8  text-black">Insurance planning</h5>
                         <div class="pt-20 relClass">
                             <div class="bar">
@@ -86,7 +86,7 @@
                         </div>
                         <p class="m-0 text-custom pb-20 bb-1 pl-24">These returns are displayed when giving recommendations on current policies.</p>
                     </div>
-                    <div *ngIf="isLoading" class="d-flex flex-column align-items-center">
+                    <div *ngIf="planSec1 == undefined && !isLoading" class="d-flex flex-column align-items-center">
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
                         <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
                     </div>
@@ -96,7 +96,7 @@
                         <h5 class="mb-8 text-black">Tasks</h5>
                     </div>
                 </div>
-                <div *ngSwitchCase="'tab4'">
+                <div appSkeletonLoading [appSkeletonLoading]="isLoading" *ngSwitchCase="'tab4'">
                     <div class="p-20">
                         <div class="row">
                             <div class="col-md-8 p-0">
@@ -110,6 +110,7 @@
 
                                 </div>
 
+                                <div *ngIf="emailList.length > 0"></div>
                                 <table mat-table [dataSource]="emailList" id="table-low" class="skeletonAnimation mt-8" appSkeletonLoading [appSkeletonLoading]="isLoading">
                                     <ng-container matColumnDef="position">
                                         <th mat-header-cell *matHeaderCellDef class="br"> Email </th>
@@ -122,7 +123,7 @@
                                     <ng-container matColumnDef="name">
                                         <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
                                         <td mat-cell *matCellDef="let element" class="br">
-                                            <div class="bar">
+                                            <div class="bar" [ngClass]="{'text-danger': element.emailVerificationStatus == 3, 'text-warning': element.emailVerificationStatus == 2, 'text-success': element.emailVerificationStatus == 1}">
                                                 {{isLoading ? '' : (element.emailVerificationStatus == 2)?'Verification pending':(element.emailVerificationStatus == 1)?'Verified':'Verification failed'}}
                                             </div>
                                         </td>
@@ -132,15 +133,18 @@
                                     <ng-container matColumnDef="weight">
                                         <th mat-header-cell *matHeaderCellDef> </th>
                                         <td mat-cell class="text-center" *matCellDef="let element">
-                                            <img class="c-p" [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg">
-                                            <mat-menu #menu="matMenu">
-                                                <!-- <button mat-menu-item (click)="verifyEmail(element)">
-                                                    <span>Edit</span>
-                                                </button> -->
-                                                <button mat-menu-item (click)="deleteEmailModal('EMAIL',element)">
-                                                    <span>Delete</span>
-                                                </button>
-                                            </mat-menu>
+                                            <div class="bar"></div>
+                                            <div *ngIf="!isLoading">
+                                                <img class="c-p" [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg">
+                                                <mat-menu #menu="matMenu">
+                                                    <!-- <button mat-menu-item (click)="verifyEmail(element)">
+                                                        <span>Edit</span>
+                                                    </button> -->
+                                                    <button mat-menu-item (click)="deleteEmailModal('EMAIL',element)">
+                                                        <span>Delete</span>
+                                                    </button>
+                                                </mat-menu>
+                                            </div>
                                         </td>
                                     </ng-container>
 
@@ -150,28 +154,32 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="emailList.length == 0" class="d-flex flex-column align-items-center">
+                    <div *ngIf="emailList.length == 0 && !isLoading" class="d-flex flex-column align-items-center">
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
-                        <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
+                        <h4 class="text-center pt-12">No data found</h4>
                     </div>
                 </div>
-                <div *ngSwitchCase="'tab5'">
+                <div appSkeletonLoading [appSkeletonLoading]="isLoading" *ngSwitchCase="'tab5'">
                     <div class="p-20">
                         <h5 class="m-0 pb-8 text-black">Email templates</h5>
                         <div class="row">
-                            <div class="col-md-11 pl-0">
+                            <div class="col-md-11 pl-0" *ngIf="emailTemplateList.length > 0">
                                 <table mat-table [dataSource]="emailTemplateList" class="mt-8" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                                     <ng-container matColumnDef="position">
                                         <th mat-header-cell class="br w-23" *matHeaderCellDef> Type </th>
                                         <td mat-cell class="br w-23" *matCellDef="let element">
-                                            <div class="bar" [innerHTML]="element.emailType"></div>
+                                            <div class="bar">
+                                                <span class="m-0" [innerHTML]="element.title"> </span>
+                                            </div>
                                         </td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="name">
                                         <th mat-header-cell class="br" *matHeaderCellDef> Description </th>
                                         <td mat-cell class="br" *matCellDef="let element">
-                                            <div class="bar" [innerHTML]="element.description"></div>
+                                            <div class="bar">
+                                                <span [innerHTML]="element.description"></span>
+                                            </div>
                                         </td>
                                     </ng-container>
 
@@ -185,15 +193,18 @@
                                     <ng-container matColumnDef="symbol">
                                         <th mat-header-cell class="br w-3" *matHeaderCellDef> </th>
                                         <td mat-cell class="br w-3" *matCellDef="let element">
-                                            <img class="c-p" [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg">
-                                            <mat-menu #menu="matMenu">
-                                                <button mat-menu-item (click)="OpenEmail('emailTemp',element)">
-                                                    <span>Edit</span>
-                                                </button>
-                                                <!-- <button mat-menu-item (click)="deleteModal('template',element)">
-                                                    <span>Delete</span>
-                                                </button> -->
-                                            </mat-menu>
+                                            <div class="bar"></div>
+                                            <div class="!isLoading">
+                                                <img class="c-p" [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg">
+                                                <mat-menu #menu="matMenu">
+                                                    <button mat-menu-item (click)="OpenEmail('emailTemp',element)">
+                                                        <span>Edit</span>
+                                                    </button>
+                                                    <!-- <button mat-menu-item (click)="deleteModal('template',element)">
+                                                        <span>Delete</span>
+                                                    </button> -->
+                                                </mat-menu>
+                                            </div>
                                         </td>
                                     </ng-container>
 
@@ -205,9 +216,9 @@
 
 
                     </div>
-                    <div *ngIf="emailTemplateList.length == 0" class="d-flex flex-column align-items-center">
+                    <div *ngIf="emailTemplateList.length == 0 && !isLoading" class="d-flex flex-column align-items-center">
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
-                        <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
+                        <h4 class="text-center pt-12">No data found.</h4>
                     </div>
                 </div>
                 <div *ngSwitchCase="'tab6'">
@@ -244,7 +255,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngSwitchCase="'tab7'">
+                <div appSkeletonLoading [appSkeletonLoading]="isLoading" *ngSwitchCase="'tab7'">
                     <div class="row p-20">
                         <div class="col-md-10 p-0">
                             <h5 class="m-0">Domain settings</h5>
@@ -342,6 +353,10 @@
                             </div>
                         </div>
                     </div>
+                    <div *ngIf="domainSetting == undefined && !isLoading" class="d-flex flex-column align-items-center">
+                        <img class="width300" src="assets/images/svg/noDataFound.svg">
+                        <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
+                    </div>
                 </div>
                 <div *ngSwitchCase="'tab8'">
                     <div class="p-20">
@@ -350,7 +365,66 @@
                 </div>
                 <div *ngSwitchCase="'tab9'">
                     <div class="p-20">
-                        <h5 class="m-0 pb-8 text-black">Appearance</h5>
+                        <div class="relClass">
+                            <h5 class="mb-8 bar text-black" [ngClass]="{'height23': isLoading}">
+                                Appearance
+                            </h5>
+                        </div>
+
+                        <div class="col-md-12 p-0" [formGroup]="appearanceFG">
+                            <h5 class="m-0 pb-20">Select an option below to add a task template...</h5>
+                            <div class="row pb-20">
+                                <div class="col-md-3 text-right d-flex align-items-center justify-content-end">
+                                    <h5 class="m-0"> Portfolio </h5>
+                                </div>
+                                <div class="col-md-8 pl-0">
+                                    <mat-radio-group class="taskTemplatesRadio" formControlName="portfolioOpt">
+                                        <mat-radio-button [ngClass]="appearanceFG.get('portfolioOpt').value == 1 ? 'text-primary b-a-custom': 'text-primitive'" [value]="1">
+                                            Advisor Details
+                                        </mat-radio-button>
+                                        <mat-radio-button [value]="2" class="pr-10" [ngClass]="appearanceFG.get('portfolioOpt').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
+                                            Company details
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                            <div class="row pb-20">
+                                <div class="col-md-3 text-right d-flex align-items-center justify-content-end">
+                                    <h4 class="m-0">Financial Plan</h4>
+                                </div>
+                                <div class="col-md-8 pl-0">
+                                    <mat-radio-group class="taskTemplatesRadio" formControlName="financialOpt">
+                                        <mat-radio-button [ngClass]="appearanceFG.get('financialOpt').value == 1 ? 'text-primary b-a-custom': 'text-primitive'" [value]="1">
+                                            Advisor Details
+                                        </mat-radio-button>
+                                        <mat-radio-button [value]="2" class="pr-10" [ngClass]="appearanceFG.get('financialOpt').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
+                                            Company details
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+
+                            </div>
+                            <div class="row pb-20">
+                                <div class="col-md-3 text-right d-flex align-items-center justify-content-end">
+                                    <h4 class="m-0"> Client Dashboard</h4>
+                                </div>
+                                <div class="col-md-8 pl-0">
+                                    <mat-radio-group class="taskTemplatesRadio" formControlName="clientOpt">
+                                        <mat-radio-button [ngClass]="appearanceFG.get('clientOpt').value == 1 ? 'text-primary b-a-custom': 'text-primitive'" [value]="1">
+                                            Advisor Details
+                                        </mat-radio-button>
+                                        <mat-radio-button [value]="2" class="pr-10" [ngClass]="appearanceFG.get('clientOpt').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
+                                            Company details
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="portfolio == undefined && !isLoading" class="d-flex flex-column align-items-center">
+                        <img class="width300" src="assets/images/svg/noDataFound.svg">
+                        <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
                     </div>
                 </div>
             </div>

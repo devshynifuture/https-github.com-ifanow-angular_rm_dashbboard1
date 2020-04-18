@@ -1,116 +1,149 @@
 <div class="container-fluid p-0">
-  <div class="row mobileLoginUi">
-    <div class="col-md-6 mobileNone imgBoxlogin p-0 bg-grey lter">
-      <img src="assets/images/svg/login-img.svg">
-    </div>
-
-    <div class="col-md-6 p-0 bg-white forgotMobileUi flexLogin">
-      <div class="row ds-none">
-        <div class="col-md-12">
-          <i [routerLink]="[ '/login']" class="material-icons f-20 mt-20">
-            arrow_back
-          </i>
+    <div class="row mobileLoginUi">
+        <div class="col-md-6 mobileNone imgBoxlogin p-0 bg-grey lter">
+            <img src="assets/images/svg/login-img.svg">
         </div>
-      </div>
-      <div class="mobileUserBox">
-        <div class="loginBoxverifyOtp">
 
-
-          <p class="f-16 mb-12 mobileNone">
-            <img class="advisorLogo "
-              src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
-          </p>
-          <h1 class="mb-16 mobileNone f-600">Create an account</h1>
-          <p class="mb-24 mobileNone f-16">Please provide some basic details to help us create your account.
-          </p>
-
-          <div class="row ds-none">
-            <div class="col-md-12 mt-70 text-center">
-              <h4 class="f-18 mb-20">Create an account</h4>
-              <p class="f-14 mb-16 contentText"> Please provide some basic details to help us create your account.
-              </p>
+        <div class="col-md-6 p-0 bg-white forgotMobileUi flexLogin">
+            <div class="row ds-none">
+                <div class="col-md-12">
+                    <i [routerLink]="[ '/login']" class="material-icons f-20 mt-20">
+                        arrow_back
+                    </i>
+                </div>
             </div>
-          </div>
+            <div class="mobileUserBox">
+                <div class="loginBoxverifyOtp">
 
-          <div [formGroup]="signUpForm" class="form_container_new_wrapper">
-            <div class="row">
-              <div class="col-md-12 form-group p-0">
-                <h5 class="pt-12 mobileNone mb-4">Full name</h5>
-                <mat-form-field appearance="standard" floatLabel="never">
-                  <input #fullName [inputValidator]="validatorType.PERSON_NAME" [maxLength]="40" appInputValueValidation
-                    class="form-control" formControlName="fullName" matInput placeholder="Enter your name" tabindex="1">
-                  <mat-hint align="end" class="f-12 mobileNone">{{fullName.value.length}}/40
-                  </mat-hint>
-                  <mat-error align="end">Username required</mat-error>
-                </mat-form-field>
-              </div>
-            </div>
 
-            <div class="row">
-              <div class="col-md-12 form-group p-0">
-                <h5 class="pt-12 mobileNone mb-4">Email</h5>
-                <mat-form-field appearance="standard" floatLabel="never">
-                  <input class="form-control" formControlName="email" matInput placeholder="Enter email" tabindex="1">
-                  <mat-error *ngIf="signUpForm.get('email').errors?.pattern" align="end">Email Invalid
-                  </mat-error>
-                  <mat-error *ngIf="signUpForm.get('email').errors?.required" align="end">Email required
-                  </mat-error>
-                </mat-form-field>
-              </div>
-            </div>
+                    <p class="f-16 mb-12 mobileNone">
+                        <img class="advisorLogo "
+                            src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
+                    </p>
+                    <h1 class="mb-16 mobileNone f-600">Create an account</h1>
+                    <p class="mb-24 mobileNone f-16">Please provide some basic details to help us create your account.
+                    </p>
 
-            <div class=" row">
-              <div class="col-md-12 form-group p-0">
-                <h5 class="pt-12 mobileNone mb-4">Mobile</h5>
-                <mat-form-field appearance="standard" floatLabel="never">
-                  <input #mobNo [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="off"
-                    class="form-control" formControlName="mobile" matInput maxlength="10" placeholder="Enter mobile"
-                    tabindex="1">
-                  <mat-error *ngIf="signUpForm.get('mobile').errors?.required" align="end">Mobile required</mat-error>
-                  <mat-error *ngIf="signUpForm.get('mobile').errors?.pattern">Mobile number must be 10 digits
-                  </mat-error>
-                  <mat-hint align="end" class="f-12 mobileNone">{{mobNo.value.length}}/10</mat-hint>
-                </mat-form-field>
-              </div>
-            </div>
+                    <div class="row ds-none">
+                        <div class="col-md-12 mt-70 text-center">
+                            <h4 class="f-18 mb-20">Create an account</h4>
+                            <p class="f-14 mb-16 contentText"> Please provide some basic details to help us create your
+                                account.
+                            </p>
+                        </div>
+                    </div>
+                    <mat-radio-group [(ngModel)]="typeOfRegister" (change)="resetForm()" aria-label="Select an option">
+                        <mat-radio-button value="1">Individual</mat-radio-button>
+                        <mat-radio-button value="2">Non-individual</mat-radio-button>
+                    </mat-radio-group>
+                    <!-- Individual <mat-slide-toggle [(ngModel)]="typeOfRegister" (change)="resetForm()">
+                    </mat-slide-toggle> Non-individual -->
+                    <div [formGroup]="signUpForm" class="form_container_new_wrapper">
+                        <div class="row">
+                            <div class="col-md-12 form-group p-0">
+                                <h5 class="pt-12 mobileNone mb-4">Full name</h5>
+                                <mat-form-field appearance="standard" floatLabel="never">
+                                    <input #fullName [inputValidator]="validatorType.PERSON_NAME" [maxLength]="40"
+                                        appInputValueValidation class="form-control" formControlName="fullName" matInput
+                                        placeholder="Enter your name" tabindex="1">
+                                    <mat-hint align="end" class="f-12 mobileNone">{{fullName.value.length}}/40
+                                    </mat-hint>
+                                    <mat-error align="end">Username required</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div *ngIf="typeOfRegister=='2'" class="row">
+                            <div class="col-md-12 form-group p-0">
+                                <h5 class="pt-12 mobileNone mb-4">Company name</h5>
+                                <mat-form-field appearance="standard" floatLabel="never">
+                                    <input #comName [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR"
+                                        [maxLength]="40" appInputValueValidation class="form-control"
+                                        formControlName="companyName" matInput placeholder="Enter company name"
+                                        tabindex="1">
+                                    <mat-hint align="end" class="f-12 mobileNone">{{comName.value.length}}/40
+                                    </mat-hint>
+                                    <mat-error align="end">Company name required</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-group p-0">
+                                <h5 class="pt-12 mobileNone mb-4">Email</h5>
+                                <mat-form-field appearance="standard" floatLabel="never">
+                                    <input class="form-control" formControlName="email" matInput
+                                        placeholder="Enter email" tabindex="1">
+                                    <mat-error *ngIf="signUpForm.get('email').errors?.pattern" align="end">Email Invalid
+                                    </mat-error>
+                                    <mat-error *ngIf="signUpForm.get('email').errors?.required" align="end">Email
+                                        required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
 
-            <div class="row">
-              <div class="col-md-12 mb-16 mt-10 p-0 f-14">
-                <mat-checkbox formControlName="termsAgreement"></mat-checkbox>
-                I accept the <span class="text-primary c-p"> terms of service
-                </span> & <span class="c-p text-primary"> privacy policy </span>
+                        <div class=" row">
+                            <div class="col-md-12 form-group p-0">
+                                <h5 class="pt-12 mobileNone mb-4">Mobile</h5>
+                                <mat-form-field appearance="standard" floatLabel="never">
+                                    <input #mobNo [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
+                                        autocomplete="off" class="form-control" formControlName="mobile" matInput
+                                        maxlength="10" placeholder="Enter mobile" tabindex="1">
+                                    <mat-error *ngIf="signUpForm.get('mobile').errors?.required" align="end">Mobile
+                                        required</mat-error>
+                                    <mat-error *ngIf="signUpForm.get('mobile').errors?.pattern">Mobile number must be 10
+                                        digits
+                                    </mat-error>
+                                    <mat-hint align="end" class="f-12 mobileNone">{{mobNo.value.length}}/10</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
 
-              </div>
-            </div>
+                        <div class="row">
+                            <div class="col-md-12 mb-16 mt-10 p-0 f-14">
+                                <!--                <mat-form-field>-->
+                                <mat-checkbox formControlName="termsAgreement">
+                                    I accept the <span (click)="showTermsAndConditions()" class="text-primary c-p">
+                                        terms of service
+                                    </span> & <span (click)="showTermsAndConditions()" class="c-p text-primary"> privacy
+                                        policy </span>
+                                </mat-checkbox>
 
-            <div class="row">
-              <div class="col-md-12 p-0">
-                <!-- <button (click)="createAccount()" class="  bg-primary f-16  text-white w-100 br-4 " mat-button>
+                                <mat-error class="matErrorCss"
+                                    *ngIf="!signUpForm.value.termsAgreement&&signUpForm.controls.termsAgreement.touched">
+                                    Please accept terms and conditions
+                                </mat-error>
+                                <!--                </mat-form-field>-->
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 p-0">
+                                <!-- <button (click)="createAccount()" class="  bg-primary f-16  text-white w-100 br-4 " mat-button>
                   <img class="iconPosition mobileNone" src="assets/images/svg/login-btn-icon.svg">
                   Create account
                 </button> -->
-                <app-progress-button (btnClick)="createAccount()" class="w-100 br-4" [options]="barButtonOptions"
-                  [logEvent]="passEvent">
-                </app-progress-button>
-              </div>
+                                <app-progress-button (btnClick)="createAccount()" class="w-100 br-4"
+                                    [options]="barButtonOptions">
+                                </app-progress-button>
+                            </div>
+                        </div>
+
+                        <div class="mobileCenter ds-none">
+                            <h5 class="mt-20 mb-10"> Already have an account? <span [routerLink]="[ '/login']"
+                                    class="text-primary c-p"> Sign in </span>
+                            </h5>
+                        </div>
+
+                        <h5 class="mt-36 mobileNone mb-36"> Already have an account? <span [routerLink]="[ '/login']"
+                                class="text-primary c-p"> Sign in </span>
+                        </h5>
+                    </div>
+                </div>
             </div>
 
-            <div class="mobileCenter ds-none">
-              <h5 class="mt-20 mb-10"> Already have an account? <span [routerLink]="[ '/login']"
-                  class="text-primary c-p"> Sign in </span>
-              </h5>
-            </div>
-
-            <h5 class="mt-36 mobileNone mb-36"> Already have an account? <span [routerLink]="[ '/login']"
-                class="text-primary c-p"> Sign in </span>
-            </h5>
-          </div>
+            <p class="f-12 mobileNone l-18 ml-24 text-primitive">Before logging in, please ensure that the URL on the
+                address bar starts with “https” or has a padlock icon. The communication of your private information
+                from any address beginning with "https" is encrypted and secured using SSL.</p>
         </div>
-      </div>
-
-      <p class="f-12 mobileNone l-18 ml-24 text-primitive">Before logging in, please ensure that the URL on the address
-        bar starts with “https” or has a padlock icon. The communication of your private information from any address
-        beginning with "https" is encrypted and secured using SSL.</p>
     </div>
-  </div>
 </div>

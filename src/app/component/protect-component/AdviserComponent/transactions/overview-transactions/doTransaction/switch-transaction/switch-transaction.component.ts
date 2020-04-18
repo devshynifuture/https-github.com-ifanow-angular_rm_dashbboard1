@@ -1,13 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { ConfirmationTransactionComponent } from '../confirmation-transaction/confirmation-transaction.component';
-import { UtilService } from 'src/app/services/util.service';
-import { OnlineTransactionService } from '../../../online-transaction.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ProcessTransactionService } from '../process-transaction.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
+import {OnlineTransactionService} from '../../../online-transaction.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ProcessTransactionService} from '../process-transaction.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {AuthService} from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-switch-transaction',
@@ -29,7 +27,7 @@ export class SwitchTransactionComponent implements OnInit {
     // buttonIcon: {
     //   fontIcon: 'favorite'
     // }
-  }
+  };
   confirmTrasaction: boolean;
   switchTransaction: any;
   dataSource: any;
@@ -54,7 +52,7 @@ export class SwitchTransactionComponent implements OnInit {
   schemeTransfer: any;
   schemeDetailsTransfer: any;
   schemeListTransfer: any;
-  showSpinnerFolio = false
+  showSpinnerFolio = false;
   showSpinnerTran = false;
   currentValue: number;
   multiTransact = false;
@@ -66,16 +64,19 @@ export class SwitchTransactionComponent implements OnInit {
   editedId: any;
   id = 0;
   navOfSelectedSchemeSwitchIn: any;
+
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private fb: FormBuilder, private eventService: EventService, private processTransaction: ProcessTransactionService) { }
+              private fb: FormBuilder, private eventService: EventService, private processTransaction: ProcessTransactionService) {
+  }
+
   @Output() changedValue = new EventEmitter();
 
   @Input()
   set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     this.inputData = data;
-    this.transactionType = data.transactionType
-    this.selectedFamilyMember = data.selectedFamilyMember
+    this.transactionType = data.transactionType;
+    this.selectedFamilyMember = data.selectedFamilyMember;
     console.log('This is Input data of FixedDepositComponent ', data);
 
     if (this.isViewInitCalled) {
@@ -88,34 +89,38 @@ export class SwitchTransactionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.transactionSummary = {}
-    this.childTransactions = []
-    this.getdataForm(this.inputData, false)
-    Object.assign(this.transactionSummary, { clientId: this.inputData.clientId })
-    Object.assign(this.transactionSummary, { transactType: 'SWITCH' });
-    Object.assign(this.transactionSummary, { allEdit: true });
-    Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
-    Object.assign(this.transactionSummary, { isMultiTransact: false });
+    this.transactionSummary = {};
+    this.childTransactions = [];
+    this.getdataForm(this.inputData, false);
+    Object.assign(this.transactionSummary, {familyMemberId: this.inputData.familyMemberId});
+    Object.assign(this.transactionSummary, {clientId: this.inputData.clientId});
+    Object.assign(this.transactionSummary, {transactType: 'SWITCH'});
+    Object.assign(this.transactionSummary, {allEdit: true});
+    Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
+    Object.assign(this.transactionSummary, {isMultiTransact: false});
   }
+
   backToTransact() {
     this.changedValue.emit('step-2');
   }
+
   getDefaultDetails(data) {
-    console.log('get defaul here yupeeee', data)
-    this.getDataSummary = data
-    Object.assign(this.transactionSummary, { aggregatorType: this.getDataSummary.defaultClient.aggregatorType });
+    console.log('get defaul here yupeeee', data);
+    this.getDataSummary = data;
+    Object.assign(this.transactionSummary, {aggregatorType: this.getDataSummary.defaultClient.aggregatorType});
     this.switchTransaction.controls.transferIn.reset();
   }
+
   getSchemeList(value) {
-    this.showSpinner = true
+    this.showSpinner = true;
     if (this.switchTransaction.get('schemeSwitch').invalid) {
-      this.showSpinner = false
-      Object.assign(this.transactionSummary, { schemeName: '' });
-      Object.assign(this.transactionSummary, { folioNumber: '' });
-      (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;//if scheme not present then min amt is 0
+      this.showSpinner = false;
+      Object.assign(this.transactionSummary, {schemeName: ''});
+      Object.assign(this.transactionSummary, {folioNumber: ''});
+      (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0; // if scheme not present then min amt is 0
     }
     if (this.selectScheme == 2 && value.length > 2) {
-      let obj = {
+      const obj = {
         searchQuery: value,
         bseOrderType: 'SWITCH',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
@@ -126,13 +131,13 @@ export class SwitchTransactionComponent implements OnInit {
         userAccountType: this.getDataSummary.defaultCredential.accountType,
         holdingType: this.getDataSummary.defaultClient.holdingType,
         tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
-      }
+      };
       this.onlineTransact.getExistingSchemes(obj).subscribe(
         data => this.getExistingSchemesRes(data), (error) => {
           this.showSpinner = false;
-          this.switchTransaction.get('schemeSwitch').setErrors({ 'setValue': error.message });
+          this.switchTransaction.get('schemeSwitch').setErrors({setValue: error.message});
           this.switchTransaction.get('schemeSwitch').markAsTouched();
-          (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;//if scheme not present then min amt is 0
+          (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0; // if scheme not present then min amt is 0
           // this.eventService.showErrorMessage(error);
         }
       );
@@ -140,66 +145,74 @@ export class SwitchTransactionComponent implements OnInit {
 
     }
   }
+
   getExistingSchemesRes(data) {
-    this.showSpinner = false
-    this.schemeList = data
+    this.showSpinner = false;
+    this.schemeList = data;
   }
+
   onFolioChange(folio) {
-    this.switchTransaction.controls.investmentAccountSelection.reset()
+    this.switchTransaction.controls.investmentAccountSelection.reset();
   }
+
   selectedFolio(folio) {
-    this.folioDetails = folio
-    this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit)
-    this.showUnits = true
-    Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
-    Object.assign(this.transactionSummary, { mutualFundId: folio.id });
-    Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId });
-    this.transactionSummary = { ...this.transactionSummary };
+    this.folioDetails = folio;
+    this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit);
+    this.showUnits = true;
+    Object.assign(this.transactionSummary, {folioNumber: folio.folioNumber});
+    Object.assign(this.transactionSummary, {mutualFundId: folio.id});
+    Object.assign(this.transactionSummary, {tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId});
+    this.transactionSummary = {...this.transactionSummary};
   }
+
   selectedScheme(scheme) {
-    this.showSpinner = true
-    this.scheme = scheme
-    this.showUnits = true
-    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
-    this.navOfSelectedScheme = scheme.nav
-    let obj1 = {
+    this.showSpinner = true;
+    this.scheme = scheme;
+    this.showUnits = true;
+    Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
+    this.navOfSelectedScheme = scheme.nav;
+    const obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       orderType: 'SWITCH',
       userAccountType: this.getDataSummary.defaultCredential.accountType,
-    }
+    };
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data), (error) => {
         this.eventService.showErrorMessage(error);
       }
     );
   }
+
   getbankDetails(event) {
     console.log(event);
   }
 
   getSchemeDetailsRes(data) {
-    this.showSpinner = false
-    console.log('getSchemeDetailsRes == ', data)
-    this.maiSchemeList = data
-    this.schemeDetails = data[0]
+    this.showSpinner = false;
+    console.log('getSchemeDetailsRes == ', data);
+    this.maiSchemeList = data;
+    this.schemeDetails = data[0];
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
     if (data.length > 1) {
-      this.reInvestmentOpt = data
-      console.log('reinvestment', this.reInvestmentOpt)
-    } if (data.length == 1) {
-      this.reInvestmentOpt = []
+      this.reInvestmentOpt = data;
+      console.log('reinvestment', this.reInvestmentOpt);
     }
-    this.getSchemeWiseFolios()
+    if (data.length == 1) {
+      this.reInvestmentOpt = [];
+    }
+    this.getSchemeWiseFolios();
   }
+
   reinvest(scheme) {
-    this.schemeDetails = scheme
-    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
-    console.log('schemeDetails == ', this.schemeDetails)
+    this.schemeDetails = scheme;
+    Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
+    console.log('schemeDetails == ', this.schemeDetails);
   }
+
   getSchemeWiseFolios() {
-    this.showSpinnerFolio = true
-    let obj1 = {
+    this.showSpinnerFolio = true;
+    const obj1 = {
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
       advisorId: this.getDataSummary.defaultClient.advisorId,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
@@ -208,54 +221,59 @@ export class SwitchTransactionComponent implements OnInit {
       holdingType: this.getDataSummary.defaultClient.holdingType,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       showOnlyNonZero: true,
-    }
+    };
     this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
       data => this.getSchemeWiseFoliosRes(data), (error) => {
         this.eventService.showErrorMessage(error);
       }
     );
   }
+
   getSchemeWiseFoliosRes(data) {
-    this.showSpinnerFolio = false
-    console.log('res scheme folio', data)
-    this.folioList = data
+    this.showSpinnerFolio = false;
+    console.log('res scheme folio', data);
+    this.folioList = data;
     if (this.switchTransaction.get('investmentAccountSelection').valid) {
-      Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
+      Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
     }
   }
+
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
+
   selectedSchemeTransfer(schemeTransfer) {
-    this.showSpinnerTran = true
-    this.schemeTransfer = schemeTransfer
-    Object.assign(this.transactionSummary, { schemeNameTranfer: schemeTransfer.schemeName });
-    this.navOfSelectedSchemeSwitchIn = schemeTransfer.nav
-    let obj1 = {
+    this.showSpinnerTran = true;
+    this.schemeTransfer = schemeTransfer;
+    Object.assign(this.transactionSummary, {schemeNameTranfer: schemeTransfer.schemeName});
+    this.navOfSelectedSchemeSwitchIn = schemeTransfer.nav;
+    const obj1 = {
       mutualFundSchemeMasterId: schemeTransfer.mutualFundSchemeMasterId,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       orderType: 'SWITCH',
       userAccountType: this.getDataSummary.defaultCredential.accountType,
-    }
+    };
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsTranferRes(data), (error) => {
         this.eventService.showErrorMessage(error);
       }
     );
   }
+
   getSchemeDetailsTranferRes(data) {
-    this.showSpinnerTran = false
+    this.showSpinnerTran = false;
     // this.maiSchemeList = data
-    this.schemeDetailsTransfer = data[0]
+    this.schemeDetailsTransfer = data[0];
   }
+
   getSchemeListTranfer(value) {
-    this.showSpinnerTran = true
+    this.showSpinnerTran = true;
     if (this.switchTransaction.get('transferIn').invalid) {
-      this.showSpinnerTran = false
-      Object.assign(this.transactionSummary, { schemeNameTranfer: '' });
+      this.showSpinnerTran = false;
+      Object.assign(this.transactionSummary, {schemeNameTranfer: ''});
     }
     if (this.selectScheme == 2 && value.length > 2) {
-      let obj = {
+      const obj = {
         searchQuery: value,
         bseOrderType: 'SWITCH',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
@@ -266,31 +284,35 @@ export class SwitchTransactionComponent implements OnInit {
         userAccountType: this.getDataSummary.defaultCredential.accountType,
         holdingType: this.getDataSummary.defaultClient.holdingType,
         tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
-      }
+      };
       this.onlineTransact.getNewSchemes(obj).subscribe(
         data => this.getNewSchemesRes(data), (error) => {
-          this.showSpinnerTran = false
-          this.switchTransaction.get('transferIn').setErrors({ 'setValue': error.message });
+          this.showSpinnerTran = false;
+          this.switchTransaction.get('transferIn').setErrors({setValue: error.message});
           this.switchTransaction.get('transferIn').markAsTouched();
           // this.eventService.showErrorMessage(error);
         }
       );
     }
   }
+
   switchType(value) {
 
   }
+
   enteredAmount(value) {
-    Object.assign(this.transactionSummary, { enteredAmount: value });
+    Object.assign(this.transactionSummary, {enteredAmount: value});
   }
+
   getNewSchemesRes(data) {
-    this.showSpinnerTran = false
-    console.log('new schemes', data)
-    this.schemeListTransfer = data
+    this.showSpinnerTran = false;
+    console.log('new schemes', data);
+    this.schemeListTransfer = data;
   }
+
   getdataForm(data, isEdit) {
     if (isEdit == true) {
-      this.isEdit = isEdit
+      this.isEdit = isEdit;
       this.editedId = data.id;
     }
     if (!data) {
@@ -320,13 +342,14 @@ export class SwitchTransactionComponent implements OnInit {
     this.ownerData = this.switchTransaction.controls;
     if (data.folioNo) {
       this.scheme.mutualFundSchemeMasterId = data.mutualFundSchemeMasterId;
-      this.getSchemeWiseFolios()
+      this.getSchemeWiseFolios();
     }
   }
 
   getFormControl(): any {
     return this.switchTransaction.controls;
   }
+
   switch() {
     if (this.reInvestmentOpt.length > 1) {
       if (this.switchTransaction.get('reinvest').invalid) {
@@ -345,7 +368,7 @@ export class SwitchTransactionComponent implements OnInit {
       return;
     } else {
 
-      let obj = {
+      const obj = {
 
         productDbId: this.schemeDetails.id,
         clientName: this.selectedFamilyMember,
@@ -366,25 +389,25 @@ export class SwitchTransactionComponent implements OnInit {
         euin: this.getDataSummary.euin.euin,
         qty: (this.switchTransaction.controls.switchType.value == 1) ? 0 : (this.switchTransaction.controls.switchType.value == 3) ? this.schemeDetails.balance_units : this.switchTransaction.controls.employeeContry.value,
         allRedeem: (this.switchTransaction.controls.switchType.value == 3) ? true : false,
-        orderType: "SWITCH",
-        buySell: "SWITCH_OUT",
-        transCode: "NEW",
-        buySellType: "FRESH",
+        orderType: 'SWITCH',
+        buySell: 'SWITCH_OUT',
+        transCode: 'NEW',
+        buySellType: 'FRESH',
         amountType: (this.switchTransaction.controls.switchType.value == 1) ? 'Amount' : 'Unit',
         dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
         clientCode: this.getDataSummary.defaultClient.clientCode,
         orderVal: this.switchTransaction.controls.employeeContry.value,
-        bseDPTransType: "PHYSICAL",
+        bseDPTransType: 'PHYSICAL',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
         childTransactions: []
 
-      }
+      };
 
-      console.log('switch', obj)
+      console.log('switch', obj);
       if (this.multiTransact == true) {
-        console.log('new purchase obj', this.childTransactions)
+        console.log('new purchase obj', this.childTransactions);
         this.AddMultiTransaction();
-        obj.childTransactions = this.childTransactions
+        obj.childTransactions = this.childTransactions;
       }
       this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
@@ -394,19 +417,21 @@ export class SwitchTransactionComponent implements OnInit {
       );
     }
   }
+
   switchBSERes(data) {
     this.barButtonOptions.active = false;
-    console.log('switch res == ', data)
+    console.log('switch res == ', data);
     if (data == undefined) {
 
     } else {
-      this.processTransaction.onAddTransaction('confirm', this.transactionSummary)
-      Object.assign(this.transactionSummary, { allEdit: false });
+      this.processTransaction.onAddTransaction('confirm', this.transactionSummary);
+      Object.assign(this.transactionSummary, {allEdit: false});
     }
   }
+
   AddMultiTransaction() {
     if (this.isEdit != true) {
-      this.id++
+      this.id++;
     }
     if (this.reInvestmentOpt.length > 1) {
       if (this.switchTransaction.get('reinvest').invalid) {
@@ -428,9 +453,9 @@ export class SwitchTransactionComponent implements OnInit {
       this.switchTransaction.get('employeeContry').markAsTouched();
       return;
     } else {
-      this.multiTransact = true
+      this.multiTransact = true;
       if (this.scheme != undefined && this.schemeDetails != undefined && this.switchTransaction != undefined) {
-        let obj = {
+        const obj = {
           id: this.id,
           amc: this.scheme.amcId,
           mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
@@ -449,7 +474,7 @@ export class SwitchTransactionComponent implements OnInit {
           transferIn: this.switchTransaction.get('transferIn').value,
           switchType: this.switchTransaction.get('switchType').value
 
-        }
+        };
         if (this.isEdit == true) {
           this.childTransactions.forEach(element => {
             if (element.id == this.editedId) {
@@ -461,20 +486,20 @@ export class SwitchTransactionComponent implements OnInit {
               element.switchType = this.switchTransaction.get('switchType').value;
               element.modeOfPaymentSelection = this.switchTransaction.get('modeOfPaymentSelection').value;
             }
-            console.log(element)
+            console.log(element);
           });
           this.isEdit = false;
         } else {
-          this.childTransactions.push(obj)
+          this.childTransactions.push(obj);
         }
-        console.log(this.childTransactions)
+        console.log(this.childTransactions);
         this.schemeList = [];
         this.showUnits = false;
-        this.switchTransaction.controls.switchType.reset()
-        this.switchTransaction.controls.employeeContry.reset()
-        this.switchTransaction.controls.investmentAccountSelection.reset()
-        this.switchTransaction.controls.schemeSwitch.reset()
-        this.switchTransaction.controls.transferIn.reset()
+        this.switchTransaction.controls.switchType.reset();
+        this.switchTransaction.controls.employeeContry.reset();
+        this.switchTransaction.controls.investmentAccountSelection.reset();
+        this.switchTransaction.controls.schemeSwitch.reset();
+        this.switchTransaction.controls.transferIn.reset();
       }
     }
   }

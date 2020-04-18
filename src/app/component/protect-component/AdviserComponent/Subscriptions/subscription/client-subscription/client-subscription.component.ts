@@ -1,16 +1,16 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from '../../subscription-inject.service';
-import { SubscriptionService } from '../../subscription.service';
-import { UtilService } from "../../../../../../services/util.service";
-import { AuthService } from "../../../../../../auth-service/authService";
-import { HelpComponent } from '../common-subscription-component/help/help.component';
-import { SubscriptionUpperSliderComponent } from '../common-subscription-component/upper-slider/subscription-upper-slider.component';
-import { Router } from '@angular/router';
-import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
-import { Location } from '@angular/common';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionInject} from '../../subscription-inject.service';
+import {SubscriptionService} from '../../subscription.service';
+import {UtilService} from '../../../../../../services/util.service';
+import {AuthService} from '../../../../../../auth-service/authService';
+import {HelpComponent} from '../common-subscription-component/help/help.component';
+import {SubscriptionUpperSliderComponent} from '../common-subscription-component/upper-slider/subscription-upper-slider.component';
+import {Router} from '@angular/router';
+import {ErrPageOpenComponent} from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
+import {Location} from '@angular/common';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 
 
 export interface PeriodicElement {
@@ -28,16 +28,16 @@ export interface PeriodicElement {
   styleUrls: ['./client-subscription.component.scss']
 })
 export class ClientSubscriptionComponent implements OnInit {
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  Questions = [{ question: 'How to apply subscription to client?' },
-  { question: 'Can we have more than one subscription applied to the client at the same time?' },
-  { question: 'What are the Future subscription?' }]
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  Questions = [{question: 'How to apply subscription to client?'},
+    {question: 'Can we have more than one subscription applied to the client at the same time?'},
+    {question: 'What are the Future subscription?'}];
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   noData: string;
 
   constructor(public dialog: MatDialog, public eventService: EventService, public subInjectService: SubscriptionInject,
-    private subService: SubscriptionService, private router: Router, private location: Location) {
+              private subService: SubscriptionService, private router: Router, private location: Location) {
   }
 
   @Input() upperData: any;
@@ -46,7 +46,7 @@ export class ClientSubscriptionComponent implements OnInit {
   advisorId;
   isLoading = false;
   ngOnInit() {
-    //this.dataSource = [{}, {}, {}];
+    // this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
     console.log('clients');
     this.getClientSubData();
@@ -56,13 +56,13 @@ export class ClientSubscriptionComponent implements OnInit {
   getClientSubData() {
     this.getClientSubscriptionList().subscribe(
       data => {
-        this.getClientListResponse(data)
+        this.getClientListResponse(data);
       }, (error) => {
-        this.errorMessage();
+        // this.errorMessage();
         this.dataSource.data = [];
         this.isLoading = false;
       }
-    )
+    );
   }
 
   getClientSubscriptionList() {
@@ -93,7 +93,7 @@ export class ClientSubscriptionComponent implements OnInit {
             barButtonOption.active = false;
 
             this.getClientListResponse(data);
-            this.eventService.changeUpperSliderState({ state: 'close' })
+            this.eventService.changeUpperSliderState({state: 'close'});
             // this.errorMessage();
           }, (error) => {
             barButtonOption.active = false;
@@ -101,9 +101,9 @@ export class ClientSubscriptionComponent implements OnInit {
             this.eventService.openSnackBar('Wait for sometime....', 'Dismiss');
             // this.eventService.showErrorMessage(error);
           }
-        )
+        );
       },
-    }
+    };
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
@@ -126,7 +126,7 @@ export class ClientSubscriptionComponent implements OnInit {
       this.data = [];
       this.dataSource.data = data;
       // console.log(data);
-      this.dataSource.data = []
+      this.dataSource.data = [];
       this.noData = 'No Data Found';
 
     }
@@ -139,9 +139,9 @@ export class ClientSubscriptionComponent implements OnInit {
   Open(value, state, data) {
     const fragmentData = {
       flag: value,
-      data: data,
+      data,
       id: 1,
-      state: state,
+      state,
       componentName: HelpComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -159,9 +159,9 @@ export class ClientSubscriptionComponent implements OnInit {
 
 
   openFragment(flag, data) {
-    if(!this.isLoading){
+    if (!this.isLoading) {
       this.location.replaceState('/subscription-upper');
-      data.flag = flag
+      data.flag = flag;
       console.log('hello mf button clicked');
       const fragmentData = {
         flag: 'clietns',

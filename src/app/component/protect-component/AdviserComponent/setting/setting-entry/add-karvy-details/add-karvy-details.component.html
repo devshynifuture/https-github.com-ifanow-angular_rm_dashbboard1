@@ -1,22 +1,22 @@
 <div class="row bb-1 popup-header-fix-50">
     <div class="col-md-10 p-0">
-        <h4 class="mb-0 l-22 wrapper-20">ADD KARVY DETAILS</h4>
+        <h4 class="mb-0 l-22 wrapper-20">{{data.is_add_call ? 'Add' : 'Edit'}} Karvy details</h4>
     </div>
     <div class="col-md-2 text-right" (click)="Close(false)">
         <i class="material-icons pt-20 c-p pr-16">
-            clear
-        </i>
+      clear
+    </i>
     </div>
 </div>
 
 <div class=" pt-100 pb-90" [formGroup]="karvyFG">
     <div class="row ">
         <div class="col-md-4 pr-0">
-            <h5 class="m-0 text-right pt-12">ARN/RIA number</h5>
+            <h5 class="m-0 text-right pt-20">ARN/RIA number</h5>
         </div>
         <div class="col-md-5">
             <div class="form-group mb-0">
-                <mat-form-field>
+                <mat-form-field appearance="standard" floatLabel="never">
                     <mat-select class="form-control br-0" formControlName="arnRiaDetailsId">
                         <mat-option value="" selected disabled>Select Option</mat-option>
                         <mat-option [value]="arnData.id" *ngFor="let arnData of data.arnData">
@@ -29,12 +29,12 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-4 pr-0">
-            <h5 class="m-0 text-right pt-12">Login ID</h5>
+            <h5 class="m-0 text-right pt-20">Login ID</h5>
         </div>
         <div class="col-md-5">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input type="text" matInput formControlName="loginId" class="form-control">
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <input type="text" placeholder="Enter Login ID" matInput formControlName="loginId" class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -42,12 +42,12 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-4 pr-0">
-            <h5 class="m-0 text-right pt-12">Login password</h5>
+            <h5 class="m-0 text-right pt-20">Login password</h5>
         </div>
         <div class="col-md-5">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input type="text" matInput formControlName="loginPassword" class="form-control">
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <input type="text" placeholder="Enter Login password" matInput formControlName="loginPassword" class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -55,13 +55,14 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-4 pr-0">
-            <h5 class="m-0 text-right pt-12">Registered email</h5>
+            <h5 class="m-0 text-right pt-20">Registered email</h5>
         </div>
         <div class="col-md-5">
             <div class="form-group mb-0">
-                <mat-form-field [floatLabel]="'never'">
-                    <input type="text" matInput formControlName="registeredEmail" class="form-control" placeholder="example@email.com">
-                    <mat-error *ngIf="karvyFG.get('registeredEmail').errors?.required">This field is required</mat-error>
+                <mat-form-field [floatLabel]="'never'" appearance="standard" floatLabel="never">
+                    <input type="text" matInput formControlName="registeredEmail" class="form-control" placeholder="Enter Registered email">
+                    <mat-error *ngIf="karvyFG.get('registeredEmail').errors?.required">This field is required
+                    </mat-error>
                     <mat-error *ngIf="karvyFG.get('registeredEmail').errors?.pattern">Email is not valid</mat-error>
                 </mat-form-field>
             </div>
@@ -69,12 +70,12 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-4 pr-0">
-            <h5 class="m-0 text-right pt-12">Mailback password</h5>
+            <h5 class="m-0 text-right pt-20">Mailback password</h5>
         </div>
         <div class="col-md-5">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <input type="text" matInput formControlName="mailbackPassword" class="form-control">
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <input type="text" placeholder="Enter password" matInput formControlName="mailbackPassword" class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -82,11 +83,11 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-4 pr-0">
-            <h5 class="m-0 text-right pt-12">Use for file ordering?</h5>
+            <h5 class="m-0 text-right pt-20">Use for file ordering?</h5>
         </div>
         <div class="col-md-5">
             <div class="form-group mb-0">
-                <mat-form-field>
+                <mat-form-field appearance="standard" floatLabel="never">
                     <mat-select class="form-control" formControlName="fileOrderingUseabilityStatusId">
                         <mat-option value="" disabled>select</mat-option>
                         <mat-option [value]="1">Yes</mat-option>

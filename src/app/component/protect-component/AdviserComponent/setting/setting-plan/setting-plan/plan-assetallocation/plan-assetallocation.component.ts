@@ -24,7 +24,7 @@ export class PlanAssetallocationComponent implements OnInit {
   editMode: boolean = false;
   dataToMap: any = [];
   onlyNumbers: string;
-  staticAllocationData: any;
+  staticAllocationData: any[] = [{}, {}, {}];
   secondValue: any;
   obj: any;
   obj1: any;
@@ -35,7 +35,7 @@ export class PlanAssetallocationComponent implements OnInit {
   staticAllocation: any;
   validatorType = ValidatorType;
   constructor(
-    private orgSetting: OrgSettingServiceService, 
+    private orgSetting: OrgSettingServiceService,
     private eventService: EventService,
   ) {
     this.advisorId = AuthService.getAdvisorId()
@@ -53,7 +53,7 @@ export class PlanAssetallocationComponent implements OnInit {
   }
   changeTableTdValue(value, field, field2, ele, index) {
     console.log(value, field, index);
-    if(value > 100) {
+    if (value > 100) {
       value = 100;
     }
     this.secondValue = 100 - value

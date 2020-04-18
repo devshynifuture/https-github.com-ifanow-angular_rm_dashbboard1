@@ -201,6 +201,7 @@ export const appConfig = {
   MUTUAL_FUND_GET: 'mutual-fund/mutualfund/list/get',
   FOLIO_MASTER_DETAILS: 'mutual-fund/folioMasterDetails/list/get',
   SIP_DETAILS: 'mutual-fund/sipDetails/list/get',
+  UNREALIZED_TRANSACTION_GET: 'mutual-fund/unrealized/transaction/list/get',
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
@@ -402,13 +403,13 @@ export const appConfig = {
   GIVE_ADVICE_ON_REAL_ESTATE: 'advice/asset/real-estate/advice/post',
   ////////////////////////////////////OnlineTransaction///////////////////////////////////////
   ADD_BSE_CREDENTIALS: 'user/save',
-  GET_BSE_CREDENTIALS: '/user/view',
+  GET_BSE_CREDENTIALS: 'user/view',
   GET_BSE_SUB_BROKER_CREDENTIALS: '/user/sub-broker/view',
   GET_NEW_SCHEMES: 'mutual-fund/search',
   GET_EXISTING_SCHEMES: 'mutual-fund/existing/search',
   GET_SCHEME_DETAILS: 'mutual-fund/product-limit/get',
   GET_FAMILY_MEMBER: 'family/name/get',
-  GET_DEFAULT_DETAILS: '/user/family-member/transaction-setting/default',
+  GET_DEFAULT_DETAILS: 'user/family-member/transaction-setting/default',
   PURCHASE: 'bse/order/bse/order/create',
   GET_AMCWISE_FOLIO: 'mutual-fund/folios/amc-wise/get',
   GET_SCHEMEWISE_FOLIO: 'mutual-fund/folios/scheme-wise/get',
@@ -427,7 +428,7 @@ export const appConfig = {
   GETIIN_DETAILS: 'nse/iin/detail/get',
   GET_FOLIO_MAPPED: '/mutual-fund/folios/mapped/get',
   GET_FOLIO_UNMAPPED: '/mutual-fund/folios/unmapped/get',
-  GET_CLIENT_CODE: '/user/family-member/client-code',
+  GET_CLIENT_CODE: 'user/family-member/client-code',
   GET_EMPANELLED_AMC: 'mutual-fund/hidden-amc/amc-wise/get',
   ADD_HIDDEN_AMC: 'mutual-fund/hidden-amc/add',
   DELETE_HIDDEN_AMC: 'mutual-fund/hidden-amc/delete',
@@ -468,7 +469,7 @@ export const appConfig = {
   BACKOFFICE_GET_UNMAPPED_SCHEMES_NJ: 'backoffice/get/unmapped/njschemes',
   BACKOFFICE_GET_UNMAPPED_SCHEMES_PRUDENT: 'backoffice/get/unmapped/prudentschemes',
   BACKOFFICE_GET_FILTERED_SCHEMES: 'backoffice/get/filtered/shemes',
-  BACKOFFICE_ADV_GET_BROKER_LIST: 'backoffice/broker/list/get',
+  BACKOFFICE_ADV_GET_BROKER_LIST: 'setting/arn-ria/list/get',
   BACKOFFICE_GET_RT_LIST: 'backoffice/rt/list/get',
   BACKOFFICE_GET_AUM_RECON_HISTORY_LIST: 'backoffice/aum/recon/history/get',
   BACKOFFICE_GET_AUM_ORDER_LIST: 'backoffice/aum/file/order/list/get',
@@ -488,8 +489,8 @@ export const appConfig = {
   BACKOFFICE_POST_UNMATCHED_FOLIOS_ADD: 'backoffice/aum/recon/unmatched/folios/add',
   BACKOFFICE_GET_AUM_REPORT_LIST: 'backoffice/aum/reconciliation/report/get',
   BACKOFFICE_GET_FOLIO_BASED_SEARCH_LIST: 'backoffice/folio/based/on/search/list/get',
-  BACKOFFICE_GET_GROUP_HEAD_NAME_LIST: 'backoffice/foliowise/groupHead/list/get',
-  BACKOFFICE_GET_INVESTOR_NAME_LIST: 'backoffice/foliowise/applicaName/list/get',
+  // BACKOFFICE_GET_GROUP_HEAD_NAME_LIST: 'backoffice/foliowise/groupHead/list/get',
+  // BACKOFFICE_GET_INVESTOR_NAME_LIST: 'backoffice/foliowise/applicaName/list/get',
   BACKOFFICE_PUT_DELETE_UNFREEZE_TRANSACTION: 'backoffice/delete/unfreeze/transaction',
 
   BACKOFFICE_FILE_UPLOAD_TYPE: 'backoffice/file-upload/types/get',
@@ -499,10 +500,31 @@ export const appConfig = {
   BACKOFFICE_SIP_STP: 'backoffice/file-upload/uploaded/sip/list/get',
   BACKOFFICE_FOLIO: 'backoffice/file-upload/uploaded/folio-master/list/get',
   BACKOFFICE_SUCCESS_FILE_UPLOAD: 'backoffice/file-upload/success',
+  GET_BACKOFFICE_ADVISOR_SEARCH_NAME: 'backoffice/advisor/search/name',
+
   GET_DAILY_SERVICES_STATUS_REPORT: 'rmdashboard/dashboard/daily/services/status/get',
   GET_DAILY_FILES: 'rmdashboard/dashboard/daily-file/get',
   FILTER_HISTORICAL_REPORT: 'rmdashboard/dashboard/historic/files/filter/get',
   GET_IFA_MATRIC_DATA: 'rmdashboard/dashboard/ifas/metric/get',
+  GET_MY_IFA_DETAILS: 'rmdashboard/myifas/dashboard/details/get',
+  GET_ONBOARDING_TASK_GLOBAL: 'rmdashboard/ifa/onboarding/task/global/get',
+  POST_HISTORICAL_FILE_ORDER: 'fileorder/historical/order',
+  GET_FILE_TYPE_ORDER: 'fileorder/file-type/list/get',
+  GET_IFA_ONBOARDING_OVERVIEW :'rmdashboard/ifa/onboard/overview/get',
+  UPDATE_IFA_ONBOARDING_OVERVIEW:'rmdashboard/ifa/onboard/overview/update',
+  GET_IFA_ONBOARDING_ACTIVITY:'rmdashboard/dashboard/ifa-onboard/advisor-id/get',
+  EDIT_ACTIVITY:'rmdashboard/dashboard/ifa-onboard/advisor-id/task/put',
+  ACTIVITY_ADD_COMMENT:'rmdashboard/dashboard/ifa-onboard/activity/chat/post',
+  ACTIVITY_UPDATE_COMMENT:'rmdashboard/dashboard/ifa-onboard/activity/chat/edit',
+  ACTIVITY_DELETECOMMENT:'rmdashboard/dashboard/ifa-onboard/activity/chat/delete',
+  GET_STAGE_COMMENT:'rmdashboard/dashboard/ifa-onboard/stages/chat/get',
+  EDIT_STAGE_COMMENT:'rmdashboard/dashboard/ifa-onboard/stages/chat/edit',
+  DELETE_STAGE_COMMENT:'rmdashboard/dashboard/ifa-onboard/stages/chat/delete',
+  ADD_STAGE_COMMENT:'rmdashboard/dashboard/ifa-onboard/stages/chat/post',
+  GET_BULK_FILE_ORDER_LIST: 'fileorder/bulk/list/get',
+
+  GET_FILE_ORDER_HISTORICAL_LIST_DATA: "fileorder/historical/advisor/list/get",
+  GET_FILE_ORDER_UPPER_LIST_DATA: 'fileorder/historical/list/get',
 
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',
@@ -537,7 +559,10 @@ export const appConfig = {
   OWNER_TASK_UPDATE: 'setting/task/sub-task/owner/update',
   GET_TEAM_MEMBER: 'setting/users/team-members/get',
   UPDATE_ACCESS_CONTROL: 'setting/users-roles/access-rights/update',
+  RESET_GALLARY: 'goal-planning/goal-gallery/reset',
   UPDATE_RETURNS_AND_INFLATIONS: 'plan/config/return-inflation/put',
+  GET_APPEARANCE_SETTING: 'setting/preferences/appearance/get',
+  UPDATE_APPEARANCE_SETTING: 'setting/preferences/appearance/update',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
@@ -584,7 +609,7 @@ export const appConfig = {
   GET_DEMAT_LIST: 'user/bank/demat/list/get',
   GET_BANK_LIST: 'user/bank/list/get',
   SEND_WELCOME_EMAIL: 'user/advisor/welcome/email/send',
-  // LOGIN_WITH_PASSWORD: 'user/login/with/password',
+  CREATE_TEAM_MEMBER: '/user/advisor/team-member/sign-up',
 
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/otp',
@@ -637,11 +662,12 @@ export const appConfig = {
   GET_USER_ACCESS_RIGHTS_LIST: 'setting/users-roles/access-rights/get',
   UPDATE_USER_ACCESS_RIGHTS: 'setting/users-roles/access-rights/update',
 
-  GET_ALL_TEAM_MEMEBERS: 'setting/users/team-members/get',
+  GET_ALL_TEAM_MEMBERS: 'setting/users/team-members/get',
   ADD_TEAM_MEMBER: 'setting/users/team-member/add',
   EDIT_TEAM_MEMBER: 'setting/users/team-member/edit',
   DELETE_TEAM_MEMBER: 'setting/users/team-member/delete',
   SUSPEND_TEAM_MEMBER: 'setting/users/team-member/suspend',
+  REACTIVATE_TEAM_MEMBER: 'setting/users/team-member/resume',
   HAND_OVER_TEAM_MEMBER: 'setting/users/team-member/hand-over/get',
 
 

@@ -26,6 +26,7 @@ export class PlanKeyParametersComponent implements OnInit {
   getSavingStatus: any;
   getInsurancePlanningData: any;
   getLifeExpentancy: any;
+  hasError: boolean = false;
   constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService, private fb: FormBuilder) {
     this.advisorId = AuthService.getAdvisorId()
   }
@@ -59,21 +60,25 @@ export class PlanKeyParametersComponent implements OnInit {
     return this.keyParameter.controls;
   }
   getKeyParameter() {
-    //this.isLoading = true;
+    this.isLoading = true;
+    this.hasError = false;
     let obj = {
       advisorId: this.advisorId
     }
     this.orgSetting.getKeyAndParameters(obj).subscribe(
-      data => this.getKeyAndParametersRes(data),
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      data => {
+        this.getKeyAndParametersRes(data)
+        this.isLoading = false;
+      },
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+        this.isLoading = false;
+        this.hasError = true;
+      }
     );
-    // this.isLoading = false;
   }
   getKeyAndParametersRes(data) {
-
-    console.log('key parameters == ', data)
     if (data) {
-
       this.allParameters = data
       this.idWiseData = data.key_Params;
 
@@ -104,14 +109,10 @@ export class PlanKeyParametersComponent implements OnInit {
       parameter: (value.value == undefined) ? value : value.value,
       configurationTypeId: id,
       advisorId: this.advisorId
-
     }
     this.orgSetting.updateKeyParameter(obj).subscribe(
-      data => this.updateKeyParameterRes(data),
+      data => {},
       err => this.eventService.openSnackBar(err, "Dismiss")
     );
-  }
-  updateKeyParameterRes(data) {
-    console.log('update key parameter', data)
   }
 }

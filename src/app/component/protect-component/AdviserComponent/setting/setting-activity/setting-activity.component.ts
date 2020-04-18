@@ -18,9 +18,12 @@ import { MatDialog } from '@angular/material';
 export class SettingActivityComponent implements OnInit {
   advisorId: any;
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'assign', 'time', 'icons'];
+  displayedColumns2: string[] = ['symbol1', 'assign1', 'time1', 'icons1'];
 
   taskList: Array<any> = [];
   isLoading = false
+  unlinkedTaskList: any[] = [{},{},{}];
+  linkedTaskList: any[] = [{},{},{}];
   constructor(private subInjectService: SubscriptionInject,
     public subscription: SubscriptionService,
     public eventService: EventService,
@@ -41,15 +44,21 @@ export class SettingActivityComponent implements OnInit {
     }
     this.orgSetting.getTaskTemplate(obj).subscribe(
       data => this.getTaskTemplateRes(data),
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+        this.linkedTaskList = [];
+        this.unlinkedTaskList = [];
+      }
     );
   }
 
   getTaskTemplateRes(data) {
-    this.isLoading = false
+    this.taskList = data
     if (data) {
-      this.taskList = data
+      this.unlinkedTaskList = data.filter(data=> data.templateType == 2);
+      this.linkedTaskList = data.filter(data=> data.templateType == 1);
     }
+    this.isLoading = false
   }
 
   deleteTask(value, data) {

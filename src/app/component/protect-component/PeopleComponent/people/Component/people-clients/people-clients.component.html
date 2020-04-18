@@ -4,21 +4,23 @@
     </div>
     <div class="col-md-8">
         <div *ngIf="clientDatasource.data.length>0" class="col-md-8 p-0 right text-right">
-            <img src="assets/images/svg/download-bordered.svg" class="c-p">
+            <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
+            <mat-menu #menu5="matMenu">
+                <button (click)="pdf('Client')" mat-menu-item>PDF</button>
+                <button (click)="Excel('Client')" mat-menu-item>XLS</button>
+            </mat-menu>
             <img src="assets/images/svg/up-down.svg" class="">
             <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
 
             <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                     class="material-icons">filter_list</i>FILTERS</button>
-            <button (click)="addClient(null)" class="btn-primary pl-8" mat-stroked-button><i
-                    class="material-icons pr-8 v-middle">
-                    add
-                </i>ADD NEW
+            <button (click)="addClient(null)" class="btn-primary pl-8" mat-stroked-button>
+                ADD NEW
             </button>
         </div>
     </div>
     <div class="col-md-12 people-clients">
-        <table *ngIf="clientDatasource.data.length>0" mat-table [dataSource]="clientDatasource" id="table-low"
+        <table #tableEl *ngIf="clientDatasource.data.length>0" mat-table [dataSource]="clientDatasource" id="table-low"
             appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation mt-8">
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef class="br w-20"> Group head name </th>

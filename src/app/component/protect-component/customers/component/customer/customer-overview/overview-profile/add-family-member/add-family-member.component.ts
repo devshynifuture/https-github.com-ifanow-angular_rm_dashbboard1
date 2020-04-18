@@ -6,6 +6,8 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
 import { ValidatorType } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { DatePipe } from '@angular/common';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-add-family-member',
@@ -20,6 +22,7 @@ export class AddFamilyMemberComponent implements OnInit {
   step = 1;
   validatorType = ValidatorType
   createFamily: any;
+  maxDateForAdultDob = moment().subtract(18, 'years');
   familyMemberList = {
     'firstRow': [
       { name: 'Wife', imgUrl: '/assets/images/svg/wife-profile.svg', selected: false, relationshipTypeId: 2 }
@@ -35,7 +38,21 @@ export class AddFamilyMemberComponent implements OnInit {
     ]
   }
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService, private peopleService: PeopleService) { }
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   ngOnInit() {
     this.createFamily = this.fb.group({
       familyMemberList: new FormArray([])
@@ -57,6 +74,7 @@ export class AddFamilyMemberComponent implements OnInit {
       this.createFamily.markAllAsTouched();
     }
     else {
+      this.barButtonOptions.active = true;
       let arrayObj = [];
       this.getFamilyListList.controls.forEach(element => {
         arrayObj.push({
@@ -81,7 +99,7 @@ export class AddFamilyMemberComponent implements OnInit {
           "id": 0,
           "dematList": null,
           "pan": null,
-          "familyMemberType": 0,
+          "familyMemberType": (element.get('relationTypeId').value == 3 || element.get('relationTypeId').value == 4) ? 2 : 1,
           "clientId": AuthService.getClientData().clientId,
           "genderId": 0,
           "dateOfBirth": this.datePipe.transform(element.get('date').value._d, 'dd/MM/yyyy'),
@@ -127,8 +145,12 @@ export class AddFamilyMemberComponent implements OnInit {
         data => {
           console.log(data),
             this.close();
+          this.barButtonOptions.active = false;
         },
-        err => this.eventService.openSnackBar(err, "Dismiss")
+        err => {
+          this.eventService.openSnackBar(err, "Dismiss");
+          this.barButtonOptions.active = false;
+        }
       )
     }
   }
@@ -163,7 +185,8 @@ export class AddFamilyMemberComponent implements OnInit {
           this.fb.group({
             name: [, [Validators.required]],
             date: [, [Validators.required]],
-            relationTypeId: [element.relationshipTypeId]
+            relationTypeId: [element.relationshipTypeId],
+            maxDateValue: [this.maxDateForAdultDob]
           }))
         this.familyMemberNameList.push(element.name)
       }
@@ -173,7 +196,8 @@ export class AddFamilyMemberComponent implements OnInit {
         this.getFamilyListList.push(this.fb.group({
           name: [, [Validators.required]],
           date: [, [Validators.required]],
-          relationTypeId: [element.relationshipTypeId]
+          relationTypeId: [element.relationshipTypeId],
+          maxDateValue: [this.maxDateForAdultDob]
         }))
         this.familyMemberNameList.push(element.name)
       }
@@ -183,7 +207,8 @@ export class AddFamilyMemberComponent implements OnInit {
         this.getFamilyListList.push(this.fb.group({
           name: [, [Validators.required]],
           date: [, [Validators.required]],
-          relationTypeId: [element.relationshipTypeId]
+          relationTypeId: [element.relationshipTypeId],
+          maxDateValue: [new Date()]
         }))
         this.familyMemberNameList.push(element.name)
         element.count--;

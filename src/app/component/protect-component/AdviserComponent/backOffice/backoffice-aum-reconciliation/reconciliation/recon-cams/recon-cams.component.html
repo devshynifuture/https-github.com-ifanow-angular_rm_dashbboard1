@@ -15,12 +15,12 @@
                 </div>
                 <div class=" col-md-2">
                     <!-- <button mat-stroked-button class="btn-default br-0 help-btn">ARN-83865</button> -->
-                    <mat-select class="b-a" formControlName="selectBrokerId" placeholder="Select broker"
-                        (selectionChange)="getAumReconHistoryData($event)">
-                        <mat-option value="">
+                    <mat-select class="b-a" formControlName="selectBrokerId" placeholder="Select broker">
+                        <mat-option>
                             Select Option
                         </mat-option>
-                        <mat-option *ngFor="let broker of brokerList" [value]="broker.id">
+                        <mat-option *ngFor="let broker of brokerList" [value]="broker.id"
+                            (click)="getAumReconHistoryData()">
                             {{ broker.brokerCode }}
                         </mat-option>
                     </mat-select>
@@ -139,7 +139,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
         </div>
-        <div class="col-md-12" *ngIf="dataSource.data === undefined">
+        <div class="col-md-12" *ngIf="dataSource.data === null">
             <h4 class="d-flex justify-content-center b-a p-44">
                 No Data Found
             </h4>

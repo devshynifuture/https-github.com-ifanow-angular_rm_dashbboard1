@@ -1,4 +1,7 @@
-import { Injectable, ElementRef } from '@angular/core';
+// tslint:disable:radix
+// tslint:disable:triple-equals
+
+import { ElementRef, Injectable } from '@angular/core';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { EventService } from '../Data-service/event.service';
 import { HttpClient } from '@angular/common/http';
@@ -12,12 +15,14 @@ import { FormGroup } from '@angular/forms';
 export class UtilService {
 
   constructor(
-    private eventService: EventService, 
-    private http: HttpClient, 
+    private eventService: EventService,
+    private http: HttpClient,
     private subService: SubscriptionService,
-  ) {}
+  ) { }
 
   private static decimalPipe = new DecimalPipe('en-US');
+  private counter: number = 0;
+  public isLoading = false;
   advisorId: any;
 
   subscriptionStepData;
@@ -102,20 +107,9 @@ export class UtilService {
   static obfuscateEmail(email: string) {
     let tempMail: string;
     const indexOfAt = email.indexOf('@');
-
-    if (indexOfAt > 3) {
-      tempMail = email.substr(0, 3) + 'XXXXX@';
-
-    } else {
-      tempMail = email.substr(0, indexOfAt) + '@';
-    }
-
-    if ((email.length - indexOfAt) > 5) {
-      tempMail += 'XXXXXX' + email.substr(email.length - 5, email.length);
-    } else {
-      tempMail += 'XXXXXX';
-    }
-
+    email = email.replace(/\./g, '');
+    let replaceTxt = email.substr(indexOfAt + 1, email.length);
+    tempMail = email.replace(replaceTxt, 'X'.repeat(email.length - indexOfAt));
     return tempMail;
   }
 
@@ -124,13 +118,19 @@ export class UtilService {
   }
 
   setSubscriptionStepData(data) {
-    this.subscriptionStepData = data
+    this.subscriptionStepData = data;
+  }
+
+  addZeroBeforeNumber(num, padlen, padchar?) {
+    var pad_char = typeof padchar !== 'undefined' ? padchar : '0';
+    var pad = new Array(1 + padlen).join(pad_char);
+    return (pad + num).slice(-pad.length);
   }
 
   checkSubscriptionastepData(stepNo) {
     let tempData;
-    tempData = Object.assign([], this.subscriptionStepData)
-    tempData = tempData.filter(element => element.stepTypeId == stepNo)
+    tempData = Object.assign([], this.subscriptionStepData);
+    tempData = tempData.filter(element => element.stepTypeId == stepNo);
     if (tempData.length != 0) {
       return tempData[0].completed;
     }
@@ -161,18 +161,18 @@ export class UtilService {
       const today = new Date();
       const birthDate = new Date(element.dateOfBirth);
       let age = today.getFullYear() - birthDate.getFullYear();
-      var m = today.getMonth() - birthDate.getMonth();
+      const m = today.getMonth() - birthDate.getMonth();
       if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
         age--;
       }
-      element['age'] = age;
+      element.age = age;
       return element;
     });
   }
 
   formValidations(whichTable) {
     // console.log("this is formGroup::::::::::", whichTable);
-    for (let key in whichTable.controls) {
+    for (const key in whichTable.controls) {
       if (whichTable.get(key).invalid) {
         whichTable.get(key).markAsTouched();
         return false;
@@ -233,15 +233,15 @@ export class UtilService {
 
   areTwoObjectsSame(a: {}, b: {}): boolean {
 
-    let aProps = Object.getOwnPropertyNames(a);
-    let bProps = Object.getOwnPropertyNames(b);
+    const aProps = Object.getOwnPropertyNames(a);
+    const bProps = Object.getOwnPropertyNames(b);
 
     if (aProps.length != bProps.length) {
       return false;
     }
 
     for (let i = 0; i < aProps.length; i++) {
-      let propName = aProps[i];
+      const propName = aProps[i];
 
       if (a[propName] !== b[propName]) {
         return false;
@@ -250,6 +250,11 @@ export class UtilService {
     return true;
   }
 
+  static toUpperCase(event) {
+    console.log(event);
+    event.target.value = event.target.value.toUpperCase();
+    return event;
+  }
 
   htmlToPdf(inputData, pdfName) {
     const obj = {
@@ -285,16 +290,17 @@ export class UtilService {
 
     // convert base64/URLEncoded data component to raw binary data held in a string
     let byteString;
-    if (dataURI.split(',')[0].indexOf('base64') >= 0)
+    if (dataURI.split(',')[0].indexOf('base64') >= 0) {
       byteString = atob(dataURI.split(',')[1]);
-    else
+    } else {
       byteString = unescape(dataURI.split(',')[1]);
+    }
 
     // separate out the mime component
     const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
 
     // write the bytes of the string to a typed array
-    let ia = new Uint8Array(byteString.length);
+    const ia = new Uint8Array(byteString.length);
     for (let i = 0; i < byteString.length; i++) {
       ia[i] = byteString.charCodeAt(i);
     }
@@ -314,6 +320,17 @@ export class UtilService {
         invalidControl.focus();
         break;
       }
+    }
+  }
+
+  loader(increament: number) {
+    if (increament === 0)
+      this.counter = 0;
+    this.counter += increament;
+    if (this.counter == 0) {
+      this.isLoading = false;
+    } else {
+      this.isLoading = true;
     }
   }
 }
@@ -337,9 +354,8 @@ export class ValidatorType {
   static ALPHA_NUMERIC_WITH_SLASH = new RegExp(/^[A-Z0-9//]+$/);
   static TEN_DIGITS = new RegExp(/^\d{10}$/);
   static PAN = new RegExp(/^[a-zA-Z0-9]{10,}$/);
-  // static EMAIL = new RegExp(/^[a-z0-9!#$%&'*+\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/);
-  // static EMAIL_ONLY = new RegExp(/\b[\w.!#$%&’*+\/=?^`{|}~-]+@[\w-]+(?:\.[\w-]+)*\b/);
-  // static EMAIL_ONLY = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+  static ADHAAR = new RegExp(/^[0-9]{12,}$/);
+  static ALPHA_NUMERIC_WITH_SPEC_CHAR = new RegExp(/^[ A-Za-z0-9_@./#&+-]*$/);
 }
 
 // Escape characters that have a special meaning in Regular Expressions

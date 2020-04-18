@@ -13,10 +13,13 @@ import { ValidatorType } from 'src/app/services/util.service';
 export class PlanReturnsinflationComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name'];
   dataSource = ELEMENT_DATA;
+  shortDS:any[] = [{},{},{}];
+  longDS:any[] = [{},{},{}];
   advisorId: any;
-  longTerm: any[] = [];
+  longTerm: any[] = [{},{},{}];
   showErrImg:boolean = false;
-  shortTerm: any[] = [];
+  shortTerm: any[] = [{},{},{}];
+  isLoading:boolean = false;
   editMode: boolean = false;
   validatorType = ValidatorType;
   constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) { 
@@ -36,6 +39,7 @@ export class PlanReturnsinflationComponent implements OnInit {
     let obj = {
       advisorId: this.advisorId
     }
+    this.isLoading = true;
     this.orgSetting.getRetuns(obj).subscribe(
       data => this.getReturnsRes(data),
       err => {
@@ -50,6 +54,9 @@ export class PlanReturnsinflationComponent implements OnInit {
     this.setTableExtensions(data.long_term);
     this.shortTerm = data.short_term;
     this.longTerm = data.long_term;
+    this.longDS = [{class: 'Inflation rate', inflation_rate: data.long_term_inflation_rate}]
+    this.shortDS = [{class: 'Inflation rate', inflation_rate: data.short_term_inflation_rate}]
+    this.isLoading = false;
   }
 
   setTableExtensions(arr:any[]) {
@@ -86,6 +93,9 @@ export class PlanReturnsinflationComponent implements OnInit {
 
   save(){
     let obj = [ this.getPostDataFormat(this.shortTerm), this.getPostDataFormat(this.longTerm)].flat();
+    if(obj.length == 0) {
+      return;
+    }
     this.orgSetting.updateReturns(obj).subscribe(res => {
       this.eventService.openSnackBar("Data Updated Successfully");
       this.toggleEditMode();
@@ -97,6 +107,6 @@ export class PlanReturnsinflationComponent implements OnInit {
 
 }
 const ELEMENT_DATA = [
-  { position: 'Inflation rate', name: '7%' },
+  { position: 'Inflation rate', inflation_rate: '' },
 
 ];

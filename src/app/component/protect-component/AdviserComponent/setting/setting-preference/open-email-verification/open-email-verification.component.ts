@@ -26,7 +26,6 @@ export class OpenEmailVerificationComponent implements OnInit {
   ngOnInit() {
     this.getdataForm('')
     const ELEMENT_DATA = this.dataS;
-    console.log('investorList == ', this.data)
     this.emailDetails = this.data.bank;
     this.emailVierify.controls.emailId.setValue(this.emailDetails.emailAddress)
     ELEMENT_DATA.forEach(item => item.selected = false);
@@ -47,6 +46,9 @@ export class OpenEmailVerificationComponent implements OnInit {
     let obj = {
       emailAddress : this.emailVierify.controls.emailId.value,
       id : this.emailDetails.id
+    }
+    if(obj.emailAddress == undefined){
+      obj = undefined
     }
     this.dialogRef.close(obj);
   }

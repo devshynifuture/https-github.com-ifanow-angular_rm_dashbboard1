@@ -10,65 +10,65 @@ import { AuthService } from '../auth-service/authService';
 })
 export class ExcelGenService {
 
-  advisor:any;
-  client:any
+  advisor: any;
+  client: any;
+
   constructor(private datePipe: DatePipe) {
     this.advisor = AuthService.getUserInfo();
     this.client = AuthService.getClientData();
   }
 
   generateExcel(rows, title) {
-    
-    
-    let headers = [];
-    let footer = [];
+
+
+    const headers = [];
+    const footer = [];
     let td = [];
-    let trTd = [];
+    const trTd = [];
     const header = headers;
     const data = trTd;
-    for(let cells in rows) {
-      for(let c in rows[cells].cells){
-        if(parseInt(c)+1 != rows[cells].cells.length){
-          if(cells == "0" && rows[cells].cells[c].innerText != undefined){
+    for (const cells in rows) {
+      for (const c in rows[cells].cells) {
+        if (parseInt(c) + 1 != rows[cells].cells.length) {
+          if (cells == '0' && rows[cells].cells[c].innerText != undefined) {
             headers.push(rows[cells].cells[c].innerText);
-          }
-          else if(cells == rows.length - 1+"" && rows[cells].cells[c].innerText != undefined){
+          } else if (cells == rows.length - 1 + '' && rows[cells].cells[c].innerText != undefined) {
             footer.push(rows[cells].cells[c].innerText);
-          }
-          else{
-            if(rows[cells].cells[c].innerText != undefined){
-              if(td.length >= parseInt(c)+1){
+          } else {
+            if (rows[cells].cells[c].innerText != undefined) {
+              if (td.length >= parseInt(c) + 1) {
                 trTd.push(td);
-                td = []
+                td = [];
               }
               td.push(rows[cells].cells[c].innerText);
             }
           }
         }
       }
-    };
+    }
+
     trTd.push(td);
-    console.log(headers,"dataSource excel");
-    console.log( td,"dataSource excel");
-    console.log( trTd,"dataSource excel");
-    console.log(footer,"dataSource excel");
-    
-
-    //Create workbook and worksheet
-    let workbook = new Workbook();
-    let worksheet = workbook.addWorksheet('Car Data');
+    console.log(headers, 'dataSource excel');
+    console.log(td, 'dataSource excel');
+    console.log(trTd, 'dataSource excel');
+    console.log(footer, 'dataSource excel');
 
 
-    //Add Row and formatting
-    let titleRow = worksheet.addRow([title]);
-    titleRow.font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true }
+    // Create workbook and worksheet
+    const workbook = new Workbook();
+    const worksheet = workbook.addWorksheet('Car Data');
+
+
+    // Add Row and formatting
+    const titleRow = worksheet.addRow([title]);
+    titleRow.font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true };
     worksheet.addRow([]);
     // let subTitleRow = worksheet.addRow(['Date :', this.datePipe.transform(new Date(), 'medium')])
 
    worksheet.addRow(['Advisor:', this.advisor.name]);
    worksheet.addRow(['Client:', this.client.name]);
 
-    //Add Image
+    // Add Image
     // let logo = workbook.addImage({
     //   base64: logoFile.logoBase64,
     //   extension: 'png',
@@ -79,30 +79,30 @@ export class ExcelGenService {
     // worksheet.mergeCells('A1:D2');
 
 
-    //Blank Row 
+    // Blank Row
     worksheet.addRow([]);
 
-    //Add Header Row
-    let headerRow = worksheet.addRow(header);
-    
+    // Add Header Row
+    const headerRow = worksheet.addRow(header);
+
     // Cell Style : Fill and Border
-    headerRow.eachCell((cell, number) => {
+    headerRow.eachCell((cell, indexNumber) => {
       cell.fill = {
         type: 'pattern',
         pattern: 'solid',
         fgColor: { argb: 'FFFFFF00' },
         bgColor: { argb: 'FF0000FF' }
-      }
-      cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } }
-    })
+      };
+      cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+    });
     // worksheet.addRows(data);
 
 
     // Add Data and Conditional Formatting
     data.forEach(d => {
-      let row = worksheet.addRow(d);
+      const row = worksheet.addRow(d);
       // let qty = row.getCell(5);
-      let color = 'FF99FF99';
+      const color = 'FF99FF99';
       // if (+qty.value < 500) {
       //   color = 'FF9999'
       // }
@@ -113,7 +113,6 @@ export class ExcelGenService {
       //   fgColor: { argb: color }
       // }
     }
-
     );
 
     worksheet.getColumn(2).width = 30;
@@ -121,8 +120,8 @@ export class ExcelGenService {
     // worksheet.addRow([]);
 
 
-    //Footer Row
-    let footerRow = worksheet.addRow(footer);
+    // Footer Row
+    const footerRow = worksheet.addRow(footer);
     // footerRow.fill = {
     //   type: 'pattern',
     //   pattern: 'solid',
@@ -131,22 +130,22 @@ export class ExcelGenService {
     // footerRow.getCell(1).border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } }
 
 
-    footerRow.eachCell((cell, number) => {
+    footerRow.eachCell((cell, indexNumber) => {
       footerRow.fill = {
         type: 'pattern',
         pattern: 'solid',
         fgColor: { argb: 'FFCCFFE5' }
       };
-      cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } }
-    })
-    //Merge Cells
+      cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+    });
+    // Merge Cells
     // worksheet.mergeCells(`A${footerRow.number}:F${footerRow.number}`);
 
-    //Generate Excel File with given name
+    // Generate Excel File with given name
     workbook.xlsx.writeBuffer().then((data) => {
-      let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      fs.saveAs(blob, title+'.xlsx');
-    })
+      const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      fs.saveAs(blob, title + '.xlsx');
+    });
 
   }
 }

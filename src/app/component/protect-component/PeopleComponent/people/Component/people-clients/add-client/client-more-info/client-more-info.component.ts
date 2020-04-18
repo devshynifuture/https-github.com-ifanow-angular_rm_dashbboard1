@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { ValidatorType } from 'src/app/services/util.service';
+import { ValidatorType, UtilService } from 'src/app/services/util.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -45,6 +45,8 @@ export class ClientMoreInfoComponent implements OnInit {
 
   @Input() fieldFlag;
   @Output() tabChange = new EventEmitter();
+  @Output() clientData = new EventEmitter();
+
 
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
@@ -75,8 +77,7 @@ export class ClientMoreInfoComponent implements OnInit {
     (data == undefined) ? data = {} : data;
     this.moreInfoForm = this.fb.group({
       displayName: [data.displayName],
-      adhaarNo: [data.aadhaarNumber],
-      taxStatus: [],
+      adhaarNo: [data.aadhaarNumber, Validators.pattern(this.validatorType.ADHAAR)],
       occupation: [(data.occupationId == 0) ? '1' : String(data.occupationId)],
       maritalStatus: [(data.martialStatusId) ? String(data.martialStatusId) : '1'],
       anniversaryDate: [String(data.anniversaryDate)],
@@ -86,8 +87,7 @@ export class ClientMoreInfoComponent implements OnInit {
       email: [data.email, [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
       gender: ['1'],
-      adhaarMinor: [data.aadhaarNumber],
-      adhharGuardian: [(data.guardianData) ? data.guardianData.aadhaarNumber : '']
+      adhharGuardian: [(data.guardianData) ? data.guardianData.aadhaarNumber : '', Validators.pattern(this.validatorType.ADHAAR)]
     });
   }
 
@@ -99,7 +99,9 @@ export class ClientMoreInfoComponent implements OnInit {
     console.log(data);
     this.mobileData = data;
   }
-
+  toUpperCase(event) {
+    event = UtilService.toUpperCase(event);
+  }
   // getCompanyDetails(data) {
   //   const obj = {
   //     userId: data.userId,
@@ -113,72 +115,55 @@ export class ClientMoreInfoComponent implements OnInit {
   // }
 
   saveNext(flag) {
-    const mobileList = [];
-    if (this.mobileData) {
-      this.mobileData.controls.forEach(element => {
-        console.log(element);
-        mobileList.push({
-          verificationStatus: 0,
-          id: 0,
-          userType: 0,
-          mobileNo: element.get('number').value,
-          isActive: 1,
-          userId: 0
-        });
-      });
+    if (this.moreInfoForm.invalid) {
+      this.moreInfoForm.markAllAsTouched();
+      return;
     }
-    this.barButtonOptions.active = true;
-    const obj = {
-      advisorId: this.moreInfoData.advisorId,
-      emailList: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.emailList : this.moreInfoForm.value.email,
-      displayName: (this.moreInfoData.invCategory == '1' || this.moreInfoData.invCategory == '2') ? this.moreInfoForm.controls.displayName.value : null,
-      bio: this.moreInfoForm.controls.bio.value,
-      martialStatusId: this.moreInfoForm.controls.maritalStatus.value,
-      password: null,
-      clientType: this.moreInfoData.clientType,
-      occupationId: (this.moreInfoData.invCategory == '1') ? this.moreInfoForm.controls.occupation.value : null,
-      id: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.id : null,
-      pan: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.pan : this.moreInfoForm.value.pan,
-      clientId: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.clientId : null,
-      kycComplaint: 0,
-      roleId: 0,
-      genderId: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.genderId : this.moreInfoForm.value.genderId,
-      companyStatus: 0,
-      aadhaarNumber: this.moreInfoForm.controls.adhaarNo.value,
-      dateOfBirth: this.datePipe.transform(this.moreInfoData.dateOfBirth, 'dd/MM/yyyy'),
-      userName: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.userName : null,
-      userId: this.moreInfoData.userId,
-      mobileList: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.mobileList : mobileList,
-      referredBy: 0,
-      name: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.name : this.moreInfoForm.value.name,
-      bioRemarkId: 0,
-      userType: 2,
-      remarks: (this.moreInfoData.invCategory == '1') ? this.moreInfoForm.controls.myNotes.value : this.moreInfoForm.value.myNotes,
-      status: (this.fieldFlag == 'client') ? 1 : 2,
-    };
-    if (this.fieldFlag == 'client' || this.fieldFlag == 'lead') {
-      if (this.moreInfoData.invCategory == '1') {
-        this.peopleService.editClient(obj).subscribe(
-          data => {
-            this.barButtonOptions.active = false;
-            console.log(data);
-            (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
-          },
-          err => {
-            this.eventService.openSnackBar(err, 'Dismiss')
-            this.barButtonOptions.active = false
-          }
-        );
-      }
-      // else {
-      //   this.peopleService.updateCompanyPersonDetail(obj).subscribe(
-      //     data => {
-      //       console.log(data);
-      //       (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
-      //     },
-      //     err => this.eventService.openSnackBar(err, 'Dismiss')
-      //   );
-      // }
+    else {
+      this.barButtonOptions.active = true;
+      const obj = {
+        advisorId: this.moreInfoData.advisorId,
+        emailList: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.emailList : this.moreInfoForm.value.email,
+        displayName: (this.moreInfoData.invCategory == '1' || this.moreInfoData.invCategory == '2') ? this.moreInfoForm.controls.displayName.value : null,
+        bio: this.moreInfoForm.controls.bio.value,
+        martialStatusId: this.moreInfoForm.controls.maritalStatus.value,
+        password: null,
+        clientType: this.moreInfoData.clientType,
+        occupationId: (this.moreInfoData.invCategory == '1') ? this.moreInfoForm.controls.occupation.value : null,
+        id: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.id : null,
+        pan: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.pan : this.moreInfoForm.value.pan,
+        clientId: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.clientId : null,
+        kycComplaint: 0,
+        roleId: this.moreInfoData.roleId,
+        genderId: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.genderId : this.moreInfoForm.value.genderId,
+        companyStatus: 0,
+        aadhaarNumber: this.moreInfoForm.controls.adhaarNo.value,
+        dateOfBirth: this.datePipe.transform(this.moreInfoData.dateOfBirth, 'dd/MM/yyyy'),
+        userName: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.userName : null,
+        userId: this.moreInfoData.userId,
+        mobileList: this.moreInfoData.mobileList,
+        referredBy: 0,
+        name: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.name : this.moreInfoForm.value.name,
+        bioRemarkId: 0,
+        userType: 2,
+        remarks: (this.moreInfoData.invCategory == '1') ? this.moreInfoForm.controls.myNotes.value : this.moreInfoForm.value.myNotes,
+        status: (this.fieldFlag == 'client') ? 1 : 2,
+        leadSource: this.moreInfoData.leadSource,
+        leadRating: this.moreInfoData.leadRating,
+        leadStatus: this.moreInfoData.leaadStatus
+      };
+      this.peopleService.editClient(obj).subscribe(
+        data => {
+          this.barButtonOptions.active = false;
+          console.log(data);
+          this.clientData.emit(data);
+          (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
+        },
+        err => {
+          this.eventService.openSnackBar(err, 'Dismiss')
+          this.barButtonOptions.active = false
+        }
+      );
     }
   }
 
@@ -186,6 +171,10 @@ export class ClientMoreInfoComponent implements OnInit {
     if (this.moreInfoData.guardianData) {
       this.moreInfoData.guardianData['aadhaarNumber'] = this.moreInfoForm.value.adhharGuardian;
       this.moreInfoData.guardianData['birthDate'] = this.datePipe.transform(this.moreInfoData.guardianData.birthDate, 'dd/MM/yyyy')
+    }
+    if (this.moreInfoForm.invalid) {
+      this.moreInfoForm.markAllAsTouched();
+      return;
     }
     this.barButtonOptions.active = true;
     const obj = {
@@ -236,6 +225,7 @@ export class ClientMoreInfoComponent implements OnInit {
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {
         console.log(data);
+        this.clientData.emit(data);
         this.barButtonOptions.active = false;
         (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
       },

@@ -17,6 +17,8 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 export class SignUpComponent implements OnInit {
   clientSignUp = false;
   duplicateTableDtaFlag: boolean;
+  termsAndCondition: any;
+  typeOfRegister: string;
 
   constructor(private fb: FormBuilder, private authService: AuthService, public routerActive: ActivatedRoute,
     private router: Router, private loginService: LoginService, private eventService: EventService, public dialog: MatDialog) {
@@ -39,25 +41,42 @@ export class SignUpComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+
   ngOnInit() {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('advisorId')) {
         // this.clientSignUp = true;
       }
     });
+    this.typeOfRegister = '1'
     this.signUpForm = this.fb.group({
       fullName: [, [Validators.required]],
+      companyName: [],
       email: [, [Validators.required,
       Validators.pattern(this.validatorType.EMAIL)]],
       mobile: [, [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
-      termsAgreement: [, [Validators.required]]
+      termsAgreement: [false, [Validators.required, Validators.requiredTrue]]
     });
   }
-
+  resetForm() {
+    this.signUpForm.reset();
+  }
   createAccount() {
+    if (this.typeOfRegister == '2') {
+      this.signUpForm.get('companyName').setValidators([Validators.required]);
+      this.signUpForm.get('companyName').updateValueAndValidity();
+    }
+    else {
+      this.signUpForm.get('companyName').setValidators(null);
+      this.signUpForm.get('companyName').updateValueAndValidity();
+    }
     if (this.signUpForm.invalid) {
       console.log('Error');
       this.signUpForm.markAllAsTouched();
+      return;
+    } else if (this.signUpForm.value.termsAgreement == false) {
+      // this.eventService.openSnackBar('Please accept terms and conditions!', 'Dismiss');
+      return;
     } else {
       this.barButtonOptions.active = true;
       const obj = {
@@ -76,6 +95,7 @@ export class SignUpComponent implements OnInit {
           }
         ],
         userType: 1,
+        companyName: (this.typeOfRegister == '2') ? this.signUpForm.get('companyName').value : null,
         forceRegistration: (this.duplicateTableDtaFlag == true) ? true : null
       };
       this.loginService.register(obj, this.clientSignUp).subscribe(
@@ -93,49 +113,52 @@ export class SignUpComponent implements OnInit {
             flag: true,
             userType: data.userType,
             userId: data.userId,
+            clientId: data.clientId,
+            advisorId: data.advisorId,
             userData: data
           };
           if (this.clientSignUp) {
-            const jsonData = {
-              advisorId: 2808,
-              clientId: 2978,
-              emailId: 'gaurav@futurewise.co.in',
-              authToken: 'data',
-              imgUrl: 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'
-            };
+            /*  const jsonData = {
+                advisorId: 2808,
+                clientId: 2978,
+                emailId: 'gaurav@futurewise.co.in',
+                authToken: 'data',
+                imgUrl: 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'
+              };
 
-            this.authService.setToken('data');
-            this.authService.setUserInfo(jsonData);
-            this.authService.setClientData({
-              id: 2978, name: 'Aryendra Kumar Saxena'
-            });
-            this.router.navigate(['customer', 'detail', 'overview', 'myfeed']);
+              this.authService.setToken('data');
+              this.authService.setUserInfo(jsonData);
+              this.authService.setClientData({
+                id: 2978, name: 'Aryendra Kumar Saxena'
+              });
+              this.router.navigate(['customer', 'detail', 'overview', 'myfeed']);*/
           } else {
             this.router.navigate(['/login/forgotpassword'], { state: forgotPassObjData });
           }
         },
         err => {
           this.barButtonOptions.active = false;
-          this.confirmModal(err.message)
+          this.confirmModal(err.message);
         }
       );
     }
   }
+
   confirmModal(errorMsg) {
     const dialogData = {
       header: 'REGISTER',
       body: errorMsg + '. How would you like to proceed?',
       body2: 'This cannot be undone.',
       btnYes: 'LOGIN',
-      btnNo: 'REGISTER',
+      btnNo: 'CANCEL',
       positiveMethod: () => {
         this.duplicateTableDtaFlag = true;
-        this.createAccount();
+        // this.createAccount();
         dialogRef.close();
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
-        this.router.navigate(['login'])
+        this.router.navigate(['login']);
       }
     };
     console.log(dialogData + '11111111111111');
@@ -150,5 +173,8 @@ export class SignUpComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+  showTermsAndConditions() {
+    this.router.navigate(['/terms-condition']);
   }
 }

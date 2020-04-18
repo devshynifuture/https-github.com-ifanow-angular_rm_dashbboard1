@@ -25,7 +25,7 @@
                 <div class="form-group mb-0">
                     <input class="form-control m-0" placeholder="Search by advisor" [matChipInputFor]="chipList"
                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                        (matChipInputTokenEnd)="add($event)">
+                        (matChipInputTokenEnd)="maniputateEventObjForName($event)" #inputAdvisorNameRef>
                 </div>
             </div>
             <div class="col-lg-3">
@@ -33,17 +33,8 @@
                     <mat-form-field>
                         <mat-select class="form-control br-0" placeholder="Ordered By" (selectionChange)="add($event)">
                             <mat-option>None</mat-option>
-                            <mat-option value="name">
-                                Name
-                            </mat-option>
-                            <mat-option value="size">
-                                Size
-                            </mat-option>
-                            <mat-option value="date">
-                                Date
-                            </mat-option>
-                            <mat-option value="last modified date">
-                                Last Modified Date
+                            <mat-option [value]="rmUser" *ngFor="let rmUser of rmList">
+                                {{ rmUser.name }}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -53,14 +44,8 @@
                 <mat-form-field>
                     <mat-select class="form-control br-0" (selectionChange)="add($event)">
                         <mat-option>None</mat-option>
-                        <mat-option value="last 7 days">
-                            Last 7 Days
-                        </mat-option>
-                        <mat-option value="last month">
-                            last Month
-                        </mat-option>
-                        <mat-option value="last year">
-                            last year
+                        <mat-option [value]="period" *ngFor="let period of periodList">
+                            {{ period.name }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -71,17 +56,8 @@
                         <mat-option>
                             None
                         </mat-option>
-                        <mat-option value="all rta">
-                            All RTA
-                        </mat-option>
-                        <mat-option value="cams">
-                            CAMS
-                        </mat-option>
-                        <mat-option value="karvy">
-                            KARVY
-                        </mat-option>
-                        <mat-option value="franklin">
-                            FRANKLIN
+                        <mat-option [value]="rta" *ngFor="let rta of rtaList">
+                            {{ rta.name }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -92,84 +68,134 @@
 
 <div class="row pt-20">
     <div class="col-md-12">
-        <table mat-table id="table-low" [dataSource]="dataSource" class="">
+        <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonLoading"
+            [appSkeletonLoading]="isLoading" appSkeletonLoading>
             <ng-container matColumnDef="advisorName">
                 <th class="br" mat-header-cell *matHeaderCellDef> Advisor name </th>
-                <td class="br" mat-cell *matCellDef="let element"> {{element.advisorName}} </td>
+                <td class="br" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        {{element.advisorName}}
+                    </div>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="rta">
                 <th class="br" mat-header-cell *matHeaderCellDef> RTA </th>
-                <td class="br" mat-cell *matCellDef="let element"> {{element.rta}} </td>
+                <td class="br" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        {{element.rta}}
+                    </div>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="orderedby">
                 <th class="br" mat-header-cell *matHeaderCellDef> Ordered by </th>
-                <td class="br" mat-cell *matCellDef="let element"> {{element.orderedby}} </td>
+                <td class="br" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        {{element.orderedby}}
+                    </div>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="startedOn">
                 <th class="br" mat-header-cell *matHeaderCellDef> Started on </th>
-                <td class="br" mat-cell *matCellDef="let element"> {{element.startedOn}} </td>
+                <td class="br" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        {{element.startedOn}}
+                    </div>
+                </td>
             </ng-container>
 
-            <ng-container matColumnDef="totalfiles">
+            <ng-container matColumnDef="totalFiles">
                 <th class="br" mat-header-cell *matHeaderCellDef> Total files </th>
                 <td class="c-p br" mat-cell *matCellDef="let element"
-                    (click)="openUpperFileOrdering('openUpperFileOrdering', element)"> {{element.totalfiles}} </td>
+                    (click)="openUpperFileOrdering('openUpperFileOrdering', element)">
+                    <div class="bar">
+                        {{element.totalFiles}}
+                    </div>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="queue">
                 <th class="br" mat-header-cell *matHeaderCellDef> In queue </th>
-                <td class="br" mat-cell *matCellDef="let element"> {{element.queue}} </td>
+                <td class="br" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        {{element.queue}}
+                    </div>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="ordering">
                 <th class="br" mat-header-cell *matHeaderCellDef> Ordering </th>
-                <td class="br" mat-cell *matCellDef="let element"> {{element.ordering}} </td>
+                <td class="br" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        {{element.ordering}}
+                    </div>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="ordered">
                 <th class="br" mat-header-cell *matHeaderCellDef> Ordered </th>
-                <td class="br" mat-cell *matCellDef="let element"> {{element.ordered}} </td>
+                <td class="br" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        {{element.ordered}}
+                    </div>
+                </td>
             </ng-container>
 
 
             <ng-container matColumnDef="failed">
                 <th class="br" mat-header-cell *matHeaderCellDef> Failed </th>
-                <td class="br" mat-cell *matCellDef="let element"> {{element.failed}} </td>
+                <td class="br" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        {{element.failed}}
+                    </div>
+                </td>
             </ng-container>
 
 
             <ng-container matColumnDef="uploaded">
                 <th class="br" mat-header-cell *matHeaderCellDef> Uploaded </th>
-                <td class="br" mat-cell *matCellDef="let element"> {{element.uploaded}} </td>
+                <td class="br" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        {{element.uploaded}}
+                    </div>
+                </td>
             </ng-container>
 
 
             <ng-container matColumnDef="refresh">
                 <th class="br" mat-header-cell *matHeaderCellDef> Refresh </th>
                 <td class="br" mat-cell *matCellDef="let element">
-                    <button mat-button class="bg-grey mr-12 h-22 btn-xs">
-                        <mat-icon>
-                            refresh
-                        </mat-icon>
-                        Refresh
-                    </button>
+                    <div class="bar">
+                        <button mat-button class="bg-grey mr-12 h-22 btn-xs">
+                            <mat-icon>
+                                refresh
+                            </mat-icon>
+                            Refresh
+                        </button>
+                    </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="empty">
                 <th class="br" mat-header-cell *matHeaderCellDef> </th>
                 <td class="br" mat-cell *matCellDef="let element">
-                    <mat-icon>
-                        more_vert
-                    </mat-icon>
+                    <div class="bar">
+                        <mat-icon>
+                            more_vert
+                        </mat-icon>
+                    </div>
                 </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+        <div class="col-md-12 p-0" *ngIf="dataSource.data === null">
+            <h4 class="d-flex justify-content-center b-a p-44">
+                No Data Found
+            </h4>
+        </div>
     </div>
 </div>

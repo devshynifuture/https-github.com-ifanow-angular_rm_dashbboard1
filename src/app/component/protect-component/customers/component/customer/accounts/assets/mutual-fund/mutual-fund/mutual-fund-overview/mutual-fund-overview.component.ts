@@ -17,8 +17,7 @@ import { MfServiceService } from '../../mf-service.service';
   styleUrls: ['./mutual-fund-overview.component.scss']
 })
 export class MutualFundOverviewComponent implements OnInit {
-
-  mfData: any;
+  mfData: any = {};
   equityPercentage: any;
   debtPercentage: any;
   hybridPercenatge: any;
@@ -121,8 +120,8 @@ export class MutualFundOverviewComponent implements OnInit {
     ];
   }
   getsubCategorywiseAllocation(data) {
-    this.filteredArray = this.MfServiceService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
     this.isLoading = true
+    this.filteredArray = this.MfServiceService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
     if(this.dataSource3.length > 0){
       this.dataSource3 = new MatTableDataSource(this.filteredArray);
       this.isLoading = false
