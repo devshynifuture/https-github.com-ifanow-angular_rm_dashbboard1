@@ -6,9 +6,9 @@
     </div>
 </div>
 
-<div class="row pt-130 mb-2">
+<div class="row pt-130 mb-2" *ngIf="!hasError && !isLoading">
     <div class="col-md-9">
-        <div class="row">
+        <div class="row" *ngIf="dataSource.data.length > 0">
             <div class="col-md-12 overflow-hidden back-office-table">
                 <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonAnimation mt-8" appSkeletonLoading
                     [appSkeletonLoading]="isLoading" matSort>
@@ -98,7 +98,7 @@
         </div>
     </div>
     
-    <div class="col-md-3" *ngIf="!isLoading">
+    <div class="col-md-3" *ngIf="!hasError">
         <div [formGroup]="addRmFG">
             create RM
             <div class="row pt-28">
@@ -154,4 +154,8 @@
             </div>
         </div>
     </div>
+</div>
+<div *ngIf="hasError && !isLoading" class="d-flex flex-column align-items-center pt-130 mb-2">
+    <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
 </div>

@@ -34,6 +34,7 @@ export class SupportManagementComponent implements OnInit, OnDestroy {
   listenToObservable = true;
   isLoading = false;
   subscription = new Subscription();
+  hasError:boolean = false;
 
   ngOnInit() {
     this.utilsService.loader(0);
@@ -84,6 +85,7 @@ export class SupportManagementComponent implements OnInit, OnDestroy {
       },
       err => {
         this.utilsService.loader(-1);
+        this.hasError = true;
         this.eventService.openSnackBar(err, "Dismiss")
       }
     )
@@ -99,6 +101,7 @@ export class SupportManagementComponent implements OnInit, OnDestroy {
       err => {
         this.utilsService.loader(-1);
         this.eventService.openSnackBar(err, "Dismiss");
+        this.hasError = true;
       }
     )
   }
