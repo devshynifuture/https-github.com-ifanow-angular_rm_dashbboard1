@@ -29,14 +29,24 @@ export class FileOrderingUploadService {
         return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FILE_ORDER_UPPER_LIST_DATA, data);
     }
 
+    getFileOrderBulkUpperListData(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BULK_FILE_ORDER_UPPER_LIST, data);
+    }
+
     getBulkFileOrderListData(data) {
         return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BULK_FILE_ORDER_LIST, data);
     }
 
     // post apis
 
+    postFileOrderBulkData(data) {
+        return this.http.post(apiConfig.MAIN_URL + appConfig.POST_FILE_ORDER_BULK_DATA, data);
+    }
 
+    // put
 
-    // upt 
+    putFileOrderRetry(data) {
+        return this.http.put(apiConfig.MAIN_URL + appConfig.PUT_FILE_ORDER_RETRY, data);
+    }
 
 }

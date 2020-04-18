@@ -16,23 +16,17 @@
         <div class="col-md-5 pr-0">
             <h5 class="text-right pt-12 mb-0">Select RTA</h5>
         </div>
-        <div class="col-md-7">
-            <mat-select formControlName="selectRta" (selectionChange)="setDateValidation()">
+        <div class="col-md-5">
+            <mat-select formControlName="rtId" (selectionChange)="setDateValidation()">
                 <mat-option>
                     None
                 </mat-option>
-                <mat-option value="cams">
-                    CAMS
-                </mat-option>
-                <mat-option value="karvy">
-                    KARVY
-                </mat-option>
-                <mat-option value="franklin">
-                    FRANKLIN
+                <mat-option [value]="rta.id" *ngFor="let rta of rtaList">
+                    {{ rta.name }}
                 </mat-option>
             </mat-select>
             <mat-error
-                *ngIf="historicalFileBulkOrderingForm.get('selectRta').touched && historicalFileBulkOrderingForm.get('selectRta').invalid">
+                *ngIf="historicalFileBulkOrderingForm.get('rtId').touched && historicalFileBulkOrderingForm.get('rtId').invalid">
                 This field is required
             </mat-error>
         </div>
@@ -42,23 +36,17 @@
         <div class="col-lg-5 pr-0">
             <h5 class="text-right pt-12 mb-0">File Type</h5>
         </div>
-        <div class="col-lg-7">
-            <mat-select formControlName="fileType">
+        <div class="col-lg-5">
+            <mat-select formControlName="fileTypeId">
                 <mat-option>
                     None
                 </mat-option>
-                <mat-option value="wefw">
-                    transaction
-                </mat-option>
-                <mat-option value="wefwe">
-                    wefw
-                </mat-option>
-                <mat-option value="qf">
-                    qwef
+                <mat-option [value]="fileType.id" *ngFor="let fileType of fileTypeList">
+                    {{ fileType.type }}
                 </mat-option>
             </mat-select>
             <mat-error
-                *ngIf="historicalFileBulkOrderingForm.get('fileType').touched && historicalFileBulkOrderingForm.get('fileType').invalid">
+                *ngIf="historicalFileBulkOrderingForm.get('fileTypeId').touched && historicalFileBulkOrderingForm.get('fileTypeId').invalid">
                 This field is required
             </mat-error>
         </div>
@@ -67,11 +55,11 @@
     <div class="row pt-24">
         <div class="col-lg-5 pr-0">
             <h5 class="text-right pt-12 mb-0">From Date</h5>
-            <p class="text-primitive">
+            <p class="text-primitive text-right">
                 The date from which you want bulk ordering to be done
             </p>
         </div>
-        <div class="col-lg-7">
+        <div class="col-lg-5">
             <mat-form-field class="date-input">
                 <input (click)="picker.open()" [min]="lastPastDate" formControlName="fromDate" readonly matInput
                     class="form-control" [matDatepicker]="picker">
@@ -89,14 +77,14 @@
     <div class="row pt-24">
         <div class="col-lg-5 pr-0">
             <h5 class="text-right pt-12 mb-0">To Date</h5>
-            <p class="text-primitive">
+            <p class="text-primitive text-right">
                 The date to which you want bulk ordering to be done
             </p>
         </div>
-        <div class="col-lg-7">
+        <div class="col-lg-5">
             <mat-form-field class="date-input">
-                <input (click)="picker1.open()" [min]="lastPastDate" formControlName="toDate" readonly matInput
-                    class="form-control" [matDatepicker]="picker1">
+                <input (click)="picker1.open()" [min]="lastPastDate" [max]="presentDate" formControlName="toDate"
+                    readonly matInput class="form-control" [matDatepicker]="picker1">
                 <mat-datepicker-toggle matSuffix style="margin-top: -18px;" [for]="picker1">
                 </mat-datepicker-toggle>
                 <mat-datepicker #picker1></mat-datepicker>
