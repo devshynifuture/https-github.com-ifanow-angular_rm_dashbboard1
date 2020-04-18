@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material';
 import { ValidatorType } from 'src/app/services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { HttpService } from 'src/app/http-service/http-service';
 
 @Component({
   selector: 'app-signup-team-member',
@@ -16,10 +17,10 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 })
 export class SignupTeamMemberComponent implements OnInit {
   duplicateTableDtaFlag: boolean;
+  paramsData: any;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, public routerActive: ActivatedRoute,
+  constructor(private http: HttpService, private fb: FormBuilder, private authService: AuthService, public routerActive: ActivatedRoute,
     private router: Router, private loginService: LoginService, private eventService: EventService, public dialog: MatDialog) { }
-
   signUpForm;
   validatorType = ValidatorType;
   barButtonOptions: MatProgressButtonOptions = {
@@ -37,16 +38,38 @@ export class SignupTeamMemberComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-
+  signUpBarList = [
+    { name: "Test", flag: false },
+    { name: "Test", flag: false },
+    { name: "Test", flag: false },
+    { name: "Test", flag: false }
+  ]
   ngOnInit() {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
-
+      if (queryParamMap.has('query')) {
+        this.paramsData = this.changeBase64ToString(queryParamMap.get('query'));
+        this.createForm(this.paramsData);
+      }
+      else {
+        this.createForm(null)
+      }
     });
+    this.barButtonOptions.text = "Create account"
+  }
+  changeBase64ToString(data) {
+    const Buffer = require('buffer/').Buffer;
+    const encodedata = data;
+    const datavalue = (Buffer.from(encodedata, 'base64').toString('utf-8'));
+    const responseData = JSON.parse(datavalue);
+    return responseData;
+  }
+  createForm(data) {
+    (data == undefined) ? data = {} : data
     this.signUpForm = this.fb.group({
-      fullName: [, [Validators.required]],
-      email: [{ value: '', disabled: true }, [Validators.required,
+      fullName: [data.name, [Validators.required]],
+      email: [{ value: data.email, disabled: (this.paramsData) ? true : false }, [Validators.required,
       Validators.pattern(this.validatorType.EMAIL)]],
-      mobile: [, [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
+      mobile: [data.mobileNo, [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
       termsAgreement: [false, [Validators.required, Validators.requiredTrue]]
     });
   }
@@ -61,7 +84,7 @@ export class SignupTeamMemberComponent implements OnInit {
     } else {
       this.barButtonOptions.active = true;
       let obj = {
-        "advisorId": 3001,
+        "advisorId": this.paramsData.advisorId,
         "mobileNo": this.signUpForm.get('mobile').value,
         "name": this.signUpForm.get('fullName').value,
         "email": this.signUpForm.get('email').value
@@ -78,7 +101,8 @@ export class SignupTeamMemberComponent implements OnInit {
             userId: data.userId,
             clientId: data.clientId,
             advisorId: data.advisorId,
-            userData: data
+            userData: data,
+            showSignUpBar: true
           };
           if (this.clientSignUp) {
             /*  const jsonData = {
@@ -109,5 +133,8 @@ export class SignupTeamMemberComponent implements OnInit {
   }
   clientSignUp(obj: { emailList: { userType: number; email: any; }[]; name: any; displayName: any; mobileList: { userType: number; mobileNo: any; }[]; userType: number; forceRegistration: boolean; }, clientSignUp: any) {
     throw new Error("Method not implemented.");
+  }
+  showTermsAndConditions() {
+    window.open('/login/termscondition');
   }
 }

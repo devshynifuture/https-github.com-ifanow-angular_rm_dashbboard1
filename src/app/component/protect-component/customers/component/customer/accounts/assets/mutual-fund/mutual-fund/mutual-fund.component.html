@@ -19,7 +19,7 @@
   </div>
   <div [ngSwitch]="viewMode">
     <div *ngSwitchCase="'Overview Report'">
-      <app-mutual-fund-overview></app-mutual-fund-overview>
+      <app-mutual-fund-overview [mutualFund]="mfData"></app-mutual-fund-overview>
     </div>
     <div *ngSwitchCase="'Summary'">
       <app-mutual-fund-summary [mutualFund]="mfData"></app-mutual-fund-summary>

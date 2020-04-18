@@ -75,8 +75,8 @@ export class HttpService {
           const resData = this.changeBase64ToString(res);
           // console.log('resData: decoded ', resData);
           return resData;
-        } else if (res.status === 304 || 204) {
-          return res.status;
+          // } else if (res.status === 304 || 204) {
+          //   return res.message;
         } else {
 
           // this._router.navigate(['login']);

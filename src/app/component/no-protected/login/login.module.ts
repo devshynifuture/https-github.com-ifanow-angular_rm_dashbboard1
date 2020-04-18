@@ -17,6 +17,8 @@ import { OtpVerifyComponent } from './otp-verify/otp-verify.component';
 // import { OtpInputComponent } from './otp-input/otp-input.component';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { SignupTeamMemberComponent } from './signup-team-member/signup-team-member.component';
+import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
+import { SignupProgressBarComponent } from './signup-progress-bar/signup-progress-bar.component';
 
 
 @NgModule({
@@ -28,6 +30,8 @@ import { SignupTeamMemberComponent } from './signup-team-member/signup-team-memb
     VerifyOtpComponent,
     OtpVerifyComponent,
     SignupTeamMemberComponent,
+    TermsConditionsComponent,
+    SignupProgressBarComponent,
     // OtpInputComponent,
   ],
   imports: [

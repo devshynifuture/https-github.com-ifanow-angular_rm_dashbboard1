@@ -25,7 +25,7 @@
                     </mat-option>
                     <ng-container *ngIf="!isLoadingForDropDown">
                         <mat-option *ngFor="let advisor of arrayOfAdvisorName"
-                            (click)="setAdvisorId(advisor, advisorRef)" [value]="advisor.name"
+                            (click)="setAdvisorId(advisor)" [value]="advisor.name"
                             [matTooltip]="advisor.name" matTooltipPosition="after">
                             <span>
                                 <b>

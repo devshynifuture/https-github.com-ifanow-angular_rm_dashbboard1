@@ -1,99 +1,79 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../../../../../auth-service/authService';
-import { Router } from '@angular/router';
-import { EventService } from 'src/app/Data-service/event.service';
-import { RoutingState } from 'src/app/services/routing-state.service';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../../../../../../auth-service/authService';
+import {Router} from '@angular/router';
+import {EventService} from 'src/app/Data-service/event.service';
+import {RoutingState} from 'src/app/services/routing-state.service';
 
 @Component({
-  selector: 'app-customer-overview',
-  templateUrl: './customer-overview.component.html',
-  styleUrls: ['./customer-overview.component.scss'],
+    selector: 'app-customer-overview',
+    templateUrl: './customer-overview.component.html',
+    styleUrls: ['./customer-overview.component.scss'],
 
 })
 export class CustomerOverviewComponent implements OnInit {
-  showRouter: boolean = false;
-  selected: number;
+    showRouter: boolean = false;
+    selected: number;
+    clientData: any;
+    loading: boolean;
 
-  set value(value: number) {
-    console.log('now value is ->>>>', value);
-    this._value = value;
-  }
-  clientData: any;
-  _value: any;
-  loading: boolean;
-
-  constructor(private authService: AuthService, private router: Router, private eventService: EventService, public routingStateService: RoutingState) {
-    this.clientData = AuthService.getClientData();
-    this.eventService.tabChangeData.subscribe(
-      data => this.getTabChangeData(data)
-    );
-  }
-
-  ngOnInit() {
-    console.log('overview is called');
-    this.showRouter = true;
-    this.selected = 1;
-    this._value = 1;
-    this.loading = false;
-    const routeName = this.router.url.split('/')[3];
-    console.log('CustomerComponent ngOnInit routeName : ', routeName);
-    if (routeName == 'overview') {
-      this.value = 1;
-    } else if (routeName == 'myFeed') {
-      this.value = 2;
-    } else if (routeName == 'profile') {
-      this.value = 3;
-    } else if (routeName == 'documents') {
-      this.value = 4;
-    } else if (routeName == 'emails') {
-      this.value = 5;
+    constructor(private authService: AuthService, private router: Router,
+                private eventService: EventService, public routingStateService: RoutingState) {
+        this.clientData = AuthService.getClientData();
+        this.eventService.tabChangeData.subscribe(
+            data => this.getTabChangeData(data)
+        );
     }
-    else if (routeName == 'subscription') {
-      this.value = 5;
+
+    _value: any;
+
+    set value(value: number) {
+        console.log('now value is ->>>>', value);
+        this._value = value;
     }
-    else if (routeName == 'settings') {
-      this.value = 5;
+
+    ngOnInit() {
+        console.log('overview is called');
+        this.showRouter = true;
+        this.selected = 1;
+        this._value = 1;
+        this.loading = false;
+        const routeName = this.router.url.split('/')[3];
+        console.log('CustomerComponent ngOnInit routeName : ', routeName);
+        if (routeName == 'overview') {
+            this.value = 1;
+        } else if (routeName == 'myFeed') {
+            this.value = 2;
+        } else if (routeName == 'profile') {
+            this.value = 3;
+        } else if (routeName == 'documents') {
+            this.value = 4;
+        } else if (routeName == 'emails') {
+            this.value = 5;
+        } else if (routeName == 'subscription') {
+            this.value = 5;
+        } else if (routeName == 'settings') {
+            this.value = 5;
+        }
+        // this.clientData = JSON.parse(sessionStorage.getItem('clientData'));
     }
-    // this.clientData = JSON.parse(sessionStorage.getItem('clientData'));
-  }
-  getTabChangeData(data) {
-    setTimeout(() => {
-      this._value = data;
-      console.log('Document selected == ', data)
-      this.loading = false;
-    }, 300);
-  }
-  goToAdvisorHome() {
-    /*this.router.navigateByUrl('/admin/subscription').then(e => {
-      if (e) {
-        console.log('Navigation is successful!');
-      } else {
-        console.log('Navigation has failed!');
-      }
-    });*/
-    // this.locationService.go('/admin/subscription');
-    /* this.ngZone.run(() => {
-       // this.navigateTo('/');
 
-       this.router.navigate(['/admin', 'subscription'], {/!*replaceUrl: true*!/}).then(e => {
-         if (e) {
-           // this.router.navigate(['/admin', 'subscription']);
-           console.log('Navigation is successful!');
-           // this.locationService.go('/admin/subscription');
+    getTabChangeData(data) {
+        setTimeout(() => {
+            this._value = data;
+            console.log('Document selected == ', data);
+            this.loading = false;
+        }, 300);
+    }
 
-         } else {
-           console.log('Navigation has failed!');
-         }
-       });
-     });*/
-    this.showRouter = false;
-    setTimeout(() => {
-      this.routingStateService.goToSpecificRoute('/admin/subscription/dashboard');
-    }, 200);
-  }
+    goToAdvisorHome() {
+        this.showRouter = false;
+        setTimeout(() => {
+            this.routingStateService.goToSpecificRoute('/admin/subscription/dashboard');
+        }, 200);
+    }
 
-  logout() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
-  }
+    logout() {
+        this.authService.logout();
+        this.router.navigate(['/login']);
+    }
 }

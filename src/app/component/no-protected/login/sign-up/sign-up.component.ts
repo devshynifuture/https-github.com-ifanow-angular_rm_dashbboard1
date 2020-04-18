@@ -23,7 +23,12 @@ export class SignUpComponent implements OnInit {
   constructor(private fb: FormBuilder, private authService: AuthService, public routerActive: ActivatedRoute,
     private router: Router, private loginService: LoginService, private eventService: EventService, public dialog: MatDialog) {
   }
-
+  signUpBarList = [
+    { name: "CREATE ACCOUNT", flag: false },
+    { name: "VERIFY EMAIL", flag: false },
+    { name: "VERIFY MOBILE", flag: false },
+    { name: "SET PASSWORD", flag: false }
+  ]
   signUpForm;
   validatorType = ValidatorType;
   barButtonOptions: MatProgressButtonOptions = {
@@ -115,7 +120,8 @@ export class SignUpComponent implements OnInit {
             userId: data.userId,
             clientId: data.clientId,
             advisorId: data.advisorId,
-            userData: data
+            userData: data,
+            showSignUpBar: true
           };
           if (this.clientSignUp) {
             /*  const jsonData = {
@@ -173,5 +179,8 @@ export class SignUpComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+  showTermsAndConditions() {
+    window.open('/login/termscondition');
   }
 }

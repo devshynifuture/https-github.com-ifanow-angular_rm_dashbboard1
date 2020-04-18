@@ -9,6 +9,9 @@
 @import url('https://fonts.adobe.com/fonts/proxima-nova');
 $smallfont:10px;
 $lineheight:20px;
+.lh-14{
+    line-height: 14px !important;
+}
 .lh-15 {
     line-height: 15px !important;
 }
@@ -1107,7 +1110,9 @@ padding-top:18px !important;
 .flex {
     display: $flex !important;
 }
-
+.i-flex{
+    display: inline-flex !important;
+}
 .i-block {
     display: $iblock !important;
 }

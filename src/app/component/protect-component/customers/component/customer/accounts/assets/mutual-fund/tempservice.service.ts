@@ -27,7 +27,7 @@ export class TempserviceService {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ?
       reportType = 'subCategoryName' : (type[0].name == 'Category wise') ?
-      reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : reportType = 'name';
+      reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : (type == 'id') ? reportType = 'id': reportType = 'name';
     let catObj = {};
     const newArray = [];
 
@@ -198,6 +198,11 @@ export class TempserviceService {
     let allocationPer = 0;
     let withdrawals = 0;
     let sip = 0;
+    let netGain = 0;
+    let marketValue = 0;
+    let netInvestment = 0;
+    let redemption = 0;
+    let switchIn = 0;
     if(!isSummaryTabValues){
       data.mutualFundTransactions.forEach(ele => {
         totalTransactionAmt += (ele.amount) ? ele.amount : 0;
@@ -228,6 +233,11 @@ export class TempserviceService {
       allocationPer += (data.allocatedPercentage) ? data.allocatedPercentage : 0;
       withdrawals += (data.switchOut) ? data.switchOut : 0;
       sip += (data.sipAmount) ? data.sipAmount : 0;
+      netGain += (data.netGain) ? data.netGain : 0;
+      marketValue += (data.marketValue) ? data.marketValue : 0;
+      netInvestment += (data.netInvestment) ? data.netInvestment : 0;
+      redemption += (data.redemption) ? data.redemption : 0;
+      switchIn += (data.switchIn) ? data.switchIn : 0;
     }
   
     const obj = {
@@ -245,7 +255,12 @@ export class TempserviceService {
       xirr,
       allocationPer,
       withdrawals,
-      sip
+      sip,
+      netGain,
+      marketValue,
+      netInvestment,
+      redemption,
+      switchIn
     };
     // this.totalObj = obj;
     return obj;
@@ -342,6 +357,7 @@ export class TempserviceService {
       });
     }
     const sendData = {
+      subCategoryData,
       family_member_list,
       category,
       schemeWise,
@@ -352,6 +368,7 @@ export class TempserviceService {
       showFolio: dataForFilter.showFolio,
       reportType: dataForFilter.reportType,
       transactionView: dataForFilter.transactionView,
+      overviewFilter : dataForFilter.overviewFilter,
       mfData,
     };
     return sendData;

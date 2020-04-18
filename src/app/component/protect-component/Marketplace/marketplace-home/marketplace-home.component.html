@@ -840,7 +840,7 @@
                  <div class="p-20 pt-28">
                    <p class="f-500 roboto m-0">Pay with Debit Card</p>
                    <p class="m-0 pt-8 f-400 roboto">Card Number</p>
-                   <div class="form-groupm mb-0">
+                   <div class="form-group mb-0">
                      <mat-form-field>
                         <input matInput class="form-control">
                       </mat-form-field>
@@ -848,7 +848,7 @@
                    <div class="row pt-8 pb-8">
                      <div class="col-md-4 pl-0">
                        <p class="m-0 pt-8 f-400 roboto">Expiry Date</p>
-                       <div class="form-groupm mb-0">
+                       <div class="form-group mb-0">
                      <mat-form-field>
                         <input matInput class="form-control" value="MM/YY">
                       </mat-form-field>
@@ -857,7 +857,7 @@
                 
                      <div class="col-md-4 pl-0">
                        <p class="m-0 pt-8 f-400 roboto">CVV</p>
-                       <div class="form-groupm mb-0">
+                       <div class="form-group mb-0">
                      <mat-form-field>
                         <input matInput class="form-control" value="***">
                       </mat-form-field>
@@ -865,7 +865,7 @@
                      </div>
                    </div>
                    <p class="m-0 pt-8 roboto f-400">Cardholder's Number</p>
-                   <div class="form-groupm mb-0">
+                   <div class="form-group mb-0">
                      <mat-form-field>
                         <input matInput class="form-control">
                       </mat-form-field>
@@ -895,11 +895,11 @@
 
 <div id="marketplace-advisors-call">
    <div class="row pt-120">
-    <div class="col-md-2"></div>
-    <div class="col-md-8 p-0">
+    <div class="col-md-1"></div>
+    <div class="col-md-10 p-0">
       <h3 class="m-0 text-dark roboto">Deepesh is <span class="text-success">online</span>. Chat now!</h3>
       <p class="text-custom m-0 roboto bb-1 pb-8">Get your queries answered by Deepesh via chat</p>
-      <div class="row pt-20">
+      <div class="row pt-20 pb-44">
         <div class="col-md-2 pl-0">
           <img src="/assets/images/men.png" class="w-100">
           <p class="m-0 roboto text-custom pt-16 text-center">View profile</p>
@@ -913,17 +913,26 @@
           star
           </span>4.6</button>
          </div>
-          <div class="col-md-5 bl-1">
-            <h5 class="m-0 text-dark f-400 roboto">Select an appointment slot</h5>
+          <div class="col-md-5 bl-1 pr-0">
+
+<!--             Select an appointment slot -->
+           <!--  <h5 class="m-0 text-dark f-400 roboto">Select an appointment slot</h5>
             <div class="row pt-20">
               <div class="col-md-6 pl-0">
                 <p class="m-0 text-dark f-500 roboto">April 2020</p>
               </div>
-              <div class="col-md-6">
-                <p class="m-0 text-dark f-500 roboto">17th April, Friday</p>
+              <div class="col-md-6 markteplace-time pr-0">
+                <p class="m-0 text-dark f-500 roboto pb-8">17th April, Friday</p>
                  <button mat-stroked-button class="review-start">10.00 AM</button>
-                  <button mat-stroked-button class="review-start">10.30 AM</button>
-                   <button mat-stroked-button class="review-start">11.00 AM</button>
+                 <div class="row">
+                   <div class="col-md-5 p-0">
+                       <button mat-stroked-button class="review-start">10.30 AM</button>
+                   </div>
+                   <div class="col-md-7 pr-0">
+                      <button mat-stroked-button class="btn-primary br-4">CONFIRM</button>
+                   </div>
+                 </div>
+                 <button mat-stroked-button class="review-start">11.00 AM</button>
                     <button mat-stroked-button class="review-start">11.30 AM</button>
                      <button mat-stroked-button class="review-start">12.00 AM</button>
                       <button mat-stroked-button class="review-start">12.30 AM</button>
@@ -932,9 +941,214 @@
                          <button mat-stroked-button class="review-start">2.00 PM</button>
                           <button mat-stroked-button class="review-start">2.30 PM</button>
               </div>
-            </div>
+            </div> -->
+
+            <!--           close  Select an appointment slot -->
+
+
+
+            <!-- form -->
+           <!--  <div class="row pb-44">
+              <div class="col-md-9 pl-0">
+            <h5 class="m-0 text-primary f-400">10.30 AM - 11.00 AM / 17th April, Friday</h5>
+             <h4 class="m-0 text-dark roboto pt-10"><span class="material-icons pr-10 c-p v-bottom">
+        keyboard_backspace
+        </span>Change</h4>
+        <h5 class="m-0 text-dark roboto pt-28 pb-6">Your full name</h5>
+        <div class="form-group mb-0">
+          <mat-form-field>
+            <input matInput class="form-control text-custom" value="Enter name">
+          </mat-form-field>
+        </div>
+        <h5 class="m-0 text-dark roboto pt-28 pb-6">Email</h5>
+        <div class="form-group mb-0">
+          <mat-form-field>
+            <input matInput class="form-control text-custom" value="Enter email">
+          </mat-form-field>
+        </div>
+        <h5 class="m-0 text-dark roboto pt-28 pb-6">Mobile number</h5>
+        <div class="row">
+          <div class="col-md-4 pl-0">
+            <div class="form-group mb-0">
+            <mat-form-field>
+              <mat-select class="form-control" >
+                <mat-option>
+                  Value
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          </div>
+          <div class="col-md-8 p-0">
+          <div class="form-group mb-0">
+          <mat-form-field>
+            <input matInput class="form-control text-custom" value="Enter mobile">
+          </mat-form-field>
+        </div>
+          </div>
+        </div>
+        <p class="text-custom f-12 m-0 roboto f-400 pt-6">A verification code will be sent on this number</p>
+        <button mat-stroked-button class="btn-primary mt-28 mb-20">Continue</button>
       </div>
+    </div> -->
+
+
+<!-- textarea screen full -->
+    <!-- <div class="row pt-28">
+      <div class="col-md-11 p-0">
+                    <h5 class="m-0 text-primary f-400">10.30 AM - 11.00 AM / 17th April, Friday</h5>
+             <h4 class="m-0 text-dark roboto pt-10"><span class="material-icons pr-10 c-p v-bottom">
+        keyboard_backspace
+        </span>Change</h4>
+        <h5 class="m-0 text-success f-400 pt-28 roboto">Thanks for verifying your number, Rahul Jain!</h5>
+        <div class="form-group mb-0 pt-20">
+           <mat-form-field>
+              <textarea matInput class="form-control h-120"></textarea>
+            </mat-form-field>
+        </div>
+        <div class="row pt-80">
+          <div class="col-md-12 p-0">
+            <p class="m-0 text-dark roboto f-400 pt-8 pb-20 c-p">+ Add more details (optional but recommended)</p>
+         <button mat-stroked-button class="btn-primary">Save & Confirm</button>
+          </div>
+        </div>
+        
+      </div>
+    </div> -->
+
+
+    <!-- add more  -->
+   <!--  <div class="row pt-28">
+      <div class="col-md-11 p-0">
+                    <h5 class="m-0 text-primary f-400">10.30 AM - 11.00 AM / 17th April, Friday</h5>
+             <h4 class="m-0 text-dark roboto pt-10"><span class="material-icons pr-10 c-p v-bottom">
+        keyboard_backspace
+        </span>Change</h4>
+        <h5 class="m-0 text-success f-400 pt-28 roboto">Thanks for verifying your number, Rahul Jain!</h5>
+        <div class="form-group mb-0 pt-20">
+           <mat-form-field>
+              <textarea matInput class="form-control h-120"></textarea>
+            </mat-form-field>
+        </div>
+        <div class="row pt-80">
+          <div class="col-md-12 p-0">
+            <p class="m-0 text-dark roboto f-400 pt-8 pb-20 c-p">- Hide optional details</p>
+            <div class="row">
+              <div class="col-md-5 pl-0">
+                <h5 class="m-0 text-dark roboto pb-6">Occupation</h5>
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                      <mat-select class="form-control" >
+                        <mat-option>
+                          Value
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+              </div>
+               <div class="col-md-3 pl-0">
+                 <h5 class="m-0 text-dark roboto pb-6">Age</h5>
+                  <div class="form-group mb-0">
+                    <mat-form-field>
+                      <mat-select class="form-control" >
+                        <mat-option>
+                          Value
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+               </div>
+               <div class="col-md-4 p-0">
+                 <h5 class="m-0 text-dark roboto pb-6">Marital status</h5>
+                  <div class="form-group mb-0">
+                    <mat-form-field>
+                      <mat-select class="form-control" >
+                        <mat-option>
+                          Value
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+               </div>
+            </div>
+         <button mat-stroked-button class="btn-primary mt-24">Save & Confirm</button>
+          </div>
+        </div>
+        
+      </div>
+    </div> -->
+
+
+    <!-- SUCCESS ! screen right  -->
+
+
+    <!-- <div class="row">
+      <div class="col-md-12 p-0">
+        <h5 class="m-0 text-success f-400 roboto">SUCCESS !</h5>
+        <p class="m-0 f-16 roboto pt-20">Call with Deepesh Raghaw is scheduled successfully</p>
+        <h5 class="m-0 text-primary roboto pt-10">10.30 AM - 11.00 AM / 17th April, Friday</h5>
+        <h5 class="text-dark f-500 roboto m-0 pt-48">Rahul, there is a message from Deepesh Raghaw</h5>
+        <p class="m-0 roboto bb-1 pb-18"><i>Please be ready with your questions so that we can have a fruitful discussion. Request you to be on time. I look forward to speaking with you.</i></p>
+        <p class="f-500 roboto f-16 text-dark pt-20">Your online money management account is also ready!</p>
+        <p class="m-0 roboto pt-4">You can start creating your financial profile in the meantime.</p>
+         <button mat-stroked-button class="btn-primary mt-20 mb-44">Login to my account</button>
+      </div>
+    </div> -->
+
+<!-- close SUCCESS ! screen right  -->
+
+
+<div class="row">
+  <div class="col-md-12 p-0">
+    <h5 class="m-0 f-500 roboto text-dark">How would you rate us on the following?</h5>
+    <p class="m-0 roboto text-dark pt-20 f-400">1. Knowledge & expertise</p>
+      <ul>
+        <li><span class="material-icons text-warning c-p">star</span></li>
+        <li><span class="material-icons text-warning c-p">star</span></li>
+        <li><span class="material-icons text-warning c-p">star</span></li>
+        <li><span class="material-icons text-warning c-p">star</span></li>
+        <li><span class="material-icons star-active c-p">star_border</span></li>
+      </ul>
+      <p class="m-0 roboto text-dark pt-28 f-400">2. Service delivery</p>
+      <ul>
+        <li><span class="material-icons text-warning c-p">star</span></li>
+        <li><span class="material-icons text-warning c-p">star</span></li>
+        <li><span class="material-icons text-warning c-p">star</span></li>
+        <li><span class="material-icons c-p star-active">star</span></li>
+        <li><span class="material-icons star-active c-p">star</span></li>
+      </ul>
+      <p class="m-0 roboto text-dark pt-28 f-400">3. Communication</p>
+      <ul>
+        <li><span class="material-icons text-warning c-p">star</span></li>
+        <li><span class="material-icons text-warning c-p">star</span></li>
+        <li><span class="material-icons text-warning c-p">star</span></li>
+        <li><span class="material-icons c-p star-active">star</span></li>
+        <li><span class="material-icons star-active c-p">star</span></li>
+      </ul>
+      <p class="m-0 roboto text-dark pt-28 pb-6 f-400">4. Will recommend to others</p>
+      <mat-radio-group class="yes-no" aria-label="Select an option">
+        <mat-radio-button value="1" class="bu-primary text-primary">yes</mat-radio-button>
+        <mat-radio-button value="2" class="b-ua text-custom">No</mat-radio-button>
+      </mat-radio-group>
+      <p class="pt-28 mb-0 roboto text-dark f-400">Tell us about your experience working with us.</p>
+      <div class="form-group mb-0 pt-10 pb-10">
+           <mat-form-field>
+              <textarea matInput class="form-control h-120" value=""></textarea>
+            </mat-form-field>
+        </div>
+        <div class="pt-90">
+        <div class="row faq-colors pt-20 pb-20">
+          <div class="col-md-1"></div>
+          <div class="col-md-11">
+            <p class="roboto f-12 text-dark mb-0 f-400 lh-14">All reviews undergo a strict moderation process to ensure that we do not publish threat content, abusive language and irrelevant material.</p>
+          </div>
+        </div>
+        <button mat-stroked-button class="btn-primary mt-28 mb-44">Post review</button>
   </div>
+</div>
+</div>
+  </div>
+  </div> 
 </div>
 </div>
 </div>

@@ -7,6 +7,7 @@ import { EventService } from '../Data-service/event.service';
 import { HttpClient } from '@angular/common/http';
 import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
 import { FormGroup } from '@angular/forms';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -23,6 +24,8 @@ export class UtilService {
   private static decimalPipe = new DecimalPipe('en-US');
   private counter: number = 0;
   public isLoading = false;
+  loaderObservable = new BehaviorSubject<boolean>(false);
+  isLoadingObservable = this.loaderObservable.asObservable();
   advisorId: any;
 
   subscriptionStepData;
@@ -329,8 +332,10 @@ export class UtilService {
     this.counter += increament;
     if (this.counter == 0) {
       this.isLoading = false;
+      this.loaderObservable.next(false);
     } else {
       this.isLoading = true;
+      this.loaderObservable.next(true);
     }
   }
 }
@@ -353,7 +358,7 @@ export class ValidatorType {
   static EMAIL = new RegExp(/^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$/);
   static ALPHA_NUMERIC_WITH_SLASH = new RegExp(/^[A-Z0-9//]+$/);
   static TEN_DIGITS = new RegExp(/^\d{10}$/);
-  static PAN = new RegExp(/^[a-zA-Z0-9]{10,}$/);
+  static PAN = new RegExp(/[A-Za-z]{5}\d{4}[A-Za-z]{1}/);
   static ADHAAR = new RegExp(/^[0-9]{12,}$/);
   static ALPHA_NUMERIC_WITH_SPEC_CHAR = new RegExp(/^[ A-Za-z0-9_@./#&+-]*$/);
 }
