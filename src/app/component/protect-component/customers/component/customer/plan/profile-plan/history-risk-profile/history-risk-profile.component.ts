@@ -73,8 +73,8 @@ export class HistoryRiskProfileComponent implements OnInit {
       }
     );
   }
-  Close(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+  Close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
 }

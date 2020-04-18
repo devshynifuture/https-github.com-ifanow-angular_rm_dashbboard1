@@ -1,10 +1,11 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {HttpService} from 'src/app/http-service/http-service';
-import {HttpHeaders} from '@angular/common/http';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { HttpService } from 'src/app/http-service/http-service';
+import { HttpHeaders } from '@angular/common/http';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-client-upload',
@@ -12,9 +13,24 @@ import {EnumServiceService} from 'src/app/services/enum-service.service';
   styleUrls: ['./client-upload.component.scss']
 })
 export class ClientUploadComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & CLOSE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   clientRoles: any = [];
   myFiles: any = [];
-  @ViewChild('fileComPan', {static: false}) fileComPanRef;
+  @ViewChild('fileComPan', { static: false }) fileComPanRef;
   advisorId: any;
   clientId: any;
   proofTypes: any = [];
@@ -25,11 +41,11 @@ export class ClientUploadComponent implements OnInit {
   bankProof: any = '';
   selectedBank: any = '';
   proofSubType: any = 1;
-  fileComPanImg: any = {view: '', store: ''};
-  filePerPanImg: any = {view: '', store: ''};
-  fileProof1Img: any = {view: '', store: ''};
-  fileProof2Img: any = {view: '', store: ''};
-  fileProof2BackImg: any = {view: '', store: ''};
+  fileComPanImg: any = { view: '', store: '' };
+  filePerPanImg: any = { view: '', store: '' };
+  fileProof1Img: any = { view: '', store: '' };
+  fileProof2Img: any = { view: '', store: '' };
+  fileProof2BackImg: any = { view: '', store: '' };
   imgWidth: any = 100;
   imgStyleCom = {
     width: this.imgWidth + '%',
@@ -59,7 +75,7 @@ export class ClientUploadComponent implements OnInit {
   userData: any;
 
   constructor(private subInjectService: SubscriptionInject, private http: HttpService,
-              private custumService: CustomerService, private enumService: EnumServiceService) {
+    private custumService: CustomerService, private enumService: EnumServiceService) {
   }
 
   @Input() fieldFlag;
@@ -94,7 +110,7 @@ export class ClientUploadComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
   getUploadedImg(data) {
@@ -245,24 +261,26 @@ export class ClientUploadComponent implements OnInit {
     switch (imgType) {
       case 'company-pan':
         this.deleteImg(this.fileComPanImg.store.id);
-        this.fileComPanImg = {view: '', store: ''};
+        this.fileComPanImg = { view: '', store: '' };
         this.fileComPanRef.nativeElement.files.FileList = null;
         break;
       case 'personal-pan':
         this.deleteImg(this.filePerPanImg.store.id);
-        this.filePerPanImg = {view: '', store: ''};
+        this.filePerPanImg = { view: '', store: '' };
         break;
       case 'proof-type1':
-        this.fileProof1Img = {view: '', store: ''};
+        this.deleteImg(this.fileComPanImg.store.id);
+        this.fileProof1Img = { view: '', store: '' };
         break;
       case 'proof-type2':
-        this.fileProof2Img = {view: '', store: ''};
+        this.deleteImg(this.fileComPanImg.store.id);
+        this.fileProof2Img = { view: '', store: '' };
         break;
     }
   }
 
   deleteImg(imgId) {
-    const obj = {id: imgId};
+    const obj = { id: imgId };
     this.custumService.deleteClientProof(obj).subscribe((data) => {
       console.log('delete proof', data);
     });

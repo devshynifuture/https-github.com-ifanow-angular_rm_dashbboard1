@@ -526,6 +526,7 @@ export const appConfig = {
   MAP_ADVISOR_TO_RM: 'rmdashboard/dashboard/admin/map-ifa-to-rm/post',
   GET_RM_LIST: 'rmdashboard/dashboard/admin/rm/list/get',
   ADD_RM: 'rmdashboard/dashboard/admin/rm/add',
+  GET_MY_IFA_REC_SUMMARY:'rmdashboard/myifas/recon-summary/get',
 
   GET_FILE_ORDER_HISTORICAL_LIST_DATA: "fileorder/historical/advisor/list/get",
   GET_FILE_ORDER_UPPER_LIST_DATA: 'fileorder/historical/list/get',

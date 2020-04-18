@@ -134,4 +134,7 @@ export class SignupTeamMemberComponent implements OnInit {
   clientSignUp(obj: { emailList: { userType: number; email: any; }[]; name: any; displayName: any; mobileList: { userType: number; mobileNo: any; }[]; userType: number; forceRegistration: boolean; }, clientSignUp: any) {
     throw new Error("Method not implemented.");
   }
+  showTermsAndConditions() {
+    window.open('/login/termscondition');
+  }
 }

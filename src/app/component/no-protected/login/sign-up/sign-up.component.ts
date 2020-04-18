@@ -181,6 +181,6 @@ export class SignUpComponent implements OnInit {
     });
   }
   showTermsAndConditions() {
-    window.open('/termscondition');
+    window.open('/login/termscondition');
   }
 }
