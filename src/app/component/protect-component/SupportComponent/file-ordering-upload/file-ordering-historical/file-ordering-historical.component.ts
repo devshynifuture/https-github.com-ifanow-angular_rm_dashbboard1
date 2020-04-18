@@ -25,7 +25,7 @@ export class FileOrderingHistoricalComponent implements OnInit {
   ) { }
 
   isLoading = false;
-  displayedColumns: string[] = ['advisorName', 'rta', 'orderedby', 'startedOn', 'totalfiles', 'queue', 'ordering', 'ordered', 'failed', 'uploaded', 'refresh', 'empty'];
+  displayedColumns: string[] = ['advisorName', 'rta', 'orderedby', 'startedOn', 'totalFiles', 'queue', 'ordering', 'ordered', 'failed', 'uploaded', 'refresh', 'empty'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   rmList: any[] = [];
   visible = true;
@@ -75,7 +75,6 @@ export class FileOrderingHistoricalComponent implements OnInit {
     },
   ];
 
-
   days = 2;
   rtId = 0;
 
@@ -112,18 +111,22 @@ export class FileOrderingHistoricalComponent implements OnInit {
           console.log("this is what i got:", data);
           data.forEach(element => {
             tableData.push({
-              advisorName: element.advisorName,
-              rta: element.rta === 0 ? "ALL-RTA" : element.rta === 1 ? "CAMS" : element.rta === 2 ? "KARVY" : element.rta === 3 ? "FRANKLIN" : null,
-              orderedBy: "-",
-              startedOn: element.startedOn ? element.startedOn : '-',
-              totalFiles: element.totalFiles,
-              queue: element.inqueue,
-              ordering: element.orderingFrequency,
-              ordered: element.ordered,
-              failed: element.failed ? element.failed : '-',
-              uploaded: element.uploaded,
+              advisorName: element.advisorName ? element.advisorName : "-",
+              rta: element.rtId === 0 ? "ALL-RTA" : element.rtId === 1 ? "CAMS" : element.rtId === 2 ? "KARVY" : element.rtId === 3 ? "FRANKLIN" : null,
+              orderedBy: element.rmName ? element.rmName : '-',
+              startedOn: element.fileOrderDateTime ? element.fileOrderDateTime : '-',
+              totalFiles: element.totalFiles ? element.totalFiles : '-',
+              queue: element.inqueue ? element.inqueue : '-',
+              ordering: element.orderingFrequency ? element.orderingFrequency : '-',
+              ordered: element.ordered ? element.ordered : '-',
+              failed: element.skipped ? element.skipped : '-',
+              uploaded: element.uploaded ? element.uploaded : '-',
               refresh: element.refresh ? element.refresh : '-',
-              empty: element.empty ? element.empty : '-'
+              empty: element.empty ? element.empty : '-',
+              rtId: element.rtId,
+              rmId: element.rmId,
+              days: this.days,
+              arnRiaDetailId: element.arnRiaDetailId,
             })
           });
 
@@ -135,7 +138,6 @@ export class FileOrderingHistoricalComponent implements OnInit {
         }
       });
   }
-
 
   maniputateEventObjForName(event) {
     let name = event.value;
@@ -195,29 +197,6 @@ export class FileOrderingHistoricalComponent implements OnInit {
     }
   }
 
-  openUpperModule(flag, data) {
-    const fragmentData = {
-      flag: "clients",
-      id: 1,
-      data,
-      direction: 'top',
-      componentName: UpperSliderBackofficeComponent,
-      state: 'open'
-    };
-    // this.router.navigate(['/subscription-upper'])
-    AuthService.setSubscriptionUpperSliderData(fragmentData);
-    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-      upperSliderData => {
-        if (UtilService.isDialogClose(upperSliderData)) {
-          // this.getClientSubscriptionList();
-          subscription.unsubscribe();
-
-        }
-      }
-    );
-
-  }
-
   remove(filterBy): void {
     const index = this.filterBy.indexOf(filterBy);
 
@@ -238,6 +217,12 @@ export class FileOrderingHistoricalComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.fileOrderHistoryListGet({
+              days: this.days,
+              rtId: this.rtId,
+            })
+          }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
@@ -260,6 +245,12 @@ export class FileOrderingHistoricalComponent implements OnInit {
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
+          if (UtilService.isRefreshRequired(upperSliderData)) {
+            this.fileOrderHistoryListGet({
+              days: this.days,
+              rtId: this.rtId,
+            })
+          }
           // this.getClientSubscriptionList();
           subscription.unsubscribe();
         }
@@ -289,5 +280,4 @@ const ELEMENT_DATA: PeriodicElement[] = [
   { advisorName: '', rta: '', orderedby: '', startedOn: '', totalfiles: '', queue: '', ordering: '', ordered: '', failed: '', uploaded: '', refresh: '', empty: '' },
   { advisorName: '', rta: '', orderedby: '', startedOn: '', totalfiles: '', queue: '', ordering: '', ordered: '', failed: '', uploaded: '', refresh: '', empty: '' },
   { advisorName: '', rta: '', orderedby: '', startedOn: '', totalfiles: '', queue: '', ordering: '', ordered: '', failed: '', uploaded: '', refresh: '', empty: '' },
-
 ];

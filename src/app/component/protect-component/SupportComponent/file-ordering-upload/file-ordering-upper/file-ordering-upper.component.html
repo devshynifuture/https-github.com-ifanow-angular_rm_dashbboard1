@@ -29,7 +29,7 @@
             </div>
             <div class="col-lg-5"></div>
             <div class="col-lg-4 text-right pr-0">
-                <button mat-button class="bg-grey">
+                <button mat-button class="bg-grey" (click)="refreshList()">
                     <mat-icon>
                         refresh
                     </mat-icon>
@@ -43,7 +43,8 @@
 
 <div class="row pt-8">
     <div class="col-lg-8">
-        <table mat-table [dataSource]="dataSource" id="table-low" class=" ">
+        <table mat-table [dataSource]="dataSource" id="table-low" class="skeletonLoading" appSkeletonLoading
+            [appSkeletonLoading]="isLoading">
 
             <ng-container matColumnDef="checkbox">
                 <th class="b-a" mat-header-cell *matHeaderCellDef>
@@ -83,7 +84,7 @@
             <ng-container matColumnDef="fileOrderTime">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> File Order Time </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
-                    <div class="bar"> {{element.fileOrderTime}} </div>
+                    <div class="bar"> {{element.fileOrderTime | date:'short'}} </div>
                 </td>
             </ng-container>
 

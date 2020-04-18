@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material';
 import { ValidatorType } from 'src/app/services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { HttpService } from 'src/app/http-service/http-service';
 
 @Component({
   selector: 'app-signup-team-member',
@@ -16,8 +17,9 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 })
 export class SignupTeamMemberComponent implements OnInit {
   duplicateTableDtaFlag: boolean;
+  paramsData: any;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, public routerActive: ActivatedRoute,
+  constructor(private http: HttpService, private fb: FormBuilder, private authService: AuthService, public routerActive: ActivatedRoute,
     private router: Router, private loginService: LoginService, private eventService: EventService, public dialog: MatDialog) { }
 
   signUpForm;
@@ -40,15 +42,20 @@ export class SignupTeamMemberComponent implements OnInit {
 
   ngOnInit() {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
-      if (queryParamMap.has('advisorId')) {
-        // this.clientSignUp = true;
+      if (queryParamMap.has('query')) {
+        this.paramsData = this.http.changeBase64ToString(queryParamMap.get('query'));
+        this.createForm(this.paramsData);
+        this.barButtonOptions.text = "Create account"
       }
     });
+  }
+  createForm(data) {
+    (data == undefined) ? data = {} : data
     this.signUpForm = this.fb.group({
-      fullName: [, [Validators.required]],
-      email: [/*{ value: '', disabled: true }*/, [Validators.required,
+      fullName: [this.paramsData.name, [Validators.required]],
+      email: [{ value: this.paramsData.email, disabled: true }, [Validators.required,
       Validators.pattern(this.validatorType.EMAIL)]],
-      mobile: [, [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
+      mobile: [this.paramsData.mobileNo, [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
       termsAgreement: [false, [Validators.required, Validators.requiredTrue]]
     });
   }
@@ -63,7 +70,7 @@ export class SignupTeamMemberComponent implements OnInit {
     } else {
       this.barButtonOptions.active = true;
       let obj = {
-        "advisorId": 3001,
+        "advisorId": this.paramsData.advisorId,
         "mobileNo": this.signUpForm.get('mobile').value,
         "name": this.signUpForm.get('fullName').value,
         "email": this.signUpForm.get('email').value
