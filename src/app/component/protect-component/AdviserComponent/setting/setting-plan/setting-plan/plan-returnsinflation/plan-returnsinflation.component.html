@@ -15,7 +15,7 @@
         </button>
     </div>
 </div>
-<div class="row plan-returnsinflation">
+<div class="row pb-20 plan-returnsinflation">
     <div class="col-md-4 pl-0">
         <table mat-table [dataSource]="shortDS" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="position">
@@ -24,7 +24,7 @@
             </ng-container>
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>Assumption </th>
-                <td mat-cell class="text-center br" *matCellDef="let element"> 
+                <td mat-cell class="text-center br" *matCellDef="let element">
                     <div class="bar">{{element.inflation_rate}}</div>
                 </td>
             </ng-container>
@@ -46,7 +46,8 @@
             </ng-container>
             <ng-container matColumnDef="disclaimer">
                 <th mat-header-cell class="br t-70" *matHeaderCellDef></th>
-                <td mat-cell class="text-primitive f-14 f-400 bg-white pl-12" *matCellDef="let element" colspan="2"> {{element.type_name}} </td>
+                <td mat-cell class="text-primitive f-14 f-400 bg-white pl-12" *matCellDef="let element" colspan="2">
+                    {{element.type_name}} </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -80,14 +81,15 @@
             </ng-container>
             <ng-container matColumnDef="name">
                 <th mat-header-cell class="br t-70" *matHeaderCellDef>Assumption </th>
-                <td mat-cell class="text-center br" *matCellDef="let element"> 
+                <td mat-cell class="text-center br" *matCellDef="let element">
                     <div class="bar" *ngIf="!editMode">{{element.inflation_rate}}</div>
-                    <input class="form-control" type="text" *ngIf="editMode" [(ngModel)]="element.inflation_rate" [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="100" appInputValueValidation (change)="element.edited = true"> 
+                    <input class="form-control" type="text" *ngIf="editMode" [(ngModel)]="element.inflation_rate" [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="100" appInputValueValidation (change)="element.edited = true">
                 </td>
             </ng-container>
             <ng-container matColumnDef="disclaimer">
                 <th mat-header-cell class="br t-70" *matHeaderCellDef></th>
-                <td mat-cell class="text-primitive f-14 f-400 bg-white pl-12" *matCellDef="let element" colspan="2"> {{element.type_name}} </td>
+                <td mat-cell class="text-primitive f-14 f-400 bg-white pl-12" *matCellDef="let element" colspan="2">
+                    {{element.type_name}} </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
