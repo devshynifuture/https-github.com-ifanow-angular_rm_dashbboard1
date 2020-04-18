@@ -57,8 +57,11 @@ export class PeopleClientsComponent implements OnInit {
               singleData.email = singleData.emailList[0].email;
             }
           });
+          this.clientDatasource.data = data;
         }
-        this.clientDatasource.data = data;
+        else {
+          this.clientDatasource.data = [];
+        }
       },
       err => {
         this.clientDatasource.data = [];

@@ -1,8 +1,8 @@
 <div class="row" id="ui-activity-secondhead">
     <div class="col-md-2 d-flex align-items-center">
-        <button *ngIf="clientData.userType==2" (click)="goToAdvisorHome()"
-            class="btn-warning-outline advisorHomeBtn br-2" mat-stroked-button>
-            <i class="material-icons"> keyboard_backspace </i> ADVISOR HOME
+        <button (click)="goToAdvisorHome()" *ngIf="authService.isAdvisor()"
+                class="btn-warning-outline advisorHomeBtn br-2" mat-stroked-button>
+          <i class="material-icons"> keyboard_backspace </i> ADVISOR HOME
         </button>
     </div>
     <div class="col-md-8">

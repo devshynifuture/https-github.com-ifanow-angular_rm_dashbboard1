@@ -69,14 +69,15 @@
                             <input autocomplete="off" class="form-control" formControlName="email" matInput
                                 placeholder="Enter Email">
                             <mat-error *ngIf="basicDetails.get('email').errors?.pattern">Email is not valid</mat-error>
-                            <mat-error>This field is required</mat-error>
+                            <mat-error *ngIf="basicDetails.get('email').errors?.required">This field is required
+                            </mat-error>
                         </mat-form-field>
-
                     </div>
                 </div>
             </div>
-            <app-add-number [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag"
-                (numberArray)="getNumberDetails($event)"></app-add-number>
+            <app-add-number [numberList]=" basicDetailsData.mobileList" [flag]="mobileNumberFlag"
+                (numberArray)="getNumberDetails($event)">
+            </app-add-number>
             <div class="row pt-44">
                 <div class="col-md-4 text-right">
                     <h5 class="m-0 pt-20">PAN</h5>
@@ -87,22 +88,25 @@
                             <input #pan placeholder="Enter PAN" (input)="toUpperCase($event)"
                                 [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
                                 autocomplete="off" class="form-control" formControlName="pan" matInput maxlength="10">
-                            <mat-error *ngIf="basicDetails.get('pan').errors?.required">This Field is required
+                            <mat-error *ngIf="basicDetails.get('pan').errors?.required">This field
+                                is required
                             </mat-error>
-                            <mat-error *ngIf="basicDetails.get('pan').errors?.pattern">Pan must be 10 digits</mat-error>
+                            <mat-error *ngIf="basicDetails.get('pan').errors?.pattern">Pan invalid
+                            </mat-error>
                             <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
                         </mat-form-field>
                     </div>
                 </div>
                 <div class="col-md-3 p-0 d-flex align-items-center">
-                    <p class="mb-0 ml-12 d-flex roboto text-primary f-400 c-p">
-                        <i class="material-icons mr-4"> check_circle </i> KYC compliant</p>
+                    <!-- <p class="mb-0 ml-12 d-flex roboto text-primary f-400 c-p">
+                        <i class="material-icons mr-4"> check_circle </i> KYC compliant</p> -->
                 </div>
             </div>
             <div *ngIf="fieldFlag=='client' && basicDetailsData.userId" class="row pt-40">
                 <div class="col-md-4 text-right">
                     <h5 class="m-0 pt-12">Username</h5>
-                    <p class="f-12 m-0 l-18 roboto text-custom">This will be the login ID. By default, email is the
+                    <p class="f-12 m-0 l-18 roboto text-custom">This will be the login ID. By
+                        default, email is the
                         username
                     </p>
                 </div>
@@ -129,7 +133,8 @@
                             <input (click)="dobAsPerRecord.open()" [matDatepicker]="dobAsPerRecord"
                                 [max]="maxDateForAdultDob" class="form-control br-0 b-0"
                                 formControlName="dobAsPerRecord" matInput readonly>
-                            <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord"></mat-datepicker-toggle>
+                            <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord">
+                            </mat-datepicker-toggle>
                             <mat-datepicker #dobAsPerRecord></mat-datepicker>
                             <mat-hint>Optional</mat-hint>
                         </mat-form-field>
@@ -178,7 +183,8 @@
                         <mat-form-field>
                             <mat-select [(ngModel)]="selectedClientOwner" class="form-control"
                                 formControlName="clientOwner">
-                                <mat-option *ngIf="clientOwnerList==undefined" value="1">{{advisorData.name}}
+                                <mat-option *ngIf="clientOwnerList==undefined" value="1">
+                                    {{advisorData.name}}
                                 </mat-option>
                                 <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
                                     {{singleClient.name}}
@@ -261,7 +267,8 @@
                         <mat-form-field>
                             <mat-select [(ngModel)]="selectedClientOwner" formControlName="leadOwner"
                                 class="form-control">
-                                <mat-option *ngIf="clientOwnerList==undefined" value='1'>{{advisorData.name}}
+                                <mat-option *ngIf="clientOwnerList==undefined" value='1'>
+                                    {{advisorData.name}}
                                 </mat-option>
                                 <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
                                     {{singleClient.name}}
@@ -275,14 +282,16 @@
             <div *ngIf="fieldFlag!='familyMember'" class="row pt-44 pb-60">
                 <div class="col-md-4 text-right">
                     <h5 class="m-0 pt-4">Role</h5>
-                    <p class="m-0 f-12 text-custom">The selected role decides<br> what access the client has
+                    <p class="m-0 f-12 text-custom">The selected role decides<br> what access the
+                        client has
                     </p>
                 </div>
                 <div class="col-md-5 p-0">
                     <div class="form-group m-0">
                         <mat-form-field>
                             <mat-select formControlName="role" class="form-control">
-                                <mat-option *ngIf="clientRoles==undefined" value="0">No roles found</mat-option>
+                                <mat-option *ngIf="clientRoles==undefined" value="0">No roles found
+                                </mat-option>
                                 <mat-option *ngIf="clientRoles" value="0">Select roles</mat-option>
                                 <mat-option [value]="role.clientRoleId" *ngFor="let role of clientRoles">
                                     {{role.clientRoleName}}</mat-option>
@@ -394,7 +403,8 @@
                             <input (click)="gDobAsPerRecord.open()" [matDatepicker]="gDobAsPerRecord"
                                 [max]="maxDateForAdultDob" class="form-control br-0 b-0"
                                 formControlName="gDobAsPerRecord" matInput readonly>
-                            <mat-datepicker-toggle matSuffix [for]="gDobAsPerRecord"></mat-datepicker-toggle>
+                            <mat-datepicker-toggle matSuffix [for]="gDobAsPerRecord">
+                            </mat-datepicker-toggle>
                             <mat-datepicker #gDobAsPerRecord></mat-datepicker>
                             <mat-hint>Optional</mat-hint>
                         </mat-form-field>
@@ -463,7 +473,8 @@
                         <mat-form-field floatLabel="never" appearance="standard">
                             <input matInput placeholder="Enter Name" formControlName="gEmail" class="form-control">
                             <mat-hint>Optional</mat-hint>
-                            <mat-error *ngIf="minorForm.get('gEmail').errors?.pattern">Email invalid</mat-error>
+                            <mat-error *ngIf="minorForm.get('gEmail').errors?.pattern">Email invalid
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -480,7 +491,7 @@
                             <input [maxLength]="10" placeholder="Enter PAN" (input)="toUpperCase($event)"
                                 formControlName="pan" #pan matInput class="form-control"
                                 [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation>
-                            <mat-error *ngIf="minorForm.get('pan').errors?.pattern">Pan must be 10 digits</mat-error>
+                            <mat-error *ngIf="minorForm.get('pan').errors?.pattern">Pan invalid</mat-error>
                             <mat-hint>Optional</mat-hint>
                             <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
                         </mat-form-field>
@@ -621,9 +632,11 @@
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <input matInput formControlName="comEmail" class="form-control">
-                            <mat-error *ngIf="nonIndividualForm.get('comEmail').errors?.pattern">Email not valid
+                            <mat-error *ngIf="nonIndividualForm.get('comEmail').errors?.pattern">Email not
+                                valid
                             </mat-error>
-                            <mat-error>This field is required</mat-error>
+                            <mat-error *ngIf="nonIndividualForm.get('comEmail').errors?.required">This field
+                                is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -642,17 +655,18 @@
                             <input [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
                                 formControlName="comPan" (input)="toUpperCase($event)" #cpan maxlength="10" matInput
                                 class="form-control">
-                            <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.required">This Field is required
+                            <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.required">This Field
+                                is required
                             </mat-error>
-                            <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.pattern">Pan must be 10 digits
+                            <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.pattern">Pan invalid
                             </mat-error>
                             <mat-hint align="end">{{cpan.value.length}} / 10</mat-hint>
                         </mat-form-field>
                     </div>
                 </div>
                 <div class="col-md-4 d-flex align-items-center">
-                    <p class="m-0 d-flex roboto text-primary f-400 c-p">
-                        <i class="material-icons mr-4"> check_circle </i> KYC compliant</p>
+                    <!-- <p class="m-0 d-flex roboto text-primary f-400 c-p">
+                        <i class="material-icons mr-4"> check_circle </i> KYC compliant</p> -->
                 </div>
             </div>
 
@@ -669,6 +683,7 @@
                                 <mat-option value="2">Service</mat-option>
                                 <mat-option value="3">Private sector</mat-option>
                                 <mat-option value="4">Business</mat-option>
+                                <mat-option value="5">Self-Occupied</mat-option>
                             </mat-select>
                             <mat-hint>Optional</mat-hint>
                         </mat-form-field>
@@ -681,7 +696,8 @@
             <div *ngIf="basicDetailsData.userId" class="row pt-44">
                 <div class="col-md-4 text-right">
                     <h5 class="m-0 pt-12">Username</h5>
-                    <p class="m-0 f-12 text-custom">This will be the login ID By <br> default.email is username
+                    <p class="m-0 f-12 text-custom">This will be the login ID By <br> default.email is
+                        username
                     </p>
                 </div>
                 <div class="col-md-5 p-0">
@@ -707,12 +723,12 @@
                             <mat-hint align="end">{{leadSource.value.length}}/ 50</mat-hint> -->
                             <mat-select formControlName="leadSource" class="form-control">
                                 <mat-option value="0">Select option</mat-option>
-                                <mat-option value="1">Search engine</mat-option>,
+                                <mat-option value="1">Search engine</mat-option>
                                 <mat-option value="2">Website</mat-option>
                                 <mat-option value="3">Refrerals from existing clients</mat-option>
                                 <mat-option value="4">Refrerals from existing friends</mat-option>
                                 <mat-option value="5">Refrerals from existing relatives</mat-option>
-                                <mat-option value="6">Linkdin</mat-option>
+                                <mat-option value="6">LinkedIn </mat-option>
                                 <mat-option value="7">Others</mat-option>
                             </mat-select>
                             <mat-hint>Optional</mat-hint>
@@ -764,13 +780,14 @@
                         <mat-form-field>
                             <mat-select [(ngModel)]="selectedClientOwner" formControlName="leadOwner"
                                 class="form-control">
-                                <mat-option *ngIf="clientOwnerList==undefined" value="1">{{advisorData.name}}
+                                <mat-option *ngIf="clientOwnerList==undefined" value="1">
+                                    {{advisorData.name}}
                                 </mat-option>
                                 <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
                                     {{singleClient.name}}
                                 </mat-option>
                             </mat-select>
-                            <mat-error>This Field is required</mat-error>
+                            <mat-error>This field is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -785,7 +802,8 @@
                         <mat-form-field>
                             <mat-select [(ngModel)]="selectedClientOwner" formControlName="clientOwner"
                                 class="form-control">
-                                <mat-option *ngIf="clientOwnerList==undefined" value="1">{{advisorData.name}}
+                                <mat-option *ngIf="clientOwnerList==undefined" value="1">
+                                    {{advisorData.name}}
                                 </mat-option>
                                 <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
                                     {{singleClient.name}}
@@ -808,7 +826,8 @@
                     <div class="form-group m-0">
                         <mat-form-field>
                             <mat-select formControlName="role" class="form-control">
-                                <mat-option *ngIf="clientRoles==undefined" value="0">No roles found</mat-option>
+                                <mat-option *ngIf="clientRoles==undefined" value="0">No roles found
+                                </mat-option>
                                 <mat-option *ngIf="clientRoles" value="0">Select roles</mat-option>
                                 <mat-option [value]="role.clientRoleId" *ngFor="let role of clientRoles">
                                     {{role.clientRoleName}}</mat-option>

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { RoutingState } from "../../../../../../services/routing-state.service";
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, OnInit} from '@angular/core';
+import {RoutingState} from '../../../../../../services/routing-state.service';
+import {AuthService} from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-customer-activity',
@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 export class CustomerActivityComponent implements OnInit {
   clientData: any;
 
-  constructor(private routingStateService: RoutingState) {
+  constructor(private routingStateService: RoutingState, private authService: AuthService) {
   }
 
   ngOnInit() {

@@ -72,7 +72,7 @@
       </div>
     </mat-expansion-panel>
 
-    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngIf="_data.name != 'Overview Report'">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h5 class="m-0">Transaction view <span class="text-right f-14 pl-12">{{countTranView}} of
@@ -89,7 +89,7 @@
       </div>
     </mat-expansion-panel>
 
-    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngIf="_data.name != 'Overview Report'">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h5 class="m-0">Report Type <span class="text-right f-14 pl-12"></span></h5>
@@ -119,7 +119,7 @@
       </div>
     </mat-expansion-panel>
     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
-                         *ngIf="_data.name!='SUMMARY REPORT'">
+                         *ngIf="_data.name!='SUMMARY REPORT' && _data.name != 'Overview Report'">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h5 class="m-0">Transaction Period</h5>
@@ -133,9 +133,22 @@
       </div>
     </mat-expansion-panel>
   </mat-accordion>
+  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngIf="_data.name == 'Overview Report'">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h5 class="m-0">Select Filter View<span class="text-right f-14 pl-12">{{overviewFilterCount}} of {{overviewFilter.length}}
+          selected</span></h5>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div>
+      <mat-list-item role="listitem" *ngFor="let item of overviewFilter let i = index;">
+        <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect(item,i)">{{item.name}}
+        </mat-checkbox>
+      </mat-list-item>
+    </div>
+  </mat-expansion-panel>
 
-
-  <div class="row pt-12" [formGroup]="summaryFilerForm">
+  <div class="row pt-12" [formGroup]="summaryFilerForm" *ngIf="_data.name != 'Overview Report'">
     <div class="col-md-6 p-0" *ngIf="transactionPeriod == false">
       <h5 class="m-0 pb-8">Report as on</h5>
       <div class="col-md-8 pl-0">
@@ -180,7 +193,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6 p-0">
+    <div class="col-md-6 p-0" *ngIf="_data.name != 'Overview Report'">
       <h5 class="m-0 pb-8">Show zero folios?</h5>
       <mat-radio-group aria-label="Select an option" id="custom-radio" formControlName="showFolios">
         <mat-radio-button value="1" class="text-custom b-ua">Yes</mat-radio-button>

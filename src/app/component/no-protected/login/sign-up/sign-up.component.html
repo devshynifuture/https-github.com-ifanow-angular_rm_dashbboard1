@@ -12,6 +12,12 @@
                     </i>
                 </div>
             </div>
+
+            <app-signup-progress-bar [signUpBarList]="signUpBarList" class="w-80"></app-signup-progress-bar>
+
+
+
+
             <div class="mobileUserBox">
                 <div class="loginBoxverifyOtp">
 
@@ -32,12 +38,24 @@
                             </p>
                         </div>
                     </div>
-                    <mat-radio-group [(ngModel)]="typeOfRegister" (change)="resetForm()" aria-label="Select an option">
+
+                    <div class="row">
+                        <div class="col-md-12 mb-20 p-0">
+                            <mat-button-toggle-group class="w-80" [(ngModel)]="typeOfRegister" (change)="resetForm()"
+                                aria-label="Select an option">
+                                <mat-button-toggle class="w-50" value="1">Individual</mat-button-toggle>
+                                <mat-button-toggle class="w-50" value="2">Non-individual</mat-button-toggle>
+                            </mat-button-toggle-group>
+                        </div>
+                    </div>
+
+
+                    <!-- <mat-radio-group [(ngModel)]="typeOfRegister" (change)="resetForm()" aria-label="Select an option">
                         <mat-radio-button value="1">Individual</mat-radio-button>
                         <mat-radio-button value="2">Non-individual</mat-radio-button>
-                    </mat-radio-group>
-                    <!-- Individual <mat-slide-toggle [(ngModel)]="typeOfRegister" (change)="resetForm()">
-                    </mat-slide-toggle> Non-individual -->
+                    </mat-radio-group> -->
+
+
                     <div [formGroup]="signUpForm" class="form_container_new_wrapper">
                         <div class="row">
                             <div class="col-md-12 form-group p-0">
@@ -89,7 +107,8 @@
                                         autocomplete="off" class="form-control" formControlName="mobile" matInput
                                         maxlength="10" placeholder="Enter mobile" tabindex="1">
                                     <mat-error *ngIf="signUpForm.get('mobile').errors?.required" align="end">Mobile
-                                        required</mat-error>
+                                        required
+                                    </mat-error>
                                     <mat-error *ngIf="signUpForm.get('mobile').errors?.pattern">Mobile number must be 10
                                         digits
                                     </mat-error>

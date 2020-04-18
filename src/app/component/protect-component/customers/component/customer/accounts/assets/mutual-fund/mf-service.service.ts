@@ -28,7 +28,12 @@ export class MfServiceService {
       return filteredArray;
     }
   }
-
+ doFiltering(data) {
+    data.subCategoryData = this.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+    data.schemeWise = this.filter(data.subCategoryData, 'mutualFundSchemeMaster');
+    data.mutualFundList = this.filter(data.schemeWise, 'mutualFund');
+    return data;
+  }
   filter(data, key) {// filtering data as per category
     const filterData = [];
     const finalDataSource = [];
@@ -224,7 +229,7 @@ export class MfServiceService {
   filterFinalData(mfData, dataForFilter) {
     const family_member_list = this.filterArray(mfData.family_member_list, 'id', dataForFilter.familyMember, 'familyMemberId');
     const category = this.filterArray(mfData.mutualFundCategoryMastersList, 'id', dataForFilter.category, 'categoryId');
-    const subCategoryData = this.filter(mfData.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+    const subCategoryData = this.filter(category, 'mutualFundSubCategoryMaster');
     const schemeWiseFilter = this.filter(subCategoryData, 'mutualFundSchemeMaster');
     const schemeWise = this.filterArray(schemeWiseFilter, 'amc_id', dataForFilter.amc, 'amc_id');
     const mutualFundListFilter = this.filter(schemeWiseFilter, 'mutualFund');
@@ -249,6 +254,7 @@ export class MfServiceService {
       });
     }
     const sendData = {
+      subCategoryData,
       family_member_list,
       category,
       schemeWise,
@@ -259,6 +265,7 @@ export class MfServiceService {
       showFolio: dataForFilter.showFolio,
       reportType: dataForFilter.reportType,
       transactionView: dataForFilter.transactionView,
+      overviewFilter : dataForFilter.overviewFilter,
       mfData,
     };
     return sendData;

@@ -1,12 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {PostalService} from 'src/app/services/postal.service';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { PostalService } from 'src/app/services/postal.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-client-address',
@@ -38,8 +38,8 @@ export class ClientAddressComponent implements OnInit {
   permanentAddFlag: boolean;
 
   constructor(private cusService: CustomerService, private fb: FormBuilder,
-              private subInjectService: SubscriptionInject, private postalService: PostalService,
-              private peopleService: PeopleService, private eventService: EventService) {
+    private subInjectService: SubscriptionInject, private postalService: PostalService,
+    private peopleService: PeopleService, private eventService: EventService) {
   }
 
   addressForm;
@@ -68,7 +68,7 @@ export class ClientAddressComponent implements OnInit {
     (data == undefined) ? data = {} : data;
     this.addressForm = this.fb.group({
       addressType: [(data.addressType) ? String(data.addressType) : '1'],
-      addProofType: [(data.proofType) ? String(data.proofType) : '1'],
+      addProofType: [(data.proofType) ? String(data.proofType) : '0'],
       proofIdNum: [data.proofIdNumber, [Validators.required]],
       addressLine1: [data.address1, [Validators.required]],
       addressLine2: [data.address2, [Validators.required]],
@@ -80,7 +80,7 @@ export class ClientAddressComponent implements OnInit {
     if (data.proofIdNumber) {
 
     } else {
-      this.changeAddrProofNumber({value: String(data.proofType)});
+      this.changeAddrProofNumber({ value: String(data.proofType) });
     }
   }
 
@@ -180,6 +180,6 @@ export class ClientAddressComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 }

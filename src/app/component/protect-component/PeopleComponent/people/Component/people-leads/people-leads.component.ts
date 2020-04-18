@@ -49,8 +49,11 @@ export class PeopleLeadsComponent implements OnInit {
               singleData.email = singleData.emailList[0].email;
             }
           });
+          this.leadDataSource.data = data;
         }
-        this.leadDataSource.data = data;
+        else {
+          this.leadDataSource.data = [];
+        }
       },
       err => {
         this.leadDataSource.data = [];
