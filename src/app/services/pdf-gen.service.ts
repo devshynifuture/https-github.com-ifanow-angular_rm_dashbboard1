@@ -87,7 +87,7 @@ export class PdfGenService {
       content: [
         
         {text: title, style: 'header'},
-        {text: 'Adviser: ' + this.advisor.name, style: 'anotherStyle'},
+        {text: 'Advisor: ' + this.advisor.name, style: 'anotherStyle'},
         {lineHeight: 2, text: 'Client: ' + this.client.name, style: 'anotherStyle'},
         // { lineHeight: 2,text: 'Date: ' + this.datePipe.transform(new Date(), 'medium'), style: 'anotherStyle'},
         

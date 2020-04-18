@@ -101,17 +101,16 @@ export class PoTdSchemeComponent implements OnInit {
 
   getPoTdSchemedataResponse(data) {
     this.isLoading = false;
-    if (data == undefined) {
-      this.noData = 'No scheme found';
-      this.dataSource.data = [];
-    } else if (data && data.postOfficeTdList.length != 0) {
-      console.log('getPoTdSchemedataResponse', data);
-      this.dataSource.data = data.postOfficeTdList;
-      this.dataSource.sort = this.sort;
-      this.sumOfCurrentValue = data.sumOfCurrentValue;
-      this.sumOfAmountInvested = data.sumOfAmountInvested;
-      this.sumOfMaturityValue = data.sumOfMaturityValue;
-      UtilService.checkStatusId(this.dataSource.filteredData);
+    if (data != undefined) {
+      if (data.assetList) {
+        console.log('getPoTdSchemedataResponse', data);
+        this.dataSource.data = data.assetList;
+        this.dataSource.sort = this.sort;
+        this.sumOfCurrentValue = data.sumOfCurrentValue;
+        this.sumOfAmountInvested = data.sumOfAmountInvested;
+        this.sumOfMaturityValue = data.sumOfMaturityValue;
+        UtilService.checkStatusId(this.dataSource.filteredData);
+      }
     } else {
       this.noData = 'No scheme found';
       this.dataSource.data = [];

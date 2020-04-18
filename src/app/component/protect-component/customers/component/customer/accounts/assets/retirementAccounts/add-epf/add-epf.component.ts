@@ -35,6 +35,7 @@ export class AddEPFComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  currentYear: any = new Date().getFullYear();
   validatorType = ValidatorType
   maxDate = new Date();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -273,7 +274,9 @@ addNewNominee(data) {
       employerContry: [(data == undefined) ? '' : data.employersMonthlyContribution, [Validators.required]],
       annualSalGrowth: [(data == undefined) ? '' : data.annualSalaryGrowthRate, [Validators.required]],
       currentEPFBal: [(data == undefined) ? '' : data.currentEpfBalance, [Validators.required]],
+      currentEPSBal: [(data == undefined) ? '' : data.currentEpsBalance, [Validators.required]],
       maturityYear: [(data == undefined) ? '' : (data.maturityYear),],
+      retirement: [(data.purchaseYear == undefined) ? '' : (data.purchaseYear), [Validators.required, Validators.minLength(4), Validators.min(this.currentYear)]],
       balanceAsOn: [(data == undefined) ? '' : new Date(data.balanceAsOnDate), [Validators.required]],
       voluntaryContribution : [(data == undefined) ? '' : data.voluntaryContribution, [Validators.required]],
       EPFNo: [(data == undefined) ? '' : (data.epfNo),],
@@ -332,10 +335,12 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.epf}
         ownerList: this.epf.value.getCoOwnerName,
         familyMemberId: this.familyMemberId,
         // ownerName: (this.ownerName == undefined) ? this.epf.controls.ownerName.value : this.ownerName,
+        YearOfRetirement: this.epf.controls.retirement.value,
         employeesMonthlyContribution: this.epf.controls.employeeContry.value,
         employersMonthlyContribution: this.epf.controls.employerContry.value,
         annualSalaryGrowthRate: this.epf.controls.annualSalGrowth.value,
         currentEpfBalance: this.epf.controls.currentEPFBal.value,
+        currentEpsBalance: this.epf.controls.currentEPSBal.value,
         maturityYear: this.epf.controls.maturityYear.value,
         balanceAsOnDate: this.datePipe.transform(this.epf.controls.balanceAsOn.value, 'yyyy-MM-dd'),
         epfNo: this.epf.controls.EPFNo.value,

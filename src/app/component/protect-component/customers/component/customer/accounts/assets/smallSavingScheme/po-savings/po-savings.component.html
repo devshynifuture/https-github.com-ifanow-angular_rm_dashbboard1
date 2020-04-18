@@ -56,7 +56,7 @@
                 Current value
             </th>
             <td *matCellDef="let element" class="br amt text-right" mat-cell>
-                <div class="bar" appFormatNumber> {{element.currentValue}} </div>
+                <div class="bar" appFormatNumber> {{element.accumalatedValue}} </div>
             </td>
             <td mat-footer-cell class="br text-right amt p-8 amt f-600" *matFooterCellDef appFormatNumber
                 [value]="SumOfCurrentValue">

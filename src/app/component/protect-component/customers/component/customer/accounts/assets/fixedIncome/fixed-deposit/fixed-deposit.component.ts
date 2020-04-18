@@ -410,9 +410,9 @@ export class FixedDepositComponent implements OnInit {
       ownerPercent: [data.ownerPerc],
       institution: [(!data) ? '' : data.institutionName],
       description: [(!data) ? '' : data.description],
-      tenureY: [(!data.tenureInYear) ? '0' : (data.fdEndDateIn == 2) ? '' : data.tenureInYear.toString()],
-      tenureM: [(!data.tenureInMonth) ? '0' : (data.fdEndDateIn == 2) ? '' : data.tenureInMonth.toString()],
-      tenureD: [(!data.tenureInDay) ? '0' : (data.fdEndDateIn == 2) ? '' : data.tenureInDay.toString()],
+      tenureY: [(!data.tenureInYear) ? '0' : (data.fdEndDateIn == 2) ? 0 : data.tenureInYear.toString()],
+      tenureM: [(!data.tenureInMonth) ? '0' : (data.fdEndDateIn == 2) ? 0 : data.tenureInMonth.toString()],
+      tenureD: [(!data.tenureInDay) ? '0' : (data.fdEndDateIn == 2) ? 0 : data.tenureInDay.toString()],
       frequencyOfPayoutPerYear: [(!data.frequencyOfPayoutPerYear) ? '' : data.frequencyOfPayoutPerYear],
       maturityDate: [(!data) ? '' : (data.fdEndDateIn == 1) ? '' : new Date(data.maturityDate)],
       payOpt: [(!data.interestPayoutOption) ? '' : data.interestPayoutOption, [Validators.required]],
@@ -450,11 +450,16 @@ export class FixedDepositComponent implements OnInit {
 
 
   saveFixedDeposit() {
-    if (this.showTenure == true) {
-      this.tenure = this.getDateYMD();
-      this.maturityDate = this.tenure;
-    } else {
+    if(this.fixedDeposit.value.maturity == 2){
       this.maturityDate = this.fixedDeposit.controls.maturityDate.value;
+    }
+    else{
+      if (this.showTenure == true) {
+        this.tenure = this.getDateYMD();
+        this.maturityDate = this.tenure;
+      } else {
+        this.maturityDate = this.fixedDeposit.controls.maturityDate.value;
+      }
     }
     if (this.tenureFlag) {
       return;
@@ -509,7 +514,10 @@ export class FixedDepositComponent implements OnInit {
         tenureInDay: this.fixedDeposit.controls.tenureD.value,
         fdEndDateIn: this.fixedDeposit.controls.maturity.value,
         id: this.fixedDeposit.controls.id.value
+        // isEdit: this.fixedDeposit.controls.id.value?true:false
       };
+      console.log("fd log", obj);
+      // return;
       this.barButtonOptions.active = true;
       console.log('fixedDeposit', obj);
       this.dataSource = obj;

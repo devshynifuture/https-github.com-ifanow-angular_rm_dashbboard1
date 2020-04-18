@@ -13,7 +13,7 @@
 
 <div [formGroup]="others" class="pb-44 mb-48 pt-100">
     <div formArrayName="getCoOwnerName">
-        <div [ngClass]="{'pt-36': pointIndex >0}" class="row"
+        <div [ngClass]="{'pt-36': pointIndex>0}" class="row"
             *ngFor="let obj of others.controls['getCoOwnerName'].controls; let pointIndex=index"
             [formGroupName]="pointIndex">
             <div class="col-md-5 pr-0 text-right">
@@ -26,9 +26,8 @@
                             (selectionChange)="disabledMember($event.value,'owner')"
                             (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
                             class="form-control br-0" [callMethod]='callMethod'>
-                            <mat-option value=''>Select family members</mat-option>
-                            <mat-option (click)="display(f)" *ngFor="let f of nomineesListFM" [disabled]="f.disable"
-                                [value]="f.userName">
+                            <mat-option value='' disabled>Select family members</mat-option>
+                            <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                 <span>{{f.userName}}</span>
                             </mat-option>
                         </mat-select>
@@ -52,6 +51,14 @@
                     </mat-form-field>
                 </div>
             </div>
+            <div class="col-md-2 pr-0 d-flex align-items-center">
+                <i *ngIf="others.value.getCoOwnerName.length < 3"
+                    class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i>
+                <i *ngIf="others.value.getCoOwnerName.length > 1"
+                    class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                    (click)="removeCoOwner(pointIndex)">remove</i>
+            </div>
+
         </div>
     </div>
     <div class="row pt-40">

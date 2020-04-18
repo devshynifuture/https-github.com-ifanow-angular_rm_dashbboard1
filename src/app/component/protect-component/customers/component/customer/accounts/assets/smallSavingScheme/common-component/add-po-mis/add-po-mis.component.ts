@@ -138,6 +138,7 @@ get getCoOwner() {
 }
 
 addNewCoOwner(data) {
+  this.pomisForm.controls["amtInvested"].setValue("");
   this.getCoOwner.push(this.fb.group({
     name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
   }));
@@ -162,6 +163,7 @@ addNewCoOwner(data) {
 }
 
 removeCoOwner(item) {
+  this.pomisForm.controls["amtInvested"].setValue("");
   this.getCoOwner.removeAt(item);
   if (this.pomisForm.value.getCoOwnerName.length == 1) {
     this.getCoOwner.controls['0'].get('share').setValue('100');
@@ -252,7 +254,7 @@ addNewNominee(data) {
         isClient:0
       })]),
       // ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required, AssetValidationService.ageValidators(10)]],
-      amtInvested: [data.amountInvested, [Validators.required, Validators.min(1500), Validators.max(450000)]],
+      amtInvested: [data.amountInvested, [Validators.required, Validators.min(1500)]],
       commencementdate: [new Date(data.commencementDate), [Validators.required]],
       tenure: [(data.tenure) ? data.tenure : '5', [Validators.required]],
       ownershipType: [(data.ownerTypeId) ? data.ownerTypeId : '1', [Validators.required]],
@@ -266,7 +268,8 @@ addNewNominee(data) {
         sharePercentage: [0],
         familyMemberId: [0],
         id:[0]
-      })])
+      })]),
+      id:[data.id]
     });
      // ==============owner-nominee Data ========================\\
   /***owner***/ 
@@ -296,6 +299,20 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.pomisForm}
 // ==============owner-nominee Data ========================\\ 
     // this.ownerData = this.pomisForm.controls;
     // this.familyMemberId = data.familyMemberId;
+  }
+
+  join:boolean = false;
+  checkOwnerType(){
+    if(this.getCoOwner.length>1){
+      this.pomisForm.controls["amtInvested"].setValidators(Validators.max(900000));
+      this.pomisForm.controls["amtInvested"].updateValueAndValidity();
+      this.join = true;
+    }
+    else{
+      this.pomisForm.controls["amtInvested"].setValidators(Validators.max(450000));
+      this.pomisForm.controls["amtInvested"].updateValueAndValidity();
+      this.join = false;
+    }
   }
 
   getFormControl() {
@@ -329,7 +346,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.pomisForm}
     } else {
         this.barButtonOptions.active = true;
         const obj = {
-          id: this._inputData.id,
+          id: this.pomisForm.value.id,
           clientId: this.clientId,
           // familyMemberId: this.familyMemberId.id,
           advisorId: this.advisorId,
@@ -361,7 +378,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.pomisForm}
           adviceDescription: "manualAssetDescription"
         }
 
-        if (this.editApi != 'Add' && this.editApi != 'advicePOMIS') {
+        if (this.pomisForm.value.id != null) {
         this.custumService.editPOMIS(obj).subscribe(
           data => this.editPOMISRes(data),
         err => {

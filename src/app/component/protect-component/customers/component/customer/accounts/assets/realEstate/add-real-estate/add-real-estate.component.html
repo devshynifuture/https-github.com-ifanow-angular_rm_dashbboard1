@@ -72,8 +72,9 @@
                         <mat-option value="" disabled>Select option</mat-option>
                         <mat-option value="0">Self Occupied property</mat-option>
                         <mat-option value="1">Let out property</mat-option>
-                        <mat-option value="2">Commercial, Agricultural land</mat-option>
-                        <mat-option value="3">Non agricultural land</mat-option>
+                        <mat-option value="2">Commercial land</mat-option>
+                        <mat-option value="3">Agricultural land</mat-option>
+                        <mat-option value="4">Non agricultural land</mat-option>
                     </mat-select>
                     <mat-error class="f-12"
                         [ngClass]="{'v-h':!(isTypeValid && getFormControl().type.invalid || getFormControl().type.touched && getFormControl().type.invalid)}">
@@ -171,10 +172,10 @@
             <div class="col-md-5 text-right">
                 <h5 class="m-0 pt-36">Area</h5>
             </div>
-            <div class="col-md-5 iconRupess">
+            <div class="col-md-5">
                 <div class="row">
                     <div class="col-md-6">
-                        <h5 class="m-0 f-14">Rate per unit</h5>
+                        <h5 class="m-20 f-14"></h5>
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <input autocomplete="off" matInput appInputValueValidation

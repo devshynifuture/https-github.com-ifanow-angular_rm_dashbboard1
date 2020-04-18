@@ -60,7 +60,7 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 p-0 text-right">
-            <h5 class="m-0 pt-8">Employee's Monthly Contribution</h5>
+            <h5 class="m-0 pt-8">Employee's Contribution</h5>
         </div>
         <div class="col-md-3 ">
             <div class="form-group mb-0 iconRupess">
@@ -80,7 +80,7 @@
 
     <div class="row pt-40">
         <div class="col-md-5 p-0 text-right">
-            <h5 class="m-0 pt-8">Employer's Monthly Contribution</h5>
+            <h5 class="m-0 pt-8">Employer's Contribution</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
@@ -118,7 +118,7 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">EPF balance</h5>
+            <h5 class="m-0 pt-8">Account Balance EPF</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
@@ -131,6 +131,24 @@
                         This field is required
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{currentEPFBal.value.length}}/10</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-40">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Account Balance EPS</h5>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group mb-0 iconRupess">
+                <mat-form-field>
+                    <input autocomplete="off" matInput #currentEPSBal type="text" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess"
+                        formControlName="currentEPSBal">
+                    <mat-error class="f-12">
+                        This field is required
+                    </mat-error>
+                    <mat-hint align="end" class="f-12">{{currentEPSBal.value.length}}/10</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -156,7 +174,7 @@
     </div>
     <div class="row pt-24">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Annual salary growth rate</h5>
+            <h5 class="m-0 pt-8">Salary growth rate</h5>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0 iconPetage">
@@ -167,6 +185,30 @@
                     <mat-error class="f-12"
                         [ngClass]="{'v-h':!(isAnnualSalGrowth && getFormControl().annualSalGrowth.invalid || getFormControl().annualSalGrowth.touched && getFormControl().annualSalGrowth.invalid)}">
                         This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-44">
+        <div class="col-md-5 d-flex align-items-end justify-content-end pr-0 text-right">
+            <h5 class="m-0">Retirement year</h5>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input autocomplete="off" [placeholder]="'E.g. '+ currentYear" matInput type="text"
+                        appInputValueValidation maxlength="4" [inputValidator]="validatorType.NUMBER_ONLY"
+                        class="form-control br-0 " formControlName="retirement">
+                    <mat-error class="f-12"
+                        *ngIf="getFormControl().retirement.touched && getFormControl().retirement.hasError('required')">
+                        This field is required
+                    </mat-error>
+                    <mat-error class="f-12" *ngIf="getFormControl().retirement.hasError('minlength')">
+                        Invalid retirement year
+                    </mat-error>
+                    <mat-error class="f-12" *ngIf="getFormControl().retirement.hasError('min') && !getFormControl().retirement.hasError('minlength')">
+                        retirement year cannot be in past year
                     </mat-error>
                 </mat-form-field>
             </div>
