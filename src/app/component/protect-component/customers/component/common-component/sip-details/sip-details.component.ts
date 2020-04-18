@@ -10,7 +10,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 })
 export class SipDetailsComponent implements OnInit {
   inputData: any;
-  sipDetails: any;
+  sipDetails=[];
 
   constructor(private subInjectService:SubscriptionInject,private custumService:CustomerService,private eventService:EventService) { }
   @Input()
@@ -30,7 +30,7 @@ export class SipDetailsComponent implements OnInit {
     }
     this.custumService.getMfSipDetails(obj).subscribe(
       data => this.getSipDetailsResponse(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.sipDetails = [];
       }
     );
   }

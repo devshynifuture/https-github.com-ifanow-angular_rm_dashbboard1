@@ -10,7 +10,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 })
 export class FolioMasterDetailsComponent implements OnInit {
   inputData: any;
-  folioDetails: any;
+  folioDetails = [];
 
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService) { }
   @Input()
@@ -30,7 +30,7 @@ export class FolioMasterDetailsComponent implements OnInit {
     }
     this.custumService.getMfFolioMaster(obj).subscribe(
       data => this.getFolioMasterResponse(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.folioDetails = [];
       }
     );
   }
