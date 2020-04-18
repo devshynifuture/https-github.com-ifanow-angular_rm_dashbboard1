@@ -66,7 +66,7 @@ export class RightFilterComponent implements OnInit {
   sendTransactionView;
   transactionPeriod = true;
   transactionPeriodCheck = true;
-
+  overviewFilterCount :any;
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
     private custumService: CustomerService, private eventService: EventService,
     private mfService: MfServiceService, private datePipe: DatePipe, ) {
@@ -412,7 +412,7 @@ export class RightFilterComponent implements OnInit {
   changeSelect = function (data, i) {
     this.sendTransactionView = this._data.transactionView;
     console.log('transaction ==', this._data.transactionView);
-    if (data.filterName == 'overView') {
+    if (this._data.name == 'Overview Report') {
       if (this.overviewFilter != undefined) {
         this.overviewFilterCount = 0;
         this.overviewFilter.forEach(item => {
