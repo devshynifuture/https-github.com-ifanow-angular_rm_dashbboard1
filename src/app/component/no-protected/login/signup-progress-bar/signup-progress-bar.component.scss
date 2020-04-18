@@ -45,13 +45,14 @@
 }
 
 .progressbar li.active {
-    color: green;
+    color: #fff;
 }
 
 .progressbar li.active:before {
-    border-color: #55b776;
+    border-color: green;
+    background: green;
 }
 
 .progressbar li.active+li:after {
-    background-color: #55b776;
+    background-color: green
 }
