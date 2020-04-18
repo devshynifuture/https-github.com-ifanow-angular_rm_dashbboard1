@@ -522,6 +522,7 @@ export const appConfig = {
   DELETE_STAGE_COMMENT:'rmdashboard/dashboard/ifa-onboard/stages/chat/delete',
   ADD_STAGE_COMMENT:'rmdashboard/dashboard/ifa-onboard/stages/chat/post',
   GET_BULK_FILE_ORDER_LIST: 'fileorder/bulk/list/get',
+  UNMAPPED_ADVISOR_LIST: 'rmdashboard/dashboard/admin/unmapped-ifas/get',
 
   GET_FILE_ORDER_HISTORICAL_LIST_DATA: "fileorder/historical/advisor/list/get",
   GET_FILE_ORDER_UPPER_LIST_DATA: 'fileorder/historical/list/get',
