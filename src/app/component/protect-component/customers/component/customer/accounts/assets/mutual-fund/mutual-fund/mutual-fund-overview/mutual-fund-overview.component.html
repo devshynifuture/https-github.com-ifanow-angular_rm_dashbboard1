@@ -123,7 +123,7 @@
                                 <div class="col-md-3 relClass height24">
                                     <div class="bar">
                                     <p class="text-black mb-0 ">
-                                        <span appFormatNumber *ngIf="this.equityCurrentValue && !isLoading ">{{(this.equityCurrentValue)?this.equityCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.equityCurrentValue && !isLoading">0</span>
+                                        <span appFormatNumber *ngIf="this.equityCurrentValue">{{(this.equityCurrentValue)?this.equityCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.equityCurrentValue">0</span>
                                     </p>
                                     </div>
                                 </div>
