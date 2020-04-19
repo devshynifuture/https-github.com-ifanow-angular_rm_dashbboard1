@@ -284,12 +284,12 @@
                                 more_vert
                             </i>
                             <mat-menu #menu25="matMenu">
-                                <button mat-menu-item>View factsheet</button>
+                                <button mat-menu-item (click)="openUpperFragment('mutualFunds')">View factsheet</button>
                                 <button mat-menu-item>Download SOA</button>
                                 <button mat-menu-item (click)="openFolioMaster(element)">Folio master details</button>
                                 <button mat-menu-item (click)="openSipDetails(element)">SIP details</button>
                                 <button mat-menu-item class="bt-1">Transact online</button>
-                                <button mat-menu-item>Transaction slip</button>
+                                <!-- <button mat-menu-item>Transaction slip</button> -->
                                 <button mat-menu-item class="bt-1">View transactions</button>
                                 <button mat-menu-item>Add records</button>
                                 <button mat-menu-item (click)="deleteModal('SCHEME')"  >Delete scheme</button>
