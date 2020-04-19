@@ -14,6 +14,7 @@ import { Subject, BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class UtilService {
+  fileURL: any;
 
   constructor(
     private eventService: EventService,
@@ -267,12 +268,13 @@ export class UtilService {
     this.http.post('http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj, { responseType: 'blob' }).subscribe(
       data => {
         const file = new Blob([data], { type: 'application/pdf' });
-        const fileURL = URL.createObjectURL(file);
-        window.open(fileURL);
+        this.fileURL = URL.createObjectURL(file);
+        window.open(this.fileURL);
         const a = document.createElement('a');
-        a.download = fileURL;
+        a.download = this.fileURL;
       }
     );
+    return (this.fileURL) ? this.fileURL :null;
   }
 
   /**
