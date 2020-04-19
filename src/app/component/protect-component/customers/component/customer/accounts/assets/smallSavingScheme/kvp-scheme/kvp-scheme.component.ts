@@ -99,18 +99,17 @@ export class KvpSchemeComponent implements OnInit {
 
   getKvpSchemedataResponse(data) {
     this.isLoading = false;
-    if (data == undefined) {
-      this.noData = 'No scheme found';
-      this.datasource.data = [];
-    } else if (data && data.KVPList && data.KVPList.length != 0) {
-      console.log('getKvpSchemedataResponse', data);
-      this.datasource.data = data.KVPList;
-      this.datasource.sort = this.sort;
-      UtilService.checkStatusId(this.datasource.filteredData);
-      this.sumOfCurrentValue = data.SumOfCurrentValue;
-      this.sumOfAmountInvested = data.SumOfAmountInvested;
-      this.kvpData = data;
-    } else {
+    if (data != undefined) {
+      if (data.assetList) {
+        console.log('getKvpSchemedataResponse', data);
+        this.datasource.data = data.assetList;
+        this.datasource.sort = this.sort;
+        UtilService.checkStatusId(this.datasource.filteredData);
+        this.sumOfCurrentValue = data.sumOfCurrentValue;
+        this.sumOfAmountInvested = data.sumOfAmountInvested;
+        this.kvpData = data;
+      }
+    }  else {
       this.noData = 'No scheme found';
       this.datasource.data = []
     }

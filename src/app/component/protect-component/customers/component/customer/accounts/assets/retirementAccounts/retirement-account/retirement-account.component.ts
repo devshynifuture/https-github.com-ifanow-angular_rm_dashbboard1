@@ -193,11 +193,11 @@ export class RetirementAccountComponent implements OnInit {
   constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog) {
   }
 
-  displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'employer','vol', 'rate', 'bal', 'bacla', 'year', 'desc', 'status', 'icons'];
+  displayedColumns11 = ['no', 'owner', 'cvalue', 'emp', 'employer','vol', 'rate','year','bal', 'desc', 'status', 'icons'];
   datasource11;
   displayedColumns12 = ['no', 'owner', 'cvalue', 'total', 'scheme', 'pran', 'desc', 'status', 'icons'];
   datasource12;
-  displayedColumns13 = ['no', 'owner', 'name', 'number', 'year', 'amt', 'reason', 'desc', 'status', 'icons'];
+  displayedColumns13 = ['no', 'owner', 'name', 'joint', 'number', 'year', 'amt', 'reason', 'desc', 'status', 'icons'];
   datasource13;
   displayedColumns14 = ['no', 'owner', 'aemp', 'aempe', 'rate', 'date', 'desc', 'status', 'icons'];
   datasource14;
@@ -290,7 +290,7 @@ export class RetirementAccountComponent implements OnInit {
 
     switch (flag) {
       case 'addEPS':
-        fragmentData.popupHeaderText += 'EPS';
+        fragmentData.popupHeaderText += 'EPF/VPF/EPS';
         fragmentData.componentName = AddEPSComponent;
         break;
       case 'addSuperannuation':
@@ -500,9 +500,9 @@ export class RetirementAccountComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       this.sumOfAmountReceived = data.sumOfAmountReceived;
-      if (data.gratuityList) {
+      if (data.assetList) {
         console.log('getGrauityRes =', data);
-        this.dataSource.data = data.gratuityList;
+        this.dataSource.data = data.assetList;
         this.dataSource.sort = this.gratuityListTableSort;
         UtilService.checkStatusId(this.dataSource.filteredData);
       }

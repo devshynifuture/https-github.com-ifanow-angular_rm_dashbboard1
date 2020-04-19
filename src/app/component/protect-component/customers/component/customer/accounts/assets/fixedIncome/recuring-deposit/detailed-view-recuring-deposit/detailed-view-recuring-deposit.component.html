@@ -14,12 +14,20 @@
     <div class="row pt-40">
         <div class="col-md-12 p-0">
             <div class="insurance-ui bt">
-                <div class="row bb p-8 b-l br" *ngFor="let owner of recuringDeposit.ownerList; let i = index">
+                <!-- <div class="row bb p-8 b-l br" *ngFor="let owner of recuringDeposit.ownerList; let i = index">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         {{i != 0?'Co-o' : 'O'}}wner {{i != 0?i:''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{owner.name}}
+                    </div>
+                </div> -->
+                <div class="row bb p-8 b-l br" *ngFor="let owner of recuringDeposit.ownerList; let i = index">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        {{i != 0?'Co-o' : 'O'}}wner {{i != 0?i:''}}
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{owner.name}} sharing {{owner.share}}% ownership
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -30,7 +38,46 @@
                         {{(recuringDeposit.monthlyContribution)?recuringDeposit.monthlyContribution:'-'}}
                     </div>
                 </div>
-
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Commencement date
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(recuringDeposit.commencementDate)?(recuringDeposit.commencementDate | date:'dd/MM/yyyy'):'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Interest rate
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(recuringDeposit.interestRate)?recuringDeposit.interestRate:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Tenure
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(recuringDeposit.tenure)?recuringDeposit.tenure:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Maturity date
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(recuringDeposit.maturityDate)?(recuringDeposit.maturityDate | date:'dd/MM/yyyy'):'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Interest compounding
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(recuringDeposit.interestCompounding=='1')?'Daily':(recuringDeposit.interestCompounding=='2')?'Monthly':(recuringDeposit.interestCompounding=='3')?'Quarterly':(recuringDeposit.interestCompounding=='4')?'Half yearly ':(recuringDeposit.interestCompounding=='5')?'Yearly':'-'}}
+                    </div>
+                </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Current value
@@ -47,46 +94,8 @@
                         {{(recuringDeposit.maturityValue)?recuringDeposit.maturityValue:'-'}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Maturity date
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(recuringDeposit.maturityDate)?(recuringDeposit.maturityDate | date:'dd/MM/yyyy'):'-'}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Interest rate
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(recuringDeposit.interestRate)?recuringDeposit.interestRate:'-'}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Interest compounding
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(recuringDeposit.interestCompounding=='1')?'Daily':(recuringDeposit.interestCompounding=='2')?'Monthly':(recuringDeposit.interestCompounding=='3')?'Quarterly':(recuringDeposit.interestCompounding=='4')?'Half yearly ':(recuringDeposit.interestCompounding=='5')?'Yearly':'-'}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Commencement date
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(recuringDeposit.commencementDate)?(recuringDeposit.commencementDate | date:'dd/MM/yyyy'):'-'}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Tenure
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(recuringDeposit.tenure)?recuringDeposit.tenure:'-'}}
-                    </div>
-                </div>
+                
+               
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         RD no.
@@ -118,6 +127,22 @@
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{(recuringDeposit.description)?recuringDeposit.description:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br" *ngIf="recuringDeposit.nomineeList.length == 0 ">
+                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                        Nominee
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        -
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br" *ngFor="let obj of recuringDeposit.nomineeList; let i = index">
+                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                        Nominee {{i + 1}}
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{obj.name}} sharing {{obj.sharePercentage}}% Nominee share
                     </div>
                 </div>
             </div>

@@ -13,7 +13,8 @@
 </div>
 <div [formGroup]="bonds" class="pt-100 pb-48 mb-44">
     <div formArrayName="getCoOwnerName">
-        <div class="row" *ngFor="let obj of bonds.controls['getCoOwnerName'].controls; let pointIndex=index"
+        <div [ngClass]="{'pt-36': pointIndex > 0}" class="row"
+            *ngFor="let obj of bonds.controls['getCoOwnerName'].controls; let pointIndex=index"
             [formGroupName]="pointIndex">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8 ">{{pointIndex != 0?'Co-o' : 'O'}}wner{{pointIndex != 0?pointIndex:''}}</h5>
@@ -25,8 +26,8 @@
                             (selectionChange)="disabledMember($event.value,'owner')"
                             (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
                             class="form-control br-0" [callMethod]='callMethod'>
-                            <mat-option value=''>Select family members</mat-option>
-                            <mat-option (click)="display(f)" *ngFor="let f of nomineesListFM" [disabled]="f.disable"
+                            <mat-option value='' disabled>Select family members</mat-option>
+                            <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
                                 [value]="f.userName">
                                 <span>{{f.userName}}</span>
                             </mat-option>
@@ -51,6 +52,14 @@
                     </mat-form-field>
                 </div>
             </div>
+            <div class="col-md-2 d-flex align-items-center">
+                <i *ngIf="bonds.value.getCoOwnerName.length < 3"
+                    class="material-icons text-primitive f-20 c-p float-left"
+                    (click)="addNewCoOwner(undefined)">add</i>
+                <i *ngIf="bonds.value.getCoOwnerName.length > 1"
+                    class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                    (click)="removeCoOwner(pointIndex)">remove</i>
+            </div>
         </div>
     </div>
     <div class="row pt-36">
@@ -74,38 +83,17 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-12">Coupon payout option</h5>
+            <h5 class="m-0 pt-12">Commencement date</h5>
         </div>
         <div class="col-md-3">
-            <mat-form-field>
-                <mat-select formControlName="couponOption" class="form-control br-0">
-                    <mat-option value="" disabled>Select option</mat-option>
-                    <mat-option value="1">Zero coupon</mat-option>
-                    <mat-option value="2">Monthly</mat-option>
-                    <mat-option value="3">Quarterly</mat-option>
-                    <mat-option value="4">Half yearly </mat-option>
-                    <mat-option value="5">Yearly</mat-option>
-                </mat-select>
-                <mat-error class="f-12 pt-4"
-                    [ngClass]="{'v-h':!(isCouponOption && getFormControl().couponOption.invalid || getFormControl().couponOption.touched && getFormControl().couponOption.invalid)}">
-                    This field is required
-                </mat-error>
-            </mat-form-field>
-
-        </div>
-    </div>
-    <div class="row pt-40">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-12">Coupon rate</h5>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group mb-0 iconPetage">
-                <mat-form-field>
-                    <input autocomplete="off" matInput type="number" (keyup)="onChange($event,'interestRate')"
-                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                        class="form-control br-0 percentage" formControlName="interestRate">
+            <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                    <input autocomplete="off" (click)="picker.open()" matInput formControlName="commencementDate"
+                        [max]="maxDate" [matDatepicker]="picker" class="form-control br-0 b-0" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
                     <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
+                        [ngClass]="{'v-h':!(isCommencementDate && getFormControl().commencementDate.invalid || getFormControl().commencementDate.touched && getFormControl().commencementDate.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -133,23 +121,98 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-12">Commencement date</h5>
+            <h5 class="m-0 pt-12">Coupon rate</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-group mb-0">
-                <mat-form-field class="ba-date">
-                    <input autocomplete="off" (click)="picker.open()" matInput formControlName="commencementDate"
-                        [max]="maxDate" [matDatepicker]="picker" class="form-control br-0 b-0" readonly>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
+            <div class="form-group mb-0 iconPetage">
+                <mat-form-field>
+                    <input autocomplete="off" matInput type="number" (keyup)="onChange($event,'interestRate')"
+                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        class="form-control br-0 percentage" formControlName="interestRate">
                     <mat-error class="f-12 pt-4"
-                        [ngClass]="{'v-h':!(isCommencementDate && getFormControl().commencementDate.invalid || getFormControl().commencementDate.touched && getFormControl().commencementDate.invalid)}">
+                        [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
                         This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
         </div>
     </div>
+    <div class="row pt-40">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-12">Tenure(in months)</h5>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input autocomplete="off" matInput autocomplete="off" formControlName="tenure" placeholder="E.g. 30"
+                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #tenure type="text"
+                        maxlength="3" class="form-control br-0">
+                    <!-- <mat-select formControlName="tenure" class="form-control br-0">
+                            <mat-option [value]="">Months</mat-option>
+                            <mat-option *ngFor="let M of fdMonths" [value]="M">
+                                <span>{{M}}</span>
+                            </mat-option>
+                        </mat-select> -->
+                    <!-- <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isTenure && getFormControl().tenure.invalid || getFormControl().interestRate.touched && getFormControl().tenure.invalid)}">
+                            This field is required
+                        </mat-error> -->
+                    <mat-error *ngIf="bonds.get('tenure').errors?.required && bonds.get('tenure').touched"
+                        class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                    <mat-error *ngIf="bonds.get('tenure').errors?.max || bonds.get('tenure').errors?.min"
+                        class="f-12 pt-4">
+                        Should be between than 1 to 120
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-40">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-12">Coupon payout option</h5>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field>
+                <mat-select formControlName="couponOption" class="form-control br-0" (selectionChange)="getIntPayout()">
+                    <mat-option value="" disabled>Select option</mat-option>
+                    <!-- <mat-option value="1">Zero coupon</mat-option>
+                    <mat-option value="2">Monthly</mat-option>
+                    <mat-option value="3">Quarterly</mat-option> -->
+                    <mat-option value="1">Cumulative </mat-option>
+                    <mat-option value="2">Non-cumulative</mat-option>
+                </mat-select>
+                <mat-error class="f-12 pt-4"
+                    [ngClass]="{'v-h':!(isCouponOption && getFormControl().couponOption.invalid || getFormControl().couponOption.touched && getFormControl().couponOption.invalid)}">
+                    This field is required
+                </mat-error>
+            </mat-form-field>
+
+        </div>
+    </div>
+    <div class="row pt-40" *ngIf="bonds.value.couponOption != ''">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 *ngIf="bonds.value.couponOption == 2" class="m-0 pt-12">Frequency of payout</h5>
+            <h5 *ngIf="bonds.value.couponOption == 1" class="m-0 pt-12">Compounding frequency</h5>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field>
+                <mat-select formControlName="frequency" class="form-control br-0">
+                    <mat-option value="" disabled>Select option</mat-option>
+                    <!-- <mat-option value="1">Zero coupon</mat-option>
+                    <mat-option value="2">Monthly</mat-option>
+                    <mat-option value="3">Quarterly</mat-option> -->
+                    <mat-option value="4">Half yearly </mat-option>
+                    <mat-option value="5">Yearly</mat-option>
+                </mat-select>
+                <mat-error class="f-12 pt-4">
+                    This field is required
+                </mat-error>
+            </mat-form-field>
+
+        </div>
+    </div>
+    
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-12">Rate of return</h5>
@@ -188,37 +251,7 @@
             </mat-form-field>
         </div>
     </div>
-    <div class="row pt-40">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-12">Tenure(in months)</h5>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group mb-0">
-                <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" matInput autocomplete="off" formControlName="tenure" placeholder="E.g. 30"
-                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #tenure type="text"
-                        maxlength="3" class="form-control br-0">
-                    <!-- <mat-select formControlName="tenure" class="form-control br-0">
-                            <mat-option [value]="">Months</mat-option>
-                            <mat-option *ngFor="let M of fdMonths" [value]="M">
-                                <span>{{M}}</span>
-                            </mat-option>
-                        </mat-select> -->
-                    <!-- <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isTenure && getFormControl().tenure.invalid || getFormControl().interestRate.touched && getFormControl().tenure.invalid)}">
-                            This field is required
-                        </mat-error> -->
-                    <mat-error *ngIf="bonds.get('tenure').errors?.required && bonds.get('tenure').touched"
-                        class="f-12 pt-4">
-                        This field is required
-                    </mat-error>
-                    <mat-error *ngIf="bonds.get('tenure').errors?.max || bonds.get('tenure').errors?.min"
-                        class="f-12 pt-4">
-                        Should be between than 1 to 120
-                    </mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
+   
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-12">Type</h5>

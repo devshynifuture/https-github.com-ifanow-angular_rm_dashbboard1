@@ -65,8 +65,8 @@ export class ExcelGenService {
     worksheet.addRow([]);
     // let subTitleRow = worksheet.addRow(['Date :', this.datePipe.transform(new Date(), 'medium')])
 
-    worksheet.addRow(['Adviser:', this.advisor.name]);
-    worksheet.addRow(['Client:', (this.client) ? this.client.name : '']);
+   worksheet.addRow(['Advisor:', this.advisor.name]);
+   worksheet.addRow(['Client:', this.client.name]);
 
     // Add Image
     // let logo = workbook.addImage({

@@ -47,6 +47,7 @@ export class AddGratuityComponent implements OnInit {
   ownerName: any;
   clientId: any;
   flag: any;
+  maxDate:Date = new Date();
   nomineesListFM:any =[];
   callMethod:any;
   adviceShowHeaderAndFooter: boolean = true;
@@ -243,8 +244,10 @@ addNewNominee(data) {
         isClient:0
       })]),
       // ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      noOfcompleteYrs: [(data == undefined) ? '' : data.yearsCompleted, [Validators.required]],
+      // noOfcompleteYrs: [(data == undefined) ? '' : data.yearsCompleted, [Validators.required]],
       amountRecived: [(data == undefined) ? '' : data.amountReceived, [Validators.required]],
+      yearOfJoining:[(data == undefined) ? '' : data.yearOfJoining, [Validators.required]],
+      employmentType:[data.employmentType? data.employmentType:'', [Validators.required]],
       nameOfOrg: [(data == undefined) ? '' : data.organizationName,],
       yearOfReceipt: [(data == undefined) ? '' : data.yearOfReceipt,],
       resonOfRecipt: [(data == undefined) ? '' : data.reasonOfReceipt,],
@@ -305,8 +308,10 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.gratuity}
         ownerList: this.gratuity.value.getCoOwnerName,
         familyMemberId: this.familyMemberId,
         // ownerName: (this.ownerName == undefined) ? this.gratuity.controls.ownerName.value : this.ownerName,
-        yearsCompleted: this.gratuity.controls.noOfcompleteYrs.value,
+        // yearsCompleted: this.gratuity.controls.noOfcompleteYrs.value,
         amountReceived: this.gratuity.controls.amountRecived.value,
+        yearOfJoining:this.gratuity.controls.yearOfJoining.value,
+        employmentType:this.gratuity.controls.employmentType.value,
         organizationName: this.gratuity.controls.nameOfOrg.value,
         yearOfReceipt: this.gratuity.controls.yearOfReceipt.value,
         reasonOfReceipt: this.gratuity.controls.resonOfRecipt.value,

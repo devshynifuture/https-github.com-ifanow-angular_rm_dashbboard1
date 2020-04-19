@@ -101,18 +101,17 @@ export class PoSavingsComponent implements OnInit {
 
   getPoSavingSchemedataResponse(data) {
     this.isLoading = false;
-    if (data == undefined) {
-      this.noData = 'No scheme found';
-      this.datasource.data = [];
-    } else if (data && data.PostOfficeSavingsList.length != 0) {
-      console.log('getPoSavingSchemedataResponse', data);
-      this.datasource.data = data.PostOfficeSavingsList;
-      this.datasource.sort = this.sort;
-      UtilService.checkStatusId(this.datasource.filteredData);
-      this.SumOfCurrentValue = data.SumOfCurrentValue;
-      this.SumOfBalancementioned = data.SumOfBalancementioned;
-      this.posavingdata = data;
-    } else {
+    if (data != undefined) {
+      if (data.assetList) {
+        console.log('getPoSavingSchemedataResponse', data);
+        this.datasource.data = data.assetList;
+        this.datasource.sort = this.sort;
+        UtilService.checkStatusId(this.datasource.filteredData);
+        this.SumOfCurrentValue = data.SumOfCurrentValue;
+        this.SumOfBalancementioned = data.SumOfBalancementioned;
+        this.posavingdata = data;
+      }
+    }  else {
       this.noData = 'No scheme found';
       this.datasource.data = [];
 
