@@ -30,6 +30,7 @@ export class PoMisSchemeComponent implements OnInit {
   sumOfMonthlyPayout: number;
   sumOfAmountInvested: number;
   sumOfMaturityValue: number;
+  sumOfPayoutTillToday: number;
   @ViewChild('tableEl', { static: false }) tableEl;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -108,19 +109,19 @@ export class PoMisSchemeComponent implements OnInit {
 
   getPoMisSchemedataResponse(data: any) {
     this.isLoading = false;
-    if (data == undefined) {
-      this.noData = 'No scheme found';
-      this.datasource.data = [];
-    } else if (data && data.poMisList && data.poMisList.length != 0) {
-      console.log('getPoMisSchemedataResponse', data);
-      this.datasource.data = data.poMisList;
-      this.datasource.sort = this.sort;
-      UtilService.checkStatusId(this.datasource.filteredData);
-      this.sumOfMaturityValue = data.sumOfMaturityValue;
-      this.sumOfCurrentValue = data.sumOfCurrentValue;
-      this.sumOfMonthlyPayout = data.sumOfMonthlyPayout;
-      this.sumOfAmountInvested = data.sumOfAmountInvested;
-      this.pomisData = data;
+    if (data != undefined) {
+      if (data.poMisList) {
+        console.log('getPoMisSchemedataResponse', data);
+        this.datasource.data = data.poMisList;
+        this.datasource.sort = this.sort;
+        UtilService.checkStatusId(this.datasource.filteredData);
+        this.sumOfMaturityValue = data.sumOfMaturityValue;
+        this.sumOfCurrentValue = data.sumOfCurrentValue;
+        this.sumOfMonthlyPayout = data.sumOfMonthlyPayout;
+        this.sumOfAmountInvested = data.sumOfAmountInvested;
+        this.sumOfPayoutTillToday = data.sumOfPayoutTillToday;
+        this.pomisData = data; 
+      }
     } else {
 
       this.noData = 'No scheme found';

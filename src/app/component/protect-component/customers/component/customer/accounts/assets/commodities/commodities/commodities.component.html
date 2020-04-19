@@ -226,9 +226,9 @@
                         <div class="bar" appFormatNumber> {{isLoading? ' ' : utils.formatter(element.marketValue)}}
                         </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br p-8 f-600 amt text-right">
-                        <div class="bar" appFormatNumber>
-                            {{isLoading? ' ' : utils.formatter(sumOfMarketValueOther) || ' '}} </div>
+                    
+                    <td mat-footer-cell *matFooterCellDef class="br proximaFont amt text-right f-600 p-8">
+                        <div >{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMarketValueOther" appFormatNumber>{{sumOfMarketValueOther}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="pvalue">
@@ -240,8 +240,8 @@
                         <div class="bar" appFormatNumber> {{isLoading? ' ' : utils.formatter(element.purchaseValue)}}
                         </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br p-8 f-600 amt text-right">
-                        <div class="bar" appFormatNumber> {{utils.formatter(sumOfPurchaseValueOther) || ' '}} </div>
+                    <td mat-footer-cell *matFooterCellDef class="br proximaFont amt text-right f-600 p-8">
+                        <div >{{isLoading ? ' ' : '₹'}}<span [value]="sumOfPurchaseValueOther" appFormatNumber>{{sumOfPurchaseValueOther}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="pur">
@@ -257,7 +257,7 @@
                         Growth rate
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
-                        <div class="bar"> {{element.growthRate}} </div>
+                        <div class="bar"> {{element.growthRate}}{{isLoading ? ' ' : '%'}} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br"> </td>
                 </ng-container>

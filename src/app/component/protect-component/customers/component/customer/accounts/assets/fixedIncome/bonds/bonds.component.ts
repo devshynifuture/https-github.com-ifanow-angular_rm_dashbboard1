@@ -280,6 +280,7 @@ export class BondsComponent implements OnInit {
       commencementDate: [(data == undefined) ? '' : new Date(data.commencementDate), [Validators.required]],
       interestRate: [(data == undefined) ? '' : data.couponRate, [Validators.required]],
       compound: [(data.compounding == undefined) ? '' : (data.compounding) + "", [Validators.required]],
+      frequency: [(data.compounding == undefined) ? '' : (data.compounding) + "", [Validators.required]],
       linkBankAc: [(data == undefined) ? '' : data.linkedBankAccount,],
       tenure: [(data == undefined) ? '' : data.tenure, [Validators.required, Validators.min(1), Validators.max(120)]],
       description: [(data == undefined) ? '' : data.description,],
@@ -380,10 +381,10 @@ export class BondsComponent implements OnInit {
         linkedBankAccount: this.bonds.controls.linkBankAc.value,
         description: this.bonds.controls.description.value,
         nomineeList: this.bonds.value.getNomineeName,
-
+        interestPayoutOption: this.bonds.value.couponOption,
         tenure: this.bonds.controls.tenure.value,
         type: this.bonds.controls.type.value,
-        compounding: this.bonds.controls.compound.value,
+        compounding: this.bonds.controls.frequency.value,
         id: this.bonds.controls.id.value
       }
       this.barButtonOptions.active = true;

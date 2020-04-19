@@ -104,17 +104,16 @@ export class NscSchemeComponent implements OnInit {
 
   getNscSchemedataResponse(data) {
     this.isLoading = false;
-    if (data == undefined) {
-      this.noData = 'No scheme found';
-      this.datasource.data = [];
-    } else if (data && data.NationalSavingCertificate.length != 0) {
-      console.log(data, 'getNscSchemedataResponse');
-      this.datasource.data = data.NationalSavingCertificate;
-      this.datasource.sort = this.sort;
-      UtilService.checkStatusId(this.datasource.filteredData);
-      this.SumOfCurrentValue = data.SumOfCurrentValue;
-      this.SumOfMaturityValue = data.SumOfMaturityValue
-      this.nscData = data;
+    if (data != undefined) {
+      if (data.assetList) {
+        console.log(data, 'getNscSchemedataResponse');
+        this.datasource.data = data.assetList;
+        this.datasource.sort = this.sort;
+        UtilService.checkStatusId(this.datasource.filteredData);
+        this.SumOfCurrentValue = data.sumOfCurrentValue;
+        this.SumOfMaturityValue = data.sumOfMaturityValue
+        this.nscData = data;
+      } 
     } else {
       this.noData = 'No scheme found';
       this.datasource.data = []

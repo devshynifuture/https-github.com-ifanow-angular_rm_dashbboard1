@@ -42,7 +42,7 @@ export class ScssSchemeComponent implements OnInit {
   constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, public dialog: MatDialog, private eventService: EventService, private cusService: CustomerService, private subInjectService: SubscriptionInject) {
   }
 
-  displayedColumns19 = ['no', 'owner', 'payout', 'rate', 'tamt', 'amt', 'mdate', 'desc', 'status', 'icons'];
+  displayedColumns19 = ['no', 'owner', 'payout', 'rate', 'tamt', 'amt', 'mdate', 'mValue', 'desc', 'status', 'icons'];
 
 
   ngOnInit() {
@@ -143,18 +143,17 @@ export class ScssSchemeComponent implements OnInit {
 
   getKvpSchemedataResponse(data: any) {
     this.isLoading = false;
-    if (data == undefined) {
-      this.noData = 'No scheme found';
-      this.datasource.data = [];
-    } else if (data && data.scssList && data.scssList.length > 0) {
-      console.log('getKvpSchemedataResponse', data);
-      this.datasource.data = data.scssList;
-      this.datasource.sort = this.sort;
-      UtilService.checkStatusId(this.datasource.filteredData);
-      this.sumOfAmountInvested = data.sumOfAmountInvested;
-      this.sumOfTotalAmountReceived = data.sumOfTotalAmountReceived;
-      this.sumOfQuarterlyPayout = data.sumOfQuarterlyPayout;
-      this.scssData = data;
+    if (data != undefined) {
+      if (data.assetList) {
+        console.log('getKvpSchemedataResponse', data);
+        this.datasource.data = data.assetList;
+        this.datasource.sort = this.sort;
+        UtilService.checkStatusId(this.datasource.filteredData);
+        this.sumOfAmountInvested = data.sumOfAmountInvested;
+        this.sumOfTotalAmountReceived = data.sumOfAmountReceived;
+        this.sumOfQuarterlyPayout = data.sumOfQuarterlyPayout;
+        this.scssData = data;
+      }
     } else {
       this.noData = 'No scheme found';
       this.datasource.data = []

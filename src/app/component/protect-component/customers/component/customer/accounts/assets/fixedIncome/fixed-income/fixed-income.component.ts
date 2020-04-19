@@ -152,9 +152,9 @@ totalSum:any
     if (data == undefined) {
       this.noData = "No scheme found";
       this.dataSource.data = [];
-    } else if (data.fixedDepositList) {
-      this.fixedDepositList = data.fixedDepositList;
-      this.dataSource.data = data.fixedDepositList;
+    } else if (data.assetList) {
+      this.fixedDepositList = data.assetList;
+      this.dataSource.data = data.assetList;
       this.dataSource.sort = this.fixedIncomeTableSort;
       console.log('soted &&&&&&&&&', this.dataSource);
       UtilService.checkStatusId(this.dataSource.filteredData);
@@ -165,10 +165,10 @@ totalSum:any
         }
 
       });
+      this.sumAmountInvested = data.sumOfAmountInvested;
+      this.sumCurrentValue = data.sumOfCurrentValue;
+      this.sumMaturityValue = data.sumOfMaturityValue;
       console.log('sumCurrentValue', this.sumCurrentValue);
-      this.sumAmountInvested = data.sumAmountInvested;
-      this.sumCurrentValue = data.sumCurrentValue;
-      this.sumMaturityValue = data.sumMaturityValue;
     } else {
       this.noData = 'No scheme found';
       this.dataSource.data = [];
@@ -205,10 +205,8 @@ totalSum:any
       this.dataSource.data = data.recurringDeposits;
       this.dataSource.sort = this.recurringDepositTableSort;
       UtilService.checkStatusId(this.dataSource.filteredData);
-      data.recurringDeposits.forEach(element => {
-        this.totalCurrentValue += element.currentValue
-        this.totalMarketValue += element.monthlyContribution
-      });
+      this.totalCurrentValue = data.totalCurrentValue;
+      this.totalMarketValue = data.totalMarketValue;
     } else {
       this.noData = 'No scheme found';
       this.dataSource.data = [];
@@ -246,6 +244,7 @@ totalSum:any
       this.sumAmountInvestedB = data.sumAmountInvested;
       this.sumCouponAmount = data.sumCouponAmount;
       this.sumCurrentValueB = data.sumCurrentValue;
+      this.sumMaturityValue = data.sumMaturityValue;
     } else {
       this.noData = 'No scheme found';
       this.dataSource.data = [];
@@ -390,7 +389,7 @@ totalSum:any
   }
 
   openBonds(data) {
-    let popupHeaderText = !!data ? 'Edit Bond' : 'Add Bond';
+    let popupHeaderText = !!data ? 'Edit Bond' : 'Add Bonds';
     const fragmentData = {
       flag: 'BondsComponent',
       data,

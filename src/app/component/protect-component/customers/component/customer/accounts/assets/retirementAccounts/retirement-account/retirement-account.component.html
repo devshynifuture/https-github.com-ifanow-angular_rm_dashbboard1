@@ -5,7 +5,7 @@
             <button (click)="getfixedIncomeData('1')"
                 [ngClass]="{'mat-stroked-button': showRecurring == '1','text-primary':showRecurring == '1'}"
                 class="br-0 text-custom" mat-button>
-                EPF
+                EPF/VPF/EPS
             </button>
             <button (click)="getfixedIncomeData('2')"
                 [ngClass]="{'mat-stroked-button': showRecurring == '2','text-primary':showRecurring == '2'}"
@@ -17,16 +17,16 @@
                 class="br-0 text-custom" mat-button>
                 Gratuity
             </button>
-            <button (click)="getfixedIncomeData('4')"
+            <!-- <button (click)="getfixedIncomeData('4')"
                 [ngClass]="{'mat-stroked-button': showRecurring == '4','text-primary':showRecurring == '4'}"
                 class="br-0 text-custom" mat-button>
                 Superannuation
-            </button>
-            <button (click)="getfixedIncomeData('5')"
+            </button> -->
+            <!-- <button (click)="getfixedIncomeData('5')"
                 [ngClass]="{'mat-stroked-button': showRecurring == '5','text-primary':showRecurring == '5'}"
                 class="br-0 text-custom" mat-button>
                 EPS
-            </button>
+            </button> -->
 
         </div>
     </div>
@@ -35,7 +35,7 @@
     <div *ngIf="showRecurring == '1'">
         <div class="row">
             <div class="col-md-6 p-0">
-                <h4 class="m-0 text-black roboto pt-8">Employees providend fund (EPF)</h4>
+                <h4 class="m-0 text-black roboto pt-8">EPF/VPF/EPS</h4>
             </div>
             <div class="col-md-6 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
@@ -91,7 +91,7 @@
                 <ng-container matColumnDef="cvalue">
                     <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef
                         class="br  textRight text-right">
-                        Current value
+                        current value-EPF 
                     </th>
                     <!-- <td mat-cell *matCellDef="let element" class="br amt  text-right">
                         <div class="bar" appFormatNumber> {{ element.currentValue }} </div>
@@ -147,14 +147,27 @@
                 <ng-container matColumnDef="rate">
                     <th mat-sort-header="rateOfReturns" mat-header-cell *matHeaderCellDef
                         class="br textRight text-right">
-                        Rate of <br> returns
+                        interest rate
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right amt">
-                        <div class="bar"> {{element.rateOfReturn}} </div>
+                        <div class="bar"> {{element.rateOfReturn}}{{!isLoading? "%" : ""}} </div>
                     </td>
                     <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
                 </ng-container>
                 <ng-container matColumnDef="bal">
+                    <th mat-sort-header="currentEpfBalance" mat-header-cell *matHeaderCellDef
+                        class="br textRight text-right">
+                        current value -EPS
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="br  text-right amt">
+                        <div class="bar" appFormatNumber> {{ element.currentEpfBalance }} </div>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef class="br  amt f-600 p-8 text-right" appFormatNumber
+                        [value]="sumOfcurrentEpfBalance">
+                        <div class="bar"> {{ sumOfcurrentEpfBalance || ' '}} </div>
+                    </td>
+                </ng-container>
+                <!-- <ng-container matColumnDef="bal">
                     <th mat-sort-header="currentEpfBalance" mat-header-cell *matHeaderCellDef
                         class="br textRight text-right">
                         Balance <br> mentioned
@@ -176,10 +189,10 @@
                         <div class="bar"> {{element.balanceAsOnDate | date:'dd/MM/yyyy'}} </div>
                     </td>
                     <td *matFooterCellDef mat-footer-cell></td>
-                </ng-container>
+                </ng-container> -->
                 <ng-container matColumnDef="year">
                     <th mat-sort-header="maturityYear" mat-header-cell *matHeaderCellDef class="br textLeft text-right">
-                        Maturity <br>year
+                        Retirement <br>year
                     </th>
                     <td mat-cell *matCellDef="let element" class="br  text-left">
                         <div class="bar"> {{element.maturityYear}} </div>
@@ -565,6 +578,15 @@
                     </td>
                     <td *matFooterCellDef class="br   text-right" mat-footer-cell></td>
                 </ng-container>
+                <ng-container matColumnDef="joint">
+                    <th *matHeaderCellDef class="br text-right " mat-header-cell mat-sort-header="organizationName">
+                        Date of joining
+                    </th>
+                    <td *matCellDef="let element" class="br text-left  " mat-cell>
+                        <div class="bar">{{element.yearOfJoining | date:'dd/MM/yyyy' }}</div>
+                    </td>
+                    <td *matFooterCellDef class="br   text-right" mat-footer-cell></td>
+                </ng-container>
                 <ng-container matColumnDef="number">
                     <th *matHeaderCellDef class="br text-right  textRight " mat-header-cell
                         mat-sort-header="yearsCompleted">
@@ -588,7 +610,8 @@
                 <ng-container matColumnDef="amt">
                     <th *matHeaderCellDef class="br textRight text-right  textRight " mat-header-cell
                         mat-sort-header="amountReceived">
-                        Amount <br> recieved
+                        amount accumulated<br>  as on date
+
                     </th>
                     <td *matCellDef="let element" class="br amt text-right  " mat-cell>
                         <div class="bar" appFormatNumber> {{element.amountReceived}} </div>

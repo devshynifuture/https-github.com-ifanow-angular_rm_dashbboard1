@@ -25,8 +25,9 @@
                                 (selectionChange)="disabledMember($event.value,'owner')"
                                 (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
                                 class="form-control br-0" [callMethod]='callMethod'>
+                                <!-- || f.familyMemberAge <= 60 -->
                                 <mat-option value='' disabled>Select family members</mat-option>
-                                <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
+                                <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable "
                                     [value]="f.userName">
                                     <span>{{f.userName}}</span>
                                 </mat-option>

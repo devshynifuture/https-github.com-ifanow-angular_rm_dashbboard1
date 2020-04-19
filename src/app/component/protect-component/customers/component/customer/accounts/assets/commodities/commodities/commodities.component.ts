@@ -226,15 +226,13 @@ export class CommoditiesComponent implements OnInit {
   }
   getOthersRes(data) {
     this.isLoading = false;
-    if (data == undefined) {
-      this.noData = 'No Others found';
-      this.otherCommodityList.data = []
-    } else if (data.otherCommodityList.length != 0) {
-      console.log('getOthersRes @@@@', data);
-      this.otherCommodityList.data = data.otherCommodityList;
-      this.otherCommodityList.sort = this.otherListTableSort;
-      this.sumOfMarketValueOther = data.sumOfMarketValue
-      this.sumOfPurchaseValueOther = data.sumOfPurchaseValue
+    if (data != undefined) {
+        console.log('getOthersRes @@@@', data);
+        this.otherCommodityList.data = data.otherCommodityList;
+        this.otherCommodityList.sort = this.otherListTableSort;
+        this.sumOfMarketValueOther = data.sumOfMarketValue;
+        this.sumOfPurchaseValueOther = data.sumOfPurchaseValue;
+      
     }
     else {
       this.noData = 'No Others found';
@@ -272,7 +270,7 @@ export class CommoditiesComponent implements OnInit {
     );
   }
   openOthers(value, state, data) {
-    let popupHeaderText = !!data ? 'Edit Other' : 'Add Other'
+    let popupHeaderText = !!data ? 'Edit Others' : 'Add Other'
     const fragmentData = {
       flag: value,
       data: data,
