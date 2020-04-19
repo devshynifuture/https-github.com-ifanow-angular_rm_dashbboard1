@@ -131,23 +131,23 @@ export class MutualFundOverviewComponent implements OnInit {
       if (element.category == 'DEBT') {
         this.debtCurrentValue = element.currentValue;
         this.debtPercentage = ((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2);
-        this.debtPercentage = parseInt(this.debtPercentage);
+        this.debtPercentage = parseFloat(this.debtPercentage);
       } else if (element.category == 'EQUITY') {
         this.equityCurrentValue = element.currentValue;
         this.equityPercentage = ((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2);
-        this.equityPercentage = parseInt(this.equityPercentage);
+        this.equityPercentage = parseFloat(this.equityPercentage);
       } else if (element.category == 'HYBRID') {
         this.hybridCurrentValue = element.currentValue;
         this.hybridPercenatge = ((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2);
-        this.hybridPercenatge = parseInt(this.hybridPercenatge);
+        this.hybridPercenatge = parseFloat(this.hybridPercenatge);
       } else if (element.category == 'SOLUTION ORIENTED') {
         this.solution_OrientedCurrentValue = element.currentValue;
         this.solution_OrientedPercenatge = ((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2);
-        this.solution_OrientedPercenatge = parseInt(this.solution_OrientedPercenatge);
+        this.solution_OrientedPercenatge = parseFloat(this.solution_OrientedPercenatge);
       } else {
         this.otherCurrentValue = element.currentValue;
         this.otherPercentage = ((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2);
-        this.otherPercentage = parseInt(this.otherPercentage);
+        this.otherPercentage = parseFloat(this.otherPercentage);
       }
     });
   }

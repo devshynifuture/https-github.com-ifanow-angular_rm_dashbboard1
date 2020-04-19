@@ -9,9 +9,10 @@ import {MFSchemeLevelHoldingsComponent} from '../mfscheme-level-holdings/mfschem
 import {MFSchemeLevelTransactionsComponent} from '../mfscheme-level-transactions/mfscheme-level-transactions.component';
 import {MfServiceService} from '../../mf-service.service';
 import {ExcelGenService} from 'src/app/services/excel-gen.service';
-import {MatTableDataSource} from '@angular/material';
+import {MatTableDataSource, MatDialog} from '@angular/material';
 import {WebworkerService} from '../../../../../../../../../../services/web-worker.service';
 import {MUTUAL_FUND_SUMMARY} from '../../mutual-fund.script';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-mutual-fund-summary',
@@ -40,7 +41,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
   constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
               private mfService: MfServiceService, private excel: ExcelGenService,
-              private workerService: WebworkerService) {
+              private workerService: WebworkerService ,public dialog: MatDialog) {
   }
 
   @Input() mutualFund;
@@ -296,5 +297,44 @@ export class MutualFundSummaryComponent implements OnInit {
   generatePdf() {
     let para = document.getElementById('template');
     this.utilService.htmlToPdf(para.innerHTML, 'Test');
+  }
+
+  deleteModal(value) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        // this.subService.deleteInvoices(this.list).subscribe(
+        //   data => {
+        //     this.dataCount = 0;
+        //     this.eventService.openSnackBar('invoice deleted successfully.', 'Dismiss');
+        //     dialogRef.close(this.list);
+
+        //   },
+        //   error => this.eventService.showErrorMessage(error)
+        // );
+        // dialogRef.close(listIndex);
+
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    
+    });
   }
 }

@@ -4,7 +4,7 @@
             <div class="col-md-4 pl-0">
                 <h4 class="m-0 text-black roboto pt-8">Mutual fund capital gains</h4>
             </div>
-            <div class="col-md-8 p-0 d-flex justify-content-end">
+            <div class="col-md-8 p-0 d-flex justify-content-end" *ngIf="!isLoading">
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1">
                 <mat-menu #menu1="matMenu">
                     <button mat-menu-item>PDF</button>
@@ -30,64 +30,64 @@
                         EQUITY
                     </h5>
                 </div>
-                <table matSort mat-table [dataSource]="dataSource" id="table-low" class="mutualfunds-capital-equity">
+                <table  mat-table [dataSource]="dataSource" id="table-low" class="mutualfunds-capital-equity">
 
                     <!--- Note that these columns can be defined in any order.
                                   The actual rendered columns are set as a property on the row definition" -->
 
                     <!-- Position Column -->
                     <ng-container matColumnDef="schemeName">
-                        <th class="br" mat-sort-header="schemeName" mat-header-cell *matHeaderCellDef> Scheme name </th>
+                        <th class="br"  mat-header-cell *matHeaderCellDef> Scheme name </th>
                         <td class="br" mat-cell *matCellDef="let element"> {{element.schemeName}} </td>
                     </ng-container>
 
                     <!-- Name Column -->
                     <ng-container matColumnDef="folioNumber">
-                        <th class="br text-right" mat-sort-header="folioNumber" mat-header-cell *matHeaderCellDef> Folio
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> Folio
                             number </th>
                         <td class="br text-right" mat-cell *matCellDef="let element"> {{element.folioNumber}} </td>
                     </ng-container>
 
                     <!-- Weight Column -->
                     <ng-container matColumnDef="investorName">
-                        <th class="br text-left" mat-sort-header="investorName" mat-header-cell *matHeaderCellDef>
+                        <th class="br text-left"  mat-header-cell *matHeaderCellDef>
                             Investor name </th>
                         <td class="br text-left" mat-cell *matCellDef="let element"> {{element.investorName}} </td>
                     </ng-container>
 
                     <!-- Symbol Column -->
                     <ng-container matColumnDef="stGain">
-                        <th class="br text-right" mat-sort-header="stGain" mat-header-cell *matHeaderCellDef> ST gain
+                        <th class="br text-right"  mat-header-cell *matHeaderCellDef> ST gain
                         </th>
                         <td class="br text-right" mat-cell *matCellDef="let element"> {{element.stGain}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="stLoss">
-                        <th class="br text-right" mat-sort-header="stLoss" mat-header-cell *matHeaderCellDef> ST loss
+                        <th class="br text-right"  mat-header-cell *matHeaderCellDef> ST loss
                         </th>
                         <td class="br text-right" mat-cell *matCellDef="let element"> {{element.stLoss}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="ltGain">
-                        <th class="br text-right" mat-sort-header="ltGain" mat-header-cell *matHeaderCellDef> LT gain
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> LT gain
                         </th>
                         <td class="br text-right" mat-cell *matCellDef="let element"> {{element.ltGain}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="indexedGain">
-                        <th class="br text-right" mat-sort-header="indexedGain" mat-header-cell *matHeaderCellDef>
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef>
                             Indexed gain </th>
                         <td class="br text-right" mat-cell *matCellDef="let element"> {{element.indexedGain}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="liloss">
-                        <th class="br text-right" mat-sort-header="liloss" mat-header-cell *matHeaderCellDef> LT loss
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> LT loss
                         </th>
                         <td class="br text-right" mat-cell *matCellDef="let element"> {{element.liloss}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="indexedLoss">
-                        <th class="br text-right" mat-sort-header="indexedLoss" mat-header-cell *matHeaderCellDef>
+                        <th class="br text-right"  mat-header-cell *matHeaderCellDef>
                             Indexed loss </th>
                         <td class="br text-right" mat-cell *matCellDef="let element"> {{element.indexedLoss}} </td>
                     </ng-container>

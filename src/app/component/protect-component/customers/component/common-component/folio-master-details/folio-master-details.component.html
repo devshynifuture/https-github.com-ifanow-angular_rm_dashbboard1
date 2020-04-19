@@ -135,6 +135,10 @@
                         </div>
                     </div>
                 </div>
+                <div *ngIf="folioDetails.length == 0" class="d-flex flex-column align-items-center">
+                    <img class="width300" src="assets/images/svg/noDataFound.svg">
+                    <h4 class="text-center pt-12"> No data found</h4>
+                </div>
             </mat-tab>
             <mat-tab label="Bank details">
                 <div class="ba-light mt-20" *ngFor="let item of folioDetails">
@@ -194,11 +198,15 @@
                             <p class="m-0 roboto">{{(item.bankPin)?item.bankPin:'N.A.'}}</p>
                         </div>
                     </div>
-                </div>
-                <div class="row pt-4">
-                    <div class="col-md-12 p-0 text-right">
-                        <p class="m-0 f-12 text-primitive roboto">Updated: 04/09/2019</p>
+                    <div class="row pt-4">
+                        <div class="col-md-12 p-0 text-right">
+                            <p class="m-0 f-12 text-primitive roboto">Updated: 04/09/2019</p>
+                        </div>
                     </div>
+                </div>
+                <div *ngIf="folioDetails.length == 0" class="d-flex flex-column align-items-center">
+                    <img class="width300" src="assets/images/svg/noDataFound.svg">
+                    <h4 class="text-center pt-12"> No data found</h4>
                 </div>
             </mat-tab>
             <mat-tab label="Nominee details" >
@@ -263,6 +271,10 @@
                         </div>
                     </div>
                 </div>
+                <div *ngIf="folioDetails.length == 0" class="d-flex flex-column align-items-center">
+                    <img class="width300" src="assets/images/svg/noDataFound.svg">
+                    <h4 class="text-center pt-12"> No data found</h4>
+                </div>
             </mat-tab>
             <mat-tab label="Broker details">
                 <div class="ba-light mt-20" *ngFor="let item of folioDetails">
@@ -290,11 +302,15 @@
                             <p class="m-0 roboto">{{(item.euin)?item.euin:'N.A.'}}</p>
                         </div>
                     </div>
-                </div>
-                <div class="row pt-4">
-                    <div class="col-md-12 p-0 text-right">
-                        <p class="m-0 f-12 text-primitive roboto">Updated: 04/09/2019</p>
+                    <div class="row pt-4">
+                        <div class="col-md-12 p-0 text-right">
+                            <p class="m-0 f-12 text-primitive roboto">Updated: 04/09/2019</p>
+                        </div>
                     </div>
+                </div>
+                <div *ngIf="folioDetails.length == 0" class="d-flex flex-column align-items-center">
+                    <img class="width300" src="assets/images/svg/noDataFound.svg">
+                    <h4 class="text-center pt-12"> No data found</h4>
                 </div>
             </mat-tab>
             <mat-tab label="Investor details">
@@ -404,11 +420,15 @@
                             <p class="m-0 roboto">{{(item.demat)?item.demat:'N.A.'}}</p>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 p-0 text-right">
-                        <p class="m-0 f-12 roboto text-primitive">Updated: 04/09/2019</p>
+                    <div class="row">
+                        <div class="col-md-12 p-0 text-right">
+                            <p class="m-0 f-12 roboto text-primitive">Updated: 04/09/2019</p>
+                        </div>
                     </div>
+                </div>
+                <div *ngIf="folioDetails.length == 0" class="d-flex flex-column align-items-center">
+                    <img class="width300" src="assets/images/svg/noDataFound.svg">
+                    <h4 class="text-center pt-12"> No data found</h4>
                 </div>
             </mat-tab>
         </mat-tab-group>
