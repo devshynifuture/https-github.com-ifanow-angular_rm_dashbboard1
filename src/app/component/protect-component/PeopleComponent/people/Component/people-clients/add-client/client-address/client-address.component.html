@@ -60,9 +60,9 @@
         <div class="col-md-4 p-0">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter ID Proof" (input)="toUpperCase($event)" appInputValueValidation
-                        [inputValidator]="validatorType.ALPHA_NUMERIC" autocomplete="off" matInput
-                        formControlName="proofIdNum" class="form-control">
+                    <input placeholder="Enter ID Proof" (input)="toUpperCase(addressForm.get('proofIdNum'),$event)"
+                        appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" autocomplete="off"
+                        matInput formControlName="proofIdNum" class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -171,7 +171,7 @@
             <div class="col-md-4">
                 <h5 (click)="close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
             </div>
-            <div class="col-md-8 right text-right">
+            <div class="col-md-8 d-flex align-items-end justify-content-end">
                 <button mat-stroked-button *ngIf="fieldFlag" (click)="saveNext('Next')"
                     class=" br-0 bg-white text-inherit">SAVE &
                     NEXT

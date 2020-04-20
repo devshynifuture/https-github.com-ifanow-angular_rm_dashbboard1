@@ -6,6 +6,7 @@ import {CustomerService} from '../../../../customer.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import {MfServiceService} from '../mf-service.service';
 import {map} from 'rxjs/operators';
+import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
 
 @Component({
   selector: 'app-mutual-fund',
@@ -27,7 +28,7 @@ export class MutualFundComponent implements OnInit {
 
   constructor(public subInjectService: SubscriptionInject, public utilService: UtilService,
               public eventService: EventService, private custumService: CustomerService,
-              private mfService: MfServiceService) {
+              private mfService: MfServiceService,private settingService: SettingsService) {
   }
 
   ngOnInit() {
@@ -36,8 +37,24 @@ export class MutualFundComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getMutualFund();
+   
   }
-
+  getPersonalDetails(data){
+    const obj={
+      id:data
+    }
+    this.settingService.getPersonalProfile(obj).subscribe(
+      data => {
+        console.log(data);
+      }
+    );
+    this.settingService.getProfileDetails(obj).subscribe(
+      data => {
+        console.log(data);
+        this.mfData.advisorData = data;
+      }
+    );
+  }
   getMutualFund() {
     this.isLoading = true;
     const obj = {
@@ -66,6 +83,7 @@ export class MutualFundComponent implements OnInit {
       this.isLoading = false;
       this.mfData = data;
       this.mfData.viewMode = this.viewMode;
+      this.getPersonalDetails(this.advisorId);
     }
     this.isLoading = false;
   }

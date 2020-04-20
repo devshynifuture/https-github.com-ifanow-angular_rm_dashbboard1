@@ -36,6 +36,8 @@ export class MutualFundSummaryComponent implements OnInit {
   catObj: {};
   isLoading = false; // added for prod build
   displayColumnsPDf:any;
+  fragmentData = {isSpinner : false};
+  advisorData:any;
   // schemeWiseForFilter: any[];
   // mutualFundListFilter: any[];
   @ViewChild('tableEl', {static: false}) tableEl;
@@ -53,6 +55,7 @@ export class MutualFundSummaryComponent implements OnInit {
     if (this.mutualFund.mutualFundList.length>0) {
       this.isLoading=true;
       this.mutualFundList = this.mutualFund.mutualFundList;
+      this.advisorData = this.mutualFund.advisorData;
       // this.getListForPdf(this.displayedColumns);
       // this.getSubCategoryWise(this.mutualFund); // get subCategoryWise list
       // this.getSchemeWise(); // get scheme wise list
@@ -297,8 +300,9 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   generatePdf() {
+    this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
-    this.utilService.htmlToPdf(para.innerHTML, 'Test');
+    this.utilService.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
   }
 
   deleteModal(value) {

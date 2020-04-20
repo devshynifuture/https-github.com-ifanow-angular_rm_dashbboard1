@@ -173,7 +173,7 @@ export class TermsAgreementComponent implements OnInit {
       {
         data: this.dataTerms.docText,
         cancelButton: () => {
-          this.utilservice.htmlToPdf(this.dataTerms.docText, 'document');
+          this.utilservice.htmlToPdf(this.dataTerms.docText, 'document','');
           dialogRef.close();
         }
       }

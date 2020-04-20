@@ -135,7 +135,7 @@ export class MutualFundAllTransactionComponent implements OnInit {
   }
   generatePdf() {
     let para = document.getElementById('template');
-    this.utilService.htmlToPdf(para.innerHTML, 'Test')
+    this.utilService.htmlToPdf(para.innerHTML, 'Test','')
   }
   editTransaction(portfolioData, data) {
     const fragmentData = {

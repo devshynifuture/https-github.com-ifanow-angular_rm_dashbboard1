@@ -99,9 +99,7 @@ export class ClientMoreInfoComponent implements OnInit {
     console.log(data);
     this.mobileData = data;
   }
-  toUpperCase(event) {
-    event = UtilService.toUpperCase(event);
-  }
+
   // getCompanyDetails(data) {
   //   const obj = {
   //     userId: data.userId,

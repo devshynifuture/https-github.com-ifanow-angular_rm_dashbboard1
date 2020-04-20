@@ -17,9 +17,10 @@
         <div class="col-md-2 p-0">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter IFSC   " autocomplete="off" (input)="toUpperCase($event)"
-                        appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC"
-                        formControlName="ifscCode" #ifcCode [maxLength]="11" matInput class="form-control">
+                    <input placeholder="Enter IFSC   " autocomplete="off"
+                        (input)="toUpperCase(bankForm.get('ifscCode'),$event)" appInputValueValidation
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="ifscCode" #ifcCode
+                        [maxLength]="11" matInput class="form-control">
                     <mat-hint align="end" class="f-12">{{ifcCode.value.length}}/11</mat-hint>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -216,7 +217,7 @@
         <div class="col-md-4">
             <h5 (click)="close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right">
+        <div class="col-md-8 d-flex align-items-end justify-content-end">
             <button mat-stroked-button *ngIf="fieldFlag" (click)="saveNext('Next')"
                 class=" br-0 bg-white text-inherit">SAVE &
                 NEXT
