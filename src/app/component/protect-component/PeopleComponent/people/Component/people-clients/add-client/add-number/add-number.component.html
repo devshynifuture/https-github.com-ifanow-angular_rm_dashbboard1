@@ -1,10 +1,10 @@
 <div *ngIf="mobileListResponse" [formGroup]="numberFormGroup">
-    <div *ngFor="let numberForm of getMobileNumList.controls;index as i" [formGroup]="numberForm" class="row pt-60">
-        <div class="col-md-4 text-right">
+    <div *ngFor="let numberForm of getMobileNumList.controls;index as i" [formGroup]="numberForm" class="row">
+        <div class="col-md-3 text-right">
             <h5 class="m-0 pt-12">{{flag}}</h5>
         </div>
 
-        <div class="col-md-2 pl-0">
+        <div class="col-md-3 pl-0">
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select formControlName="code" class="form-control">
@@ -18,8 +18,9 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input #num formControlName="number" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" autocomplete="off" formControlName="number" matInput class="form-control" maxlength="10">
-                    <mat-hint>Optional</mat-hint>
+                    <mat-hint *ngIf="i > (minimumCompulsary -1)">Optional</mat-hint>
                     <mat-hint align="end">{{num.value.length}}/10</mat-hint>
+                    <mat-error *ngIf="numberForm.get('number').errors?.required">This field is required</mat-error>
                     <mat-error *ngIf="numberForm.get('number').errors?.pattern">Number must be 10 digits</mat-error>
                 </mat-form-field>
             </div>
