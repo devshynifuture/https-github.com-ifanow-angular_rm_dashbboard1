@@ -5,10 +5,10 @@
 </div>
 
 <div class="row" [formGroup]="selectArnRiaForm">
-    <div class="col-md-12 pr-24 pl-24 pt-8">
+    <div class="col-md-12 pr-24 pl-24 pt-8" *ngFor="let opt of options">
         <mat-radio-group aria-label="Select an option" formControlName="arnOrRia">
-            <mat-radio-button class="d-block f-14" value="1"> RIA-INA000004409 </mat-radio-button>
-            <mat-radio-button class="d-block f-14 pt-8" value="2"> ARN-83865 </mat-radio-button>
+            <mat-radio-button class="d-block f-14" (click)='selectedOtp(opt)'[value]="opt.brokerCode"
+            [checked]="opt.selected"> {{opt.brokerCode}} </mat-radio-button>
         </mat-radio-group>
         <mat-error class="f-12 pt-8 f-500"
             *ngIf="selectArnRiaForm.get('arnOrRia').touched && selectArnRiaForm.get('arnOrRia').invalid">
@@ -22,7 +22,7 @@
         <button mat-button (click)="dialogClose()" class="f-500 text-primitive mr-20">
             CANCEL
         </button>
-        <button mat-button (click)="start()" class="text-danger">
+        <button mat-button (click)="openUpperSliderBackoffice()" class="text-danger">
             START
         </button>
     </div>

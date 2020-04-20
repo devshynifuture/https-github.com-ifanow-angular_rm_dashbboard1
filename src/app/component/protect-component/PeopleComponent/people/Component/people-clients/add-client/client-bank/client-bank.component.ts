@@ -21,7 +21,7 @@ export class ClientBankComponent implements OnInit {
   bankList: any;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'SAVE & NEXT',
+    text: 'SAVE & CLOSE',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -200,7 +200,7 @@ export class ClientBankComponent implements OnInit {
           });
         });
       }
-      this.barButtonOptions.active = true;
+      (flag == 'Save') ? this.barButtonOptions.active = true : '';
       const obj = {
         branchCode: (this.bankList) ? this.bankList.branchCode : this.bankDetail.branchCode,
         branchName: this.bankForm.get('branchName').value,
