@@ -75,8 +75,8 @@
                     </div>
                 </div>
             </div>
-            <app-add-number [numberList]=" basicDetailsData.mobileList" [flag]="mobileNumberFlag"
-                (numberArray)="getNumberDetails($event)">
+            <app-add-number [userData]="basicDetailsData" [numberList]=" basicDetailsData.mobileList"
+                [flag]="mobileNumberFlag" (numberArray)="getNumberDetails($event)">
             </app-add-number>
             <div class="row pt-44">
                 <div class="col-md-4 text-right">

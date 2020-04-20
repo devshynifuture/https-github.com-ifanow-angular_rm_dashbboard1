@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { PeopleService } from '../../../../people.service';
 
 @Component({
   selector: 'app-add-client',
@@ -29,4 +30,5 @@ export class AddClientComponent implements OnInit {
   changeTab(flag) {
     (flag == 1) ? this.selected++ : '';
   }
+
 }

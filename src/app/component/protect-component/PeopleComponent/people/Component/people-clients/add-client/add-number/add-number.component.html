@@ -7,8 +7,12 @@
         <div class="col-md-2 pl-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select formControlName="code" class="form-control">
-                        <mat-option selected value="+91">+91</mat-option>
+                    <mat-select [(ngModel)]="countryCode" formControlName="code" class="form-control">
+
+                        <mat-option *ngIf="isdCodes==undefined" value="+91">+91</mat-option>
+                        <mat-option *ngIf="singleCode" value='0'>Select option</mat-option>
+                        <mat-option *ngFor="let singleCode of isdCodes" [value]="singleCode.code">{{singleCode.code}}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -17,7 +21,9 @@
         <div class="col-md-4 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input #num formControlName="number" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" autocomplete="off" formControlName="number" matInput class="form-control" maxlength="10">
+                    <input #num formControlName="number" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" autocomplete="off" formControlName="number"
+                        matInput class="form-control" maxlength="10">
                     <mat-hint>Optional</mat-hint>
                     <mat-hint align="end">{{num.value.length}}/10</mat-hint>
                     <mat-error *ngIf="numberForm.get('number').errors?.pattern">Number must be 10 digits</mat-error>
