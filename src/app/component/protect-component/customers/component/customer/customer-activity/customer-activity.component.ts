@@ -10,7 +10,7 @@ import {AuthService} from 'src/app/auth-service/authService';
 export class CustomerActivityComponent implements OnInit {
   clientData: any;
 
-  constructor(private routingStateService: RoutingState, private authService: AuthService) {
+  constructor(private routingStateService: RoutingState, public authService: AuthService) {
   }
 
   ngOnInit() {

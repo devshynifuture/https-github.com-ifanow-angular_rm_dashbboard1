@@ -18,7 +18,7 @@ const moment = require('moment');
 export class ClientBasicDetailsComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'SAVE & NEXT',
+    text: 'SAVE & CLOSE',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -246,7 +246,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.nonIndividualForm.markAllAsTouched();
       return;
     } else {
-      this.barButtonOptions.active = true;
+      (flag == 'close') ? this.barButtonOptions.active = true : '';
       const mobileList = [];
       if (this.mobileData) {
         this.mobileData.controls.forEach(element => {
@@ -354,7 +354,13 @@ export class ClientBasicDetailsComponent implements OnInit {
             data.invCategory = this.invTypeCategory;
             data.categoryTypeflag = (this.invTypeCategory == '1') ? 'Individual' : 'clientNonIndividual';
             this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
-            (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
+            if (flag == 'Next') {
+              this.changeTabAndSendData(data);
+            }
+            else {
+              this.barButtonOptions.active = false;
+              this.close(data);
+            }
           },
           (err) => {
             this.barButtonOptions.active = false;
@@ -432,7 +438,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.minorForm.markAllAsTouched();
       return;
     }
-    this.barButtonOptions.active = true;
+    (flag == 'close') ? this.barButtonOptions.active = true : '';
     const obj = {
       familyMemberId: this.basicDetailsData.familyMemberId,
       clientId: this.basicDetailsData.clientId,
@@ -469,10 +475,15 @@ export class ClientBasicDetailsComponent implements OnInit {
     obj.displayName = this.basicDetailsData.displayName;
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {
-        this.barButtonOptions.active = false;
         data.invTypeCategory = this.invTypeCategory;
         data.categoryTypeflag = 'familyMinor';
-        (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(data);
+        if (flag == 'Next') {
+          this.changeTabAndSendData(data);
+        }
+        else {
+          this.barButtonOptions.active = false;
+          this.close(data);
+        }
       },
       err => {
         this.barButtonOptions.active = false;

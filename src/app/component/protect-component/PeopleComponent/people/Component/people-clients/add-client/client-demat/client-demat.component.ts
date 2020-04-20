@@ -24,7 +24,7 @@ export class ClientDematComponent implements OnInit {
   holdingMode: string;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'SAVE & NEXT',
+    text: 'SAVE & CLOSE',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -333,7 +333,7 @@ export class ClientDematComponent implements OnInit {
           dematId: (this.userData.dematData) ? this.userData.dematData.dematId : (this.dematList) ? this.dematList.dematId : null
         });
       }
-      this.barButtonOptions.active = true;
+      (flag == 'Save') ? this.barButtonOptions.active = true : '';
       let obj =
       {
         "depositoryParticipantName": this.dematForm.get('depositoryPartName').value,

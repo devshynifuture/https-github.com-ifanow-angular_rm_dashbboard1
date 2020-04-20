@@ -13,12 +13,26 @@ export class AddNumberComponent implements OnInit {
   mobileListResponse: any;
 
   create;
+  compulsionCount = 0;
 
   @Input() flag;
+  @Input() minimumCompulsary = 0;
+  @Input() isResidential = false;
   @Output() numberArray = new EventEmitter();
+  @Input() classObj = {
+    topPadding: 'pt-60',
+    label: 'col-md-4',
+    code: 'col-md-3',
+    mobile: 'col-md-3',
+    addRemove: 'col-md-1',
+  }
+
+  countryCodes:Array<string> = ['+91', '+92', "+93"];
 
   ngOnInit() {
-
+    if(this.isResidential) {
+      this.countryCodes = ['+1'];
+    }
   }
 
   constructor(private fb: FormBuilder) {
@@ -50,6 +64,7 @@ export class AddNumberComponent implements OnInit {
   }
 
   removeNumber(index) {
+    this.compulsionCount--;
     (this.numberFormGroup.controls.mobileNo.length == 1) ? '' : this.numberFormGroup.controls.mobileNo.removeAt(index);
   }
 
@@ -57,10 +72,18 @@ export class AddNumberComponent implements OnInit {
     if (!data) {
       data = {};
     }
-    this.getMobileNumList.push(this.fb.group({
-      code: ['+91'],
-      number: [data.mobileNo, Validators.pattern(this.validatorType.TEN_DIGITS)]
-    }));
+    if(this.compulsionCount < this.minimumCompulsary) {
+      this.compulsionCount ++;
+      this.getMobileNumList.push(this.fb.group({
+        code: [''],
+        number: [data.mobileNo, [Validators.pattern(this.validatorType.TEN_DIGITS), Validators.required]]
+      }));
+    } else {
+      this.getMobileNumList.push(this.fb.group({
+        code: [''],
+        number: [data.mobileNo, Validators.pattern(this.validatorType.TEN_DIGITS)]
+      }));
+    }
     this.numberArray.emit(this.getMobileNumList);
   }
 }

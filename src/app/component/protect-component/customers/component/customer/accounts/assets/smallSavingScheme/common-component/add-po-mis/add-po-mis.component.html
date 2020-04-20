@@ -73,7 +73,7 @@
                     <mat-error *ngIf="(pomisForm.get('amtInvested').errors?.min)" class="f-12">
                         Should be greater than or equal to 1500
                     </mat-error>
-                    <mat-error *ngIf="(pomisForm.get('amtInvested').errors?.max)" class="f-12">
+                    <mat-error *ngIf="(pomisForm.get('amtInvested').errors?.max && !pomisForm.get('amtInvested').errors?.min)" class="f-12">
                         Should be less than  {{join?900000:450000}}
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{amtInvested.value.length}}/10</mat-hint>
@@ -260,7 +260,7 @@
         </div>
         <div class="col-md-8 right text-right">
             
-                <app-progress-button (btnClick)="saveFormData()" [options]="barButtonOptions" >
+                <app-progress-button (btnClick)="saveFormData(null)" [options]="barButtonOptions" >
                 </app-progress-button>
         </div>
     </div>

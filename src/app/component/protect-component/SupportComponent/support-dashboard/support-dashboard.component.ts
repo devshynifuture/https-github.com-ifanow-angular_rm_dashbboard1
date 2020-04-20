@@ -33,10 +33,10 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
 
 
   subscription = new Subscription();
-  bulkData:any[] = [{},{},{}];
-  dropDownData:any[] = [];
+  bulkData: any[] = [{}, {}, {}];
+  dropDownData: any[] = [];
   hasError: boolean = false;
-  
+
   dashFG: FormGroup;
   constructor(
     private eventService: EventService,
@@ -53,20 +53,20 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
     this.createFormGroup();
     this.addFormListeners();
     this.loadGlobalData();
-    
+
     this.getDailyServicesStatusReport();
     this.getDailyFiles();
     this.getIfaMatricData();
   }
 
-  createFormGroup(){
+  createFormGroup() {
     this.dashFG = this.fb.group({
       bulkOptRtId: '',
       historicalFileOptId: '',
     });
   }
 
-  addFormListeners(){
+  addFormListeners() {
     this.subscription.add(
       this.dashFG.controls.bulkOptRtId.valueChanges.subscribe(value => {
         this.loadBulkFilesData();
@@ -79,7 +79,7 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
     );
   }
 
-  flowCash(previous,current,id) {
+  flowCash(previous, current, id) {
     var chart1 = new Highcharts.Chart(id, {
       chart: {
         type: 'column'
@@ -106,15 +106,15 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
         }
       },
       series: [{
-        data: [current],
+        data: [0,0,4,5,6,6,3],
         color: '#4790ff',
         name: 'This week',
-        pointWidth: 12
+        pointWidth: 10
       } as SeriesColumnOptions, {
-        data: [previous],
+        data: [0,1,6,7,6,6,3],
         color: '#49b875',
         name: 'Last week',
-        pointWidth: 12
+        pointWidth: 10
       } as SeriesColumnOptions]
     });
   }
@@ -137,30 +137,40 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
       data => {
         if (data) {
           this.dailyData = data;
-          this.previousWeekCams = []
-          this.currentWeekCams = []
-          this.previousWeekKarvy = []
-          this.currentWeekKarvy = []
-          this.previousWeekFrankline = []
-          this.dailyData.previousWeek[1].forEach(element => {
-            this.previousWeekCams.push(element.fileCount)
-          });
-          this.dailyData.currentWeek[1].forEach(element => {
-            this.currentWeekCams.push(element.fileCount)
-          });
-          this.dailyData.previousWeek[2].forEach(element => {
-            this.previousWeekKarvy.push(element.fileCount)
-          });
-          this.dailyData.currentWeek[2].forEach(element => {
-            this.currentWeekKarvy.push(element.fileCount)
-          });
-          this.dailyData.previousWeek[3].forEach(element => {
-            this.previousWeekFrankline.push(element.fileCount)
-          });
+          this.previousWeekCams = data.previousWeek[1]
+          this.currentWeekCams = data.currentWeek[1]
+          this.previousWeekKarvy = data.previousWeek[2]
+          this.currentWeekKarvy = data.currentWeek[2]
+          this.previousWeekFrankline = data.previousWeek[3]
+          if (this.dailyData.previousWeek[1]) {
+            this.dailyData.previousWeek[1].forEach(element => {
+              this.previousWeekCams.push(element.fileCount)
+            });
+          } else if (this.dailyData.currentWeek[1]) {
+            this.dailyData.currentWeek[1].forEach(element => {
+              this.currentWeekCams.push(element.fileCount)
+            });
+          }
+          else if (this.dailyData.previousWeek[2]) {
+            this.dailyData.previousWeek[2].forEach(element => {
+              this.previousWeekKarvy.push(element.fileCount)
+            });
+          }
+          else if (this.dailyData.currentWeek[2]) {
+            this.dailyData.currentWeek[2].forEach(element => {
+              this.currentWeekKarvy.push(element.fileCount)
+            });
+          }
+          else if (this.dailyData.previousWeek[3]) {
+            this.dailyData.previousWeek[3].forEach(element => {
+              this.previousWeekFrankline.push(element.fileCount)
+            });
+          }
+
           //  this.currentWeekFrankline = this.dailyData.currentWeek[0]
-          this.flowCash(this.previousWeekCams,this.currentWeekCams,'flowCash')
-          this.flowCash(this.previousWeekKarvy,this.currentWeekKarvy,'flowCash2')
-          this.flowCash(this.previousWeekFrankline,'','flowCash3')
+          this.flowCash(this.previousWeekCams, this.currentWeekCams, 'flowCash')
+          this.flowCash(this.previousWeekKarvy, this.currentWeekKarvy, 'flowCash2')
+          this.flowCash(this.previousWeekFrankline, '', 'flowCash3')
         }
       }
       , err => this.eventService.openSnackBar(err, "Dismiss")
@@ -248,7 +258,7 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
     );
   }
 
-  loadGlobalData(){
+  loadGlobalData() {
     this.utilsService.loader(1);
     this.reconsilationService.getRTListValues({}).subscribe(res => {
       this.dropDownData = res;
@@ -262,7 +272,7 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  loadBulkFilesData(){
+  loadBulkFilesData() {
     const jsonObj = {
       days: 0,
       fileTypeId: 0,
@@ -281,16 +291,16 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
   }
 
   getRTCode(code) {
-    if(code) {
+    if (code) {
       const rt = this.dropDownData.find(data => data.id == code);
       const rtCode = rt.name as string;
-      return rtCode.slice(0,2);
+      return rtCode.slice(0, 2);
     } else {
       return '';
     }
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 }
