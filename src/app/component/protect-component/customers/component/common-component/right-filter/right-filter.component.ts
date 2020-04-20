@@ -34,7 +34,7 @@ export class RightFilterComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  panelOpenState = true;
+  panelOpenState = false;
   _data: any;
   familyMember: any;
   folio: any;

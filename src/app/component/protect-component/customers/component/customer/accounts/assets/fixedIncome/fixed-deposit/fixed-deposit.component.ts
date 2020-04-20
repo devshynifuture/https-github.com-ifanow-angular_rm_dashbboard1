@@ -103,7 +103,7 @@ export class FixedDepositComponent implements OnInit {
     '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101',
     '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114',
     '115', '116', '117', '118', '119', '120'];
-  fdDays = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14',
+  fdDays = ['0','7', '8', '9', '10', '11', '12', '13', '14',
     '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
   fdYears = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'];
   addOwner: any;
@@ -156,21 +156,21 @@ export class FixedDepositComponent implements OnInit {
   }
 
   checkDate() {
-    this.validMaturity = new Date(new Date().setDate(new Date(this.getFormControl().commencementDate.value).getDate() + 1));
+    this.validMaturity = new Date(new Date().setDate(new Date(this.getFormControl().commencementDate.value).getDate() + 7));
     console.log(this.validMaturity);
-    this.checkCommDateAndTenure();
+    // this.checkCommDateAndTenure();
   }
-  checkCommDateAndTenure() {
-    if (this.tenure && this.getFormControl().commencementDate.value) {
-      if (this.tenure._d < new Date()) {
-        console.log("error");
-        this.tenureFlag = true;
-        return;
-      }
-      this.tenureFlag = false;
-      return;
-    }
-  }
+  // checkCommDateAndTenure() {
+  //   if (this.tenure && this.getFormControl().commencementDate.value) {
+  //     if (this.tenure._d < new Date()) {
+  //       console.log("error");
+  //       this.tenureFlag = true;
+  //       return;
+  //     }
+  //     this.tenureFlag = false;
+  //     return;
+  //   }
+  // }
   tenureError() {
     return { flag: true }
   }
@@ -366,14 +366,14 @@ export class FixedDepositComponent implements OnInit {
     let d = this.fixedDeposit.controls.tenureD.value;
     let m = this.fixedDeposit.controls.tenureM.value;
     let y = this.fixedDeposit.controls.tenureY.value;
-    if (d != 0 || m != 0 || y != 0) {
+    if ((d != 0 && d >= 7) || m != 0 || y != 0) {
       this.tenure = moment(this.fixedDeposit.controls.commencementDate.value).add(m, 'months');
       this.tenure = moment(this.tenure).add(y, 'years');
       this.tenure = moment(this.tenure).add(d, 'days');
       if (this.fixedDeposit.controls.commencementDate.valid) {
         this.getDate = this.datePipe.transform(this.tenure, 'yyyy-MM-dd');
         console.log(this.tenure, this.getDate);
-        this.checkCommDateAndTenure();
+        // this.checkCommDateAndTenure();
       }
       this.tenureValid = true;
       return this.getDate;

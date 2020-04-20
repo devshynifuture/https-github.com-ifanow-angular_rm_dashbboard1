@@ -5,11 +5,12 @@
             <h4 class="m-0 text-black roboto pt-8">Mutual fund summary</h4>
         </div>
         <div class="col-md-8 p-0 d-flex justify-content-end" *ngIf="!isLoading">
-            <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
+            <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p" *ngIf="!fragmentData.isSpinner">
             <mat-menu #menu5="matMenu">
                 <button (click)="generatePdf()" mat-menu-item>PDF</button>
                 <button (click)="Excel('Mutual fund summary')" mat-menu-item>XLS</button>
             </mat-menu>
+            <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
             <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
             <img class="c-p mr-12" src="assets/images/svg/up-down.svg">
             <!-- <img matTooltip="Download PDF" (click)="generatePdf()" class="b-a c-p"
@@ -363,13 +364,13 @@
 <div class="hide" #summaryTemplate id="template">
     <tr>
         <td style="text-align: left;">
-            <img style="width: 200px;" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+            <img  style="width: 200px;" *ngIf="advisorData" [src]="advisorData.profilePic">
         </td>
         <td style="text-align: right;">
-            <p style="margin: 0px; font-weight: 600;">Sher Khan</p>
-            <p style="margin: 0px; font-size: 14px;">Himachal Pradesh</p>
-            <p style="margin: 0px; font-size: 14px;"> <strong> Number: </strong> 123456789</p>
-            <p style="margin: 0px; font-size: 14px;"> <strong> Email : </strong> sherKhan@gmail.com</p>
+            <p style="margin: 0px; font-weight: 600;"  *ngIf="advisorData">{{(advisorData.fullName) ? advisorData.fullName : '-'}}</p>
+            <p style="margin: 0px; font-size: 14px;"  *ngIf="advisorData">Himachal Pradesh</p>
+            <p style="margin: 0px; font-size: 14px;"  *ngIf="advisorData"> <strong> Number: </strong> {{(advisorData.mobileNo) ? advisorData.mobileNo : '-'}}</p>
+            <p style="margin: 0px; font-size: 14px;"  *ngIf="advisorData"> <strong> Email : </strong>  {{(advisorData.emailId) ? advisorData.emailId : '-'}}</p>
         </td>
     </tr>
 
