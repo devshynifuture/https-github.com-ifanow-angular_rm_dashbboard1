@@ -128,7 +128,7 @@ export class CompanyMoreInfoComponent implements OnInit {
         email: emailId
       });
     }
-    this.barButtonOptions.active = true;
+    (flag == 'Save') ? this.barButtonOptions.active = true : '';
     const obj = {
       emailList,
       displayName: this.moreInfoForm.controls.displayName.value,
