@@ -18,12 +18,17 @@ export class AddNumberComponent implements OnInit {
 
   @Input() flag;
   @Input() minimumCompulsary = 0;
+  @Input() isResidential = false;
   @Output() numberArray = new EventEmitter();
   isdCodes;
   countryCode: any;
 
-  ngOnInit() {
+  countryCodes:Array<string> = ['+91', '+92', "+93"];
 
+  ngOnInit() {
+    if(this.isResidential) {
+      this.countryCodes = ['+1'];
+    }
   }
 
   constructor(private fb: FormBuilder, private utilService: UtilService, private peopleService: PeopleService) {
@@ -80,6 +85,7 @@ export class AddNumberComponent implements OnInit {
   }
 
   removeNumber(index) {
+    this.compulsionCount--;
     (this.numberFormGroup.controls.mobileNo.length == 1) ? '' : this.numberFormGroup.controls.mobileNo.removeAt(index);
   }
 
@@ -90,12 +96,12 @@ export class AddNumberComponent implements OnInit {
     if (this.compulsionCount < this.minimumCompulsary) {
       this.compulsionCount++;
       this.getMobileNumList.push(this.fb.group({
-        code: ['+91'],
+        code: [''],
         number: [data.mobileNo, [Validators.pattern(this.validatorType.TEN_DIGITS), Validators.required]]
       }));
     } else {
       this.getMobileNumList.push(this.fb.group({
-        code: ['+91'],
+        code: [''],
         number: [data.mobileNo, Validators.pattern(this.validatorType.TEN_DIGITS)]
       }));
     }

@@ -7,12 +7,9 @@
         <div class="col-md-3 pl-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select [(ngModel)]="countryCode" formControlName="code" class="form-control">
-
-                        <mat-option *ngIf="isdCodes==undefined" value="+91">+91</mat-option>
-                        <mat-option *ngIf="singleCode" value='0'>Select option</mat-option>
-                        <mat-option *ngFor="let singleCode of isdCodes" [value]="singleCode.code">{{singleCode.code}}
-                        </mat-option>
+                    <mat-select formControlName="code" class="form-control">
+                        <mat-option value="" selected disabled>Select Country Code</mat-option>
+                        <mat-option [value]="code" *ngFor="let code of countryCodes">{{code}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
