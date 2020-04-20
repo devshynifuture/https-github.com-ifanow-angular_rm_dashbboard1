@@ -74,6 +74,7 @@ export class IfasDetailsComponent implements OnInit {
   ngOnInit() {
     this.getReconSummaryList();
     this.getRTList();
+    this.utilsService.loader(0);
 
   }
   @Input() set data(data) {
@@ -144,19 +145,18 @@ export class IfasDetailsComponent implements OnInit {
 
   }
   getTicketSummary() {
-    this.isLoading = true
+    this.utilsService.loader(1);
     let obj = {
       rmId: 3
     }
     this.supportService.getTickets(obj)
       .subscribe(res => {
         if (res) {
-          this.isLoading = false
+          this.utilsService.loader(-1);
           this.ticketList = res.listItems;
           this.onHold = res.onHold
           this.unResolved = res.unResolved
           this.openTickets = res.open
-
           console.log('jdfgj dfj', this.ticketList)
           this.ticketList
         }
