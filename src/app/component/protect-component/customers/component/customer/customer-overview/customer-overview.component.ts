@@ -16,7 +16,7 @@ export class CustomerOverviewComponent implements OnInit {
     clientData: any;
     loading: boolean;
 
-    constructor(private authService: AuthService, private router: Router,
+    constructor(public authService: AuthService, private router: Router,
                 private eventService: EventService, public routingStateService: RoutingState) {
         this.clientData = AuthService.getClientData();
         this.eventService.tabChangeData.subscribe(
