@@ -41,6 +41,14 @@
             "webWorkerTsConfig": "tsconfig.worker.json"
           },
           "configurations": {
+            "hmr": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.hmr.ts"
+                }
+              ]
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -73,6 +81,10 @@
             "browserTarget": "myplanner:build"
           },
           "configurations": {
+            "hmr": {
+              "hmr": true,
+              "browserTarget": "myplanner:build:hmr"
+            },
             "production": {
               "browserTarget": "myplanner:build:production"
             }

@@ -35,7 +35,7 @@ export class NewTeamMemberComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  countryCodes:Array<string> = ['+91', '+92', "+93"];
+  countryCodes:Array<number> = [91, 92];
 
   constructor(
     private fb: FormBuilder,

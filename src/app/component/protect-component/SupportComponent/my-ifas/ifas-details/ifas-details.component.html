@@ -396,8 +396,9 @@
                 </div>
             </div>
 
-            <div class="row" class="skeletonAnimation mt-8" appSkeletonLoading [appSkeletonLoading]="isLoading">
-                <div class="col-md-12 d-flex">
+            <div class="row" class="skeletonAnimation mt-8" appSkeletonLoading
+            [appSkeletonLoading]="utilsService.isLoading">
+                <div class="col-md-12 d-flex relClass">
                     <div class="summaryBox">
                         <p class="f-16 roboto">Unresolved</p>
                         <div class="bar" [ngClass]="{'height23': isLoading}">
