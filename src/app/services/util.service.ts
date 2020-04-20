@@ -1,7 +1,7 @@
 // tslint:disable:radix
 // tslint:disable:triple-equals
 
-import { ElementRef, Injectable } from '@angular/core';
+import { ElementRef, Injectable, Input } from '@angular/core';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { EventService } from '../Data-service/event.service';
 import { HttpClient } from '@angular/common/http';
@@ -14,8 +14,9 @@ import { Subject, BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class UtilService {
-  fileURL: any;
-
+  @Input()
+  public positiveMethod: Function;
+  fragmentData: any;
   constructor(
     private eventService: EventService,
     private http: HttpClient,
@@ -260,21 +261,22 @@ export class UtilService {
     return event;
   }
 
-  htmlToPdf(inputData, pdfName) {
+  htmlToPdf(inputData, pdfName ,fragData) {
     const obj = {
       htmlInput: inputData,
       name: pdfName
     };
-    this.http.post('http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj, { responseType: 'blob' }).subscribe(
+    return this.http.post('http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj, { responseType: 'blob' }).subscribe(
       data => {
         const file = new Blob([data], { type: 'application/pdf' });
-        this.fileURL = URL.createObjectURL(file);
-        window.open(this.fileURL);
+        const fileURL = URL.createObjectURL(file);
+        fragData.isSpinner = false;
+        window.open(fileURL);
         const a = document.createElement('a');
-        a.download = this.fileURL;
+        a.download = fileURL;
       }
     );
-    return (this.fileURL) ? this.fileURL :null;
+   
   }
 
   /**

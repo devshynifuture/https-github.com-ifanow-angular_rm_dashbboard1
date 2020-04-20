@@ -12,6 +12,8 @@ import { MatTableDataSource } from '@angular/material';
 import { MfServiceService } from '../../mf-service.service';
 import { RightFilterComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
 import { WebworkerService } from 'src/app/services/web-worker.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
 
 @Component({
   selector: 'app-mutual-fund-overview',
@@ -47,9 +49,11 @@ export class MutualFundOverviewComponent implements OnInit {
   showCategory = true;
   showSubCategory = true;
   totalValue: any = {};
-  isSpinner = false;
+  fragmentData = {isSpinner : false};
+  advisorId: any;
+  advisorData:any;
   constructor(public subInjectService: SubscriptionInject, public UtilService: UtilService,
-    public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService) {
+    public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService,private settingService : SettingsService) {
   }
 
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
@@ -60,10 +64,28 @@ export class MutualFundOverviewComponent implements OnInit {
    @Input() mutualFund;
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.getMutualFundData();
     this.dataSource = [{}, {}, {}];
     this.dataSource2 = [{}, {}, {}];
     this.dataSource3 = [{}, {}, {}];
+    this.getPersonalDetails(this.advisorId);
+  }
+  getPersonalDetails(data){
+    const obj={
+      id:data
+    }
+    this.settingService.getPersonalProfile(obj).subscribe(
+      data => {
+        console.log(data);
+      }
+    );
+    this.settingService.getProfileDetails(obj).subscribe(
+      data => {
+        console.log(data);
+        this.advisorData = data;
+      }
+    );
   }
   asyncFilter(mutualFund,categoryList) {
     if (typeof Worker !== 'undefined') {
@@ -192,16 +214,9 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   generatePdf() {
-    this.isSpinner = true;
+    this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
-    this.UtilService.htmlToPdf(para.innerHTML, 'Test').subscribe(
-      data => {
-        if(data){
-          this.isSpinner = false;
-        }
-      }
-      
-      );
+    this.UtilService.htmlToPdf(para.innerHTML,'Test',this.fragmentData)
   }
   pieChart(id) {
     Highcharts.chart('piechartMutualFund', {
