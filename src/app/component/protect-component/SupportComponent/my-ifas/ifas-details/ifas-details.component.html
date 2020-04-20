@@ -396,21 +396,27 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" class="skeletonAnimation mt-8" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <div class="col-md-12 d-flex">
                     <div class="summaryBox">
                         <p class="f-16 roboto">Unresolved</p>
-                        <h4 class="text-primary m-0 f-22">4</h4>
+                        <div class="bar" [ngClass]="{'height23': isLoading}">
+                            <h4 class="text-primary m-0 f-22">{{unResolved}}</h4>
+                        </div>
                     </div>
 
                     <div class="summaryBox">
                         <p class="f-16 roboto">Open</p>
-                        <h4 class="text-primary m-0 f-22">4</h4>
+                        <div class="bar" [ngClass]="{'height23': isLoading}">
+                            <h4 class="text-primary m-0 f-22">{{openTickets}}</h4>
+                        </div>
                     </div>
 
                     <div class="summaryBox">
                         <p class="f-16 roboto">On hold</p>
-                        <h4 class="text-primary m-0 f-22">4</h4>
+                        <div class="bar" [ngClass]="{'height23': isLoading}">
+                            <h4 class="text-primary m-0 f-22">{{onHold}}</h4>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -419,43 +425,65 @@
                 <div class="col-md-12 back-office-table  overflow-hidden">
                     <h3 class="f-16 mb-4">Ticket list</h3>
 
-                    <table mat-table [dataSource]="dataSource3" id="table-low" class="">
+                    <table mat-table [dataSource]="ticketList" id="table-low" appSkeletonLoading
+                        [appSkeletonLoading]="utilsService.isLoading">
                         <ng-container matColumnDef="ticket">
                             <th class="br" mat-header-cell *matHeaderCellDef> Ticket </th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.ticket}} </td>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                <div class="bar"> #{{element.id}} </div>
+                            </td>
                         </ng-container>
 
 
                         <ng-container matColumnDef="subject">
                             <th class="br" mat-header-cell *matHeaderCellDef> Subject </th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.subject}} </td>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                <div class="bar">{{element.subject}}</div>
+                            </td>
                         </ng-container>
 
 
                         <ng-container matColumnDef="created">
                             <th class="br" mat-header-cell *matHeaderCellDef> Created on </th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.created}} </td>
+                            <td class="br" mat-cell *matCellDef="let element">
+
+                                <div class="bar">{{element.createdAt  | date:'dd/MM/yyyy'}} </div>
+                            </td>
                         </ng-container>
 
 
                         <ng-container matColumnDef="type">
                             <th class="br" mat-header-cell *matHeaderCellDef> Type </th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.type}} </td>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                <div class="bar"> {{element.type}} </div>
+                            </td>
                         </ng-container>
 
                         <ng-container matColumnDef="status">
                             <th class="br" mat-header-cell *matHeaderCellDef>Status </th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.status}} </td>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    {{(element.status == 2)?'Open':(element.status == 3)?'Pending':(element.status == 4)? 'Resolved':(element.status == 5)?'Closed':'-'}}
+                                </div>
+                            </td>
                         </ng-container>
 
                         <ng-container matColumnDef="raised">
                             <th class="br" mat-header-cell *matHeaderCellDef> Raised by</th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.raised}} </td>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                <div class="bar">{{element.freshdeskRequesterModel.name}}
+                                </div>
+                            </td>
                         </ng-container>
 
                         <ng-container matColumnDef="assigned">
                             <th class="br" mat-header-cell *matHeaderCellDef> Assigned to</th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.assigned}} </td>
+                            <td class="br" mat-cell *matCellDef="let element">
+
+                                <div class="bar">
+                                    {{(element.freshdeskAgentModel)? element.freshdeskAgentModel.contact.name : '-'}}
+                                </div>
+                            </td>
                         </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
@@ -473,8 +501,8 @@
                 <div class="col-md-12 back-office-table  overflow-hidden" *ngIf="dataSource4.length > 0">
                     <h3 class="f-16 mb-4">Ticket list</h3>
 
-                    <table mat-table [dataSource]="dataSource4" id="table-low" class=""
-                    appSkeletonLoading [appSkeletonLoading]="utilsService.isLoading">
+                    <table mat-table [dataSource]="dataSource4" id="table-low" class="" appSkeletonLoading
+                        [appSkeletonLoading]="utilsService.isLoading">
                         <ng-container matColumnDef="name">
                             <th class="br" mat-header-cell *matHeaderCellDef> Name </th>
                             <td class="br" mat-cell *matCellDef="let element"> {{element.name}} </td>
@@ -513,11 +541,13 @@
                     </table>
                 </div>
                 <div class="col-md-12">
-                    <div *ngIf="dataSource4.length == 0 && !isLoading && !hasError" class="d-flex flex-column align-items-center">
+                    <div *ngIf="dataSource4.length == 0 && !isLoading && !hasError"
+                        class="d-flex flex-column align-items-center">
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
                         <h4 class="pt-12">No Team members found</h4>
                     </div>
-                    <div *ngIf="userList==undefined && !isLoading && hasError" class="d-flex flex-column align-items-center">
+                    <div *ngIf="userList==undefined && !isLoading && hasError"
+                        class="d-flex flex-column align-items-center">
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
                         <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
                     </div>

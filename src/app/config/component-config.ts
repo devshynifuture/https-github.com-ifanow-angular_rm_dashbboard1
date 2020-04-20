@@ -532,6 +532,7 @@ export const appConfig = {
   GET_FILE_ORDER_UPPER_LIST_DATA: 'fileorder/historical/list/get',
   POST_FILE_ORDER_BULK_DATA: 'fileorder/bulk/order',
   PUT_FILE_ORDER_RETRY: 'fileorder/list/retry',
+  GET_TICKET:'rmdashboard/tickets/get',
 
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',

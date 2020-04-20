@@ -55,12 +55,16 @@ export class IfasDetailsComponent implements OnInit {
     billing: false,
     misc: false,
   }
+  ticketList: [{}, {}, {}];;
+  openTickets: any;
+  unResolved: any;
+  onHold: any;
 
 
   constructor(public subInjectService: SubscriptionInject,
     public dialog: MatDialog,
     private eventService: EventService,
-    private reconService : ReconciliationService,
+    private reconService: ReconciliationService,
     public utilsService: UtilService,
     private settingsService: SettingsService,
     private supportService: SupportService) { }
@@ -81,7 +85,7 @@ export class IfasDetailsComponent implements OnInit {
   }
 
   getReconSummaryList() {
-    this.isLoading = true
+    this.utilsService.loader(1)
     let obj =
     {
       advisorId: this.ifasData.adminAdvisorId,
@@ -90,11 +94,13 @@ export class IfasDetailsComponent implements OnInit {
       data => {
         console.log('editStageComment', data);
         if (data) {
-          this.isLoading = false
+          this.utilsService.loader(-1)
           this.reconSummaryList = data
           this.franklineData = data.FRANKLIN_TEMPLETON
           this.cams = data.CAMS
           this.karvy = data.KARVY
+        }else{
+          this.utilsService.loader(-1);
         }
       }
       , err => this.eventService.openSnackBar(err, "Dismiss")
@@ -123,8 +129,8 @@ export class IfasDetailsComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.brokerList = res;
-          console.log('jdfgj dfj',this.brokerListCams)
-          this.openSelectArnRiaDialog(res,this.ifasData,this.rtId)
+          console.log('jdfgj dfj', this.brokerListCams)
+          this.openSelectArnRiaDialog(res, this.ifasData, this.rtId)
         }
       });
   }
@@ -138,7 +144,23 @@ export class IfasDetailsComponent implements OnInit {
 
   }
   getTicketSummary() {
+    this.isLoading = true
+    let obj = {
+      rmId: 3
+    }
+    this.supportService.getTickets(obj)
+      .subscribe(res => {
+        if (res) {
+          this.isLoading = false
+          this.ticketList = res.listItems;
+          this.onHold = res.onHold
+          this.unResolved = res.unResolved
+          this.openTickets = res.open
 
+          console.log('jdfgj dfj', this.ticketList)
+          this.ticketList
+        }
+      });
   }
 
   getBillingDetails() {
@@ -168,12 +190,12 @@ export class IfasDetailsComponent implements OnInit {
 
   }
 
-  openSelectArnRiaDialog(data,value,rtId) {
-  
+  openSelectArnRiaDialog(data, value, rtId) {
+
     const Fragmentdata = {
       flag: data,
-      mainData : value,
-      rtId : rtId
+      mainData: value,
+      rtId: rtId
     };
     const dialogRef = this.dialog.open(MyIfaSelectArnRiaComponent, {
       width: '30%',
