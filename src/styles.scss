@@ -334,7 +334,7 @@
                 #ui-subscriptions,
                 #uiTransactions,
                 #ui-setting,
-                #ui-people {
+                #ui-people,#ui-mareketplace-advisor {
                   position: fixed;
                   margin-top: 4px;
                   float: right;
@@ -515,6 +515,7 @@
                 }
 
                 #ui-subscriptions,
+                #ui-mareketplace-advisor,
                 #ui-setting,
                 #ui-plans,
                 #ui-transactions,
@@ -639,6 +640,7 @@
 
                 #ui-subscriptions,
                 #ui-setting,
+                #ui-mareketplace-advisor,
                 #uiTransactions {
                   .mat-tab-link {
                     color: #595252 !important;
@@ -1897,7 +1899,7 @@
                   }
                 }
 
-                #ui-people {
+                #ui-people,#ui-mareketplace-advisor {
                   .mat-tab-link {
                     color: #595252 !important;
                     border-bottom: 4px solid transparent;
