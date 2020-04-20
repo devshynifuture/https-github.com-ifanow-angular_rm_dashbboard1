@@ -27,7 +27,7 @@ export class AccountsComponent implements OnInit {
   selected;
 
   constructor(private eventService: EventService, private router: Router, private ngZone: NgZone,
-              public routingStateService: RoutingState, private authService: AuthService) {
+              public routingStateService: RoutingState, public authService: AuthService) {
     this.eventService.tabChangeData.subscribe(
       data => this.getTabChangeData(data)
     );

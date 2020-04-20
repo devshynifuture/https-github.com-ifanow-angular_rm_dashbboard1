@@ -75,8 +75,8 @@
                     </div>
                 </div>
             </div>
-            <app-add-number [numberList]=" basicDetailsData.mobileList" [flag]="mobileNumberFlag"
-                (numberArray)="getNumberDetails($event)">
+            <app-add-number [userData]="basicDetailsData" [numberList]=" basicDetailsData.mobileList"
+                [flag]="mobileNumberFlag" (numberArray)="getNumberDetails($event)">
             </app-add-number>
             <div class="row pt-44">
                 <div class="col-md-4 text-right">
@@ -85,11 +85,10 @@
                 <div class="col-md-3 p-0">
                     <div class="form-group mb-0">
                         <mat-form-field floatLabel="never" appearance="standard">
-                            <input #pan placeholder="Enter PAN" (input)="toUpperCase($event)"
+                            <input #pan placeholder="Enter PAN" (input)="toUpperCase(basicDetails.get('pan'),$event)"
                                 [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
                                 autocomplete="off" class="form-control" formControlName="pan" matInput maxlength="10">
-                            <mat-error *ngIf="basicDetails.get('pan').errors?.required">This field
-                                is required
+                            <mat-error *ngIf="basicDetails.get('pan').errors?.required">This field is required
                             </mat-error>
                             <mat-error *ngIf="basicDetails.get('pan').errors?.pattern">Pan invalid
                             </mat-error>
@@ -105,8 +104,7 @@
             <div *ngIf="fieldFlag=='client' && basicDetailsData.userId" class="row pt-40">
                 <div class="col-md-4 text-right">
                     <h5 class="m-0 pt-12">Username</h5>
-                    <p class="f-12 m-0 l-18 roboto text-custom">This will be the login ID. By
-                        default, email is the
+                    <p class="f-12 m-0 l-18 roboto text-custom">This will be the login ID. By default, email is the
                         username
                     </p>
                 </div>
@@ -210,7 +208,7 @@
                             <mat-hint>Optional</mat-hint> -->
                             <mat-select formControlName="leadSource" class="form-control">
                                 <mat-option value="0">Select option</mat-option>
-                                <mat-option value="1">Search engine</mat-option>,
+                                <mat-option value="1">Search engine</mat-option>
                                 <mat-option value="2">Website</mat-option>
                                 <mat-option value="3">Refrerals from existing clients</mat-option>
                                 <mat-option value="4">Refrerals from existing friends</mat-option>
@@ -282,8 +280,7 @@
             <div *ngIf="fieldFlag!='familyMember'" class="row pt-44 pb-60">
                 <div class="col-md-4 text-right">
                     <h5 class="m-0 pt-4">Role</h5>
-                    <p class="m-0 f-12 text-custom">The selected role decides<br> what access the
-                        client has
+                    <p class="m-0 f-12 text-custom">The selected role decides<br> what access the client has
                     </p>
                 </div>
                 <div class="col-md-5 p-0">
@@ -488,9 +485,10 @@
                 <div class="col-md-3 p-0">
                     <div class="form-group mb-0">
                         <mat-form-field floatLabel="never" appearance="standard">
-                            <input [maxLength]="10" placeholder="Enter PAN" (input)="toUpperCase($event)"
-                                formControlName="pan" #pan matInput class="form-control"
-                                [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation>
+                            <input [maxLength]="10" placeholder="Enter PAN"
+                                (input)="toUpperCase(minorForm.get('pan'),$event)" formControlName="pan" #pan matInput
+                                class="form-control" [inputValidator]="validatorType.ALPHA_NUMERIC"
+                                appInputValueValidation>
                             <mat-error *ngIf="minorForm.get('pan').errors?.pattern">Pan invalid</mat-error>
                             <mat-hint>Optional</mat-hint>
                             <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
@@ -632,11 +630,10 @@
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <input matInput formControlName="comEmail" class="form-control">
-                            <mat-error *ngIf="nonIndividualForm.get('comEmail').errors?.pattern">Email not
-                                valid
+                            <mat-error *ngIf="nonIndividualForm.get('comEmail').errors?.pattern">Email not valid
                             </mat-error>
-                            <mat-error *ngIf="nonIndividualForm.get('comEmail').errors?.required">This field
-                                is required</mat-error>
+                            <mat-error *ngIf="nonIndividualForm.get('comEmail').errors?.required">This field is required
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -653,10 +650,9 @@
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <input [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
-                                formControlName="comPan" (input)="toUpperCase($event)" #cpan maxlength="10" matInput
-                                class="form-control">
-                            <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.required">This Field
-                                is required
+                                formControlName="comPan" (input)="toUpperCase(nonIndividualForm.get('comPan'),$event)"
+                                #cpan maxlength="10" matInput class="form-control">
+                            <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.required">This Field is required
                             </mat-error>
                             <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.pattern">Pan invalid
                             </mat-error>
@@ -696,8 +692,7 @@
             <div *ngIf="basicDetailsData.userId" class="row pt-44">
                 <div class="col-md-4 text-right">
                     <h5 class="m-0 pt-12">Username</h5>
-                    <p class="m-0 f-12 text-custom">This will be the login ID By <br> default.email is
-                        username
+                    <p class="m-0 f-12 text-custom">This will be the login ID By <br> default.email is username
                     </p>
                 </div>
                 <div class="col-md-5 p-0">
@@ -847,8 +842,11 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close('close')">Cancel</h5>
         </div>
-        <div *ngIf="fieldFlag=='client' || fieldFlag=='lead'" class="col-md-8 right text-right">
+        <div *ngIf="fieldFlag=='client' || fieldFlag=='lead'"
+            class="col-md-8 d-flex align-items-end justify-content-end">
 
+            <button mat-stroked-button (click)="saveNextClient('Next')" class=" br-0 bg-white text-inherit">SAVE & NEXT
+            </button>
             <!-- <button mat-raised-button (click)="saveNextClient('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
       </button> -->
             <!-- ================= ERROR ======================= -->
@@ -856,7 +854,7 @@
             <!--  -->
             <!-- ================= ERROR ======================= -->
 
-            <app-progress-button (btnClick)="saveNextClient('Next')" class="br-0 text-inherit mr-12"
+            <app-progress-button (btnClick)="saveNextClient('close')" class="br-0 text-inherit ml-12"
                 [options]="barButtonOptions">
             </app-progress-button>
             <!-- <button mat-stroked-button (click)="saveNextClient('close')" class="btn-bottom br-0 text-inherit">SAVE &
@@ -866,7 +864,10 @@
         <div *ngIf="fieldFlag=='familyMember'" class="col-md-8 right text-right">
             <!-- <button mat-raised-button (click)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
       </button> -->
-            <app-progress-button (btnClick)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12"
+            <button mat-stroked-button (click)="saveNextFamilyMember('Next')" class=" br-0 bg-white text-inherit">SAVE &
+                NEXT
+            </button>
+            <app-progress-button (btnClick)="saveNextFamilyMember('close')" class="br-0 text-inherit mr-12"
                 [options]="barButtonOptions">
             </app-progress-button>
             <!-- <button mat-stroked-button (click)="saveNextFamilyMember('close')" class="btn-bottom br-0 text-inherit">SAVE

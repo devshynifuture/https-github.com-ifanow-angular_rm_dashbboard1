@@ -128,30 +128,36 @@ export class FileOrderingUpperComponent implements OnInit {
   }
 
   fileOrderRetry(value) {
-    let data;
-    if (value === null) {
-      data = {
-        ids: [...this.arrayOfIdsForRetry],
-        isHistorical: this.data.flag == 'historical' ? true : false
-      }
-    } else if (value !== null) {
-      data = {
-        ids: value,
-        isHistorical: this.data.flag == 'historical' ? true : false
-      }
-    }
-    console.log(this.arrayOfIdsForRetry);
-    this.fileOrderingService.putFileOrderRetry(data)
-      .subscribe(res => {
-        if (res) {
-          console.log("this is retry files res:::", res);
-          this.dataSource.data = ELEMENT_DATA;
-          this.data.flag == 'historical' ? this.fileOrderingListData() : this.fileOrderBulkListData()
+    if (this.arrayOfIdsForRetry.length !== 0) {
 
+      let data;
+      if (value === null) {
+        data = {
+          ids: [...this.arrayOfIdsForRetry],
+          isHistorical: this.data.flag == 'historical' ? true : false
         }
-      }, err => {
-        this.eventService.openSnackBar(err, "DISMISS");
-      })
+      } else if (value !== null) {
+        data = {
+          ids: value,
+          isHistorical: this.data.flag == 'historical' ? true : false
+        }
+      }
+      console.log(this.arrayOfIdsForRetry);
+      this.fileOrderingService.putFileOrderRetry(data)
+        .subscribe(res => {
+          if (res) {
+            console.log("this is retry files res:::", res);
+            this.dataSource.data = ELEMENT_DATA;
+            this.data.flag == 'historical' ? this.fileOrderingListData() : this.fileOrderBulkListData()
+
+          }
+        }, err => {
+          this.eventService.openSnackBar(err, "DISMISS");
+        })
+
+    } else {
+      this.eventService.openSnackBar("No Files Selected to Retry", "DISMISS");
+    }
   }
 
   fileOrderingListData() {

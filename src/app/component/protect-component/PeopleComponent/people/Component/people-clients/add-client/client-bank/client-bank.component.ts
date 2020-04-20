@@ -21,7 +21,7 @@ export class ClientBankComponent implements OnInit {
   bankList: any;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'SAVE & NEXT',
+    text: 'SAVE & CLOSE',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -37,7 +37,7 @@ export class ClientBankComponent implements OnInit {
   constructor(private cusService: CustomerService, private eventService: EventService,
     private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private subService: SubscriptionService, private postalService: PostalService,
-    private peopleService: PeopleService) {
+    private peopleService: PeopleService, private utilService: UtilService) {
   }
 
   bankForm;
@@ -61,8 +61,8 @@ export class ClientBankComponent implements OnInit {
       this.createBankForm(this.userData.bankData);
     }
   }
-  toUpperCase(event) {
-    event = UtilService.toUpperCase(event);
+  toUpperCase(formControl, event) {
+    this.utilService.toUpperCase(formControl, event);
     if (event.target.value.length == 11) {
       this.getBankAddress(event.target.value);
       return;
@@ -200,7 +200,7 @@ export class ClientBankComponent implements OnInit {
           });
         });
       }
-      this.barButtonOptions.active = true;
+      (flag == 'Save') ? this.barButtonOptions.active = true : '';
       const obj = {
         branchCode: (this.bankList) ? this.bankList.branchCode : this.bankDetail.branchCode,
         branchName: this.bankForm.get('branchName').value,

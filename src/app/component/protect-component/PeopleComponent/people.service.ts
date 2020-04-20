@@ -95,4 +95,8 @@ export class PeopleService {
   getAdvisorFromEmailAndMobileData(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_ADVISOR_FROM_EMAIL_MOBILE, data, 1);
   }
+
+  getIsdCode(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_ISD_CODES, data, 1);
+  }
 }

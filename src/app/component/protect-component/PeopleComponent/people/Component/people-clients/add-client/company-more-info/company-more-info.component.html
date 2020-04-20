@@ -39,9 +39,9 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" (input)="toUpperCase($event)" formControlName="pan" #pan
-                        appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" maxlength="10" matInput
-                        class="form-control">
+                    <input autocomplete="off" (input)="toUpperCase(moreInfoForm.get('pan'),$event)"
+                        formControlName="pan" #pan appInputValueValidation
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" maxlength="10" matInput class="form-control">
                     <mat-hint>Optional</mat-hint>
                     <mat-error *ngIf="moreInfoForm.get('pan').errors?.pattern">Pan invalid</mat-error>
                     <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
@@ -179,9 +179,13 @@
             <h5 (click)="close('close')" class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
+            <button mat-stroked-button *ngIf="fieldFlag" (click)="saveNext('Next')"
+                class=" br-0 bg-white text-inherit">SAVE &
+                NEXT
+            </button>
             <!-- <button mat-raised-button (click)="saveNext('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
             </button> -->
-            <app-progress-button (btnClick)="saveNext('Next')" class="br-0 text-inherit mr-12"
+            <app-progress-button (btnClick)="saveNext('Save')" class="br-0 text-inherit mr-12"
                 [options]="barButtonOptions">
             </app-progress-button>
             <!-- <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE &

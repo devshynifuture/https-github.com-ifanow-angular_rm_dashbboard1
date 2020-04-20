@@ -22,7 +22,7 @@ export class ClientAddressComponent implements OnInit {
   isLoading: boolean;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'SAVE & NEXT',
+    text: 'SAVE & CLOSE',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -39,7 +39,7 @@ export class ClientAddressComponent implements OnInit {
 
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private postalService: PostalService,
-    private peopleService: PeopleService, private eventService: EventService) {
+    private peopleService: PeopleService, private eventService: EventService, private utilService: UtilService) {
   }
 
   addressForm;
@@ -92,8 +92,8 @@ export class ClientAddressComponent implements OnInit {
     }
   }
 
-  toUpperCase(event) {
-    event = UtilService.toUpperCase(event);
+  toUpperCase(formControl, event) {
+    event = this.utilService.toUpperCase(formControl, event);
   }
 
   getPostalPin(value) {
@@ -146,7 +146,7 @@ export class ClientAddressComponent implements OnInit {
       this.addressForm.markAllAsTouched();
       return;
     } else {
-      this.barButtonOptions.active = true;
+      (flag == 'Save') ? this.barButtonOptions.active = true : '';
       const obj = {
         address1: this.addressForm.get('addressLine1').value,
         address2: this.addressForm.get('addressLine2').value,

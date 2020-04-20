@@ -17,9 +17,10 @@
         <div class="col-md-2 p-0">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter IFSC   " autocomplete="off" (input)="toUpperCase($event)"
-                        appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC"
-                        formControlName="ifscCode" #ifcCode [maxLength]="11" matInput class="form-control">
+                    <input placeholder="Enter IFSC   " autocomplete="off"
+                        (input)="toUpperCase(bankForm.get('ifscCode'),$event)" appInputValueValidation
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="ifscCode" #ifcCode
+                        [maxLength]="11" matInput class="form-control">
                     <mat-hint align="end" class="f-12">{{ifcCode.value.length}}/11</mat-hint>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -199,7 +200,7 @@
             <h5 class="m-0 pt-20">Branch state</h5>
         </div>
         <div class="col-md-6 p-0">
-            <div class="form-group mb-0">
+            <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter Branch state" maxlength="30" autocomplete="off" appInputValueValidation
                         [inputValidator]="validatorType.TEXT_ONLY" #branchState formControlName="branchState" matInput
@@ -216,7 +217,11 @@
         <div class="col-md-4">
             <h5 (click)="close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right">
+        <div class="col-md-8 d-flex align-items-end justify-content-end">
+            <button mat-stroked-button *ngIf="fieldFlag" (click)="saveNext('Next')"
+                class=" br-0 bg-white text-inherit">SAVE &
+                NEXT
+            </button>
             <!-- <button mat-raised-button *ngIf="fieldFlag!=undefined" (click)="saveNext('Next')"
                 class="br-0 text-inherit mr-12">SAVE & NEXT
             </button> -->
@@ -225,7 +230,7 @@
             <app-progress-button *ngIf="fieldFlag==undefined" (btnClick)="saveNext('Save')" [options]="barButtonOptions"
                 class="br-0 text-inherit mr-12">
             </app-progress-button>
-            <app-progress-button (btnClick)="saveNext('Next')" class="br-0 text-inherit mr-12"
+            <app-progress-button (btnClick)="saveNext('Save')" class="br-0 text-inherit mr-12"
                 [options]="barButtonOptions">
             </app-progress-button>
         </div>

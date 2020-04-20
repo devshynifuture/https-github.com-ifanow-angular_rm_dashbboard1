@@ -18,7 +18,7 @@ const moment = require('moment');
 export class ClientBasicDetailsComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'SAVE & NEXT',
+    text: 'SAVE & CLOSE',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -60,7 +60,7 @@ export class ClientBasicDetailsComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
-    private eventService: EventService, private datePipe: DatePipe) {
+    private eventService: EventService, private datePipe: DatePipe, private utilService: UtilService) {
   }
 
   ngOnInit() {
@@ -95,8 +95,8 @@ export class ClientBasicDetailsComponent implements OnInit {
     }
     console.log(data);
   }
-  toUpperCase(event) {
-    event = UtilService.toUpperCase(event);
+  toUpperCase(formControl, event) {
+    this.utilService.toUpperCase(formControl, event);
   }
   // setMinDateForAge() {
   //   this.minAge = new Date();
@@ -108,8 +108,8 @@ export class ClientBasicDetailsComponent implements OnInit {
     (data == undefined) ? data = {} : '';
     this.basicDetails = this.fb.group({
       fullName: [data.name, [Validators.required]],
-      email: [(data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
-      pan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
+      email: [{ value: (data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', disabled: this.basicDetailsData.userId ? true : false }, [Validators.pattern(this.validatorType.EMAIL)]],
+      pan: [{ value: data.pan, disabled: this.basicDetailsData.userId ? true : false }, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       username: [{ value: data.userName, disabled: true }],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       dobActual: [],
@@ -144,8 +144,8 @@ export class ClientBasicDetailsComponent implements OnInit {
       comName: [data.name, [Validators.required]],
       dateOfIncorporation: [(data.dateOfBirth) ? new Date(data.dateOfBirth) : ''],
       comStatus: [(data.companyStatus) ? String(data.companyStatus) : '0', [Validators.required]],
-      comEmail: [(data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
-      comPan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
+      comEmail: [{ value: (data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', disabled: this.basicDetailsData.userId ? true : false }, [Validators.pattern(this.validatorType.EMAIL)]],
+      comPan: [{ value: data.pan, disabled: this.basicDetailsData.userId ? true : false }, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       comOccupation: [(data.occupationId == 0) ? '1' : String(data.occupationId)],
       username: [{ value: data.userName, disabled: true }],
       leadSource: [data.leadSource ? data.leadSource : '0'],
@@ -246,7 +246,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.nonIndividualForm.markAllAsTouched();
       return;
     } else {
-      this.barButtonOptions.active = true;
+      (flag == 'close') ? this.barButtonOptions.active = true : '';
       const mobileList = [];
       if (this.mobileData) {
         this.mobileData.controls.forEach(element => {
@@ -354,7 +354,13 @@ export class ClientBasicDetailsComponent implements OnInit {
             data.invCategory = this.invTypeCategory;
             data.categoryTypeflag = (this.invTypeCategory == '1') ? 'Individual' : 'clientNonIndividual';
             this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
-            (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
+            if (flag == 'Next') {
+              this.changeTabAndSendData(data);
+            }
+            else {
+              this.barButtonOptions.active = false;
+              this.close(data);
+            }
           },
           (err) => {
             this.barButtonOptions.active = false;
@@ -432,7 +438,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.minorForm.markAllAsTouched();
       return;
     }
-    this.barButtonOptions.active = true;
+    (flag == 'close') ? this.barButtonOptions.active = true : '';
     const obj = {
       familyMemberId: this.basicDetailsData.familyMemberId,
       clientId: this.basicDetailsData.clientId,
@@ -469,10 +475,15 @@ export class ClientBasicDetailsComponent implements OnInit {
     obj.displayName = this.basicDetailsData.displayName;
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {
-        this.barButtonOptions.active = false;
         data.invTypeCategory = this.invTypeCategory;
         data.categoryTypeflag = 'familyMinor';
-        (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(data);
+        if (flag == 'Next') {
+          this.changeTabAndSendData(data);
+        }
+        else {
+          this.barButtonOptions.active = false;
+          this.close(data);
+        }
       },
       err => {
         this.barButtonOptions.active = false;

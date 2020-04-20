@@ -13,6 +13,10 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./my-ifa-select-arn-ria.component.scss']
 })
 export class MyIfaSelectArnRiaComponent implements OnInit {
+  dataToSend: any;
+  options: any;
+  rtId: any;
+  selectedOption: any;
 
   constructor(
     public dialogRef: MatDialogRef<MyIfaSelectArnRiaComponent>,
@@ -27,9 +31,20 @@ export class MyIfaSelectArnRiaComponent implements OnInit {
   });
 
   ngOnInit() {
+    console.log('fragmentData',this.fragmentData)
+    this.dataToSend = this.fragmentData.mainData
+    this.options = this.fragmentData.flag
+    this.options.forEach(element => {
+      element.selected = false
+    });
+    this.rtId = this.fragmentData.rtId
   }
-
+  selectedOtp(value){
+    console.log('selectedOtp',value)
+    this.selectedOption = value
+  }
   openUpperModule(flag, data) {
+    
     const fragmentData = {
       flag: "clients",
       id: 1,
@@ -42,6 +57,32 @@ export class MyIfaSelectArnRiaComponent implements OnInit {
     AuthService.setSubscriptionUpperSliderData(fragmentData);
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+
+        }
+      }
+    );
+
+  }
+  openUpperSliderBackoffice(flag, data) {
+    this.dialogClose();
+    data = this.fragmentData.mainData
+    data.rtId = this.rtId
+    const fragmentData = {
+      flag: "clients",
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: UpperSliderBackofficeComponent,
+      state: 'open'
+    };
+    // this.router.navigate(['/subscription-upper'])
+    AuthService.setSubscriptionUpperSliderData(fragmentData);
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        this.subscriptionInject.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
         if (UtilService.isDialogClose(upperSliderData)) {
           // this.getClientSubscriptionList();
           subscription.unsubscribe();

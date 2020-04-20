@@ -96,6 +96,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           this.handlingDataVariable();
         } else {
           this.adminAdvisorIds = [this.advisorId];
+          this.handlingDataVariable();
           this.eventService.openSnackBar('No Team Member Found', "DISMISS");
         }
       })
@@ -232,8 +233,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
         folio: this.mutualFundIds
       }
     }
-    this.isLoading = true;
     if (this.didAumReportListGot) {
+      this.isLoading = true;
       this.reconService.getDuplicateFolioDataValues(data)
         .subscribe(res => {
           this.isLoading = false;
@@ -277,7 +278,6 @@ export class UpperSliderBackofficeComponent implements OnInit {
                 transactions: ''
               })
             })
-            this.isLoading = false;
             this.dataSource2.data = arrValue;
           } else {
             this.dataSource2.data = null;
@@ -533,8 +533,10 @@ export class UpperSliderBackofficeComponent implements OnInit {
     let data = {
       aumReconId: this.data.id
     };
+    this.isLoading = true;
     this.reconService.getAumReportListValues(data)
       .subscribe(res => {
+        this.isLoading = false;
         console.log("this is aum report list get:::", res);
         if (res) {
           this.didAumReportListGot = true;

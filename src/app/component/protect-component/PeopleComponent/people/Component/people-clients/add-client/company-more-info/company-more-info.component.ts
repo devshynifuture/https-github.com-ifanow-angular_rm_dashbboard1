@@ -44,7 +44,7 @@ export class CompanyMoreInfoComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private peopleService: PeopleService, private eventService: EventService,
-    private datePipe: DatePipe) {
+    private datePipe: DatePipe, private utilService: UtilService) {
   }
 
   @Input() set data(data) {
@@ -53,8 +53,8 @@ export class CompanyMoreInfoComponent implements OnInit {
     this.getCompanyDetails(data);
     this.companyIndividualData = data
   }
-  toUpperCase(event) {
-    event = UtilService.toUpperCase(event);
+  toUpperCase(formControl, event) {
+    this.utilService.toUpperCase(formControl, event);
   }
 
   createMoreInfoForm(data) {
@@ -128,7 +128,7 @@ export class CompanyMoreInfoComponent implements OnInit {
         email: emailId
       });
     }
-    this.barButtonOptions.active = true;
+    (flag == 'Save') ? this.barButtonOptions.active = true : '';
     const obj = {
       emailList,
       displayName: this.moreInfoForm.controls.displayName.value,

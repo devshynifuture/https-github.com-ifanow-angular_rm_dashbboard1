@@ -15,9 +15,10 @@ import { AddNumberComponent } from './Component/people-clients/add-client/add-nu
 import { AddHolderNamesComponent } from './Component/people-clients/add-client/add-holder-names/add-holder-names.component';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { CompanyMoreInfoComponent } from './Component/people-clients/add-client/company-more-info/company-more-info.component';
+import { CommonComponentModule } from '../../common-component/common-component.module';
 
 
-export const componentList = [CompanyMoreInfoComponent, AddClientComponent, LeadsClientsComponent, ClientBasicDetailsComponent, ClientMoreInfoComponent, ClientAddressComponent, ClientBankComponent, ClientDematComponent, ClientUploadComponent, AddNumberComponent, AddHolderNamesComponent]
+export const componentList = [CompanyMoreInfoComponent, AddClientComponent, LeadsClientsComponent, ClientBasicDetailsComponent, ClientMoreInfoComponent, ClientAddressComponent, ClientBankComponent, ClientDematComponent, ClientUploadComponent, AddHolderNamesComponent]
 @NgModule({
   declarations: [componentList],
   imports: [
@@ -26,7 +27,8 @@ export const componentList = [CompanyMoreInfoComponent, AddClientComponent, Lead
     FormsModule,
     ReactiveFormsModule,
     CustomDirectiveModule,
-    CustomCommonModule
+    CustomCommonModule,
+    CommonComponentModule,
   ], entryComponents: [componentList]
 })
 export class PeopleEntryModule {
