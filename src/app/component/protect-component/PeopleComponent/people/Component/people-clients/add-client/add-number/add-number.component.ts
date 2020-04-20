@@ -27,8 +27,11 @@ export class AddNumberComponent implements OnInit {
     mobile: 'col-md-3',
     addRemove: 'col-md-1',
   }
-
+  placeHolderObj = ['Enter Primary Number', 'Enter Secondary Number']
   countryCodes: Array<string> = ['+91', '+92', "+93"];
+  isdCodes: any;
+  countryCode: any;
+  lengthControl: number;
 
   ngOnInit() {
     if (this.isResidential) {
@@ -92,24 +95,28 @@ export class AddNumberComponent implements OnInit {
   removeNumber(index) {
     this.compulsionCount--;
     (this.numberFormGroup.controls.mobileNo.length == 1) ? '' : this.numberFormGroup.controls.mobileNo.removeAt(index);
+    // this.lengthControl = this.getMobileNumList.length;
   }
 
   addNumber(data) {
     if (!data) {
       data = {};
     }
-    if (this.compulsionCount < this.minimumCompulsary) {
-      this.compulsionCount++;
-      this.getMobileNumList.push(this.fb.group({
-        code: [''],
-        number: [data.mobileNo, [Validators.pattern(this.validatorType.TEN_DIGITS), Validators.required]]
-      }));
-    } else {
-      this.getMobileNumList.push(this.fb.group({
-        code: [''],
-        number: [data.mobileNo, Validators.pattern(this.validatorType.TEN_DIGITS)]
-      }));
+    if (this.getMobileNumList, length < 3) {
+      if (this.compulsionCount < this.minimumCompulsary) {
+        this.compulsionCount++;
+        this.getMobileNumList.push(this.fb.group({
+          code: [''],
+          number: [data.mobileNo, [Validators.pattern(this.validatorType.TEN_DIGITS), Validators.required]]
+        }));
+      } else {
+        this.getMobileNumList.push(this.fb.group({
+          code: [''],
+          number: [data.mobileNo, Validators.pattern(this.validatorType.TEN_DIGITS)]
+        }));
+      }
+      this.numberArray.emit(this.getMobileNumList);
     }
-    this.numberArray.emit(this.getMobileNumList);
+    // this.lengthControl = this.getMobileNumList.length
   }
 }

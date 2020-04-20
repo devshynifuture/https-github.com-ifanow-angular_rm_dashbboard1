@@ -17,9 +17,10 @@
         <div class="col-md-2 p-0">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter IFSC   " autocomplete="off" (input)="toUpperCase($event)"
-                        appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC"
-                        formControlName="ifscCode" #ifcCode [maxLength]="11" matInput class="form-control">
+                    <input placeholder="Enter IFSC   " autocomplete="off"
+                        (input)="toUpperCase(bankForm.get('ifscCode'),$event)" appInputValueValidation
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="ifscCode" #ifcCode
+                        [maxLength]="11" matInput class="form-control">
                     <mat-hint align="end" class="f-12">{{ifcCode.value.length}}/11</mat-hint>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>

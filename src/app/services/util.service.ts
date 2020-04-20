@@ -8,7 +8,6 @@ import { HttpClient } from '@angular/common/http';
 import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
 import { FormGroup } from '@angular/forms';
 import { Subject, BehaviorSubject } from 'rxjs';
-import { PeopleService } from '../component/protect-component/PeopleComponent/people.service';
 
 
 @Injectable({
@@ -21,7 +20,6 @@ export class UtilService {
     private eventService: EventService,
     private http: HttpClient,
     private subService: SubscriptionService,
-    private peopleService: PeopleService
   ) { }
 
   private static decimalPipe = new DecimalPipe('en-US');
@@ -122,6 +120,7 @@ export class UtilService {
   static obfuscateMobile(mobileNo: string) {
     return mobileNo.substr(0, 2) + 'XXXXX' + mobileNo.substr(7, 9);
   }
+
   setSubscriptionStepData(data) {
     this.subscriptionStepData = data;
   }
@@ -174,6 +173,7 @@ export class UtilService {
       return element;
     });
   }
+
   formValidations(whichTable) {
     // console.log("this is formGroup::::::::::", whichTable);
     for (const key in whichTable.controls) {
@@ -254,10 +254,11 @@ export class UtilService {
     return true;
   }
 
-  static toUpperCase(event) {
-    console.log(event);
-    event.target.value = event.target.value.toUpperCase();
-    return event;
+  toUpperCase(formGroup, event) {
+    if (event.data == undefined) {
+      return;
+    }
+    formGroup.patchValue(event.target.value.toUpperCase());
   }
 
   htmlToPdf(inputData, pdfName) {
@@ -341,6 +342,7 @@ export class UtilService {
     }
   }
 }
+
 export class ValidatorType {
 
   // static NUMBER_ONLY = new RegExp(/^\d{1,6}(\.\d{1,2})?$/);

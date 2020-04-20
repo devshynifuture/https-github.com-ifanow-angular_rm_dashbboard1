@@ -60,7 +60,7 @@ export class ClientBasicDetailsComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
-    private eventService: EventService, private datePipe: DatePipe) {
+    private eventService: EventService, private datePipe: DatePipe, private utilService: UtilService) {
   }
 
   ngOnInit() {
@@ -95,8 +95,8 @@ export class ClientBasicDetailsComponent implements OnInit {
     }
     console.log(data);
   }
-  toUpperCase(event) {
-    event = UtilService.toUpperCase(event);
+  toUpperCase(formControl, event) {
+    this.utilService.toUpperCase(formControl, event);
   }
   // setMinDateForAge() {
   //   this.minAge = new Date();
@@ -108,8 +108,8 @@ export class ClientBasicDetailsComponent implements OnInit {
     (data == undefined) ? data = {} : '';
     this.basicDetails = this.fb.group({
       fullName: [data.name, [Validators.required]],
-      email: [(data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
-      pan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
+      email: [{ value: (data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', disabled: this.basicDetailsData.userId ? true : false }, [Validators.pattern(this.validatorType.EMAIL)]],
+      pan: [{ value: data.pan, disabled: this.basicDetailsData.userId ? true : false }, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       username: [{ value: data.userName, disabled: true }],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       dobActual: [],
@@ -144,8 +144,8 @@ export class ClientBasicDetailsComponent implements OnInit {
       comName: [data.name, [Validators.required]],
       dateOfIncorporation: [(data.dateOfBirth) ? new Date(data.dateOfBirth) : ''],
       comStatus: [(data.companyStatus) ? String(data.companyStatus) : '0', [Validators.required]],
-      comEmail: [(data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
-      comPan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
+      comEmail: [{ value: (data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', disabled: this.basicDetailsData.userId ? true : false }, [Validators.pattern(this.validatorType.EMAIL)]],
+      comPan: [{ value: data.pan, disabled: this.basicDetailsData.userId ? true : false }, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       comOccupation: [(data.occupationId == 0) ? '1' : String(data.occupationId)],
       username: [{ value: data.userName, disabled: true }],
       leadSource: [data.leadSource ? data.leadSource : '0'],
