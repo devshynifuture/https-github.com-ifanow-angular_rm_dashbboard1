@@ -20,13 +20,18 @@ export class AddNumberComponent implements OnInit {
   @Input() minimumCompulsary = 0;
   @Input() isResidential = false;
   @Output() numberArray = new EventEmitter();
-  isdCodes;
-  countryCode: any;
+  @Input() classObj = {
+    topPadding: 'pt-60',
+    label: 'col-md-4',
+    code: 'col-md-3',
+    mobile: 'col-md-3',
+    addRemove: 'col-md-1',
+  }
 
-  countryCodes:Array<string> = ['+91', '+92', "+93"];
+  countryCodes: Array<string> = ['+91', '+92', "+93"];
 
   ngOnInit() {
-    if(this.isResidential) {
+    if (this.isResidential) {
       this.countryCodes = ['+1'];
     }
   }
