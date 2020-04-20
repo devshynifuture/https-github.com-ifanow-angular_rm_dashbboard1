@@ -27,7 +27,7 @@
     "@angular/animations": "github:angular/animations-builds#8.2.x",
     "@angular/cdk": "github:angular/cdk-builds#8.2.x",
     "@angular/cdk-experimental": "^8.2.3",
-    "@angular/cli": "^8.3.25",
+    "@angular/cli": "^8.3.26",
     "@angular/common": "~8.2.14",
     "@angular/compiler": "~8.2.14",
     "@angular/core": "~8.2.14",
@@ -73,7 +73,7 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.803.25",
+    "@angular-devkit/build-angular": "^0.803.26",
     "@angular/compiler-cli": "~8.2.14",
     "@angular/language-service": "~8.2.14",
     "@types/file-saver": "^2.0.1",
