@@ -477,7 +477,7 @@
                     appSkeletonLoading [appSkeletonLoading]="utilsService.isLoading">
                         <ng-container matColumnDef="name">
                             <th class="br" mat-header-cell *matHeaderCellDef> Name </th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.name}} </td>
+                            <td class="br" mat-cell *matCellDef="let element"> {{element.fullName}} </td>
                         </ng-container>
 
 
@@ -495,7 +495,7 @@
 
                         <ng-container matColumnDef="role">
                             <th class="br" mat-header-cell *matHeaderCellDef> role </th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.role}} </td>
+                            <td class="br" mat-cell *matCellDef="let element"> {{element.role?.roleName}} </td>
                         </ng-container>
 
                         <ng-container matColumnDef="lastlogin">
@@ -505,7 +505,7 @@
 
                         <ng-container matColumnDef="status">
                             <th class="br" mat-header-cell *matHeaderCellDef> Status</th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.status}} </td>
+                            <td class="br" mat-cell *matCellDef="let element"> {{element.isActive ? (element.isSuspended ? 'Suspended' : 'Active') : 'Deleted'}} </td>
                         </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>

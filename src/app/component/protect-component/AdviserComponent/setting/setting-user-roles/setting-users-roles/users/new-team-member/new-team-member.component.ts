@@ -35,7 +35,7 @@ export class NewTeamMemberComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  mobileNumberFA:FormArray;
+  countryCodes:Array<string> = ['+91', '+92', "+93"];
 
   constructor(
     private fb: FormBuilder,
@@ -70,15 +70,15 @@ export class NewTeamMemberComponent implements OnInit {
       fullName: [this.data.mainData.fullName || '',
         [Validators.required, Validators.maxLength(50), Validators.pattern(ValidatorType.PERSON_NAME)]],
       emailId: [this.data.mainData.email || '', [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
-      // mobileNo: [this.data.mainData.mobile || '', [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
+      mobileNo: [this.data.mainData.mobile || '', [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
+      isdCode: [this.data.mainData.isdCode || '', [Validators.required]],
       roleId: [roleId, [Validators.required]],
     });
   }
 
   save() {
-    if (this.teamMemberFG.invalid || this.mobileNumberFA.invalid) {
+    if (this.teamMemberFG.invalid) {
       this.teamMemberFG.markAllAsTouched();
-      this.mobileNumberFA.markAllAsTouched();
     } else {
       if (this.barButtonOptions.active) {
       } else {
@@ -93,10 +93,7 @@ export class NewTeamMemberComponent implements OnInit {
   }
 
   addTeamMember() {
-    const dataObj = {
-      ...this.teamMemberFG.value,
-      mobileList: this.mobileNumberFA.value,
-    };
+    const dataObj = this.teamMemberFG.value;
     this.settingsService.addTeamMember(dataObj).subscribe((res) => {
       this.close(true);
       this.eventService.openSnackBar('Invitation sent successfully');
@@ -152,9 +149,5 @@ export class NewTeamMemberComponent implements OnInit {
       teamMemberRoleId.setValue('');
       this.teamMemberFG.updateValueAndValidity();
     }
-  }
-
-  getNumberDetails(formArr:FormArray) {
-    this.mobileNumberFA = formArr;
   }
 }
