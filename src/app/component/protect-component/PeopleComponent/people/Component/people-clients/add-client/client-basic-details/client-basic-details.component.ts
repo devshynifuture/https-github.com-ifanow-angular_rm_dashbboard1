@@ -56,6 +56,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   minAge: any;
   advisorData: any;
   maxDate = new Date();
+  invTypeCategoryList = [];
   // advisorId;
 
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
@@ -75,6 +76,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     this.advisorData = AuthService.getUserInfo();
     if (data.fieldFlag == 'familyMember') {
       this.basicDetailsData = data;
+      // (this.basicDetails)
       this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
       this.invTypeCategory = String(this.basicDetailsData.familyMemberType);
       (this.basicDetailsData.familyMemberType == 1 || this.basicDetailsData.familyMemberType == 0) ? this.createIndividualForm(this.basicDetailsData) : this.createMinorForm(this.basicDetailsData);
