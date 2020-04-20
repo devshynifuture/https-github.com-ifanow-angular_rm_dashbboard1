@@ -24,6 +24,7 @@ export class AddPersonalProfileComponent implements OnInit {
   anyDetailsChanged: boolean; // check if any details have been updated
   inputData: any;
   isLoading = false
+  countryCodes:Array<number> = [91, 92];
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -136,6 +137,7 @@ export class AddPersonalProfileComponent implements OnInit {
       fullName: this.personalProfile.controls.name.value,
       emailId: this.personalProfile.controls.emailId.value,
       // userName: this.personalProfile.controls.userName.value,
+      isdCodeId: this.personalProfile.controls.isdCodeId.value,
       mobileNo: this.personalProfile.controls.mobileNo.value,
       // roleId: 0,
     }
