@@ -36,6 +36,7 @@ export class AddPersonalProfileComponent implements OnInit {
   }
 
   personalProfile: FormGroup;
+  countryCodes:Array<string> = ['+91', '+92', "+93"];
   validatorType = ValidatorType
   @Input()
   set data(data) {
@@ -115,7 +116,7 @@ export class AddPersonalProfileComponent implements OnInit {
     this.personalProfile = this.fb.group({
       name: [(!data) ? '' : (data.fullName), [Validators.required, Validators.maxLength(40)]],
       emailId: [(!data) ? '' : data.emailId, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
-      isdCode: [(!data) ? '' : data.isdCode, [Validators.required]],
+      isdCodeId: [(!data) ? '' : data.isdCodeId, [Validators.required]],
       mobileNo: [(!data) ? '' : data.mobileNo, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(ValidatorType.NUMBER_ONLY)]],
       userName: [(!data) ? '' : data.userName, [Validators.required]],
     });
