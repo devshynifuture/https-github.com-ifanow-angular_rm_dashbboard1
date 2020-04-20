@@ -19,12 +19,15 @@
 
     <div class="row pb-12">
       <div class="col-md-6 pl-0">
-        <h4 class="m-0 text-black roboto pt-8">Mutual fund {{(this.mutualFund)?this.mutualFund.viewMode:'Transactions'}}</h4>
+        <h4 class="m-0 text-black roboto pt-8"><mat-spinner [diameter]="10" *ngIf="isSpinner"></mat-spinner>
+          Mutual fund {{(this.mutualFund)?this.mutualFund.viewMode:'Transactions'}}</h4>
       </div>
       <div class="col-md-6 p-0 d-flex justify-content-end" *ngIf="!isLoading">
         <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
         <mat-menu #menu5="matMenu">
-          <button (click)="generatePdf()" mat-menu-item>PDF</button>
+          <button (click)="generatePdf()" mat-menu-item>PDF
+            <mat-spinner [diameter]="10" *ngIf="isSpinner"></mat-spinner>
+          </button>
           <button (click)="Excel('Mutual fund unrealized transactions')" mat-menu-item>XLS</button>
         </mat-menu>
         <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">

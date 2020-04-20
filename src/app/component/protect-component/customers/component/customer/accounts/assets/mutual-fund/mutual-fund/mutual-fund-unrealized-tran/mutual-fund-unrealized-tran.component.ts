@@ -27,6 +27,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   schemeWiseForFilter: any;
   mutualFundListFilter: any[];
   type : any = { name : ''};
+  isSpinner = false;
   customDataSource = new TableVirtualScrollDataSource([{},{},{}]);
   @ViewChild('tableEl', {static: false}) tableEl;
   rightFilterData: any ={reportType :'' };
@@ -201,8 +202,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   // }
 
   generatePdf() {
+    this.isSpinner = true;
     const para = document.getElementById('template');
     this.utilService.htmlToPdf(para.innerHTML, 'Test');
+    // if(data){
+    //   this.isSpinner = false;
+    // }
   }
 
 }

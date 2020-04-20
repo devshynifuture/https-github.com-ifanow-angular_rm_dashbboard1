@@ -13,6 +13,8 @@ import {MatTableDataSource, MatDialog} from '@angular/material';
 import {WebworkerService} from '../../../../../../../../../../services/web-worker.service';
 import {MUTUAL_FUND_SUMMARY} from '../../mutual-fund.script';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { UpperCustomerComponent } from 'src/app/component/protect-component/customers/component/common-component/upper-customer/upper-customer.component';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-mutual-fund-summary',
@@ -41,7 +43,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
   constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
               private mfService: MfServiceService, private excel: ExcelGenService,
-              private workerService: WebworkerService ,public dialog: MatDialog) {
+              private workerService: WebworkerService ,public dialog: MatDialog , public eventService:EventService) {
   }
 
   @Input() mutualFund;
@@ -336,5 +338,23 @@ export class MutualFundSummaryComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
     
     });
+  }
+  openUpperFragment(data) {
+    const fragmentData = {
+      flag: 'app-upper-customer',
+      id: 1,
+      data,
+      direction: 'top',
+      componentName: UpperCustomerComponent,
+      state: 'open'
+    };
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+        }
+      }
+    );
   }
 }

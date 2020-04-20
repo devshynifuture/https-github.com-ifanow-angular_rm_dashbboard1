@@ -36,7 +36,7 @@ export class MutualFundOverviewComponent implements OnInit {
   subCategoryArray: any;
   dataSource2;
   dataSource;
-  isLoading: boolean = false;
+  isLoading: boolean = true;
   dataSource3;
   rightFilterData : any;
   showHideTable: any;
@@ -47,6 +47,7 @@ export class MutualFundOverviewComponent implements OnInit {
   showCategory = true;
   showSubCategory = true;
   totalValue: any = {};
+  isSpinner = false;
   constructor(public subInjectService: SubscriptionInject, public UtilService: UtilService,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService) {
   }
@@ -191,8 +192,16 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   generatePdf() {
+    this.isSpinner = true;
     let para = document.getElementById('template');
-    this.UtilService.htmlToPdf(para.innerHTML, 'Test')
+    this.UtilService.htmlToPdf(para.innerHTML, 'Test').subscribe(
+      data => {
+        if(data){
+          this.isSpinner = false;
+        }
+      }
+      
+      );
   }
   pieChart(id) {
     Highcharts.chart('piechartMutualFund', {
@@ -306,24 +315,24 @@ export class MutualFundOverviewComponent implements OnInit {
       }
     );
   }
-  openUpperFragment(data) {
-    const fragmentData = {
-      flag: 'app-upper-customer',
-      id: 1,
-      data,
-      direction: 'top',
-      componentName: UpperCustomerComponent,
-      state: 'open'
-    };
-    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-      upperSliderData => {
-        if (UtilService.isDialogClose(upperSliderData)) {
-          // this.getClientSubscriptionList();
-          subscription.unsubscribe();
-        }
-      }
-    );
-  }
+  // openUpperFragment(data) {
+  //   const fragmentData = {
+  //     flag: 'app-upper-customer',
+  //     id: 1,
+  //     data,
+  //     direction: 'top',
+  //     componentName: UpperCustomerComponent,
+  //     state: 'open'
+  //   };
+  //   const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+  //     upperSliderData => {
+  //       if (UtilService.isDialogClose(upperSliderData)) {
+  //         // this.getClientSubscriptionList();
+  //         subscription.unsubscribe();
+  //       }
+  //     }
+  //   );
+  // }
   openFilter() {
     const fragmentData = {
       flag: 'openFilter',
