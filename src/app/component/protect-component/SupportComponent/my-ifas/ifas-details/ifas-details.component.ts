@@ -55,7 +55,7 @@ export class IfasDetailsComponent implements OnInit {
     billing: false,
     misc: false,
   }
-  ticketList: [{}, {}, {}];;
+  ticketList= [{}, {}, {}];
   openTickets: any;
   unResolved: any;
   onHold: any;
@@ -72,9 +72,9 @@ export class IfasDetailsComponent implements OnInit {
   isInEditMode: boolean = false;
   reconSummaryList;
   ngOnInit() {
+    this.utilsService.loader(0);
     this.getReconSummaryList();
     this.getRTList();
-    this.utilsService.loader(0);
 
   }
   @Input() set data(data) {
@@ -104,7 +104,10 @@ export class IfasDetailsComponent implements OnInit {
           this.utilsService.loader(-1);
         }
       }
-      , err => this.eventService.openSnackBar(err, "Dismiss")
+      , err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+        this.utilsService.loader(-1);
+      }
     )
   }
   getRTList() {
@@ -130,7 +133,6 @@ export class IfasDetailsComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.brokerList = res;
-          console.log('jdfgj dfj', this.brokerListCams)
           this.openSelectArnRiaDialog(res, this.ifasData, this.rtId)
         }
       });
@@ -152,13 +154,11 @@ export class IfasDetailsComponent implements OnInit {
     this.supportService.getTickets(obj)
       .subscribe(res => {
         if (res) {
-          this.utilsService.loader(-1);
-          this.ticketList = res.listItems;
+          this.ticketList = res.listItems || [];
           this.onHold = res.onHold
           this.unResolved = res.unResolved
           this.openTickets = res.open
-          console.log('jdfgj dfj', this.ticketList)
-          this.ticketList
+          this.utilsService.loader(-1);
         }
       });
   }
@@ -223,14 +223,14 @@ export class IfasDetailsComponent implements OnInit {
       advisorId: this.ifasData.adminAdvisorId
     };
     this.settingsService.getTeamMembers(dataObj).subscribe((res) => {
-      this.utilsService.loader(-1);
       this.isComponentLoaded.teamMember = true;
       console.log('team member details', res);
       this.dataSource4 = res || [];
-    }, err => {
       this.utilsService.loader(-1);
+    }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
       this.hasError = true;
+      this.utilsService.loader(-1);
     });
   }
 
