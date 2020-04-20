@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {MatTabsModule} from '@angular/material/tabs';
 
 import { AdvisorMarketplceRoutingModule } from './advisor-marketplce-routing.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -20,7 +21,8 @@ import { MarketplaceReviewRatingComponent } from './advisor-marketplace/marketpl
     MarketplacePostsComponent,
     MarketplaceChatsComponent,
     MarketplaceCallsComponent,
-    MarketplaceReviewRatingComponent
+    MarketplaceReviewRatingComponent,
+    
 
   ],
   imports: [
@@ -28,6 +30,7 @@ import { MarketplaceReviewRatingComponent } from './advisor-marketplace/marketpl
     AdvisorMarketplceRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    MatTabsModule
   ]
 })
 export class AdvisorMarketplceModule { }
