@@ -304,14 +304,16 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.pomisForm}
   join:boolean = false;
   checkOwnerType(){
     if(this.getCoOwner.length>1){
-      this.pomisForm.controls["amtInvested"].setValidators(Validators.max(900000));
+      this.pomisForm.controls["amtInvested"].setValidators([Validators.required, Validators.min(1500),Validators.max(900000)]);
+      // this.pomisForm.controls["amtInvested"].markAsTouched();
       this.pomisForm.controls["amtInvested"].updateValueAndValidity();
       this.join = true;
     }
     else{
-      this.pomisForm.controls["amtInvested"].setValidators(Validators.max(450000));
+      // this.pomisForm.controls["amtInvested"].markAsTouched();
+      this.pomisForm.controls["amtInvested"].setValidators([Validators.required, Validators.min(1500),Validators.max(450000)]);;
       this.pomisForm.controls["amtInvested"].updateValueAndValidity();
-      this.join = false;
+      this.join = false; 
     }
   }
 
