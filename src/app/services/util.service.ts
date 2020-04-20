@@ -255,13 +255,14 @@ export class UtilService {
     return true;
   }
 
-  static toUpperCase(event) {
-    console.log(event);
-    event.target.value = event.target.value.toUpperCase();
-    return event;
+  toUpperCase(formGroup, event) {
+    if (event.data == undefined) {
+      return;
+    }
+    formGroup.patchValue(event.target.value.toUpperCase());
   }
 
-  htmlToPdf(inputData, pdfName ,fragData) {
+  htmlToPdf(inputData, pdfName, fragData) {
     const obj = {
       htmlInput: inputData,
       name: pdfName
@@ -276,7 +277,7 @@ export class UtilService {
         a.download = fileURL;
       }
     );
-   
+    // return (this.fileURL) ? this.fileURL : null;
   }
 
   /**

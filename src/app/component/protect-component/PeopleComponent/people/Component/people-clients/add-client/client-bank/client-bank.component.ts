@@ -37,7 +37,7 @@ export class ClientBankComponent implements OnInit {
   constructor(private cusService: CustomerService, private eventService: EventService,
     private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private subService: SubscriptionService, private postalService: PostalService,
-    private peopleService: PeopleService) {
+    private peopleService: PeopleService, private utilService: UtilService) {
   }
 
   bankForm;
@@ -61,8 +61,8 @@ export class ClientBankComponent implements OnInit {
       this.createBankForm(this.userData.bankData);
     }
   }
-  toUpperCase(event) {
-    event = UtilService.toUpperCase(event);
+  toUpperCase(formControl, event) {
+    this.utilService.toUpperCase(formControl, event);
     if (event.target.value.length == 11) {
       this.getBankAddress(event.target.value);
       return;

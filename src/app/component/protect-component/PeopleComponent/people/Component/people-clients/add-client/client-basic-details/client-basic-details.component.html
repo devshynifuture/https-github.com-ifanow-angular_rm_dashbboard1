@@ -75,8 +75,8 @@
                     </div>
                 </div>
             </div>
-            <app-add-number [numberList]=" basicDetailsData.mobileList" [flag]="mobileNumberFlag"
-                (numberArray)="getNumberDetails($event)">
+            <app-add-number [userData]="basicDetailsData" [numberList]=" basicDetailsData.mobileList"
+                [flag]="mobileNumberFlag" (numberArray)="getNumberDetails($event)">
             </app-add-number>
             <div class="row pt-44">
                 <div class="col-md-4 text-right">
@@ -85,7 +85,7 @@
                 <div class="col-md-3 p-0">
                     <div class="form-group mb-0">
                         <mat-form-field floatLabel="never" appearance="standard">
-                            <input #pan placeholder="Enter PAN" (input)="toUpperCase($event)"
+                            <input #pan placeholder="Enter PAN" (input)="toUpperCase(basicDetails.get('pan'),$event)"
                                 [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
                                 autocomplete="off" class="form-control" formControlName="pan" matInput maxlength="10">
                             <mat-error *ngIf="basicDetails.get('pan').errors?.required">This field is required
@@ -485,9 +485,10 @@
                 <div class="col-md-3 p-0">
                     <div class="form-group mb-0">
                         <mat-form-field floatLabel="never" appearance="standard">
-                            <input [maxLength]="10" placeholder="Enter PAN" (input)="toUpperCase($event)"
-                                formControlName="pan" #pan matInput class="form-control"
-                                [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation>
+                            <input [maxLength]="10" placeholder="Enter PAN"
+                                (input)="toUpperCase(minorForm.get('pan'),$event)" formControlName="pan" #pan matInput
+                                class="form-control" [inputValidator]="validatorType.ALPHA_NUMERIC"
+                                appInputValueValidation>
                             <mat-error *ngIf="minorForm.get('pan').errors?.pattern">Pan invalid</mat-error>
                             <mat-hint>Optional</mat-hint>
                             <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
@@ -649,8 +650,8 @@
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <input [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
-                                formControlName="comPan" (input)="toUpperCase($event)" #cpan maxlength="10" matInput
-                                class="form-control">
+                                formControlName="comPan" (input)="toUpperCase(nonIndividualForm.get('comPan'),$event)"
+                                #cpan maxlength="10" matInput class="form-control">
                             <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.required">This Field is required
                             </mat-error>
                             <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.pattern">Pan invalid

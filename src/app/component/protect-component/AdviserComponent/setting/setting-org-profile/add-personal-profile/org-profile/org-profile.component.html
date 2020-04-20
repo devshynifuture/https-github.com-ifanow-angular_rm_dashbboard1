@@ -48,6 +48,17 @@
                     <div class="col-md-4 text-right pr-0">
                         <h5 class="mb-0 mt-20">Mobile No.</h5>
                     </div>
+                    <div class="col-md-2 pr-0">
+                        <div class="form-group">
+                            <mat-form-field appearance="standard">
+                                <mat-select formControlName="isdCodeId" class="form-control">
+                                    <mat-option value="" selected disabled>Select Country Code</mat-option>
+                                    <mat-option [value]="code" *ngFor="let code of countryCodes">{{code}}</mat-option>
+                                </mat-select>
+                                <mat-error>This field is required</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">

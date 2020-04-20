@@ -39,7 +39,7 @@ export class ClientAddressComponent implements OnInit {
 
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private postalService: PostalService,
-    private peopleService: PeopleService, private eventService: EventService) {
+    private peopleService: PeopleService, private eventService: EventService, private utilService: UtilService) {
   }
 
   addressForm;
@@ -92,8 +92,8 @@ export class ClientAddressComponent implements OnInit {
     }
   }
 
-  toUpperCase(event) {
-    event = UtilService.toUpperCase(event);
+  toUpperCase(formControl, event) {
+    event = this.utilService.toUpperCase(formControl, event);
   }
 
   getPostalPin(value) {
