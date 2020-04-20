@@ -22,7 +22,7 @@ export class PeopleLeadsComponent implements OnInit {
   leadDataSource = new MatTableDataSource();
   isLoading: boolean;
   advisorId: any;
-  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('tableEl') tableEl;
   constructor(private pdfGen: PdfGenService, private excel: ExcelGenService, public dialog: MatDialog, public eventService: EventService, private subInjectService: SubscriptionInject, private peopleService: PeopleService) { }
 
   ngOnInit() {

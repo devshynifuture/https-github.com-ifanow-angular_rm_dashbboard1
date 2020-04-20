@@ -39,10 +39,10 @@ export class FixedIncomeComponent implements OnInit {
   sumCouponAmount: any;
   sumCurrentValueB: any;
 
-  @ViewChild('fixedIncomeTableSort', { static: false }) fixedIncomeTableSort: MatSort;
-  @ViewChild('tableEl', { static: false }) tableEl;
-  @ViewChild('recurringDepositTable', { static: false }) recurringDepositTableSort: MatSort;
-  @ViewChild('bondListTable', { static: false }) bondListTableSort: MatSort;
+  @ViewChild('fixedIncomeTableSort') fixedIncomeTableSort: MatSort;
+  @ViewChild('tableEl') tableEl;
+  @ViewChild('recurringDepositTable') recurringDepositTableSort: MatSort;
+  @ViewChild('bondListTable') bondListTableSort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
   footer = [];

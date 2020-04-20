@@ -59,7 +59,7 @@ export class MutualFundOverviewComponent implements OnInit {
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
   displayedColumns1 = ['data', 'amts'];
   datasource1 = [{}, {}, {}];
-  @ViewChild('mfOverviewTemplate', { static: false }) mfOverviewTemplate: ElementRef;
+  @ViewChild('mfOverviewTemplate') mfOverviewTemplate: ElementRef;
 
   @Input() mutualFund;
 

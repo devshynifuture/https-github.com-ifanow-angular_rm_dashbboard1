@@ -30,7 +30,7 @@ export interface PeriodicElement {
   styleUrls: ['./quotations.component.scss']
 })
 export class QuotationsComponent implements OnInit {
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
 
   noData: string;
   quotationData: any[];

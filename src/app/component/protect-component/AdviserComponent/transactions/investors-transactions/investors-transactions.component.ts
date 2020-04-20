@@ -18,7 +18,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   filterData: any;
   selectedBrokerCode: any;
   selectedPlatform: any;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
   noData: string;
 
   // dataSource = ELEMENT_DATA;

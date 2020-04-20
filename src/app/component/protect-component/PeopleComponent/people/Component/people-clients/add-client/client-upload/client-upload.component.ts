@@ -30,7 +30,7 @@ export class ClientUploadComponent implements OnInit {
   };
   clientRoles: any = [];
   myFiles: any = [];
-  @ViewChild('fileComPan', { static: false }) fileComPanRef;
+  @ViewChild('fileComPan') fileComPanRef;
   advisorId: any;
   clientId: any;
   proofTypes: any = [];

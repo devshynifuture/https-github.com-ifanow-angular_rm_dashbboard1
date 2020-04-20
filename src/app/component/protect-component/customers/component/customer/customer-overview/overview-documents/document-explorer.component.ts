@@ -24,7 +24,7 @@ import { GetSharebleLinkComponent } from './get-shareble-link/get-shareble-link.
 
 export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
   fileType = [
     { id: 1, name: 'PDF' },
     { id: 2, name: 'DOC' },

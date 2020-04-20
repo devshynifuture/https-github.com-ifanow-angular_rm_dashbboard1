@@ -29,7 +29,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   type : any = { name : ''};
   isSpinner = false;
   customDataSource = new TableVirtualScrollDataSource([{},{},{}]);
-  @ViewChild('tableEl', {static: false}) tableEl;
+  @ViewChild('tableEl') tableEl;
   rightFilterData: any ={reportType :'' };
   advisorData: any;
   fragmentData = {isSpinner : false};

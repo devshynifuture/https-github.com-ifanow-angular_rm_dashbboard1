@@ -52,7 +52,7 @@ export class InvoiceComponent implements OnInit {
     {name: 'Unregistered Business', value: 2}
   ];
 
-  @ViewChild('invoiceTemplate', {static: false}) invoiceTemplate: ElementRef;
+  @ViewChild('invoiceTemplate') invoiceTemplate: ElementRef;
 
   constructor(public utils: UtilService, public enumService: EnumServiceService, public subInjectService: SubscriptionInject,
               private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {

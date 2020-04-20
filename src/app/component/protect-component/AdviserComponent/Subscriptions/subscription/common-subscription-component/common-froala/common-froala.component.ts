@@ -71,9 +71,8 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     static: true
   }) renderElement;*/
   @ViewChild('renderElement', {
-    read: ElementRef,
-    static: false
-  }) renderElement: ElementRef;
+    read: ElementRef
+}) renderElement: ElementRef;
 
   constructor(public subscription: SubscriptionService, public subInjectService: SubscriptionInject,
     public eventService: EventService, public dialog: MatDialog) {

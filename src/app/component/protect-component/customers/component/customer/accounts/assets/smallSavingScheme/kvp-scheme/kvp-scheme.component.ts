@@ -28,7 +28,7 @@ export class KvpSchemeComponent implements OnInit {
   kvpData: any;
   sumOfCurrentValue: number;
   sumOfAmountInvested: number;
-  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('tableEl') tableEl;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];

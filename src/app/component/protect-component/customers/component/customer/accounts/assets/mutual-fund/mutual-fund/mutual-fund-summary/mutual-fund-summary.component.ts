@@ -40,7 +40,7 @@ export class MutualFundSummaryComponent implements OnInit {
   advisorData:any;
   // schemeWiseForFilter: any[];
   // mutualFundListFilter: any[];
-  @ViewChild('tableEl', {static: false}) tableEl;
+  @ViewChild('tableEl') tableEl;
 
 
   constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -49,7 +49,7 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   @Input() mutualFund;
-  @ViewChild('summaryTemplate', {static: false}) summaryTemplate: ElementRef;
+  @ViewChild('summaryTemplate') summaryTemplate: ElementRef;
 
   ngOnInit() {
     if (this.mutualFund.mutualFundList.length>0) {

@@ -44,9 +44,8 @@ export class CustomDialogContainerComponent implements OnInit {
   }
 
   @ViewChild('dynamic', {
-    read: ViewContainerRef,
-    static: false
-  }) viewContainerRef: ViewContainerRef
+    read: ViewContainerRef
+}) viewContainerRef: ViewContainerRef
 
   ngOnInit() {
     this.addDynamicComponentService(this.componentName);

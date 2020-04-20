@@ -25,7 +25,7 @@ export class PPFSchemeComponent implements OnInit {
   isLoading = false;
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
-  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('tableEl') tableEl;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   SumOfAmountInvested: any;
   SumOfCurrentValue: any;

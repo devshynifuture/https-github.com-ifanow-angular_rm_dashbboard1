@@ -1,7 +1,7 @@
 // tslint:disable:radix
 // tslint:disable:triple-equals
 
-import { ElementRef, Injectable, Input } from '@angular/core';
+import { ElementRef, Injectable, Input, Directive } from '@angular/core';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { EventService } from '../Data-service/event.service';
 import { HttpClient } from '@angular/common/http';
@@ -10,6 +10,7 @@ import { FormGroup } from '@angular/forms';
 import { Subject, BehaviorSubject } from 'rxjs';
 
 
+@Directive()
 @Injectable({
   providedIn: 'root'
 })

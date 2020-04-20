@@ -22,7 +22,7 @@ export class MandatesTransactionsComponent implements OnInit {
   dataSource = new MatTableDataSource(this.data);
   clientId: any;
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor( private onlineTransact: OnlineTransactionService,private eventService:EventService,
     private subInjectService : SubscriptionInject) { }

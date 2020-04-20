@@ -9,7 +9,7 @@ import { ExcelService } from '../../../../../excel.service';
   styleUrls: ['./mutual-funds-capital.component.scss']
 })
 export class MutualFundsCapitalComponent implements OnInit {
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   displayedColumns: string[] = ['schemeName', 'folioNumber', 'investorName', 'stGain', 'stLoss', 'ltGain', 'indexedGain', 'liloss', 'indexedLoss'];
   dataSource = ELEMENT_DATA;

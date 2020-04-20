@@ -95,7 +95,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
 
   addMoreFlag;
   insuranceFormFilledData: any;
-  @ViewChild('chnageScrollPosition', { static: false }) eleRef: ElementRef;
+  @ViewChild('chnageScrollPosition') eleRef: ElementRef;
 
   lifeInsuranceForm = this.fb.group({
     lifeAssured: [, [Validators.required]],

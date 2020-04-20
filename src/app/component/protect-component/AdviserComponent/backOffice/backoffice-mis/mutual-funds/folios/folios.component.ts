@@ -16,7 +16,7 @@ export class FoliosComponent implements OnInit {
   advisorId: any;
   dataSource = new MatTableDataSource([]);
   folioList: any;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private fb: FormBuilder, private backoffice: BackOfficeService) { }
   isLoading = false;

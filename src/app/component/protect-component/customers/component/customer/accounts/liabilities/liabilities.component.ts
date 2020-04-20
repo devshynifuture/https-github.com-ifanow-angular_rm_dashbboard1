@@ -52,7 +52,7 @@ export class LiabilitiesComponent implements OnInit {
   constructor(private excel: ExcelService, private eventService: EventService, private subInjectService: SubscriptionInject,
     public customerService: CustomerService, public util: UtilService, public dialog: MatDialog) {
   }
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
 
   viewMode: string;

@@ -24,7 +24,7 @@ export class PeopleClientsComponent implements OnInit {
   advisorId: any;
   clientDatasource = new MatTableDataSource();
   isLoading: boolean;
-  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('tableEl') tableEl;
 
   constructor(private authService: AuthService, private ngZone: NgZone, private router: Router,
     private subInjectService: SubscriptionInject, public eventService: EventService,

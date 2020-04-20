@@ -31,7 +31,7 @@ export class PoRdSchemeComponent implements OnInit {
   sumOfMaturityValue: number;
   footer = [];
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('tableEl') tableEl;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
 

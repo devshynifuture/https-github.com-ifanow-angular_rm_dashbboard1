@@ -19,7 +19,7 @@ export class AllSipComponent implements OnInit {
   isLoading=false;
   @Output() changedValue = new EventEmitter();
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private backoffice:BackOfficeService,private sip:SipComponent) { }
 

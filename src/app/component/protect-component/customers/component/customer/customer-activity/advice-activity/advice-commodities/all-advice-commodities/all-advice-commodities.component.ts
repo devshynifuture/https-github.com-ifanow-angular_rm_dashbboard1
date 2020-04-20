@@ -25,8 +25,8 @@ export class AllAdviceCommoditiesComponent implements OnInit {
   isLoading: boolean;
   goldDataSource: any = new MatTableDataSource();
   otherDataSource: any = new MatTableDataSource();
-  @ViewChild("tableOne", { static: false }) sort1: MatSort;
-  @ViewChild("tableTwo", { static: false }) sort2: MatSort;
+  @ViewChild("tableOne") sort1: MatSort;
+  @ViewChild("tableTwo") sort2: MatSort;
   constructor(private utilService: UtilService, private subInjectService: SubscriptionInject,private activityService:ActiityService,private AdviceUtilsService:AdviceUtilsService) { }
 
   ngOnInit() {

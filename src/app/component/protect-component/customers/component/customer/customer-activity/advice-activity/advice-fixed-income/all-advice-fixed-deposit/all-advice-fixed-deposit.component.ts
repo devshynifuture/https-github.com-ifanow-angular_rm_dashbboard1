@@ -28,7 +28,7 @@ export class AllAdviceFixedDepositComponent implements OnInit {
   fixedCount: any;
   recurringCount: any;
   bondCount: any;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private utilService: UtilService, private activityService: ActiityService) { }
   ngOnInit() {

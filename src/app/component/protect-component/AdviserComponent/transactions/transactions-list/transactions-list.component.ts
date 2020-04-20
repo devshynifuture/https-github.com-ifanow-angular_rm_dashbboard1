@@ -26,7 +26,7 @@ export class TransactionsListComponent implements OnInit {
   finalStartDate;
   finalEndDate
   errMessage: any;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
   noData: string;
 
   constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) { }

@@ -20,7 +20,7 @@ export class ArnRiaCredentialsComponent implements OnInit {
   dataSource = new MatTableDataSource(this.data);  advisorId: any;
   brokerCredentials: any;
   noData: string;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private eventService: EventService, private onlineTransact: OnlineTransactionService,
      private utilService: UtilService, private subInjectService: SubscriptionInject,

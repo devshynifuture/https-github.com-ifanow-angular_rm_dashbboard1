@@ -35,14 +35,14 @@ export class CashAndBankComponent implements OnInit {
   excelData: any[];
   footer = [];
 
-  @ViewChild('bankAccountListTable', { static: false }) bankAccountListTableSort: MatSort;
-  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('bankAccountListTable') bankAccountListTableSort: MatSort;
+  @ViewChild('tableEl') tableEl;
 
   displayedColumns7 = ['no', 'owner', 'type', 'amt', 'rate', 'bal', 'account', 'bank', 'desc', 'status', 'icons'];
   datasource7 = ELEMENT_DATA7;
   displayedColumns8 = ['no', 'owner', 'cash', 'bal', 'desc', 'status', 'icons'];
   datasource8 = ELEMENT_DATA8;
-  @ViewChild('cashInHandListTable', { static: false }) cashInHandListTableSort: MatSort;
+  @ViewChild('cashInHandListTable') cashInHandListTableSort: MatSort;
 
   constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, private subInjectService: SubscriptionInject,
     private custumService: CustomerService, private eventService: EventService,

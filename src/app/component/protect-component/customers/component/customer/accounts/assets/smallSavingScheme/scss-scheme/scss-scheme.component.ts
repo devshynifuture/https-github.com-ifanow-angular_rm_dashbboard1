@@ -33,9 +33,9 @@ export class ScssSchemeComponent implements OnInit {
   sumOfQuarterlyPayout: number;
   sumOfTotalAmountReceived: number;
   sumOfAmountInvested: number;
-  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('tableEl') tableEl;
   footer = [];
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
 

@@ -34,8 +34,8 @@ export class MutualFundAllTransactionComponent implements OnInit {
               private mfService: MfServiceService, private eventService: EventService,
               private excel : ExcelGenService) {
   }
-  @ViewChild('allTranTemplate', {static: false}) allTranTemplate: ElementRef;
-  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('allTranTemplate') allTranTemplate: ElementRef;
+  @ViewChild('tableEl') tableEl;
 
   @Input() mutualFund;
 

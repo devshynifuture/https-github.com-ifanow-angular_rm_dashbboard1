@@ -88,7 +88,7 @@ const routes: Routes = [
   },
   {
     path: 'not-found',
-    loadChildren: './component/protect-component/common-component/not-found/not-found.module#NotFoundModule'
+    loadChildren: () => import('./component/protect-component/common-component/not-found/not-found.module').then(m => m.NotFoundModule)
   },
   {
     path: 'error-page',
