@@ -36,7 +36,7 @@ export class MutualFundOverviewComponent implements OnInit {
   subCategoryArray: any;
   dataSource2;
   dataSource;
-  isLoading: boolean = false;
+  isLoading: boolean = true;
   dataSource3;
   rightFilterData : any;
   showHideTable: any;
