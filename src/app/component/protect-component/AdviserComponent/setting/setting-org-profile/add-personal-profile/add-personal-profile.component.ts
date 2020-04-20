@@ -24,6 +24,7 @@ export class AddPersonalProfileComponent implements OnInit {
   anyDetailsChanged: boolean; // check if any details have been updated
   inputData: any;
   isLoading = false
+  countryCodes:Array<number> = [91, 92];
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -115,7 +116,7 @@ export class AddPersonalProfileComponent implements OnInit {
     this.personalProfile = this.fb.group({
       name: [(!data) ? '' : (data.fullName), [Validators.required, Validators.maxLength(40)]],
       emailId: [(!data) ? '' : data.emailId, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
-      isdCode: [(!data) ? '' : data.isdCode, [Validators.required]],
+      isdCodeId: [(!data) ? '' : data.isdCodeId, [Validators.required]],
       mobileNo: [(!data) ? '' : data.mobileNo, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(ValidatorType.NUMBER_ONLY)]],
       userName: [(!data) ? '' : data.userName, [Validators.required]],
     });
@@ -135,6 +136,7 @@ export class AddPersonalProfileComponent implements OnInit {
       fullName: this.personalProfile.controls.name.value,
       emailId: this.personalProfile.controls.emailId.value,
       // userName: this.personalProfile.controls.userName.value,
+      isdCodeId: this.personalProfile.controls.isdCodeId.value,
       mobileNo: this.personalProfile.controls.mobileNo.value,
       // roleId: 0,
     }

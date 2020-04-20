@@ -11,7 +11,8 @@ export const environment = {
 
   // 'http://192.168.0.9:8080/transaction-platform/api/v1/web/',
   PostalUrl: 'http://api.postalpincode.in/pincode/',
-  UserUrl: 'http://dev.ifanow.in:8080/userserver/api/v1/web/'
+  UserUrl: 'http://dev.ifanow.in:8080/userserver/api/v1/web/',
+  hmr: true,
   // UserUrl: 'http://localhost:8080/userserver/api/v1/web/'
 
   // CalendarAPIEndpoint: 'http://dev.ifanow.in:8080/email-server/',

@@ -20,7 +20,8 @@
     "e2e": "ng e2e",
     "bundlewatch": "bundlewatch",
     "compress": "npx gzipper --verbose ./dist/myplanner ./gzipped",
-    "stats": "webpack-bundle-analyzer dist/myplanner/stats-es2015.json"
+    "stats": "webpack-bundle-analyzer dist/myplanner/stats-es2015.json",
+    "hmr": "ng serve --configuration hmr"
   },
   "private": true,
   "dependencies": {
@@ -76,6 +77,9 @@
     "@angular-devkit/build-angular": "^0.803.25",
     "@angular/compiler-cli": "~8.2.14",
     "@angular/language-service": "~8.2.14",
+    "@angularclass/hmr": "^2.1.3",
+    "@ngxs/hmr-plugin": "^3.6.2",
+    "@ngxs/store": "^3.6.2",
     "@types/file-saver": "^2.0.1",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "^2.0.8",

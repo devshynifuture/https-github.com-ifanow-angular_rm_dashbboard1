@@ -50,9 +50,9 @@
         <div class="col-md-3 pr-0">
             <div class="form-group">
                 <mat-form-field appearance="standard">
-                    <mat-select formControlName="isdCode" class="form-control">
+                    <mat-select formControlName="isdCodeId" class="form-control">
                         <mat-option value="" selected disabled>Select Country Code</mat-option>
-                        <mat-option [value]="code" *ngFor="let code of countryCodes">{{code}}</mat-option>
+                        <mat-option [value]="code" *ngFor="let code of countryCodes" [disabled]="!data.is_add_call">{{code}}</mat-option>
                     </mat-select>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -71,20 +71,20 @@
                 </mat-form-field>
             </div>
         </div>
-        <div class="row pt-28">
-            <div class="col-md-3 text-right pr-0">
-                <h5 class="m-0 pt-20">Role</h5>
-            </div>
-            <div class="col-md-7 pr-0">
-                <div class="form-group">
-                    <mat-form-field floatLabel="never" appearance="standard">
-                        <mat-select class="form-control" formControlName="roleId">
-                            <mat-option value="">Select Role</mat-option>
-                            <mat-option *ngFor="let role of roles" [value]="role.id">{{role.roleName}}</mat-option>
-                        </mat-select>
-                        <mat-error>This field is required</mat-error>
-                    </mat-form-field>
-                </div>
+    </div>
+    <div class="row pt-28">
+        <div class="col-md-3 text-right pr-0">
+            <h5 class="m-0 pt-20">Role</h5>
+        </div>
+        <div class="col-md-7 pr-0">
+            <div class="form-group">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <mat-select class="form-control" formControlName="roleId">
+                        <mat-option value="">Select Role</mat-option>
+                        <mat-option *ngFor="let role of roles" [value]="role.id">{{role.roleName}}</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required</mat-error>
+                </mat-form-field>
             </div>
         </div>
     </div>
