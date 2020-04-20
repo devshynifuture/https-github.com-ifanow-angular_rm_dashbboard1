@@ -42,27 +42,10 @@
             </div>
         </div>
     </div>
-    <div class="row pt-28">
-        <!-- <div class="col-md-3 text-right pr-0">
-            <h5 class="m-0 pt-20">Mobile</h5>
-        </div> -->
-        <div class="col-md-12 pr-0">
-            <div class="form-group">
-                <!-- <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                    <input matInput [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" appInputValueValidation
-                        #mobileNo formControlName="mobileNo" placeholder="Enter Mobile number" class="form-control"
-                        [readonly]="!data.is_add_call">
-                    <mat-error *ngIf="teamMemberFG.get('mobileNo').errors?.pattern">
-                        Enter Valid Mobile number</mat-error>
-                    <mat-error *ngIf="teamMemberFG.get('mobileNo').errors?.required">This field is required</mat-error>
-                    <mat-hint align="end">{{mobileNo.value.length}}/10</mat-hint>
-                </mat-form-field> -->
-                <app-add-number [numberList]="data.mainData.mobile" [flag]="'Mobile'"
-                    (numberArray)="getNumberDetails($event)" [minimumCompulsary]='1'>
-                </app-add-number>
-            </div>
-        </div>
-    </div>
+    <app-add-number [numberList]="data.mainData.mobile" [flag]="'Mobile'"
+        (numberArray)="getNumberDetails($event)" [minimumCompulsary]='1'
+        [classObj]="classObj">
+    </app-add-number>
     <div class="row pt-28">
         <div class="col-md-3 text-right pr-0">
             <h5 class="m-0 pt-20">Role</h5>

@@ -22,8 +22,8 @@ export class AddNumberComponent implements OnInit {
   @Input() classObj = {
     topPadding: 'pt-60',
     label: 'col-md-4',
-    code: 'col-md-3',
-    mobile: 'col-md-3',
+    code: 'col-md-3 pl-0',
+    mobile: 'col-md-3 p-0',
     addRemove: 'col-md-1',
   }
 

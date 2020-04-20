@@ -4,7 +4,7 @@
             <h5 class="m-0 pt-12">{{flag}}</h5>
         </div>
 
-        <div class="pl-0" [ngClass]="classObj.code">
+        <div [ngClass]="classObj.code">
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select formControlName="code" class="form-control">
@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <div class="p-0" [ngClass]="classObj.mobile">
+        <div class="" [ngClass]="classObj.mobile">
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input #num formControlName="number" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" autocomplete="off" formControlName="number" matInput class="form-control" maxlength="10">

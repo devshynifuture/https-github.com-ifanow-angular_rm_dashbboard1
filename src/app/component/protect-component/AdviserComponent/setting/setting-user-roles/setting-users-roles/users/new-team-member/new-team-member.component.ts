@@ -36,6 +36,13 @@ export class NewTeamMemberComponent implements OnInit {
     // }
   };
   mobileNumberFA:FormArray;
+  classObj = {
+    topPadding: 'pt-20',
+    label: 'col-md-3 text-right pr-0',
+    code: 'col-md-3 pr-0',
+    mobile: 'col-md-4 pr-0',
+    addRemove: 'col-md-2',
+  }
 
   constructor(
     private fb: FormBuilder,
