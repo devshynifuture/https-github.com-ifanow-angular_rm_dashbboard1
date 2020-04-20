@@ -207,7 +207,7 @@
                             <mat-hint align="end">{{leadSource.value.length}}/ 50</mat-hint>
                             <mat-hint>Optional</mat-hint> -->
                             <mat-select formControlName="leadSource" class="form-control">
-                                <mat-option value="0">Select option</mat-option>
+                                <mat-option value='' disabled>Select option</mat-option>
                                 <mat-option value="1">Search engine</mat-option>
                                 <mat-option value="2">Website</mat-option>
                                 <mat-option value="3">Refrerals from existing clients</mat-option>
@@ -230,7 +230,7 @@
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select formControlName="leaadStatus" class="form-control">
-                                <mat-option value="1">Select lead status</mat-option>
+                                <mat-option value='' disabled>Select lead status</mat-option>
                                 <mat-option value="2">New</mat-option>
                                 <mat-option value="3">In progress</mat-option>
                             </mat-select>
@@ -247,7 +247,7 @@
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select formControlName="leadRating" class="form-control">
-                                <mat-option value="0">Select lead rating</mat-option>
+                                <mat-option value='' disabled>Select lead rating</mat-option>
                                 <mat-option value="1">Cold</mat-option>
                                 <mat-option value="2">Hot</mat-option>
                             </mat-select>
@@ -287,9 +287,9 @@
                     <div class="form-group m-0">
                         <mat-form-field>
                             <mat-select formControlName="role" class="form-control">
-                                <mat-option *ngIf="clientRoles==undefined" value="0">No roles found
-                                </mat-option>
-                                <mat-option *ngIf="clientRoles" value="0">Select roles</mat-option>
+                                <!-- <mat-option *ngIf="clientRoles==undefined" value="0">No roles found
+                                </mat-option> -->
+                                <mat-option value='' disabled>Select roles</mat-option>
                                 <mat-option [value]="role.clientRoleId" *ngFor="let role of clientRoles">
                                     {{role.clientRoleName}}</mat-option>
                             </mat-select>
@@ -328,7 +328,7 @@
                     <p class="m-0 roboto">As per records</p>
                     <div class="form-group mb-0">
                         <mat-form-field class="ba-date">
-                            <input (click)="dobAsPerRecord.open()" [matDatepicker]="dobAsPerRecord"
+                            <input (click)="dobAsPerRecord.open()" [matDatepicker]="dobAsPerRecord" [max]="maxDate"
                                 class="form-control br-0 b-0" formControlName="dobAsPerRecord" matInput readonly>
                             <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord"></mat-datepicker-toggle>
                             <mat-datepicker #dobAsPerRecord></mat-datepicker>
@@ -717,7 +717,7 @@
                                 autocomplete="off" class="form-control" formControlName="leadSource" matInput>
                             <mat-hint align="end">{{leadSource.value.length}}/ 50</mat-hint> -->
                             <mat-select formControlName="leadSource" class="form-control">
-                                <mat-option value="0">Select option</mat-option>
+                                <mat-option value="" disable>Select option</mat-option>
                                 <mat-option value="1">Search engine</mat-option>
                                 <mat-option value="2">Website</mat-option>
                                 <mat-option value="3">Refrerals from existing clients</mat-option>
@@ -740,7 +740,7 @@
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select formControlName="leaadStatus" class="form-control">
-                                <mat-option value="1">Select lead status</mat-option>
+                                <mat-option value="" disable>Select lead status</mat-option>
                                 <mat-option value="2">New</mat-option>
                                 <mat-option value="3">In progress</mat-option>
                             </mat-select>
@@ -757,7 +757,7 @@
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select formControlName="leadRating" class="form-control">
-                                <mat-option value="0">Select lead rating</mat-option>
+                                <mat-option value="" disable>Select lead rating</mat-option>
                                 <mat-option value="1">Cold</mat-option>
                                 <mat-option value="2">Hot</mat-option>
                             </mat-select>
@@ -821,9 +821,7 @@
                     <div class="form-group m-0">
                         <mat-form-field>
                             <mat-select formControlName="role" class="form-control">
-                                <mat-option *ngIf="clientRoles==undefined" value="0">No roles found
-                                </mat-option>
-                                <mat-option *ngIf="clientRoles" value="0">Select roles</mat-option>
+                                <mat-option value='' disabled>Select roles</mat-option>
                                 <mat-option [value]="role.clientRoleId" *ngFor="let role of clientRoles">
                                     {{role.clientRoleName}}</mat-option>
                             </mat-select>

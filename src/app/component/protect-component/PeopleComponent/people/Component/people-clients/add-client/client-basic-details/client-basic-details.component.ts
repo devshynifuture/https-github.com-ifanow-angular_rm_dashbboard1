@@ -114,12 +114,12 @@ export class ClientBasicDetailsComponent implements OnInit {
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       dobActual: [],
       gender: ['1'],
-      leadSource: [(data.leadSource) ? data.leadSource : '0'],
-      leaadStatus: [(data.leadStatus) ? String(data.leadStatus) : '1'],
-      leadRating: [(data.leadRating) ? String(data.leadRating) : '0'],
+      leadSource: [(data.leadSource) ? data.leadSource : ''],
+      leaadStatus: [(data.leadStatus) ? String(data.leadStatus) : ''],
+      leadRating: [(data.leadRating) ? String(data.leadRating) : ''],
       leadOwner: [],
       clientOwner: [],
-      role: [(data.roleId) ? data.roleId : '0', Validators.required],
+      role: [(data.roleId) ? data.roleId : '', Validators.required],
     });
   }
 
@@ -148,12 +148,12 @@ export class ClientBasicDetailsComponent implements OnInit {
       comPan: [{ value: data.pan, disabled: this.basicDetailsData.userId ? true : false }, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       comOccupation: [(data.occupationId == 0) ? '1' : String(data.occupationId)],
       username: [{ value: data.userName, disabled: true }],
-      leadSource: [data.leadSource ? data.leadSource : '0'],
-      leaadStatus: [(data.leadStatus) ? String(data.leadStatus) : '1'],
-      leadRating: [(data.leadRating) ? String(data.leadRating) : '0'],
+      leadSource: [data.leadSource ? data.leadSource : ''],
+      leaadStatus: [(data.leadStatus) ? String(data.leadStatus) : ''],
+      leadRating: [(data.leadRating) ? String(data.leadRating) : ''],
       leadOwner: [],
       clientOwner: [],
-      role: [(data.roleId) ? data.roleId : '0', Validators.required]
+      role: [(data.roleId) ? data.roleId : '', Validators.required]
     });
   }
 
@@ -405,6 +405,9 @@ export class ClientBasicDetailsComponent implements OnInit {
     if (this.invTypeCategory == '1') {
       this.basicDetails.get('email').setValidators([Validators.required]);
       this.basicDetails.get('email').updateValueAndValidity();
+      this.basicDetails.get('role').setValidators(null);
+      this.basicDetails.get('role').updateValueAndValidity();
+
     }
     let gardianObj;
     if (this.invTypeCategory == '2') {

@@ -41,7 +41,7 @@ export class CompanyMoreInfoComponent implements OnInit {
   @Input() fieldFlag;
   @Output() tabChange = new EventEmitter();
   companyIndividualData: any;
-
+  maxDate = new Date();
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private peopleService: PeopleService, private eventService: EventService,
     private datePipe: DatePipe, private utilService: UtilService) {

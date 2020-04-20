@@ -114,7 +114,8 @@
             </mat-radio-group>
         </div>
     </div> -->
-    <div *ngIf="moreInfoData.categoryTypeflag=='Individual' || moreInfoData.categoryTypeflag=='familyMinor'" class="row pt-44">
+    <div *ngIf="moreInfoData.categoryTypeflag=='Individual' || moreInfoData.categoryTypeflag=='familyMinor'"
+        class="row pt-44">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-20">Display name</h5>
             <p class="m-0 f-12 text-custom">This will display everwhere</p>
@@ -122,7 +123,9 @@
         <div class="col-md-6 p-0">
             <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" placeholder="Enter Name" #displayName appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="displayName" matInput [maxLength]="50" class="form-control">
+                    <input autocomplete="off" placeholder="Enter Name" #displayName appInputValueValidation
+                        [inputValidator]="validatorType.TEXT_ONLY" formControlName="displayName" matInput
+                        [maxLength]="50" class="form-control">
                     <mat-hint align="end">{{displayName.value.length}}/50</mat-hint>
                     <mat-hint>Optional</mat-hint>
                 </mat-form-field>
@@ -137,7 +140,9 @@
             <p class="m-0 roboto">Minor</p>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" placeholder="Enter Adhaar Number" #adhaarMinor appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="adhaarNo" matInput [maxLength]="12" class="form-control">
+                    <input autocomplete="off" placeholder="Enter Adhaar Number" #adhaarMinor appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" formControlName="adhaarNo" matInput
+                        [maxLength]="12" class="form-control">
                     <mat-error *ngIf="moreInfoForm.get('adhaarNo').errors?.pattern">Adhaar must be 12 digits</mat-error>
                     <mat-hint align="end">{{adhaarMinor.value.length}}/12</mat-hint>
                     <mat-hint>Optional</mat-hint>
@@ -148,7 +153,9 @@
             <p class="m-0 roboto">Guardian</p>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" placeholder="Enter Adhaar Number" #adhharGuardian appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="adhharGuardian" matInput [maxLength]="12" class="form-control">
+                    <input autocomplete="off" placeholder="Enter Adhaar Number" #adhharGuardian appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" formControlName="adhharGuardian" matInput
+                        [maxLength]="12" class="form-control">
                     <mat-hint align="end">{{adhharGuardian.value.length}}/12</mat-hint>
                     <mat-hint>Optional</mat-hint>
                     <mat-error *ngIf="moreInfoForm.get('adhharGuardian').errors?.pattern">Adhaar must be 12 digits
@@ -164,7 +171,9 @@
         <div class="col-md-4 p-0">
             <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" placeholder="Enter Aadhaar number" [maxLength]="12" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #adharNum formControlName="adhaarNo" matInput class="form-control">
+                    <input autocomplete="off" placeholder="Enter Aadhaar number" [maxLength]="12"
+                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #adharNum
+                        formControlName="adhaarNo" matInput class="form-control">
                     <mat-hint>Optional</mat-hint>
                     <mat-error *ngIf="moreInfoForm.get('adhaarNo').errors?.pattern">Adhaar must be 12 digits</mat-error>
                     <mat-hint align="end">{{adharNum.value.length}} / 12</mat-hint>
@@ -187,7 +196,8 @@
             </div>
         </div>
     </div> -->
-    <div *ngIf="moreInfoData.categoryTypeflag=='Individual' || moreInfoData.categoryTypeflag=='familyMinor'" class=" row pt-44">
+    <div *ngIf="moreInfoData.categoryTypeflag=='Individual' || moreInfoData.categoryTypeflag=='familyMinor'"
+        class=" row pt-44">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-8">Occupation</h5>
         </div>
@@ -195,11 +205,14 @@
             <div class="form-group">
                 <mat-form-field>
                     <mat-select formControlName="occupation" class="form-control">
-                        <mat-option value="1">Goverment</mat-option>
+                        <mat-option value='' disabled>Select Option</mat-option>
+                        <!-- <mat-option value="1">Goverment</mat-option>
                         <mat-option value="2">Service</mat-option>
                         <mat-option value="3">Private sector</mat-option>
                         <mat-option value="4">Business</mat-option>
-                        <mat-option value="5">Self-Occupied</mat-option>
+                        <mat-option value="5">Self-Occupied</mat-option> -->
+                        <mat-option *ngFor="let singleOccupation of occupationList" [value]="singleOccupation.value">
+                            {{singleOccupation.name}}</mat-option>
                     </mat-select>
                     <mat-hint>Optional</mat-hint>
                 </mat-form-field>
@@ -212,15 +225,18 @@
         </div>
         <div class="col-md-8 p-0 marital-status">
             <mat-radio-group formControlName="maritalStatus" aria-label="Select an option">
-                <mat-radio-button value="1" [ngClass]="{'bu-primary': moreInfoForm.get('maritalStatus').value=='1','borderRadio':moreInfoForm.get('maritalStatus').value!='1','text-primary': moreInfoForm.get('maritalStatus').value=='1','text-custom':moreInfoForm.get('maritalStatus').value!='1'}"
+                <mat-radio-button value="1"
+                    [ngClass]="{'bu-primary': moreInfoForm.get('maritalStatus').value=='1','borderRadio':moreInfoForm.get('maritalStatus').value!='1','text-primary': moreInfoForm.get('maritalStatus').value=='1','text-custom':moreInfoForm.get('maritalStatus').value!='1'}"
                     class="bu-primary">
                     Married
                 </mat-radio-button>
-                <mat-radio-button value="2" [ngClass]="{'bu-primary': moreInfoForm.get('maritalStatus').value=='2','borderRadio':moreInfoForm.get('maritalStatus').value!='2','text-primary': moreInfoForm.get('maritalStatus').value=='2','text-custom':moreInfoForm.get('maritalStatus').value!='2'}"
+                <mat-radio-button value="2"
+                    [ngClass]="{'bu-primary': moreInfoForm.get('maritalStatus').value=='2','borderRadio':moreInfoForm.get('maritalStatus').value!='2','text-primary': moreInfoForm.get('maritalStatus').value=='2','text-custom':moreInfoForm.get('maritalStatus').value!='2'}"
                     class="borderRadio pr-10">
                     Unmarried
                 </mat-radio-button>
-                <mat-radio-button value="3" [ngClass]="{'bu-primary': moreInfoForm.get('maritalStatus').value=='3','borderRadio':moreInfoForm.get('maritalStatus').value!='3','text-primary': moreInfoForm.get('maritalStatus').value=='3','text-custom':moreInfoForm.get('maritalStatus').value!='3'}"
+                <mat-radio-button value="3"
+                    [ngClass]="{'bu-primary': moreInfoForm.get('maritalStatus').value=='3','borderRadio':moreInfoForm.get('maritalStatus').value!='3','text-primary': moreInfoForm.get('maritalStatus').value=='3','text-custom':moreInfoForm.get('maritalStatus').value!='3'}"
                     class="borderRadio">
                     Other</mat-radio-button>
             </mat-radio-group>
@@ -233,7 +249,8 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
-                    <input [matDatepicker]="anniversaryDate" formControlName="anniversaryDate" (click)="anniversaryDate.open()" class="form-control br-0 b-0" matInput readonly>
+                    <input [matDatepicker]="anniversaryDate" formControlName="anniversaryDate"
+                        (click)="anniversaryDate.open()" class="form-control br-0 b-0" matInput readonly>
                     <mat-datepicker-toggle matSuffix [for]="anniversaryDate"></mat-datepicker-toggle>
                     <mat-datepicker #anniversaryDate></mat-datepicker>
                     <mat-error class="f-12">This field is required
@@ -252,7 +269,8 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <textarea autocomplete="off" formControlName="bio" maxlength="200" #bio matInput class="form-control height80" rows="3"></textarea>
+                    <textarea autocomplete="off" formControlName="bio" maxlength="200" #bio matInput
+                        class="form-control height80" rows="3"></textarea>
                     <mat-hint>Optional</mat-hint>
                     <mat-hint align="end">{{bio.value.length}}/200</mat-hint>
                 </mat-form-field>
@@ -267,7 +285,8 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <textarea #myNotes formControlName="myNotes" maxlength="100" autocomplete="off" matInput class="form-control height80" rows="3"></textarea>
+                    <textarea #myNotes formControlName="myNotes" maxlength="100" autocomplete="off" matInput
+                        class="form-control height80" rows="3"></textarea>
                     <mat-hint>Optional</mat-hint>
                     <mat-hint align="end">{{myNotes.value.length}}/100</mat-hint>
                 </mat-form-field>
@@ -280,13 +299,15 @@
         <div class="col-md-4">
             <h5 (click)="close('close')" class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
-        <div *ngIf="fieldFlag=='client' || fieldFlag=='lead'" class="col-md-8 d-flex align-items-end justify-content-end">
+        <div *ngIf="fieldFlag=='client' || fieldFlag=='lead'"
+            class="col-md-8 d-flex align-items-end justify-content-end">
             <button mat-stroked-button (click)="saveNext('Next')" class=" br-0 bg-white text-inherit">SAVE &
                 NEXT
             </button>
             <!-- <button mat-raised-button (click)="saveNext('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
             </button> -->
-            <app-progress-button (btnClick)="saveNext('Save')" class="br-0 text-inherit mr-12" [options]="barButtonOptions">
+            <app-progress-button (btnClick)="saveNext('Save')" class="br-0 text-inherit mr-12"
+                [options]="barButtonOptions">
             </app-progress-button>
             <!-- <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE &
                 CLOSE
@@ -299,7 +320,8 @@
             <!-- <button mat-raised-button (click)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12">SAVE &
                 NEXT
             </button> -->
-            <app-progress-button (btnClick)="saveNextFamilyMember('close')" class="br-0 text-inherit mr-12" [options]="barButtonOptions">
+            <app-progress-button (btnClick)="saveNextFamilyMember('close')" class="br-0 text-inherit mr-12"
+                [options]="barButtonOptions">
             </app-progress-button>
             <!-- <button mat-stroked-button (click)="saveNextFamilyMember('close')" class="btn-bottom br-0 text-inherit">SAVE
                 & CLOSE
