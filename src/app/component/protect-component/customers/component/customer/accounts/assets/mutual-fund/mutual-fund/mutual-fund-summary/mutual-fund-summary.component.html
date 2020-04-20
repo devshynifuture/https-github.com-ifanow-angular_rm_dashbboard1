@@ -290,8 +290,8 @@
                                 <button mat-menu-item (click)="openSipDetails(element)">SIP details</button>
                                 <button mat-menu-item class="bt-1">Transact online</button>
                                 <!-- <button mat-menu-item>Transaction slip</button> -->
-                                <button mat-menu-item class="bt-1">View transactions</button>
-                                <button mat-menu-item>Add records</button>
+                                <button mat-menu-item class="bt-1" (click)="openUpperFragment('transaction')">View transactions</button>
+                                <button mat-menu-item (click)="openUpperFragment('transaction')">Add records</button>
                                 <button mat-menu-item (click)="deleteModal('SCHEME')">Delete scheme</button>
 
                             </mat-menu>

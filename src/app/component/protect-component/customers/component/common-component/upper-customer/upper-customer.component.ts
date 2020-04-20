@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {EventService} from "../../../../../../Data-service/event.service";
 
 @Component({
@@ -7,11 +7,16 @@ import {EventService} from "../../../../../../Data-service/event.service";
   styleUrls: ['./upper-customer.component.scss']
 })
 export class UpperCustomerComponent implements OnInit {
-
+  selected = 0;
+  fragmentData: any;
+  @Input() set data(data) {
+   this.fragmentData = data;
+  }
   constructor(private eventService: EventService) {
   }
 
   ngOnInit() {
+    (this.fragmentData == 'mutualFunds') ? this.selected = 0 : this.selected = 1 ;
   }
 
   close() {
