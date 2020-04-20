@@ -17,7 +17,7 @@ export class PlanComponent implements OnInit {
   }
 
   constructor(private router: Router, private routingStateService: RoutingState,
-              private authService: AuthService) {
+              public authService: AuthService) {
   }
 
   selected;
