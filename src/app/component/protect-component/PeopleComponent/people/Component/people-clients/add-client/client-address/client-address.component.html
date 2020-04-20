@@ -17,10 +17,14 @@
         <div class="col-md-6 p-0">
             <div class="form-group m-0 p-address">
                 <mat-radio-group [(ngModel)]="proofType" aria-label="Select an option" formControlName="addressType">
-                    <mat-radio-button [checked]="proofType=='1'" value="1" [ngClass]="{'bu-primary':proofType=='1','text-primary':proofType=='1','borderRadio':proofType=='2','text-custom':proofType=='2' }" class="borderRadio text-custom">
+                    <mat-radio-button [checked]="proofType=='1'" value="1"
+                        [ngClass]="{'bu-primary':proofType=='1','text-primary':proofType=='1','borderRadio':proofType=='2','text-custom':proofType=='2' }"
+                        class="borderRadio text-custom">
                         Residential
                     </mat-radio-button>
-                    <mat-radio-button value="2" [checked]="proofType=='2'" [ngClass]="{'bu-primary':proofType=='2','text-primary':proofType=='2','borderRadio':proofType=='1','text-custom':proofType=='1'}" class="borderRadio text-custom">
+                    <mat-radio-button value="2" [checked]="proofType=='2'"
+                        [ngClass]="{'bu-primary':proofType=='2','text-primary':proofType=='2','borderRadio':proofType=='1','text-custom':proofType=='1'}"
+                        class="borderRadio text-custom">
                         Business
                     </mat-radio-button>
                 </mat-radio-group>
@@ -34,7 +38,8 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select (selectionChange)="changeAddrProofNumber($event)" formControlName="addProofType" class="form-control">
+                    <mat-select (selectionChange)="changeAddrProofNumber($event)" formControlName="addProofType"
+                        class="form-control">
                         <mat-option value="0">Select proof type</mat-option>
                         <mat-option value="1">Passport</mat-option>
                         <mat-option value="2">Aadhaar</mat-option>
@@ -55,7 +60,9 @@
         <div class="col-md-4 p-0">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter ID Proof" (input)="toUpperCase($event)" appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" autocomplete="off" matInput formControlName="proofIdNum" class="form-control">
+                    <input placeholder="Enter ID Proof" (input)="toUpperCase($event)" appInputValueValidation
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" autocomplete="off" matInput
+                        formControlName="proofIdNum" class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -68,7 +75,8 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Flat/building/street" autocomplete="off" #add1 maxlength="100" matInput formControlName="addressLine1" class="form-control">
+                    <input placeholder="Flat/building/street" autocomplete="off" #add1 maxlength="100" matInput
+                        formControlName="addressLine1" class="form-control">
                     <mat-error>This field is required</mat-error>
                     <mat-hint align="end">{{add1.value.length}}/100</mat-hint>
                 </mat-form-field>
@@ -82,7 +90,8 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Block/locality" autocomplete="off" #add2 matInput maxlength="100" formControlName="addressLine2" class="form-control">
+                    <input placeholder="Block/locality" autocomplete="off" #add2 matInput maxlength="100"
+                        formControlName="addressLine2" class="form-control">
                     <mat-error>This field is required</mat-error>
                     <mat-hint align="end">{{add2.value.length}}/100</mat-hint>
                 </mat-form-field>
@@ -96,7 +105,10 @@
         <div class="col-md-2 p-0">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" placeholder="Enter Pin Code" [maxLength]="6" #pinCode (focusout)="getPostalPin($event.target.value)" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" matInput formControlName="pinCode" class="form-control">
+                    <input autocomplete="off" placeholder="Enter Pin Code" [maxLength]="6" #pinCode
+                        (focusout)="getPostalPin($event.target.value)" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" matInput formControlName="pinCode"
+                        class="form-control">
                     <mat-hint align="end" class="f-12">{{pinCode.value.length}}/6</mat-hint>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -113,7 +125,9 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter Your City" autocomplete="off" #city matInput formControlName="city" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" maxlength="30" class="form-control">
+                    <input placeholder="Enter Your City" autocomplete="off" #city matInput formControlName="city"
+                        appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" maxlength="30"
+                        class="form-control">
                     <mat-error>This field is required</mat-error>
                     <mat-hint align="end" class="f-12">{{city.value.length}}/6</mat-hint>
                 </mat-form-field>
@@ -127,7 +141,9 @@
         <div class="col-md-5 p-0">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter Your State" autocomplete="off" #state matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" maxlength="30" formControlName="state" class="form-control">
+                    <input placeholder="Enter Your State" autocomplete="off" #state matInput appInputValueValidation
+                        [inputValidator]="validatorType.TEXT_ONLY" maxlength="30" formControlName="state"
+                        class="form-control">
                     <mat-error>This field is required</mat-error>
                     <mat-hint align="end" class="f-12">{{state.value.length}}/30</mat-hint>
                 </mat-form-field>
@@ -141,7 +157,9 @@
         <div class="col-md-5 p-0">
             <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" placeholder="Enter Your Country" #country matInput formControlName="country" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" maxlength="30" class="form-control">
+                    <input autocomplete="off" placeholder="Enter Your Country" #country matInput
+                        formControlName="country" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
+                        maxlength="30" class="form-control">
                     <mat-error>This field is required</mat-error>
                     <mat-hint align="end" class="f-12">{{country.value.length}}/30</mat-hint>
                 </mat-form-field>
@@ -154,14 +172,20 @@
                 <h5 (click)="close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
             </div>
             <div class="col-md-8 right text-right">
+                <button mat-stroked-button *ngIf="fieldFlag" (click)="saveNext('Next')"
+                    class=" br-0 bg-white text-inherit">SAVE &
+                    NEXT
+                </button>
                 <!-- <button *ngIf="fieldFlag!=undefined" mat-raised-button (click)="saveNext('Next')"
                     class="br-0 text-inherit mr-12">SAVE & NEXT
                 </button> -->
                 <!-- <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
                 </button> -->
-                <app-progress-button *ngIf="fieldFlag==undefined" (btnClick)="saveNext('Save')" [options]="barButtonOptions" class="br-0 text-inherit mr-12">
+                <app-progress-button *ngIf="fieldFlag==undefined" (btnClick)="saveNext('Save')"
+                    [options]="barButtonOptions" class="br-0 text-inherit mr-12">
                 </app-progress-button>
-                <app-progress-button (btnClick)="saveNext('Next')" class="br-0 text-inherit mr-12" [options]="barButtonOptions">
+                <app-progress-button (btnClick)="saveNext('Save')" class="br-0 text-inherit mr-12"
+                    [options]="barButtonOptions">
                 </app-progress-button>
             </div>
 

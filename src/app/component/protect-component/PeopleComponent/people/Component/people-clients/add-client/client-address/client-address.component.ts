@@ -22,7 +22,7 @@ export class ClientAddressComponent implements OnInit {
   isLoading: boolean;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'SAVE & NEXT',
+    text: 'SAVE & CLOSE',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -146,7 +146,7 @@ export class ClientAddressComponent implements OnInit {
       this.addressForm.markAllAsTouched();
       return;
     } else {
-      this.barButtonOptions.active = true;
+      (flag == 'Save') ? this.barButtonOptions.active = true : '';
       const obj = {
         address1: this.addressForm.get('addressLine1').value,
         address2: this.addressForm.get('addressLine2').value,
