@@ -78,7 +78,14 @@
                                         src="/assets/images/svg/man-profile.svg">
                                     <div class="familyList">
                                         <h4 class="f-12 m-0">{{singleMembers.displayName}}</h4>
-                                        <p class="f-12 m-0 text-primitive">{{singleMembers.name}} </p>
+                                        <p class="f-12 m-0 text-primitive">
+                                            <span *ngIf="singleMembers.relationshipId==2">Wife </span>
+                                            <span *ngIf="singleMembers.relationshipId==3">Son</span>
+                                            <span *ngIf="singleMembers.relationshipId==4">Daughter</span>
+                                            <span *ngIf="singleMembers.relationshipId==5">Mother</span>
+                                            <span *ngIf="singleMembers.relationshipId==6">Father</span>
+                                            <span *ngIf="singleMembers.relationshipId==6">Others</span>
+                                        </p>
                                         <p class="f-12 m-0 text-primitive">{{singleMembers.age}}</p>
                                     </div>
                                 </div>

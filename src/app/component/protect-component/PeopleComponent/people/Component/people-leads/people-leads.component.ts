@@ -17,7 +17,7 @@ import { PdfGenService } from 'src/app/services/pdf-gen.service';
   styleUrls: ['./people-leads.component.scss']
 })
 export class PeopleLeadsComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'lsource', /*'status', 'rating',*/ 'lead',
+  displayedColumns: string[] = ['position', 'name', 'weight', 'lsource', 'lrating',/*'status', 'rating',*/ 'lead',
     'icon', 'icons'];
   leadDataSource = new MatTableDataSource();
   isLoading: boolean;
