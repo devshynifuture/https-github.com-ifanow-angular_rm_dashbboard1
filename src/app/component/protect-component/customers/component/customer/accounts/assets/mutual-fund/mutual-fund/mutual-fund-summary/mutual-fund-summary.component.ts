@@ -134,8 +134,12 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   Excel(tableTitle) {
+    this.fragmentData.isSpinner = true;
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows, tableTitle);
+    const data = this.excel.generateExcel(rows, tableTitle);
+    if(data){
+      this.fragmentData.isSpinner = false;
+    }
   }
 
   subCatArrayForSummary(mutualFundList, type, mfService: MfServiceService) {

@@ -146,6 +146,6 @@ export class ExcelGenService {
       const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       fs.saveAs(blob, title + '.xlsx');
     });
-    return ;
+    return data;
   }
 }

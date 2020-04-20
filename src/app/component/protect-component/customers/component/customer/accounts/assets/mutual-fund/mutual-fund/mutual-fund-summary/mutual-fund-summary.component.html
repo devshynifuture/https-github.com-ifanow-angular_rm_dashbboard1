@@ -22,7 +22,7 @@
                 </div>
                 <div class="mat-button-focus-overlay"></div>
             </button>
-            <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1"> ADD NEW</button>
+            <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">{{fragmentData.isSpinner}}ADD NEW</button>
             <mat-menu #menu1="matMenu" class="add-new">
                 <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b">
                     <div class="row">
@@ -97,7 +97,7 @@
                     <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalTransactionAmt" class="br f-600 text-right" mat-footer-cell>
                         <!-- <div appFormatNumber [value]="grandTotal.totalTransactionAmt"></div> -->
                         <!-- {{(grandTotal.totalTransactionAmt)?grandTotal.totalTransactionAmt:0}} -->
-                    </td>
+                    </td>sdsfds
                 </ng-container>
 
                 <ng-container matColumnDef="currentValue">

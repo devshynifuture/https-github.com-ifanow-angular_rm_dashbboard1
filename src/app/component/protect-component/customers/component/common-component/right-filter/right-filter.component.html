@@ -176,8 +176,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" *ngIf="transactionPeriod == true ">
-            <div class="col-md-4 pl-0">
+            <div class="col-md-4 pl-0" *ngIf="transactionPeriod == true ">
                 <h5 class="m-0 pb-8">From date</h5>
                 <div class="col-md-12 p-0">
                     <mat-form-field class="ba-date">
@@ -191,7 +190,7 @@
 
                 </div>
             </div>
-            <div class="col-md-4 p-0">
+            <div class="col-md-4 p-0" *ngIf="transactionPeriod == true ">
                 <h5 class="m-0 pb-8">To date</h5>
                 <div class="col-md-12 p-0">
                     <mat-form-field class="ba-date">
@@ -205,7 +204,6 @@
 
                 </div>
             </div>
-        </div>
         <div class="col-md-6 pl-0" *ngIf="_data.name != 'Overview Report'">
             <h5 class="m-0 pb-8">Show zero folios?</h5>
             <mat-radio-group aria-label="Select an option" id="custom-radio" formControlName="showFolios">
