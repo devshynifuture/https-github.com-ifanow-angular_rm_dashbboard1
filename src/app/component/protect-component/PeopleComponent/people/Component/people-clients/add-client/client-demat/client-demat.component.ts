@@ -49,12 +49,12 @@ export class ClientDematComponent implements OnInit {
   @Input() set data(data) {
     this.userData = data;
     (this.userData.dematData) ? this.dematList = this.userData.dematData : '';
-    this.holdingMode = (this.userData.dematData) ? String(this.userData.dematData.modeOfHolding) : '1';
     if (this.userData.dematData == undefined && this.fieldFlag) {
       this.createDematForm(null);
       this.getDematList(data);
     }
     else {
+      this.holdingMode = (this.userData.dematData) ? String(this.userData.dematData.modeOfHolding) : '1';
       (this.userData.dematData) ? this.dematList = this.userData.dematData : this.dematList = {};
       this.barButtonOptions.text = "SAVE & CLOSE";
       this.createDematForm(this.userData.dematData);
@@ -216,7 +216,7 @@ export class ClientDematComponent implements OnInit {
     (data == undefined) ? data = {} : data;
     this.dematForm = this.fb.group({
       modeOfHolding: [(data.modeOfHolding) ? String(data.modeOfHolding) : '1'],
-      holderName: [(data.holderNameList && data.holderNameList.length > 0) ? data.holderNameList[0].name : ''],
+      holderName: [(data.modeOfHolding == '1') ? (data.holderNameList && data.holderNameList.length > 0) ? data.holderNameList[0].name : '' : ''],
       depositoryPartName: [data.depositoryParticipantName, [Validators.required]],
       depositoryPartId: [data.depositoryParticipantId, [Validators.required]],
       dematClientId: [data.dematClientId, [Validators.required]],
@@ -275,6 +275,7 @@ export class ClientDematComponent implements OnInit {
         if (data && data.length > 0) {
           this.dematList = data[0];
           this.createDematForm(this.dematList)
+          this.holdingMode = (this.dematList.modeOfHolding) ? String(this.dematList.modeOfHolding) : '1';
         }
         else {
           this.dematList = {};
@@ -347,15 +348,7 @@ export class ClientDematComponent implements OnInit {
         "depositoryParticipantId": this.dematForm.get('depositoryPartId').value,
         "linkedBankAccount": this.dematForm.get('linkedBankAccount').value,
         "powerOfAttorneyName": this.dematForm.get('powerOfAttName').value,
-        "nomineeList": [
-          {
-            "name": null,
-            "id": 0,
-            "userType": 0,
-            "userId": 0,
-            "sharePercentage": 0
-          }
-        ],
+        "nomineeList": [],
         "userType": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
         "brokerName": this.dematForm.get('brekerName').value,
         "dematClientId": this.dematForm.get('dematClientId').value

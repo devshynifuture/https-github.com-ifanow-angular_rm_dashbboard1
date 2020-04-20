@@ -37,6 +37,7 @@ export class ClientMoreInfoComponent implements OnInit {
     // }
   };
   moreInfoForm;
+  occupationList = [];
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private peopleService: PeopleService, private eventService: EventService,
@@ -53,6 +54,11 @@ export class ClientMoreInfoComponent implements OnInit {
     this.moreInfoData = data;
     console.log('ClientMoreInfoComponent data : ', data);
     if (this.fieldFlag == 'familyMember') {
+      this.occupationList = [
+        { name: "Home maker", value: 1 },
+        { name: "Student", value: 2 },
+        { name: "Retired", value: 3 },
+      ]
       this.createMoreInfoForm(data);
       (this.moreInfoData.familyMemberType == 0 || this.moreInfoData.familyMemberType == 1) ?
         this.moreInfoData.categoryTypeflag = 'Individual' : this.moreInfoData.categoryTypeflag = 'familyMinor';
@@ -61,6 +67,18 @@ export class ClientMoreInfoComponent implements OnInit {
         this.createMoreInfoForm(null);
         return;
       } else {
+        // tion value="1">Goverment</mat-option>
+        //                 <mat-option value="2">Service</mat-option>
+        //                 <mat-option value="3">Private sector</mat-option>
+        //                 <mat-option value="4">Business</mat-option>
+        //                 <mat-option value="5">Self-Occupied</mat-option> -->
+        this.occupationList = [
+          { name: 'Goverment', value: 1 },
+          { name: 'Service', value: 2 },
+          { name: 'Private sector', value: 3 },
+          { name: 'Business', value: 4 },
+          { name: 'Self-Occupied', value: 5 },
+        ]
         if (this.moreInfoData.clientType == 1 || this.moreInfoData.clientType == 0) {
           this.moreInfoData.categoryTypeflag = 'Individual';
           this.moreInfoData.invCategory = '1';
@@ -78,7 +96,7 @@ export class ClientMoreInfoComponent implements OnInit {
     this.moreInfoForm = this.fb.group({
       displayName: [data.displayName],
       adhaarNo: [data.aadhaarNumber, Validators.pattern(this.validatorType.ADHAAR)],
-      occupation: [(data.occupationId == 0) ? '1' : String(data.occupationId)],
+      occupation: [(data.occupationId == 0) ? '' : String(data.occupationId)],
       maritalStatus: [(data.martialStatusId) ? String(data.martialStatusId) : '1'],
       anniversaryDate: [String(data.anniversaryDate)],
       bio: [data.bio],
