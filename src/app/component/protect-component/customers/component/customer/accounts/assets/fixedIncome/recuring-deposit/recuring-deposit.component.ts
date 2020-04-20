@@ -288,9 +288,9 @@ export class RecuringDepositComponent implements OnInit {
         isClient:0
       })]),
       // ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      monthlyContribution: [(data == undefined) ? '' : data.monthlyContribution, [Validators.required]],
+      monthlyContribution: [(data == undefined) ? '' : data.monthlyContribution, [Validators.required, Validators.min(1)]],
       commencementDate: [(data.commencementDate == undefined) ? null : new Date(data.commencementDate), [Validators.required]],
-      interestRate: [(data == undefined) ? '' : data.interestRate, [Validators.required]],
+      interestRate: [(data == undefined) ? '' : data.interestRate, [Validators.required, Validators.min(1)]],
       compound: [(data.interestCompounding == undefined) ? '' : (data.interestCompounding) + "", [Validators.required]],
       linkBankAc: [(data == undefined) ? '' : data.linkedBankAccount,],
       tenure: [(data == undefined) ? '' : data.tenure, [Validators.required, Validators.min(1), Validators.max(120)]],
