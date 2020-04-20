@@ -23,7 +23,7 @@ export class ClientMoreInfoComponent implements OnInit {
   validatorType = ValidatorType;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'SAVE & NEXT',
+    text: 'SAVE & CLOSE',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -120,7 +120,7 @@ export class ClientMoreInfoComponent implements OnInit {
       return;
     }
     else {
-      this.barButtonOptions.active = true;
+      (flag == 'close') ? this.barButtonOptions.active = true : '';
       const obj = {
         advisorId: this.moreInfoData.advisorId,
         emailList: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.emailList : this.moreInfoForm.value.email,
@@ -157,7 +157,13 @@ export class ClientMoreInfoComponent implements OnInit {
           this.barButtonOptions.active = false;
           console.log(data);
           this.clientData.emit(data);
-          (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
+          if (flag == 'Next') {
+            this.tabChange.emit(1)
+          }
+          else {
+            this.barButtonOptions.active = false;
+            this.close(data);
+          }
         },
         err => {
           this.eventService.openSnackBar(err, 'Dismiss')
@@ -176,7 +182,7 @@ export class ClientMoreInfoComponent implements OnInit {
       this.moreInfoForm.markAllAsTouched();
       return;
     }
-    this.barButtonOptions.active = true;
+    (flag == 'close') ? this.barButtonOptions.active = true : '';
     const obj = {
       isKycCompliant: this.moreInfoData.isKycCompliant,
       taxStatusId: this.moreInfoData.taxStatusId,
@@ -227,7 +233,13 @@ export class ClientMoreInfoComponent implements OnInit {
         console.log(data);
         this.clientData.emit(data);
         this.barButtonOptions.active = false;
-        (flag == 'Next') ? this.tabChange.emit(1) : this.close(data);
+        if (flag == 'Next') {
+          this.tabChange.emit(1)
+        }
+        else {
+          this.barButtonOptions.active = false;
+          this.close(data);
+        }
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss')

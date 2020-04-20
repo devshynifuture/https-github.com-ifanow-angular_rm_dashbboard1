@@ -251,6 +251,10 @@
             <h5 (click)="close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
+            <button mat-stroked-button *ngIf="fieldFlag" (click)="saveNext('Next')"
+                class=" br-0 bg-white text-inherit">SAVE &
+                NEXT
+            </button>
             <!-- <button *ngIf="fieldFlag!=undefined" mat-raised-button (click)="saveNext('Next')"
               class="br-0 text-inherit mr-12">SAVE & NEXT
           </button> -->
@@ -259,7 +263,7 @@
             <app-progress-button *ngIf="fieldFlag==undefined" (btnClick)="saveNext('Save')" [options]="barButtonOptions"
                 class="br-0 text-inherit mr-12">
             </app-progress-button>
-            <app-progress-button (btnClick)="saveNext('Next')" [options]="barButtonOptions"
+            <app-progress-button (btnClick)="saveNext('Save')" [options]="barButtonOptions"
                 class="br-0 text-inherit mr-12">
             </app-progress-button>
         </div>

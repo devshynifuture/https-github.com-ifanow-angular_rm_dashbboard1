@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators, FormArray} from '@angular/forms';
 import {SettingsService} from '../../../../settings.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import {ValidatorType} from 'src/app/services/util.service';
@@ -35,6 +35,7 @@ export class NewTeamMemberComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  mobileNumberFA:FormArray;
 
   constructor(
     private fb: FormBuilder,
@@ -69,14 +70,15 @@ export class NewTeamMemberComponent implements OnInit {
       fullName: [this.data.mainData.fullName || '',
         [Validators.required, Validators.maxLength(50), Validators.pattern(ValidatorType.PERSON_NAME)]],
       emailId: [this.data.mainData.email || '', [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
-      mobileNo: [this.data.mainData.mobile || '', [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
+      // mobileNo: [this.data.mainData.mobile || '', [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
       roleId: [roleId, [Validators.required]],
     });
   }
 
   save() {
-    if (this.teamMemberFG.invalid) {
+    if (this.teamMemberFG.invalid || this.mobileNumberFA.invalid) {
       this.teamMemberFG.markAllAsTouched();
+      this.mobileNumberFA.markAllAsTouched();
     } else {
       if (this.barButtonOptions.active) {
       } else {
@@ -91,7 +93,10 @@ export class NewTeamMemberComponent implements OnInit {
   }
 
   addTeamMember() {
-    const dataObj = this.teamMemberFG.value;
+    const dataObj = {
+      ...this.teamMemberFG.value,
+      mobileList: this.mobileNumberFA.value,
+    };
     this.settingsService.addTeamMember(dataObj).subscribe((res) => {
       this.close(true);
       this.eventService.openSnackBar('Invitation sent successfully');
@@ -127,10 +132,6 @@ export class NewTeamMemberComponent implements OnInit {
     if (this.counter == 0) {
       this.isLoading = false;
       this.checkIfRoleExists();
-      // if (this.data.is_add_call) {
-      // }else {
-      //
-      // }
     } else {
       this.isLoading = true;
     }
@@ -139,8 +140,6 @@ export class NewTeamMemberComponent implements OnInit {
   checkIfRoleExists() {
     const teamMemberRoleId = this.teamMemberFG.get('roleId') as FormControl;
     const roleExist = this.roles.find((role) => {
-      console.log('checkIfRoleExists role: ', role);
-      console.log('checkIfRoleExists teamMemberRoleId.value: ', teamMemberRoleId.value);
       if (role.roleMasterId == teamMemberRoleId.value) {
         teamMemberRoleId.setValue(role.id);
         return true;
@@ -148,11 +147,14 @@ export class NewTeamMemberComponent implements OnInit {
         return false;
       }
     });
-    console.log('2345467t8y9u0 checkIfRoleExists roleExist: ', roleExist);
 
     if (!roleExist) {
       teamMemberRoleId.setValue('');
       this.teamMemberFG.updateValueAndValidity();
     }
+  }
+
+  getNumberDetails(formArr:FormArray) {
+    this.mobileNumberFA = formArr;
   }
 }

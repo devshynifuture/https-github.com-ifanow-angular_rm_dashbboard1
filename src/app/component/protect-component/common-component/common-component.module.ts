@@ -14,11 +14,13 @@ import { ImageCropperComponent } from './image-cropper/image-cropper.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { ReplaceUserComponent } from './replace-user/replace-user.component';
+import { AddNumberComponent } from '../PeopleComponent/people/Component/people-clients/add-client/add-number/add-number.component';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 
 @NgModule({
   declarations: [
-    FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, ImageCropperComponent, WelcomePageComponent, ReplaceUserComponent],
-  exports: [FroalaComponent, ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent],
+    FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, ImageCropperComponent, WelcomePageComponent, ReplaceUserComponent, AddNumberComponent],
+  exports: [FroalaComponent, ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent],
   imports: [
     MaterialModule,
     CommonModule,
@@ -27,10 +29,12 @@ import { ReplaceUserComponent } from './replace-user/replace-user.component';
     ReactiveFormsModule,
     FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),
     FroalaEditorModule,
-    FileUploadModule
+    FileUploadModule,
+    CustomDirectiveModule,
+
     // AppModule
   ],
-  entryComponents: [ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent]
+  entryComponents: [ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent]
 })
 export class CommonComponentModule {
 }
