@@ -26,8 +26,6 @@ export class AumKarvyComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dataSource.sort = this.sort;
-    this.isLoading = true;
     this.reconService.getRTListValues({})
       .subscribe(res => {
         if (res) {
@@ -58,6 +56,7 @@ export class AumKarvyComponent implements OnInit {
   }
 
   getAumHistoryData() {
+    this.isLoading = true;
     const data = {
       advisorId: 0,
       brokerId: 0,
@@ -80,7 +79,7 @@ export class AumKarvyComponent implements OnInit {
               orderTypeId: element.orderTypeId,
               matchedCount: element.matchedCount,
               rtId: element.rtId,
-              advisorName: '---',
+              advisorName: element.advisorName,
               arnria: '---',
               doneOn: element.doneOn,
               doneBy: element.doneBy,
@@ -99,6 +98,7 @@ export class AumKarvyComponent implements OnInit {
             })
           });
           this.dataSource.data = tableData;
+          this.dataSource.sort = this.sort;
         } else {
           this.dataSource.data = null;
           this.eventService.openSnackBar("No AUM History Found", "DISMISS");

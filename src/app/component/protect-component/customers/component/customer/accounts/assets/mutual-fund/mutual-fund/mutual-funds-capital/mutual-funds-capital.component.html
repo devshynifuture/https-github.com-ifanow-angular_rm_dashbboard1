@@ -4,7 +4,8 @@
             <div class="col-md-4 pl-0">
                 <h4 class="m-0 text-black roboto pt-8">Mutual fund capital gains</h4>
             </div>
-            <div class="col-md-8 p-0 d-flex justify-content-end" *ngIf="!isLoading">
+            <!-- *ngIf="!isLoading" prod -->
+            <div class="col-md-8 p-0 d-flex justify-content-end" >
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1">
                 <mat-menu #menu1="matMenu">
                     <button mat-menu-item>PDF</button>
