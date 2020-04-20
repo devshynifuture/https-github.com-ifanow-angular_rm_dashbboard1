@@ -42,18 +42,16 @@
                 <div class="cardList">
                     <div class="row pt-10 pb-10 bb">
                         <div class="col-md-8 f-14" *ngFor="let stage of stageList">
-                            <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-                                <div class="relClass">
-                                    <div class="bar" [ngClass]="{'height10': isLoading}">
-                                        <mat-checkbox class="mr-8" [value]="stage.isComplete"
-                                            *ngIf="stage.isShowComment == false"
-                                            [checked]="(stage.isComplete == 1)? true:false"
-                                            (change)="updateActivityCompleteness(stage,$event)"> </mat-checkbox>
-                                        <span (click)="showComment(stage,true)"
-                                            [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('firstCall').value == true ? 'line-through': 'initial' }">
-                                            {{isLoading? '': stage.taskName}}
-                                        </span>
-                                    </div>
+                            <div>
+                                <div class="">
+                                    <mat-checkbox class="mr-8" [value]="stage.isComplete"
+                                        *ngIf="stage.isShowComment == false"
+                                        [checked]="(stage.isComplete == 1)? true:false"
+                                        (change)="updateActivityCompleteness(stage,$event)"> </mat-checkbox>
+                                    <span (click)="showComment(stage,true)"
+                                        [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('firstCall').value == true ? 'line-through': 'initial' }">
+                                        {{isLoading? '': stage.taskName}}
+                                    </span>
                                 </div>
                             </div>
                             <div class="bg-grey lter mt-44 p-20 skeletonAnimation" appSkeletonLoading

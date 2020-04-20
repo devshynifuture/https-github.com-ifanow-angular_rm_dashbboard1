@@ -40,12 +40,24 @@
         </div>
     </div>
     <div class="row pt-28">
-        <!-- <div class="col-md-3 text-right pr-0">
+        <div class="col-md-3 text-right pr-0">
             <h5 class="m-0 pt-20">Mobile</h5>
-        </div> -->
-        <div class="col-md-12 pr-0">
+        </div>
+        
+        <div class="col-md-3 pr-0">
             <div class="form-group">
-                <!-- <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
+                <mat-form-field appearance="standard">
+                    <mat-select formControlName="isdCode" class="form-control">
+                        <mat-option value="" selected disabled>Select Country Code</mat-option>
+                        <mat-option [value]="code" *ngFor="let code of countryCodes">{{code}}</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-4 pr-0">
+            <div class="form-group">
+                <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                     <input matInput [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" appInputValueValidation
                         #mobileNo formControlName="mobileNo" placeholder="Enter Mobile number" class="form-control"
                         [readonly]="!data.is_add_call">
@@ -53,25 +65,23 @@
                         Enter Valid Mobile number</mat-error>
                     <mat-error *ngIf="teamMemberFG.get('mobileNo').errors?.required">This field is required</mat-error>
                     <mat-hint align="end">{{mobileNo.value.length}}/10</mat-hint>
-                </mat-form-field> -->
-                <app-add-number [numberList]="data.mainData.mobile" [flag]="'Mobile'" (numberArray)="getNumberDetails($event)" [minimumCompulsary]='1'>
-                </app-add-number>
+                </mat-form-field>
             </div>
         </div>
-    </div>
-    <div class="row pt-28">
-        <div class="col-md-3 text-right pr-0">
-            <h5 class="m-0 pt-20">Role</h5>
-        </div>
-        <div class="col-md-7 pr-0">
-            <div class="form-group">
-                <mat-form-field floatLabel="never" appearance="standard">
-                    <mat-select class="form-control" formControlName="roleId">
-                        <mat-option value="">Select Role</mat-option>
-                        <mat-option *ngFor="let role of roles" [value]="role.id">{{role.roleName}}</mat-option>
-                    </mat-select>
-                    <mat-error>This field is required</mat-error>
-                </mat-form-field>
+        <div class="row pt-28">
+            <div class="col-md-3 text-right pr-0">
+                <h5 class="m-0 pt-20">Role</h5>
+            </div>
+            <div class="col-md-7 pr-0">
+                <div class="form-group">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <mat-select class="form-control" formControlName="roleId">
+                            <mat-option value="">Select Role</mat-option>
+                            <mat-option *ngFor="let role of roles" [value]="role.id">{{role.roleName}}</mat-option>
+                        </mat-select>
+                        <mat-error>This field is required</mat-error>
+                    </mat-form-field>
+                </div>
             </div>
         </div>
     </div>
@@ -85,4 +95,3 @@
             <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()">{{data.is_add_call ? 'SEND INVITE' : 'SAVE'}}</button>
         </div>
     </div>
-</div>
