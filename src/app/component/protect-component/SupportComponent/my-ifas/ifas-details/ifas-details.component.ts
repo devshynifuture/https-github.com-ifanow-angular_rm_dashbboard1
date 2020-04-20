@@ -7,6 +7,7 @@ import { UpperSliderBackofficeComponent } from '../../common-component/upper-sli
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
 import { SupportService } from '../../support.service';
+import { ReconciliationService } from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 
 @Component({
   selector: 'app-ifas-details',
@@ -38,18 +39,27 @@ export class IfasDetailsComponent implements OnInit {
   cams: any;
   karvy: any;
   isLoading: boolean = false;
+  brokerList: any;
+  brokerListCams: any;
+  rtId: any;
+  camsId: any;
+  karvyId: any;
+  franklinId: any;
 
 
 
   constructor(public subInjectService: SubscriptionInject,
     public dialog: MatDialog,
     private eventService: EventService,
-    private supportService :SupportService) { }
+    private supportService :SupportService,
+    private reconService : ReconciliationService) { }
 
   isInEditMode: boolean = false;
   reconSummaryList;
   ngOnInit() {
     this.getReconSummaryList();
+    this.getRTList();
+
   }
   @Input() set data(data) {
     this.ifasData = data;
@@ -83,6 +93,34 @@ export class IfasDetailsComponent implements OnInit {
       }
       , err => this.eventService.openSnackBar(err, "Dismiss")
     )
+  }
+  getRTList() {
+    this.reconService.getRTListValues({})
+      .subscribe(res => {
+        console.log("this is RT list:::::", res);
+        res.forEach(element => {
+          if (element.name === "CAMS") {
+            this.camsId = element.id;
+          }
+          if (element.name === 'KARVY') {
+            this.karvyId = element.id;
+          }
+          if (element.name === 'FRANKLIN_TEMPLETON') {
+            this.franklinId = element.id;
+          }
+        });
+      });
+  }
+  getBrokerList(value) {
+    this.rtId = value
+    this.reconService.getBrokerListValues({ advisorId: this.ifasData.adminAdvisorId })
+      .subscribe(res => {
+        if (res) {
+          this.brokerList = res;
+          console.log('jdfgj dfj',this.brokerListCams)
+          this.openSelectArnRiaDialog(res,this.ifasData,this.rtId)
+        }
+      });
   }
   getCancelSubscriptionData() {
 
@@ -126,9 +164,12 @@ export class IfasDetailsComponent implements OnInit {
 
   }
 
-  openSelectArnRiaDialog(data) {
+  openSelectArnRiaDialog(data,value,rtId) {
+  
     const Fragmentdata = {
       flag: data,
+      mainData : value,
+      rtId : rtId
     };
     const dialogRef = this.dialog.open(MyIfaSelectArnRiaComponent, {
       width: '30%',
