@@ -13,8 +13,10 @@ export class AddNumberComponent implements OnInit {
   mobileListResponse: any;
 
   create;
+  compulsionCount = 0;
 
   @Input() flag;
+  @Input() minimumCompulsary = 0;
   @Output() numberArray = new EventEmitter();
 
   ngOnInit() {
@@ -57,10 +59,18 @@ export class AddNumberComponent implements OnInit {
     if (!data) {
       data = {};
     }
-    this.getMobileNumList.push(this.fb.group({
-      code: ['+91'],
-      number: [data.mobileNo, Validators.pattern(this.validatorType.TEN_DIGITS)]
-    }));
+    if(this.compulsionCount < this.minimumCompulsary) {
+      this.compulsionCount ++;
+      this.getMobileNumList.push(this.fb.group({
+        code: ['+91'],
+        number: [data.mobileNo, [Validators.pattern(this.validatorType.TEN_DIGITS), Validators.required]]
+      }));
+    } else {
+      this.getMobileNumList.push(this.fb.group({
+        code: ['+91'],
+        number: [data.mobileNo, Validators.pattern(this.validatorType.TEN_DIGITS)]
+      }));
+    }
     this.numberArray.emit(this.getMobileNumList);
   }
 }
