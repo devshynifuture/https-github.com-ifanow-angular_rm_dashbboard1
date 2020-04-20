@@ -14,7 +14,7 @@
 
 <div class="pt-90 pb-28 pl-20">
 
-    <mat-tab-group id="ui-backoffice-tabs">
+    <mat-tab-group id="ui-backoffice-tabs" (selectedIndexChange)="loadSection($event)">
         <mat-tab label="Recon summary">
             <div class="row">
                 <div class="col-md-12">
@@ -470,10 +470,11 @@
         <mat-tab label="Team members">
 
             <div class="row">
-                <div class="col-md-12 back-office-table  overflow-hidden">
+                <div class="col-md-12 back-office-table  overflow-hidden" *ngIf="dataSource4.length > 0">
                     <h3 class="f-16 mb-4">Ticket list</h3>
 
-                    <table mat-table [dataSource]="dataSource4" id="table-low" class="">
+                    <table mat-table [dataSource]="dataSource4" id="table-low" class=""
+                    appSkeletonLoading [appSkeletonLoading]="utilsService.isLoading">
                         <ng-container matColumnDef="name">
                             <th class="br" mat-header-cell *matHeaderCellDef> Name </th>
                             <td class="br" mat-cell *matCellDef="let element"> {{element.name}} </td>
@@ -510,6 +511,16 @@
                         <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
                     </table>
+                </div>
+                <div class="col-md-12">
+                    <div *ngIf="dataSource4.length == 0 && !isLoading && !hasError" class="d-flex flex-column align-items-center">
+                        <img class="width300" src="assets/images/svg/noDataFound.svg">
+                        <h4 class="pt-12">No Team members found</h4>
+                    </div>
+                    <div *ngIf="userList==undefined && !isLoading && hasError" class="d-flex flex-column align-items-center">
+                        <img class="width300" src="assets/images/svg/noDataFound.svg">
+                        <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
+                    </div>
                 </div>
             </div>
 

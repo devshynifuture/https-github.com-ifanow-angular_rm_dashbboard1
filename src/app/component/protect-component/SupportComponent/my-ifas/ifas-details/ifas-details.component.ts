@@ -7,6 +7,7 @@ import { UpperSliderBackofficeComponent } from '../../common-component/upper-sli
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
 import { SupportService } from '../../support.service';
+import { SettingsService } from '../../../AdviserComponent/setting/settings.service';
 
 @Component({
   selector: 'app-ifas-details',
@@ -28,7 +29,7 @@ export class IfasDetailsComponent implements OnInit {
   dataSource3 = ELEMENT_DATA3;
 
   displayedColumns4: string[] = ['name', 'email', 'mobile', 'role', 'lastlogin', 'status'];
-  dataSource4 = ELEMENT_DATA4;
+  dataSource4 = [{}, {}, {}];
 
   displayedColumns5: string[] = ['invoice', 'sentDate', 'status', 'dueDate', 'amount', 'balance'];
   dataSource5 = ELEMENT_DATA5;
@@ -38,13 +39,24 @@ export class IfasDetailsComponent implements OnInit {
   cams: any;
   karvy: any;
   isLoading: boolean = false;
+  hasError: boolean = false;
 
+  isComponentLoaded = {
+    recon: true,
+    suggestion: false,
+    tickets: false,
+    teamMember: false,
+    billing: false,
+    misc: false,
+  }
 
 
   constructor(public subInjectService: SubscriptionInject,
     public dialog: MatDialog,
     private eventService: EventService,
-    private supportService :SupportService) { }
+    public utilsService: UtilService,
+    private settingsService: SettingsService,
+    private supportService: SupportService) { }
 
   isInEditMode: boolean = false;
   reconSummaryList;
@@ -53,22 +65,17 @@ export class IfasDetailsComponent implements OnInit {
   }
   @Input() set data(data) {
     this.ifasData = data;
-    this.getReconSummaryList();
   }
+
   toggleEditMode() {
     this.isInEditMode = !this.isInEditMode;
   }
 
   getReconSummaryList() {
-    // this.reconSummaryList = [
-    //   { name: 'CAMS' },
-    //   { name: 'Karvy' },
-    //   { name: 'Franklin Templeton' }
-    // ]
     this.isLoading = true
     let obj =
     {
-      advisorId : this.ifasData.adminAdvisorId,
+      advisorId: this.ifasData.adminAdvisorId,
     }
     this.supportService.getMyIFAReconSummary(obj).subscribe(
       data => {
@@ -96,9 +103,7 @@ export class IfasDetailsComponent implements OnInit {
   getTicketSummary() {
 
   }
-  getTeamMembers() {
 
-  }
   getBillingDetails() {
 
   }
@@ -149,7 +154,55 @@ export class IfasDetailsComponent implements OnInit {
 
 
 
+  getTeamMembers() {
+    this.utilsService.loader(1);
+    this.hasError = false;
+    const dataObj = {
+      advisorId: this.ifasData.adminAdvisorId
+    };
+    this.settingsService.getTeamMembers(dataObj).subscribe((res) => {
+      this.utilsService.loader(-1);
+      this.isComponentLoaded.teamMember = true;
+      console.log('team member details', res);
+      this.dataSource4 = res || [];
+    }, err => {
+      this.utilsService.loader(-1);
+      this.eventService.openSnackBar(err, "Dismiss");
+      this.hasError = true;
+    });
+  }
 
+  loadSection(index) {
+    switch (index) {
+      case 1:
+        if (!this.isComponentLoaded.suggestion) {
+          this.getSuggestionsData()
+        }
+        break;
+      case 2:
+        if (!this.isComponentLoaded.tickets) {
+          this.getTicketSummary()
+        }
+        break;
+
+      case 3:
+        if (!this.isComponentLoaded.teamMember) {
+          this.getTeamMembers()
+        }
+        break;
+
+      case 3:
+        if (!this.isComponentLoaded.billing) {
+        }
+        break;
+
+      case 3:
+        if (!this.isComponentLoaded.misc) {
+        }
+        break;
+
+    }
+  }
 
 
 
@@ -240,18 +293,6 @@ export interface PeriodicElement4 {
 
 }
 
-const ELEMENT_DATA4: PeriodicElement4[] = [
-  { name: 'Atul Shah', email: 'atul@manekfinancial.com', mobile: '9879879878', role: 'Team member', lastlogin: '30 min ago', status: 'Active', },
-  { name: 'Atul Shah', email: 'atul@manekfinancial.com', mobile: '9879879878', role: 'Team member', lastlogin: '30 min ago', status: 'Active', },
-  { name: 'Atul Shah', email: 'atul@manekfinancial.com', mobile: '9879879878', role: 'Team member', lastlogin: '30 min ago', status: 'Active', },
-  { name: 'Atul Shah', email: 'atul@manekfinancial.com', mobile: '9879879878', role: 'Team member', lastlogin: '30 min ago', status: 'Active', },
-
-];
-
-
-
-
-
 export interface PeriodicElement5 {
   invoice: string;
   sentDate: string;
@@ -259,9 +300,6 @@ export interface PeriodicElement5 {
   dueDate: string;
   amount: string;
   balance: string;
-
-
-
 }
 
 const ELEMENT_DATA5: PeriodicElement5[] = [
@@ -269,7 +307,5 @@ const ELEMENT_DATA5: PeriodicElement5[] = [
   { invoice: 'INV-19-20-104031', sentDate: 'atul@17/01/2020', status: 'Paid', dueDate: '17/01/2020', amount: '18,880', balance: '0', },
   { invoice: 'INV-19-20-104031', sentDate: 'atul@17/01/2020', status: 'Paid', dueDate: '17/01/2020', amount: '18,880', balance: '0', },
   { invoice: 'INV-19-20-104031', sentDate: 'atul@17/01/2020', status: 'Paid', dueDate: '17/01/2020', amount: '18,880', balance: '0', },
-
-
 ];
 
