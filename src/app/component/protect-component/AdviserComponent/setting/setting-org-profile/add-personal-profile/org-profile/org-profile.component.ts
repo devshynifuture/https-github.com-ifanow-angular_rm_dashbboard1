@@ -32,6 +32,7 @@ export class OrgProfileComponent implements OnInit {
   pinInvalid: boolean;
   validatorType = ValidatorType
   subscription = new Subscription();
+  countryCodes:Array<string> = ['+91', '+92', "+93"];
 
   constructor(
     public utils: UtilService, 
@@ -107,6 +108,7 @@ export class OrgProfileComponent implements OnInit {
     this.orgProfile = this.fb.group({
       companyName: [(!data) ? '' : (data.companyName), [Validators.required, Validators.maxLength(50)]],
       emailId: [(!data) ? '' : data.email, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
+      isdCodeId: [(!data) ? '' : data.isdCodeId, [Validators.required]],
       mobileNo: [(!data) ? '' : data.mobileNumber, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(ValidatorType.NUMBER_ONLY)]],
       website: [(!data) ? '' : data.website, [Validators.required]],
       address: [(!data) ? '' : data.billerAddress, [Validators.required]],
