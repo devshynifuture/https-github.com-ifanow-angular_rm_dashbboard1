@@ -69,9 +69,9 @@
                         </div>
                         <div class="col-md-12 p-0">
                             <p class="m-0 text-custom pt-20 pl-8">Current value</p>
-                                    <h2  class="m-0 f-300 text-black pt-4 pl-8 pb-16 relClass height24" >
-                                        <div  class="bar"  appFormatNumber *ngIf="totalValue.currentValue">
-                                            {{(totalValue.currentValue) ? (totalValue.currentValue) : 0}}
+                                    <h2  class="m-0 f-300 text-black pt-4 pl-8 pb-16 relClass" >
+                                        <div  class="bar height24" >
+                                                <span appFormatNumber *ngIf="totalValue.currentValue"> {{(totalValue.currentValue) ? (totalValue.currentValue) : 0}}</span>
                                         </div>
                                     </h2>
                            
@@ -97,7 +97,7 @@
                                     <p class="text-custom m-0">Returns</p>
                                     <h5 class="m-0 text-success relClass height24">
                                         <div class="bar height24">
-                                        <span *ngIf="totalValue.xirr">{{totalValue.xirr | number:'1.2-2'}}</span>% <i class="material-icons f-14 f-700"  *ngIf="!isLoading">
+                                        <span *ngIf="totalValue.xirr">{{totalValue.xirr | number:'1.2-2'}}</span> {{(!isLoading) ? '%' : ''}} <i class="material-icons f-14 f-700"  *ngIf="!isLoading">
                       arrow_upward
                     </i>
                         </div>
@@ -120,16 +120,16 @@
                                 <div class="col-md-6">
                                     <p class="f-500 text-black mb-0">Equity</p>
                                 </div>
-                                <div class="col-md-3 relClass height24">
-                                    <div class="bar">
+                                <div class="col-md-3 relClass ">
+                                    <div class="bar height24">
                                     <p class="text-black mb-0 ">
-                                        <span appFormatNumber *ngIf="this.equityCurrentValue">{{(this.equityCurrentValue)?this.equityCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.equityCurrentValue">0</span>
+                                        <span appFormatNumber *ngIf="this.equityCurrentValue">{{(this.equityCurrentValue)?this.equityCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.equityCurrentValue && !isLoading">0</span>
                                     </p>
                                     </div>
                                 </div>
-                                <div class="col-md-2 relClass height24">
-                                    <div class="bar">
-                                    <p class="text-black mb-0 ">{{(this.equityPercentage) ? (this.equityPercentage | number:'1.2-2') : '0'}}%</p>
+                                <div class="col-md-2 relClass ">
+                                    <div class="bar height24">
+                                    <p class="text-black mb-0 " *ngIf="this.equityPercentage">{{(this.equityPercentage) ? (this.equityPercentage | number:'1.2-2') : '0'}}%</p>
                                     </div>    
                                 </div>
                             </div>
@@ -140,14 +140,14 @@
                                 <div class="col-md-6">
                                     <p class="f-500 text-black mb-0">Debt</p>
                                 </div>
-                                <div class="col-md-3 relClass height24">
-                                    <div class="bar">
-                                    <p class="text-black mb-0"><span appFormatNumber *ngIf="this.debtCurrentValue">{{(this.debtCurrentValue)?this.debtCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.debtCurrentValue">0</span></p>
+                                <div class="col-md-3 relClass ">
+                                    <div class="bar height24">
+                                    <p class="text-black mb-0"><span appFormatNumber *ngIf="this.debtCurrentValue">{{(this.debtCurrentValue)?this.debtCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.debtCurrentValue && !isLoading">0</span></p>
                                     </div>
                                 </div>
-                                <div class="col-md-2 relClass height24">
-                                    <div class="bar">
-                                    <p class="text-black mb-0 ">{{(this.debtPercentage) ? (this.debtPercentage | number:'1.2-2') : '0'}}%</p>
+                                <div class="col-md-2 relClass ">
+                                    <div class="bar height24">
+                                    <p class="text-black mb-0 " *ngIf="this.debtPercentage">{{(this.debtPercentage) ? (this.debtPercentage | number:'1.2-2') : '0'}}%</p>
                                      </div>  
                                 </div>
                             </div>
@@ -158,14 +158,14 @@
                                 <div class="col-md-6">
                                     <p class="f-500 text-black mb-0">Hybrid</p>
                                 </div>
-                                <div class="col-md-3 relClass height24">
-                                    <div class="bar">
-                                    <p class="text-black mb-0 relClass height24"><span appFormatNumber *ngIf="this.hybridCurrentValue">{{(this.hybridCurrentValue)?this.hybridCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.hybridCurrentValue">0</span></p>
+                                <div class="col-md-3 relClass ">
+                                    <div class="bar height24">
+                                    <p class="text-black mb-0"><span appFormatNumber *ngIf="this.hybridCurrentValue">{{(this.hybridCurrentValue)?this.hybridCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.hybridCurrentValue && !isLoading">0</span></p>
                                     </div>        
                                 </div>
-                                <div class="col-md-2 relClass height24">
-                                    <div class="bar">
-                                    <p class="text-black mb-0 relClass height24">{{(this.hybridPercenatge)? (this.hybridPercenatge | number:'1.2-2') : '0'}}%</p>
+                                <div class="col-md-2 relClass ">
+                                    <div class="bar height24">
+                                    <p class="text-black mb-0"  *ngIf="this.hybridPercenatge">{{(this.hybridPercenatge)? (this.hybridPercenatge | number:'1.2-2') : '0'}}%</p>
                                      </div>  
                                 </div>
                             </div>
@@ -176,16 +176,16 @@
                                 <div class="col-md-6 ">
                                     <p class="f-500 text-black mb-0">Solutions oriented</p>
                                 </div>
-                                <div class="col-md-3 relClass height24">
-                                    <div class="bar">
+                                <div class="col-md-3 relClass ">
+                                    <div class="bar height24">
                                     <p class="text-black mb-0">
-                                        <span appFormatNumber *ngIf="this.solution_OrientedCurrentValue">{{(this.solution_OrientedCurrentValue)?this.solution_OrientedCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.solution_OrientedCurrentValue">0</span>
+                                        <span appFormatNumber *ngIf="this.solution_OrientedCurrentValue">{{(this.solution_OrientedCurrentValue)?this.solution_OrientedCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.solution_OrientedCurrentValue && !isLoading">0</span>
                                     </p>
                                 </div>
                                 </div>
-                                <div class="col-md-2 relClass height24">
-                                    <div class="bar">
-                                    <p class="text-black mb-0 relClass height24">
+                                <div class="col-md-2 relClass ">
+                                    <div class="bar height24">
+                                    <p class="text-black mb-0" *ngIf="this.solution_OrientedPercenatge">
                                         {{(this.solution_OrientedPercenatge) ? (this.solution_OrientedPercenatge | number:'1.2-2') : '0'}}%
                                     </p>
                                     </div>
@@ -198,14 +198,14 @@
                                 <div class="col-md-6">
                                     <p class="f-500 text-black mb-0">Others</p>
                                 </div>
-                                <div class="col-md-3 relClass height24">
-                                    <div class="bar">
-                                    <p class="text-black mb-0"><span appFormatNumber *ngIf="this.otherCurrentValue">{{(this.otherCurrentValue)?this.otherCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.otherCurrentValue">0</span></p>
+                                <div class="col-md-3 relClass ">
+                                    <div class="bar height24">
+                                    <p class="text-black mb-0"><span appFormatNumber *ngIf="this.otherCurrentValue">{{(this.otherCurrentValue)?this.otherCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.otherCurrentValue && !isLoading">0</span></p>
                                 </div>
                                 </div>
-                                <div class="col-md-2 relClass height24">
-                                    <div class="bar">
-                                    <p class="text-black mb-0">{{(this.otherPercentage) ? (this.otherPercentage | number:'1.2-2') : '0'}}%</p>
+                                <div class="col-md-2 relClass ">
+                                    <div class="bar height24 ">
+                                    <p class="text-black mb-0" *ngIf="this.otherPercentage">{{(this.otherPercentage) ? (this.otherPercentage | number:'1.2-2') : '0'}}%</p>
                                     </div>    
                                 </div>
                             </div>
