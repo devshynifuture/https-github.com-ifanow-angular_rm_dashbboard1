@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EventService } from '../../../../../../Data-service/event.service';
 
 @Component({
   selector: 'app-marketplace-review-request-bulk',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MarketplaceReviewRequestBulkComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private eventService: EventService
+  ) { }
 
   ngOnInit() {
+  }
+
+  dialogClose() {
+    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
   }
 
 }
