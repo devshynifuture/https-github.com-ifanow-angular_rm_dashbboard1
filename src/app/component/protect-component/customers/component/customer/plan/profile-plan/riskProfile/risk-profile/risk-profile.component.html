@@ -36,7 +36,7 @@
         <div class="col-md-3 pr-0">
             <div class="row">
                 <div class="col-md-12 p-0 d-flex justify-content-between">
-                    <button mat-flat-button class="b-a-custom text-primary" (click)="showRisk = false">Risk
+                    <button mat-flat-button class="b-a-custom text-primary" (click)="reset();showRisk = false">Risk
                         assessment</button>
                     <button mat-flat-button class="b-a-custom text-primary" (click)="open('riskProfile', null)">History</button>
                 </div>
@@ -52,7 +52,7 @@
 <div class="pt-32 pb-44" *ngIf="showRisk == true">
     <div class="row">
         <div class="col-md-12 mb-16 d-flex justify-content-end">
-            <button mat-flat-button class="b-a-custom text-primary mr-12" (click)="showRisk = false">Risk
+            <button mat-flat-button class="b-a-custom text-primary mr-12" (click)="reset();showRisk = false">Risk
                 assessment</button>
             <button mat-flat-button class="b-a-custom text-primary" (click)="open('riskProfile', null)">History</button>
         </div>
@@ -63,8 +63,8 @@
         <div class="col-md-5">
             <div class="row">
                 <div class="col-md-8"></div>
-                <div class="col-md-4">
-                    <h5 class="m-0 f-500 text-black">Your risk score</h5>
+                <div class="col-md-4 p-0">
+                    <h5 class="m-0 f-500 roboto text-black">Your risk score</h5>
                     <div class="ba-3x text-center riskScoreBox mt-12">
                         <h1 class="f-48 mb-8">{{score}}</h1>
                         <p class="m-0 text-custom f-12 ">Max: 600</p>
@@ -72,20 +72,18 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="col-md-6">
+        <div class="col-md-6">
             <div class="row">
-                <div class="col-md-8 p-0" *ngIf="score">
-                    <h5 class="m-0 f-500 text-black">Your risk
-                        profile:{{(score <= 180)? 'conservative':(score <= 290)? 'Moderately conservative': (score <= 400)? 'Moderate':(score <= 510)? 'Moderately aggressive' :(score <= 600)? 'Aggressive': ''}}
-                        </h5>
+                <div class="col-md-8 p-0 text-center" *ngIf="score">
+                    <h5 class="m-0 f-500 roboto text-black">Your risk {{scoreStatus}}
+                    </h5>
                     <div #referenceKeyName (click)="onClickMe(referenceKeyName)" id="Gauge"></div>
-                    <p class="m-0 text-custom roboto" style="text-align: center;">You are an investor who is willing to
-                        take moderately high risk for moderately high returns</p>
+                    <p class="m-0 text-custom roboto" style="text-align: center;">You are an investor who is willing to take moderately high risk for moderately high returns</p>
                 </div>
                 <div class="col-md-4">
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
     <div class="row">
         <div class="col-md-2">
@@ -128,7 +126,9 @@
 <div *ngIf="showRisk == true">
     <div class="row">
         <div class="col-md-12 text-center">
-            <h5 class="m-0 f-500 text-black">Equity asset allocation </h5>
+
+            <h5 class="mb-4 f-500 roboto width545 text-black">Equity asset allocation </h5>
+
             <div id="container1"></div>
             <!-- <img src="/assets/images/svg/assest-allocation.svg" class="w-100"> -->
         </div>

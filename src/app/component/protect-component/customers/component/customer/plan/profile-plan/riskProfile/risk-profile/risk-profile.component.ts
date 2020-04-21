@@ -34,6 +34,8 @@ export class RiskProfileComponent implements OnInit {
   showErrorMsg
   checkFamilyMem;
   showButton;
+  progressBar;
+  scoreStatus;
   equityAllocationLowerLimit;
 
   clientRiskAssessmentResults;
@@ -53,7 +55,7 @@ export class RiskProfileComponent implements OnInit {
     this.getRiskProfileList();
     this.getdataForm('');
     this.sendRiskList = [];
-    this.progressBar = [];
+   // this.progressBar = [];
     this.statusArray = [];
     this.showLoader = true;
     this.showErrorMsg = false
@@ -302,6 +304,7 @@ export class RiskProfileComponent implements OnInit {
           riskAssessmentChoiceId: element.selectedChoiceId,
           weight: element.weight
         });
+        this.showErrorMsg = false
       }
     });
     if (this.showErrorMsg == false) {
@@ -326,6 +329,19 @@ export class RiskProfileComponent implements OnInit {
     if (data) {
       console.log(data);
       this.score = data.score;
+      if(this.score <= 180){
+        this.scoreStatus = 'conservative'
+      }else if(this.score <= 290){
+        this.scoreStatus = 'Moderately conservative'
+      }else if(this.score <= 400){
+        this.scoreStatus = 'Moderate'
+      }else if(this.score <= 510){
+        this.scoreStatus = 'Moderately aggressive'
+      }else if(this.score <= 600){
+        this.scoreStatus = 'Aggressive'
+      }else{
+        this.scoreStatus = ''
+      }
       this.equityAllocationLowerLimit = data.equityAllocationLowerLimit
       this.equityAllocationUpperLimit = data.equityAllocationUpperLimit
     }
@@ -362,6 +378,10 @@ export class RiskProfileComponent implements OnInit {
         this.showButton = false
       }
     }
+  }
+  reset(){
+    this.statusArray = []
+    this.getRiskProfileList();  
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
