@@ -18,7 +18,7 @@ export class AddNumberComponent implements OnInit {
 
   @Input() flag;
   @Input() minimumCompulsary = 0;
-  @Input() isResidential = false;
+  // @Input() isResidential = false;
   @Output() numberArray = new EventEmitter();
   @Input() classObj = {
     topPadding: 'pt-60',
@@ -28,45 +28,42 @@ export class AddNumberComponent implements OnInit {
     addRemove: 'col-md-1',
   }
   placeHolderObj = ['Enter Primary Number', 'Enter Secondary Number']
-  countryCodes: Array<string> = ['+91', '+92', "+93"];
   isdCodes: any;
   countryCode: any;
   lengthControl: number;
 
   ngOnInit() {
-    if (this.isResidential) {
-      this.countryCodes = ['+1'];
-    }
   }
 
   constructor(private fb: FormBuilder, private utilService: UtilService, private peopleService: PeopleService) {
   }
-  @Input() set userData(userdetailData) {
+
+  // if this input not used anywhere then remove it
+  @Input() set isResidential(userdetailData) {
     if (userdetailData == undefined) {
       return;
     }
-    else {
-      if (userdetailData.taxStatusId == 1) {
-        this.isdCodes = { code: '+91' }
-      }
-      else {
-        this.getIsdCodesData();
-      }
-    }
-  };
-  getIsdCodesData() {
+    this.getIsdCodesData(userdetailData);
+
+  }
+
+  getIsdCodesData(invTypeData) {
     let obj = {};
     this.peopleService.getIsdCode(obj).subscribe(
       data => {
         if (data) {
           console.log(data);
           this.isdCodes = data;
-          this.isdCodes.filter(element => element.code != '+91');
-          this.countryCode = data[0]
+          if (invTypeData == '1') {
+            this.isdCodes = this.isdCodes.filter(element => element.code == '+91');
+          } else {
+            this.isdCodes = this.isdCodes.filter(element => element.code != '+91');
+          }
         }
       }
     )
   }
+
   @Input() set numberList(data) {
     this.numberFormGroup = this.fb.group({
       mobileNo: new FormArray([])
@@ -106,17 +103,16 @@ export class AddNumberComponent implements OnInit {
       if (this.compulsionCount < this.minimumCompulsary) {
         this.compulsionCount++;
         this.getMobileNumList.push(this.fb.group({
-          code: [''],
+          code: [data.isdCodeId],
           number: [data.mobileNo, [Validators.pattern(this.validatorType.TEN_DIGITS), Validators.required]]
         }));
       } else {
         this.getMobileNumList.push(this.fb.group({
-          code: [''],
+          code: [data.isdCodeId],
           number: [data.mobileNo, Validators.pattern(this.validatorType.TEN_DIGITS)]
         }));
       }
       this.numberArray.emit(this.getMobileNumList);
     }
-    // this.lengthControl = this.getMobileNumList.length
   }
 }

@@ -2,15 +2,16 @@
     <div *ngFor="let numberForm of getMobileNumList.controls;index as i" [formGroup]="numberForm" class="row"
         [ngClass]="classObj.topPadding">
         <div class="text-right" [ngClass]="classObj.label">
-            <h5 class="m-0 pt-12">{{flag}}</h5>
+            <h5 class="m-0 pt-20">{{flag}}</h5>
         </div>
 
         <div [ngClass]="classObj.code">
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select formControlName="code" class="form-control">
-                        <mat-option value="" selected disabled>Select Country Code</mat-option>
-                        <mat-option [value]="code" *ngFor="let code of countryCodes">{{code}}</mat-option>
+                        <mat-option value="" disabled>Select Country Code</mat-option>
+                        <mat-option [value]="singleCode.id" *ngFor="let singleCode of isdCodes">{{singleCode.code}}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -30,7 +31,7 @@
             </div>
         </div>
 
-        <div class="d-flex align-items-center" [ngClass]="classObj.addRemove">
+        <div class="d-flex align-items-center mt-16" [ngClass]="classObj.addRemove">
             <i *ngIf="getMobileNumList.length==1" (click)="addNumber(null)" class="material-icons c-p f-20">
                 add
             </i>

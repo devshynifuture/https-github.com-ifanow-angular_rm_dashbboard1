@@ -54,24 +54,30 @@ export class ClientMoreInfoComponent implements OnInit {
     this.moreInfoData = data;
     console.log('ClientMoreInfoComponent data : ', data);
     if (this.fieldFlag == 'familyMember') {
-      this.occupationList = [
-        { name: "Home maker", value: 1 },
-        { name: "Student", value: 2 },
-        { name: "Retired", value: 3 },
-      ]
+      if (this.moreInfoData.familyMemberType == 0 || this.moreInfoData.familyMemberType == 1) {
+        this.moreInfoData.categoryTypeflag = 'Individual';
+        this.occupationList = [
+          { name: "Goverment", value: 1 },
+          { name: "Service", value: 2 },
+          { name: "Private", value: 3 },
+          { name: "Business", value: 4 },
+          { name: "Self-Occupied", value: 5 },
+        ]
+      }
+      else {
+        this.moreInfoData.categoryTypeflag = 'familyMinor';
+        this.occupationList = [
+          { name: "Home maker", value: 1 },
+          { name: "Student", value: 2 },
+          { name: "Retired", value: 3 },
+        ]
+      }
       this.createMoreInfoForm(data);
-      (this.moreInfoData.familyMemberType == 0 || this.moreInfoData.familyMemberType == 1) ?
-        this.moreInfoData.categoryTypeflag = 'Individual' : this.moreInfoData.categoryTypeflag = 'familyMinor';
     } else {
       if (this.moreInfoData.userId == null) {
         this.createMoreInfoForm(null);
         return;
       } else {
-        // tion value="1">Goverment</mat-option>
-        //                 <mat-option value="2">Service</mat-option>
-        //                 <mat-option value="3">Private sector</mat-option>
-        //                 <mat-option value="4">Business</mat-option>
-        //                 <mat-option value="5">Self-Occupied</mat-option> -->
         this.occupationList = [
           { name: 'Goverment', value: 1 },
           { name: 'Service', value: 2 },
@@ -96,7 +102,7 @@ export class ClientMoreInfoComponent implements OnInit {
     this.moreInfoForm = this.fb.group({
       displayName: [data.displayName],
       adhaarNo: [data.aadhaarNumber, Validators.pattern(this.validatorType.ADHAAR)],
-      occupation: [(data.occupationId == 0) ? '' : String(data.occupationId)],
+      occupation: [(data.occupationId == 0) ? '' : (data.occupationId)],
       maritalStatus: [(data.martialStatusId) ? String(data.martialStatusId) : '1'],
       anniversaryDate: [String(data.anniversaryDate)],
       bio: [data.bio],

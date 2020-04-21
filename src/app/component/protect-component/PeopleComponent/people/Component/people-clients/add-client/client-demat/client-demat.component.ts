@@ -86,7 +86,11 @@ export class ClientDematComponent implements OnInit {
       disControl: type
     }
   }
-
+  changeHoldingType(data) {
+    (data.value == '1') ? this.dematForm.get('holderName').setValue('') : '';
+    this.dematList.holderNameList = [];
+    this.holderList = [];
+  }
   displayControler(con) {
     console.log('value selected', con);
     if (this.dematForm.value.getCoOwnerName) {
@@ -312,11 +316,11 @@ export class ClientDematComponent implements OnInit {
           mobileList.push({
             "id": 0,
             "mobileNo": element.get('number').value,
-            ifscCode: 73
+            ifscCode: element.get('code').value
           });
         });
       }
-      if (this.holderList) {
+      if (this.holderList.length > 0) {
         this.holderList.controls.forEach(element => {
           holderList.push({
             // fMDetailTypeId: 1,
@@ -334,6 +338,21 @@ export class ClientDematComponent implements OnInit {
           dematId: (this.userData.dematData) ? this.userData.dematData.dematId : (this.dematList) ? this.dematList.dematId : null
         });
       }
+      for (let element in this.dematForm.controls) {
+        console.log(element)
+        this.dematForm.controls[element].markAsTouched();
+        if (element == 'getCoOwnerName') {
+          for (let e in this.getCoOwner.controls) {
+            const arrayCon: any = this.getCoOwner.controls[e];
+            for (let i in arrayCon.controls) {
+              arrayCon.controls[i].markAsTouched();
+            }
+          }
+        }
+        // if (this.fixedDeposit.controls[element].invalid) {
+        // return;
+        // }
+      }
       (flag == 'Save') ? this.barButtonOptions.active = true : '';
       let obj =
       {
@@ -348,7 +367,7 @@ export class ClientDematComponent implements OnInit {
         "depositoryParticipantId": this.dematForm.get('depositoryPartId').value,
         "linkedBankAccount": this.dematForm.get('linkedBankAccount').value,
         "powerOfAttorneyName": this.dematForm.get('powerOfAttName').value,
-        "nomineeList": [],
+        "nomineeList": this.dematForm.value.getNomineeName,
         "userType": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
         "brokerName": this.dematForm.get('brekerName').value,
         "dematClientId": this.dematForm.get('dematClientId').value
