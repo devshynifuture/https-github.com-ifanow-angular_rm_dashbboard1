@@ -13,7 +13,7 @@
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p" *ngIf="!fragmentData.isSpinner">
                 <mat-menu #menu5="matMenu">
                     <button (click)="generatePdf()" mat-menu-item>PDF
-          </button>
+                    </button>
                     <button (click)="Excel('Mutual fund unrealized transactions')" mat-menu-item>XLS</button>
                 </mat-menu>
                 <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
@@ -22,8 +22,8 @@
                 <!-- <img matTooltip="Download PDF" (click)="generatePdf()" class="b-a c-p"
         src="assets/images/svg/pdf-icons.svg"> -->
                 <button class="btn-default addon v-middle" mat-stroked-button (click)="openFilter()">
-          <i class="material-icons">filter_list</i>FILTERS
-        </button>
+                    <i class="material-icons">filter_list</i>FILTERS
+                </button>
             </div>
         </div>
         <div>
@@ -62,7 +62,8 @@
                                     Current value
                                 </th>
                                 <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.currentValue)?element.currentValue:0)}}</span></div>
+                                    <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.currentValue)?element.currentValue:0)}}</span>
+                                    </div>
                                 </td>
                                 <td *matFooterCellDef appFormatNumber [value]="grandTotal.currentValue" class="br p-8 f-600 text-right" mat-footer-cell>
                                     <!--                  <div>{{ grandTotal.currentValue }}</div>-->
@@ -117,10 +118,12 @@
                                 </th>
                                 <td class="br text-right" mat-cell *matCellDef="let element">
                                     <div class="bar">
-                                        <span>{{isLoading ? '':((element.absReturn)?(element.absReturn | number:'1.2-2'):0)}}</span></div>
+                                        <span>{{isLoading ? '':((element.absReturn)?(element.absReturn | number:'1.2-2'):0)}}</span>
+                                    </div>
                                 </td>
                                 <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-                                    <div class="bar">{{(grandTotal.absReturn) ? (grandTotal.absReturn | number:'1.2-2') : 0}}
+                                    <div class="bar">
+                                        {{(grandTotal.absReturn) ? (grandTotal.absReturn | number:'1.2-2') : 0}}
                                     </div>
                                 </td>
 
@@ -151,13 +154,15 @@
                                     </div>
                                 </td>
                                 <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
-                                    <div class="bar">{{(grandTotal.allocationPer) ? (grandTotal.allocationPer | number:'1.2-2') : 0}}
+                                    <div class="bar">
+                                        {{(grandTotal.allocationPer) ? (grandTotal.allocationPer | number:'1.2-2') : 0}}
                                     </div>
                                 </td>
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="displayedColumns2; sticky: true"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
-                            <tr mat-footer-row *matFooterRowDef="displayedColumns2;sticky: true" [hidden]="isLoading"></tr>
+                            <tr mat-footer-row *matFooterRowDef="displayedColumns2;sticky: true" [hidden]="isLoading">
+                            </tr>
 
 
                         </table>
@@ -258,7 +263,8 @@
                                     Current value
                                 </th>
                                 <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.currentValue)?element.currentValue:0)}}</span></div>
+                                    <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.currentValue)?element.currentValue:0)}}</span>
+                                    </div>
                                 </td>
                                 <!-- <td *matFooterCellDef appFormatNumber [value]="grandTotal.currentValue" class="br f-600 text-right" mat-footer-cell> -->
                                 <!--                  {{ grandTotal.currentValue }}-->
@@ -296,7 +302,8 @@
                                     Total amount
                                 </th>
                                 <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.totalAmount)?element.totalAmount:0)}}</span></div>
+                                    <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.totalAmount)?element.totalAmount:0)}}</span>
+                                    </div>
                                 </td>
                                 <!-- <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalAmount" class="br f-600 text-right" mat-footer-cell> -->
                                 <!--                  {{ grandTotal.totalAmount }}-->
@@ -309,7 +316,8 @@
                                     Gain
                                 </th>
                                 <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar"><span appFormatNumber> {{isLoading ? '':((element.gain)?element.gain:0)}}</span>
+                                    <div class="bar"><span appFormatNumber>
+                                            {{isLoading ? '':((element.gain)?element.gain:0)}}</span>
                                     </div>
                                 </td>
                                 <!-- <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalGain" class="br f-600 text-right" mat-footer-cell> -->
@@ -323,7 +331,8 @@
                                     Absolute Return%
                                 </th>
                                 <td class="br text-right" mat-cell *matCellDef="let element">
-                                    <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.absReturn)?element.absReturn:0)}}</span></div>
+                                    <div class="bar"><span appFormatNumber>{{isLoading ? '':((element.absReturn)?element.absReturn:0)}}</span>
+                                    </div>
                                 </td>
                                 <!-- <td *matFooterCellDef appFormatNumber [value]="grandTotal.absReturn" class="br f-600 text-right" mat-footer-cell> -->
                                 <!--                  {{ grandTotal.absReturn }}-->
@@ -467,74 +476,66 @@
         </tr>
     </table>
 
-    <br><br><br><br><br>
+
 
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
-        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 4%;">
-                Sr no. </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 17%;">
-                Transaction Type </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 10%;">
-                Transaction date </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 7%;">
-                Transaction amount </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 4%;">
-                Transaction NAV </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
-                Units </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
-                Current value </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
-                Dividend payout </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
-                Dividend reinvestment </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
-                Total amount </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
-                Gain </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
-                Absolute Return% </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;width: 6%;">
-                Xirr% </td>
-        </tr>
-    </table>
-    <table style="width: 100%;font-family: Roboto,sans-serif;border-collapse: collapse;" *ngFor="let item of customDataSource.data ;index as i">
-
-        <!-- <tr>
-      <td colspan="13" style="color: #008FFF;text-align: center; padding: 12px 8px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">{{item.groupName}}</td>
-    </tr> -->
-        <div style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
-            *ngIf="item.groupName">
-            {{item.groupName}}
-        </div>
-        <!-- <tr>
-      <td colspan="10" style="color: #212121;text-align: left; padding: 12px 8px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0; ">{{item.schemeName}}</td>
-      <td colspan="3" style="border-right: 1px solid #DADCE0;">Current NAV:{{item.nav}}</td>
-    </tr> -->
-        <!--  <div style="width: 100%;" *ngIf="item.schemeName || item.nav">
-      <div style="width: 66%;float:left;text-align: center;color: #008FFF;text-align: center;  padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left:1px solid  #DADCE0;font-family: Roboto,sans-serif;">
-        {{item.schemeName}}
-      </div>
-      <div style="width: 28%;float: right; border-right:1px solid  #DADCE0;border-left:1px solid  #DADCE0;padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;padding-left: 20px;font-family: Roboto,sans-serif;font-size: 14px;border-bottom:1px solid  #DADCE0;">
-        Current NAV:{{item.nav}}
-      </div>
-      </div> -->
-        <table style="width: 100%;border-bottom: 1px solid #DADCE0;border-collapse: collapse;font-family: Roboto,sans-serif;" *ngIf="item.schemeName || item.nav">
-            <tr>
-                <td colspan="8" style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;" class="f-700">{{item.schemeName}}</td>
-                <td colspan="5" style="padding: 12px;border-right: 1px solid #DADCE0;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: center;" class="f-700">Current NAV:{{item.nav}}</td>
+        <thead>
+            <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+                <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 4%;">
+                    Sr no. </td>
+                <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 17%;">
+                    Transaction Type </td>
+                <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 10%;">
+                    Transaction date </td>
+                <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 7%;">
+                    Transaction amount </td>
+                <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 4%;">
+                    Transaction NAV </td>
+                <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
+                    Units </td>
+                <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
+                    Current value </td>
+                <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
+                    Dividend payout </td>
+                <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
+                    Dividend reinvestment </td>
+                <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
+                    Total amount </td>
+                <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
+                    Gain </td>
+                <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;">
+                    Absolute Return% </td>
+                <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;width: 6%;">
+                    Xirr% </td>
             </tr>
-        </table>
-        <div style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
-            *ngIf="item.name || item.pan || item.folio">
-            {{item.groupName}}(PAN:{{item.pan}})|{{item.folio}}
-        </div>
-        <tr style="height: 40px;border-bottom:1px solid #DADCE0; " *ngIf="item.fwTransactionType || item.category">
+        </thead>
+    </table>
+    <tbody *ngFor="let item of customDataSource.data ;index as i">
+        <tr>
+            <td colspan="13" style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
+                *ngIf="item.groupName">
+                {{item.groupName}}
+            </td>
+        </tr>
+
+        <tr *ngIf="item.schemeName || item.nav">
+            <td colspan="8" style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;" class="f-700">{{item.schemeName}}</td>
+            <td colspan="5" style="padding: 12px;border-right: 1px solid #DADCE0;font-size: 13px !important;line-height: 16px !important;color: #202020;text-align: center;" class="f-700">Current NAV:{{item.nav}}</td>
+        </tr>
+
+        <tr>
+            <td colspan="13" style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
+                *ngIf="item.name || item.pan || item.folio">
+                {{item.groupName}}(PAN:{{item.pan}})|{{item.folio}}
+            </td>
+        </tr>
+
+        <tr style=" border-bottom:1px solid #DADCE0; " *ngIf="item.fwTransactionType || item.category">
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-left: 1px solid #DADCE0;width: 4%;">
                 {{i + 1}}</td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 17%;">
-                <span *ngIf="item.fwTransactionType"> {{(item.fwTransactionType)?item.fwTransactionType:'-'}} </span></td>
+                <span *ngIf="item.fwTransactionType"> {{(item.fwTransactionType)?item.fwTransactionType:'-'}} </span>
+            </td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 10%">
                 {{(item.transactionDate)?(item.transactionDate | date:'dd/MM/yyyy'):'-'}} </td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 7%;">
@@ -554,7 +555,7 @@
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-right: 1px solid #DADCE0;width: 6%;">
                 {{(item.xirr)?item.xirr:0}} </td>
         </tr>
-        <tr style="height: 40px;border-bottom:1px solid #DADCE0;" *ngIf="item.total">
+        <tr style=" border-bottom:1px solid #DADCE0;" *ngIf="item.total">
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-left: 1px solid #DADCE0;width: 4%;" class="f-700"></td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-left: 1px solid #DADCE0;width: 17%" class="f-700">Total</td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-right: 1px solid #DADCE0;width: 10%;" class="f-700"> </td>
@@ -571,35 +572,6 @@
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;width: 6%;" class="f-700"> {{(item.absReturn)?item.absReturn:0}} </td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-right: 1px solid #DADCE0;width: 6%;" class="f-700"> {{(item.xirr)?item.xirr:0}} </td>
         </tr>
-    </table>
-    <!-- <tr style="height: 40px;border: 1px solid #DADCE0;">
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"> 2 </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  Redemption  </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  - </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  5,000</td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  0 </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"> 0 </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  223 </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
-    </tr> -->
-    <!-- <tr style="height: 40px;border: 1px solid #DADCE0;font-weight:700;">
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  Total  </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  - </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  10,581</td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"> 446 </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">  0 </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
-      <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">   0 </td>
-    </tr> -->
+    </tbody>
+
 </div>
