@@ -423,3 +423,111 @@ margin-right: 8px;
     }
   }
 }
+#marketplace-profile{
+  .col-md-8{
+    border-right: 1px dashed rgba(0, 0, 0, 0.12);
+  }
+  p{
+    font-weight: normal;
+    line-height: 16px;
+    
+  }
+  .aboutus
+  {
+    p{
+    color: #484848;
+  }
+}
+.mat-progress-bar{
+  height: 8px;
+}
+.mat-progress-bar-fill::after{
+  background-color: #008FFF !important;
+}
+.mat-progress-bar-buffer{
+  background-color:#D9DEE1 !important;
+}
+p{
+  font-family: Roboto;
+}
+li{
+  text-align: left;
+    font-size: 14px;
+   font-family: Roboto;
+}
+.chief-manger {
+    ul {
+      padding-top: 10px;
+      list-style: disc;
+      padding-left:20px;
+    }
+    li {
+      text-align: left !important;
+      padding-top: 0px !important;
+     
+
+    }
+  }
+}
+#marketplace-leads,#marketplace-post,#marketplace-call{
+  #table-low{
+    tr.mat-header-row{
+      height: 44px !important;
+    }
+    tr.mat-row{
+      height: 36px !important;
+    }
+   tbody td {
+    padding: 0px 7px !important;
+}
+  }
+}
+#marketplace-post{
+  li{
+    text-align: left !important;
+    font-size: 14px;
+    line-height: 16px;
+    font-family: Roboto;
+  }
+  li,p{
+    font-weight:normal !important;
+  }
+  p:nth-child(1){
+    font-weight: 500 !important;
+  }
+
+}
+#marketplace-call{
+  .mat-radio-button{
+    min-width: 120px !important
+  }
+  .main-row{
+    border:1px solid rgba(25, 25, 25, 0.32);
+    border-bottom:0px;
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    .columns{
+      width: 14.28%;
+      height: 152px;
+      border-bottom:1px solid rgba(25, 25, 25, 0.32);
+      border-right:1px solid rgba(25, 25, 25, 0.32);
+      p{
+        padding:8px;
+        text-align: right;
+      }
+      button{
+        background: #83959D;
+        border-radius: 2px !important;
+        color: #fff;
+        height: 20px !important;
+        line-height: 20px !important;
+        font-size: 12px !important;
+        padding: 0 2px !important;
+      }
+    }
+    .columns:nth-child(7),.columns:nth-child(14),.columns:nth-child(21),.columns:nth-child(28){
+      border-right:0px !important;
+    }
+  }
+}
