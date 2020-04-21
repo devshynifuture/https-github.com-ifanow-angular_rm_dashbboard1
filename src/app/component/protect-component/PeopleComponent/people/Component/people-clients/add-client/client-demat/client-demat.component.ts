@@ -307,7 +307,11 @@ export class ClientDematComponent implements OnInit {
       this.holderList.markAllAsTouched();
       this.dematForm.markAllAsTouched();
       return;
-    } else {
+    }
+    else if (this.mobileData.invalid) {
+      this.mobileData.markAllAsTouched();
+    }
+    else {
       const mobileList = [];
       const holderList = [];
       if (this.mobileData) {

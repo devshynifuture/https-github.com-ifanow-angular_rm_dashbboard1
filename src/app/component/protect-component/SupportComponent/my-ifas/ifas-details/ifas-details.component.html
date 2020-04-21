@@ -100,7 +100,7 @@
                                     <th class="br" mat-header-cell *matHeaderCellDef> Report </th>
                                     <td class="br" mat-cell *matCellDef="let element">
                                         <button mat-stroked-button class="bg-primary text-white"
-                                            (click)="openUpperSliderBackoffice('report', element)">
+                                            (click)="openUpperSliderBackoffice('report', element, franklinId)">
                                             Report
                                         </button>
                                     </td>
@@ -186,7 +186,7 @@
                             <th class="br" mat-header-cell *matHeaderCellDef> Report </th>
                             <td class="br" mat-cell *matCellDef="let element">
                                 <button mat-stroked-button class="bg-primary text-white"
-                                    (click)="openUpperSliderBackoffice('', element)">
+                                    (click)="openUpperSliderBackoffice('report', element, camsId)">
                                     Report
                                 </button>
                             </td>
@@ -272,7 +272,7 @@
                             <th class="br" mat-header-cell *matHeaderCellDef> Report </th>
                             <td class="br" mat-cell *matCellDef="let element">
                                 <button mat-stroked-button class="bg-primary text-white"
-                                    (click)="openUpperSliderBackoffice('', element)">
+                                    (click)="openUpperSliderBackoffice('report', element, karvyId)">
                                     Report
                                 </button>
                             </td>

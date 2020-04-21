@@ -124,8 +124,8 @@ export class ClientBasicDetailsComponent implements OnInit {
       leadSource: [(data.leadSource) ? data.leadSource : ''],
       leaadStatus: [(data.leadStatus) ? String(data.leadStatus) : ''],
       leadRating: [(data.leadRating) ? String(data.leadRating) : ''],
-      leadOwner: [],
-      clientOwner: [],
+      leadOwner: [''],
+      clientOwner: [''],
       role: [(data.roleId) ? data.roleId : '', Validators.required],
     });
   }
@@ -158,8 +158,8 @@ export class ClientBasicDetailsComponent implements OnInit {
       leadSource: [data.leadSource ? data.leadSource : ''],
       leaadStatus: [(data.leadStatus) ? String(data.leadStatus) : ''],
       leadRating: [(data.leadRating) ? String(data.leadRating) : ''],
-      leadOwner: [],
-      clientOwner: [],
+      leadOwner: [''],
+      clientOwner: [''],
       role: [(data.roleId) ? data.roleId : '', Validators.required]
     });
   }
@@ -228,7 +228,11 @@ export class ClientBasicDetailsComponent implements OnInit {
     if (this.invTypeCategory == '2' && this.nonIndividualForm.invalid) {
       this.nonIndividualForm.markAllAsTouched();
       return;
-    } else {
+    }
+    else if (this.mobileData.invalid) {
+      this.mobileData.markAllAsTouched();
+    }
+    else {
       (flag == 'close') ? this.barButtonOptions.active = true : '';
       const mobileList = [];
       if (this.mobileData) {
