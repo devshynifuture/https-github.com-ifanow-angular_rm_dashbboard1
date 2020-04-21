@@ -370,7 +370,7 @@ export class MutualFundOverviewComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          if (sideBarData.data != 'Close') {
+          if (sideBarData.data && sideBarData.data != 'Close') {
             this.totalValue = {};
             this.dataSource2.data = [{}, {}, {}]
             this.dataSource4 = [{}, {}, {}]

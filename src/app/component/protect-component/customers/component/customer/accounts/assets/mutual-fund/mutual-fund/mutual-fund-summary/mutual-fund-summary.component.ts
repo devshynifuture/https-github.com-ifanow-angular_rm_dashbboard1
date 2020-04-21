@@ -121,10 +121,10 @@ export class MutualFundSummaryComponent implements OnInit {
       // Create a new
       const worker = new Worker('../../mutual-fund.worker.ts', {type: 'module'});
       worker.onmessage = ({data}) => {
-        this.isLoading=false;
         this.grandTotal = data.totalValue;
         this.customDataSource.data = data.customDataSourceData;
         console.log(`MUTUALFUNDSummary COMPONENT page got message:`, data);
+        this.isLoading=false;
       };
       worker.postMessage(input);
     } else {
@@ -205,7 +205,7 @@ export class MutualFundSummaryComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          if (sideBarData.data != 'Close') {
+          if (sideBarData.data && sideBarData.data != 'Close') {
             this.customDataSource = new MatTableDataSource([{}, {}, {}]);
             this.isLoading = true;
             this.rightFilterData = sideBarData.data;
