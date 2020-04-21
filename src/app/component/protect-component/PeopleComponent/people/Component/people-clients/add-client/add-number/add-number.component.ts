@@ -117,6 +117,5 @@ export class AddNumberComponent implements OnInit {
       }
       this.numberArray.emit(this.getMobileNumList);
     }
-    // this.lengthControl = this.getMobileNumList.length
   }
 }
