@@ -264,6 +264,7 @@ export class RiskProfileComponent implements OnInit {
 
   getRiskProfileList() {
     // let obj = {}
+    this.showButton = false
     this.planService.getRiskProfile('').subscribe(
       data => this.getRiskProfilRes(data)
     );
@@ -275,6 +276,7 @@ export class RiskProfileComponent implements OnInit {
     this.riskAssessments = data.riskAssessments;
     this.riskAssessmentQuestionList = this.riskAssessments.riskAssessmentQuestionList;
     console.log(this.riskAssessmentQuestionList);
+    this.showButton = true
   }
 
   submitRiskAnalysis(data) {
