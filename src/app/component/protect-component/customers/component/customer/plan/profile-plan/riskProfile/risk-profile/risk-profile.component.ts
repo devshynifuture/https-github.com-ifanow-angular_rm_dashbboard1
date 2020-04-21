@@ -3,10 +3,10 @@ import { PlanService } from '../../../plan.service';
 import { FormBuilder } from '@angular/forms';
 import { UtilService } from 'src/app/services/util.service';
 import * as Highcharts from 'highcharts';
-import { AuthService } from 'src/app/auth-service/authService';
 import { HistoryRiskProfileComponent } from '../../history-risk-profile/history-risk-profile.component';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import more from 'highcharts/highcharts-more';
+import { AuthService } from 'src/app/auth-service/authService';
 more(Highcharts);
 
 @Component({
@@ -30,8 +30,13 @@ export class RiskProfileComponent implements OnInit {
   name = 'Angular';
   showLoader: boolean;
   isLoading = false
-  statusArray : any;
+  statusArray: any;
+  showErrorMsg
   checkFamilyMem;
+  showButton;
+  equityAllocationLowerLimit;
+  equityAllocationUpperLimit;
+ clientRiskAssessmentResults;
   onClickMe(referenceKeyName) {
     alert(referenceKeyName.id);
   }
@@ -41,6 +46,7 @@ export class RiskProfileComponent implements OnInit {
   constructor(private fb: FormBuilder, public planService: PlanService, private subInjectService: SubscriptionInject) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+
   }
 
   ngOnInit() {
@@ -51,7 +57,7 @@ export class RiskProfileComponent implements OnInit {
     this.statusArray = [];
     this.showLoader = true;
     this.showErrorMsg = false
-    this.showButton = true
+    this.showButton = false
     this.count = 0
   }
 
@@ -238,16 +244,16 @@ export class RiskProfileComponent implements OnInit {
     }));
   }
   checkState(item, i) {
-    if(this.statusArray.length > 0 && item.question){
+    if (this.statusArray.length > 0 && item.question) {
       this.statusArray.forEach(element => {
         this.checkFamilyMem = item.question.includes(element.question);
         console.log(this.checkFamilyMem)
       });
-      if( this.checkFamilyMem == false && this.statusArray.length > 16){
+      if (this.checkFamilyMem == false) {
         this.statusArray.push(item)
         this.progressBar = this.statusArray.length * 7
       }
-    }else if(item.question){
+    } else if (item.question) {
       this.statusArray.push(item)
       this.progressBar = this.statusArray.length * 7
     }
@@ -264,12 +270,14 @@ export class RiskProfileComponent implements OnInit {
 
   getRiskProfileList() {
     // let obj = {}
+    this.showButton = false
     this.planService.getRiskProfile('').subscribe(
       data => this.getRiskProfilRes(data)
     );
   }
 
   getRiskProfilRes(data) {
+    this.showButton = true
     console.log(data);
     this.showLoader = false;
     this.riskAssessments = data.riskAssessments;
@@ -310,7 +318,6 @@ export class RiskProfileComponent implements OnInit {
 
   submitRiskRes(data) {
     this.isLoading = false
-
     this.showRisk = true;
     setTimeout(() => {
       this.guageFun('Gauge');
@@ -346,11 +353,11 @@ export class RiskProfileComponent implements OnInit {
 
     if (data != undefined) {
       this.showRisk = false
-      if(data.refreshRequired == false){
+      if (data.refreshRequired == false) {
         this.getRiskProfileList();
-      }else{
+      } else {
         this.riskAssessmentQuestionList = data.refreshRequired
-        this.statusArray = [{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]
+        this.statusArray = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
         this.progressBar = this.statusArray.length * 7
         this.showButton = false
       }
