@@ -20,8 +20,8 @@
                         <mat-form-field>
                             <mat-select [(ngModel)]="invTypeCategory" (selectionChange)="changeInvestorType($event)"
                                 class="form-control">
-                                <mat-option value='1'>Individual</mat-option>
-                                <mat-option value='2'>Minor</mat-option>
+                                <mat-option [value]="familyMemberType.value">
+                                    {{familyMemberType.name}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>

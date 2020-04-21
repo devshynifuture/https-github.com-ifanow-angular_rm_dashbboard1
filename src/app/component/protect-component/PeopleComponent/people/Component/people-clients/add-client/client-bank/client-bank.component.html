@@ -230,7 +230,7 @@
             <app-progress-button *ngIf="fieldFlag==undefined" (btnClick)="saveNext('Save')" [options]="barButtonOptions"
                 class="br-0 text-inherit mr-12">
             </app-progress-button>
-            <app-progress-button (btnClick)="saveNext('Save')" class="br-0 text-inherit mr-12"
+            <app-progress-button *ngIf="fieldFlag" (btnClick)="saveNext('Save')" class="br-0 text-inherit mr-12"
                 [options]="barButtonOptions">
             </app-progress-button>
         </div>
