@@ -153,7 +153,7 @@ export class SignUpComponent implements OnInit {
   confirmModal(errorMsg) {
     const dialogData = {
       header: 'REGISTER',
-      body: errorMsg,
+      body: "User already exists. How would you like to proceed?",
       body2: 'This cannot be undone.',
       btnYes: 'LOGIN',
       btnNo: 'CANCEL',
