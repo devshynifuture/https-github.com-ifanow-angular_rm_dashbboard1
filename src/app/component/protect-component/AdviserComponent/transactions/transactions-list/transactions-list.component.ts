@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { TransactionsHistoryComponent } from './transactions-history/transactions-history.component';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
-import { OnlineTransactionService } from '../online-transaction.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { TransactionEnumService } from '../transaction-enum.service';
-import { OnlineTrasactionComponent } from '../overview-transactions/doTransaction/online-trasaction/online-trasaction.component';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {TransactionsHistoryComponent} from './transactions-history/transactions-history.component';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
+import {OnlineTransactionService} from '../online-transaction.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {TransactionEnumService} from '../transaction-enum.service';
+import {OnlineTrasactionComponent} from '../overview-transactions/doTransaction/online-trasaction/online-trasaction.component';
+import {MatSort, MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-transactions-list',
@@ -24,34 +24,45 @@ export class TransactionsListComponent implements OnInit {
   selectedBroker: any;
   seletedPreviousDate;
   finalStartDate;
-  finalEndDate
+  finalEndDate;
   errMessage: any;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
   noData: string;
 
-  constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) { }
+  constructor(private onlineTransact: OnlineTransactionService,
+              private eventService: EventService, private utilService: UtilService,
+              private subInjectService: SubscriptionInject,
+              private tranService: OnlineTransactionService) {
+  }
 
   isLoading = false;
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.getFilterOptionData()
+    this.getFilterOptionData();
   }
+
   getFilterOptionData() {
     this.dataSource.data = [{}, {}, {}];
     this.isLoading = true;
-    let obj = {
+    const obj = {
       advisorId: this.advisorId,
       onlyBrokerCred: true
-    }
-    console.log('encode', obj)
+    };
+    console.log('encode', obj);
     this.onlineTransact.getBSECredentials(obj).subscribe(
-      data => this.getFilterOptionDataRes(data)
+      data => this.getFilterOptionDataRes(data), error => {
+        this.isLoading = false;
+        this.noData = 'No Transactions found';
+        this.eventService.openSnackBar(error, 'Dismiss');
+        this.dataSource.data = [];
+      }
     );
   }
+
   getFilterOptionDataRes(data) {
-    if(data){
-      this.isLoading = false
+    if (data) {
+      this.isLoading = false;
       console.log(data);
       this.filterData = data;
       this.selectedBroker = data[0];
@@ -59,57 +70,64 @@ export class TransactionsListComponent implements OnInit {
       this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 1).getTime();
       this.finalEndDate = new Date().getTime();
       this.getAllTransactionList();
-    }else{
-      this.isLoading = false
-      this.noData = "No Transactions found";
+    } else {
+      this.isLoading = false;
+      this.noData = 'No Transactions found';
       this.dataSource.data = [];
     }
-   
+
   }
+
   getAllTransactionList() {
     this.dataSource.data = [{}, {}, {}];
     this.isLoading = true;
-    let obj =
-    {
-      "advisorId": this.advisorId,
-      "tpUserCredentialId": this.selectedBroker.id,
-      "startDate": this.finalStartDate,
-      "endDate": this.finalEndDate
-    }
+    const obj = {
+      advisorId: this.advisorId,
+      tpUserCredentialId: this.selectedBroker.id,
+      startDate: this.finalStartDate,
+      endDate: this.finalEndDate
+    };
     this.tranService.getSearchScheme(obj).subscribe(
       data => {
         console.log(data);
         this.isLoading = false;
         this.dataSource.data = TransactionEnumService.setPlatformEnum(data);
-        this.dataSource.data = TransactionEnumService.setTransactionStatus(data)
+        this.dataSource.data = TransactionEnumService.setTransactionStatus(data);
         this.dataSource.sort = this.sort;
-        console.log(this.dataSource.data)
+        console.log(this.dataSource.data);
       },
       err => {
         this.isLoading = false;
-        this.errMessage=err.error.message;
+        this.eventService.openSnackBar(err, 'Dismiss');
+        this.dataSource.data = [];
+        this.errMessage = err.error.message;
       }
-    )
+    );
   }
+
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
   }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.dataSource.sort = this.sort;
   }
+
   sortDateFilter(data) {
     console.log(this.selectedPreviousToShowDate);
     this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * data.value).getTime();
     (data.value == 'custom') ? '' : this.getAllTransactionList();
   }
+
   startAndEndDateEvent(data) {
     this.finalStartDate = data.value.begin.getTime();
     this.finalEndDate = data.value.end.getTime();
     this.getAllTransactionList();
     console.log(data);
   }
+
   openTransactionHistory(data) {
     const fragmentData = {
       flag: 'addNewTransaction',
@@ -128,6 +146,7 @@ export class TransactionsListComponent implements OnInit {
       }
     );
   }
+
   openTransaction() {
     const fragmentData = {
       flag: 'addNewTransaction',

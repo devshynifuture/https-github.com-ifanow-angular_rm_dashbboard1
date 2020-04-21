@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { OnlineTransactionService } from '../online-transaction.service';
-import { TransactionEnumService } from '../transaction-enum.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {OnlineTransactionService} from '../online-transaction.service';
+import {TransactionEnumService} from '../transaction-enum.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {MatSort, MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-investors-transactions',
@@ -18,25 +18,28 @@ export class InvestorsTransactionsComponent implements OnInit {
   filterData: any;
   selectedBrokerCode: any;
   selectedPlatform: any;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
   noData: string;
 
   // dataSource = ELEMENT_DATA;
-  constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService) { }
+  constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService) {
+  }
 
   isLoading = false;
 
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId()
+    this.advisorId = AuthService.getAdvisorId();
     this.isLoading = true;
     this.getMappedData();
     // this.getFilterOptionData();
   }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.dataSource.sort = this.sort;
   }
+
   // getFilterOptionData() {
   //   let obj = {
   //     advisorId: this.advisorId,
@@ -57,33 +60,38 @@ export class InvestorsTransactionsComponent implements OnInit {
     // this.dataSource = [{}, {}, {}];
     // this.sortDataFilterWise();
   }
+
   // sortDataFilterWise() {
   //   (this.type == '1') ? this.getMappedData() : this.getUnmappedData();
   // }
   getMappedData() {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
-    let obj =
-    {
+    const obj = {
       advisorId: this.advisorId,
       // tpUserCredentialId: this.selectedBrokerCode.id,
       // aggregatorType: this.selectedPlatform.aggregatorType
-    }
+    };
     this.onlineTransact.getMapppedClients(obj).subscribe(
       data => {
         console.log(data);
         if (data) {
           this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
           this.dataSource.sort = this.sort;
-        } else if(data == undefined){
-          this.noData = "No scheme found";
+        } else if (data == undefined) {
+          this.noData = 'No scheme found';
           this.dataSource.data = [];
         }
         this.isLoading = false;
       },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
-    )
+      err => {
+        this.isLoading = false;
+        this.dataSource.data = [];
+        this.eventService.openSnackBar(err, 'Dismiss');
+      }
+    );
   }
+
   // getUnmappedData() {
   //   this.isLoading = true;
   //   this.dataSource = [{}, {}, {}];
@@ -103,6 +111,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   //   )
   // }
 }
+
 export interface PeriodicElement {
   name: string;
   position: string;
