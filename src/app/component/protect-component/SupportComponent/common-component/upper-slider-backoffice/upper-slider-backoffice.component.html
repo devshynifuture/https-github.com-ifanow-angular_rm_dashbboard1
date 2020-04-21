@@ -105,8 +105,9 @@
                             <ng-container matColumnDef="export_folios">
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> Export unmatched folios </th>
                                 <td class="b-a text-center" mat-cell *matCellDef="let element">
-                                    <div class="bar">
-                                        <button class="bg-grey lt" mat-button
+                                    <div class="bar" matTooltip="Loading..." [matTooltipDisabled]="didAumReportListGot"
+                                        matTooltipPosition="below">
+                                        <button class="bg-grey lt" mat-button [disabled]="!didAumReportListGot"
                                             (click)="exportToExcelSheet('export-folios', element)">Export</button>
                                     </div>
                                 </td>
@@ -164,7 +165,8 @@
                         <!-- manual recon all folio -->
                         <div *ngIf="subTabState == 1">
 
-                            <table mat-table [dataSource]="dataSource1" id="table-low" class=" ">
+                            <table mat-table [dataSource]="dataSource1" id="table-low" class=" " appSkeletonLoading
+                                [appSkeletonLoading]="isLoading">
 
                                 <ng-container matColumnDef="name">
                                     <th class="b-a" mat-header-cell *matHeaderCellDef> Scheme name </th>
@@ -226,7 +228,8 @@
                         <!-- manual recon duplicate folio -->
 
                         <div *ngIf="subTabState == 2">
-                            <table mat-table [dataSource]="dataSource2" id="table-low" class=" ">
+                            <table mat-table [dataSource]="dataSource2" id="table-low" class=" " appSkeletonLoading
+                                [appSkeletonLoading]="isLoadingForDuplicate">
                                 <ng-container matColumnDef="name">
                                     <th class="b-a" mat-header-cell *matHeaderCellDef> Scheme name </th>
                                     <td class="b-a" mat-cell *matCellDef="let element">

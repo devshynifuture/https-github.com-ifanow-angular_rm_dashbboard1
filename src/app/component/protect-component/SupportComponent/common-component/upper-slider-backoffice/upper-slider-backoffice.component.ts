@@ -38,6 +38,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
   aumList: any;
   mutualFundIds: any[] = [];
   // advisorId = AuthService.getAdvisorId();
+  // need to change  this 
+
   advisorId = 2808;
   rtId: any;
   didAumReportListGot: boolean = false;
@@ -45,6 +47,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   adminAdvisorIds: any[] = [];
   adminId = AuthService.getAdminId();
   parentId = AuthService.getParentId();
+  isLoadingForDuplicate: boolean = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -181,7 +184,9 @@ export class UpperSliderBackofficeComponent implements OnInit {
             aumBalanceDate: res.aumList[0].aumDate,
             unmatchedCountBeforeRecon: res.unmappedCount,
             transactionDate: res.transactionDate,
-            rtId: this.data.rtId
+            rtId: this.data.rtId,
+            // when rm login is creted this will get value from localStorage
+            rmId: 1
           }
           if (doStartRecon) {
             this.reconService.putBackofficeReconAdd(data)
@@ -235,10 +240,10 @@ export class UpperSliderBackofficeComponent implements OnInit {
       }
     }
     if (this.didAumReportListGot) {
-      this.isLoading = true;
+      this.isLoadingForDuplicate = true;
       this.reconService.getDuplicateFolioDataValues(data)
         .subscribe(res => {
-          this.isLoading = false;
+          this.isLoadingForDuplicate = false;
           if (res) {
             console.log("this is some duplicate values:::::::::", res, this.aumList);
             let filteredArrValue = [];
@@ -417,8 +422,9 @@ export class UpperSliderBackofficeComponent implements OnInit {
           'amt difference',
         ]
 
-        excelData.push(Object.assign(data))
+        excelData.push(Object.assign(data));
       });
+      ExcelService.exportExcel(headerData, header, excelData, footer, value);
     } else {
       if (this.didAumReportListGot && this.aumListReportValue.length !== 0) {
         this.aumListReportValue.forEach(element => {

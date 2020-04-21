@@ -127,13 +127,14 @@ export class IfasDetailsComponent implements OnInit {
         });
       });
   }
+
   getBrokerList(value) {
-    this.rtId = value
+    this.rtId = value;
     this.reconService.getBrokerListValues({ advisorId: this.ifasData.adminAdvisorId })
       .subscribe(res => {
         if (res) {
           this.brokerList = res;
-          console.log('jdfgj dfj', this.brokerListCams, res);
+          console.log('broker list values:::', res);
           if (value === this.franklinId) {
             this.openSelectArnRiaDialog(res, this.franklineData, this.rtId)
           } else if (value === this.camsId) {
@@ -142,7 +143,6 @@ export class IfasDetailsComponent implements OnInit {
             this.openSelectArnRiaDialog(res, this.karvyData, this.rtId)
 
           }
-
         }
       });
   }
@@ -176,29 +176,14 @@ export class IfasDetailsComponent implements OnInit {
 
   }
 
-  openUpperSliderBackoffice(flag, data) {
-    console.log("this is what we are sending to upper slider::", flag, data);
-
-    // flag,
-    // id: 1,
-    // data: {
-    //   ...data,
-    //   startRecon: flag === 'startReconciliation' ? true : (flag === 'report' ? false : null),
-    //   brokerId: this.selectBrokerForm.get('selectBrokerId').value,
-    //   rtId: this.rtId,
-    //   flag,
-    // },
-    // direction: 'top',
-    // componentName: UpperSliderBackofficeComponent,
-    // state: 'open'
+  openUpperSliderBackoffice(flag, data, rtId) {
     const fragmentData = {
       flag,
       id: 1,
       data: {
         ...data,
         startRecon: flag === 'startRecon' ? true : (flag === 'report' ? false : null),
-        brokerId: '',
-        rtId: this.rtId,
+        rtId,
         flag
       },
       direction: 'top',
@@ -208,24 +193,22 @@ export class IfasDetailsComponent implements OnInit {
 
     console.log(fragmentData);
     // this.router.navigate(['/subscription-upper'])
-    // AuthService.setSubscriptionUpperSliderData(fragmentData);
-    // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-    //   upperSliderData => {
-    //     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
-    //     if (UtilService.isDialogClose(upperSliderData)) {
-    //       // this.getClientSubscriptionList();
-    //       subscription.unsubscribe();
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
 
-    //     }
-    //   }
-    // );
+        }
+      }
+    );
 
   }
 
   openSelectArnRiaDialog(data, value, rtId) {
-    console.log(data, value, rtId);
     const Fragmentdata = {
-      flag: data,
+      brokerCodeValue: data,
       mainData: value,
       rtId: rtId
     };

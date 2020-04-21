@@ -191,5 +191,10 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+        <div class="col-md-12 p-0" *ngIf="dataSource.data === null">
+            <h5 class="text-center p-44">
+                No Data Found
+            </h5>
+        </div>
     </div>
 </div>
