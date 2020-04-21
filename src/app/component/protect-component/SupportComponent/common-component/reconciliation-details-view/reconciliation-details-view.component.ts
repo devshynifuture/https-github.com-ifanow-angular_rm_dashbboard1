@@ -75,13 +75,13 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     this.selection.toggle(element);
     if (this.selection.isSelected(element)) {
       this.shouldDeleteMultiple = true;
-      this.selectedFolioUnits = this.selectedFolioUnits + parseInt(element.units.toFixed(3));
+      this.selectedFolioUnits = parseInt(this.selectedFolioUnits + parseInt(element.units).toFixed(3));
       this.deleteMultipleTransactionArray.push(element.id);
     } else {
       // this.selectedFolioUnits = 0;
       let index = this.deleteMultipleTransactionArray.indexOf(element);
       this.deleteMultipleTransactionArray.splice(index, 1);
-      this.selectedFolioUnits = this.selectedFolioUnits - parseInt(element.units.toFixed(3));
+      this.selectedFolioUnits = this.selectedFolioUnits - parseInt(parseInt(element.units).toFixed(3));
       if (this.selectedFolioUnits < 0) {
         this.selectedFolioUnits = 0;
       }
@@ -264,7 +264,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
       .subscribe(res => {
         console.log(res);
         this.dataSource.data.map(element => {
-          element.unitOne = String(res.units.toFixed(3));
+          element.unitOne = String(parseInt(res.units).toFixed(3));
           element.difference = String((parseInt(res.units) - parseInt(element['unitsRta'])).toFixed(3))
           if (element.difference !== '0.000') {
             this.disableFreezeBtn = true;
