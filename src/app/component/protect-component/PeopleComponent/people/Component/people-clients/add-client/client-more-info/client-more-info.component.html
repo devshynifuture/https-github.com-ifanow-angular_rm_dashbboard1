@@ -205,11 +205,14 @@
             <div class="form-group">
                 <mat-form-field>
                     <mat-select formControlName="occupation" class="form-control">
-                        <mat-option value="1">Goverment</mat-option>
+                        <mat-option value='' disabled>Select Option</mat-option>
+                        <!-- <mat-option value="1">Goverment</mat-option>
                         <mat-option value="2">Service</mat-option>
                         <mat-option value="3">Private sector</mat-option>
                         <mat-option value="4">Business</mat-option>
-                        <mat-option value="5">Self-Occupied</mat-option>
+                        <mat-option value="5">Self-Occupied</mat-option> -->
+                        <mat-option *ngFor="let singleOccupation of occupationList" [value]="singleOccupation.value">
+                            {{singleOccupation.name}}</mat-option>
                     </mat-select>
                     <mat-hint>Optional</mat-hint>
                 </mat-form-field>
@@ -296,7 +299,8 @@
         <div class="col-md-4">
             <h5 (click)="close('close')" class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
-        <div *ngIf="fieldFlag=='client' || fieldFlag=='lead'" class="col-md-8 right text-right">
+        <div *ngIf="fieldFlag=='client' || fieldFlag=='lead'"
+            class="col-md-8 d-flex align-items-end justify-content-end">
             <button mat-stroked-button (click)="saveNext('Next')" class=" br-0 bg-white text-inherit">SAVE &
                 NEXT
             </button>
@@ -309,7 +313,7 @@
                 CLOSE
             </button> -->
         </div>
-        <div *ngIf="fieldFlag=='familyMember'" class="col-md-8 right text-right">
+        <div *ngIf="fieldFlag=='familyMember'" class="col-md-8 d-flex align-items-end justify-content-end">
             <button mat-stroked-button (click)="saveNextFamilyMember('Next')" class=" br-0 bg-white text-inherit">SAVE &
                 NEXT
             </button>

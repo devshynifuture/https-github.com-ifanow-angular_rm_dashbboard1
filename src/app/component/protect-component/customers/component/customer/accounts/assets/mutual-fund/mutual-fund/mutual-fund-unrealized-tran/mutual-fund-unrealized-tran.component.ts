@@ -31,7 +31,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   customDataSource = new TableVirtualScrollDataSource([{},{},{}]);
   @ViewChild('tableEl', {static: false}) tableEl;
   rightFilterData: any ={reportType :'' };
-
+  advisorData: any;
+  fragmentData = {isSpinner : false};
   constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
               private mfService: MfServiceService, private excel: ExcelGenService,private custumService:CustomerService) {
   }
@@ -42,6 +43,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
     this.isLoading=true;
     console.log('this.mutualFund == ', this.mutualFund);
     if (this.mutualFund) {
+     this.advisorData = this.mutualFund.advisorData;
+
       // this.getSubCategoryWise(this.mutualFund);
       // this.getSchemeWise();
       // this.mfSchemes();
@@ -117,8 +120,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   }
 
   Excel(tableTitle) {
+    this.fragmentData.isSpinner = true;
     const rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows, tableTitle);
+    const data = this.excel.generateExcel(rows, tableTitle);
+    if(data){
+      this.fragmentData.isSpinner = false;
+    }
   }
 
   mfSchemes() {// get last mf list
@@ -202,9 +209,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   // }
 
   generatePdf() {
-    this.isSpinner = true;
+    this.fragmentData.isSpinner = true;
     const para = document.getElementById('template');
-    this.utilService.htmlToPdf(para.innerHTML, 'Test');
+    this.utilService.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
     // if(data){
     //   this.isSpinner = false;
     // }

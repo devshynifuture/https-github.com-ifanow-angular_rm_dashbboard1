@@ -16,13 +16,9 @@
         </div>
         <div class="col-md-7 p-0 mode-holding">
             <mat-radio-group formControlName="modeOfHolding" [(ngModel)]="holdingMode" aria-label="Select an option">
-                <mat-radio-button value="1"
-                    [ngClass]="{'bu-primary': holdingMode=='1','borderRadio': holdingMode=='2','text-primary': holdingMode=='1','text-custom': holdingMode=='2'}"
-                    class="borderRadio">Single
+                <mat-radio-button value="1" [ngClass]="{'bu-primary': holdingMode=='1','borderRadio': holdingMode=='2','text-primary': holdingMode=='1','text-custom': holdingMode=='2'}" class="borderRadio">Single
                 </mat-radio-button>
-                <mat-radio-button value="2"
-                    [ngClass]="{'bu-primary': holdingMode=='2','text-primary': holdingMode=='2','borderRadio': holdingMode=='1','text-custom': holdingMode=='1'}"
-                    class="borderRadio">Joint
+                <mat-radio-button value="2" [ngClass]="{'bu-primary': holdingMode=='2','text-primary': holdingMode=='2','borderRadio': holdingMode=='1','text-custom': holdingMode=='1'}" class="borderRadio">Joint
                 </mat-radio-button>
             </mat-radio-group>
         </div>
@@ -34,17 +30,14 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter Holder name" autocomplete="off" formControlName="holderName" #holderName
-                        appInputValueValidation [inputValidator]="validatorType.PERSON_NAME" [maxLength]="50" matInput
-                        class="form-control">
+                    <input placeholder="Enter Holder name" autocomplete="off" formControlName="holderName" #holderName appInputValueValidation [inputValidator]="validatorType.PERSON_NAME" [maxLength]="50" matInput class="form-control">
                     <mat-hint align="end" class="f-12">{{holderName.value.length}}/50</mat-hint>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
     </div>
-    <app-add-holder-names *ngIf="dematList && holdingMode=='2'" [holderListInput]="dematList.holderNameList"
-        (holderList)="getHolderList($event)">
+    <app-add-holder-names *ngIf="dematList && holdingMode=='2'" [holderListInput]="dematList.holderNameList" (holderList)="getHolderList($event)">
     </app-add-holder-names>
     <div class="row pt-54">
         <div class="col-md-4 text-right pl-0">
@@ -53,9 +46,7 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter Depository participant name" autocomplete="off"
-                        formControlName="depositoryPartName" #nadNameme appInputValueValidation
-                        [inputValidator]="validatorType.PERSON_NAME" [maxLength]="50" matInput class="form-control">
+                    <input placeholder="Enter Depository participant name" autocomplete="off" formControlName="depositoryPartName" #nadNameme appInputValueValidation [inputValidator]="validatorType.PERSON_NAME" [maxLength]="50" matInput class="form-control">
                     <mat-hint align="end" class="f-12">{{nadNameme.value.length}}/50</mat-hint>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -69,9 +60,7 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter Depository ID" autocomplete="off" appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" formControlName="depositoryPartId" matInput
-                        class="form-control">
+                    <input placeholder="Enter Depository ID" autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="depositoryPartId" matInput class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -84,9 +73,7 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter Demat client ID" autocomplete="off" appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" formControlName="dematClientId" matInput
-                        class="form-control">
+                    <input placeholder="Enter Demat client ID" autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="dematClientId" matInput class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -99,9 +86,7 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" placeholder="Enter Broker name " #brokerName appInputValueValidation
-                        [inputValidator]="validatorType.PERSON_NAME" formControlName="brekerName" matInput
-                        class="form-control">
+                    <input autocomplete="off" placeholder="Enter Broker name " #brokerName appInputValueValidation [inputValidator]="validatorType.PERSON_NAME" formControlName="brekerName" matInput class="form-control">
                     <mat-hint align="end" class="f-12">{{brokerName.value.length}}/50</mat-hint>
                     <mat-hint>Optional</mat-hint>
                 </mat-form-field>
@@ -115,16 +100,14 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter Broker address" autocomplete="off" #bAddres
-                        formControlName="brokerAddress" matInput maxlength="200" class="form-control">
+                    <input placeholder="Enter Broker address" autocomplete="off" #bAddres formControlName="brokerAddress" matInput maxlength="200" class="form-control">
                     <mat-hint align="end" class="f-12">{{bAddres.value.length}}/20</mat-hint>
                     <mat-hint>Optional</mat-hint>
                 </mat-form-field>
             </div>
         </div>
     </div>
-    <app-add-number *ngIf="dematList" [numberList]="dematList.mobileDataList" [flag]="mobileNumberFlag"
-        (numberArray)="getNumberDetails($event)"></app-add-number>
+    <app-add-number *ngIf="dematList" [numberList]="dematList.mobileDataList" [flag]="mobileNumberFlag" (numberArray)="getNumberDetails($event)"></app-add-number>
     <!-- <div class="row pt-44">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-8">Nominee</h5>
@@ -151,17 +134,14 @@
         </div>
     </div> -->
     <div *ngIf="nomineesListFM" formArrayName="getNomineeName">
-        <div class="row pt-36" *ngFor="let obj of dematForm.controls['getNomineeName'].controls; let pointIndex=index"
-            [formGroupName]="pointIndex">
+        <div class="row pt-36" *ngFor="let obj of dematForm.controls['getNomineeName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
             <div class="col-md-4  text-right">
                 <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
             </div>
             <div class="p-0" [ngClass]="getNominee.length > 1?'col-md-4' : 'col-md-6'">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select appOwnerNominee matInput formControlName="name" [clientIdData]="userData.clientId"
-                            [data]='ownerData' (selectionChange)="disabledMember($event.value,'nominee')"
-                            (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                        <mat-select appOwnerNominee matInput formControlName="name" [clientIdData]="userData.clientId" [data]='ownerData' (selectionChange)="disabledMember($event.value,'nominee')" (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                             <mat-option *ngIf="nomineesListFM" value='' disabled>No family members found</mat-option>
                             <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                 <span>{{f.userName}}</span>
@@ -176,8 +156,7 @@
             <div class="col-md-2 pr-0  " *ngIf="getNominee.length > 1">
                 <div class="form-group mb-0 iconPetage">
                     <mat-form-field>
-                        <input matInput class="form-control br-0 percentage" type="number"
-                            formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
+                        <input matInput class="form-control br-0 percentage" type="number" formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
                         <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('required')">
                             This field is required
                         </mat-error>
@@ -188,10 +167,8 @@
                 </div>
             </div>
             <div class="col-md-2 pr-0 d-flex align-items-center">
-                <i *ngIf="dematForm.value.getNomineeName.length < 3" class="material-icons f-20 c-p"
-                    (click)="addNewNominee(undefined)">add</i>
-                <i *ngIf="dematForm.value.getNomineeName.length > 1" class="material-icons f-20 c-p ml-10"
-                    (click)="removeNewNominee(pointIndex)">remove</i>
+                <i *ngIf="dematForm.value.getNomineeName.length < 3" class="material-icons f-20 c-p" (click)="addNewNominee(undefined)">add</i>
+                <i *ngIf="dematForm.value.getNomineeName.length > 1" class="material-icons f-20 c-p ml-10" (click)="removeNewNominee(pointIndex)">remove</i>
             </div>
 
         </div>
@@ -203,9 +180,7 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter Liked bank account" autocomplete="off" #linkedAccNum [maxLength]="16"
-                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                        formControlName="linkedBankAccount" matInput class="form-control">
+                    <input placeholder="Enter Liked bank account" autocomplete="off" #linkedAccNum [maxLength]="16" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="linkedBankAccount" matInput class="form-control">
                     <mat-hint align="end" class="f-12">{{linkedAccNum.value.length}}/16</mat-hint>
                     <mat-hint>Optional</mat-hint>
                 </mat-form-field>
@@ -219,9 +194,7 @@
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter Power of attorney name" autocomplete="off" #paName appInputValueValidation
-                        [inputValidator]="validatorType.PERSON_NAME" [maxLength]="50" formControlName="powerOfAttName"
-                        matInput class="form-control">
+                    <input placeholder="Enter Power of attorney name" autocomplete="off" #paName appInputValueValidation [inputValidator]="validatorType.PERSON_NAME" [maxLength]="50" formControlName="powerOfAttName" matInput class="form-control">
                     <mat-hint>Optional</mat-hint>
                     <mat-hint align="end" class="f-12">{{paName.value.length}}/50</mat-hint>
                 </mat-form-field>
@@ -235,9 +208,7 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" placeholder="Enter Power of attorney master ID" #powerOfAttMasId
-                        formControlName="powerOfAttMasId" appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" matInput class="form-control">
+                    <input autocomplete="off" placeholder="Enter Power of attorney master ID" #powerOfAttMasId formControlName="powerOfAttMasId" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" matInput class="form-control">
                     <mat-hint>Optional</mat-hint>
                     <mat-hint align="end" class="f-12">{{powerOfAttMasId.value.length}}/10</mat-hint>
                 </mat-form-field>
@@ -250,9 +221,8 @@
         <div class="col-md-4">
             <h5 (click)="close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right">
-            <button mat-stroked-button *ngIf="fieldFlag" (click)="saveNext('Next')"
-                class=" br-0 bg-white text-inherit">SAVE &
+        <div class="col-md-8 d-flex align-items-end justify-content-end">
+            <button mat-stroked-button *ngIf="fieldFlag" (click)="saveNext('Next')" class=" br-0 bg-white text-inherit">SAVE &
                 NEXT
             </button>
             <!-- <button *ngIf="fieldFlag!=undefined" mat-raised-button (click)="saveNext('Next')"
@@ -260,11 +230,9 @@
           </button> -->
             <!-- <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
           </button> -->
-            <app-progress-button *ngIf="fieldFlag==undefined" (btnClick)="saveNext('Save')" [options]="barButtonOptions"
-                class="br-0 text-inherit mr-12">
+            <app-progress-button *ngIf="fieldFlag==undefined" (btnClick)="saveNext('Save')" [options]="barButtonOptions" class="br-0 text-inherit mr-12">
             </app-progress-button>
-            <app-progress-button (btnClick)="saveNext('Save')" [options]="barButtonOptions"
-                class="br-0 text-inherit mr-12">
+            <app-progress-button (btnClick)="saveNext('Save')" [options]="barButtonOptions" class="br-0 text-inherit mr-12">
             </app-progress-button>
         </div>
     </div>

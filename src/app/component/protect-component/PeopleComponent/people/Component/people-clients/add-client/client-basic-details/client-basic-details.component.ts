@@ -56,11 +56,12 @@ export class ClientBasicDetailsComponent implements OnInit {
   minAge: any;
   advisorData: any;
   maxDate = new Date();
+  invTypeCategoryList = [];
   // advisorId;
 
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
-    private eventService: EventService, private datePipe: DatePipe) {
+    private eventService: EventService, private datePipe: DatePipe, private utilService: UtilService) {
   }
 
   ngOnInit() {
@@ -75,6 +76,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     this.advisorData = AuthService.getUserInfo();
     if (data.fieldFlag == 'familyMember') {
       this.basicDetailsData = data;
+      // (this.basicDetails)
       this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
       this.invTypeCategory = String(this.basicDetailsData.familyMemberType);
       (this.basicDetailsData.familyMemberType == 1 || this.basicDetailsData.familyMemberType == 0) ? this.createIndividualForm(this.basicDetailsData) : this.createMinorForm(this.basicDetailsData);
@@ -95,8 +97,8 @@ export class ClientBasicDetailsComponent implements OnInit {
     }
     console.log(data);
   }
-  toUpperCase(event) {
-    event = UtilService.toUpperCase(event);
+  toUpperCase(formControl, event) {
+    this.utilService.toUpperCase(formControl, event);
   }
   // setMinDateForAge() {
   //   this.minAge = new Date();
@@ -108,18 +110,18 @@ export class ClientBasicDetailsComponent implements OnInit {
     (data == undefined) ? data = {} : '';
     this.basicDetails = this.fb.group({
       fullName: [data.name, [Validators.required]],
-      email: [(data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
-      pan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
+      email: [{ value: (data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', disabled: this.basicDetailsData.userId ? true : false }, [Validators.pattern(this.validatorType.EMAIL)]],
+      pan: [{ value: data.pan, disabled: this.basicDetailsData.userId ? true : false }, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       username: [{ value: data.userName, disabled: true }],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       dobActual: [],
       gender: ['1'],
-      leadSource: [(data.leadSource) ? data.leadSource : '0'],
-      leaadStatus: [(data.leadStatus) ? String(data.leadStatus) : '1'],
-      leadRating: [(data.leadRating) ? String(data.leadRating) : '0'],
+      leadSource: [(data.leadSource) ? data.leadSource : ''],
+      leaadStatus: [(data.leadStatus) ? String(data.leadStatus) : ''],
+      leadRating: [(data.leadRating) ? String(data.leadRating) : ''],
       leadOwner: [],
       clientOwner: [],
-      role: [(data.roleId) ? data.roleId : '0', Validators.required],
+      role: [(data.roleId) ? data.roleId : '', Validators.required],
     });
   }
 
@@ -144,16 +146,16 @@ export class ClientBasicDetailsComponent implements OnInit {
       comName: [data.name, [Validators.required]],
       dateOfIncorporation: [(data.dateOfBirth) ? new Date(data.dateOfBirth) : ''],
       comStatus: [(data.companyStatus) ? String(data.companyStatus) : '0', [Validators.required]],
-      comEmail: [(data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
-      comPan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
+      comEmail: [{ value: (data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', disabled: this.basicDetailsData.userId ? true : false }, [Validators.pattern(this.validatorType.EMAIL)]],
+      comPan: [{ value: data.pan, disabled: this.basicDetailsData.userId ? true : false }, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       comOccupation: [(data.occupationId == 0) ? '1' : String(data.occupationId)],
       username: [{ value: data.userName, disabled: true }],
-      leadSource: [data.leadSource ? data.leadSource : '0'],
-      leaadStatus: [(data.leadStatus) ? String(data.leadStatus) : '1'],
-      leadRating: [(data.leadRating) ? String(data.leadRating) : '0'],
+      leadSource: [data.leadSource ? data.leadSource : ''],
+      leaadStatus: [(data.leadStatus) ? String(data.leadStatus) : ''],
+      leadRating: [(data.leadRating) ? String(data.leadRating) : ''],
       leadOwner: [],
       clientOwner: [],
-      role: [(data.roleId) ? data.roleId : '0', Validators.required]
+      role: [(data.roleId) ? data.roleId : '', Validators.required]
     });
   }
 
@@ -405,6 +407,9 @@ export class ClientBasicDetailsComponent implements OnInit {
     if (this.invTypeCategory == '1') {
       this.basicDetails.get('email').setValidators([Validators.required]);
       this.basicDetails.get('email').updateValueAndValidity();
+      this.basicDetails.get('role').setValidators(null);
+      this.basicDetails.get('role').updateValueAndValidity();
+
     }
     let gardianObj;
     if (this.invTypeCategory == '2') {

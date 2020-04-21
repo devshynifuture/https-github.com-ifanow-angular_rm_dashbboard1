@@ -38,7 +38,8 @@
                             <div *ngIf="clientOverviewData" class="col-md-10 pl-12">
                                 <div class="profileDetails">
                                     <h1 class="f-26 roboto f-500">{{clientOverviewData.name}}</h1>
-                                    <h5>{{clientOverviewData.bio}} <span *ngIf="clientOverviewData.bio">|</span> {{clientOverviewData.age}} Years</h5>
+                                    <h5>{{clientOverviewData.bio}} <span *ngIf="clientOverviewData.bio">|</span>
+                                        {{clientOverviewData.age}} Years</h5>
                                     <p class="roboto l-18 f-14 text-primitive">{{clientOverviewData.remarks}}</p>
                                 </div>
                             </div>
@@ -59,16 +60,32 @@
                             <p class="memberName">Family members</p>
 
                             <div class="memberSlider">
-                                <div (click)="open('edit',singleMembers)" *ngFor="let singleMembers of familyMemberList" class="memberList primary-border c-p">
-                                    <img width="48px" *ngIf="singleMembers.relationshipId==2" src="/assets/images/svg/women-profile-icon.svg">
-                                    <img width="36px" style="margin-right: 10px;" *ngIf="singleMembers.relationshipId==3" src="/assets/images/svg/son-profile.svg">
-                                    <img width="39px" style="margin-right: 10px;" *ngIf="singleMembers.relationshipId==4" src="/assets/images/svg/daughter-profile.svg">
-                                    <img width="48px" *ngIf="singleMembers.relationshipId==5" src="/assets/images/svg/mother-profile.svg">
-                                    <img width="48px" *ngIf="singleMembers.relationshipId==6" src="/assets/images/svg/father-profile.svg">
-                                    <img width="48px" *ngIf="singleMembers.relationshipId==7" src="/assets/images/svg/man-profile.svg">
+                                <div (click)="open('edit',singleMembers)" *ngFor="let singleMembers of familyMemberList"
+                                    class="memberList primary-border c-p">
+                                    <img width="48px" *ngIf="singleMembers.relationshipId==2"
+                                        src="/assets/images/svg/women-profile-icon.svg">
+                                    <img width="36px" style="margin-right: 10px;"
+                                        *ngIf="singleMembers.relationshipId==3"
+                                        src="/assets/images/svg/son-profile.svg">
+                                    <img width="39px" style="margin-right: 10px;"
+                                        *ngIf="singleMembers.relationshipId==4"
+                                        src="/assets/images/svg/daughter-profile.svg">
+                                    <img width="48px" *ngIf="singleMembers.relationshipId==5"
+                                        src="/assets/images/svg/mother-profile.svg">
+                                    <img width="48px" *ngIf="singleMembers.relationshipId==6"
+                                        src="/assets/images/svg/father-profile.svg">
+                                    <img width="48px" *ngIf="singleMembers.relationshipId==7"
+                                        src="/assets/images/svg/man-profile.svg">
                                     <div class="familyList">
                                         <h4 class="f-12 m-0">{{singleMembers.displayName}}</h4>
-                                        <p class="f-12 m-0 text-primitive">{{singleMembers.name}} </p>
+                                        <p class="f-12 m-0 text-primitive">
+                                            <span *ngIf="singleMembers.relationshipId==2">Wife </span>
+                                            <span *ngIf="singleMembers.relationshipId==3">Son</span>
+                                            <span *ngIf="singleMembers.relationshipId==4">Daughter</span>
+                                            <span *ngIf="singleMembers.relationshipId==5">Mother</span>
+                                            <span *ngIf="singleMembers.relationshipId==6">Father</span>
+                                            <span *ngIf="singleMembers.relationshipId==6">Others</span>
+                                        </p>
                                         <p class="f-12 m-0 text-primitive">{{singleMembers.age}}</p>
                                     </div>
                                 </div>
@@ -92,7 +109,8 @@
                             </div>
 
                             <div class=" col-md-2 text-right ">
-                                <a (click)="openClient('edit client',clientOverviewData)" class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
+                                <a (click)="openClient('edit client',clientOverviewData)"
+                                    class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                             </div>
 
                         </div>
@@ -106,7 +124,8 @@
 
                                 <div class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">MOBILE</p>
-                                    <p class=" f-14 roboto f-500 m-0 "><span *ngIf="clientOverviewData.mobileList.length>0">{{clientOverviewData.mobileList[0].mobileNo}}</span>
+                                    <p class=" f-14 roboto f-500 m-0 "><span
+                                            *ngIf="clientOverviewData.mobileList.length>0">{{clientOverviewData.mobileList[0].mobileNo}}</span>
                                     </p>
                                 </div>
 
@@ -134,7 +153,8 @@
                             <div class=" col-md-6 pl-0 ">
                                 <div class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">EMAIL</p>
-                                    <p class=" f-14 roboto f-500 m-0 "><span *ngIf="clientOverviewData.emailList.length>0">{{clientOverviewData.emailList[0].email}}</span>
+                                    <p class=" f-14 roboto f-500 m-0 "><span
+                                            *ngIf="clientOverviewData.emailList.length>0">{{clientOverviewData.emailList[0].email}}</span>
                                     </p>
                                 </div>
 
@@ -144,7 +164,7 @@
                                 </div>
 
                                 <div class=" basicDetaisList ">
-                                    <p class=" text-primitive m-0 f-12 ">AADHAAR</p>
+                                    <p class=" text-primitive m-0 f-12 ">ADHAAR</p>
                                     <p class=" f-14 roboto f-500 m-0 ">{{clientOverviewData.aadhaarNumber}}</p>
                                 </div>
 
@@ -185,7 +205,8 @@
                                 <div class="d-flex flex-column align-items-center">
                                     <!-- <img class="width150" src="assets/images/svg/noDataFound.svg"> -->
                                     <h4 class="text-center pt-12">No data Found</h4>
-                                    <button (click)="openAddEdit(clientOverviewData,null,'Address','Add')" class="btn-primary br-0" mat-stroked-button> ADD ADDRESS</button>
+                                    <button (click)="openAddEdit(clientOverviewData,null,'Address','Add')"
+                                        class="btn-primary br-0" mat-stroked-button> ADD ADDRESS</button>
                                 </div>
 
 
@@ -195,13 +216,18 @@
                             <div *ngFor="let singleAddress of addressList" class=" col-md-12 mb-8 ">
                                 <div class="d-flex justify-content-between align-items-center mb-8">
                                     <p class=" f-12 mb-0 mt-8 text-primitive ">PERMANENT</p>
-                                    <a (click)="openAddEdit(clientOverviewData,singleAddress,'Address','Edit')" class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
+                                    <a (click)="openAddEdit(clientOverviewData,singleAddress,'Address','Edit')"
+                                        class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
 
                                 </div>
 
                                 <p class=" f-14 ">
-                                    {{singleAddress.address1 ? singleAddress.address1 + ' , ' : ''}} {{singleAddress.address2 ? singleAddress.address2 + ' , ' : ''}} {{singleAddress.address3 ? singleAddress.address3 + ' , ' : ''}} {{singleAddress.city ? singleAddress.city : ''}} {{singleAddress.pinCode
-                                    ? singleAddress.pinCode + '.' : ''}} {{singleAddress.state ? singleAddress.state : ''}}
+                                    {{singleAddress.address1 ? singleAddress.address1 + ' , ' : ''}}
+                                    {{singleAddress.address2 ? singleAddress.address2 + ' , ' : ''}}
+                                    {{singleAddress.address3 ? singleAddress.address3 + ' , ' : ''}}
+                                    {{singleAddress.city ? singleAddress.city : ''}} {{singleAddress.pinCode
+                                    ? singleAddress.pinCode + '.' : ''}}
+                                    {{singleAddress.state ? singleAddress.state : ''}}
                                     <!--                  3B/1002, Green Meadows, Lokhandwala Township. Akurli Road, Kandivali-->
                                     <!--                  East, Mumbai 400 101. Maharashtra-->
                                 </p>
@@ -216,7 +242,8 @@
                                 <div class="d-flex flex-column align-items-center">
                                     <!-- <img class="width150" src="assets/images/svg/noDataFound.svg"> -->
                                     <h4 class="text-center pt-12">No data Found</h4>
-                                    <button (click)="openAddEdit(clientOverviewData,null,'Bank','Add')" class="btn-primary br-0 " mat-stroked-button> ADD BANK </button>
+                                    <button (click)="openAddEdit(clientOverviewData,null,'Bank','Add')"
+                                        class="btn-primary br-0 " mat-stroked-button> ADD BANK </button>
                                 </div>
                             </div>
 
@@ -224,11 +251,13 @@
                                 <div *ngIf="selectedBankData===singleBank" class=" row ">
                                     <div class=" col-md-6 ">
                                         <h5 class=" headingDetails d-flex"> Bank
-                                            <i (click)="openAddEdit(clientOverviewData,null,'Bank','Add')" class=" material-icons f-18 ">
+                                            <i (click)="openAddEdit(clientOverviewData,null,'Bank','Add')"
+                                                class=" material-icons f-18 ">
                                                 add_circle_outline</i>
                                         </h5>
                                     </div>
-                                    <div *ngIf="bankList && bankList.length>1" class=" col-md-5 p-0 d-flex align-items-center justify-content-end ">
+                                    <div *ngIf="bankList && bankList.length>1"
+                                        class=" col-md-5 p-0 d-flex align-items-center justify-content-end ">
                                         <span class=" f-12 text-primitive ">{{i + 1}} of {{bankList.length}}</span>
                                         <span class=" arrow-primitive arrowSlider c-p ">
                                             <i (click)="previous('bank',i)"
@@ -247,10 +276,14 @@
                                 <div *ngIf="selectedBankData===singleBank" class="row">
                                     <div class=" col-md-9 pr-0 ">
                                         <p class=" m-0 f-14 ">
-                                            <span class=" f-500 roboto ">{{selectedBankData.bankName}}</span><br> A/c: {{selectedBankData.accountNumber}} <br> {{selectedBankData.accountTypeName }} <br> IFSC: {{selectedBankData.ifscCode }} <br> {{selectedBankData.shortAddress}}
+                                            <span class=" f-500 roboto ">{{selectedBankData.bankName}}</span><br> A/c:
+                                            {{selectedBankData.accountNumber}} <br>
+                                            {{selectedBankData.accountTypeName }} <br> IFSC:
+                                            {{selectedBankData.ifscCode }} <br> {{selectedBankData.shortAddress}}
                                     </div>
                                     <div class=" col-md-2 p-0 text-right ">
-                                        <a (click)="openAddEdit(clientOverviewData,selectedBankData,'Bank','Edit')" class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
+                                        <a (click)="openAddEdit(clientOverviewData,selectedBankData,'Bank','Edit')"
+                                            class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                                     </div>
                                 </div>
                             </div>
@@ -262,17 +295,20 @@
                             <h5 class=" headingDetails "> Demat </h5>
                             <div class="d-flex addDenmatClass flex-column align-items-center">
                                 <h4 class="text-center pt-12">No data Found</h4>
-                                <button (click)="openAddEdit(clientOverviewData,null,'Demat','Add')" class="btn-primary br-0 " mat-stroked-button> ADD DEMAT </button>
+                                <button (click)="openAddEdit(clientOverviewData,null,'Demat','Add')"
+                                    class="btn-primary br-0 " mat-stroked-button> ADD DEMAT </button>
                             </div>
                         </div>
 
                         <div *ngFor="let singleDemat of dematList;index as i">
                             <div *ngIf="selectedDemat===singleDemat">
                                 <h5 class=" headingDetails "> Demat
-                                    <i (click)="openAddEdit(clientOverviewData,null,'Demat','Add')" class=" material-icons f-18 ">
+                                    <i (click)="openAddEdit(clientOverviewData,null,'Demat','Add')"
+                                        class=" material-icons f-18 ">
                                         add_circle_outline</i>
                                 </h5>
-                                <div *ngIf="dematList.length>1" class=" col-md-5 p-0 d-flex align-items-center justify-content-end ">
+                                <div *ngIf="dematList.length>1"
+                                    class=" col-md-5 p-0 d-flex align-items-center justify-content-end ">
                                     <span class=" f-12 text-primitive ">{{i+1}} of {{dematList.length}}</span>
                                     <span class=" arrow-primitive arrowSlider c-p ">
                                         <i (click)="previous('demat',i)" class=" material-icons f-17 text-primitive ">
@@ -288,13 +324,17 @@
                                 <div class=" row ">
                                     <div class=" col-md-9 pr-0 ">
                                         <p class=" m-0 f-14 ">
-                                            <span class=" f-500 roboto ">{{selectedDemat.depositoryParticipantName}}</span>
-                                            <br> DP ID: {{selectedDemat.depositoryParticipantId}} <br> UCC: {{selectedDemat.dematClientId}} <br> {{selectedDemat.brokerAddress ? selectedDemat.brokerAddress : ''}}
+                                            <span
+                                                class=" f-500 roboto ">{{selectedDemat.depositoryParticipantName}}</span>
+                                            <br> DP ID: {{selectedDemat.depositoryParticipantId}} <br> UCC:
+                                            {{selectedDemat.dematClientId}} <br>
+                                            {{selectedDemat.brokerAddress ? selectedDemat.brokerAddress : ''}}
 
                                         </p>
                                     </div>
                                     <div class=" col-md-2 p-0 text-right ">
-                                        <a (click)="openAddEdit(clientOverviewData,selectedDemat,'Demat','Edit')" class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
+                                        <a (click)="openAddEdit(clientOverviewData,selectedDemat,'Demat','Edit')"
+                                            class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                                     </div>
                                 </div>
                             </div>

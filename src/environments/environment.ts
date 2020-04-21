@@ -6,24 +6,14 @@ export const environment = {
   production: false,
   APIEndpoint: 'http://dev.ifanow.in:8080/futurewise/api/v1/web/',
   GmailAPIEndpoint: 'https://dev.ifanow.in:8080/email-server/api/v1/web/',
-  TransactionPlatform: 'http://dev.ifanow.in:8080/transaction-platform/api/v1/web/',
-  // TransactionPlatform: 'http://localhost:8080/transaction-platform/api/v1/web/',
+  // TransactionPlatform: 'http://dev.ifanow.in:8080/transaction-platform/api/v1/web/',
+  TransactionPlatform: 'http://localhost:8080/transaction-platform/api/v1/web/',
 
   // 'http://192.168.0.9:8080/transaction-platform/api/v1/web/',
   PostalUrl: 'http://api.postalpincode.in/pincode/',
-  UserUrl: 'http://dev.ifanow.in:8080/userserver/api/v1/web/'
+  UserUrl: 'http://dev.ifanow.in:8080/userserver/api/v1/web/',
+  hmr: true,
   // UserUrl: 'http://localhost:8080/userserver/api/v1/web/'
-
-  // CalendarAPIEndpoint: 'http://dev.ifanow.in:8080/email-server/',
-  // GmailAPIEndpoint: 'http://localhost:8090/email-server/api/v1/web/',
-
-
-  // APIEndpoint: 'http://localhost:8080/futurewise/api/v1/web/'
-
-  // APIEndpoint: 'http://192.168.0.27:8080/futurewise/api/v1/web/'
-
-  //  APIEndpoint:'http://192.168.0.6:8080/' http://192.168.0.27:8080/futurewise/swagger-ui.html
-  // APIEndpoint:'http://23.21.238.140:8090/'
 };
 /*
  * For easier debugging in development mode, you can import the following file

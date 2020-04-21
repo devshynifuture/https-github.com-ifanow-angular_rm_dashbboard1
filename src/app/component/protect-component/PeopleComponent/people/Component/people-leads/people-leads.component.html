@@ -49,7 +49,24 @@
             <ng-container matColumnDef="lsource">
                 <th mat-header-cell *matHeaderCellDef class="br"> Lead source </th>
                 <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.leadSource}}</div>
+                    <div class="bar">
+                        <span *ngIf="element.leadSource==1">Search engine</span>
+                        <span *ngIf="element.leadSource==2">Website</span>
+                        <span *ngIf="element.leadSource==3">Refrerals from existing clients</span>
+                        <span *ngIf="element.leadSource==4">Refrerals from existing friends</span>
+                        <span *ngIf="element.leadSource==5">Refrerals from existing relatives</span>
+                        <span *ngIf="element.leadSource==6">LinkedIn</span>
+                        <span *ngIf="element.leadSource==7">Others</span>
+                    </div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="lrating">
+                <th mat-header-cell *matHeaderCellDef class="br"> Lead rating </th>
+                <td mat-cell *matCellDef="let element" class="br">
+                    <div class="bar">
+                        <span *ngIf="element.leadRating==1">Cold</span>
+                        <span *ngIf="element.leadRating==2">Hot</span>
+                    </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="status">

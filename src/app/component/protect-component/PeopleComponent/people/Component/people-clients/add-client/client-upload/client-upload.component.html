@@ -3,7 +3,7 @@
         <h5 class="m-0 text-black pb-10">Company PAN</h5>
         <input #fileComPan (change)="getFile($event, 'company-pan')" accept='image/*, .pdf' style="display: none;"
             type="file">
-        <mat-card class="upload-card c-p" (click)="fileComPan.click()">
+        <mat-card appFileDragDrop class="upload-card c-p" (click)="fileComPan.click()">
             <p *ngIf="!fileComPanImg.view" class="m-0 roboto text-black">Drag & drop file here or Browse
             </p>
             <img [src]="fileComPanImg.view" [ngStyle]="imgStyleCom" *ngIf="fileComPanImg.view">
