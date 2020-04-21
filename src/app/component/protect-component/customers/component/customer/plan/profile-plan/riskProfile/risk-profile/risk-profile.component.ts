@@ -3,10 +3,10 @@ import { PlanService } from '../../../plan.service';
 import { FormBuilder } from '@angular/forms';
 import { UtilService } from 'src/app/services/util.service';
 import * as Highcharts from 'highcharts';
-import { AuthService } from 'src/app/auth-service/authService';
 import { HistoryRiskProfileComponent } from '../../history-risk-profile/history-risk-profile.component';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import more from 'highcharts/highcharts-more';
+import { AuthService } from 'src/app/auth-service/authService';
 more(Highcharts);
 
 @Component({
