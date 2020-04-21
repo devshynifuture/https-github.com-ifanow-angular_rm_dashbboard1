@@ -41,6 +41,7 @@ export class RiskProfileComponent implements OnInit {
   constructor(private fb: FormBuilder, public planService: PlanService, private subInjectService: SubscriptionInject) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    
   }
 
   ngOnInit() {
