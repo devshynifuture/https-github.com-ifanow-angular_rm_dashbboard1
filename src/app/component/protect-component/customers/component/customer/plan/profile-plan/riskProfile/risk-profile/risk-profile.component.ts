@@ -238,7 +238,7 @@ export class RiskProfileComponent implements OnInit {
     }));
   }
   checkState(item, i) {
-    if(this.statusArray.length > 0 && item.question){
+    if(this.statusArray.length > 0){
       this.statusArray.forEach(element => {
         this.checkFamilyMem = item.question.includes(element.question);
         console.log(this.checkFamilyMem)
@@ -247,7 +247,7 @@ export class RiskProfileComponent implements OnInit {
         this.statusArray.push(item)
         this.progressBar = this.statusArray.length * 7
       }
-    }else if(item.question){
+    }else{
       this.statusArray.push(item)
       this.progressBar = this.statusArray.length * 7
     }
