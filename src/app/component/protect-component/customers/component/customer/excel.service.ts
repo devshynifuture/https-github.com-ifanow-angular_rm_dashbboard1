@@ -34,9 +34,15 @@ export class ExcelService {
     meta3.font = { bold: true };
 
     let userData = AuthService.getUserInfo();
+    let username;
 
+    if (userData.hasOwnProperty('fullName')) {
+      username = userData.fullName;
+    } else {
+      username = userData.name;
+    }
     ws.getCell('A1').value = 'Type of report - ' + metaData;
-    ws.getCell('A2').value = `Client name - ` + userData.fullName;
+    ws.getCell('A2').value = `Client name - ` + username;
     ws.getCell('A3').value = 'Report as on - ' + new Date();
     const head = ws.getRow(5);
     head.font = { bold: true };
@@ -56,7 +62,7 @@ export class ExcelService {
       last.font = { bold: true };
     });
     const buf = await wb.xlsx.writeBuffer();
-    saveAs(new Blob([buf]), userData.fullName + '-' + metaData + '-' + new Date() + '.xlsx');
+    saveAs(new Blob([buf]), username + '-' + metaData + '-' + new Date() + '.xlsx');
   }
 
 }

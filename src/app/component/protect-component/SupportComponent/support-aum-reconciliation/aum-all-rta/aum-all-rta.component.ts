@@ -19,6 +19,8 @@ export class AumAllRtaComponent implements OnInit {
   dataSource = new MatTableDataSource<AumAllRtaI>(ELEMENT_DATA);
   rtId;
 
+  advisorId = 2808;
+
   constructor(
     public eventService: EventService,
     private reconService: ReconciliationService,
@@ -56,7 +58,7 @@ export class AumAllRtaComponent implements OnInit {
   getAumHistoryData() {
     this.isLoading = true;
     const data = {
-      advisorId: 0,
+      advisorId: 2808,
       brokerId: 0,
       rtId: this.rtId,
       // rtId: 0,
@@ -68,12 +70,13 @@ export class AumAllRtaComponent implements OnInit {
         this.isLoading = false;
         if (res) {
           let tableData = [];
+          console.log(res)
           res.forEach(element => {
             tableData.push({
               id: element.id,
               rmId: element.rmId,
               advisorId: element.advisorId,
-              brokerId: 4,
+              brokerId: element.brokerId,
               orderTypeId: element.orderTypeId,
               matchedCount: element.matchedCount,
               rtId: element.rtId,
@@ -108,6 +111,22 @@ export class AumAllRtaComponent implements OnInit {
 
   openUpperModule(flag, data) {
     console.log('hello mf button clicked');
+
+    // const fragmentData = {
+    //   flag,
+    //   id: 1,
+    //   data: {
+    //     ...data,
+    //     startRecon: flag === 'startReconciliation' ? true : (flag === 'report' ? false : null),
+    //     brokerId: this.selectBrokerForm.get('selectBrokerId').value,
+    //     rtId: this.rtId,
+    //     flag,
+    //   },
+    //   direction: 'top',
+    //   componentName: UpperSliderBackofficeComponent,
+    //   state: 'open'
+    // };
+
     const fragmentData = {
       flag,
       id: 1,
