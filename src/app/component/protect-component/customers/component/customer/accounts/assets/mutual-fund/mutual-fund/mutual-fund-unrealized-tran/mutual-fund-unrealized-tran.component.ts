@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild, Output, EventEmitter} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {UtilService} from 'src/app/services/util.service';
 import {MatTableDataSource} from '@angular/material';
@@ -33,6 +33,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   rightFilterData: any ={reportType :'' };
   advisorData: any;
   fragmentData = {isSpinner : false};
+  @Output() changeInput = new EventEmitter();
+
   constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
               private mfService: MfServiceService, private excel: ExcelGenService,private custumService:CustomerService) {
   }
@@ -41,6 +43,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.isLoading=true;
+    this.changeInput.emit(true);
     console.log('this.mutualFund == ', this.mutualFund);
     if (this.mutualFund) {
      this.advisorData = this.mutualFund.advisorData;
@@ -106,11 +109,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       // Create a new
       const worker = new Worker('./mutual-fund-unrealized.worker.ts', {type: 'module'});
       worker.onmessage = ({data}) => {
-        this.isLoading=false;
         this.grandTotal = data.totalValue;
         this.dataSource = new TableVirtualScrollDataSource(data.dataSourceData);
         this.customDataSource = new TableVirtualScrollDataSource(data.customDataSourceData);
         console.log(`MUTUALFUND COMPONENT page got message:`, data);
+        this.isLoading=false;
+        this.changeInput.emit(false);
       };
       worker.postMessage(input);
     } else {
@@ -160,10 +164,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          if (sideBarData.data!='Close') {
+          if (sideBarData.data && sideBarData.data!='Close') {
             this.dataSource = new TableVirtualScrollDataSource([{},{},{}]);
             this.customDataSource = new TableVirtualScrollDataSource([{},{},{}]);
             this.isLoading=true;
+            this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
             this.type=this.rightFilterData.reportType[0];
             this.asyncFilter(this.rightFilterData.mutualFundList);
