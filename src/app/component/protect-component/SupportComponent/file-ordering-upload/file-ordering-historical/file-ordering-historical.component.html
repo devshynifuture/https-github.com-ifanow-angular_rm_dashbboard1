@@ -168,10 +168,7 @@
                 <th class="br" mat-header-cell *matHeaderCellDef> Refresh </th>
                 <td class="br" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        <button mat-button class="bg-grey mr-12 h-22 btn-xs" (click)="fileOrderHistoryListGet({
-                            days: this.days,
-                            rtId: this.rtId,
-                          })">
+                        <button mat-button class="bg-grey mr-12 h-22 btn-xs" (click)="refreshFileOrder()">
                             <mat-icon>
                                 refresh
                             </mat-icon>

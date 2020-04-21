@@ -1,12 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-upload.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
-import { SettingsService } from '../../settings.service';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {PhotoCloudinaryUploadService} from 'src/app/services/photo-cloudinary-upload.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {SettingsService} from '../../settings.service';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-add-personal-profile',
@@ -14,16 +14,17 @@ import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.s
   styleUrls: ['./add-personal-profile.component.scss']
 })
 export class AddPersonalProfileComponent implements OnInit {
-  imgURL: string = ''
+  imgURL = '';
   finalImage: any;
   advisorId: any;
   imageUploadEvent: any;
-  showCropper: boolean = false;
-  cropImage: boolean = false;
-  selectedTab: number = 0;
+  showCropper = false;
+  cropImage = false;
+  selectedTab = 0;
   anyDetailsChanged: boolean; // check if any details have been updated
   inputData: any;
-  isLoading = false
+  isLoading = false;
+  countryCodes: Array<number> = [91, 92];
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -36,20 +37,22 @@ export class AddPersonalProfileComponent implements OnInit {
   }
 
   personalProfile: FormGroup;
-  countryCodes:Array<string> = ['+91', '+92', "+93"];
-  validatorType = ValidatorType
+  // countryCodes:Array<string> = ['+91', '+92', "+93"];
+  validatorType = ValidatorType;
+
   @Input()
   set data(data) {
     this.inputData = data;
 
     this.getdataForm(data);
   }
+
   get data() {
     return this.inputData;
   }
 
   ngOnInit() {
-    this.getdataForm(this.inputData)
+    this.getdataForm(this.inputData);
     this.getPersonalInfo();
   }
 
@@ -75,7 +78,7 @@ export class AddPersonalProfileComponent implements OnInit {
             const jsonDataObj = {
               id: this.advisorId,
               profilePic: responseObject.url
-            }
+            };
             this.settingsService.uploadProfilePhoto(jsonDataObj).subscribe((res) => {
               this.anyDetailsChanged = true;
               this.imgURL = jsonDataObj.profilePic;
@@ -125,26 +128,27 @@ export class AddPersonalProfileComponent implements OnInit {
   getFormControl(): any {
     return this.personalProfile.controls;
   }
-  
+
   updatePersonalProfile() {
-    if(this.personalProfile.invalid) {
+    if (this.personalProfile.invalid) {
       this.personalProfile.markAllAsTouched();
       return;
     }
-    let obj = {
+    const obj = {
       adminAdvisorId: this.advisorId,
       fullName: this.personalProfile.controls.name.value,
       emailId: this.personalProfile.controls.emailId.value,
       // userName: this.personalProfile.controls.userName.value,
+      isdCodeId: this.personalProfile.controls.isdCodeId.value,
       mobileNo: this.personalProfile.controls.mobileNo.value,
       // roleId: 0,
-    }
+    };
     this.settingsService.editPersonalProfile(obj).subscribe(
       data => {
         this.selectedTab = 2; // switch tab to profile pic
         this.anyDetailsChanged = true;
       },
-      err => this.event.openSnackBar(err, "Dismiss")
+      err => this.event.openSnackBar(err, 'Dismiss')
     );
   }
 

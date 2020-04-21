@@ -37,8 +37,8 @@ export class IfasDetailsComponent implements OnInit {
   ifasData: any;
   getOverview: any;
   franklineData: any;
-  cams: any;
-  karvy: any;
+  camsData: any;
+  karvyData: any;
   isLoading: boolean = false;
   brokerList: any;
   brokerListCams: any;
@@ -55,7 +55,7 @@ export class IfasDetailsComponent implements OnInit {
     billing: false,
     misc: false,
   }
-  ticketList= [{}, {}, {}];
+  ticketList = [{}, {}, {}];
   openTickets: any;
   unResolved: any;
   onHold: any;
@@ -98,9 +98,9 @@ export class IfasDetailsComponent implements OnInit {
           this.utilsService.loader(-1)
           this.reconSummaryList = data
           this.franklineData = data.FRANKLIN_TEMPLETON
-          this.cams = data.CAMS
-          this.karvy = data.KARVY
-        }else{
+          this.camsData = data.CAMS
+          this.karvyData = data.KARVY
+        } else {
           this.utilsService.loader(-1);
         }
       }
@@ -133,7 +133,16 @@ export class IfasDetailsComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.brokerList = res;
-          this.openSelectArnRiaDialog(res, this.ifasData, this.rtId)
+          console.log('jdfgj dfj', this.brokerListCams, res);
+          if (value === this.franklinId) {
+            this.openSelectArnRiaDialog(res, this.franklineData, this.rtId)
+          } else if (value === this.camsId) {
+            this.openSelectArnRiaDialog(res, this.camsData, this.rtId)
+          } else if (value === this.karvyId) {
+            this.openSelectArnRiaDialog(res, this.karvyData, this.rtId)
+
+          }
+
         }
       });
   }
@@ -166,32 +175,55 @@ export class IfasDetailsComponent implements OnInit {
   getBillingDetails() {
 
   }
+
   openUpperSliderBackoffice(flag, data) {
+    console.log("this is what we are sending to upper slider::", flag, data);
+
+    // flag,
+    // id: 1,
+    // data: {
+    //   ...data,
+    //   startRecon: flag === 'startReconciliation' ? true : (flag === 'report' ? false : null),
+    //   brokerId: this.selectBrokerForm.get('selectBrokerId').value,
+    //   rtId: this.rtId,
+    //   flag,
+    // },
+    // direction: 'top',
+    // componentName: UpperSliderBackofficeComponent,
+    // state: 'open'
     const fragmentData = {
-      flag: "clients",
+      flag,
       id: 1,
-      data,
+      data: {
+        ...data,
+        startRecon: flag === 'startRecon' ? true : (flag === 'report' ? false : null),
+        brokerId: '',
+        rtId: this.rtId,
+        flag
+      },
       direction: 'top',
       componentName: UpperSliderBackofficeComponent,
       state: 'open'
     };
-    // this.router.navigate(['/subscription-upper'])
-    AuthService.setSubscriptionUpperSliderData(fragmentData);
-    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-      upperSliderData => {
-        this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
-        if (UtilService.isDialogClose(upperSliderData)) {
-          // this.getClientSubscriptionList();
-          subscription.unsubscribe();
 
-        }
-      }
-    );
+    console.log(fragmentData);
+    // this.router.navigate(['/subscription-upper'])
+    // AuthService.setSubscriptionUpperSliderData(fragmentData);
+    // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+    //   upperSliderData => {
+    //     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+    //     if (UtilService.isDialogClose(upperSliderData)) {
+    //       // this.getClientSubscriptionList();
+    //       subscription.unsubscribe();
+
+    //     }
+    //   }
+    // );
 
   }
 
   openSelectArnRiaDialog(data, value, rtId) {
-
+    console.log(data, value, rtId);
     const Fragmentdata = {
       flag: data,
       mainData: value,

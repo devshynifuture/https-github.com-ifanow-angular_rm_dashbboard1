@@ -120,8 +120,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   }
 
   Excel(tableTitle) {
+    this.fragmentData.isSpinner = true;
     const rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows, tableTitle);
+    const data = this.excel.generateExcel(rows, tableTitle);
+    if(data){
+      this.fragmentData.isSpinner = false;
+    }
   }
 
   mfSchemes() {// get last mf list

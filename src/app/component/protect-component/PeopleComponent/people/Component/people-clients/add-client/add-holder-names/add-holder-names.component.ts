@@ -61,7 +61,7 @@ export class AddHolderNamesComponent implements OnInit {
   }
 
   removeHolders(index) {
-    if (this.holderNameList.length == 0) {
+    if (this.holderNameList.length == 1) {
       return;
     }
     this.holderNamesForm.controls.holderNameList.removeAt(index);
