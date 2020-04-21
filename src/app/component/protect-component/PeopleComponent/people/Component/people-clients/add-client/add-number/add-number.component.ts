@@ -115,4 +115,9 @@ export class AddNumberComponent implements OnInit {
       this.numberArray.emit(this.getMobileNumList);
     }
   }
+  checkUniqueNumber() {
+    if (this.getMobileNumList.length == 2) {
+      (this.getMobileNumList.controls[0].value.number === this.getMobileNumList.controls[0].value.number) ? this.getMobileNumList.controls[0].get('number').setErrors({ notUnique: true }) : '';
+    }
+  }
 }
