@@ -37,8 +37,8 @@ export class IfasDetailsComponent implements OnInit {
   ifasData: any;
   getOverview: any;
   franklineData: any;
-  cams: any;
-  karvy: any;
+  camsData: any;
+  karvyData: any;
   isLoading: boolean = false;
   brokerList: any;
   brokerListCams: any;
@@ -60,7 +60,7 @@ export class IfasDetailsComponent implements OnInit {
   constructor(public subInjectService: SubscriptionInject,
     public dialog: MatDialog,
     private eventService: EventService,
-    private reconService : ReconciliationService,
+    private reconService: ReconciliationService,
     public utilsService: UtilService,
     private settingsService: SettingsService,
     private supportService: SupportService) { }
@@ -93,8 +93,8 @@ export class IfasDetailsComponent implements OnInit {
           this.isLoading = false
           this.reconSummaryList = data
           this.franklineData = data.FRANKLIN_TEMPLETON
-          this.cams = data.CAMS
-          this.karvy = data.KARVY
+          this.camsData = data.CAMS
+          this.karvyData = data.KARVY
         }
       }
       , err => this.eventService.openSnackBar(err, "Dismiss")
@@ -123,8 +123,16 @@ export class IfasDetailsComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.brokerList = res;
-          console.log('jdfgj dfj',this.brokerListCams)
-          this.openSelectArnRiaDialog(res,this.ifasData,this.rtId)
+          console.log('jdfgj dfj', this.brokerListCams, res);
+          if (value === this.franklinId) {
+            this.openSelectArnRiaDialog(res, this.franklineData, this.rtId)
+          } else if (value === this.camsId) {
+            this.openSelectArnRiaDialog(res, this.camsData, this.rtId)
+          } else if (value === this.karvyId) {
+            this.openSelectArnRiaDialog(res, this.karvyData, this.rtId)
+
+          }
+
         }
       });
   }
@@ -145,35 +153,57 @@ export class IfasDetailsComponent implements OnInit {
 
   }
   openUpperSliderBackoffice(flag, data) {
+    console.log("this is what we are sending to upper slider::", flag, data);
+
+    // flag,
+    // id: 1,
+    // data: {
+    //   ...data,
+    //   startRecon: flag === 'startReconciliation' ? true : (flag === 'report' ? false : null),
+    //   brokerId: this.selectBrokerForm.get('selectBrokerId').value,
+    //   rtId: this.rtId,
+    //   flag,
+    // },
+    // direction: 'top',
+    // componentName: UpperSliderBackofficeComponent,
+    // state: 'open'
     const fragmentData = {
-      flag: "clients",
+      flag,
       id: 1,
-      data,
+      data: {
+        ...data,
+        startRecon: flag === 'startRecon' ? true : (flag === 'report' ? false : null),
+        brokerId: '',
+        rtId: this.rtId,
+        flag
+      },
       direction: 'top',
       componentName: UpperSliderBackofficeComponent,
       state: 'open'
     };
-    // this.router.navigate(['/subscription-upper'])
-    AuthService.setSubscriptionUpperSliderData(fragmentData);
-    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-      upperSliderData => {
-        this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
-        if (UtilService.isDialogClose(upperSliderData)) {
-          // this.getClientSubscriptionList();
-          subscription.unsubscribe();
 
-        }
-      }
-    );
+    console.log(fragmentData);
+    // this.router.navigate(['/subscription-upper'])
+    // AuthService.setSubscriptionUpperSliderData(fragmentData);
+    // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+    //   upperSliderData => {
+    //     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+    //     if (UtilService.isDialogClose(upperSliderData)) {
+    //       // this.getClientSubscriptionList();
+    //       subscription.unsubscribe();
+
+    //     }
+    //   }
+    // );
 
   }
 
-  openSelectArnRiaDialog(data,value,rtId) {
-  
+  openSelectArnRiaDialog(data, value, rtId) {
+    console.log(data, value, rtId);
     const Fragmentdata = {
       flag: data,
-      mainData : value,
-      rtId : rtId
+      mainData: value,
+      rtId: rtId
     };
     const dialogRef = this.dialog.open(MyIfaSelectArnRiaComponent, {
       width: '30%',
