@@ -69,7 +69,7 @@
         </div>
         <div class="col-md-6">
             <div class="row">
-                <div class="col-md-8 p-0">
+                <div class="col-md-8 p-0" *ngIf="score">
                     <h5 class="m-0 f-500 text-black">Your risk
                         profile:{{(score <= 180)? 'conservative':(score <= 290)? 'Moderately conservative': (score <= 400)? 'Moderate':(score <= 510)? 'Moderately aggressive' :(score <= 600)? 'Aggressive': ''}}
                         </h5>
