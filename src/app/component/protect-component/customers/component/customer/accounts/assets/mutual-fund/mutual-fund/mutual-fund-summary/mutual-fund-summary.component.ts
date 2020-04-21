@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild, Output, EventEmitter} from '@angular/core';
 import {RightFilterComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {UtilService} from 'src/app/services/util.service';
@@ -41,6 +41,7 @@ export class MutualFundSummaryComponent implements OnInit {
   // schemeWiseForFilter: any[];
   // mutualFundListFilter: any[];
   @ViewChild('tableEl', {static: false}) tableEl;
+  @Output() changeInput = new EventEmitter();
 
 
   constructor(private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -54,6 +55,7 @@ export class MutualFundSummaryComponent implements OnInit {
   ngOnInit() {
     if (this.mutualFund.mutualFundList.length>0) {
       this.isLoading=true;
+      this.changeInput.emit(true);
       this.mutualFundList = this.mutualFund.mutualFundList;
       this.advisorData = this.mutualFund.advisorData;
       // this.getListForPdf(this.displayedColumns);
@@ -71,6 +73,7 @@ export class MutualFundSummaryComponent implements OnInit {
       this.asyncFilter(this.mutualFundList);
     }else{
       this.isLoading=false;
+      this.changeInput.emit(false);
       this.customDataSource.data=[];
     }
   }
@@ -125,6 +128,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.customDataSource.data = data.customDataSourceData;
         console.log(`MUTUALFUNDSummary COMPONENT page got message:`, data);
         this.isLoading=false;
+        this.changeInput.emit(false);
       };
       worker.postMessage(input);
     } else {
@@ -208,6 +212,7 @@ export class MutualFundSummaryComponent implements OnInit {
           if (sideBarData.data && sideBarData.data != 'Close') {
             this.customDataSource = new MatTableDataSource([{}, {}, {}]);
             this.isLoading = true;
+            this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
             this.asyncFilter(this.rightFilterData.mutualFundList);
             // this.getListForPdf(this.rightFilterData.transactionView);

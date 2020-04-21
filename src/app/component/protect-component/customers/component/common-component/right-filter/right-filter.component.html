@@ -213,7 +213,7 @@
 
         </div>
     </div>
-    <div *ngIf="showError"  class="f-12 pt-4"><p>Please select at least one {{showError}}</p></div>
+    <div *ngIf="showError" class="errorClass">Please select at least one {{showError}}</div>
 </div>
 <div class="bottom-fixed-35 wrapper-12">
     <div class="row">
@@ -222,7 +222,7 @@
         </div>
         <div class="col-md-8 right text-right">
             <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="generateReport()">GENERATE REPORT</button> -->
-            <app-progress-button class="mb-0 pt-8 text-white c-p" (click)="generateReport()" [options]="barButtonOptions">
+            <app-progress-button class="mb-0 pt-8 text-white c-p" (click)="(!showError) ? generateReport() : null" [options]="barButtonOptions">
             </app-progress-button>
         </div>
     </div>
