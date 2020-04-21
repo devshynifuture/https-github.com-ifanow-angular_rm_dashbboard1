@@ -38,8 +38,8 @@
                 <button mat-raised-button color="primary"(click)="showRisk = false">Risk assessment</button>
             </div>
             <div class="p-20 b-primitive mt-8">
-                <mat-progress-bar mode="determinate" value="{{this.progressBar}}"></mat-progress-bar>
-                <h5 class="pt-8 m-0 pt-12 text-center">{{this.statusArray.length}} of 15 completed</h5>
+                <mat-progress-bar mode="determinate" value="{{progressBar}}"></mat-progress-bar>
+                <h5 class="pt-8 m-0 pt-12 text-center">{{statusArray.length}} of 15 completed</h5>
             </div>
         </div>
     </div>
@@ -67,7 +67,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
             <div class="row">
                 <div class="col-md-8 p-0" *ngIf="score">
                     <h5 class="m-0 f-500 text-black">Your risk
@@ -80,7 +80,7 @@
                 <div class="col-md-4">
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
     <div class="row">
         <div class="col-md-2">
