@@ -4,7 +4,8 @@
             <div class="col-md-4 pl-0 c-p">
                 <h4 class="m-0 text-black roboto">Mutual fund overview</h4>
             </div>
-            <div class="col-md-8 p-0 right text-right" *ngIf="!isLoading">
+            <div class="col-md-8 p-0 justify-content-end d-flex align-items-center " *ngIf="!isLoading">
+                <div class="pdfClass"> 
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p" *ngIf="!fragmentData.isSpinner">
                 <mat-menu #menu5="matMenu">
                     <button (click)="generatePdf()" mat-menu-item>PDF
@@ -12,8 +13,7 @@
                     <!-- <button (click)="Excel('Mutual fund transactions')" mat-menu-item>XLS</button> -->
                 </mat-menu>
                 <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
-                <!-- <img src="assets/images/svg/up-down.svg" class="c-p">
-                <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12"> -->
+                </div>
                 <button mat-stroked-button class="btn-default addon mr-12 v-middle"  (click)="openFilter()"><i
             class="material-icons">filter_list</i>FILTERS</button>
                 <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">ADD NEW</button>
@@ -671,7 +671,7 @@
 
         <tr>
             <td style="text-align: left;">
-                <img  style="width: 200px;" *ngIf="advisorData" [src]="advisorData.profilePic">
+                <img  width="100px"  *ngIf="advisorData" [src]="advisorData.profilePic">
             </td>
             <td style="text-align: right;">
                 <p style="margin: 0px; font-weight: 600;"  *ngIf="advisorData">{{(advisorData.fullName) ? advisorData.fullName : '-'}}</p>
