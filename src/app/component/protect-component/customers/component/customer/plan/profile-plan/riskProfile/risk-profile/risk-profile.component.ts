@@ -31,7 +31,11 @@ export class RiskProfileComponent implements OnInit {
   showLoader: boolean;
   isLoading = false
   statusArray : any;
+  showErrorMsg
   checkFamilyMem;
+  showButton;
+  
+  clientRiskAssessmentResults;
   onClickMe(referenceKeyName) {
     alert(referenceKeyName.id);
   }
