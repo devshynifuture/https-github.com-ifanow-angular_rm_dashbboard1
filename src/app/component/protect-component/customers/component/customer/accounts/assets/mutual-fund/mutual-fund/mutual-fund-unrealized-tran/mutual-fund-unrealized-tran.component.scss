@@ -20,12 +20,16 @@
         }
     }
 }
+
 .example-viewport {
     height: 200px;
     border: 1px solid black;
-  }.wrapper {
-    height: 300px;
-  }
-  .hide {
+}
+
+.wrapper {
+    height: 500px;
+}
+
+.hide {
     display: none;
-  }
+}

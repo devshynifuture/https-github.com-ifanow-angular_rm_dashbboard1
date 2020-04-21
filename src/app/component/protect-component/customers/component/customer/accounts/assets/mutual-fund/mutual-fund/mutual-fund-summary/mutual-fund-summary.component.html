@@ -94,7 +94,7 @@
                         <div class="bar"> {{(mutualFund)?mutualFund.total_amount_invested:'0'}}
                         </div>
                     </td> -->
-                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalTransactionAmt" class="br f-600 text-right" mat-footer-cell>
+                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalTransactionAmt" class="br p-8 f-600 text-right" mat-footer-cell>
                         <!-- <div appFormatNumber [value]="grandTotal.totalTransactionAmt"></div> -->
                         <!-- {{(grandTotal.totalTransactionAmt)?grandTotal.totalTransactionAmt:0}} -->
                     </td>sdsfds
@@ -112,7 +112,7 @@
                         <div class="bar"> {{(mutualFund)?mutualFund.total_current_value:'0'}}
                         </div>
                     </td> -->
-                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.currentValue" class="br f-600 text-right" mat-footer-cell>
+                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.currentValue" class="br p-8 f-600 text-right" mat-footer-cell>
                         <!--                  <div>{{ grandTotal.currentValue }}</div>-->
                     </td>
 
@@ -183,7 +183,7 @@
                         <div class="bar"> {{(mutualFund)?mutualFund.total_dividend_payout:'0'}}
                         </div>
                     </td> -->
-                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.dividendPayout" class="br f-600 text-right" mat-footer-cell>
+                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.dividendPayout" class="br p-8 f-600 text-right" mat-footer-cell>
                         <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
                     </td>
                 </ng-container>
@@ -200,7 +200,7 @@
                         <div class="bar"> {{(mutualFund)?mutualFund.total_switch_out:'0'}}
                         </div>
                     </td> -->
-                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.withdrawals" class="br f-600 text-right" mat-footer-cell>
+                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.withdrawals" class="br p-8 f-600 text-right" mat-footer-cell>
                         <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
                     </td>
                 </ng-container>
@@ -217,7 +217,7 @@
                         <div class="bar"> {{(mutualFund || mutualFund.balanceUnit)?mutualFund.balanceUnit:'0'}}
                         </div>
                     </td> -->
-                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalBalanceUnit" class="br f-600 text-right" mat-footer-cell>
+                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalBalanceUnit" class="br p-8 f-600 text-right" mat-footer-cell>
                         <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
                     </td>
                 </ng-container>
@@ -233,7 +233,7 @@
                         <div class="bar">{{(mutualFund)?mutualFund.navDate:'0'}}
                         </div>
                     </td> -->
-                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalNav" class="br f-600 text-right" mat-footer-cell>
+                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.totalNav" class="br p-8 f-600 text-right" mat-footer-cell>
                         <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
                     </td>
                 </ng-container>
@@ -249,7 +249,7 @@
                         <div class="bar"> {{(mutualFund || mutualFund.totalSipAmount)?mutualFund.totalSipAmount:'0'}}
                         </div>
                     </td> -->
-                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.sip" class="br f-600 text-right" mat-footer-cell>
+                    <td *matFooterCellDef appFormatNumber [value]="grandTotal.sip" class="br p-8 f-600 text-right" mat-footer-cell>
                         <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
                     </td>
                 </ng-container>
@@ -290,7 +290,8 @@
                                 <button mat-menu-item (click)="openSipDetails(element)">SIP details</button>
                                 <button mat-menu-item class="bt-1">Transact online</button>
                                 <!-- <button mat-menu-item>Transaction slip</button> -->
-                                <button mat-menu-item class="bt-1" (click)="openUpperFragment('transaction')">View transactions</button>
+                                <button mat-menu-item class="bt-1" (click)="openUpperFragment('transaction')">View
+                                    transactions</button>
                                 <button mat-menu-item (click)="openUpperFragment('transaction')">Add records</button>
                                 <button mat-menu-item (click)="deleteModal('SCHEME')">Delete scheme</button>
 
@@ -364,13 +365,14 @@
 <div class="hide" #summaryTemplate id="template">
     <tr>
         <td style="text-align: left;">
-            <img  style="width: 200px;" *ngIf="advisorData" [src]="advisorData.profilePic">
+            <img style="width: 200px;" *ngIf="advisorData" [src]="advisorData.profilePic">
         </td>
         <td style="text-align: right;">
-            <p style="margin: 0px; font-weight: 600;"  *ngIf="advisorData">{{(advisorData.fullName) ? advisorData.fullName : '-'}}</p>
-            <p style="margin: 0px; font-size: 14px;"  *ngIf="advisorData">Himachal Pradesh</p>
-            <p style="margin: 0px; font-size: 14px;"  *ngIf="advisorData"> <strong> Number: </strong> {{(advisorData.mobileNo) ? advisorData.mobileNo : '-'}}</p>
-            <p style="margin: 0px; font-size: 14px;"  *ngIf="advisorData"> <strong> Email : </strong>  {{(advisorData.emailId) ? advisorData.emailId : '-'}}</p>
+            <p style="margin: 0px; font-weight: 600;" *ngIf="advisorData">
+                {{(advisorData.fullName) ? advisorData.fullName : '-'}}</p>
+            <p style="margin: 0px; font-size: 14px;" *ngIf="advisorData">Himachal Pradesh</p>
+            <p style="margin: 0px; font-size: 14px;" *ngIf="advisorData"> <strong> Number: </strong> {{(advisorData.mobileNo) ? advisorData.mobileNo : '-'}}</p>
+            <p style="margin: 0px; font-size: 14px;" *ngIf="advisorData"> <strong> Email : </strong> {{(advisorData.emailId) ? advisorData.emailId : '-'}}</p>
         </td>
     </tr>
 
