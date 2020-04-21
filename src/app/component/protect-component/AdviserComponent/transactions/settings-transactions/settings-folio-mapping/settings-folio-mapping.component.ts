@@ -15,11 +15,13 @@ import {TransactionEnumService} from '../../transaction-enum.service';
   styleUrls: ['./settings-folio-mapping.component.scss']
 })
 export class SettingsFolioMappingComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'iname', 'hold', 'map'];
+  // displayedColumns: string[] = ['position', 'name', 'schemeName', 'iname', 'hold', 'map'];
+  displayedColumns: string[] = ['folioNumber', 'schemeName', 'name', 'hold', 'map'];
+
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   filterData: any;
-  type: string;
+  type: string = '1';
   selectedBrokerCode: any;
   selectedPlatform: any;
   nomineesListFM: any = [];
