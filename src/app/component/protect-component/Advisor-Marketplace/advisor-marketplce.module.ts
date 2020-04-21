@@ -20,6 +20,11 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material';
 
 import {MatRadioModule} from '@angular/material/radio';
+import { MarketplaceProfileEditComponent } from './advisor-marketplace/marketplace-profile/marketplace-profile-edit/marketplace-profile-edit.component';
+import { MarketplacePostsAddComponent } from './advisor-marketplace/marketplace-posts/marketplace-posts-add/marketplace-posts-add.component';
+import { MarketplaceReviewRequestBulkComponent } from './advisor-marketplace/marketplace-review-rating/marketplace-review-request-bulk/marketplace-review-request-bulk.component';
+import { MarketplaceCallDetailsComponent } from './advisor-marketplace/marketplace-calls/marketplace-call-details/marketplace-call-details.component';
+import { MarketplaceReviewReplyComponent } from './advisor-marketplace/marketplace-review-rating/marketplace-review-reply/marketplace-review-reply.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +35,11 @@ import {MatRadioModule} from '@angular/material/radio';
     MarketplaceChatsComponent,
     MarketplaceCallsComponent,
     MarketplaceReviewRatingComponent,
+    MarketplaceProfileEditComponent,
+    MarketplacePostsAddComponent,
+    MarketplaceReviewRequestBulkComponent,
+    MarketplaceCallDetailsComponent,
+    MarketplaceReviewReplyComponent,
     
 
   ],
