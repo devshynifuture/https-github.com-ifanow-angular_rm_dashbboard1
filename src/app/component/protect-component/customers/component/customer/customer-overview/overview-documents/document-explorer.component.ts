@@ -175,17 +175,15 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   // }
   copyFilesRes() {
     this.eventService.openSnackBar('File copied successfully', 'Dismiss');
-    this.reset()
+    this.getAllFileList(1, 'copy')
   }
   moveFilesRes() {
     this.eventService.openSnackBar('File moved successfully', 'Dismiss');
-    this.getAllFileList('Documents', 'move')
-    this.reset()
+    this.getAllFileList(1, 'move')
   }
   moveFolderRes() {
     this.eventService.openSnackBar('Folder moved successfully', 'Dismiss');
-    this.getAllFileList('Documents', 'move')
-    this.reset()
+    this.getAllFileList(1, 'move')
   }
   openDialogCopy(element, value): void {
     const dialogRef = this.dialog.open(CopyDocumentsComponent, {
@@ -341,7 +339,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     this.getSort = this.dataToCommon;
     this.dataToCommon.push.apply(this.dataToCommon, this.allFiles);
     if (this.dataToCommon.openFolderId == undefined || this.openFolderName.length == 0) {
-      Object.assign(this.dataToCommon, { openFolderNm: value.folderName });
+      Object.assign(this.dataToCommon, { openFolderNm: value.folderName});
       Object.assign(this.dataToCommon, { openFolderId: value.id });
       this.parentId = (value.id == undefined) ? 0 : value.id; 
         this.openFolderName.push(this.dataToCommon);
@@ -372,8 +370,9 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   keyPress(event, tabValue) {
-    if (event == ' ') {
-      this.reset();
+    if (event == '') {
+      this.getAllFileList(1,'reset')
+      this.showResult = false;
     } else {
       console.log('search', event);
       const obj = {
@@ -751,13 +750,14 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     this.http.put(fileuploadurl, fileName, httpOptions).subscribe((responseData) => {
       console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
       if (responseData == null) {
-        this._bottomSheet.dismiss()
-        this.eventService.openSnackBar('Uploaded successfully', 'Dismiss');
+        setTimeout(() => {
+          this._bottomSheet.dismiss()
+          this.eventService.openSnackBar('Uploaded successfully', 'Dismiss');
+        },600);
         setTimeout(() => {
           this.getAllFileList(1, 'uplaodFile')
-        }, 400);
+        },600);
       }
-
     });
 
   }

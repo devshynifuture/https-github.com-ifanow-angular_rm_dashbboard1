@@ -87,6 +87,13 @@ export class FileOrderingHistoricalComponent implements OnInit {
     });
   }
 
+  refreshFileOrder() {
+    this.fileOrderHistoryListGet({
+      days: this.days,
+      rtId: this.rtId,
+    })
+  }
+
   getRmMasterDetails() {
     this.fileOrderingUploadService.getRmMasterUserData({})
       .subscribe(data => {

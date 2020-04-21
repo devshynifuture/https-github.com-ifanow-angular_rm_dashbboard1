@@ -100,7 +100,7 @@
                                     <th class="br" mat-header-cell *matHeaderCellDef> Report </th>
                                     <td class="br" mat-cell *matCellDef="let element">
                                         <button mat-stroked-button class="bg-primary text-white"
-                                            (click)="openUpperSliderBackoffice('', element)">
+                                            (click)="openUpperSliderBackoffice('report', element)">
                                             Report
                                         </button>
                                     </td>
@@ -131,7 +131,7 @@
             </div>
             <div class="row">
                 <div class="back-office-table col-md-12 pl-0 overflow-hidden ">
-                    <table mat-table [dataSource]="cams" id="table-low" class="skeletonAnimation" appSkeletonLoading
+                    <table mat-table [dataSource]="camsData" id="table-low" class="skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="arn">
                             <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
@@ -215,7 +215,7 @@
                 </div>
 
             </div>
-            <div class="row" *ngIf="karvy">
+            <div class="row" *ngIf="karvyData">
                 <div class="back-office-table col-md-12 pl-0 overflow-hidden ">
                     <table mat-table [dataSource]="dataSource" id="table-low" class="skeletonAnimation"
                         appSkeletonLoading [appSkeletonLoading]="isLoading">
@@ -397,7 +397,7 @@
             </div>
 
             <div class="row" class="skeletonAnimation mt-8" appSkeletonLoading
-            [appSkeletonLoading]="utilsService.isLoading">
+                [appSkeletonLoading]="utilsService.isLoading">
                 <div class="col-md-12 d-flex relClass">
                     <div class="summaryBox">
                         <p class="f-16 roboto">Unresolved</p>
@@ -506,7 +506,9 @@
                         [appSkeletonLoading]="utilsService.isLoading">
                         <ng-container matColumnDef="name">
                             <th class="br" mat-header-cell *matHeaderCellDef> Name </th>
-                            <td class="br" mat-cell *matCellDef="let element"> <div class="bar">{{element.fullName}}</div></td>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                <div class="bar">{{element.fullName}}</div>
+                            </td>
                         </ng-container>
 
 
@@ -524,7 +526,8 @@
 
                         <ng-container matColumnDef="role">
                             <th class="br" mat-header-cell *matHeaderCellDef> role </th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{(element.role)?element.role.roleName:'-'}} </td>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                {{(element.role)?element.role.roleName:'-'}} </td>
                         </ng-container>
 
                         <ng-container matColumnDef="lastlogin">
@@ -534,7 +537,8 @@
 
                         <ng-container matColumnDef="status">
                             <th class="br" mat-header-cell *matHeaderCellDef> Status</th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.isActive ? (element.isSuspended ? 'Suspended' : 'Active') : 'Deleted'}} </td>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                {{element.isActive ? (element.isSuspended ? 'Suspended' : 'Active') : 'Deleted'}} </td>
                         </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>
@@ -547,11 +551,11 @@
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
                         <h4 class="pt-12">No Team members found</h4>
                     </div>
-                    <div *ngIf="userList==undefined && !isLoading && hasError"
+                    <!-- <div *ngIf="userList==undefined && !isLoading && hasError"
                         class="d-flex flex-column align-items-center">
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
                         <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 

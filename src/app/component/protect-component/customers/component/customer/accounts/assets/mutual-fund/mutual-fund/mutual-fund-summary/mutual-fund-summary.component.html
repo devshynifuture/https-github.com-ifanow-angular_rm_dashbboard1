@@ -11,8 +11,8 @@
                 <button (click)="Excel('Mutual fund summary')" mat-menu-item>XLS</button>
             </mat-menu>
             <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
-            <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
-            <img class="c-p mr-12" src="assets/images/svg/up-down.svg">
+            <!-- <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
+            <img class="c-p mr-12" src="assets/images/svg/up-down.svg"> -->
             <!-- <img matTooltip="Download PDF" (click)="generatePdf()" class="b-a c-p"
                             src="assets/images/svg/pdf-icons.svg"> -->
             <button class="btn-default addon mr-12 v-middle mat-stroked-button mat-button-base" mat-stroked-button="" (click)="openFilter()">
@@ -22,7 +22,7 @@
                 </div>
                 <div class="mat-button-focus-overlay"></div>
             </button>
-            <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">{{fragmentData.isSpinner}}ADD NEW</button>
+            <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">ADD NEW</button>
             <mat-menu #menu1="matMenu" class="add-new">
                 <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b">
                     <div class="row">
@@ -285,7 +285,7 @@
                             </i>
                             <mat-menu #menu25="matMenu">
                                 <button mat-menu-item (click)="openUpperFragment('mutualFunds')">View factsheet</button>
-                                <button mat-menu-item>Download SOA</button>
+                                <!-- <button mat-menu-item>Download SOA</button> -->
                                 <button mat-menu-item (click)="openFolioMaster(element)">Folio master details</button>
                                 <button mat-menu-item (click)="openSipDetails(element)">SIP details</button>
                                 <button mat-menu-item class="bt-1">Transact online</button>

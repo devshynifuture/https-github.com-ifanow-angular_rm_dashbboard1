@@ -31,22 +31,29 @@ export class MyIfaSelectArnRiaComponent implements OnInit {
   });
 
   ngOnInit() {
-    console.log('fragmentData',this.fragmentData)
-    this.dataToSend = this.fragmentData.mainData
-    this.options = this.fragmentData.flag
+    console.log('fragmentData', this.fragmentData)
+    this.dataToSend = this.fragmentData.mainData;
+    this.options = this.fragmentData.flag;
     this.options.forEach(element => {
       element.selected = false
     });
     this.rtId = this.fragmentData.rtId
   }
-  selectedOtp(value){
-    console.log('selectedOtp',value)
-    this.selectedOption = value
+
+  selectedOtp(value) {
+    console.log('selectedOtp', value)
+    value.selected = true;
+    this.selectedOption = value;
   }
+
   openUpperModule(flag, data) {
-    
+    if (flag == 'report') {
+      data.startRecon = false;
+    } else {
+      data.startRecon = true;
+    }
     const fragmentData = {
-      flag: "clients",
+      flag,
       id: 1,
       data,
       direction: 'top',
