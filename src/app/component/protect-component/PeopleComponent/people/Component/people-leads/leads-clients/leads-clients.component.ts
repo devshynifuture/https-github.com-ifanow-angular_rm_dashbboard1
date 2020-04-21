@@ -5,6 +5,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-leads-clients',
@@ -32,11 +33,13 @@ export class LeadsClientsComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  clientRoles: any;
 
-  constructor(private fb: FormBuilder, private peopleService: PeopleService, private subInjectService: SubscriptionInject, private eventService: EventService) {
+  constructor(private fb: FormBuilder, private peopleService: PeopleService, private subInjectService: SubscriptionInject, private eventService: EventService, private enumService: EnumServiceService) {
   }
 
   ngOnInit() {
+    this.clientRoles = this.enumService.getClientRole();
     this.convertClientForm = this.fb.group({
       clientOwner: ['', [Validators.required]],
       confirmRole: ['', [Validators.required]],

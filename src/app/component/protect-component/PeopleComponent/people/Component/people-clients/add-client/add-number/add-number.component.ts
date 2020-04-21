@@ -18,7 +18,7 @@ export class AddNumberComponent implements OnInit {
 
   @Input() flag;
   @Input() minimumCompulsary = 0;
-  @Input() isResidential = false;
+  // @Input() isResidential = false;
   @Output() numberArray = new EventEmitter();
   @Input() classObj = {
     topPadding: 'pt-60',
@@ -39,28 +39,22 @@ export class AddNumberComponent implements OnInit {
   }
 
   // if this input not used anywhere then remove it
-  @Input() set userData(userdetailData) {
+  @Input() set isResidential(userdetailData) {
     if (userdetailData == undefined) {
       return;
     }
-    else {
-      if (userdetailData.taxStatusId == 1) {
-        this.isdCodes = { code: '+91', value: 73 }
-      }
-      else {
-        this.getIsdCodesData();
-      }
-    }
-  };
+    this.getIsdCodesData(userdetailData);
 
-  getIsdCodesData() {
+  }
+
+  getIsdCodesData(invTypeData) {
     let obj = {};
     this.peopleService.getIsdCode(obj).subscribe(
       data => {
         if (data) {
           console.log(data);
           this.isdCodes = data;
-          if(this.isResidential) {
+          if (invTypeData == '1') {
             this.isdCodes = this.isdCodes.filter(element => element.code == '+91');
           } else {
             this.isdCodes = this.isdCodes.filter(element => element.code != '+91');
@@ -69,7 +63,7 @@ export class AddNumberComponent implements OnInit {
       }
     )
   }
-  
+
   @Input() set numberList(data) {
     this.numberFormGroup = this.fb.group({
       mobileNo: new FormArray([])
@@ -109,12 +103,12 @@ export class AddNumberComponent implements OnInit {
       if (this.compulsionCount < this.minimumCompulsary) {
         this.compulsionCount++;
         this.getMobileNumList.push(this.fb.group({
-          code: [data.id],
+          code: [data.isdCodeId],
           number: [data.mobileNo, [Validators.pattern(this.validatorType.TEN_DIGITS), Validators.required]]
         }));
       } else {
         this.getMobileNumList.push(this.fb.group({
-          code: [data.id],
+          code: [data.isdCodeId],
           number: [data.mobileNo, Validators.pattern(this.validatorType.TEN_DIGITS)]
         }));
       }
