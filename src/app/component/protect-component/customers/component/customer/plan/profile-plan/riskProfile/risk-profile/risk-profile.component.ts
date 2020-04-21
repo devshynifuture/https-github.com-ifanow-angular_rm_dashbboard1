@@ -238,16 +238,16 @@ export class RiskProfileComponent implements OnInit {
     }));
   }
   checkState(item, i) {
-    if(this.statusArray.length > 0){
+    if(this.statusArray.length > 0 && item.question){
       this.statusArray.forEach(element => {
         this.checkFamilyMem = item.question.includes(element.question);
         console.log(this.checkFamilyMem)
       });
-      if( this.checkFamilyMem == false && this.statusArray.length > 16){
+      if( this.checkFamilyMem == false){
         this.statusArray.push(item)
         this.progressBar = this.statusArray.length * 7
       }
-    }else{
+    }else if(item.question){
       this.statusArray.push(item)
       this.progressBar = this.statusArray.length * 7
     }
