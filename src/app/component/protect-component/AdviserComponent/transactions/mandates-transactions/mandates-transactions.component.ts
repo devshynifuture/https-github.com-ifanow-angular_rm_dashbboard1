@@ -87,6 +87,7 @@ export class MandatesTransactionsComponent implements OnInit {
       }
     );
   }
+
   ownerDetail() {
 
     // const obj = {
@@ -146,6 +147,7 @@ export class MandatesTransactionsComponent implements OnInit {
     );
   }
 }
+
 export interface PeriodicElement {
   name: string;
   position: string;

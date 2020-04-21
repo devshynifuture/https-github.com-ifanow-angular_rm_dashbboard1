@@ -15,6 +15,7 @@ export class EnumServiceService {
   private globalEnumData = {
     otherAssetTypes: [],
     feeCollectionMode: [],
+    taxStatusMap: {},
   };
 
 
@@ -32,6 +33,10 @@ export class EnumServiceService {
 
   getFeeCollectionModeData() {
     return this.globalEnumData.feeCollectionMode;
+  }
+
+  getTaxStatus() {
+    return this.globalEnumData.taxStatusMap;
   }
 
   public addRoles(data) {

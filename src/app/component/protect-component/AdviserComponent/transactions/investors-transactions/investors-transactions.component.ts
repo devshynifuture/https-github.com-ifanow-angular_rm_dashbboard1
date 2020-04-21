@@ -4,6 +4,7 @@ import {OnlineTransactionService} from '../online-transaction.service';
 import {TransactionEnumService} from '../transaction-enum.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MatSort, MatTableDataSource} from '@angular/material';
+import {EnumServiceService} from '../../../../../services/enum-service.service';
 
 @Component({
   selector: 'app-investors-transactions',
@@ -11,7 +12,7 @@ import {MatSort, MatTableDataSource} from '@angular/material';
   styleUrls: ['./investors-transactions.component.scss']
 })
 export class InvestorsTransactionsComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'bank', 'bankac', 'amt', 'status', 'icons'];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'bank', 'bankac', 'amt', 'status'];
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   advisorId: any;
@@ -22,7 +23,8 @@ export class InvestorsTransactionsComponent implements OnInit {
   noData: string;
 
   // dataSource = ELEMENT_DATA;
-  constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService) {
+  constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService,
+              private enumServiceService: EnumServiceService) {
   }
 
   isLoading = false;
@@ -77,6 +79,7 @@ export class InvestorsTransactionsComponent implements OnInit {
         console.log(data);
         if (data) {
           this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
+          TransactionEnumService.setTaxStatusDesc(data, this.enumServiceService);
           this.dataSource.sort = this.sort;
         } else if (data == undefined) {
           this.noData = 'No scheme found';

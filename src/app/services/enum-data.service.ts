@@ -94,14 +94,21 @@ export class EnumDataService {
   }
 
   public getDataForTaxMasterService() {
-    const obj = {tpUserCredentialId: 192};
-    console.log('getOtherAssetData EnumDataService getDataForSubscriptionEnumService ', this.enumService.getOtherAssetData());
+    const obj = {bseUserId: 192};
     this.onlineTransactionService.getTaxMasterData(obj).subscribe(
       data => {
+        console.log('getDataForTaxMasterService data : ', data);
+
         if (data) {
+          const taxStatusMap: any = {};
+          data.forEach(singleData => {
+            taxStatusMap[singleData.taxStatusCode] = singleData;
+          });
           const output = {
-            taxStatusList: data
+            taxStatusList: data,
+            taxStatusMap
           };
+          console.log('getDataForTaxMasterService output : ', output);
           this.enumService.addToGlobalEnumData(output);
 
         }

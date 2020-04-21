@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
+import {Component, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-detailed-view-mandate',
@@ -9,14 +9,16 @@ import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.s
 export class DetailedViewMandateComponent implements OnInit {
   data;
   details: any;
-  constructor(private subInjectService : SubscriptionInject) { }
+
+  constructor(private subInjectService: SubscriptionInject) {
+  }
 
   ngOnInit() {
-  this.details = this.data
-  console.log('mandateDetails',this.data)
+    this.details = this.data;
+    console.log('mandateDetails', this.data);
   }
   close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
-  
+
 }

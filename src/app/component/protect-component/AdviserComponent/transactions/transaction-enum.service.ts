@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {EnumServiceService} from '../../../../services/enum-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +22,24 @@ export class TransactionEnumService {
 
   static setHoldingTypeEnum(data) {
     data.forEach(element => {
+
       element.holdingTypeName = (element.holdingType == 'JO') ? 'Joint' : (element.holdingType == 'AS') ? 'Anyone or Survivor' : 'Single';
     });
     return data;
+  }
+
+  static setTaxStatusDesc(data, enumServiceService: EnumServiceService) {
+    data.forEach(element => {
+
+      if (element.taxStatus) {
+        const taxStatusObj = enumServiceService.getTaxStatus()[element.taxStatus];
+        if (taxStatusObj) {
+          element.taxDesc = taxStatusObj.taxStatusDesc;
+        }
+      }
+    });
+    return data;
+
   }
 
   static setTransactionStatus(data) {

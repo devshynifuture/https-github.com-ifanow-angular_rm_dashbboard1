@@ -160,7 +160,7 @@ export class OnlineTransactionService {
   }
 
   getTaxMasterData(data) {
-    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.TAX_MASTER, data, 1);
+    return this.http.get(apiConfig.TRANSACT + appConfig.TAX_MASTER, data);
   }
 
   // sipBSE(data){
