@@ -67,8 +67,6 @@ export const appConfig = {
   ///////////////////////////// back office/////////////////////////////////////////////
 
 
-
-
   AllClient_get: 'asset/allClient/get',
   AllClient_ByName_get: 'asset/allClient/ByName/get',
   AllClient_ByTags_get: 'asset/allClient/ByTags/get',
@@ -440,6 +438,8 @@ export const appConfig = {
   MANDATE_VIEW: 'mandate/view',
   GET_TOKEN: 'user/bse/upload/password',
   BANK_MANDTAE: 'nse/iin/bank-detail/get',
+  TAX_MASTER: 'nse/tax-master/get',
+
   ADD_MANDATE: 'mandate/add',
   // SIP_BSE:'bse/order/create',
 
@@ -528,11 +528,11 @@ export const appConfig = {
   GET_RM_LIST: 'rmdashboard/dashboard/admin/rm/list/get',
   ADD_RM: 'rmdashboard/dashboard/admin/rm/add',
   GET_MY_IFA_REC_SUMMARY: 'rmdashboard/myifas/recon-summary/get',
-  GET_FILE_ORDER_HISTORICAL_LIST_DATA: "fileorder/historical/advisor/list/get",
+  GET_FILE_ORDER_HISTORICAL_LIST_DATA: 'fileorder/historical/advisor/list/get',
   GET_FILE_ORDER_UPPER_LIST_DATA: 'fileorder/historical/list/get',
   POST_FILE_ORDER_BULK_DATA: 'fileorder/bulk/order',
   PUT_FILE_ORDER_RETRY: 'fileorder/list/retry',
-  GET_TICKET:'rmdashboard/tickets/get',
+  GET_TICKET: 'rmdashboard/tickets/get',
 
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',
