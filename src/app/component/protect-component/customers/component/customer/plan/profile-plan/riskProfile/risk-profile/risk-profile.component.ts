@@ -243,7 +243,7 @@ export class RiskProfileComponent implements OnInit {
         this.checkFamilyMem = item.question.includes(element.question);
         console.log(this.checkFamilyMem)
       });
-      if( this.checkFamilyMem == false && this.statusArray.length > 16){
+      if( this.checkFamilyMem == false){
         this.statusArray.push(item)
         this.progressBar = this.statusArray.length * 7
       }
@@ -264,6 +264,7 @@ export class RiskProfileComponent implements OnInit {
 
   getRiskProfileList() {
     // let obj = {}
+    this.showButton = false
     this.planService.getRiskProfile('').subscribe(
       data => this.getRiskProfilRes(data)
     );
@@ -275,6 +276,7 @@ export class RiskProfileComponent implements OnInit {
     this.riskAssessments = data.riskAssessments;
     this.riskAssessmentQuestionList = this.riskAssessments.riskAssessmentQuestionList;
     console.log(this.riskAssessmentQuestionList);
+    this.showButton = true
   }
 
   submitRiskAnalysis(data) {
