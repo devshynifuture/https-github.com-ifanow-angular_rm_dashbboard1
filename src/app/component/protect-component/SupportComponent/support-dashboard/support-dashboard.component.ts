@@ -166,7 +166,8 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
               this.previousWeekFrankline.push(element.fileCount)
             });
           }
-
+         
+          console.log('dailyData',this.dailyData)
           //  this.currentWeekFrankline = this.dailyData.currentWeek[0]
           this.flowCash(this.previousWeekCams, this.currentWeekCams, 'flowCash')
           this.flowCash(this.previousWeekKarvy, this.currentWeekKarvy, 'flowCash2')
