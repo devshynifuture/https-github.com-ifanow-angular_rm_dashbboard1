@@ -129,7 +129,7 @@
                                 </div>
                                 <div class="col-md-2 relClass ">
                                     <div class="bar height24">
-                                    <p class="text-black mb-0 " *ngIf="this.equityPercentage">{{(this.equityPercentage) ? (this.equityPercentage | number:'1.2-2') : '0'}}%</p>
+                                     <p class="text-black mb-0"><span appFormatNumber *ngIf="this.equityPercentage">{{(this.equityPercentage)?this.equityPercentage:0}}</span><span appFormatNumber *ngIf="!this.equityPercentage && !isLoading">0%</span></p>
                                     </div>    
                                 </div>
                             </div>
@@ -147,8 +147,8 @@
                                 </div>
                                 <div class="col-md-2 relClass ">
                                     <div class="bar height24">
-                                    <p class="text-black mb-0 " *ngIf="this.debtPercentage">{{(this.debtPercentage) ? (this.debtPercentage | number:'1.2-2') : '0'}}%</p>
-                                     </div>  
+                                    <p class="text-black mb-0"><span appFormatNumber *ngIf="this.debtPercentage">{{(this.debtPercentage) ? (this.debtPercentage | number:'1.2-2') : '0'}}%</span><span appFormatNumber *ngIf="!this.debtPercentage && !isLoading ">0%</span></p>     
+                                </div>  
                                 </div>
                             </div>
                             <div class="row b-b pt-10 pb-10">
@@ -165,7 +165,7 @@
                                 </div>
                                 <div class="col-md-2 relClass ">
                                     <div class="bar height24">
-                                    <p class="text-black mb-0"  *ngIf="this.hybridPercenatge">{{(this.hybridPercenatge)? (this.hybridPercenatge | number:'1.2-2') : '0'}}%</p>
+                                    <p class="text-black mb-0"><span appFormatNumber *ngIf="this.hybridPercenatge">{{(this.hybridPercenatge) ? (this.hybridPercenatge | number:'1.2-2') : '0'}}%</span><span appFormatNumber *ngIf="!this.hybridPercenatge && !isLoading ">0%</span></p>     
                                      </div>  
                                 </div>
                             </div>
@@ -185,9 +185,8 @@
                                 </div>
                                 <div class="col-md-2 relClass ">
                                     <div class="bar height24">
-                                    <p class="text-black mb-0" *ngIf="this.solution_OrientedPercenatge">
-                                        {{(this.solution_OrientedPercenatge) ? (this.solution_OrientedPercenatge | number:'1.2-2') : '0'}}%
-                                    </p>
+                                            <p class="text-black mb-0"><span appFormatNumber *ngIf="this.solution_OrientedPercenatge">{{(this.solution_OrientedPercenatge) ? (this.hybridPercenatge | number:'1.2-2') : '0'}}%</span><span appFormatNumber *ngIf="!this.solution_OrientedPercenatge && !isLoading ">0%</span></p>     
+
                                     </div>
                                 </div>
                             </div>
@@ -205,7 +204,7 @@
                                 </div>
                                 <div class="col-md-2 relClass ">
                                     <div class="bar height24 ">
-                                    <p class="text-black mb-0" *ngIf="this.otherPercentage">{{(this.otherPercentage) ? (this.otherPercentage | number:'1.2-2') : '0'}}%</p>
+                                            <p class="text-black mb-0"><span appFormatNumber *ngIf="this.otherPercentage">{{(this.otherPercentage) ? (this.hybridPercenatge | number:'1.2-2') : '0'}}%</span><span appFormatNumber *ngIf="!this.otherPercentage && !isLoading ">0%</span></p>     
                                     </div>    
                                 </div>
                             </div>

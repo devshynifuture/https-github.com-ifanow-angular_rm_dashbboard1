@@ -207,13 +207,13 @@
         <div class="col-md-6 pl-0" *ngIf="_data.name != 'Overview Report'">
             <h5 class="m-0 pb-8">Show zero folios?</h5>
             <mat-radio-group aria-label="Select an option" id="custom-radio" formControlName="showFolios">
-                <mat-radio-button value="1" class="text-custom b-ua">Yes</mat-radio-button>
-                <mat-radio-button value="2" class="text-primary bu-primary">No</mat-radio-button>
+                <mat-radio-button value="1"[ngClass]="{'b-a-custom': summaryFilerForm.get('showFolios').value==1,'text-primary':summaryFilerForm.get('showFolios').value==1,'b-a':summaryFilerForm.get('showFolios').value==2}">Yes</mat-radio-button>
+                <mat-radio-button value="2" [ngClass]="{'b-a-custom': summaryFilerForm.get('showFolios').value==2,'text-primary':summaryFilerForm.get('showFolios').value==2,'b-a':summaryFilerForm.get('showFolios').value==1}">No</mat-radio-button>
             </mat-radio-group>
 
         </div>
     </div>
-
+    <div *ngIf="showError"  class="f-12 pt-4"><p>Please select at least one {{showError}}</p></div>
 </div>
 <div class="bottom-fixed-35 wrapper-12">
     <div class="row">

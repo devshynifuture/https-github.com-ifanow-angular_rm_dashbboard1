@@ -67,6 +67,7 @@ export class RightFilterComponent implements OnInit {
   transactionPeriod = true;
   transactionPeriodCheck = true;
   overviewFilterCount :any;
+  showError: string;
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
     private custumService: CustomerService, private eventService: EventService,
     private mfService: MfServiceService, private datePipe: DatePipe, ) {
@@ -252,6 +253,7 @@ export class RightFilterComponent implements OnInit {
   }
 
   changeFilterFamily() {
+    (this.familyMemObj.length == 0) ?  this.showError = 'family member' : this.showError = null ;
     const filterData = this._data.schemeWise;
     const filterData1 = [];
     const filterData2 = [];
@@ -294,6 +296,7 @@ export class RightFilterComponent implements OnInit {
   }
 
   changeFilterCategory(data) {
+    (this.categoryObj.length == 0) ?  this.showError ='category' : this.showError = null ;
     const filterData = this._data.schemeWise;
     const filterData1 = [];
     const filterData2 = [];
@@ -337,6 +340,7 @@ export class RightFilterComponent implements OnInit {
   }
 
   changeFilterFolio() {
+    (this.familyMemObj.length == 0) ?  this.showError = 'folio' : this.showError = null ;
     const filterData = [];
     const filterData2 = this._data.schemeWise;
     const filterData1 = [];
@@ -382,6 +386,7 @@ export class RightFilterComponent implements OnInit {
   }
 
   changeFilterAmc() {
+    (this.amcObj.length == 0) ?  this.showError = 'amc' : this.showError = null ;
     this.obj = this.mfService.filterScheme(this.amc);
     this.folio = this.obj.filterData;
     this.familyMember = [...new Map(this.obj.filterData2.map(item => [item.familyMemberId, item])).values()];
@@ -392,6 +397,7 @@ export class RightFilterComponent implements OnInit {
   }
 
   changeFilterScheme() {
+    (this.schemeObj.length == 0) ? this.showError = 'scheme' : this.showError = null ;
     this.obj = this.mfService.filterScheme(this.scheme);
     this.folio = this.obj.filterData;
     this.familyMember = [...new Map(this.obj.filterData2.map(item => [item.familyMemberId, item])).values()];
