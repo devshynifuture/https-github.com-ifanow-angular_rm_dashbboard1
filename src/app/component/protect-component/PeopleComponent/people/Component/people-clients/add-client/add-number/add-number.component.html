@@ -9,7 +9,8 @@
                 <mat-form-field floatLabel="never" appearance="standard">
                     <mat-select formControlName="code" placeholder="Select Country Code" class="form-control">
                         <mat-option value="" selected disabled>Select Country Code</mat-option>
-                        <mat-option [value]="code" *ngFor="let code of countryCodes">{{code}}</mat-option>
+                        <mat-option [value]="singleCode.id" *ngFor="let singleCode of countryCodes">{{singleCode.code}}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>

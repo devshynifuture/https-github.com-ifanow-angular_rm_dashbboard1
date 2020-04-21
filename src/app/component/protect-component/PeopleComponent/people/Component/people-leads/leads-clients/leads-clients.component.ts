@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {PeopleService} from '../../../../people.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { PeopleService } from '../../../../people.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-leads-clients',
@@ -38,8 +38,8 @@ export class LeadsClientsComponent implements OnInit {
 
   ngOnInit() {
     this.convertClientForm = this.fb.group({
-      clientOwner: [, [Validators.required]],
-      confirmRole: [, [Validators.required]],
+      clientOwner: ['', [Validators.required]],
+      confirmRole: ['', [Validators.required]],
       sendEmailFlag: [true, [Validators.required]]
     });
   }

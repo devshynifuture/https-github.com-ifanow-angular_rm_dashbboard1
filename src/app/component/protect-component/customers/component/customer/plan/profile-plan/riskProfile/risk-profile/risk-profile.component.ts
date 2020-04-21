@@ -35,10 +35,9 @@ export class RiskProfileComponent implements OnInit {
   checkFamilyMem;
   showButton;
   equityAllocationLowerLimit;
-  equityAllocationUpperLimit;
 
   clientRiskAssessmentResults;
-ClickMe(referenceKeyName) {
+  ClickMe(referenceKeyName) {
     alert(referenceKeyName.id);
   }
   onClick(referenceKeyName1) {
