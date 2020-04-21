@@ -175,6 +175,7 @@ export class IfasDetailsComponent implements OnInit {
   getBillingDetails() {
 
   }
+
   openUpperSliderBackoffice(flag, data) {
     console.log("this is what we are sending to upper slider::", flag, data);
 
