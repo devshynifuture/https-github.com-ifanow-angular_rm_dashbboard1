@@ -16,8 +16,9 @@ import {TransactionEnumService} from '../../transaction-enum.service';
 })
 export class SettingsFolioMappingComponent implements OnInit {
   // displayedColumns: string[] = ['position', 'name', 'schemeName', 'iname', 'hold', 'map'];
-  displayedColumns: string[] = ['folioNumber', 'schemeName', 'name', 'hold', 'map'];
-
+  displayedColumnsUnmapped: string[] = ['folioNumber', 'schemeName', 'name', 'hold', 'map'];
+  displayedColumnsMapped: string[] = ['folioNumber', 'schemeName', 'name', 'accountno', 'platformtype', 'map'];
+  displayedColumns = [];
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   filterData: any;
@@ -81,6 +82,8 @@ export class SettingsFolioMappingComponent implements OnInit {
   }
 
   getFolioMappedData() {
+    this.displayedColumns = this.displayedColumnsMapped;
+
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     (this.clientData == undefined) ? this.clientData = {clientId: '', familyMemberId: ''} : '';
@@ -109,6 +112,7 @@ export class SettingsFolioMappingComponent implements OnInit {
   }
 
   getFolioUnmappedData() {
+    this.displayedColumns = this.displayedColumnsUnmapped;
     this.dataSource.data = [{}, {}, {}];
     this.isLoading = true;
     (this.clientData == undefined) ? this.clientData = {clientId: '', familyMemberId: ''} : '';
