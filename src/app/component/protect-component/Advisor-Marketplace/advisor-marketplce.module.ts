@@ -18,6 +18,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material';
+import {MatCardModule} from '@angular/material/card';
 
 import {MatRadioModule} from '@angular/material/radio';
 import { MarketplaceProfileEditComponent } from './advisor-marketplace/marketplace-profile/marketplace-profile-edit/marketplace-profile-edit.component';
@@ -56,7 +57,8 @@ import { MarketplaceReviewReplyComponent } from './advisor-marketplace/marketpla
     MatIconModule,
     MatRadioModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatCardModule
   ]
 })
 export class AdvisorMarketplceModule { }
