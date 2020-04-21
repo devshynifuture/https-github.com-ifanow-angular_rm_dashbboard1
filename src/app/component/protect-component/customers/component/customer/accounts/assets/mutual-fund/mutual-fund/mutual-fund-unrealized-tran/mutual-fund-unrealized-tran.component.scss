@@ -20,12 +20,28 @@
         }
     }
 }
+
 .example-viewport {
     height: 200px;
     border: 1px solid black;
-  }.wrapper {
-    height: 300px;
-  }
-  .hide {
+}
+
+.wrapper {
+    height: 200px;
+}
+
+.hide {
     display: none;
-  }
+}
+
+.pdfClass {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin-right: 10px;
+}
+
+.cdk-virtual-scroll-viewport {
+    overflow: hidden !important;
+}
