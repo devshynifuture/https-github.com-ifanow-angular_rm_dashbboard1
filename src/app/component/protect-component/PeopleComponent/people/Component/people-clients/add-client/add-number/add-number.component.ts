@@ -28,19 +28,17 @@ export class AddNumberComponent implements OnInit {
     addRemove: 'col-md-1',
   }
   placeHolderObj = ['Enter Primary Number', 'Enter Secondary Number']
-  countryCodes: Array<string> = ['+91', '+92', "+93"];
   isdCodes: any;
   countryCode: any;
   lengthControl: number;
 
   ngOnInit() {
-    if (this.isResidential) {
-      this.countryCodes = ['+1'];
-    }
   }
 
   constructor(private fb: FormBuilder, private utilService: UtilService, private peopleService: PeopleService) {
   }
+
+  // if this input not used anywhere then remove it
   @Input() set userData(userdetailData) {
     if (userdetailData == undefined) {
       return;
@@ -54,6 +52,7 @@ export class AddNumberComponent implements OnInit {
       }
     }
   };
+
   getIsdCodesData() {
     let obj = {};
     this.peopleService.getIsdCode(obj).subscribe(
@@ -61,12 +60,16 @@ export class AddNumberComponent implements OnInit {
         if (data) {
           console.log(data);
           this.isdCodes = data;
-          this.isdCodes.filter(element => element.code != '+91');
-          this.countryCode = data[0]
+          if(this.isResidential) {
+            this.isdCodes = this.isdCodes.filter(element => element.code == '+91');
+          } else {
+            this.isdCodes = this.isdCodes.filter(element => element.code != '+91');
+          }
         }
       }
     )
   }
+  
   @Input() set numberList(data) {
     this.numberFormGroup = this.fb.group({
       mobileNo: new FormArray([])
