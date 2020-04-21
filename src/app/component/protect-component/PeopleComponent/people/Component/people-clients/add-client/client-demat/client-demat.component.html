@@ -124,8 +124,8 @@
             </div>
         </div>
     </div>
-    <app-add-number *ngIf="dematList" [numberList]="dematList.mobileDataList" [flag]="mobileNumberFlag"
-        (numberArray)="getNumberDetails($event)"></app-add-number>
+    <app-add-number *ngIf="dematList" [isResidential]="userData.taxStatusId" [numberList]="dematList.mobileDataList"
+        [flag]="mobileNumberFlag" (numberArray)="getNumberDetails($event)"></app-add-number>
     <!-- <div class="row pt-44">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-8">Nominee</h5>

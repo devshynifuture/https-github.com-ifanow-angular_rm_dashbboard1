@@ -75,10 +75,11 @@
                     </div>
                 </div>
             </div>
-            <app-add-number [userData]="basicDetailsData" [numberList]=" basicDetailsData.mobileList"
-                [flag]="mobileNumberFlag" (numberArray)="getNumberDetails($event)" [isResidential]="true">
+            <!-- [userData]="basicDetailsData" -->
+            <app-add-number [numberList]=" basicDetailsData.mobileList" [flag]="mobileNumberFlag"
+                (numberArray)="getNumberDetails($event)" [isResidential]="invTaxStatus">
             </app-add-number>
-            <div class="row pt-44">
+            <div class=" row pt-44">
                 <div class="col-md-4 text-right">
                     <h5 class="m-0 pt-20">PAN</h5>
                 </div>
@@ -477,7 +478,7 @@
                 </div>
             </div>
             <app-add-number [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag"
-                (numberArray)="getNumberDetails($event)" [isResidential]="true"></app-add-number>
+                (numberArray)="getNumberDetails($event)" [isResidential]="invTaxStatus"></app-add-number>
             <div class="row pt-44">
                 <div class="col-md-4 text-right">
                     <h5 class="m-0 pt-20">PAN</h5>
@@ -640,7 +641,7 @@
             </div>
 
             <app-add-number [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag"
-                (numberArray)="getNumberDetails($event)" [isResidential]="true"></app-add-number>
+                (numberArray)="getNumberDetails($event)" [isResidential]="invTaxStatus"></app-add-number>
 
             <div class="row pt-44">
                 <div class="col-md-4 text-right">
