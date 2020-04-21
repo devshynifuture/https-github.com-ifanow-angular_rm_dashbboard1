@@ -81,7 +81,7 @@
                                 <div class="col-md-4 pr-0 pl-12">
                                     <p class="text-custom m-0">Amount invested</p>
                                     <h5 class="m-0 text-black relClass">
-                                        <div class="bar">
+                                        <div class="bar height24">
                                         <span appFormatNumber *ngIf="totalValue.totalTransactionAmt"> {{(totalValue)?(totalValue.totalTransactionAmt):0}}</span>
                                         </div>
                                     </h5>
@@ -89,14 +89,14 @@
                                 <div class="col-md-4 pr-0 pl-12">
                                     <p class="text-custom m-0">Unrealized gain/loss</p>
                                     <h5 class="m-0 text-success relClass height24">
-                                        <div class="bar" *ngIf="isLoading"></div>
+                                        <div class="bar height24" *ngIf="isLoading"></div>
                                         <span appFormatNumber *ngIf="totalValue.totalGain && !isLoading">{{(totalValue.totalGain)?(totalValue.totalGain):0}}</span>
                                     </h5>
                                 </div>
                                 <div class="col-md-4 pr-0 pl-12">
                                     <p class="text-custom m-0">Returns</p>
                                     <h5 class="m-0 text-success relClass height24">
-                                        <div class="bar">
+                                        <div class="bar height24">
                                         <span *ngIf="totalValue.xirr">{{totalValue.xirr | number:'1.2-2'}}</span>% <i class="material-icons f-14 f-700"  *ngIf="!isLoading">
                       arrow_upward
                     </i>

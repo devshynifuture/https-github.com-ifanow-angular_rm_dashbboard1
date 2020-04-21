@@ -34,6 +34,7 @@ export class RiskProfileComponent implements OnInit {
   showErrorMsg
   checkFamilyMem;
   showButton;
+  progressBar;
   scoreStatus;
   equityAllocationLowerLimit;
 
@@ -54,7 +55,7 @@ export class RiskProfileComponent implements OnInit {
     this.getRiskProfileList();
     this.getdataForm('');
     this.sendRiskList = [];
-    this.progressBar = [];
+   // this.progressBar = [];
     this.statusArray = [];
     this.showLoader = true;
     this.showErrorMsg = false

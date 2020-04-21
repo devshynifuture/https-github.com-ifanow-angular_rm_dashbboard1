@@ -143,7 +143,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         }
       }
       if (result.isRefreshRequired) {
-        this.getAllFileList(1,'create')
+        this.getAllFileList(1, 'create')
       }
 
     });
@@ -339,11 +339,11 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     this.getSort = this.dataToCommon;
     this.dataToCommon.push.apply(this.dataToCommon, this.allFiles);
     if (this.dataToCommon.openFolderId == undefined || this.openFolderName.length == 0) {
-      Object.assign(this.dataToCommon, { openFolderNm: value.folderName});
+      Object.assign(this.dataToCommon, { openFolderNm: value.folderName });
       Object.assign(this.dataToCommon, { openFolderId: value.id });
-      this.parentId = (value.id == undefined) ? 0 : value.id; 
-        this.openFolderName.push(this.dataToCommon);
-        this.valueFirst = this.openFolderName[0];
+      this.parentId = (value.id == undefined) ? 0 : value.id;
+      this.openFolderName.push(this.dataToCommon);
+      this.valueFirst = this.openFolderName[0];
       if (this.dataToCommon.length > 0) {
         this.dataToCommon.forEach(element => {
           if (element.fileName) {
@@ -371,7 +371,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   keyPress(event, tabValue) {
     if (event == '') {
-      this.getAllFileList(1,'reset')
+      this.getAllFileList(1, 'reset')
       this.showResult = false;
     } else {
       console.log('search', event);
@@ -490,6 +490,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     console.log(data);
     if (value == 'shareLink' || value == 'share') {
       console.log('shareLink', data)
+      this.urlShorten(data)
       this.verifyEmail(data, value)
     } else {
       window.open(data);
@@ -725,7 +726,24 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       frmData.append('fileUpload', this.myFiles[i]);
     }
   }
+  urlShorten(value) {
+    console.log('value', value)
 
+    var link =
+     { "destination":value , 
+     "domain": { "fullName": "rebrand.ly" } 
+    }
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json');
+    headers = headers.append('apikey', 'b96683be9a4742979e78c6011a3ec2ca');
+    headers = headers.append('workspace', 'futurewise');
+    this.http.post('https://api.rebrandly.com/v1/links', link, headers).subscribe((responseData) => {
+      console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
+      if (responseData == null) {
+      }
+      console.log(responseData)
+    });
+  }
   uploadFile(element, fileName) {
     this.countFile++;
     this.parentId = element
@@ -753,10 +771,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         setTimeout(() => {
           this._bottomSheet.dismiss()
           this.eventService.openSnackBar('Uploaded successfully', 'Dismiss');
-        },600);
+        }, 600);
         setTimeout(() => {
           this.getAllFileList(1, 'uplaodFile')
-        },600);
+        }, 600);
       }
     });
 
