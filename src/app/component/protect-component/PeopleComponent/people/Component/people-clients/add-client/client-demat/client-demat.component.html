@@ -71,7 +71,7 @@
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter Depository ID" autocomplete="off" appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" formControlName="depositoryPartId" matInput
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="depositoryPartId" matInput
                         class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -86,7 +86,7 @@
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter Demat client ID" autocomplete="off" appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" formControlName="dematClientId" matInput
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="dematClientId" matInput
                         class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -261,9 +261,6 @@
           </button> -->
             <!-- <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
           </button> -->
-            <app-progress-button *ngIf="fieldFlag==undefined" (btnClick)="saveNext('Save')" [options]="barButtonOptions"
-                class="br-0 text-inherit ml-12">
-            </app-progress-button>
             <app-progress-button (btnClick)="saveNext('Save')" [options]="barButtonOptions"
                 class="br-0 text-inherit ml-12">
             </app-progress-button>

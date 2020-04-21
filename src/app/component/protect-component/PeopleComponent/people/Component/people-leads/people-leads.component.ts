@@ -18,7 +18,7 @@ import { PdfGenService } from 'src/app/services/pdf-gen.service';
 })
 export class PeopleLeadsComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'lsource', 'lrating',/*'status', 'rating',*/ 'lead',
-    'icon', 'icons'];
+    'icons'];
   leadDataSource = new MatTableDataSource();
   isLoading: boolean;
   advisorId: any;
@@ -50,6 +50,7 @@ export class PeopleLeadsComponent implements OnInit {
             }
           });
           this.leadDataSource.data = data;
+          this.leadDataSource.sort = this.tableEl;
         }
         else {
           this.leadDataSource.data = [];
