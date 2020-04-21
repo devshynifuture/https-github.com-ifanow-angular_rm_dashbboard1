@@ -31,8 +31,14 @@ export class RiskProfileComponent implements OnInit {
   showLoader: boolean;
   isLoading = false
   statusArray: any;
+  showErrorMsg
   checkFamilyMem;
-  onClickMe(referenceKeyName) {
+  showButton;
+  equityAllocationLowerLimit;
+  equityAllocationUpperLimit;
+
+  clientRiskAssessmentResults;
+ClickMe(referenceKeyName) {
     alert(referenceKeyName.id);
   }
   onClick(referenceKeyName1) {
@@ -41,7 +47,7 @@ export class RiskProfileComponent implements OnInit {
   constructor(private fb: FormBuilder, public planService: PlanService, private subInjectService: SubscriptionInject) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    
+
   }
 
   ngOnInit() {
