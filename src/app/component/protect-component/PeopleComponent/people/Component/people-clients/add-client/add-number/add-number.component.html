@@ -1,14 +1,13 @@
 <div *ngIf="mobileListResponse" [formGroup]="numberFormGroup">
-    <div *ngFor="let numberForm of getMobileNumList.controls;index as i" [formGroup]="numberForm" class="row"
-        [ngClass]="classObj.topPadding">
+    <div *ngFor="let numberForm of getMobileNumList.controls;index as i" [formGroup]="numberForm" class="row" [ngClass]="classObj.topPadding">
         <div class="text-right" [ngClass]="classObj.label">
-            <h5 class="m-0 pt-12">{{flag}}</h5>
+            <h5 class="m-0 pt-20">{{flag}}</h5>
         </div>
 
         <div [ngClass]="classObj.code">
             <div class="form-group mb-0">
-                <mat-form-field>
-                    <mat-select formControlName="code" class="form-control">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <mat-select formControlName="code" placeholder="Select Country Code" class="form-control">
                         <mat-option value="" selected disabled>Select Country Code</mat-option>
                         <mat-option [value]="code" *ngFor="let code of countryCodes">{{code}}</mat-option>
                     </mat-select>
@@ -19,9 +18,7 @@
         <div class="" [ngClass]="classObj.mobile">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input #num placeholder={{placeHolderObj[i]}} formControlName="number" appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" autocomplete="off" formControlName="number"
-                        matInput class="form-control" maxlength="10">
+                    <input #num placeholder={{placeHolderObj[i]}} formControlName="number" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" autocomplete="off" formControlName="number" matInput class="form-control" maxlength="10">
                     <mat-hint *ngIf="i > (minimumCompulsary -1)">Optional</mat-hint>
                     <mat-hint align="end">{{num.value.length}}/10</mat-hint>
                     <mat-error *ngIf="numberForm.get('number').errors?.required">This field is required</mat-error>
@@ -30,7 +27,7 @@
             </div>
         </div>
 
-        <div class="d-flex align-items-center" [ngClass]="classObj.addRemove">
+        <div class="d-flex align-items-center mt-16" [ngClass]="classObj.addRemove">
             <i *ngIf="getMobileNumList.length==1" (click)="addNumber(null)" class="material-icons c-p f-20">
                 add
             </i>
