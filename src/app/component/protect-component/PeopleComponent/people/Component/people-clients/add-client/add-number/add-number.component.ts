@@ -47,7 +47,7 @@ export class AddNumberComponent implements OnInit {
     }
     else {
       if (userdetailData.taxStatusId == 1) {
-        this.isdCodes = { code: '+91' }
+        this.isdCodes = { code: '+91', value: 73 }
       }
       else {
         this.getIsdCodesData();
@@ -106,12 +106,12 @@ export class AddNumberComponent implements OnInit {
       if (this.compulsionCount < this.minimumCompulsary) {
         this.compulsionCount++;
         this.getMobileNumList.push(this.fb.group({
-          code: [''],
+          code: [data.id],
           number: [data.mobileNo, [Validators.pattern(this.validatorType.TEN_DIGITS), Validators.required]]
         }));
       } else {
         this.getMobileNumList.push(this.fb.group({
-          code: [''],
+          code: [data.id],
           number: [data.mobileNo, Validators.pattern(this.validatorType.TEN_DIGITS)]
         }));
       }

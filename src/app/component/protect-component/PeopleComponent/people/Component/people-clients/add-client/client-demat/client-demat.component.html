@@ -15,7 +15,8 @@
             <h5 class="m-0 pt-8">Mode of holding</h5>
         </div>
         <div class="col-md-7 p-0 mode-holding">
-            <mat-radio-group formControlName="modeOfHolding" [(ngModel)]="holdingMode" aria-label="Select an option">
+            <mat-radio-group (change)="changeHoldingType($event)" formControlName="modeOfHolding"
+                [(ngModel)]="holdingMode" aria-label="Select an option">
                 <mat-radio-button value="1"
                     [ngClass]="{'bu-primary': holdingMode=='1','borderRadio': holdingMode=='2','text-primary': holdingMode=='1','text-custom': holdingMode=='2'}"
                     class="borderRadio">Single

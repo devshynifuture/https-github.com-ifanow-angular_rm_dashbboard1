@@ -239,7 +239,7 @@ export class ClientBasicDetailsComponent implements OnInit {
             mobileList.push({
               userType: 2,
               mobileNo: element.get('number').value,
-              ifscCode: 73
+              ifscCode: element.get('code').value
             });
           }
         });
@@ -382,7 +382,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       mobileList.push({
         mobileNo: element.get('number').value,
         verificationStatus: 0,
-        ifscCode: 73
+        ifscCode: element.get('code').value
       });
     });
     if (this.invTypeCategory == '1') {
