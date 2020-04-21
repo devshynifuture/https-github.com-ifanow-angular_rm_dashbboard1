@@ -70,8 +70,8 @@
                         </div>
                         <div class="col-md-12 p-0">
                             <p class="m-0 text-custom pt-20 pl-8">Current value</p>
-                            <h2 class="m-0 f-300 text-black pt-4 pl-8 pb-16 relClass height24">
-                                <div class="bar" appFormatNumber *ngIf="totalValue.currentValue">
+                            <h2 class="m-0 f-300 text-black pt-4 pl-8 pb-16 relClass">
+                                <div [ngClass]="isLoading ? 'height24': ''" class="bar" *ngIf="totalValue.currentValue">
                                     {{(totalValue.currentValue) ? (totalValue.currentValue) : 0}}
                                 </div>
                             </h2>
@@ -1144,9 +1144,9 @@
                         <td style="text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
                             Total
                         </td>
-                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" [value]="totalValue.totalTransactionAmt">
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber [value]="totalValue.totalTransactionAmt">
                         </td>
-                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" [value]="totalValue.currentValue">
+                        <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;" appFormatNumber [value]="totalValue.currentValue">
                         </td>
                         <td style="text-align: left; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
                             {{totalValue.absReturn | number:'1.2-2'}}</td>
