@@ -34,6 +34,9 @@
         </div>
         <div class="col-md-3 pr-0">
             <button mat-raised-button color="primary" (click)="open('riskProfile', null)">History</button>
+            <div class="col-md-6 mb-16 text-right">
+                <button mat-raised-button color="primary"(click)="showRisk = false">Risk assessment</button>
+            </div>
             <div class="p-20 b-primitive mt-8">
                 <mat-progress-bar mode="determinate" value="{{this.progressBar}}"></mat-progress-bar>
                 <h5 class="pt-8 m-0 pt-12 text-center">{{this.statusArray.length}} of 15 completed</h5>

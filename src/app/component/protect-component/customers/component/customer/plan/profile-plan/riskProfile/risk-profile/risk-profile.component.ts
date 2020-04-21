@@ -51,7 +51,7 @@ export class RiskProfileComponent implements OnInit {
     this.statusArray = [];
     this.showLoader = true;
     this.showErrorMsg = false
-    this.showButton = true
+    this.showButton = false
     this.count = 0
   }
 
@@ -243,7 +243,7 @@ export class RiskProfileComponent implements OnInit {
         this.checkFamilyMem = item.question.includes(element.question);
         console.log(this.checkFamilyMem)
       });
-      if( this.checkFamilyMem == false && this.statusArray.length > 16){
+      if( this.checkFamilyMem == false){
         this.statusArray.push(item)
         this.progressBar = this.statusArray.length * 7
       }
@@ -264,12 +264,14 @@ export class RiskProfileComponent implements OnInit {
 
   getRiskProfileList() {
     // let obj = {}
+    this.showButton = false
     this.planService.getRiskProfile('').subscribe(
       data => this.getRiskProfilRes(data)
     );
   }
 
   getRiskProfilRes(data) {
+    this.showButton = true
     console.log(data);
     this.showLoader = false;
     this.riskAssessments = data.riskAssessments;
@@ -310,7 +312,6 @@ export class RiskProfileComponent implements OnInit {
 
   submitRiskRes(data) {
     this.isLoading = false
-
     this.showRisk = true;
     setTimeout(() => {
       this.guageFun('Gauge');
