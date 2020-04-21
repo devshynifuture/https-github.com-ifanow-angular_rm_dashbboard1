@@ -129,5 +129,10 @@
             <tr *matRowDef=" let row; columns: displayedColumns;" mat-row></tr>
 
         </table>
+        <div class="col-md-12 p-0" *ngIf="dataSource.data === null">
+            <h5 class="text-center b-a p-44">
+                No Data Found
+            </h5>
+        </div>
     </div>
 </div>

@@ -23,12 +23,10 @@ export class MyIfasComponent implements OnInit {
     private subInjectService: SubscriptionInject, private supportService: SupportService, private eventService: EventService
   ) { }
 
-  dataSource;
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
   displayedColumns = ['adminName', 'email', 'mobile', 'usingSince', 'lastLogin', 'accStatus', 'plan', 'nextBilling', 'team', 'arn', 'logout', 'menu']
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
-    this.dataSource.sort = this.sort;
     this.getMyIfasList();
   }
 
@@ -59,6 +57,9 @@ export class MyIfasComponent implements OnInit {
             })
           });
           this.dataSource.data = tableArray;
+          this.dataSource.sort = this.sort;
+        } else {
+          this.dataSource.data = null;
         }
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
@@ -96,6 +97,9 @@ export class MyIfasComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getMyIfasList();
+          }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }

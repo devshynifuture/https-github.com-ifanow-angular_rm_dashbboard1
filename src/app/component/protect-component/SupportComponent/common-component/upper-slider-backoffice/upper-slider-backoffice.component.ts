@@ -37,7 +37,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
   isLoading: boolean = false;
   aumList: any;
   mutualFundIds: any[] = [];
-  advisorId = AuthService.getAdvisorId();
+  // advisorId = AuthService.getAdvisorId();
+  advisorId = 2808;
   rtId: any;
   didAumReportListGot: boolean = false;
   aumListReportValue: any[] = [];
@@ -56,7 +57,6 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   ngOnInit() {
     this.teamMemberListGet();
-
   }
 
   handlingDataVariable() {
@@ -89,6 +89,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
     this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
       .subscribe(data => {
         if (data && data.length !== 0) {
+          console.log("team members: ", data)
           data.forEach(element => {
             this.adminAdvisorIds.push(element.adminAdvisorId);
           });
@@ -224,7 +225,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
         mutualFundIds.push(element.mutualFundId);
       });
       data = {
-        advisorId: this.advisorId,
+        advisorIds: [this.advisorId],
         folio: mutualFundIds
       }
     } else {
