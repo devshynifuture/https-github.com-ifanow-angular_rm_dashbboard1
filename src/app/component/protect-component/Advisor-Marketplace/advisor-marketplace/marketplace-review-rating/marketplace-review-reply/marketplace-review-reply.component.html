@@ -1,0 +1,15 @@
+<div class="popup-header-fix-40">
+    <div class="row bb-1">
+        <div class="col-lg-8 p-0">
+            <h4 class="mb-0 wrapper-20"> Marketplace {{ data.flag == 'reply' ? 'Review Reply': '' }}
+                {{ data.flag  === 'faq'? 'Review and ratings FAQ': (data.flag === 'guidelines' ? 'Review and ratings Guidelines': '')}}
+            </h4>
+        </div>
+        <div class="col-lg-4 text-right">
+            <div class="wrapper-12">
+                <!-- (click)="Close(false)" removed for prod build -->
+                <i class="material-icons c-p pt-8 v-middle" (click)="dialogClose()"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>

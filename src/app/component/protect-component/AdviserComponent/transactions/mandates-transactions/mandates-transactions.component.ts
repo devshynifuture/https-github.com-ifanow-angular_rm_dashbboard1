@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { OnlineTransactionService } from '../online-transaction.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { MatTableDataSource, MatSort } from '@angular/material';
-import { DetailedViewMandateComponent } from './detailed-view-mandate/detailed-view-mandate.component';
-import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { MandateCreationComponent } from '../overview-transactions/MandateCreation/mandate-creation/mandate-creation.component';
-import { VerifyMemberComponent } from '../overview-transactions/MandateCreation/verify-member/verify-member.component';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {OnlineTransactionService} from '../online-transaction.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {MatSort, MatTableDataSource} from '@angular/material';
+import {DetailedViewMandateComponent} from './detailed-view-mandate/detailed-view-mandate.component';
+import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {MandateCreationComponent} from '../overview-transactions/MandateCreation/mandate-creation/mandate-creation.component';
+import {VerifyMemberComponent} from '../overview-transactions/MandateCreation/verify-member/verify-member.component';
 
 @Component({
   selector: 'app-mandates-transactions',
@@ -22,43 +22,49 @@ export class MandatesTransactionsComponent implements OnInit {
   dataSource = new MatTableDataSource(this.data);
   clientId: any;
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
 
-  constructor( private onlineTransact: OnlineTransactionService,private eventService:EventService,
-    private subInjectService : SubscriptionInject) { }
+  constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService,
+              private subInjectService: SubscriptionInject) {
+  }
 
   isLoading = false;
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getNSEAchmandate()
+    this.getNSEAchmandate();
   }
+
   getNSEAchmandate() {
     this.dataSource.data = [{}, {}, {}];
     this.isLoading = true;
-    let obj1 = {
-     advisorId:this.advisorId,
-    }
+    const obj1 = {
+      advisorId: this.advisorId,
+    };
     this.onlineTransact.getMandateList(obj1).subscribe(
       data => this.getMandateListRes(data), (error) => {
         this.isLoading = false;
+        this.dataSource.data = [];
         this.eventService.showErrorMessage(error);
       }
     );
   }
-  getMandateListRes(data){
+
+  getMandateListRes(data) {
     this.isLoading = false;
     console.log(data);
-    this.dataSource.data=data;
-     this.dataSource.sort = this.sort;
+    this.dataSource.data = data;
+    this.dataSource.sort = this.sort;
   }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.dataSource.sort = this.sort;
   }
-  openMandateDetails(data){
+
+  openMandateDetails(data) {
     console.log('this is detailed potd data', data);
     const fragmentData = {
       flag: 'detailPoTd',
@@ -82,7 +88,7 @@ export class MandatesTransactionsComponent implements OnInit {
     );
   }
   ownerDetail() {
-    
+
     // const obj = {
     //   clientId: this.familyMemberData.clientId,
     //   advisorId: this.familyMemberData.advisorId,
@@ -96,28 +102,30 @@ export class MandatesTransactionsComponent implements OnInit {
     //   },
     //   err => this.eventService.openSnackBar(err, 'Dismiss')
     // );
-}
-openMandateClient(data){
-  const fragmentData = {
-    flag: 'mandate',
-    data,
-    id: 1,
-    state: 'open',
-    componentName: VerifyMemberComponent
-  };
-  const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-    sideBarData => {
-      console.log('this is sidebardata in subs subs : ', sideBarData);
+  }
 
-      if (UtilService.isRefreshRequired(sideBarData)) {
-        console.log('this is sidebardata in subs subs 2: ', sideBarData);
+  openMandateClient(data) {
+    const fragmentData = {
+      flag: 'mandate',
+      data,
+      id: 1,
+      state: 'open',
+      componentName: VerifyMemberComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
 
+        if (UtilService.isRefreshRequired(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+
+        }
       }
-    }
-  );
-}
-  openMandate(data){
-    //var data = this.clientCodeData
+    );
+  }
+
+  openMandate(data) {
+    // var data = this.clientCodeData
     const fragmentData = {
       flag: 'mandate',
       data,

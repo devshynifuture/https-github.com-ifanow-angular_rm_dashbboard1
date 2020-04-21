@@ -125,6 +125,8 @@ export class ClientBankComponent implements OnInit {
       },
         err => {
           console.log(err, 'error internet');
+          this.isIfsc = false;
+          this.bankForm.get('ifscCode').setErrors({ invalidIfsc: true })
           this.bankData(err);
         });
     }

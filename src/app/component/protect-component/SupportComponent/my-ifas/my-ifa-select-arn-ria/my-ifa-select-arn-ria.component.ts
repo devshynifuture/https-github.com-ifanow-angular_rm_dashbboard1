@@ -31,9 +31,9 @@ export class MyIfaSelectArnRiaComponent implements OnInit {
   });
 
   ngOnInit() {
-    console.log('fragmentData', this.fragmentData)
+    console.log('fragmentData', this.fragmentData);
     this.dataToSend = this.fragmentData.mainData;
-    this.options = this.fragmentData.flag;
+    this.options = this.fragmentData.brokerCodeValue;
     this.options.forEach(element => {
       element.selected = false
     });
@@ -41,50 +41,31 @@ export class MyIfaSelectArnRiaComponent implements OnInit {
   }
 
   selectedOtp(value) {
-    console.log('selectedOtp', value)
     value.selected = true;
     this.selectedOption = value;
+    console.log('selectedOtp', value);
+    this.selectArnRiaForm.patchValue({ arnOrRia: value['id'] });
   }
 
-  openUpperModule(flag, data) {
-    if (flag == 'report') {
-      data.startRecon = false;
-    } else {
-      data.startRecon = true;
-    }
+  openUpperSliderBackoffice(flag, data) {
+    this.dialogClose();
+    // data = this.fragmentData.mainData
+    // data.rtId = this.rtId
     const fragmentData = {
       flag,
       id: 1,
-      data,
+      data: {
+        ...data,
+        startRecon: flag === 'startRecon' ? true : (flag === 'report' ? false : null),
+        brokerId: this.selectArnRiaForm.get('arnOrRia').value,
+        rtId: this.rtId,
+        flag
+      },
       direction: 'top',
       componentName: UpperSliderBackofficeComponent,
       state: 'open'
     };
-    // this.router.navigate(['/subscription-upper'])
-    AuthService.setSubscriptionUpperSliderData(fragmentData);
-    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-      upperSliderData => {
-        if (UtilService.isDialogClose(upperSliderData)) {
-          // this.getClientSubscriptionList();
-          subscription.unsubscribe();
-
-        }
-      }
-    );
-
-  }
-  openUpperSliderBackoffice(flag, data) {
-    this.dialogClose();
-    data = this.fragmentData.mainData
-    data.rtId = this.rtId
-    const fragmentData = {
-      flag: "clients",
-      id: 1,
-      data,
-      direction: 'top',
-      componentName: UpperSliderBackofficeComponent,
-      state: 'open'
-    };
+    console.log(fragmentData);
     // this.router.navigate(['/subscription-upper'])
     AuthService.setSubscriptionUpperSliderData(fragmentData);
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
@@ -101,9 +82,10 @@ export class MyIfaSelectArnRiaComponent implements OnInit {
   }
 
   start() {
+    console.log(this.selectArnRiaForm);
     if (this.selectArnRiaForm.valid) {
       this.dialogClose();
-      this.openUpperModule('', '');
+      this.openUpperSliderBackoffice('startRecon', '');
       this.subscriptionInject.changeNewRightSliderState({ state: 'close' });
     } else if (this.selectArnRiaForm.invalid) {
       this.selectArnRiaForm.get('arnOrRia').markAsTouched();

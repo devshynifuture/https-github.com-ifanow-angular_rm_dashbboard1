@@ -35,7 +35,9 @@ export class SettingsClientMappingComponent implements OnInit {
 
   @ViewChild(MatSort, {static: false}) sort: MatSort;
 
-  constructor(public dialog: MatDialog, private onlineTransact: OnlineTransactionService, private eventService: EventService, private utilService: UtilService, private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) {
+  constructor(public dialog: MatDialog, private onlineTransact: OnlineTransactionService,
+              private eventService: EventService, private utilService: UtilService,
+              private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) {
   }
 
   ngOnInit() {
@@ -46,13 +48,17 @@ export class SettingsClientMappingComponent implements OnInit {
   }
 
   getFilterOptionData() {
-    let obj = {
+    const obj = {
       advisorId: this.advisorId,
       onlyBrokerCred: true
     };
     console.log('encode', obj);
     this.onlineTransact.getBSECredentials(obj).subscribe(
-      data => this.getFilterOptionDataRes(data)
+      data => this.getFilterOptionDataRes(data), error => {
+        this.isLoading = false;
+        this.dataSource.data = [];
+        this.eventService.openSnackBar(error, 'Dismiss');
+      }
     );
   }
 
@@ -75,12 +81,11 @@ export class SettingsClientMappingComponent implements OnInit {
   getMappedData() {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
-    let obj =
-      {
-        advisorId: this.advisorId,
-        tpUserCredentialId: this.selectedBrokerCode.id,
-        aggregatorType: this.selectedPlatform.aggregatorType
-      };
+    const obj = {
+      advisorId: this.advisorId,
+      tpUserCredentialId: this.selectedBrokerCode.id,
+      aggregatorType: this.selectedPlatform.aggregatorType
+    };
     this.tranService.getMapppedClients(obj).subscribe(
       data => {
         console.log(data);
@@ -95,6 +100,8 @@ export class SettingsClientMappingComponent implements OnInit {
       },
       err => {
         this.isLoading = false;
+        this.dataSource.data = [];
+        this.eventService.openSnackBar(err, 'Dismiss');
       }
     );
   }
@@ -118,49 +125,55 @@ export class SettingsClientMappingComponent implements OnInit {
   getUnmappedData() {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
-    let obj =
-      {
-        advisorId: this.advisorId,
-        tpUserCredentialId: this.selectedBrokerCode.id,
-        aggregatorType: this.selectedPlatform.aggregatorType
-      };
+    const obj = {
+      advisorId: this.advisorId,
+      tpUserCredentialId: this.selectedBrokerCode.id,
+      aggregatorType: this.selectedPlatform.aggregatorType
+    };
     this.tranService.getUnmappedClients(obj).subscribe(
       data => {
         console.log(data);
         if (data) {
           this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
           this.dataSource.sort = this.sort;
+        } else {
+          this.dataSource.data = [];
         }
         this.isLoading = false;
       },
       err => {
+        this.dataSource.data = [];
         this.isLoading = false;
+        this.eventService.openSnackBar(err, 'Dismiss');
       }
     );
   }
 
   unmapClient(value, data) {
     const dialogData = {
-      data: data,
+      data,
       header: 'UNMAP',
       body: 'Are you sure you want to unmap?',
       body2: 'This cannot be undone.',
       btnYes: 'CANCEL',
       btnNo: 'UNMAP',
       positiveMethod: () => {
-        let obj =
-          {
-            tpUserCredentialId: this.selectedBrokerCode.id,
-            tpUserCredFamilyMappingId: value.tpUserCredFamilyMappingId,
-            aggregatorType: this.selectedPlatform.aggregatorType
-          };
+        const obj = {
+          tpUserCredentialId: this.selectedBrokerCode.id,
+          tpUserCredFamilyMappingId: value.tpUserCredFamilyMappingId,
+          aggregatorType: this.selectedPlatform.aggregatorType
+        };
         this.onlineTransact.unmapMappedClient(obj).subscribe(
           data => {
             console.log(data);
             this.sortDataFilterWise();
             dialogRef.close();
           },
-          err => this.eventService.openSnackBar(err, 'Dismiss')
+          err => {
+            this.isLoading = false;
+            this.dataSource.data = [];
+            this.eventService.openSnackBar(err, 'Dismiss');
+          }
         );
       },
       negativeMethod: () => {
@@ -207,7 +220,7 @@ export class SettingsClientMappingComponent implements OnInit {
   }
 
   openAddMappiing(data, flag) {
-    data['flag'] = 'client';
+    data.flag = 'client';
     data.selectedBroker = this.selectedBrokerCode;
 
     const fragmentData = {

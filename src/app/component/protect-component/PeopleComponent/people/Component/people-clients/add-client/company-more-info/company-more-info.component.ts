@@ -110,6 +110,9 @@ export class CompanyMoreInfoComponent implements OnInit {
 
   saveNext(flag) {
     const mobileList = [];
+    if (this.mobileData.invalid) {
+      this.mobileData.markAllAsTouched();
+    }
     if (this.mobileData) {
       this.mobileData.controls.forEach(element => {
         console.log(element);

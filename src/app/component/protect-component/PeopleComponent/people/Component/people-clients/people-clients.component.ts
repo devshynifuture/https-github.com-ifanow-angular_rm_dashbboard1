@@ -58,6 +58,7 @@ export class PeopleClientsComponent implements OnInit {
             }
           });
           this.clientDatasource.data = data;
+          this.clientDatasource.sort = this.tableEl
         }
         else {
           this.clientDatasource.data = [];
