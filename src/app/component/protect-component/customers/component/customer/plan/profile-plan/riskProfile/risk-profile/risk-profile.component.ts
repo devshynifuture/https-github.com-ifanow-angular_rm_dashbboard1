@@ -30,7 +30,7 @@ export class RiskProfileComponent implements OnInit {
   name = 'Angular';
   showLoader: boolean;
   isLoading = false
-  statusArray : any;
+  statusArray: any;
   checkFamilyMem;
   onClickMe(referenceKeyName) {
     alert(referenceKeyName.id);
@@ -238,16 +238,16 @@ export class RiskProfileComponent implements OnInit {
     }));
   }
   checkState(item, i) {
-    if(this.statusArray.length > 0 && item.question){
+    if (this.statusArray.length > 0 && item.question) {
       this.statusArray.forEach(element => {
         this.checkFamilyMem = item.question.includes(element.question);
         console.log(this.checkFamilyMem)
       });
-      if( this.checkFamilyMem == false){
+      if (this.checkFamilyMem == false) {
         this.statusArray.push(item)
         this.progressBar = this.statusArray.length * 7
       }
-    }else if(item.question){
+    } else if (item.question) {
       this.statusArray.push(item)
       this.progressBar = this.statusArray.length * 7
     }
@@ -347,11 +347,11 @@ export class RiskProfileComponent implements OnInit {
 
     if (data != undefined) {
       this.showRisk = false
-      if(data.refreshRequired == false){
+      if (data.refreshRequired == false) {
         this.getRiskProfileList();
-      }else{
+      } else {
         this.riskAssessmentQuestionList = data.refreshRequired
-        this.statusArray = [{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]
+        this.statusArray = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
         this.progressBar = this.statusArray.length * 7
         this.showButton = false
       }
