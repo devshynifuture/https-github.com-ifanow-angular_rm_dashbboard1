@@ -557,7 +557,7 @@ export class RightFilterComponent implements OnInit {
         }
       );
 
-    } else if (this._data.name == 'ALL TRANSACTION REPORT' && this.dataToSend.toDate != todayDate) {
+    } else if (this._data.name == 'ALL TRANSACTION REPORT' && this.dataToSend.toDate && this.dataToSend.toDate != todayDate) {
       let catObj: any;
       catObj = this.mfService.categoryFilter(this.finalFilterData.mutualFundList, 'id');
       Object.keys(catObj).map(key => {
