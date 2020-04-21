@@ -303,6 +303,7 @@ export class RiskProfileComponent implements OnInit {
           riskAssessmentChoiceId: element.selectedChoiceId,
           weight: element.weight
         });
+        this.showErrorMsg = false
       }
     });
     if (this.showErrorMsg == false) {
