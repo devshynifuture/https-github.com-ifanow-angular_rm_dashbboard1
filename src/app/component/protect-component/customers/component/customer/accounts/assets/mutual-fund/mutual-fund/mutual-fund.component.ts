@@ -22,9 +22,10 @@ export class MutualFundComponent implements OnInit {
   schemeWise: any[];
   mutualFundList: any[];
   mfDataUnrealised: any;
-  isLoading = false;
+  isLoading = true;
 
   dataHolder: any = {};
+  isShow = true;
 
   constructor(public subInjectService: SubscriptionInject, public utilService: UtilService,
               public eventService: EventService, private custumService: CustomerService,
@@ -43,11 +44,6 @@ export class MutualFundComponent implements OnInit {
     const obj={
       id:data
     }
-    this.settingService.getPersonalProfile(obj).subscribe(
-      data => {
-        console.log(data);
-      }
-    );
     this.settingService.getProfileDetails(obj).subscribe(
       data => {
         console.log(data);
@@ -97,6 +93,9 @@ export class MutualFundComponent implements OnInit {
       this.mfData.viewMode = data;
       this.viewMode = data;
     }
+  }
+  changeInput(value){
+    this.isShow = value;
   }
 }
 

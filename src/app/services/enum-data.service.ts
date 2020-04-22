@@ -2,13 +2,15 @@ import {Injectable} from '@angular/core';
 import {UtilService} from './util.service';
 import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
 import {EnumServiceService} from './enum-service.service';
+import {OnlineTransactionService} from '../component/protect-component/AdviserComponent/transactions/online-transaction.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EnumDataService {
 
-  constructor(private enumService: EnumServiceService, private subService: SubscriptionService) {
+  constructor(private enumService: EnumServiceService, private subService: SubscriptionService,
+              private onlineTransactionService: OnlineTransactionService) {
   }
 
   proofType = [
@@ -89,5 +91,29 @@ export class EnumDataService {
 
       }
     );
+  }
+
+  public getDataForTaxMasterService() {
+    const obj = {bseUserId: 192};
+    this.onlineTransactionService.getTaxMasterData(obj).subscribe(
+      data => {
+        console.log('getDataForTaxMasterService data : ', data);
+
+        if (data) {
+          const taxStatusMap: any = {};
+          data.forEach(singleData => {
+            taxStatusMap[singleData.taxStatusCode] = singleData;
+          });
+          const output = {
+            taxStatusList: data,
+            taxStatusMap
+          };
+          console.log('getDataForTaxMasterService output : ', output);
+          this.enumService.addToGlobalEnumData(output);
+
+        }
+      }, error => {
+        console.error('error of', error);
+      });
   }
 }

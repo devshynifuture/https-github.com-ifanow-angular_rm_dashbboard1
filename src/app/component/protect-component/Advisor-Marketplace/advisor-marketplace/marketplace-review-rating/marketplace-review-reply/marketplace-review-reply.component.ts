@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { SubscriptionInject } from '../../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import {Component, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../../AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-marketplace-review-reply',
@@ -7,16 +7,18 @@ import { SubscriptionInject } from '../../../../AdviserComponent/Subscriptions/s
   styleUrls: ['./marketplace-review-reply.component.scss']
 })
 export class MarketplaceReviewReplyComponent implements OnInit {
+  data = {flag: ''};
 
   constructor(
     private subscriptionInject: SubscriptionInject
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
   }
 
   dialogClose() {
-    this.subscriptionInject.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+    this.subscriptionInject.changeNewRightSliderState({state: 'close', refreshRequired: true});
   }
 
 }
