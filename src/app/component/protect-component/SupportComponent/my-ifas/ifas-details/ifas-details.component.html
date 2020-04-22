@@ -109,6 +109,11 @@
                                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                             </table>
+                            <div class="col-md-12 p-0" *ngIf="franklineData.data === null">
+                                <h5 class="text-center b-a p-44">
+                                    No Data Found
+                                </h5>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -195,6 +200,11 @@
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
+                    <div class="col-md-12 p-0" *ngIf="camsData.data === null">
+                        <h5 class="text-center b-a p-44">
+                            No Data Found
+                        </h5>
+                    </div>
                 </div>
             </div>
 
@@ -215,9 +225,9 @@
                 </div>
 
             </div>
-            <div class="row" *ngIf="karvyData">
+            <div class="row">
                 <div class="back-office-table col-md-12 pl-0 overflow-hidden ">
-                    <table mat-table [dataSource]="dataSource" id="table-low" class="skeletonAnimation"
+                    <table mat-table [dataSource]="karvyData" id="table-low" class="skeletonAnimation"
                         appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="arn">
                             <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
@@ -281,6 +291,11 @@
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
+                    <div class="col-md-12 p-0" *ngIf="karvyData.data === null">
+                        <h5 class="text-center b-a p-44">
+                            No Data Found
+                        </h5>
+                    </div>
                 </div>
             </div>
         </mat-tab>
@@ -294,7 +309,8 @@
                     </h2>
                 </div>
                 <div class="back-office-table col-md-10 overflow-hidden">
-                    <table mat-table [dataSource]="dataSourceOne" id="table-low" class="">
+                    <table mat-table [dataSource]="dataSourceOne" id="table-low" class="skeletonAnimation"
+                        appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="description">
                             <th class="br" mat-header-cell *matHeaderCellDef> Description </th>
                             <td class="br" mat-cell *matCellDef="let element"> {{element.description}} </td>
@@ -326,6 +342,11 @@
                         <tr mat-header-row *matHeaderRowDef="displayedColumnsOne"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumnsOne;"></tr>
                     </table>
+                    <div class="col-md-12 p-0" *ngIf="dataSourceOne.data === null">
+                        <h5 class="text-center b-a p-44">
+                            No Data Found
+                        </h5>
+                    </div>
                 </div>
             </div>
 
@@ -343,7 +364,8 @@
 
             <div class="row">
                 <div class="back-office-table col-md-10 overflow-hidden">
-                    <table mat-table [dataSource]="dataSourceTwo" id="table-low" class="">
+                    <table mat-table [dataSource]="dataSourceTwo" id="table-low" class="skeletonAnimation"
+                        appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="type">
                             <th class="br w-12" mat-header-cell *matHeaderCellDef> Type </th>
                             <td class="br w-12" mat-cell *matCellDef="let element"> {{element.type}} </td>
@@ -380,7 +402,11 @@
                         <tr mat-header-row *matHeaderRowDef="displayedColumnsTwo"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumnsTwo;"></tr>
                     </table>
-
+                    <div class="col-md-12 p-0" *ngIf="dataSourceTwo.data === null">
+                        <h5 class="text-center b-a p-44">
+                            No Data Found
+                        </h5>
+                    </div>
                 </div>
             </div>
 
@@ -426,8 +452,8 @@
                 <div class="col-md-12 back-office-table  overflow-hidden">
                     <h3 class="f-16 mb-4">Ticket list</h3>
 
-                    <table mat-table [dataSource]="ticketList" id="table-low" appSkeletonLoading
-                        [appSkeletonLoading]="utilsService.isLoading">
+                    <table mat-table [dataSource]="ticketList" id="table-low" class="skeletonAnimation"
+                        appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="ticket">
                             <th class="br" mat-header-cell *matHeaderCellDef> Ticket </th>
                             <td class="br" mat-cell *matCellDef="let element">
@@ -491,7 +517,11 @@
                         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
                     </table>
 
-
+                    <div class="col-md-12 p-0" *ngIf="ticketList.data === null">
+                        <h5 class="text-center b-a p-44">
+                            No Data Found
+                        </h5>
+                    </div>
                 </div>
             </div>
 
@@ -502,8 +532,8 @@
                 <div class="col-md-12 back-office-table  overflow-hidden" *ngIf="dataSource4.length > 0">
                     <h3 class="f-16 mb-4">Ticket list</h3>
 
-                    <table mat-table [dataSource]="dataSource4" id="table-low" class="" appSkeletonLoading
-                        [appSkeletonLoading]="utilsService.isLoading">
+                    <table mat-table [dataSource]="dataSource4" id="table-low" class="skeletonAnimation"
+                        appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="name">
                             <th class="br" mat-header-cell *matHeaderCellDef> Name </th>
                             <td class="br" mat-cell *matCellDef="let element">
@@ -544,6 +574,11 @@
                         <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
                     </table>
+                    <div class="col-md-12 p-0" *ngIf="dataSource4.data === null">
+                        <h5 class="text-center b-a p-44">
+                            No Data Found
+                        </h5>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <div *ngIf="dataSource4.length == 0 && !isLoading && !hasError"
@@ -567,7 +602,8 @@
                 <div class="col-md-10 back-office-table  overflow-hidden">
                     <h3 class="f-16 mb-4">Ticket list</h3>
 
-                    <table mat-table [dataSource]="dataSource5" id="table-low" class="">
+                    <table mat-table [dataSource]="dataSource5" id="table-low" class="skeletonAnimation"
+                        appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="invoice">
                             <th class="br" mat-header-cell *matHeaderCellDef> Invoice </th>
                             <td class="br" mat-cell *matCellDef="let element"> {{element.invoice}} </td>
@@ -604,6 +640,11 @@
                         <tr mat-header-row *matHeaderRowDef="displayedColumns5"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns5;"></tr>
                     </table>
+                    <div class="col-md-12 p-0" *ngIf="dataSource5.data === null">
+                        <h5 class="text-center b-a p-44">
+                            No Data Found
+                        </h5>
+                    </div>
                 </div>
             </div>
         </mat-tab>

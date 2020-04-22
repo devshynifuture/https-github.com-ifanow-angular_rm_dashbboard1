@@ -59,7 +59,7 @@ export class ReportReceivablesComponent implements OnInit {
   openAdminDetails(data) {
     const fragmentData = {
       flag: 'ifaDetails',
-      data,
+      data: { ...data, adminAdvisorId: 2808 },
       id: 1,
       state: 'open70',
       componentName: IfasDetailsComponent,
