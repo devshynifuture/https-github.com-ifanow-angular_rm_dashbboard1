@@ -71,12 +71,18 @@ export class MutualFundOverviewComponent implements OnInit {
     this.dataSource = [{}, {}, {}];
     this.dataSource2 = [{}, {}, {}];
     this.dataSource3 = [{}, {}, {}];
-    this.getPersonalDetails(this.advisorId);
+    this.advisorData =this.MfServiceService.getPersonalDetails(this.advisorId);
+    // this.getPersonalDetails(this.advisorId);
   }
   getPersonalDetails(data){
     const obj={
       id:data
     }
+    this.settingService.getPersonalProfile(obj).subscribe(
+      data => {
+        console.log(data);
+      }
+    );
     this.settingService.getProfileDetails(obj).subscribe(
       data => {
         console.log(data);

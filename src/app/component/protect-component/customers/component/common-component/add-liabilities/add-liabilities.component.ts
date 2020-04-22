@@ -178,9 +178,9 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       this.transactionData.forEach(element => {
         if (element.valid) {
           let obj = {
-            "date": (element.controls.date.value._d) ? element.controls.date.value._d : element.controls.date.value,
-            "amount": element.controls.amount.value,
-            "type": element.controls.type.value,
+            "partPaymentDate": (element.controls.date.value._d) ? element.controls.date.value._d : element.controls.date.value,
+            "partPayment": element.controls.amount.value,
+            "option": element.controls.type.value,
             "id": (this.editData) ? this.editData.id : null
           }
           finalTransctList.push(obj)
@@ -203,7 +203,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
           ownerName: (this.ownerName == null) ? this.addLiabilityForm.controls.ownerName.value : this.ownerName,
           loanTypeId: this.addLiabilityForm.controls.loanType.value,
           loanAmount: this.addLiabilityForm.controls.loanAmount.value,
-          principalOutStandingAmount: this.addLiabilityForm.controls.outstandingCheck.value,
+          principalOutStandingAmount: this.addLiabilityForm.controls.outstandingAmt.value,
           loanTenure: this.addLiabilityForm.controls.loanTenure.value,
           commencementDate: this.addLiabilityForm.controls.CommencementDate.value,
           principalOutstandingAsOn: this.addLiabilityForm.controls.poDate.value,
@@ -223,7 +223,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
           loanTypeId: this.addLiabilityForm.controls.loanType.value,
           id: this._data.id,
           loanAmount: this.addLiabilityForm.controls.loanAmount.value,
-          principalOutStandingAmount: this.addLiabilityForm.controls.outstandingCheck.value,
+          principalOutStandingAmount: this.addLiabilityForm.controls.outstandingAmt.value,
           loanTenure: this.addLiabilityForm.controls.loanTenure.value,
           commencementDate: this.addLiabilityForm.controls.CommencementDate.value,
           principalOutstandingAsOn: this.addLiabilityForm.controls.poDate.value,
