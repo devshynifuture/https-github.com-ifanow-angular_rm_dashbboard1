@@ -244,7 +244,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       console.log(data);
       data = this.loanTypeView;
       this.close(true);
-      (this._data.id == undefined) ? this.eventService.openSnackBar('Liabilities added successfully', 'OK') : this.eventService.openSnackBar('Liabilities edited successfully', 'OK');
+      (this._data.id == undefined) ? this.eventService.openSnackBar('Liability added successfully', 'OK') : this.eventService.openSnackBar('Liability edited successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'Dismiss');
     }
