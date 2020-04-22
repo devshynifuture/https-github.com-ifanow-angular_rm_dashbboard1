@@ -17,7 +17,9 @@
 
                         <mat-radio-group aria-label="Select an option" id="custom-radio">
 
-                            <mat-radio-button class="w-100" *ngFor="let choice of item.riskAssessmentChoices; let i = index" [checked]="choice.selected" [value]="choice" (click)="item.selectedChoiceId = choice.id;item.weight = choice.weight;checkState(item,i)">
+                            <mat-radio-button class="w-100" *ngFor="let choice of item.riskAssessmentChoices; let i = index"
+                             [checked]="choice.selected" [value]="choice" [disabled]="choice.disabled"
+                             (click)="item.selectedChoiceId = choice.id;item.weight = choice.weight;checkState(item,i)">
                                 {{choice.choice}}<br>
                             </mat-radio-button>
 
