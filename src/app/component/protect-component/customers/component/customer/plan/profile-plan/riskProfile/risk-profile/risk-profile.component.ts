@@ -235,11 +235,11 @@ export class RiskProfileComponent implements OnInit {
         enabled: true
       },
       series: [{
-        name: '',
+        name: 'Score',
         data: [this.score],
         dataLabels: 1,
         tooltip: {
-          valueSuffix: ''
+          valueSuffix: this.score+'/600'
         },
       }]
 

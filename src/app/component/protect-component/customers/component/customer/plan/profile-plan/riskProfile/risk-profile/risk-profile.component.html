@@ -17,7 +17,9 @@
 
                         <mat-radio-group aria-label="Select an option" id="custom-radio">
 
-                            <mat-radio-button class="w-100" *ngFor="let choice of item.riskAssessmentChoices; let i = index" [checked]="choice.selected" [value]="choice" (click)="item.selectedChoiceId = choice.id;item.weight = choice.weight;checkState(item,i)">
+                            <mat-radio-button class="w-100" *ngFor="let choice of item.riskAssessmentChoices; let i = index"
+                             [checked]="choice.selected" [value]="choice" [disabled]="choice.disabled"
+                             (click)="item.selectedChoiceId = choice.id;item.weight = choice.weight;checkState(item,i)">
                                 {{choice.choice}}<br>
                             </mat-radio-button>
 
@@ -78,7 +80,7 @@
                     <h5 class="m-0 f-500 roboto text-black">Your risk {{scoreStatus}}
                     </h5>
                     <div #referenceKeyName (click)="onClickMe(referenceKeyName)" id="Gauge"></div>
-                    <p class="m-0 text-custom roboto" style="text-align: center;">You are an investor who is willing to take moderately high risk for moderately high returns</p>
+                    <p class="m-0 text-custom roboto" style="text-align: center;">You are an investor who is willing to take {{scoreStatus}} risk for {{scoreStatus}} returns</p>
                 </div>
                 <div class="col-md-4">
                 </div>

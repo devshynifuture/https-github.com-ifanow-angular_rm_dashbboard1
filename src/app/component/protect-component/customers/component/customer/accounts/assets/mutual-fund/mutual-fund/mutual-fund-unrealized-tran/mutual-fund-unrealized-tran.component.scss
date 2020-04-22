@@ -27,7 +27,7 @@
 }
 
 .wrapper {
-    height: 400px;
+    height: 300px;
 }
 
 .hide {
@@ -40,8 +40,4 @@
     align-items: center;
     justify-content: end;
     margin-right: 10px;
-}
-
-.cdk-virtual-scroll-viewport {
-    overflow: hidden !important;
 }
