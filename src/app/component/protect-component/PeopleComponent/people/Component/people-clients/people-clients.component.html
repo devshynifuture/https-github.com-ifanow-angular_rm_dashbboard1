@@ -3,7 +3,7 @@
         <h4 class="m-0">Clients</h4>
     </div>
     <div class="col-md-8">
-        <div *ngIf="isLoading==false" class="col-md-8 p-0 right text-right">
+        <div *ngIf="clientDatasource.data.length>0 && isLoading==false" class="col-md-8 p-0 right text-right">
             <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
             <mat-menu #menu5="matMenu">
                 <button (click)="pdf('Client')" mat-menu-item>PDF</button>

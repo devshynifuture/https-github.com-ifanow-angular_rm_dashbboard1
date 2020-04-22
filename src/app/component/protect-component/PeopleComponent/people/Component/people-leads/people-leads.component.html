@@ -2,8 +2,8 @@
     <div class="col-md-4 d-flex align-items-center">
         <h3 class="m-0">Leads</h3>
     </div>
-    <div *ngIf="isLoading==false" class="col-md-8">
-        <div class="col-md-8 p-0 right text-right">
+    <div class="col-md-8">
+        <div *ngIf="leadDataSource.data.length>0 && isLoading==false" class="col-md-8 p-0 right text-right">
             <img [matMenuTriggerFor]="menu5" src="assets/images/svg/download-bordered.svg" class="c-p">
             <mat-menu #menu5="matMenu">
                 <button (click)="pdf('Lead')" mat-menu-item>PDF</button>
