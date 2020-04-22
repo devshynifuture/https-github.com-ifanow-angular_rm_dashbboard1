@@ -481,6 +481,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     } else if (value == 'preview') {
       this.urlData = data
     } else if (value == 'DocPreview') {
+      this.urlData = ''
       const dialogRef = this.dialog.open(PreviewComponent, {
         width: '500px',
         height: '600px',
