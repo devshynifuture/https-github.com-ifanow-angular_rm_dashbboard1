@@ -44,7 +44,6 @@ export class AddNumberComponent implements OnInit {
       return;
     }
     this.getIsdCodesData(userdetailData);
-
   }
 
   getIsdCodesData(invTypeData) {
@@ -54,7 +53,7 @@ export class AddNumberComponent implements OnInit {
         if (data) {
           console.log(data);
           this.isdCodes = data;
-          if (invTypeData == '1') {
+          if (invTypeData == 0) {
             this.isdCodes = this.isdCodes.filter(element => element.code == '+91');
           } else {
             this.isdCodes = this.isdCodes.filter(element => element.code != '+91');

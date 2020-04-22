@@ -59,6 +59,8 @@ export class ClientBasicDetailsComponent implements OnInit {
   maxDate = new Date();
   invTypeCategoryList = [];
   familyMemberType: { name: string; value: string; };
+  invTaxStatusList: any[];
+  countryCodeFlag: any;
   // advisorId;
 
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
@@ -89,22 +91,24 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.invTypeCategory = '2';
         this.createMinorForm(this.basicDetailsData)
       }
-      this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
+      this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '1' : (this.basicDetailsData.taxStatusId);
       (this.basicDetailsData.familyMemberType == 1 || this.basicDetailsData.familyMemberType == 0) ? this.createIndividualForm(this.basicDetailsData) : this.createMinorForm(this.basicDetailsData);
     } else {
       this.getClientList();
       this.basicDetailsData = data;
       if (this.basicDetailsData.userId == null) {
         this.invTypeCategory = '1';
-        this.invTaxStatus = '1';
+        this.invTaxStatus = '';
+        this.invTaxStatusList = this.enumService.getIndividualTaxList();
         this.createIndividualForm(null);
         return;
       } else {
         this.invTypeCategory = (data.clientType == 1 || data.clientType == 0) ? '1' : String(data.clientType);
-        this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
+        this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '' : (this.basicDetailsData.taxStatusId);
       }
       (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
       this.getClientOrLeadData(this.basicDetailsData);
+      (this.invTypeCategory == '1') ? this.invTaxStatusList = this.enumService.getIndividualTaxList() : (this.invTypeCategory == '2' && this.fieldFlag == "familyMember") ? this.invTaxStatusList = this.enumService.getMinorTaxList() : this.invTaxStatusList = this.enumService.getCorporateTaxList();
     }
     console.log(data);
   }
@@ -113,7 +117,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   }
 
   createIndividualForm(data) {
-    this.selectedClientOwner = '1';
+    // this.selectedClientOwner = '1';
     (data == undefined) ? data = {} : '';
     this.basicDetails = this.fb.group({
       fullName: [data.name, [Validators.required]],
@@ -177,7 +181,7 @@ export class ClientBasicDetailsComponent implements OnInit {
           return;
         } else {
           this.invTypeCategory = (data.clientType == 0) ? '1' : String(data.clientType);
-          this.invTaxStatus = (data.taxStatusId == 0) ? '1' : String(data.taxStatusId);
+          // this.invTaxStatus = (data.taxStatusId == 0) ? '1' : String(data.taxStatusId);
           (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
           this.clientData.emit(data);
 
@@ -193,18 +197,29 @@ export class ClientBasicDetailsComponent implements OnInit {
     console.log(data);
     this.mobileData = data;
   }
-
+  numberFlag(data) {
+    this.countryCodeFlag = data.residentFlag;
+  }
   changeInvestorType(event) {
     (event.value == '1') ? this.createIndividualForm(this.basicDetailsData) : '';
     if (event.value == '1') {
+      this.invTaxStatus = ''
       this.mobileNumberFlag = 'Mobile number';
+      this.invTaxStatusList = this.enumService.getIndividualTaxList();
+      console.log(this.invTaxStatusList)
     }
     else if (event.value == '2' && this.fieldFlag == 'familyMember') {
+      this.invTaxStatus = ''
       this.createMinorForm(this.basicDetailsData);
       this.mobileNumberFlag = 'Mobile number';
+      this.invTaxStatusList = this.enumService.getMinorTaxList();
+      console.log(this.invTaxStatusList)
     } else {
+      this.invTaxStatus = ''
       this.createNonIndividualForm(this.basicDetails);
       this.mobileNumberFlag = 'Company mobile number';
+      this.invTaxStatusList = this.enumService.getCorporateTaxList();
+      console.log(this.invTaxStatusList)
     }
     this.invTypeCategory = event.value;
   }
@@ -440,7 +455,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       genderId: (this.invTypeCategory == '1') ? this.basicDetails.controls.gender.value : this.minorForm.value.gender,
       occupationId: 1,
       pan: (this.invTypeCategory == '1') ? this.basicDetails.controls.pan.value : this.minorForm.value.pan,
-      taxStatusId: this.invTaxStatus,
+      taxStatusId: parseInt(this.invTaxStatus),
       relationshipId: this.basicDetailsData.relationshipId,
       familyMemberType: parseInt(this.invTypeCategory),
       isKycCompliant: 1,
