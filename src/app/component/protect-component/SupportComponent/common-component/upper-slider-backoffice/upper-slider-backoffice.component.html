@@ -105,9 +105,11 @@
                             <ng-container matColumnDef="export_folios">
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> Export unmatched folios </th>
                                 <td class="b-a text-center" mat-cell *matCellDef="let element">
-                                    <div class="bar" matTooltip="Loading..." [matTooltipDisabled]="didAumReportListGot"
-                                        matTooltipPosition="below">
-                                        <button class="bg-grey lt" mat-button [disabled]="!didAumReportListGot"
+                                    <div class="bar"
+                                        [matTooltip]="canExportExcelSheet === 'intermediate'? 'Loading...': (canExportExcelSheet == 'false' ? 'No Data Found': (canExportExcelSheet == 'true'? 'Click Now': null))"
+                                        [matTooltipDisabled]="didAumReportListGot" matTooltipPosition="below">
+                                        <button class="bg-grey lt" mat-button
+                                            [disabled]="(canExportExcelSheet == 'false')"
                                             (click)="exportToExcelSheet('export-folios', element)">Export</button>
                                     </div>
                                 </td>
