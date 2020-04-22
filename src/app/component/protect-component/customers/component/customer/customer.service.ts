@@ -520,7 +520,7 @@ export class CustomerService {
   }
 
   deleteClientProof(data) {
-    return this.http.put(apiConfig.USER + appConfig.DELETE_CLIENT_UPLOAD_FILE, data);
+    return this.http.putEncoded(apiConfig.USER + appConfig.DELETE_CLIENT_UPLOAD_FILE, data);
   }
 
   getClientProof(data) {
@@ -581,7 +581,7 @@ export class CustomerService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_GET, data);
   }
   getMfUnrealizedTransactions(data) {
-      return this.http.post(apiConfig.MAIN_URL + appConfig.UNREALIZED_TRANSACTION_GET, data);
+    return this.http.post(apiConfig.MAIN_URL + appConfig.UNREALIZED_TRANSACTION_GET, data);
   }
   getMfFolioMaster(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_MASTER_DETAILS, data);

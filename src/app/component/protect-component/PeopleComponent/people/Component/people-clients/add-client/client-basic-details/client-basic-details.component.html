@@ -35,8 +35,8 @@
                                 <!-- <mat-option value="1">Resident</mat-option>
                                 <mat-option value="2">Non-resident</mat-option> -->
                                 <mat-option value='' disabled>Select option</mat-option>
-                                <mat-option (onSelectionChange)="numberFlag(singleTaxStatus)"
-                                    *ngFor="let singleTaxStatus of invTaxStatusList"
+                                <!-- (onSelectionChange)="numberFlag(singleTaxStatus)" -->
+                                <mat-option *ngFor="let singleTaxStatus of invTaxStatusList"
                                     [value]="singleTaxStatus.taxStatusCode">{{singleTaxStatus.taxStatusDesc}}
                                 </mat-option>
                             </mat-select>
@@ -82,7 +82,7 @@
             </div>
             <!-- [userData]="basicDetailsData" -->
             <app-add-number [numberList]=" basicDetailsData.mobileList" [flag]="mobileNumberFlag"
-                (numberArray)="getNumberDetails($event)" [isResidential]="countryCodeFlag">
+                (numberArray)="getNumberDetails($event)" [isResidential]="invTaxStatus">
             </app-add-number>
             <div class=" row pt-44">
                 <div class="col-md-4 text-right">
@@ -485,7 +485,7 @@
                 </div>
             </div>
             <app-add-number [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag"
-                (numberArray)="getNumberDetails($event)" [isResidential]="countryCodeFlag"></app-add-number>
+                (numberArray)="getNumberDetails($event)" [isResidential]="invTaxStatus"></app-add-number>
             <div class="row pt-44">
                 <div class="col-md-4 text-right">
                     <h5 class="m-0 pt-20">PAN</h5>
@@ -648,7 +648,7 @@
             </div>
 
             <app-add-number [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag"
-                (numberArray)="getNumberDetails($event)" [isResidential]="countryCodeFlag"></app-add-number>
+                (numberArray)="getNumberDetails($event)" [isResidential]="invTaxStatus"></app-add-number>
 
             <div class="row pt-44">
                 <div class="col-md-4 text-right">
