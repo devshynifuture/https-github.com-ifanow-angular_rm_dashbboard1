@@ -185,3 +185,7 @@
     <img class="width300" src="assets/images/svg/noDataFound.svg">
     <h4 class="text-center pt-12">No {{orgProfile ? 'organization' : 'personal'}} profile found</h4>
 </div>
+<div *ngIf="userList == undefined && !isLoading" class="d-flex flex-column align-items-center">
+    <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="text-center pt-12">No {{orgProfile ? 'organization' : 'personal'}} profile found</h4>
+</div>

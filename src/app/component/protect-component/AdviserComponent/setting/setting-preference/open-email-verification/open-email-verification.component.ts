@@ -1,7 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DialogData } from '../../../Activities/calendar/calendar.component';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-open-email-verification',
@@ -15,7 +16,7 @@ export class OpenEmailVerificationComponent implements OnInit {
   bankList: any;
   popUP: any;
   email: any;
-  emailVierify: any;
+  emailVierify: FormGroup;
   emailDetails: any;
   constructor(public dialogRef: MatDialogRef<OpenEmailVerificationComponent>, private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
@@ -32,7 +33,7 @@ export class OpenEmailVerificationComponent implements OnInit {
   }
   getdataForm(data) {
     this.emailVierify = this.fb.group({
-      emailId: [(!data) ? '' : data.emailId, [Validators.required]],
+      emailId: [(!data) ? '' : data.emailId, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
     });
   }
 
@@ -43,6 +44,10 @@ export class OpenEmailVerificationComponent implements OnInit {
     this.email = email
   }
   onNoClick(): void {
+    if(this.emailVierify.invalid) {
+      this.emailVierify.markAllAsTouched();
+      return;
+    }
     let obj = {
       emailAddress : this.emailVierify.controls.emailId.value,
       id : this.emailDetails.id

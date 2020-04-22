@@ -9,6 +9,7 @@ import { SettingsService } from '../../../settings.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PostalService } from 'src/app/services/postal.service';
 import { Subscription } from 'rxjs';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-org-profile',
@@ -32,7 +33,7 @@ export class OrgProfileComponent implements OnInit {
   pinInvalid: boolean;
   validatorType = ValidatorType
   subscription = new Subscription();
-  countryCodes:Array<string> = ['+91', '+92', "+93"];
+  isdCodes: Array<any> = [];
 
   constructor(
     public utils: UtilService, 
@@ -41,6 +42,7 @@ export class OrgProfileComponent implements OnInit {
     public subInjectService: SubscriptionInject,
     private settingsService: SettingsService,
     private postalService: PostalService,
+    private peopleService: PeopleService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -55,8 +57,20 @@ export class OrgProfileComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
+    this.getIsdCodesData();
     this.getOrgProfiles();
     this.getdataForm(this.inputData);
+  }
+
+  getIsdCodesData() {
+    this.peopleService.getIsdCode({}).subscribe(
+      data => {
+        if (data) {
+          console.log(data);
+          this.isdCodes = data;
+        }
+      }
+    )
   }
 
   Close(flag) {
