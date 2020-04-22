@@ -154,29 +154,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   }
   getSharebleLink(element, flag) {
-    this.downlodFiles(element, flag);
+    if(element.fileName){
+      this.downlodFiles(element, flag);
+    }
   }
-  // openDocumentPreview() {
-
-  //   let obj =
-  //     {
-  //       data: this.dataTerms.docText,
-  //       cancelButton: () => {
-  //         this.utilservice.htmlToPdf(this.dataTerms.docText, 'document');
-  //         dialogRef.close();
-  //       }
-  //     }
-  //   const dialogRef = this.dialog.open(DocumentPreviewComponent, {
-  //     width: '1800px',
-  //     height: '900px',
-  //     data: obj,
-  //   });
-
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     console.log('The dialog was closed');
-  //   });
-
-  // }
   copyFilesRes() {
     this.eventService.openSnackBar('File copied successfully', 'Dismiss');
     this.getAllFileList(1, 'copy')
@@ -489,9 +470,6 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       data => this.downloadFileRes(data, value)
     );
   }
-  openPreview(value, flag) {
-    this.downlodFiles(value, flag)
-  }
   downloadFileRes(data, value) {
     this.isLoading = false
 
@@ -505,7 +483,8 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     }
     else if (value == 'DocPreview') {
       const dialogRef = this.dialog.open(PreviewComponent, {
-        width: '100%',
+        width: '500px',
+        height:'600px',
         data: { bank: data, flag: 'flag' }
       });
       dialogRef.afterClosed().subscribe(result => {
