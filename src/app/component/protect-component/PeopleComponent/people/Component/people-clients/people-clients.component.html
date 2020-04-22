@@ -3,7 +3,7 @@
         <h4 class="m-0">Clients</h4>
     </div>
     <div class="col-md-8">
-        <div *ngIf="isLoading==false" class="col-md-8 p-0 right text-right">
+        <div *ngIf="clientDatasource.data.length>0 && isLoading==false" class="col-md-8 p-0 right text-right">
             <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
             <mat-menu #menu5="matMenu">
                 <button (click)="pdf('Client')" mat-menu-item>PDF</button>
@@ -20,8 +20,9 @@
         </div>
     </div>
     <div class="col-md-12 people-clients">
-        <table #tableEl matSort *ngIf="clientDatasource.data.length>0" mat-table [dataSource]="clientDatasource"
-            id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation mt-8">
+        <table #tableEl matSort *ngIf="clientDatasource.data.length>0" #clientTableSort="matSort" mat-table
+            [dataSource]="clientDatasource" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading"
+            class="skeletonAnimation mt-8">
             <ng-container matColumnDef="position">
                 <th mat-sort-header="name" mat-header-cell *matHeaderCellDef class="br w-20"> Group head name </th>
                 <td (click)="selectClient(element)" mat-cell *matCellDef="let element" class="br">

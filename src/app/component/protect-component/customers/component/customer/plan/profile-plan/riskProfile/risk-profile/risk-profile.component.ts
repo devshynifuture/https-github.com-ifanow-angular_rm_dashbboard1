@@ -235,11 +235,11 @@ export class RiskProfileComponent implements OnInit {
         enabled: true
       },
       series: [{
-        name: '',
+        name: 'Score',
         data: [this.score],
         dataLabels: 1,
         tooltip: {
-          valueSuffix: ''
+          valueSuffix: this.score+'/600'
         },
       }]
 
@@ -251,11 +251,11 @@ export class RiskProfileComponent implements OnInit {
         this.checkFamilyMem = item.question.includes(element.question);
         console.log(this.checkFamilyMem)
       });
-      if (this.checkFamilyMem == false) {
+      if (this.checkFamilyMem == false &&  this.statusArray.length < 15) {
         this.statusArray.push(item)
         this.progressBar = this.statusArray.length * 7
       }
-    } else if (item.question) {
+    } else if (this.statusArray.length == 0) {
       this.statusArray.push(item)
       this.progressBar = this.statusArray.length * 7
     }
@@ -271,7 +271,7 @@ export class RiskProfileComponent implements OnInit {
   }
 
   getRiskProfileList(flag) {
-    // let obj = {}
+    this.isLoading = true
     this.showButton = false
     this.planService.getRiskProfile('').subscribe(
       data => this.getRiskProfilRes(data,flag)
@@ -280,6 +280,7 @@ export class RiskProfileComponent implements OnInit {
 
   getRiskProfilRes(data,flag) {
     this.showButton = true
+    this.isLoading = false
     console.log(data);
     this.showLoader = false;
     this.riskAssessments = data.riskAssessments;

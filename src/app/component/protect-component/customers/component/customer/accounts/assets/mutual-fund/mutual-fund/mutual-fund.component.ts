@@ -40,17 +40,17 @@ export class MutualFundComponent implements OnInit {
     this.getMutualFund();
    
   }
-  getPersonalDetails(data){
-    const obj={
-      id:data
-    }
-    this.settingService.getProfileDetails(obj).subscribe(
-      data => {
-        console.log(data);
-        this.mfData.advisorData = data;
-      }
-    );
-  }
+  // getPersonalDetails(data){
+  //   const obj={
+  //     id:data
+  //   }
+  //   this.settingService.getProfileDetails(obj).subscribe(
+  //     data => {
+  //       console.log(data);
+  //       this.mfData.advisorData = data;
+  //     }
+  //   );
+  // }
   getMutualFund() {
     this.isLoading = true;
     const obj = {
@@ -79,7 +79,9 @@ export class MutualFundComponent implements OnInit {
       this.isLoading = false;
       this.mfData = data;
       this.mfData.viewMode = this.viewMode;
-      this.getPersonalDetails(this.advisorId);
+      if(this.mfData){
+        this.mfData.advisorData=this.mfService.getPersonalDetails(this.advisorId);
+      }
     }
     this.isLoading = false;
   }

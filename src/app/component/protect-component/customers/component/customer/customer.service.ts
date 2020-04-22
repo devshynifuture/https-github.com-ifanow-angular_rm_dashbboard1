@@ -494,7 +494,12 @@ export class CustomerService {
   deleteFolder(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_FOLDER, data);
   }
-
+  deleteFolderPermnant(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_PERMANANT_FOLDER, data);
+  }
+  recovery(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.RECOVERY, data);
+  }
   starFile(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.STAR_FILE, data);
   }

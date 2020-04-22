@@ -236,7 +236,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       let obj = {
         id: this.element.id,
         emailAddress: this.element.emailAddress,
-        userId: this.userId
+        userId: this.advisorId
       }
       this.orgSetting.addEmailVerfify(obj).subscribe(
         data => this.addEmailVerfifyRes(data),
@@ -298,7 +298,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     this.loader(1);
     this.emailList  = [{},{},{}];
     let obj = {
-      userId: this.userId,
+      userId: this.advisorId,
       // advisorId: this.advisorId
     }
     this.orgSetting.getEmailVerification(obj).subscribe(

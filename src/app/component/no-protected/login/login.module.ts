@@ -19,6 +19,7 @@ import { NgOtpInputModule } from 'ng-otp-input';
 import { SignupTeamMemberComponent } from './signup-team-member/signup-team-member.component';
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 import { SignupProgressBarComponent } from './signup-progress-bar/signup-progress-bar.component';
+import { SupportLoginComponent } from './support-login/support-login.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { SignupProgressBarComponent } from './signup-progress-bar/signup-progres
     SignupTeamMemberComponent,
     TermsConditionsComponent,
     SignupProgressBarComponent,
+    SupportLoginComponent,
     // OtpInputComponent,
   ],
   imports: [

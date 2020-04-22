@@ -2,8 +2,8 @@
     <div class="col-md-4 d-flex align-items-center">
         <h3 class="m-0">Leads</h3>
     </div>
-    <div *ngIf="isLoading==false" class="col-md-8">
-        <div class="col-md-8 p-0 right text-right">
+    <div class="col-md-8">
+        <div *ngIf="leadDataSource.data.length>0 && isLoading==false" class="col-md-8 p-0 right text-right">
             <img [matMenuTriggerFor]="menu5" src="assets/images/svg/download-bordered.svg" class="c-p">
             <mat-menu #menu5="matMenu">
                 <button (click)="pdf('Lead')" mat-menu-item>PDF</button>
@@ -19,8 +19,9 @@
         </div>
     </div>
     <div class="col-md-12 people-leads">
-        <table #tableEl matSort mat-table *ngIf="leadDataSource.data.length>0" [dataSource]="leadDataSource"
-            appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation" class="mt-8" id="table-low">
+        <table #tableEl matSort mat-table *ngIf="leadDataSource.data.length>0" #leadTableSort="matSort"
+            [dataSource]="leadDataSource" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation"
+            class="mt-8" id="table-low">
 
             <ng-container matColumnDef="position">
                 <th mat-sort-header="displayName" mat-header-cell *matHeaderCellDef class="br w-20"> Lead name </th>

@@ -6,6 +6,8 @@ import { MaterialModule } from 'src/app/material/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { DocumentExplorerComponent } from './document-explorer.component';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
+import { PreviewComponent } from './preview/preview.component';
 
 
 @NgModule({
@@ -17,6 +19,7 @@ import { DocumentExplorerComponent } from './document-explorer.component';
     FormsModule,
     ReactiveFormsModule,
     CustomDirectiveModule,
+    NgxDocViewerModule,
   ]
 })
 export class DocumentsModule { }
