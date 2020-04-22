@@ -77,11 +77,6 @@ export class MutualFundOverviewComponent implements OnInit {
     const obj={
       id:data
     }
-    this.settingService.getPersonalProfile(obj).subscribe(
-      data => {
-        console.log(data);
-      }
-    );
     this.settingService.getProfileDetails(obj).subscribe(
       data => {
         console.log(data);
