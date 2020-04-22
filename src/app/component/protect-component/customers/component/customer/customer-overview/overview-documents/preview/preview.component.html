@@ -1,0 +1,27 @@
+
+<div class="popup-header-fix-30">
+    <div class="row bb-1">
+        <div class="col-md-8 d-flex align-items-center p-0">
+            <h4 class="mb-0 text-uppercase ml-16">
+                Preview Doc
+            </h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12 pr-0">
+                <i (click)="onNoClick('clear')" class="material-icons c-p pt-8 v-middle"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="link">
+    <ngx-doc-viewer [url]="link" viewer="google" style="width:100%;height:50vh;">
+    </ngx-doc-viewer>
+</div>
+<div class="row pt-16 pb-16">
+    <div class="col-md-12 text-right">
+        <button class="br-0 text-inherit f-14" mat-button [mat-dialog-close]="data.investor">
+            CANCEL
+        </button>
+    </div>
+</div>
