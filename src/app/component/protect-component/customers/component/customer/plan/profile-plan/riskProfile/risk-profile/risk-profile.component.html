@@ -36,7 +36,7 @@
         <div class="col-md-3 pr-0">
             <div class="row">
                 <div class="col-md-12 p-0 d-flex justify-content-between">
-                    <button mat-flat-button class="b-a-custom text-primary" (click)="reset();showRisk = false">Risk
+                    <button mat-flat-button class="b-a-custom text-primary" (click)="reset(true);showRisk = false">Risk
                         assessment</button>
                     <button mat-flat-button class="b-a-custom text-primary" (click)="open('riskProfile', null)">History</button>
                 </div>
@@ -52,7 +52,7 @@
 <div class="pt-32 pb-44" *ngIf="showRisk == true">
     <div class="row">
         <div class="col-md-12 mb-16 d-flex justify-content-end">
-            <button mat-flat-button class="b-a-custom text-primary mr-12" (click)="reset();showRisk = false">Risk
+            <button mat-flat-button class="b-a-custom text-primary mr-12" (click)="reset(true);showRisk = false">Risk
                 assessment</button>
             <button mat-flat-button class="b-a-custom text-primary" (click)="open('riskProfile', null)">History</button>
         </div>
