@@ -6,6 +6,6 @@ export const environment = {
   TransactionPlatform: 'http://dev.ifanow.in:8080/transaction-platform/api/v1/web/',
   PostalUrl: 'https://api.postalpincode.in/pincode/',
   UserUrl: 'http://dev.ifanow.in:8080/userserver/api/v1/web/',
-  hmr: true
+  hmr: false
   // APIEndpoint:'http://dev.ifanow.in:8080/'
 };
