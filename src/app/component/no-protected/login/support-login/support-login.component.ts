@@ -117,191 +117,15 @@ export class SupportLoginComponent implements OnInit {
     // }
     this.btnProgressData = 'state1';
   }
-
-  getOtp(resendFlag) {
-    this.resendOtpFlag = resendFlag;
-    if (this.userName.invalid) {
-      this.userName.markAsTouched();
-      return;
-    } else {
-      this.showTimeRemaing = 30;
-      this.otpResendCountDown();
-      this.getOtpBtnOption.active = true;
-      const obj = {
-        userName: this.userName.value
-      };
-      this.loginService.getUsernameData(obj).subscribe(
-        data => {
-          if (data) {
-            if (this.resendOtpFlag) {
-              this.eventService.openSnackBar("OTP sent successfully", "Dismiss");
-            }
-            this.userName.disable();
-            console.log(data);
-            this.userData = data;
-            this.getOtpResponse(data);
-            this.getOtpFlag = true;
-            this.getOtpBtnOption.active = false;
-          } else {
-            this.getOtpBtnOption.active = false;
-            this.eventService.openSnackBar('error found', 'Dismiss');
-          }
-        },
-        err => {
-          this.getOtpBtnOption.active = false;
-          this.eventService.openSnackBar(err, 'Dismiss')
-        }
-      );
-    }
-  }
-
-  getOtpOnEnter(event) {
-    (event.keyCode == 13) ? this.getOtp(false) : '';
-  }
-
-  getOtpData(outputData) {
-    console.log('login with otp', outputData);
-    this.otpData = outputData;
-  }
-
-  getOtpResponse(data) {
-    if (data.emailList && data.emailList.length > 0) {
-      data.email = data.emailList[0].email;
-      this.verifyResponseData.email = UtilService.obfuscateEmail(data.email);
-    }
-    if (data.mobileList && data.mobileList.length > 0) {
-      data.mobileNo = data.mobileList[0].mobileNo;
-      this.verifyResponseData.mobileNo = UtilService.obfuscateMobile(String(data.mobileNo));
-    }
-    console.log(this.verifyResponseData);
-    if (this.verifyResponseData.mobileNo) {
-      this.verifyFlag = 'Mobile';
-      const obj = { mobileNo: data.mobileNo };
-      this.loginUsingCredential(obj);
-    } else {
-      this.verifyFlag = 'Email';
-      const obj = { email: data.email };
-      this.loginUsingCredential(obj);
-    }
-  }
-
-  loginUsingCredential(obj) {
-    this.loginService.generateOtp(obj).subscribe(
-      data => {
-        console.log(data);
-        this.otpResponse = data;
-      },
-      err => this.eventService.openSnackBar(err, 'Dismiss')
-    );
-  }
-
-  otpClick() {
-    (this.otpNumber) ? this.otpNumber = false : this.otpNumber = true;
-  }
-
-  verifyWithOtpResponse() {
-    this.barButtonOptions.active = true;
-    const otpString = this.otpData.toString().replace(/,/g, '');
-    console.log('LoginComponent verifyWithOtpResponse data; ', this.userData);
-    console.log('LoginComponent verifyWithOtpResponse otpData; ', this.otpData);
-    console.log('LoginComponent verifyWithOtpResponse verifyFlag; ', this.verifyFlag);
-
-    console.log('LoginComponent verifyWithOtpResponse otpString; ', otpString);
-    console.log('LoginComponent verifyWithOtpResponse verifyResponseData; ', this.verifyResponseData);
-    console.log('LoginComponent verifyWithOtpResponse this.otpResponse; ', this.otpResponse);
-
-
-    if (this.userData) {
-
-      if (this.verifyFlag == 'Email' && this.otpData.length == 4 && this.otpResponse == otpString) {
-        const obj = {
-          email: this.userData.email,
-          userId: (this.userData.clientId) ? (this.userData.clientId > 0) ?
-            this.userData.clientId : this.userData.advisorId : this.userData.advisorId,
-          userType: this.userData.userType
-        };
-        this.saveAfterVerifyCredential(obj);
-
-        this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
-        this.loginService.handleUserData(this.authService, this.router, this.userData);
-      } else if (this.verifyFlag == 'Mobile' && this.otpData.length == 4) {
-        const obj = {
-          mobileNo: this.userData.mobileNo,
-          userId: (this.userData.clientId) ? (this.userData.clientId > 0) ?
-            this.userData.clientId : this.userData.advisorId : this.userData.advisorId,
-          userType: this.userData.userType,
-          otp: otpString
-        };
-        this.loginService.saveAfterVerification(obj).subscribe(
-          data => {
-            if (data) {
-              this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
-              this.loginService.handleUserData(this.authService, this.router, this.userData);
-            } else {
-              this.barButtonOptions.active = false;
-            }
-          },
-          err => {
-            console.error(err);
-            // this.eventService.openSnackBar(err, 'Dismiss');
-            (this.resendOtpFlag) ? this.eventService.openSnackBar('OTP has expired', 'Dismiss') : this.eventService.openSnackBar('Otp is incorrect', 'Dismiss');
-            this.barButtonOptions.active = false;
-          }
-        );
-      } else {
-        (this.resendOtpFlag) ? this.eventService.openSnackBar('OTP has expired', 'Dismiss') : this.eventService.openSnackBar('Otp is incorrect', 'Dismiss');
-        this.barButtonOptions.active = false;
-      }
-    } else {
-      this.barButtonOptions.active = false;
-    }
-  }
-  otpResendCountDown() {
-    let timeLeft = 30;
-    let intervallTimer = interval(1000).subscribe(
-      data => {
-        if (data == 31) {
-          intervallTimer.unsubscribe();
-        } else {
-          this.showTimeRemaing = timeLeft--;
-        }
-      }
-    )
-  }
+  
   private createForm() {
     this.loginForm = this.formBuilder.group({
-      name: new FormControl('', {
-        validators: [Validators.required, Validators.maxLength(55)],
-        updateOn: 'change'
-      }),
-      password: new FormControl('', {
-        validators: [Validators.required, Validators.maxLength(55)],
-        updateOn: 'change'
-      }),
+      name: ['', [Validators.required]],
+      password: ['', [Validators.required]]
     });
   }
 
-  getError() {
-    return ' *This is required field';
-  }
-
-  cancel(): void {
-    this.loginForm.reset();
-  }
-
-  enterEvent(event) {
-    this.errorMsg = false;
-    this.errorStyle = {
-      visibility: this.errorMsg ? 'visible' : 'hidden',
-      opacity: this.errorMsg ? '1' : '0',
-    };
-    if (event.keyCode === 13) {
-      this.passEvent = event.keyCode;
-    }
-  }
-
   onSubmit() {
-
     if (this.loginForm.valid) {
       const loginData = {
         userName: this.loginForm.controls.name.value,
@@ -370,30 +194,6 @@ export class SupportLoginComponent implements OnInit {
       //   }
       // );
     }
-  }
-
-  onEnterPressed() {
-    console.log(' on enter pressed sdkvjasbhkdj');
-  }
-
-  hardCodeLoginForTest() {
-    const jsonData = {
-      advisorId: 2808,
-      clientId: 2978,
-      emailId: 'gaurav@futurewise.co.in',
-      authToken: 'data',
-      imgUrl: 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'
-    };
-
-    this.authService.setToken('data');
-
-    this.authService.setUserInfo(jsonData);
-    this.authService.setClientData({
-      id: 2978, name: 'Aryendra Kumar Saxena'
-    });
-    // this.authService.setToken(loginData.payLoad);
-    this.eventService.openSnackBar('Login successFully', 'Dismiss');
-    this.router.navigate(['admin', 'subscription', 'dashboard']);
   }
 
   progressButtonClick(event) {

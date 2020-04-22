@@ -628,6 +628,7 @@ export const appConfig = {
   SEARCH_USERNAME: 'user/search/username',
   SAVE_PASSWORD: 'user/password/update',
   LOGIN_WITH_PASSWORD: 'user/login/with/password',
+  SUPPORT_LOGIN: 'rmdashboard/rm/sign-in',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_UPDATE: 'calendar/event/update',
