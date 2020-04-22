@@ -141,8 +141,10 @@
                                             modified
                                         </th>
                                         <td *matCellDef="let element" mat-cell>
+                                            <div (click)="getSharebleLink(element,'preview')">
                                             <div class="bar">
                                                 {{isLoading ? '' : element.createdDate | date:'dd/MM/yyyy'}} </div>
+                                                </div>
                                         </td>
                                     </ng-container>
 
@@ -150,8 +152,10 @@
                                     <ng-container matColumnDef="type">
                                         <th *matHeaderCellDef mat-header-cell mat-sort-header="fileTypeId"> Type</th>
                                         <td *matCellDef="let element" mat-cell>
+                                            <div (click)="getSharebleLink(element,'preview')">
                                             <div class="bar">
                                                 {{isLoading ? '' : element.fileType}}
+                                            </div>
                                             </div>
                                         </td>
                                     </ng-container>
@@ -159,8 +163,10 @@
                                     <ng-container matColumnDef="size">
                                         <th *matHeaderCellDef mat-header-cell mat-sort-header="size"> Size</th>
                                         <td *matCellDef="let element" mat-cell>
+                                            <div (click)="getSharebleLink(element,'preview')">
                                             <div class="bar">
                                                 {{isLoading ? '' : element.size}}
+                                            </div>
                                             </div>
                                         </td>
                                     </ng-container>
@@ -263,7 +269,7 @@
                                     Select a file to see more details
                                 </p>
                                 <ngx-doc-viewer [url]="urlData"
-                                  viewer="google" style="width:100%;height:50vh;">
+                                  viewer="google" style="width:270px;height:350px;">
                                 </ngx-doc-viewer>
                                 <div class="row">
                                     <div class="col-md-6">

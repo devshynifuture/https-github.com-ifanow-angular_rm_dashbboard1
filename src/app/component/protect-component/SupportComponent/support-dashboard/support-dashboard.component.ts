@@ -137,6 +137,7 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
       data => {
         if (data) {
           this.dailyData = data;
+          console.log('dailyData',this.dailyData)
           this.previousWeekCams = data.previousWeek[1]
           this.currentWeekCams = data.currentWeek[1]
           this.previousWeekKarvy = data.previousWeek[2]

@@ -569,11 +569,11 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
             },
             error => this.eventService.showErrorMessage(error)
           );
-        } else if (flag == 'permenant') {
+        } else if (flag == 'permanently') {
           const obj = {
             clientId: this.clientId,
             advisorId: this.advisorId,
-            type: (data.folderName) ? 'folder' : (data.fileName) ? 'file' : '',
+            type: (data.folderName) ? 1 : (data.fileName) ? 2 : '',
             id: data.id
           };
           this.custumService.deleteFolderPermnant(obj).subscribe(
@@ -585,11 +585,11 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
             },
             error => this.eventService.showErrorMessage(error)
           );
-        } else if (flag == 'recover') {
+        } else if (flag == 'file/folder') {
           const obj = {
             clientId: this.clientId,
             advisorId: this.advisorId,
-            type: (data.folderName) ? 'folder' : (data.fileName) ? 'file' : '',
+            type: (data.folderName) ? 1 : (data.fileName) ? 2 : '',
             id: data.id
           };
           this.custumService.recovery(obj).subscribe(
