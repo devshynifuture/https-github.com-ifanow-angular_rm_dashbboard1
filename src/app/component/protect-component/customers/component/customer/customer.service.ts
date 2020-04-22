@@ -494,7 +494,12 @@ export class CustomerService {
   deleteFolder(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_FOLDER, data);
   }
-
+  deleteFolderPermnant(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_PERMANANT_FOLDER, data);
+  }
+  recovery(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.RECOVERY, data);
+  }
   starFile(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.STAR_FILE, data);
   }
@@ -520,7 +525,7 @@ export class CustomerService {
   }
 
   deleteClientProof(data) {
-    return this.http.put(apiConfig.USER + appConfig.DELETE_CLIENT_UPLOAD_FILE, data);
+    return this.http.putEncoded(apiConfig.USER + appConfig.DELETE_CLIENT_UPLOAD_FILE, data);
   }
 
   getClientProof(data) {
@@ -581,7 +586,7 @@ export class CustomerService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_GET, data);
   }
   getMfUnrealizedTransactions(data) {
-      return this.http.post(apiConfig.MAIN_URL + appConfig.UNREALIZED_TRANSACTION_GET, data);
+    return this.http.post(apiConfig.MAIN_URL + appConfig.UNREALIZED_TRANSACTION_GET, data);
   }
   getMfFolioMaster(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_MASTER_DETAILS, data);

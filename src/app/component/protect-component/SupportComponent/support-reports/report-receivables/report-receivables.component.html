@@ -75,56 +75,90 @@
 
 <div class="row pt-12">
     <div class="col-xl-12">
-        <table mat-table id="table-low" [dataSource]="dataSource" class="">
+        <table mat-table id="table-low" [dataSource]="dataSource" class="" appSkeletonLoading
+            [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="adminName">
                 <th class="br" mat-header-cell *matHeaderCellDef> Admin name </th>
-                <td class="br" mat-cell *matCellDef="let element" (click)="openAdminDetails(element)">
-                    {{element.adminName}} </td>
+                <td class="br" mat-cell *matCellDef="let element" class="c-p" (click)="openAdminDetails(element)">
+                    <div class="bar">
+                        {{element.adminName}}
+                    </div>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="email">
                 <th class="br" mat-header-cell *matHeaderCellDef> Email </th>
-                <td class="br" mat-cell *matCellDef="let element"> {{element.email}} </td>
+                <td class="br" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        {{element.email}}
+                    </div>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="mobile">
                 <th class="br" mat-header-cell *matHeaderCellDef> Mobile </th>
-                <td class="br" mat-cell *matCellDef="let element"> {{element.mobile}} </td>
+                <td class="br" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        {{element.mobile}}
+                    </div>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="invoice">
                 <th class="br" mat-header-cell *matHeaderCellDef> Invoice </th>
                 <td class="br" mat-cell *matCellDef="let element">
-                    <a href="javascript:void(0)">
-                        {{element.invoice}}
-                    </a>
+                    <div class="bar">
+                        <a href="javascript:void(0)">
+                            {{element.invoice}}
+                        </a>
+                    </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="sentDate">
                 <th class="br" mat-header-cell *matHeaderCellDef> Sent Date </th>
-                <td class="br" mat-cell *matCellDef="let element"> {{element.sentDate}} </td>
+                <td class="br" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        {{element.sentDate}}
+                    </div>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="dueDate">
                 <th class="br" mat-header-cell *matHeaderCellDef> Due Date </th>
-                <td class="br" mat-cell *matCellDef="let element"> {{element.dueDate}} </td>
+                <td class="br" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        {{element.dueDate}}
+                    </div>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="dueSince">
                 <th class="br" mat-header-cell *matHeaderCellDef> Due Since </th>
-                <td class="br" mat-cell *matCellDef="let element"> {{element.dueSince}} </td>
+                <td class="br" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        {{element.dueSince}}
+                    </div>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="amount">
                 <th class="br" mat-header-cell *matHeaderCellDef> Amount </th>
-                <td class="br" mat-cell *matCellDef="let element"> {{element.amount}} </td>
+                <td class="br" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        {{element.amount}}
+                    </div>
+                </td>
             </ng-container>
 
 
             <ng-container matColumnDef="balance">
                 <th class="br" mat-header-cell *matHeaderCellDef> Balance </th>
-                <td class="br" mat-cell *matCellDef="let element"> {{element.balance}} </td>
+                <td class="br" mat-cell *matCellDef="let element">
+                    <div class="bar">
+                        {{element.balance}}
+                    </div>
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

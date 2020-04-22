@@ -161,6 +161,8 @@ export const appConfig = {
   RENAME_FILE: 'document/account/document/all-file/file/rename',
   RENAME_FOLDER: 'document/account/document/all-file/folder/rename',
   DELETE_FOLDER: 'document/account/document/all-file/folder/trash',
+  DELETE_PERMANANT_FOLDER:'',
+  RECOVERY:'',
   SEARCH_FILE: 'document/account/document/all-file/search',
   STAR_FILE: 'document/document/all-file/star',
   SEND_SHAREBLE_LINK: 'pdfAndEmail/email-only/send',
