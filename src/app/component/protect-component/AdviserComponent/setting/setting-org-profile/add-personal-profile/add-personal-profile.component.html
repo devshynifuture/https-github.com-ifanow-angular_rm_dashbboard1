@@ -51,7 +51,7 @@
                         <mat-form-field appearance="standard">
                             <mat-select formControlName="isdCodeId" class="form-control">
                                 <mat-option value="" selected disabled>Select Country Code</mat-option>
-                                <mat-option [value]="code.id" *ngFor="let code of isdCodes">{{code.code}}</mat-option>
+                                <mat-option [value]="code.id" *ngFor="let code of isdCodes">{{code.code}}({{code.countryCode}})</mat-option>
                             </mat-select>
                             <mat-error>This field is required</mat-error>
                         </mat-form-field>
@@ -104,6 +104,7 @@
                 </div>
                 <div class="col-md-4 pl-0" *ngIf="cropImage">
                     <button mat-stroked-button class="btn-primary" (click)="chooseImage.click()">CHOOSE IMAGE</button>
+                    <button mat-stroked-button class="btn-primary" (click)="resetPageVariables()">CANCEL EDIT</button>
                     <input type="file" #chooseImage (change)="uploadImageForCorping($event)" hidden>
                 </div>
                 <div class="col-md-5" *ngIf="!cropImage">
