@@ -6,6 +6,7 @@ import {ValidatorType} from 'src/app/services/util.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {MatProgressButtonOptions} from '../../../../../../../../common/progress-button/progress-button.component';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-new-team-member',
@@ -35,13 +36,14 @@ export class NewTeamMemberComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  countryCodes:Array<number> = [91, 92];
+  isdCodes: Array<any> = [];
 
   constructor(
     private fb: FormBuilder,
     private settingsService: SettingsService,
     private eventService: EventService,
     private subInjectService: SubscriptionInject,
+    private peopleService: PeopleService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -49,6 +51,18 @@ export class NewTeamMemberComponent implements OnInit {
   ngOnInit() {
     this.createForm();
     this.loadRoles();
+    this.getIsdCodesData();
+  }
+
+  getIsdCodesData() {
+    this.peopleService.getIsdCode({}).subscribe(
+      data => {
+        if (data) {
+          console.log(data);
+          this.isdCodes = data;
+        }
+      }
+    )
   }
 
   loadRoles() {
