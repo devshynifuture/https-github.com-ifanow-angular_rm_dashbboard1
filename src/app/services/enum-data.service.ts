@@ -101,12 +101,26 @@ export class EnumDataService {
 
         if (data) {
           const taxStatusMap: any = {};
+          const individualTaxList = [];
+          const corporateTaxList = [];
+          const minorTaxList = [];
           data.forEach(singleData => {
+            if (singleData.corporateFlag === 1) {
+              corporateTaxList.push(singleData);
+              // corporateTaxList.
+            } else if (singleData.minorFlag === 1) {
+              minorTaxList.push(singleData);
+            } else {
+              individualTaxList.push(singleData);
+            }
             taxStatusMap[singleData.taxStatusCode] = singleData;
           });
           const output = {
             taxStatusList: data,
-            taxStatusMap
+            taxStatusMap,
+            corporateTaxList,
+            individualTaxList,
+            minorTaxList
           };
           console.log('getDataForTaxMasterService output : ', output);
           this.enumService.addToGlobalEnumData(output);
