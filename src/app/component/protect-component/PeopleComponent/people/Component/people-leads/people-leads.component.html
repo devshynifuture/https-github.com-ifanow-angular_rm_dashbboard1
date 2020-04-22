@@ -19,8 +19,9 @@
         </div>
     </div>
     <div class="col-md-12 people-leads">
-        <table #tableEl matSort mat-table *ngIf="leadDataSource.data.length>0" [dataSource]="leadDataSource"
-            appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation" class="mt-8" id="table-low">
+        <table #tableEl matSort mat-table *ngIf="leadDataSource.data.length>0" #leadTableSort="matSort"
+            [dataSource]="leadDataSource" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation"
+            class="mt-8" id="table-low">
 
             <ng-container matColumnDef="position">
                 <th mat-sort-header="displayName" mat-header-cell *matHeaderCellDef class="br w-20"> Lead name </th>
