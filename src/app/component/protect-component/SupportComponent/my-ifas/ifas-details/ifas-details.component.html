@@ -529,7 +529,7 @@
         <mat-tab label="Team members">
 
             <div class="row">
-                <div class="col-md-12 back-office-table  overflow-hidden" *ngIf="dataSource4.length > 0">
+                <div class="col-md-12 back-office-table  overflow-hidden" *ngIf="dataSource4.data.length > 0">
                     <h3 class="f-16 mb-4">Ticket list</h3>
 
                     <table mat-table [dataSource]="dataSource4" id="table-low" class="skeletonAnimation"
@@ -581,7 +581,7 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div *ngIf="dataSource4.length == 0 && !isLoading && !hasError"
+                    <div *ngIf="dataSource4.data.length == 0 && !isLoading && !hasError"
                         class="d-flex flex-column align-items-center">
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
                         <h4 class="pt-12">No Team members found</h4>

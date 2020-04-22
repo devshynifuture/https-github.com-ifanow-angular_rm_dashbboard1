@@ -8,6 +8,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { DatePipe } from '@angular/common';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 const moment = require('moment');
 
 @Component({
@@ -62,14 +63,14 @@ export class ClientBasicDetailsComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
-    private eventService: EventService, private datePipe: DatePipe, private utilService: UtilService) {
+    private eventService: EventService, private datePipe: DatePipe, private utilService: UtilService, private enumDataService: EnumDataService) {
   }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientRoles = this.enumService.getClientRole();
     console.log(this.clientRoles, 'this.clientRoles 123A');
-
+    console.log("tax status data", this.enumDataService.getDataForTaxMasterService());
   }
 
   @Input() set data(data) {
@@ -243,7 +244,7 @@ export class ClientBasicDetailsComponent implements OnInit {
             mobileList.push({
               userType: 2,
               mobileNo: element.get('number').value,
-              ifscCode: element.get('code').value
+              isdCodeId: element.get('code').value
             });
           }
         });
@@ -386,7 +387,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       mobileList.push({
         mobileNo: element.get('number').value,
         verificationStatus: 0,
-        ifscCode: element.get('code').value
+        isdCodeId: element.get('code').value
       });
     });
     if (this.invTypeCategory == '1') {

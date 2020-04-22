@@ -119,7 +119,7 @@ export class CompanyMoreInfoComponent implements OnInit {
         mobileList.push({
           userType: 8,
           mobileNo: element.get('number').value,
-          ifscCode: element.get('code').value
+          isdCodeId: element.get('code').value
         });
       });
     }

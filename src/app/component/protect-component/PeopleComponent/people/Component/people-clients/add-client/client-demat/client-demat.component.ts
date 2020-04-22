@@ -282,9 +282,11 @@ export class ClientDematComponent implements OnInit {
           this.holdingMode = (this.dematList.modeOfHolding) ? String(this.dematList.modeOfHolding) : '1';
         }
         else {
+          this.holdingMode = '1';
           this.dematList = {};
         }
       }, err => {
+        this.holdingMode = '1';
         this.dematList = {};
       }
     )
@@ -320,7 +322,7 @@ export class ClientDematComponent implements OnInit {
           mobileList.push({
             "id": 0,
             "mobileNo": element.get('number').value,
-            ifscCode: element.get('code').value
+            isdCodeId: element.get('code').value
           });
         });
       }
