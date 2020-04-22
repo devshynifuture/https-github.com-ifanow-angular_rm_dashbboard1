@@ -154,7 +154,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   }
   getSharebleLink(element, flag) {
-    if(element.fileName){
+    if (element.fileName) {
       this.downlodFiles(element, flag);
     }
   }
@@ -480,11 +480,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       this.verifyEmail(data, value)
     } else if (value == 'preview') {
       this.urlData = data
-    }
-    else if (value == 'DocPreview') {
+    } else if (value == 'DocPreview') {
       const dialogRef = this.dialog.open(PreviewComponent, {
         width: '500px',
-        height:'600px',
+        height: '600px',
         data: { bank: data, flag: 'flag' }
       });
       dialogRef.afterClosed().subscribe(result => {
