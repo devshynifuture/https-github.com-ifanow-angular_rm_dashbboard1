@@ -52,7 +52,7 @@ export class RiskProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getRiskProfileList();
+    this.getRiskProfileList(true);
     this.getdataForm('');
     this.sendRiskList = [];
    // this.progressBar = [];
@@ -270,21 +270,24 @@ export class RiskProfileComponent implements OnInit {
     return this.riskProfile.controls;
   }
 
-  getRiskProfileList() {
+  getRiskProfileList(flag) {
     // let obj = {}
     this.showButton = false
     this.planService.getRiskProfile('').subscribe(
-      data => this.getRiskProfilRes(data)
+      data => this.getRiskProfilRes(data,flag)
     );
   }
 
-  getRiskProfilRes(data) {
+  getRiskProfilRes(data,flag) {
     this.showButton = true
     console.log(data);
     this.showLoader = false;
     this.riskAssessments = data.riskAssessments;
     this.riskAssessmentQuestionList = this.riskAssessments.riskAssessmentQuestionList;
     console.log(this.riskAssessmentQuestionList);
+    if(flag == false){
+      this.reset(false)
+    }
   }
 
   submitRiskAnalysis(data) {
@@ -370,7 +373,7 @@ export class RiskProfileComponent implements OnInit {
     if (data != undefined) {
       this.showRisk = false
       if (data.refreshRequired == false) {
-        this.getRiskProfileList();
+        this.getRiskProfileList(false);
       } else {
         this.riskAssessmentQuestionList = data.refreshRequired
         this.statusArray = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
@@ -379,9 +382,12 @@ export class RiskProfileComponent implements OnInit {
       }
     }
   }
-  reset(){
+  reset(flag){
     this.statusArray = []
-    this.getRiskProfileList();  
+    this.progressBar = this.statusArray.length * 0
+    if(flag == true){
+      this.getRiskProfileList(true);  
+    }
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
