@@ -51,7 +51,7 @@ export class AuthService {
 
   isAdvisor() {
     if (AuthService.getUserInfo()) {
-      console.log('Authservice isAdvisor userType: ', AuthService.getUserInfo().userType);
+     // console.log('Authservice isAdvisor userType: ', AuthService.getUserInfo().userType);
       return AuthService.getUserInfo().userType ? AuthService.getUserInfo().userType === 1 : false;
     } else {
       return false;

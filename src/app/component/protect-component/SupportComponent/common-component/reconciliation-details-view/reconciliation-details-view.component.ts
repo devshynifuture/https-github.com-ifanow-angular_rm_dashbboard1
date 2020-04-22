@@ -122,7 +122,12 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource1.data.length;
+    let numRows;
+    if (this.dataSource1.data && this.dataSource1.data.length !== 0) {
+      numRows = this.dataSource1.data.length;
+    } else {
+      numRows = 0;
+    }
     return numSelected === numRows;
   }
 
@@ -215,7 +220,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     } else {
       this.dataSource1.data = this.dataSource1.data.filter(item => {
         console.log(item, filterBasedOn);
-        return item.transactionType === filterBasedOn ? item : null;
+        return item.transactionType === filterBasedOn.toUpperCase() ? item : null;
       })
     }
     console.log("data filtered", this.dataSource1.data);
@@ -246,6 +251,14 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
       if (this.data.tableType === 'duplicate-folios') {
         this.dataSource2.data = this.tableData1;
+      }
+    } else {
+      if (this.data.tableType == 'all-folios') {
+        this.dataSource1.data = null;
+      }
+
+      if (this.data.tableType === 'duplicate-folios') {
+        this.dataSource2.data = null;
       }
     }
   }
@@ -315,11 +328,11 @@ interface PeriodicElement2 {
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  { position: 1, checkbox: '', transactionType: 'SIP', date: '07/01/2019', amount: '5,000.00', units: '156.23', balanceUnits: '156.23', action: ' ' },
-  { position: 2, checkbox: '', transactionType: 'Transfer Out Change of Broker', date: '07/01/2019', amount: '5,000.00', units: '156.23', balanceUnits: '156.23', action: ' ' },
+  { position: 1, checkbox: '', transactionType: '', date: '', amount: '', units: '', balanceUnits: '', action: ' ' },
+  { position: 2, checkbox: '', transactionType: '', date: '', amount: '', units: '', balanceUnits: '', action: ' ' },
 ];
 
 const ELEMENT_DATA2: PeriodicElement2[] = [
-  { transactionType: 'SIP', date: '07/01/2019', amount: '5,000.00', nav: '298.43', units: '156.23', action: ' ', keep: false },
-  { transactionType: 'Transfer Out Change of Broker', date: '07/01/2019', amount: '5,000.00', nav: '348.34', units: '156.23', action: ' ', keep: true },
+  { transactionType: '', date: '', amount: '', nav: '', units: '', action: ' ', keep: false },
+  { transactionType: '', date: '', amount: '', nav: '', units: '', action: ' ', keep: true },
 ];

@@ -99,10 +99,13 @@
                                 <ng-container matColumnDef="report">
                                     <th class="br" mat-header-cell *matHeaderCellDef> Report </th>
                                     <td class="br" mat-cell *matCellDef="let element">
-                                        <button mat-stroked-button class="bg-primary text-white"
-                                            (click)="openUpperSliderBackoffice('report', element, franklinId)">
-                                            Report
-                                        </button>
+                                        <div matTooltip=" Loading..." [matTooltipDisabled]="!isLoading">
+                                            <button mat-stroked-button class="bg-primary text-white"
+                                                [disabled]="isLoading"
+                                                (click)="openUpperSliderBackoffice('report', element, franklinId)">
+                                                Report
+                                            </button>
+                                        </div>
                                     </td>
                                 </ng-container>
 
@@ -190,10 +193,12 @@
                         <ng-container matColumnDef="report">
                             <th class="br" mat-header-cell *matHeaderCellDef> Report </th>
                             <td class="br" mat-cell *matCellDef="let element">
-                                <button mat-stroked-button class="bg-primary text-white"
-                                    (click)="openUpperSliderBackoffice('report', element, camsId)">
-                                    Report
-                                </button>
+                                <div matTooltip=" Loading..." [matTooltipDisabled]="!isLoading">
+                                    <button mat-stroked-button class="bg-primary text-white" [disabled]="isLoading"
+                                        (click)="openUpperSliderBackoffice('report', element, camsId)">
+                                        Report
+                                    </button>
+                                </div>
                             </td>
                         </ng-container>
 
@@ -281,17 +286,19 @@
                         <ng-container matColumnDef="report">
                             <th class="br" mat-header-cell *matHeaderCellDef> Report </th>
                             <td class="br" mat-cell *matCellDef="let element">
-                                <button mat-stroked-button class="bg-primary text-white"
-                                    (click)="openUpperSliderBackoffice('report', element, karvyId)">
-                                    Report
-                                </button>
+                                <div matTooltip=" Loading..." [matTooltipDisabled]="!isLoading">
+                                    <button mat-stroked-button class="bg-primary text-white" [disabled]="isLoading"
+                                        (click)="openUpperSliderBackoffice('report', element, karvyId)">
+                                        Report
+                                    </button>
+                                </div>
                             </td>
                         </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
-                    <div class="col-md-12 p-0" *ngIf="karvyData.data === null">
+                    <div class="col-md-12 p-0" *ngIf="!karvyData.data">
                         <h5 class="text-center b-a p-44">
                             No Data Found
                         </h5>
@@ -517,7 +524,7 @@
                         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
                     </table>
 
-                    <div class="col-md-12 p-0" *ngIf="ticketList.data === null">
+                    <div class="col-md-12 p-0" *ngIf="(ticketList.data.length === 0) || (ticketList.data === null)">
                         <h5 class="text-center b-a p-44">
                             No Data Found
                         </h5>
@@ -529,7 +536,7 @@
         <mat-tab label="Team members">
 
             <div class="row">
-                <div class="col-md-12 back-office-table  overflow-hidden" *ngIf="dataSource4.data.length > 0">
+                <div class="col-md-12 back-office-table  overflow-hidden">
                     <h3 class="f-16 mb-4">Ticket list</h3>
 
                     <table mat-table [dataSource]="dataSource4" id="table-low" class="skeletonAnimation"
@@ -581,7 +588,7 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div *ngIf="dataSource4.data.length == 0 && !isLoading && !hasError"
+                    <div *ngIf="dataSource4.data && dataSource4.data.length == 0 && !isLoading && !hasError"
                         class="d-flex flex-column align-items-center">
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
                         <h4 class="pt-12">No Team members found</h4>
@@ -593,8 +600,6 @@
                     </div> -->
                 </div>
             </div>
-
-
         </mat-tab>
         <mat-tab label="Billing details">
 

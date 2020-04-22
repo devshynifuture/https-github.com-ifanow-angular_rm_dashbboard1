@@ -75,6 +75,7 @@ export class IfasDetailsComponent implements OnInit {
     // this.utilsService.loader(0);
     this.getReconSummaryList();
     this.getRTList();
+    this.getBrokerListData();
 
   }
   @Input() set data(data) {
@@ -98,9 +99,9 @@ export class IfasDetailsComponent implements OnInit {
         if (data) {
           // this.utilsService.loader(-1)
           this.reconSummaryList = data
-          this.franklineData = data.FRANKLIN_TEMPLETON
-          this.camsData = data.CAMS
-          this.karvyData = data.KARVY
+          this.franklineData.data = data.FRANKLIN_TEMPLETON
+          this.camsData.data = data.CAMS
+          this.karvyData.data = data.KARVY
         } else {
           // this.utilsService.loader(-1);
           this.franklineData.data = null;
@@ -132,23 +133,27 @@ export class IfasDetailsComponent implements OnInit {
       });
   }
 
-  getBrokerList(value) {
-    this.rtId = value;
+
+  getBrokerListData() {
     this.reconService.getBrokerListValues({ advisorId: this.ifasData.adminAdvisorId })
       .subscribe(res => {
         if (res) {
           this.brokerList = res;
           console.log('broker list values:::', res);
-          if (value === this.franklinId) {
-            this.openSelectArnRiaDialog(res, this.franklineData, this.rtId)
-          } else if (value === this.camsId) {
-            this.openSelectArnRiaDialog(res, this.camsData, this.rtId)
-          } else if (value === this.karvyId) {
-            this.openSelectArnRiaDialog(res, this.karvyData, this.rtId)
-
-          }
         }
       });
+  }
+
+  getBrokerList(value) {
+    this.rtId = value;
+    if (value === this.franklinId) {
+      this.openSelectArnRiaDialog(this.brokerList, this.franklineData, this.rtId)
+    } else if (value === this.camsId) {
+      this.openSelectArnRiaDialog(this.brokerList, this.camsData, this.rtId)
+    } else if (value === this.karvyId) {
+      this.openSelectArnRiaDialog(this.brokerList, this.karvyData, this.rtId)
+
+    }
   }
   getCancelSubscriptionData() {
 
@@ -163,17 +168,19 @@ export class IfasDetailsComponent implements OnInit {
     // this.utilsService.loader(1);
     this.isLoading = true;
     let obj = {
-      rmId: 3
+      rmId: 3,
+      advisorId: this.ifasData.adminAdvisorId
     }
     this.supportService.getTickets(obj)
       .subscribe(res => {
+        console.log("this is ticket list::::", res);
         this.isLoading = false;
         if (res) {
-          this.ticketList = res.listItems || [];
+          this.ticketList.data = res.listItems;
           this.onHold = res.onHold
           this.unResolved = res.unResolved
           this.openTickets = res.open
-          this.utilsService.loader(-1);
+          // this.utilsService.loader(-1);
         } else {
           this.ticketList.data = null;
         }
@@ -249,15 +256,18 @@ export class IfasDetailsComponent implements OnInit {
     this.settingsService.getTeamMembers(dataObj)
       .subscribe((res) => {
         this.isLoading = false;
-        this.isComponentLoaded.teamMember = true;
-        console.log('team member details', res);
-        this.dataSource4 = res || [];
-        this.utilsService.loader(-1);
+        if (res) {
+          this.isComponentLoaded.teamMember = true;
+          console.log('team member details', res);
+          this.dataSource4.data = res;
+        } else {
+          this.dataSource4.data = null;
+        }
+        // this.utilsService.loader(-1);
       }, err => {
-        this.dataSource4.data = null;
         this.eventService.openSnackBar(err, "Dismiss");
         this.hasError = true;
-        this.utilsService.loader(-1);
+        // this.utilsService.loader(-1);
       });
   }
 

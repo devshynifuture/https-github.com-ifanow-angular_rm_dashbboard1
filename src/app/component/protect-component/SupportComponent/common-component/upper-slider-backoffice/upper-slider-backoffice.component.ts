@@ -48,6 +48,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   adminId = AuthService.getAdminId();
   parentId = AuthService.getParentId();
   isLoadingForDuplicate: boolean = false;
+  canExportExcelSheet = 'false';
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -541,12 +542,14 @@ export class UpperSliderBackofficeComponent implements OnInit {
       aumReconId: this.data.id
     };
     this.isLoading = true;
+    this.canExportExcelSheet = 'intermediate';
     this.reconService.getAumReportListValues(data)
       .subscribe(res => {
         this.isLoading = false;
         console.log("this is aum report list get:::", res);
         if (res) {
           this.didAumReportListGot = true;
+          this.canExportExcelSheet = 'true';
           console.log("this is aum report list get:::", res);
           let arrayValue = [];
           this.aumListReportValue = res;
@@ -564,6 +567,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           });
           this.dataSource1.data = arrayValue;
         } else {
+          this.canExportExcelSheet = 'false';
           this.didAumReportListGot = false;
           this.dataSource1.data = null;
         }

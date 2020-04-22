@@ -15,6 +15,7 @@ import { CopyDocumentsComponent } from '../../../common-component/copy-documents
 import { ViewActivityComponent } from './view-activity/view-activity.component';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { GetSharebleLinkComponent } from './get-shareble-link/get-shareble-link.component';
+import { PreviewComponent } from './preview/preview.component';
 
 @Component({
   selector: 'app-document-explorer',
@@ -70,6 +71,9 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   countDocs: any;
   isAdvisor: any;
   getUserInfo: any;
+  dialogObj: { header: string; body: string; body2: string; btnYes: string; btnNo: string; };
+  url: any;
+  urlData: any;
 
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
     private custumService: CustomerService, public subInjectService: SubscriptionInject,
@@ -150,29 +154,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   }
   getSharebleLink(element, flag) {
-    this.downlodFiles(element, flag);
+    if (element.fileName) {
+      this.downlodFiles(element, flag);
+    }
   }
-  // openDocumentPreview() {
-
-  //   let obj =
-  //     {
-  //       data: this.dataTerms.docText,
-  //       cancelButton: () => {
-  //         this.utilservice.htmlToPdf(this.dataTerms.docText, 'document');
-  //         dialogRef.close();
-  //       }
-  //     }
-  //   const dialogRef = this.dialog.open(DocumentPreviewComponent, {
-  //     width: '1800px',
-  //     height: '900px',
-  //     data: obj,
-  //   });
-
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     console.log('The dialog was closed');
-  //   });
-
-  // }
   copyFilesRes() {
     this.eventService.openSnackBar('File copied successfully', 'Dismiss');
     this.getAllFileList(1, 'copy')
@@ -472,7 +457,9 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   downlodFiles(element, value) {
-    this.isLoading = true
+    if (value != 'preview') {
+      this.isLoading = true
+    }
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
@@ -483,7 +470,6 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       data => this.downloadFileRes(data, value)
     );
   }
-
   downloadFileRes(data, value) {
     this.isLoading = false
 
@@ -492,9 +478,27 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       console.log('shareLink', data)
       this.urlShorten(data)
       this.verifyEmail(data, value)
+    } else if (value == 'preview') {
+      this.urlData = data
+    } else if (value == 'DocPreview') {
+      this.urlData = ''
+      const dialogRef = this.dialog.open(PreviewComponent, {
+        width: '500px',
+        height: '600px',
+        data: { bank: data, flag: 'flag' }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result == undefined) {
+          return
+        }
+        console.log('The dialog was closed');
+        this.element = result;
+        console.log('result -==', this.element)
+      });
     } else {
       window.open(data);
     }
+    return this.urlData
   }
   verifyEmail(value, flag) {
     const dialogRef = this.dialog.open(GetSharebleLinkComponent, {
@@ -525,19 +529,31 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
   deleteModal(flag, data) {
     this.parentId = data.parentFolderId
+    if (flag == 'file/folder') {
+      this.dialogObj = {
+        header: 'RECOVER',
+        body: 'Are you sure you want to recover?',
+        body2: '',
+        btnYes: 'CANCEL',
+        btnNo: 'RECOVER',
+      }
+    } else {
+      this.dialogObj = {
+        header: 'DELETE',
+        body: 'Are you sure you want to delete?',
+        body2: '',
+        btnYes: 'CANCEL',
+        btnNo: 'DELETE',
+      }
+    }
     const dialogData = {
       data: flag,
-      header: 'DELETE',
-      body: 'Are you sure you want to delete?',
-      body2: 'This cannot be undone.',
-      btnYes: 'CANCEL',
-      btnNo: 'DELETE',
+      header: this.dialogObj.header,
+      body: this.dialogObj.body,
+      body2: this.dialogObj.body2,
+      btnYes: this.dialogObj.btnYes,
+      btnNo: this.dialogObj.btnNo,
       positiveMethod: () => {
-        if (flag == 'FOLDER') {
-
-        } else {
-
-        }
         if (flag == 'FOLDER') {
           const obj = {
             clientId: this.clientId,
@@ -545,6 +561,38 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
             id: data.id
           };
           this.custumService.deleteFolder(obj).subscribe(
+            data => {
+              this.eventService.openSnackBar('Deleted', 'Dismiss');
+              dialogRef.close();
+              this.getCount()
+              this.getAllFileList(1, 'uplaodFile');
+            },
+            error => this.eventService.showErrorMessage(error)
+          );
+        } else if (flag == 'permanently') {
+          const obj = {
+            clientId: this.clientId,
+            advisorId: this.advisorId,
+            type: (data.folderName) ? 1 : (data.fileName) ? 2 : '',
+            id: data.id
+          };
+          this.custumService.deleteFolderPermnant(obj).subscribe(
+            data => {
+              this.eventService.openSnackBar('Deleted', 'Dismiss');
+              dialogRef.close();
+              this.getCount()
+              this.getAllFileList(1, 'uplaodFile');
+            },
+            error => this.eventService.showErrorMessage(error)
+          );
+        } else if (flag == 'file/folder') {
+          const obj = {
+            clientId: this.clientId,
+            advisorId: this.advisorId,
+            type: (data.folderName) ? 1 : (data.fileName) ? 2 : '',
+            id: data.id
+          };
+          this.custumService.recovery(obj).subscribe(
             data => {
               this.eventService.openSnackBar('Deleted', 'Dismiss');
               dialogRef.close();
@@ -730,8 +778,9 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     console.log('value', value)
 
     var link =
-     { "destination":value , 
-     "domain": { "fullName": "rebrand.ly" } 
+    {
+      "destination": value,
+      "domain": { "fullName": "rebrand.ly" }
     }
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/json');
@@ -771,10 +820,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         setTimeout(() => {
           this._bottomSheet.dismiss()
           this.eventService.openSnackBar('Uploaded successfully', 'Dismiss');
-        }, 600);
+        }, 1000);
         setTimeout(() => {
           this.getAllFileList(1, 'uplaodFile')
-        }, 600);
+        }, 2000);
       }
     });
 
