@@ -16,6 +16,9 @@ export class EnumServiceService {
     otherAssetTypes: [],
     feeCollectionMode: [],
     taxStatusMap: {},
+    corporateTaxList: [],
+    individualTaxList: [],
+    minorTaxList: [],
   };
 
 
@@ -37,6 +40,18 @@ export class EnumServiceService {
 
   getTaxStatus() {
     return this.globalEnumData.taxStatusMap;
+  }
+
+  getCorporateTaxList() {
+    return this.globalEnumData.corporateTaxList;
+  }
+
+  getMinorTaxList() {
+    return this.globalEnumData.minorTaxList;
+  }
+
+  getIndividualTaxList() {
+    return this.globalEnumData.individualTaxList;
   }
 
   public addRoles(data) {
