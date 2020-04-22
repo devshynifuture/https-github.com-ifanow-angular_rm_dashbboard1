@@ -48,18 +48,21 @@ export class LiabilitiesComponent implements OnInit {
   filterData: any;
   excelData: any[];
   footer = [];
-  fragmentData = {isSpinner : false};
+  fragmentData = { isSpinner: false };
   deletedDataId: any;
-  isLiabilitiFilter=false;
+  isLiabilitiFilter = false;
+  filteredData: any[];
+  filterForliabilities: any;
+  advisorData: any;
 
 
   constructor(private excel: ExcelService, private eventService: EventService, private subInjectService: SubscriptionInject,
-    public customerService: CustomerService, public util: UtilService, public dialog: MatDialog ,private excelGen :ExcelGenService) {
+    public customerService: CustomerService, public util: UtilService, public dialog: MatDialog, private excelGen: ExcelGenService) {
   }
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild('tableEl', {static: false}) tableEl;
+  @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChildren(FormatNumberDirective) formatNumber;
-  @ViewChild('liabilitiesTemp', {static: false}) liabilitiesTemp: ElementRef;
+  @ViewChild('liabilitiesTemp', { static: false }) liabilitiesTemp: ElementRef;
 
   viewMode: string;
 
@@ -104,7 +107,7 @@ export class LiabilitiesComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     let rows = this.tableEl._elementRef.nativeElement.rows;
     const data = this.excelGen.generateExcel(rows, tableTitle);
-    if(data){
+    if (data) {
       this.fragmentData.isSpinner = false;
     }
   }
@@ -117,16 +120,41 @@ export class LiabilitiesComponent implements OnInit {
   getGlobalLiabilitiesRes(data) {
     console.log(data);
   }
-  filterLiabilities(key: string, value: any) {
+  filterLiabilities(category, key: string, value: any, data) {
     let dataFiltered;
-    dataFiltered = this.dataSource.data.filter(function (item) {
+    if (data == 'tab1') {
+      dataFiltered = this.filterForliabilities;
+    } else {
+      data = parseInt(data);
+      dataFiltered = this.filterForliabilities.filter(function (item) {
+        return item[category] === data;
+      });
+    }
+
+    dataFiltered = dataFiltered.filter(function (item) {
       return item[key] === value;
     });
 
     this.isLiabilitiFilter = true;
-    this.dataSource.data = dataFiltered;
-     this.dataSource = new MatTableDataSource(this.dataSource.data);
-   
+    if (dataFiltered.length > 0) {
+      this.dataSource.data = dataFiltered;
+      this.dataSource = new MatTableDataSource(this.dataSource.data);
+      this.totalLoanAmt =0;
+      this.outStandingAmt =0;
+     this.dataSource.data.forEach(element => {
+        this.totalLoanAmt += element.loanAmount
+      });
+      this.dataSource.data.forEach(element => {
+        if (element.outstandingAmount == "NaN") {
+          element.outstandingAmount = 0
+        }
+        this.outStandingAmt += element.outstandingAmount
+      });
+    } else {
+      this.eventService.openSnackBar("No data found", "Dismiss")
+    }
+
+
   }
   getPayables() {
     const obj = {
@@ -200,7 +228,7 @@ export class LiabilitiesComponent implements OnInit {
       positiveMethod: () => {
         this.customerService.deleteLiabilities(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar("Liabilities is deleted", "Dismiss")
+            this.eventService.openSnackBar("Liabilitiy deleted successfully", "Dismiss")
             dialogRef.close();
             this.getLiability(this.deletedDataId);
           },
@@ -310,9 +338,9 @@ export class LiabilitiesComponent implements OnInit {
   generatePdf() {
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
-    this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
+    this.util.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
   }
-  checkStatusId(data){
+  checkStatusId(data) {
     data.forEach(obj => {
       if (obj.maturityDate < new Date()) {
         obj.statusId = 'MATURED';
@@ -325,6 +353,7 @@ export class LiabilitiesComponent implements OnInit {
     this.isLoading = false;
     // this.showLoader = false;
     if (data && data.loans.length > 0) {
+      this.filterForliabilities = data.loans;
       this.checkStatusId(data.loans);
       // this.totalLoanAmt = data.totalLoanAmount;
       // this.outStandingAmt = data.outstandingAmount;

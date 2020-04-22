@@ -41,8 +41,8 @@ export class OtherPayablesComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild('tableEl', {static: false}) tableEl;
   @ViewChild('otherPayablesTemp', {static: false}) otherPayablesTemp: ElementRef;
-  isLiabilitiFilter=false;
   filterData: MatTableDataSource<any>;
+  filterForOtherPayables: any;
   constructor(public custmService: CustomerService, public util: UtilService,
     public subInjectService: SubscriptionInject, public eventService: EventService,
     public dialog: MatDialog,private excel :ExcelGenService) {
@@ -59,6 +59,7 @@ export class OtherPayablesComponent implements OnInit {
     } else {
       this.dataSource = this.payableData;
       this.dataSource = new MatTableDataSource(this.payableData);
+      this.filterForOtherPayables = this.payableData;
       this.dataSource.sort = this.sort;
       this.getStatusId(this.dataSource.data)
       this.payableData.forEach(element => {
@@ -116,15 +117,26 @@ export class OtherPayablesComponent implements OnInit {
       this.fragmentData.isSpinner = false;
     }
   }
-  filterLiabilities(key: string, value: any) {
+  filterOtherPayable(key: string, value: any) {
     let dataFiltered;
-    dataFiltered = this.dataSource.data.filter(function (item) {
+
+    dataFiltered = this.filterForOtherPayables.filter(function (item) {
       return item[key] === value;
     });
-
-    this.isLiabilitiFilter = true;
-    this.dataSource.data = dataFiltered;
-     this.dataSource = new MatTableDataSource(this.dataSource.data);
+    if (dataFiltered.length > 0) {
+      this.dataSource.data = dataFiltered;
+      this.dataSource = new MatTableDataSource(this.dataSource.data);
+      this.totalAmountBorrowed = 0;
+      this.totalAmountOutstandingBalance = 0;
+      this.dataSource.data.forEach(element => {
+        this.totalAmountBorrowed += element.amountBorrowed;
+      });
+      this.dataSource.data.forEach(element => {
+        this.totalAmountOutstandingBalance += element.outstandingBalance;
+      });
+    } else {
+      this.eventService.openSnackBar("No data found", "Dismiss")
+    }
    
   }
   generatePdf() {

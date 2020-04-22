@@ -1,5 +1,5 @@
 <div class="wrapper-8">
-    <div class="row pb-8">
+    <div class="row pb-8 pt-28 ">
         <div class="col-md-4 p-0">
             <h4 class="m-0 text-black roboto">Other Payables</h4>
         </div>
@@ -27,10 +27,10 @@
             ><i class="material-icons">filter_list</i>FILTERS
             </button>
             <mat-menu #liabilitiesMenu>
-                 <button mat-menu-item (click)="filterLiabilities('statusId', 'LIVE')">
+                 <button mat-menu-item (click)="filterOtherPayable('statusId', 'LIVE')">
                      STATUS - LIVE
                  </button>
-                 <button mat-menu-item (click)="filterLiabilities('statusId', 'MATURED')">
+                 <button mat-menu-item (click)="filterOtherPayable('statusId', 'MATURED')">
                      STATUS - MATURED
                  </button>
              </mat-menu>
@@ -40,8 +40,7 @@
         </div>
     </div>
 
-    <div [ngClass]="{'table-scroll':isLoading==false }" class="liabilities overflow-hidden" #otherPayablesTemp
-        id="template">
+    <div [ngClass]="{'table-scroll':isLoading==false }" class="liabilities overflow-hidden" >
         <table matSort #tableEl  mat-table [dataSource]="dataSource" id="tbs" *ngIf="dataSource.filteredData.length > 0"
             class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="no" sticky>
@@ -162,3 +161,106 @@
         </div>
     </div>
 </div>
+<!-- -------------------- pdf ---------------------------- -->
+<div #otherPayablesTemp id="template" class="hide">
+        <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
+            <tr>
+                    <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
+                           Other payables</td>
+            </tr>
+            <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+                <td
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                    No. </td>
+                <td
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                    Owner</td>
+                <td
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                    Date of receipt </td>
+                <td
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                    Creditor name </td>
+                <td
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                    Amount borrowed </td>
+                <td
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                    Interest </td>
+                <td
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                    Date of repayment</td>
+                <td
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                    Outstanding balance</td>
+                    <td
+                    style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                    Description
+                </td>  
+                <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                    Status </td>
+    
+            </tr>
+            <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
+                *ngFor="let item of dataSource.data ;index as i">
+                <td
+                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                    {{i + 1}}</td>
+                <td
+                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                    {{item.ownerName}}</td>
+                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
+                    >
+                    {{item.dateOfReceived | date:'dd/MM/yyyy'}} 
+                </td>
+                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                    >{{(item.creditorName)?item.creditorName:0}}</td>
+                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                    appFormatNumber>{{(item.amountBorrowed)?item.amountBorrowed:0}}</td>
+                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                    appFormatNumber>{{(item.interest)?item.interest:0}}</td>
+                <td
+                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                    {{item.dateOfRepayment | date:'dd/MM/yyyy'}}</td>
+                <td
+                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>
+                    {{(item.outstandingBalance)?(item.outstandingBalance):0}}</td>
+                <td
+                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>
+                    {{(item.description) ? item.description : '-'}}</td>
+                    <td
+                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                    <span class="text-primary" *ngIf="item.statusId == 'LIVE'">
+                            {{'LIVE'}} </span>
+                        <span class="text-success" *ngIf="item.statusId == 'MATURED'">
+                            {{'MATURED'}} </span>
+                </td>
+                   
+            </tr>
+            <tr
+                style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
+                <td
+                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"></td>
+                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
+                    appFormatNumber>Total</td>
+                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                    appFormatNumber></td>
+                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                    appFormatNumber></td>
+                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                    appFormatNumber [value]="totalAmountBorrowed">{{totalAmountBorrowed}}</td>
+                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                    appFormatNumber></td>
+                <td
+                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"></td>
+                <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" [value]="totalAmountOutstandingBalance" appFormatNumber>
+                        {{totalAmountOutstandingBalance}}</td>
+                <td
+                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                    </td>
+                    <td
+                    style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                    </td>
+            </tr>
+        </table>
+    </div>
