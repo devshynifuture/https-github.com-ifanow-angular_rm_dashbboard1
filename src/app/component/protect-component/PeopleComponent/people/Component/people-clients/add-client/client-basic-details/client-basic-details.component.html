@@ -30,8 +30,8 @@
                     <p class="m-0 roboto">Tax status</p>
                     <div class="form-group">
                         <mat-form-field>
-                            <<<<<<< HEAD <mat-select (selectionChange)="changeTaxStatus($event)"
-                                [(ngModel)]="invTaxStatus" class="form-control">
+                            <mat-select (selectionChange)="changeTaxStatus($event)" [(ngModel)]="invTaxStatus"
+                                class="form-control">
                                 <!-- <mat-option value="1">Resident</mat-option>
                                 <mat-option value="2">Non-resident</mat-option> -->
                                 <mat-option value='' disabled>Select option</mat-option>
@@ -39,13 +39,7 @@
                                     *ngFor="let singleTaxStatus of invTaxStatusList"
                                     [value]="singleTaxStatus.taxStatusCode">{{singleTaxStatus.taxStatusDesc}}
                                 </mat-option>
-                                =======
-                                <mat-select (selectionChange)="changeTaxStatus($event)" [(ngModel)]="invTaxStatus"
-                                    class="form-control">
-                                    <mat-option value="1">Resident</mat-option>
-                                    <mat-option value="2">Non-resident</mat-option>
-                                    >>>>>>> b276973f8c0138e3eb29e271e360c221fa2cccb4
-                                </mat-select>
+                            </mat-select>
                         </mat-form-field>
                     </div>
                 </div>
@@ -490,37 +484,32 @@
                     </div>
                 </div>
             </div>
-            <<<<<<< HEAD <app-add-number [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag"
-                (numberArray)="getNumberDetails($event)" [isResidential]="countryCodeFlag">
-                </app-add-number>
-                =======
-                <app-add-number [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag"
-                    (numberArray)="getNumberDetails($event)" [isResidential]="invTaxStatus"></app-add-number>
-                >>>>>>> b276973f8c0138e3eb29e271e360c221fa2cccb4
-                <div class="row pt-44">
-                    <div class="col-md-4 text-right">
-                        <h5 class="m-0 pt-20">PAN</h5>
-                    </div>
-                    <div class="col-md-3 p-0">
-                        <div class="form-group ">
-                            <mat-form-field floatLabel="never" appearance="standard">
-                                <input [maxLength]="10" placeholder="Enter PAN"
-                                    (input)="toUpperCase(minorForm.get('pan'),$event)" formControlName="pan" #pan
-                                    matInput class="form-control" [inputValidator]="validatorType.ALPHA_NUMERIC"
-                                    appInputValueValidation>
-                                <mat-error *ngIf="minorForm.get('pan').errors?.pattern">Pan invalid</mat-error>
-                                <mat-hint>Optional</mat-hint>
-                                <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="col-md-4 d-flex align-items-center">
-                        <p class="m-0 d-flex roboto text-primary f-400 c-p">
-                            <i class="material-icons mr-4"> check_circle </i> KYC compliant</p>
+            <app-add-number [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag"
+                (numberArray)="getNumberDetails($event)" [isResidential]="countryCodeFlag"></app-add-number>
+            <div class="row pt-44">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-20">PAN</h5>
+                </div>
+                <div class="col-md-3 p-0">
+                    <div class="form-group ">
+                        <mat-form-field floatLabel="never" appearance="standard">
+                            <input [maxLength]="10" placeholder="Enter PAN"
+                                (input)="toUpperCase(minorForm.get('pan'),$event)" formControlName="pan" #pan matInput
+                                class="form-control" [inputValidator]="validatorType.ALPHA_NUMERIC"
+                                appInputValueValidation>
+                            <mat-error *ngIf="minorForm.get('pan').errors?.pattern">Pan invalid</mat-error>
+                            <mat-hint>Optional</mat-hint>
+                            <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
+                        </mat-form-field>
                     </div>
                 </div>
+                <div class="col-md-4 d-flex align-items-center">
+                    <p class="m-0 d-flex roboto text-primary f-400 c-p">
+                        <i class="material-icons mr-4"> check_circle </i> KYC compliant</p>
+                </div>
+            </div>
 
-                <!--
+            <!--
     <div class="row pt-44">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-12">Username</h5>
@@ -658,207 +647,200 @@
                 </div>
             </div>
 
-            <<<<<<< HEAD <app-add-number [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag"
-                (numberArray)="getNumberDetails($event)" [isResidential]="countryCodeFlag">
-                </app-add-number>
-                =======
-                <app-add-number [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag"
-                    (numberArray)="getNumberDetails($event)" [isResidential]="invTaxStatus"></app-add-number>
-                >>>>>>> b276973f8c0138e3eb29e271e360c221fa2cccb4
+            <app-add-number [numberList]="basicDetailsData.mobileList" [flag]="mobileNumberFlag"
+                (numberArray)="getNumberDetails($event)" [isResidential]="countryCodeFlag"></app-add-number>
 
-                <div class="row pt-44">
-                    <div class="col-md-4 text-right">
-                        <h5 class="m-0 pt-12">Company PAN</h5>
+            <div class="row pt-44">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-12">Company PAN</h5>
+                </div>
+                <div class="col-md-3 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
+                                formControlName="comPan" (input)="toUpperCase(nonIndividualForm.get('comPan'),$event)"
+                                #cpan maxlength="10" matInput class="form-control">
+                            <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.required">This Field is required
+                            </mat-error>
+                            <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.pattern">Pan invalid
+                            </mat-error>
+                            <mat-hint align="end">{{cpan.value.length}} / 10</mat-hint>
+                        </mat-form-field>
                     </div>
-                    <div class="col-md-3 p-0">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <input [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
-                                    formControlName="comPan"
-                                    (input)="toUpperCase(nonIndividualForm.get('comPan'),$event)" #cpan maxlength="10"
-                                    matInput class="form-control">
-                                <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.required">This Field is
-                                    required
-                                </mat-error>
-                                <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.pattern">Pan invalid
-                                </mat-error>
-                                <mat-hint align="end">{{cpan.value.length}} / 10</mat-hint>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="col-md-4 d-flex align-items-center">
-                        <!-- <p class="m-0 d-flex roboto text-primary f-400 c-p">
+                </div>
+                <div class="col-md-4 d-flex align-items-center">
+                    <!-- <p class="m-0 d-flex roboto text-primary f-400 c-p">
                         <i class="material-icons mr-4"> check_circle </i> KYC compliant</p> -->
+                </div>
+            </div>
+
+
+            <div class="row pt-44">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-12">Company Occupation</h5>
+                </div>
+                <div class="col-md-5 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <mat-select formControlName="comOccupation" class="form-control">
+                                <mat-option value="" disable>Select option</mat-option>
+                                <mat-option value="1">Government</mat-option>
+                                <mat-option value="2">Service</mat-option>
+                                <mat-option value="3">Private sector</mat-option>
+                                <mat-option value="4">Business</mat-option>
+                                <mat-option value="5">Self-Occupied</mat-option>
+                            </mat-select>
+                            <mat-hint>Optional</mat-hint>
+                        </mat-form-field>
                     </div>
                 </div>
 
+            </div>
 
-                <div class="row pt-44">
-                    <div class="col-md-4 text-right">
-                        <h5 class="m-0 pt-12">Company Occupation</h5>
-                    </div>
-                    <div class="col-md-5 p-0">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <mat-select formControlName="comOccupation" class="form-control">
-                                    <mat-option value="" disable>Select option</mat-option>
-                                    <mat-option value="1">Government</mat-option>
-                                    <mat-option value="2">Service</mat-option>
-                                    <mat-option value="3">Private sector</mat-option>
-                                    <mat-option value="4">Business</mat-option>
-                                    <mat-option value="5">Self-Occupied</mat-option>
-                                </mat-select>
-                                <mat-hint>Optional</mat-hint>
-                            </mat-form-field>
-                        </div>
-                    </div>
 
+            <div *ngIf="basicDetailsData.userId" class="row pt-44">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-12">Username</h5>
+                    <p class="m-0 f-12 text-custom">This will be the login ID By <br> default.email is username
+                    </p>
                 </div>
-
-
-                <div *ngIf="basicDetailsData.userId" class="row pt-44">
-                    <div class="col-md-4 text-right">
-                        <h5 class="m-0 pt-12">Username</h5>
-                        <p class="m-0 f-12 text-custom">This will be the login ID By <br> default.email is username
-                        </p>
-                    </div>
-                    <div class="col-md-5 p-0">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <input matInput #username formControlName="username" appInputValueValidation
-                                    [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" class="form-control">
-                                <mat-hint align="end">{{username.value.length}}/ 50</mat-hint>
-                                <mat-error>This field is required</mat-error>
-                            </mat-form-field>
-                        </div>
+                <div class="col-md-5 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput #username formControlName="username" appInputValueValidation
+                                [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" class="form-control">
+                            <mat-hint align="end">{{username.value.length}}/ 50</mat-hint>
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
                     </div>
                 </div>
-                <div *ngIf="fieldFlag=='lead'" class="row pt-44">
-                    <div class="col-md-4 text-right">
-                        <h5 class="m-0 pt-12">Lead source</h5>
-                    </div>
-                    <div class="col-md-5 p-0">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <!-- <input #leadSource [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
+            </div>
+            <div *ngIf="fieldFlag=='lead'" class="row pt-44">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-12">Lead source</h5>
+                </div>
+                <div class="col-md-5 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <!-- <input #leadSource [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
                                 autocomplete="off" class="form-control" formControlName="leadSource" matInput>
                             <mat-hint align="end">{{leadSource.value.length}}/ 50</mat-hint> -->
-                                <mat-select formControlName="leadSource" class="form-control">
-                                    <mat-option value="" disable>Select option</mat-option>
-                                    <mat-option value="1">Search engine</mat-option>
-                                    <mat-option value="2">Website</mat-option>
-                                    <mat-option value="3">Refrerals from existing clients</mat-option>
-                                    <mat-option value="4">Refrerals from existing friends</mat-option>
-                                    <mat-option value="5">Refrerals from existing relatives</mat-option>
-                                    <mat-option value="6">LinkedIn </mat-option>
-                                    <mat-option value="7">Others</mat-option>
-                                </mat-select>
-                                <mat-hint>Optional</mat-hint>
-                            </mat-form-field>
-                        </div>
+                            <mat-select formControlName="leadSource" class="form-control">
+                                <mat-option value="" disable>Select option</mat-option>
+                                <mat-option value="1">Search engine</mat-option>
+                                <mat-option value="2">Website</mat-option>
+                                <mat-option value="3">Refrerals from existing clients</mat-option>
+                                <mat-option value="4">Refrerals from existing friends</mat-option>
+                                <mat-option value="5">Refrerals from existing relatives</mat-option>
+                                <mat-option value="6">LinkedIn </mat-option>
+                                <mat-option value="7">Others</mat-option>
+                            </mat-select>
+                            <mat-hint>Optional</mat-hint>
+                        </mat-form-field>
                     </div>
                 </div>
+            </div>
 
-                <div *ngIf="fieldFlag=='lead'" class="row pt-44">
-                    <div class="col-md-4 text-right">
-                        <h5 class="m-0 pt-12">Lead status</h5>
-                    </div>
-                    <div class="col-md-5 p-0">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <mat-select formControlName="leaadStatus" class="form-control">
-                                    <mat-option value="" disable>Select lead status</mat-option>
-                                    <mat-option value="2">New</mat-option>
-                                    <mat-option value="3">In progress</mat-option>
-                                </mat-select>
-                                <mat-hint>Optional</mat-hint>
-                            </mat-form-field>
-                        </div>
+            <div *ngIf="fieldFlag=='lead'" class="row pt-44">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-12">Lead status</h5>
+                </div>
+                <div class="col-md-5 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <mat-select formControlName="leaadStatus" class="form-control">
+                                <mat-option value="" disable>Select lead status</mat-option>
+                                <mat-option value="2">New</mat-option>
+                                <mat-option value="3">In progress</mat-option>
+                            </mat-select>
+                            <mat-hint>Optional</mat-hint>
+                        </mat-form-field>
                     </div>
                 </div>
-                <div *ngIf="fieldFlag=='lead'" class="row pt-44">
-                    <div class="col-md-4 text-right">
-                        <h5 class="m-0 pt-12">Lead rating</h5>
-                    </div>
-                    <div class="col-md-5 p-0">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <mat-select formControlName="leadRating" class="form-control">
-                                    <mat-option value="" disable>Select lead rating</mat-option>
-                                    <mat-option value="1">Cold</mat-option>
-                                    <mat-option value="2">Hot</mat-option>
-                                </mat-select>
-                                <mat-hint>Optional</mat-hint>
-                            </mat-form-field>
-                        </div>
+            </div>
+            <div *ngIf="fieldFlag=='lead'" class="row pt-44">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-12">Lead rating</h5>
+                </div>
+                <div class="col-md-5 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <mat-select formControlName="leadRating" class="form-control">
+                                <mat-option value="" disable>Select lead rating</mat-option>
+                                <mat-option value="1">Cold</mat-option>
+                                <mat-option value="2">Hot</mat-option>
+                            </mat-select>
+                            <mat-hint>Optional</mat-hint>
+                        </mat-form-field>
                     </div>
                 </div>
-                <div *ngIf="fieldFlag=='lead' && basicDetailsData.userId==null" class="row pt-44">
-                    <div class="col-md-4 text-right">
-                        <h5 class="m-0 pt-12">Lead Owner</h5>
-                    </div>
-                    <div class="col-md-5 p-0">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <mat-select [(ngModel)]="selectedClientOwner" formControlName="leadOwner"
-                                    class="form-control">
-                                    <mat-option *ngIf="clientOwnerList==undefined" value="1">
-                                        {{advisorData.name}}
-                                    </mat-option>
-                                    <mat-option value='' disabled>Select owner</mat-option>
-                                    <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
-                                        {{singleClient.name}}
-                                    </mat-option>
-                                </mat-select>
-                                <mat-error>This field is required</mat-error>
-                            </mat-form-field>
-                        </div>
+            </div>
+            <div *ngIf="fieldFlag=='lead' && basicDetailsData.userId==null" class="row pt-44">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-12">Lead Owner</h5>
+                </div>
+                <div class="col-md-5 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <mat-select [(ngModel)]="selectedClientOwner" formControlName="leadOwner"
+                                class="form-control">
+                                <mat-option *ngIf="clientOwnerList==undefined" value="1">
+                                    {{advisorData.name}}
+                                </mat-option>
+                                <mat-option value='' disabled>Select owner</mat-option>
+                                <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
+                                    {{singleClient.name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
                     </div>
                 </div>
-                <div *ngIf="fieldFlag=='client' && basicDetailsData.userId==null" class="row pt-44">
-                    <div class="col-md-4 text-right">
-                        <h5 class="m-0 pt-12">Client Owner</h5>
-                        <p class="m-0 f-12 text-custom">Team member</p>
-                    </div>
-                    <div class="col-md-5 p-0">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <mat-select [(ngModel)]="selectedClientOwner" formControlName="clientOwner"
-                                    class="form-control">
-                                    <mat-option *ngIf="clientOwnerList==undefined" value="1">
-                                        {{advisorData.name}}
-                                    </mat-option>
-                                    <mat-option value='' disabled>Select owner</mat-option>
-                                    <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
-                                        {{singleClient.name}}
-                                    </mat-option>
-                                </mat-select>
-                                <mat-error>This field is required</mat-error>
-                            </mat-form-field>
-                        </div>
+            </div>
+            <div *ngIf="fieldFlag=='client' && basicDetailsData.userId==null" class="row pt-44">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-12">Client Owner</h5>
+                    <p class="m-0 f-12 text-custom">Team member</p>
+                </div>
+                <div class="col-md-5 p-0">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <mat-select [(ngModel)]="selectedClientOwner" formControlName="clientOwner"
+                                class="form-control">
+                                <mat-option *ngIf="clientOwnerList==undefined" value="1">
+                                    {{advisorData.name}}
+                                </mat-option>
+                                <mat-option value='' disabled>Select owner</mat-option>
+                                <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
+                                    {{singleClient.name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
                     </div>
                 </div>
+            </div>
 
 
-                <div class="row pt-44 pb-60">
-                    <div class="col-md-4 text-right">
-                        <h5 class="m-0 pt-4">Role</h5>
-                        <p class="m-0 f-12 text-custom">The selected role decides<br> what access the client has
-                        </p>
-                    </div>
-                    <div class="col-md-5 p-0">
-                        <div class="form-group m-0">
-                            <mat-form-field>
-                                <mat-select formControlName="role" class="form-control">
-                                    <mat-option value='' disabled>Select roles</mat-option>
-                                    <mat-option [value]="role.clientRoleId" *ngFor="let role of clientRoles">
-                                        {{role.clientRoleName}}</mat-option>
-                                </mat-select>
-                                <mat-error>This field is required</mat-error>
-                            </mat-form-field>
-                        </div>
+            <div class="row pt-44 pb-60">
+                <div class="col-md-4 text-right">
+                    <h5 class="m-0 pt-4">Role</h5>
+                    <p class="m-0 f-12 text-custom">The selected role decides<br> what access the client has
+                    </p>
+                </div>
+                <div class="col-md-5 p-0">
+                    <div class="form-group m-0">
+                        <mat-form-field>
+                            <mat-select formControlName="role" class="form-control">
+                                <mat-option value='' disabled>Select roles</mat-option>
+                                <mat-option [value]="role.clientRoleId" *ngFor="let role of clientRoles">
+                                    {{role.clientRoleName}}</mat-option>
+                            </mat-select>
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
 </div>
