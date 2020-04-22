@@ -38,6 +38,7 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
   hasError: boolean = false;
 
   dashFG: FormGroup;
+  currentWeekFrankline: any;
   constructor(
     private eventService: EventService,
     private subInjectService: SubscriptionInject,
@@ -143,6 +144,7 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
           this.previousWeekKarvy = data.previousWeek[2]
           this.currentWeekKarvy = data.currentWeek[2]
           this.previousWeekFrankline = data.previousWeek[3]
+          this.currentWeekFrankline = data.currentWeek[3]
           if (this.dailyData.previousWeek[1]) {
             this.dailyData.previousWeek[1].forEach(element => {
               this.previousWeekCams.push(element.fileCount)
@@ -162,18 +164,18 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
               this.currentWeekKarvy.push(element.fileCount)
             });
           }
-          else if (this.dailyData.previousWeek[3]) {
-            this.dailyData.previousWeek[3].forEach(element => {
-              this.previousWeekFrankline.push(element.fileCount)
+          else if (this.dailyData.currentWeek[3]) {
+            this.dailyData.currentWeek[3].forEach(element => {
+              this.currentWeekFrankline.push(element.fileCount)
             });
           }
 
           console.log('previousWeekCams', this.previousWeekCams)
           console.log('previousWeekKarvy', this.previousWeekKarvy)
           //  this.currentWeekFrankline = this.dailyData.currentWeek[0]
-          this.flowCash(this.previousWeekCams, this.previousWeekCams, 'flowCash')
-          this.flowCash(this.previousWeekKarvy, this.previousWeekCams, 'flowCash2')
-          // this.flowCash(this.previousWeekFrankline, '', 'flowCash3')
+          this.flowCash(this.previousWeekCams, this.currentWeekCams, 'flowCash')
+          this.flowCash(this.previousWeekKarvy, this.currentWeekKarvy, 'flowCash2')
+           this.flowCash(this.previousWeekFrankline, this.currentWeekFrankline, 'flowCash3')
         }
       }
       , err => this.eventService.openSnackBar(err, "Dismiss")
