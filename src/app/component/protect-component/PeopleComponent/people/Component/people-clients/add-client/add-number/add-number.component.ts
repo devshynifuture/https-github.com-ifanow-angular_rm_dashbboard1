@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { ValidatorType, UtilService } from 'src/app/services/util.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-add-number',
@@ -35,26 +36,26 @@ export class AddNumberComponent implements OnInit {
   ngOnInit() {
   }
 
-  constructor(private fb: FormBuilder, private utilService: UtilService, private peopleService: PeopleService) {
+  constructor(private fb: FormBuilder, private utilService: UtilService, private peopleService: PeopleService, private enumService: EnumServiceService) {
   }
 
   // if this input not used anywhere then remove it
-  @Input() set isResidential(userdetailData) {
-    if (userdetailData == undefined) {
+  @Input() set isResidential(taxStatusId) {
+    if (taxStatusId == undefined) {
       return;
     }
-    this.getIsdCodesData(userdetailData);
-
+    let taxStatusObj = this.enumService.filterTaxStatusList(taxStatusId);
+    this.getIsdCodesData(taxStatusObj);
   }
 
-  getIsdCodesData(invTypeData) {
+  getIsdCodesData(taxStatusObj) {
     let obj = {};
     this.peopleService.getIsdCode(obj).subscribe(
       data => {
         if (data) {
           console.log(data);
           this.isdCodes = data;
-          if (invTypeData == '1') {
+          if (taxStatusObj[0].residentFlag == 0) {
             this.isdCodes = this.isdCodes.filter(element => element.code == '+91');
           } else {
             this.isdCodes = this.isdCodes.filter(element => element.code != '+91');
@@ -117,7 +118,12 @@ export class AddNumberComponent implements OnInit {
   }
   checkUniqueNumber() {
     if (this.getMobileNumList.length == 2) {
-      (this.getMobileNumList.controls[0].value.number === this.getMobileNumList.controls[0].value.number) ? this.getMobileNumList.controls[0].get('number').setErrors({ notUnique: true }) : '';
+      if (this.getMobileNumList.controls[0].value.number === this.getMobileNumList.controls[1].value.number) {
+        this.getMobileNumList.controls[0].get('number').setErrors({ notUnique: true });
+      }
+      else {
+        this.getMobileNumList.controls[0].get('number').setErrors(null);
+      };
     }
   }
 }

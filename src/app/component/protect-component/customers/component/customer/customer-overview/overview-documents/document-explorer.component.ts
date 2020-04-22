@@ -154,7 +154,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   }
   getSharebleLink(element, flag) {
-    if(element.fileName){
+    if (element.fileName) {
       this.downlodFiles(element, flag);
     }
   }
@@ -480,11 +480,11 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       this.verifyEmail(data, value)
     } else if (value == 'preview') {
       this.urlData = data
-    }
-    else if (value == 'DocPreview') {
+    } else if (value == 'DocPreview') {
+      this.urlData = ''
       const dialogRef = this.dialog.open(PreviewComponent, {
         width: '500px',
-        height:'600px',
+        height: '600px',
         data: { bank: data, flag: 'flag' }
       });
       dialogRef.afterClosed().subscribe(result => {
@@ -569,11 +569,11 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
             },
             error => this.eventService.showErrorMessage(error)
           );
-        } else if (flag == 'permenant') {
+        } else if (flag == 'permanently') {
           const obj = {
             clientId: this.clientId,
             advisorId: this.advisorId,
-            type: (data.folderName) ? 'folder' : (data.fileName) ? 'file' : '',
+            type: (data.folderName) ? 1 : (data.fileName) ? 2 : '',
             id: data.id
           };
           this.custumService.deleteFolderPermnant(obj).subscribe(
@@ -585,11 +585,11 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
             },
             error => this.eventService.showErrorMessage(error)
           );
-        } else if (flag == 'recover') {
+        } else if (flag == 'file/folder') {
           const obj = {
             clientId: this.clientId,
             advisorId: this.advisorId,
-            type: (data.folderName) ? 'folder' : (data.fileName) ? 'file' : '',
+            type: (data.folderName) ? 1 : (data.fileName) ? 2 : '',
             id: data.id
           };
           this.custumService.recovery(obj).subscribe(

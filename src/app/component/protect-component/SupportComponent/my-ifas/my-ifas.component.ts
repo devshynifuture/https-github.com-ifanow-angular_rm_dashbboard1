@@ -65,6 +65,7 @@ export class MyIfasComponent implements OnInit {
       err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
+
   openOrderHistoricalFile(data) {
     const fragmentData = {
       flag: 'ifaDetails',
