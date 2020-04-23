@@ -86,7 +86,11 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     }
     this.orgSetting.getDomainSetting(obj).subscribe(
       data => this.getDomainSettingRes(data),
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+        this.hasError = true;
+        this.loader(-1);
+      }
     );
   }
   getDomainSettingRes(data) {
@@ -156,7 +160,12 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     }
     this.orgSetting.getPortfolio(obj).subscribe(
       data => this.getPortfolioRes(data),
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+        this.portfolio = undefined;
+        this.loader(-1);
+        this.hasError = true;
+      }
     );
   }
   getPortfolioRes(data) {
@@ -174,7 +183,11 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     }
     this.orgSetting.getPlans(obj).subscribe(
       data => this.getPlanRes(data),
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+        this.loader(-1);
+        this.hasError = true;
+      }
     );
   }
   
@@ -303,7 +316,11 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     }
     this.orgSetting.getEmailVerification(obj).subscribe(
       data => this.getEmailVerificationRes(data),
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+        this.hasError = true;
+        this.loader(-1);
+      }
     );
   }
   getEmailVerificationRes(data) {
@@ -323,7 +340,11 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     }
     this.orgSetting.getEmailTempalate(obj).subscribe(
       data => this.getEmailTempalatRes(data),
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+        this.hasError = true;
+        this.loader(-1);
+      }
     );
   }
   getEmailTempalatRes(data) {
@@ -395,10 +416,12 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
         this.appearanceFG.controls.financialOpt.setValue(data.find(data => data.appearanceOptionId == 2).advisorOrOrganisation);
         this.appearanceFG.controls.clientOpt.setValue(data.find(data => data.appearanceOptionId == 3).advisorOrOrganisation);
         this.appearanceUpdateFlag = true;
+        this.loader(-1)
       },
       err => {
         this.eventService.openSnackBar(err, "Dismiss")
         this.hasError = true;
+        this.loader(-1)
       }
     );
   }
@@ -433,6 +456,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
 
   changeView(tab) {
     this.viewMode = tab;
+    this.hasError = false;
     switch(tab) {
       case 'tab1': 
         this.getPortfolio();

@@ -42,7 +42,7 @@
             </div>
             <div class="col-md-10 b-a p-0 min-height" [ngSwitch]="viewMode">
                 <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngSwitchCase="'tab1'">
-                    <div class="p-20">
+                    <div class="p-20" [hidden]="hasError">
                         <div class="relClass">
                             <h5 class="mb-8 bar text-black" [ngClass]="{'height23': isLoading}">
                                 Mutual Fund
@@ -70,13 +70,9 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="portfolio == undefined && !isLoading" class="d-flex flex-column align-items-center">
-                        <img class="width300" src="assets/images/svg/noDataFound.svg">
-                        <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
-                    </div>
                 </div>
                 <div appSkeletonLoading [appSkeletonLoading]="isLoading" *ngSwitchCase="'tab2'">
-                    <div class="p-20">
+                    <div class="p-20" [hidden]="hasError">
                         <h5 class="mb-8  text-black">Insurance planning</h5>
                         <div class="pt-20 relClass">
                             <div class="bar">
@@ -86,10 +82,6 @@
                         </div>
                         <p class="m-0 text-custom pb-20 bb-1 pl-24">These returns are displayed when giving recommendations on current policies.</p>
                     </div>
-                    <div *ngIf="planSec1 == undefined && !isLoading" class="d-flex flex-column align-items-center">
-                        <img class="width300" src="assets/images/svg/noDataFound.svg">
-                        <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
-                    </div>
                 </div>
                 <div *ngSwitchCase="'tab3'">
                     <div class="p-20">
@@ -97,7 +89,7 @@
                     </div>
                 </div>
                 <div appSkeletonLoading [appSkeletonLoading]="isLoading" *ngSwitchCase="'tab4'">
-                    <div class="p-20">
+                    <div class="p-20" [hidden]="hasError">
                         <div class="row">
                             <div class="col-md-8 p-0">
                                 <h5 class="mb-8 text-black">Email verification</h5>
@@ -132,10 +124,10 @@
                                     <!-- Weight Column -->
                                     <ng-container matColumnDef="weight">
                                         <th mat-header-cell *matHeaderCellDef> </th>
-                                        <td mat-cell class="text-center" *matCellDef="let element">
+                                        <td mat-cell class="text-center" *matCellDef="let element" [matMenuTriggerFor]="menu">
                                             <div class="bar"></div>
-                                            <div *ngIf="!isLoading">
-                                                <img class="c-p" [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg">
+                                            <div [hidden]="isLoading">
+                                                <img class="c-p" src="/assets/images/svg/dot-menu.svg">
                                                 <mat-menu #menu="matMenu">
                                                     <!-- <button mat-menu-item (click)="verifyEmail(element)">
                                                         <span>Edit</span>
@@ -154,13 +146,13 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="emailList.length == 0 && !isLoading" class="d-flex flex-column align-items-center">
+                    <div *ngIf="emailList.length == 0 && !isLoading && !hasError" class="d-flex flex-column align-items-center">
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
                         <h4 class="text-center pt-12">No data found</h4>
                     </div>
                 </div>
                 <div appSkeletonLoading [appSkeletonLoading]="isLoading" *ngSwitchCase="'tab5'">
-                    <div class="p-20">
+                    <div class="p-20" [hidden]="hasError">
                         <h5 class="m-0 pb-8 text-black">Email templates</h5>
                         <div class="row">
                             <div class="col-md-11 pl-0" *ngIf="emailTemplateList.length > 0">
@@ -192,10 +184,10 @@
 
                                     <ng-container matColumnDef="symbol">
                                         <th mat-header-cell class="br w-3" *matHeaderCellDef> </th>
-                                        <td mat-cell class="br w-3" *matCellDef="let element">
+                                        <td mat-cell class="br w-3" *matCellDef="let element" [matMenuTriggerFor]="menu">
                                             <div class="bar"></div>
-                                            <div class="!isLoading">
-                                                <img class="c-p" [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg">
+                                            <div [hidden]="isLoading">
+                                                <img class="c-p" src="/assets/images/svg/dot-menu.svg">
                                                 <mat-menu #menu="matMenu">
                                                     <button mat-menu-item (click)="OpenEmail('emailTemp',element)">
                                                         <span>Edit</span>
@@ -216,13 +208,13 @@
 
 
                     </div>
-                    <div *ngIf="emailTemplateList.length == 0 && !isLoading" class="d-flex flex-column align-items-center">
+                    <div *ngIf="emailTemplateList.length == 0 && !isLoading && !hasError" class="d-flex flex-column align-items-center">
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
                         <h4 class="text-center pt-12">No data found.</h4>
                     </div>
                 </div>
                 <div *ngSwitchCase="'tab6'">
-                    <div class="p-20">
+                    <div class="p-20" [hidden]="hasError">
                         <div class="row">
                             <div class="col-md-10 p-0">
                                 <h5 class="m-0">Color theme<span class="ba-warning text-warning f-12 p-4 br-2 ml-12" matTooltip="This is a premium feature.Please upgrade to use it.">Premium</span>
@@ -256,7 +248,7 @@
                     </div>
                 </div>
                 <div appSkeletonLoading [appSkeletonLoading]="isLoading" *ngSwitchCase="'tab7'">
-                    <div class="row p-20">
+                    <div class="row p-20" [hidden]="hasError">
                         <div class="col-md-10 p-0">
                             <h5 class="m-0">Domain settings</h5>
                             <p class="text-custom m-0 roboto pt-6">Domain settings gives you an option to customize the link with which IFANOW is accessed by you, your team and your clients. You have an option to either Partially or Completely white label the URL. <span class="text-primary text-underline c-p">Read more</span></p>
@@ -353,10 +345,6 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="domainSetting == undefined && !isLoading" class="d-flex flex-column align-items-center">
-                        <img class="width300" src="assets/images/svg/noDataFound.svg">
-                        <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
-                    </div>
                 </div>
                 <div *ngSwitchCase="'tab8'">
                     <div class="p-20">
@@ -364,7 +352,7 @@
                     </div>
                 </div>
                 <div *ngSwitchCase="'tab9'">
-                    <div class="p-20">
+                    <div class="p-20" [hidden]="hasError">
                         <div class="relClass">
                             <h5 class="mb-8 bar text-black" [ngClass]="{'height23': isLoading}">
                                 Appearance
@@ -422,10 +410,11 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="portfolio == undefined && !isLoading" class="d-flex flex-column align-items-center">
-                        <img class="width300" src="assets/images/svg/noDataFound.svg">
-                        <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
-                    </div>
+                </div>
+
+                <div *ngIf="hasError" class="d-flex flex-column align-items-center">
+                    <img class="width300" src="assets/images/svg/noDataFound.svg">
+                    <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
                 </div>
             </div>
         </div>

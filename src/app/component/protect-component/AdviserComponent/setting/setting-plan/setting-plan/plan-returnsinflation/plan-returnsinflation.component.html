@@ -2,7 +2,7 @@
     <div class="col-md-8 p-0">
         <h4 class="m-0 text-black">Returns & inflation</h4>
     </div>
-    <div class="col-md-4 text-right p-0">
+    <div class="col-md-4 text-right p-0" *ngIf="!showErrImg">
         <button mat-stroked-button class="greryColorBg" class="btn-primary" *ngIf="!editMode" (click)="toggleEditMode()">
             <span class="tableValue">
                 EDIT MODE
@@ -15,7 +15,7 @@
         </button>
     </div>
 </div>
-<div class="row pb-20 plan-returnsinflation">
+<div class="row pb-20 plan-returnsinflation" *ngIf="!showErrImg">
     <div class="col-md-4 pl-0">
         <table mat-table [dataSource]="shortDS" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="position">
@@ -23,7 +23,7 @@
                 <td mat-cell class="br" *matCellDef="let element"> {{element.class}} </td>
             </ng-container>
             <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef>Assumption </th>
+                <th mat-header-cell *matHeaderCellDef>Assumption (%)</th>
                 <td mat-cell class="text-center br" *matCellDef="let element">
                     <div class="bar">{{element.inflation_rate}}</div>
                 </td>
@@ -38,7 +38,7 @@
                 <td mat-cell class="br" *matCellDef="let element"> {{element.class}} </td>
             </ng-container>
             <ng-container matColumnDef="name">
-                <th mat-header-cell class="br t-70" *matHeaderCellDef>Assumption </th>
+                <th mat-header-cell class="br t-70" *matHeaderCellDef>Assumption (%)</th>
                 <td mat-cell class="text-center br" *matCellDef="let element">
                     <div class="bar" *ngIf="!editMode">{{element.inflation_rate}}</div>
                     <input class="form-control" type="text" *ngIf="editMode" [(ngModel)]="element.inflation_rate" [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="100" appInputValueValidation (change)="element.edited = true">
@@ -63,7 +63,7 @@
                 <td mat-cell class="br" *matCellDef="let element"> {{element.class}} </td>
             </ng-container>
             <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef>Assumption </th>
+                <th mat-header-cell *matHeaderCellDef>Assumption (%)</th>
                 <td mat-cell class="text-center br" *matCellDef="let element">
                     <div class="bar">{{element.inflation_rate}}</div>
                 </td>
@@ -80,7 +80,7 @@
                 <td mat-cell class="br" *matCellDef="let element"> {{element.class}} </td>
             </ng-container>
             <ng-container matColumnDef="name">
-                <th mat-header-cell class="br t-70" *matHeaderCellDef>Assumption </th>
+                <th mat-header-cell class="br t-70" *matHeaderCellDef>Assumption (%)</th>
                 <td mat-cell class="text-center br" *matCellDef="let element">
                     <div class="bar" *ngIf="!editMode">{{element.inflation_rate}}</div>
                     <input class="form-control" type="text" *ngIf="editMode" [(ngModel)]="element.inflation_rate" [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="100" appInputValueValidation (change)="element.edited = true">
@@ -98,4 +98,9 @@
         </table>
     </div>
     <div class="col-md-4"></div>
+</div>
+
+<div *ngIf="showErrImg" class="d-flex flex-column align-items-center">
+    <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
 </div>

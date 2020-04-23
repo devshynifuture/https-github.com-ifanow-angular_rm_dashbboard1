@@ -2,7 +2,7 @@
     <div class="col-md-8 p-0">
         <h4 class="m-0 text-black">Static asset allocation</h4>
     </div>
-    <div class="col-md-4 text-right p-0">
+    <div class="col-md-4 text-right p-0" *ngIf="!hasError">
         <button mat-stroked-button class="greryColorBg" class="btn-primary " (click)="toggleEditMode()">
             <span class="tableValue" *ngIf="!editMode">
                 EDIT MODE
@@ -14,7 +14,7 @@
     </div>
 </div>
 
-<div class="overflow-hidden">
+<div class="overflow-hidden" *ngIf="!hasError">
     <div class="row pt-20">
         <div class="col-md-2"></div>
         <div class="col-md-2 p-0 text-center bg-grey lter bt-1 br1 bl1">
@@ -120,4 +120,9 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+</div>
+
+<div *ngIf="hasError" class="d-flex flex-column align-items-center">
+    <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
 </div>
