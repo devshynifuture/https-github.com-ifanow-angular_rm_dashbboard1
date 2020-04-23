@@ -34,6 +34,8 @@ export class SupportSidebarComponent extends DialogContainerComponent implements
     super(eventService, subinject, dynamicComponentService);
   }
   logoText = 'Your Logo here';
+  isAdmin = AuthService.getAdminStatus();
+
   ngOnInit() {
     this.userInfo = AuthService.getUserInfo();
     this.changeName = "Dashboard";
@@ -52,6 +54,11 @@ export class SupportSidebarComponent extends DialogContainerComponent implements
       console.log('at other: shouldShowMainNav::', this.shouldShowMainNav)
       this.stateOfPanel.open();
     }
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['login', 'support-login']);
   }
 
   checkUrl(value) {

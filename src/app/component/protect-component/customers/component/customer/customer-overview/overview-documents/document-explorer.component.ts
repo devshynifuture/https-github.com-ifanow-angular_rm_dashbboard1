@@ -74,6 +74,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   dialogObj: { header: string; body: string; body2: string; btnYes: string; btnNo: string; };
   url: any;
   urlData: any;
+  previewDoc = false;
 
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
     private custumService: CustomerService, public subInjectService: SubscriptionInject,
@@ -136,9 +137,6 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
       this.getInnerDoc = result.data;
-      // if (element == 'CREATE') {
-      //   this.createFolder(this.getInnerDoc);
-      // }
       if (element == 'RENAME') {
         if (this.getInnerDoc.rename.flag == 'fileName') {
           this.renameFile(this.getInnerDoc);
@@ -472,7 +470,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
   downloadFileRes(data, value) {
     this.isLoading = false
-
+    this.previewDoc = true
     console.log(data);
     if (value == 'shareLink' || value == 'share') {
       console.log('shareLink', data)
@@ -498,7 +496,9 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     } else {
       window.open(data);
     }
-    return this.urlData
+    setTimeout(() => {
+      this.previewDoc = false
+    }, 5000);
   }
   verifyEmail(value, flag) {
     const dialogRef = this.dialog.open(GetSharebleLinkComponent, {
@@ -509,7 +509,6 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       if (result == undefined) {
         return
       }
-      console.log('The dialog was closed');
       this.element = result;
       console.log('result -==', this.element)
       let obj = {
@@ -779,14 +778,14 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
     var link =
     {
-      "destination": value,
-      "domain": { "fullName": "rebrand.ly" }
+      // group_guid: "devshyni",
+      domain: "bit.ly",
+      long_url: value
     }
+    const payload = JSON.stringify({'long_url': value, "domain": "bit.ly" })
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/json');
-    headers = headers.append('apikey', 'b96683be9a4742979e78c6011a3ec2ca');
-    headers = headers.append('workspace', 'futurewise');
-    this.http.post('https://api.rebrandly.com/v1/links', link, headers).subscribe((responseData) => {
+    this.http.post('https://api-ssl.bitly.com/v4/shorten', payload).subscribe((responseData) => {
       console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
       if (responseData == null) {
       }
