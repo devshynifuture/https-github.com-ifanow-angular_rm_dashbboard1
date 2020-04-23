@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
   templateUrl: './summary.component.html',
   styleUrls: ['./summary.component.scss']
 })
+
 export class SummaryComponent implements OnInit {
   advisorId: any;
   clientId: any;
@@ -18,16 +19,23 @@ export class SummaryComponent implements OnInit {
   isLoading: boolean;
   totalAssets: number;
   asOnDate: any;
-  summaryMap: any = {};
+  summaryMap;
   graphList: any[];
   totalAssetsWithoutLiability;
   liabilityTotal;
   nightyDayData: any;
   oneDay: any;
-
+  displayedColumns: string[] = ['description', 'date', 'amount'];
   constructor(public eventService: EventService, private cusService: CustomerService, private datePipe: DatePipe) {
   }
 
+  datasource = [
+    { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
+    { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
+    { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
+    { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
+    { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' }
+  ];
   ngOnInit() {
     this.asOnDate = new Date().getTime();
     this.advisorId = AuthService.getAdvisorId();
@@ -52,8 +60,9 @@ export class SummaryComponent implements OnInit {
           this.totalAssets = 0;
           this.summaryTotalValue = Object.assign([], data);
           console.log(this.summaryTotalValue);
+          let tempSummaryTotalValue: any = {}
           this.summaryTotalValue.forEach(element => {
-            this.summaryMap[element.assetType] = element;
+            tempSummaryTotalValue[element.assetType] = element;
             if (element.currentValue == element.investedAmount) {
               element.percentage = 0;
             } else {
@@ -66,6 +75,7 @@ export class SummaryComponent implements OnInit {
             this.liabilityTotal = 0;
             this.totalOfLiabilitiesAndTotalAssset(data);
           });
+          this.summaryMap = tempSummaryTotalValue;
           this.pieChart('piechartMutualFund', data);
         }
       },
@@ -76,7 +86,12 @@ export class SummaryComponent implements OnInit {
         console.log(data);
         this.calculate1DayAnd90Days(data);
         this.graphList = [];
-        for (let singleData of data) {
+        let sortedDateList = [];
+        sortedDateList = data;
+        sortedDateList.sort(function (a, b) {
+          return a.targetDate - b.targetDate;
+        })
+        for (let singleData of sortedDateList) {
           let sumOf10Days = 0;
           singleData.summaryData.forEach(element => {
             if (element.assetType == 2) {
@@ -146,7 +161,17 @@ export class SummaryComponent implements OnInit {
     this.asOnDate = new Date(event.value).getTime();
     this.calculateTotalSummaryValues();
   }
+  getCashFlowData(data) {
+    let obj =
+    {
 
+    }
+    this.cusService.getCashFlowList(obj).subscribe(
+      data => {
+        console.log(data)
+      }, err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
   cashFlow(id) {
     const chart1 = new Highcharts.Chart('cashFlow', {
       chart: {
@@ -228,7 +253,6 @@ export class SummaryComponent implements OnInit {
 
       series: [{
         type: 'area',
-        name: 'USD to EUR',
         data: this.graphList
       }]
     });
