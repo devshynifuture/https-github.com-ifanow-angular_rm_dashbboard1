@@ -349,11 +349,13 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ssySchemeForm}
     else {
         this.barButtonOptions.active = true;
         let obj = {
+          "advisorId":this.advisorId,
+          "clientId":this.clientId,
           "id": this.editApi? this.editApi.id : 0,
           "familyMemberId": this.familyMemberId,
           // "ownerName": (this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName.userName,
           "ownerList": this.ssySchemeForm.value.getCoOwnerName,
-          "accountBalance": this.ssySchemeForm.get('accBalance').value,
+          "accountBalance":parseInt(this.ssySchemeForm.get('accBalance').value),
           "balanceAsOn": this.ssySchemeForm.get('balanceAsOn').value,
           "commencementDate": this.ssySchemeForm.get('commDate').value,
           "description": this.ssySchemeForm.get('description').value,
