@@ -65,6 +65,11 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     this.ownerData.Fmember = value;
     this.nomineesListFM = Object.assign([], value);
   }
+  getFamilyMember(data, index) {
+    this.familyMemberLifeData = data;
+    console.log('family Member', this.FamilyMember);
+  }
+
   
   disabledMember(value, type) {
     this.callMethod = {
