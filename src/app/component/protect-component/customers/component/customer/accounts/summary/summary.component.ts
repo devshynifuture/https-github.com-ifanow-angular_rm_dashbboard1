@@ -26,7 +26,6 @@ export class SummaryComponent implements OnInit {
     this.asOnDate = new Date().getTime();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.pieChart('piechartMutualFund');
     this.lineChart('container');
     this.cashFlow('cashFlow');
     this.calculateTotalSummaryValues();
@@ -66,6 +65,7 @@ export class SummaryComponent implements OnInit {
               this.totalAssets += element.currentValue;
             }
           });
+          this.pieChart('piechartMutualFund', data);
         }
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
@@ -695,7 +695,20 @@ export class SummaryComponent implements OnInit {
     });
   }
 
-  pieChart(id) {
+  pieChart(id, data) {
+    let dataSeriesList = [];
+    data.forEach(element => {
+      element.currentValue = (element.currentValue == '-') ? 0 : element.currentValue;
+      let dividedValue = element.currentValue / this.totalAssets;
+      dataSeriesList.push({
+        name: element.assetTypeString,
+        y: dividedValue * 100,
+        // color: "#A6CEE3",
+        dataLabels: {
+          enabled: false
+        }
+      })
+    });
     Highcharts.chart('piechartMutualFund', {
       chart: {
         plotBackgroundColor: null,
@@ -731,79 +744,7 @@ export class SummaryComponent implements OnInit {
         type: 'pie',
         name: 'Browser share',
         innerSize: '60%',
-        data: [
-          {
-            name: 'Equity',
-            y: 23,
-            color: "#A6CEE3",
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Debt',
-            y: 13,
-            color: "#1F78B4",
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Hybrid',
-            y: 25.42,
-            color: "#B2DF8A",
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Other',
-            y: 12.61,
-            color: "#33A02C",
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Solutions oriented',
-            y: 23.42,
-            color: "#FB9A99",
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Solutions oriented',
-            y: 23.42,
-            color: "#E31A1C",
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Solutions oriented',
-            y: 23.42,
-            color: "#FDBF6F",
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Solutions oriented',
-            y: 23.42,
-            color: "#FF7F00",
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Solutions oriented',
-            y: 23.42,
-            color: "#CAB2D6",
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Solutions oriented',
-            y: 23.42,
-            color: "#6A3D9A",
-            dataLabels: {
-              enabled: false
-            }
-          }
-        ]
+        data: dataSeriesList
       }]
     });
   }
