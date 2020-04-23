@@ -18,7 +18,7 @@ export class SummaryComponent implements OnInit {
   isLoading: boolean;
   totalAssets: number;
   asOnDate: any;
-  summaryMap: any = {};
+  summaryMap;
   graphList: any[];
   totalAssetsWithoutLiability;
   liabilityTotal;
@@ -52,8 +52,9 @@ export class SummaryComponent implements OnInit {
           this.totalAssets = 0;
           this.summaryTotalValue = Object.assign([], data);
           console.log(this.summaryTotalValue);
+          let tempSummaryTotalValue: any = {}
           this.summaryTotalValue.forEach(element => {
-            this.summaryMap[element.assetType] = element;
+            tempSummaryTotalValue[element.assetType] = element;
             if (element.currentValue == element.investedAmount) {
               element.percentage = 0;
             } else {
@@ -66,6 +67,7 @@ export class SummaryComponent implements OnInit {
             this.liabilityTotal = 0;
             this.totalOfLiabilitiesAndTotalAssset(data);
           });
+          this.summaryMap = tempSummaryTotalValue;
           this.pieChart('piechartMutualFund', data);
         }
       },
@@ -76,7 +78,12 @@ export class SummaryComponent implements OnInit {
         console.log(data);
         this.calculate1DayAnd90Days(data);
         this.graphList = [];
-        for (let singleData of data) {
+        let sortedDateList = [];
+        sortedDateList = data;
+        sortedDateList.sort(function (a, b) {
+          return a.targetDate - b.targetDate;
+        })
+        for (let singleData of sortedDateList) {
           let sumOf10Days = 0;
           singleData.summaryData.forEach(element => {
             if (element.assetType == 2) {
