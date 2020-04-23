@@ -75,8 +75,7 @@
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
                         <mat-select matInput formControlName="PlanType" autocomplete="true" class="form-control br-0">
-                            <mat-option (click)="getProposerData(option,i)"
-                                *ngFor="let option of policyList ;index as i" [value]="option.policy_type">
+                            <mat-option *ngFor="let option of policyList ;index as i" [value]="option.policy_type">
                                 {{option.policy_type}}</mat-option>
                         </mat-select>
                         <mat-error>This field is required
@@ -344,8 +343,7 @@
                     <div class="form-group mb-0 iconRupess">
                             <mat-form-field>
                                     <mat-select matInput formControlName="PlanType" autocomplete="true" class="form-control br-0">
-                                        <mat-option (click)="getProposerData(option,i)"
-                                            *ngFor="let option of addOns ;index as i" [value]="option.add_on">
+                                        <mat-option *ngFor="let option of addOns ;index as i" [value]="option.add_on">
                                             {{option.add_on}}</mat-option>
                                     </mat-select>
                                     <mat-error>This field is required

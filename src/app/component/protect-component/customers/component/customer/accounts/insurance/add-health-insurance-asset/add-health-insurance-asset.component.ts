@@ -12,6 +12,8 @@ import { MatInput } from '@angular/material';
   styleUrls: ['./add-health-insurance-asset.component.scss']
 })
 export class AddHealthInsuranceAssetComponent implements OnInit {
+  maxDate = new Date();
+
   inputData: any;
   ownerName: any;
   nomineesListFM: any = [];
@@ -304,6 +306,9 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     this.FamilyMember = data.familyMembersList;
     this.ProposerData = Object.assign([], data.familyMembersList);
     console.log('Proposer data', this.ProposerData);
+  }
+  preventDefault(e) {
+    e.preventDefault();
   }
   saveHealthInsurance() {
     if (this.healthInsuranceForm.invalid) {
