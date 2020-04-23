@@ -18,6 +18,7 @@ export class AddNewRoleComponent implements OnInit {
   rolesFG: FormGroup;
   editDetails: any;
   advisorId: any;
+  isLoading:boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -38,25 +39,31 @@ export class AddNewRoleComponent implements OnInit {
   }
 
   getTemplate() {
+    this.isLoading = true;
     this.settingsService.getTemplateRole({ optionId: this.data.roleType }).subscribe((res) => {
       if (res) {
         console.log(res);
+        this.isLoading = false;
         this.constructAdminDataSource(res.modules);
       }
     }, err => {
       this.eventService.openSnackBar("Error Occured");
+      this.isLoading = false;
     })
   }
 
   getRoleDetails() {
+    this.isLoading = true;
     this.settingsService.getDetailedRole({ id: this.data.mainData.id }).subscribe((res) => {
       if (res) {
         console.log(res);
         this.editDetails = res.roleDetail;
+        this.isLoading = false;
         this.constructAdminDataSource(res.modules);
       }
     }, err => {
       this.eventService.openSnackBar("Error Occured");
+      this.isLoading = false;
     })
   }
 

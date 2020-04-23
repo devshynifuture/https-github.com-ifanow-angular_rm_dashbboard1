@@ -19,6 +19,7 @@ export class SettingOrgProfileComponent implements OnInit {
   orgDetails: any = {};
   isLoading = true
   counter: number = 0;
+  isOrgProfileLoaded = false;
 
   constructor(
     private eventService: EventService,
@@ -30,7 +31,6 @@ export class SettingOrgProfileComponent implements OnInit {
 
   ngOnInit() {
     this.getPersonalProfiles()
-    this.getOrgProfiles()
     this.orgProfile = false
   }
 
@@ -53,24 +53,28 @@ export class SettingOrgProfileComponent implements OnInit {
     this.loader(-1);
   }
   getOrgProfiles() {
-    this.loader(1)
-    let obj = {
-      advisorId: this.advisorId,
-    }
-    this.settingsService.getOrgProfile(obj).subscribe(
-      data => this.getOrgProfileRes(data),
-      err => {
-        this.eventService.openSnackBar(err, "Dismiss");
-        this.orgDetails = undefined;
-        this.loader(-1);
+    if(!this.isOrgProfileLoaded) {
+      this.loader(1)
+      let obj = {
+        advisorId: this.advisorId,
       }
-    );
+      this.settingsService.getOrgProfile(obj).subscribe(
+        data => this.getOrgProfileRes(data),
+        err => {
+          this.eventService.openSnackBar(err, "Dismiss");
+          this.isOrgProfileLoaded = true;
+          this.orgDetails = undefined;
+          this.loader(-1);
+        }
+      );
+    }
   }
   getOrgProfileRes(data) {
     if (data) {
       this.orgDetails = data
     }
     this.loader(-1);
+    this.isOrgProfileLoaded = true;
   }
 
   OpenpersonalProfile(data, flag) {
@@ -92,10 +96,9 @@ export class SettingOrgProfileComponent implements OnInit {
   }
 
   openOrg(flag) {
-    if (flag == true) {
-      this.orgProfile = true
-    } else {
-      this.orgProfile = false
+    this.orgProfile = flag;
+    if (flag) {
+      this.getOrgProfiles();
     }
   }
 

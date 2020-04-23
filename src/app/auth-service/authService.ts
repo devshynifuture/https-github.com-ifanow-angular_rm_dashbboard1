@@ -37,6 +37,22 @@ export class AuthService {
     return clientData ? clientData.id : undefined;
   }
 
+  static setProfilePic(pic) {
+    localStorage.setItem('profilePic', pic);
+  }
+
+  static setAppPic(pic) {
+    localStorage.setItem('webLogo', pic);
+  }
+
+  get profilePic(){
+    return localStorage.getItem('profilePic');
+  }
+
+  get appPic(){
+    return localStorage.getItem('webLogo');
+  }
+
   setToken(token: string) {
     localStorage.setItem('token', token);
   }
