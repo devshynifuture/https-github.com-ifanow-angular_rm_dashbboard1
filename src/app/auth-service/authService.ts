@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 
 // import {Router} from '@angular/router';
@@ -101,6 +102,8 @@ export class AuthService {
     localStorage.removeItem('userInfo');
     localStorage.removeItem('clientData');
     sessionStorage.removeItem('clientData');
+    localStorage.removeItem('profilePic');
+    localStorage.removeItem('webLogo');
 
     // this.myRoute.navigate(['login']);
   }

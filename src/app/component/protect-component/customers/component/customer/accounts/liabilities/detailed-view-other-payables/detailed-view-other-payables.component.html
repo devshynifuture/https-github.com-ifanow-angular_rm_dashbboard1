@@ -44,7 +44,7 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Amount borrowed
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
+                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
                         {{otherpayables.amountBorrowed}}
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Outstanding balance
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
+                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
                         {{otherpayables.outstandingBalance}}
                     </div>
                 </div>
@@ -78,6 +78,14 @@
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{otherpayables.collateral}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Description
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{otherpayables.description}}
                     </div>
                 </div>
             </div>
