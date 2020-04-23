@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {AuthService} from '../auth-service/authService';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { AuthService } from '../auth-service/authService';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,10 @@ export class AuthGuard implements CanActivate {
         // TODO comment for old login
         if (this.authService.isAdvisor()) {
           this.myRoute.navigate(['admin', 'subscription', 'dashboard']);
-        } else {
+        } else if (AuthService.getAdminStatus()) {
+          this.myRoute.navigate(['support', 'dashboard']);
+        }
+        else {
           this.myRoute.navigate(['customer', 'detail', 'overview', 'myfeed']);
         }
         return false;

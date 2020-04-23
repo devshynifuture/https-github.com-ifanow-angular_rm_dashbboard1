@@ -37,10 +37,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
   isLoading: boolean = false;
   aumList: any;
   mutualFundIds: any[] = [];
-  // advisorId = AuthService.getAdvisorId();
-  // need to change  this 
+  advisorId;
 
-  advisorId = 2808;
   rtId: any;
   didAumReportListGot: boolean = false;
   aumListReportValue: any[] = [];
@@ -49,6 +47,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   parentId = AuthService.getParentId();
   isLoadingForDuplicate: boolean = false;
   canExportExcelSheet = 'false';
+  rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -60,6 +59,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId() ? AuthService.getAdvisorId() : this.data.advisorId;
     this.teamMemberListGet();
   }
 
@@ -145,7 +145,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       advisorIds: [...this.adminAdvisorIds],
       brokerId: this.brokerId,
       rt: this.data.rtId,
-      parentId: this.adminId == 0 ? this.advisorId : this.parentId
+      parentId: (this.adminId == 0 && this.adminId) ? this.advisorId : (this.parentId ? this.parentId : this.advisorId)
     }
     // 
     this.supportService.getAumReconListGetValues(data)
@@ -187,7 +187,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
             transactionDate: res.transactionDate,
             rtId: this.data.rtId,
             // when rm login is creted this will get value from localStorage
-            rmId: 1
+            rmId: this.rmId
           }
           if (doStartRecon) {
             this.reconService.putBackofficeReconAdd(data)

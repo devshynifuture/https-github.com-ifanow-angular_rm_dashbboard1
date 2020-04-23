@@ -8,6 +8,7 @@ import { SettingsService } from '../../../AdviserComponent/setting/settings.serv
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from '../../../common-component/confirm-dialog/confirm-dialog.component';
+import { AuthService } from '../../../../../auth-service/authService';
 
 @Component({
   selector: 'app-admin-details',
@@ -25,10 +26,11 @@ export class AdminDetailsComponent implements OnInit {
   rtaDetails: any;
   isLoading = false
   stageComment: any[] = [{}];
-  CommentStage:any;
-  Comment:any;
+  CommentStage: any;
+  Comment: any;
   activityId: any;
   stage: any;
+  rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
   @Input()
   set data(data) {
     window.screenTop;
@@ -108,7 +110,7 @@ export class AdminDetailsComponent implements OnInit {
       id: value.id,
       commentMsg: value.commentMsg,
     }
-    if(flag == true){
+    if (flag == true) {
       this.supportService.activityCommentUpdate(obj).subscribe(
         data => {
           console.log('activityCommentUpdate', data);
@@ -143,7 +145,7 @@ export class AdminDetailsComponent implements OnInit {
     {
       id: stage.taskLevelId,
       commentMsg: value,
-      rmId: 3,
+      rmId: this.rmId,
     }
     this.supportService.addStageComment(obj).subscribe(
       data => {
@@ -226,7 +228,7 @@ export class AdminDetailsComponent implements OnInit {
     }
     let obj1 = []
     obj1.push(obj)
-    if(event.checked == true){
+    if (event.checked == true) {
       this.supportService.editActivity(obj1).subscribe(
         data => {
           console.log('getOverviewIFAOnbording', data);
@@ -286,12 +288,12 @@ export class AdminDetailsComponent implements OnInit {
     {
       activityId: this.activityId,
       commentMsg: comment,
-      rmId: 3,
+      rmId: this.rmId,
     }
     this.supportService.activityAddComment(obj).subscribe(
       data => {
         this.getIFAActivity()
-        this.Comment =''
+        this.Comment = ''
         console.log('editStageComment', data);
         if (data) {
         }
@@ -299,7 +301,7 @@ export class AdminDetailsComponent implements OnInit {
       , err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
-  deleteModal(value, element,event) {
+  deleteModal(value, element, event) {
     this.stage = element
     const dialogData = {
       data: value,

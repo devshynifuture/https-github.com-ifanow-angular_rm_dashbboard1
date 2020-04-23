@@ -136,7 +136,9 @@
                         class="form-control br-0 b-0" formControlName="balanceAsOn" matInput readonly>
                     <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                     <mat-datepicker #balanceAsOn></mat-datepicker>
-                    <mat-error class="f-12">This field is required </mat-error>
+                    <mat-error class="f-12 pt-4 w-s">
+                        {{ssySchemeForm.get('balanceAsOn').value == "Invalid Date"? 'This field is required':'balance as on date should be greater than commencement date'}}
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>

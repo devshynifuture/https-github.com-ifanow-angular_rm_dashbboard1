@@ -9,6 +9,12 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { AddInsuranceComponent } from '../../../common-component/add-insurance/add-insurance.component';
 import { DetailedViewComponent } from "../../../common-component/detailed-view/detailed-view.component";
 import { AddHealthInsuranceAssetComponent } from './add-health-insurance-asset/add-health-insurance-asset.component';
+import { AddPersonalAccidentInAssetComponent } from './add-personal-accident-in-asset/add-personal-accident-in-asset.component';
+import { AddCriticalIllnessInAssetComponent } from './add-critical-illness-in-asset/add-critical-illness-in-asset.component';
+import { AddMotorInsuranceInAssetComponent } from './add-motor-insurance-in-asset/add-motor-insurance-in-asset.component';
+import { AddTravelInsuranceInAssetComponent } from './add-travel-insurance-in-asset/add-travel-insurance-in-asset.component';
+import { AddHomeInsuranceInAssetComponent } from './add-home-insurance-in-asset/add-home-insurance-in-asset.component';
+import { AddFireAndPerilsInsuranceInAssetComponent } from './add-fire-and-perils-insurance-in-asset/add-fire-and-perils-insurance-in-asset.component';
 
 @Component({
   selector: 'app-insurance',
@@ -245,22 +251,22 @@ export class InsuranceComponent implements OnInit {
         fragmentData.componentName = AddHealthInsuranceAssetComponent;
         break;
         case 5: 
-        fragmentData.componentName = AddInsuranceComponent;
+        fragmentData.componentName = AddPersonalAccidentInAssetComponent;
         break;
         case 6: 
-        fragmentData.componentName = AddInsuranceComponent;
+        fragmentData.componentName = AddCriticalIllnessInAssetComponent;
         break;
         case 7: 
-        fragmentData.componentName = AddInsuranceComponent;
+        fragmentData.componentName = AddMotorInsuranceInAssetComponent;
         break;
         case 8: 
-        fragmentData.componentName = AddInsuranceComponent;
+        fragmentData.componentName = AddTravelInsuranceInAssetComponent;
         break;
         case 9:
-        fragmentData.componentName = AddInsuranceComponent;
+        fragmentData.componentName = AddHomeInsuranceInAssetComponent;
         break;
         case 10: 
-        fragmentData.componentName = AddInsuranceComponent;
+        fragmentData.componentName = AddFireAndPerilsInsuranceInAssetComponent;
         break;
         default:
         fragmentData.componentName = AddInsuranceComponent;

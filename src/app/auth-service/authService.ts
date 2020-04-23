@@ -17,7 +17,7 @@ export class AuthService {
       return this.getUserInfo().isAdmin;
     }
     else {
-      throw new Error("Not found");
+      return false;
     }
   }
 
@@ -42,7 +42,7 @@ export class AuthService {
       return this.getUserInfo().rmId;
     }
     else {
-      throw new Error("No Rm ID found");
+      return null;
     }
   }
 
