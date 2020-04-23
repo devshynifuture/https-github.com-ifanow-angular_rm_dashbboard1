@@ -3,7 +3,7 @@
         <h4 class="m-0 text-black pt-8">ARN/RIA details</h4>
     </div>
     <div class="col-md-6 text-right ">
-        <button (click)="openArnDetails(null, null, true)" class="btn-primary " mat-stroked-button>
+        <button (click)="openArnDetails(null, null, true)" class="btn-primary" mat-stroked-button [disabled]="utilService.isLoading">
             ADD NEW
         </button>
     </div>
@@ -84,7 +84,7 @@
     <img class="width300" src="assets/images/svg/noDataFound.svg">
     <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
 </div>
-<div *ngIf="arnobjs.length == 0 && !utilService.isLoading" class="d-flex flex-column align-items-center">
+<div *ngIf="arnobjs.length == 0 && !utilService.isLoading && !hasError" class="d-flex flex-column align-items-center">
     <img class="width300" src="assets/images/svg/noDataFound.svg">
     <h4 class="text-center pt-12">No ARN/RIA details found</h4>
 </div>

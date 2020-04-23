@@ -7,6 +7,8 @@ import {SubscriptionInject} from '../../../../AdviserComponent/Subscriptions/sub
   styleUrls: ['./marketplace-review-reply.component.scss']
 })
 export class MarketplaceReviewReplyComponent implements OnInit {
+displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  dataSource = ELEMENT_DATA;
   data = {flag: ''};
 
   constructor(
@@ -22,3 +24,13 @@ export class MarketplaceReviewReplyComponent implements OnInit {
   }
 
 }
+export interface PeriodicElement {
+  name: string;
+  weight: string;
+  symbol: string;
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  { name: 'Eamil', weight: 'Free', symbol: 'Details'},
+  { name: 'Eamil', weight: '0.15/SMS', symbol: 'Details'},
+];

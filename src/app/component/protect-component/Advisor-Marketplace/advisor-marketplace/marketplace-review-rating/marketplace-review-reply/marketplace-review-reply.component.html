@@ -1,7 +1,6 @@
-<div class="popup-header-fix-40">
-    <div class="row bb-1">
+    <div class="row bb-1 popup-header-fix w-40">
         <div class="col-lg-8 p-0">
-            <h4 class="mb-0 wrapper-20"> Marketplace {{ data.flag == 'reply' ? 'Review Reply': '' }}
+            <h4 class="mb-0 wrapper-20"> {{ data.flag == 'reply' ? 'Review Reply': '' }}
                 {{ data.flag  === 'faq'? 'Review and ratings FAQ': (data.flag === 'guidelines' ? 'Review and ratings Guidelines': '')}}
             </h4>
         </div>
@@ -10,6 +9,266 @@
                 <!-- (click)="Close(false)" removed for prod build -->
                 <i class="material-icons c-p pt-8 v-middle" (click)="dialogClose()"> clear</i>
             </div>
+        </div>
+    </div>
+
+   <!--  <div class="row pt-90 pl-16 pr-16">
+        Review and ratings FAQ
+
+        <div class="col-md-12">
+            <h5 class="m-0 text-dark roboto f-400">What are Reviews?</h5>
+            <h5 class="m-0 text-dark roboto f-400 pt-28">Why are Reviews important for me?</h5>
+            <h5 class="m-0 text-dark roboto f-400 pt-28">Where do they show up?</h5>
+            <h5 class="m-0 text-dark roboto f-400 pt-28">Who can give me a Review?</h5>
+            <h5 class="m-0 text-dark roboto f-400 pt-28">How can I ask my clients for a Reivew?</h5>
+            <h5 class="m-0 text-dark roboto f-400 pt-28">How does the Review process work?</h5>
+        </div>
+
+       end Review and ratings FAQ
+
+       Review and ratings Guidelines
+       <div class="col-md-12">
+           <h5 class="text-dark m-0 roboto f-400">IFANOW allows advisors to collect reviews from their clients about their experience working with them. This helps other users chose a financial advisor who is best suited to help them with their financial queries.</h5>
+
+           <h5 class="text-dark m-0 roboto f-400 pt-20"> We have issued some guidelines to ensure a robust mechanism to get reviews, posting it on the marketplace and preventing misuse.</h5>
+       </div>
+        end Review and ratings Guidelines
+
+     
+       
+    </div> -->
+
+
+<!-- request to a review -->
+<!-- <div class="pt-90 pl-16 pr-16 mb-100">
+<div class="row">
+      <div class="col-md-1 pr-0">
+            <img src="/assets/images/deepesh.png">
+        </div>
+        <div class="col-md-8">
+            <p class="m-0 roboto text-dark f-400">Sushil</p>
+            <p class="m-0 roboto text-custom f-400">Mar 2020</p>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="m-0 f-500 text-success roboto pt-12">I recommend Deepesh</p>
+                <p class="m-0 pt-4 roboto f-400 pb-10 bb-dashed-1">I connected with Deepesh in Jan 2020. Deepesh helped me organizing my finances in a very nice way. He was very patient in explaining me all the concepts of personal finance. He thoroughly reviewed my portflio and told me about the mistakes I have made in the past. I have since started investing and currently saving for financial goals. I would hightly recommend you to hire Deepesh.</p>
+            </div>
+        </div>
+        
+</div>
+<div class="row pt-20 ">
+    <div class="col-md-12">
+        <div class="row bb-dashed-1">
+            <div class="col-md-6 pl-0">
+                <p class="text-dark f-400 pb-6 roboto m-0">Knowledge & expertise</p>
+                <div class="icons">
+                    <span class="material-icons text-warning c-p">
+                        star
+                        </span>
+                        <span class="material-icons text-warning c-p">
+                        star
+                        </span>
+                        <span class="material-icons text-warning c-p">
+                        star
+                        </span>
+                        <span class="material-icons text-warning c-p">
+                        star
+                        </span>
+                        <span class="material-icons text-coff c-p">
+                        star
+                        </span> 
+                </div>
+            </div>
+                    <div class="col-md-6">
+                <p class="text-dark f-400 pb-6 roboto m-0">Service delivery</p>
+                <div class="icons">
+                    <span class="material-icons text-warning c-p">
+                        star
+                        </span>
+                        <span class="material-icons text-warning c-p">
+                        star
+                        </span>
+                        <span class="material-icons text-warning c-p">
+                        star
+                        </span>
+                        <span class="material-icons text-coff c-p">
+                        star
+                        </span>
+                        <span class="material-icons text-coff c-p">
+                        star
+                        </span>
+                </div>
+            </div>
+                    <div class="col-md-6 pl-0">
+                <p class="text-dark f-400 roboto pb-6 m-0">Communication</p>
+                <div class="icons">
+                    <span class="material-icons text-warning c-p">
+                        star
+                        </span>
+                        <span class="material-icons text-warning c-p">
+                        star
+                        </span>
+                        <span class="material-icons text-warning c-p">
+                        star
+                        </span>
+                        <span class="material-icons text-coff c-p">
+                        star
+                        </span>
+                        <span class="material-icons text-coff c-p">
+                        star
+                        </span>
+                </div>
+            </div>
+                    <div class="col-md-6">
+                <p class="text-dark roboto f-400 pb-6 m-0">Will recommend to others</p>
+                <h5 class="m-0 text-primary roboto">yes</h5>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="row pt-20">
+            <div class="col-md-12">
+                <h5 class="text-dark f-500 roboto m-0 pb-10">Your reply</h5>
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <textarea matInput class="form-control" rows="6"></textarea>
+                      </mat-form-field>
+                </div>
+            </div>
+        </div>
+</div><br><br><br><br> -->
+
+<!-- end request to a review -->
+
+<!-- campaign request to a review -->
+<!-- <div class="pt-90 pl-16 pr-16">
+<div class="row">
+    <div class="col-md-12">
+        <h5 class="text-dark m-0 roboto pb-10">Select an investor from the search box below...</h5>
+        <div class="form-group mb-0">
+             <mat-form-field>
+                    <input type="text"
+                           aria-label="Number"
+                           matInput
+                           [formControl]="myControl"
+                           class="form-control" 
+                           [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete">
+                      <mat-option>
+                        option
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+        </div>
+    </div>
+    <div class="col-md-12 pt-60">
+        <h5 class="m-0 text-dark roboto pb-10 f-500">Following are the details of Rahul Jain</h5>
+        <div class=" b-a">
+        <div class="row bb-1">
+            <div class="col-md-6 pl-8 pt-8 pb-8">
+                <p class="m-0 roboto f-400">Full name</p>
+            </div>
+             <div class="col-md-6 pr-8 pt-8 pb-8 text-right">
+                 <p class="m-0 roboto f-400">Rahul Jain</p>
+             </div>
+        </div>
+         <div class="row bb-1">
+            <div class="col-md-6 pl-8 pt-8 pb-8">
+                <p class="m-0 roboto f-400">Mobile number</p>
+            </div>
+             <div class="col-md-6 pr-8 pt-8 pb-8 text-right">
+                 <p class="m-0 roboto f-400">99145789</p>
+             </div>
+        </div>
+         <div class="row bb-1">
+            <div class="col-md-6 pl-8 pt-8 pb-8">
+                <p class="m-0 roboto f-400">Eamil</p>
+            </div>
+             <div class="col-md-6 pr-8 pt-8 pb-8 text-right">
+                 <p class="m-0 roboto f-400">RahulJain@mail.com</p>
+             </div>
+        </div>
+         <div class="row bb-1">
+            <div class="col-md-6 pl-8 pt-8 pb-8">
+                <p class="m-0 roboto f-400">PAN</p>
+            </div>
+             <div class="col-md-6 pr-8 pt-8 pb-8 text-right">
+                 <p class="m-0 roboto f-400">ASDCSFGH12A</p>
+             </div>
+        </div>
+         <div class="row">
+            <div class="col-md-6 pl-8 pt-8 pb-8">
+                <p class="m-0 roboto f-400">MF Portfolio</p>
+            </div>
+             <div class="col-md-6 pr-8 pt-8 pb-8 text-right">
+                 <p class="m-0 roboto f-400">25,35.891 </p>
+             </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="row">
+    <div class="col-md-12 request-review-table pb-90">
+        <h5 class="pt-28 pb-10 m-0 roboto">Select a channel to proceed</h5>
+        <table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
+
+              <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef>  </th>
+                <td mat-cell *matCellDef="let element" class="br text-center"> <mat-checkbox></mat-checkbox>
+                 </td>
+              </ng-container>
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>  </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+              </ng-container>
+              <ng-container matColumnDef="weight">
+                <th mat-header-cell *matHeaderCellDef>  </th>
+                <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+              </ng-container>
+              <ng-container matColumnDef="symbol">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+    </div>
+</div>
+</div> -->
+
+
+<!-- call deatils screen -->
+
+<div class="pt-90 pl-16 pr-16">
+    <div class="row">
+        <div class="col-md-12">
+            <h5 class="m-0 text-dark roboto f-400 pb-10">Client name</h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput class="form-control" value="Rahul Jain">
+                  </mat-form-field>
+            </div>
+            <h5 class="m-0 pt-28 roboto text-dark f-500">Description</h5>
+            <h5 class="pt-4 m-0 roboto f-400">I’d like to understand how I should go about planning for my emergency funds. Since I am facing losses in my business and also the portfolio I invested in is down.</h5>
+            <h5 class="m-0 pt-28 roboto text-dark f-500">Profile</h5>
+            <h5 class="pt-4 m-0 roboto f-400">Business, Married with 2 kids and 38 years old</h5>
+            <h5 class="m-0 pt-28 roboto text-dark f-500">Interested in</h5>
+            <h5 class="pt-4 m-0 roboto f-400">Portfolio review, Financial Planning, Emergency Planning</h5>
+            <h5 class="m-0 pt-28 roboto text-dark f-500 pt-28 pb-10">My notes</h5>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <textarea matInput class="form-control h-120"></textarea>
+                  </mat-form-field>
+            </div><br><br><br><br><br><br><br><br>
+        </div>
+    </div>
+</div> 
+<div class="bottom-fixed wrapper-16 w-40">
+    <div class="row">
+        <div class="col-md-12">
+            <h5 class="m-0 roboto pt-6 c-p text-white">Close</h5>
         </div>
     </div>
 </div>

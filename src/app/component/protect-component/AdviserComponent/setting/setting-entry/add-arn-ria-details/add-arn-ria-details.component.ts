@@ -7,6 +7,7 @@ import { ValidatorType, UtilService } from 'src/app/services/util.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth-service/authService';
 import { DatePipe } from '@angular/common';
+import { ValueType } from 'exceljs';
 
 @Component({
   selector: 'app-add-arn-ria-details',
@@ -22,6 +23,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
   subscriber = new Subscription();
   advisorId:any;
   @ViewChild('arnForm', {static: true}) arnForm: ElementRef;
+  validatorType = ValidatorType;
 
   constructor(
     private subInjectService: SubscriptionInject, 
@@ -50,7 +52,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
       commencementDate: [this.data.mainData.commencementDate],
       renewalDate: [this.data.mainData.renewalDate],
       registeredEmail: [this.data.mainData.registeredEmail, [Validators.pattern(ValidatorType.EMAIL)]],
-      registeredPan: [this.data.mainData.registeredPan, [Validators.minLength(10), Validators.maxLength(10)]],
+      registeredPan: [this.data.mainData.registeredPan, [Validators.minLength(10), Validators.maxLength(10), Validators.pattern(ValidatorType.PAN)]],
       registeredAddress: [this.data.mainData.registeredAddress, [Validators.required, Validators.maxLength(150)]],
       gstApplicableId: [this.data.mainData.gstApplicableId, [Validators.required]],
       gstNumber: [this.data.mainData.gstNumber, []],

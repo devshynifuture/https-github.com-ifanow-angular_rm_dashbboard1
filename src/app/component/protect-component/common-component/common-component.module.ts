@@ -16,16 +16,19 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { ReplaceUserComponent } from './replace-user/replace-user.component';
 import { AddNumberComponent } from '../PeopleComponent/people/Component/people-clients/add-client/add-number/add-number.component';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 @NgModule({
   declarations: [
-    FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, ImageCropperComponent, WelcomePageComponent, ReplaceUserComponent, AddNumberComponent],
-  exports: [FroalaComponent, ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent],
+    FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, ImageCropperComponent, WelcomePageComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent],
+  exports: [FroalaComponent, ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent],
   imports: [
     MaterialModule,
     CommonModule,
     ImageCropperModule,
     FormsModule,
+    CustomCommonModule,
     ReactiveFormsModule,
     FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),
     FroalaEditorModule,
@@ -34,7 +37,7 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
 
     // AppModule
   ],
-  entryComponents: [ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent]
+  entryComponents: [ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent]
 })
 export class CommonComponentModule {
 }
