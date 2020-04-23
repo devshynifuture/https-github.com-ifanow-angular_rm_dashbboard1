@@ -4,6 +4,12 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class AuthService {
+  static getProfileInfo(): any {
+    throw new Error("Method not implemented.");
+  }
+  static profilePic(): any {
+    throw new Error("Method not implemented.");
+  }
   constructor(/*private myRoute: Router*/) {
   }
 
@@ -43,6 +49,14 @@ export class AuthService {
 
   static setAppPic(pic) {
     localStorage.setItem('webLogo', pic);
+  }
+
+  static setProfileInfo(info) {
+    localStorage.setItem('profileInfo', info);
+  }
+
+  get getProfileInfo(){
+    return localStorage.getItem('profileInfo');
   }
 
   get profilePic(){

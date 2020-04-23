@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class MfServiceService {
    this.settingService.getProfileDetails(obj).subscribe(
       data => {
         console.log(data)
+        AuthService.setAppPic(data);
         this.advisorData = data;
       }
     );

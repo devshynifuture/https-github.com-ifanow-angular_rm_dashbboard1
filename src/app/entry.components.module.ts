@@ -100,6 +100,7 @@ import {BottomSheetComponent} from './component/protect-component/customers/comp
 import {CustomCommonModule} from './common/custom.common.module';
 import { PreviewComponent } from './component/protect-component/customers/component/customer/customer-overview/overview-documents/preview/preview.component';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
+import { AddHealthInsuranceAssetComponent } from './component/protect-component/customers/component/customer/accounts/insurance/add-health-insurance-asset/add-health-insurance-asset.component';
 // tslint:disable-next-line:max-line-length
 // import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
@@ -233,7 +234,8 @@ export const componentList = [
   SingleGoalYearComponent,
   MultiYearGoalComponent,
   DetailedViewNpsComponent,
-  OwnerNomineeComponent
+  OwnerNomineeComponent,
+  AddHealthInsuranceAssetComponent
   // ComposeEmailComponent
 ];
 
