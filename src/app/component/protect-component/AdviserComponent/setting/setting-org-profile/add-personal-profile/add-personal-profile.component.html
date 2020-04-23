@@ -84,10 +84,13 @@
             </div>
 
         </mat-tab>
-        <mat-tab label="Profile pic">
+        <mat-tab label="Profile picture">
             <div class="row pt-40">
                 <div class="col-md-3 text-right pr-0">
-                    <h5 class="m-0 pt-8" *ngIf="!cropImage">Your profile pic</h5>
+                    <h5 class="m-0 pt-8" *ngIf="!cropImage">Your profile picture</h5>
+                    <div>
+                        This picture is visible on the top right of web login
+                    </div>
                 </div>
                 <div class="col-md-5" *ngIf="cropImage">
                     <div *ngIf="!showCropper">

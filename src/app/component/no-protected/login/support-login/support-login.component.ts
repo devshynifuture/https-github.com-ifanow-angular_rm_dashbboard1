@@ -125,6 +125,17 @@ export class SupportLoginComponent implements OnInit {
     });
   }
 
+  enterEvent(event) {
+    this.errorMsg = false;
+    this.errorStyle = {
+      visibility: this.errorMsg ? 'visible' : 'hidden',
+      opacity: this.errorMsg ? '1' : '0',
+    };
+    if (event.keyCode === 13) {
+      this.passEvent = event.keyCode;
+    }
+  }
+  
   onSubmit() {
     if (this.loginForm.valid) {
       const loginData = {
