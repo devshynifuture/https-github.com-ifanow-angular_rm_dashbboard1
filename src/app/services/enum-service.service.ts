@@ -1,4 +1,5 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
+import { element } from 'protractor';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,9 @@ export class EnumServiceService {
     otherAssetTypes: [],
     feeCollectionMode: [],
     taxStatusMap: {},
+    corporateTaxList: [],
+    individualTaxList: [],
+    minorTaxList: [],
   };
 
 
@@ -37,6 +41,18 @@ export class EnumServiceService {
 
   getTaxStatus() {
     return this.globalEnumData.taxStatusMap;
+  }
+
+  getCorporateTaxList() {
+    return this.globalEnumData.corporateTaxList;
+  }
+
+  getMinorTaxList() {
+    return this.globalEnumData.minorTaxList;
+  }
+
+  getIndividualTaxList() {
+    return this.globalEnumData.individualTaxList;
   }
 
   public addRoles(data) {
@@ -70,5 +86,13 @@ export class EnumServiceService {
 
   public getClientRole() {
     return this.clientRoleList;
+  }
+
+  public filterTaxStatusList(taxStatusId) {
+    let individualTaxData, minorTaxData, corporateTaxData;
+    individualTaxData = this.globalEnumData.individualTaxList.filter(element => element.taxStatusCode == taxStatusId);
+    minorTaxData = this.globalEnumData.minorTaxList.filter(element => element.taxStatusCode == taxStatusId)
+    corporateTaxData = this.globalEnumData.corporateTaxList.filter(element => element.taxStatusCode == taxStatusId)
+    return (individualTaxData) ? individualTaxData : (minorTaxData) ? minorTaxData : corporateTaxData;
   }
 }

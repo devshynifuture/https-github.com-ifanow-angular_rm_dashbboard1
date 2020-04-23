@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-add-other-payables',
@@ -34,6 +35,7 @@ export class AddOtherPayablesComponent implements OnInit {
   interestRate: number;
   showError: boolean;
     nomineesListFM: any = [];
+    @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   constructor(private fb: FormBuilder, public subInjectService: SubscriptionInject, public custumService: CustomerService, public eventService: EventService) {
   }
@@ -79,7 +81,7 @@ export class AddOtherPayablesComponent implements OnInit {
       creditorName: [data.creditorName, [Validators.required]],
       amtBorrowed: [data.amountBorrowed, [Validators.required]],
       interest: [data.interest, [Validators.required, Validators.min(1), Validators.max(100)]],
-
+      description: [data.description],
       dateOfRepayment: [new Date(data.dateOfRepayment), [Validators.required]],
       balance: [data.outstandingBalance, [Validators.required]],
       collateral: [data.collateral],
@@ -90,6 +92,7 @@ export class AddOtherPayablesComponent implements OnInit {
     this.getFormControl().interest.maxLength = 20;
     this.getFormControl().balance.maxLength = 20;
     this.getFormControl().collateral.maxLength = 20;
+    this.getFormControl().description.maxLength = 20
     this.ownerData = this.otherLiabilityForm.controls;
 
   }
@@ -129,30 +132,33 @@ export class AddOtherPayablesComponent implements OnInit {
   }
 
   saveFormData() {
-    if (this.otherLiabilityForm.get('ownerName').invalid) {
-      this.otherLiabilityForm.get('ownerName').markAsTouched();
-      return;
-     } else if (this.otherLiabilityForm.get('dateOfReceipt').invalid) {
-      this.otherLiabilityForm.get('dateOfReceipt').markAsTouched();
-      return;
-    } else if (this.otherLiabilityForm.get('ownerName').invalid) {
-      this.otherLiabilityForm.get('ownerName').markAsTouched();
-      return
-    } else if (this.otherLiabilityForm.get('creditorName').invalid) {
-      this.otherLiabilityForm.get('creditorName').markAsTouched();
-      return;
-    } else if (this.otherLiabilityForm.get('amtBorrowed').invalid) {
-      this.otherLiabilityForm.get('amtBorrowed').markAsTouched();
-      return;
-    } else if (this.otherLiabilityForm.get('interest').invalid) {
-      this.otherLiabilityForm.get('interest').markAsTouched();
-      return;
-    } else if (this.otherLiabilityForm.get('dateOfRepayment').invalid) {
-      this.otherLiabilityForm.get('dateOfRepayment').markAsTouched();
-      return;
-    } else if (this.otherLiabilityForm.get('balance').invalid) {
-      this.otherLiabilityForm.get('balance').markAsTouched();
-      return;
+    // if (this.otherLiabilityForm.get('ownerName').invalid) {
+    //   this.otherLiabilityForm.get('ownerName').markAsTouched();
+    //   return;
+    //  } else if (this.otherLiabilityForm.get('dateOfReceipt').invalid) {
+    //   this.otherLiabilityForm.get('dateOfReceipt').markAsTouched();
+    //   return;
+    // } else if (this.otherLiabilityForm.get('ownerName').invalid) {
+    //   this.otherLiabilityForm.get('ownerName').markAsTouched();
+    //   return
+    // } else if (this.otherLiabilityForm.get('creditorName').invalid) {
+    //   this.otherLiabilityForm.get('creditorName').markAsTouched();
+    //   return;
+    // } else if (this.otherLiabilityForm.get('amtBorrowed').invalid) {
+    //   this.otherLiabilityForm.get('amtBorrowed').markAsTouched();
+    //   return;
+    // } else if (this.otherLiabilityForm.get('interest').invalid) {
+    //   this.otherLiabilityForm.get('interest').markAsTouched();
+    //   return;
+    // } else if (this.otherLiabilityForm.get('dateOfRepayment').invalid) {
+    //   this.otherLiabilityForm.get('dateOfRepayment').markAsTouched();
+    //   return;
+    // } else if (this.otherLiabilityForm.get('balance').invalid) {
+    //   this.otherLiabilityForm.get('balance').markAsTouched();
+    //   return;
+    if (this.otherLiabilityForm.invalid) {
+      this.otherLiabilityForm.markAllAsTouched();
+      this.inputs.find(input => !input.ngControl.valid).focus();
     } else {
       const obj = {
         ownerName: (this.ownerName == null) ? this.otherLiabilityForm.controls.ownerName.value : this.ownerName,
@@ -163,6 +169,7 @@ export class AddOtherPayablesComponent implements OnInit {
         dateOfRepayment: this.otherLiabilityForm.controls.dateOfRepayment.value,
         balance: this.otherLiabilityForm.controls.balance.value,
         collateral: this.otherLiabilityForm.controls.collateral.value,
+        description: this.otherLiabilityForm.controls.description.value,
       };
       obj.balance = parseInt(obj.balance);
       obj.amtBorrowed = parseInt(obj.amtBorrowed);
@@ -183,6 +190,7 @@ export class AddOtherPayablesComponent implements OnInit {
           outstandingBalance: obj.balance,
           dateOfReceived: obj.dateOfReceipt,
           dateOfRepayment: obj.dateOfRepayment,
+          description: obj.description,
         };
         console.log('obj', obj);
         this.custumService.addOtherPayables(objToSend).subscribe(
@@ -200,6 +208,7 @@ export class AddOtherPayablesComponent implements OnInit {
           dateOfReceived: obj.dateOfReceipt,
           dateOfRepayment: obj.dateOfRepayment,
           id: this._data.id,
+          description: obj.description,
         };
         this.custumService.editOtherPayables(editObj).subscribe(
           data => this.editOtherPayablesRes(data)

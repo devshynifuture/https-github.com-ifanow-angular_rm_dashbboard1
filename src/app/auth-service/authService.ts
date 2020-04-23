@@ -37,6 +37,22 @@ export class AuthService {
     return clientData ? clientData.id : undefined;
   }
 
+  static setProfilePic(pic) {
+    localStorage.setItem('profilePic', pic);
+  }
+
+  static setAppPic(pic) {
+    localStorage.setItem('webLogo', pic);
+  }
+
+  get profilePic(){
+    return localStorage.getItem('profilePic');
+  }
+
+  get appPic(){
+    return localStorage.getItem('webLogo');
+  }
+
   setToken(token: string) {
     localStorage.setItem('token', token);
   }
@@ -51,7 +67,7 @@ export class AuthService {
 
   isAdvisor() {
     if (AuthService.getUserInfo()) {
-      console.log('Authservice isAdvisor userType: ', AuthService.getUserInfo().userType);
+     // console.log('Authservice isAdvisor userType: ', AuthService.getUserInfo().userType);
       return AuthService.getUserInfo().userType ? AuthService.getUserInfo().userType === 1 : false;
     } else {
       return false;

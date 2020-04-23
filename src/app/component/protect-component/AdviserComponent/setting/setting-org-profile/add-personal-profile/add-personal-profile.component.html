@@ -51,7 +51,7 @@
                         <mat-form-field appearance="standard">
                             <mat-select formControlName="isdCodeId" class="form-control">
                                 <mat-option value="" selected disabled>Select Country Code</mat-option>
-                                <mat-option [value]="code" *ngFor="let code of countryCodes">{{code}}</mat-option>
+                                <mat-option [value]="code.id" *ngFor="let code of isdCodes">{{code.code}}({{code.countryCode}})</mat-option>
                             </mat-select>
                             <mat-error>This field is required</mat-error>
                         </mat-form-field>
@@ -84,10 +84,13 @@
             </div>
 
         </mat-tab>
-        <mat-tab label="Profile pic">
+        <mat-tab label="Profile picture">
             <div class="row pt-40">
                 <div class="col-md-3 text-right pr-0">
-                    <h5 class="m-0 pt-8" *ngIf="!cropImage">Your profile pic</h5>
+                    <h5 class="m-0 pt-8" *ngIf="!cropImage">Your profile picture</h5>
+                    <div>
+                        This picture is visible on the top right of web login
+                    </div>
                 </div>
                 <div class="col-md-5" *ngIf="cropImage">
                     <div *ngIf="!showCropper">
@@ -104,6 +107,7 @@
                 </div>
                 <div class="col-md-4 pl-0" *ngIf="cropImage">
                     <button mat-stroked-button class="btn-primary" (click)="chooseImage.click()">CHOOSE IMAGE</button>
+                    <button mat-stroked-button class="btn-primary" (click)="resetPageVariables()">CANCEL EDIT</button>
                     <input type="file" #chooseImage (change)="uploadImageForCorping($event)" hidden>
                 </div>
                 <div class="col-md-5" *ngIf="!cropImage">

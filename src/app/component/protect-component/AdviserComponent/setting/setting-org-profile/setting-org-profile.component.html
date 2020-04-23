@@ -43,7 +43,7 @@
                         <div class="relClass">
                             <p class="f-12 mb-0 text-custom mt-28"> MOBILE</p>
                             <div class="bar" [ngClass]="{'height23': isLoading}">
-                                <p class="m-0">{{userList.isdCodeId}} {{userList.mobileNo}}</p>
+                                <p class="m-0">{{userList.isdCodeValue}} {{userList.mobileNo}}</p>
                             </div>
                         </div>
                         <div class="relClass">
@@ -181,7 +181,11 @@
     </div>
     <div class="col-xl-1"></div>
 </div>
-<div *ngIf="orgDetails == undefined && !isLoading" class="d-flex flex-column align-items-center">
+<div *ngIf="orgDetails == undefined && orgProfile &&  !isLoading" class="d-flex flex-column align-items-center">
+    <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="text-center pt-12">No {{orgProfile ? 'organization' : 'personal'}} profile found</h4>
+</div>
+<div *ngIf="userList == undefined && !orgProfile && !isLoading" class="d-flex flex-column align-items-center">
     <img class="width300" src="assets/images/svg/noDataFound.svg">
     <h4 class="text-center pt-12">No {{orgProfile ? 'organization' : 'personal'}} profile found</h4>
 </div>

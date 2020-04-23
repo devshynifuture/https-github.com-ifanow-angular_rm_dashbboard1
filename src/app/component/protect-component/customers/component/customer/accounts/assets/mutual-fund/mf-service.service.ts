@@ -1,12 +1,26 @@
 import {Injectable} from '@angular/core';
+import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MfServiceService {
-  constructor() {
+  advisorData: any;
+  constructor(private settingService:SettingsService) {
   }
 
+  getPersonalDetails(data){
+    const obj={
+      id:data
+    }
+   this.settingService.getProfileDetails(obj).subscribe(
+      data => {
+        console.log(data)
+        this.advisorData = data;
+      }
+    );
+    return this.advisorData;
+  }
   subCatArrayForSummary = (mutualFundList, type) => {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :

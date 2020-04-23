@@ -38,6 +38,7 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
   hasError: boolean = false;
 
   dashFG: FormGroup;
+  currentWeekFrankline: any;
   constructor(
     private eventService: EventService,
     private subInjectService: SubscriptionInject,
@@ -106,12 +107,12 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
         }
       },
       series: [{
-        data: [0,0,4,5,6,6,3],
+        data: [current[0].fileCount, current[1].fileCount, current[2].fileCount, current[3].fileCount, current[4].fileCount, current[5].fileCount, current[6].fileCount],
         color: '#4790ff',
         name: 'This week',
         pointWidth: 10
       } as SeriesColumnOptions, {
-        data: [0,1,6,7,6,6,3],
+        data: [previous[0].fileCount, previous[1].fileCount, previous[2].fileCount, previous[3].fileCount, previous[4].fileCount, previous[5].fileCount, previous[6].fileCount],
         color: '#49b875',
         name: 'Last week',
         pointWidth: 10
@@ -137,11 +138,13 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
       data => {
         if (data) {
           this.dailyData = data;
+          console.log('dailyData', this.dailyData)
           this.previousWeekCams = data.previousWeek[1]
           this.currentWeekCams = data.currentWeek[1]
           this.previousWeekKarvy = data.previousWeek[2]
           this.currentWeekKarvy = data.currentWeek[2]
           this.previousWeekFrankline = data.previousWeek[3]
+          this.currentWeekFrankline = data.currentWeek[3]
           if (this.dailyData.previousWeek[1]) {
             this.dailyData.previousWeek[1].forEach(element => {
               this.previousWeekCams.push(element.fileCount)
@@ -161,17 +164,18 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
               this.currentWeekKarvy.push(element.fileCount)
             });
           }
-          else if (this.dailyData.previousWeek[3]) {
-            this.dailyData.previousWeek[3].forEach(element => {
-              this.previousWeekFrankline.push(element.fileCount)
+          else if (this.dailyData.currentWeek[3]) {
+            this.dailyData.currentWeek[3].forEach(element => {
+              this.currentWeekFrankline.push(element.fileCount)
             });
           }
-         
-          console.log('dailyData',this.dailyData)
+
+          console.log('previousWeekCams', this.previousWeekCams)
+          console.log('previousWeekKarvy', this.previousWeekKarvy)
           //  this.currentWeekFrankline = this.dailyData.currentWeek[0]
           this.flowCash(this.previousWeekCams, this.currentWeekCams, 'flowCash')
           this.flowCash(this.previousWeekKarvy, this.currentWeekKarvy, 'flowCash2')
-          this.flowCash(this.previousWeekFrankline, '', 'flowCash3')
+           this.flowCash(this.previousWeekFrankline, this.currentWeekFrankline, 'flowCash3')
         }
       }
       , err => this.eventService.openSnackBar(err, "Dismiss")

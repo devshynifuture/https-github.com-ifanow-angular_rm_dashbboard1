@@ -161,6 +161,8 @@ export const appConfig = {
   RENAME_FILE: 'document/account/document/all-file/file/rename',
   RENAME_FOLDER: 'document/account/document/all-file/folder/rename',
   DELETE_FOLDER: 'document/account/document/all-file/folder/trash',
+  DELETE_PERMANANT_FOLDER:'',
+  RECOVERY:'',
   SEARCH_FILE: 'document/account/document/all-file/search',
   STAR_FILE: 'document/document/all-file/star',
   SEND_SHAREBLE_LINK: 'pdfAndEmail/email-only/send',
@@ -626,6 +628,7 @@ export const appConfig = {
   SEARCH_USERNAME: 'user/search/username',
   SAVE_PASSWORD: 'user/password/update',
   LOGIN_WITH_PASSWORD: 'user/login/with/password',
+  SUPPORT_LOGIN: 'rmdashboard/rm/sign-in',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_UPDATE: 'calendar/event/update',

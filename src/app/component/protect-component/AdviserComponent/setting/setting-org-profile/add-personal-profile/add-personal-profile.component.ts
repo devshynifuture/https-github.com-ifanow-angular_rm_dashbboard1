@@ -7,6 +7,7 @@ import {UtilService, ValidatorType} from 'src/app/services/util.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-add-personal-profile',
@@ -24,7 +25,7 @@ export class AddPersonalProfileComponent implements OnInit {
   anyDetailsChanged: boolean; // check if any details have been updated
   inputData: any;
   isLoading = false;
-  countryCodes: Array<number> = [91, 92];
+  isdCodes: Array<any> = [];
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -32,12 +33,12 @@ export class AddPersonalProfileComponent implements OnInit {
     private settingsService: SettingsService,
     private event: EventService,
     private fb: FormBuilder,
+    private peopleService: PeopleService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
 
   personalProfile: FormGroup;
-  // countryCodes:Array<string> = ['+91', '+92', "+93"];
   validatorType = ValidatorType;
 
   @Input()
@@ -54,6 +55,19 @@ export class AddPersonalProfileComponent implements OnInit {
   ngOnInit() {
     this.getdataForm(this.inputData);
     this.getPersonalInfo();
+    this.getIsdCodesData();
+  }
+
+
+  getIsdCodesData() {
+    this.peopleService.getIsdCode({}).subscribe(
+      data => {
+        if (data) {
+          console.log(data);
+          this.isdCodes = data;
+        }
+      }
+    )
   }
 
   getPersonalInfo() {
@@ -82,6 +96,7 @@ export class AddPersonalProfileComponent implements OnInit {
             this.settingsService.uploadProfilePhoto(jsonDataObj).subscribe((res) => {
               this.anyDetailsChanged = true;
               this.imgURL = jsonDataObj.profilePic;
+              AuthService.setProfilePic(jsonDataObj.profilePic);
               this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
               this.Close(this.anyDetailsChanged);
             });
