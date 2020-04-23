@@ -715,5 +715,9 @@ export class CustomerService {
     let httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('targetDate', data.targetDate);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUMMARY_LIST, httpParams);
   }
+  getCashFlowList(data) {
+    let httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('targetDate', data.targetDate);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CASHFLOW_LIST, httpParams);
+  }
 }
 

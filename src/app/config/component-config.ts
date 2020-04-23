@@ -247,6 +247,7 @@ export const appConfig = {
   DELETE_GOAL: 'goal-planning/goal/delete',
   CALCULATE_TOTAL_VALUES: 'account/asset/summary',
   GET_SUMMARY_LIST: 'account/asset/summary/list',
+  GET_CASHFLOW_LIST: '',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   GET_EPF: 'account/asset/retirement/epf/list/get',

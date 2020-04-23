@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
   templateUrl: './summary.component.html',
   styleUrls: ['./summary.component.scss']
 })
+
 export class SummaryComponent implements OnInit {
   advisorId: any;
   clientId: any;
@@ -24,10 +25,17 @@ export class SummaryComponent implements OnInit {
   liabilityTotal;
   nightyDayData: any;
   oneDay: any;
-
+  displayedColumns: string[] = ['description', 'date', 'amount'];
   constructor(public eventService: EventService, private cusService: CustomerService, private datePipe: DatePipe) {
   }
 
+  datasource = [
+    { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
+    { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
+    { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
+    { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
+    { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' }
+  ];
   ngOnInit() {
     this.asOnDate = new Date().getTime();
     this.advisorId = AuthService.getAdvisorId();
@@ -153,7 +161,17 @@ export class SummaryComponent implements OnInit {
     this.asOnDate = new Date(event.value).getTime();
     this.calculateTotalSummaryValues();
   }
+  getCashFlowData(data) {
+    let obj =
+    {
 
+    }
+    this.cusService.getCashFlowList(obj).subscribe(
+      data => {
+        console.log(data)
+      }, err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
   cashFlow(id) {
     const chart1 = new Highcharts.Chart('cashFlow', {
       chart: {
@@ -235,7 +253,6 @@ export class SummaryComponent implements OnInit {
 
       series: [{
         type: 'area',
-        name: 'USD to EUR',
         data: this.graphList
       }]
     });
