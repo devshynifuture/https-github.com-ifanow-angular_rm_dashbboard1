@@ -72,6 +72,7 @@ export class LiabilitiesComponent implements OnInit {
     //this.showLoader = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    // this.advisorData = AuthService.getProfileInfo();
     this.getLiability('');
     this.getPayables();
     this.getGlobalLiabilities();
