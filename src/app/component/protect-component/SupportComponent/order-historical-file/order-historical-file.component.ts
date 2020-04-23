@@ -15,7 +15,7 @@ import { UtilService } from '../../../../services/util.service';
   styleUrls: ['./order-historical-file.component.scss']
 })
 export class OrderHistoricalFileComponent implements OnInit {
-  rmId = 2;
+  rmId = AuthService.getRmId() ? AuthService.getRmId(): 0;
   arnRiaDetails = 4;
   asOnDate: boolean = false;
   formValidationFalseCount: number = 0;

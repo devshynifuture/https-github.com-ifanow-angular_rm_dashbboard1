@@ -33,6 +33,8 @@ export class ReconKarvyComponent implements OnInit {
     selectBrokerId: [, Validators.required]
   })
 
+  rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
+
   @Input() rtId;
   displayedColumns: string[] = ['doneOn', 'doneBy', 'totalFolioCount', 'unmatchedCountBeforeRecon', 'unmatchedCountAfterRecon', 'aumBalanceDate', 'transactionDate', 'deleted', 'reordered', 'orderSuccess', 'orderFailed', 'action']
 
@@ -74,7 +76,7 @@ export class ReconKarvyComponent implements OnInit {
       const data = {
         advisorIds: [...this.adminAdvisorIds],
         brokerId: this.selectBrokerForm.get('selectBrokerId').value,
-        rmId: 0,
+        rmId: this.rmId,
         rtId: this.rtId,
         parentId: this.adminId == 0 ? this.advisorId : this.parentId
       }

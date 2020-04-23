@@ -17,6 +17,7 @@ export class AumCamsComponent implements OnInit {
   displayedColumns = ['rtId', 'advisorName', 'arnria', 'doneOn', 'doneBy', 'totalFolioCount', 'unmatchedCountBeforeRecon', 'unmatchedCountAfterRecon', 'aumBalanceDate', 'transactionDate', 'report']
   dataSource = new MatTableDataSource<AumCamsI>(ELEMENT_DATA);
   rtId;
+  rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
 
   constructor(
     public eventService: EventService,
@@ -60,7 +61,7 @@ export class AumCamsComponent implements OnInit {
       brokerId: 0,
       rtId: this.rtId,
       // need to work on this after completing rm login to fetch rmId form localStorage
-      rmId: 3
+      rmId: this.rmId
     }
 
     this.reconService.getAumReconHistoryDataValues(data)
