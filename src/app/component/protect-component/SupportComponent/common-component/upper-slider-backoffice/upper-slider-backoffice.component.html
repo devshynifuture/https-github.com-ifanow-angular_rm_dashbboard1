@@ -373,7 +373,9 @@
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> File order time (most recent)
                                 </th>
                                 <td class="b-a" mat-cell *matCellDef="let element">
-                                    <div class="bar"> {{element.fileOrderDateTime | date:'short'}} </div>
+                                    <div class="bar">
+                                        {{element.fileOrderDateTime !== '-' ? ( element.fileOrderDateTime | date:'short') : ''}}
+                                    </div>
                                 </td>
                             </ng-container>
 

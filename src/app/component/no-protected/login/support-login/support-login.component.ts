@@ -35,9 +35,9 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
 })
 export class SupportLoginComponent implements OnInit {
 
-  barButtonOptions: MatProgressButtonOptions = {
+  barButtonOptions1: MatProgressButtonOptions = {
     active: false,
-    text: 'Login to your account',
+    text: 'Login to Support Account',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -117,7 +117,7 @@ export class SupportLoginComponent implements OnInit {
     // }
     this.btnProgressData = 'state1';
   }
-  
+
   private createForm() {
     this.loginForm = this.formBuilder.group({
       name: ['', [Validators.required]],
@@ -135,75 +135,76 @@ export class SupportLoginComponent implements OnInit {
       this.passEvent = event.keyCode;
     }
   }
-  
+
   onSubmit() {
     if (this.loginForm.valid) {
       const loginData = {
-        userName: this.loginForm.controls.name.value,
+        emailId: this.loginForm.controls.name.value,
         password: this.loginForm.controls.password.value,
-        roleId: 1
       };
       this.isLoading = true;
       // TODO comment for old login
-      this.peopleService.loginWithPassword(loginData).subscribe(data => {
-        console.log('data: ', data);
-        if (data) {
-          if (data.forceResetPassword) {
-            data['buttonFlag'] = "reset";
-            this.router.navigate(['/login/setpassword'],
-              { state: { userData: data } });
-          }
-          else {
-            this.loginService.handleUserData(this.authService, this.router, data);
-          }
-          // this.authService.setToken(data.token);
-        } else {
-          this.passEvent = '';
-          this.errorMsg = true;
-          this.errorStyle = {
-            visibility: this.errorMsg ? 'visible' : 'hidden',
-            opacity: this.errorMsg ? '1' : '0',
-          };
-          this.barButtonOptions.active = false;
-        }
-      }, err => {
-        this.isLoading = false;
-        this.barButtonOptions.active = false;
-        console.log('error on login: ', err.message);
-        this.eventService.openSnackBar(err, 'Dismiss');
-      });
-      // this.backOfficeService.loginApi(loginData).subscribe(
-      //   data => {
-      //
-      //     if (data) {
-      //       console.log('data: ', data);
-      //       this.authService.setToken(data.token);
-      //       if (!data.advisorId) {
-      //         data.advisorId = data.adminAdvisorId;
-      //       }
-      //       this.authService.setUserInfo(data);
-      //       this.router.navigate(['admin', 'subscription', 'dashboard']);
-      //       this.authService.setClientData({
-      //         id: 2978, name: 'Aryendra Kumar Saxena'
-      //       });
-      //
-      //     } else {
-      //       this.passEvent = '';
-      //       this.errorMsg = true;
-      //       this.errorStyle = {
-      //         visibility: this.errorMsg ? 'visible' : 'hidden',
-      //         opacity: this.errorMsg ? '1' : '0',
-      //       };
-      //       this.barButtonOptions.active = false;
+      // this.peopleService.loginWithPassword(loginData).subscribe(data => {
+      //   console.log('data: ', data);
+      //   if (data) {
+      //     if (data.forceResetPassword) {
+      //       data['buttonFlag'] = "reset";
+      //       this.router.navigate(['/login/setpassword'],
+      //         { state: { userData: data } });
       //     }
-      //   },
-      //   err => {
-      //     this.isLoading = false;
-      //     this.barButtonOptions.active = false;
-      //     console.log('error on login: ', err);
-      //     this.eventService.openSnackBar(err, 'Dismiss');
+      //     else {
+      //       this.loginService.handleUserData(this.authService, this.router, data);
+      //     }
+      //     // this.authService.setToken(data.token);
+      //   } else {
+      //     this.passEvent = '';
+      //     this.errorMsg = true;
+      //     this.errorStyle = {
+      //       visibility: this.errorMsg ? 'visible' : 'hidden',
+      //       opacity: this.errorMsg ? '1' : '0',
+      //     };
+      //     this.barButtonOptions1.active = false;
       //   }
-      // );
+      // }, err => {
+      //   this.isLoading = false;
+      //   this.barButtonOptions1.active = false;
+      //   console.log('error on login: ', err.message);
+      //   this.eventService.openSnackBar(err, 'Dismiss');
+      // });
+
+      this.backOfficeService.loginApi(loginData)
+        // .subscribe(res => {
+        //   console.log("this is some login data:::", res);
+        // })
+        .subscribe(
+          data => {
+            if (data) {
+              console.log('rm data: ', data);
+              if (data.isAdmin) {
+                data.rmId = data.id
+                delete data.id;
+              }
+              // this.authService.setToken(data.token);
+              this.loginService.handleUserData(this.authService, this.router, data);
+              // this.router.navigate(['support', 'dashboard']);
+
+            } else {
+              this.passEvent = '';
+              this.errorMsg = true;
+              this.errorStyle = {
+                visibility: this.errorMsg ? 'visible' : 'hidden',
+                opacity: this.errorMsg ? '1' : '0',
+              };
+              this.barButtonOptions1.active = false;
+            }
+          },
+          err => {
+            this.isLoading = false;
+            this.barButtonOptions1.active = false;
+            console.log('error on login: ', err);
+            this.eventService.openSnackBar(err, 'Dismiss');
+          }
+        );
     }
   }
 
@@ -215,13 +216,13 @@ export class SupportLoginComponent implements OnInit {
         visibility: this.errorMsg ? 'visible' : 'hidden',
         opacity: this.errorMsg ? '1' : '0',
       };
-      this.barButtonOptions.active = true;
-      this.barButtonOptions.value = 20;
+      this.barButtonOptions1.active = true;
+      this.barButtonOptions1.value = 20;
       this.onSubmit();
     } else {
       this.loginForm.get('name').markAsTouched();
       this.loginForm.get('password').markAsTouched();
-      this.barButtonOptions.active = false;
+      this.barButtonOptions1.active = false;
     }
   }
 

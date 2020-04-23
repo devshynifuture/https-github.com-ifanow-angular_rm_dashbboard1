@@ -7,6 +7,7 @@ import { SetNewPasswordComponent } from './set-new-password/set-new-password.com
 import { VerifyOtpComponent } from './verify-otp/verify-otp.component';
 import { SignupTeamMemberComponent } from './signup-team-member/signup-team-member.component';
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
+import { SupportLoginComponent } from './support-login/support-login.component';
 
 
 const routes: Routes = [
@@ -39,6 +40,10 @@ const routes: Routes = [
   {
     path: 'termscondition',
     component: TermsConditionsComponent
+  },
+  {
+    path: 'support-login',
+    component: SupportLoginComponent
   }
 ];
 
