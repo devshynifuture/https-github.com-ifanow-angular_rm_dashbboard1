@@ -17,6 +17,7 @@ export class AumFranklinComponent implements OnInit {
   displayedColumns = ['rtId', 'advisorName', 'arnria', 'doneOn', 'doneBy', 'totalFolioCount', 'unmatchedCountBeforeRecon', 'unmatchedCountAfterRecon', 'aumBalanceDate', 'transactionDate', 'report']
   dataSource = new MatTableDataSource<AumFranklinI>(ELEMENT_DATA);
   rtId;
+  rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
 
   constructor(
     public eventService: EventService,
@@ -59,7 +60,7 @@ export class AumFranklinComponent implements OnInit {
       brokerId: 0,
       rtId: this.rtId,
       // rtId: 0,
-      rmId: 3
+      rmId: this.rmId
     }
 
     this.reconService.getAumReconHistoryDataValues(data)
@@ -99,7 +100,7 @@ export class AumFranklinComponent implements OnInit {
           this.dataSource.sort = this.sort;
 
         } else {
-          this.dataSource.data == null;
+          this.dataSource.data = null;
           this.eventService.openSnackBar("No AUM History Found", "DISMISS");
         }
       })

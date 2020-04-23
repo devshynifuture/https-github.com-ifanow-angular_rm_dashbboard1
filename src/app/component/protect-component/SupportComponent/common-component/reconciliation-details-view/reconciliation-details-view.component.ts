@@ -63,7 +63,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     this.upperTableArr = tableArr;
     this.disableUnfreezeBtn = false;
 
-    if (this.data.freezeDate == null && this.data.difference === 0.000) {
+    if (this.data && this.data.difference === '0.000') {
       this.disableFreezeBtn = false;
     } else {
       this.disableFreezeBtn = true;
@@ -182,7 +182,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
         this.dataSource.data.map(item => {
           item['unitOne'] = String((res.units).toFixed(3));
           item['difference'] = String((parseInt(item['unitOne']) - parseInt(item['unitsRta'])).toFixed(3));
-          if (this.data && this.data.freezeDate && item['difference'] === '0.000') {
+          if (this.data && item['difference'] === '0.000') {
             this.disableFreezeBtn = true;
           } else {
             this.disableFreezeBtn = false;

@@ -23,7 +23,7 @@ export class IfaOnboardingComponent implements OnInit {
     private subInjectService: SubscriptionInject,
     private supportService: SupportService,
     private eventService: EventService
-  ) { 
+  ) {
     this.advisorId = AuthService.getAdvisorId()
   }
 
@@ -50,7 +50,7 @@ export class IfaOnboardingComponent implements OnInit {
   }
   getOverviewIFAOnbording() {
     let obj = {
-      adminAdvisorId : this.advisorId
+      adminAdvisorId: this.advisorId
     }
     this.supportService.getOverviewIFAOnboarding(obj).subscribe(
       data => {
@@ -81,7 +81,7 @@ export class IfaOnboardingComponent implements OnInit {
               plan: element.plan ? element.plan : ' - ',
               team: element.team_count,
               arn: element.arn_ria_count,
-              adminAdvisorId : element.admin_advisor_id,
+              adminAdvisorId: element.admin_advisor_id,
               menu: '',
               advisorId: element.admin_advisor_id,
             })
@@ -133,7 +133,7 @@ export class IfaOnboardingComponent implements OnInit {
 
 
 
-  openAdminDetails(data,value) {
+  openAdminDetails(data, value) {
     const fragmentData = {
       flag: value,
       data,
@@ -147,7 +147,7 @@ export class IfaOnboardingComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
+            this.getStagesFromBackend();
           }
           rightSideDataSub.unsubscribe();
         }
