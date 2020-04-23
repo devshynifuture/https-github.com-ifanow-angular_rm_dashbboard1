@@ -19,9 +19,9 @@
                 </li>
                 <li (click)="viewMode ='tab3'" [ngClass]="{'activeColor':viewMode =='tab3'}" class="c-p">
                     <div (click)="tabValue = 'Starred';getAllFileList(tabValue,'refresh')" class="row">
-                        <div class="col-md-11 p-0"><img class="mr-8" src="assets/images/svg/star-menu-documents.svg"> Starred
+                        <div class="col-md-10 p-0"><img class="mr-8" src="assets/images/svg/star-menu-documents.svg"> Starred
                         </div>
-                        <div *ngIf="countDocs" class="col-md-1 p-0 text-custom">{{countDocs.starredFiles}}</div>
+                        <div *ngIf="countDocs" class="col-md-2 p-0 text-custom">{{countDocs.starredFiles}}</div>
                     </div>
                 </li>
                 <li (click)="viewMode ='tab4'" [ngClass]="{'activeColor':viewMode =='tab4'}" class=" c-p">
