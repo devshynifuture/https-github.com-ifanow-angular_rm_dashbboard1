@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, OnInit} from '@angular/core';
+import {EventService} from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../customer.service';
-import { isNumber } from 'util';
-import { DatePipe } from '@angular/common';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../customer.service';
+import {isNumber} from 'util';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-summary',
@@ -18,6 +18,7 @@ export class SummaryComponent implements OnInit {
   isLoading: boolean;
   totalAssets: number;
   asOnDate: any;
+  summaryMap: any = {};
 
   constructor(public eventService: EventService, private cusService: CustomerService, private datePipe: DatePipe) {
   }
@@ -30,15 +31,15 @@ export class SummaryComponent implements OnInit {
     this.cashFlow('cashFlow');
     this.calculateTotalSummaryValues();
   }
+
   calculateTotalSummaryValues() {
     this.isLoading = true;
-    console.log(new Date(this.asOnDate).getTime())
-    let obj =
-    {
+    console.log(new Date(this.asOnDate).getTime());
+    const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
       targetDate: this.asOnDate
-    }
+    };
     this.cusService.calculateTotalValues(obj).subscribe(
       data => {
         if (data && data.length > 0) {
@@ -46,20 +47,19 @@ export class SummaryComponent implements OnInit {
           console.log(data);
           this.totalAssets = 0;
           this.summaryTotalValue = Object.assign([], data);
-          console.log(this.summaryTotalValue)
+          console.log(this.summaryTotalValue);
           this.summaryTotalValue.forEach(element => {
+            this.summaryMap[element.assetTypeString] = element;
             if (element.currentValue == 0) {
-              element['currentValue'] = '-';
-              element['percentage'] = '-';
-            }
-            else if (element.currentValue == element.investedAmount) {
-              element['percentage'] = 0;
-            }
-            else {
-              let topValue = element.currentValue - element.investedAmount;
-              let dividedValue = topValue / element.investedAmount;
-              element['percentage'] = (dividedValue * 100).toFixed(2);
-              element['positiveFlag'] = (Math.sign(element.percentage) == 1) ? true : false;
+              element.currentValue = '-';
+              element.percentage = '-';
+            } else if (element.currentValue == element.investedAmount) {
+              element.percentage = 0;
+            } else {
+              const topValue = element.currentValue - element.investedAmount;
+              const dividedValue = topValue / element.investedAmount;
+              element.percentage = (dividedValue * 100).toFixed(2);
+              element.positiveFlag = (Math.sign(element.percentage) == 1) ? true : false;
             }
             if (isNumber(element.currentValue)) {
               this.totalAssets += element.currentValue;
@@ -68,15 +68,17 @@ export class SummaryComponent implements OnInit {
           this.pieChart('piechartMutualFund', data);
         }
       },
-      err => this.eventService.openSnackBar(err, "Dismiss")
-    )
+      err => this.eventService.openSnackBar(err, 'Dismiss')
+    );
   }
+
   dateChange(event) {
     this.asOnDate = new Date(event.value).getTime();
     this.calculateTotalSummaryValues();
   }
+
   cashFlow(id) {
-    var chart1 = new Highcharts.Chart('cashFlow', {
+    const chart1 = new Highcharts.Chart('cashFlow', {
       chart: {
         type: 'column'
       },
@@ -104,7 +106,7 @@ export class SummaryComponent implements OnInit {
   }
 
   lineChart(id) {
-    var chart1 = new Highcharts.Chart('container', {
+    const chart1 = new Highcharts.Chart('container', {
       chart: {
         zoomType: 'x'
       },
@@ -696,10 +698,10 @@ export class SummaryComponent implements OnInit {
   }
 
   pieChart(id, data) {
-    let dataSeriesList = [];
+    const dataSeriesList = [];
     data.forEach(element => {
       element.currentValue = (element.currentValue == '-') ? 0 : element.currentValue;
-      let dividedValue = element.currentValue / this.totalAssets;
+      const dividedValue = element.currentValue / this.totalAssets;
       dataSeriesList.push({
         name: element.assetTypeString,
         y: dividedValue * 100,
@@ -707,7 +709,7 @@ export class SummaryComponent implements OnInit {
         dataLabels: {
           enabled: false
         }
-      })
+      });
     });
     Highcharts.chart('piechartMutualFund', {
       chart: {
