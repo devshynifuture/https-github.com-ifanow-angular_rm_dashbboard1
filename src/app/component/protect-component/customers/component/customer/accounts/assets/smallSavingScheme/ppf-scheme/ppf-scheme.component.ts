@@ -63,17 +63,18 @@ export class PPFSchemeComponent implements OnInit {
         this.isLoading = false;
       });
   }
+  sumOfAmountInvested:any;
   getPpfSchemeDataResponse(data) {
     this.isLoading = false;
-    if (data == undefined) {
-      this.noData = 'No scheme found';
-      this.dataSource.data = [];
-    } else if (data && data.PPFList && data.PPFList.length > 0) {
-      console.log('getPpfSchemeDataResponse', data);
-      this.dataSource.data = data.PPFList;
-      this.dataSource.sort = this.sort;
-      UtilService.checkStatusId(this.dataSource.filteredData);
-      this.SumOfCurrentValue = data.SumOfCurrentValue
+    if (data != undefined) {
+      if (data.assetList) {
+        console.log('getPpfSchemeDataResponse', data);
+        this.dataSource.data = data.assetList;
+        this.dataSource.sort = this.sort;
+        UtilService.checkStatusId(this.dataSource.filteredData);
+        this.SumOfCurrentValue = data.sumOfCurrentValue;
+        this.sumOfAmountInvested = data.sumOfAmountInvested;
+      }
     } else {
       this.noData = 'No scheme found';
       this.dataSource.data = []

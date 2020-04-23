@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/auth-service/authService';
 import { AddLifeInsuranceMasterComponent } from './add-life-insurance-master/add-life-insurance-master.component';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AddStockMasterComponent } from './add-stock-master/add-stock-master.component';
@@ -31,6 +32,7 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
   previousWeekFrankline: any;
   currentWeekKarvy: any;
 
+  rmId = AuthService.getRmId();
 
   subscription = new Subscription();
   bulkData: any[] = [{}, {}, {}];
@@ -49,6 +51,7 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    console.log("this is rtId:::", this.rmId);
     this.utilsService.loader(0);
 
     this.createFormGroup();
@@ -175,7 +178,7 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
           //  this.currentWeekFrankline = this.dailyData.currentWeek[0]
           this.flowCash(this.previousWeekCams, this.currentWeekCams, 'flowCash')
           this.flowCash(this.previousWeekKarvy, this.currentWeekKarvy, 'flowCash2')
-           this.flowCash(this.previousWeekFrankline, this.currentWeekFrankline, 'flowCash3')
+          this.flowCash(this.previousWeekFrankline, this.currentWeekFrankline, 'flowCash3')
         }
       }
       , err => this.eventService.openSnackBar(err, "Dismiss")
@@ -281,7 +284,7 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
     const jsonObj = {
       days: 0,
       fileTypeId: 0,
-      rmId: 2,
+      rmId: this.rmId,
       rtId: this.dashFG.controls.bulkOptRtId.value,
       limit: 10
     }

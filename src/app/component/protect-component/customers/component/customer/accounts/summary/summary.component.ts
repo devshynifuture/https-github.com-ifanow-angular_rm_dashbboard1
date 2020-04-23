@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../customer.service';
+import { isNumber } from 'util';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-summary',
@@ -8,16 +12,69 @@ import * as Highcharts from 'highcharts';
   styleUrls: ['./summary.component.scss']
 })
 export class SummaryComponent implements OnInit {
+  advisorId: any;
+  clientId: any;
+  summaryTotalValue: any;
+  isLoading: boolean;
+  totalAssets: number;
+  asOnDate: any;
 
-  constructor(public eventService: EventService, ) {
+  constructor(public eventService: EventService, private cusService: CustomerService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
-    this.pieChart('piechartMutualFund')
-    this.lineChart('container')
-    this.cashFlow('cashFlow')
+    this.asOnDate = new Date().getTime();
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.lineChart('container');
+    this.cashFlow('cashFlow');
+    this.calculateTotalSummaryValues();
   }
-
+  calculateTotalSummaryValues() {
+    this.isLoading = true;
+    console.log(new Date(this.asOnDate).getTime())
+    let obj =
+    {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      targetDate: this.asOnDate
+    }
+    this.cusService.calculateTotalValues(obj).subscribe(
+      data => {
+        if (data && data.length > 0) {
+          this.isLoading = false;
+          console.log(data);
+          this.totalAssets = 0;
+          this.summaryTotalValue = Object.assign([], data);
+          console.log(this.summaryTotalValue)
+          this.summaryTotalValue.forEach(element => {
+            if (element.currentValue == 0) {
+              element['currentValue'] = '-';
+              element['percentage'] = '-';
+            }
+            else if (element.currentValue == element.investedAmount) {
+              element['percentage'] = 0;
+            }
+            else {
+              let topValue = element.currentValue - element.investedAmount;
+              let dividedValue = topValue / element.investedAmount;
+              element['percentage'] = (dividedValue * 100).toFixed(2);
+              element['positiveFlag'] = (Math.sign(element.percentage) == 1) ? true : false;
+            }
+            if (isNumber(element.currentValue)) {
+              this.totalAssets += element.currentValue;
+            }
+          });
+          this.pieChart('piechartMutualFund', data);
+        }
+      },
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+  dateChange(event) {
+    this.asOnDate = new Date(event.value).getTime();
+    this.calculateTotalSummaryValues();
+  }
   cashFlow(id) {
     var chart1 = new Highcharts.Chart('cashFlow', {
       chart: {
@@ -638,7 +695,20 @@ export class SummaryComponent implements OnInit {
     });
   }
 
-  pieChart(id) {
+  pieChart(id, data) {
+    let dataSeriesList = [];
+    data.forEach(element => {
+      element.currentValue = (element.currentValue == '-') ? 0 : element.currentValue;
+      let dividedValue = element.currentValue / this.totalAssets;
+      dataSeriesList.push({
+        name: element.assetTypeString,
+        y: dividedValue * 100,
+        // color: "#A6CEE3",
+        dataLabels: {
+          enabled: false
+        }
+      })
+    });
     Highcharts.chart('piechartMutualFund', {
       chart: {
         plotBackgroundColor: null,
@@ -674,79 +744,7 @@ export class SummaryComponent implements OnInit {
         type: 'pie',
         name: 'Browser share',
         innerSize: '60%',
-        data: [
-          {
-            name: 'Equity',
-            y: 23,
-            color: "#A6CEE3",
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Debt',
-            y: 13,
-            color: "#1F78B4",
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Hybrid',
-            y: 25.42,
-            color: "#B2DF8A",
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Other',
-            y: 12.61,
-            color: "#33A02C",
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Solutions oriented',
-            y: 23.42,
-            color: "#FB9A99",
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Solutions oriented',
-            y: 23.42,
-            color: "#E31A1C",
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Solutions oriented',
-            y: 23.42,
-            color: "#FDBF6F",
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Solutions oriented',
-            y: 23.42,
-            color: "#FF7F00",
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Solutions oriented',
-            y: 23.42,
-            color: "#CAB2D6",
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Solutions oriented',
-            y: 23.42,
-            color: "#6A3D9A",
-            dataLabels: {
-              enabled: false
-            }
-          }
-        ]
+        data: dataSeriesList
       }]
     });
   }
