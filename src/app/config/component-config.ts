@@ -161,8 +161,8 @@ export const appConfig = {
   RENAME_FILE: 'document/account/document/all-file/file/rename',
   RENAME_FOLDER: 'document/account/document/all-file/folder/rename',
   DELETE_FOLDER: 'document/account/document/all-file/folder/trash',
-  DELETE_PERMANANT_FOLDER:'',
-  RECOVERY:'',
+  DELETE_PERMANANT_FOLDER: '',
+  RECOVERY: '',
   SEARCH_FILE: 'document/account/document/all-file/search',
   STAR_FILE: 'document/document/all-file/star',
   SEND_SHAREBLE_LINK: 'pdfAndEmail/email-only/send',
@@ -243,6 +243,7 @@ export const appConfig = {
   GET_ALL_ASSETS: 'goal-planning/static-allocation/get',
   GET_ALL_GOALS: 'goal-planning/goal/list/get',
   DELETE_GOAL: 'goal-planning/goal/delete',
+  CALCULATE_TOTAL_VALUES: 'account/asset/summary',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   GET_EPF: 'account/asset/retirement/epf/list/get',

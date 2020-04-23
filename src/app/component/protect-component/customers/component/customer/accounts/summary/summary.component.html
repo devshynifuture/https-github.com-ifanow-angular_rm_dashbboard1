@@ -11,10 +11,12 @@
                         <p class="text-black f-12 m-0 roboto">ASSETS</p>
                     </div>
                     <div class="col-md-6 p-0">
-                        <p class="text-black f-12 m-0 text-right roboto">₹1,78,57,250</p>
+                        <p *ngIf="totalAssets" class="text-black f-12 m-0 text-right roboto">
+                            <span appFormatNumber>₹{{totalAssets}}</span>
+                        </p>
                     </div>
                     <div class="col-md-12 p-0 pt-4">
-                        <mat-progress-bar class="light-blue" mode="determinate" value="70"></mat-progress-bar>
+                        <mat-progress-bar class="light-blue" mode="determinate" value="50"></mat-progress-bar>
                     </div>
                 </div>
                 <div class="row pt-20">
@@ -25,83 +27,173 @@
                         <p class="text-black f-12 m-0 text-right roboto">₹53,21,780</p>
                     </div>
                     <div class="col-md-12 p-0 pt-4">
-                        <mat-progress-bar class="light-red" mode="determinate" value="40"></mat-progress-bar>
+                        <mat-progress-bar class="light-red" mode="determinate" value="50"></mat-progress-bar>
                     </div>
                 </div>
             </div>
-            <div class="height-700">
+            <div appSkeletonLoading [appSkeletonLoading]="isLoading" class="height-700 skeletonAnimation">
                 <div class="row bb c-p">
                     <div class="col-md-6 pr-0">
                         <a [queryParams]="{ tab: 'tab1'}" class="text-black m-0 roboto"
-                            routerLink="/customer/detail/account/assets">Mutual funds</a>
+                            routerLink="/customer/detail/account/assets">
+                            <div class="bar height24">
+                                <span *ngIf="summaryTotalValue">{{summaryTotalValue[3].assetTypeString}}</span>
+                            </div>
+                        </a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
-                        <p class="text-black m-0 roboto">₹57,22,896</p>
-                        <p class="text-success m-0 roboto">12.23%</p>
+                        <div class="bar height24">
+                            <p class="text-black m-0 roboto">
+                                <span *ngIf="summaryTotalValue[3].currentValue!='-'">₹</span>
+                                <span appFormatNumber
+                                    *ngIf="summaryTotalValue">{{summaryTotalValue[3].currentValue}}</span>
+                            </p>
+                            <p [ngClass]="{'text-success': summaryTotalValue[3].positiveFlag,'text-danger':summaryTotalValue[3].positiveFlag==false}"
+                                class="m-0 roboto">
+                                <span *ngIf="summaryTotalValue" appFormatNumber>{{summaryTotalValue[3].percentage}}<span
+                                        *ngIf="summaryTotalValue[3].currentValue!='-'">%</span></span>
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <div class="row bb c-p">
                     <div class="col-md-6 pr-0">
                         <a [queryParams]="{ tab: 'tab2'}" class="text-black m-0 roboto"
-                            routerLink="/customer/detail/account/assets">Stocks</a>
+                            routerLink="/customer/detail/account/assets">
+                            <div class="bar height24">
+                                <span *ngIf="summaryTotalValue">{{summaryTotalValue[2].assetTypeString}}</span>
+                            </div>
+                        </a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
-                        <p class="text-black m-0  roboto">₹57,22,896</p>
-                        <p class="text-danger m-0 roboto">-5.76%</p>
+                        <div class="bar height24">
+                            <p class="text-black m-0  roboto">
+                                <span *ngIf="summaryTotalValue[2].currentValue!='-'">₹</span>
+                                <span *ngIf="summaryTotalValue" appFormatNumber>{{summaryTotalValue[2].currentValue}}
+                                </span>
+                            </p>
+                            <p [ngClass]="{'text-success': summaryTotalValue[2].positiveFlag,'text-danger':summaryTotalValue[2].positiveFlag==false}"
+                                class="m-0 roboto">
+                                <span *ngIf="summaryTotalValue">{{summaryTotalValue[2].percentage}}<span
+                                        *ngIf="summaryTotalValue[2].currentValue!='-'">%</span></span>
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <div class="row bb c-p">
                     <div class="col-md-6 pr-0">
                         <a [queryParams]="{ tab: 'tab3'}" class="text-black m-0 roboto"
-                            routerLink="/customer/detail/account/assets">Fixed income</a>
+                            routerLink="/customer/detail/account/assets">
+                            <div class="bar height24">
+                                <span *ngIf="summaryTotalValue">{{summaryTotalValue[0].assetTypeString}}</span>
+                            </div>
+                        </a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
-                        <p class="text-black m-0 roboto">₹57,22,896</p>
-                        <p class="text-success m-0 roboto">12.23%</p>
+                        <div class="bar height24">
+                            <p class="text-black m-0 roboto">
+                                <span *ngIf="summaryTotalValue[0].currentValue!='-'">₹</span>
+                                <span *ngIf="summaryTotalValue"
+                                    appFormatNumber>{{summaryTotalValue[0].currentValue}}</span>
+                            </p>
+                            <p [ngClass]="{'text-success': summaryTotalValue[0].positiveFlag,'text-danger':summaryTotalValue[0].positiveFlag==false}"
+                                class=" m-0 roboto">
+                                <span *ngIf="summaryTotalValue">{{summaryTotalValue[0].percentage}}<span
+                                        *ngIf="summaryTotalValue[2].currentValue!='-'">%</span></span>
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <div class="row bb c-p">
                     <div class="col-md-6 pr-0">
                         <p class="text-black m-0 roboto"></p>
                         <a [queryParams]="{ tab: 'tab4'}" class="text-black m-0 roboto"
-                            routerLink="/customer/detail/account/assets">Real estate</a>
+                            routerLink="/customer/detail/account/assets">
+                            <span *ngIf="summaryTotalValue">{{summaryTotalValue[1].assetTypeString}}</span>
+                        </a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
-                        <p class="text-black m-0 roboto">₹57,22,896</p>
-                        <p class="text-success m-0 roboto">12.23%</p>
+                        <div class="bar height24">
+                            <p class="text-black m-0 roboto">
+                                <span *ngIf="summaryTotalValue[1].currentValue!='-'">₹</span>
+                                <span appFormatNumber
+                                    *ngIf="summaryTotalValue">{{summaryTotalValue[1].currentValue}}</span>
+                            </p>
+                            <p [ngClass]="{'text-success': summaryTotalValue[1].positiveFlag,'text-danger':summaryTotalValue[1].positiveFlag==false}"
+                                class=" m-0 roboto">
+                                <span *ngIf="summaryTotalValue">{{summaryTotalValue[1].percentage}}<span
+                                        *ngIf="summaryTotalValue[1].currentValue!='-'">%</span></span>
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <div class="row bb c-p">
                     <div class="col-md-6 pr-0">
                         <a [queryParams]="{ tab: 'tab5'}" class="text-black m-0 roboto"
-                            routerLink="/customer/detail/account/assets">Retirement a/c</a>
+                            routerLink="/customer/detail/account/assets">
+                            <span *ngIf="summaryTotalValue">{{summaryTotalValue[4].assetTypeString}}</span>
+                        </a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
-                        <p class="text-black m-0 f-500 roboto pr-8">-</p>
-                        <p class="text-success m-0 roboto pr-8">-%</p>
+                        <div class="bar height24">
+                            <p class="text-black m-0 f-500 roboto pr-8">
+                                <span *ngIf="summaryTotalValue[4].currentValue!='-'">₹</span>
+                                <span appFormatNumber *ngIf="summaryTotalValue">
+                                    {{summaryTotalValue[4].currentValue}}</span>
+                            </p>
+                            <p [ngClass]="{'text-success': summaryTotalValue[4].positiveFlag,'text-danger':summaryTotalValue[4].positiveFlag==false}"
+                                class=" m-0 roboto pr-8">
+                                <span *ngIf="summaryTotalValue">{{summaryTotalValue[4].percentage}}<span
+                                        *ngIf="summaryTotalValue[4].currentValue!='-'">%</span></span>
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <div class="row bb c-p">
                     <div class="col-md-6 pr-0">
                         <a [queryParams]="{ tab: 'tab6'}" class="text-black m-0 roboto"
-                            routerLink="/customer/detail/account/assets">Small savings</a>
+                            routerLink="/customer/detail/account/assets">
+                            <span *ngIf="summaryTotalValue">{{summaryTotalValue[5].assetTypeString}}</span>
+                        </a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
-                        <p class="text-black m-0 roboto">₹57,22,896</p>
-                        <p class="text-success m-0 roboto">12.23%</p>
+                        <div class="bar height24">
+                            <p class="text-black m-0 roboto">
+                                <span *ngIf="summaryTotalValue[5].currentValue!='-'">₹</span>
+                                <span appFormatNumber
+                                    *ngIf="summaryTotalValue">{{summaryTotalValue[5].currentValue}}</span>
+                            </p>
+                            <p [ngClass]="{'text-success': summaryTotalValue[5].positiveFlag,'text-danger':summaryTotalValue[5].positiveFlag==false}"
+                                class=" m-0 roboto">
+                                <span *ngIf="summaryTotalValue">{{summaryTotalValue[5].percentage}}<span
+                                        *ngIf="summaryTotalValue[5].currentValue!='-'">%</span></span>
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <div class="row bb c-p">
                     <div class="col-md-6 pr-0">
                         <a [queryParams]="{ tab: 'tab7'}" class="text-black m-0 roboto"
-                            routerLink="/customer/detail/account/assets">Cash & Bank</a>
+                            routerLink="/customer/detail/account/assets">
+                            <span *ngIf="summaryTotalValue">{{summaryTotalValue[6].assetTypeString}}</span>
+                        </a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
-                        <p class="text-black m-0 roboto">₹57,22,896</p>
-                        <p class="text-success m-0 roboto">12.23%</p>
+                        <div class="bar height24">
+                            <p class="text-black m-0 roboto">
+                                <span *ngIf="summaryTotalValue[6].currentValue!='-'">₹</span>
+                                <span appFormatNumber
+                                    *ngIf="summaryTotalValue">{{summaryTotalValue[6].currentValue}}</span>
+                            </p>
+                            <p [ngClass]="{'text-success': summaryTotalValue[6].positiveFlag,'text-danger':summaryTotalValue[6].positiveFlag==false}"
+                                class=" m-0 roboto">
+                                <span *ngIf="summaryTotalValue">{{summaryTotalValue[6].percentage}}<span
+                                        *ngIf="summaryTotalValue[6].currentValue!='-'">%</span></span>
+                            </p>
+                        </div>
                     </div>
                 </div>
-                <div class="row bb c-p">
+                <!-- <div class="row bb c-p">
                     <div class="col-md-6 pr-0">
                         <a [queryParams]="{ tab: 'tab8'}" class="text-black m-0 roboto"
                             routerLink="/customer/detail/account/assets">Commodities</a>
@@ -110,7 +202,7 @@
                         <p class="text-black m-0 f-500 roboto pr-8">-</p>
                         <p class="text-success m-0 roboto pr-8">-%</p>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- <div class="row c-p">
             <div class="col-md-6 pr-0">
@@ -131,14 +223,20 @@
                             <h3 class="m-0 roboto wrapper-20 pr-0 f-500 text-black">Portfolio Summary</h3>
                         </div>
                         <div class="col-md-6 pl-0">
-                            <button [matMenuTriggerFor]="menu" class="right text-right b-a mt-12 br-0" mat-button>As on
-                                03/10/2019 <i class="material-icons text-custom">
+                            <button (click)="dobAsPerRecord.open()" class="right text-right b-a mt-12 br-0"
+                                mat-button>As on
+                                {{asOnDate | date:'dd/MM/yyyy'}} <i class="material-icons text-custom">
                                     keyboard_arrow_down
                                 </i></button>
-                            <mat-menu #menu="matMenu">
-                                <button mat-menu-item>Item 1</button>
-                                <button mat-menu-item>Item 2</button>
-                            </mat-menu>
+                            <div class="form-group mb-0">
+                                <mat-form-field class="v-h">
+                                    <input (dateChange)="dateChange($event)" [matDatepicker]="dobAsPerRecord"
+                                        class="form-control br-0 b-0" matInput readonly>
+                                    <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #dobAsPerRecord></mat-datepicker>
+                                </mat-form-field>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
