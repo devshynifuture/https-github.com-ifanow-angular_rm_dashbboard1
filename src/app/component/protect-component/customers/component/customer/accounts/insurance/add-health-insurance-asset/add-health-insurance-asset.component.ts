@@ -29,6 +29,8 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
   healthInsuranceForm: any;
   displayList: any;
   nomineesList: any[] = [];
+  policyList: any;
+  addOns: any;
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
@@ -36,7 +38,8 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.displayList = data.displayList;
+    this.policyList = data.displayList.policyTypes;
+    this.addOns = data.displayList.addOns;
     this.getdataForm(data)
     this.inputData = data;
     // this.setInsuranceDataFormField(data);
@@ -86,7 +89,9 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
   }
   
   /***owner***/ 
-  
+  get insuredMembersForm() {
+    return this.healthInsuranceForm.get('InsuredMemberForm') as FormArray;
+  }
   get getCoOwner() {
     return this.healthInsuranceForm.get('getCoOwnerName') as FormArray;
   }
@@ -230,6 +235,10 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         sharePercentage: [0],
         familyMemberId: [0],
         id: [0]
+      })]),
+      InsuredMemberForm: this.fb.array([this.fb.group({
+        insuredMembers: [''],
+        sumAssured: null
       })])
     })
     // ==============owner-nominee Data ========================\\
@@ -265,6 +274,16 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
   ngOnInit() {
   }
 
+  addTransaction() {
+    this.insuredMembersForm.push(this.fb.group({
+      insuredMembers: [''],
+      sumAssured: null
+    }));
+  }
+
+  removeTransaction(item) {
+    this.insuredMembersForm.removeAt(item);
+  }
   /***owner***/
 
   openOptionField() {
