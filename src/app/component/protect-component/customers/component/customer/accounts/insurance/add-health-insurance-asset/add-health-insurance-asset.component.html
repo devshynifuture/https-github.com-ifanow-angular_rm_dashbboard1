@@ -23,7 +23,7 @@
                 *ngFor="let obj of healthInsuranceForm.controls['getCoOwnerName'].controls; let pointIndex=index"
                 [formGroupName]="pointIndex">
                 <div class="col-md-5 pr-0 text-right">
-                    <h5 class="m-0 pt-8 ">{{pointIndex != 0?'Co-o' : 'O'}}wner{{pointIndex != 0?pointIndex:''}}</h5>
+                    <h5 class="m-0 pt-8 ">Name of policy holder</h5>
                 </div>
                 <div class="pr-0"
                     [ngClass]="healthInsuranceForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
@@ -75,8 +75,7 @@
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
                         <mat-select matInput formControlName="PlanType" autocomplete="true" class="form-control br-0">
-                            <mat-option (click)="getProposerData(option,i)"
-                                *ngFor="let option of policyList ;index as i" [value]="option.policy_type">
+                            <mat-option *ngFor="let option of policyList ;index as i" [value]="option.policy_type">
                                 {{option.policy_type}}</mat-option>
                         </mat-select>
                         <mat-error>This field is required
@@ -325,7 +324,7 @@
                     <div class="form-group mb-0">
                         <label class="f-14 roboto">Rupees</label>
                         <mat-form-field>
-                            <mat-select matInput formControlName="bonusType" #frequency autocomplete="off"
+                            <mat-select matInput formControlName="bonusType" #bonusType autocomplete="off"
                                 class="form-control br-0">
                                 <mat-option value='1'>Rupees</mat-option>
                                 <mat-option value='2'>Percentage</mat-option>
@@ -344,8 +343,7 @@
                     <div class="form-group mb-0 iconRupess">
                             <mat-form-field>
                                     <mat-select matInput formControlName="PlanType" autocomplete="true" class="form-control br-0">
-                                        <mat-option (click)="getProposerData(option,i)"
-                                            *ngFor="let option of addOns ;index as i" [value]="option.add_on">
+                                        <mat-option *ngFor="let option of addOns ;index as i" [value]="option.add_on">
                                             {{option.add_on}}</mat-option>
                                     </mat-select>
                                     <mat-error>This field is required
@@ -401,8 +399,7 @@
                 </div>
             </div>
             <div formArrayName="getNomineeName">
-                <div class="row pt-36"
-                    *ngFor="let obj of healthInsuranceForm.controls['getNomineeName'].controls; let pointIndex=index"
+                <div class="row pt-36" *ngFor="let obj of healthInsuranceForm.controls['getNomineeName'].controls; let pointIndex=index"
                     [formGroupName]="pointIndex">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
@@ -412,8 +409,7 @@
                             <mat-form-field>
                                 <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
                                     (selectionChange)="disabledMember($event.value,'nominee')"
-                                    (valueChange1)='lisNominee($event)' class="form-control br-0"
-                                    [callMethod]='callMethod'>
+                                    (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                                     <mat-option value='' disabled>Select family members</mat-option>
                                     <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
                                         [value]="f.userName">
@@ -441,14 +437,14 @@
                         </div>
                     </div>
                     <div class="col-md-2 p-0 d-flex align-items-center">
-                        <i *ngIf="disabledMember.value.getNomineeName.length < 3"
+                        <i *ngIf="healthInsuranceForm.value.getNomineeName.length < 3"
                             class="material-icons text-primitive f-20 c-p float-left"
                             (click)="addNewNominee(undefined)">add</i>
-                        <i *ngIf="disabledMember.value.getNomineeName.length > 1"
+                        <i *ngIf="healthInsuranceForm.value.getNomineeName.length > 1"
                             class="material-icons text-primitive f-20 c-p pl-10"
                             (click)="removeNewNominee(pointIndex)">remove</i>
                     </div>
-
+    
                 </div>
             </div>
             <div class="row pt-40">

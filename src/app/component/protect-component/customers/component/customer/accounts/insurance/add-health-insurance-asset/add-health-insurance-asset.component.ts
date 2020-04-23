@@ -12,6 +12,8 @@ import { MatInput } from '@angular/material';
   styleUrls: ['./add-health-insurance-asset.component.scss']
 })
 export class AddHealthInsuranceAssetComponent implements OnInit {
+  maxDate = new Date();
+
   inputData: any;
   ownerName: any;
   nomineesListFM: any = [];
@@ -63,6 +65,11 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     this.ownerData.Fmember = value;
     this.nomineesListFM = Object.assign([], value);
   }
+  getFamilyMember(data, index) {
+    this.familyMemberLifeData = data;
+    console.log('family Member', this.FamilyMember);
+  }
+
   
   disabledMember(value, type) {
     this.callMethod = {
@@ -305,6 +312,9 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     this.ProposerData = Object.assign([], data.familyMembersList);
     console.log('Proposer data', this.ProposerData);
   }
+  preventDefault(e) {
+    e.preventDefault();
+  }
   saveHealthInsurance() {
     if (this.healthInsuranceForm.invalid) {
       this.inputs.find(input => !input.ngControl.valid).focus();
@@ -318,30 +328,18 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         "policyHolderId":17,
         "policyStartDate":this.healthInsuranceForm.get('policyStartDate').value,
         "policyExpiryDate":this.healthInsuranceForm.get('policyExpiryDate').value,
-        "cumulativeBonus":500.0,
-        "cumulativeBonusRupeesOrPercent":2,
-        "sumInsuredIdv":500.0,
-        "policyTypeId":5,
-        "geographyId":3,
-        "deductibleSumInsured":500.0,
-        "exclusion":"basiagkbduif",
-        "premiumAmount":800.0,
-        "copay":80.0,
-        "copayRupeesOrPercent":1,
-        "vehicleTypeId":1,
-        "vehicleRegNo":"bdsf",
-        "vehicleRegistrationDate":"2020-01-02",
-        "vehicleModel":"ford",
-        "engineNo":"11",
-        "chasisNo":"3646",
-        "fuelTypeId":1,
-        "hypothetication":"lcsiadfi",
-        "specialDiscount":80.0,
-        "noClaimBonus":80.0,
-        "tpaName":"pqrts",
-        "advisorName":"Shilpa",
-        "serviceBranch":"Goregaon",
-        "linkedBankAccount":"kbksad",
+        "cumulativeBonus":this.healthInsuranceForm.get('cumulativeBonus').value,
+        "cumulativeBonusRupeesOrPercent":this.healthInsuranceForm.get('bonusType').value,
+        "sumInsuredIdv":this.healthInsuranceForm.get('sumAssured').value,
+        "policyTypeId":this.healthInsuranceForm.get('PlanType').value,
+        "deductibleSumInsured":this.healthInsuranceForm.get('deductibleAmt').value,
+        "exclusion":this.healthInsuranceForm.get('exclusion').value,
+        "copay":this.healthInsuranceForm.get('copay').value,
+        "copayRupeesOrPercent":this.healthInsuranceForm.get('copayType').value,
+        "tpaName":this.healthInsuranceForm.get('tpaName').value,
+        "advisorName":this.healthInsuranceForm.get('advisorName').value,
+        "serviceBranch":this.healthInsuranceForm.get('policyExpiryDate').value,
+        "linkedBankAccount":this.healthInsuranceForm.get('policyExpiryDate').value,
         "insuranceSubTypeId":6,
         "addOns":[{
            "addOnId":13,

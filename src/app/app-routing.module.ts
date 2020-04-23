@@ -52,7 +52,8 @@ const routes: Routes = [
   },
   {
     path: 'support',
-    loadChildren: () => import('./component/protect-component/SupportComponent/support.module').then(m => m.SupportModule)
+    loadChildren: () => import('./component/protect-component/SupportComponent/support.module').then(m => m.SupportModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'subscription-upper',

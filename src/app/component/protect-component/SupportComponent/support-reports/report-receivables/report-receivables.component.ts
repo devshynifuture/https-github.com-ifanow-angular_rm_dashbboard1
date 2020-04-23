@@ -131,6 +131,6 @@ export interface ReportReceivableI {
 }
 
 const ELEMENT_DATA: ReportReceivableI[] = [
-  { adminName: 'Rahul Jain', email: 'rahuiljain@gmail.com', mobile: '+91789483433', invoice: 'INV-00006989424', sentDate: '01/01/2020', dueDate: '02/01/2020', dueSince: 'last 10 days', amount: '2834', balance: '324' },
-  { adminName: 'Rahul Jain', email: 'rahuiljain@gmail.com', mobile: '+91789483433', invoice: 'INV-00006989424', sentDate: '01/01/2020', dueDate: '02/01/2020', dueSince: 'last 10 days', amount: '2834', balance: '324' }
+  { adminName: '', email: '', mobile: '', invoice: 'INV-00006989424', sentDate: '01/01/2020', dueDate: '02/01/2020', dueSince: 'last 10 days', amount: '2834', balance: '324' },
+  { adminName: '', email: '', mobile: '', invoice: 'INV-00006989424', sentDate: '01/01/2020', dueDate: '02/01/2020', dueSince: 'last 10 days', amount: '2834', balance: '324' }
 ]

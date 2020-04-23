@@ -4,15 +4,16 @@
 
             <div class="wrapper-16 bb-2 c-p">
                 <p class="m-0 text-black roboto">NET WORTH</p>
-                <h1 class="f-35 m-0 text-black pt-8">₹1,25,35,470</h1>
+                <h1 class="f-35 m-0 text-black pt-8">₹
+                    <span appFormatNumber>{{totalAssetsWithoutLiability-liabilityTotal}}</span></h1>
 
                 <div class="row pt-20">
                     <div class="col-md-6 p-0">
                         <p class="text-black f-12 m-0 roboto">ASSETS</p>
                     </div>
                     <div class="col-md-6 p-0">
-                        <p *ngIf="totalAssets" class="text-black f-12 m-0 text-right roboto">
-                            <span appFormatNumber>₹{{totalAssets}}</span>
+                        <p class="text-black f-12 m-0 text-right roboto">
+                            ₹<span appFormatNumber>{{totalAssetsWithoutLiability+liabilityTotal}}</span>
                         </p>
                     </div>
                     <div class="col-md-12 p-0 pt-4">
@@ -24,7 +25,8 @@
                         <p class="text-black f-12 m-0 roboto">LIABILITIES</p>
                     </div>
                     <div class="col-md-6 p-0">
-                        <p class="text-black f-12 m-0 text-right roboto">₹53,21,780</p>
+                        <p class="text-black f-12 m-0 text-right roboto">₹<span
+                                appFormatNumber>{{liabilityTotal}}</span></p>
                     </div>
                     <div class="col-md-12 p-0 pt-4">
                         <mat-progress-bar class="light-red" mode="determinate" value="50"></mat-progress-bar>
@@ -37,21 +39,21 @@
                         <a [queryParams]="{ tab: 'tab1'}" class="text-black m-0 roboto"
                             routerLink="/customer/detail/account/assets">
                             <div class="bar height24">
-                                <span *ngIf="summaryTotalValue">{{summaryTotalValue[3].assetTypeString}}</span>
+                                <span *ngIf="summaryMap">{{summaryMap[5].assetTypeString}}</span>
                             </div>
                         </a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
                         <div class="bar height24">
-                            <p class="text-black m-0 roboto">
-                                <span *ngIf="summaryTotalValue[3].currentValue!='-'">₹</span>
+                            <p *ngIf="summaryMap" class="text-black m-0 roboto">
+                                <span *ngIf="summaryMap[5].currentValue!=0">₹</span>
                                 <span appFormatNumber
-                                    *ngIf="summaryTotalValue">{{summaryTotalValue[3].currentValue}}</span>
+                                    *ngIf="summaryMap">{{summaryMap[5].currentValue==0?'-':summaryMap[5].currentValue}}</span>
                             </p>
-                            <p [ngClass]="{'text-success': summaryTotalValue[3].positiveFlag,'text-danger':summaryTotalValue[3].positiveFlag==false}"
-                                class="m-0 roboto">
-                                <span *ngIf="summaryTotalValue" appFormatNumber>{{summaryTotalValue[3].percentage}}<span
-                                        *ngIf="summaryTotalValue[3].currentValue!='-'">%</span></span>
+                            <p class="m-0 roboto">
+                                <span *ngIf="summaryMap"
+                                    appFormatNumber>{{summaryMap[5].percentage==0?'-':summaryMap[5].percentage}}<span
+                                        *ngIf="summaryMap[5].currentValue!=0">%</span></span>
                             </p>
                         </div>
                     </div>
@@ -61,21 +63,22 @@
                         <a [queryParams]="{ tab: 'tab2'}" class="text-black m-0 roboto"
                             routerLink="/customer/detail/account/assets">
                             <div class="bar height24">
-                                <span *ngIf="summaryTotalValue">{{summaryTotalValue[2].assetTypeString}}</span>
+                                <span *ngIf="summaryMap">{{summaryMap[6].assetTypeString}}</span>
                             </div>
                         </a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
                         <div class="bar height24">
                             <p class="text-black m-0  roboto">
-                                <span *ngIf="summaryTotalValue[2].currentValue!='-'">₹</span>
-                                <span *ngIf="summaryTotalValue" appFormatNumber>{{summaryTotalValue[2].currentValue}}
+                                <span *ngIf="summaryMap[6].currentValue!=0">₹</span>
+                                <span *ngIf="summaryMap"
+                                    appFormatNumber>{{summaryMap[6].currentValue==0?'-':summaryMap[2].currentValue}}
                                 </span>
                             </p>
-                            <p [ngClass]="{'text-success': summaryTotalValue[2].positiveFlag,'text-danger':summaryTotalValue[2].positiveFlag==false}"
-                                class="m-0 roboto">
-                                <span *ngIf="summaryTotalValue">{{summaryTotalValue[2].percentage}}<span
-                                        *ngIf="summaryTotalValue[2].currentValue!='-'">%</span></span>
+                            <p class="m-0 roboto">
+                                <span
+                                    *ngIf="summaryMap">{{summaryMap[6].percentage==0?'-':summaryMap[6].percentage}}<span
+                                        *ngIf="summaryMap[6].currentValue!=0">%</span></span>
                             </p>
                         </div>
                     </div>
@@ -85,21 +88,21 @@
                         <a [queryParams]="{ tab: 'tab3'}" class="text-black m-0 roboto"
                             routerLink="/customer/detail/account/assets">
                             <div class="bar height24">
-                                <span *ngIf="summaryTotalValue">{{summaryTotalValue[0].assetTypeString}}</span>
+                                <span *ngIf="summaryMap">{{summaryMap[7].assetTypeString}}</span>
                             </div>
                         </a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
                         <div class="bar height24">
                             <p class="text-black m-0 roboto">
-                                <span *ngIf="summaryTotalValue[0].currentValue!='-'">₹</span>
-                                <span *ngIf="summaryTotalValue"
-                                    appFormatNumber>{{summaryTotalValue[0].currentValue}}</span>
+                                <span *ngIf="summaryMap[7].currentValue!=0">₹</span>
+                                <span *ngIf="summaryMap"
+                                    appFormatNumber>{{summaryMap[7].currentValue==0?'-':summaryMap[7].currentValue}}</span>
                             </p>
-                            <p [ngClass]="{'text-success': summaryTotalValue[0].positiveFlag,'text-danger':summaryTotalValue[0].positiveFlag==false}"
-                                class=" m-0 roboto">
-                                <span *ngIf="summaryTotalValue">{{summaryTotalValue[0].percentage}}<span
-                                        *ngIf="summaryTotalValue[2].currentValue!='-'">%</span></span>
+                            <p class=" m-0 roboto">
+                                <span
+                                    *ngIf="summaryMap">{{summaryMap[7].percentage==0?'-':summaryMap[7].percentage}}<span
+                                        *ngIf="summaryMap[7].currentValue!=0">%</span></span>
                             </p>
                         </div>
                     </div>
@@ -109,20 +112,20 @@
                         <p class="text-black m-0 roboto"></p>
                         <a [queryParams]="{ tab: 'tab4'}" class="text-black m-0 roboto"
                             routerLink="/customer/detail/account/assets">
-                            <span *ngIf="summaryTotalValue">{{summaryTotalValue[1].assetTypeString}}</span>
+                            <span *ngIf="summaryMap">{{summaryMap[8].assetTypeString}}</span>
                         </a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
                         <div class="bar height24">
                             <p class="text-black m-0 roboto">
-                                <span *ngIf="summaryTotalValue[1].currentValue!='-'">₹</span>
+                                <span *ngIf="summaryMap[8].currentValue!=0">₹</span>
                                 <span appFormatNumber
-                                    *ngIf="summaryTotalValue">{{summaryTotalValue[1].currentValue}}</span>
+                                    *ngIf="summaryMap">{{summaryMap[8].currentValue==0?'-':summaryMap[8].currentValue}}</span>
                             </p>
-                            <p [ngClass]="{'text-success': summaryTotalValue[1].positiveFlag,'text-danger':summaryTotalValue[1].positiveFlag==false}"
-                                class=" m-0 roboto">
-                                <span *ngIf="summaryTotalValue">{{summaryTotalValue[1].percentage}}<span
-                                        *ngIf="summaryTotalValue[1].currentValue!='-'">%</span></span>
+                            <p class=" m-0 roboto">
+                                <span
+                                    *ngIf="summaryMap">{{summaryMap[8].percentage==0?'-':summaryMap[8].percentage}}<span
+                                        *ngIf="summaryMap[8].currentValue!=0">%</span></span>
                             </p>
                         </div>
                     </div>
@@ -131,20 +134,20 @@
                     <div class="col-md-6 pr-0">
                         <a [queryParams]="{ tab: 'tab5'}" class="text-black m-0 roboto"
                             routerLink="/customer/detail/account/assets">
-                            <span *ngIf="summaryTotalValue">{{summaryTotalValue[4].assetTypeString}}</span>
+                            <span *ngIf="summaryMap">{{summaryMap[9].assetTypeString}}</span>
                         </a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
                         <div class="bar height24">
                             <p class="text-black m-0 f-500 roboto pr-8">
-                                <span *ngIf="summaryTotalValue[4].currentValue!='-'">₹</span>
-                                <span appFormatNumber *ngIf="summaryTotalValue">
-                                    {{summaryTotalValue[4].currentValue}}</span>
+                                <span *ngIf="summaryMap[9].currentValue!=0">₹</span>
+                                <span appFormatNumber *ngIf="summaryMap">
+                                    {{summaryMap[9].currentValue==0?'-':summaryMap[9].currentValue}}</span>
                             </p>
-                            <p [ngClass]="{'text-success': summaryTotalValue[4].positiveFlag,'text-danger':summaryTotalValue[4].positiveFlag==false}"
-                                class=" m-0 roboto pr-8">
-                                <span *ngIf="summaryTotalValue">{{summaryTotalValue[4].percentage}}<span
-                                        *ngIf="summaryTotalValue[4].currentValue!='-'">%</span></span>
+                            <p class=" m-0 roboto pr-8">
+                                <span
+                                    *ngIf="summaryMap">{{summaryMap[9].percentage==0?'-':summaryMap[9].percentage}}<span
+                                        *ngIf="summaryMap[9].currentValue!=0">%</span></span>
                             </p>
                         </div>
                     </div>
@@ -153,20 +156,20 @@
                     <div class="col-md-6 pr-0">
                         <a [queryParams]="{ tab: 'tab6'}" class="text-black m-0 roboto"
                             routerLink="/customer/detail/account/assets">
-                            <span *ngIf="summaryTotalValue">{{summaryTotalValue[5].assetTypeString}}</span>
+                            <span *ngIf="summaryMap">{{summaryMap[10].assetTypeString}}</span>
                         </a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
                         <div class="bar height24">
                             <p class="text-black m-0 roboto">
-                                <span *ngIf="summaryTotalValue[5].currentValue!='-'">₹</span>
+                                <span *ngIf="summaryMap[10].currentValue!=0">₹</span>
                                 <span appFormatNumber
-                                    *ngIf="summaryTotalValue">{{summaryTotalValue[5].currentValue}}</span>
+                                    *ngIf="summaryMap">{{summaryMap[10].currentValue==0?'-':summaryMap[10].currentValue}}</span>
                             </p>
-                            <p [ngClass]="{'text-success': summaryTotalValue[5].positiveFlag,'text-danger':summaryTotalValue[5].positiveFlag==false}"
-                                class=" m-0 roboto">
-                                <span *ngIf="summaryTotalValue">{{summaryTotalValue[5].percentage}}<span
-                                        *ngIf="summaryTotalValue[5].currentValue!='-'">%</span></span>
+                            <p class=" m-0 roboto">
+                                <span
+                                    *ngIf="summaryMap">{{summaryMap[10].percentage==0?'-':summaryMap[10].percentage}}<span
+                                        *ngIf="summaryMap[10].currentValue!=0">%</span></span>
                             </p>
                         </div>
                     </div>
@@ -175,20 +178,20 @@
                     <div class="col-md-6 pr-0">
                         <a [queryParams]="{ tab: 'tab7'}" class="text-black m-0 roboto"
                             routerLink="/customer/detail/account/assets">
-                            <span *ngIf="summaryTotalValue">{{summaryTotalValue[6].assetTypeString}}</span>
+                            <span *ngIf="summaryMap">{{summaryMap[31].assetTypeString}}</span>
                         </a>
                     </div>
                     <div class="col-md-6 pl-0 text-right">
                         <div class="bar height24">
                             <p class="text-black m-0 roboto">
-                                <span *ngIf="summaryTotalValue[6].currentValue!='-'">₹</span>
+                                <span *ngIf="summaryMap[31].currentValue!=0">₹</span>
                                 <span appFormatNumber
-                                    *ngIf="summaryTotalValue">{{summaryTotalValue[6].currentValue}}</span>
+                                    *ngIf="summaryMap">{{summaryMap[31].currentValue==0?'-':summaryMap[31].currentValue}}</span>
                             </p>
-                            <p [ngClass]="{'text-success': summaryTotalValue[6].positiveFlag,'text-danger':summaryTotalValue[6].positiveFlag==false}"
-                                class=" m-0 roboto">
-                                <span *ngIf="summaryTotalValue">{{summaryTotalValue[6].percentage}}<span
-                                        *ngIf="summaryTotalValue[6].currentValue!='-'">%</span></span>
+                            <p class=" m-0 roboto">
+                                <span
+                                    *ngIf="summaryMap">{{summaryMap[31].percentage==0?'-':summaryMap[31].percentage}}<span
+                                        *ngIf="summaryMap[6].currentValue!=0">%</span></span>
                             </p>
                         </div>
                     </div>
@@ -247,18 +250,23 @@
                                         <h4 class="m-0 wrapper-20">Net worth</h4>
                                     </div>
                                     <div class="col-md-6 p-0">
-                                        <h2 class="m-0 text-primary text-right f-300 wrapper-20">₹1,25,35,470</h2>
+                                        <h2 class="m-0 text-primary text-right f-300 wrapper-20">
+                                            ₹<span appFormatNumber>{{totalAssetsWithoutLiability-liabilityTotal}}</span>
+                                        </h2>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 p-0">
                                         <div class="highcharts-figure" id="container"></div>
                                         <!-- <img src="assets/images/svg/summary.svg" class="w-100"> -->
-                                        <ul class="pl-20 pb-20">
+                                        <ul *ngIf="nightyDayData && oneDay" class="pl-20 pb-20">
                                             <li class="pr-4 text-black">90-days</li>
-                                            <li class="text-success pr-24">₹7,25,872</li>
+                                            <li [ngClass]="{'text-success': nightyDayData.flag,'text-danger':nightyDayData.flag==false}"
+                                                class="text-success pr-24">₹<span
+                                                    appFormatNumber>{{nightyDayData.value}}</span></li>
                                             <li class="pr-4 text-black">1-days</li>
-                                            <li class="text-danger">₹23,250</li>
+                                            <li [ngClass]="{'text-success': oneDay.flag,'text-danger':oneDay.flag==false}"
+                                                class="text-danger">₹<span appFormatNumber>{{oneDay.value}}</span></li>
                                         </ul>
                                     </div>
                                 </div>
