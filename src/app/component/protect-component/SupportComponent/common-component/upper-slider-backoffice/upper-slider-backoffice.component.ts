@@ -352,13 +352,25 @@ export class UpperSliderBackofficeComponent implements OnInit {
           });
 
           res.map(item => {
-            item.fileOrderDateTime && item.fildeOrderDateTime !== '' ? item.fileOrderDateTime : '-----';
-            item.referenceId && item.referenceId !== '' ? item.referenceId : '-----';
-            item.transactionAddedInFiles && item.transactionAddedInFiles !== '' ? item.transactionAddedInFiles : '-----';
-            item.transactionAdded && item.transactionAdded !== '' ? item.transactionAdded : '-----';
-            item.fileName && item.fileName !== '' ? item.fileName : '-----';
+            if (!item.hasOwnProperty('fileOrderDateTime')) {
+              item.fileOrderDateTime = '-'
+            }
+            if (!item.hasOwnProperty('referenceId')) {
+              item.referenceId = '-'
+            }
+            if (!item.hasOwnProperty('transactionAddedInFiles')) {
+              item.transactionAddedInFiles = '-'
+            }
+            if (!item.hasOwnProperty('transactionAdded')) {
+              item.transactionAdded = '-'
+            }
+            if (!item.hasOwnProperty('fileName')) {
+              item.fileName = '-'
+            }
             item.fileUrl && item.fileUrl !== '' ? item.fileUrl : null;
           })
+
+          console.log("deleted reorder values::::", res);
           this.dataSource3.data = res;
         } else {
           this.dataSource3.data = null;

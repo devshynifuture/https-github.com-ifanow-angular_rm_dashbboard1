@@ -124,24 +124,24 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
 
 
   getOrgProfiles() {
-    this.utilService.loader(1)
+    // this.utilService.loader(1)
     let obj = {
       advisorId: this.advisorId,
     }
     this.settingsService.getOrgProfile(obj).subscribe(
       data => {
         AuthService.setAppPic(data.logoUrl);
-        this.utilService.loader(-1);
+        // this.utilService.loader(-1);
       },
       err => {
         this.eventService.openSnackBar(err, "Dismiss");
-        this.utilService.loader(-1);
+        // this.utilService.loader(-1);
       }
     );
   }
 
   getPersonalProfiles() {
-    this.utilService.loader(1)
+    // this.utilService.loader(1)
     let obj = {
       id: this.advisorId
     }
@@ -151,7 +151,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
       },
       err => {
         this.eventService.openSnackBar(err, "Dismiss");
-        this.utilService.loader(-1);
+        // this.utilService.loader(-1);
       }
     );
   }

@@ -497,7 +497,7 @@ export class CustomerService {
   deleteFolderPermnant(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_PERMANANT_FOLDER, data);
   }
-  recovery(data){
+  recovery(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.RECOVERY, data);
   }
   starFile(data) {
@@ -706,6 +706,10 @@ export class CustomerService {
   }
   getBankList(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_BANK_LIST, data, 1)
+  }
+  calculateTotalValues(data) {
+    let httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('targetDate', data.targetDate);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.CALCULATE_TOTAL_VALUES, httpParams);
   }
 }
 
