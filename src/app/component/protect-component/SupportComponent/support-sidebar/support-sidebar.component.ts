@@ -34,6 +34,8 @@ export class SupportSidebarComponent extends DialogContainerComponent implements
     super(eventService, subinject, dynamicComponentService);
   }
   logoText = 'Your Logo here';
+  isAdmin = AuthService.getAdminStatus();
+
   ngOnInit() {
     this.userInfo = AuthService.getUserInfo();
     this.changeName = "Dashboard";

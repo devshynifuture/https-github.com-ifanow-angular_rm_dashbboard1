@@ -35,9 +35,9 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
 })
 export class SupportLoginComponent implements OnInit {
 
-  barButtonOptions: MatProgressButtonOptions = {
+  barButtonOptions1: MatProgressButtonOptions = {
     active: false,
-    text: 'Login to your account',
+    text: 'Login to Support Account',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -117,7 +117,7 @@ export class SupportLoginComponent implements OnInit {
     // }
     this.btnProgressData = 'state1';
   }
-  
+
   private createForm() {
     this.loginForm = this.formBuilder.group({
       name: ['', [Validators.required]],
@@ -135,7 +135,7 @@ export class SupportLoginComponent implements OnInit {
       this.passEvent = event.keyCode;
     }
   }
-  
+
   onSubmit() {
     if (this.loginForm.valid) {
       const loginData = {
@@ -163,11 +163,11 @@ export class SupportLoginComponent implements OnInit {
       //       visibility: this.errorMsg ? 'visible' : 'hidden',
       //       opacity: this.errorMsg ? '1' : '0',
       //     };
-      //     this.barButtonOptions.active = false;
+      //     this.barButtonOptions1.active = false;
       //   }
       // }, err => {
       //   this.isLoading = false;
-      //   this.barButtonOptions.active = false;
+      //   this.barButtonOptions1.active = false;
       //   console.log('error on login: ', err.message);
       //   this.eventService.openSnackBar(err, 'Dismiss');
       // });
@@ -195,12 +195,12 @@ export class SupportLoginComponent implements OnInit {
                 visibility: this.errorMsg ? 'visible' : 'hidden',
                 opacity: this.errorMsg ? '1' : '0',
               };
-              this.barButtonOptions.active = false;
+              this.barButtonOptions1.active = false;
             }
           },
           err => {
             this.isLoading = false;
-            this.barButtonOptions.active = false;
+            this.barButtonOptions1.active = false;
             console.log('error on login: ', err);
             this.eventService.openSnackBar(err, 'Dismiss');
           }
@@ -216,13 +216,13 @@ export class SupportLoginComponent implements OnInit {
         visibility: this.errorMsg ? 'visible' : 'hidden',
         opacity: this.errorMsg ? '1' : '0',
       };
-      this.barButtonOptions.active = true;
-      this.barButtonOptions.value = 20;
+      this.barButtonOptions1.active = true;
+      this.barButtonOptions1.value = 20;
       this.onSubmit();
     } else {
       this.loginForm.get('name').markAsTouched();
       this.loginForm.get('password').markAsTouched();
-      this.barButtonOptions.active = false;
+      this.barButtonOptions1.active = false;
     }
   }
 
