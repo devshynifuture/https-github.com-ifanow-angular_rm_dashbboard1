@@ -43,10 +43,9 @@ export class AddPpfComponent implements OnInit {
   ownerData: any;
   ppfSchemeForm;
   transactionForm
-  optionalppfSchemeForm;
   transactionList = [];
   addTransactionList: number;
-  transactionData: any[] = [];
+  transactionData: any= [];
   editApi: any;
   clientId: number;
   nexNomineePer = 0;
@@ -186,13 +185,13 @@ removeCoOwner(item) {
 /***nominee***/ 
 
 get getNominee() {
-  return this.optionalppfSchemeForm.get('getNomineeName') as FormArray;
+  return this.ppfSchemeForm.get('getNomineeName') as FormArray;
 }
 
 removeNewNominee(item) {
   this.disabledMember(null, null);
   this.getNominee.removeAt(item);
-  if (this.optionalppfSchemeForm.value.getNomineeName.length == 1) {
+  if (this.ppfSchemeForm.value.getNomineeName.length == 1) {
     this.getNominee.controls['0'].get('sharePercentage').setValue('100');
   } else {
     let share = 100/this.getNominee.value.length;
@@ -269,19 +268,18 @@ addNewNominee(data) {
       commencementDate: [new Date(data.commencementDate), [Validators.required]],
       futureContribution: [data.futureApproxcontribution, [Validators.required]],
       frquency: [(data.frequency == undefined) ? "1" : String(data.frequency), [Validators.required]],
-    })
-    this.optionalppfSchemeForm = this.fb.group({
-      description: [data.description, [Validators.required]],
-      bankName: [data.bankName, [Validators.required]],
-      linkedBankAccount: [data.linkedBankAccount, [Validators.required]],
+      description: [data.description],
+      bankName: [data.bankName],
+      linkedBankAccount: [data.linkedBankAccount],
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
         sharePercentage: [0],
         familyMemberId: [0],
         id:[0]
       })]),
-      nominees: this.nomineesList
+      id: [data.id]
     })
+   
       // ==============owner-nominee Data ========================\\
   /***owner***/ 
   if(this.ppfSchemeForm.value.getCoOwnerName.length == 1){
@@ -313,36 +311,66 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ppfSchemeForm}
     this.familyMemberId = data.familyMemberId;
   }
   get nominee() {
-    return this.optionalppfSchemeForm.get('npsNomineesList') as FormArray;
+    return this.ppfSchemeForm.get('npsNomineesList') as FormArray;
   }
   check() {
     console.log(this.ppfSchemeForm)
   }
-
+removedList:any=[];
   getFormData(data) {
     console.log(data)
-    this.commencementDate = this.ppfSchemeForm.controls.commencementDate.value;
-    this.transactionData = data.controls
-    return;
+    if(data.removed){
+      this.transactionData = data.data.controls;
+      this.removedList=data.removed;
+    }else{
+      this.commencementDate = this.ppfSchemeForm.controls.commencementDate.value;
+      this.transactionData = data.controls
+    }
   }
   addPPF() {
     let transactionFlag, finalTransctList = []
-    if (this.transactionData && this.transactionData.length > 0) {
+    this.removedList.forEach(Fg => {
+      if (Fg.value) {
+        let obj = {
+          "transactionDate":Fg.value.date,
+          "amount": Fg.value.amount,
+          "ppfTransactionType":Fg.value.type,
+          "isActive":Fg.value.isActive
+        }
+        finalTransctList.push(obj);
+      }
+    });
+  //   if (this.removedList.value) {
+  //   // this.removedList.forEach(element => {
+  //     // if (element.valid) {
+  //       let obj = {
+  //         "transactionDate":this.removedList.value.date,
+  //         "amount": this.removedList.value.amount,
+  //         "ppfTransactionType":this.removedList.value.type,
+  //         "isActive":this.removedList.value.isActive
+  //       }
+  //       finalTransctList.push(obj);
+  //     // }
+     
+  //   // });
+  // }
+    if (this.transactionData.length > 0) {
       this.transactionData.forEach(element => {
         if (element.valid) {
           let obj = {
-            "date": element.controls.date.value._d,
+            "transactionDate":element.controls.date.value._d?element.controls.date.value._d:element.controls.date.value,
             "amount": element.controls.amount.value,
-            "paymentType": element.controls.type.value
+            "ppfTransactionType": element.controls.type.value,
+            "isActive":element.value.isActive == 0?element.value.isActive:1
           }
-          finalTransctList.push(obj)
+          finalTransctList.push(obj);
         }
         else {
           transactionFlag = false;
         }
       });
     }
-    this.nominees = []
+    // this.nominees = []
     if (this.nomineesList) {
       this.nomineesList.forEach(element => {
         let obj = {
@@ -373,17 +401,20 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ppfSchemeForm}
         'ownerList': this.ppfSchemeForm.value.getCoOwnerName,
         // "ownerName": (this.ownerName == undefined) ? this.ppfSchemeForm.get('ownerName').value : this.ownerName.userName,
         "familyMemberId": this.familyMemberId,
-        "accountBalance": this.ppfSchemeForm.get('accountBalance').value,
+        "accountBalance":parseInt(this.ppfSchemeForm.get('accountBalance').value),
         "balanceAsOn": this.ppfSchemeForm.get('balanceAsOn').value,
         "commencementDate": this.ppfSchemeForm.get('commencementDate').value,
-        "description": this.optionalppfSchemeForm.get('description').value,
-        "bankName": this.optionalppfSchemeForm.get('bankName').value,
-        "linkedBankAccount": this.optionalppfSchemeForm.get('linkedBankAccount').value,
-        "nominees": this.nominees,
+        "description": this.ppfSchemeForm.get('description').value,
+        "bankName": this.ppfSchemeForm.get('bankName').value,
+        "linkedBankAccount": this.ppfSchemeForm.get('linkedBankAccount').value,
         "frequency": this.ppfSchemeForm.get('frquency').value,
-        "futureApproxcontribution": this.ppfSchemeForm.get('futureContribution').value,
-        'nomineeList': this.optionalppfSchemeForm.value.getNomineeName,
-        "publicprovidendfundtransactionlist": finalTransctList,
+        "futureApproxcontribution": parseInt(this.ppfSchemeForm.get('futureContribution').value),
+        'nomineeList': this.ppfSchemeForm.value.getNomineeName,
+        "ppfTransactionList": finalTransctList,
+        "id":this.ppfSchemeForm.value.id,
+        "agentName":"abc",
+        "parentId":0,
+        "realOrFictitious":1
       }
       this.barButtonOptions.active = true;
       obj.nomineeList.forEach((element, index) => {
@@ -439,8 +470,8 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ppfSchemeForm}
   isFormValuesForAdviceValid() {
     
     if (this.ppfSchemeForm.valid ||
-      (this.ppfSchemeForm.valid && this.optionalppfSchemeForm.valid) ||
-      (this.ppfSchemeForm.valid && this.optionalppfSchemeForm.valid && this.nomineesList.length !== 0 && this.transactionData.length !== 0)) {
+      (this.ppfSchemeForm.valid && this.ppfSchemeForm.valid) ||
+      (this.ppfSchemeForm.valid && this.ppfSchemeForm.valid && this.nomineesList.length !== 0 && this.transactionData.length !== 0)) {
       return true;
     } else {
       return false;

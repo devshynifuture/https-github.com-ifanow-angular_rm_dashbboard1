@@ -100,20 +100,36 @@ Description description: "this is futurewise Tech" -->
                         {{(fixedDeposit.interestPayoutOption == 1)?'Cumulative':'Interest payout'}}
                     </div>
                 </div>
-                <!-- <div *ngIf="fixedDeposit.interestPayoutOption == 1" class="row bb p-8 b-l br">
+                <div *ngIf="fixedDeposit.interestPayoutOption == 1" class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Interest compounding
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{(fixedDeposit.interestCompoundingId == 2)?'Monthly':(fixedDeposit.interestCompoundingId == 3)?'Quarterly':(fixedDeposit.interestCompoundingId == 4)?'Half yearly':'Yearly'}}
                     </div>
-                </div> -->
+                </div>
                 <div *ngIf="fixedDeposit.interestPayoutOption == 2" class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Frequency of payout per year
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{(fixedDeposit.frequencyOfPayoutPerYear == 2)?'Monthly':(fixedDeposit.frequencyOfPayoutPerYear == 3)?'Quarterly':(fixedDeposit.frequencyOfPayoutPerYear == 4)?'Half yearly':'Yearly'}}
+                    </div>
+                </div>
+                <div *ngIf="fixedDeposit.interestPayoutOption == 2" class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Payout received till date
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        ₹{{fixedDeposit.currentValue?utils.formatter(fixedDeposit.payoutTillToday):'-'}}
+                    </div>
+                </div>
+                <div *ngIf="fixedDeposit.interestPayoutOption == 2"F class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Payout received till maturity
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        ₹{{fixedDeposit.currentValue?utils.formatter(fixedDeposit.payoutTillMaturity):'-'}}
                     </div>
                 </div>
                 <!-- <div class="row bb p-8 b-l br">

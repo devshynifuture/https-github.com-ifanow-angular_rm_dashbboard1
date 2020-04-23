@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../customer.service';
+import { isNumber } from 'util';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-summary',
@@ -8,16 +12,69 @@ import * as Highcharts from 'highcharts';
   styleUrls: ['./summary.component.scss']
 })
 export class SummaryComponent implements OnInit {
+  advisorId: any;
+  clientId: any;
+  summaryTotalValue: any;
+  isLoading: boolean;
+  totalAssets: number;
+  asOnDate: any;
 
-  constructor(public eventService: EventService, ) {
+  constructor(public eventService: EventService, private cusService: CustomerService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
-    this.pieChart('piechartMutualFund')
-    this.lineChart('container')
-    this.cashFlow('cashFlow')
+    this.asOnDate = new Date().getTime();
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.pieChart('piechartMutualFund');
+    this.lineChart('container');
+    this.cashFlow('cashFlow');
+    this.calculateTotalSummaryValues();
   }
-
+  calculateTotalSummaryValues() {
+    this.isLoading = true;
+    console.log(new Date(this.asOnDate).getTime())
+    let obj =
+    {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      targetDate: this.asOnDate
+    }
+    this.cusService.calculateTotalValues(obj).subscribe(
+      data => {
+        if (data && data.length > 0) {
+          this.isLoading = false;
+          console.log(data);
+          this.totalAssets = 0;
+          this.summaryTotalValue = Object.assign([], data);
+          console.log(this.summaryTotalValue)
+          this.summaryTotalValue.forEach(element => {
+            if (element.currentValue == 0) {
+              element['currentValue'] = '-';
+              element['percentage'] = '-';
+            }
+            else if (element.currentValue == element.investedAmount) {
+              element['percentage'] = 0;
+            }
+            else {
+              let topValue = element.currentValue - element.investedAmount;
+              let dividedValue = topValue / element.investedAmount;
+              element['percentage'] = (dividedValue * 100).toFixed(2);
+              element['positiveFlag'] = (Math.sign(element.percentage) == 1) ? true : false;
+            }
+            if (isNumber(element.currentValue)) {
+              this.totalAssets += element.currentValue;
+            }
+          });
+        }
+      },
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+  dateChange(event) {
+    this.asOnDate = new Date(event.value).getTime();
+    this.calculateTotalSummaryValues();
+  }
   cashFlow(id) {
     var chart1 = new Highcharts.Chart('cashFlow', {
       chart: {
