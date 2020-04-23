@@ -137,19 +137,6 @@
                                     </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group mb-0">
-                                <!-- <label class="f-16 roboto">Approx amount</label> -->
-                                <mat-form-field>
-                                    <input type="number" [inputValidator]="validatorType.NUMBER_ONLY"
-                                        appInputValueValidation [maxLength]="10" autocomplete="off"
-                                        formControlName="approxAmt" #approxAmt matInput
-                                        class="form-control br-0 rupess">
-                                    <mat-hint align="end" class="f-12">{{approxAmt.value.length}}/10
-                                    </mat-hint>
-                                </mat-form-field>
-                            </div>
-                        </div>
 
                         <div class="col-md-1 p-0 pt-8 d-flex">
                             <i class="material-icons text-primitive c-p float-left"
@@ -310,10 +297,8 @@
                         <mat-form-field>
                             <mat-select matInput formControlName="copayType" #frequency autocomplete="off"
                                 class="form-control br-0">
-                                <mat-option value='1'>Monthly</mat-option>
-                                <mat-option value='2'>Quarterly</mat-option>
-                                <mat-option value='3'>Half yearly</mat-option>
-                                <mat-option value='4'>Yearly</mat-option>
+                                <mat-option value='1'>Rupees</mat-option>
+                                <mat-option value='2'>Percentage</mat-option>
                             </mat-select>
                             <mat-error>This field is required
                             </mat-error>
@@ -342,10 +327,8 @@
                         <mat-form-field>
                             <mat-select matInput formControlName="bonusType" #frequency autocomplete="off"
                                 class="form-control br-0">
-                                <mat-option value='1'>Monthly</mat-option>
-                                <mat-option value='2'>Quarterly</mat-option>
-                                <mat-option value='3'>Half yearly</mat-option>
-                                <mat-option value='4'>Yearly</mat-option>
+                                <mat-option value='1'>Rupees</mat-option>
+                                <mat-option value='2'>Percentage</mat-option>
                             </mat-select>
                             <mat-error>This field is required
                             </mat-error>
@@ -362,8 +345,8 @@
                             <mat-form-field>
                                     <mat-select matInput formControlName="PlanType" autocomplete="true" class="form-control br-0">
                                         <mat-option (click)="getProposerData(option,i)"
-                                            *ngFor="let option of addOns ;index as i" [value]="option.userName">
-                                            {{option.policy_type}}</mat-option>
+                                            *ngFor="let option of addOns ;index as i" [value]="option.add_on">
+                                            {{option.add_on}}</mat-option>
                                     </mat-select>
                                     <mat-error>This field is required
                                     </mat-error>

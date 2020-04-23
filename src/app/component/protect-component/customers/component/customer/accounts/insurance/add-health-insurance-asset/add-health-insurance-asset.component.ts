@@ -41,6 +41,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     this.policyList = data.displayList.policyTypes;
     this.addOns = data.displayList.addOns;
     this.getdataForm(data)
+    this.getFamilyMemberList();
     this.inputData = data;
     // this.setInsuranceDataFormField(data);
     console.log(data);
@@ -289,7 +290,21 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
   openOptionField() {
     (this.addMoreFlag) ? this.addMoreFlag = false : this.addMoreFlag = true;
   }
-
+  getFamilyMemberList() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+    };
+    this.customerService.getListOfFamilyByClient(obj).subscribe(
+      data => this.getFamilyMemberListRes(data)
+    );
+  }
+  getFamilyMemberListRes(data) {
+    console.log(data);
+    this.FamilyMember = data.familyMembersList;
+    this.ProposerData = Object.assign([], data.familyMembersList);
+    console.log('Proposer data', this.ProposerData);
+  }
   saveHealthInsurance() {
     if (this.healthInsuranceForm.invalid) {
       this.inputs.find(input => !input.ngControl.valid).focus();
