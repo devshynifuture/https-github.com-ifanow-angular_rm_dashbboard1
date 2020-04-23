@@ -27,6 +27,7 @@ export class PlanAssetallocationComponent implements OnInit {
   staticAllocationData: any[] = [{}, {}, {}];
   secondValue: any;
   obj: any;
+  hasError = false;
   obj1: any;
   obj2: any;
   obj3: any;
@@ -130,7 +131,11 @@ export class PlanAssetallocationComponent implements OnInit {
     }
     this.orgSetting.getAssetAllocation(obj).subscribe(
       data => this.getAssetAllocationRes(data),
-      err => this.eventService.openSnackBar(err, "Dismiss")
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+        this.hasError = true;
+        this.isLoading = false;
+      }
     );
   }
   getAssetAllocationRes(data) {

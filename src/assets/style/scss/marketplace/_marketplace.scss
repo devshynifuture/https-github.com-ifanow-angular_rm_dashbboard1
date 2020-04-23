@@ -11,7 +11,23 @@
     min-width: 110px !important;
   }
 }
+.rounded-numbers{
+      height: 36px;
+    width: 36px;
+    text-align: center;
+    padding: 0 !important;
+        line-height: 26px !important;
+        min-width: auto !important;
+        background:#C4C4C4 !important;
+        border:0px !important;
+        border-radius:50% !important;
+        font-family: Playfair Display !important;
+        font-style: normal !important;
+        font-weight: normal !important;
+        font-size: 30px !important;
+        cursor: pointer;
 
+}
 .review-start {
   border: 1px solid #008FFF !important;
   border-radius: 4px !important;
@@ -528,6 +544,21 @@ li{
     }
     .columns:nth-child(7),.columns:nth-child(14),.columns:nth-child(21),.columns:nth-child(28){
       border-right:0px !important;
+    }
+  }
+}
+.reviews-rating{
+  .mat-progress-bar-fill::after{
+  background-color: #008FFF !important;
+}
+.mat-progress-bar-buffer{
+  background-color:#D9DEE1 !important;
+}
+}
+.request-review-table{
+  #table-low{
+    thead tr{
+      display: none !important;
     }
   }
 }

@@ -24,6 +24,7 @@ export class SettingActivityComponent implements OnInit {
   isLoading = false
   unlinkedTaskList: any[] = [{},{},{}];
   linkedTaskList: any[] = [{},{},{}];
+  hasError = false;
   constructor(private subInjectService: SubscriptionInject,
     public subscription: SubscriptionService,
     public eventService: EventService,
@@ -48,6 +49,8 @@ export class SettingActivityComponent implements OnInit {
         this.eventService.openSnackBar(err, "Dismiss");
         this.linkedTaskList = [];
         this.unlinkedTaskList = [];
+        this.hasError = true;
+        this.taskList = undefined;
       }
     );
   }

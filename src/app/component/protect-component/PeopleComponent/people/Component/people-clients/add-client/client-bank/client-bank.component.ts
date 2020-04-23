@@ -138,7 +138,9 @@ export class ClientBankComponent implements OnInit {
     let address1, address2, pincode, adderessData;
     if (data.address) {
       adderessData = data.address.trim();
-      pincode = adderessData.substring(adderessData.length - 6);
+      pincode = adderessData.match(/\d/g);
+      pincode = pincode.join("");
+      pincode = pincode.substring(pincode.length - 6, pincode.length)
       adderessData = adderessData.replace(pincode, '');
       let addressMidLength = adderessData.length / 2;
       address1 = adderessData.substring(0, addressMidLength);

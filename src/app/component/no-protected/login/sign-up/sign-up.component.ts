@@ -121,7 +121,8 @@ export class SignUpComponent implements OnInit {
             clientId: data.clientId,
             advisorId: data.advisorId,
             userData: data,
-            showSignUpBar: true
+            showSignUpBar: true,
+            showMaskedMsg: true
           };
           if (this.clientSignUp) {
             /*  const jsonData = {

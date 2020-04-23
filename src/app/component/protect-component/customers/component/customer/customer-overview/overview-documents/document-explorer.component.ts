@@ -74,6 +74,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   dialogObj: { header: string; body: string; body2: string; btnYes: string; btnNo: string; };
   url: any;
   urlData: any;
+  previewDoc = false;
 
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
     private custumService: CustomerService, public subInjectService: SubscriptionInject,
@@ -136,9 +137,6 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
       this.getInnerDoc = result.data;
-      // if (element == 'CREATE') {
-      //   this.createFolder(this.getInnerDoc);
-      // }
       if (element == 'RENAME') {
         if (this.getInnerDoc.rename.flag == 'fileName') {
           this.renameFile(this.getInnerDoc);
@@ -154,7 +152,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   }
   getSharebleLink(element, flag) {
-    if(element.fileName){
+    if (element.fileName) {
       this.downlodFiles(element, flag);
     }
   }
@@ -472,7 +470,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
   downloadFileRes(data, value) {
     this.isLoading = false
-
+    this.previewDoc = true
     console.log(data);
     if (value == 'shareLink' || value == 'share') {
       console.log('shareLink', data)
@@ -480,11 +478,11 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       this.verifyEmail(data, value)
     } else if (value == 'preview') {
       this.urlData = data
-    }
-    else if (value == 'DocPreview') {
+    } else if (value == 'DocPreview') {
+      this.urlData = ''
       const dialogRef = this.dialog.open(PreviewComponent, {
         width: '500px',
-        height:'600px',
+        height: '600px',
         data: { bank: data, flag: 'flag' }
       });
       dialogRef.afterClosed().subscribe(result => {
@@ -498,7 +496,9 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     } else {
       window.open(data);
     }
-    return this.urlData
+    setTimeout(() => {
+      this.previewDoc = false
+    }, 5000);
   }
   verifyEmail(value, flag) {
     const dialogRef = this.dialog.open(GetSharebleLinkComponent, {
@@ -509,7 +509,6 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       if (result == undefined) {
         return
       }
-      console.log('The dialog was closed');
       this.element = result;
       console.log('result -==', this.element)
       let obj = {
@@ -569,11 +568,11 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
             },
             error => this.eventService.showErrorMessage(error)
           );
-        } else if (flag == 'permenant') {
+        } else if (flag == 'permanently') {
           const obj = {
             clientId: this.clientId,
             advisorId: this.advisorId,
-            type: (data.folderName) ? 'folder' : (data.fileName) ? 'file' : '',
+            type: (data.folderName) ? 1 : (data.fileName) ? 2 : '',
             id: data.id
           };
           this.custumService.deleteFolderPermnant(obj).subscribe(
@@ -585,11 +584,11 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
             },
             error => this.eventService.showErrorMessage(error)
           );
-        } else if (flag == 'recover') {
+        } else if (flag == 'file/folder') {
           const obj = {
             clientId: this.clientId,
             advisorId: this.advisorId,
-            type: (data.folderName) ? 'folder' : (data.fileName) ? 'file' : '',
+            type: (data.folderName) ? 1 : (data.fileName) ? 2 : '',
             id: data.id
           };
           this.custumService.recovery(obj).subscribe(

@@ -29,9 +29,6 @@ export class LoginService {
     }
   }
 
-  userRegister(data) {
-  }
-
   getUsernameData(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.SEARCH_USERNAME, data, 1);
   }
@@ -44,6 +41,10 @@ export class LoginService {
     return this.http.getEncoded(apiConfig.USER + appConfig.LOGIN_WITH_PASSWORD, data, 1);
   }
 
+  supportLogin(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.LOGIN_WITH_PASSWORD, data, 1);
+  }
+
   sendWelcomeEmail(data) {
     return this.http.postEncoded(apiConfig.USER + appConfig.SEND_WELCOME_EMAIL, data);
   }
@@ -51,6 +52,7 @@ export class LoginService {
   createTeamMember(data) {
     return this.http.putEncoded(apiConfig.USER + appConfig.CREATE_TEAM_MEMBER, data);
   }
+
   verifyOtp(data) {
     const url = 'https://api.msg91.com/api/v5/otp/verify?mobile=' + data.mobileNo +
       '&otp=' + data.otp + '&authkey=' + '299688ARWCWf9dMo5daa04d8';

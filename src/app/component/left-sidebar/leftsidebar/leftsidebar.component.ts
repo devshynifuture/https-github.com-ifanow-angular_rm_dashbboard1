@@ -10,6 +10,8 @@ import {DialogContainerComponent} from '../../../common/dialog-container/dialog-
 import {DynamicComponentService} from '../../../services/dynamic-component.service';
 import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from '../../../animation/animation';
 import {EnumDataService} from '../../../services/enum-data.service';
+import { SettingsService } from '../../protect-component/AdviserComponent/setting/settings.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-leftsidebar',
@@ -41,11 +43,13 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
 
   logoText = 'Your Logo here';
 
-  constructor(private authService: AuthService, private _eref: ElementRef,
+  constructor(public authService: AuthService, private _eref: ElementRef,
               protected eventService: EventService, protected subinject: SubscriptionInject,
               private subService: SubscriptionService, private router: Router, private ngZone: NgZone,
               protected dynamicComponentService: DynamicComponentService,
-              private enumDataService: EnumDataService) {
+              private enumDataService: EnumDataService,
+              private settingsService: SettingsService,
+              private utilService: UtilService) {
     /*constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
       protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
       private authService: AuthService) {*/
@@ -114,6 +118,42 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     this.myControl = new FormControl();
     this.getClientSubscriptionList();
     this.enumDataService.getDataForTaxMasterService();
+    this.getOrgProfiles();
+    this.getPersonalProfiles();
+  }
+
+
+  getOrgProfiles() {
+    // this.utilService.loader(1)
+    let obj = {
+      advisorId: this.advisorId,
+    }
+    this.settingsService.getOrgProfile(obj).subscribe(
+      data => {
+        AuthService.setAppPic(data.logoUrl);
+        // this.utilService.loader(-1);
+      },
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+        // this.utilService.loader(-1);
+      }
+    );
+  }
+
+  getPersonalProfiles() {
+    // this.utilService.loader(1)
+    let obj = {
+      id: this.advisorId
+    }
+    this.settingsService.getPersonalProfile(obj).subscribe(
+      data => {
+        AuthService.setProfilePic(data.profilePic);
+      },
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+        // this.utilService.loader(-1);
+      }
+    );
   }
 
   private _filter(name: string): Client[] {

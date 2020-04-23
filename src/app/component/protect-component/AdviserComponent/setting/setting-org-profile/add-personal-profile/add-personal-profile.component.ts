@@ -96,6 +96,7 @@ export class AddPersonalProfileComponent implements OnInit {
             this.settingsService.uploadProfilePhoto(jsonDataObj).subscribe((res) => {
               this.anyDetailsChanged = true;
               this.imgURL = jsonDataObj.profilePic;
+              AuthService.setProfilePic(jsonDataObj.profilePic);
               this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
               this.Close(this.anyDetailsChanged);
             });
