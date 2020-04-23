@@ -248,6 +248,10 @@ export const appConfig = {
   CALCULATE_TOTAL_VALUES: 'account/asset/summary',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
+  ADD_EPF_EPS: 'account/asset/epf-eps/add',
+  EDIT_EPF_EPS: 'account/asset/epf-eps/edit',
+  DELETE_EPF_EPS: 'account/asset/epf-eps/delete',
+  GET_EPF_EPS: 'account/asset/epf-eps/get',
   GET_EPF: 'account/asset/retirement/epf/list/get',
   ADD_EPF: 'account/asset/retirement/epf/add',
   EDIT_EPF: 'account/asset/retirement/epf/edit',

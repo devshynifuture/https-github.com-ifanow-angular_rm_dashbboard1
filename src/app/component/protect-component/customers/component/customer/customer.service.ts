@@ -133,6 +133,22 @@ export class CustomerService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_REAL_ESTATE, httpParams);
   }
 
+  getEPF_EPS(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EPF_EPS, data);
+  }
+
+  addEPF_EPS(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_EPF_EPS, data);
+  }
+
+  editEPF_EPS(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_EPF_EPS, data);
+  }
+
+  deleteEPF_EPS(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_EPF_EPS, data);
+  }
+
   getEPF(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EPF, data);
   }
