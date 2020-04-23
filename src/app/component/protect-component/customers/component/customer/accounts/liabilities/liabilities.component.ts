@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, ElementRef } from '@angular/core';
 // import {UtilService} from '../../../../../../../services/util.service';
 import { EventService } from '../../../../../../../Data-service/event.service';
 import { SubscriptionInject } from '../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
@@ -11,6 +11,7 @@ import { AddLiabilitiesComponent } from "../../../common-component/add-liabiliti
 import { LiabilitiesDetailComponent } from '../../../common-component/liabilities-detail/liabilities-detail.component';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../excel.service';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
 
 
 @Component({
@@ -42,18 +43,26 @@ export class LiabilitiesComponent implements OnInit {
   // showLoader: boolean;
   isLoading = false;
   noData: string;
-  totalLoanAmt: any;
-  outStandingAmt: any;
+  totalLoanAmt = 0;
+  outStandingAmt = 0;
   filterData: any;
   excelData: any[];
   footer = [];
+  fragmentData = { isSpinner: false };
+  deletedDataId: any;
+  isLiabilitiFilter = false;
+  filteredData: any[];
+  filterForliabilities: any;
+  advisorData: any;
 
 
   constructor(private excel: ExcelService, private eventService: EventService, private subInjectService: SubscriptionInject,
-    public customerService: CustomerService, public util: UtilService, public dialog: MatDialog) {
+    public customerService: CustomerService, public util: UtilService, public dialog: MatDialog, private excelGen: ExcelGenService) {
   }
   @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChildren(FormatNumberDirective) formatNumber;
+  @ViewChild('liabilitiesTemp', { static: false }) liabilitiesTemp: ElementRef;
 
   viewMode: string;
 
@@ -68,31 +77,39 @@ export class LiabilitiesComponent implements OnInit {
     this.getGlobalLiabilities();
   }
   /**used for excel  */
-  async ExportTOExcel(value) {
+  // async ExportTOExcel(value) {
 
-    this.excelData = []
-    var data = []
-    var headerData = [{ width: 20, key: 'Owner' },
-    { width: 20, key: 'Type' },
-    { width: 20, key: 'Loan amount' },
-    { width: 18, key: 'Loan as on' },
-    { width: 25, key: 'Outstanding as on today' },
-    { width: 18, key: 'Tenure remaining' },
-    { width: 25, key: 'Annual interest rate' },
-    { width: 18, key: 'EMI' },
-    { width: 25, key: 'Financial institution' },
-    { width: 18, key: 'Status' },]
-    var header = ['Owner', 'Type', 'Loan amount', 'Loan as on',
-      'Outstanding as on today', 'Tenure remaining', 'Annual interest rate', 'EMI', 'Financial institution', 'Status'];
-    this.dataSource.filteredData.forEach(element => {
-      data = [element.ownerName, (element.loanTypeId == 1) ? 'Home Loan' : (element.loanTypeId == 2) ? 'Vehicle' : (element.loanTypeId == 3) ? 'Education' : (element.loanTypeId == 4) ? 'Credit Card' : (element.loanTypeId == 5) ? 'Personal' : 'Mortgage', this.formatNumber.first.formatAndRoundOffNumber(element.loanAmount)
-        , new Date(element.commencementDate), this.formatNumber.first.formatAndRoundOffNumber(element.outstandingAmount),
-      element.loanTenure, element.annualInterestRate, this.formatNumber.first.formatAndRoundOffNumber(element.emi), element.financialInstitution, element.status]
-      this.excelData.push(Object.assign(data))
-    });
-    var footerData = ['Total', '', this.formatNumber.first.formatAndRoundOffNumber(this.totalLoanAmt), '', this.formatNumber.first.formatAndRoundOffNumber(this.outStandingAmt), '', '', '', '', '']
-    this.footer.push(Object.assign(footerData))
-    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
+  //   this.excelData = []
+  //   var data = []
+  //   var headerData = [{ width: 20, key: 'Owner' },
+  //   { width: 20, key: 'Type' },
+  //   { width: 20, key: 'Loan amount' },
+  //   { width: 18, key: 'Loan as on' },
+  //   { width: 25, key: 'Outstanding as on today' },
+  //   { width: 18, key: 'Tenure remaining' },
+  //   { width: 25, key: 'Annual interest rate' },
+  //   { width: 18, key: 'EMI' },
+  //   { width: 25, key: 'Financial institution' },
+  //   { width: 18, key: 'Status' },]
+  //   var header = ['Owner', 'Type', 'Loan amount', 'Loan as on',
+  //     'Outstanding as on today', 'Tenure remaining', 'Annual interest rate', 'EMI', 'Financial institution', 'Status'];
+  //   this.dataSource.filteredData.forEach(element => {
+  //     data = [element.ownerName, (element.loanTypeId == 1) ? 'Home Loan' : (element.loanTypeId == 2) ? 'Vehicle' : (element.loanTypeId == 3) ? 'Education' : (element.loanTypeId == 4) ? 'Credit Card' : (element.loanTypeId == 5) ? 'Personal' : 'Mortgage', this.formatNumber.first.formatAndRoundOffNumber(element.loanAmount)
+  //       , new Date(element.commencementDate), this.formatNumber.first.formatAndRoundOffNumber(element.outstandingAmount),
+  //     element.loanTenure, element.annualInterestRate, this.formatNumber.first.formatAndRoundOffNumber(element.emi), element.financialInstitution, element.status]
+  //     this.excelData.push(Object.assign(data))
+  //   });
+  //   var footerData = ['Total', '', this.formatNumber.first.formatAndRoundOffNumber(this.totalLoanAmt), '', this.formatNumber.first.formatAndRoundOffNumber(this.outStandingAmt), '', '', '', '', '']
+  //   this.footer.push(Object.assign(footerData))
+  //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
+  // }
+  Excel(tableTitle) {
+    this.fragmentData.isSpinner = true;
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    const data = this.excelGen.generateExcel(rows, tableTitle);
+    if (data) {
+      this.fragmentData.isSpinner = false;
+    }
   }
   getGlobalLiabilities() {
     const obj = {};
@@ -102,6 +119,42 @@ export class LiabilitiesComponent implements OnInit {
   }
   getGlobalLiabilitiesRes(data) {
     console.log(data);
+  }
+  filterLiabilities(category, key: string, value: any, data) {
+    let dataFiltered;
+    if (data == 'tab1') {
+      dataFiltered = this.filterForliabilities;
+    } else {
+      data = parseInt(data);
+      dataFiltered = this.filterForliabilities.filter(function (item) {
+        return item[category] === data;
+      });
+    }
+
+    dataFiltered = dataFiltered.filter(function (item) {
+      return item[key] === value;
+    });
+
+    this.isLiabilitiFilter = true;
+    if (dataFiltered.length > 0) {
+      this.dataSource.data = dataFiltered;
+      this.dataSource = new MatTableDataSource(this.dataSource.data);
+      this.totalLoanAmt =0;
+      this.outStandingAmt =0;
+     this.dataSource.data.forEach(element => {
+        this.totalLoanAmt += element.loanAmount
+      });
+      this.dataSource.data.forEach(element => {
+        if (element.outstandingAmount == "NaN") {
+          element.outstandingAmount = 0
+        }
+        this.outStandingAmt += element.outstandingAmount
+      });
+    } else {
+      this.eventService.openSnackBar("No data found", "Dismiss")
+    }
+
+
   }
   getPayables() {
     const obj = {
@@ -147,6 +200,8 @@ export class LiabilitiesComponent implements OnInit {
       if (filterData.length == 0) {
         this.noData = "No Data Found";
       } else {
+        this.totalLoanAmt = 0
+        this.outStandingAmt = 0
         this.totalLoanAmt = filterData.reduce((accumulator, currentElement) =>
           accumulator + currentElement.loanAmount
           , 0)
@@ -162,6 +217,7 @@ export class LiabilitiesComponent implements OnInit {
   }
 
   deleteModal(value, data) {
+    this.deletedDataId = data.loanTypeId;
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -172,9 +228,9 @@ export class LiabilitiesComponent implements OnInit {
       positiveMethod: () => {
         this.customerService.deleteLiabilities(data.id).subscribe(
           data => {
-            this.eventService.openSnackBar("Liabilities is deleted", "Dismiss")
+            this.eventService.openSnackBar("Liabilitiy deleted successfully", "Dismiss")
             dialogRef.close();
-            this.getLiability('');
+            this.getLiability(this.deletedDataId);
           },
           error => this.eventService.showErrorMessage(error)
         )
@@ -265,7 +321,7 @@ export class LiabilitiesComponent implements OnInit {
   getLiability(data) {
     this.isLoading = true;
 
-    this.dataToShow = data.data;
+    this.dataToShow = (data == "") ? null : (data.data) ? data.data : data
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
@@ -279,12 +335,27 @@ export class LiabilitiesComponent implements OnInit {
       }
     );
   }
+  generatePdf() {
+    this.fragmentData.isSpinner = true;
+    let para = document.getElementById('template');
+    this.util.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
+  }
+  checkStatusId(data) {
+    data.forEach(obj => {
+      if (obj.maturityDate < new Date()) {
+        obj.statusId = 'MATURED';
+      } else {
+        obj.statusId = 'LIVE';
+      }
+    });
+  }
   getLiabiltyRes(data) {
     this.isLoading = false;
     // this.showLoader = false;
-    if (data && data.loans.length) {
-      this.outStandingAmt = 0;
-      this.totalLoanAmt = data.totalLoanAmount;
+    if (data && data.loans.length > 0) {
+      this.filterForliabilities = data.loans;
+      this.checkStatusId(data.loans);
+      // this.totalLoanAmt = data.totalLoanAmount;
       // this.outStandingAmt = data.outstandingAmount;
       data.loans.forEach(element => {
         this.totalLoanAmt += element.loanAmount
