@@ -79,6 +79,8 @@ export class AuthService {
     localStorage.removeItem('userInfo');
     localStorage.removeItem('clientData');
     sessionStorage.removeItem('clientData');
+    sessionStorage.removeItem('profilePic');
+    sessionStorage.removeItem('webLogo');
 
     // this.myRoute.navigate(['login']);
   }

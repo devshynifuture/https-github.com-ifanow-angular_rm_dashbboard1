@@ -127,10 +127,11 @@ export class OrgProfileComponent implements OnInit {
       website: [(!data) ? '' : data.website, [Validators.required]],
       address: [(!data) ? '' : data.billerAddress, [Validators.required]],
       gstTreatment:  ['', [Validators.required]],
+      country:  [(!data) ? '' : data.country, []],
       gstNumber: [(!data) ? '' : data.gstin],
       city: [(!data) ? '' :data.city, [Validators.required, Validators.pattern(ValidatorType.TEXT_ONLY)]],
       state: [(!data) ? '' :data.state, [Validators.required, Validators.pattern(ValidatorType.TEXT_ONLY)]],
-      pincode: [(!data) ? '' :data.zipCode, [Validators.required, Validators.minLength(6), Validators.maxLength(6), Validators.pattern(ValidatorType.NUMBER_ONLY)]],
+      pincode: [(!data) ? '' :data.zipCode, []],
     });
 
     this.subscribeToGSTTypeValueChange();
@@ -141,18 +142,34 @@ export class OrgProfileComponent implements OnInit {
     this.subscription.add(
       this.orgProfile.controls.gstTreatment.valueChanges.subscribe(value => {
         // for some weird reason validation is not happening the first time hence kept it twice
-        this.doSomething(value);
-        this.doSomething(value);
+        this.changeGSTDependentValidators(value);
+        this.changeGSTDependentValidators(value);
       })
     )
   }
 
-  doSomething(value){
+  changeGSTDependentValidators(value){
     if(value == 4) {
       this.orgProfile.get('gstNumber').setValidators([Validators.required, Validators.maxLength(15), Validators.minLength(15)]);
     } else {
       this.orgProfile.get('gstNumber').setValue('');
       this.orgProfile.get('gstNumber').clearValidators();
+    }
+    
+    if(value == 3) {
+      this.orgProfile.get('pincode').setValue('');
+      this.orgProfile.get('city').setValue('');
+      this.orgProfile.get('state').setValue('');
+      this.orgProfile.get('pincode').clearValidators();
+      this.orgProfile.get('city').clearValidators();
+      this.orgProfile.get('state').clearValidators();
+      this.orgProfile.get('country').setValidators([Validators.required]);
+    } else {
+      this.orgProfile.get('pincode').setValidators([Validators.required, Validators.minLength(6), Validators.maxLength(6), Validators.pattern(ValidatorType.NUMBER_ONLY)]);
+      this.orgProfile.get('city').setValidators([Validators.required, Validators.pattern(ValidatorType.TEXT_ONLY)]);
+      this.orgProfile.get('state').setValidators([Validators.required, Validators.pattern(ValidatorType.TEXT_ONLY)]);
+      this.orgProfile.get('country').setValue('');
+      this.orgProfile.get('country').clearValidators();
     }
     this.orgProfile.updateValueAndValidity();
 
@@ -179,6 +196,8 @@ export class OrgProfileComponent implements OnInit {
       zipCode:this.orgProfile.controls.pincode.value || '',
       gstTreatmentId:this.orgProfile.controls.gstTreatment.value || '',
       gstin: this.orgProfile.controls.gstNumber.value || '',
+      country: this.orgProfile.controls.country.value || '',
+      isdCodeId: this.orgProfile.controls.isdCodeId.value || '',
     }
     this.settingsService.editOrgProfile(obj).subscribe(
       data => {
