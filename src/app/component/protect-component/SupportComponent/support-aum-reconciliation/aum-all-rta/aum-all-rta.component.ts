@@ -18,6 +18,7 @@ export class AumAllRtaComponent implements OnInit {
   displayedColumns = ['rtId', 'advisorName', 'arnria', 'doneOn', 'doneBy', 'totalFolioCount', 'unmatchedCountBeforeRecon', 'unmatchedCountAfterRecon', 'aumBalanceDate', 'transactionDate', 'report']
   dataSource = new MatTableDataSource<AumAllRtaI>(ELEMENT_DATA);
   rtId;
+  rmId = AuthService.getRmId() ? AuthService.getRmId(): 0;
 
   advisorId = 2808;
 
@@ -62,7 +63,7 @@ export class AumAllRtaComponent implements OnInit {
       brokerId: 0,
       rtId: this.rtId,
       // rtId: 0,
-      rmId: 3
+      rmId: this.rmId
     }
 
     this.reconService.getAumReconHistoryDataValues(data)

@@ -211,14 +211,18 @@ export class FileOrderingUpperComponent implements OnInit {
   }
 
   creatingArrayIdValue(event, row) {
-    if (event) {
-      this.selection.toggle(row)
+    if (event.checked === true) {
+      this.selection.toggle(row);
       if (!this.arrayOfIdsForRetry.includes(row.id)) {
         this.arrayOfIdsForRetry.push(row.id);
       }
     }
-
-    console.log(this.arrayOfIdsForRetry);
+    else if (event.checked === false) {
+      this.selection.toggle(row);
+      this.arrayOfIdsForRetry = this.arrayOfIdsForRetry.filter(item => {
+        return item !== row.id;
+      });
+    }
   }
 
   dialogClose() {
@@ -227,7 +231,11 @@ export class FileOrderingUpperComponent implements OnInit {
 
   refreshList() {
     this.dataSource.data = ELEMENT_DATA;
-    this.fileOrderingListData();
+    if (this.data.flag == 'historical') {
+      this.fileOrderingListData();
+    } else {
+      this.fileOrderBulkListData();
+    }
   }
 
   openDetailedView(data) {

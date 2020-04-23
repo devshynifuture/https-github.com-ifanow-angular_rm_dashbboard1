@@ -32,7 +32,7 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
   previousWeekFrankline: any;
   currentWeekKarvy: any;
 
-  rmId = AuthService.getRmId();
+  rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
 
   subscription = new Subscription();
   bulkData: any[] = [{}, {}, {}];
@@ -51,7 +51,6 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    console.log("this is rtId:::", this.rmId);
     this.utilsService.loader(0);
 
     this.createFormGroup();

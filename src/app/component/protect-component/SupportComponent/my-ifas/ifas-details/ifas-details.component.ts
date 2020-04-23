@@ -17,7 +17,7 @@ import { SettingsService } from '../../../AdviserComponent/setting/settings.serv
 })
 export class IfasDetailsComponent implements OnInit {
 
-  displayedColumns: string[] = ['arn', 'date', 'name', 'total', 'befor', 'after', 'aumbalance', 'transaction', 'report'];
+  displayedColumns: string[] = ['arn', 'doneOn', 'name', 'total', 'befor', 'after', 'aumbalance', 'transaction', 'report'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   displayedColumnsOne: string[] = ['description', 'subscribedSince', 'fees', 'frequency', 'nextBilling'];
@@ -71,6 +71,7 @@ export class IfasDetailsComponent implements OnInit {
 
   isInEditMode: boolean = false;
   reconSummaryList;
+  rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
   ngOnInit() {
     // this.utilsService.loader(0);
     this.getReconSummaryList();
@@ -147,10 +148,16 @@ export class IfasDetailsComponent implements OnInit {
   getBrokerList(value) {
     this.rtId = value;
     if (value === this.franklinId) {
+      this.franklineData['rmId'] = this.rtId;
+      this.franklineData['advisorId'] = this.ifasData.adminAdvisorId;
       this.openSelectArnRiaDialog(this.brokerList, this.franklineData, this.rtId)
     } else if (value === this.camsId) {
+      this.camsData['rmId'] = this.rtId;
+      this.camsData['advisorId'] = this.ifasData.adminAdvisorId;
       this.openSelectArnRiaDialog(this.brokerList, this.camsData, this.rtId)
     } else if (value === this.karvyId) {
+      this.karvyData['rmId'] = this.rtId;
+      this.karvyData['advisorId'] = this.ifasData.adminAdvisorId;
       this.openSelectArnRiaDialog(this.brokerList, this.karvyData, this.rtId)
 
     }
@@ -166,9 +173,10 @@ export class IfasDetailsComponent implements OnInit {
   }
   getTicketSummary() {
     // this.utilsService.loader(1);
+    this.ticketList.data = [{}, {}, {}];
     this.isLoading = true;
     let obj = {
-      rmId: 3,
+      rmId: this.rmId,
       advisorId: this.ifasData.adminAdvisorId
     }
     this.supportService.getTickets(obj)

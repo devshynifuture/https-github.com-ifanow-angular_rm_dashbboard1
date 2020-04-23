@@ -51,15 +51,18 @@ export class MyIfaSelectArnRiaComponent implements OnInit {
     this.dialogClose();
     // data = this.fragmentData.mainData
     // data.rtId = this.rtId
+
     const fragmentData = {
       flag,
       id: 1,
       data: {
         ...data,
+        advisorId: this.dataToSend.advisorId,
         startRecon: flag === 'startRecon' ? true : (flag === 'report' ? false : null),
         brokerId: this.selectArnRiaForm.get('arnOrRia').value,
         rtId: this.rtId,
-        flag
+        flag,
+
       },
       direction: 'top',
       componentName: UpperSliderBackofficeComponent,
