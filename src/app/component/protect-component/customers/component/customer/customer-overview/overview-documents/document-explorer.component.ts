@@ -778,14 +778,14 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
     var link =
     {
-      "destination": value,
-      "domain": { "fullName": "rebrand.ly" }
+      // group_guid: "devshyni",
+      domain: "bit.ly",
+      long_url: value
     }
+    const payload = JSON.stringify({'long_url': value, "domain": "bit.ly" })
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/json');
-    headers = headers.append('apikey', 'b96683be9a4742979e78c6011a3ec2ca');
-    headers = headers.append('workspace', 'futurewise');
-    this.http.post('https://api.rebrandly.com/v1/links', link, headers).subscribe((responseData) => {
+    this.http.post('https://api-ssl.bitly.com/v4/shorten', payload).subscribe((responseData) => {
       console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
       if (responseData == null) {
       }
