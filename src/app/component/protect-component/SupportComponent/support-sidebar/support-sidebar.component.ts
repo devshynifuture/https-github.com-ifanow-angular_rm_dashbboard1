@@ -54,6 +54,11 @@ export class SupportSidebarComponent extends DialogContainerComponent implements
     }
   }
 
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['login', 'support-login']);
+  }
+
   checkUrl(value) {
     if (value === 'dashboard') {
       this.shouldShowMainNav = false;

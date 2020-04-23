@@ -68,8 +68,11 @@
                 <a class="" mat-list-item>
                     <img src="assets/images/svg/earphone.svg">
                 </a>
-                <a class="" mat-list-item>
+                <a class="" mat-list-item [matMenuTriggerFor]="menu">
                     <img src="assets/images/svg/setting.svg">
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="logout()">Logout</button>
+                    </mat-menu>
                 </a>
 
             </div>
@@ -126,8 +129,7 @@
                     <img src="assets/images/svg/ruppes.svg">
                     <span class="title" mat-line>Miscellaneous</span>
                 </a>
-                <a class="sidenav-link" routerLink="/support/management" (click)="checkUrl('management')"
-                    mat-list-item>
+                <a class="sidenav-link" routerLink="/support/management" (click)="checkUrl('management')" mat-list-item>
                     <img src="assets/images/svg/ruppes.svg">
                     <span class="title" mat-line>RM management</span>
                 </a>

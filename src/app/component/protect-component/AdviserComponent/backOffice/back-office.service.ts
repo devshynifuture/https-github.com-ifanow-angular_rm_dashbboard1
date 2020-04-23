@@ -37,9 +37,8 @@ export class BackOfficeService {
   }
 
   loginApi(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.LOGIN, data);
+    return this.http.post(apiConfig.MAIN_URL + appConfig.RM_LOGIN, data);
   }
-
 
   getClientTotalAUM(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);

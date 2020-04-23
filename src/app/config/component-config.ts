@@ -28,6 +28,8 @@ export const appConfig = {
   ADVISOR_TAG_GET: 'advisor/tag/get',
   AUM_GRAPH_GET: 'backoffice/aum/graph/details/get',
   ARN_RIA_LIST: 'backoffice/arn/ria/list/get',
+  RM_LOGIN: 'rmdashboard/rm/sign-in',
+
   ///////////////////foliodetails///////////////////////////
   FOLIO_GROUP_HEAD_SEARCH: 'backoffice/folio/search/by/groupHead/get',
   FOLIO_INVESTOR_SEARCH: 'backoffice/folio/search/by/investorName/get',
@@ -161,8 +163,8 @@ export const appConfig = {
   RENAME_FILE: 'document/account/document/all-file/file/rename',
   RENAME_FOLDER: 'document/account/document/all-file/folder/rename',
   DELETE_FOLDER: 'document/account/document/all-file/folder/trash',
-  DELETE_PERMANANT_FOLDER:'',
-  RECOVERY:'',
+  DELETE_PERMANANT_FOLDER: '',
+  RECOVERY: '',
   SEARCH_FILE: 'document/account/document/all-file/search',
   STAR_FILE: 'document/document/all-file/star',
   SEND_SHAREBLE_LINK: 'pdfAndEmail/email-only/send',

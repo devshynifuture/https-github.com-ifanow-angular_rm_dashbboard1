@@ -62,6 +62,10 @@ export class LoginService {
     if (userData.userType == 1) {
       authService.setUserInfo(userData);
       router.navigate(['admin', 'subscription', 'dashboard']);
+    } else if (userData.isAdmin) {
+      authService.setToken('authTokenInLoginComponent');
+      authService.setUserInfo(userData);
+      router.navigate(['support', 'dashboard']);
     } else {
       authService.setToken('authTokenInLoginComponent');
       userData.id = userData.clientId;
