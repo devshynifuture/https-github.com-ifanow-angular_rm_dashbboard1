@@ -37,7 +37,7 @@ export class ClientBankComponent implements OnInit {
   constructor(private cusService: CustomerService, private eventService: EventService,
     private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private subService: SubscriptionService, private postalService: PostalService,
-    private peopleService: PeopleService) {
+    private peopleService: PeopleService, private utilService: UtilService) {
   }
 
   bankForm;
@@ -61,8 +61,8 @@ export class ClientBankComponent implements OnInit {
       this.createBankForm(this.userData.bankData);
     }
   }
-  toUpperCase(event) {
-    event = UtilService.toUpperCase(event);
+  toUpperCase(formControl, event) {
+    this.utilService.toUpperCase(formControl, event);
     if (event.target.value.length == 11) {
       this.getBankAddress(event.target.value);
       return;
@@ -125,6 +125,8 @@ export class ClientBankComponent implements OnInit {
       },
         err => {
           console.log(err, 'error internet');
+          this.isIfsc = false;
+          this.bankForm.get('ifscCode').setErrors({ invalidIfsc: true })
           this.bankData(err);
         });
     }
@@ -136,7 +138,9 @@ export class ClientBankComponent implements OnInit {
     let address1, address2, pincode, adderessData;
     if (data.address) {
       adderessData = data.address.trim();
-      pincode = adderessData.substring(adderessData.length - 6);
+      pincode = adderessData.match(/\d/g);
+      pincode = pincode.join("");
+      pincode = pincode.substring(pincode.length - 6, pincode.length)
       adderessData = adderessData.replace(pincode, '');
       let addressMidLength = adderessData.length / 2;
       address1 = adderessData.substring(0, addressMidLength);

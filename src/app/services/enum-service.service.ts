@@ -1,24 +1,30 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
+import { element } from 'protractor';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EnumServiceService {
-  roleList:any = [];
-  bankList:any = [];
-  clientRoleList:any = [];
-  proofTypeList:any = [];
+  roleList: any = [];
+  bankList: any = [];
+  clientRoleList: any = [];
+  proofTypeList: any = [];
+
   constructor() {
   }
 
   private globalEnumData = {
     otherAssetTypes: [],
     feeCollectionMode: [],
+    taxStatusMap: {},
+    corporateTaxList: [],
+    individualTaxList: [],
+    minorTaxList: [],
   };
 
 
   public addToGlobalEnumData(data) {
-    console.log(data, "check data variable fee 2");
+    console.log(data, 'check data variable fee 2');
 
     Object.assign(this.globalEnumData, data);
   }
@@ -33,6 +39,22 @@ export class EnumServiceService {
     return this.globalEnumData.feeCollectionMode;
   }
 
+  getTaxStatus() {
+    return this.globalEnumData.taxStatusMap;
+  }
+
+  getCorporateTaxList() {
+    return this.globalEnumData.corporateTaxList;
+  }
+
+  getMinorTaxList() {
+    return this.globalEnumData.minorTaxList;
+  }
+
+  getIndividualTaxList() {
+    return this.globalEnumData.individualTaxList;
+  }
+
   public addRoles(data) {
     this.roleList = data;
   }
@@ -41,27 +63,36 @@ export class EnumServiceService {
     return this.roleList;
   }
 
-  public proofType(data){
+  public proofType(data) {
     this.proofTypeList = data;
   }
 
-  public getProofType(){
+  public getProofType() {
     return this.proofTypeList;
   }
-  public addBank(data){
+
+  public addBank(data) {
     this.bankList = data;
   }
 
-  public getBank(){
+  public getBank() {
     return this.bankList;
   }
 
-  public addClientRole(data){
+  public addClientRole(data) {
     this.clientRoleList = data;
 
   }
 
   public getClientRole() {
     return this.clientRoleList;
+  }
+
+  public filterTaxStatusList(taxStatusId) {
+    let individualTaxData, minorTaxData, corporateTaxData;
+    individualTaxData = this.globalEnumData.individualTaxList.filter(element => element.taxStatusCode == taxStatusId);
+    minorTaxData = this.globalEnumData.minorTaxList.filter(element => element.taxStatusCode == taxStatusId)
+    corporateTaxData = this.globalEnumData.corporateTaxList.filter(element => element.taxStatusCode == taxStatusId)
+    return (individualTaxData) ? individualTaxData : (minorTaxData) ? minorTaxData : corporateTaxData;
   }
 }

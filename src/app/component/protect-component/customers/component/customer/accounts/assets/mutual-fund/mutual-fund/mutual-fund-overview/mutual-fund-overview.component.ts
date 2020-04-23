@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { UpperCustomerComponent } from 'src/app/component/protect-component/customers/component/common-component/upper-customer/upper-customer.component';
 import { AddMutualFundComponent } from '../add-mutual-fund/add-mutual-fund.component';
 import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
@@ -12,6 +12,8 @@ import { MatTableDataSource } from '@angular/material';
 import { MfServiceService } from '../../mf-service.service';
 import { RightFilterComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
 import { WebworkerService } from 'src/app/services/web-worker.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
 
 @Component({
   selector: 'app-mutual-fund-overview',
@@ -47,9 +49,13 @@ export class MutualFundOverviewComponent implements OnInit {
   showCategory = true;
   showSubCategory = true;
   totalValue: any = {};
-  isSpinner = false;
+  fragmentData = {isSpinner : false};
+  advisorId: any;
+  advisorData:any;
+  
+  @Output() changeInput = new EventEmitter();
   constructor(public subInjectService: SubscriptionInject, public UtilService: UtilService,
-    public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService) {
+    public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService,private settingService : SettingsService) {
   }
 
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
@@ -60,10 +66,29 @@ export class MutualFundOverviewComponent implements OnInit {
   @Input() mutualFund;
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.getMutualFundData();
     this.dataSource = [{}, {}, {}];
     this.dataSource2 = [{}, {}, {}];
     this.dataSource3 = [{}, {}, {}];
+    this.advisorData =this.MfServiceService.getPersonalDetails(this.advisorId);
+    // this.getPersonalDetails(this.advisorId);
+  }
+  getPersonalDetails(data){
+    const obj={
+      id:data
+    }
+    this.settingService.getPersonalProfile(obj).subscribe(
+      data => {
+        console.log(data);
+      }
+    );
+    this.settingService.getProfileDetails(obj).subscribe(
+      data => {
+        console.log(data);
+        this.advisorData = data;
+      }
+    );
   }
   asyncFilter(mutualFund, categoryList) {
     if (typeof Worker !== 'undefined') {
@@ -81,7 +106,7 @@ export class MutualFundOverviewComponent implements OnInit {
         this.pieChart('piechartMutualFund'); // pie chart data after calculating percentage
         this.getCashFlowStatus();
         this.isLoading = false;
-
+        this.changeInput.emit(false);
         console.log(`MUTUALFUNDSummary COMPONENT page got message:`, data);
       };
       worker.postMessage(input);
@@ -92,8 +117,8 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   getMutualFundData() {
-    this.isLoading = true
-
+    this.isLoading = true;
+    this.changeInput.emit(true);
     const obj = {
       advisorId: 2753,
       clientId: 15545
@@ -114,7 +139,7 @@ export class MutualFundOverviewComponent implements OnInit {
     this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
     this.schemeWiseAllocation(data); // for shemeWiseAllocation
     this.isLoading = false;
-
+    this.changeInput.emit(false);
 
   }
   calculatePercentage(data) {// function for calculating percentage
@@ -168,40 +193,42 @@ export class MutualFundOverviewComponent implements OnInit {
     ];
   }
   getsubCategorywiseAllocation(data) {
-    this.isLoading = true
+    this.isLoading = true;
+    this.changeInput.emit(true);
     this.filteredArray = this.MfServiceService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
     if (this.dataSource3.length > 0) {
       this.dataSource3 = new MatTableDataSource(this.filteredArray);
-      this.isLoading = false
+      this.isLoading = false;
+      this.changeInput.emit(false);
+
     }
   }
   getFamilyMemberWiseAllocation(data) {
-    this.isLoading = true
+    this.isLoading = true;
+    this.changeInput.emit(true);
     if (this.dataSource.length > 0) {
       this.dataSource = new MatTableDataSource(data.family_member_list);
-      this.isLoading = false
+      this.isLoading = false;
+      this.changeInput.emit(false);
+
     }
   }
   schemeWiseAllocation(data) {
-    this.isLoading = true
+    this.isLoading = true;
+    this.changeInput.emit(true);
     this.filteredArray = this.MfServiceService.filter(this.filteredArray, 'mutualFundSchemeMaster');
     if (this.dataSource2.length > 0) {
       this.dataSource2 = new MatTableDataSource(this.filteredArray);
-      this.isLoading = false
+      this.isLoading = false;
+      this.changeInput.emit(false);
     }
+
   }
 
   generatePdf() {
-    this.isSpinner = true;
+    this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
-    this.UtilService.htmlToPdf(para.innerHTML, 'Test').subscribe(
-      data => {
-        if (data) {
-          this.isSpinner = false;
-        }
-      }
-
-    );
+    this.UtilService.htmlToPdf(para.innerHTML,'Test',this.fragmentData)
   }
   pieChart(id) {
     Highcharts.chart('piechartMutualFund', {
@@ -355,13 +382,14 @@ export class MutualFundOverviewComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          if (sideBarData.data != 'Close') {
+          if (sideBarData.data && sideBarData.data != 'Close') {
             this.totalValue = {};
             this.dataSource2.data = [{}, {}, {}]
             this.dataSource4 = [{}, {}, {}]
             this.dataSource.data = [{}, {}, {}]
             this.dataSource3.data = [{}, {}, {}]
             this.isLoading = true;
+            this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
             this.asyncFilter(this.rightFilterData.mutualFundList, this.rightFilterData.category);
             this.dataSource2.data = this.rightFilterData.schemeWise;
@@ -378,6 +406,7 @@ export class MutualFundOverviewComponent implements OnInit {
 
 
             this.isLoading = false;
+            this.changeInput.emit(false);
             // this.getMutualFundResponse(this.rightFilterData.mfData);
             // this.asyncFilter(this.rightFilterData.mutualFundList);
             // this.getListForPdf(this.rightFilterData.transactionView);

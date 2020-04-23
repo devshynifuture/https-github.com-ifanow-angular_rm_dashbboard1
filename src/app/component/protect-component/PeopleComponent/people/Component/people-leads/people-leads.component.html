@@ -2,8 +2,8 @@
     <div class="col-md-4 d-flex align-items-center">
         <h3 class="m-0">Leads</h3>
     </div>
-    <div *ngIf="leadDataSource.data.length>0" class="col-md-8">
-        <div class="col-md-8 p-0 right text-right">
+    <div class="col-md-8">
+        <div *ngIf="leadDataSource.data.length>0 && isLoading==false" class="col-md-8 p-0 right text-right">
             <img [matMenuTriggerFor]="menu5" src="assets/images/svg/download-bordered.svg" class="c-p">
             <mat-menu #menu5="matMenu">
                 <button (click)="pdf('Lead')" mat-menu-item>PDF</button>
@@ -19,11 +19,12 @@
         </div>
     </div>
     <div class="col-md-12 people-leads">
-        <table #tableEl mat-table *ngIf="leadDataSource.data.length>0" [dataSource]="leadDataSource" appSkeletonLoading
-            [appSkeletonLoading]="isLoading" class="skeletonAnimation" class="mt-8" id="table-low">
+        <table #tableEl matSort mat-table *ngIf="leadDataSource.data.length>0" #leadTableSort="matSort"
+            [dataSource]="leadDataSource" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation"
+            class="mt-8" id="table-low">
 
             <ng-container matColumnDef="position">
-                <th mat-header-cell *matHeaderCellDef class="br w-20"> Lead name </th>
+                <th mat-sort-header="displayName" mat-header-cell *matHeaderCellDef class="br w-20"> Lead name </th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar">{{element.displayName}}</div>
                 </td>
@@ -31,7 +32,7 @@
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef class="br"> Registered mobile </th>
+                <th mat-sort-header="mobileNo" mat-header-cell *matHeaderCellDef class="br"> Registered mobile </th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar"> {{element.mobileNo}}</div>
                 </td>
@@ -39,7 +40,7 @@
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
-                <th mat-header-cell *matHeaderCellDef class="br"> Registered email </th>
+                <th mat-sort-header="email" mat-header-cell *matHeaderCellDef class="br"> Registered email </th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar"> {{element.email}}</div>
                 </td>
@@ -47,35 +48,52 @@
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="lsource">
-                <th mat-header-cell *matHeaderCellDef class="br"> Lead source </th>
+                <th mat-sort-header="leadSource" mat-header-cell *matHeaderCellDef class="br"> Lead source </th>
                 <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.leadSource}}</div>
+                    <div class="bar">
+                        <span *ngIf="element.leadSource==1">Search engine</span>
+                        <span *ngIf="element.leadSource==2">Website</span>
+                        <span *ngIf="element.leadSource==3">Refrerals from existing clients</span>
+                        <span *ngIf="element.leadSource==4">Refrerals from existing friends</span>
+                        <span *ngIf="element.leadSource==5">Refrerals from existing relatives</span>
+                        <span *ngIf="element.leadSource==6">LinkedIn</span>
+                        <span *ngIf="element.leadSource==7">Others</span>
+                    </div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="lrating">
+                <th mat-sort-header="leadRating" mat-header-cell *matHeaderCellDef class="br"> Lead rating </th>
+                <td mat-cell *matCellDef="let element" class="br">
+                    <div class="bar">
+                        <span *ngIf="element.leadRating==1">Cold</span>
+                        <span *ngIf="element.leadRating==2">Hot</span>
+                    </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef class="br"> Lead status </th>
+                <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br"> Lead status </th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar"> {{element.status}}</div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="rating">
-                <th mat-header-cell *matHeaderCellDef class="br"> Rating </th>
+                <th mat-sort-header="rating" mat-header-cell *matHeaderCellDef class="br"> Rating </th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar"> {{element.rating}}</div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="lead">
-                <th mat-header-cell *matHeaderCellDef class="br"> Lead owner </th>
+                <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br"> Lead owner </th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar"> {{element.ownerName}}</div>
                 </td>
             </ng-container>
-            <ng-container matColumnDef="icon">
+            <!-- <ng-container matColumnDef="icon">
                 <th mat-header-cell *matHeaderCellDef class="br"> </th>
                 <td mat-cell *matCellDef="let element" class="br text-center">
                     <img *ngIf="isLoading==false" src="/assets/images/svg/action.svg">
                 </td>
-            </ng-container>
+            </ng-container> -->
             <ng-container matColumnDef="icons">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell class="text-center" *matCellDef="let element">

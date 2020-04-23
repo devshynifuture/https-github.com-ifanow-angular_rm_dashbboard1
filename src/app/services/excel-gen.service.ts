@@ -56,17 +56,18 @@ export class ExcelGenService {
 
     // Create workbook and worksheet
     const workbook = new Workbook();
-    const worksheet = workbook.addWorksheet(title + 'Data');
+    const worksheet = workbook.addWorksheet(this.advisor.name+'_'+title +'_'+'Data');
 
 
     // Add Row and formatting
+    worksheet.addRow([]);
     const titleRow = worksheet.addRow([title]);
     titleRow.font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true };
     worksheet.addRow([]);
     // let subTitleRow = worksheet.addRow(['Date :', this.datePipe.transform(new Date(), 'medium')])
 
-   worksheet.addRow(['Advisor:', this.advisor.name]);
-   worksheet.addRow(['Client:', this.client.name]);
+   worksheet.addRow(['Advisor', this.advisor.name]);
+   worksheet.addRow(['Client', this.client.name]);
 
     // Add Image
     // let logo = workbook.addImage({
@@ -146,6 +147,6 @@ export class ExcelGenService {
       const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       fs.saveAs(blob, title + '.xlsx');
     });
-
+    return data;
   }
 }

@@ -14,24 +14,24 @@
 </div>
 <div class="pt-100 pl-24 pr-24 pb-48 mb-48" [formGroup]="addLiabilityForm">
     <div class="row">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Owner</h5>
+            <div class="col-md-5 text-right">
+                <h5 class="m-0 pt-8">Owner</h5>
+            </div>
+            <div class="col-md-5 pl-0">
+                <mat-form-field class="w-100">
+                    <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+                        [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+                        <mat-option value=''>Select family members</mat-option>
+                        <mat-option *ngFor="let f of nomineesListFM" [value]="f.userName">
+                            <span>{{f.userName}}</span>
+                        </mat-option>
+                    </mat-select>
+                    <mat-error class="f-12">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
         </div>
-        <div class="col-md-5">
-            <mat-form-field class="w-100">
-                <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
-                    [data]='ownerData' formControlName="ownerName" class="form-control br-0">
-                    <mat-option value=''>Select family members</mat-option>
-                    <mat-option *ngFor="let f of nomineesListFM" [value]="f">
-                        <span>{{f.userName}}</span>
-                    </mat-option>
-                </mat-select>
-                <mat-error class="f-12 pt-4">
-                    This field is required
-                </mat-error>
-            </mat-form-field>
-        </div>
-    </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8"> Loan type</h5>

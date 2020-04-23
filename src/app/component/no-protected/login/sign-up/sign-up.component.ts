@@ -121,7 +121,8 @@ export class SignUpComponent implements OnInit {
             clientId: data.clientId,
             advisorId: data.advisorId,
             userData: data,
-            showSignUpBar: true
+            showSignUpBar: true,
+            showMaskedMsg: true
           };
           if (this.clientSignUp) {
             /*  const jsonData = {
@@ -153,7 +154,7 @@ export class SignUpComponent implements OnInit {
   confirmModal(errorMsg) {
     const dialogData = {
       header: 'REGISTER',
-      body: errorMsg,
+      body: "User already exists. How would you like to proceed?",
       body2: 'This cannot be undone.',
       btnYes: 'LOGIN',
       btnNo: 'CANCEL',

@@ -12,32 +12,39 @@ import { MarketplaceReviewRatingComponent } from './advisor-marketplace/marketpl
 const routes: Routes = [
   {
     path: '',
-    component: AdvisorMarketplaceComponent
+    component: AdvisorMarketplaceComponent,
+    children: [
+      {
+        path: 'profile',
+        component: MarketplaceProfileComponent
+      },
+      {
+        path: 'leads',
+        component: MarketplaceLeadsComponent
+      },
+      {
+        path: 'posts',
+        component: MarketplacePostsComponent
+      },
+      {
+        path: 'chats',
+        component: MarketplaceChatsComponent
+      },
+      {
+        path: 'calls',
+        component: MarketplaceCallsComponent
+      },
+      {
+        path: 'reviewRating',
+        component: MarketplaceReviewRatingComponent
+      },
+      {
+        path: '',
+        redirectTo: 'profile',
+        pathMatch: 'full'
+      }
+    ]
   },
-  {
-    path: 'profile',
-    component: MarketplaceProfileComponent
-  },
-  {
-    path: 'leads',
-    component: MarketplaceLeadsComponent
-  },
-  {
-    path: 'posts',
-    component: MarketplacePostsComponent
-  },
-  {
-    path: 'chats',
-    component: MarketplaceChatsComponent
-  },
-  {
-    path: 'calls',
-    component: MarketplaceCallsComponent
-  },
-  {
-    path: 'reviewRating',
-    component: MarketplaceReviewRatingComponent
-  }
 ];
 
 @NgModule({

@@ -30,8 +30,8 @@
             </div>
         </div>
     </div>
-    <app-add-number [flag]="mobileNumberFlag" [numberList]="moreInfoData.mobileList"
-        (numberArray)="getNumberDetails($event)"></app-add-number>
+    <app-add-number [flag]="mobileNumberFlag" [isResidential]="moreInfoData.taxStatusId"
+        [numberList]="moreInfoData.mobileList" (numberArray)="getNumberDetails($event)"></app-add-number>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-12">PAN</h5>
@@ -39,9 +39,9 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" (input)="toUpperCase($event)" formControlName="pan" #pan
-                        appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" maxlength="10" matInput
-                        class="form-control">
+                    <input autocomplete="off" (input)="toUpperCase(moreInfoForm.get('pan'),$event)"
+                        formControlName="pan" #pan appInputValueValidation
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" maxlength="10" matInput class="form-control">
                     <mat-hint>Optional</mat-hint>
                     <mat-error *ngIf="moreInfoForm.get('pan').errors?.pattern">Pan invalid</mat-error>
                     <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
@@ -130,7 +130,7 @@
         <div class="col-md-3 p-0">
             <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
-                    <input [matDatepicker]="anniversaryDate" formControlName="dateOfBirth"
+                    <input [matDatepicker]="anniversaryDate" [max]="maxDate" formControlName="dateOfBirth"
                         (click)="anniversaryDate.open()" class="form-control br-0 b-0" matInput readonly>
                     <mat-datepicker-toggle matSuffix [for]="anniversaryDate"></mat-datepicker-toggle>
                     <mat-datepicker #anniversaryDate></mat-datepicker>

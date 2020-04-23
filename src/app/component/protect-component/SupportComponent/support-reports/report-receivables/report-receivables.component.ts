@@ -5,6 +5,7 @@ import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { MatChipInputEvent, MatTableDataSource } from '@angular/material';
 import { OrderHistoricalFileComponent } from '../../order-historical-file/order-historical-file.component';
 import { UtilService } from 'src/app/services/util.service';
+import { SupportService } from '../../support.service';
 
 @Component({
   selector: 'app-report-receivables',
@@ -12,12 +13,18 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./report-receivables.component.scss']
 })
 export class ReportReceivablesComponent implements OnInit {
+  isLoading: boolean;
+
+  sort: any;
+  eventService: any;
 
   constructor(
-    private subInjectService: SubscriptionInject
+    private subInjectService: SubscriptionInject,
+    private supportService: SupportService
   ) { }
 
   ngOnInit() {
+    this.getMyIfasList();
   }
 
   dataSource = new MatTableDataSource<ReportReceivableI>(ELEMENT_DATA);
@@ -56,10 +63,43 @@ export class ReportReceivablesComponent implements OnInit {
     }
   }
 
+  getMyIfasList() {
+    let obj = {};
+    this.isLoading = true;
+    this.supportService.getMyIFAValues(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data && data.length !== 0) {
+          this.isLoading = false;
+          let tableArray = [];
+          data.forEach(element => {
+            tableArray.push({
+              adminName: element.name,
+              email: element.email_id,
+              mobile: element.mobile_number,
+              invoice: ELEMENT_DATA[1].invoice,
+              sentDate: ELEMENT_DATA[1].sentDate,
+              dueDate: ELEMENT_DATA[1].dueDate,
+              dueSince: ELEMENT_DATA[1].dueSince,
+              amount: ELEMENT_DATA[1].amount,
+              balance: ELEMENT_DATA[1].balance,
+              adminAdvisorId: element.admin_advisor_id
+            })
+          });
+          this.dataSource.data = tableArray;
+          this.dataSource.sort = this.sort;
+        } else {
+          this.dataSource.data = null;
+        }
+      },
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+
   openAdminDetails(data) {
     const fragmentData = {
       flag: 'ifaDetails',
-      data,
+      data: { ...data, adminAdvisorId: 2808 },
       id: 1,
       state: 'open70',
       componentName: IfasDetailsComponent,

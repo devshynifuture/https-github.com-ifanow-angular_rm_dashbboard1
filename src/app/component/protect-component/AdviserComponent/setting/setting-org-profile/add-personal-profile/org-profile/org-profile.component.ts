@@ -9,6 +9,7 @@ import { SettingsService } from '../../../settings.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PostalService } from 'src/app/services/postal.service';
 import { Subscription } from 'rxjs';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-org-profile',
@@ -32,6 +33,7 @@ export class OrgProfileComponent implements OnInit {
   pinInvalid: boolean;
   validatorType = ValidatorType
   subscription = new Subscription();
+  isdCodes: Array<any> = [];
 
   constructor(
     public utils: UtilService, 
@@ -40,6 +42,7 @@ export class OrgProfileComponent implements OnInit {
     public subInjectService: SubscriptionInject,
     private settingsService: SettingsService,
     private postalService: PostalService,
+    private peopleService: PeopleService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -54,8 +57,20 @@ export class OrgProfileComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
+    this.getIsdCodesData();
     this.getOrgProfiles();
     this.getdataForm(this.inputData);
+  }
+
+  getIsdCodesData() {
+    this.peopleService.getIsdCode({}).subscribe(
+      data => {
+        if (data) {
+          console.log(data);
+          this.isdCodes = data;
+        }
+      }
+    )
   }
 
   Close(flag) {
@@ -107,6 +122,7 @@ export class OrgProfileComponent implements OnInit {
     this.orgProfile = this.fb.group({
       companyName: [(!data) ? '' : (data.companyName), [Validators.required, Validators.maxLength(50)]],
       emailId: [(!data) ? '' : data.email, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
+      isdCodeId: [(!data) ? '' : data.isdCodeId, [Validators.required]],
       mobileNo: [(!data) ? '' : data.mobileNumber, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(ValidatorType.NUMBER_ONLY)]],
       website: [(!data) ? '' : data.website, [Validators.required]],
       address: [(!data) ? '' : data.billerAddress, [Validators.required]],
@@ -222,6 +238,7 @@ export class OrgProfileComponent implements OnInit {
         this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
         this.anyDetailsChanged = true;
         this.profileImg = jsonDataObj.logoUrl;
+        AuthService.setAppPic(jsonDataObj.logoUrl);
         this.switchToTab(++this.selectedTab);
       });
     } else {

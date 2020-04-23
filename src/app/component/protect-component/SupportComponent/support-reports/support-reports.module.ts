@@ -6,6 +6,7 @@ import { ReportReceivablesComponent } from './report-receivables/report-receivab
 import { ReportUpsellingsComponent } from './report-upsellings/report-upsellings.component';
 import { SupportReportsComponent } from './support-reports.component';
 import { MaterialModule } from 'src/app/material/material';
+import { CustomDirectiveModule } from '../../../../common/directives/common-directive.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { MaterialModule } from 'src/app/material/material';
   imports: [
     CommonModule,
     SupportReportsRoutingModule,
-    MaterialModule
+    MaterialModule,
+    CustomDirectiveModule
   ]
 })
 export class SupportReportsModule { }

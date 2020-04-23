@@ -16,9 +16,7 @@
         <div class="col-md-7 pr-0">
             <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                    <input matInput placeholder="Enter Full name" formControlName="fullName" class="form-control"
-                        [readonly]="!data.is_add_call" [inputValidator]="validatorType.PERSON_NAME" [maxValue]="50"
-                        appInputValueValidation>
+                    <input matInput placeholder="Enter Full name" formControlName="fullName" class="form-control" [readonly]="!data.is_add_call" [inputValidator]="validatorType.PERSON_NAME" [maxValue]="50" appInputValueValidation>
                     <mat-hint align="end">{{teamMemberFG.get('fullName').value.length}}/50</mat-hint>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -33,8 +31,7 @@
         <div class="col-md-7 pr-0">
             <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                    <input placeholder="Enter Email Id" matInput formControlName="emailId" class="form-control"
-                        [readonly]="!data.is_add_call">
+                    <input placeholder="Enter Email Id" matInput formControlName="emailId" class="form-control" [readonly]="!data.is_add_call">
                     <mat-error *ngIf="teamMemberFG.get('emailId').errors?.pattern">Email is invalid</mat-error>
                     <mat-error *ngIf="teamMemberFG.get('emailId').errors?.required">This field is required</mat-error>
                 </mat-form-field>
@@ -43,12 +40,24 @@
         </div>
     </div>
     <div class="row pt-28">
-        <!-- <div class="col-md-3 text-right pr-0">
+        <div class="col-md-3 text-right pr-0">
             <h5 class="m-0 pt-20">Mobile</h5>
-        </div> -->
-        <div class="col-md-12 pr-0">
+        </div>
+        
+        <div class="col-md-3 pr-0">
             <div class="form-group">
-                <!-- <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
+                <mat-form-field appearance="standard">
+                    <mat-select formControlName="isdCodeId" class="form-control">
+                        <mat-option value="" selected disabled>Select Country Code</mat-option>
+                        <mat-option [value]="code.id" *ngFor="let code of isdCodes" [disabled]="!data.is_add_call">{{code.code}}</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-4 pr-0">
+            <div class="form-group">
+                <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                     <input matInput [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" appInputValueValidation
                         #mobileNo formControlName="mobileNo" placeholder="Enter Mobile number" class="form-control"
                         [readonly]="!data.is_add_call">
@@ -56,10 +65,7 @@
                         Enter Valid Mobile number</mat-error>
                     <mat-error *ngIf="teamMemberFG.get('mobileNo').errors?.required">This field is required</mat-error>
                     <mat-hint align="end">{{mobileNo.value.length}}/10</mat-hint>
-                </mat-form-field> -->
-                <app-add-number [numberList]="data.mainData.mobile" [flag]="'Mobile'"
-                    (numberArray)="getNumberDetails($event)" [minimumCompulsary]='1'>
-                </app-add-number>
+                </mat-form-field>
             </div>
         </div>
     </div>
@@ -86,8 +92,6 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit"
-                (click)="save()">{{data.is_add_call ? 'SEND INVITE' : 'SAVE'}}</button>
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()">{{data.is_add_call ? 'SEND INVITE' : 'SAVE'}}</button>
         </div>
     </div>
-</div>

@@ -37,13 +37,18 @@ export class UpperSliderBackofficeComponent implements OnInit {
   isLoading: boolean = false;
   aumList: any;
   mutualFundIds: any[] = [];
-  advisorId = AuthService.getAdvisorId();
+  // advisorId = AuthService.getAdvisorId();
+  // need to change  this 
+
+  advisorId = 2808;
   rtId: any;
   didAumReportListGot: boolean = false;
   aumListReportValue: any[] = [];
   adminAdvisorIds: any[] = [];
   adminId = AuthService.getAdminId();
   parentId = AuthService.getParentId();
+  isLoadingForDuplicate: boolean = false;
+  canExportExcelSheet = 'false';
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -56,7 +61,6 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   ngOnInit() {
     this.teamMemberListGet();
-
   }
 
   handlingDataVariable() {
@@ -89,6 +93,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
     this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
       .subscribe(data => {
         if (data && data.length !== 0) {
+          console.log("team members: ", data)
           data.forEach(element => {
             this.adminAdvisorIds.push(element.adminAdvisorId);
           });
@@ -180,7 +185,9 @@ export class UpperSliderBackofficeComponent implements OnInit {
             aumBalanceDate: res.aumList[0].aumDate,
             unmatchedCountBeforeRecon: res.unmappedCount,
             transactionDate: res.transactionDate,
-            rtId: this.data.rtId
+            rtId: this.data.rtId,
+            // when rm login is creted this will get value from localStorage
+            rmId: 1
           }
           if (doStartRecon) {
             this.reconService.putBackofficeReconAdd(data)
@@ -224,7 +231,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
         mutualFundIds.push(element.mutualFundId);
       });
       data = {
-        advisorId: this.advisorId,
+        advisorIds: [this.advisorId],
         folio: mutualFundIds
       }
     } else {
@@ -234,10 +241,10 @@ export class UpperSliderBackofficeComponent implements OnInit {
       }
     }
     if (this.didAumReportListGot) {
-      this.isLoading = true;
+      this.isLoadingForDuplicate = true;
       this.reconService.getDuplicateFolioDataValues(data)
         .subscribe(res => {
-          this.isLoading = false;
+          this.isLoadingForDuplicate = false;
           if (res) {
             console.log("this is some duplicate values:::::::::", res, this.aumList);
             let filteredArrValue = [];
@@ -416,8 +423,9 @@ export class UpperSliderBackofficeComponent implements OnInit {
           'amt difference',
         ]
 
-        excelData.push(Object.assign(data))
+        excelData.push(Object.assign(data));
       });
+      ExcelService.exportExcel(headerData, header, excelData, footer, value);
     } else {
       if (this.didAumReportListGot && this.aumListReportValue.length !== 0) {
         this.aumListReportValue.forEach(element => {
@@ -534,12 +542,14 @@ export class UpperSliderBackofficeComponent implements OnInit {
       aumReconId: this.data.id
     };
     this.isLoading = true;
+    this.canExportExcelSheet = 'intermediate';
     this.reconService.getAumReportListValues(data)
       .subscribe(res => {
         this.isLoading = false;
         console.log("this is aum report list get:::", res);
         if (res) {
           this.didAumReportListGot = true;
+          this.canExportExcelSheet = 'true';
           console.log("this is aum report list get:::", res);
           let arrayValue = [];
           this.aumListReportValue = res;
@@ -557,6 +567,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           });
           this.dataSource1.data = arrayValue;
         } else {
+          this.canExportExcelSheet = 'false';
           this.didAumReportListGot = false;
           this.dataSource1.data = null;
         }

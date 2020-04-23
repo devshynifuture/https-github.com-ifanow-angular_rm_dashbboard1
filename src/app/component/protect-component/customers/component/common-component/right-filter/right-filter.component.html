@@ -176,8 +176,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" *ngIf="transactionPeriod == true ">
-            <div class="col-md-4 pl-0">
+            <div class="col-md-4 pl-0" *ngIf="transactionPeriod == true ">
                 <h5 class="m-0 pb-8">From date</h5>
                 <div class="col-md-12 p-0">
                     <mat-form-field class="ba-date">
@@ -191,7 +190,7 @@
 
                 </div>
             </div>
-            <div class="col-md-4 p-0">
+            <div class="col-md-4 p-0" *ngIf="transactionPeriod == true ">
                 <h5 class="m-0 pb-8">To date</h5>
                 <div class="col-md-12 p-0">
                     <mat-form-field class="ba-date">
@@ -205,17 +204,16 @@
 
                 </div>
             </div>
-        </div>
         <div class="col-md-6 pl-0" *ngIf="_data.name != 'Overview Report'">
             <h5 class="m-0 pb-8">Show zero folios?</h5>
             <mat-radio-group aria-label="Select an option" id="custom-radio" formControlName="showFolios">
-                <mat-radio-button value="1" class="text-custom b-ua">Yes</mat-radio-button>
-                <mat-radio-button value="2" class="text-primary bu-primary">No</mat-radio-button>
+                <mat-radio-button value="1"[ngClass]="{'b-a-custom': summaryFilerForm.get('showFolios').value==1,'text-primary':summaryFilerForm.get('showFolios').value==1,'b-a':summaryFilerForm.get('showFolios').value==2}">Yes</mat-radio-button>
+                <mat-radio-button value="2" [ngClass]="{'b-a-custom': summaryFilerForm.get('showFolios').value==2,'text-primary':summaryFilerForm.get('showFolios').value==2,'b-a':summaryFilerForm.get('showFolios').value==1}">No</mat-radio-button>
             </mat-radio-group>
 
         </div>
     </div>
-
+    <div *ngIf="showError" class="errorClass">Please select at least one {{showError}}</div>
 </div>
 <div class="bottom-fixed-35 wrapper-12">
     <div class="row">
@@ -224,7 +222,7 @@
         </div>
         <div class="col-md-8 right text-right">
             <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="generateReport()">GENERATE REPORT</button> -->
-            <app-progress-button class="mb-0 pt-8 text-white c-p" (click)="generateReport()" [options]="barButtonOptions">
+            <app-progress-button class="mb-0 pt-8 text-white c-p" (click)="(!showError) ? generateReport() : null" [options]="barButtonOptions">
             </app-progress-button>
         </div>
     </div>

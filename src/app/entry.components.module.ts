@@ -98,6 +98,8 @@ import {GetSharebleLinkComponent} from './component/protect-component/customers/
 // tslint:disable-next-line:max-line-length
 import {BottomSheetComponent} from './component/protect-component/customers/component/common-component/bottom-sheet/bottom-sheet.component';
 import {CustomCommonModule} from './common/custom.common.module';
+import { PreviewComponent } from './component/protect-component/customers/component/customer/customer-overview/overview-documents/preview/preview.component';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 // tslint:disable-next-line:max-line-length
 // import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
@@ -203,6 +205,7 @@ export const componentList = [
   DetailedPoRdComponent,
   DetailedViewSchemeHoldingComponent,
   ViewActivityComponent,
+  PreviewComponent,
   DetailedViewOtherPayablesComponent,
   AddOtherPayablesComponent,
   MfAllocationsComponent,
@@ -249,6 +252,7 @@ export const componentList = [
     AccountCommonModule,
     CustomDirectiveModule,
     Ng5SliderModule, // used in MultiYearGoalComponent
+    NgxDocViewerModule,
   ],
   exports: [
     FormsModule,

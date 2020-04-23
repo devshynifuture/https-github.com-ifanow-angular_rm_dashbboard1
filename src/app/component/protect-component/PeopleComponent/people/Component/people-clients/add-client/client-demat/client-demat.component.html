@@ -15,7 +15,8 @@
             <h5 class="m-0 pt-8">Mode of holding</h5>
         </div>
         <div class="col-md-7 p-0 mode-holding">
-            <mat-radio-group formControlName="modeOfHolding" [(ngModel)]="holdingMode" aria-label="Select an option">
+            <mat-radio-group (change)="changeHoldingType($event)" formControlName="modeOfHolding"
+                [(ngModel)]="holdingMode" aria-label="Select an option">
                 <mat-radio-button value="1"
                     [ngClass]="{'bu-primary': holdingMode=='1','borderRadio': holdingMode=='2','text-primary': holdingMode=='1','text-custom': holdingMode=='2'}"
                     class="borderRadio">Single
@@ -70,7 +71,7 @@
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter Depository ID" autocomplete="off" appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" formControlName="depositoryPartId" matInput
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="depositoryPartId" matInput
                         class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -85,7 +86,7 @@
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter Demat client ID" autocomplete="off" appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" formControlName="dematClientId" matInput
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="dematClientId" matInput
                         class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
@@ -123,8 +124,8 @@
             </div>
         </div>
     </div>
-    <app-add-number *ngIf="dematList" [numberList]="dematList.mobileDataList" [flag]="mobileNumberFlag"
-        (numberArray)="getNumberDetails($event)"></app-add-number>
+    <app-add-number *ngIf="dematList" [isResidential]="userData.taxStatusId" [numberList]="dematList.mobileDataList"
+        [flag]="mobileNumberFlag" (numberArray)="getNumberDetails($event)"></app-add-number>
     <!-- <div class="row pt-44">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-8">Nominee</h5>
@@ -162,7 +163,7 @@
                         <mat-select appOwnerNominee matInput formControlName="name" [clientIdData]="userData.clientId"
                             [data]='ownerData' (selectionChange)="disabledMember($event.value,'nominee')"
                             (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
-                            <mat-option *ngIf="nomineesListFM" value='' disabled>No family members found</mat-option>
+                            <mat-option *ngIf="nomineesListFM" value=''>{{userData.name}}</mat-option>
                             <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                 <span>{{f.userName}}</span>
                             </mat-option>
@@ -250,7 +251,7 @@
         <div class="col-md-4">
             <h5 (click)="close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right">
+        <div class="col-md-8 d-flex align-items-end justify-content-end">
             <button mat-stroked-button *ngIf="fieldFlag" (click)="saveNext('Next')"
                 class=" br-0 bg-white text-inherit">SAVE &
                 NEXT
@@ -260,11 +261,8 @@
           </button> -->
             <!-- <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
           </button> -->
-            <app-progress-button *ngIf="fieldFlag==undefined" (btnClick)="saveNext('Save')" [options]="barButtonOptions"
-                class="br-0 text-inherit mr-12">
-            </app-progress-button>
             <app-progress-button (btnClick)="saveNext('Save')" [options]="barButtonOptions"
-                class="br-0 text-inherit mr-12">
+                class="br-0 text-inherit ml-12">
             </app-progress-button>
         </div>
     </div>

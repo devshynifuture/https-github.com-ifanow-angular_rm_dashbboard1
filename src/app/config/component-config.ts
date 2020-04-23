@@ -67,8 +67,6 @@ export const appConfig = {
   ///////////////////////////// back office/////////////////////////////////////////////
 
 
-
-
   AllClient_get: 'asset/allClient/get',
   AllClient_ByName_get: 'asset/allClient/ByName/get',
   AllClient_ByTags_get: 'asset/allClient/ByTags/get',
@@ -163,6 +161,8 @@ export const appConfig = {
   RENAME_FILE: 'document/account/document/all-file/file/rename',
   RENAME_FOLDER: 'document/account/document/all-file/folder/rename',
   DELETE_FOLDER: 'document/account/document/all-file/folder/trash',
+  DELETE_PERMANANT_FOLDER:'',
+  RECOVERY:'',
   SEARCH_FILE: 'document/account/document/all-file/search',
   STAR_FILE: 'document/document/all-file/star',
   SEND_SHAREBLE_LINK: 'pdfAndEmail/email-only/send',
@@ -440,6 +440,8 @@ export const appConfig = {
   MANDATE_VIEW: 'mandate/view',
   GET_TOKEN: 'user/bse/upload/password',
   BANK_MANDTAE: 'nse/iin/bank-detail/get',
+  TAX_MASTER: 'nse/tax-master/get',
+
   ADD_MANDATE: 'mandate/add',
   // SIP_BSE:'bse/order/create',
 
@@ -528,10 +530,11 @@ export const appConfig = {
   GET_RM_LIST: 'rmdashboard/dashboard/admin/rm/list/get',
   ADD_RM: 'rmdashboard/dashboard/admin/rm/add',
   GET_MY_IFA_REC_SUMMARY: 'rmdashboard/myifas/recon-summary/get',
-  GET_FILE_ORDER_HISTORICAL_LIST_DATA: "fileorder/historical/advisor/list/get",
+  GET_FILE_ORDER_HISTORICAL_LIST_DATA: 'fileorder/historical/advisor/list/get',
   GET_FILE_ORDER_UPPER_LIST_DATA: 'fileorder/historical/list/get',
   POST_FILE_ORDER_BULK_DATA: 'fileorder/bulk/order',
   PUT_FILE_ORDER_RETRY: 'fileorder/list/retry',
+  GET_TICKET: 'rmdashboard/tickets/get',
 
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',
@@ -617,7 +620,7 @@ export const appConfig = {
   GET_BANK_LIST: 'user/bank/list/get',
   SEND_WELCOME_EMAIL: 'user/advisor/welcome/email/send',
   CREATE_TEAM_MEMBER: 'user/advisor/team-member/sign-up',
-
+  GET_ISD_CODES: 'user/isd-code/list/get',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
@@ -625,6 +628,7 @@ export const appConfig = {
   SEARCH_USERNAME: 'user/search/username',
   SAVE_PASSWORD: 'user/password/update',
   LOGIN_WITH_PASSWORD: 'user/login/with/password',
+  SUPPORT_LOGIN: 'rmdashboard/rm/sign-in',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_UPDATE: 'calendar/event/update',

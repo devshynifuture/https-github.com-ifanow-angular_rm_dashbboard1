@@ -10,7 +10,8 @@
 </div>
 
 <div [formGroup]="convertClientForm" class="pt-90 pl-28 pr-28 pb-100">
-    <h5 class="m-0 roboto">You are about to convert the prospect <strong> Rahul Jain </strong> into a client. <br>
+    <h5 class="m-0 roboto">You are about to convert the prospect <strong> {{clientData.name}} </strong> into a client.
+        <br>
         Before we do that, let’s confirm a few things...
     </h5>
 
@@ -20,6 +21,7 @@
             <div class="form-group m-0">
                 <mat-form-field>
                     <mat-select class="form-control" formControlName="clientOwner">
+                        <mat-option value="" disabled>Select option</mat-option>
                         <mat-option *ngFor="let client of clientOwnerList" [value]="client">{{client.name}}</mat-option>
                     </mat-select>
                     <mat-error>This Field is required</mat-error>
@@ -43,7 +45,10 @@
             <div class="form-group m-0">
                 <mat-form-field>
                     <mat-select formControlName="confirmRole" class="form-control">
-                        <mat-option value="1">Client - Standard plan</mat-option>
+                        <mat-option value="" disabled>Select option</mat-option>
+                        <!-- <mat-option value="1">Client - Standard plan</mat-option> -->
+                        <mat-option [value]="role.clientRoleId" *ngFor="let role of clientRoles">
+                            {{role.clientRoleName}}</mat-option>
                     </mat-select>
                     <mat-error>This Field is required</mat-error>
                 </mat-form-field>
@@ -59,24 +64,24 @@
             </p>
         </div>
     </div>
-  <!-- <div class="row">
+    <!-- <div class="row">
      <div class="col-md-12 roboto f-14 p-0">
          <mat-checkbox> </mat-checkbox> Automatically generate a password
      </div>
  </div>-->
 
-  <div class="row pt-24">
-    <div class="col-md-12 roboto f-14 p-0">
-      <mat-checkbox formControlName="sendEmailFlag"></mat-checkbox>
-      Send welcome email
+    <div class="row pt-24">
+        <div class="col-md-12 roboto f-14 p-0">
+            <mat-checkbox formControlName="sendEmailFlag"></mat-checkbox>
+            Send welcome email
+        </div>
+        <div class="col-md-12 pl-20 pr-0">
+            <p class="f-12 l-18 m-0 text-primitive">
+                If opted, an email window will show up once you click on the Convert button below. You can customize the
+                email content from here.
+            </p>
+        </div>
     </div>
-    <div class="col-md-12 pl-20 pr-0">
-      <p class="f-12 l-18 m-0 text-primitive">
-        If opted, an email window will show up once you click on the Convert button below. You can customize the
-        email content from here.
-      </p>
-    </div>
-  </div>
 
 
 </div>
@@ -87,14 +92,14 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
-      <div class="col-md-8 right text-right">
+        <div class="col-md-8 right text-right">
 
-        <!-- <button *ngIf="convertClientForm.valid" mat-stroked-button class="btn-bottom br-0 text-inherit"
+            <!-- <button *ngIf="convertClientForm.valid" mat-stroked-button class="btn-bottom br-0 text-inherit"
             (click)="convertIntoLead()">CONVERT
         </button> -->
-        <app-progress-button (btnClick)="convertIntoLead()" *ngIf="convertClientForm.valid"
-                             [options]="barButtonOptions" class="br-0 text-inherit mr-12">
-        </app-progress-button>
-      </div>
+            <app-progress-button (btnClick)="convertIntoLead()" *ngIf="convertClientForm.valid"
+                [options]="barButtonOptions" class="br-0 text-inherit mr-12">
+            </app-progress-button>
+        </div>
     </div>
 </div>

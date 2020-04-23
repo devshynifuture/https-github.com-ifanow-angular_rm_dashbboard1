@@ -28,18 +28,25 @@ $lineheight:20px;
     line-height: 20px !important;
 }
 
-.l-21 {
+.l-21,.lh-21 {
     line-height: 21px !important;
 }
 
 .l-26 {
     line-height: 26px !important;
 }
-
+.lh-29{
+    line-height: 29px !important;
+}
+.lh-36{
+    line-height: 36px !important;
+}
 .lh-40 {
     line-height: 40px !important;
 }
-
+.lh-48{
+    line-height: 48px !important;
+}
 .lh-normal {
     line-height: normal !important;
 }
@@ -524,6 +531,9 @@ padding-top:18px !important;
 
 .pt-180 {
     padding-top: 180px !important;
+}
+.pt-220 {
+    padding-top: 220px !important;
 }
 
 .pr-0 {

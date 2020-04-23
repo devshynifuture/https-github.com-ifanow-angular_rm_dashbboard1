@@ -4,16 +4,16 @@
             <div class="col-md-4 pl-0 c-p">
                 <h4 class="m-0 text-black roboto">Mutual fund overview</h4>
             </div>
-            <div class="col-md-8 p-0 right text-right" *ngIf="!isLoading">
-                <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p" *ngIf="!isSpinner">
+            <div class="col-md-8 p-0 justify-content-end d-flex align-items-center " *ngIf="!isLoading">
+                <div class="pdfClass"> 
+                <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p" *ngIf="!fragmentData.isSpinner">
                 <mat-menu #menu5="matMenu">
                     <button (click)="generatePdf()" mat-menu-item>PDF
                     </button>
                     <!-- <button (click)="Excel('Mutual fund transactions')" mat-menu-item>XLS</button> -->
                 </mat-menu>
-                <mat-spinner [diameter]="10" *ngIf="isSpinner"></mat-spinner>
-                <img src="assets/images/svg/up-down.svg" class="c-p">
-                <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
+                <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
+                </div>
                 <button mat-stroked-button class="btn-default addon mr-12 v-middle"  (click)="openFilter()"><i
             class="material-icons">filter_list</i>FILTERS</button>
                 <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">ADD NEW</button>
@@ -70,8 +70,8 @@
                         <div class="col-md-12 p-0">
                             <p class="m-0 text-custom pt-20 pl-8">Current value</p>
                                     <h2  class="m-0 f-300 text-black pt-4 pl-8 pb-16 relClass" >
-                                        <div [ngClass]="{'isLoading': height24}" class="bar"  appFormatNumber *ngIf="totalValue.currentValue">
-                                            {{(totalValue.currentValue) ? (totalValue.currentValue) : 0}} 
+                                        <div  class="bar height24" >
+                                                <span appFormatNumber *ngIf="totalValue.currentValue"> {{(totalValue.currentValue) ? (totalValue.currentValue) : 0}}</span>
                                         </div>
                                     </h2>
                            
@@ -81,7 +81,7 @@
                                 <div class="col-md-4 pr-0 pl-12">
                                     <p class="text-custom m-0">Amount invested</p>
                                     <h5 class="m-0 text-black relClass">
-                                        <div class="bar">
+                                        <div class="bar height24">
                                         <span appFormatNumber *ngIf="totalValue.totalTransactionAmt"> {{(totalValue)?(totalValue.totalTransactionAmt):0}}</span>
                                         </div>
                                     </h5>
@@ -89,15 +89,15 @@
                                 <div class="col-md-4 pr-0 pl-12">
                                     <p class="text-custom m-0">Unrealized gain/loss</p>
                                     <h5 class="m-0 text-success relClass height24">
-                                        <div class="bar" *ngIf="isLoading"></div>
+                                        <div class="bar height24" *ngIf="isLoading"></div>
                                         <span appFormatNumber *ngIf="totalValue.totalGain && !isLoading">{{(totalValue.totalGain)?(totalValue.totalGain):0}}</span>
                                     </h5>
                                 </div>
                                 <div class="col-md-4 pr-0 pl-12">
                                     <p class="text-custom m-0">Returns</p>
                                     <h5 class="m-0 text-success relClass height24">
-                                        <div class="bar">
-                                        <span *ngIf="totalValue.xirr">{{totalValue.xirr | number:'1.2-2'}}</span>% <i class="material-icons f-14 f-700"  *ngIf="!isLoading">
+                                        <div class="bar height24">
+                                        <span *ngIf="totalValue.xirr">{{totalValue.xirr | number:'1.2-2'}}</span> {{(!isLoading) ? '%' : ''}} <i class="material-icons f-14 f-700"  *ngIf="!isLoading">
                       arrow_upward
                     </i>
                         </div>
@@ -120,16 +120,16 @@
                                 <div class="col-md-6">
                                     <p class="f-500 text-black mb-0">Equity</p>
                                 </div>
-                                <div class="col-md-3 relClass height24">
-                                    <div class="bar">
+                                <div class="col-md-3 relClass ">
+                                    <div class="bar height24">
                                     <p class="text-black mb-0 ">
-                                        <span appFormatNumber *ngIf="this.equityCurrentValue">{{(this.equityCurrentValue)?this.equityCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.equityCurrentValue">0</span>
+                                        <span appFormatNumber *ngIf="this.equityCurrentValue">{{(this.equityCurrentValue)?this.equityCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.equityCurrentValue && !isLoading">0</span>
                                     </p>
                                     </div>
                                 </div>
-                                <div class="col-md-2 relClass height24">
-                                    <div class="bar">
-                                    <p class="text-black mb-0 ">{{(this.equityPercentage) ? (this.equityPercentage | number:'1.2-2') : '0'}}%</p>
+                                <div class="col-md-2 relClass ">
+                                    <div class="bar height24">
+                                     <p class="text-black mb-0"><span appFormatNumber *ngIf="this.equityPercentage">{{(this.equityPercentage)?this.equityPercentage:0}}</span><span appFormatNumber *ngIf="!this.equityPercentage && !isLoading">0%</span></p>
                                     </div>    
                                 </div>
                             </div>
@@ -140,15 +140,15 @@
                                 <div class="col-md-6">
                                     <p class="f-500 text-black mb-0">Debt</p>
                                 </div>
-                                <div class="col-md-3 relClass height24">
-                                    <div class="bar">
-                                    <p class="text-black mb-0"><span appFormatNumber *ngIf="this.debtCurrentValue">{{(this.debtCurrentValue)?this.debtCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.debtCurrentValue">0</span></p>
+                                <div class="col-md-3 relClass ">
+                                    <div class="bar height24">
+                                    <p class="text-black mb-0"><span appFormatNumber *ngIf="this.debtCurrentValue">{{(this.debtCurrentValue)?this.debtCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.debtCurrentValue && !isLoading">0</span></p>
                                     </div>
                                 </div>
-                                <div class="col-md-2 relClass height24">
-                                    <div class="bar">
-                                    <p class="text-black mb-0 ">{{(this.debtPercentage) ? (this.debtPercentage | number:'1.2-2') : '0'}}%</p>
-                                     </div>   
+                                <div class="col-md-2 relClass ">
+                                    <div class="bar height24">
+                                    <p class="text-black mb-0"><span appFormatNumber *ngIf="this.debtPercentage">{{(this.debtPercentage) ? (this.debtPercentage | number:'1.2-2') : '0'}}%</span><span appFormatNumber *ngIf="!this.debtPercentage && !isLoading ">0%</span></p>     
+                                </div>  
                                 </div>
                             </div>
                             <div class="row b-b pt-10 pb-10">
@@ -158,15 +158,15 @@
                                 <div class="col-md-6">
                                     <p class="f-500 text-black mb-0">Hybrid</p>
                                 </div>
-                                <div class="col-md-3 relClass height24">
-                                    <div class="bar">
-                                    <p class="text-black mb-0 relClass height24"><span appFormatNumber *ngIf="this.hybridCurrentValue">{{(this.hybridCurrentValue)?this.hybridCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.hybridCurrentValue">0</span></p>
+                                <div class="col-md-3 relClass ">
+                                    <div class="bar height24">
+                                    <p class="text-black mb-0"><span appFormatNumber *ngIf="this.hybridCurrentValue">{{(this.hybridCurrentValue)?this.hybridCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.hybridCurrentValue && !isLoading">0</span></p>
                                     </div>        
                                 </div>
-                                <div class="col-md-2 relClass height24">
-                                    <div class="bar">
-                                    <p class="text-black mb-0 relClass height24">{{(this.hybridPercenatge)? (this.hybridPercenatge | number:'1.2-2') : '0'}}%</p>
-                                     </div>   
+                                <div class="col-md-2 relClass ">
+                                    <div class="bar height24">
+                                    <p class="text-black mb-0"><span appFormatNumber *ngIf="this.hybridPercenatge">{{(this.hybridPercenatge) ? (this.hybridPercenatge | number:'1.2-2') : '0'}}%</span><span appFormatNumber *ngIf="!this.hybridPercenatge && !isLoading ">0%</span></p>     
+                                     </div>  
                                 </div>
                             </div>
                             <div class="row b-b pt-10 pb-10">
@@ -176,18 +176,17 @@
                                 <div class="col-md-6 ">
                                     <p class="f-500 text-black mb-0">Solutions oriented</p>
                                 </div>
-                                <div class="col-md-3 relClass height24">
-                                    <div class="bar">
+                                <div class="col-md-3 relClass ">
+                                    <div class="bar height24">
                                     <p class="text-black mb-0">
-                                        <span appFormatNumber *ngIf="this.solution_OrientedCurrentValue">{{(this.solution_OrientedCurrentValue)?this.solution_OrientedCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.solution_OrientedCurrentValue">0</span>
+                                        <span appFormatNumber *ngIf="this.solution_OrientedCurrentValue">{{(this.solution_OrientedCurrentValue)?this.solution_OrientedCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.solution_OrientedCurrentValue && !isLoading">0</span>
                                     </p>
                                 </div>
                                 </div>
-                                <div class="col-md-2 relClass height24">
-                                    <div class="bar">
-                                    <p class="text-black mb-0 relClass height24">
-                                        {{(this.solution_OrientedPercenatge) ? (this.solution_OrientedPercenatge | number:'1.2-2') : '0'}}%
-                                    </p>
+                                <div class="col-md-2 relClass ">
+                                    <div class="bar height24">
+                                            <p class="text-black mb-0"><span appFormatNumber *ngIf="this.solution_OrientedPercenatge">{{(this.solution_OrientedPercenatge) ? (this.hybridPercenatge | number:'1.2-2') : '0'}}%</span><span appFormatNumber *ngIf="!this.solution_OrientedPercenatge && !isLoading ">0%</span></p>     
+
                                     </div>
                                 </div>
                             </div>
@@ -198,14 +197,14 @@
                                 <div class="col-md-6">
                                     <p class="f-500 text-black mb-0">Others</p>
                                 </div>
-                                <div class="col-md-3 relClass height24">
-                                    <div class="bar">
-                                    <p class="text-black mb-0"><span appFormatNumber *ngIf="this.otherCurrentValue">{{(this.otherCurrentValue)?this.otherCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.otherCurrentValue">0</span></p>
+                                <div class="col-md-3 relClass ">
+                                    <div class="bar height24">
+                                    <p class="text-black mb-0"><span appFormatNumber *ngIf="this.otherCurrentValue">{{(this.otherCurrentValue)?this.otherCurrentValue:0}}</span><span appFormatNumber *ngIf="!this.otherCurrentValue && !isLoading">0</span></p>
                                 </div>
                                 </div>
-                                <div class="col-md-2 relClass height24">
-                                    <div class="bar">
-                                    <p class="text-black mb-0">{{(this.otherPercentage) ? (this.otherPercentage | number:'1.2-2') : '0'}}%</p>
+                                <div class="col-md-2 relClass ">
+                                    <div class="bar height24 ">
+                                            <p class="text-black mb-0"><span appFormatNumber *ngIf="this.otherPercentage">{{(this.otherPercentage) ? (this.hybridPercenatge | number:'1.2-2') : '0'}}%</span><span appFormatNumber *ngIf="!this.otherPercentage && !isLoading ">0%</span></p>     
                                     </div>    
                                 </div>
                             </div>
@@ -217,7 +216,7 @@
     </div>
     <div class="wrapper-8 pt-0">
         <div class="row pt-12 pb-12 pb-md-20">
-            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 pl-0 scheme-wise" *ngIf="showSchemeWise">
+            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise" *ngIf="showSchemeWise">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 b-a pt-10 pb-10 bb-0">Scheme wise allocation</h5>
                 </div>
@@ -301,7 +300,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-6 col-lg-12 col-md-12 pr-0 cashflow" *ngIf="showCashFlow">
+
+            <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 cashflow" *ngIf="showCashFlow">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 pt-10 pb-10 b-a bb-0">Cashflow status</h5>
                 </div>
@@ -324,9 +324,8 @@
                     </table>
                 </div>
             </div>
-        </div>
-        <div class="row pb-44 pb-md-0">
-            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 pl-0 scheme-wise" *ngIf="showSubCategory">
+     
+            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise" *ngIf="showSubCategory">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 b-a pb-10 pt-10 bb-0">Sub category wise allocation
                     </h5>
@@ -350,7 +349,7 @@
                                 <div class="bar">{{(totalValue.totalTransactionAmt)?totalValue.totalTransactionAmt:0}}
                                 </div>
                             </td> -->
-                            <td *matFooterCellDef  appFormatNumber [value]="totalValue.totalTransactionAmt" class="br f-600 text-right" mat-footer-cell  >
+                            <td *matFooterCellDef  appFormatNumber [value]="totalValue.totalTransactionAmt" class="br f-600 p-8 text-right" mat-footer-cell  >
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="value">
@@ -362,7 +361,7 @@
                                 <div class="bar">{{(totalValue.currentValue)?totalValue.currentValue:0}}
                                 </div>
                             </td> -->
-                            <td *matFooterCellDef  appFormatNumber [value]="totalValue.currentValue" class="br f-600 text-right" mat-footer-cell  >
+                            <td *matFooterCellDef  appFormatNumber [value]="totalValue.currentValue" class="br p-8 f-600 text-right" mat-footer-cell  >
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="abs">
@@ -422,7 +421,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-6 col-lg-12 col-md-12 pr-0 familymember-wise" *ngIf="showFamilyMember">
+
+            <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 familymember-wise" *ngIf="showFamilyMember">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 pt-10 pb-10 b-a bb-0">Family member wise allocation</h5>
                 </div>
@@ -445,7 +445,7 @@
                                 <div class="bar"> {{(totalValue.totalTransactionAmt)?totalValue.totalTransactionAmt:0}}
                                 </div>
                             </td> -->
-                            <td *matFooterCellDef  appFormatNumber [value]="totalValue.totalTransactionAmt" class="br f-600 text-right" mat-footer-cell  >
+                            <td *matFooterCellDef  appFormatNumber [value]="totalValue.totalTransactionAmt" class="br p-8 f-600 text-right" mat-footer-cell  >
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="value">
@@ -457,7 +457,7 @@
                                 <div class="bar">{{(totalValue.currentValue)?totalValue.currentValue:0}}
                                 </div>
                             </td> -->
-                            <td *matFooterCellDef  appFormatNumber [value]="totalValue.currentValue" class="br f-600 text-right" mat-footer-cell  >
+                            <td *matFooterCellDef  appFormatNumber [value]="totalValue.currentValue" class="br p-8 f-600 text-right" mat-footer-cell  >
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="abs">
@@ -516,9 +516,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row pb-44 pb-md-0">
-            <div class="col-xl-6 col-lg-12 col-md-12 p-0 familymember-wise"  *ngIf="showCategory">
+       
+            <div class="col-xl-6 col-lg-12 col-md-12 p-0 mb-20 familymember-wise"  *ngIf="showCategory">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 pt-10 pb-10 b-a bb-0">Category wise allocation</h5>
                 </div>
@@ -540,7 +539,7 @@
                                 <div class="bar">{{(totalValue.totalTransactionAmt)?totalValue.totalTransactionAmt:0}}
                                 </div>
                             </td> -->
-                            <td *matFooterCellDef  appFormatNumber [value]="totalValue.totalTransactionAmt" class="br f-600 text-right" mat-footer-cell  >
+                            <td *matFooterCellDef  appFormatNumber [value]="totalValue.totalTransactionAmt" class="br p-8 f-600 text-right" mat-footer-cell  >
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="value">
@@ -552,7 +551,7 @@
                                 <div class="bar">{{(totalValue.currentValue)?totalValue.currentValue:0}}
                                 </div>
                             </td> -->
-                            <td *matFooterCellDef  appFormatNumber [value]="totalValue.currentValue" class="br f-600 text-right" mat-footer-cell  >
+                            <td *matFooterCellDef  appFormatNumber [value]="totalValue.currentValue" class="br p-8 f-600 text-right" mat-footer-cell  >
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="abs">
@@ -671,13 +670,13 @@
 
         <tr>
             <td style="text-align: left;">
-                <img  style="width: 200px;" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+                <img  width="100px"  *ngIf="advisorData" [src]="advisorData.profilePic">
             </td>
             <td style="text-align: right;">
-                <p style="margin: 0px; font-weight: 600;">Sher Khan</p>
-                <p style="margin: 0px; font-size: 14px;">Himachal Pradesh</p>
-                <p style="margin: 0px; font-size: 14px;"> <strong> Number: </strong> 123456789</p>
-                <p style="margin: 0px; font-size: 14px;"> <strong> Email : </strong>  sherKhan@gmail.com</p>
+                <p style="margin: 0px; font-weight: 600;"  *ngIf="advisorData">{{(advisorData.fullName) ? advisorData.fullName : '-'}}</p>
+                <p style="margin: 0px; font-size: 14px;"  *ngIf="advisorData">Himachal Pradesh</p>
+                <p style="margin: 0px; font-size: 14px;"  *ngIf="advisorData"> <strong> Number: </strong> {{(advisorData.mobileNo) ? advisorData.mobileNo : '-'}}</p>
+                <p style="margin: 0px; font-size: 14px;"  *ngIf="advisorData"> <strong> Email : </strong>  {{(advisorData.emailId) ? advisorData.emailId : '-'}}</p>
             </td>
         </tr>
 

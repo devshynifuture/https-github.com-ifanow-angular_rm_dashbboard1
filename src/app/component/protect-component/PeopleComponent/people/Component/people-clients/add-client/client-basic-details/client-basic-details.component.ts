@@ -8,6 +8,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { DatePipe } from '@angular/common';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 const moment = require('moment');
 
 @Component({
@@ -56,70 +57,83 @@ export class ClientBasicDetailsComponent implements OnInit {
   minAge: any;
   advisorData: any;
   maxDate = new Date();
+  invTypeCategoryList = [];
+  familyMemberType: { name: string; value: string; };
+  invTaxStatusList: any[];
+  countryCodeFlag: any;
   // advisorId;
 
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
-    private eventService: EventService, private datePipe: DatePipe) {
+    private eventService: EventService, private datePipe: DatePipe, private utilService: UtilService, private enumDataService: EnumDataService) {
   }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientRoles = this.enumService.getClientRole();
     console.log(this.clientRoles, 'this.clientRoles 123A');
-
+    console.log("tax status data", this.enumDataService.getDataForTaxMasterService());
   }
 
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     this.advisorData = AuthService.getUserInfo();
     if (data.fieldFlag == 'familyMember') {
+      (data.relationshipId == 2 || data.relationshipId == 4 || data.relationshipId == 5) ? data.genderId = 2 : (data.relationshipId == 3 || data.relationshipId == 6) ? data.genderId = 1 : data.genderId = 3;
       this.basicDetailsData = data;
-      this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
-      this.invTypeCategory = String(this.basicDetailsData.familyMemberType);
+      if (this.basicDetailsData.relationshipId == 2 || this.basicDetailsData.relationshipId == 6 || this.basicDetailsData.relationshipId == 5 || this.basicDetailsData.relationshipId == 7) {
+        this.familyMemberType = { name: 'Individual', value: '1' }
+        this.invTypeCategory = '1'
+        this.createIndividualForm(this.basicDetailsData);
+        this.invTaxStatusList = this.enumService.getIndividualTaxList();
+      }
+      else {
+        this.familyMemberType = { name: 'Minor', value: '2' };
+        this.invTypeCategory = '2';
+        this.createMinorForm(this.basicDetailsData)
+        this.invTaxStatusList = this.enumService.getMinorTaxList();
+      }
+      this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '' : (this.basicDetailsData.taxStatusId);
       (this.basicDetailsData.familyMemberType == 1 || this.basicDetailsData.familyMemberType == 0) ? this.createIndividualForm(this.basicDetailsData) : this.createMinorForm(this.basicDetailsData);
     } else {
       this.getClientList();
       this.basicDetailsData = data;
       if (this.basicDetailsData.userId == null) {
         this.invTypeCategory = '1';
-        this.invTaxStatus = '1';
+        this.invTaxStatus = '';
+        this.invTaxStatusList = this.enumService.getIndividualTaxList();
         this.createIndividualForm(null);
         return;
       } else {
         this.invTypeCategory = (data.clientType == 1 || data.clientType == 0) ? '1' : String(data.clientType);
-        this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '1' : String(this.basicDetailsData.taxStatusId);
+        this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '' : (this.basicDetailsData.taxStatusId);
       }
       (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
       this.getClientOrLeadData(this.basicDetailsData);
+      (this.invTypeCategory == '1') ? this.invTaxStatusList = this.enumService.getIndividualTaxList() : this.invTaxStatusList = this.enumService.getCorporateTaxList();
     }
     console.log(data);
   }
-  toUpperCase(event) {
-    event = UtilService.toUpperCase(event);
+  toUpperCase(formControl, event) {
+    this.utilService.toUpperCase(formControl, event);
   }
-  // setMinDateForAge() {
-  //   this.minAge = new Date();
-  //   console.log(this.minAge);
-  // }
 
   createIndividualForm(data) {
-    this.selectedClientOwner = '1';
+    // this.selectedClientOwner = '1';
     (data == undefined) ? data = {} : '';
     this.basicDetails = this.fb.group({
       fullName: [data.name, [Validators.required]],
-      email: [(data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
-      pan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
+      email: [{ value: (data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', disabled: this.basicDetailsData.userId ? true : false }, [Validators.pattern(this.validatorType.EMAIL)]],
+      pan: [{ value: data.pan, disabled: this.basicDetailsData.userId ? true : false }, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       username: [{ value: data.userName, disabled: true }],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
-      dobActual: [],
-      gender: ['1'],
-      leadSource: [(data.leadSource) ? data.leadSource : '0'],
-      leaadStatus: [(data.leadStatus) ? String(data.leadStatus) : '1'],
-      leadRating: [(data.leadRating) ? String(data.leadRating) : '0'],
-      leadOwner: [],
-      clientOwner: [],
-      role: [(data.roleId) ? data.roleId : '0', Validators.required],
+      gender: [(data.genderId) ? String(data.genderId) : '1'],
+      leadSource: [(data.leadSource) ? data.leadSource : ''],
+      leaadStatus: [(data.leadStatus) ? String(data.leadStatus) : ''],
+      leadRating: [(data.leadRating) ? String(data.leadRating) : ''],
+      leadOwner: [''],
+      clientOwner: [''],
+      role: [(data.roleId) ? data.roleId : '', Validators.required],
     });
   }
 
@@ -144,16 +158,16 @@ export class ClientBasicDetailsComponent implements OnInit {
       comName: [data.name, [Validators.required]],
       dateOfIncorporation: [(data.dateOfBirth) ? new Date(data.dateOfBirth) : ''],
       comStatus: [(data.companyStatus) ? String(data.companyStatus) : '0', [Validators.required]],
-      comEmail: [(data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
-      comPan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
+      comEmail: [{ value: (data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', disabled: this.basicDetailsData.userId ? true : false }, [Validators.pattern(this.validatorType.EMAIL)]],
+      comPan: [{ value: data.pan, disabled: this.basicDetailsData.userId ? true : false }, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       comOccupation: [(data.occupationId == 0) ? '1' : String(data.occupationId)],
       username: [{ value: data.userName, disabled: true }],
-      leadSource: [data.leadSource ? data.leadSource : '0'],
-      leaadStatus: [(data.leadStatus) ? String(data.leadStatus) : '1'],
-      leadRating: [(data.leadRating) ? String(data.leadRating) : '0'],
-      leadOwner: [],
-      clientOwner: [],
-      role: [(data.roleId) ? data.roleId : '0', Validators.required]
+      leadSource: [data.leadSource ? data.leadSource : ''],
+      leaadStatus: [(data.leadStatus) ? String(data.leadStatus) : ''],
+      leadRating: [(data.leadRating) ? String(data.leadRating) : ''],
+      leadOwner: [''],
+      clientOwner: [''],
+      role: [(data.roleId) ? data.roleId : '', Validators.required]
     });
   }
 
@@ -169,7 +183,7 @@ export class ClientBasicDetailsComponent implements OnInit {
           return;
         } else {
           this.invTypeCategory = (data.clientType == 0) ? '1' : String(data.clientType);
-          this.invTaxStatus = (data.taxStatusId == 0) ? '1' : String(data.taxStatusId);
+          // this.invTaxStatus = (data.taxStatusId == 0) ? '1' : String(data.taxStatusId);
           (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
           this.clientData.emit(data);
 
@@ -185,18 +199,29 @@ export class ClientBasicDetailsComponent implements OnInit {
     console.log(data);
     this.mobileData = data;
   }
-
+  numberFlag(data) {
+    this.countryCodeFlag = data.residentFlag;
+  }
   changeInvestorType(event) {
     (event.value == '1') ? this.createIndividualForm(this.basicDetailsData) : '';
     if (event.value == '1') {
+      this.invTaxStatus = ''
       this.mobileNumberFlag = 'Mobile number';
+      this.invTaxStatusList = this.enumService.getIndividualTaxList();
+      console.log(this.invTaxStatusList)
     }
     else if (event.value == '2' && this.fieldFlag == 'familyMember') {
+      this.invTaxStatus = ''
       this.createMinorForm(this.basicDetailsData);
       this.mobileNumberFlag = 'Mobile number';
+      this.invTaxStatusList = this.enumService.getMinorTaxList();
+      console.log(this.invTaxStatusList)
     } else {
+      this.invTaxStatus = ''
       this.createNonIndividualForm(this.basicDetails);
       this.mobileNumberFlag = 'Company mobile number';
+      this.invTaxStatusList = this.enumService.getCorporateTaxList();
+      console.log(this.invTaxStatusList)
     }
     this.invTypeCategory = event.value;
   }
@@ -206,30 +231,6 @@ export class ClientBasicDetailsComponent implements OnInit {
   }
 
   saveNextClient(flag) {
-    // if (this.fieldFlag == 'client' && this.basicDetailsData.userId == null) {
-    //   if (this.invTypeCategory == '1') {
-    //     this.basicDetails.get('clientOwner').setValidators([Validators.required]);
-    //     this.basicDetails.get('clientOwner').updateValueAndValidity();
-    //   } else {
-    //     this.nonIndividualForm.get('clientOwner').setValidators([Validators.required]);
-    //     this.nonIndividualForm.get('clientOwner').updateValueAndValidity();
-    //   }
-    // } else {
-    //   (this.invTypeCategory == '1') ? this.basicDetails.get('clientOwner').setValidators(null) : this.nonIndividualForm.get('clientOwner').setValidators(null);
-    // }
-    // if (this.fieldFlag == 'lead' && this.basicDetailsData.userId == null) {
-    //   if (this.invTypeCategory == '1') {
-    //     this.basicDetails.get('leadOwner').setValidators([Validators.required]);
-    //     this.basicDetails.get('leadOwner').updateValueAndValidity();
-    //   }
-    //   else {
-    //     this.nonIndividualForm.get('leadOwner').setValidators([Validators.required]);
-    //     this.nonIndividualForm.get('leadOwner').updateValueAndValidity();
-    //   }
-    // }
-    // else {
-    //   (this.invTypeCategory == '1') ? this.basicDetails.get('leadOwner').setValidators(null) : this.nonIndividualForm.get('leadOwner').setValidators(null);
-    // }
     if (this.invTypeCategory == '1') {
       this.basicDetails.get('email').setValidators([Validators.required]);
       this.basicDetails.get('email').updateValueAndValidity();
@@ -245,7 +246,11 @@ export class ClientBasicDetailsComponent implements OnInit {
     if (this.invTypeCategory == '2' && this.nonIndividualForm.invalid) {
       this.nonIndividualForm.markAllAsTouched();
       return;
-    } else {
+    }
+    else if (this.mobileData.invalid) {
+      this.mobileData.markAllAsTouched();
+    }
+    else {
       (flag == 'close') ? this.barButtonOptions.active = true : '';
       const mobileList = [];
       if (this.mobileData) {
@@ -256,7 +261,7 @@ export class ClientBasicDetailsComponent implements OnInit {
             mobileList.push({
               userType: 2,
               mobileNo: element.get('number').value,
-              ifscCode: 73
+              isdCodeId: element.get('code').value
             });
           }
         });
@@ -399,12 +404,15 @@ export class ClientBasicDetailsComponent implements OnInit {
       mobileList.push({
         mobileNo: element.get('number').value,
         verificationStatus: 0,
-        ifscCode: 73
+        isdCodeId: element.get('code').value
       });
     });
     if (this.invTypeCategory == '1') {
       this.basicDetails.get('email').setValidators([Validators.required]);
       this.basicDetails.get('email').updateValueAndValidity();
+      this.basicDetails.get('role').setValidators(null);
+      this.basicDetails.get('role').updateValueAndValidity();
+
     }
     let gardianObj;
     if (this.invTypeCategory == '2') {
@@ -449,7 +457,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       genderId: (this.invTypeCategory == '1') ? this.basicDetails.controls.gender.value : this.minorForm.value.gender,
       occupationId: 1,
       pan: (this.invTypeCategory == '1') ? this.basicDetails.controls.pan.value : this.minorForm.value.pan,
-      taxStatusId: this.invTaxStatus,
+      taxStatusId: parseInt(this.invTaxStatus),
       relationshipId: this.basicDetailsData.relationshipId,
       familyMemberType: parseInt(this.invTypeCategory),
       isKycCompliant: 1,

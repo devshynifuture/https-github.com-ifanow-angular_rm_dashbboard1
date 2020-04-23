@@ -3,7 +3,7 @@
         <h4 class="m-0">Clients</h4>
     </div>
     <div class="col-md-8">
-        <div *ngIf="clientDatasource.data.length>0" class="col-md-8 p-0 right text-right">
+        <div *ngIf="clientDatasource.data.length>0 && isLoading==false" class="col-md-8 p-0 right text-right">
             <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
             <mat-menu #menu5="matMenu">
                 <button (click)="pdf('Client')" mat-menu-item>PDF</button>
@@ -20,10 +20,11 @@
         </div>
     </div>
     <div class="col-md-12 people-clients">
-        <table #tableEl *ngIf="clientDatasource.data.length>0" mat-table [dataSource]="clientDatasource" id="table-low"
-            appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation mt-8">
+        <table #tableEl matSort *ngIf="clientDatasource.data.length>0" #clientTableSort="matSort" mat-table
+            [dataSource]="clientDatasource" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading"
+            class="skeletonAnimation mt-8">
             <ng-container matColumnDef="position">
-                <th mat-header-cell *matHeaderCellDef class="br w-20"> Group head name </th>
+                <th mat-sort-header="name" mat-header-cell *matHeaderCellDef class="br w-20"> Group head name </th>
                 <td (click)="selectClient(element)" mat-cell *matCellDef="let element" class="br">
                     <div class="bar"> {{element.name}}</div>
                 </td>
@@ -31,7 +32,7 @@
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef class="br"> Registered mobile </th>
+                <th mat-header-cell mat-sort-header="mobileNo" *matHeaderCellDef class="br"> Registered mobile </th>
                 <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
                     <div class="bar"> {{element.mobileNo}}</div>
                 </td>
@@ -39,7 +40,7 @@
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
-                <th mat-header-cell *matHeaderCellDef class="br"> Registered email </th>
+                <th mat-sort-header="email" mat-header-cell *matHeaderCellDef class="br"> Registered email </th>
                 <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
                     <div class="bar"> {{element.email}}</div>
                 </td>
@@ -47,31 +48,31 @@
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="symbol">
-                <th mat-header-cell *matHeaderCellDef class="br"> PAN </th>
+                <th mat-sort-header="pan" mat-header-cell *matHeaderCellDef class="br"> PAN </th>
                 <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
                     <div class="bar"> {{element.pan}}</div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="member">
-                <th mat-header-cell *matHeaderCellDef class="br"> Members </th>
+                <th mat-sort-header="count" mat-header-cell *matHeaderCellDef class="br"> Members </th>
                 <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
                     <div class="bar"> {{element.count}}</div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="owner">
-                <th mat-header-cell *matHeaderCellDef class="br"> Client owner </th>
+                <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br"> Client owner </th>
                 <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
                     <div class="bar"> {{element.ownerName}}</div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="login">
-                <th mat-header-cell *matHeaderCellDef class="br"> Last login </th>
+                <th mat-sort-header="login" mat-header-cell *matHeaderCellDef class="br"> Last login </th>
                 <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
                     <div class="bar"> {{element.login}}</div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
+                <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br"> Status </th>
                 <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
                     <div class="bar"> {{element.status}}</div>
                 </td>

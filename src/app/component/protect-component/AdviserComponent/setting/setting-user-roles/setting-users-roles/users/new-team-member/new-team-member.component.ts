@@ -6,6 +6,7 @@ import {ValidatorType} from 'src/app/services/util.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {MatProgressButtonOptions} from '../../../../../../../../common/progress-button/progress-button.component';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-new-team-member',
@@ -35,13 +36,14 @@ export class NewTeamMemberComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  mobileNumberFA:FormArray;
+  isdCodes: Array<any> = [];
 
   constructor(
     private fb: FormBuilder,
     private settingsService: SettingsService,
     private eventService: EventService,
     private subInjectService: SubscriptionInject,
+    private peopleService: PeopleService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -49,6 +51,18 @@ export class NewTeamMemberComponent implements OnInit {
   ngOnInit() {
     this.createForm();
     this.loadRoles();
+    this.getIsdCodesData();
+  }
+
+  getIsdCodesData() {
+    this.peopleService.getIsdCode({}).subscribe(
+      data => {
+        if (data) {
+          console.log(data);
+          this.isdCodes = data;
+        }
+      }
+    )
   }
 
   loadRoles() {
@@ -70,15 +84,15 @@ export class NewTeamMemberComponent implements OnInit {
       fullName: [this.data.mainData.fullName || '',
         [Validators.required, Validators.maxLength(50), Validators.pattern(ValidatorType.PERSON_NAME)]],
       emailId: [this.data.mainData.email || '', [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
-      // mobileNo: [this.data.mainData.mobile || '', [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
+      mobileNo: [this.data.mainData.mobile || '', [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
+      isdCodeId: [this.data.mainData.isdCodeId || '', [Validators.required]],
       roleId: [roleId, [Validators.required]],
     });
   }
 
   save() {
-    if (this.teamMemberFG.invalid || this.mobileNumberFA.invalid) {
+    if (this.teamMemberFG.invalid) {
       this.teamMemberFG.markAllAsTouched();
-      this.mobileNumberFA.markAllAsTouched();
     } else {
       if (this.barButtonOptions.active) {
       } else {
@@ -93,10 +107,7 @@ export class NewTeamMemberComponent implements OnInit {
   }
 
   addTeamMember() {
-    const dataObj = {
-      ...this.teamMemberFG.value,
-      mobileList: this.mobileNumberFA.value,
-    };
+    const dataObj = this.teamMemberFG.value;
     this.settingsService.addTeamMember(dataObj).subscribe((res) => {
       this.close(true);
       this.eventService.openSnackBar('Invitation sent successfully');
@@ -152,9 +163,5 @@ export class NewTeamMemberComponent implements OnInit {
       teamMemberRoleId.setValue('');
       this.teamMemberFG.updateValueAndValidity();
     }
-  }
-
-  getNumberDetails(formArr:FormArray) {
-    this.mobileNumberFA = formArr;
   }
 }

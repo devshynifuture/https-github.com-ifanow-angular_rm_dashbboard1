@@ -33,7 +33,7 @@
         <h5 class="m-0 pt-36">Role description</h5>
         <p class="m-0 text-custom roboto f-12 pb-4">E.g. write something descriptive for easy recall.</p>
         <div class="form-group mb-0">
-            <mat-form-field hintLabel="optional">
+            <mat-form-field hintLabel="Optional">
                 <textarea matInput formControlName="roleDescription" class="form-control" rows="5"></textarea>
                 <mat-hint align="end">{{rolesFG.get('roleDescription').value.length}}/ 60</mat-hint>
                 <mat-error *ngIf="rolesFG.get('roleDescription').errors?.required">This field is required</mat-error>
@@ -41,6 +41,7 @@
             </mat-form-field>
         </div>
     </div>
+    <div [hidden]="!isLoading"><mat-spinner></mat-spinner></div>
     <div class="col-md-9 p-0 bl-1">
         <div class="wrapper-40 pt-24">
             <h5 class="m-0">Manage role based access permissions from here.</h5>

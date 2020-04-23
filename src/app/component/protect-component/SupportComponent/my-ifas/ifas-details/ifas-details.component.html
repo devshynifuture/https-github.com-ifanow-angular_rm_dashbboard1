@@ -99,16 +99,24 @@
                                 <ng-container matColumnDef="report">
                                     <th class="br" mat-header-cell *matHeaderCellDef> Report </th>
                                     <td class="br" mat-cell *matCellDef="let element">
-                                        <button mat-stroked-button class="bg-primary text-white"
-                                            (click)="openUpperSliderBackoffice('', element)">
-                                            Report
-                                        </button>
+                                        <div matTooltip=" Loading..." [matTooltipDisabled]="!isLoading">
+                                            <button mat-stroked-button class="bg-primary text-white"
+                                                [disabled]="isLoading"
+                                                (click)="openUpperSliderBackoffice('report', element, franklinId)">
+                                                Report
+                                            </button>
+                                        </div>
                                     </td>
                                 </ng-container>
 
                                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                             </table>
+                            <div class="col-md-12 p-0" *ngIf="franklineData.data === null">
+                                <h5 class="text-center b-a p-44">
+                                    No Data Found
+                                </h5>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -131,7 +139,7 @@
             </div>
             <div class="row">
                 <div class="back-office-table col-md-12 pl-0 overflow-hidden ">
-                    <table mat-table [dataSource]="cams" id="table-low" class="skeletonAnimation" appSkeletonLoading
+                    <table mat-table [dataSource]="camsData" id="table-low" class="skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="arn">
                             <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
@@ -185,16 +193,23 @@
                         <ng-container matColumnDef="report">
                             <th class="br" mat-header-cell *matHeaderCellDef> Report </th>
                             <td class="br" mat-cell *matCellDef="let element">
-                                <button mat-stroked-button class="bg-primary text-white"
-                                    (click)="openUpperSliderBackoffice('', element)">
-                                    Report
-                                </button>
+                                <div matTooltip=" Loading..." [matTooltipDisabled]="!isLoading">
+                                    <button mat-stroked-button class="bg-primary text-white" [disabled]="isLoading"
+                                        (click)="openUpperSliderBackoffice('report', element, camsId)">
+                                        Report
+                                    </button>
+                                </div>
                             </td>
                         </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
+                    <div class="col-md-12 p-0" *ngIf="camsData.data === null">
+                        <h5 class="text-center b-a p-44">
+                            No Data Found
+                        </h5>
+                    </div>
                 </div>
             </div>
 
@@ -215,9 +230,9 @@
                 </div>
 
             </div>
-            <div class="row" *ngIf="karvy">
+            <div class="row">
                 <div class="back-office-table col-md-12 pl-0 overflow-hidden ">
-                    <table mat-table [dataSource]="dataSource" id="table-low" class="skeletonAnimation"
+                    <table mat-table [dataSource]="karvyData" id="table-low" class="skeletonAnimation"
                         appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="arn">
                             <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
@@ -271,16 +286,23 @@
                         <ng-container matColumnDef="report">
                             <th class="br" mat-header-cell *matHeaderCellDef> Report </th>
                             <td class="br" mat-cell *matCellDef="let element">
-                                <button mat-stroked-button class="bg-primary text-white"
-                                    (click)="openUpperSliderBackoffice('', element)">
-                                    Report
-                                </button>
+                                <div matTooltip=" Loading..." [matTooltipDisabled]="!isLoading">
+                                    <button mat-stroked-button class="bg-primary text-white" [disabled]="isLoading"
+                                        (click)="openUpperSliderBackoffice('report', element, karvyId)">
+                                        Report
+                                    </button>
+                                </div>
                             </td>
                         </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
+                    <div class="col-md-12 p-0" *ngIf="!karvyData.data">
+                        <h5 class="text-center b-a p-44">
+                            No Data Found
+                        </h5>
+                    </div>
                 </div>
             </div>
         </mat-tab>
@@ -294,7 +316,8 @@
                     </h2>
                 </div>
                 <div class="back-office-table col-md-10 overflow-hidden">
-                    <table mat-table [dataSource]="dataSourceOne" id="table-low" class="">
+                    <table mat-table [dataSource]="dataSourceOne" id="table-low" class="skeletonAnimation"
+                        appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="description">
                             <th class="br" mat-header-cell *matHeaderCellDef> Description </th>
                             <td class="br" mat-cell *matCellDef="let element"> {{element.description}} </td>
@@ -326,6 +349,11 @@
                         <tr mat-header-row *matHeaderRowDef="displayedColumnsOne"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumnsOne;"></tr>
                     </table>
+                    <div class="col-md-12 p-0" *ngIf="dataSourceOne.data === null">
+                        <h5 class="text-center b-a p-44">
+                            No Data Found
+                        </h5>
+                    </div>
                 </div>
             </div>
 
@@ -343,7 +371,8 @@
 
             <div class="row">
                 <div class="back-office-table col-md-10 overflow-hidden">
-                    <table mat-table [dataSource]="dataSourceTwo" id="table-low" class="">
+                    <table mat-table [dataSource]="dataSourceTwo" id="table-low" class="skeletonAnimation"
+                        appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="type">
                             <th class="br w-12" mat-header-cell *matHeaderCellDef> Type </th>
                             <td class="br w-12" mat-cell *matCellDef="let element"> {{element.type}} </td>
@@ -380,7 +409,11 @@
                         <tr mat-header-row *matHeaderRowDef="displayedColumnsTwo"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumnsTwo;"></tr>
                     </table>
-
+                    <div class="col-md-12 p-0" *ngIf="dataSourceTwo.data === null">
+                        <h5 class="text-center b-a p-44">
+                            No Data Found
+                        </h5>
+                    </div>
                 </div>
             </div>
 
@@ -396,21 +429,28 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-12 d-flex">
+            <div class="row" class="skeletonAnimation mt-8" appSkeletonLoading
+                [appSkeletonLoading]="utilsService.isLoading">
+                <div class="col-md-12 d-flex relClass">
                     <div class="summaryBox">
                         <p class="f-16 roboto">Unresolved</p>
-                        <h4 class="text-primary m-0 f-22">4</h4>
+                        <div class="bar" [ngClass]="{'height23': isLoading}">
+                            <h4 class="text-primary m-0 f-22">{{unResolved}}</h4>
+                        </div>
                     </div>
 
                     <div class="summaryBox">
                         <p class="f-16 roboto">Open</p>
-                        <h4 class="text-primary m-0 f-22">4</h4>
+                        <div class="bar" [ngClass]="{'height23': isLoading}">
+                            <h4 class="text-primary m-0 f-22">{{openTickets}}</h4>
+                        </div>
                     </div>
 
                     <div class="summaryBox">
                         <p class="f-16 roboto">On hold</p>
-                        <h4 class="text-primary m-0 f-22">4</h4>
+                        <div class="bar" [ngClass]="{'height23': isLoading}">
+                            <h4 class="text-primary m-0 f-22">{{onHold}}</h4>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -419,50 +459,76 @@
                 <div class="col-md-12 back-office-table  overflow-hidden">
                     <h3 class="f-16 mb-4">Ticket list</h3>
 
-                    <table mat-table [dataSource]="dataSource3" id="table-low" class="">
+                    <table mat-table [dataSource]="ticketList" id="table-low" class="skeletonAnimation"
+                        appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="ticket">
                             <th class="br" mat-header-cell *matHeaderCellDef> Ticket </th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.ticket}} </td>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                <div class="bar"> #{{element.id}} </div>
+                            </td>
                         </ng-container>
 
 
                         <ng-container matColumnDef="subject">
                             <th class="br" mat-header-cell *matHeaderCellDef> Subject </th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.subject}} </td>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                <div class="bar">{{element.subject}}</div>
+                            </td>
                         </ng-container>
 
 
                         <ng-container matColumnDef="created">
                             <th class="br" mat-header-cell *matHeaderCellDef> Created on </th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.created}} </td>
+                            <td class="br" mat-cell *matCellDef="let element">
+
+                                <div class="bar">{{element.createdAt  | date:'dd/MM/yyyy'}} </div>
+                            </td>
                         </ng-container>
 
 
                         <ng-container matColumnDef="type">
                             <th class="br" mat-header-cell *matHeaderCellDef> Type </th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.type}} </td>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                <div class="bar"> {{element.type}} </div>
+                            </td>
                         </ng-container>
 
                         <ng-container matColumnDef="status">
                             <th class="br" mat-header-cell *matHeaderCellDef>Status </th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.status}} </td>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    {{(element.status == 2)?'Open':(element.status == 3)?'Pending':(element.status == 4)? 'Resolved':(element.status == 5)?'Closed':'-'}}
+                                </div>
+                            </td>
                         </ng-container>
 
                         <ng-container matColumnDef="raised">
                             <th class="br" mat-header-cell *matHeaderCellDef> Raised by</th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.raised}} </td>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                <div class="bar">{{element.freshdeskRequesterModel?.name}}
+                                </div>
+                            </td>
                         </ng-container>
 
                         <ng-container matColumnDef="assigned">
                             <th class="br" mat-header-cell *matHeaderCellDef> Assigned to</th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.assigned}} </td>
+                            <td class="br" mat-cell *matCellDef="let element">
+
+                                <div class="bar">
+                                    {{(element.freshdeskAgentModel)? element.freshdeskAgentModel.contact.name : '-'}}
+                                </div>
+                            </td>
                         </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
                     </table>
 
-
+                    <div class="col-md-12 p-0" *ngIf="(ticketList.data.length === 0) || (ticketList.data === null)">
+                        <h5 class="text-center b-a p-44">
+                            No Data Found
+                        </h5>
+                    </div>
                 </div>
             </div>
 
@@ -470,14 +536,16 @@
         <mat-tab label="Team members">
 
             <div class="row">
-                <div class="col-md-12 back-office-table  overflow-hidden" *ngIf="dataSource4.length > 0">
+                <div class="col-md-12 back-office-table  overflow-hidden">
                     <h3 class="f-16 mb-4">Ticket list</h3>
 
-                    <table mat-table [dataSource]="dataSource4" id="table-low" class=""
-                    appSkeletonLoading [appSkeletonLoading]="utilsService.isLoading">
+                    <table mat-table [dataSource]="dataSource4" id="table-low" class="skeletonAnimation"
+                        appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="name">
                             <th class="br" mat-header-cell *matHeaderCellDef> Name </th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.name}} </td>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                <div class="bar">{{element.fullName}}</div>
+                            </td>
                         </ng-container>
 
 
@@ -495,7 +563,8 @@
 
                         <ng-container matColumnDef="role">
                             <th class="br" mat-header-cell *matHeaderCellDef> role </th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.role}} </td>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                {{(element.role)?element.role.roleName:'-'}} </td>
                         </ng-container>
 
                         <ng-container matColumnDef="lastlogin">
@@ -505,26 +574,32 @@
 
                         <ng-container matColumnDef="status">
                             <th class="br" mat-header-cell *matHeaderCellDef> Status</th>
-                            <td class="br" mat-cell *matCellDef="let element"> {{element.status}} </td>
+                            <td class="br" mat-cell *matCellDef="let element">
+                                {{element.isActive ? (element.isSuspended ? 'Suspended' : 'Active') : 'Deleted'}} </td>
                         </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
                     </table>
+                    <div class="col-md-12 p-0" *ngIf="dataSource4.data === null">
+                        <h5 class="text-center b-a p-44">
+                            No Data Found
+                        </h5>
+                    </div>
                 </div>
                 <div class="col-md-12">
-                    <div *ngIf="dataSource4.length == 0 && !isLoading && !hasError" class="d-flex flex-column align-items-center">
+                    <div *ngIf="dataSource4.data && dataSource4.data.length == 0 && !isLoading && !hasError"
+                        class="d-flex flex-column align-items-center">
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
                         <h4 class="pt-12">No Team members found</h4>
                     </div>
-                    <div *ngIf="userList==undefined && !isLoading && hasError" class="d-flex flex-column align-items-center">
+                    <!-- <div *ngIf="userList==undefined && !isLoading && hasError"
+                        class="d-flex flex-column align-items-center">
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
                         <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
-                    </div>
+                    </div> -->
                 </div>
             </div>
-
-
         </mat-tab>
         <mat-tab label="Billing details">
 
@@ -532,7 +607,8 @@
                 <div class="col-md-10 back-office-table  overflow-hidden">
                     <h3 class="f-16 mb-4">Ticket list</h3>
 
-                    <table mat-table [dataSource]="dataSource5" id="table-low" class="">
+                    <table mat-table [dataSource]="dataSource5" id="table-low" class="skeletonAnimation"
+                        appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="invoice">
                             <th class="br" mat-header-cell *matHeaderCellDef> Invoice </th>
                             <td class="br" mat-cell *matCellDef="let element"> {{element.invoice}} </td>
@@ -569,6 +645,11 @@
                         <tr mat-header-row *matHeaderRowDef="displayedColumns5"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns5;"></tr>
                     </table>
+                    <div class="col-md-12 p-0" *ngIf="dataSource5.data === null">
+                        <h5 class="text-center b-a p-44">
+                            No Data Found
+                        </h5>
+                    </div>
                 </div>
             </div>
         </mat-tab>

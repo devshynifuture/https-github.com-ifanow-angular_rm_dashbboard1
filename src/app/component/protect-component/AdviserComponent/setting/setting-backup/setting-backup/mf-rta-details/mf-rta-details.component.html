@@ -53,15 +53,15 @@
                     <!-- Symbol Column -->
                     <ng-container matColumnDef="symbol">
                         <th mat-header-cell *matHeaderCellDef> </th>
-                        <td mat-cell *matCellDef="let element" class="text-center">
+                        <td mat-cell *matCellDef="let element" class="text-center" [matMenuTriggerFor]="menu">
                             <div class="bar">
-                                <ng-container *ngIf="!utilService.isLoading">
-                                    <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
+                                <div [hidden]="utilService.isLoading">
+                                    <img src="/assets/images/svg/dot-menu.svg" class="c-p">
                                     <mat-menu #menu="matMenu">
                                         <button mat-menu-item (click)="openInSideBar(1, element, false)">Edit</button>
                                         <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
                                     </mat-menu>
-                                </ng-container>
+                                </div>
                             </div>
                         </td>
                     </ng-container>
@@ -142,15 +142,15 @@
                     </ng-container>
                     <ng-container matColumnDef="icons">
                         <th mat-header-cell *matHeaderCellDef> </th>
-                        <td class="text-center" mat-cell *matCellDef="let element">
+                        <td class="text-center" mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu">
                             <div class="bar">
-                                <ng-container *ngIf="!utilService.isLoading">
-                                    <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
+                                <div [hidden]="utilService.isLoading">
+                                    <img src="/assets/images/svg/dot-menu.svg" class="c-p">
                                     <mat-menu #menu="matMenu">
                                         <button mat-menu-item (click)="openInSideBar(2, element, false)">Edit</button>
                                         <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
                                     </mat-menu>
-                                </ng-container>
+                                </div>
                             </div>
                         </td>
                     </ng-container>
@@ -217,15 +217,15 @@
         
                     <ng-container matColumnDef="icons">
                         <th mat-header-cell *matHeaderCellDef> </th>
-                        <td mat-cell class="text-center" *matCellDef="let element">
+                        <td mat-cell class="text-center" *matCellDef="let element" [matMenuTriggerFor]="menu">
                             <div class="bar">
-                                <ng-container *ngIf="!utilService.isLoading">
-                                    <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
+                                <div [hidden]="utilService.isLoading">
+                                    <img src="/assets/images/svg/dot-menu.svg" class="c-p">
                                     <mat-menu #menu="matMenu">
                                         <button mat-menu-item (click)="openInSideBar(3, element, false)">Edit</button>
                                         <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
                                     </mat-menu>
-                                </ng-container>
+                                </div>
                             </div>
                         </td>
                     </ng-container>
@@ -300,15 +300,15 @@
         
                     <ng-container matColumnDef="icons">
                         <th mat-header-cell *matHeaderCellDef> </th>
-                        <td valign="top" mat-cell *matCellDef="let element">
+                        <td valign="top" mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu">
                             <div class="bar">
-                                <ng-container *ngIf="!utilService.isLoading">
-                                    <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
+                                <div [hidden]="utilService.isLoading">
+                                    <img src="/assets/images/svg/dot-menu.svg" class="c-p">
                                     <mat-menu #menu="matMenu">
                                         <button mat-menu-item (click)="openInSideBar(4, element, false)">Edit</button>
                                         <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
                                     </mat-menu>
-                                </ng-container>
+                                </div>
                             </div>
                         </td>
                     </ng-container>
@@ -336,5 +336,5 @@
 </div>
 <div *ngIf="mfRTAlist.length == 0 && !utilService.isLoading" class="d-flex flex-column align-items-center">
     <img class="width300" src="assets/images/svg/noDataFound.svg">
-    <h4 class="text-center pt-12">No task template found</h4>
+    <h4 class="text-center pt-12">No data found</h4>
 </div>

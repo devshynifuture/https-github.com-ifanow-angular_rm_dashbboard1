@@ -10,7 +10,8 @@ import { MarketplacePostsComponent } from './advisor-marketplace/marketplace-pos
 import { MarketplaceChatsComponent } from './advisor-marketplace/marketplace-chats/marketplace-chats.component';
 import { MarketplaceCallsComponent } from './advisor-marketplace/marketplace-calls/marketplace-calls.component';
 import { MarketplaceReviewRatingComponent } from './advisor-marketplace/marketplace-review-rating/marketplace-review-rating.component';
-
+import { MarketPlaceEntryModule } from './advisor-marketplace.entry.module';
+import { MaterialModule } from 'src/app/material/material';
 
 @NgModule({
   declarations: [
@@ -20,14 +21,15 @@ import { MarketplaceReviewRatingComponent } from './advisor-marketplace/marketpl
     MarketplacePostsComponent,
     MarketplaceChatsComponent,
     MarketplaceCallsComponent,
-    MarketplaceReviewRatingComponent
-
+    MarketplaceReviewRatingComponent,
   ],
   imports: [
     CommonModule,
     AdvisorMarketplceRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    MaterialModule,
+    MarketPlaceEntryModule,
   ]
 })
 export class AdvisorMarketplceModule { }

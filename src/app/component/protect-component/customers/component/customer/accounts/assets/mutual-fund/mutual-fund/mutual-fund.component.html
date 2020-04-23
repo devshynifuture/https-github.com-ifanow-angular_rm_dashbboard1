@@ -2,40 +2,40 @@
   <div class="wrapper-8">
     <div class="row">
       <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
-        <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
+        <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0"  [ngClass]="{ 'disabled' : isShow}">
           {{viewMode}}
           <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="changeViewMode('Overview Report')">Overview Report</button>
-          <button mat-menu-item (click)="changeViewMode('Summary')">Summary</button>
-          <button mat-menu-item (click)="changeViewMode('All Transactions')">All Transactions</button>
-          <button mat-menu-item (click)="changeViewMode('Unrealized Transactions')">Unrealized Transactions</button>
-          <button mat-menu-item (click)="changeViewMode('Capital Gains')">Capital Gains</button>
-          <button mat-menu-item (click)="changeViewMode('Goal Linkage')">Goal Linkage</button>
-        </mat-menu>
+          <button mat-menu-item  (click)="changeViewMode('Overview Report')">Overview Report</button>
+          <button mat-menu-item  (click)="changeViewMode('Summary')">Summary</button>
+          <button mat-menu-item  (click)="changeViewMode('All Transactions')">All Transactions</button>
+          <button mat-menu-item  (click)="changeViewMode('Unrealized Transactions')">Unrealized Transactions</button>
+          <button mat-menu-item  (click)="changeViewMode('Capital Gains')">Capital Gains</button>
+<!--           <button mat-menu-item (click)="changeViewMode('Goal Linkage')">Goal Linkage</button>
+ -->        </mat-menu>
       </div>
     </div>
   </div>
   <div [ngSwitch]="viewMode">
     <div *ngSwitchCase="'Overview Report'">
-      <app-mutual-fund-overview [mutualFund]="mfData"></app-mutual-fund-overview>
+      <app-mutual-fund-overview [mutualFund]="mfData" (changeInput)="changeInput($event)"></app-mutual-fund-overview>
     </div>
     <div *ngSwitchCase="'Summary'">
-      <app-mutual-fund-summary [mutualFund]="mfData"></app-mutual-fund-summary>
+      <app-mutual-fund-summary [mutualFund]="mfData" (changeInput)="changeInput($event)"></app-mutual-fund-summary>
     </div>
     <div *ngSwitchCase="'All Transactions'">
-      <app-mutual-fund-unrealized-tran [mutualFund]="mfData"></app-mutual-fund-unrealized-tran>
+      <app-mutual-fund-unrealized-tran [mutualFund]="mfData" (changeInput)="changeInput($event)"></app-mutual-fund-unrealized-tran>
       <!--      <app-mutual-fund-all-transaction [mutualFund]="mfData"></app-mutual-fund-all-transaction>-->
     </div>
     <div *ngSwitchCase="'Unrealized Transactions'">
-      <app-mutual-fund-unrealized-tran [mutualFund]="mfData"></app-mutual-fund-unrealized-tran>
+      <app-mutual-fund-unrealized-tran [mutualFund]="mfData" (changeInput)="changeInput($event)"></app-mutual-fund-unrealized-tran>
     </div>
     <div *ngSwitchCase="'Capital Gains'">
-      <app-mutual-funds-capital></app-mutual-funds-capital>
+      <app-mutual-funds-capital (changeInput)="changeInput($event)"></app-mutual-funds-capital>
     </div>
     <div *ngSwitchCase="'Goal Linkage'">
-      <app-mutual-fund-goal-linkage></app-mutual-fund-goal-linkage>
+      <app-mutual-fund-goal-linkage (changeInput)="changeInput($event)"></app-mutual-fund-goal-linkage>
     </div>
   </div>
 </div>

@@ -6,7 +6,7 @@ import { AddClientComponent } from './add-client/add-client.component';
 import { PeopleService } from '../../../people.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSort } from '@angular/material';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
@@ -25,6 +25,7 @@ export class PeopleClientsComponent implements OnInit {
   clientDatasource = new MatTableDataSource();
   isLoading: boolean;
   @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('clientTableSort', { static: false }) clientTableSort: MatSort;
 
   constructor(private authService: AuthService, private ngZone: NgZone, private router: Router,
     private subInjectService: SubscriptionInject, public eventService: EventService,
@@ -58,6 +59,7 @@ export class PeopleClientsComponent implements OnInit {
             }
           });
           this.clientDatasource.data = data;
+          this.clientDatasource.sort = this.clientTableSort;
         }
         else {
           this.clientDatasource.data = [];

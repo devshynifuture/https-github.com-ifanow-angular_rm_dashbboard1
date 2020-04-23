@@ -1,1 +1,258 @@
-<p>marketplace-review-rating works!</p>
+<div class="pt-150">
+	<div class="row pb-8">
+		<div class="col-md-8">
+			<h4 class="m-0 roboto text-dark f-400">Reviews & ratings</h4>
+		</div>
+		<div class="col-md-4 text-right">
+			<button mat-stroked-button class="text-primary"> Home </button>
+			<button mat-button>Campaign</button>
+		</div>
+	</div>
+
+
+	<!-- home screen -->
+	 <div class="row pt-60">
+		<div class="col-md-12 text-center">
+			<p class="f-500 m-0 roboto">You do not have any reviews from your clients</p>
+			<p class="f-500 m-0 f-18 roboto pt-20">Advisors with Reviews from clients are far more likely to get new
+				leads on the marketplace.</p>
+		</div>
+	</div>
+	<div class="row pt-20">
+		<div class="col-md-2"></div>
+		<div class="col-md-8 p-0">
+			<div class="row">
+				<div class="col-md-6 pl-0">
+					<mat-card class="b-a p-0">
+						<div class="bg-grey lter bb-1">
+							<h5 class="text-center pt-20 pb-20 mb-0">Request single review
+							</h5>
+						</div>
+						<mat-card-content>
+							<div class="row">
+								<div class="col-md-12 text-center pt-20 pr-8 pl-8">
+									<span class="material-icons text-warning">
+										star
+									</span><br>
+									<span class="material-icons text-danger f-48 pt-10">
+										person
+									</span>
+									<p class="roboto f-400 text-dark pr-4 pl-4 m-0">We’ve made it easy for you to
+										request a review from your existing client.</p>
+									<button mat-stroked-button class="btn-primary mt-20 mb-20"> Request a review
+									</button>
+								</div>
+							</div>
+						</mat-card-content>
+					</mat-card>
+
+				</div>
+				<div class="col-md-6 pr-0">
+					<mat-card class="b-a p-0">
+						<div class="bg-grey lter bb-1">
+							<h5 class="text-center pt-20 pb-20 mb-0">Request
+								reviews in Bulk
+							</h5>
+						</div>
+						<mat-card-content>
+							<div class="row">
+								<div class="col-md-12 text-center pt-20 pr-8 pl-8">
+
+									<span class="material-icons text-warning">
+										star
+									</span>
+									<span class="material-icons text-warning">
+										star
+									</span>
+									<span class="material-icons text-warning">
+										star
+									</span>
+									<span class="material-icons text-warning">
+										star
+									</span>
+									<span class="material-icons text-warning">
+										star
+									</span>
+									<br>
+									<span class="material-icons text-danger f-48 pt-10">
+										person
+									</span>
+									<p class="roboto f-400 text-dark pr-4 pl-4 m-0">Have lots of existing clients? Use
+										our campaign feature to send review requests in one go.</p>
+									<button mat-stroked-button class="btn-primary mt-20 mb-20"
+										(click)="openMarketplaceReviewBulk('', '')"> Request bulk reviews
+									</button>
+								</div>
+							</div>
+						</mat-card-content>
+					</mat-card>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-2"></div>
+	</div>
+	<div class="row pt-40 pb-40">
+		<div class="col-md-12 text-center">
+			<p class="m-0 text-danger roboto f-400 c-p" (click)="openReviewAndRatingFAQ('faq','')">Reviews & Ratings FAQ
+			</p>
+			<p class="m-0 text-danger roboto pt-20 f-400 c-p" (click)="openReviewAndRatingsGuidelines('guidelines','')">
+				Reviews &
+				Ratings Guidelines</p>
+		</div>
+	</div>
+
+
+	<!-- campaign screen -->
+<!-- <div class="row bt-1">
+<div class="col-md-3 bg-grey lter reviews-rating">
+	<h5 class="m-0 roboto f-500 text-dark pt-20 pb-10">Summary</h5>
+	<div class="row pb-20 bb-1">
+		<div class="col-md-3 pl-0">
+			 <button mat-stroked-button class="review-start"><span class="material-icons text-primary f-14 pr-6">
+          star
+          </span>4.6</button>
+		</div>
+		<div class="col-md-6 pr-0">
+			<p class="m-0 roboto pt-6">39 reviews</p>
+		</div>
+	</div>
+	<div class="row pt-28">
+		<div class="col-md-12 p-0">
+		<p class="m-0 roboto f-400 pb-12">Knowledge & expertise</p>
+		</div>
+	</div>
+		<div class="row">
+			<div class="col-md-10 pt-8 p-0">
+				<mat-progress-bar mode="determinate" value="90"></mat-progress-bar>
+			</div>
+			<div class="col-md-1">
+				<p class="m-0 f-12 roboto f-600 text-dark">4.7</p>
+			</div>
+		</div>
+		<div class="row pt-28">
+		<div class="col-md-12 p-0">
+		<p class="m-0 roboto f-400 pb-12">Service delivery</p>
+		</div>
+	</div>
+		<div class="row">
+			<div class="col-md-10 pt-8 p-0">
+				<mat-progress-bar mode="determinate" value="90"></mat-progress-bar>
+			</div>
+			<div class="col-md-1 ">
+				<p class="m-0 f-12 roboto f-600 text-dark">4.3</p>
+			</div>
+		</div>
+		<div class="row pt-28">
+		<div class="col-md-12 p-0">
+		<p class="m-0 roboto f-400 pb-12">Communication</p>
+		</div>
+	</div>
+		<div class="row">
+			<div class="col-md-10 pt-8 p-0">
+				<mat-progress-bar mode="determinate" value="90"></mat-progress-bar>
+			</div>
+			<div class="col-md-1">
+				<p class="m-0 f-12 roboto f-600 text-dark">4.8</p>
+			</div>
+		</div>
+		<div class="row pt-28">
+		<div class="col-md-12 p-0">
+		<p class="m-0 roboto f-400 pb-12">Will recommend to others</p>
+		</div>
+	</div>
+		<div class="row">
+			<div class="col-md-10 pt-8 p-0">
+				<mat-progress-bar mode="determinate" value="90"></mat-progress-bar>
+			</div>
+			<div class="col-md-1">
+				<p class="m-0 f-12 roboto f-600 text-dark">4.6</p>
+			</div>
+		</div>
+		<div class="row pt-150">
+			<div class="col-md-12 p-0">
+				<p class="m-0 roboto pt-8 f-400">Reviews & Ratings FAQ</p>
+				<p class="m-0 roboto pt-20 f-400">Reviews & Ratings FAQ</p>
+			</div>
+		</div>
+</div>
+<div class="col-md-9 pl-36">
+	<div class="row pt-40">
+		<div class="col-md-1 pl-0">
+			<img src="/assets/images/deepesh.png">
+		</div>
+		<div class="col-md-8 pl-0">
+			<p class="m-0 roboto text-dark f-400">Sushil</p>
+			<p class="m-0 roboto text-custom f-400">Mar 2020</p>
+		</div>
+		<div class="col-md-3 text-right">
+			 <button mat-stroked-button class="text-light"><span class="material-icons text-light f-24 pr-4">
+					reply
+					</span>Reply</button>
+		</div>
+		<div class="col-md-12 p-0 bb-dashed-1">
+			<div class="row pt-12">
+				<div class="col-md-1 pl-0"></div>
+				<div class="col-md-11 pl-0">
+					<p class="text-success f-500 roboto">I recommend Deepesh | Average rating 4.5</p>
+					<p class="pt-4 roboto m-0 pb-20 f-400">I connected with Deepesh in Jan 2020. Deepesh helped me organizing my finances in a very nice way. He was very patient in explaining me all the concepts of personal finance. He thoroughly reviewed my portflio and told me about the mistakes I have made in the past. I have since started investing and currently saving for financial goals. I would hightly recommend you to hire Deepesh.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row pt-40">
+		<div class="col-md-1 pl-0">
+			<img src="/assets/images/deepesh.png">
+		</div>
+		<div class="col-md-8 pl-0">
+			<p class="m-0 roboto text-dark f-400">Azhar</p>
+			<p class="m-0 roboto text-custom f-400">Mar 2020</p>
+		</div>
+		<div class="col-md-3 text-right">
+			 <button mat-stroked-button class="text-light"><span class="material-icons text-light f-24 pr-4">
+					reply
+					</span>Reply</button>
+		</div>
+		<div class="col-md-12 p-0 bb-dashed-1">
+			<div class="row pt-12">
+				<div class="col-md-1 pl-0"></div>
+				<div class="col-md-11 pl-0">
+					<p class="text-success f-500 roboto">I recommend Deepesh | Average rating 4.8</p>
+					<p class="pt-4 roboto m-0 pb-24 f-400">I connected with Deepesh in Jan 2020. Deepesh helped me organizing my finances in a very nice way. He was very patient in explaining me all the concepts of personal finance. He thoroughly reviewed my portflio and told me about the mistakes I have made in the past. I have since started investing and currently saving for financial goals... <span class="text-primary c-p">Read more</span></p>
+				</div>
+			</div>
+			<div class="row pt-20">
+				<div class="col-md-1 pl-0">
+			<img src="/assets/images/deepesh.png">
+		</div>
+		<div class="col-md-11">
+			<p class="text-dark f-500 m-0 pb-4">Response from Deepesh <span class="text-custom">14 Apr 2020</span></p>
+			<p class="m-0 roboto pb-20"> <i>Thank you for the kind words Azhar. Good to know you enjoyed the financial planning experience. I look forward to working with you again.</i></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row pt-40">
+		<div class="col-md-1 pl-0">
+			<img src="/assets/images/deepesh.png">
+		</div>
+		<div class="col-md-8 pl-0">
+			<p class="m-0 roboto text-dark f-400">Ayush </p>
+			<p class="m-0 roboto text-custom f-400">Mar 2020</p>
+		</div>
+		<div class="col-md-3 text-right">
+			 <button mat-stroked-button class="text-light"><span class="material-icons text-light f-24 pr-4">
+					reply
+					</span>Reply</button>
+		</div>
+		<div class="col-md-12 p-0 bb-dashed-1">
+			<div class="row pt-12">
+				<div class="col-md-1 pl-0"></div>
+				<div class="col-md-11 pl-0">
+					<p class="text-danger f-500 roboto">I recommend Deepesh | Average rating 4.5</p>
+					<p class="pt-4 roboto m-0 pb-20 f-400">I connected with Deepesh in Jan 2020. Deepesh helped me organizing my finances in a very nice way. He was very patient in explaining me all the concepts of personal finance. He thoroughly reviewed my portflio and told me about the mistakes I have made in the past. I have since started investing and currently saving for financial goals. I would hightly recommend you to hire Deepesh.</p>
+				</div>
+			</div>
+		</div>
+	</div>	
+</div>
+</div> -->

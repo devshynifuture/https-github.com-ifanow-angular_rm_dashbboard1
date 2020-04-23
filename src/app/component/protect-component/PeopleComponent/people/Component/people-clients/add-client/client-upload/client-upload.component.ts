@@ -73,6 +73,7 @@ export class ClientUploadComponent implements OnInit {
   errProof2 = true;
   showErr2 = false;
   userData: any;
+  bankList: any;
 
   constructor(private subInjectService: SubscriptionInject, private http: HttpService,
     private custumService: CustomerService, private enumService: EnumServiceService) {
@@ -83,6 +84,7 @@ export class ClientUploadComponent implements OnInit {
   @Input() set data(data) {
     console.log(data, 'user data1');
     this.userData = data;
+    this.getBankList();
     const obj = {
       userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ?
         this.userData.clientId : this.userData.familyMemberId,
@@ -267,18 +269,40 @@ export class ClientUploadComponent implements OnInit {
       case 'personal-pan':
         this.deleteImg(this.filePerPanImg.store.id);
         this.filePerPanImg = { view: '', store: '' };
+        this.fileComPanRef.nativeElement.files.FileList = null;
         break;
       case 'proof-type1':
         this.deleteImg(this.fileComPanImg.store.id);
         this.fileProof1Img = { view: '', store: '' };
+        this.fileComPanRef.nativeElement.files.FileList = null;
         break;
       case 'proof-type2':
         this.deleteImg(this.fileComPanImg.store.id);
         this.fileProof2Img = { view: '', store: '' };
+        this.fileComPanRef.nativeElement.files.FileList = null;
         break;
     }
   }
-
+  getBankList() {
+    let obj =
+    {
+      "userId": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
+      "userType": (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
+    }
+    this.custumService.getBankList(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data && data.length > 0) {
+          this.bankList = data;
+          this.selectedBank = data[0].bankId;
+        }
+      },
+      err => {
+        this.selectedBank = '';
+      }
+      // this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
   deleteImg(imgId) {
     const obj = { id: imgId };
     this.custumService.deleteClientProof(obj).subscribe((data) => {

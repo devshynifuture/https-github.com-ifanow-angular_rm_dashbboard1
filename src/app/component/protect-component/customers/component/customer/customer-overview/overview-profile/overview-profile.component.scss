@@ -86,8 +86,13 @@
             margin-left: 0px;
             margin-top: 2px;
             float: left;
+            width: 94px;
             p {
                 line-height: 16px;
+            }
+            h4 {
+                text-overflow: ellipsis;
+                overflow: hidden;
             }
         }
     }

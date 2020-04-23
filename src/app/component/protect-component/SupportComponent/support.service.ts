@@ -131,5 +131,8 @@ export class SupportService {
   addRm(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_RM, data);
   }
+  getTickets(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TICKET, data);
+  }
 
 }

@@ -6,7 +6,7 @@ import { AddClientComponent } from '../people-clients/add-client/add-client.comp
 import { AuthService } from 'src/app/auth-service/authService';
 import { PeopleService } from '../../../people.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatDialog, MatSort } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
@@ -17,12 +17,13 @@ import { PdfGenService } from 'src/app/services/pdf-gen.service';
   styleUrls: ['./people-leads.component.scss']
 })
 export class PeopleLeadsComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'lsource', /*'status', 'rating',*/ 'lead',
-    'icon', 'icons'];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'lsource', 'lrating',/*'status', 'rating',*/ 'lead',
+    'icons'];
   leadDataSource = new MatTableDataSource();
   isLoading: boolean;
   advisorId: any;
   @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('leadTableSort', { static: false }) leadTableSort: MatSort;
   constructor(private pdfGen: PdfGenService, private excel: ExcelGenService, public dialog: MatDialog, public eventService: EventService, private subInjectService: SubscriptionInject, private peopleService: PeopleService) { }
 
   ngOnInit() {
@@ -50,6 +51,7 @@ export class PeopleLeadsComponent implements OnInit {
             }
           });
           this.leadDataSource.data = data;
+          this.leadDataSource.sort = this.leadTableSort;
         }
         else {
           this.leadDataSource.data = [];

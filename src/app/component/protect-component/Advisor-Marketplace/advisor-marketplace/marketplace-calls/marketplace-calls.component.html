@@ -1,1 +1,341 @@
-<p>marketplace-calls works!</p>
+<div class="pt-150" id="marketplace-call">
+	<div class="row">
+		<div class="col-md-12 text-right">
+			<button mat-stroked-button class="text-primary"> Call </button>
+			<button mat-button>Setting</button>
+		</div>
+	</div>
+	<!-- <div class="row pt-16">
+		<div class="col-md-12">
+			<h4 class="m-0 f-18 roboto text-primary">Upcoming <span class="text-dark">Past</span></h4>
+		</div>
+		<div class="col-md-12">
+			<table mat-table [dataSource]="dataSource" class="mt-8" id="table-low">
+
+
+			  <ng-container matColumnDef="position">
+			    <th mat-header-cell *matHeaderCellDef class="br"> Date </th>
+			    <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+			  </ng-container>
+			  <ng-container matColumnDef="name">
+			    <th mat-header-cell *matHeaderCellDef class="br"> Time </th>
+			    <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+			  </ng-container>
+			  <ng-container matColumnDef="weight">
+			    <th mat-header-cell *matHeaderCellDef class="br"> With </th>
+			    <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+			  </ng-container>
+
+			  <ng-container matColumnDef="symbol">
+			    <th mat-header-cell *matHeaderCellDef class="br"> Mobile </th>
+			    <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+			  </ng-container>
+			   <ng-container matColumnDef="mail">
+			    <th mat-header-cell *matHeaderCellDef class="br"> Email </th>
+			    <td mat-cell *matCellDef="let element" class="br"> {{element.mail}} </td>
+			  </ng-container>
+   				<ng-container matColumnDef="deatils">
+			    <th mat-header-cell *matHeaderCellDef class="br"> Details </th>
+			    <td mat-cell *matCellDef="let element" class="br text-primary"><u> {{element.deatils}}</u> </td>
+			  </ng-container>
+			    <ng-container matColumnDef="menus">
+		          <th mat-header-cell *matHeaderCellDef class="br">  </th>
+		          <td mat-cell *matCellDef="let element" class="br">
+		        
+		              <mat-icon [matMenuTriggerFor]="menu1" class="c-p">more_vert</mat-icon>
+		              <mat-menu #menu1="matMenu">
+		              <button mat-menu-item>Reschedule</button>
+		              <button mat-menu-item>Cancel</button>
+		            </mat-menu>
+		          </td>
+		        </ng-container>
+			  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+			  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			</table>
+		</div>
+	</div> -->
+
+
+	<!-- Setting -->
+	<div class="row pt-28">
+		<div class="col-md-12">
+			<h3 class="m-0 text-dark roboto">Settings</h3>
+			<p class="pt-4 m-0 roboto text-custom">All settings related to Schedule a call feature on the marketplace can be managed from here.</p>
+		</div>
+	</div>
+	<div class="row pt-60">
+		<div class="col-md-3">
+			<h5 class="m-0 roboto text-right pt-10">Call duration</h5>
+		</div>
+		<div class="col-md-5 pl-0">
+			<mat-radio-group aria-label="Select an option">
+			  <mat-radio-button value="1" class="b-ua text-custom">30 mins</mat-radio-button>
+			  <mat-radio-button value="2" class="text-primary bu-primary text-primary">45 mins</mat-radio-button>
+			  <mat-radio-button value="2" class="b-ua text-custom">60 mins</mat-radio-button>
+			</mat-radio-group>
+		</div>
+			
+		</div>
+		<div class="row pt-44">
+		<div class="col-md-3">
+			<h5 class="m-0 roboto text-right pt-10">Date range</h5>
+		</div>
+		<div class="col-md-2 pl-0">
+			<div class="form-group mb-0">
+				<mat-form-field>
+				    <input matInput class="form-control">
+				  </mat-form-field>
+			</div>
+
+		</div>
+			<div class="col-md-1 pl-0">
+				<p class="m-0 roboto text-primary pt-8 c-p">Edit</p>
+			</div>
+			
+		</div>
+		<div class="row pt-10">
+			<div class="col-md-3"></div>
+			<div class="col-md-8 pl-0">
+				<p class="text-dark roboto m-0 f-400">Your availability to the users is currently set to 60 rolling days</p>
+			</div>
+		</div>
+			<div class="row pt-44">
+		<div class="col-md-3">
+			<h5 class="m-0 roboto text-right pt-10">Description</h5>
+		</div>
+		<div class="col-md-5 pl-0">
+			<div class="form-group mb-0">
+				<mat-form-field>
+				    <textarea matInput class="form-control h-200"></textarea>
+				     <mat-hint align="end">0/200</mat-hint>
+				  </mat-form-field>
+			</div>
+		</div>
+			<div class="col-md-1 pl-0">
+				<p class="m-0 roboto text-primary pt-8 c-p">Edit</p>
+			</div>
+		</div>
+		<div class="row pt-220">
+			<div class="col-md-12 pl-48">
+				<h5 class="m-0 roboto text-dark f-400">Availability</h5>
+				<p class="text-custom roboto pt-4 m-0 f-400">Set your available hours to help users schedule calls with you.</p>
+			</div>
+		</div>
+		<div class="row pt-16">
+			<div class="col-md-9 pl-48">
+			<h4 class="m-0 text-dark f-400 pt-12">5th April - 2nd May 2020</h4>
+		</div>
+		<div class="col-md-3">
+			<div class="row">
+				<div class="col-md-6 pl-0">
+					<button mat-stroked-button class="btn-dark-outline">Today</button>
+				</div>
+				<div class="col-md-6 pr-0 pt-8 pl-40">
+					<span class="material-icons c-p">
+					keyboard_arrow_left
+					</span>
+					<span class="material-icons c-p">
+					keyboard_arrow_right
+					</span>
+				</div>
+			</div>
+		</div>
+		</div>
+		<div class="row pt-10 pb-48">
+			<div class="col-md-12 pl-48 pr-48">
+				<div class="main-row">
+				<div class="columns bg-grey lt">
+					<p class="text-dark m-0">5 April</p>
+				</div>
+				<div class="columns bg-grey lt">
+					<p class="text-dark m-0">6</p>
+					<div class="text-center">
+					 <button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+				<div class="columns bg-grey lt">
+					<p class="text-dark m-0">7</p>
+					<div class="text-center">
+					 <button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+				<div class="columns bg-grey lt">
+					<p class="text-dark m-0">8</p>
+					<div class="text-center">
+					 <button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+				<div class="columns">
+					<p class="text-dark m-0">9</p>
+					<div class="text-center">
+					<button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+				<div class="columns">
+					<p class="text-dark m-0">10</p>
+					<div class="text-center">
+					<button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+				<div class="columns">
+					<p class="text-dark m-0">11</p>
+					<div class="text-center">
+					<button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+					<div class="columns">
+					<p class="text-dark m-0">11</p>
+					<div class="text-center">
+				
+					</div>
+				</div>
+					<div class="columns">
+					<p class="text-dark m-0">11</p>
+					<div class="text-center">
+					<button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+					<div class="columns">
+					<p class="text-dark m-0">11</p>
+					<div class="text-center">
+					<button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+					<div class="columns">
+					<p class="text-dark m-0">11</p>
+					<div class="text-center">
+					<button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+					<div class="columns">
+					<p class="text-dark m-0">11</p>
+					<div class="text-center">
+					<button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+					<div class="columns">
+					<p class="text-dark m-0">11</p>
+					<div class="text-center">
+					<button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+					<div class="columns">
+					<p class="text-dark m-0">11</p>
+					<div class="text-center">
+					
+					</div>
+				</div>
+				<div class="columns">
+					<p class="text-dark m-0">11</p>
+					<div class="text-center">
+					<button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+					<div class="columns">
+					<p class="text-dark m-0">11</p>
+					<div class="text-center">
+					<button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+					<div class="columns">
+					<p class="text-dark m-0">11</p>
+					<div class="text-center">
+					<button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+					<div class="columns">
+					<p class="text-dark m-0">11</p>
+					<div class="text-center">
+					<button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+					<div class="columns">
+					<p class="text-dark m-0">11</p>
+					<div class="text-center">
+					<button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+					<div class="columns">
+					<p class="text-dark m-0">11</p>
+					<div class="text-center">
+					<button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+					<div class="columns">
+					<p class="text-dark m-0">11</p>
+					<div class="text-center">
+					<button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+				<div class="columns">
+					<p class="text-dark m-0">11</p>
+					<div class="text-center">
+					<button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+					<div class="columns">
+					<p class="text-dark m-0">11</p>
+					<div class="text-center">
+					<button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+					<div class="columns">
+					<p class="text-dark m-0">11</p>
+					<div class="text-center">
+					<button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+					<div class="columns">
+					<p class="text-dark m-0">11</p>
+					<div class="text-center">
+					<button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+					<div class="columns">
+					<p class="text-dark m-0">11</p>
+					<div class="text-center">
+					<button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+					<div class="columns">
+					<p class="text-dark m-0">11</p>
+					<div class="text-center">
+					<button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+					<div class="columns">
+					<p class="text-dark m-0">11</p>
+					<div class="text-center">
+					<button mat-stroked-button>10.00AM - 12.30PM</button>
+					 <button mat-stroked-button>01.00PM - 06.30PM</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+

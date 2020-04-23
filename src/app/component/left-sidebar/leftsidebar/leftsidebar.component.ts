@@ -1,14 +1,17 @@
-import { Component, ElementRef, NgZone, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from '../../../Data-service/event.service';
-import { SubscriptionInject } from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { FormControl } from '@angular/forms';
-import { SubscriptionService } from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
-import { Router } from '@angular/router';
-import { map, startWith } from 'rxjs/operators';
-import { DialogContainerComponent } from '../../../common/dialog-container/dialog-container.component';
-import { DynamicComponentService } from '../../../services/dynamic-component.service';
-import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from '../../../animation/animation';
+import {Component, ElementRef, NgZone, OnInit} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from '../../../Data-service/event.service';
+import {SubscriptionInject} from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {FormControl} from '@angular/forms';
+import {SubscriptionService} from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
+import {Router} from '@angular/router';
+import {map, startWith} from 'rxjs/operators';
+import {DialogContainerComponent} from '../../../common/dialog-container/dialog-container.component';
+import {DynamicComponentService} from '../../../services/dynamic-component.service';
+import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from '../../../animation/animation';
+import {EnumDataService} from '../../../services/enum-data.service';
+import { SettingsService } from '../../protect-component/AdviserComponent/setting/settings.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-leftsidebar',
@@ -40,10 +43,13 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
 
   logoText = 'Your Logo here';
 
-  constructor(private authService: AuthService, private _eref: ElementRef,
-    protected eventService: EventService, protected subinject: SubscriptionInject,
-    private subService: SubscriptionService, private router: Router, private ngZone: NgZone,
-    protected dynamicComponentService: DynamicComponentService) {
+  constructor(public authService: AuthService, private _eref: ElementRef,
+              protected eventService: EventService, protected subinject: SubscriptionInject,
+              private subService: SubscriptionService, private router: Router, private ngZone: NgZone,
+              protected dynamicComponentService: DynamicComponentService,
+              private enumDataService: EnumDataService,
+              private settingsService: SettingsService,
+              private utilService: UtilService) {
     /*constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
       protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
       private authService: AuthService) {*/
@@ -86,18 +92,21 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     // console.log("link check", link);
 
     switch (link) {
-      case 'subscription': return link === value ? true : false;
+      case 'subscription':
+        return link === value ? true : false;
 
-      case 'emails': return link === value ? true : false;
+      case 'emails':
+        return link === value ? true : false;
 
-      case 'transactions': return link === value ? true : false;
+      case 'transactions':
+        return link === value ? true : false;
     }
   }
 
   selectClient(singleClientData) {
     console.log(singleClientData);
     this.ngZone.run(() => {
-      this.router.navigate(['customer', 'detail', 'account', 'assets'], { state: { ...singleClientData } });
+      this.router.navigate(['customer', 'detail', 'account', 'assets'], {state: {...singleClientData}});
     });
   }
 
@@ -108,6 +117,43 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     this.userInfo = AuthService.getUserInfo();
     this.myControl = new FormControl();
     this.getClientSubscriptionList();
+    this.enumDataService.getDataForTaxMasterService();
+    this.getOrgProfiles();
+    this.getPersonalProfiles();
+  }
+
+
+  getOrgProfiles() {
+    // this.utilService.loader(1)
+    let obj = {
+      advisorId: this.advisorId,
+    }
+    this.settingsService.getOrgProfile(obj).subscribe(
+      data => {
+        AuthService.setAppPic(data.logoUrl);
+        // this.utilService.loader(-1);
+      },
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+        // this.utilService.loader(-1);
+      }
+    );
+  }
+
+  getPersonalProfiles() {
+    // this.utilService.loader(1)
+    let obj = {
+      id: this.advisorId
+    }
+    this.settingsService.getPersonalProfile(obj).subscribe(
+      data => {
+        AuthService.setProfilePic(data.profilePic);
+      },
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+        // this.utilService.loader(-1);
+      }
+    );
   }
 
   private _filter(name: string): Client[] {
@@ -124,8 +170,8 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     document.getElementById('d').classList.add('width-230');
     document.getElementById('d').classList.remove('width-70');
     document.getElementById('left').classList.remove('width-60');
-    document.getElementById('left').style.marginLeft = "230px";
-    document.getElementById('left').style.transition = "0.2s";
+    document.getElementById('left').style.marginLeft = '230px';
+    document.getElementById('left').style.transition = '0.2s';
     this.showTabs = true;
     this.arrow = false;
     //   console.log("i was call left bar 3");
@@ -134,15 +180,15 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   showsmallNavWrapper() {
     document.getElementById('d').classList.remove('width-230');
     document.getElementById('d').classList.add('width-70');
-    document.getElementById('left').style.transition = "0.2s";
-    console.log("i was call left bar");
+    document.getElementById('left').style.transition = '0.2s';
+    console.log('i was call left bar');
 
     this.showTabs = false;
     this.arrow = true;
   }
 
   onResize() {
-    console.log("i was call left bar 2");
+    console.log('i was call left bar 2');
 
     if (window.innerHeight >= 670 || window.innerHeight == 670) {
       this.showSettings = false;
@@ -152,7 +198,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
       // $('#left').css('margin-left', '60px');
       // $('#d').addClass('width,60px');
       // $('#d').removeClass('width-230');
-      this.showsmallNavWrapper()
+      this.showsmallNavWrapper();
     } else {
       if (this.showTabs == false) {
         this.showTabs = false;
@@ -187,7 +233,6 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   //   return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   // }
 }
-
 
 
 export interface Client {
