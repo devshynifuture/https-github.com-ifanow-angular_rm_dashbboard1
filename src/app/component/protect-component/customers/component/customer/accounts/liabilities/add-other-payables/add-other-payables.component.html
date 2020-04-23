@@ -176,6 +176,21 @@
                 </div>
             </div>
         </div>
+        <div class="row pt-40">
+                <div class="col-md-5 pr-0 text-right">
+                    <h5 class="m-0 pt-12">Description</h5>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput autocomplete="off" #description maxlength="60" class="form-control br-0"
+                                formControlName="description" type="text">
+                            <mat-hint align="start" class="f-12">Optional</mat-hint>
+                            <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
     </div>
 
 </div>

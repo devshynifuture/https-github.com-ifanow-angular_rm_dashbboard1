@@ -206,7 +206,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
           principalOutStandingAmount: this.addLiabilityForm.controls.outstandingAmt.value,
           loanTenure: this.addLiabilityForm.controls.loanTenure.value,
           commencementDate: this.addLiabilityForm.controls.CommencementDate.value,
-          principalOutstandingAsOn: this.addLiabilityForm.controls.poDate.value,
+          principalOutstandingAsOn: (this.addLiabilityForm.controls.poDate.value) ? this.addLiabilityForm.controls.poDate.value : null,
           principalOutstanding: this.addLiabilityForm.controls.outstandingCheck.value,
           frequencyOfPayments: this.addLiabilityForm.controls.emiFrequency.value,
           annualInterestRate: this.addLiabilityForm.controls.interest.value,
@@ -226,7 +226,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
           principalOutStandingAmount: this.addLiabilityForm.controls.outstandingAmt.value,
           loanTenure: this.addLiabilityForm.controls.loanTenure.value,
           commencementDate: this.addLiabilityForm.controls.CommencementDate.value,
-          principalOutstandingAsOn: this.addLiabilityForm.controls.poDate.value,
+          principalOutstandingAsOn: (this.addLiabilityForm.controls.poDate.value) ? this.addLiabilityForm.controls.poDate.value : null,
           frequencyOfPayments: this.addLiabilityForm.controls.emiFrequency.value,
           annualInterestRate: this.addLiabilityForm.controls.interest.value,
           emi: this.addLiabilityForm.controls.emi.value,
@@ -244,7 +244,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       console.log(data);
       data = this.loanTypeView;
       this.close(true);
-      (this._data.id == undefined) ? this.eventService.openSnackBar('Liabilities added successfully', 'OK') : this.eventService.openSnackBar('Liabilities edited successfully', 'OK');
+      (this._data.id == undefined) ? this.eventService.openSnackBar('Liability added successfully', 'OK') : this.eventService.openSnackBar('Liability edited successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'Dismiss');
     }

@@ -238,6 +238,7 @@ export class OrgProfileComponent implements OnInit {
         this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
         this.anyDetailsChanged = true;
         this.profileImg = jsonDataObj.logoUrl;
+        AuthService.setAppPic(jsonDataObj.logoUrl);
         this.switchToTab(++this.selectedTab);
       });
     } else {
