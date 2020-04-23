@@ -123,6 +123,24 @@
                         </div>
                     </div>
                 </div>
+                <div class="row pt-40" *ngIf="orgProfile.get('gstTreatment').value == 3">
+                    <div class="col-md-4 text-right pr-0">
+                        <h5 class="mb-0 mt-20">Country</h5>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
+                                <mat-select formControlName="country" class="form-control br-0" id="sel1">
+                                    <mat-option value="" disabled>Select Country</mat-option>
+                                    <mat-option [value]="code.countryName" *ngFor="let code of isdCodes">{{code.countryName}}</mat-option>
+                                </mat-select>
+                                <mat-error class=" pt-4">
+                                    This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
                 <div class="row pt-40" *ngIf="orgProfile.get('gstTreatment').value == 4">
                     <div class="col-md-4 text-right pr-0">
                         <h5 class="mb-0 mt-20">GSTIN Number</h5>
@@ -140,7 +158,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row pt-40">
+                <div class="row pt-40" *ngIf="orgProfile.get('gstTreatment').value != 3">
                     <div class="col-md-4 text-right pr-0">
                         <h5 class="mb-0 mt-20">Pin code</h5>
                     </div>
@@ -157,7 +175,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row pt-40">
+                <div class="row pt-40" *ngIf="orgProfile.get('gstTreatment').value != 3">
                     <div class="col-md-4 text-right pr-0">
                         <h5 class="mb-0 mt-20">City</h5>
                     </div>
@@ -170,7 +188,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row pt-40">
+                <div class="row pt-40" *ngIf="orgProfile.get('gstTreatment').value != 3">
                     <div class="col-md-4 text-right pr-0">
                         <h5 class="mb-0 mt-20">State</h5>
                     </div>
