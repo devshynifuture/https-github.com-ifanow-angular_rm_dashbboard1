@@ -142,9 +142,9 @@
                                         </th>
                                         <td *matCellDef="let element" mat-cell>
                                             <div (click)="getSharebleLink(element,'preview')">
-                                            <div class="bar">
-                                                {{isLoading ? '' : element.createdDate | date:'dd/MM/yyyy'}} </div>
-                                                </div>
+                                                <div class="bar">
+                                                    {{isLoading ? '' : element.createdDate | date:'dd/MM/yyyy'}} </div>
+                                            </div>
                                         </td>
                                     </ng-container>
 
@@ -153,9 +153,9 @@
                                         <th *matHeaderCellDef mat-header-cell mat-sort-header="fileTypeId"> Type</th>
                                         <td *matCellDef="let element" mat-cell>
                                             <div (click)="getSharebleLink(element,'preview')">
-                                            <div class="bar">
-                                                {{isLoading ? '' : element.fileType}}
-                                            </div>
+                                                <div class="bar">
+                                                    {{isLoading ? '' : element.fileType}}
+                                                </div>
                                             </div>
                                         </td>
                                     </ng-container>
@@ -164,9 +164,9 @@
                                         <th *matHeaderCellDef mat-header-cell mat-sort-header="size"> Size</th>
                                         <td *matCellDef="let element" mat-cell>
                                             <div (click)="getSharebleLink(element,'preview')">
-                                            <div class="bar">
-                                                {{isLoading ? '' : element.size}}
-                                            </div>
+                                                <div class="bar">
+                                                    {{isLoading ? '' : element.size}}
+                                                </div>
                                             </div>
                                         </td>
                                     </ng-container>
@@ -179,10 +179,10 @@
                                                 </i>
                                                 <mat-menu #menu4="matMenu">
                                                     <button *ngIf="element.folderName == undefined" class="f-14"
-                                                    (click)="getSharebleLink(element,'DocPreview')" mat-menu-item>
-                                                    <img class="mr-20" src="assets/images/svg/preview.svg">
-                                                    Preview
-                                                </button>
+                                                        (click)="getSharebleLink(element,'DocPreview')" mat-menu-item>
+                                                        <img class="mr-20" src="assets/images/svg/preview.svg">
+                                                        Preview
+                                                    </button>
                                                     <button *ngIf="element.folderName == undefined && valueTab != 4"
                                                         (click)="getSharebleLink(element,'share')" class="f-14"
                                                         mat-menu-item>
@@ -265,14 +265,17 @@
                         </div>
                         <div class="col-md-3 pr-0" *ngIf="showMsg == false && noResult == false">
                             <div class="bg-grey lter mb-16 boxGrey f-14" *ngIf="urlData">
+                                
                                 <p class="selectMoreDetails">
                                     Select a file to see more details
                                 </p>
-                                <ngx-doc-viewer [url]="urlData"
-                                  viewer="google" style="width:270px;height:350px;">
+                                <ngx-doc-viewer [url]="urlData" viewer="google" style="width:270px;height:350px;">
                                 </ngx-doc-viewer>
                                 <div class="row">
                                     <div class="col-md-6">
+                                        <div *ngIf="previewDoc==true">
+                                            <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <!-- <p class="f-12">Bajaj Allizan critical care</p> -->
