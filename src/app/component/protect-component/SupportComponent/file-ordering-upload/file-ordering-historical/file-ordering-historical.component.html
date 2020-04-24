@@ -168,7 +168,8 @@
                 <th class="br" mat-header-cell *matHeaderCellDef> Refresh </th>
                 <td class="br" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        <button mat-button class="bg-grey mr-12 h-22 btn-xs" (click)="refreshFileOrder()">
+                        <button mat-button *ngIf="!isLoading" class="bg-grey mr-12 h-22 btn-xs"
+                            (click)="refreshFileOrder()">
                             <mat-icon>
                                 refresh
                             </mat-icon>
@@ -182,7 +183,7 @@
                 <th class="br" mat-header-cell *matHeaderCellDef> </th>
                 <td class="br" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        <mat-icon>
+                        <mat-icon *ngIf="!isLoading">
                             more_vert
                         </mat-icon>
                     </div>

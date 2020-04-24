@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="back-office-table col-md-12 pl-0 overflow-hidden ">
+                        <div class="back-office-table col-md-12 pl-0 pr-0 overflow-hidden ">
                             <table mat-table [dataSource]="franklineData" id="table-low" class="skeletonAnimation"
                                 appSkeletonLoading [appSkeletonLoading]="isLoading">
                                 <ng-container matColumnDef="arn">
@@ -99,13 +99,10 @@
                                 <ng-container matColumnDef="report">
                                     <th class="br" mat-header-cell *matHeaderCellDef> Report </th>
                                     <td class="br" mat-cell *matCellDef="let element">
-                                        <div matTooltip=" Loading..." [matTooltipDisabled]="!isLoading">
-                                            <button mat-stroked-button class="bg-primary text-white"
-                                                [disabled]="isLoading"
-                                                (click)="openUpperSliderBackoffice('report', element, franklinId)">
-                                                Report
-                                            </button>
-                                        </div>
+                                        <button *ngIf="!isLoading" mat-stroked-button class="bg-primary text-white"
+                                            (click)="openUpperSliderBackoffice('report', element, franklinId)">
+                                            Report
+                                        </button>
                                     </td>
                                 </ng-container>
 
@@ -122,7 +119,7 @@
                 </div>
             </div>
             <div class="row pt-28">
-                <div class="col-md-6 pl-0">
+                <div class="col-md-6">
                     <h2 class="f-16 m-0 d-flex align-items-center">
                         CAMS
                         <i class="material-icons ml-4 c-p" (click)="getBrokerList(camsId)">
@@ -138,7 +135,7 @@
 
             </div>
             <div class="row">
-                <div class="back-office-table col-md-12 pl-0 overflow-hidden ">
+                <div class="back-office-table col-md-12 overflow-hidden ">
                     <table mat-table [dataSource]="camsData" id="table-low" class="skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="arn">
@@ -193,12 +190,10 @@
                         <ng-container matColumnDef="report">
                             <th class="br" mat-header-cell *matHeaderCellDef> Report </th>
                             <td class="br" mat-cell *matCellDef="let element">
-                                <div matTooltip=" Loading..." [matTooltipDisabled]="!isLoading">
-                                    <button mat-stroked-button class="bg-primary text-white" [disabled]="isLoading"
-                                        (click)="openUpperSliderBackoffice('report', element, camsId)">
-                                        Report
-                                    </button>
-                                </div>
+                                <button *ngIf="!isLoading" mat-stroked-button class="bg-primary text-white"
+                                    (click)="openUpperSliderBackoffice('report', element, camsId)">
+                                    Report
+                                </button>
                             </td>
                         </ng-container>
 
@@ -231,7 +226,7 @@
 
             </div>
             <div class="row">
-                <div class="back-office-table col-md-12 pl-0 overflow-hidden ">
+                <div class="back-office-table col-md-12 overflow-hidden ">
                     <table mat-table [dataSource]="karvyData" id="table-low" class="skeletonAnimation"
                         appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="arn">
@@ -286,12 +281,10 @@
                         <ng-container matColumnDef="report">
                             <th class="br" mat-header-cell *matHeaderCellDef> Report </th>
                             <td class="br" mat-cell *matCellDef="let element">
-                                <div matTooltip=" Loading..." [matTooltipDisabled]="!isLoading">
-                                    <button mat-stroked-button class="bg-primary text-white" [disabled]="isLoading"
-                                        (click)="openUpperSliderBackoffice('report', element, karvyId)">
-                                        Report
-                                    </button>
-                                </div>
+                                <button *ngIf="!isLoading" mat-stroked-button class="bg-primary text-white"
+                                    (click)="openUpperSliderBackoffice('report', element, karvyId)">
+                                    Report
+                                </button>
                             </td>
                         </ng-container>
 

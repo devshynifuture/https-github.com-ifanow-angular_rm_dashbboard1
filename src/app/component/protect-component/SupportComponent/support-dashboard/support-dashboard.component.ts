@@ -33,6 +33,7 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
   currentWeekKarvy: any;
 
   rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
+  rmName = AuthService.getUserInfo().name;
 
   subscription = new Subscription();
   bulkData: any[] = [{}, {}, {}];
