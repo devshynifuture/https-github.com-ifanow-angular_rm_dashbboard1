@@ -777,18 +777,17 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     }
   }
   urlShorten(value) {
-    console.log('value', value)
-
     var link =
-    {
-      // group_guid: "devshyni",
-      domain: "bit.ly",
-      long_url: value
+    {"destination": "https://futurewise-temp.s3.amazonaws.com/c93407d7-40a9-4cdf-b39e-a186a10fcd9b?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEAUaCXVzLWVhc3QtMSJGMEQCH31niEPmXuCL9sLJf9EO9bFO2cAC8fNcfm0YDXh5XUgCIQCzB6k5TJ%2FNw3fAUWQcLktE0NyIrDU5aZLd8yfZxfQPUirOAQgtEAAaDDAzMDM4NDY1ODA1NiIMGITBIbtr1hTjQ1DcKqsBaFVLVlLfDinX34hUCyfpDb9sHvY6BTzhZFddKhmBSpMeUOrReshcqTDkKWTXJgcgTNP6VrBJvgIXYUvU04bEZw0IZxWGrWl0Jbv5can8pHfC4lr6Q252UNHjkCMcd515AdIkaT9EewnmNIbN1VZ7AeG14gS4%2FD9yWFWpbTtbeQl0k6cbn%2B6EMyhQuSZATt6fe0efEBj9kuYkWLaujVcPe%2FpLG3OQTgEIBlf9MI7F%2B%2FQFOuEBgbvXzyUiGQP5OG6tZmiflgoMxu4lWq5LbIT54VQAhA6ZJDuwIXLWZYsjSUHvq%2B3tsYakuD0Y9uaPXaRSQKPVH5kfHzlyTMMJ4gWU0QT%2Fu70wfw1gnm2Stodbokp0nStD1w%2FmBSS3QG%2F%2Bp%2BYKamqKdEZZxLsd23QQk%2BQnfH7qahV2zGKsfDpisDntiW%2Fxr9cJoy%2FSP4uTlGedjxF9Rjs1AVE6T91nkTq6G5zsMgQsS2y64GE4Se9xGuVhZG%2Bgmyc8xJ1uDQ0PHEKPgBe8ujc%2BWWFOlRtsVgwi3LY3fA9uyuTQ&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20200421T131611Z&X-Amz-SignedHeaders=host&X-Amz-Expires=900&X-Amz-Credential=ASIAQOEYRC2EIR7G5QU6%2F20200421%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=1bef2dca0b5e6789631996ce615a67516c601498e1ca1345ae2c11f573ae0c7a", 
+    "domain": 
+    { 
+    "fullName": "rebrand.ly"}
     }
-    const payload = JSON.stringify(link)
-    let headers: HttpHeaders = new HttpHeaders();
-    headers = headers.set('Content-Type', 'application/json');
-    this.http.post('https://api-ssl.bitly.com/v4/shorten', payload, headers).subscribe((responseData) => {
+    const httpOptions = {
+      headers: new HttpHeaders()
+        .set('apiKey', 'b96683be9a4742979e78c6011a3ec2ca')
+    };
+    this.http.post('https://api.rebrandly.com/v1/links', link, httpOptions).subscribe((responseData) => {
       console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
       if (responseData == null) {
       }
@@ -808,7 +807,6 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       data => this.uploadFileRes(data, fileName)
     );
   }
-
   uploadFileRes(data, fileName) {
     this.countFile++;
     const fileuploadurl = data;
