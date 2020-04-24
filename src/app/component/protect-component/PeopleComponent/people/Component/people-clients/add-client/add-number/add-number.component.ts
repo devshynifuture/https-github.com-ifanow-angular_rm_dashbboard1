@@ -55,6 +55,9 @@ export class AddNumberComponent implements OnInit {
         if (data) {
           console.log(data);
           this.isdCodes = data;
+          if (taxStatusObj[0].residentFlag == undefined) {
+            return;
+          }
           if (taxStatusObj[0].residentFlag == 0) {
             this.isdCodes = this.isdCodes.filter(element => element.code == '+91');
           } else {
