@@ -24,8 +24,9 @@ import { AddFireAndPerilsInsuranceInAssetComponent } from './add-fire-and-perils
 
 export class InsuranceComponent implements OnInit {
   displayedColumns = ['no', 'life', 'name', 'number', 'sum', 'cvalue', 'premium', 'term', 'pterm', 'desc', 'status', 'icons'];
-
   displayedColumns1 = ['no', 'owner', 'cvalue', 'amt', 'mvalue', 'rate', 'mdate', 'type', 'ppf', 'desc', 'status', 'icons'];
+  displayedColumns2 = ['no', 'life', 'insurerName', 'sumInsured', 'premiumAmount', 'policyExpiryDate', 'Duration', 'planName', 'policyNumber','status', 'icons'];
+
   dataSource1;
   isLoading = false;
   advisorId: any;
@@ -36,11 +37,19 @@ export class InsuranceComponent implements OnInit {
   generalInsuranceFlag: boolean;
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
+  data2: Array<any> = [{}, {}, {}];
+  dataSourceGeneralInsurance = new MatTableDataSource(this.data);
   @ViewChild("tableOne", { static: true }) sort: MatSort;
   lifeInsuranceList = [{ name: 'Term', id: 1 }, { name: 'Traditional', id: 2 }, { name: 'ULIP', id: 3 }];
 
   viewMode;
   dislayList: any;
+  sumAssured = 0;
+  totalSumAssured=0;
+  totalPremiunAmount=0;
+  totalCurrentValue = 0;
+  totalPremiunAmountLifeIns = 0;
+  totalSumAssuredLifeIns = 0;
 
   constructor(private eventService: EventService, public dialog: MatDialog,
     private subInjectService: SubscriptionInject, private cusService: CustomerService) {
@@ -62,6 +71,7 @@ export class InsuranceComponent implements OnInit {
 
   getInsuranceSubTypeData(advisorId, clientId, insuranceId, insuranceSubTypeId) {
     this.dataSource = new MatTableDataSource([{}, {}, {}]);
+    this.dataSourceGeneralInsurance = new MatTableDataSource([{}, {}, {}]);
     this.isLoading = true;
     const obj = {
       advisorId: advisorId,
@@ -69,9 +79,17 @@ export class InsuranceComponent implements OnInit {
       insuranceSubTypeId: insuranceSubTypeId,
       insuranceTypeId: insuranceId
     };
-    this.cusService.getLifeInsuranceData(obj).subscribe(
-      data => this.getInsuranceDataResponse(data)
-    );
+    if(insuranceId==1){
+      this.cusService.getLifeInsuranceData(obj).subscribe(
+        data => this.getInsuranceDataResponse(data)
+      );
+    }else{
+      delete obj.insuranceTypeId;
+      this.cusService.getGeneralInsuranceData(obj).subscribe(
+        data => this.getGeneralInsuranceDataRes(data)
+      );
+    }
+ 
   }
 
   getInsuranceDataResponse(data) {
@@ -80,6 +98,11 @@ export class InsuranceComponent implements OnInit {
       this.dataSource.data = data.insuranceList;
       this.dataSource = new MatTableDataSource(this.dataSource.data);
       this.dataSource.sort = this.sort;
+      this.dataSource.data.forEach(element => {
+        this.totalCurrentValue += (element.currentValue) ? element.currentValue :0,
+        this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount :0
+        this.totalSumAssuredLifeIns +=( element.sumAssured) ?  element.sumAssured :0
+      });
     } else {
       this.dataSource.data = [];
     }
@@ -103,19 +126,48 @@ export class InsuranceComponent implements OnInit {
       // }
     );
   }
-
   getInsuranceDataRes(data) {
     if (data) {
       this.dataSource.data = data.insuranceList;
       this.dataSource = new MatTableDataSource(this.dataSource.data);
       this.dataSource.sort = this.sort;
+      this.dataSource.data.forEach(element => {
+        this.totalCurrentValue += (element.currentValue) ? element.currentValue :0,
+        this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount :0
+        this.totalSumAssuredLifeIns +=( element.sumAssured) ?  element.sumAssured :0
+      });
       this.isLoading = false;
     } else {
       this.dataSource.data = [];
   
     }
   }
+  getGeneralInsuranceDataRes(data) {
+  
+    if (data) {
+      this.dataSourceGeneralInsurance.data = data.generalInsuranceList;
+      this.dataSourceGeneralInsurance = new MatTableDataSource(this.dataSourceGeneralInsurance.data);
+      this.dataSourceGeneralInsurance.sort = this.sort;
+      this.totalSumAssured= 0;
+      this.totalPremiunAmount= 0;
+      this.dataSourceGeneralInsurance.data.forEach(element => {
+        this.sumAssured = 0;
+        element.insuredMembers.forEach(ele => {
+          this.sumAssured += ele.sumInsured
+        });
+        element.sumAssured = this.sumAssured
+      });
+      this.dataSourceGeneralInsurance.data.forEach(element => {
+        this.totalSumAssured += element.sumAssured,
+        this.totalPremiunAmount += element.premiumAmount
 
+      });
+      this.isLoading = false;
+    } else {
+      this.dataSourceGeneralInsurance.data = [];
+  
+    }
+  }
   getGlobalDataInsurance() {
     const obj = {};
     this.cusService.getInsuranceGlobalData(obj).subscribe(
@@ -142,14 +194,26 @@ export class InsuranceComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.cusService.deleteInsurance(data.id).subscribe(
-          data => {
-            this.eventService.openSnackBar('Insurance is deleted', 'Dismiss');
-            dialogRef.close();
-            this.getInsuranceData(this.insuranceTypeId)
-          },
-          error => this.eventService.showErrorMessage(error)
-        );
+        if(this.insuranceTypeId == 1){
+          this.cusService.deleteInsurance(data.id).subscribe(
+            data => {
+              this.eventService.openSnackBar('Insurance is deleted', 'Dismiss');
+              dialogRef.close();
+              this.getInsuranceData(this.insuranceTypeId)
+            },
+            error => this.eventService.showErrorMessage(error)
+          );
+        }else{
+          this.cusService.deleteGeneralInsurance(data.id).subscribe(
+            data => {
+              this.eventService.openSnackBar('Insurance is deleted', 'Dismiss');
+              dialogRef.close();
+              this.getInsuranceSubTypeData(this.advisorId, this.clientId, this.insuranceTypeId, this.insuranceSubTypeId); 
+            },
+            error => this.eventService.showErrorMessage(error)
+          );
+        }
+
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -277,10 +341,18 @@ export class InsuranceComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.lifeInsuranceFlag = true
-          this.insuranceSubTypeId = 0;
-          this.getInsuranceData(this.insuranceTypeId)
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          if(sideBarData.data){
+            this.lifeInsuranceFlag = true
+            if(this.insuranceTypeId==1){
+              this.insuranceSubTypeId = 0;
+              this.getInsuranceData(this.insuranceTypeId)
+              console.log('this is sidebardata in subs subs 2: ', sideBarData);
+            }else{
+              this.getInsuranceSubTypeData(this.advisorId, this.clientId, this.insuranceTypeId, this.insuranceSubTypeId) 
+            }
+            
+          }
+
           rightSideDataSub.unsubscribe();
 
         }
