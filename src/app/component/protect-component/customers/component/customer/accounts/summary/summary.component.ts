@@ -28,13 +28,18 @@ export class SummaryComponent implements OnInit {
   nightyDayData: any;
   oneDay: any;
   displayedColumns: string[] = ['description', 'date', 'amount'];
-  cashFlowDataSource = [];
+  cashFlowViewDataSource = [];
   expenseList = [];
   incomeList = [];
+  clientData: any;
+  filterCashFlow;
+  inflowFlag;
+  outflowFlag;
   constructor(public eventService: EventService, private cusService: CustomerService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
+    this.clientData = AuthService.getClientData();
     this.asOnDate = new Date().getTime();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -107,36 +112,97 @@ export class SummaryComponent implements OnInit {
     this.cusService.getCashFlowList(obj).subscribe(
       data => {
         console.log(data);
-        this.cashFlowDataSource = [];
-        for (let singleList in data) {
-          if (data[singleList].length > 0) {
-            data[singleList].forEach(element => {
-              if (singleList == "expense") {
-                element['colourFlag'] = false;
-                this.expenseList.push(element.currentValue);
-              } else {
-                this.incomeList.push(element.currentValue);
-                element['colourFlag'] = true
-              }
-              this.cashFlowDataSource.push(element);
-            });
-          }
-        }
+        this.filterCashFlow = Object.assign({}, data);
+        this.cashFlowViewDataSource = [];
+        this.incomeList = [];
+        this.expenseList = [];
+        this.sortDataUsingFlowType(data, true);
         this.cashFlow('cashFlow');
-        console.log(this.cashFlowDataSource);
+        console.log(this.cashFlowViewDataSource);
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
+
+
+  sortDataUsingFlowType(ObjectArray, flag) {
+
+    if (ObjectArray['expense'].length > 0 && ObjectArray['income'].length > 0) {
+      this.cashFlowViewDataSource = ObjectArray['expense'];
+      this.cashFlowViewDataSource = this.cashFlowViewDataSource.concat(ObjectArray['income']);
+      ObjectArray['expense'].forEach(element => {
+        element['colourFlag'] = false;
+        this.expenseList.push(element.currentValue)
+      })
+      ObjectArray['income'].forEach(element => {
+        element['colourFlag'] = true;
+        this.incomeList.push(element.currentValue)
+      })
+      this.inflowFlag = true;
+      this.outflowFlag = true;
+    }
+    else if (ObjectArray['expense'].length > 0) {
+      this.cashFlowViewDataSource = ObjectArray['expense'];
+      ObjectArray['expense'].forEach(element => {
+        element['colourFlag'] = false;
+        this.expenseList.push(element.currentValue)
+      })
+      this.outflowFlag = true;
+    }
+    else {
+      this.cashFlowViewDataSource = ObjectArray['income'];
+      ObjectArray['income'].forEach(element => {
+        element['colourFlag'] = true;
+        this.incomeList.push(element.currentValue)
+      })
+      this.inflowFlag = true;
+    }
+    this.cashFlow('cashFlow');
+  }
+
+
+  filterData(eventData, flag) {
+    this.incomeList = [];
+    this.expenseList = [];
+    if (this.inflowFlag && this.outflowFlag == false) {
+      let ObjArray = {
+        income: this.filterCashFlow.income,
+        expense: []
+      }
+      this.sortDataUsingFlowType(ObjArray, true);
+    }
+    else if (this.outflowFlag && this.inflowFlag == false) {
+      let ObjArray = {
+        income: [],
+        expense: this.filterCashFlow.expense
+      }
+      this.sortDataUsingFlowType(ObjArray, true);
+    }
+    else if (this.inflowFlag == false && this.outflowFlag == false) {
+      (flag == 'inflow') ? this.outflowFlag = true : this.inflowFlag = true;
+      let ObjArray = {
+        income: (this.inflowFlag) ? this.filterCashFlow.income : [],
+        expense: (this.outflowFlag) ? this.filterCashFlow.expense : []
+      }
+      this.sortDataUsingFlowType(ObjArray, true);
+    }
+    else {
+      this.sortDataUsingFlowType(this.filterCashFlow, true);
+    }
+  }
+
+
   checkNumberPositiveAndNegative(value: number) {
     if (value == 0) {
-      return;
+      return undefined;
     }
     else {
       let result = Math.sign(value)
       return (result == -1) ? false : true;
     }
   }
+
+
   calculate1DayAnd90Days(data) {
     console.log(data)
     let firstIndexTotalCurrentValue = 0, lastIndexTotalCurrentValue = 0, secondLastIndexTotalCurrentValue = 0;
@@ -175,6 +241,8 @@ export class SummaryComponent implements OnInit {
       };
     }
   }
+
+
   totalOfLiabilitiesAndTotalAssset(dataList) {
     dataList.forEach(element => {
       if (element.assetType == 2) {
@@ -190,17 +258,8 @@ export class SummaryComponent implements OnInit {
     this.asOnDate = new Date(event.value).getTime();
     this.calculateTotalSummaryValues();
   }
-  getCashFlowData(data) {
-    let obj =
-    {
 
-    }
-    this.cusService.getCashFlowList(obj).subscribe(
-      data => {
-        console.log(data)
-      }, err => this.eventService.openSnackBar(err, "Dismiss")
-    )
-  }
+
   cashFlow(id) {
     const chart1 = new Highcharts.Chart('cashFlow', {
       chart: {
@@ -234,13 +293,6 @@ export class SummaryComponent implements OnInit {
       chart: {
         zoomType: 'x'
       },
-      title: {
-        text: ''
-      },
-      subtitle: {
-        text: document.ontouchstart === undefined ?
-          '' : ''
-      },
       xAxis: {
         type: 'datetime'
       },
@@ -248,6 +300,13 @@ export class SummaryComponent implements OnInit {
         title: {
           text: ''
         }
+      },
+      title: {
+        text: ''
+      },
+      subtitle: {
+        text: document.ontouchstart === undefined ?
+          '' : ''
       },
       legend: {
         enabled: false
@@ -314,7 +373,7 @@ export class SummaryComponent implements OnInit {
         y: 60
       },
       tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        pointFormat: '<b>{point.percentage:.1f}%</b>'
       },
       plotOptions: {
         pie: {
