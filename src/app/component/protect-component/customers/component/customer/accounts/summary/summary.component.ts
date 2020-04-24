@@ -31,7 +31,7 @@ export class SummaryComponent implements OnInit {
   cashFlowViewDataSource = [];
   expenseList = [];
   incomeList = [];
-  clientData: any;
+  userData: any;
   filterCashFlow;
   inflowFlag;
   outflowFlag;
@@ -39,7 +39,7 @@ export class SummaryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.clientData = AuthService.getClientData();
+    this.userData = AuthService.getUserInfo();
     this.asOnDate = new Date().getTime();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -75,8 +75,8 @@ export class SummaryComponent implements OnInit {
             }
             this.totalAssetsWithoutLiability = 0;
             this.liabilityTotal = 0;
-            this.totalOfLiabilitiesAndTotalAssset(data);
           });
+          this.totalOfLiabilitiesAndTotalAssset(data);
           this.summaryMap = tempSummaryTotalValue;
           this.pieChart('piechartMutualFund', data);
         }
@@ -91,13 +91,13 @@ export class SummaryComponent implements OnInit {
     this.cusService.getSUmmaryList(obj).subscribe(
       data => {
         console.log(data);
-        this.calculate1DayAnd90Days(data);
         this.graphList = [];
         let sortedDateList = [];
         sortedDateList = data;
         sortedDateList.sort(function (a, b) {
           return a.targetDate - b.targetDate;
         })
+        this.calculate1DayAnd90Days(sortedDateList);
         for (let singleData of sortedDateList) {
           let sumOf10Days = 0;
           singleData.summaryData.forEach(element => {
@@ -136,7 +136,7 @@ export class SummaryComponent implements OnInit {
       this.cashFlowViewDataSource = this.cashFlowViewDataSource.concat(ObjectArray['income']);
       ObjectArray['expense'].forEach(element => {
         element['colourFlag'] = false;
-        this.expenseList.push(-Math.abs(element.currentValue))
+        this.expenseList.push(-Math.abs(element.currentValue.toFixed(2)))
       })
       ObjectArray['income'].forEach(element => {
         element['colourFlag'] = true;
@@ -256,6 +256,8 @@ export class SummaryComponent implements OnInit {
         this.totalAssetsWithoutLiability += element.currentValue;
       }
     });
+    console.log(this.totalAssetsWithoutLiability, "total asset without liability");
+    console.log(this.liabilityTotal, "liability total")
   }
 
   dateChange(event) {
