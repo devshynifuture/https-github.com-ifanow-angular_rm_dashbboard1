@@ -35,7 +35,7 @@
         <div class="form-group mb-0">
             <mat-form-field hintLabel="Optional">
                 <textarea matInput formControlName="roleDescription" class="form-control" rows="5"></textarea>
-                <mat-hint align="end">{{rolesFG.get('roleDescription').value.length}}/ 60</mat-hint>
+                <mat-hint align="end">{{rolesFG.get('roleDescription').value.length}}/ 250</mat-hint>
                 <mat-error *ngIf="rolesFG.get('roleDescription').errors?.required">This field is required</mat-error>
                 <mat-error *ngIf="rolesFG.get('roleDescription').errors?.maxlength">Max length exceeded</mat-error>
             </mat-form-field>
@@ -93,7 +93,7 @@
                             <div [hidden]="!(element.advanced_permissions && element.advanced_permissions.length > 0)">
                                 Manage
                                 <mat-menu #menu="matMenu" class="min-152">
-                                    <button mat-menu-item *ngFor="let advanced_permission of element.advanced_permissions">
+                                    <button mat-menu-item (click)="$event.stopPropagation()" *ngFor="let advanced_permission of element.advanced_permissions">
                                         <div class="row">
                                             <div class="col-md-2 pl-0">
                                                 <mat-checkbox [(ngModel)]="advanced_permission.enabledOrDisabled"

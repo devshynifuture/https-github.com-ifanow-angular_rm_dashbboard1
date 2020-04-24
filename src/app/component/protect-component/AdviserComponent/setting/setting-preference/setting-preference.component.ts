@@ -54,6 +54,11 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   appearanceFG:FormGroup;
   appearanceUpdateFlag: boolean;
   hasError = false;
+
+  appearancePortfolio:number = 0;
+  appearanceFinancial:number = 0;
+  appearanceClient:number = 0;
+
   constructor(private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, ) {
       
@@ -64,9 +69,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getPortfolio()
     this.getdataForm('')
-    this.planSection = []
-    this.createAppearanceForm();
-    this.addAppearanceFormListener();
+    this.planSection = [];
   }
   getdataForm(data) {
     this.domainS = this.fb.group({
@@ -412,9 +415,9 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     this.appearanceUpdateFlag = false;
     this.orgSetting.getAppearancePreference(obj).subscribe(
       data => {
-        this.appearanceFG.controls.portfolioOpt.setValue(data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation);
-        this.appearanceFG.controls.financialOpt.setValue(data.find(data => data.appearanceOptionId == 2).advisorOrOrganisation);
-        this.appearanceFG.controls.clientOpt.setValue(data.find(data => data.appearanceOptionId == 3).advisorOrOrganisation);
+        this.appearancePortfolio = data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation
+        this.appearanceFinancial = data.find(data => data.appearanceOptionId == 2).advisorOrOrganisation
+        this.appearanceClient = data.find(data => data.appearanceOptionId == 3).advisorOrOrganisation
         this.appearanceUpdateFlag = true;
         this.loader(-1)
       },
@@ -426,32 +429,25 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     );
   }
 
-  createAppearanceForm() {
-    this.appearanceFG = this.fb.group({
-      portfolioOpt: '',
-      financialOpt: '',
-      clientOpt: '',
+  changeAppearanceSettings() {
+    let jsonArr = [];
+    jsonArr.push({
+      advisorId: this.advisorId,
+      appearanceOptionId: 1,
+      advisorOrOrganisation: this.appearancePortfolio
     })
-  }
-
-  addAppearanceFormListener(){
-    this.subcription.add(
-      this.appearanceFG.valueChanges.subscribe(value => {
-        let jsonArr = [];
-        let counter = 0;
-        for(let k in value) {
-          counter++;
-          jsonArr.push({
-            advisorId: this.advisorId,
-            appearanceOptionId: counter,
-            advisorOrOrganisation: value[k]
-          })
-        }
-
-        if(this.appearanceUpdateFlag)
-          this.orgSetting.updateAppearancePreferance(jsonArr).subscribe();
-      })
-    );
+    jsonArr.push({
+      advisorId: this.advisorId,
+      appearanceOptionId: 2,
+      advisorOrOrganisation: this.appearanceFinancial
+    })
+    jsonArr.push({
+      advisorId: this.advisorId,
+      appearanceOptionId: 3,
+      advisorOrOrganisation: this.appearanceClient
+    })
+    if(this.appearanceUpdateFlag)
+      this.orgSetting.updateAppearancePreferance(jsonArr).subscribe();
   }
 
   changeView(tab) {

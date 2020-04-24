@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators, FormArray} from '@angular/forms';
 import {SettingsService} from '../../../../settings.service';
 import {AuthService} from 'src/app/auth-service/authService';
-import {ValidatorType} from 'src/app/services/util.service';
+import {ValidatorType, UtilService} from 'src/app/services/util.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {MatProgressButtonOptions} from '../../../../../../../../common/progress-button/progress-button.component';
@@ -49,18 +49,22 @@ export class NewTeamMemberComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.createForm();
-    this.loadRoles();
     this.getIsdCodesData();
+    this.loadRoles();
   }
 
   getIsdCodesData() {
+    this.loader(1);
     this.peopleService.getIsdCode({}).subscribe(
       data => {
         if (data) {
-          console.log(data);
           this.isdCodes = data;
         }
+        this.loader(-1);
+      },
+      err => {
+        this.loader(-1);
+        this.eventService.openSnackBar(err, "Dismiss")
       }
     )
   }
@@ -73,7 +77,10 @@ export class NewTeamMemberComponent implements OnInit {
     this.settingsService.getUserRolesGlobalData(obj).subscribe((res) => {
       this.roles = res;
       this.loader(-1);
-    }, err => {this.eventService.openSnackBar(err, "Dismiss")});
+    }, err => {
+      this.loader(-1);
+      this.eventService.openSnackBar(err, "Dismiss")
+    });
   }
 
   createForm() {
@@ -142,6 +149,7 @@ export class NewTeamMemberComponent implements OnInit {
     this.counter += countAdder;
     if (this.counter == 0) {
       this.isLoading = false;
+      this.createForm();
       this.checkIfRoleExists();
     } else {
       this.isLoading = true;
@@ -151,8 +159,7 @@ export class NewTeamMemberComponent implements OnInit {
   checkIfRoleExists() {
     const teamMemberRoleId = this.teamMemberFG.get('roleId') as FormControl;
     const roleExist = this.roles.find((role) => {
-      if (role.roleMasterId == teamMemberRoleId.value) {
-        teamMemberRoleId.setValue(role.id);
+      if (role.id == teamMemberRoleId.value) {
         return true;
       } else {
         return false;
