@@ -5,6 +5,8 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
 import { isNumber } from 'util';
 import { DatePipe } from '@angular/common';
+import { MatTableDataSource } from '@angular/material';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-summary',
@@ -26,21 +28,16 @@ export class SummaryComponent implements OnInit {
   nightyDayData: any;
   oneDay: any;
   displayedColumns: string[] = ['description', 'date', 'amount'];
+  cashFlowDataSource = [];
+  expenseList = [];
+  incomeList = [];
   constructor(public eventService: EventService, private cusService: CustomerService, private datePipe: DatePipe) {
   }
 
-  datasource = [
-    { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-    { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-    { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-    { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-    { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' }
-  ];
   ngOnInit() {
     this.asOnDate = new Date().getTime();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.cashFlow('cashFlow');
     this.calculateTotalSummaryValues();
   }
 
@@ -107,6 +104,38 @@ export class SummaryComponent implements OnInit {
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
     )
+    this.cusService.getCashFlowList(obj).subscribe(
+      data => {
+        console.log(data);
+        this.cashFlowDataSource = [];
+        for (let singleList in data) {
+          if (data[singleList].length > 0) {
+            data[singleList].forEach(element => {
+              if (singleList == "expense") {
+                element['colourFlag'] = false;
+                this.expenseList.push(element.currentValue);
+              } else {
+                this.incomeList.push(element.currentValue);
+                element['colourFlag'] = true
+              }
+              this.cashFlowDataSource.push(element);
+            });
+          }
+        }
+        this.cashFlow('cashFlow');
+        console.log(this.cashFlowDataSource);
+      },
+      err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
+  checkNumberPositiveAndNegative(value: number) {
+    if (value == 0) {
+      return;
+    }
+    else {
+      let result = Math.sign(value)
+      return (result == -1) ? false : true;
+    }
   }
   calculate1DayAnd90Days(data) {
     console.log(data)
@@ -187,14 +216,14 @@ export class SummaryComponent implements OnInit {
         enabled: false
       },
       series: [{
-        name: 'Inflow',
+        name: 'Income',
         color: '#5cc644',
-        data: [5, 3, 4, 7, 2],
+        data: this.incomeList,
         type: undefined,
       }, {
-        name: 'outFlow',
+        name: 'Expense',
         color: '#ef6725',
-        data: [2, -2, -3, 2, 1],
+        data: this.expenseList,
         type: undefined,
       }]
     });

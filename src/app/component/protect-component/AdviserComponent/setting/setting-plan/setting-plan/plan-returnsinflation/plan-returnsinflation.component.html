@@ -25,7 +25,8 @@
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>Assumption (%)</th>
                 <td mat-cell class="text-center br" *matCellDef="let element">
-                    <div class="bar">{{element.inflation_rate}}</div>
+                    <div class="bar" *ngIf="!editMode">{{element.inflation_rate}}</div>
+                    <input class="form-control" type="text" *ngIf="editMode" [value]="element.inflation_rate" #returnInput (input)="checkForMinMax(returnInput.value, element)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation (change)="element.edited = true">
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -41,7 +42,7 @@
                 <th mat-header-cell class="br t-70" *matHeaderCellDef>Assumption (%)</th>
                 <td mat-cell class="text-center br" *matCellDef="let element">
                     <div class="bar" *ngIf="!editMode">{{element.inflation_rate}}</div>
-                    <input class="form-control" type="text" *ngIf="editMode" [(ngModel)]="element.inflation_rate" [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="100" appInputValueValidation (change)="element.edited = true">
+                    <input class="form-control" type="text" *ngIf="editMode" [value]="element.inflation_rate" #returnInput (input)="checkForMinMax(returnInput.value, element)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation (change)="element.edited = true">
                 </td>
             </ng-container>
             <ng-container matColumnDef="disclaimer">
@@ -65,7 +66,8 @@
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>Assumption (%)</th>
                 <td mat-cell class="text-center br" *matCellDef="let element">
-                    <div class="bar">{{element.inflation_rate}}</div>
+                    <div class="bar" *ngIf="!editMode">{{element.inflation_rate}}</div>
+                    <input class="form-control" type="text" *ngIf="editMode" [value]="element.inflation_rate" #returnInput (input)="checkForMinMax(returnInput.value, element)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation (change)="element.edited = true">
                 </td>
             </ng-container>
 
@@ -83,7 +85,7 @@
                 <th mat-header-cell class="br t-70" *matHeaderCellDef>Assumption (%)</th>
                 <td mat-cell class="text-center br" *matCellDef="let element">
                     <div class="bar" *ngIf="!editMode">{{element.inflation_rate}}</div>
-                    <input class="form-control" type="text" *ngIf="editMode" [(ngModel)]="element.inflation_rate" [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="100" appInputValueValidation (change)="element.edited = true">
+                    <input class="form-control" type="text" *ngIf="editMode" [value]="element.inflation_rate" #returnInput (input)="checkForMinMax(returnInput.value, element)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation (change)="element.edited = true">
                 </td>
             </ng-container>
             <ng-container matColumnDef="disclaimer">

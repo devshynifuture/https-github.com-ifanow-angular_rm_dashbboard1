@@ -75,6 +75,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   url: any;
   urlData: any;
   previewDoc = false;
+  shortUrl: any;
 
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
     private custumService: CustomerService, public subInjectService: SubscriptionInject,
@@ -145,7 +146,9 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         }
       }
       if (result.isRefreshRequired) {
-        this.getAllFileList(1, 'create')
+        setTimeout(() => {
+          this.getAllFileList(1, 'create')
+        }, 500);
       }
 
     });
@@ -277,7 +280,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
 
   getAllFileList(tabValue, flag) {
-    tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : (tabValue == 'Deleted files' || tabValue == 3) ? 4 : undefined;
+    tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : (tabValue == 'Deleted files' || tabValue == 4) ? 4 : undefined;
     if (tabValue == undefined) {
       tabValue = 1
     }
@@ -355,6 +358,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   keyPress(event, tabValue) {
+    tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : (tabValue == 'Deleted files' || tabValue == 4) ? 4 : undefined;
     if (event == '') {
       this.getAllFileList(tabValue, 'reset')
       this.showResult = false;
@@ -476,8 +480,8 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     console.log(data);
     if (value == 'shareLink' || value == 'share') {
       console.log('shareLink', data)
-      this.urlShorten(data)
-      this.verifyEmail(data, value)
+      this.urlShorten(data,value)
+      
     } else if (value == 'preview') {
       this.urlData = data
     } else if (value == 'DocPreview') {
@@ -517,7 +521,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
         fromEmail: "support@futurewise.co.in",
         toEmail: this.element.email,
         emailSubject: "Share link",
-        messageBody: this.element.link
+        messageBody: 'You have received this email because AdvisorName shared link with you.'+this.element.link
       }
       this.custumService.sendSharebleLink(obj).subscribe(
         data => this.sendSharebleLinkRes(data),
@@ -579,10 +583,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
           };
           this.custumService.deleteFolderPermnant(obj).subscribe(
             data => {
-              this.eventService.openSnackBar('Deleted', 'Dismiss');
+              this.eventService.openSnackBar('Deleted permanently', 'Dismiss');
               dialogRef.close();
               this.getCount()
-              this.getAllFileList(1, 'uplaodFile');
+              this.getAllFileList(4, 'delete');
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -595,10 +599,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
           };
           this.custumService.recovery(obj).subscribe(
             data => {
-              this.eventService.openSnackBar('Deleted', 'Dismiss');
+              this.eventService.openSnackBar('Recovered', 'Dismiss');
               dialogRef.close();
               this.getCount()
-              this.getAllFileList(1, 'uplaodFile');
+              this.getAllFileList(4, 'Recovered');
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -775,23 +779,26 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       frmData.append('fileUpload', this.myFiles[i]);
     }
   }
-  urlShorten(value) {
-    console.log('value', value)
-
+  urlShorten(data,value) {
+    this.isLoading = true
     var link =
-    {
-      // group_guid: "devshyni",
-      domain: "bit.ly",
-      long_url: value
+    {"destination":data, 
+    "domain": 
+    { 
+    "fullName": "rebrand.ly"}
     }
-    const payload = JSON.stringify(link)
-    let headers: HttpHeaders = new HttpHeaders();
-    headers = headers.set('Content-Type', 'application/json');
-    this.http.post('https://api-ssl.bitly.com/v4/shorten', payload, headers).subscribe((responseData) => {
+    const httpOptions = {
+      headers: new HttpHeaders()
+        .set('apiKey', 'b96683be9a4742979e78c6011a3ec2ca')
+    };
+    this.http.post('https://api.rebrandly.com/v1/links', link, httpOptions).subscribe((responseData) => {
       console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
       if (responseData == null) {
       }
       console.log(responseData)
+      this.isLoading = false
+      this.shortUrl = responseData.shortUrl
+      this.verifyEmail(this.shortUrl, value)
     });
   }
   uploadFile(element, fileName) {
@@ -807,7 +814,6 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       data => this.uploadFileRes(data, fileName)
     );
   }
-
   uploadFileRes(data, fileName) {
     this.countFile++;
     const fileuploadurl = data;

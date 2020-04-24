@@ -6,7 +6,8 @@ import { MatChipInputEvent, MatTableDataSource } from '@angular/material';
 import { OrderHistoricalFileComponent } from '../../order-historical-file/order-historical-file.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SupportService } from '../../support.service';
-
+import * as moment from 'moment';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-report-receivables',
   templateUrl: './report-receivables.component.html',
@@ -17,10 +18,12 @@ export class ReportReceivablesComponent implements OnInit {
 
   sort: any;
   eventService: any;
+  filterDate: string;
 
   constructor(
     private subInjectService: SubscriptionInject,
-    private supportService: SupportService
+    private supportService: SupportService,
+    private datePipe: DatePipe,
   ) { }
 
   ngOnInit() {
@@ -41,7 +44,49 @@ export class ReportReceivablesComponent implements OnInit {
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
-
+    this.isLoading = true;
+    if(value == '30'){
+     var date = moment().subtract(30, 'days');
+     this.filterDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    }else if(value == '60'){
+      var date = moment().subtract(30, 'days');
+      this.filterDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    }else if(value == '90'){
+      var date = moment().subtract(30, 'days');
+      this.filterDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    }
+    var currentDate = new Date()
+    let obj = {
+      advisorId: 0,
+      dateFrom: this.filterDate,
+      dateTill:this.datePipe.transform(currentDate, 'yyyy-MM-dd'),
+      ascOrDescByBalance: 0
+    } 
+    this.supportService.getDayWiseDataRm(obj)
+    .subscribe(res => {
+      if (res) {
+        let tableArray = [];
+        if(res){
+          this.isLoading = false;
+          res.forEach(element => {
+            tableArray.push({
+              adminName: element.name,
+              email: element.email_id,
+              mobile: element.mobile_number,
+              invoice: ELEMENT_DATA[1].invoice,
+              sentDate: ELEMENT_DATA[1].sentDate,
+              dueDate: ELEMENT_DATA[1].dueDate,
+              dueSince: ELEMENT_DATA[1].dueSince,
+              amount: ELEMENT_DATA[1].amount,
+              balance: ELEMENT_DATA[1].balance,
+              adminAdvisorId: element.admin_advisor_id
+            })
+          });
+          this.dataSource.data = tableArray;
+          this.dataSource.sort = this.sort;
+        }
+      }
+    });
     console.log("this some event:::::::", event.value);
 
     // Add our filterBy
