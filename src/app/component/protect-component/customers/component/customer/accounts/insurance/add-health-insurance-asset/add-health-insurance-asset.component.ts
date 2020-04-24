@@ -25,6 +25,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
   FamilyMember: any;
   ProposerData: any;
   familyMemberLifeData: any;
+  nominees: any[];
   flag: string;
   ownerData: any;
   callMethod: any;
@@ -238,6 +239,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
       advisorName: [data.advisorName],
       serviceBranch: [data.serviceBranch],
       bankAccount: [data.bankAccount],
+      nominees: this.nominees,
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
         sharePercentage: [0],
@@ -316,16 +318,25 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     e.preventDefault();
   }
   saveHealthInsurance() {
-    if (this.healthInsuranceForm.invalid) {
-      this.inputs.find(input => !input.ngControl.valid).focus();
-      this.healthInsuranceForm.markAllAsTouched();
-      return
-    }
-    else { 
+    let memberList = [];
+    let finalMemberList = this.healthInsuranceForm.get('InsuredMemberForm') as FormArray
+    finalMemberList.controls.forEach(element => {
+      let obj =
+      {
+        familyMemberId: element.get('insuredMembers').value.id,
+        sumInsured: element.get('sumAssured').value,
+        relationshipId:element.get('insuredMembers').value.relationshipId,
+        insuredOrNominee:1,
+      }
+      memberList.push(obj)
+    })
+      // if (this.healthInsuranceForm.invalid) {
+      //   this.healthInsuranceForm.markAllAsTouched();
+      // } else { 
       const obj ={
         "clientId":this.clientId,
         "advisorId":this.advisorId,
-        "policyHolderId":17,
+        "policyHolderId":this.healthInsuranceForm.value.getCoOwnerName[0].familyMemberId,
         "policyStartDate":this.healthInsuranceForm.get('policyStartDate').value,
         "policyExpiryDate":this.healthInsuranceForm.get('policyExpiryDate').value,
         "cumulativeBonus":this.healthInsuranceForm.get('cumulativeBonus').value,
@@ -338,37 +349,43 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         "copayRupeesOrPercent":this.healthInsuranceForm.get('copayType').value,
         "tpaName":this.healthInsuranceForm.get('tpaName').value,
         "advisorName":this.healthInsuranceForm.get('advisorName').value,
-        "serviceBranch":this.healthInsuranceForm.get('policyExpiryDate').value,
-        "linkedBankAccount":this.healthInsuranceForm.get('policyExpiryDate').value,
-        "insuranceSubTypeId":6,
+        "serviceBranch":this.healthInsuranceForm.get('serviceBranch').value,
+        "linkedBankAccount":this.healthInsuranceForm.get('bankAccount').value,
+        "insuranceSubTypeId":this.inputData.insuranceSubTypeId,
         "addOns":[{
-           "addOnId":13,
-           "addOnSumInsured":500
+           "addOnId":this.healthInsuranceForm.get('additionalCovers').value,
+           "addOnSumInsured":this.healthInsuranceForm.get('coversAmount').value
         }],
-        "policyFeatures":[
-           {
-               "policyFeatureId":1
-           }
-        ],
-        "insuredMembers":[
-        {
-        "familyMemberId":17,
-        "relationshipId":2,
-        "insuredOrNominee":1,
-        "sumInsured":500
+        // "insuredMembers":[
+        // {
+        // "familyMemberId":17,
+        // "relationshipId":2,
+        // "insuredOrNominee":1,
+        // "sumInsured":500
+        // }
+        // ],
+        insuredMembers:memberList,
+        nominees:this.healthInsuranceForm.value.getNomineeName,
+        // "nominees":[
+        // {
+        // "familyMemberId":18,
+        // "relationshipId":2,
+        // "insuredOrNominee":2
+        // }
+        // ]
         }
-        ],
-        "nominees":[
-        {
-        "familyMemberId":18,
-        "relationshipId":2,
-        "insuredOrNominee":2
-        }
-        ]
-        }
-    }
 
-  }
+
+        obj.nominees.forEach((element, index) => {
+          if(element.name == ''){
+            this.removeNewNominee(index);
+          }
+        });
+        obj.nominees= this.healthInsuranceForm.value.getNomineeName;
+        console.log(obj);
+      }
+
+  
   close(data) {
     this.addMoreFlag = false;
     this.subInjectService.changeNewRightSliderState({ state: 'close', data });
