@@ -22,19 +22,34 @@ export class SupportManagementComponent implements OnInit, OnDestroy {
     private supportService: SupportService,
     private eventService: EventService,
     public utilsService: UtilService,
-    private fb:FormBuilder,
+    private fb: FormBuilder,
     private dialog: MatDialog,
   ) { }
 
   dataSource = new MatTableDataSource([{}, {}, {}]);
   displayedColumns = ['adminName', 'email', 'mobile', 'plan', 'nextBilling', 'menu']
-  rmList:any[] = [];
-  addRmFG:FormGroup;
+  rmList: any[] = [];
+  addRmFG: FormGroup;
   validatorType = ValidatorType;
   listenToObservable = true;
   isLoading = false;
   subscription = new Subscription();
-  hasError:boolean = false;
+  hasError: boolean = false;
+  hide = true;
+  errorMsg = false;
+  errorStyle;
+  passEvent;
+
+  enterEvent(event) {
+    this.errorMsg = false;
+    this.errorStyle = {
+      visibility: this.errorMsg ? 'visible' : 'hidden',
+      opacity: this.errorMsg ? '1' : '0',
+    };
+    if (event.keyCode === 13) {
+      this.passEvent = event.keyCode;
+    }
+  }
 
   ngOnInit() {
     this.utilsService.loader(0);
@@ -44,22 +59,23 @@ export class SupportManagementComponent implements OnInit, OnDestroy {
     this.createRMFG();
     this.subscription.add(
       this.utilsService.isLoadingObservable.subscribe(v => {
-        if(this.listenToObservable)
+        if (this.listenToObservable)
           this.isLoading = v
       })
     );
   }
 
-  createRMFG(){
+  createRMFG() {
     this.addRmFG = this.fb.group({
       email: ['', [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
       mobileNo: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
-      name: ['', [Validators.required, Validators.maxLength(40)]]
+      name: ['', [Validators.required, Validators.maxLength(40)]],
+      password: ['', Validators.required]
     });
   }
 
-  addRMMember(){
-    if(this.addRmFG.invalid) {
+  addRMMember() {
+    if (this.addRmFG.invalid) {
       this.addRmFG.markAllAsTouched();
     } else {
       let jsonObj = this.addRmFG.value;
@@ -91,7 +107,7 @@ export class SupportManagementComponent implements OnInit, OnDestroy {
     )
   }
 
-  getRMList(){
+  getRMList() {
     this.utilsService.loader(1);
     this.supportService.getRMList().subscribe(
       res => {

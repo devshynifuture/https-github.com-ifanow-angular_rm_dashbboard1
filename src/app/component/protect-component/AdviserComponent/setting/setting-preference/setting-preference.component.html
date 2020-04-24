@@ -359,21 +359,18 @@
                             </h5>
                         </div>
 
-                        <div class="col-md-12 p-0" [formGroup]="appearanceFG">
+                        <div class="col-md-12 p-0">
                             <h5 class="m-0 pb-20">Select an option below to add a task template...</h5>
                             <div class="row pb-20">
                                 <div class="col-md-3 text-right d-flex align-items-center justify-content-end">
                                     <h5 class="m-0 f-14"> Portfolio </h5>
                                 </div>
                                 <div class="col-md-8 pl-0">
-                                    <mat-radio-group class="taskTemplatesRadio" formControlName="portfolioOpt">
-                                        <mat-radio-button [ngClass]="appearanceFG.get('portfolioOpt').value == 1 ? 'text-primary b-a-custom': 'text-primitive'" [value]="1">
-                                            Advisor Details
-                                        </mat-radio-button>
-                                        <mat-radio-button [value]="2" class="pr-10" [ngClass]="appearanceFG.get('portfolioOpt').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
-                                            Company details
-                                        </mat-radio-button>
-                                    </mat-radio-group>
+                                    <mat-button-toggle-group class="w-80" [(ngModel)]="appearancePortfolio" (change)="changeAppearanceSettings()"
+                                        aria-label="Select an option">
+                                        <mat-button-toggle class="w-50" [value]="1">Advisor Details</mat-button-toggle>
+                                        <mat-button-toggle class="w-50" [value]="2">Company details</mat-button-toggle>
+                                    </mat-button-toggle-group>
                                 </div>
                             </div>
                             <div class="row pb-20">
@@ -381,14 +378,11 @@
                                     <h5 class="m-0 f-14">Financial Plan</h5>
                                 </div>
                                 <div class="col-md-8 pl-0">
-                                    <mat-radio-group class="taskTemplatesRadio" formControlName="financialOpt">
-                                        <mat-radio-button [ngClass]="appearanceFG.get('financialOpt').value == 1 ? 'text-primary b-a-custom': 'text-primitive'" [value]="1">
-                                            Advisor Details
-                                        </mat-radio-button>
-                                        <mat-radio-button [value]="2" class="pr-10" [ngClass]="appearanceFG.get('financialOpt').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
-                                            Company details
-                                        </mat-radio-button>
-                                    </mat-radio-group>
+                                    <mat-button-toggle-group class="w-80" [(ngModel)]="appearanceFinancial" (change)="changeAppearanceSettings()"
+                                        aria-label="Select an option">
+                                        <mat-button-toggle class="w-50" [value]="1">Advisor Details</mat-button-toggle>
+                                        <mat-button-toggle class="w-50" [value]="2">Company details</mat-button-toggle>
+                                    </mat-button-toggle-group>
                                 </div>
 
                             </div>
@@ -397,14 +391,11 @@
                                     <h5 class="m-0 f-14"> Client Dashboard</h5>
                                 </div>
                                 <div class="col-md-8 pl-0">
-                                    <mat-radio-group class="taskTemplatesRadio" formControlName="clientOpt">
-                                        <mat-radio-button [ngClass]="appearanceFG.get('clientOpt').value == 1 ? 'text-primary b-a-custom': 'text-primitive'" [value]="1">
-                                            Advisor Details
-                                        </mat-radio-button>
-                                        <mat-radio-button [value]="2" class="pr-10" [ngClass]="appearanceFG.get('clientOpt').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
-                                            Company details
-                                        </mat-radio-button>
-                                    </mat-radio-group>
+                                    <mat-button-toggle-group class="w-80" [(ngModel)]="appearanceClient" (change)="changeAppearanceSettings()"
+                                        aria-label="Select an option">
+                                        <mat-button-toggle class="w-50" [value]="1">Advisor Details</mat-button-toggle>
+                                        <mat-button-toggle class="w-50" [value]="2">Company details</mat-button-toggle>
+                                    </mat-button-toggle-group>
                                 </div>
 
                             </div>

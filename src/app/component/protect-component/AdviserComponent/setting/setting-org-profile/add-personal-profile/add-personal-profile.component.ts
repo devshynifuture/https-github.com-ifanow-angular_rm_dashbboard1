@@ -53,6 +53,7 @@ export class AddPersonalProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.selectedTab = this.inputData.openTab;
     this.getdataForm(this.inputData);
     this.getPersonalInfo();
     this.getIsdCodesData();

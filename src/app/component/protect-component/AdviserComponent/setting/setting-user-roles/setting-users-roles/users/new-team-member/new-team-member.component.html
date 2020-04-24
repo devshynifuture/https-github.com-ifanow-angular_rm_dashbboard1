@@ -8,7 +8,7 @@
         </i>
     </div>
 </div>
-<div class="pt-90 pl-28 pr-28" [formGroup]="teamMemberFG">
+<div class="pt-90 pl-28 pr-28" [formGroup]="teamMemberFG" *ngIf="!isLoading">
     <div class="row pt-28">
         <div class="col-md-3 text-right pr-0">
             <h5 class="m-0 pt-20">Full name</h5>
@@ -86,6 +86,7 @@
         </div>
     </div>
 </div>
+<div class="pt-90 pl-28 pr-28" *ngIf="isLoading">Loading data...</div>
 <div class="bottom-fixed wrapper-12 w-35">
     <div class="row">
         <div class="col-md-4">
