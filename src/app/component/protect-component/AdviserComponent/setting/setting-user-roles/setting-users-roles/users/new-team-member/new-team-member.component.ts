@@ -92,7 +92,7 @@ export class NewTeamMemberComponent implements OnInit {
         [Validators.required, Validators.maxLength(50), Validators.pattern(ValidatorType.PERSON_NAME)]],
       emailId: [this.data.mainData.email || '', [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
       mobileNo: [this.data.mainData.mobile || '', [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
-      isdCodeId: [this.data.mainData.isdCodeId || '', [Validators.required]],
+      isdCodeId: [this.data.mainData.isdCodeId || 73, [Validators.required]],
       roleId: [roleId, [Validators.required]],
     });
   }

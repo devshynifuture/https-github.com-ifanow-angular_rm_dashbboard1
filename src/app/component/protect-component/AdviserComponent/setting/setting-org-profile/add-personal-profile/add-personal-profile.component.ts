@@ -64,9 +64,10 @@ export class AddPersonalProfileComponent implements OnInit {
     this.peopleService.getIsdCode({}).subscribe(
       data => {
         if (data) {
-          console.log(data);
           this.isdCodes = data;
         }
+      }, err => {
+        this.event.showErrorMessage('Error');
       }
     )
   }

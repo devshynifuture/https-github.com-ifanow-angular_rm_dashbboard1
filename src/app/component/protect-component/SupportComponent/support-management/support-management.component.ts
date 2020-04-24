@@ -39,6 +39,7 @@ export class SupportManagementComponent implements OnInit, OnDestroy {
   errorMsg = false;
   errorStyle;
   passEvent;
+  isMainLoading = false;
 
   enterEvent(event) {
     this.errorMsg = false;
@@ -98,6 +99,7 @@ export class SupportManagementComponent implements OnInit, OnDestroy {
       data => {
         this.dataSource.data = data || [];
         this.utilsService.loader(-1);
+        this.isMainLoading = true;
       },
       err => {
         this.utilsService.loader(-1);

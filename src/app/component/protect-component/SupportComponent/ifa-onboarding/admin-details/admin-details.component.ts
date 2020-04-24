@@ -30,6 +30,7 @@ export class AdminDetailsComponent implements OnInit {
   Comment: any;
   activityId: any;
   stage: any;
+  isEditRm = false
   rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
   @Input()
   set data(data) {
@@ -69,7 +70,7 @@ export class AdminDetailsComponent implements OnInit {
 
   rtaAPIError: boolean = false;
   teamAPIError: boolean = false;
-
+  isEditStageRm = false
   displayedColumns: string[] = ['name', 'email', 'mobile', 'role'];
   displayedColumns1: string[] = ['arn', 'regEmailId', 'scheduleExp'];
   displayedColumns2: string[] = ['arn', 'loginId', 'registeredId', 'userOrdering'];
@@ -173,6 +174,9 @@ export class AdminDetailsComponent implements OnInit {
           if (data) {
             this.stageComment = data;
             this.stageComment.forEach(element => {
+              if(this.rmId == element.rmId){
+                element.isEditStageRm = true
+              }
               element.isEditStage = true
             });
           }
@@ -259,6 +263,9 @@ export class AdminDetailsComponent implements OnInit {
           });
           this.activityCommentList = data.activityCommentList
           this.activityCommentList.forEach(element => {
+            if(this.rmId == element.rmId){
+              element.isEditRm = true
+            }
             element.isEdit = true
           });
           this.isSuccess = false

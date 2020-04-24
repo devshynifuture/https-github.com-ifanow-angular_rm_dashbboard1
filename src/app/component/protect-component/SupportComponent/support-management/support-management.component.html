@@ -142,7 +142,6 @@
                                 class="form-control" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
                                 minlength="10" appInputValueValidation>
                             <mat-hint align="end">{{addRmFG.get('mobileNo').value.length}}/10</mat-hint>
-                            <mat-error *ngIf="addRmFG.get('email').errors?.required">This field is required</mat-error>
                             <mat-error *ngIf="addRmFG.get('mobileNo').errors?.required">This field is required
                             </mat-error>
                             <mat-error *ngIf="addRmFG.get('mobileNo').errors?.minlength">Enter valid mobile number
@@ -186,4 +185,8 @@
 <div *ngIf="hasError && !isLoading" class="d-flex flex-column align-items-center pt-130 mb-2">
     <img class="width300" src="assets/images/svg/noDataFound.svg">
     <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
+</div>
+
+<div class="row" *ngIf="!isMainLoading">
+    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
 </div>

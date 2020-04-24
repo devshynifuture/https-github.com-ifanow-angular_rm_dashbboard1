@@ -5,7 +5,9 @@
             <div class="wrapper-16 bb-2 c-p">
                 <p class="m-0 text-black roboto">NET WORTH</p>
                 <h1 class="f-35 m-0 text-black pt-8">₹
-                    <span appFormatNumber>{{totalAssetsWithoutLiability-liabilityTotal}}</span></h1>
+                    <span appFormatNumber
+                        [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability-liabilityTotal}}</span>
+                </h1>
 
                 <div class="row pt-20">
                     <div class="col-md-6 p-0">
@@ -13,24 +15,25 @@
                     </div>
                     <div class="col-md-6 p-0">
                         <p class="text-black f-12 m-0 text-right roboto">
-                            ₹<span appFormatNumber>{{totalAssetsWithoutLiability+liabilityTotal}}</span>
+                            ₹<span appFormatNumber
+                                [value]="totalAssetsWithoutLiability+liabilityTotal">{{totalAssetsWithoutLiability+liabilityTotal}}</span>
                         </p>
                     </div>
-                    <div class="col-md-12 p-0 pt-4">
+                    <!-- <div class="col-md-12 p-0 pt-4">
                         <mat-progress-bar class="light-blue" mode="determinate" value="50"></mat-progress-bar>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="row pt-20">
                     <div class="col-md-6 p-0">
                         <p class="text-black f-12 m-0 roboto">LIABILITIES</p>
                     </div>
                     <div class="col-md-6 p-0">
-                        <p class="text-black f-12 m-0 text-right roboto">₹<span
-                                appFormatNumber>{{liabilityTotal}}</span></p>
+                        <p class="text-black f-12 m-0 text-right roboto">₹<span appFormatNumber
+                                [value]="liabilityTotal">{{liabilityTotal}}</span></p>
                     </div>
-                    <div class="col-md-12 p-0 pt-4">
+                    <!-- <div class="col-md-12 p-0 pt-4">
                         <mat-progress-bar class="light-red" mode="determinate" value="50"></mat-progress-bar>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div appSkeletonLoading [appSkeletonLoading]="isLoading" class="height-700 skeletonAnimation">
@@ -45,13 +48,13 @@
                         <div class="bar height24">
                             <p *ngIf="summaryMap[5]" class="text-black m-0 roboto">
                                 <span *ngIf="summaryMap[5].currentValue!=0">₹</span>
-                                <span appFormatNumber
+                                <span appFormatNumber [value]="summaryMap[5].currentValue"
                                     *ngIf="summaryMap">{{summaryMap[5].currentValue==0?'-':summaryMap[5].currentValue}}</span>
                             </p>
                             <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(summaryMap[5].percentage),'text-danger': checkNumberPositiveAndNegative(summaryMap[5].percentage)==false,'': checkNumberPositiveAndNegative(summaryMap[5].percentage)==undefined}"
                                 class="m-0 roboto">
-                                <span *ngIf="summaryMap[5]"
-                                    appFormatNumber>{{summaryMap[5].percentage==0?'-':summaryMap[5].percentage}}<span
+                                <span
+                                    *ngIf="summaryMap[5]">{{summaryMap[5].percentage==0?'-':summaryMap[5].percentage}}<span
                                         *ngIf="summaryMap[5].currentValue!=0">%</span></span>
                             </p>
                         </div>
@@ -68,7 +71,7 @@
                         <div class="bar height24">
                             <p class="text-black m-0  roboto">
                                 <span *ngIf="summaryMap[6].currentValue!=0">₹</span>
-                                <span *ngIf="summaryMap[6]"
+                                <span *ngIf="summaryMap[6]" [value]="summaryMap[6].currentValue"
                                     appFormatNumber>{{summaryMap[6].currentValue==0?'-':summaryMap[6].currentValue}}
                                 </span>
                             </p>
@@ -92,8 +95,8 @@
                         <div class="bar height24">
                             <p class="text-black m-0 roboto">
                                 <span *ngIf="summaryMap[7].currentValue!=0">₹</span>
-                                <span *ngIf="summaryMap[7]"
-                                    appFormatNumber>{{summaryMap[7].currentValue==0?'-':summaryMap[7].currentValue}}</span>
+                                <span *ngIf="summaryMap[7]" appFormatNumber
+                                    [value]="summaryMap[7].currentValue">{{summaryMap[7].currentValue==0?'-':summaryMap[7].currentValue}}</span>
                             </p>
                             <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(summaryMap[7].percentage),'text-danger': checkNumberPositiveAndNegative(summaryMap[7].percentage)==false}"
                                 class=" m-0 roboto">
@@ -116,7 +119,7 @@
                         <div class="bar height24">
                             <p class="text-black m-0 roboto">
                                 <span *ngIf="summaryMap[8].currentValue!=0">₹</span>
-                                <span appFormatNumber
+                                <span appFormatNumber [value]="summaryMap[8].currentValue"
                                     *ngIf="summaryMap[8]">{{summaryMap[8].currentValue==0?'-':summaryMap[8].currentValue}}</span>
                             </p>
                             <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(summaryMap[8].percentage),'text-danger': checkNumberPositiveAndNegative(summaryMap[8].percentage)==false,'': checkNumberPositiveAndNegative(summaryMap[8].percentage)==undefined}"
@@ -139,7 +142,7 @@
                         <div class="bar height24">
                             <p class="text-black m-0 f-500 roboto pr-8">
                                 <span *ngIf="summaryMap[9].currentValue!=0">₹</span>
-                                <span appFormatNumber *ngIf="summaryMap">
+                                <span appFormatNumber [value]="summaryMap[9].currentValue" *ngIf="summaryMap">
                                     {{summaryMap[9].currentValue==0?'-':summaryMap[9].currentValue}}</span>
                             </p>
                             <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(summaryMap[9].percentage),'text-danger': checkNumberPositiveAndNegative(summaryMap[9].percentage)==false,'': checkNumberPositiveAndNegative(summaryMap[9].percentage)==undefined}"
@@ -162,7 +165,7 @@
                         <div class="bar height24">
                             <p class="text-black m-0 roboto">
                                 <span *ngIf="summaryMap[10].currentValue!=0">₹</span>
-                                <span appFormatNumber
+                                <span appFormatNumber [value]="summaryMap[10].currentValue"
                                     *ngIf="summaryMap">{{summaryMap[10].currentValue==0?'-':summaryMap[10].currentValue}}</span>
                             </p>
                             <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(summaryMap[10].percentage),'text-danger': checkNumberPositiveAndNegative(summaryMap[10].percentage)==false,'': checkNumberPositiveAndNegative(summaryMap[10].percentage)==undefined}"
@@ -185,7 +188,7 @@
                         <div class="bar height24">
                             <p class="text-black m-0 roboto">
                                 <span *ngIf="summaryMap[31].currentValue!=0">₹</span>
-                                <span appFormatNumber
+                                <span appFormatNumber [value]="summaryMap[31].currentValue"
                                     *ngIf="summaryMap">{{summaryMap[31].currentValue==0?'-':summaryMap[31].currentValue}}</span>
                             </p>
                             <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(summaryMap[31].percentage),'text-danger': checkNumberPositiveAndNegative(summaryMap[31].percentage)==false,'': checkNumberPositiveAndNegative(summaryMap[31].percentage)==undefined}"
@@ -232,7 +235,8 @@
                                     </div>
                                     <div class="col-md-6 p-0">
                                         <h2 class="m-0 text-primary text-right f-300 wrapper-20">
-                                            ₹<span appFormatNumber>{{totalAssetsWithoutLiability-liabilityTotal}}</span>
+                                            ₹<span appFormatNumber
+                                                [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability-liabilityTotal}}</span>
                                         </h2>
                                     </div>
                                 </div>
@@ -243,11 +247,12 @@
                                         <ul *ngIf="nightyDayData && oneDay" class="pl-20 pb-20">
                                             <li class="pr-4 text-black">90-days</li>
                                             <li [ngClass]="{'text-success': nightyDayData.flag,'text-danger':nightyDayData.flag==false}"
-                                                class="text-success pr-24">₹<span
-                                                    appFormatNumber>{{nightyDayData.value}}</span></li>
+                                                class="text-success pr-24">₹<span appFormatNumber
+                                                    [value]="nightyDayData.value">{{nightyDayData.value}}</span></li>
                                             <li class="pr-4 text-black">1-days</li>
                                             <li [ngClass]="{'text-success': oneDay.flag,'text-danger':oneDay.flag==false}"
-                                                class="text-danger">₹<span appFormatNumber>{{oneDay.value}}</span></li>
+                                                class="text-danger">₹<span appFormatNumber
+                                                    [value]="oneDay.value">{{oneDay.value}}</span></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -273,32 +278,40 @@
 
                                 <div class="row">
                                     <div class="col-md-6 p-0 border-right-1 pt-8 pb-8 pr-4">
-                                        <mat-checkbox checked="false">Inflows</mat-checkbox>
+                                        <mat-checkbox [ngClass]="{'disable-checkbox':filterCashFlow.income.length==0}"
+                                            [disabled]="filterCashFlow.income.length==0"
+                                            (change)="filterData($event,'inflow')" [(ngModel)]="inflowFlag"
+                                            [checked]="filterCashFlow.income.length>0">
+                                            Inflows</mat-checkbox>
                                     </div>
                                     <div class="col-md-6 p-0 pt-8 pb-8 pr-4 pl-16">
-                                        <mat-checkbox checked="false">Outflows</mat-checkbox>
+                                        <mat-checkbox [ngClass]="{'disable-checkbox': filterCashFlow.expense.length==0}"
+                                            [disabled]="filterCashFlow.expense.length==0"
+                                            (change)="filterData($event,'outflow')" [(ngModel)]="outflowFlag"
+                                            [checked]="filterCashFlow.expense.length>0">
+                                            Outflows</mat-checkbox>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-2 pt-4">
-                                <button [matMenuTriggerFor]="menu" class="b-a pr-4 br-0" mat-button>All bank a/c <i
+                                <!-- <button [matMenuTriggerFor]="menu" class="b-a pr-4 br-0" mat-button>All bank a/c <i
                                         class="material-icons text-custom">
                                         keyboard_arrow_down
                                     </i></button>
                                 <mat-menu #menu="matMenu">
                                     <button mat-menu-item>Item 1</button>
                                     <button mat-menu-item>Item 2</button>
-                                </mat-menu>
+                                </mat-menu> -->
                             </div>
                             <div class="col-md-2 pt-4">
-                                <button [matMenuTriggerFor]="menu" class="b-a pr-4 br-0" mat-button>All family <i
+                                <!-- <button [matMenuTriggerFor]="menu" class="b-a pr-4 br-0" mat-button>All family <i
                                         class="material-icons text-custom">
                                         keyboard_arrow_down
                                     </i></button>
                                 <mat-menu #menu="matMenu">
                                     <button mat-menu-item>Item 1</button>
                                     <button mat-menu-item>Item 2</button>
-                                </mat-menu>
+                                </mat-menu> -->
                             </div>
                         </div>
                         <div class="row pt-20">
@@ -366,7 +379,7 @@
                                         <p class="m-0 text-success p-4 bt-grey pt-16">5,000</p>
                                     </div>
                                 </div> -->
-                                <table mat-table [dataSource]="cashFlowDataSource" id="table-low"
+                                <table mat-table [dataSource]="cashFlowViewDataSource" id="table-low"
                                     class="mat-elevation-z8">
                                     <!-- Name Column -->
                                     <ng-container matColumnDef="description">
@@ -417,7 +430,7 @@
                             src="http://localhost:4200/assets/images/img1.jpg">
                     </div>
                     <div class="col-md-9 p-0 text-left">
-                        <p class="text-black m-0 f-500 pt-20">Acme Financial Advisors</p>
+                        <p class="text-black m-0 f-500 pt-20">{{userData.name}}</p>
                         <p class="text-custom m-0">Contact</p>
                     </div>
                 </div>
@@ -471,7 +484,7 @@
                         <p class="m-0 text-black f-500">9,395</p>
                     </div>
                 </div>
-                <div class="">
+                <!-- <div class="">
                     <div class="wrapper-20 pl-12 pr-12">
                         <div class="row">
                             <div class="col-md-12 p-0">
@@ -518,7 +531,7 @@
                         </div>
                     </div>
 
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
