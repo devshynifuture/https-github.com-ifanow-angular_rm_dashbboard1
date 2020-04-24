@@ -12,4 +12,8 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
   ngOnInit() {
   }
 
+  // prod fix
+  close(flag){}
+  saveHealthInsurance(){}
+
 }

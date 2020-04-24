@@ -163,7 +163,7 @@
             <mat-form-field appearance="standard" class="arrowRemoveBox" floatLabel="never">
               <img class="img-pos-two" src="/assets/images/svg/people.svg">
               <mat-select class="form-control" formControlName="ownerId">
-                <mat-option (click)="updateOwner()" *ngFor="let team of teamMemberList" [value]="team.userId">
+                <mat-option *ngFor="let team of teamMemberList" [value]="team.userId">
                   {{team.name}}</mat-option>
               </mat-select>
             </mat-form-field>
