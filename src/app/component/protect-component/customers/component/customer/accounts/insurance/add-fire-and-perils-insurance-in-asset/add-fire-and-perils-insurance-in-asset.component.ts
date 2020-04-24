@@ -497,8 +497,4 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
 
-  // prod fix
-  saveHealthInsurance(){}
-  close(flag){}
-
 }

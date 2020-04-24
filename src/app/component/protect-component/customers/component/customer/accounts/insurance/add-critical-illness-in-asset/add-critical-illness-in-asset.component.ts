@@ -360,10 +360,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
   preventDefault(e) {
     e.preventDefault();
   }
-  close(data) {
-    this.addMoreFlag = false;
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
-  }
+
   saveCriticalIllness() {
     let memberList = [];
     let finalMemberList = this.critialIllnessForm.get('InsuredMemberForm') as FormArray
@@ -458,7 +455,9 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
     }
   }
 
-  // prod fix
-  close(flag){}
-  saveHealthInsurance(){}
+  close(data) {
+    this.addMoreFlag = false;
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+  }
+
 }

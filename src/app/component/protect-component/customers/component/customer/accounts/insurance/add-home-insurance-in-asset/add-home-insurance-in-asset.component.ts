@@ -496,9 +496,4 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
     this.addMoreFlag = false;
     this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
-
-
-  // prod fix
-  close(flag){}
-  saveHealthInsurance(){}
 }
