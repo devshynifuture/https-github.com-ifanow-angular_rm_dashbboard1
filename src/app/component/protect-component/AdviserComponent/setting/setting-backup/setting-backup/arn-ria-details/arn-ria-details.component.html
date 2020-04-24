@@ -40,11 +40,11 @@
                         </div>
                         <div class="col-md-3 p-0">
                             <p class="f-12 m-0 proxima text-primitive">COMMENCEMENT DATE</p>
-                            <h5 class="m-0">{{arn.commencementDate | date : 'dd/MM/yyyy'}}</h5>
+                            <h5 class="m-0">{{(arn.commencementDate | date : 'dd/MM/yyyy') || 'N/A'}}</h5>
                         </div>
                         <div class="col-md-3 p-0">
                             <p class="f-12 m-0 proxima text-primitive">RENEWAL DATE</p>
-                            <h5 class="m-0">{{arn.renewalDate | date : 'dd/MM/yyyy'}}</h5>
+                            <h5 class="m-0">{{(arn.renewalDate | date : 'dd/MM/yyyy') || 'N/A'}}</h5>
                         </div>
                         <div class="col-md-3 p-0" *ngIf="arn.euin">
                             <p class="f-12 m-0 proxima text-primitive">PRIMARY EUIN</p>
@@ -54,7 +54,7 @@
                     <div class="row pt-12 pb-28">
                         <div class="col-md-6">
                             <p class="f-12 m-0 proxima text-primitive">BILLING ADDRESS</p>
-                            <h5 class="m-0">{{arn.registeredAddress}}</h5>
+                            <h5 class="m-0">{{arn.registeredAddress || 'N/A'}}</h5>
                         </div>
                         <div class="col-md-3 pl-0">
                             <p class="f-12 m-0 proxima text-primitive">GST TREATMENT</p>

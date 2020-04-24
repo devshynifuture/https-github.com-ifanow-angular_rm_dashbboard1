@@ -23,7 +23,7 @@
                 *ngFor="let obj of healthInsuranceForm.controls['getCoOwnerName'].controls; let pointIndex=index"
                 [formGroupName]="pointIndex">
                 <div class="col-md-5 pr-0 text-right">
-                    <h5 class="m-0 pt-8 ">{{pointIndex != 0?'Co-o' : 'O'}}wner{{pointIndex != 0?pointIndex:''}}</h5>
+                    <h5 class="m-0 pt-8 ">Name of policy holder</h5>
                 </div>
                 <div class="pr-0"
                     [ngClass]="healthInsuranceForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
@@ -324,7 +324,7 @@
                     <div class="form-group mb-0">
                         <label class="f-14 roboto">Rupees</label>
                         <mat-form-field>
-                            <mat-select matInput formControlName="bonusType" #frequency autocomplete="off"
+                            <mat-select matInput formControlName="bonusType" #bonusType autocomplete="off"
                                 class="form-control br-0">
                                 <mat-option value='1'>Rupees</mat-option>
                                 <mat-option value='2'>Percentage</mat-option>

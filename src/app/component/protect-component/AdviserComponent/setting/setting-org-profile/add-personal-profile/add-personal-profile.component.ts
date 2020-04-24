@@ -53,6 +53,7 @@ export class AddPersonalProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.selectedTab = this.inputData.openTab;
     this.getdataForm(this.inputData);
     this.getPersonalInfo();
     this.getIsdCodesData();
@@ -63,9 +64,10 @@ export class AddPersonalProfileComponent implements OnInit {
     this.peopleService.getIsdCode({}).subscribe(
       data => {
         if (data) {
-          console.log(data);
           this.isdCodes = data;
         }
+      }, err => {
+        this.event.showErrorMessage('Error');
       }
     )
   }

@@ -101,6 +101,12 @@ import {CustomCommonModule} from './common/custom.common.module';
 import { PreviewComponent } from './component/protect-component/customers/component/customer/customer-overview/overview-documents/preview/preview.component';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { AddHealthInsuranceAssetComponent } from './component/protect-component/customers/component/customer/accounts/insurance/add-health-insurance-asset/add-health-insurance-asset.component';
+import { AddPersonalAccidentInAssetComponent } from './component/protect-component/customers/component/customer/accounts/insurance/add-personal-accident-in-asset/add-personal-accident-in-asset.component';
+import { AddCriticalIllnessInAssetComponent } from './component/protect-component/customers/component/customer/accounts/insurance/add-critical-illness-in-asset/add-critical-illness-in-asset.component';
+import { AddMotorInsuranceInAssetComponent } from './component/protect-component/customers/component/customer/accounts/insurance/add-motor-insurance-in-asset/add-motor-insurance-in-asset.component';
+import { AddTravelInsuranceInAssetComponent } from './component/protect-component/customers/component/customer/accounts/insurance/add-travel-insurance-in-asset/add-travel-insurance-in-asset.component';
+import { AddHomeInsuranceInAssetComponent } from './component/protect-component/customers/component/customer/accounts/insurance/add-home-insurance-in-asset/add-home-insurance-in-asset.component';
+import { AddFireAndPerilsInsuranceInAssetComponent } from './component/protect-component/customers/component/customer/accounts/insurance/add-fire-and-perils-insurance-in-asset/add-fire-and-perils-insurance-in-asset.component';
 // tslint:disable-next-line:max-line-length
 // import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
@@ -235,7 +241,13 @@ export const componentList = [
   MultiYearGoalComponent,
   DetailedViewNpsComponent,
   OwnerNomineeComponent,
-  AddHealthInsuranceAssetComponent
+  AddHealthInsuranceAssetComponent,
+  AddPersonalAccidentInAssetComponent,
+  AddCriticalIllnessInAssetComponent,
+  AddMotorInsuranceInAssetComponent,
+  AddTravelInsuranceInAssetComponent,
+  AddHomeInsuranceInAssetComponent,
+  AddFireAndPerilsInsuranceInAssetComponent
   // ComposeEmailComponent
 ];
 

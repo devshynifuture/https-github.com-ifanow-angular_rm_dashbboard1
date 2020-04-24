@@ -12,4 +12,8 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
   ngOnInit() {
   }
 
+  // prod fix
+  saveHealthInsurance(){}
+  close(flag){}
+
 }

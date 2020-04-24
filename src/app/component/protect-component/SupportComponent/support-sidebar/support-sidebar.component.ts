@@ -80,7 +80,6 @@ export class SupportSidebarComponent extends DialogContainerComponent implements
 
   toggleSideNav() {
     this.stateOfPanel.toggle();
-    this.shouldShowMainNav = !this.shouldShowMainNav;
   }
 
   changeNavigation(name) {
