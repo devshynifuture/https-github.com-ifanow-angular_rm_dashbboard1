@@ -128,7 +128,15 @@ export class SummaryComponent implements OnInit {
       err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
-
+  checkNumberPositiveAndNegative(value: number) {
+    if (value == 0) {
+      return;
+    }
+    else {
+      let result = Math.sign(value)
+      return (result == -1) ? false : true;
+    }
+  }
   calculate1DayAnd90Days(data) {
     console.log(data)
     let firstIndexTotalCurrentValue = 0, lastIndexTotalCurrentValue = 0, secondLastIndexTotalCurrentValue = 0;
