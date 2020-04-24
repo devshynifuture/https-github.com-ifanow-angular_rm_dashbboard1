@@ -12,4 +12,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
   ngOnInit() {
   }
 
+  // prod fix
+  close(flag){}
+  saveHealthInsurance(){}
 }
