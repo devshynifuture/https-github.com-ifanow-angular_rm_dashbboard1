@@ -108,7 +108,7 @@ export class SummaryComponent implements OnInit {
               sumOf10Days += element.currentValue;
             }
           });
-          this.graphList.push([singleData.targetDate, sumOf10Days]);
+          this.graphList.push([singleData.targetDate, Math.round(sumOf10Days)]);
         }
         this.lineChart('container');
       },
@@ -136,11 +136,13 @@ export class SummaryComponent implements OnInit {
       this.cashFlowViewDataSource = this.cashFlowViewDataSource.concat(ObjectArray['income']);
       ObjectArray['expense'].forEach(element => {
         element['colourFlag'] = false;
-        this.expenseList.push(-Math.abs(element.currentValue.toFixed(2)))
+        this.expenseList.push(-Math.abs(Math.round(element.currentValue)))
+        this.expenseList.push(0);
       })
       ObjectArray['income'].forEach(element => {
         element['colourFlag'] = true;
-        this.incomeList.push(element.currentValue)
+        this.incomeList.push(Math.round(element.currentValue));
+        this.incomeList.push(0);
       })
       this.inflowFlag = true;
       this.outflowFlag = true;
@@ -149,7 +151,7 @@ export class SummaryComponent implements OnInit {
       this.cashFlowViewDataSource = ObjectArray['expense'];
       ObjectArray['expense'].forEach(element => {
         element['colourFlag'] = false;
-        this.expenseList.push(-Math.abs(element.currentValue))
+        this.expenseList.push(-Math.abs(Math.round(element.currentValue)))
       })
       this.outflowFlag = true;
     }
@@ -157,7 +159,7 @@ export class SummaryComponent implements OnInit {
       this.cashFlowViewDataSource = ObjectArray['income'];
       ObjectArray['income'].forEach(element => {
         element['colourFlag'] = true;
-        this.incomeList.push(element.currentValue)
+        this.incomeList.push(Math.round(element.currentValue))
       })
       this.inflowFlag = true;
     }
@@ -240,7 +242,7 @@ export class SummaryComponent implements OnInit {
         flag: (Math.sign(lastIndexTotalCurrentValue - firstIndexTotalCurrentValue) == -1) ? false : true
       }
       this.oneDay = {
-        value: lastIndexTotalCurrentValue - secondLastIndexTotalCurrentValue,
+        value: Math.abs(lastIndexTotalCurrentValue - secondLastIndexTotalCurrentValue),
         flag: (Math.sign(lastIndexTotalCurrentValue - secondLastIndexTotalCurrentValue) == -1) ? false : true
       };
     }
