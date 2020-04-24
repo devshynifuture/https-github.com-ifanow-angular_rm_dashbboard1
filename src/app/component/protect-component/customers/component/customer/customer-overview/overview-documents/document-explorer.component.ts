@@ -277,7 +277,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
 
   getAllFileList(tabValue, flag) {
-    tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : (tabValue == 'Deleted files' || tabValue == 3) ? 4 : undefined;
+    tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : (tabValue == 'Deleted files' || tabValue == 4) ? 4 : undefined;
     if (tabValue == undefined) {
       tabValue = 1
     }
@@ -355,7 +355,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   keyPress(event, tabValue) {
-    tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : (tabValue == 'Deleted files' || tabValue == 3) ? 4 : undefined;
+    tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : (tabValue == 'Deleted files' || tabValue == 4) ? 4 : undefined;
     if (event == '') {
       this.getAllFileList(tabValue, 'reset')
       this.showResult = false;
@@ -583,7 +583,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
               this.eventService.openSnackBar('Deleted permanently', 'Dismiss');
               dialogRef.close();
               this.getCount()
-              this.getAllFileList(4, 'uplaodFile');
+              this.getAllFileList(4, 'delete');
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -599,7 +599,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
               this.eventService.openSnackBar('Recovered', 'Dismiss');
               dialogRef.close();
               this.getCount()
-              this.getAllFileList(4, 'uplaodFile');
+              this.getAllFileList(4, 'Recovered');
             },
             error => this.eventService.showErrorMessage(error)
           );
