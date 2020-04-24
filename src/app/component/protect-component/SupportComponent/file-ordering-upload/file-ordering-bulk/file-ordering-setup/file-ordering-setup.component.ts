@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService } from './../../../../../../services/util.service';
 import { SubscriptionInject } from './../../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { Component, OnInit } from '@angular/core';
@@ -26,6 +27,7 @@ export class FileOrderingSetupComponent implements OnInit {
   lastPastDate: Date = new Date('1 Jan 1990');
   fileTypeList: any[] = [];
   presentDate = new Date();
+  rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
 
   historicalFileBulkOrderingForm = this.fb.group({
     rtId: [, Validators.required],
@@ -81,7 +83,7 @@ export class FileOrderingSetupComponent implements OnInit {
 
       let values = this.historicalFileBulkOrderingForm.value;
       const data = {
-        rmId: 1,
+        rmId: this.rmId,
         rtId: values.rtId,
         fileTypeId: values.fileTypeId,
         fromDate: values.fromDate.getFullYear() + "-" +

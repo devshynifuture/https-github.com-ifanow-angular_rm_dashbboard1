@@ -11,6 +11,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { InsuranceComponent } from './insurance.component';
 
 
+
 @NgModule({
   declarations: [InsuranceComponent],
   imports: [

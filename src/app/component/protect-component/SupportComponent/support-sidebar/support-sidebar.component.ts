@@ -35,6 +35,7 @@ export class SupportSidebarComponent extends DialogContainerComponent implements
   }
   logoText = 'Your Logo here';
   isAdmin = AuthService.getAdminStatus();
+  profileImgSrc = AuthService.getUserInfo().profileImageUrl ? AuthService.getUserInfo().profileImageUrl : "https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png";
 
   ngOnInit() {
     this.userInfo = AuthService.getUserInfo();
@@ -79,7 +80,6 @@ export class SupportSidebarComponent extends DialogContainerComponent implements
 
   toggleSideNav() {
     this.stateOfPanel.toggle();
-    this.shouldShowMainNav = !this.shouldShowMainNav;
   }
 
   changeNavigation(name) {

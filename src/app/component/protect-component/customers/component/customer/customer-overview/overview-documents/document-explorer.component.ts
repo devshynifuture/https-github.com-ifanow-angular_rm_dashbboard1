@@ -277,7 +277,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
 
   getAllFileList(tabValue, flag) {
-    tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : (tabValue == 'Deleted files' || tabValue == 3) ? 4 : undefined;
+    tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : (tabValue == 'Deleted files' || tabValue == 4) ? 4 : undefined;
     if (tabValue == undefined) {
       tabValue = 1
     }
@@ -310,12 +310,14 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   getAllFilesRes(data, value) {
+    this.isLoading = false;
+    this.noResult = false;
+    this.showResult = false;
     if (data.files.length == 0 && data.folders.length == 0) {
       this.showMsg = true;
     } else {
       this.showMsg = false;
     }
-    this.isLoading = false;
     this.allFiles = data.files;
     this.AllDocs = data.folders;
     this.dataToCommon = data.folders;
@@ -353,8 +355,9 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   keyPress(event, tabValue) {
+    tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : (tabValue == 'Deleted files' || tabValue == 4) ? 4 : undefined;
     if (event == '') {
-      this.getAllFileList(1, 'reset')
+      this.getAllFileList(tabValue, 'reset')
       this.showResult = false;
     } else {
       console.log('search', event);
@@ -577,10 +580,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
           };
           this.custumService.deleteFolderPermnant(obj).subscribe(
             data => {
-              this.eventService.openSnackBar('Deleted', 'Dismiss');
+              this.eventService.openSnackBar('Deleted permanently', 'Dismiss');
               dialogRef.close();
               this.getCount()
-              this.getAllFileList(1, 'uplaodFile');
+              this.getAllFileList(4, 'delete');
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -593,10 +596,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
           };
           this.custumService.recovery(obj).subscribe(
             data => {
-              this.eventService.openSnackBar('Deleted', 'Dismiss');
+              this.eventService.openSnackBar('Recovered', 'Dismiss');
               dialogRef.close();
               this.getCount()
-              this.getAllFileList(1, 'uplaodFile');
+              this.getAllFileList(4, 'Recovered');
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -782,10 +785,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       domain: "bit.ly",
       long_url: value
     }
-    const payload = JSON.stringify({'long_url': value, "domain": "bit.ly" })
+    const payload = JSON.stringify(link)
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/json');
-    this.http.post('https://api-ssl.bitly.com/v4/shorten', payload).subscribe((responseData) => {
+    this.http.post('https://api-ssl.bitly.com/v4/shorten', payload, headers).subscribe((responseData) => {
       console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
       if (responseData == null) {
       }

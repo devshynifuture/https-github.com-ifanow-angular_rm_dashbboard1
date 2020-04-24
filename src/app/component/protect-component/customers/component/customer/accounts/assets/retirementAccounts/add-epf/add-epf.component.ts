@@ -335,18 +335,18 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.epf}
         ownerList: this.epf.value.getCoOwnerName,
         familyMemberId: this.familyMemberId,
         // ownerName: (this.ownerName == undefined) ? this.epf.controls.ownerName.value : this.ownerName,
-        YearOfRetirement: this.epf.controls.retirement.value,
-        employeesMonthlyContribution: this.epf.controls.employeeContry.value,
-        employersMonthlyContribution: this.epf.controls.employerContry.value,
-        annualSalaryGrowthRate: this.epf.controls.annualSalGrowth.value,
-        currentEpfBalance: this.epf.controls.currentEPFBal.value,
-        currentEpsBalance: this.epf.controls.currentEPSBal.value,
+        retirementYear: this.epf.controls.retirement.value,
+        employeesMonthlyContribution: parseInt(this.epf.controls.employeeContry.value),
+        employersMonthlyContribution: parseInt(this.epf.controls.employerContry.value),
+        salaryGrowthRate: this.epf.controls.annualSalGrowth.value,
+        accountBalanceEpf: this.epf.controls.currentEPFBal.value,
+        accountBalanceEps: this.epf.controls.currentEPSBal.value,
         maturityYear: this.epf.controls.maturityYear.value,
-        balanceAsOnDate: this.datePipe.transform(this.epf.controls.balanceAsOn.value, 'yyyy-MM-dd'),
+        balanceAsOn: this.datePipe.transform(this.epf.controls.balanceAsOn.value, 'yyyy-MM-dd'),
         epfNo: this.epf.controls.EPFNo.value,
         bankAccountNumber: this.epf.controls.bankAcNo.value,
         description: this.epf.controls.description.value,
-        voluntaryContribution:this.epf.controls.voluntaryContribution.value,
+        voluntaryContribution:parseInt(this.epf.controls.voluntaryContribution.value),
         nomineeList: this.epf.value.getNomineeName,
 
         id: this.epf.controls.id.value
@@ -366,7 +366,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.epf}
         adviceDescription: "manualAssetDescription"
       }
       if (this.epf.controls.id.value == undefined && this.flag != 'adviceEPF') {
-        this.custumService.addEPF(obj).subscribe(
+        this.custumService.addEPF_EPS(obj).subscribe(
           data => this.addEPFRes(data), (error) => {
             this.barButtonOptions.active = false;
             this.event.showErrorMessage(error);
@@ -382,7 +382,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.epf}
         );
       } else {
         //edit call
-        this.custumService.editEPF(obj).subscribe(
+        this.custumService.editEPF_EPS(obj).subscribe(
           data => this.editEPFRes(data), (error) => {
             this.barButtonOptions.active = false;
             this.event.showErrorMessage(error);

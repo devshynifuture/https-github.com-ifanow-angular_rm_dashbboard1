@@ -10,7 +10,7 @@ import { SupportService } from '../support.service';
 import * as Highcharts from 'highcharts';
 import { SeriesColumnOptions } from 'highcharts';
 import { ReconciliationService } from '../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -32,12 +32,13 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
   previousWeekFrankline: any;
   currentWeekKarvy: any;
 
-  rmId = AuthService.getRmId();
+  rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
 
   subscription = new Subscription();
   bulkData: any[] = [{}, {}, {}];
   dropDownData: any[] = [];
   hasError: boolean = false;
+  dailyFileSelected = 'option1';
 
   dashFG: FormGroup;
   currentWeekFrankline: any;
@@ -51,7 +52,6 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    console.log("this is rtId:::", this.rmId);
     this.utilsService.loader(0);
 
     this.createFormGroup();
@@ -203,6 +203,7 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
     let obj = {};
     this.supportService.getIfaMatricData(obj).subscribe(
       data => {
+        console.log("this is my ifa metric data::", data);
         if (data) {
           this.ifaCountData = data;
         }
