@@ -1,14 +1,14 @@
-<div class="row">
+<div class="row mt-65">
     <div class="col-md-2 pr-4 pl-0">
         <div class="b-b pb-16">
             <div class="row">
                 <div class="col-md-6 pl-32">
                     <p class="f-12 roboto mb-10 mt-20">MY IFAs</p>
-                    <h5 *ngIf="ifaCountData" class="f-32 m-0">{{ifaCountData.myIfas}}%</h5>
+                    <h5 *ngIf="ifaCountData" class="f-32 m-0">{{ifaCountData.myIfas}}</h5>
                 </div>
                 <div class="col-md-6">
                     <p class="f-12 roboto mb-10 mt-20">ACTIVE</p>
-                    <h5 *ngIf="ifaCountData" class="f-32 m-0 text-success">{{ifaCountData.activeIfas}}%</h5>
+                    <h5 *ngIf="ifaCountData" class="f-32 m-0 text-success">{{ifaCountData.activeIfas}}</h5>
                 </div>
             </div>
 
@@ -54,10 +54,10 @@
             <div class="col-md-9 p-0 br">
                 <div class="row b-b p-12">
                     <div class="col-md-9 pl-10 d-flex align-items-center">
-                        <h4 class="f-20 m-0 f-600 roboto">RM Dashboard</h4>
+                        <h4 class="f-20 m-0 f-600 roboto"> Welcome {{ rmName }}</h4>
                     </div>
                     <div class="col-md-3">
-                        <button mat-button [matMenuTriggerFor]="menu">Quick actions</button>
+                        <button mat-stroked-button [matMenuTriggerFor]="menu">Quick actions</button>
                         <mat-menu #menu="matMenu">
                             <button mat-menu-item (click)="openAddStockMaster('')">Add to stock master</button>
                             <button mat-menu-item (click)="openAddLifeInsuranceMaster('')">Add to LI master</button>
@@ -81,9 +81,9 @@
                                     </div>
                                     <div class="col-md-5 pl-10 paddRight10">
                                         <mat-form-field>
-                                            <mat-select class="form-control">
-                                                <mat-option>
-                                                    All files
+                                            <mat-select class="form-control" [(value)]="dailyFileSelected">
+                                                <mat-option value="option1">
+                                                    All Files
                                                 </mat-option>
                                             </mat-select>
                                         </mat-form-field>
@@ -178,7 +178,8 @@
                                     <div class="col-md-5 pl-10 paddRight10">
                                         <mat-form-field>
                                             <mat-select class="form-control" formControlName="bulkOptRtId">
-                                                <mat-option *ngFor="let fileFilter of dropDownData" [value]="fileFilter.id">
+                                                <mat-option *ngFor="let fileFilter of dropDownData"
+                                                    [value]="fileFilter.id">
                                                     {{fileFilter.name}}
                                                 </mat-option>
                                             </mat-select>
@@ -188,7 +189,8 @@
                                 <div *ngFor="let singleFile of bulkData" class="pl-10 pb-10 paddRight10">
                                     <div class="row">
                                         <div class="col-md-12 pb-8 p-0 f-14">
-                                            {{getRTCode(singleFile.rtId)}}: {{singleFile.description}} - {{singleFile.startedOn | date:'dd/MM h:mm '}}
+                                            {{getRTCode(singleFile.rtId)}}: {{singleFile.description}} -
+                                            {{singleFile.startedOn | date:'dd/MM h:mm '}}
                                         </div>
                                     </div>
                                     <div class="row b-b">
@@ -231,7 +233,8 @@
                                     <div class="col-md-5 pl-10 paddRight10">
                                         <mat-form-field>
                                             <mat-select formControlName="historicalFileOptId" class="form-control">
-                                                <mat-option *ngFor="let fileFilter of dropDownData" [value]="fileFilter.id">
+                                                <mat-option *ngFor="let fileFilter of dropDownData"
+                                                    [value]="fileFilter.id">
                                                     {{fileFilter.name}}
                                                 </mat-option>
                                             </mat-select>

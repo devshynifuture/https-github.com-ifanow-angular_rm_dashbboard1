@@ -498,4 +498,7 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
   }
 
 
+  // prod fix
+  close(flag){}
+  saveHealthInsurance(){}
 }

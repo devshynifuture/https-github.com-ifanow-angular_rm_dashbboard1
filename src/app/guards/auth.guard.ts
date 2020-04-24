@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
         // TODO comment for old login
         if (this.authService.isAdvisor()) {
           this.myRoute.navigate(['admin', 'subscription', 'dashboard']);
-        } else if (AuthService.getAdminStatus()) {
+        } else if (AuthService.getUserInfo().isRmLogin) {
           this.myRoute.navigate(['support', 'dashboard']);
         }
         else {

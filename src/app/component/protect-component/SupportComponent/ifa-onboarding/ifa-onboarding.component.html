@@ -17,7 +17,8 @@
 
 <div class="row">
     <div class="col-md-12 overflow-hidden back-office-table">
-        <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonAnimation mt-8" appSkeletonLoading [appSkeletonLoading]="isLoading" matSort>
+        <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonAnimation mt-8" appSkeletonLoading
+            [appSkeletonLoading]="isLoading" matSort>
             <!-- admin name Column -->
             <ng-container matColumnDef="adminName">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header="adminName" class="b-a"> Admin Name </th>
@@ -94,7 +95,7 @@
                             <button mat-menu-item>Merge Scheme Code</button>
                         </mat-menu>
 
-                        <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                        <button mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="!isLoading">
                             <mat-icon>more_vert</mat-icon>
                         </button>
                     </div>

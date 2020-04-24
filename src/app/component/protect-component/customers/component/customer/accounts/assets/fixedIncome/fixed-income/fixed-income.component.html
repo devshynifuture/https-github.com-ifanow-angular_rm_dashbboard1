@@ -454,7 +454,7 @@
                             <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span> </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
-                            <div *ngIf="bondTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="bondTotalSum.sumCurrentValue" appFormatNumber>{{bondTotalSum.sumCurrentValue}}</span></div>
+                            <div *ngIf="bondTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumCurrentValueB" appFormatNumber>{{sumCurrentValueB}}</span></div>
                         </td>
                     </ng-container>
 
@@ -474,7 +474,7 @@
                             <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.couponAmount }}</span> </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
-                            <div *ngIf="bondTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="bondTotalSum.sumCouponAmount" appFormatNumber>{{bondTotalSum.sumCouponAmount}}</span></div>
+                            <div *ngIf="bondTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumCouponAmount" appFormatNumber>{{sumCouponAmount}}</span></div>
                         </td>
                     </ng-container>
 
@@ -493,7 +493,7 @@
                             <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amountInvested }}</span> </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
-                            <div *ngIf="bondTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="bondTotalSum.sumAmountInvested" appFormatNumber>{{bondTotalSum.sumAmountInvested}}</span></div>
+                            <div *ngIf="bondTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumAmountInvestedB" appFormatNumber>{{sumAmountInvestedB}}</span></div>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="cdate">

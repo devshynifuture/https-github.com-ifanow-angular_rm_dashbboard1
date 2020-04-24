@@ -50,7 +50,12 @@ export class SettingOrgProfileComponent implements OnInit {
     );
   }
   getPersonalProfileRes(data) {
-    this.userList = data
+    if(data) {
+      this.userList = data
+    } else {
+      this.userList = undefined;
+      this.eventService.showErrorMessage("Error");
+    }
     this.loader(-1);
   }
   getOrgProfiles() {
@@ -73,15 +78,23 @@ export class SettingOrgProfileComponent implements OnInit {
   getOrgProfileRes(data) {
     if (data) {
       this.orgDetails = data
+    } else {
+      this.eventService.showErrorMessage("Error");
+      this.isOrgProfileLoaded = true;
+      this.orgDetails = undefined;
     }
     this.loader(-1);
     this.isOrgProfileLoaded = true;
   }
 
-  OpenpersonalProfile(data, flag) {
+  OpenpersonalProfile(data, flag, openTab = 0) {
+    const dataObj = {
+      ...data,
+      openTab: openTab
+    }
     const fragmentData = {
       flag: flag,
-      data,
+      data: dataObj,
       id: 1,
       state: (flag == 'detailedNsc') ? 'open' : 'open',
       componentName: AddPersonalProfileComponent
@@ -89,6 +102,7 @@ export class SettingOrgProfileComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
+          this.isOrgProfileLoaded = false;
           this.getPersonalProfiles();
           rightSideDataSub.unsubscribe();
         }
@@ -103,12 +117,16 @@ export class SettingOrgProfileComponent implements OnInit {
     }
   }
 
-  OpenOrgProfile(data, flag) {
+  OpenOrgProfile(data, flag, openTab=0) {
+    const dataObj = {
+      ...data,
+      openTab: openTab
+    }
     const fragmentData = {
       flag: flag,
-      data,
+      data: dataObj,
       id: 1,
-      state: (flag == 'detailedNsc') ? 'open' : 'open',
+      state: 'open',
       componentName: OrgProfileComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

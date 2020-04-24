@@ -168,8 +168,8 @@ export const appConfig = {
   RENAME_FILE: 'document/account/document/all-file/file/rename',
   RENAME_FOLDER: 'document/account/document/all-file/folder/rename',
   DELETE_FOLDER: 'document/account/document/all-file/folder/trash',
-  DELETE_PERMANANT_FOLDER: '',
-  RECOVERY: '',
+  DELETE_PERMANANT_FOLDER: 'document/account/document/perma-delete/put',
+  RECOVERY: 'document/account/document/restore-file-folder/put',
   SEARCH_FILE: 'document/account/document/all-file/search',
   STAR_FILE: 'document/document/all-file/star',
   SEND_SHAREBLE_LINK: 'pdfAndEmail/email-only/send',
@@ -252,7 +252,7 @@ export const appConfig = {
   DELETE_GOAL: 'goal-planning/goal/delete',
   CALCULATE_TOTAL_VALUES: 'account/asset/summary',
   GET_SUMMARY_LIST: 'account/asset/summary/list',
-  GET_CASHFLOW_LIST: '',
+  GET_CASHFLOW_LIST: 'cashflow/monthly/list/get',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   ADD_EPF_EPS: 'account/asset/epf-eps/add',
@@ -549,6 +549,7 @@ export const appConfig = {
   POST_FILE_ORDER_BULK_DATA: 'fileorder/bulk/order',
   PUT_FILE_ORDER_RETRY: 'fileorder/list/retry',
   GET_TICKET: 'rmdashboard/tickets/get',
+  GET_RM_DAY_WISEDATA:'rmdashboard/myifas/dashboard/details/get/filter',
 
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',

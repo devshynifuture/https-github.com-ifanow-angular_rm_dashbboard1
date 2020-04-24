@@ -31,15 +31,16 @@ export class AddTransactionComponent implements OnInit {
   get getTransFormList() { return this.getTransForm.transactionFormList as FormArray; }
   setTransactionData(data) {
   
-   if(data.ppfTransactionList){
+   if(data.transactionList){
     // data.ppfTransactionList;
-    data.ppfTransactionList.forEach(element => {
+    // let list = data.ppfTransactionList?data.ppfTransactionList:data.ssyTransactionList;
+    data.transactionList.forEach(element => {
       this.getTransFormList.push(this.fb.group({
         date: [new Date(element.transactionDate), [Validators.required]],
         amount: [element.amount, Validators.required],
-        type: [element.ppfTransactionType, Validators.required],
+        type: [element.transactionType, Validators.required],
         id: [(element.id + ''), Validators.required],
-        publicProvidendFundId:[element.publicProvidendFundId],
+        assetId:[element.assetId],
         isActive:1
       }));
     });
@@ -82,7 +83,7 @@ export class AddTransactionComponent implements OnInit {
   removeTransaction(index) {
     console.log(this.getTransFormList, "getTransFormList",  this.transactionForm.controls.ppfTransactionList);
     
-    if(this.getTransFormList.controls[index].value.publicProvidendFundId){
+    if(this.getTransFormList.controls[index].value.assetId){
       // this.transactionForm.controls.ppfTransactionList.controls['isActive'].setValue(0);
       this.getTransFormList.controls[index].value.isActive = 0
       this.removed.push(this.getTransFormList.controls[index]);

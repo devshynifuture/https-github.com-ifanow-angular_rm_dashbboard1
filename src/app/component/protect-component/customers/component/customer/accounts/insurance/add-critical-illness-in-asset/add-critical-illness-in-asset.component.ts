@@ -458,4 +458,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
     }
   }
 
+  // prod fix
+  close(flag){}
+  saveHealthInsurance(){}
 }

@@ -49,13 +49,13 @@ export class MutualFundOverviewComponent implements OnInit {
   showCategory = true;
   showSubCategory = true;
   totalValue: any = {};
-  fragmentData = {isSpinner : false};
+  fragmentData = { isSpinner: false };
   advisorId: any;
-  advisorData:any;
-  
+  advisorData: any;
+
   @Output() changeInput = new EventEmitter();
   constructor(public subInjectService: SubscriptionInject, public UtilService: UtilService,
-    public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService,private settingService : SettingsService) {
+    public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
   }
 
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
@@ -71,12 +71,12 @@ export class MutualFundOverviewComponent implements OnInit {
     this.dataSource = [{}, {}, {}];
     this.dataSource2 = [{}, {}, {}];
     this.dataSource3 = [{}, {}, {}];
-    this.advisorData =this.MfServiceService.getPersonalDetails(this.advisorId);
+    this.advisorData = this.MfServiceService.getPersonalDetails(this.advisorId);
     // this.getPersonalDetails(this.advisorId);
   }
-  getPersonalDetails(data){
-    const obj={
-      id:data
+  getPersonalDetails(data) {
+    const obj = {
+      id: data
     }
     this.settingService.getPersonalProfile(obj).subscribe(
       data => {
@@ -228,7 +228,7 @@ export class MutualFundOverviewComponent implements OnInit {
   generatePdf() {
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
-    this.UtilService.htmlToPdf(para.innerHTML,'Test',this.fragmentData)
+    this.UtilService.htmlToPdf(para.innerHTML, 'Test', this.fragmentData)
   }
   pieChart(id) {
     Highcharts.chart('piechartMutualFund', {
@@ -244,7 +244,7 @@ export class MutualFundOverviewComponent implements OnInit {
         y: 60
       },
       tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        pointFormat: ' <b>{point.percentage:.1f}%</b>'
       },
       plotOptions: {
         pie: {
