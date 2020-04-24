@@ -134,5 +134,8 @@ export class SupportService {
   getTickets(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TICKET, data);
   }
+  getDayWiseDataRm(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.GET_RM_DAY_WISEDATA, data); 
+  }
 
 }
