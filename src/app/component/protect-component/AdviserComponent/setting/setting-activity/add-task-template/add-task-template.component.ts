@@ -24,6 +24,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
   categoryList: any[] = [];
   category: any = 'asset';
   listOfSub: any;
+  adviceTypeMasterList: any[] = [];
 
   dataEdited = false;
 
@@ -117,10 +118,6 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
       });
     }
 
-    if (this.data.id) {
-      this.taskTemplate.controls.subSubCategoryId.clearValidators();
-    }
-
     this.taskTemplate.updateValueAndValidity();
   }
 
@@ -132,6 +129,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
         this.taskTemplate.controls.subSubCategoryId.setValue('');
         this.dataEdited = true;
         this.hideSubcategory = true;
+        this.adviceTypeMasterList = this.globalData.system_generated_advice_map_key;
         this.categoryList = this.globalData.task_template_category_and_subcategory_list.find(data => data.categoryId == value).taskTempSubCategorytoCategoryList;
       })
     );
@@ -141,8 +139,10 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
         if (value != '') {
           this.listOfSub = this.categoryList.find(subCategory => subCategory.subcategoryId == value).taskTempSubcattoSubCategories;
           this.taskTemplate.controls.subSubCategoryId.setValue('');
+          this.taskTemplate.controls.adviceTypeId.setValue('');
           if (this.listOfSub.length == 0) {
             this.hideSubcategory = true;
+            this.adviceTypeMasterList = this.globalData.system_generated_advice_map_key;
           } else {
             this.hideSubcategory = false;
           }
@@ -150,12 +150,19 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
         }
       })
     );
-    if (this.data.id) {
-      this.subscription.add(
-        this.taskTemplate.controls.subSubCategoryId.valueChanges.subscribe(value => {
+    this.subscription.add(
+      this.taskTemplate.controls.subSubCategoryId.valueChanges.subscribe(value => {
+        if(this.data.id)
           this.dataEdited = true;
-        })
-      );
+        
+        this.taskTemplate.controls.adviceTypeId.setValue('');
+        if(value) {
+          this.adviceTypeMasterList = this.listOfSub.find(subSubCat => subSubCat.subSubCategoryId == value).adviceTypeMasterList || this.globalData.system_generated_advice_map_key;
+        }
+
+      })
+    );
+    if (this.data.id) {
       this.subscription.add(
         this.taskTemplate.controls.adviceTypeId.valueChanges.subscribe(value => {
           this.dataEdited = true;
@@ -224,7 +231,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
     jsonObj.subTaskList = this.reorderSubtasksForEditedTemplate();
     jsonObj.isEdited = this.dataEdited ? 1 : 0;
     if (jsonObj.templateType == 1) {
-      jsonObj.taskDescription = this.globalData.system_generated_advice_map_key.find(obj => obj.id == jsonObj.adviceTypeId).name;
+      this.setTaskDescriptionForLinkedTask(jsonObj);
     }
     this.setNullForEmptyValues(jsonObj);
     this.orgSetting.editTaskTemplate(jsonObj).subscribe(
@@ -243,7 +250,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
       task.taskNumber = index + 1;
     });
     if (jsonObj.templateType == 1) {
-      jsonObj.taskDescription = this.globalData.system_generated_advice_map_key.find(obj => obj.id == jsonObj.adviceTypeId).name;
+      this.setTaskDescriptionForLinkedTask(jsonObj);
     }
     this.setNullForEmptyValues(jsonObj);
     this.orgSetting.addTaskTemplate(jsonObj).subscribe(
@@ -253,6 +260,14 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
       },
       err => this.event.openSnackBar(err, 'Dismiss')
     );
+  }
+
+  setTaskDescriptionForLinkedTask(jsonObj){
+    if (this.hideSubcategory) {
+      jsonObj.taskDescription = this.globalData.system_generated_advice_map_key.find(obj => obj.id == jsonObj.adviceTypeId).advice;
+    } else {
+      jsonObj.taskDescription = this.adviceTypeMasterList.find(obj => obj.id == jsonObj.adviceTypeId).advice;
+    }
   }
 
   reorderSubtasksForEditedTemplate() {
@@ -322,8 +337,10 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
       this.listOfSub = this.categoryList.find(data => this.data.subcategoryId == data.subcategoryId).taskTempSubcattoSubCategories;
       if (this.listOfSub.length == 0) {
         this.hideSubcategory = true;
+        this.adviceTypeMasterList = this.globalData.system_generated_advice_map_key;
       } else {
         this.hideSubcategory = false;
+        this.adviceTypeMasterList = this.listOfSub.find(subSubCat => subSubCat.subSubCategoryId == this.data.subSubCategoryId).adviceTypeMasterList || this.globalData.system_generated_advice_map_key;
       }
     }
   }

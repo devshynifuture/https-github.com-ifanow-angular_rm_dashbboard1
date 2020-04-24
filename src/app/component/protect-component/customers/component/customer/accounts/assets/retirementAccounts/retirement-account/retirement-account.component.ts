@@ -445,7 +445,7 @@ export class RetirementAccountComponent implements OnInit {
     this.isLoading = true;
     const obj = this.getObject;
     this.dataSource.data = [{}, {}, {}];
-    this.custumService.getEPF(obj).subscribe(
+    this.custumService.getEPF_EPS(obj).subscribe(
       data => this.getEPFRes(data), (error) => {
         this.eventService.showErrorMessage(error);
         this.dataSource.data = [];

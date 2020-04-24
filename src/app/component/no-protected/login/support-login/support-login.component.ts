@@ -180,10 +180,8 @@ export class SupportLoginComponent implements OnInit {
           data => {
             if (data) {
               console.log('rm data: ', data);
-              if (data.isAdmin) {
-                data.rmId = data.id
-                delete data.id;
-              }
+              data.rmId = data.id
+              delete data.id;
               // this.authService.setToken(data.token);
               this.loginService.handleUserData(this.authService, this.router, data);
               // this.router.navigate(['support', 'dashboard']);

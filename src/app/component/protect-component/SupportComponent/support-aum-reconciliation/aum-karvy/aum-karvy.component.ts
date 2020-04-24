@@ -18,11 +18,11 @@ export class AumKarvyComponent implements OnInit {
   displayedColumns = ['rtId', 'advisorName', 'arnria', 'doneOn', 'doneBy', 'totalFolioCount', 'unmatchedCountBeforeRecon', 'unmatchedCountAfterRecon', 'aumBalanceDate', 'transactionDate', 'report']
   dataSource = new MatTableDataSource<AumKarvyI>(ELEMENT_DATA);
   rtId;
+  rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
 
   constructor(
     public eventService: EventService,
     private reconService: ReconciliationService,
-    private supportAumReconService: SupportAumReconService
   ) { }
 
   ngOnInit() {
@@ -62,7 +62,7 @@ export class AumKarvyComponent implements OnInit {
       brokerId: 0,
       rtId: this.rtId,
       // rtId: 0,
-      rmId: 3
+      rmId: this.rmId
     }
 
     this.reconService.getAumReconHistoryDataValues(data)

@@ -100,13 +100,18 @@ lisNominee(value) {
   this.ownerData.Fmember = value;
   this.nomineesListFM = Object.assign([], value);
 }
-
+selectOwner:any;
 disabledMember(value, type) {
   this.callMethod = {
     methodName : "disabledMember",
     ParamValue : value,
     disControl : type
   }
+  setTimeout(() => {
+    this.selectOwner = this.nomineesListFM.filter((m)=> m.id == this.ssySchemeForm.value.getCoOwnerName[0].familyMemberId)
+   }, 1000);
+  
+
 }
 
 displayControler(con) {
@@ -349,11 +354,13 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ssySchemeForm}
     else {
         this.barButtonOptions.active = true;
         let obj = {
+          "advisorId":this.advisorId,
+          "clientId":this.clientId,
           "id": this.editApi? this.editApi.id : 0,
           "familyMemberId": this.familyMemberId,
           // "ownerName": (this.ownerName == null) ? this.ssySchemeForm.controls.ownerName.value : this.ownerName.userName,
           "ownerList": this.ssySchemeForm.value.getCoOwnerName,
-          "accountBalance": this.ssySchemeForm.get('accBalance').value,
+          "accountBalance":parseInt(this.ssySchemeForm.get('accBalance').value),
           "balanceAsOn": this.ssySchemeForm.get('balanceAsOn').value,
           "commencementDate": this.ssySchemeForm.get('commDate').value,
           "description": this.ssySchemeForm.get('description').value,
@@ -362,13 +369,13 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ssySchemeForm}
           "agentName": this.ssySchemeForm.get('agentName').value,
           "guardianName": this.ssySchemeForm.get('guardian').value,
           "nominees": this.nominees,
-          "ssyFutureContributionList": [{
-            "futureApproxContribution": this.ssySchemeForm.get('futureAppx').value,
-            "frequency": this.ssySchemeForm.get('futureAppx').value,
-          }],
+          "futureApproxContribution": parseInt(this.ssySchemeForm.get('futureAppx').value),
+          "frequency": parseInt(this.ssySchemeForm.get('frquency').value),
           "ssyTransactionList": finalTransctList,
           'nomineeList': this.ssySchemeForm.value.getNomineeName,
-          'familyMemberDob': this.dateFormatPipe.transform(this.DOB, 'dd/MM/yyyy')
+          'familyMemberDob': this.dateFormatPipe.transform(this.selectOwner[0].dateOfBirth, 'dd/MM/yyyy'),
+          "parentId": 0,
+          "realOrFictitious": 1
         }
 
         let adviceObj = {

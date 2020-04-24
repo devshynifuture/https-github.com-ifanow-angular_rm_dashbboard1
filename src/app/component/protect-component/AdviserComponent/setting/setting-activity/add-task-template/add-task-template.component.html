@@ -91,8 +91,8 @@
           <mat-form-field appearance="standard" floatLabel="never">
             <mat-select class="form-control" formControlName="adviceTypeId">
               <mat-option disabled value="">Select option</mat-option>
-              <mat-option *ngFor="let advise of globalData.system_generated_advice_map_key" [value]="advise.id">
-                {{advise.name}}
+              <mat-option *ngFor="let advise of adviceTypeMasterList" [value]="advise.id">
+                {{advise.advice}}
               </mat-option>
             </mat-select>
             <mat-error class="f-12">

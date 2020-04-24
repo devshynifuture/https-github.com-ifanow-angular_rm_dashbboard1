@@ -47,7 +47,7 @@
                                         </div>
                                     </td>
                                 </ng-container>
-                                <ng-container matColumnDef="date">
+                                <ng-container matColumnDef="doneOn">
                                     <th class="br" mat-header-cell *matHeaderCellDef> Last done on </th>
                                     <td class="br" mat-cell *matCellDef="let element">
                                         <div class="bar">{{(isLoading)?'': element.doneOn | date:'dd/MM/yyyy'}}
@@ -57,7 +57,7 @@
                                 <ng-container matColumnDef="name">
                                     <th class="br" mat-header-cell *matHeaderCellDef> Done by </th>
                                     <td class="br" mat-cell *matCellDef="let element">
-                                        <div class="bar">{{(isLoading)?'':element.doneBy}}
+                                        <div class="bar">{{(isLoading)?'':element.doneBy }}
                                         </div>
                                     </td>
                                 </ng-container>
@@ -147,7 +147,7 @@
                                 <div class="bar">{{(isLoading)?'': (element.arnOrRia==1)?'ARN':'RIA'}}</div>
                             </td>
                         </ng-container>
-                        <ng-container matColumnDef="date">
+                        <ng-container matColumnDef="doneOn">
                             <th class="br" mat-header-cell *matHeaderCellDef> Last done on </th>
                             <td class="br" mat-cell *matCellDef="let element">
                                 <div class="bar">{{(isLoading)?'': element.doneOn | date:'dd/MM/yyyy'}} </div>
@@ -241,7 +241,7 @@
                                 </div>
                             </td>
                         </ng-container>
-                        <ng-container matColumnDef="date">
+                        <ng-container matColumnDef="doneOn">
                             <th class="br" mat-header-cell *matHeaderCellDef> Last done on </th>
                             <td class="br" mat-cell *matCellDef="let element">
                                 <div class="bar">{{(isLoading)?'': element.doneOn | date:'dd/MM/yyyy'}} </div>
