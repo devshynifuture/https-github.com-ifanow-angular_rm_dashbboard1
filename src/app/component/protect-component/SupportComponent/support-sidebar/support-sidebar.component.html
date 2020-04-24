@@ -15,12 +15,13 @@
             </i>
         </div>
 
-        <div class="row">
-            <div class="col-md-2 bb d-flex align-items-center justify-content-center" *ngIf="!shouldShowMainNav">
+        <div class="row top-setting-css">
+            <div class="col-md-2 bb d-flex align-items-center justify-content-center bg-white"
+                *ngIf="!shouldShowMainNav">
                 <img *ngIf="profileImgSrc" class="imgWidth" [src]="profileImgSrc">
                 <h5 *ngIf="!profileImgSrc" class="logoh5">YOUR LOGO HERE</h5>
             </div>
-            <div class="d-flex align-items-center bg-grey lt" [ngClass]="!shouldShowMainNav ? 'col-md-7': 'col-md-9'">
+            <div class="d-flex align-items-center bg-grey lt" [ngClass]="!shouldShowMainNav ? 'col-md-7': 'col-md-7'">
                 <!-- <mat-form-field class="serachbox">
                     <div class="form-group searchBoxHeader">
                         <input #inputSearch [matAutocomplete]="auto" class="form-control pl-40" matInput type="text">
@@ -87,7 +88,7 @@
     <mat-sidenav #sidenav class="sideNavClass" role="navigation">
         <mat-nav-list class="width-230 pt-0" id="d">
 
-            <div class="bb d-flex align-items-center justify-content-center" *ngIf="shouldShowMainNav">
+            <div class="bb d-flex align-items-center justify-content-center">
                 <img class="imgWidth" *ngIf="profileImgSrc" [src]="profileImgSrc">
                 <h5 *ngIf="!profileImgSrc" class="logoh5">YOUR LOGO HERE</h5>
             </div>
