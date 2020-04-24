@@ -83,6 +83,11 @@ export class SummaryComponent implements OnInit {
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
     );
+    this.getSummaryList(obj);
+    this.getCashFlowList(obj);
+  }
+
+  getSummaryList(obj) {
     this.cusService.getSUmmaryList(obj).subscribe(
       data => {
         console.log(data);
@@ -109,6 +114,8 @@ export class SummaryComponent implements OnInit {
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
     )
+  }
+  getCashFlowList(obj) {
     this.cusService.getCashFlowList(obj).subscribe(
       data => {
         console.log(data);
@@ -117,14 +124,11 @@ export class SummaryComponent implements OnInit {
         this.incomeList = [];
         this.expenseList = [];
         this.sortDataUsingFlowType(data, true);
-        this.cashFlow('cashFlow');
         console.log(this.cashFlowViewDataSource);
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
     )
   }
-
-
   sortDataUsingFlowType(ObjectArray, flag) {
 
     if (ObjectArray['expense'].length > 0 && ObjectArray['income'].length > 0) {
@@ -132,7 +136,7 @@ export class SummaryComponent implements OnInit {
       this.cashFlowViewDataSource = this.cashFlowViewDataSource.concat(ObjectArray['income']);
       ObjectArray['expense'].forEach(element => {
         element['colourFlag'] = false;
-        this.expenseList.push(element.currentValue)
+        this.expenseList.push(-Math.abs(element.currentValue))
       })
       ObjectArray['income'].forEach(element => {
         element['colourFlag'] = true;
@@ -145,7 +149,7 @@ export class SummaryComponent implements OnInit {
       this.cashFlowViewDataSource = ObjectArray['expense'];
       ObjectArray['expense'].forEach(element => {
         element['colourFlag'] = false;
-        this.expenseList.push(element.currentValue)
+        this.expenseList.push(-Math.abs(element.currentValue))
       })
       this.outflowFlag = true;
     }
@@ -157,7 +161,7 @@ export class SummaryComponent implements OnInit {
       })
       this.inflowFlag = true;
     }
-    this.cashFlow('cashFlow');
+    this.cashFlow('cashFlow', ObjectArray);
   }
 
 
@@ -260,7 +264,21 @@ export class SummaryComponent implements OnInit {
   }
 
 
-  cashFlow(id) {
+  cashFlow(id, data) {
+    console.log(data);
+    const { expense, income } = data;
+    let timeArray = []
+    if (expense.length > 0) {
+      expense.forEach(element => {
+        timeArray.push(this.datePipe.transform(new Date(element.targetDate), 'd MMM'))
+      });
+    }
+    if (income.length > 0) {
+      income.forEach(element => {
+        timeArray.push(this.datePipe.transform(new Date(element.targetDate), 'd MMM'))
+      });
+    }
+
     const chart1 = new Highcharts.Chart('cashFlow', {
       chart: {
         type: 'column'
@@ -269,7 +287,7 @@ export class SummaryComponent implements OnInit {
         text: ''
       },
       xAxis: {
-        categories: ['10', '20', '30', '40', '50']
+        categories: timeArray
       },
       credits: {
         enabled: false
@@ -348,6 +366,7 @@ export class SummaryComponent implements OnInit {
 
   pieChart(id, data) {
     const dataSeriesList = [];
+    data = data.filter(element => element.assetType != 2);
     data.forEach(element => {
       const totalAssetData = this.totalAssetsWithoutLiability + this.liabilityTotal;
       const dividedValue = element.currentValue / totalAssetData;
