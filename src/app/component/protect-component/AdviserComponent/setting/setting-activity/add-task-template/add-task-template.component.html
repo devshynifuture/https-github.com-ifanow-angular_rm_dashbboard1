@@ -111,7 +111,7 @@
             <mat-select class="form-control" formControlName="assignedTo">
               <mat-option disabled value="">Select option</mat-option>
               <mat-option *ngFor="let team of teamMemberList" [value]="team.userId">
-                {{team.name}}
+                {{team.fullName}}
               </mat-option>
             </mat-select>
             <mat-hint>Optional</mat-hint>
