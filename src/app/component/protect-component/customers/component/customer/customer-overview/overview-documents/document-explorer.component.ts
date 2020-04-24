@@ -355,6 +355,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   keyPress(event, tabValue) {
+    tabValue = (tabValue == 'Documents' || tabValue == 1) ? 1 : (tabValue == 'Recents' || tabValue == 2) ? 2 : (tabValue == 'Starred' || tabValue == 3) ? 3 : (tabValue == 'Deleted files' || tabValue == 3) ? 4 : undefined;
     if (event == '') {
       this.getAllFileList(tabValue, 'reset')
       this.showResult = false;
@@ -579,10 +580,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
           };
           this.custumService.deleteFolderPermnant(obj).subscribe(
             data => {
-              this.eventService.openSnackBar('Deleted', 'Dismiss');
+              this.eventService.openSnackBar('Deleted permanently', 'Dismiss');
               dialogRef.close();
               this.getCount()
-              this.getAllFileList(1, 'uplaodFile');
+              this.getAllFileList(4, 'uplaodFile');
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -595,10 +596,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
           };
           this.custumService.recovery(obj).subscribe(
             data => {
-              this.eventService.openSnackBar('Deleted', 'Dismiss');
+              this.eventService.openSnackBar('Recovered', 'Dismiss');
               dialogRef.close();
               this.getCount()
-              this.getAllFileList(1, 'uplaodFile');
+              this.getAllFileList(4, 'uplaodFile');
             },
             error => this.eventService.showErrorMessage(error)
           );
