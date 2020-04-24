@@ -109,15 +109,20 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
         ...this.arnRiaFG.getRawValue()
       };
 
-      if(jsonObj.commencementDate instanceof Date) {
-        jsonObj.commencementDate = this.datePipe.transform(jsonObj.commencementDate, 'yyyy-MM-dd');
-      } else {
-        jsonObj.commencementDate = this.datePipe.transform(jsonObj.commencementDate.toDate(), 'yyyy-MM-dd');
+      if(jsonObj.commencementDate) {
+        if(jsonObj.commencementDate instanceof Date) {
+          jsonObj.commencementDate = this.datePipe.transform(jsonObj.commencementDate, 'yyyy-MM-dd');
+        } else {
+          jsonObj.commencementDate = this.datePipe.transform(jsonObj.commencementDate.toDate(), 'yyyy-MM-dd');
+        }
       }
-      if(jsonObj.renewalDate instanceof Date) {
-        jsonObj.renewalDate = this.datePipe.transform(jsonObj.renewalDate, 'yyyy-MM-dd');
-      } else {
-        jsonObj.renewalDate = this.datePipe.transform(jsonObj.renewalDate.toDate(), 'yyyy-MM-dd');
+
+      if(jsonObj.renewalDate) {
+        if(jsonObj.renewalDate instanceof Date) {
+          jsonObj.renewalDate = this.datePipe.transform(jsonObj.renewalDate, 'yyyy-MM-dd');
+        } else {
+          jsonObj.renewalDate = this.datePipe.transform(jsonObj.renewalDate.toDate(), 'yyyy-MM-dd');
+        }
       }
 
       // edit action

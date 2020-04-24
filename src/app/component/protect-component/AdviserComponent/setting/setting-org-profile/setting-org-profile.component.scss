@@ -31,3 +31,13 @@
   -ms-transform: translate(-50%, -50%);
   text-align: center;
 }
+.container {
+    position: relative;
+}
+.container:hover .image {
+  opacity: 0.3;
+}
+
+.container:hover .middle {
+  opacity: 1;
+}
