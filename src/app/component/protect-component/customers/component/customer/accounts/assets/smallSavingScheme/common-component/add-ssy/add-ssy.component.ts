@@ -256,7 +256,7 @@ addNewNominee(data) {
       balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       futureAppx: [data.futureApproxContribution, [Validators.required]],
-      frquency: [data.frequency ? String(data.frequency) : '1', [Validators.required]],
+      frquency: [data.frequency ? String(data.frequency) : '', [Validators.required]],
       description: [data.description],
       linkedAcc: [data.linkedBankAccount],
       bankName: [data.bankName],
@@ -309,23 +309,46 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ssySchemeForm}
   moreFields() {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
   }
+
+  removedList:any=[];
   getFormData(data) {
     console.log(data)
+    if(data.removed){
+      this.transactionData = data.data.controls;
+      this.removedList=data.removed;
+    }else{
     this.commencementDate = this.ssySchemeForm.controls.commDate.value;
     this.transactionData = data.controls
+    }
   }
 
   addSSYScheme() {
     let transactionFlag, finalTransctList = []
-    if (this.transactionData && this.transactionData.length > 0) {
+
+    this.removedList.forEach(Fg => {
+      if (Fg.value) {
+        let obj = {
+          "id":Fg.value.id,
+          "transactionDate":Fg.value.date,
+          "amount": Fg.value.amount,
+          "transactionType":Fg.value.type,
+          "isActive":Fg.value.isActive
+        }
+        finalTransctList.push(obj);
+      }
+    });
+
+    if (this.transactionData.length > 0) {
       this.transactionData.forEach(element => {
         if (element.valid) {
           let obj = {
-            "date": element.controls.date.value._d,
+            "id":element.value.id,
+            "transactionDate":element.controls.date.value._d?element.controls.date.value._d:element.controls.date.value,
             "amount": element.controls.amount.value,
-            "type": element.controls.type.value
+            "transactionType": element.controls.type.value,
+            "isActive":element.value.isActive == 0?element.value.isActive:1
           }
-          finalTransctList.push(obj)
+          finalTransctList.push(obj);
         }
         else {
           transactionFlag = false;

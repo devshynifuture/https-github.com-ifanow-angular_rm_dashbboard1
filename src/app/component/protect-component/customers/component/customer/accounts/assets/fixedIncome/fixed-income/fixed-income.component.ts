@@ -233,18 +233,17 @@ totalSum:any
   getBondsRes(data) {
     this.bondTotalSum = data;
     this.isLoading = false;
-    if (data == undefined) {
-      this.noData = 'No scheme found';
-      this.dataSource.data = [];
-    } else if (data.bondList) {
-      console.log('getBondsRes ******** ', data);
-      this.dataSource.data = data.bondList;
-      this.dataSource.sort = this.bondListTableSort;
-      UtilService.checkStatusId(this.dataSource.filteredData);
-      this.sumAmountInvestedB = data.sumAmountInvested;
-      this.sumCouponAmount = data.sumCouponAmount;
-      this.sumCurrentValueB = data.sumCurrentValue;
-      this.sumMaturityValue = data.sumMaturityValue;
+    if (data != undefined) {
+      if (data.assetList) {
+        console.log('getBondsRes ******** ', data);
+        this.dataSource.data = data.assetList;
+        this.dataSource.sort = this.bondListTableSort;
+        UtilService.checkStatusId(this.dataSource.filteredData);
+        this.sumAmountInvestedB = data.sumAmountInvested;
+        this.sumCouponAmount = data.sumCouponAmount;
+        this.sumCurrentValueB = data.sumOfCurrentValue;
+        this.sumMaturityValue = data.sumOfMaturityValue;
+      }
     } else {
       this.noData = 'No scheme found';
       this.dataSource.data = [];

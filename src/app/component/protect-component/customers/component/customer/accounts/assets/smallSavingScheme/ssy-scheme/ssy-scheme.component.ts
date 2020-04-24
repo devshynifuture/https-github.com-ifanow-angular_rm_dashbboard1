@@ -99,17 +99,16 @@ export class SsySchemeComponent implements OnInit {
 
   getSsySchemedataResponse(data) {
     this.isLoading = false;
-    if (data == undefined) {
-      this.noData = 'No scheme found';
-      this.datasource.data = [];
-    } else if (data && data.SSYList.length != 0) {
-      console.log('getSsySchemedataResponse', data);
-      this.datasource.data = data.SSYList;
-      this.datasource.sort = this.sort;
-      UtilService.checkStatusId(this.datasource.filteredData);
-      this.sumOfCurrentValue = data.SumOfCurrentValue;
-      this.sumOfAmountInvested = data.SumOfAmountInvested;
-      this.ssyData = data;
+    if (data != undefined) {
+      if (data.assetList) {
+        console.log('getSsySchemedataResponse', data);
+        this.datasource.data = data.assetList;
+        this.datasource.sort = this.sort;
+        UtilService.checkStatusId(this.datasource.filteredData);
+        this.sumOfCurrentValue = data.sumOfCurrentValue;
+        this.sumOfAmountInvested = data.sumOfAmountInvested;
+        this.ssyData = data;
+      }
     } else {
       this.noData = 'No scheme found';
       this.datasource.data = []

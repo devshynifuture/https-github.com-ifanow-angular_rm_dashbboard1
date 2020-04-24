@@ -101,11 +101,11 @@
                         <div class="bar"> {{ sumOfcurrentValue || '-'}} </div>
                     </td> -->
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
-                        <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span> </div>
+                        <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentEpfValue }}</span> </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
                         <!-- *ngIf="bondTotalSum" for prod build -->
-                        <div >{{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{sumOfcurrentValue}}</span></div>
+                        <div >{{isLoading ? ' ' : '₹'}}<span [value]="sumOfcurrentEpfBalance" appFormatNumber>{{sumOfcurrentEpfBalance}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="emp">
@@ -114,7 +114,7 @@
                         Employee's <br>contribution
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
-                        <div class="bar" appFormatNumber> {{ element.employeesMonthlyContribution }} </div>
+                        <div class="bar" > {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{ element.employeesMonthlyContribution }} </span></div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br amt f-600 p-8 text-right" appFormatNumber
                         [value]="sumOfemployeesMonthlyContribution">
@@ -127,7 +127,8 @@
                         Employer's <br>contribution
                     </th>
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
-                        <div class="bar" appFormatNumber> {{ element.employersMonthlyContribution }} </div>
+                        
+                        <div class="bar" > {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{ element.employersMonthlyContribution }} </span></div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br amt f-600 p-8 text-right" appFormatNumber
                         [value]="sumOfemployersMonthlyContribution">
@@ -140,7 +141,7 @@
                         Voluntary <br>Contribution 
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right amt">
-                        <div class="bar"> {{element.voluntaryContribution}} </div>
+                        <div class="bar" > {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{ element.voluntaryContribution }} </span></div>
                     </td>
                     <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
                 </ng-container>
@@ -150,7 +151,7 @@
                         interest rate
                     </th>
                     <td mat-cell *matCellDef="let element" class="br text-right amt">
-                        <div class="bar"> {{element.rateOfReturn}}{{!isLoading? "%" : ""}} </div>
+                        <div class="bar"> {{element.salaryGrowthRate}}{{!isLoading? "%" : ""}} </div>
                     </td>
                     <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
                 </ng-container>
@@ -160,11 +161,10 @@
                         current value -EPS
                     </th>
                     <td mat-cell *matCellDef="let element" class="br  text-right amt">
-                        <div class="bar" appFormatNumber> {{ element.currentEpfBalance }} </div>
+                        <div class="bar" > {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{ element.currentEpsValue }} </span></div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br  amt f-600 p-8 text-right" appFormatNumber
-                        [value]="sumOfcurrentEpfBalance">
-                        <div class="bar"> {{ sumOfcurrentEpfBalance || ' '}} </div>
+                    <td mat-footer-cell *matFooterCellDef class="br  amt f-600 p-8 text-right" >
+                        <div >{{isLoading ? ' ' : '₹'}}<span [value]="sumOfcurrentEpsBalance" appFormatNumber>{{sumOfcurrentEpsBalance}}</span></div>
                     </td>
                 </ng-container>
                 <!-- <ng-container matColumnDef="bal">
@@ -195,7 +195,7 @@
                         Retirement <br>year
                     </th>
                     <td mat-cell *matCellDef="let element" class="br  text-left">
-                        <div class="bar"> {{element.maturityYear}} </div>
+                        <div class="bar"> {{element.retirementYear}} </div>
                     </td>
                     <td *matFooterCellDef mat-footer-cell></td>
                 </ng-container>
@@ -579,7 +579,7 @@
                     <td *matFooterCellDef class="br   text-right" mat-footer-cell></td>
                 </ng-container>
                 <ng-container matColumnDef="joint">
-                    <th *matHeaderCellDef class="br text-right " mat-header-cell mat-sort-header="organizationName">
+                    <th *matHeaderCellDef class="br text-right " mat-header-cell mat-sort-header="yearOfJoining">
                         Date of joining
                     </th>
                     <td *matCellDef="let element" class="br text-left  " mat-cell>
