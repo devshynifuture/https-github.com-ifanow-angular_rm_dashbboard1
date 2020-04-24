@@ -5,7 +5,9 @@
 .faq-colors {
   background: rgba(255, 193, 0, 0.3);
 }
-
+.contact-deatils-info{
+  background:rgba(255, 114, 114, 0.2) !important;
+}
 .yes-no {
   .mat-radio-button {
     min-width: 110px !important;
@@ -630,6 +632,35 @@ li{
     color: #212121;
     text-align: center;
   }
+  .active-success{
+    background: #02B875;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 40px;
+    letter-spacing: 0.2px;
+    color: #FFFFFF;
+    border-radius:50%;
+    height: 40px;
+    width: 40px;
+    color: #fff;
+    text-align: center;
+  }.active-primary{
+    background: #008FFF;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 40px;
+    letter-spacing: 0.2px;
+    color: #FFFFFF;
+    border-radius:50%;
+    height: 40px;
+    width: 40px;
+    color: #fff;
+    text-align: center;
+  }
   .vertical-menu{
     .row{
       padding-top:24px;
@@ -661,5 +692,29 @@ li{
     height: 30px !important;
     line-height: 30px !important;
     padding:0 10px !important;
+  }
+  .expertise{
+    .mat-checkbox{
+      text-align: right;
+    float: right;
+    margin-top: -5px;
+    }
+  }
+  .consultation{
+    .mat-radio-button{
+      min-width: 190px !important;
+    }
+  }
+}
+.account-types{
+  display: flex;
+  .mw-119{
+    min-width: 110px !important;
+  }
+  .mw-115{
+    min-width: 108px !important;
+  }
+  .mw-145{
+    min-width: 130px !important;
   }
 }

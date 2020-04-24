@@ -45,7 +45,7 @@ export class MarketplaceReviewRatingComponent implements OnInit {
       flag,
       data: { ...data, flag },
       id: 1,
-      state: 'open40',
+      state: 'open50',
       componentName: MarketplaceReviewReplyComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

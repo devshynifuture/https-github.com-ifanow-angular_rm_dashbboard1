@@ -1,222 +1,873 @@
-    <div class="row popup-header-fix-100">
-        <div class="col-md-2 border-right-1 p-0 d-flex justify-content-center align-items-center">
-            <img class="w-100"
-                src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
-        </div>
-        <div class="col-md-8 pt-18">
-          <p class="m-0 roboto f-16 f-400">Sonesh Dedhia <span class="bg-danger br-4 text-white ml-12 f-12 p-2">Not Live</span></p>
-        </div>
-        <div class="col-md-2 text-right">
-            <i class="material-icons pt-16 c-p pr-16" (click)="dialogClose()">
-                clear
-            </i>
-        </div>
-    </div>
-
-<div class="row pt-60" id="onboargings">
-        <div class="col-md-2 p-0 pt-40">
-            <ul class="vertical-menu">
-                <li (click)="viewMode ='tab1'" (click)="sortTable('tab1')"
-                    [ngClass]="{'activeColor':showFilter =='tab1'}" class="c-p">
-                    <div class="row">
-                        <div class="col-md-4 pl-0">
-                            <div class="active-blue">1</div>
-                        </div>
-                        <div class="col-md-8 p-0 pt-10">Key info</div>
-                    </div>
-                </li>
-                <li (click)="viewMode ='tab2'" (click)="sortTable('tab2')"
-                    [ngClass]="{'activeColor':showFilter =='tab2'}" class="c-p">
-                    <div class="row">
-                        <div class="col-md-4 pl-0">
-                            <div class="active-grey">2</div>
-                        </div>
-                        <div class="col-md-8 p-0 pt-10">Contact details</div>
-                    </div>
-                </li>
-                 <li (click)="viewMode ='tab3'" (click)="sortTable('tab3')"
-                    [ngClass]="{'activeColor':showFilter =='tab3'}" class="c-p">
-                    <div class="row">
-                        <div class="col-md-4 pl-0">
-                            <div class="active-grey">3</div>
-                        </div>
-                        <div class="col-md-8 p-0 pt-10">Expertise</div>
-                    </div>
-                </li>
-                 <li (click)="viewMode ='tab4'" (click)="sortTable('tab4')"
-                    [ngClass]="{'activeColor':showFilter =='tab4'}" class="c-p">
-                  <div class="row">
-                        <div class="col-md-4 pl-0">
-                            <div class="active-grey">4</div>
-                        </div>
-                        <div class="col-md-8 p-0 pt-10">Fees</div>
-                    </div>
-                     </li>
-                 <li (click)="viewMode ='tab5'" (click)="sortTable('tab5')"
-                    [ngClass]="{'activeColor':showFilter =='tab5'}" class="c-p">
-                  <div class="row">
-                        <div class="col-md-4 pl-0">
-                            <div class="active-grey">5</div>
-                        </div>
-                        <div class="col-md-8 p-0 pt-2">Certification & Licenses</div>
-                    </div>
-                </li>
-                 <li (click)="viewMode ='tab6'" (click)="sortTable('tab6')"
-                    [ngClass]="{'activeColor':showFilter =='tab6'}" class="c-p">
-                   <div class="row">
-                        <div class="col-md-4 pl-0">
-                            <div class="active-grey">6</div>
-                        </div>
-                        <div class="col-md-8 p-0 pt-10">Education</div>
-                    </div>
-                </li>
-                 <li (click)="viewMode ='tab7'" (click)="sortTable('tab7')"
-                    [ngClass]="{'activeColor':showFilter =='tab7'}" class="c-p">
-                    <div class="row">
-                        <div class="col-md-4 pl-0">
-                            <div class="active-grey">7</div>
-                        </div>
-                        <div class="col-md-8 p-0 pt-10">Experience</div>
-                    </div>
-                </li>
-                 <li (click)="viewMode ='tab8'" (click)="sortTable('tab8')"
-                    [ngClass]="{'activeColor':showFilter =='tab8'}" class="c-p">
-                   <div class="row">
-                        <div class="col-md-4 pl-0">
-                            <div class="active-grey">8</div>
-                        </div>
-                        <div class="col-md-8 p-0 pt-10">Review & submit</div>
-                    </div>
-                </li>
-               
-            </ul>
-        </div>
-        <div class="col-md-7 bl-1 border-right-1 pb-44">
-        <div class="col-md-12 p-0 min-height pt-28" [ngSwitch]="viewMode" *ngIf="viewMode=='tab1'">
-            <div *ngSwitchCase="'tab1'">
-                <h4 class="m-0 f-500 text-dark">Key info</h4>
-                <div class="row pt-28">
-                    <div class="col-md-3 text-right">
-                        <h5 class="m-0 roboto roboto pt-8 f-400">Full name</h5>
-                    </div>
-                    <div class="col-md-5 p-0">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <input matInput class="form-control">
-                              </mat-form-field>
-                        </div>
-                    </div>
-                </div>
-                    <div class="row pt-16">
-                    <div class="col-md-3 text-right">
-                        <h5 class="m-0 roboto roboto pt-8 f-400 pt-28">Company name</h5>
-                    </div>
-                    <div class="col-md-5 p-0 pt-20">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <input matInput class="form-control">
-                              </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <p class="m-0 roboto text-dark f-400">Team size</p>
-                        <div class="form-group">
-                        <mat-form-field>
-                            <mat-select class="form-control">
-                              <mat-option value="option">Option</mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                      </div>
-                    </div>
-                </div>
-                 <div class="row pt-28">
-                    <div class="col-md-3 text-right">
-                        <h5 class="m-0 roboto roboto pt-8 f-400">About</h5>
-                    </div>
-                    <div class="col-md-8 pl-0">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <textarea matInput class="form-control h-200"></textarea>
-                                <mat-hint align="end">0/500</mat-hint>
-                              </mat-form-field>
-                        </div>
-                    </div>
-                </div>
-                <div class="row pt-200">
-                    <div class="col-md-3 text-right">
-                        <h5 class="m-0 roboto roboto pt-8 f-400">Social media</h5>
-                    </div>
-                    <div class="col-md-3 p-0">
-                          <div class="form-group">
-                        <mat-form-field>
-                            <mat-select class="form-control">
-                              <mat-option value="option">Option</mat-option>
-                            </mat-select>
-                             <mat-hint>+ Add more</mat-hint>
-                          </mat-form-field>
-                      </div>
-                    </div>
-                    <div class="col-md-5">
-                         <div class="form-group mb-0">
-                            <mat-form-field>
-                                <input matInput class="form-control">
-                                 <mat-hint>optional</mat-hint>
-                              </mat-form-field>
-                        </div>
-                    </div>
-                </div>
-                <div class="row pt-28 pb-28">
-                    <div class="col-md-3 text-right">
-                        <h5 class="m-0 roboto roboto pt-8 f-400">Profile photo</h5>
-                    </div>
-                    <div class="col-md-5 pl-0">
-                       <div class="darganddrop text-center">
-                           drag & drop file here<br>
-                           or<br>
-                           Browse
-                       </div>
-                       <div class="col-md-9 text-right pr-0 files-actions">
-                            <button mat-stroked-button class="mr-8">+</button>
-                             <button mat-stroked-button class="mr-8">-</button>
-                              <button mat-stroked-button class="mw-70">REMOVE</button>
-                       </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <textarea matInput class="form-control h-120 br-4"></textarea>
-                              </mat-form-field>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-       
-          <div class="col-md-12 p-0 min-height pt-28" [ngSwitch]="viewMode" *ngIf="viewMode=='tab2'">
-           
-              <div *ngSwitchCase="'tab2'">
-                Contact details
-            </div>
-        </div>
-    </div>
-        <div class="col-md-3 reviews-rating">
-            <h3 class="pt-28 m-0 text-dark roboto pb-10">43% Profile completeness</h3>
-            <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
-              <button mat-stroked-button class="btn-dark-outline preview-btn mt-24">Preview</button>
-        </div>
-
+<div class="row popup-header-fix-100">
+  <div class="col-md-2 border-right-1 p-0 d-flex justify-content-center align-items-center">
+    <img class="w-100"
+      src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+  </div>
+  <div class="col-md-8 pt-18">
+    <p class="m-0 roboto f-16 f-400">Sonesh Dedhia <span class="bg-danger br-4 text-white ml-12 f-12 p-2">Not Live</span></p>
+  </div>
+  <div class="col-md-2 text-right">
+    <i class="material-icons pt-16 c-p pr-16" (click)="dialogClose()">
+    clear
+    </i>
+  </div>
 </div>
-<div class="bottom-fixed wrapper-12 w-100">
-    <div class="row">
-    <div class="col-md-6">
-        <h5 class="m-0 c-p text-white pt-8">Cancel</h5>
+<div class="row pt-60 pb-90" id="onboargings">
+  <div class="col-md-2 p-0 pt-16">
+    <ul class="vertical-menu">
+      <li (click)="viewMode ='tab1'" (click)="sortTable('tab1')"
+      [ngClass]="{'activeColor':showFilter =='tab1'}" class="c-p">
+      <div class="row">
+        <div class="col-md-4 pl-0">
+          <div class="active-blue">1</div>
+        </div>
+        <div class="col-md-8 p-0 pt-10">Key info</div>
+      </div>
+      </li>
+      <li (click)="viewMode ='tab2'" (click)="sortTable('tab2')"
+      [ngClass]="{'activeColor':showFilter =='tab2'}" class="c-p">
+      <div class="row">
+        <div class="col-md-4 pl-0">
+          <div class="active-grey">2</div>
+        </div>
+        <div class="col-md-8 p-0 pt-10">Contact details</div>
+      </div>
+      </li>
+      <li (click)="viewMode ='tab3'" (click)="sortTable('tab3')"
+      [ngClass]="{'activeColor':showFilter =='tab3'}" class="c-p">
+      <div class="row">
+        <div class="col-md-4 pl-0">
+          <div class="active-grey">3</div>
+        </div>
+        <div class="col-md-8 p-0 pt-10">Expertise</div>
+      </div>
+      </li>
+      <li (click)="viewMode ='tab4'" (click)="sortTable('tab4')"
+      [ngClass]="{'activeColor':showFilter =='tab4'}" class="c-p">
+      <div class="row">
+        <div class="col-md-4 pl-0">
+          <div class="active-grey">4</div>
+        </div>
+        <div class="col-md-8 p-0 pt-10">Fees</div>
+      </div>
+      </li>
+      <li (click)="viewMode ='tab5'" (click)="sortTable('tab5')"
+      [ngClass]="{'activeColor':showFilter =='tab5'}" class="c-p">
+      <div class="row">
+        <div class="col-md-4 pl-0">
+          <div class="active-grey">5</div>
+        </div>
+        <div class="col-md-8 p-0 pt-2">Certification & Licenses</div>
+      </div>
+      </li>
+      <li (click)="viewMode ='tab6'" (click)="sortTable('tab6')"
+      [ngClass]="{'activeColor':showFilter =='tab6'}" class="c-p">
+      <div class="row">
+        <div class="col-md-4 pl-0">
+          <div class="active-grey">6</div>
+        </div>
+        <div class="col-md-8 p-0 pt-10">Education</div>
+      </div>
+      </li>
+      <li (click)="viewMode ='tab7'" (click)="sortTable('tab7')"
+      [ngClass]="{'activeColor':showFilter =='tab7'}" class="c-p">
+      <div class="row">
+        <div class="col-md-4 pl-0">
+          <div class="active-success">
+          	7
+				</div>
+        </div>
+        <div class="col-md-8 p-0 pt-10">Experience</div>
+      </div>
+      </li>
+      <li (click)="viewMode ='tab8'" (click)="sortTable('tab8')"
+      [ngClass]="{'activeColor':showFilter =='tab8'}" class="c-p">
+      <div class="row">
+        <div class="col-md-4 pl-0">
+          <div class="active-primary">8</div>
+        </div>
+        <div class="col-md-8 p-0 pt-10">Review & submit</div>
+      </div>
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-7 bl-1 border-right-1 pb-44">
+    <div class="col-md-12 p-0 min-height pt-28" [ngSwitch]="viewMode" *ngIf="viewMode=='tab1'">
+    <div *ngSwitchCase="'tab1'">
+      <h4 class="m-0 f-500 text-dark">Key info</h4>
+      <div class="row pt-28">
+        <div class="col-md-3 text-right">
+          <h5 class="m-0 roboto roboto pt-8 f-400">Full name</h5>
+        </div>
+        <div class="col-md-5 p-0">
+          <div class="form-group mb-0">
+            <mat-form-field>
+              <input matInput class="form-control">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-16">
+        <div class="col-md-3 text-right">
+          <h5 class="m-0 roboto roboto pt-8 f-400 pt-28">Company name</h5>
+        </div>
+        <div class="col-md-5 p-0 pt-20">
+          <div class="form-group mb-0">
+            <mat-form-field>
+              <input matInput class="form-control">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <p class="m-0 roboto text-dark f-400">Team size</p>
+          <div class="form-group">
+            <mat-form-field>
+              <mat-select class="form-control">
+                <mat-option value="option">Option</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-28">
+        <div class="col-md-3 text-right">
+          <h5 class="m-0 roboto roboto pt-8 f-400">About</h5>
+        </div>
+        <div class="col-md-8 pl-0">
+          <div class="form-group mb-0">
+            <mat-form-field>
+              <textarea matInput class="form-control h-200"></textarea>
+              <mat-hint align="end">0/500</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-200">
+        <div class="col-md-3 text-right">
+          <h5 class="m-0 roboto roboto pt-8 f-400">Social media</h5>
+        </div>
+        <div class="col-md-3 p-0">
+          <div class="form-group">
+            <mat-form-field>
+              <mat-select class="form-control">
+                <mat-option value="option">Option</mat-option>
+              </mat-select>
+              <mat-hint>+ Add more</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="form-group mb-0">
+            <mat-form-field>
+              <input matInput class="form-control">
+              <mat-hint>optional</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-28 pb-28">
+        <div class="col-md-3 text-right">
+          <h5 class="m-0 roboto roboto pt-8 f-400">Profile photo</h5>
+        </div>
+        <div class="col-md-5 pl-0">
+          <div class="darganddrop text-center">
+            drag & drop file here<br>
+            or<br>
+            Browse
+          </div>
+          <div class="col-md-9 text-right pr-0 files-actions">
+            <button mat-stroked-button class="mr-8">+</button>
+            <button mat-stroked-button class="mr-8">-</button>
+            <button mat-stroked-button class="mw-70">REMOVE</button>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group mb-0">
+            <mat-form-field>
+              <textarea matInput class="form-control h-120 br-4"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-md-6 text-right">
-        <button mat-stroked-button class="btn-primary" [matMenuTriggerFor]="menu">NEXT STEP</button>
-        <mat-menu #menu="matMenu">
+  </div>
+  <div class="col-md-12 p-0 min-height pt-28" [ngSwitch]="viewMode" *ngIf="viewMode=='tab2'">
+  <div *ngSwitchCase="'tab2'">
+    <h4 class="m-0 f-500 text-dark">Contact details</h4>
+    <div class="row pt-28">
+      <div class="col-md-3 text-right">
+        <h5 class="m-0 roboto roboto pt-28 f-400">Full name</h5>
+      </div>
+      <div class="col-md-3 pl-0">
+        <p class="m-0 roboto f-400">Mobile</p>
+        <div class="form-group mb-0">
+          <mat-form-field>
+            <input matInput class="form-control">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-6 pr-0">
+        <p class="m-0 roboto f-400">Email</p>
+        <div class="form-group mb-0">
+          <mat-form-field>
+            <input matInput class="form-control">
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row pt-28">
+      <div class="col-md-3 text-right">
+        <h5 class="m-0 roboto roboto pt-28 f-400">Work timings</h5>
+      </div>
+      <div class="col-md-4 pl-0 pt-20">
+        <div class="form-group mb-0">
+          <mat-form-field>
+            <mat-select class="form-control">
+              <mat-option value="option">Option</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <mat-checkbox class="text-custom f-14 pt-4">2nd & 4th Saturdays off</mat-checkbox>
+      </div>
+      <div class="col-md-5 pr-0">
+        <div class="row">
+          <div class="col-md-6 pl-0 pr-8">
+            <p class="m-0 roboto f-400">From</p>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-select class="form-control">
+                  <mat-option value="option">Option</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6 pr-0 pl-8">
+            <p class="m-0 roboto f-400">To</p>
+            <div class="form-group">
+              <mat-form-field>
+                <mat-select class="form-control">
+                  <mat-option value="option">Option</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row pt-28 pb-24">
+      <div class="col-md-3 text-right">
+        <h5 class="m-0 roboto roboto pt-28 f-400">Current location</h5>
+      </div>
+      <div class="col-md-4 pl-0 pt-20">
+        <div class="form-group mb-0">
+          <mat-form-field>
+            <input matInput class="form-control">
+            <mat-hint align="end">0/6</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="p-32">
+      <div class="row br-4 contact-deatils-info">
+        <div class="col-md-1"></div>
+        <div class="col-md-11">
+          <p class="m-0 text-dark f-400 pt-20 pb-20 lh-16">In light of COVID-19 pandemic, if you are currently working from a temporary location like your home then provide the pincode above. When investors search for advisors by nearby pincodes we will display results by your current location. For privacy reasons we are only asking for your pincode and not your residential address. However, if you have an office you can update the details below as this is where investors would want to contact you when things normalize.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row pt-28">
+      <div class="col-md-3 text-right">
+        <h5 class="m-0 roboto roboto pt-12 f-400">Office location</h5>
+      </div>
+      <div class="col-md-4 pl-0">
+        <div class="form-group mb-0">
+          <mat-form-field>
+            <input matInput class="form-control">
+            <mat-hint align="end">0/6</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row pt-28">
+      <div class="col-md-3 text-right">
+        <h5 class="m-0 roboto roboto pt-12 f-400">Address line 1</h5>
+      </div>
+      <div class="col-md-6 pl-0">
+        <div class="form-group mb-0">
+          <mat-form-field>
+            <input matInput class="form-control">
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row pt-28">
+      <div class="col-md-3 text-right">
+        <h5 class="m-0 roboto roboto pt-12 f-400">Address line 2</h5>
+      </div>
+      <div class="col-md-6 pl-0">
+        <div class="form-group mb-0">
+          <mat-form-field>
+            <input matInput class="form-control">
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row pt-28">
+      <div class="col-md-3 text-right">
+        <h5 class="m-0 roboto roboto pt-12 f-400">City</h5>
+      </div>
+      <div class="col-md-6 pl-0">
+        <div class="form-group mb-0">
+          <mat-form-field>
+            <input matInput class="form-control">
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row pt-28 pb-48">
+      <div class="col-md-3 text-right">
+        <h5 class="m-0 roboto roboto pt-12 f-400">State</h5>
+      </div>
+      <div class="col-md-6 pl-0">
+        <div class="form-group mb-0">
+          <mat-form-field>
+            <input matInput class="form-control">
+            <mat-hint align="end">0/6</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-12 p-0 expertise pt-28" [ngSwitch]="viewMode" *ngIf="viewMode=='tab3'">
+<div *ngSwitchCase="'tab3'">
+  <h4 class="m-0 f-500 text-dark">Contact detailsExpertise</h4>
+  <div class="row">
+    <div class="col-md-12">
+      <h5 class="m-0 text-dark m-0 roboto pt-28 f-500">Service expertise</h5>
+      <p class="m-0 text-dark roboto f-400 pt-4">Tell us about what services you offer. Select only the ones that apply.</p>
+    </div>
+  </div>
+  <div class="row pt-10">
+    <div class="col-md-4">
+      <div class="bu-primary">
+        <mat-checkbox checked="false"></mat-checkbox>
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Portfolio review</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="b-ua">
+        <!-- <mat-checkbox></mat-checkbox> -->
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Financial planning</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="b-ua">
+        <!-- <mat-checkbox></mat-checkbox> -->
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Emergency planning</p>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-20">
+    <div class="col-md-4">
+      <div class="b-ua">
+        <!-- <mat-checkbox></mat-checkbox> -->
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Insurance planning</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="bu-primary">
+        <mat-checkbox checked="false"></mat-checkbox>
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Investment management</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="bu-primary">
+        <mat-checkbox checked="false"></mat-checkbox>
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Investment consulting</p>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-20">
+    <div class="col-md-4">
+      <div class="b-ua">
+        <!-- <mat-checkbox></mat-checkbox> -->
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Retirement planning</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="bu-primary">
+        <mat-checkbox checked="false"></mat-checkbox>
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Asset allocation</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="bu-primary">
+        <mat-checkbox checked="false"></mat-checkbox>
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Tax planning</p>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-20">
+    <div class="col-md-4">
+      <div class="bu-primary">
+        <mat-checkbox checked="false"></mat-checkbox>
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Cash flow planning</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="b-ua">
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Real estate advisory</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="b-ua">
+        <!-- <mat-checkbox checked="false"></mat-checkbox> -->
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Will writing</p>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-20">
+    <div class="col-md-4">
+      <div class="b-ua">
+        <!-- <mat-checkbox></mat-checkbox> -->
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Estate planning</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="b-ua">
+        <!-- <mat-checkbox checked="false"></mat-checkbox> -->
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Raising capital or Debt</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="bu-primary">
+        <mat-checkbox checked="false"></mat-checkbox>
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Personal lending</p>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-48">
+    <div class="col-md-12">
+      <h5 class="m-0 text-dark m-0 roboto pt-28 f-500">Client profile</h5>
+      <p class="m-0 text-dark roboto f-400 pt-4">Tell us about what kind of clients you mostly work with. Select only the ones that apply.</p>
+    </div>
+  </div>
+  <div class="row pt-20">
+    <div class="col-md-4">
+      <div class="b-ua">
+        <!-- <mat-checkbox></mat-checkbox> -->
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Salaried workforce</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="b-ua">
+        <!-- <mat-checkbox checked="false"></mat-checkbox> -->
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Small business owners</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="bu-primary">
+        <mat-checkbox checked="false"></mat-checkbox>
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Medical professionals</p>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-20">
+    <div class="col-md-4">
+      <div class="b-ua">
+        <!-- <mat-checkbox></mat-checkbox> -->
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Finance professionals</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="b-ua">
+        <!-- <mat-checkbox checked="false"></mat-checkbox> -->
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Legal professionals</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="bu-primary">
+        <mat-checkbox checked="false"></mat-checkbox>
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Business executives</p>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-20">
+    <div class="col-md-4">
+      <div class="b-ua">
+        <!-- <mat-checkbox></mat-checkbox> -->
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Entrepreneurs</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="b-ua">
+        <!-- <mat-checkbox checked="false"></mat-checkbox> -->
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Retirees</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="bu-primary">
+        <mat-checkbox checked="false"></mat-checkbox>
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Publice sector workforce</p>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-20">
+    <div class="col-md-4">
+      <div class="b-ua">
+        <!-- <mat-checkbox></mat-checkbox> -->
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">HNI investors</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="b-ua">
+        <!-- <mat-checkbox checked="false"></mat-checkbox> -->
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">UHNI investors</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="bu-primary">
+        <mat-checkbox checked="false"></mat-checkbox>
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Instititional investors</p>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-48">
+    <div class="col-md-12">
+      <h5 class="m-0 text-dark m-0 roboto pt-28 f-500">Product expertise</h5>
+      <p class="m-0 text-dark roboto f-400 pt-4">If you are an expert in a prodcut class, tell us here. Select only the ones that apply.</p>
+    </div>
+  </div>
+  <div class="row pt-20">
+    <div class="col-md-4">
+      <div class="b-ua">
+        <!-- <mat-checkbox></mat-checkbox> -->
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Mutual funds</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="b-ua">
+        <!-- <mat-checkbox checked="false"></mat-checkbox> -->
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Stcoks</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="bu-primary">
+        <mat-checkbox checked="false"></mat-checkbox>
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Fixed incomes & Bonds</p>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-20">
+    <div class="col-md-4">
+      <div class="b-ua">
+        <!-- <mat-checkbox></mat-checkbox> -->
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Life & General Insurance</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="b-ua">
+        <!-- <mat-checkbox checked="false"></mat-checkbox> -->
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Post office schemes</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="bu-primary">
+        <mat-checkbox checked="false"></mat-checkbox>
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">PF & Pension schemes</p>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-20 pb-44">
+    <div class="col-md-4">
+      <div class="b-ua">
+        <!-- <mat-checkbox></mat-checkbox> -->
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Alternative investments</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="b-ua">
+        <!-- <mat-checkbox checked="false"></mat-checkbox> -->
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Commodities</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="bu-primary">
+        <mat-checkbox checked="false"></mat-checkbox>
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Real estate</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="col-md-12 p-0 expertise pt-28" [ngSwitch]="viewMode" *ngIf="viewMode=='tab4'">
+<div *ngSwitchCase="'tab4'">
+  <h4 class="m-0 f-500 text-dark">Fees </h4>
+  <div class="row pt-28">
+    <div class="col-md-12 pl-0">
+      <p class="m-0 text-dark roboto f-400 pt-4">When users click on “Schedule a call” on the marketplace, you can specify a basic fee for your consultation.</p>
+      <p class="m-0 text-dark roboto f-400 pt-12">As mentioned, this fee is for first consultation only. You can charge a higher fee too, if you decide to onboard the client later. You can manage such complex use cases from the Subscriptions module in IFANOW. Having said that, you can still specify your high level fee structure (if at all you do have one) at the bottom of this section.</p>
+    </div>
+  </div>
+  <div class="row pt-28">
+    <div class="col-md-7 pl-0">
+      <h5 class="text-dark m-0 roboto f-400 pb-10">Specify fees for <b>First consultation</b></h5>
+      <mat-radio-group aria-label="Select an option" class="consultation">
+        <mat-radio-button value="1" class="text-primary bu-primary">I will charge a fee</mat-radio-button>
+        <mat-radio-button value="2" class="b-ua text-custom">I will do it for free</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+  <div class="row pt-20 pb-36">
+    <div class="col-md-3 pl-0">
+      <h5 class="m-0 text-dark f-500 roboto pb-10">Fee amount</h5>
+      <div class="form-group mb-0">
+        <mat-form-field>
+          <input matInput class="form-control">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-md-3 pr-0">
+      <h5 class="m-0 text-dark f-500 roboto pb-10">Bank a/c</h5>
+      <button mat-stroked-button class="text-custom b-a">Add bank details</button>
+    </div>
+  </div>
+  <div class="row pt-20 bt-dashed-1">
+    <div class="col-md-12 pl-0">
+      <h5 class="m-0 f-400 roboto text-dark">Fee structure</h5>
+      <p class="m-0 roboto text-dark f-4000">Specify your high level fee structure so that users know about it</p>
+    </div>
+  </div>
+  <div class="row pt-20">
+    <div class="col-md-4 pl-0">
+      <div class="b-ua">
+        <!-- <mat-checkbox></mat-checkbox> -->
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Fixed fee</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="bu-primary">
+        <mat-checkbox checked="false"></mat-checkbox>
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Variable fee</p>
+      </div>
+    </div>
+    <div class="col-md-4 pr-0">
+      <div class="bu-primary">
+        <mat-checkbox checked="false"></mat-checkbox>
+        <p class="m-0 text-center text-dark roboto pt-16 pb-16">Commision based</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="col-md-12 p-0 pt-28" [ngSwitch]="viewMode" *ngIf="viewMode=='tab5'">
+<div *ngSwitchCase="'tab5'">
+  <div class="row">
+    <div class="col-md-8">
+      <h4 class="m-0 f-500 text-dark pt-8">Certification </h4>
+    </div>
+    <div class="col-md-4 text-right">
+      <button mat-stroked-button class="btn-primary">ADD NEW</button>
+    </div>
+  </div>
+  <div class="row pt-20">
+    <div class="col-md-4 pr-0">
+      <div class="b-a br-4">
+        <div class="row pt-16">
+          <div class="col-md-6 pl-0">
+          </div>
+          <div class="col-md-6 pr-0 text-right">
+            <mat-icon [matMenuTriggerFor]="menu" class="text-custom">more_vert</mat-icon>
+            <mat-menu #menu="matMenu">
               <button mat-menu-item>Item 1</button>
               <button mat-menu-item>Item 2</button>
             </mat-menu>
+          </div>
+          <div class="col-md-12 pt-20 pb-20">
+            <p class="m-0 f-500 roboto">Certified Financial Planner</p>
+            <p class="m-0 f-400 roboto pt-4">FPSB</p>
+            <p class="m-0 f-400 pt-10 text-custom roboto">Apr-2016</p>
+          </div>
+        </div>
+      </div>
     </div>
- </div>
- </div>
+    <div class="col-md-4 pr-0">
+      <div class="b-a br-4">
+        <div class="row pt-16">
+          <div class="col-md-6 pl-0">
+          </div>
+          <div class="col-md-6 pr-0 text-right">
+            <mat-icon [matMenuTriggerFor]="menu" class="text-custom">more_vert</mat-icon>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>Item 1</button>
+              <button mat-menu-item>Item 2</button>
+            </mat-menu>
+          </div>
+          <div class="col-md-12 pt-20 pb-20">
+            <p class="m-0 f-500 roboto">Chartered Financial Analyst</p>
+            <p class="m-0 f-400 roboto pt-4">CFA Institute, USA</p>
+            <p class="m-0 f-400 pt-10 text-custom roboto">Apr-2020 (Charter awaited)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-40">
+    <div class="col-md-8">
+      <h4 class="m-0 f-500 text-dark pt-8">Licenses </h4>
+    </div>
+    <div class="col-md-4 text-right">
+      <button mat-stroked-button class="btn-primary">ADD NEW</button>
+    </div>
+  </div>
+  <div class="row pt-20">
+    <div class="col-md-4 pr-0">
+      <div class="b-a br-4">
+        <div class="row pt-16">
+          <div class="col-md-6 pl-0">
+          </div>
+          <div class="col-md-6 pr-0 text-right">
+            <mat-icon [matMenuTriggerFor]="menu" class="text-custom">more_vert</mat-icon>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>Item 1</button>
+              <button mat-menu-item>Item 2</button>
+            </mat-menu>
+          </div>
+          <div class="col-md-12 pt-20 pb-20">
+            <p class="m-0 f-500 roboto">Registered Investment Advisor</p>
+            <p class="m-0 f-400 roboto pt-4">SEBI</p>
+            <p class="m-0 f-400 pt-10 text-custom roboto">Apr-2016</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="col-md-12 p-0 pt-28" [ngSwitch]="viewMode" *ngIf="viewMode=='tab6'">
+<div *ngSwitchCase="'tab6'">
+  <div class="row">
+    <div class="col-md-8">
+      <h4 class="m-0 f-500 text-dark pt-8">Education </h4>
+    </div>
+    <div class="col-md-4 text-right">
+      <button mat-stroked-button class="btn-primary">ADD NEW</button>
+    </div>
+  </div>
+  <div class="row pt-20">
+    <div class="col-md-4 pr-0">
+      <div class="b-a br-4">
+        <div class="row pt-16">
+          <div class="col-md-6 pl-0">
+          </div>
+          <div class="col-md-6 pr-0 text-right">
+            <mat-icon [matMenuTriggerFor]="menu" class="text-custom">more_vert</mat-icon>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>Item 1</button>
+              <button mat-menu-item>Item 2</button>
+            </mat-menu>
+          </div>
+          <div class="col-md-12 pt-20 pb-20">
+            <p class="m-0 f-500 roboto">MBA</p>
+            <p class="m-0 f-400 roboto pt-4">IIM Lucknow</p>
+            <p class="m-0 f-400 pt-10 text-custom roboto">Mar-2015</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 pr-0">
+      <div class="b-a br-4">
+        <div class="row pt-16">
+          <div class="col-md-6 pl-0">
+          </div>
+          <div class="col-md-6 pr-0 text-right">
+            <mat-icon [matMenuTriggerFor]="menu" class="text-custom">more_vert</mat-icon>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>Item 1</button>
+              <button mat-menu-item>Item 2</button>
+            </mat-menu>
+          </div>
+          <div class="col-md-12 pt-20 pb-20">
+            <p class="m-0 f-500 roboto">Bachelor of commerce</p>
+            <p class="m-0 f-400 roboto pt-4">Mumbai University</p>
+            <p class="m-0 f-400 pt-10 text-custom roboto">Apr-2016</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="col-md-12 p-0 pt-28" [ngSwitch]="viewMode" *ngIf="viewMode=='tab7'">
+<div *ngSwitchCase="'tab7'">
+  <div class="row">
+    <div class="col-md-8">
+      <h4 class="m-0 f-500 text-dark pt-8">Experience </h4>
+    </div>
+    <div class="col-md-4 text-right">
+      <button mat-stroked-button class="btn-primary">ADD NEW</button>
+    </div>
+  </div>
+  <div class="row bb-dashed-1 pt-20 pb-20">
+    <div class="col-md-10">
+      <h5 class="m-0 f-400 roboto text-dark">Founder</h5>
+      <p class="m-0 pt-4 text-dark roboto">PersonalFinancePlan</p>
+      <p class="m-0 pt-4 text-dark roboto">Aug 2014 – Present • 5 yrs 9 mos<br> Mumbai Area, India</p>
+      <p class="m-0 pt-10 text-dark roboto">PersonalFinancePlan is an online fee-only personal finance advisory firm. We help bring discipline to your investments, reduce your financial risk and put your money on the right path to help you achieve your financial goals.</p>
+    </div>
+    <div class="col-md-2 text-center">
+      <mat-icon [matMenuTriggerFor]="menu" class="text-custom c-p">more_vert</mat-icon>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>Item 1</button>
+        <button mat-menu-item>Item 2</button>
+      </mat-menu>
+    </div>
+  </div>
+  <div class="row bb-dashed-1 pt-20 pb-20">
+    <div class="col-md-10">
+      <h5 class="m-0 f-400 roboto text-dark">Chief Manager</h5>
+      <p class="m-0 pt-4 text-dark roboto">ICICI Bank</p>
+      <p class="m-0 pt-4 pb-10 text-dark roboto">Aug 2014 – Present • 5 yrs 9 mos<br> Mumbai Area, India</p>
+      <ul class="d-block">
+        <li class="pl-0 roboto">• Evaluated credit requirement of large corporates in diverse industries including steel pipes, construction & engineering, capital goods, textiles, consumer durables and media </li>
+        <li class="pl-0 roboto">• Prepared and presented working capital, term loan and derivative proposals of multiple large corporates</li>
+      </ul>
+    </div>
+    <div class="col-md-2 text-center">
+      <mat-icon [matMenuTriggerFor]="menu" class="text-custom c-p">more_vert</mat-icon>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>Item 1</button>
+        <button mat-menu-item>Item 2</button>
+      </mat-menu>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<div class="col-md-3 reviews-rating">
+  <h3 class="pt-28 m-0 text-dark roboto pb-10">43% Profile completeness</h3>
+  <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+  <button mat-stroked-button class="btn-dark-outline preview-btn mt-24 mb-20">Preview</button>
+  <h5 class="pt-28 bt-dashed-1">FAQs on Fees</h5>
+  <p class="pt-10 roboto text-dark f-400">I am a distributor (MFD), should I charge a fee?</p>
+  <p class="pt-20 roboto text-dark f-400">I have specified my bank details for fees to be collected. How does the flow work? Do the fees directly get credited to my bank account?</p>
+  <p class="pt-20 roboto text-dark f-400">Is there any merit in doing the first consultation for free?</p>
+  <p class="pt-20 roboto text-dark f-400">I have a complex fee structure. Can I manage that via the marketplace?</p>
+  <p class="pt-20 roboto text-dark f-400">What happens if I collect the fee and later I am unable to take the call on the scheduled time?</p>
+</div>
+</div>
+<div class="bottom-fixed wrapper-12 w-100">
+  <div class="row">
+    <div class="col-md-6">
+      <h5 class="m-0 c-p text-white pt-8">Cancel</h5>
+    </div>
+    <div class="col-md-6 text-right">
+      <button mat-stroked-button class="btn-primary" [matMenuTriggerFor]="menu">NEXT STEP</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>Item 1</button>
+        <button mat-menu-item>Item 2</button>
+      </mat-menu>
+    </div>
+  </div>
+</div>

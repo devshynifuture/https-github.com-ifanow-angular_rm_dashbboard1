@@ -3,6 +3,7 @@ import {SubscriptionInject} from '../../../../AdviserComponent/Subscriptions/sub
 
 @Component({
   selector: 'app-marketplace-review-reply',
+ // templateUrl: './add-bank.html',
   templateUrl: './marketplace-review-reply.component.html',
   styleUrls: ['./marketplace-review-reply.component.scss']
 })
