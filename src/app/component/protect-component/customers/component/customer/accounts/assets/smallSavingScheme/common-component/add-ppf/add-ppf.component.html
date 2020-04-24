@@ -135,11 +135,12 @@
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field class="ba-date">
-                        <input [matDatepicker]="balanceAsOn" (click)="balanceAsOn.open()" [max]="maxDate"
+                        <input [matDatepicker]="balanceAsOn" (click)="balanceAsOn.open()" [max]="maxDate" [min]="ppfSchemeForm.value.commencementDate"
                             class="form-control br-0 b-0" formControlName="balanceAsOn" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
-                        <mat-error class="f-12">This field is required
+                        <mat-error class="f-12 pt-4 w-s">
+                            {{ppfSchemeForm.get('balanceAsOn').value == "Invalid Date"? 'This field is required':'balance as on date should be greater than commencement date'}}
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -197,103 +198,103 @@
         <div class="col-md-5">
 
         </div>
-    </div>
-    <div *ngIf="isOptionalField==false" [formGroup]="optionalppfSchemeForm">
-        <div class="row pt-48">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Description</h5>
-            </div>
-            <div class="col-md-5">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input autocomplete="off" #fdNo class="form-control br-0" #description
-                            formControlName="description" matInput maxlength="60" type="text">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
-        <div class="row pt-48">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Bank Name</h5>
-            </div>
-            <div class="col-md-5">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input autocomplete="off" #bankACNo class="form-control br-0" #bankName
-                            formControlName="bankName" matInput maxlength="40" type="text" appInputValueValidation
-                            [inputValidator]="validatorType.TEXT_ONLY">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{bankName.value.length}}/40</mat-hint>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
-        <div class="row pt-48">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Linked bank account</h5>
-            </div>
-            <div class="col-md-5">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                            #linkedBankAccount class="form-control br-0" formControlName="linkedBankAccount" matInput
-                            maxlength="16">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{linkedBankAccount.value.length}}/16</mat-hint>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
-        <div formArrayName="getNomineeName">
-            <div class="row pt-36"
-                *ngFor="let obj of optionalppfSchemeForm.controls['getNomineeName'].controls; let pointIndex=index"
-                [formGroupName]="pointIndex">
+        <div *ngIf="isOptionalField==false">
+            <div class="row pt-48">
                 <div class="col-md-5 pr-0 text-right">
-                    <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
+                    <h5 class="m-0 pt-8">Description</h5>
                 </div>
-                <div ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
+                <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
-                                (selectionChange)="disabledMember($event.value,'nominee')"
-                                (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
-                                <mat-option value='' disabled>Select family members</mat-option>
-                                <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
-                                    [value]="f.userName">
-                                    <span>{{f.userName}}</span>
-                                </mat-option>
-                            </mat-select>
-                            <mat-error class="f-12">
-                                This field is required
-                            </mat-error>
+                            <input autocomplete="off" #fdNo class="form-control br-0" #description
+                                formControlName="description" matInput maxlength="60" type="text">
+                            <mat-hint align="start" class="f-12">Optional</mat-hint>
+                            <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="col-md-2" *ngIf="getNominee.length > 1">
-                    <div class="form-group mb-0 iconPetage">
+            </div>
+            <div class="row pt-48">
+                <div class="col-md-5 pr-0 text-right">
+                    <h5 class="m-0 pt-8">Bank Name</h5>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput class="form-control br-0 percentage" type="number"
-                                formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
-                            <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('required')">
-                                This field is required
-                            </mat-error>
-                            <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('incorrect') ">
-                                Total percent should be 100%
-                            </mat-error>
+                            <input autocomplete="off" #bankACNo class="form-control br-0" #bankName
+                                formControlName="bankName" matInput maxlength="40" type="text" appInputValueValidation
+                                [inputValidator]="validatorType.TEXT_ONLY">
+                            <mat-hint align="start" class="f-12">Optional</mat-hint>
+                            <mat-hint align="end" class="f-12">{{bankName.value.length}}/40</mat-hint>
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="col-md-2 pr-0 d-flex align-items-center">
-                    <i *ngIf="optionalppfSchemeForm.value.getNomineeName.length < 3"
-                        class="material-icons text-primitive f-20 c-p float-left"
-                        (click)="addNewNominee(undefined)">add</i>
-                    <i *ngIf="optionalppfSchemeForm.value.getNomineeName.length > 1"
-                        class="material-icons text-primitive f-20 c-p pl-10"
-                        (click)="removeNewNominee(pointIndex)">remove</i>
+            </div>
+            <div class="row pt-48">
+                <div class="col-md-5 pr-0 text-right">
+                    <h5 class="m-0 pt-8">Linked bank account</h5>
                 </div>
-
+                <div class="col-md-5">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                                #linkedBankAccount class="form-control br-0" formControlName="linkedBankAccount" matInput
+                                maxlength="16">
+                            <mat-hint align="start" class="f-12">Optional</mat-hint>
+                            <mat-hint align="end" class="f-12">{{linkedBankAccount.value.length}}/16</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div formArrayName="getNomineeName">
+                <div class="row pt-36"
+                    *ngFor="let obj of ppfSchemeForm.controls['getNomineeName'].controls; let pointIndex=index"
+                    [formGroupName]="pointIndex">
+                    <div class="col-md-5 pr-0 text-right">
+                        <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
+                    </div>
+                    <div [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                                    (selectionChange)="disabledMember($event.value,'nominee')"
+                                    (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                                    <mat-option value='' disabled>Select family members</mat-option>
+                                    <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
+                                        [value]="f.userName">
+                                        <span>{{f.userName}}</span>
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error class="f-12">
+                                    This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-2" *ngIf="getNominee.length > 1">
+                        <div class="form-group mb-0 iconPetage">
+                            <mat-form-field>
+                                <input matInput class="form-control br-0 percentage" type="number"
+                                    formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
+                                <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('required')">
+                                    This field is required
+                                </mat-error>
+                                <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('incorrect') ">
+                                    Total percent should be 100%
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-2 pr-0 d-flex align-items-center">
+                        <i *ngIf="ppfSchemeForm.value.getNomineeName.length < 3"
+                            class="material-icons text-primitive f-20 c-p float-left"
+                            (click)="addNewNominee(undefined)">add</i>
+                        <i *ngIf="ppfSchemeForm.value.getNomineeName.length > 1"
+                            class="material-icons text-primitive f-20 c-p pl-10"
+                            (click)="removeNewNominee(pointIndex)">remove</i>
+                    </div>
+    
+                </div>
             </div>
         </div>
     </div>

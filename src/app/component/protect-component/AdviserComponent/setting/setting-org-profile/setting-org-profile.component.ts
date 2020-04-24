@@ -6,6 +6,7 @@ import { SubscriptionInject } from '../../Subscriptions/subscription-inject.serv
 import { AuthService } from 'src/app/auth-service/authService';
 import { OrgProfileComponent } from './add-personal-profile/org-profile/org-profile.component';
 import { SettingsService } from '../settings.service';
+import { ResetPasswordComponent } from '../../../common-component/reset-password/reset-password.component';
 
 @Component({
   selector: 'app-setting-org-profile',
@@ -142,5 +143,22 @@ export class SettingOrgProfileComponent implements OnInit {
     } else {
       this.isLoading = true;
     }
+  }
+
+  resetPassword() {
+    const fragmentData = {
+      flag: '',
+      data: null,
+      id: 1,
+      state: 'open',
+      componentName: ResetPasswordComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
   }
 }

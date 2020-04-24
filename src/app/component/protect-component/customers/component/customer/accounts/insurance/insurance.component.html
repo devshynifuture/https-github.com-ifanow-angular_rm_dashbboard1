@@ -75,8 +75,7 @@
 
                     <div [ngClass]="{'table-scroll':isLoading==false }"
                         class="col-md-12 p-0 liabilities overflow-hidden">
-                        <table #tableOne="matSort" matSort mat-table [dataSource]="dataSource" id="tbs"
-                            appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
+                        <table #tableOne="matSort" matSort mat-table [dataSource]="dataSource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation" *ngIf="dataSource && dataSource.data.length > 0">
                             <ng-container matColumnDef="no" sticky>
                                 <th mat-header-cell *matHeaderCellDef class="br"> No. </th>
                                 <td mat-cell *matCellDef="let element; let i = index" class="br">
@@ -104,7 +103,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="sum">
-                                <th mat-header-cell mat-sort-header="policyNumber" *matHeaderCellDef
+                                <th mat-header-cell mat-sort-header="sumAssured" *matHeaderCellDef
                                     class="br text-right"> Sum
                                     assured </th>
                                 <td mat-cell *matCellDef="let element" class="br text-right">
@@ -178,13 +177,13 @@
                         </table>
                     </div>
                 </div>
-                <div *ngIf="dataSource==undefined" class="d-flex flex-column align-items-center">
-                    <img class="width400" src="assets/images/svg/noDataFound.svg">
-                    <h4 class="text-center pt-12">{{noData}}</h4>
-                    <button mat-stroked-button class="btn-primary proximaFont addon v-middle"
-                        (click)="openAddInsurance(null)"> ADD NEW
-                    </button>
-                </div>
+                <div *ngIf="dataSource.data.length == 0"
+                class="w-100 d-flex flex-column align-items-center">
+                <img class="width400" src="assets/images/svg/noDataFound.svg">
+                <h4 class="text-center pt-12">No Data Found</h4>
+                <button mat-stroked-button class="btn-primary addon v-middle"
+                 (click)="openAddInsurance(null)"> ADD NEW</button>
+            </div>
             </div>
         </div>
     </div>

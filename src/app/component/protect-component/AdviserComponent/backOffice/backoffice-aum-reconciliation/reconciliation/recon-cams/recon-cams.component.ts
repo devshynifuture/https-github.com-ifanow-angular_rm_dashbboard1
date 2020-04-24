@@ -22,6 +22,7 @@ export class ReconCamsComponent implements OnInit {
 
   brokerList: any[] = [];
   dataSource;
+  rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
   advisorId = AuthService.getAdvisorId();
   isLoading: boolean = false;
   selectBrokerForm = this.fb.group({
@@ -77,7 +78,7 @@ export class ReconCamsComponent implements OnInit {
       const data = {
         advisorIds: [...this.adminAdvisorIds],
         brokerId: this.selectBrokerForm.get('selectBrokerId').value,
-        rmId: 0,
+        rmId: this.rmId,
         rtId: this.rtId,
         parentId: this.adminId == 0 ? this.advisorId : this.parentId
       }

@@ -8,11 +8,11 @@
     <div class="col-md-9">
         <h4 class="m-0 text-black pt-8">Task templates</h4>
     </div>
-    <div class="col-md-3 text-right">
+    <div class="col-md-3 text-right" *ngIf="!hasError && !isLoading">
         <!-- ng build prod issue expected argument added empty strings  -->
         <button mat-stroked-button class="btn-primary " (click)="addNewTaskTemplate()"> ADD NEW</button>
     </div>
-    <div class="col-md-12" *ngIf="taskList && !isLoading">
+    <div class="col-md-12" *ngIf="taskList">
         <div>Linked task template</div>
         <table mat-table [dataSource]="linkedTaskList" class="mt-8 skeletonAnimation" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
@@ -60,8 +60,8 @@
             </ng-container>
             <ng-container matColumnDef="icons">
                 <th mat-header-cell *matHeaderCellDef> </th>
-                <td mat-cell class="text-center" *matCellDef="let element">
-                    <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
+                <td mat-cell class="text-center" *matCellDef="let element" [matMenuTriggerFor]="menu">
+                    <img src="/assets/images/svg/dot-menu.svg" class="c-p">
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="editTaskTemplate(element, '')">
                             Edit
@@ -76,7 +76,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
     </div>
-    <div class="col-md-12 pt-20" *ngIf="taskList && !isLoading">
+    <div class="col-md-12 pt-20" *ngIf="taskList">
         <div>Non linked task template</div>
         <table mat-table [dataSource]="unlinkedTaskList" class="mt-8 skeletonAnimation" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="symbol1">
@@ -99,8 +99,8 @@
             </ng-container>
             <ng-container matColumnDef="icons1">
                 <th mat-header-cell *matHeaderCellDef> </th>
-                <td mat-cell class="text-center" *matCellDef="let element">
-                    <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
+                <td mat-cell class="text-center" *matCellDef="let element" [matMenuTriggerFor]="menu">
+                    <img src="/assets/images/svg/dot-menu.svg" class="c-p">
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="editTaskTemplate(element, '')">
                             Edit
@@ -119,4 +119,8 @@
 <div *ngIf="taskList == undefined && !isLoading" class="d-flex flex-column align-items-center">
     <img class="width300" src="assets/images/svg/noDataFound.svg">
     <h4 class="text-center pt-12">No task template found</h4>
+</div>
+<div *ngIf="hasError" class="d-flex flex-column align-items-center">
+    <img class="width300" src="assets/images/svg/noDataFound.svg">
+    <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
 </div>

@@ -5,7 +5,7 @@
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="Close(false)"> clear</i>
+                <i class="material-icons c-p pt-8 v-middle" (click)="Close(true)"> clear</i>
             </div>
         </div>
     </div>
@@ -44,11 +44,11 @@
                         <div class="col-md-8 f-14" *ngFor="let stage of stageList">
                             <div>
                                 <div class="">
+                                    <!-- *ngIf="stage.isShowComment == false" -->
                                     <mat-checkbox class="mr-8" [value]="stage.isComplete"
-                                        *ngIf="stage.isShowComment == false"
                                         [checked]="(stage.isComplete == 1)? true:false"
                                         (change)="updateActivityCompleteness(stage,$event)"> </mat-checkbox>
-                                    <span (click)="showComment(stage,true)"
+                                    <span (click)="showComment(stage,true)" class="c-p"
                                         [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('firstCall').value == true ? 'line-through': 'initial' }">
                                         {{isLoading? '': stage.taskName}}
                                     </span>
@@ -392,8 +392,8 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right">
+        <!-- <div class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
-        </div>
+        </div> -->
     </div>
 </div>

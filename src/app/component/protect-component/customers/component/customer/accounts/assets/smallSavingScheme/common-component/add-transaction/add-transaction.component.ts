@@ -30,20 +30,33 @@ export class AddTransactionComponent implements OnInit {
   get getTransForm() { return this.transactionForm.controls; }
   get getTransFormList() { return this.getTransForm.transactionFormList as FormArray; }
   setTransactionData(data) {
-    if (data.loanPartPayments) {
-      data.loanPartPayments.forEach(element => {
-        this.getTransFormList.push(this.fb.group({
-          date: [new Date(element.partPaymentDate), [Validators.required]],
-          amount: [element.partPayment, Validators.required],
-          type: [element.option, Validators.required],
-          id: [(element.id + ''), Validators.required],
-        }));
-        this.addTransactionList++;
-      });
-    }
-    else {
-      this.addTransactionList = 0;
-    }
+  
+   if(data.ppfTransactionList){
+    // data.ppfTransactionList;
+    data.ppfTransactionList.forEach(element => {
+      this.getTransFormList.push(this.fb.group({
+        date: [new Date(element.transactionDate), [Validators.required]],
+        amount: [element.amount, Validators.required],
+        type: [element.ppfTransactionType, Validators.required],
+        id: [(element.id + ''), Validators.required],
+        publicProvidendFundId:[element.publicProvidendFundId],
+        isActive:1
+      }));
+    });
+   }else{
+    data.loanPartPayments;
+    data.loanPartPayments.forEach(element => {
+      this.getTransFormList.push(this.fb.group({
+        date: [new Date(element.partPaymentDate), [Validators.required]],
+        amount: [element.partPayment, Validators.required],
+        type: [element.option, Validators.required],
+        id: [(element.id + ''), Validators.required],
+      }));
+    });
+   }
+    
+    
+    
     this.outputEvent.emit(this.getTransFormList)
   }
   ngOnInit() {
@@ -65,8 +78,23 @@ export class AddTransactionComponent implements OnInit {
     this.outputEvent.emit(this.getTransFormList)
     this.addTransactionList = this.getTransFormList.controls.length
   }
+  removed:any=[];
   removeTransaction(index) {
-    this.transactionForm.controls.transactionFormList.removeAt(index)
-    this.addTransactionList = this.getTransFormList.controls.length
+    console.log(this.getTransFormList, "getTransFormList",  this.transactionForm.controls.ppfTransactionList);
+    
+    if(this.getTransFormList.controls[index].value.publicProvidendFundId){
+      // this.transactionForm.controls.ppfTransactionList.controls['isActive'].setValue(0);
+      this.getTransFormList.controls[index].value.isActive = 0
+      this.removed.push(this.getTransFormList.controls[index]);
+      console.log(this.removed,"removed 123");
+      this.transactionForm.controls.transactionFormList.removeAt(index);
+      this.outputEvent.emit({removed:this.removed, data:this.getTransFormList})
+      // this.transactionForm.controls.transactionFormList.push(this.removed);
+    }
+    else{
+      this.transactionForm.controls.transactionFormList.removeAt(index)
+      this.addTransactionList = this.getTransFormList.controls.length
+    }
+
   }
 }

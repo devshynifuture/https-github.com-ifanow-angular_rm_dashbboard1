@@ -34,6 +34,9 @@ export class SupportSidebarComponent extends DialogContainerComponent implements
     super(eventService, subinject, dynamicComponentService);
   }
   logoText = 'Your Logo here';
+  isAdmin = AuthService.getAdminStatus();
+  profileImgSrc = AuthService.getUserInfo().profileImageUrl ? AuthService.getUserInfo().profileImageUrl : "https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png";
+
   ngOnInit() {
     this.userInfo = AuthService.getUserInfo();
     this.changeName = "Dashboard";
@@ -52,6 +55,11 @@ export class SupportSidebarComponent extends DialogContainerComponent implements
       console.log('at other: shouldShowMainNav::', this.shouldShowMainNav)
       this.stateOfPanel.open();
     }
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['login', 'support-login']);
   }
 
   checkUrl(value) {
