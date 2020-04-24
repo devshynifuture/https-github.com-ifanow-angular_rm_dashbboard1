@@ -23,7 +23,7 @@ export class PreviewComponent implements OnInit {
     this.loadSpinner = true
     setTimeout(() => {
       this.getLoader()
-    }, 2000);
+    }, 4000);
   }
   getLoader(){
     this.loadSpinner = false
