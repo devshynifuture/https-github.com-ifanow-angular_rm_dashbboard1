@@ -89,7 +89,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
       adviceTypeId: [this.data.adviceTypeId || ''],
       templateType: this.data.templateType,
       taskDescription: [this.data.taskDescription || ''],
-      assignedTo: this.data.ownerName || '',
+      assignedTo: this.data.assignedTo || '',
       turnAroundTime: [this.data.turnAroundTime || ''],
       subTaskList: this.fb.array([]),
     });
@@ -349,9 +349,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  updateOwner() {
-  }
-
-  removeSubTask(i) {
+  removeSubTask(index) {
+    this.subTask.removeAt(index);
   }
 }

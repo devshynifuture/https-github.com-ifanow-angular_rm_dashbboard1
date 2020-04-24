@@ -47,8 +47,7 @@
             <th mat-header-cell *matHeaderCellDef class="br"> Access to </th>
             <td (click)="assignTeamMember(null, element)" mat-cell *matCellDef="let element" class="br c-p">
                 <div class="bar"><span *ngIf="element.parentName && !utilService.isLoading">{{element.parentName}}</span></div>
-                <button mat-stroked-button class="btn-primary-outline  btn-sm" *ngIf="!element.parentName && !utilService.isLoading && !element.canReport"> ADD TEAM
-                    MEMBER</button>
+                <button mat-stroked-button class="btn-primary-outline  btn-sm" *ngIf="!element.parentName && !utilService.isLoading && element.canReport == 1"> ADD TEAM MEMBER</button>
             </td>
         </ng-container>
         <ng-container matColumnDef="icons">
