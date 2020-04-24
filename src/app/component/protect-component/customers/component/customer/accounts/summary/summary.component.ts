@@ -3,10 +3,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
-import { isNumber } from 'util';
 import { DatePipe } from '@angular/common';
-import { MatTableDataSource } from '@angular/material';
-import { element } from 'protractor';
 
 @Component({
   selector: 'app-summary',
@@ -32,10 +29,40 @@ export class SummaryComponent implements OnInit {
   expenseList = [];
   incomeList = [];
   userData: any;
-  filterCashFlow;
+  filterCashFlow = { income: [], expense: [] };
   inflowFlag;
   outflowFlag;
-  constructor(public eventService: EventService, private cusService: CustomerService, private datePipe: DatePipe) {
+  mutualFundValue: any = {
+    currentValue: null,
+    percentage: null
+  };
+  fixedIncome: any = {
+    currentValue: null,
+    percentage: null
+  };
+  realEstate: any = {
+    currentValue: null,
+    percentage: null
+  };
+  stocks: any = {
+    currentValue: null,
+    percentage: null
+  };
+  retirement: any = {
+    currentValue: null,
+    percentage: null
+  };
+  smallSavingScheme: any = {
+    currentValue: null,
+    percentage: null
+  };
+  cashAndFLow: any = {
+    currentValue: null,
+    percentage: null
+  };
+
+  constructor(public eventService: EventService, private cusService: CustomerService,
+    private datePipe: DatePipe) {
   }
 
   ngOnInit() {
@@ -62,7 +89,14 @@ export class SummaryComponent implements OnInit {
           this.totalAssets = 0;
           this.summaryTotalValue = Object.assign([], data);
           console.log(this.summaryTotalValue);
-          let tempSummaryTotalValue: any = {}
+          this.mutualFundValue = data[3];
+          this.fixedIncome = data[0];
+          this.realEstate = data[1];
+          this.stocks = data[2];
+          this.retirement = data[4];
+          this.smallSavingScheme = data[5];
+          this.cashAndFLow = data[6]
+          const tempSummaryTotalValue: any = {};
           this.summaryTotalValue.forEach(element => {
             tempSummaryTotalValue[element.assetType] = element;
             if (element.currentValue == element.investedAmount) {
@@ -96,15 +130,14 @@ export class SummaryComponent implements OnInit {
         sortedDateList = data;
         sortedDateList.sort(function (a, b) {
           return a.targetDate - b.targetDate;
-        })
+        });
         this.calculate1DayAnd90Days(sortedDateList);
-        for (let singleData of sortedDateList) {
+        for (const singleData of sortedDateList) {
           let sumOf10Days = 0;
           singleData.summaryData.forEach(element => {
             if (element.assetType == 2) {
               sumOf10Days = sumOf10Days - element.currentValue;
-            }
-            else {
+            } else {
               sumOf10Days += element.currentValue;
             }
           });
@@ -112,9 +145,10 @@ export class SummaryComponent implements OnInit {
         }
         this.lineChart('container');
       },
-      err => this.eventService.openSnackBar(err, "Dismiss")
-    )
+      err => this.eventService.openSnackBar(err, 'Dismiss')
+    );
   }
+
   getCashFlowList(obj) {
     this.cusService.getCashFlowList(obj).subscribe(
       data => {
@@ -126,9 +160,10 @@ export class SummaryComponent implements OnInit {
         this.sortDataUsingFlowType(data, true);
         console.log(this.cashFlowViewDataSource);
       },
-      err => this.eventService.openSnackBar(err, "Dismiss")
-    )
+      err => this.eventService.openSnackBar(err, 'Dismiss')
+    );
   }
+
   sortDataUsingFlowType(ObjectArray, flag) {
 
     if (ObjectArray['expense'].length > 0 && ObjectArray['income'].length > 0) {
@@ -171,28 +206,25 @@ export class SummaryComponent implements OnInit {
     this.incomeList = [];
     this.expenseList = [];
     if (this.inflowFlag && this.outflowFlag == false) {
-      let ObjArray = {
+      const ObjArray = {
         income: this.filterCashFlow.income,
         expense: []
-      }
+      };
       this.sortDataUsingFlowType(ObjArray, true);
-    }
-    else if (this.outflowFlag && this.inflowFlag == false) {
-      let ObjArray = {
+    } else if (this.outflowFlag && this.inflowFlag == false) {
+      const ObjArray = {
         income: [],
         expense: this.filterCashFlow.expense
-      }
+      };
       this.sortDataUsingFlowType(ObjArray, true);
-    }
-    else if (this.inflowFlag == false && this.outflowFlag == false) {
+    } else if (this.inflowFlag == false && this.outflowFlag == false) {
       (flag == 'inflow') ? this.outflowFlag = true : this.inflowFlag = true;
-      let ObjArray = {
+      const ObjArray = {
         income: (this.inflowFlag) ? this.filterCashFlow.income : [],
         expense: (this.outflowFlag) ? this.filterCashFlow.expense : []
-      }
+      };
       this.sortDataUsingFlowType(ObjArray, true);
-    }
-    else {
+    } else {
       this.sortDataUsingFlowType(this.filterCashFlow, true);
     }
   }
@@ -201,46 +233,42 @@ export class SummaryComponent implements OnInit {
   checkNumberPositiveAndNegative(value: number) {
     if (value == 0) {
       return undefined;
-    }
-    else {
-      let result = Math.sign(value)
+    } else {
+      const result = Math.sign(value);
       return (result == -1) ? false : true;
     }
   }
 
 
   calculate1DayAnd90Days(data) {
-    console.log(data)
+    console.log(data);
     let firstIndexTotalCurrentValue = 0, lastIndexTotalCurrentValue = 0, secondLastIndexTotalCurrentValue = 0;
     if (data.length > 0) {
       data[0].summaryData.forEach(element => {                /////// first index total current value
         if (element.assetType != 2) {
           firstIndexTotalCurrentValue += element.currentValue;
-        }
-        else {
+        } else {
           firstIndexTotalCurrentValue -= element.currentValue;
         }
       });
       data[data.length - 1].summaryData.forEach(element => {   /////// last index total current value
         if (element.assetType != 2) {
           lastIndexTotalCurrentValue += element.currentValue;
-        }
-        else {
+        } else {
           lastIndexTotalCurrentValue -= element.currentValue;
         }
       });
       data[data.length - 2].summaryData.forEach(element => {       /////// second last index total current value
         if (element.assetType != 2) {
           secondLastIndexTotalCurrentValue += element.currentValue;
-        }
-        else {
+        } else {
           secondLastIndexTotalCurrentValue -= element.currentValue;
         }
       });
       this.nightyDayData = {
         value: lastIndexTotalCurrentValue - firstIndexTotalCurrentValue,
         flag: (Math.sign(lastIndexTotalCurrentValue - firstIndexTotalCurrentValue) == -1) ? false : true
-      }
+      };
       this.oneDay = {
         value: Math.abs(lastIndexTotalCurrentValue - secondLastIndexTotalCurrentValue),
         flag: (Math.sign(lastIndexTotalCurrentValue - secondLastIndexTotalCurrentValue) == -1) ? false : true
@@ -253,13 +281,12 @@ export class SummaryComponent implements OnInit {
     dataList.forEach(element => {
       if (element.assetType == 2) {
         this.liabilityTotal += element.currentValue;
-      }
-      else {
+      } else {
         this.totalAssetsWithoutLiability += element.currentValue;
       }
     });
-    console.log(this.totalAssetsWithoutLiability, "total asset without liability");
-    console.log(this.liabilityTotal, "liability total")
+    console.log(this.totalAssetsWithoutLiability, 'total asset without liability');
+    console.log(this.liabilityTotal, 'liability total');
   }
 
   dateChange(event) {
@@ -271,18 +298,19 @@ export class SummaryComponent implements OnInit {
   cashFlow(id, data) {
     console.log(data);
     const { expense, income } = data;
-    let timeArray = []
-    if (expense.length > 0) {
-      expense.forEach(element => {
-        timeArray.push(this.datePipe.transform(new Date(element.targetDate), 'd MMM'))
-      });
-    }
+    const timeArray = [];
+
     if (income.length > 0) {
       income.forEach(element => {
-        timeArray.push(this.datePipe.transform(new Date(element.targetDate), 'd MMM'))
+        timeArray.push(this.datePipe.transform(new Date(element.targetDate), 'd MMM'));
       });
     }
-
+    if (expense.length > 0) {
+      expense.forEach(element => {
+        timeArray.push(this.datePipe.transform(new Date(element.targetDate), 'd MMM'));
+      });
+    }
+    console.log('timearray : ', timeArray);
     const chart1 = new Highcharts.Chart('cashFlow', {
       chart: {
         type: 'column'
