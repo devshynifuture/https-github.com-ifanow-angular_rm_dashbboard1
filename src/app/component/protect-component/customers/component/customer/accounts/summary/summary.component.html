@@ -16,9 +16,9 @@
                             ₹<span appFormatNumber>{{totalAssetsWithoutLiability+liabilityTotal}}</span>
                         </p>
                     </div>
-                    <div class="col-md-12 p-0 pt-4">
+                    <!-- <div class="col-md-12 p-0 pt-4">
                         <mat-progress-bar class="light-blue" mode="determinate" value="50"></mat-progress-bar>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="row pt-20">
                     <div class="col-md-6 p-0">
@@ -28,9 +28,9 @@
                         <p class="text-black f-12 m-0 text-right roboto">₹<span
                                 appFormatNumber>{{liabilityTotal}}</span></p>
                     </div>
-                    <div class="col-md-12 p-0 pt-4">
+                    <!-- <div class="col-md-12 p-0 pt-4">
                         <mat-progress-bar class="light-red" mode="determinate" value="50"></mat-progress-bar>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div appSkeletonLoading [appSkeletonLoading]="isLoading" class="height-700 skeletonAnimation">
@@ -273,32 +273,40 @@
 
                                 <div class="row">
                                     <div class="col-md-6 p-0 border-right-1 pt-8 pb-8 pr-4">
-                                        <mat-checkbox checked="false">Inflows</mat-checkbox>
+                                        <mat-checkbox [ngClass]="{'disable-checkbox':filterCashFlow.income.length==0}"
+                                            [disabled]="filterCashFlow.income.length==0"
+                                            (change)="filterData($event,'inflow')" [(ngModel)]="inflowFlag"
+                                            [checked]="filterCashFlow.income.length>0">
+                                            Inflows</mat-checkbox>
                                     </div>
                                     <div class="col-md-6 p-0 pt-8 pb-8 pr-4 pl-16">
-                                        <mat-checkbox checked="false">Outflows</mat-checkbox>
+                                        <mat-checkbox [ngClass]="{'disable-checkbox': filterCashFlow.expense.length==0}"
+                                            [disabled]="filterCashFlow.expense.length==0"
+                                            (change)="filterData($event,'outflow')" [(ngModel)]="outflowFlag"
+                                            [checked]="filterCashFlow.expense.length>0">
+                                            Outflows</mat-checkbox>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-2 pt-4">
-                                <button [matMenuTriggerFor]="menu" class="b-a pr-4 br-0" mat-button>All bank a/c <i
+                                <!-- <button [matMenuTriggerFor]="menu" class="b-a pr-4 br-0" mat-button>All bank a/c <i
                                         class="material-icons text-custom">
                                         keyboard_arrow_down
                                     </i></button>
                                 <mat-menu #menu="matMenu">
                                     <button mat-menu-item>Item 1</button>
                                     <button mat-menu-item>Item 2</button>
-                                </mat-menu>
+                                </mat-menu> -->
                             </div>
                             <div class="col-md-2 pt-4">
-                                <button [matMenuTriggerFor]="menu" class="b-a pr-4 br-0" mat-button>All family <i
+                                <!-- <button [matMenuTriggerFor]="menu" class="b-a pr-4 br-0" mat-button>All family <i
                                         class="material-icons text-custom">
                                         keyboard_arrow_down
                                     </i></button>
                                 <mat-menu #menu="matMenu">
                                     <button mat-menu-item>Item 1</button>
                                     <button mat-menu-item>Item 2</button>
-                                </mat-menu>
+                                </mat-menu> -->
                             </div>
                         </div>
                         <div class="row pt-20">
@@ -366,7 +374,7 @@
                                         <p class="m-0 text-success p-4 bt-grey pt-16">5,000</p>
                                     </div>
                                 </div> -->
-                                <table mat-table [dataSource]="cashFlowDataSource" id="table-low"
+                                <table mat-table [dataSource]="cashFlowViewDataSource" id="table-low"
                                     class="mat-elevation-z8">
                                     <!-- Name Column -->
                                     <ng-container matColumnDef="description">
@@ -417,7 +425,7 @@
                             src="http://localhost:4200/assets/images/img1.jpg">
                     </div>
                     <div class="col-md-9 p-0 text-left">
-                        <p class="text-black m-0 f-500 pt-20">Acme Financial Advisors</p>
+                        <p class="text-black m-0 f-500 pt-20">{{clientData.name}}</p>
                         <p class="text-custom m-0">Contact</p>
                     </div>
                 </div>
@@ -471,7 +479,7 @@
                         <p class="m-0 text-black f-500">9,395</p>
                     </div>
                 </div>
-                <div class="">
+                <!-- <div class="">
                     <div class="wrapper-20 pl-12 pr-12">
                         <div class="row">
                             <div class="col-md-12 p-0">
@@ -518,7 +526,7 @@
                         </div>
                     </div>
 
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
