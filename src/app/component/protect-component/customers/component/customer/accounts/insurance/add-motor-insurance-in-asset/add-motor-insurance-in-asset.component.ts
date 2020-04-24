@@ -12,4 +12,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
   ngOnInit() {
   }
 
+  // prod fix
+  close(flag){}
+  saveHealthInsurance(){}
 }

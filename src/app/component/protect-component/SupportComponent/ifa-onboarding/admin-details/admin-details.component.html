@@ -85,13 +85,13 @@
                                         </div>
                                     </div>
                                     <div class="col-md-2 p-0 text-right">
-                                        <p *ngIf="activityStage.isEditStage == true"
+                                        <p *ngIf="activityStage.isEditStage == true && activityStage.isEditStageRm == true"
                                             class="f-12 c-p mr-8 d-inline-block"
                                             (click)='activityCommentFunStage(activityStage,false)'> Edit </p>
                                         <p *ngIf="activityStage.isEditStage == false"
                                             class="f-12 c-p mr-8 d-inline-block"
                                             (click)='activityCommentFunStage(activityStage,true)'> Save </p>
-                                        <p class="f-12 c-p d-inline-block"
+                                        <p class="f-12 c-p d-inline-block" *ngIf="activityStage.isEditStageRm == true"
                                             (click)="deleteModal('commentStage',stage,activityStage)"> Delete </p>
                                     </div>
                                 </div>
@@ -143,11 +143,11 @@
                             </div>
                         </div>
                         <div class="col-md-2 p-0 text-right">
-                            <p *ngIf="activity.isEdit == true" class="f-12 c-p mr-8 d-inline-block"
+                            <p *ngIf="activity.isEdit == true && activity.isEditRm == true" class="f-12 c-p mr-8 d-inline-block"
                                 (click)='activityCommentFun(activity,false)'> Edit </p>
                             <p *ngIf="activity.isEdit == false" class="f-12 c-p mr-8 d-inline-block"
                                 (click)='activityCommentFun(activity,true)'> Save </p>
-                            <p class="f-12 c-p d-inline-block" (click)="deleteModal('comment',activity,'')"> Delete </p>
+                            <p class="f-12 c-p d-inline-block" *ngIf="activity.isEditRm == true" (click)="deleteModal('comment',activity,'')"> Delete </p>
                         </div>
                     </div>
                 </div>

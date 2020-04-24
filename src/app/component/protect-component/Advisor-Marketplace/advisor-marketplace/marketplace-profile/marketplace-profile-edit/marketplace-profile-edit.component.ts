@@ -12,6 +12,7 @@ displayedColumns: string[] = ['position', 'name', 'weight', 'symbol','pan','inve
   dataSource = ELEMENT_DATA;
    displayedColumns1: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource1 = ELEMENT_DATA1;
+  showFilter:string = '';
   constructor(
     private eventService: EventService
   ) { }
@@ -22,6 +23,10 @@ displayedColumns: string[] = ['position', 'name', 'weight', 'symbol','pan','inve
 
   dialogClose() {
     this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
+  }
+
+  sortTable(filter) {
+    this.showFilter = filter;
   }
 
 }

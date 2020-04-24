@@ -544,6 +544,7 @@ export const appConfig = {
   POST_FILE_ORDER_BULK_DATA: 'fileorder/bulk/order',
   PUT_FILE_ORDER_RETRY: 'fileorder/list/retry',
   GET_TICKET: 'rmdashboard/tickets/get',
+  GET_RM_DAY_WISEDATA:'rmdashboard/myifas/dashboard/details/get/filter',
 
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',

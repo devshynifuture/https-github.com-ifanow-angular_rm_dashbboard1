@@ -12,4 +12,8 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
   ngOnInit() {
   }
 
+  // prod fix
+  close(flag){}
+  saveHealthInsurance(){}
+
 }
