@@ -310,12 +310,14 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   }
 
   getAllFilesRes(data, value) {
+    this.isLoading = false;
+    this.noResult = false;
+    this.showResult = false;
     if (data.files.length == 0 && data.folders.length == 0) {
       this.showMsg = true;
     } else {
       this.showMsg = false;
     }
-    this.isLoading = false;
     this.allFiles = data.files;
     this.AllDocs = data.folders;
     this.dataToCommon = data.folders;
@@ -354,7 +356,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   keyPress(event, tabValue) {
     if (event == '') {
-      this.getAllFileList(1, 'reset')
+      this.getAllFileList(tabValue, 'reset')
       this.showResult = false;
     } else {
       console.log('search', event);
@@ -782,10 +784,10 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
       domain: "bit.ly",
       long_url: value
     }
-    const payload = JSON.stringify({'long_url': value, "domain": "bit.ly" })
+    const payload = JSON.stringify(link)
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/json');
-    this.http.post('https://api-ssl.bitly.com/v4/shorten', payload).subscribe((responseData) => {
+    this.http.post('https://api-ssl.bitly.com/v4/shorten', payload, headers).subscribe((responseData) => {
       console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
       if (responseData == null) {
       }
