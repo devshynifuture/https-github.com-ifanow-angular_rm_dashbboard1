@@ -1,1 +1,236 @@
-<p>add-fire-and-perils-insurance-in-asset works!</p>
+<div class="popup-header-fix-60">
+    <div class="row bb-1">
+        <div class="col-md-6 p-0">
+            <h4 class="mb-0 wrapper-20 pr-0"> ADD Fire & SPECIAL PERILS INSURANCE </h4>
+        </div>
+        <div class="col-md-6 text-right">
+            <div class="wrapper-12">
+                <button matTooltip="Have lots of policies?You can bulk upload these policies using excel import option" mat-button class="btn-dark-black addon mr-8 ">
+                    <img src="assets/images/svg/insurance-download-icon.svg" class="c-p mr-8"> Import policies
+                </button>
+                <i class="material-icons c-p v-middle" (click)="close(null)"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class=" mt-100 pl-24 pr-24 pb-24 mb-48">
+
+    <div class="row">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-20 ">Name of policy holder</h5>
+        </div>
+        <div class="col-md-5 form-group">
+            <mat-form-field floatLabel="never" appearance="standard">
+                <input class="form-control" matInput placeholder="Enter policy holder name">
+            </mat-form-field>
+        </div>
+    </div>
+
+
+    <div class="row pt-32">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-20 ">Name of insurer</h5>
+        </div>
+        <div class="col-md-5 form-group">
+            <mat-form-field floatLabel="never" appearance="standard">
+                <input class="form-control" matInput placeholder=" ">
+            </mat-form-field>
+        </div>
+    </div>
+
+
+
+
+    <div class="row pt-32">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-20 ">Policy number</h5>
+        </div>
+        <div class="col-md-3 form-group">
+            <mat-form-field floatLabel="never" appearance="standard">
+                <input class="form-control" matInput placeholder=" ">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row pt-32">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-20 ">Plan type</h5>
+        </div>
+        <div class="col-md-5 form-group">
+            <mat-form-field floatLabel="never" appearance="standard">
+                <input class="form-control" matInput placeholder=" ">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row pt-32">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-20 ">Plan name</h5>
+        </div>
+        <div class="col-md-5 form-group">
+            <mat-form-field floatLabel="never" appearance="standard">
+                <input class="form-control" matInput placeholder="Enter Plan name">
+            </mat-form-field>
+        </div>
+    </div>
+
+
+    <div class="row pt-32">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-32">Plan</h5>
+        </div>
+        <div class="col-md-4 form-group">
+            <h5 class="mb-8">Plan features</h5>
+            <mat-form-field>
+                <input class="form-control" matInput>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-2 p-0 form-group">
+            <h5 class="mb-8">Sum insured</h5>
+            <mat-form-field class="iconRupess">
+                <input class="form-control rupess" matInput>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-1 pr-0 d-flex align-items-center">
+            <i class="material-icons text-primitive f-20 c-p float-left">add</i>
+        </div>
+
+    </div>
+
+
+
+
+    <div class="row pt-32">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-20 ">Premium</h5>
+        </div>
+        <div class="col-md-3 form-group iconRupess">
+            <mat-form-field floatLabel="never" appearance="standard">
+                <input class="form-control rupess" matInput>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row pt-36">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Policy start date</h5>
+        </div>
+        <div class="col-md-3 form-group mb-0">
+            <mat-form-field class="ba-date">
+                <input class="form-control b-0" matInput [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+
+
+    <div class="row pt-44">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8 ">Policy expiry date</h5>
+        </div>
+        <div class="col-md-3 form-group mb-0">
+            <mat-form-field class="ba-date">
+                <input matInput class="form-control b-0" [matDatepicker]="picker1">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row pt-36">
+        <div class="col-md-12">
+            <h4 class="text-primitive">+ Add more [optional data]</h4>
+        </div>
+    </div>
+
+
+    <div class="row pt-32">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-32">Add on</h5>
+        </div>
+        <div class="col-md-4 form-group">
+            <h5 class="mb-8">Cover</h5>
+            <mat-form-field>
+                <input class="form-control" matInput>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-2 p-0 form-group">
+            <h5 class="mb-8">Sum insured</h5>
+            <mat-form-field class="iconRupess">
+                <input class="form-control rupess" matInput>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-1 pr-0 d-flex align-items-center">
+            <i class="material-icons text-primitive f-20 c-p float-left">add</i>
+        </div>
+
+    </div>
+
+
+    <div class="row pt-32">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-20 ">Exclusions/Special conditons</h5>
+        </div>
+        <div class="col-md-5 form-group ">
+            <mat-form-field floatLabel="never" appearance="standard">
+                <input class="form-control" matInput>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row pt-32">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-20 ">Hypothecation/Financier name</h5>
+        </div>
+        <div class="col-md-5 form-group  ">
+            <mat-form-field floatLabel="never" appearance="standard">
+                <input class="form-control" matInput>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row pt-32">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-20 ">Advisor name</h5>
+        </div>
+        <div class="col-md-5 form-group  ">
+            <mat-form-field floatLabel="never" appearance="standard">
+                <input class="form-control" matInput>
+            </mat-form-field>
+        </div>
+    </div>
+
+
+    <div class="row pt-32">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-20 ">Service branch</h5>
+        </div>
+        <div class="col-md-5 form-group  ">
+            <mat-form-field floatLabel="never" appearance="standard">
+                <input class="form-control" matInput>
+            </mat-form-field>
+        </div>
+    </div>
+
+</div>
+
+
+
+<div class="bottom-fixed wrapper-16 pb-12">
+    <div class="row">
+        <div class="col-md-4 p-0">
+            <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="close(null)">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveHealthInsurance()">SAVE</button>
+
+        </div>
+    </div>
+</div>
