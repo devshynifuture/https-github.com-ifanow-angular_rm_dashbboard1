@@ -408,6 +408,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         "insurerName": this.healthInsuranceForm.get('insurerName').value,
         "policyInceptionDate": this.healthInsuranceForm.get('inceptionDate').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
+        "loanAmount": this.inputData.loanAmount,
         "addOns": [{
           "addOnId": this.healthInsuranceForm.get('additionalCovers').value,
           "addOnSumInsured": this.healthInsuranceForm.get('coversAmount').value

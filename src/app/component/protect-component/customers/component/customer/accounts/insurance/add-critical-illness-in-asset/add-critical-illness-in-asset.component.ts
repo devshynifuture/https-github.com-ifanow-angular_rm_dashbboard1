@@ -224,7 +224,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
       PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId : ''), [Validators.required]],
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : ''), [Validators.required]],
       insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : ''), [Validators.required]],
-      planeName: [(this.dataForEdit ? this.dataForEdit.planeName :''), [Validators.required]],
+      planeName: [(this.dataForEdit ? this.dataForEdit.planName :''), [Validators.required]],
       premium: [(this.dataForEdit ? this.dataForEdit.premiumAmount :''), [Validators.required]],
       policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : '', [Validators.required]],
       policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : '', [Validators.required]],

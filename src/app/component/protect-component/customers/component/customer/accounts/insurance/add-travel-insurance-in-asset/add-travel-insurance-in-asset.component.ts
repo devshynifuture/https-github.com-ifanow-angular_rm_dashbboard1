@@ -215,7 +215,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
   }
   addNewFeature(data) {
     this.planFeatureForm.push(this.fb.group({
-      planfeatures: [data ? data.planFeature : ''],
+      planfeatures: [data ? data.policyFeatureId : ''],
     }));
   }
   removeNewFeature(item) {
@@ -272,12 +272,12 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
       planDetails: [(this.dataForEdit ? this.dataForEdit.policyFeatureId+'' : ''), [Validators.required]],
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : ''), [Validators.required]],
       insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : ''), [Validators.required]],
-      sumAssuredIdv: [(this.dataForEdit ? this.dataForEdit.sumAssuredIdv : ''), [Validators.required]],
-      planeName: [(this.dataForEdit ? this.dataForEdit.planeName :''), [Validators.required]],
+      sumAssuredIdv: [(this.dataForEdit ? this.dataForEdit.sumInsuredIdv : ''), [Validators.required]],
+      planeName: [(this.dataForEdit ? this.dataForEdit.planName :''), [Validators.required]],
       premium: [(this.dataForEdit ? this.dataForEdit.premiumAmount : ''), [Validators.required]],
       policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : '', [Validators.required]],
       policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : '', [Validators.required]],
-      geography: [this.dataForEdit ? this.dataForEdit.geography + '' : ''],
+      geography: [this.dataForEdit ? this.dataForEdit.geographyId + '' : ''],
       exclusion: [this.dataForEdit ? this.dataForEdit.exclusion :''],
       tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : ''],
       advisorName: [this.dataForEdit ? this.dataForEdit.advisorName :''],
@@ -333,7 +333,12 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
       });
     }
 
-
+    if (this.dataForEdit) {
+      this.planFeatureForm.removeAt(0);
+      this.dataForEdit.policyFeatures.forEach(element => {
+        this.addNewFeature(element);
+      });
+    }
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.travelInsuranceForm }
 
     // this.finalCashFlowData = [];
@@ -365,7 +370,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
     finalplanFeatureList.controls.forEach(element => {
       let obj =
       {
-        planfeatures : element.get('planfeatures').value,
+        policyFeatureId : element.get('planfeatures').value,
       }
       featureList.push(obj)
     })
@@ -391,7 +396,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
         "advisorName": this.travelInsuranceForm.get('advisorName').value,
         "serviceBranch": this.travelInsuranceForm.get('serviceBranch').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
-        "planFeature":featureList,
+        "policyFeatures":featureList,
         insuredMembers: memberList,
         nominees: this.travelInsuranceForm.value.getNomineeName,
       }
