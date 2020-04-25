@@ -71,7 +71,7 @@ export class AddNewRoleComponent implements OnInit {
     this.rolesFG = this.fb.group({
       advisorId: [this.advisorId],
       roleName: [this.data.mainData.roleName || '', [Validators.required, Validators.maxLength(30)]],
-      roleDescription: [this.data.mainData.roleDesc || '', [Validators.maxLength(60)]]
+      roleDescription: [this.data.mainData.roleDesc || '', [Validators.maxLength(250)]]
     });
   }
 

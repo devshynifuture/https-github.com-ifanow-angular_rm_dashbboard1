@@ -5,6 +5,7 @@ import {OrgSettingServiceService} from '../../org-setting-service.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
 import {Subscription} from 'rxjs';
+import { SettingsService } from '../../settings.service';
 
 @Component({
   selector: 'app-add-task-template',
@@ -36,6 +37,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
     private orgSetting: OrgSettingServiceService,
     private event: EventService,
     private fb: FormBuilder,
+    private settingService: SettingsService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.user = AuthService.getUserInfo();
@@ -58,13 +60,15 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
     const obj = {
       advisorId: this.advisorId
     };
-    this.orgSetting.getTeamMemberList(obj).subscribe(
+    this.settingService.getTeamMembers(obj).subscribe(
       data => {
         this.teamMemberList = data || [];
-        this.teamMemberList.unshift(this.user);
         this.changeLoadCounter(-1);
       },
-      err => this.event.openSnackBar(err, 'Dismiss')
+      err => {
+        this.event.openSnackBar(err, 'Dismiss')
+        this.changeLoadCounter(-1);
+      }
     );
   }
 
@@ -89,7 +93,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
       adviceTypeId: [this.data.adviceTypeId || ''],
       templateType: this.data.templateType,
       taskDescription: [this.data.taskDescription || ''],
-      assignedTo: this.data.ownerName || '',
+      assignedTo: this.data.assignedTo || '',
       turnAroundTime: [this.data.turnAroundTime || ''],
       subTaskList: this.fb.array([]),
     });
@@ -191,9 +195,9 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
     }
   }
 
-  subTaskFormGroup(id = '', taskNo = '', desp = '', tat = '', ownerId = '') {
+  subTaskFormGroup(id = 0, taskNo = '', desp = '', tat = '', ownerId = '') {
     return this.fb.group({
-      id,
+      id: id,
       taskNumber: taskNo,
       description: [(desp), Validators.required],
       turnAroundTime: [tat],
@@ -349,9 +353,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  updateOwner() {
-  }
-
-  removeSubTask(i) {
+  removeSubTask(index) {
+    this.subTask.removeAt(index);
   }
 }

@@ -40,6 +40,7 @@ export class CopyDocumentsComponent implements OnInit {
   isLoading = false;
   showMsg = false;
   dataToCommon: any;
+  sendObj: any;
   constructor(
     public dialogRef: MatDialogRef<CopyDocumentsComponent>,
     @Inject(MAT_DIALOG_DATA) public dataGet: DialogData, private custumService: CustomerService, public utils: UtilService, public dialog: MatDialog) {
@@ -155,14 +156,26 @@ Close(){
   }
   copyFile(value) {
     var idTOsend = this.sendToCopy
-    const obj = {
-      clientId: this.clientId,
-      advisorId: this.advisorId,
-      parentFolderId: this.parentId,
-      id: idTOsend.id
-    };
-    Object.assign(obj, { value: value });
-    this.dialogRef.close(obj)
+    if(value == 'Move'){
+      const obj = {
+        clientId: this.clientId,
+        advisorId: this.advisorId,
+        folderParentId: this.parentId,
+        id: idTOsend.id
+      };
+    this.sendObj = obj  
+    }else{
+      const obj = {
+        clientId: this.clientId,
+        advisorId: this.advisorId,
+        parentFolderId: this.parentId,
+        id: idTOsend.id
+      };
+      this.sendObj = obj  
+    }
+   
+    Object.assign(this.sendObj, { value: value });
+    this.dialogRef.close(this.sendObj)
 
   }
 }

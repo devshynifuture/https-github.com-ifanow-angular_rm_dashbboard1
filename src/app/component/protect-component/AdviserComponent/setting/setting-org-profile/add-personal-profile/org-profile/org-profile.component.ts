@@ -57,6 +57,7 @@ export class OrgProfileComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
+    this.selectedTab = this.inputData.openTab;
     this.getIsdCodesData();
     this.getOrgProfiles();
     this.getdataForm(this.inputData);

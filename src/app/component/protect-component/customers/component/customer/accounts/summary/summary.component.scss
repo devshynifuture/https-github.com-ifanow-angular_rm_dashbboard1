@@ -150,3 +150,7 @@ p {
 .highcharts-data-table tr:hover {
   background: #f1f7ff;
 }
+.disable-checkbox
+{
+  pointer-events: none;
+}

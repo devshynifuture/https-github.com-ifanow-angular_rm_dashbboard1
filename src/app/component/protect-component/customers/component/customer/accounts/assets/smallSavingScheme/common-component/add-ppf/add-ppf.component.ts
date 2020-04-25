@@ -332,9 +332,10 @@ removedList:any=[];
     this.removedList.forEach(Fg => {
       if (Fg.value) {
         let obj = {
+          "id":Fg.value.id,
           "transactionDate":Fg.value.date,
           "amount": Fg.value.amount,
-          "ppfTransactionType":Fg.value.type,
+          "transactionType":Fg.value.type,
           "isActive":Fg.value.isActive
         }
         finalTransctList.push(obj);
@@ -358,9 +359,10 @@ removedList:any=[];
       this.transactionData.forEach(element => {
         if (element.valid) {
           let obj = {
+            "id":element.value.id,
             "transactionDate":element.controls.date.value._d?element.controls.date.value._d:element.controls.date.value,
             "amount": element.controls.amount.value,
-            "ppfTransactionType": element.controls.type.value,
+            "transactionType": element.controls.type.value,
             "isActive":element.value.isActive == 0?element.value.isActive:1
           }
           finalTransctList.push(obj);

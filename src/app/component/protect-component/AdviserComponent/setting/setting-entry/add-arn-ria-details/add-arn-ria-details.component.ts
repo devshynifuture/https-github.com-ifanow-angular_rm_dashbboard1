@@ -31,7 +31,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
     private settingService: SettingsService,
     private fb: FormBuilder,
     private datePipe: DatePipe,
-    private utils: UtilService,
+    public utils: UtilService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -53,7 +53,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
       renewalDate: [this.data.mainData.renewalDate],
       registeredEmail: [this.data.mainData.registeredEmail, [Validators.pattern(ValidatorType.EMAIL)]],
       registeredPan: [this.data.mainData.registeredPan, [Validators.minLength(10), Validators.maxLength(10), Validators.pattern(ValidatorType.PAN)]],
-      registeredAddress: [this.data.mainData.registeredAddress, [Validators.required, Validators.maxLength(150)]],
+      registeredAddress: [this.data.mainData.registeredAddress, [Validators.maxLength(150)]],
       gstApplicableId: [this.data.mainData.gstApplicableId, [Validators.required]],
       gstNumber: [this.data.mainData.gstNumber, []],
       dataUploadTypeId: [this.data.mainData.dataUploadTypeId, [Validators.required]],
@@ -109,15 +109,20 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
         ...this.arnRiaFG.getRawValue()
       };
 
-      if(jsonObj.commencementDate instanceof Date) {
-        jsonObj.commencementDate = this.datePipe.transform(jsonObj.commencementDate, 'yyyy-MM-dd');
-      } else {
-        jsonObj.commencementDate = this.datePipe.transform(jsonObj.commencementDate.toDate(), 'yyyy-MM-dd');
+      if(jsonObj.commencementDate) {
+        if(jsonObj.commencementDate instanceof Date) {
+          jsonObj.commencementDate = this.datePipe.transform(jsonObj.commencementDate, 'yyyy-MM-dd');
+        } else {
+          jsonObj.commencementDate = this.datePipe.transform(jsonObj.commencementDate.toDate(), 'yyyy-MM-dd');
+        }
       }
-      if(jsonObj.renewalDate instanceof Date) {
-        jsonObj.renewalDate = this.datePipe.transform(jsonObj.renewalDate, 'yyyy-MM-dd');
-      } else {
-        jsonObj.renewalDate = this.datePipe.transform(jsonObj.renewalDate.toDate(), 'yyyy-MM-dd');
+
+      if(jsonObj.renewalDate) {
+        if(jsonObj.renewalDate instanceof Date) {
+          jsonObj.renewalDate = this.datePipe.transform(jsonObj.renewalDate, 'yyyy-MM-dd');
+        } else {
+          jsonObj.renewalDate = this.datePipe.transform(jsonObj.renewalDate.toDate(), 'yyyy-MM-dd');
+        }
       }
 
       // edit action

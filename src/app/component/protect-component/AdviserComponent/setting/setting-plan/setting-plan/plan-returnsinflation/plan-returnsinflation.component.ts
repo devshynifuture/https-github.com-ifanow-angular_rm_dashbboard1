@@ -12,7 +12,6 @@ import { ValidatorType } from 'src/app/services/util.service';
 })
 export class PlanReturnsinflationComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name'];
-  dataSource = ELEMENT_DATA;
   shortDS:any[] = [{},{},{}];
   longDS:any[] = [{},{},{}];
   advisorId: any;
@@ -22,6 +21,7 @@ export class PlanReturnsinflationComponent implements OnInit {
   isLoading:boolean = false;
   editMode: boolean = false;
   validatorType = ValidatorType;
+  postHasError = false;
   constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) { 
     this.advisorId = AuthService.getAdvisorId()
   }
@@ -84,16 +84,33 @@ export class PlanReturnsinflationComponent implements OnInit {
       return {
         id: data.id,
         advisorId: this.advisorId,
-        inflationRate: parseInt(data.inflation_rate) || 0,
+        inflationRate: parseFloat(data.inflation_rate),
         type: data.type,
         categoryId: data.category_id
       };
     });
   }
 
+  getPostDataInflationFormat(arr:any[]){
+    let editedData = arr.filter(obj => obj.edited);
+    return editedData.map(data => {
+      return {
+        id: data.id,
+        advisorId: this.advisorId,
+        inflationRate: parseFloat(data.inflation_rate),
+        type: data.type,
+      };
+    });
+  }
+
   save(){
-    let obj = [ this.getPostDataFormat(this.shortTerm), this.getPostDataFormat(this.longTerm)].flat();
-    if(obj.length == 0) {
+    this.postHasError = false;
+    const returnsObj = [ this.getPostDataFormat(this.shortTerm), this.getPostDataFormat(this.longTerm)].flat();
+    const infationObj = [this.getPostDataInflationFormat(this.longDS), this.getPostDataInflationFormat(this.shortDS)].flat();
+
+    const obj = {returns: returnsObj, infation: infationObj}
+    
+    if(obj.returns.length == 0 && obj.infation.length == 0) {
       return;
     }
     this.orgSetting.updateReturns(obj).subscribe(res => {
@@ -102,11 +119,20 @@ export class PlanReturnsinflationComponent implements OnInit {
     }, err => {
       this.eventService.openSnackBar("Error Occured");
     })
-
   }
 
+  checkForMinMax(value, data) {
+    let inflation_rate = parseFloat(data.inflation_rate || 0);
+    if(value > 100) {
+      this.eventService.openSnackBar("Maximum value is 100", "Dismiss");
+      data.inflation_rate = inflation_rate;
+      return;
+    }
+    if(value < 1) {
+      this.eventService.openSnackBar("Minimum value is 1", "Dismiss");
+      data.inflation_rate = 1;
+      return;
+    }
+    data.inflation_rate = value;
+  }
 }
-const ELEMENT_DATA = [
-  { position: 'Inflation rate', inflation_rate: '' },
-
-];

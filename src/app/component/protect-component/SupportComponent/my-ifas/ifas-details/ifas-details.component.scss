@@ -46,6 +46,7 @@
 .zIndex {
     z-index: 2;
 }
+
 .height23 {
     height: 23px;
 }
@@ -71,4 +72,11 @@
             animation: loading 1s infinite;
         }
     }
+}
+
+.reportBtn {
+    width: 76px;
+    height: 28px;
+    padding: 0px !important;
+    line-height: 24px;
 }
