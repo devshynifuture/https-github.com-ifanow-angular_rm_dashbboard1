@@ -3,10 +3,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
-import { isNumber } from 'util';
 import { DatePipe } from '@angular/common';
-import { MatTableDataSource } from '@angular/material';
-import { element } from 'protractor';
 
 @Component({
   selector: 'app-summary',
@@ -28,13 +25,48 @@ export class SummaryComponent implements OnInit {
   nightyDayData: any;
   oneDay: any;
   displayedColumns: string[] = ['description', 'date', 'amount'];
-  cashFlowDataSource = [];
+  cashFlowViewDataSource = [];
   expenseList = [];
   incomeList = [];
-  constructor(public eventService: EventService, private cusService: CustomerService, private datePipe: DatePipe) {
+  userData: any;
+  filterCashFlow = { income: [], expense: [] };
+  inflowFlag;
+  outflowFlag;
+  mutualFundValue: any = {
+    currentValue: null,
+    percentage: null
+  };
+  fixedIncome: any = {
+    currentValue: null,
+    percentage: null
+  };
+  realEstate: any = {
+    currentValue: null,
+    percentage: null
+  };
+  stocks: any = {
+    currentValue: null,
+    percentage: null
+  };
+  retirement: any = {
+    currentValue: null,
+    percentage: null
+  };
+  smallSavingScheme: any = {
+    currentValue: null,
+    percentage: null
+  };
+  cashAndFLow: any = {
+    currentValue: null,
+    percentage: null
+  };
+
+  constructor(public eventService: EventService, private cusService: CustomerService,
+    private datePipe: DatePipe) {
   }
 
   ngOnInit() {
+    this.userData = AuthService.getUserInfo();
     this.asOnDate = new Date().getTime();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -57,7 +89,14 @@ export class SummaryComponent implements OnInit {
           this.totalAssets = 0;
           this.summaryTotalValue = Object.assign([], data);
           console.log(this.summaryTotalValue);
-          let tempSummaryTotalValue: any = {}
+          this.mutualFundValue = data[3];
+          this.fixedIncome = data[0];
+          this.realEstate = data[1];
+          this.stocks = data[2];
+          this.retirement = data[4];
+          this.smallSavingScheme = data[5];
+          this.cashAndFLow = data[6]
+          const tempSummaryTotalValue: any = {};
           this.summaryTotalValue.forEach(element => {
             tempSummaryTotalValue[element.assetType] = element;
             if (element.currentValue == element.investedAmount) {
@@ -70,138 +109,208 @@ export class SummaryComponent implements OnInit {
             }
             this.totalAssetsWithoutLiability = 0;
             this.liabilityTotal = 0;
-            this.totalOfLiabilitiesAndTotalAssset(data);
           });
+          this.totalOfLiabilitiesAndTotalAssset(data);
           this.summaryMap = tempSummaryTotalValue;
           this.pieChart('piechartMutualFund', data);
         }
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
     );
+    this.getSummaryList(obj);
+    this.getCashFlowList(obj);
+  }
+
+  getSummaryList(obj) {
     this.cusService.getSUmmaryList(obj).subscribe(
       data => {
         console.log(data);
-        this.calculate1DayAnd90Days(data);
         this.graphList = [];
         let sortedDateList = [];
         sortedDateList = data;
         sortedDateList.sort(function (a, b) {
           return a.targetDate - b.targetDate;
-        })
-        for (let singleData of sortedDateList) {
+        });
+        this.calculate1DayAnd90Days(sortedDateList);
+        for (const singleData of sortedDateList) {
           let sumOf10Days = 0;
           singleData.summaryData.forEach(element => {
             if (element.assetType == 2) {
               sumOf10Days = sumOf10Days - element.currentValue;
-            }
-            else {
+            } else {
               sumOf10Days += element.currentValue;
             }
           });
-          this.graphList.push([singleData.targetDate, sumOf10Days]);
+          this.graphList.push([singleData.targetDate, Math.round(sumOf10Days)]);
         }
         this.lineChart('container');
       },
-      err => this.eventService.openSnackBar(err, "Dismiss")
-    )
+      err => this.eventService.openSnackBar(err, 'Dismiss')
+    );
+  }
+
+  getCashFlowList(obj) {
     this.cusService.getCashFlowList(obj).subscribe(
       data => {
         console.log(data);
-        this.cashFlowDataSource = [];
-        for (let singleList in data) {
-          if (data[singleList].length > 0) {
-            data[singleList].forEach(element => {
-              if (singleList == "expense") {
-                element['colourFlag'] = false;
-                this.expenseList.push(element.currentValue);
-              } else {
-                this.incomeList.push(element.currentValue);
-                element['colourFlag'] = true
-              }
-              this.cashFlowDataSource.push(element);
-            });
-          }
-        }
-        this.cashFlow('cashFlow');
-        console.log(this.cashFlowDataSource);
+        this.filterCashFlow = Object.assign({}, data);
+        this.cashFlowViewDataSource = [];
+        this.incomeList = [];
+        this.expenseList = [];
+        this.sortDataUsingFlowType(data, true);
+        console.log(this.cashFlowViewDataSource);
       },
-      err => this.eventService.openSnackBar(err, "Dismiss")
-    )
+      err => this.eventService.openSnackBar(err, 'Dismiss')
+    );
   }
-  checkNumberPositiveAndNegative(value: number) {
-    if (value == 0) {
-      return;
+
+  sortDataUsingFlowType(ObjectArray, flag) {
+
+    if (ObjectArray['expense'].length > 0 && ObjectArray['income'].length > 0) {
+      this.cashFlowViewDataSource = ObjectArray['expense'];
+      this.cashFlowViewDataSource = this.cashFlowViewDataSource.concat(ObjectArray['income']);
+      ObjectArray['expense'].forEach(element => {
+        element['colourFlag'] = false;
+        this.expenseList.push(-Math.abs(Math.round(element.currentValue)))
+        this.expenseList.push(0);
+      })
+      ObjectArray['income'].forEach(element => {
+        element['colourFlag'] = true;
+        this.incomeList.push(Math.round(element.currentValue));
+        this.incomeList.push(0);
+      })
+      this.inflowFlag = true;
+      this.outflowFlag = true;
+    }
+    else if (ObjectArray['expense'].length > 0) {
+      this.cashFlowViewDataSource = ObjectArray['expense'];
+      ObjectArray['expense'].forEach(element => {
+        element['colourFlag'] = false;
+        this.expenseList.push(-Math.abs(Math.round(element.currentValue)))
+      })
+      this.outflowFlag = true;
     }
     else {
-      let result = Math.sign(value)
+      this.cashFlowViewDataSource = ObjectArray['income'];
+      ObjectArray['income'].forEach(element => {
+        element['colourFlag'] = true;
+        this.incomeList.push(Math.round(element.currentValue))
+      })
+      this.inflowFlag = true;
+    }
+    this.cashFlow('cashFlow', ObjectArray);
+  }
+
+
+  filterData(eventData, flag) {
+    this.incomeList = [];
+    this.expenseList = [];
+    if (this.inflowFlag && this.outflowFlag == false) {
+      const ObjArray = {
+        income: this.filterCashFlow.income,
+        expense: []
+      };
+      this.sortDataUsingFlowType(ObjArray, true);
+    } else if (this.outflowFlag && this.inflowFlag == false) {
+      const ObjArray = {
+        income: [],
+        expense: this.filterCashFlow.expense
+      };
+      this.sortDataUsingFlowType(ObjArray, true);
+    } else if (this.inflowFlag == false && this.outflowFlag == false) {
+      (flag == 'inflow') ? this.outflowFlag = true : this.inflowFlag = true;
+      const ObjArray = {
+        income: (this.inflowFlag) ? this.filterCashFlow.income : [],
+        expense: (this.outflowFlag) ? this.filterCashFlow.expense : []
+      };
+      this.sortDataUsingFlowType(ObjArray, true);
+    } else {
+      this.sortDataUsingFlowType(this.filterCashFlow, true);
+    }
+  }
+
+
+  checkNumberPositiveAndNegative(value: number) {
+    if (value == 0) {
+      return undefined;
+    } else {
+      const result = Math.sign(value);
       return (result == -1) ? false : true;
     }
   }
+
+
   calculate1DayAnd90Days(data) {
-    console.log(data)
+    console.log(data);
     let firstIndexTotalCurrentValue = 0, lastIndexTotalCurrentValue = 0, secondLastIndexTotalCurrentValue = 0;
     if (data.length > 0) {
       data[0].summaryData.forEach(element => {                /////// first index total current value
         if (element.assetType != 2) {
           firstIndexTotalCurrentValue += element.currentValue;
-        }
-        else {
+        } else {
           firstIndexTotalCurrentValue -= element.currentValue;
         }
       });
       data[data.length - 1].summaryData.forEach(element => {   /////// last index total current value
         if (element.assetType != 2) {
           lastIndexTotalCurrentValue += element.currentValue;
-        }
-        else {
+        } else {
           lastIndexTotalCurrentValue -= element.currentValue;
         }
       });
       data[data.length - 2].summaryData.forEach(element => {       /////// second last index total current value
         if (element.assetType != 2) {
           secondLastIndexTotalCurrentValue += element.currentValue;
-        }
-        else {
+        } else {
           secondLastIndexTotalCurrentValue -= element.currentValue;
         }
       });
       this.nightyDayData = {
         value: lastIndexTotalCurrentValue - firstIndexTotalCurrentValue,
         flag: (Math.sign(lastIndexTotalCurrentValue - firstIndexTotalCurrentValue) == -1) ? false : true
-      }
+      };
       this.oneDay = {
-        value: lastIndexTotalCurrentValue - secondLastIndexTotalCurrentValue,
+        value: Math.abs(lastIndexTotalCurrentValue - secondLastIndexTotalCurrentValue),
         flag: (Math.sign(lastIndexTotalCurrentValue - secondLastIndexTotalCurrentValue) == -1) ? false : true
       };
     }
   }
+
+
   totalOfLiabilitiesAndTotalAssset(dataList) {
     dataList.forEach(element => {
       if (element.assetType == 2) {
         this.liabilityTotal += element.currentValue;
-      }
-      else {
+      } else {
         this.totalAssetsWithoutLiability += element.currentValue;
       }
     });
+    console.log(this.totalAssetsWithoutLiability, 'total asset without liability');
+    console.log(this.liabilityTotal, 'liability total');
   }
 
   dateChange(event) {
     this.asOnDate = new Date(event.value).getTime();
     this.calculateTotalSummaryValues();
   }
-  getCashFlowData(data) {
-    let obj =
-    {
 
+
+  cashFlow(id, data) {
+    console.log(data);
+    const { expense, income } = data;
+    const timeArray = [];
+
+    if (income.length > 0) {
+      income.forEach(element => {
+        timeArray.push(this.datePipe.transform(new Date(element.targetDate), 'd MMM'));
+      });
     }
-    this.cusService.getCashFlowList(obj).subscribe(
-      data => {
-        console.log(data)
-      }, err => this.eventService.openSnackBar(err, "Dismiss")
-    )
-  }
-  cashFlow(id) {
+    if (expense.length > 0) {
+      expense.forEach(element => {
+        timeArray.push(this.datePipe.transform(new Date(element.targetDate), 'd MMM'));
+      });
+    }
+    console.log('timearray : ', timeArray);
     const chart1 = new Highcharts.Chart('cashFlow', {
       chart: {
         type: 'column'
@@ -210,7 +319,7 @@ export class SummaryComponent implements OnInit {
         text: ''
       },
       xAxis: {
-        categories: ['10', '20', '30', '40', '50']
+        categories: timeArray
       },
       credits: {
         enabled: false
@@ -234,13 +343,6 @@ export class SummaryComponent implements OnInit {
       chart: {
         zoomType: 'x'
       },
-      title: {
-        text: ''
-      },
-      subtitle: {
-        text: document.ontouchstart === undefined ?
-          '' : ''
-      },
       xAxis: {
         type: 'datetime'
       },
@@ -248,6 +350,13 @@ export class SummaryComponent implements OnInit {
         title: {
           text: ''
         }
+      },
+      title: {
+        text: ''
+      },
+      subtitle: {
+        text: document.ontouchstart === undefined ?
+          '' : ''
       },
       legend: {
         enabled: false
@@ -289,6 +398,7 @@ export class SummaryComponent implements OnInit {
 
   pieChart(id, data) {
     const dataSeriesList = [];
+    data = data.filter(element => element.assetType != 2);
     data.forEach(element => {
       const totalAssetData = this.totalAssetsWithoutLiability + this.liabilityTotal;
       const dividedValue = element.currentValue / totalAssetData;
@@ -314,7 +424,7 @@ export class SummaryComponent implements OnInit {
         y: 60
       },
       tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        pointFormat: '<b>{point.percentage:.1f}%</b>'
       },
       plotOptions: {
         pie: {
