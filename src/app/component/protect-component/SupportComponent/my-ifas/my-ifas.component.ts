@@ -99,6 +99,7 @@ export class MyIfasComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
+            this.dataSource.data = ELEMENT_DATA;
             this.getMyIfasList();
           }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);

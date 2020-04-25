@@ -157,7 +157,12 @@ export class FileOrderingHistoricalComponent implements OnInit {
 
   add(event): void {
     const input = event.input;
-    const value = event.value['name'];
+    let value;
+    if (event.value.hasOwnPropety('name')) {
+      value = event.value['name'];
+    } else {
+      value = event.value;
+    }
     console.log("add event", event);
 
     if (event.value['type'] == 'rm') {

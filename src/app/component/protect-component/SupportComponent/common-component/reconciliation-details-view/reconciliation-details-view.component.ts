@@ -218,10 +218,11 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     if (filterBasedOn === 'all') {
       this.dataSource1.data = this.tableData1;
     } else {
-      this.dataSource1.data = this.dataSource1.data.filter(item => {
-        console.log(item, filterBasedOn);
+      let filteredArray = [];
+      filteredArray = this.tableData1.filter(item => {
         return item.transactionType === filterBasedOn.toUpperCase() ? item : null;
-      })
+      });
+      this.dataSource1.data = filteredArray
     }
     console.log("data filtered", this.dataSource1.data);
   }

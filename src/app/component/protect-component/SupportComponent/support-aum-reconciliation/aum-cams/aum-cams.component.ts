@@ -21,7 +21,7 @@ export class AumCamsComponent implements OnInit {
 
   constructor(
     public eventService: EventService,
-    private reconService: ReconciliationService
+    private reconService: ReconciliationService,
   ) { }
 
   ngOnInit() {

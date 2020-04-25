@@ -16,8 +16,9 @@
         </div>
 
         <div class="row top-setting-css">
-            <div class="col-md-2 bb d-flex align-items-center justify-content-center bg-white" *ngIf="!shouldShowMainNav">
-                <img *ngIf="profileImgSrc" class="imgWidth" [src]="profileImgSrc">
+            <div class="col-md-2 bb d-flex align-items-center justify-content-center bg-white"
+                *ngIf="!shouldShowMainNav">
+                <img class="imgWidth" [src]="ifanowLogo">
                 <h5 *ngIf="!profileImgSrc" class="logoh5">YOUR LOGO HERE</h5>
             </div>
             <div class="d-flex align-items-center bg-grey lt" [ngClass]="!shouldShowMainNav ? 'col-md-7': 'col-md-7'">
@@ -63,7 +64,7 @@
                     <div class="form-group searchBoxHeader">
                         <input #inputSearch [matAutocomplete]="auto" class="form-control pl-40" matInput type="text">
                         <i class="material-icons searchIcon"> search </i>
-                        <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete">
+                        <mat-autocomplete #auto="matAutocomplete">
 
                         </mat-autocomplete>
                     </div>
@@ -99,11 +100,28 @@
         <mat-nav-list class="width-230 pt-0" id="d">
 
             <div class="bb d-flex align-items-center justify-content-center">
-                <img class="imgWidth" *ngIf="profileImgSrc" [src]="profileImgSrc">
+                <img class="imgWidth" [src]="ifanowLogo">
                 <h5 *ngIf="!profileImgSrc" class="logoh5">YOUR LOGO HERE</h5>
             </div>
+            <div class="bb d-flex align-items-center justify-content-center">
+                <div class="row">
+                    <div class="col-lg-12 mt-20">
+                        <img class="rmUserImg" *ngIf="profileImgSrc" [src]="profileImgSrc">
+                    </div>
+                    <div class="col-lg-12 mt-2">
+                        <h3>
+                            {{ isAdmin ? 'Admin Login': 'RM Login' }}
+                        </h3>
+                    </div>
+                    <div class="col-lg-12 mt-2">
+                        <p class="f-500">
+                            {{ rmName }}
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-            <div class="mt-50">
+            <div class="mt-20">
 
                 <!-- dashboard not created so removing routerLink -->
                 <a class="sidenav-link" routerLink="/support/dashboard" (click)="checkUrl('dashboard')" mat-list-item>
@@ -114,15 +132,18 @@
                     <img src="assets/images/svg/people.svg">
                     <span class="title" mat-line>My IFAs</span>
                 </a>
-                <a class="sidenav-link" routerLink="/support/ifa-onboarding" (click)="checkUrl('ifa-onboarding')" routerLinkActive="router-link-active" mat-list-item>
+                <a class="sidenav-link" routerLink="/support/ifa-onboarding" (click)="checkUrl('ifa-onboarding')"
+                    routerLinkActive="router-link-active" mat-list-item>
                     <img src="assets/images/svg/file-lines.svg">
                     <span class="title" mat-line>IFA onboarding</span>
                 </a>
-                <a class="sidenav-link" routerLink="/support/aum-reconciliation" (click)="checkUrl('aum-reconciliation')" mat-list-item>
+                <a class="sidenav-link" routerLink="/support/aum-reconciliation"
+                    (click)="checkUrl('aum-reconciliation')" mat-list-item>
                     <img src="assets/images/svg/mail.svg">
                     <span class="title" mat-line>AUM Reconciliation</span>
                 </a>
-                <a class="sidenav-link" routerLink="/support/file-ordering" (click)="checkUrl('file-ordering')" mat-list-item>
+                <a class="sidenav-link" routerLink="/support/file-ordering" (click)="checkUrl('file-ordering')"
+                    mat-list-item>
                     <img src="assets/images/svg/cart.svg">
                     <span class="title" mat-line>File ordering & uploads</span>
                 </a>
@@ -130,11 +151,13 @@
                     <img src="assets/images/svg/ruppes.svg">
                     <span class="title" mat-line>Reports</span>
                 </a>
-                <a class="sidenav-link" routerLink="/support/miscellaneous" (click)="checkUrl('miscellaneous')" mat-list-item>
+                <a class="sidenav-link" routerLink="/support/miscellaneous" (click)="checkUrl('miscellaneous')"
+                    mat-list-item>
                     <img src="assets/images/svg/ruppes.svg">
                     <span class="title" mat-line>Miscellaneous</span>
                 </a>
-                <a *ngIf="isAdmin" class="sidenav-link" routerLink="/support/management" (click)="checkUrl('management')" mat-list-item>
+                <a *ngIf="isAdmin" class="sidenav-link" routerLink="/support/management"
+                    (click)="checkUrl('management')" mat-list-item>
                     <img src="assets/images/svg/ruppes.svg">
                     <span class="title" mat-line>RM management</span>
                 </a>
@@ -142,7 +165,8 @@
 
         </mat-nav-list>
 
-        <div class="leftside-overlay-toggle-button-close" [ngClass]="sidenavState ? 'd-none': ''" (click)="toggleSideNav()">
+        <div class="leftside-overlay-toggle-button-close" [ngClass]="sidenavState ? 'd-none': ''"
+            (click)="toggleSideNav()">
             <i class="material-icons f-30 text-custom">
                 keyboard_arrow_left
             </i>

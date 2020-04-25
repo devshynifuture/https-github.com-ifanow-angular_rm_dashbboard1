@@ -1,5 +1,5 @@
-import {ValidatorType} from '../../services/util.service';
-import {Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer2} from '@angular/core';
+import { ValidatorType } from '../../services/util.service';
+import { Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer2 } from '@angular/core';
 
 /** A hero's name can't match the given regular expression */
 
@@ -109,11 +109,12 @@ export class InputValueValidationDirective /*implements Validator*/ {
     console.log('InputValueValidationDirective keypress event.target.value : ', currValue);
 
     if (this.checkCurrentValue(currValue)) {
-
+      // this.renderer.setProperty(this._el.nativeElement, 'value', this.prevValue);
     } else {
       console.log('InputValueValidationDirective keypress prevValue : ', this.prevValue);
       event.preventDefault();
-      this.renderer.setProperty(this._el.nativeElement, 'value', this.prevValue);
+      this._el.nativeElement.value = this.prevValue;
+      // this.renderer.setProperty(this._el.nativeElement, 'value', this.prevValue);
       /*  setTimeout(() => {
           console.log('InputValueValidationDirective keypress  setTimeout prevValue : ', this.prevValue);
           this._el.nativeElement.value = this.prevValue;

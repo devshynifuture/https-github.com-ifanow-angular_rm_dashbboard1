@@ -5,7 +5,7 @@
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="Close(false)"> clear</i>
+                <i class="material-icons c-p pt-8 v-middle" (click)="Close(true)"> clear</i>
             </div>
         </div>
     </div>
@@ -21,7 +21,7 @@
                     <div class="row">
                         <div class="col-md-6 pl-0">
                             <h2 class="f-16 m-0 d-flex align-items-center">
-                                FRANKLINE
+                                FRANKLIN
                                 <i class="material-icons ml-4 c-p" (click)="getBrokerList(franklinId)">
                                     add_circle_outline
                                 </i>
@@ -30,13 +30,15 @@
                         <div class="col-md-5 pl-0">
                             <h2 class="f-14 f-600 d-inline-block widthYear text-center border_h2 m-0">Unmatched folios
                             </h2>
-                            <h2 class="f-14 text-center d-inline-block widthQuarterly f-600 border_h2 m-0 borderleft_none">
+                            <h2
+                                class="f-14 text-center d-inline-block widthQuarterly f-600 border_h2 m-0 borderleft_none">
                                 Quarterly fees</h2>
                         </div>
                     </div>
                     <div class="row">
                         <div class="back-office-table col-md-12 pl-0 pr-0 overflow-hidden ">
-                            <table mat-table [dataSource]="franklineData" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                            <table mat-table [dataSource]="franklineData" id="table-low" class="skeletonAnimation"
+                                appSkeletonLoading [appSkeletonLoading]="isLoading">
                                 <ng-container matColumnDef="arn">
                                     <th class="br w-10" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
                                     <td class="br w-10" mat-cell *matCellDef="let element">
@@ -97,7 +99,9 @@
                                 <ng-container matColumnDef="report">
                                     <th class="br" mat-header-cell *matHeaderCellDef> Report </th>
                                     <td class="br" mat-cell *matCellDef="let element">
-                                        <button *ngIf="!isLoading" mat-stroked-button class="bg-primary reportBtn text-white" (click)="openUpperSliderBackoffice('report', element, franklinId)">
+                                        <button *ngIf="!isLoading" mat-stroked-button
+                                            class="bg-primary reportBtn text-white"
+                                            (click)="openUpperSliderBackoffice('report', element, franklinId)">
                                             Report
                                         </button>
                                     </td>
@@ -133,7 +137,8 @@
             </div>
             <div class="row">
                 <div class="back-office-table col-md-12 pl-0 overflow-hidden ">
-                    <table mat-table [dataSource]="camsData" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                    <table mat-table [dataSource]="camsData" id="table-low" class="skeletonAnimation" appSkeletonLoading
+                        [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="arn">
                             <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
                             <td class="br" mat-cell *matCellDef="let element">
@@ -186,7 +191,8 @@
                         <ng-container matColumnDef="report">
                             <th class="br" mat-header-cell *matHeaderCellDef> Report </th>
                             <td class="br" mat-cell *matCellDef="let element">
-                                <button *ngIf="!isLoading" mat-stroked-button class="bg-primary reportBtn text-white" (click)="openUpperSliderBackoffice('report', element, camsId)">
+                                <button *ngIf="!isLoading" mat-stroked-button class="bg-primary reportBtn text-white"
+                                    (click)="openUpperSliderBackoffice('report', element, camsId)">
                                     Report
                                 </button>
                             </td>
@@ -205,7 +211,7 @@
 
 
             <div class="row pt-28">
-                <div class="col-md-6 pl-0">
+                <div class="col-md-6">
                     <h2 class="f-16 m-0 d-flex align-items-center">
                         KARVY
                         <i class="material-icons ml-4 c-p" (click)="getBrokerList(karvyId)">
@@ -222,7 +228,8 @@
             </div>
             <div class="row">
                 <div class="back-office-table col-md-12 pl-0 overflow-hidden ">
-                    <table mat-table [dataSource]="karvyData" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                    <table mat-table [dataSource]="karvyData" id="table-low" class="skeletonAnimation"
+                        appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="arn">
                             <th class="br" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
                             <td class="br" mat-cell *matCellDef="let element">
@@ -275,7 +282,8 @@
                         <ng-container matColumnDef="report">
                             <th class="br" mat-header-cell *matHeaderCellDef> Report </th>
                             <td class="br" mat-cell *matCellDef="let element">
-                                <button *ngIf="!isLoading" mat-stroked-button class="bg-primary reportBtn text-white" (click)="openUpperSliderBackoffice('report', element, karvyId)">
+                                <button *ngIf="!isLoading" mat-stroked-button class="bg-primary reportBtn text-white"
+                                    (click)="openUpperSliderBackoffice('report', element, karvyId)">
                                     Report
                                 </button>
                             </td>
@@ -302,7 +310,8 @@
                     </h2>
                 </div>
                 <div class="back-office-table col-md-10 overflow-hidden">
-                    <table mat-table [dataSource]="dataSourceOne" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                    <table mat-table [dataSource]="dataSourceOne" id="table-low" class="skeletonAnimation"
+                        appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="description">
                             <th class="br" mat-header-cell *matHeaderCellDef> Description </th>
                             <td class="br" mat-cell *matCellDef="let element"> {{element.description}} </td>
@@ -356,7 +365,8 @@
 
             <div class="row">
                 <div class="back-office-table col-md-10 overflow-hidden">
-                    <table mat-table [dataSource]="dataSourceTwo" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                    <table mat-table [dataSource]="dataSourceTwo" id="table-low" class="skeletonAnimation"
+                        appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="type">
                             <th class="br w-12" mat-header-cell *matHeaderCellDef> Type </th>
                             <td class="br w-12" mat-cell *matCellDef="let element"> {{element.type}} </td>
@@ -408,11 +418,13 @@
             <div class="row pt-28">
                 <div class="col-md-12">
                     <h3 class="f-16 m-0">Ticket summary</h3>
-                    <p class="f-14 m-0 text-primitive">Following is the summary of Freshdesk tickets belonging to this IFA and IFA’s team members</p>
+                    <p class="f-14 m-0 text-primitive">Following is the summary of Freshdesk tickets belonging to this
+                        IFA and IFA’s team members</p>
                 </div>
             </div>
 
-            <div class="row" class="skeletonAnimation mt-8" appSkeletonLoading [appSkeletonLoading]="utilsService.isLoading">
+            <div class="row" class="skeletonAnimation mt-8" appSkeletonLoading
+                [appSkeletonLoading]="utilsService.isLoading">
                 <div class="col-md-12 d-flex relClass">
                     <div class="summaryBox">
                         <p class="f-16 roboto">Unresolved</p>
@@ -441,7 +453,8 @@
                 <div class="col-md-12 back-office-table  overflow-hidden">
                     <h3 class="f-16 mb-4">Ticket list</h3>
 
-                    <table mat-table [dataSource]="ticketList" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                    <table mat-table [dataSource]="ticketList" id="table-low" class="skeletonAnimation"
+                        appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="ticket">
                             <th class="br" mat-header-cell *matHeaderCellDef> Ticket </th>
                             <td class="br" mat-cell *matCellDef="let element">
@@ -520,7 +533,8 @@
                 <div class="col-md-12 back-office-table  overflow-hidden">
                     <h3 class="f-16 mb-4">Ticket list</h3>
 
-                    <table mat-table [dataSource]="dataSource4" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                    <table mat-table [dataSource]="dataSource4" id="table-low" class="skeletonAnimation"
+                        appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="name">
                             <th class="br" mat-header-cell *matHeaderCellDef> Name </th>
                             <td class="br" mat-cell *matCellDef="let element">
@@ -568,7 +582,8 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div *ngIf="dataSource4.data && dataSource4.data.length == 0 && !isLoading && !hasError" class="d-flex flex-column align-items-center">
+                    <div *ngIf="dataSource4.data && dataSource4.data.length == 0 && !isLoading && !hasError"
+                        class="d-flex flex-column align-items-center">
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
                         <h4 class="pt-12">No Team members found</h4>
                     </div>
@@ -586,7 +601,8 @@
                 <div class="col-md-10 back-office-table  overflow-hidden">
                     <h3 class="f-16 mb-4">Ticket list</h3>
 
-                    <table mat-table [dataSource]="dataSource5" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                    <table mat-table [dataSource]="dataSource5" id="table-low" class="skeletonAnimation"
+                        appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <ng-container matColumnDef="invoice">
                             <th class="br" mat-header-cell *matHeaderCellDef> Invoice </th>
                             <td class="br" mat-cell *matCellDef="let element"> {{element.invoice}} </td>
@@ -638,8 +654,10 @@
                     <h2 class="f-16 roboto">Miscellaneous</h2>
                     <mat-form-field class="example-full-width">
                         <textarea matInput [disabled]="!isInEditMode" class="form-control height160"></textarea>
-                        <button mat-button class=" bg-primary text-white right br-0 text-inherit mt-12" *ngIf="!isInEditMode" (click)="toggleEditMode()">EDIT</button>
-                        <button mat-button class=" bg-primary text-white right br-0 text-inherit mt-12" *ngIf="isInEditMode" (click)="toggleEditMode()">SAVE</button>
+                        <button mat-button class=" bg-primary text-white right br-0 text-inherit mt-12"
+                            *ngIf="!isInEditMode" (click)="toggleEditMode()">EDIT</button>
+                        <button mat-button class=" bg-primary text-white right br-0 text-inherit mt-12"
+                            *ngIf="isInEditMode" (click)="toggleEditMode()">SAVE</button>
 
                     </mat-form-field>
 
