@@ -348,7 +348,8 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.epf}
         description: this.epf.controls.description.value,
         voluntaryContribution:parseInt(this.epf.controls.voluntaryContribution.value),
         nomineeList: this.epf.value.getNomineeName,
-
+        parentId:0,
+        realOrFictitious:1,
         id: this.epf.controls.id.value
       }
 
