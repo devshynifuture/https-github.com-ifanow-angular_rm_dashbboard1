@@ -1,4 +1,4 @@
-<div class="row pt-130">
+<div class="row pt-150">
     <div class="col-md-12 text-right">
         <button class="btn-primary addon" mat-stroked-button (click)="openHistoricalFileOrderingSlider('')">
             <mat-icon>add</mat-icon> Order Historical files
@@ -10,8 +10,7 @@
     <div class="col-md-4">
         <div class="example-chip-list">
             <mat-chip-list #chipList aria-label="Filtering Table">
-                <mat-chip *ngFor="let filter of filterBy" [selectable]="selectable" [removable]="removable"
-                    (removed)="remove(filter)">
+                <mat-chip *ngFor="let filter of filterBy" [selectable]="selectable" [removable]="removable" (removed)="remove(filter)">
                     {{filter.name}}
                     <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
@@ -22,15 +21,15 @@
     <div class="col-md-8">
         <div class="row">
             <div class="col-lg-3">
-                <div class="form-group mb-0">
-                    <input class="form-control m-0" placeholder="Search by advisor" [matChipInputFor]="chipList"
-                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                        (matChipInputTokenEnd)="maniputateEventObjForName($event)" #inputAdvisorNameRef>
+                <div class="form-group ">
+                    <mat-form-field appearance="standard" floatLabel="never">
+                        <input matInput class="form-control m-0" placeholder="Search by advisor" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="maniputateEventObjForName($event)" #inputAdvisorNameRef>
+                    </mat-form-field>
                 </div>
             </div>
             <div class="col-lg-3">
-                <div class="form-group mb-0">
-                    <mat-form-field>
+                <div class="form-group ">
+                    <mat-form-field appearance="standard" floatLabel="never">
                         <mat-select class="form-control br-0" placeholder="Ordered By" (selectionChange)="add($event)">
                             <mat-option>None</mat-option>
                             <mat-option [value]="rmUser" *ngFor="let rmUser of rmList">
@@ -41,7 +40,7 @@
                 </div>
             </div>
             <div class="col-lg-3">
-                <mat-form-field>
+                <mat-form-field appearance="standard" floatLabel="never">
                     <mat-select class="form-control br-0" (selectionChange)="add($event)">
                         <mat-option>None</mat-option>
                         <mat-option [value]="period" *ngFor="let period of periodList">
@@ -51,7 +50,7 @@
                 </mat-form-field>
             </div>
             <div class="col-lg-3">
-                <mat-form-field>
+                <mat-form-field appearance="standard" floatLabel="never">
                     <mat-select class="form-control br-0" (selectionChange)="add($event)">
                         <mat-option>
                             None
@@ -68,8 +67,7 @@
 
 <div class="row pt-20">
     <div class="col-md-12">
-        <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonLoading"
-            [appSkeletonLoading]="isLoading" appSkeletonLoading>
+        <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonLoading" [appSkeletonLoading]="isLoading" appSkeletonLoading>
             <ng-container matColumnDef="advisorName">
                 <th class="br" mat-header-cell *matHeaderCellDef> Advisor name </th>
                 <td class="br" mat-cell *matCellDef="let element">
@@ -108,8 +106,7 @@
 
             <ng-container matColumnDef="totalFiles">
                 <th class="br" mat-header-cell *matHeaderCellDef> Total files </th>
-                <td class="c-p br" mat-cell *matCellDef="let element"
-                    (click)="openUpperFileOrdering('historical', element)">
+                <td class="c-p br" mat-cell *matCellDef="let element" (click)="openUpperFileOrdering('historical', element)">
                     <div class="bar">
                         {{element.totalFiles}}
                     </div>
@@ -168,8 +165,7 @@
                 <th class="br" mat-header-cell *matHeaderCellDef> Refresh </th>
                 <td class="br" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        <button mat-button *ngIf="!isLoading" class="bg-grey mr-12 h-22 btn-xs"
-                            (click)="refreshFileOrder()">
+                        <button mat-button *ngIf="!isLoading" class="bg-grey mr-12 h-22 btn-xs" (click)="refreshFileOrder()">
                             <mat-icon>
                                 refresh
                             </mat-icon>
