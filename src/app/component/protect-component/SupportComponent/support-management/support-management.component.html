@@ -1,22 +1,21 @@
 <div id="ui-subscriptions">
     <div class="row">
         <div class="col-md-12">
-            <h3 class="m-0 pt-16"> RM management </h3>
+            <h3 class="m-0 pt-20"> RM management </h3>
         </div>
     </div>
 </div>
 
-<div class="row pt-130 mb-2" *ngIf="!hasError && !isLoading">
+<div class="row pt-125 mb-2" *ngIf="!hasError && !isLoading">
     <div class="col-md-9">
         <div class="row" *ngIf="dataSource.data.length > 0">
-            <div class="col-md-12 overflow-hidden back-office-table">
-                <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonAnimation mt-8"
-                    appSkeletonLoading [appSkeletonLoading]="isLoading" matSort>
+            <div class="col-md-12 p-0 overflow-hidden back-office-table">
+                <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonAnimation mt-8" appSkeletonLoading [appSkeletonLoading]="isLoading" matSort>
                     <!-- admin name Column -->
                     <ng-container matColumnDef="adminName">
-                        <th mat-header-cell *matHeaderCellDef class="b-a w-12" mat-sort-header="adminName"> Admin Name
+                        <th mat-header-cell *matHeaderCellDef class="b-a w-22" mat-sort-header="adminName"> Admin Name
                         </th>
-                        <td mat-cell *matCellDef="let element" class="b-a w-12 c-p" (click)="openAdminDetails(element)">
+                        <td mat-cell *matCellDef="let element" class="b-a w-22 c-p" (click)="openAdminDetails(element)">
                             <div class="bar"> {{element.fullName}} </div>
                         </td>
                     </ng-container>
@@ -50,13 +49,15 @@
                     <ng-container matColumnDef="nextBilling">
                         <th mat-header-cell *matHeaderCellDef class="b-a" mat-sort-header="nextBilling"> Map</th>
                         <td mat-cell *matCellDef="let element" class="b-a">
-                            <div class="bar"> <button (click)="mapToRM(element)">Map</button> </div>
+                            <div class="bar">
+                                <button class="mapBtn btn-primary" (click)="mapToRM(element)">Map</button>
+                            </div>
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="menu">
                         <th mat-header-cell *matHeaderCellDef class="b-a"> </th>
-                        <td mat-cell *matCellDef="let element" class="b-a">
+                        <td mat-cell *matCellDef="let element" class="b-a text-center">
                             <div class="bar">
                                 <mat-menu #appMenu="matMenu">
                                     <button mat-menu-item>Recalculate Balance Units</button>
@@ -64,9 +65,11 @@
                                     <button mat-menu-item>Merge Scheme Code</button>
                                 </mat-menu>
 
-                                <button mat-icon-button [matMenuTriggerFor]="appMenu">
+                                <img [matMenuTriggerFor]="appMenu" class="c-p" *ngIf="!isLoading" src="/assets/images/svg/dot-menu.svg" class="c-p">
+
+                                <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu">
                                     <mat-icon>more_vert</mat-icon>
-                                </button>
+                                </button> -->
                             </div>
                         </td>
                     </ng-container>
@@ -76,9 +79,8 @@
             </div>
         </div>
         <div class="row pt-20">
-            <div class="col-md-3 mb-16 pl-0" *ngFor="let user of rmList">
-                <mat-card class="b-a p-9 br-4"
-                    [ngClass]="{'active-class-name': user.isSuspended == 0, 'suspended-class-name': user.isSuspended == 1}">
+            <div class="col-md-4 mb-16 pl-0" *ngFor="let user of rmList">
+                <mat-card class="b-a p-9 br-4" [ngClass]="{'active-class-name': user.isSuspended == 0, 'suspended-class-name': user.isSuspended == 1}">
                     <div class="row">
                         <div class="col-md-4 p-0">
                             <img [src]="user.profileImage" class="w-100 h-80">
@@ -99,85 +101,84 @@
         </div>
     </div>
 
-    <div class="col-md-3" *ngIf="!hasError">
-        <div [formGroup]="addRmFG">
-            create RM
-            <div class="row pt-28">
-                <div class="col-md-3 text-right pr-0">
-                    <h5 class="m-0 pt-20">Full name</h5>
-                </div>
-                <div class="col-md-7 pr-0">
-                    <div class="form-group">
-                        <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                            <input matInput placeholder="Enter Full name" formControlName="name" class="form-control"
-                                [inputValidator]="validatorType.PERSON_NAME" [maxLength]="40" appInputValueValidation>
-                            <mat-hint align="end">{{addRmFG.get('name').value.length}}/40</mat-hint>
-                            <mat-error>This field is required</mat-error>
-                        </mat-form-field>
+    <div class="col-md-3 bg-grey lter p-0" *ngIf="!hasError">
+        <div class=" p-16 createRmBox">
+            <div [formGroup]="addRmFG">
+                <h5 class="roboto f-500"> Create RM </h5>
+                <div class="row">
+                    <div class="col-md-12 p-0">
+                        <h5 class="m-0 pt-20">Full name</h5>
+                    </div>
+                    <div class="col-md-12 p-0">
+                        <div class="form-group">
+                            <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
+                                <input matInput placeholder="Enter Full name" formControlName="name" class="form-control" [inputValidator]="validatorType.PERSON_NAME" [maxLength]="40" appInputValueValidation>
+                                <mat-hint align="end">{{addRmFG.get('name').value.length}}/40</mat-hint>
+                                <mat-error>This field is required</mat-error>
+                            </mat-form-field>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row pt-28">
-                <div class="col-md-3 text-right pr-0">
-                    <h5 class="m-0 pt-20">Email</h5>
-                </div>
-                <div class="col-md-7 pr-0">
-                    <div class="form-group">
-                        <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                            <input matInput placeholder="Enter email" formControlName="email" class="form-control">
-                            <mat-error *ngIf="addRmFG.get('email').errors?.required">This field is required</mat-error>
-                            <mat-error *ngIf="addRmFG.get('email').errors?.pattern">Valid email required</mat-error>
-                        </mat-form-field>
+                <div class="row">
+                    <div class="col-md-12 p-0">
+                        <h5 class="m-0 pt-20">Email</h5>
+                    </div>
+                    <div class="col-md-12 p-0">
+                        <div class="form-group">
+                            <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
+                                <input matInput placeholder="Enter email" formControlName="email" class="form-control">
+                                <mat-error *ngIf="addRmFG.get('email').errors?.required">This field is required
+                                </mat-error>
+                                <mat-error *ngIf="addRmFG.get('email').errors?.pattern">Valid email required</mat-error>
+                            </mat-form-field>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row pt-28">
-                <div class="col-md-3 text-right pr-0">
-                    <h5 class="m-0 pt-20">Mobile</h5>
-                </div>
-                <div class="col-md-7 pr-0">
-                    <div class="form-group">
-                        <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                            <input matInput placeholder="Enter Full name" formControlName="mobileNo"
-                                class="form-control" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
-                                minlength="10" appInputValueValidation>
-                            <mat-hint align="end">{{addRmFG.get('mobileNo').value.length}}/10</mat-hint>
-                            <mat-error *ngIf="addRmFG.get('mobileNo').errors?.required">This field is required
-                            </mat-error>
-                            <mat-error *ngIf="addRmFG.get('mobileNo').errors?.minlength">Enter valid mobile number
-                            </mat-error>
-                        </mat-form-field>
+                <div class="row">
+                    <div class="col-md-12 p-0">
+                        <h5 class="m-0 pt-20">Mobile</h5>
+                    </div>
+                    <div class="col-md-12 p-0">
+                        <div class="form-group">
+                            <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
+                                <input matInput placeholder="Enter Full name" formControlName="mobileNo" class="form-control" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" minlength="10" appInputValueValidation>
+                                <mat-hint align="end">{{addRmFG.get('mobileNo').value.length}}/10</mat-hint>
+                                <mat-error *ngIf="addRmFG.get('mobileNo').errors?.required">This field is required
+                                </mat-error>
+                                <mat-error *ngIf="addRmFG.get('mobileNo').errors?.minlength">Enter valid mobile number
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row pt-28">
-                <div class="col-md-3 text-right pr-0">
-                    <h5 class="m-0 pt-20">Password</h5>
-                </div>
-                <div class="col-md-7 pr-0">
-                    <div class="form-group">
-                        <mat-form-field appearance="standard" floatLabel="never">
-                            <input (keypress)="enterEvent($event)" [type]="hide ? 'password' : 'text'"
-                                class="form-control br-0" formControlName="password" matInput
-                                placeholder="Enter password" tabindex="2" type="password">
+                <div class="row">
+                    <div class="col-md-12 p-0">
+                        <h5 class="m-0 pt-20">Password</h5>
+                    </div>
+                    <div class="col-md-12 p-0">
+                        <div class="form-group">
+                            <mat-form-field appearance="standard" floatLabel="never">
+                                <input (keypress)="enterEvent($event)" [type]="hide ? 'password' : 'text'" class="form-control br-0" formControlName="password" matInput placeholder="Enter password" tabindex="2" type="password">
 
-                            <i (click)="hide = !hide" *ngIf="hide"
-                                class="material-icons eyesPassword c-p text-primitive">
-                                visibility
-                            </i>
-                            <i (click)="hide = !hide" *ngIf="hide==false"
-                                class="material-icons eyesPassword c-p text-primitive">
-                                visibility_off
-                            </i>
-                            <mat-error *ngIf="addRmFG.get('password').errors?.required">This field is required
-                            </mat-error>
-                        </mat-form-field>
+                                <i (click)="hide = !hide" *ngIf="hide" class="material-icons eyesPassword c-p text-primitive">
+                                    visibility
+                                </i>
+                                <i (click)="hide = !hide" *ngIf="hide==false" class="material-icons eyesPassword c-p text-primitive">
+                                    visibility_off
+                                </i>
+                                <mat-error *ngIf="addRmFG.get('password').errors?.required">This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row pt-28">
-                <button (click)="addRMMember()">ADD</button>
+                <div class="row pt-12">
+                    <div class="col-md-12 p-0">
+                        <button class="btn-primary btninvite" (click)="addRMMember()">Send invite</button>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
@@ -187,6 +188,6 @@
     <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
 </div>
 
-<div class="row" *ngIf="!isMainLoading">
+<!-- <div class="row" *ngIf="!isMainLoading">
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-</div>
+</div>   -->
