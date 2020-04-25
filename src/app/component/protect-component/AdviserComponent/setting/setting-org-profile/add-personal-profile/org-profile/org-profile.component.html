@@ -53,7 +53,8 @@
                             <mat-form-field appearance="standard">
                                 <mat-select formControlName="isdCodeId" class="form-control">
                                     <mat-option value="" selected disabled>Select Country Code</mat-option>
-                                    <mat-option [value]="code.id" *ngFor="let code of isdCodes">{{code.code}}({{code.countryCode}})</mat-option>
+                                    <mat-option [value]="code.id" *ngFor="let code of isdCodes">
+                                        {{code.code}}({{code.countryCode}})</mat-option>
                                 </mat-select>
                                 <mat-error>This field is required</mat-error>
                             </mat-form-field>
@@ -132,7 +133,8 @@
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                                 <mat-select formControlName="country" class="form-control br-0" id="sel1">
                                     <mat-option value="" disabled>Select Country</mat-option>
-                                    <mat-option [value]="code.countryName" *ngFor="let code of isdCodes">{{code.countryName}}</mat-option>
+                                    <mat-option [value]="code.countryName" *ngFor="let code of isdCodes">
+                                        {{code.countryName}}</mat-option>
                                 </mat-select>
                                 <mat-error class=" pt-4">
                                     This field is required
@@ -205,11 +207,11 @@
         </mat-tab>
         <mat-tab label="Web app logo">
             <div class="row pt-44" *ngIf="selectedTab == 1">
-                <div class="col-md-3 p-0 text-right">
+                <div class="col-md-12">
                     <h5 class="m-0">Your logo</h5>
                     <div>This logo is visible on top left of web login, About section in mobile app etc.</div>
                 </div>
-                <div class="col-md-5" *ngIf="cropImage">
+                <div class="col-md-12" *ngIf="cropImage">
                     <div *ngIf="!showCropper">
                         <h5 class="m-0 pt-8">Upload a photo to edit and upload.</h5>
                     </div>
@@ -222,28 +224,33 @@
                     <div class="row pt-24">
                     </div>
                 </div>
-                <div class="col-md-4 pl-0" *ngIf="cropImage">
+                <div class="col-md-12" *ngIf="cropImage">
                     <button mat-stroked-button class="btn-primary" (click)="chooseImage.click()">CHOOSE IMAGE</button>
-                    <button mat-stroked-button class="btn-primary" (click)="resetPageVariables()">CANCEL EDIT</button>
+                    <button mat-stroked-button class="bg-white text-inherit ml-12" (click)="resetPageVariables()">CANCEL
+                        EDIT</button>
                     <input type="file" #chooseImage (change)="uploadImageForCorping($event)" hidden>
                 </div>
-                <div class="col-md-5" *ngIf="!cropImage">
+                <div class="col-md-12" *ngIf="!cropImage">
                     <div class="profile-web-app-img">
                         <img [src]="profileImg" class="w-100">
                     </div>
                     <div class="row pt-24">
-                        <button mat-stroked-button class="btn-primary" (click)="cropImage = true">EDIT IMAGE</button>
+                        <div class="col-md-12 p-0 ">
+                            <button mat-stroked-button class="btn-primary" (click)="cropImage = true">EDIT
+                                IMAGE</button>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </mat-tab>
         <mat-tab label="Logo for reports">
             <div class="row pt-44" *ngIf="selectedTab == 2">
-                <div class="col-md-3 p-0 text-right">
+                <div class="col-md-12">
                     <h5 class="m-0">Your logo</h5>
                     <div>This logo is visible on various reports (MF, Financial Plan etc.).</div>
                 </div>
-                <div class="col-md-5" *ngIf="cropImage">
+                <div class="col-md-12" *ngIf="cropImage">
                     <div *ngIf="!showCropper">
                         <h5 class="m-0 pt-8">Upload a photo to edit and upload.</h5>
                     </div>
@@ -256,9 +263,10 @@
                     <div class="row pt-24">
                     </div>
                 </div>
-                <div class="col-md-4 pl-0" *ngIf="cropImage">
+                <div class="col-md-12" *ngIf="cropImage">
                     <button mat-stroked-button class="btn-primary" (click)="chooseImage.click()">CHOOSE IMAGE</button>
-                    <button mat-stroked-button class="btn-primary" (click)="resetPageVariables()">CANCEL EDIT</button>
+                    <button mat-stroked-button class="bg-white text-inherit ml-12" (click)="resetPageVariables()">CANCEL
+                        EDIT</button>
                     <input type="file" #chooseImage (change)="uploadImageForCorping($event)" hidden>
                 </div>
                 <div class="col-md-5" *ngIf="!cropImage">
