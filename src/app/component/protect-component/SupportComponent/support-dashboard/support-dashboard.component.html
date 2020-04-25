@@ -54,7 +54,7 @@
             <div class="col-md-9 p-0 br">
                 <div class="row b-b p-12 pr-4">
                     <div class="col-md-9 pl-10 d-flex align-items-center">
-                        <h4 class="f-20 m-0 f-600 roboto"> Welcome {{ rmName }}</h4>
+                        <h4 class="f-20 m-0 f-600 roboto"> Welcome, {{ rmName }}</h4>
                     </div>
                     <div class="col-md-3 text-right">
                         <button class="quickBtn" mat-stroked-button [matMenuTriggerFor]="menu">
@@ -87,7 +87,7 @@
                                     <div class="col-md-5 pl-10 paddRight10">
                                         <mat-form-field>
                                             <mat-select class="form-control" [(value)]="dailyFileSelected">
-                                                <mat-option value="option1">
+                                                <mat-option value="option1" class="f-12">
                                                     All Files
                                                 </mat-option>
                                             </mat-select>
@@ -136,7 +136,8 @@
                                     <div class="col-md-5 pl-10 paddRight10">
                                         <mat-form-field>
                                             <mat-select class="form-control" formControlName="bulkOptRtId">
-                                                <mat-option *ngFor="let fileFilter of dropDownData" [value]="fileFilter.id">
+                                                <mat-option *ngFor="let fileFilter of dropDownData"
+                                                    [value]="fileFilter.id">
                                                     {{fileFilter.name}}
                                                 </mat-option>
                                             </mat-select>
@@ -146,7 +147,8 @@
                                 <div *ngFor="let singleFile of bulkData" class="pl-10 pb-10 paddRight10">
                                     <div class="row">
                                         <div class="col-md-12 pb-8 p-0 f-14">
-                                            {{getRTCode(singleFile.rtId)}}: {{singleFile.description}} - {{singleFile.startedOn | date:'dd/MM h:mm '}}
+                                            {{getRTCode(singleFile.rtId)}}: {{singleFile.description}} -
+                                            {{singleFile.startedOn | date:'dd/MM h:mm '}}
                                         </div>
                                     </div>
                                     <div class="row b-b">
@@ -189,7 +191,8 @@
                                     <div class="col-md-5 pl-10 paddRight10">
                                         <mat-form-field>
                                             <mat-select formControlName="historicalFileOptId" class="form-control">
-                                                <mat-option *ngFor="let fileFilter of dropDownData" [value]="fileFilter.id">
+                                                <mat-option *ngFor="let fileFilter of dropDownData"
+                                                    [value]="fileFilter.id">
                                                     {{fileFilter.name}}
                                                 </mat-option>
                                             </mat-select>
@@ -283,19 +286,23 @@
             <div class="col-md-3 pt-20 pr-0 pl-10">
 
                 <h3 class="f-16 m-0 mb-20 roboto">Running services</h3>
-                <div *ngFor="let singleService of serviceStatusData" [ngClass]="{'boxColorOrenge': singleService.service_status=='Not Updated'||singleService.service_status=='Not Working'}" class="boxColorGreen">
+                <div *ngFor="let singleService of serviceStatusData"
+                    [ngClass]="{'boxColorOrenge': singleService.service_status=='Not Updated'||singleService.service_status=='Not Working'}"
+                    class="boxColorGreen">
                     <div class="row">
                         <div class="col-md-10 p-0">
                             <h4 class="f-14">{{singleService.service_name}}</h4>
                         </div>
                         <div class="col-md-2 p-0">
-                            <i class="material-icons f-30 greenColor" [ngClass]="{'orengeColor': singleService.service_status=='Not Updated' ||singleService.service_status=='Not Working'}">
+                            <i class="material-icons f-30 greenColor"
+                                [ngClass]="{'orengeColor': singleService.service_status=='Not Updated' ||singleService.service_status=='Not Working'}">
                                 check_circle
                             </i>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6 f-12 p-0 greenColor" [ngClass]="{'orengeColor': singleService.service_status=='Not Updated' ||singleService.service_status=='Not Working'}">
+                        <div class="col-md-6 f-12 p-0 greenColor"
+                            [ngClass]="{'orengeColor': singleService.service_status=='Not Updated' ||singleService.service_status=='Not Working'}">
                             {{singleService.service_status}}
                         </div>
                         <div class="col-md-6 p-0 text-primitive text-right f-12">

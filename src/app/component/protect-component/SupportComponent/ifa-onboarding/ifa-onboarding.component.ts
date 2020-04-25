@@ -147,6 +147,7 @@ export class IfaOnboardingComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+            this.dataSource.data = ELEMENT_DATA
             this.getStagesFromBackend();
           }
           rightSideDataSub.unsubscribe();

@@ -61,6 +61,10 @@
     width: 100%;
 }
 
+::ng-deep .mat-select-value-text{
+    font-size: 12px !important;
+}
+
 .mt-65 {
     margin-top: 65px !important;
 }
