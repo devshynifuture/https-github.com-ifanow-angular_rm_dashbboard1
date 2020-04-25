@@ -15,7 +15,7 @@ export class SummaryComponent implements OnInit {
   advisorId: any;
   clientId: any;
   summaryTotalValue: any;
-  isLoading: true;
+  isLoading: boolean;
   totalAssets: number;
   asOnDate: any;
   summaryMap;
@@ -150,6 +150,7 @@ export class SummaryComponent implements OnInit {
   }
 
   getCashFlowList(obj) {
+    this.cashFlowViewDataSource = [{}, {}, {}];
     this.cusService.getCashFlowList(obj).subscribe(
       data => {
         console.log(data);

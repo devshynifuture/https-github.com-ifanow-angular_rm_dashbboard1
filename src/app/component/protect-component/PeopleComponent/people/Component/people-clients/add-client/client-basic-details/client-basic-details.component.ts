@@ -157,13 +157,13 @@ export class ClientBasicDetailsComponent implements OnInit {
     this.nonIndividualForm = this.fb.group({
       comName: [data.name, [Validators.required]],
       dateOfIncorporation: [(data.dateOfBirth) ? new Date(data.dateOfBirth) : ''],
-      comStatus: [(data.companyStatus) ? String(data.companyStatus) : '0', [Validators.required]],
+      comStatus: [(data.companyStatus) ? String(data.companyStatus) : '', [Validators.required]],
       comEmail: [{ value: (data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', disabled: this.basicDetailsData.userId ? true : false }, [Validators.pattern(this.validatorType.EMAIL)]],
       comPan: [{ value: data.pan, disabled: this.basicDetailsData.userId ? true : false }, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
-      comOccupation: [(data.occupationId == 0) ? '1' : String(data.occupationId)],
+      comOccupation: [(data.occupationId) ? String(data.occupationId) : ''],
       username: [{ value: data.userName, disabled: true }],
       leadSource: [data.leadSource ? data.leadSource : ''],
-      leaadStatus: [(data.leadStatus) ? String(data.leadStatus) : ''],
+      leadStatus: [(data.leadStatus) ? String(data.leadStatus) : ''],
       leadRating: [(data.leadRating) ? String(data.leadRating) : ''],
       leadOwner: [''],
       clientOwner: [''],
@@ -274,7 +274,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       } else {
         advisorId = this.advisorId;
       }
-      const emailId = (this.invTypeCategory == '1') ? this.basicDetails.controls.email.value : this.nonIndividualForm.value.comEmail;
+      const emailId = (this.invTypeCategory == '1') ? this.basicDetails.controls.email.value : this.nonIndividualForm.controls.comEmail.value;
       const emailList = [];
       if (emailId) {
         emailList.push({
@@ -289,7 +289,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         bio: null,
         martialStatusId: 0,
         clientType: parseInt(this.invTypeCategory),
-        pan: (this.invTypeCategory == '1') ? this.basicDetails.controls.pan.value : this.nonIndividualForm.value.comPan,
+        pan: (this.invTypeCategory == '1') ? this.basicDetails.controls.pan.value : this.nonIndividualForm.controls.comPan.value,
         clientId: (this.basicDetailsData == null) ? null : this.basicDetailsData.clientId,
         kycComplaint: 0,
         roleId: (this.invTypeCategory == '1') ? this.basicDetails.value.role : this.nonIndividualForm.value.role,
@@ -309,7 +309,8 @@ export class ClientBasicDetailsComponent implements OnInit {
         leadSource: (this.fieldFlag == 'lead' && this.invTypeCategory == '1') ? this.basicDetails.value.leadSource : (this.fieldFlag == 'lead' && this.invTypeCategory == '2') ? this.nonIndividualForm.value.leadSource : null,
         leadRating: (this.fieldFlag == 'lead' && this.invTypeCategory == '1') ? this.basicDetails.value.leadRating : (this.fieldFlag == 'lead' && this.invTypeCategory == '2') ? this.nonIndividualForm.value.leadRating : null,
         companyStatus: (this.invTypeCategory == '2') ? this.nonIndividualForm.value.comStatus : null,
-        leadStatus: (this.fieldFlag == 'lead' && this.invTypeCategory == '1') ? this.basicDetails.value.leaadStatus : (this.fieldFlag == 'lead' && this.invTypeCategory == '2') ? this.nonIndividualForm.value.leadStatus : null
+        leadStatus: (this.fieldFlag == 'lead' && this.invTypeCategory == '1') ? this.basicDetails.value.leaadStatus : (this.fieldFlag == 'lead' && this.invTypeCategory == '2') ? this.nonIndividualForm.value.leadStatus : null,
+        occupationId: (this.fieldFlag == 'lead' && this.invTypeCategory == '2') ? this.nonIndividualForm.value.comOccupation : null
       };
       if (this.basicDetailsData.userId == null) {
         // if (this.invTypeCategory == '2') {
@@ -351,7 +352,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         obj.remarks = this.basicDetailsData.remarks;
         obj.aadhaarNumber = this.basicDetailsData.aadhaarNumber;
         obj.martialStatusId = this.basicDetailsData.martialStatusId;
-        obj.occupationId = this.basicDetailsData.occupationId;
+        (this.invTypeCategory == '2') ? '' : obj.occupationId = this.basicDetailsData.occupationId;
         this.peopleService.editClient(obj).subscribe(
           data => {
             this.barButtonOptions.active = false;
