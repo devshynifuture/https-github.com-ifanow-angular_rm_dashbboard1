@@ -1,7 +1,7 @@
 .height23 {
     height: 23px;
-  }
-  
+}
+
 .skeletonAnimation .relClass {
     position: relative;
     .bar {
@@ -24,7 +24,9 @@
         }
     }
 }
+
 .profile-img {
+    margin-top: 12px;
     img {
         max-width: 100%;
     }

@@ -87,14 +87,14 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
     this.taskTemplate = this.fb.group({
       id: [this.data.id, []],
       advisorId: this.advisorId,
-      categoryId: [this.data.categoryId || ''],
-      subcategoryId: [this.data.subcategoryId || ''],
-      subSubCategoryId: [this.data.subSubCategoryId || ''],
-      adviceTypeId: [this.data.adviceTypeId || ''],
+      categoryId: [this.data.categoryId || 0],
+      subcategoryId: [this.data.subcategoryId || 0],
+      subSubCategoryId: [this.data.subSubCategoryId || 0],
+      adviceTypeId: [this.data.adviceTypeId || 0],
       templateType: this.data.templateType,
       taskDescription: [this.data.taskDescription || ''],
-      assignedTo: this.data.assignedTo || '',
-      turnAroundTime: [this.data.turnAroundTime || ''],
+      assignedTo: this.data.assignedTo || 0,
+      turnAroundTime: [this.data.turnAroundTime || 0],
       subTaskList: this.fb.array([]),
     });
 
@@ -195,7 +195,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
     }
   }
 
-  subTaskFormGroup(id = 0, taskNo = '', desp = '', tat = '', ownerId = '') {
+  subTaskFormGroup(id = 0, taskNo = '', desp = '', tat = 0, ownerId = 0) {
     return this.fb.group({
       id: id,
       taskNumber: taskNo,

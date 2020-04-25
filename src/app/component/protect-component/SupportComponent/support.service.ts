@@ -95,11 +95,11 @@ export class SupportService {
   editStageComment(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_STAGE_COMMENT, data);
   }
-  addStageComment(data){
-    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_STAGE_COMMENT , data);
+  addStageComment(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_STAGE_COMMENT, data);
   }
-  getMyIFAReconSummary(data){
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MY_IFA_REC_SUMMARY, data); 
+  getMyIFAReconSummary(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MY_IFA_REC_SUMMARY, data);
   }
   // observable data sending
 
@@ -131,11 +131,11 @@ export class SupportService {
   addRm(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_RM, data);
   }
-  getTickets(data){
+  getTickets(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TICKET, data);
   }
-  getDayWiseDataRm(data){
-    return this.http.post(apiConfig.MAIN_URL + appConfig.GET_RM_DAY_WISEDATA, data); 
+  getReportFilterData(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.GET_REPORT_FILTER_DATA, data);
   }
 
 }
