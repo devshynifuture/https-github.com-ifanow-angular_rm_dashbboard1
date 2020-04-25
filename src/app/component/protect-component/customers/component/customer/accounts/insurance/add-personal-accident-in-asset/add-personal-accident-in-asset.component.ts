@@ -104,7 +104,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '',], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
     }));
     if (data) {
       setTimeout(() => {
@@ -172,7 +172,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
 
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : ''], sharePercentage: [data ? data.sumInsured : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -213,7 +213,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
   }
   addNewFeature(data) {
     this.planFeatureForm.push(this.fb.group({
-      planfeatures: [data ? data.planFeature : ''],
+      planfeatures: [data ? data.policyFeatureId : ''],
     }));
   }
   removeNewFeature(item) {
@@ -249,7 +249,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
         id: 0,
         isClient: 0
       })]),
-      name:[(this.dataForEdit ? this.dataForEdit.name : ''),[Validators.required]],
+      name:[(this.dataForEdit ? this.dataForEdit.name : '')],
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : ''), [Validators.required]],
       insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : ''), [Validators.required]],
       planeName: [(this.dataForEdit ? this.dataForEdit.planeName :''), [Validators.required]],
@@ -258,7 +258,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
       policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : '', [Validators.required]],
       cumulativeBonus: [this.dataForEdit ? this.dataForEdit.cumulativeBonus : ''],
       bonusType: [this.dataForEdit ? this.dataForEdit.cumulativeBonusRupeesOrPercent + '' : ''],
-      planfeatures: [(this.dataForEdit ? this.dataForEdit.planFeatures +'' : ''), [Validators.required]],
+      planfeatures: [(this.dataForEdit ? this.dataForEdit.policyFeatureId : '')],
       exclusion: [this.dataForEdit ? this.dataForEdit.exclusion :''],
       inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : ''],
       tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : ''],
@@ -278,7 +278,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
         id:[0],
         familyMemberId:[''],
         relationshipId:[''],
-        ttdSumAssured:['']
+        ttdSumAssured:['',[Validators.required]]
       })]),
       planFeatureForm: this.fb.array([this.fb.group({
         planfeatures: [''],
@@ -315,7 +315,12 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
         this.addTransaction(element);
       });
     }
-
+    if (this.dataForEdit) {
+      this.planFeatureForm.removeAt(0);
+      this.dataForEdit.policyFeatures.forEach(element => {
+        this.addNewFeature(element);
+      });
+    }
 
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.personalAccidentForm }
 
@@ -324,6 +329,22 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
     // this.DOB = data.dateOfBirth
     // this.ownerData = this.personalAccidentForm.controls;
     // this.familyMemberId = data.familyMemberId;
+  }
+  getFamilyData(value,data){
+
+    data.forEach(element => {
+      for (let e in this.insuredMembersForm.controls) {
+        let name = this.insuredMembersForm.controls[e].get('insuredMembers')
+        if(element.userName == name.value){
+          this.insuredMembersForm.controls[e].get('insuredMembers').setValue(element.userName);
+          this.insuredMembersForm.controls[e].get('familyMemberId').setValue(element.id);
+          this.insuredMembersForm.controls[e].get('relationshipId').setValue(element.relationshipId);
+        }
+      }
+     
+    });
+    
+
   }
   ngOnInit() {
   }
@@ -338,7 +359,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
         sumInsured: element.get('sumAssured').value,
         relationshipId: element.get('relationshipId').value,  
         insuredOrNominee: 1,
-        id:element.get('id').value,
+        id:(element.get('id').value) ? element.get('id').value : null,
         ttdSumAssured:element.get('id').value
       }
       memberList.push(obj)
@@ -348,7 +369,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
     finalplanFeatureList.controls.forEach(element => {
       let obj =
       {
-        planfeatures : element.get('planfeatures').value,
+        policyFeatureId : element.get('planfeatures').value,
       }
       featureList.push(obj)
     })
@@ -363,25 +384,18 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
         "policyExpiryDate": this.personalAccidentForm.get('policyExpiryDate').value,
         "cumulativeBonus": this.personalAccidentForm.get('cumulativeBonus').value,
         "cumulativeBonusRupeesOrPercent": this.personalAccidentForm.get('bonusType').value,
-        "policyTypeId": this.personalAccidentForm.get('PlanType').value,
-        "deductibleSumInsured": this.personalAccidentForm.get('deductibleAmt').value,
-        "exclusion": this.personalAccidentForm.get('exclusion').value,
-        "copay": this.personalAccidentForm.get('copay').value,
         "planName": this.personalAccidentForm.get('planeName').value,
-        "policyNumber": this.personalAccidentForm.get('policyNum').value,
-        "copayRupeesOrPercent": this.personalAccidentForm.get('copayType').value,
+        "exclusion": this.personalAccidentForm.get('exclusion').value,
+        "premiumAmount": this.personalAccidentForm.get('premium').value,
         "tpaName": this.personalAccidentForm.get('tpaName').value,
         "advisorName": this.personalAccidentForm.get('advisorName').value,
         "serviceBranch": this.personalAccidentForm.get('serviceBranch').value,
         "linkedBankAccount": this.personalAccidentForm.get('bankAccount').value,
-        "insurerName": this.personalAccidentForm.get('insurerName').value,
+        "policyNumber": this.personalAccidentForm.get('policyNum').value,
         "policyInceptionDate": this.personalAccidentForm.get('inceptionDate').value,
+        "policyFeatures":featureList,
+        "insurerName": this.personalAccidentForm.get('insurerName').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
-        "planFeature":featureList,
-        "addOns": [{
-          "addOnId": this.personalAccidentForm.get('additionalCovers').value,
-          "addOnSumInsured": this.personalAccidentForm.get('coversAmount').value
-        }],
         insuredMembers: memberList,
         nominees: this.personalAccidentForm.value.getNomineeName,
       }
@@ -394,6 +408,9 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
         });
         obj.nominees = this.personalAccidentForm.value.getNomineeName;
         obj.nominees.forEach(element => {
+         if(element.sharePercentage){
+           element.sumInsured = element.sharePercentage;
+         }
           element.insuredOrNominee = 2
         });
       } else {
@@ -402,7 +419,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
       console.log(obj);
 
 
-
+     
       if (this.dataForEdit) {
         this.customerService.editGeneralInsuranceData(obj).subscribe(
           data => {

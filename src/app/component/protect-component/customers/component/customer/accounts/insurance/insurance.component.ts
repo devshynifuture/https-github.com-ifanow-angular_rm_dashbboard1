@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -15,6 +15,7 @@ import { AddMotorInsuranceInAssetComponent } from './add-motor-insurance-in-asse
 import { AddTravelInsuranceInAssetComponent } from './add-travel-insurance-in-asset/add-travel-insurance-in-asset.component';
 import { AddHomeInsuranceInAssetComponent } from './add-home-insurance-in-asset/add-home-insurance-in-asset.component';
 import { AddFireAndPerilsInsuranceInAssetComponent } from './add-fire-and-perils-insurance-in-asset/add-fire-and-perils-insurance-in-asset.component';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
 
 @Component({
   selector: 'app-insurance',
@@ -38,10 +39,18 @@ export class InsuranceComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   data2: Array<any> = [{}, {}, {}];
+  fragmentData = { isSpinner: false };
   dataSourceGeneralInsurance = new MatTableDataSource(this.data);
-  @ViewChild("tableOne", { static: true }) sort: MatSort;
-  lifeInsuranceList = [{ name: 'Term', id: 1 }, { name: 'Traditional', id: 2 }, { name: 'ULIP', id: 3 }];
-
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  lifeInsuranceList = [{ name: 'Term', id: 1 ,count:''}, { name: 'Traditional', id: 2,count:'' }, { name: 'ULIP', id: 3 ,count:''}];
+  generalLifeInsuranceList =[{ name: 'Health', id: 5,count:'' }, { name: 'Personal accident', id: 7 ,count:'' }, { name: 'Critical illness', id: 6 ,count:''}, {
+    name: 'Motor',
+    id: 4 ,count:''
+  }, { name: 'Travel', id: 8 ,count:'' }, { name: 'Home', id: 9 , count:'' }, { name: 'Fire & special perils', id: 10,count:'' }]
+  allInsurance = [{ name: 'Term', id: 1 }, { name: 'Traditional', id: 2 }, { name: 'ULIP', id: 3 },{ name: 'Health', id: 5 }, { name: 'Personal accident', id: 7 }, { name: 'Critical illness', id: 6 }, {
+    name: 'Motor',
+    id: 4
+  }, { name: 'Travel', id: 8 }, { name: 'Home', id: 9 }, { name: 'Fire & special perils', id: 10 }]
   viewMode;
   dislayList: any;
   sumAssured = 0;
@@ -50,12 +59,18 @@ export class InsuranceComponent implements OnInit {
   totalCurrentValue = 0;
   totalPremiunAmountLifeIns = 0;
   totalSumAssuredLifeIns = 0;
+  showInsurance: any;
+  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('tableEl2', { static: false }) tableEl2;
+  @ViewChild('lifeInsurance', { static: false }) lifeInsurance: ElementRef;
+  @ViewChild('generalInsurance', { static: false }) generalInsurance: ElementRef;
+  lifeInsuranceCount: any;
+  generalInsuranceCount: any;
 
   constructor(private eventService: EventService, public dialog: MatDialog,
-    private subInjectService: SubscriptionInject, private cusService: CustomerService) {
+    private subInjectService: SubscriptionInject, private cusService: CustomerService ,private utils :UtilService ,private excelGen:ExcelGenService) {
   }
 
-  generalLifeInsuranceList = [/*"Health", "Car/2 Wheeler", "Travel", "Personal accident", "Critical illness", "Cancer", "Home", "Others"*/];
   insuranceTypeId;
 
   ngOnInit() {
@@ -63,13 +78,50 @@ export class InsuranceComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.insuranceTypeId = 1;
     this.insuranceSubTypeId = 0;
+    this.getCount();
     this.getGlobalDataInsurance();
     this.getInsuranceData(1);
     this.lifeInsuranceFlag = true;
     this.generalInsuranceFlag = false;
   }
+  
+  getCount(){
+    const obj={
+      advisorId:this.advisorId,
+      clientId:this.clientId
+    }
+    this.cusService.getInsuranceCount(obj).subscribe(
+      data => {
+        console.log(data);
+        if(data){
+          this.lifeInsuranceCount=data.LifeInsurance
+          this.generalInsuranceCount =data.GeneralInsurance
+          this.lifeInsuranceList[0].count =data.Term;
+          this.lifeInsuranceList[1].count =data.Traditional;
+          this.lifeInsuranceList[2].count =data.ULIP;
+          this.generalLifeInsuranceList[0].count =data.HealthInsurance;
+          this.generalLifeInsuranceList[1].count =data.PersonalAccident;
+          this.generalLifeInsuranceList[2].count =data.CriticalIllness;
+          this.generalLifeInsuranceList[3].count =data.MotorInsurance;
+          this.generalLifeInsuranceList[4].count =data.TravelInsurance  ;
+          this.generalLifeInsuranceList[5].count =data.HomeInsurance;
+          this.generalLifeInsuranceList[6].count =data.FireAndSpecialPerilsInsurance;
+
+
+        }
+          
+
+      },
+      error => this.eventService.showErrorMessage(error)
+    );
+  }
 
   getInsuranceSubTypeData(advisorId, clientId, insuranceId, insuranceSubTypeId) {
+    this.allInsurance.forEach(element => {
+     if(element.id == insuranceSubTypeId) {
+       this.showInsurance = element.name;
+     }
+    });
     this.dataSource = new MatTableDataSource([{}, {}, {}]);
     this.dataSourceGeneralInsurance = new MatTableDataSource([{}, {}, {}]);
     this.isLoading = true;
@@ -91,15 +143,52 @@ export class InsuranceComponent implements OnInit {
     }
  
   }
+  filterInsurance(category, key: string, value: any, data) {
+    // let dataFiltered;
+    // if (data == 'tab1') {
+    //   dataFiltered = this.filterForliabilities;
+    // } else {
+    //   data = parseInt(data);
+    //   dataFiltered = this.filterForliabilities.filter(function (item) {
+    //     return item[category] === data;
+    //   });
+    // }
 
+    // dataFiltered = dataFiltered.filter(function (item) {
+    //   return item[key] === value;
+    // });
+
+    // this.isLiabilitiFilter = true;
+    // if (dataFiltered.length > 0) {
+    //   this.dataSource.data = dataFiltered;
+    //   this.dataSource = new MatTableDataSource(this.dataSource.data);
+    //   this.totalLoanAmt =0;
+    //   this.outStandingAmt =0;
+    //  this.dataSource.data.forEach(element => {
+    //     this.totalLoanAmt += element.loanAmount
+    //   });
+    //   this.dataSource.data.forEach(element => {
+    //     if (element.outstandingAmount == "NaN") {
+    //       element.outstandingAmount = 0
+    //     }
+    //     this.outStandingAmt += element.outstandingAmount
+    //   });
+    // } else {
+    //   this.eventService.openSnackBar("No data found", "Dismiss")
+    // }
+
+
+  }
   getInsuranceDataResponse(data) {
     this.isLoading = false
     if (data) {
       this.dataSource.data = data.insuranceList;
       this.dataSource = new MatTableDataSource(this.dataSource.data);
       this.dataSource.sort = this.sort;
+      this.getStatusId(this.dataSource.data)
+      this.dataSourceGeneralInsurance.data
       this.dataSource.data.forEach(element => {
-        this.totalCurrentValue += (element.currentValue) ? element.currentValue :0,
+        this.totalCurrentValue += (element.currentValue == 'Infinity') ? 0 : element.currentValue,
         this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount :0
         this.totalSumAssuredLifeIns +=( element.sumAssured) ?  element.sumAssured :0
       });
@@ -109,6 +198,7 @@ export class InsuranceComponent implements OnInit {
   }
 
   getInsuranceData(typeId) {
+    this.showInsurance = 'life';
     this.isLoading = true;
     this.dataSource = new MatTableDataSource([{}, {}, {}]);
     const obj = {
@@ -126,13 +216,23 @@ export class InsuranceComponent implements OnInit {
       // }
     );
   }
+  getStatusId(data){
+    data.forEach(obj => {
+      if (obj.policyExpiryDate < new Date()) {
+        obj.statusId = 'MATURED';
+      } else {
+        obj.statusId = 'LIVE';
+      }
+    });
+  }
   getInsuranceDataRes(data) {
     if (data) {
       this.dataSource.data = data.insuranceList;
       this.dataSource = new MatTableDataSource(this.dataSource.data);
       this.dataSource.sort = this.sort;
+      this.getStatusId(this.dataSource.data)
       this.dataSource.data.forEach(element => {
-        this.totalCurrentValue += (element.currentValue) ? element.currentValue :0,
+        this.totalCurrentValue +=  (element.currentValue == 'Infinity') ? 0 : element.currentValue,
         this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount :0
         this.totalSumAssuredLifeIns +=( element.sumAssured) ?  element.sumAssured :0
       });
@@ -148,6 +248,7 @@ export class InsuranceComponent implements OnInit {
       this.dataSourceGeneralInsurance.data = data.generalInsuranceList;
       this.dataSourceGeneralInsurance = new MatTableDataSource(this.dataSourceGeneralInsurance.data);
       this.dataSourceGeneralInsurance.sort = this.sort;
+      this.getStatusId(this.dataSourceGeneralInsurance.data);
       this.totalSumAssured= 0;
       this.totalPremiunAmount= 0;
       this.dataSourceGeneralInsurance.data.forEach(element => {
@@ -177,7 +278,34 @@ export class InsuranceComponent implements OnInit {
       }
     );
   }
+  generatePdf() {
+    this.fragmentData.isSpinner = true;
+    if(this.insuranceTypeId == 1){
+      let para = document.getElementById('lifeInsurance');
+      this.utils.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
+    }else{
+      let para = document.getElementById('generalInsurance');
+      this.utils.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
+    }
+  
+  }
+  Excel(tableTitle) {
+    this.fragmentData.isSpinner = true;
+    if(this.insuranceTypeId == 1){
+      let rows = this.tableEl._elementRef.nativeElement.rows;
+      const data = this.excelGen.generateExcel(rows, tableTitle);
+      if (data) {
+        this.fragmentData.isSpinner = false;
+      }
+    }else{
+      let rows = this.tableEl2._elementRef.nativeElement.rows;
+      const data = this.excelGen.generateExcel(rows, tableTitle);
+      if (data) {
+        this.fragmentData.isSpinner = false;
+      }
+    }
 
+  }
   getInsuranceTypeData(typeId, typeSubId) {
     this.lifeInsuranceFlag = false;
     this.insuranceTypeId = typeId;
@@ -240,7 +368,7 @@ export class InsuranceComponent implements OnInit {
       this.insuranceSubTypeId = 0;
       this.generalLifeInsuranceList = [];
       this.lifeInsuranceList = [];
-      [{ name: 'Term', id: 1 }, { name: 'Traditional', id: 2 }, { name: 'ULIP', id: 3 }].map((i) => {
+      [{ name: 'Term', id: 1 ,count:''}, { name: 'Traditional', id: 2,count:'' }, { name: 'ULIP', id: 3 ,count:''}].map((i) => {
         this.lifeInsuranceList.push(i);
       });
     } else {
@@ -248,13 +376,10 @@ export class InsuranceComponent implements OnInit {
       this.lifeInsuranceFlag = false;
       this.generalInsuranceFlag = true;
       this.generalLifeInsuranceList = [];
-      [{ name: 'Health', id: 4 }, { name: 'Personal accident', id: 5 }, { name: 'Critical illness', id: 6 }, {
+      [{ name: 'Health', id: 5,count:'' }, { name: 'Personal accident', id: 7 ,count:'' }, { name: 'Critical illness', id: 6 ,count:''}, {
         name: 'Motor',
-        id: 7
-      }, { name: 'Travel', id: 8 }, { name: 'Home', id: 9 }, { name: 'Fire & special perils', id: 10 }, {
-        name: 'Others',
-        id: 11
-      }].map((i) => {
+        id: 4 ,count:''
+      }, { name: 'Travel', id: 8 ,count:'' }, { name: 'Home', id: 9 , count:'' }, { name: 'Fire & special perils', id: 10,count:'' }].map((i) => {
         this.generalLifeInsuranceList.push(i);
       });
     }
@@ -311,16 +436,16 @@ export class InsuranceComponent implements OnInit {
       case 3: 
         fragmentData.componentName = AddInsuranceComponent;
         break;
-      case 4: 
+      case 5: 
         fragmentData.componentName = AddHealthInsuranceAssetComponent;
         break;
-        case 5: 
+        case 7: 
         fragmentData.componentName = AddPersonalAccidentInAssetComponent;
         break;
         case 6: 
         fragmentData.componentName = AddCriticalIllnessInAssetComponent;
         break;
-        case 7: 
+        case 4: 
         fragmentData.componentName = AddMotorInsuranceInAssetComponent;
         break;
         case 8: 
@@ -345,9 +470,11 @@ export class InsuranceComponent implements OnInit {
             this.lifeInsuranceFlag = true
             if(this.insuranceTypeId==1){
               this.insuranceSubTypeId = 0;
+              this.getCount();
               this.getInsuranceData(this.insuranceTypeId)
               console.log('this is sidebardata in subs subs 2: ', sideBarData);
             }else{
+              this.getCount();
               this.getInsuranceSubTypeData(this.advisorId, this.clientId, this.insuranceTypeId, this.insuranceSubTypeId) 
             }
             

@@ -108,7 +108,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : ''], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
     }));
     if (data) {
       setTimeout(() => {
@@ -177,7 +177,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
 
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : ''], sharePercentage: [data ? data.sumInsured : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -222,7 +222,6 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
       })]),
       name:[(this.dataForEdit ? this.dataForEdit.name : '')],
       PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId : ''), [Validators.required]],
-      planDetails: [(this.dataForEdit ? this.dataForEdit.policyFeatureId+'' : ''), [Validators.required]],
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : ''), [Validators.required]],
       insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : ''), [Validators.required]],
       planeName: [(this.dataForEdit ? this.dataForEdit.planeName :''), [Validators.required]],
@@ -382,28 +381,26 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
         "clientId": this.clientId,
         "advisorId": this.advisorId,
         "policyHolderId": this.critialIllnessForm.value.getCoOwnerName[0].familyMemberId,
+        "policyTypeId": this.critialIllnessForm.get('PlanType').value,
+        "policyNumber": this.critialIllnessForm.get('policyNum').value,
+        "insurerName": this.critialIllnessForm.get('insurerName').value,
+        "planName": this.critialIllnessForm.get('planeName').value,
+        "premiumAmount": this.critialIllnessForm.get('premium').value,
         "policyStartDate": this.critialIllnessForm.get('policyStartDate').value,
         "policyExpiryDate": this.critialIllnessForm.get('policyExpiryDate').value,
         "cumulativeBonus": this.critialIllnessForm.get('cumulativeBonus').value,
         "cumulativeBonusRupeesOrPercent": this.critialIllnessForm.get('bonusType').value,
-        "policyTypeId": this.critialIllnessForm.get('PlanType').value,
-        "deductibleSumInsured": this.critialIllnessForm.get('deductibleAmt').value,
-        "exclusion": this.critialIllnessForm.get('exclusion').value,
-        "copay": this.critialIllnessForm.get('copay').value,
-        "planName": this.critialIllnessForm.get('planeName').value,
-        "policyNumber": this.critialIllnessForm.get('policyNum').value,
-        "copayRupeesOrPercent": this.critialIllnessForm.get('copayType').value,
-        "tpaName": this.critialIllnessForm.get('tpaName').value,
-        "advisorName": this.critialIllnessForm.get('advisorName').value,
-        "serviceBranch": this.critialIllnessForm.get('serviceBranch').value,
-        "linkedBankAccount": this.critialIllnessForm.get('bankAccount').value,
-        "insurerName": this.critialIllnessForm.get('insurerName').value,
-        "policyInceptionDate": this.critialIllnessForm.get('inceptionDate').value,
-        "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
         "addOns": [{
           "addOnId": this.critialIllnessForm.get('additionalCovers').value,
           "addOnSumInsured": this.critialIllnessForm.get('coversAmount').value
         }],
+        "exclusion": this.critialIllnessForm.get('exclusion').value,
+        "policyInceptionDate": this.critialIllnessForm.get('inceptionDate').value,
+        "tpaName": this.critialIllnessForm.get('tpaName').value,
+        "advisorName": this.critialIllnessForm.get('advisorName').value,
+        "serviceBranch": this.critialIllnessForm.get('serviceBranch').value,
+        "linkedBankAccount": this.critialIllnessForm.get('bankAccount').value,
+        "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
         insuredMembers: memberList,
         nominees: this.critialIllnessForm.value.getNomineeName,
       }
@@ -416,8 +413,11 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
         });
         obj.nominees = this.critialIllnessForm.value.getNomineeName;
         obj.nominees.forEach(element => {
-          element.insuredOrNominee = 2
-        });
+          if(element.sharePercentage){
+            element.sumInsured = element.sharePercentage;
+          }
+           element.insuredOrNominee = 2
+         });
       } else {
         obj.nominees = [];
       }

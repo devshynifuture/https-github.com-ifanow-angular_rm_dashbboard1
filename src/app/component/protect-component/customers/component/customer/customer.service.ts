@@ -28,6 +28,10 @@ export class CustomerService {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('insuranceSubTypeId', data.insuranceSubTypeId).set('insuranceTypeId', data.insuranceTypeId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIFE_INSURANCE, httpParams);
   }
+  getInsuranceCount(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.INSURANCE_COUNT_GET, httpParams);
+  }
   editLifeInsuranceData(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_LIFE_INSURANCE, data);
   }
@@ -411,6 +415,7 @@ export class CustomerService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_POLICY_NAME, httpParams);
   }
 
+  
   deleteInsurance(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_INSURANCE, data);
   }

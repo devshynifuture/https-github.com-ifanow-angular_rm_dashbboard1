@@ -323,6 +323,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         "advisorId": this.advisorId,
         "ownerName": "",
         "commencementDate": this.lifeInsuranceForm.get('commencementDate').value,
+        "policyNumber": this.lifeInsuranceForm.get('policyNum').value,
         "sumAssured": this.lifeInsuranceForm.get('sumAssured').value,
         "policyStatusId": this.lifeInsuranceForm.get('policyStatus').value,
         "lastUnpaidPremium": this.lifeInsuranceForm.get('policyStatusLastUnpaid').value,

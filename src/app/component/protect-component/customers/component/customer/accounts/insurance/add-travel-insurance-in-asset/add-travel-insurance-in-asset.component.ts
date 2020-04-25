@@ -106,7 +106,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : ''], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
     }));
     if (data) {
       setTimeout(() => {
@@ -174,7 +174,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
 
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : ''], sharePercentage: [data ? data.sumInsured : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -231,6 +231,22 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
   preventDefault(e) {
     e.preventDefault();
   }
+  getFamilyData(value,data){
+
+    data.forEach(element => {
+      for (let e in this.insuredMembersForm.controls) {
+        let name = this.insuredMembersForm.controls[e].get('insuredMembers')
+        if(element.userName == name.value){
+          this.insuredMembersForm.controls[e].get('insuredMembers').setValue(element.userName);
+          this.insuredMembersForm.controls[e].get('familyMemberId').setValue(element.id);
+          this.insuredMembersForm.controls[e].get('relationshipId').setValue(element.relationshipId);
+        }
+      }
+     
+    });
+    
+
+  }
   getdataForm(data) {
     this.dataForEdit = data.data;
     if (data.data == null) {
@@ -251,17 +267,16 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
         id: 0,
         isClient: 0
       })]),
-      name:[(this.dataForEdit ? this.dataForEdit.name : ''),[Validators.required]],
+      name:[(this.dataForEdit ? this.dataForEdit.name : '')],
       PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId : ''), [Validators.required]],
       planDetails: [(this.dataForEdit ? this.dataForEdit.policyFeatureId+'' : ''), [Validators.required]],
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : ''), [Validators.required]],
       insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : ''), [Validators.required]],
+      sumAssuredIdv: [(this.dataForEdit ? this.dataForEdit.sumAssuredIdv : ''), [Validators.required]],
       planeName: [(this.dataForEdit ? this.dataForEdit.planeName :''), [Validators.required]],
-      sumAssured: [(this.dataForEdit ? this.dataForEdit.sumAssured : ''), [Validators.required]],
       premium: [(this.dataForEdit ? this.dataForEdit.premiumAmount : ''), [Validators.required]],
       policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : '', [Validators.required]],
       policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : '', [Validators.required]],
-      planfeatures: [(this.dataForEdit ? this.dataForEdit.planFeatures +'' : ''), [Validators.required]],
       geography: [this.dataForEdit ? this.dataForEdit.geography + '' : ''],
       exclusion: [this.dataForEdit ? this.dataForEdit.exclusion :''],
       tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : ''],
@@ -340,7 +355,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
         sumInsured: element.get('sumAssured').value,
         relationshipId: element.get('relationshipId').value,  
         insuredOrNominee: 1,
-        id:element.get('id').value,
+        id:(element.get('id').value) ? element.get('id').value : null,
         ttdSumAssured:element.get('id').value
       }
       memberList.push(obj)
@@ -361,29 +376,22 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
         "clientId": this.clientId,
         "advisorId": this.advisorId,
         "policyHolderId": this.travelInsuranceForm.value.getCoOwnerName[0].familyMemberId,
+        "policyTypeId": this.travelInsuranceForm.get('PlanType').value,
+        "policyFeatureId": this.travelInsuranceForm.get('planDetails').value,
+        "insurerName": this.travelInsuranceForm.get('insurerName').value,
+        "policyNumber": this.travelInsuranceForm.get('policyNum').value,
+        "planName": this.travelInsuranceForm.get('planeName').value,
+        "sumInsuredIdv": this.travelInsuranceForm.get('sumAssuredIdv').value,
+        "premiumAmount": this.travelInsuranceForm.get('premium').value,
         "policyStartDate": this.travelInsuranceForm.get('policyStartDate').value,
         "policyExpiryDate": this.travelInsuranceForm.get('policyExpiryDate').value,
-        "cumulativeBonus": this.travelInsuranceForm.get('cumulativeBonus').value,
-        "cumulativeBonusRupeesOrPercent": this.travelInsuranceForm.get('bonusType').value,
-        "policyTypeId": this.travelInsuranceForm.get('PlanType').value,
-        "deductibleSumInsured": this.travelInsuranceForm.get('deductibleAmt').value,
+        "geographyId": this.travelInsuranceForm.get('geography').value,
         "exclusion": this.travelInsuranceForm.get('exclusion').value,
-        "copay": this.travelInsuranceForm.get('copay').value,
-        "planName": this.travelInsuranceForm.get('planeName').value,
-        "policyNumber": this.travelInsuranceForm.get('policyNum').value,
-        "copayRupeesOrPercent": this.travelInsuranceForm.get('copayType').value,
         "tpaName": this.travelInsuranceForm.get('tpaName').value,
         "advisorName": this.travelInsuranceForm.get('advisorName').value,
         "serviceBranch": this.travelInsuranceForm.get('serviceBranch').value,
-        "linkedBankAccount": this.travelInsuranceForm.get('bankAccount').value,
-        "insurerName": this.travelInsuranceForm.get('insurerName').value,
-        "policyInceptionDate": this.travelInsuranceForm.get('inceptionDate').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
         "planFeature":featureList,
-        "addOns": [{
-          "addOnId": this.travelInsuranceForm.get('additionalCovers').value,
-          "addOnSumInsured": this.travelInsuranceForm.get('coversAmount').value
-        }],
         insuredMembers: memberList,
         nominees: this.travelInsuranceForm.value.getNomineeName,
       }
@@ -396,8 +404,11 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
         });
         obj.nominees = this.travelInsuranceForm.value.getNomineeName;
         obj.nominees.forEach(element => {
-          element.insuredOrNominee = 2
-        });
+          if(element.sharePercentage){
+            element.sumInsured = element.sharePercentage;
+          }
+           element.insuredOrNominee = 2
+         });
       } else {
         obj.nominees = [];
       }

@@ -83,7 +83,7 @@
         </div>
     </div>
 
-    <div class="row pt-32">
+    <!-- <div class="row pt-32">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-20 ">Add ons</h5>
         </div>
@@ -102,9 +102,34 @@
             <i class="material-icons text-primitive f-20 c-p float-left">add</i>
         </div>
 
+    </div> -->
+
+    <div class="row pt-32"  formArrayName="addOnForm">
+        <div class="row pt-36" *ngFor="let obj of motorInsuranceForm.controls['addOnForm'].controls; let pointIndex=index"
+        [formGroupName]="pointIndex">
+    <div class="col-md-5 pr-0 text-right">
+        <h5 class="m-0 pt-20 ">Add ons</h5>
     </div>
 
+    <div class="col-md-5 form-group">
+        <mat-form-field>
+            <mat-select matInput formControlName="additionalCovers" autocomplete="true" class="form-control br-0">
+                <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
+                    {{option.add_on}}</mat-option>
+            </mat-select>
+            <mat-error>This field is required
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <div class="col-md-1 p-0 pt-8 d-flex">
+            <i class="material-icons text-primitive c-p float-left"
+            (click)="addNewAddOns(undefined)">add</i>
+            <i class="material-icons text-primitive c-p float-right"
+            (click)="removeNewAddOns(pointIndex)">remove</i>
+        </div>
+</div>
 
+</div>
     <div class="row pt-32">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-20 ">Policy number</h5>
@@ -140,10 +165,17 @@
             <h5 class="m-0 pt-20 ">Policy name</h5>
         </div>
         <div class="col-md-5 form-group">
-            <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
-                formControlName="policyName" #insureerName appInputValueValidation autocomplete="off"
-                class="form-control br-0"  placeholder="Enter Policy name">
+            <mat-form-field class="example-full-width">
+                <input matInput class="form-control br-0" type="text" (keyup)="findPolicyName($event)"
+                    formControlName="policyName" aria-label="Number" matInput [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option (click)="selectPolicy(option)" *ngFor="let option of options"
+                        [value]="option.policyName">
+                        {{option.policyName}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error>This field is required
+                </mat-error>
             </mat-form-field>
         </div>
     </div>
@@ -173,7 +205,7 @@
         </div>
         <div class="col-md-3 form-group mb-0">
                 <mat-form-field class="ba-date">
-                        <input matInput formControlName="policyExpiryDate" [max]="maxDate" class="form-control br-0 b-0"
+                        <input matInput formControlName="policyExpiryDate" class="form-control br-0 b-0"
                             [matDatepicker]="policyExpiryDatePicker" (focus)="policyExpiryDatePicker.open()"
                             (input)="preventDefault($event)">
                         <mat-datepicker-toggle matSuffix [for]="policyExpiryDatePicker"></mat-datepicker-toggle>
@@ -516,7 +548,7 @@
             <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="close(null)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveHealthInsurance()">SAVE</button>
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveMotorInsurance()">SAVE</button>
 
         </div>
     </div>

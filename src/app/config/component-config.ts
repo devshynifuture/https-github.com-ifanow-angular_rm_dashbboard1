@@ -88,6 +88,7 @@ export const appConfig = {
   EDIT_GENERAL_INSURANCE:'account/insurance/general-insurance/edit',
   GET_GENERAL_INSURANCE:'account/insurance/general-insurance/list/get',
   DELETE_GENERAL_INSURANCE:'account/insurance/general-insurance/delete',
+  INSURANCE_COUNT_GET:'account/insurance/count/list',
   ADD_LIABILITY: 'account/liability/loan/add',
   GET_LIABILITY: 'account/liability/loan/list/get',
   EDIT_LIABILITY: 'account/liability/loan/edit',

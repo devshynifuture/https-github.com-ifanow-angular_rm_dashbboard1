@@ -100,16 +100,17 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
   }
 
   /***owner***/
-  get insuredMembersForm() {
-    return this.healthInsuranceForm.get('InsuredMemberForm') as FormArray;
-  }
   get getCoOwner() {
     return this.healthInsuranceForm.get('getCoOwnerName') as FormArray;
   }
+  get insuredMembersForm() {
+    return this.healthInsuranceForm.get('InsuredMemberForm') as FormArray;
+  }
+
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : ''], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
     }));
     if (data) {
       setTimeout(() => {
@@ -178,7 +179,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
 
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : ''], sharePercentage: [data ? data.sumInsured : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -209,6 +210,10 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     }
     else {
       this.dataForEdit = data.data;
+      if(this.dataForEdit.addOns.length > 0){
+        this.addOns.addOnId =this.dataForEdit.addOns[0].addOnId;
+        this.addOns.addOnSumInsured =this.dataForEdit.addOns[0].addOnSumInsured;
+      }
       this.flag = "EDIT";
     }
     this.healthInsuranceForm = this.fb.group({
@@ -226,7 +231,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
       deductibleAmt: [(this.dataForEdit ? this.dataForEdit.deductibleSumInsured : ''), [Validators.required]],
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : ''), [Validators.required]],
       insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : ''), [Validators.required]],
-      planeName: [(this.dataForEdit ? this.dataForEdit.planeName :''), [Validators.required]],
+      planeName: [(this.dataForEdit ? this.dataForEdit.planName :''), [Validators.required]],
       loanAmount: [(this.dataForEdit ? this.dataForEdit.loanAmount :''), [Validators.required]],
       policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : '', [Validators.required]],
       policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : '', [Validators.required]],
@@ -234,14 +239,14 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
       copayType: [this.dataForEdit ? this.dataForEdit.copayRupeesOrPercent + '' : ''],
       cumulativeBonus: [this.dataForEdit ? this.dataForEdit.cumulativeBonus : ''],
       bonusType: [this.dataForEdit ? this.dataForEdit.cumulativeBonusRupeesOrPercent + '' : ''],
-      additionalCovers: [this.dataForEdit ? this.dataForEdit.addOns[0].addOnId : ''],
-      coversAmount: [this.dataForEdit ? this.dataForEdit.addOns[0].addOnSumInsured : ''],
       exclusion: [this.dataForEdit ? this.dataForEdit.exclusion :''],
       inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : ''],
       tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : ''],
       advisorName: [this.dataForEdit ? this.dataForEdit.advisorName :''],
       serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch :''],
       bankAccount: [this.dataForEdit ? this.dataForEdit.linkedBankAccount : ''],
+      additionalCovers: [(this.dataForEdit) ? this.addOns.addOnId : ''],
+      coversAmount: [(this.dataForEdit) ? this.addOns.addOnSumInsured : ''],
       nominees: this.nominees,
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
@@ -419,8 +424,11 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         });
         obj.nominees = this.healthInsuranceForm.value.getNomineeName;
         obj.nominees.forEach(element => {
-          element.insuredOrNominee = 2
-        });
+          if(element.sharePercentage){
+            element.sumInsured = element.sharePercentage;
+          }
+           element.insuredOrNominee = 2
+         });
       } else {
         obj.nominees = [];
       }
