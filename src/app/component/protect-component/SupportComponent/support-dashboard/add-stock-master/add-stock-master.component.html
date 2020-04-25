@@ -12,18 +12,15 @@
 </div>
 
 
-<div class="pb-44 mb-48 pt-100" [formGroup]="addStockMasterForm">
+<div class="pb-44 mb-48 pt-40" [formGroup]="addStockMasterForm">
     <div class="row">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Scrip name</h5>
         </div>
         <div class="col-md-5">
             <mat-form-field>
-                <input matInput appInputValueValidation
-                    [inputValidator]="validatorType.ALPHA_NUMERIC_PARANTHESIS_DOT_SPACE" #scriptNameRef type="text"
-                    class="form-control br-0" formControlName="scriptName">
-                <mat-error
-                    *ngIf="addStockMasterForm.get('scriptName').invalid && addStockMasterForm.get('scriptName').touched">
+                <input matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC_PARANTHESIS_DOT_SPACE" #scriptNameRef type="text" class="form-control br-0" formControlName="scriptName">
+                <mat-error *ngIf="addStockMasterForm.get('scriptName').invalid && addStockMasterForm.get('scriptName').touched">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -37,10 +34,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
-                        #bseSymbolRef type="text" class="form-control br-0" formControlName="bseSymbol">
-                    <mat-error
-                        *ngIf="addStockMasterForm.get('bseSymbol').invalid && addStockMasterForm.get('bseSymbol').touched">
+                    <input matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" #bseSymbolRef type="text" class="form-control br-0" formControlName="bseSymbol">
+                    <mat-error *ngIf="addStockMasterForm.get('bseSymbol').invalid && addStockMasterForm.get('bseSymbol').touched">
                         This field is required
                     </mat-error>
                     <mat-hint align="end">
@@ -58,11 +53,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC"
-                        [maxLength]="10" #nseSymbolRef type="text" class="form-control br-0"
-                        formControlName="nseSymbol">
-                    <mat-error
-                        *ngIf="addStockMasterForm.get('nseSymbol').invalid && addStockMasterForm.get('nseSymbol').touched">
+                    <input matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" #nseSymbolRef type="text" class="form-control br-0" formControlName="nseSymbol">
+                    <mat-error *ngIf="addStockMasterForm.get('nseSymbol').invalid && addStockMasterForm.get('nseSymbol').touched">
                         This field is required
                     </mat-error>
                     <mat-hint align="end">
@@ -86,8 +78,7 @@
                             {{ category }}
                         </mat-option>
                     </mat-select>
-                    <mat-error
-                        *ngIf="addStockMasterForm.get('subCategory').invalid && addStockMasterForm.get('subCategory').touched">
+                    <mat-error *ngIf="addStockMasterForm.get('subCategory').invalid && addStockMasterForm.get('subCategory').touched">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -103,11 +94,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                        [maxLength]="10" #prevDayClosingPriceRef type="text" class="form-control br-0"
-                        formControlName="prevDayClosingPrice">
-                    <mat-error
-                        *ngIf="addStockMasterForm.get('prevDayClosingPrice').invalid && addStockMasterForm.get('prevDayClosingPrice').touched">
+                    <input matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" #prevDayClosingPriceRef type="text" class="form-control br-0" formControlName="prevDayClosingPrice">
+                    <mat-error *ngIf="addStockMasterForm.get('prevDayClosingPrice').invalid && addStockMasterForm.get('prevDayClosingPrice').touched">
                         This field is required
                     </mat-error>
                     <mat-hint align="end">

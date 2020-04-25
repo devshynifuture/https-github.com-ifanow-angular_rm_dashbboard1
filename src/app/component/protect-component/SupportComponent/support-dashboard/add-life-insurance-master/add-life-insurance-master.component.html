@@ -12,17 +12,15 @@
 </div>
 
 
-<div class="pb-44 mb-48 pt-100" [formGroup]="addLifeInsuranceMasterForm">
+<div class="pb-44 mb-48 pt-40" [formGroup]="addLifeInsuranceMasterForm">
     <div class="row">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Policy name</h5>
         </div>
         <div class="col-md-5">
             <mat-form-field>
-                <input matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="10"
-                    #policyNameRef type="text" class="form-control br-0" formControlName="policyName">
-                <mat-error
-                    *ngIf="addLifeInsuranceMasterForm.get('policyName').invalid && addLifeInsuranceMasterForm.get('policyName').touched">
+                <input matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="10" #policyNameRef type="text" class="form-control br-0" formControlName="policyName">
+                <mat-error *ngIf="addLifeInsuranceMasterForm.get('policyName').invalid && addLifeInsuranceMasterForm.get('policyName').touched">
                     This field is required
                 </mat-error>
                 <mat-hint>
@@ -39,10 +37,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="10"
-                        #companyNameRef type="text" class="form-control br-0" formControlName="companyName">
-                    <mat-error
-                        *ngIf="addLifeInsuranceMasterForm.get('companyName').invalid && addLifeInsuranceMasterForm.get('companyName').touched">
+                    <input matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="10" #companyNameRef type="text" class="form-control br-0" formControlName="companyName">
+                    <mat-error *ngIf="addLifeInsuranceMasterForm.get('companyName').invalid && addLifeInsuranceMasterForm.get('companyName').touched">
                         This field is required
                     </mat-error>
                     <mat-hint>
@@ -80,8 +76,7 @@
                             Term - Return of Premium
                         </mat-option>
                     </mat-select>
-                    <mat-error
-                        *ngIf="addLifeInsuranceMasterForm.get('category').invalid && addLifeInsuranceMasterForm.get('category').touched">
+                    <mat-error *ngIf="addLifeInsuranceMasterForm.get('category').invalid && addLifeInsuranceMasterForm.get('category').touched">
                         This field is required
                     </mat-error>
                 </mat-form-field>
