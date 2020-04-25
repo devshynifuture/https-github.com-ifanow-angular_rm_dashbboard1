@@ -55,19 +55,18 @@
             <th *matHeaderCellDef class="br textRight text-right" mat-header-cell mat-sort-header="currentValue">
                 Current value
             </th>
-            <td *matCellDef="let element" class="br amt text-right" mat-cell>
-                <div class="bar" appFormatNumber> {{element.accumalatedValue}} </div>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.accumalatedValue }}</span> </div>
             </td>
-            <td mat-footer-cell class="br text-right amt p-8 amt f-600" *matFooterCellDef appFormatNumber
-                [value]="SumOfCurrentValue">
-                <div class="bar"> {{SumOfCurrentValue}} </div>
+            <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
+                <div >{{isLoading ? ' ' : '₹'}}<span [value]="SumOfCurrentValue" appFormatNumber>{{SumOfCurrentValue}}</span></div>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="rate">
             <th *matHeaderCellDef class="br textRight text-right" mat-header-cell mat-sort-header="rate"> Rate</th>
             <td *matCellDef="let element" class="br amt text-right" mat-cell>
-                <div class="bar"> {{element.rate}} </div>
+                <div class="bar"> {{element.rate}}{{!isLoading? "%" : ""}}</div>
             </td>
             <td *matFooterCellDef class="br text-left" mat-footer-cell></td>
         </ng-container>
@@ -75,12 +74,11 @@
             <th *matHeaderCellDef class="br textRight text-right" mat-header-cell mat-sort-header="balance">Balance
                 mentioned
             </th>
-            <td *matCellDef="let element" class="br amt text-right" mat-cell>
-                <div class="bar" appFormatNumber> {{element.accountBalance}} </div>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.accountBalance }}</span> </div>
             </td>
-            <td mat-footer-cell class="br text-right amt p-8 f-600" *matFooterCellDef appFormatNumber
-                [value]="SumOfBalancementioned">
-                <div class="bar"> {{SumOfBalancementioned}} </div>
+            <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
+                <div >{{isLoading ? ' ' : '₹'}}<span [value]="SumOfBalancementioned" appFormatNumber>{{SumOfBalancementioned}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="balAs">

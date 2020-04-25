@@ -384,7 +384,7 @@ export class RetirementAccountComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         if (value == 'EPF') {
-          this.custumService.deleteEPF(data.id).subscribe(
+          this.custumService.deleteEPF_EPS(data.id).subscribe(
             data => {
               dialogRef.close();
               this.getListEPF();
