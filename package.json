@@ -11,7 +11,7 @@
   },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 4200 --poll=2000",
+    "start": "ng serve --port 4200 --poll=2000 --configuration hmr",
     "build": "ng build --stats-json",
     "build-prod-nostat": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --prod --extra-webpack-config webpack.extra.js",
     "build-prod": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --prod --stats-json --extra-webpack-config webpack.extra.js --watch",

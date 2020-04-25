@@ -4,12 +4,14 @@ import { appConfig } from 'src/app/config/component-config';
 import { HttpService } from 'src/app/http-service/http-service';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { EventService } from '../../../../../../Data-service/event.service';
 @Injectable({
     providedIn: 'root'
 })
 export class ReconciliationService {
     constructor(
-        private http: HttpService
+        private http: HttpService,
+        private eventService: EventService
     ) { }
 
     // api calling functions 
@@ -20,16 +22,20 @@ export class ReconciliationService {
         const subject = new BehaviorSubject<any>('');
         this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_ADV_GET_BROKER_LIST, data)
             .subscribe(res => {
-                res.forEach(item => {
-                    const { id } = item;
-                    let brokerCode = item.arnOrRia === 1 ? 'ARN - ' + item.number : item.arnOrRia === 2 ? 'RIA - ' + item.number : null;
-                    let brokerListArr = [];
-                    brokerListArr.push({
-                        id,
-                        brokerCode
+                if (res) {
+                    res.forEach(item => {
+                        const { id } = item;
+                        let brokerCode = item.arnOrRia === 1 ? 'ARN - ' + item.number : item.arnOrRia === 2 ? 'RIA - ' + item.number : null;
+                        let brokerListArr = [];
+                        brokerListArr.push({
+                            id,
+                            brokerCode
+                        });
+                        subject.next(brokerListArr);
                     });
-                    subject.next(brokerListArr);
-                });
+                } else {
+                    this.eventService.openSnackBar('No Broker LIst Found', "DISMISS");
+                }
             });
 
         return subject.asObservable();
