@@ -46,16 +46,16 @@
                     </div>
                     <div class="col-md-6 pl-0 text-right">
                         <div class="bar height24">
-                            <p *ngIf="summaryMap[5]" class="text-black m-0 roboto">
-                                <span *ngIf="summaryMap[5].currentValue!=0">₹</span>
-                                <span appFormatNumber [value]="summaryMap[5].currentValue"
-                                    *ngIf="summaryMap">{{summaryMap[5].currentValue==0?'-':summaryMap[5].currentValue}}</span>
+                            <p *ngIf="mutualFundValue" class="text-black m-0 roboto">
+                                <span *ngIf="mutualFundValue.currentValue!=0">₹</span>
+                                <span appFormatNumber [value]="mutualFundValue.currentValue"
+                                    *ngIf="mutualFundValue">{{mutualFundValue.currentValue==0?'-':mutualFundValue.currentValue}}</span>
                             </p>
-                            <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(summaryMap[5].percentage),'text-danger': checkNumberPositiveAndNegative(summaryMap[5].percentage)==false,'': checkNumberPositiveAndNegative(summaryMap[5].percentage)==undefined}"
+                            <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(mutualFundValue.percentage),'text-danger': checkNumberPositiveAndNegative(mutualFundValue.percentage)==false,'': checkNumberPositiveAndNegative(mutualFundValue.percentage)==undefined}"
                                 class="m-0 roboto">
                                 <span
-                                    *ngIf="summaryMap[5]">{{summaryMap[5].percentage==0?'-':summaryMap[5].percentage}}<span
-                                        *ngIf="summaryMap[5].currentValue!=0">%</span></span>
+                                    *ngIf="mutualFundValue">{{mutualFundValue.percentage==0?'-':mutualFundValue.percentage}}<span
+                                        *ngIf="mutualFundValue.currentValue!=0">%</span></span>
                             </p>
                         </div>
                     </div>
@@ -70,16 +70,15 @@
                     <div class="col-md-6 pl-0 text-right">
                         <div class="bar height24">
                             <p class="text-black m-0  roboto">
-                                <span *ngIf="summaryMap[6].currentValue!=0">₹</span>
-                                <span *ngIf="summaryMap[6]" [value]="summaryMap[6].currentValue"
-                                    appFormatNumber>{{summaryMap[6].currentValue==0?'-':summaryMap[6].currentValue}}
+                                <span *ngIf="stocks.currentValue!=0">₹</span>
+                                <span *ngIf="stocks" [value]="stocks.currentValue"
+                                    appFormatNumber>{{stocks.currentValue==0?'-':stocks.currentValue}}
                                 </span>
                             </p>
-                            <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(summaryMap[6].percentage),'text-danger': checkNumberPositiveAndNegative(summaryMap[6].percentage)==false,'': checkNumberPositiveAndNegative(summaryMap[6].percentage)==undefined}"
+                            <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(stocks.percentage),'text-danger': checkNumberPositiveAndNegative(stocks.percentage)==false,'': checkNumberPositiveAndNegative(stocks.percentage)==undefined}"
                                 class="m-0 roboto">
-                                <span
-                                    *ngIf="summaryMap[6]">{{summaryMap[6].percentage==0?'-':summaryMap[6].percentage}}<span
-                                        *ngIf="summaryMap[6].currentValue!=0">%</span></span>
+                                <span *ngIf="stocks">{{stocks.percentage==0?'-':stocks.percentage}}<span
+                                        *ngIf="stocks.currentValue!=0">%</span></span>
                             </p>
                         </div>
                     </div>
@@ -94,15 +93,15 @@
                     <div class="col-md-6 pl-0 text-right">
                         <div class="bar height24">
                             <p class="text-black m-0 roboto">
-                                <span *ngIf="summaryMap[7].currentValue!=0">₹</span>
-                                <span *ngIf="summaryMap[7]" appFormatNumber
-                                    [value]="summaryMap[7].currentValue">{{summaryMap[7].currentValue==0?'-':summaryMap[7].currentValue}}</span>
+                                <span *ngIf="fixedIncome.currentValue!=0">₹</span>
+                                <span *ngIf="fixedIncome" appFormatNumber
+                                    [value]="fixedIncome.currentValue">{{fixedIncome.currentValue==0?'-':fixedIncome.currentValue}}</span>
                             </p>
-                            <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(summaryMap[7].percentage),'text-danger': checkNumberPositiveAndNegative(summaryMap[7].percentage)==false}"
+                            <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(fixedIncome.percentage),'text-danger': checkNumberPositiveAndNegative(fixedIncome.percentage)==false}"
                                 class=" m-0 roboto">
-                                <span *ngIf="summaryMap[7]">
-                                    {{summaryMap[7].percentage==0?'-':summaryMap[7].percentage}}
-                                    <span *ngIf="summaryMap[7].currentValue!=0">%</span></span>
+                                <span *ngIf="fixedIncome">
+                                    {{fixedIncome.percentage==0?'-':fixedIncome.percentage}}
+                                    <span *ngIf="fixedIncome.currentValue!=0">%</span></span>
                             </p>
                         </div>
                     </div>
@@ -118,15 +117,14 @@
                     <div class="col-md-6 pl-0 text-right">
                         <div class="bar height24">
                             <p class="text-black m-0 roboto">
-                                <span *ngIf="summaryMap[8].currentValue!=0">₹</span>
-                                <span appFormatNumber [value]="summaryMap[8].currentValue"
-                                    *ngIf="summaryMap[8]">{{summaryMap[8].currentValue==0?'-':summaryMap[8].currentValue}}</span>
+                                <span *ngIf="realEstate.currentValue!=0">₹</span>
+                                <span appFormatNumber [value]="realEstate.currentValue"
+                                    *ngIf="realEstate">{{realEstate.currentValue==0?'-':realEstate.currentValue}}</span>
                             </p>
-                            <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(summaryMap[8].percentage),'text-danger': checkNumberPositiveAndNegative(summaryMap[8].percentage)==false,'': checkNumberPositiveAndNegative(summaryMap[8].percentage)==undefined}"
+                            <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(realEstate.percentage),'text-danger': checkNumberPositiveAndNegative(realEstate.percentage)==false,'': checkNumberPositiveAndNegative(realEstate.percentage)==undefined}"
                                 class=" m-0 roboto pr-8">
-                                <span
-                                    *ngIf="summaryMap[8]">{{summaryMap[8].percentage==0?'-':summaryMap[8].percentage}}<span
-                                        *ngIf="summaryMap[8].currentValue!=0">%</span></span>
+                                <span *ngIf="realEstate">{{realEstate.percentage==0?'-':realEstate.percentage}}<span
+                                        *ngIf="realEstate.currentValue!=0">%</span></span>
                             </p>
                         </div>
                     </div>
@@ -141,15 +139,14 @@
                     <div class="col-md-6 pl-0 text-right">
                         <div class="bar height24">
                             <p class="text-black m-0 f-500 roboto pr-8">
-                                <span *ngIf="summaryMap[9].currentValue!=0">₹</span>
-                                <span appFormatNumber [value]="summaryMap[9].currentValue" *ngIf="summaryMap">
-                                    {{summaryMap[9].currentValue==0?'-':summaryMap[9].currentValue}}</span>
+                                <span *ngIf="retirement.currentValue!=0">₹</span>
+                                <span appFormatNumber [value]="retirement.currentValue" *ngIf="summaryMap">
+                                    {{retirement.currentValue==0?'-':retirement.currentValue}}</span>
                             </p>
-                            <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(summaryMap[9].percentage),'text-danger': checkNumberPositiveAndNegative(summaryMap[9].percentage)==false,'': checkNumberPositiveAndNegative(summaryMap[9].percentage)==undefined}"
+                            <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(retirement.percentage),'text-danger': checkNumberPositiveAndNegative(retirement.percentage)==false,'': checkNumberPositiveAndNegative(retirement.percentage)==undefined}"
                                 class=" m-0 roboto pr-8">
-                                <span
-                                    *ngIf="summaryMap">{{summaryMap[9].percentage==0?'-':summaryMap[9].percentage}}<span
-                                        *ngIf="summaryMap[9].currentValue!=0">%</span></span>
+                                <span *ngIf="retirement">{{retirement.percentage==0?'-':retirement.percentage}}<span
+                                        *ngIf="retirement.currentValue!=0">%</span></span>
                             </p>
                         </div>
                     </div>
@@ -164,15 +161,15 @@
                     <div class="col-md-6 pl-0 text-right">
                         <div class="bar height24">
                             <p class="text-black m-0 roboto">
-                                <span *ngIf="summaryMap[10].currentValue!=0">₹</span>
-                                <span appFormatNumber [value]="summaryMap[10].currentValue"
-                                    *ngIf="summaryMap">{{summaryMap[10].currentValue==0?'-':summaryMap[10].currentValue}}</span>
+                                <span *ngIf="smallSavingScheme.currentValue!=0">₹</span>
+                                <span appFormatNumber [value]="smallSavingScheme.currentValue"
+                                    *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue==0?'-':smallSavingScheme.currentValue}}</span>
                             </p>
-                            <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(summaryMap[10].percentage),'text-danger': checkNumberPositiveAndNegative(summaryMap[10].percentage)==false,'': checkNumberPositiveAndNegative(summaryMap[10].percentage)==undefined}"
+                            <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(smallSavingScheme.percentage),'text-danger': checkNumberPositiveAndNegative(smallSavingScheme.percentage)==false,'': checkNumberPositiveAndNegative(smallSavingScheme.percentage)==undefined}"
                                 class=" m-0 roboto">
                                 <span
-                                    *ngIf="summaryMap">{{summaryMap[10].percentage==0?'-':summaryMap[10].percentage}}<span
-                                        *ngIf="summaryMap[10].currentValue!=0">%</span></span>
+                                    *ngIf="smallSavingScheme">{{smallSavingScheme.percentage==0?'-':smallSavingScheme.percentage}}<span
+                                        *ngIf="smallSavingScheme.currentValue!=0">%</span></span>
                             </p>
                         </div>
                     </div>
@@ -187,15 +184,14 @@
                     <div class="col-md-6 pl-0 text-right">
                         <div class="bar height24">
                             <p class="text-black m-0 roboto">
-                                <span *ngIf="summaryMap[31].currentValue!=0">₹</span>
-                                <span appFormatNumber [value]="summaryMap[31].currentValue"
-                                    *ngIf="summaryMap">{{summaryMap[31].currentValue==0?'-':summaryMap[31].currentValue}}</span>
+                                <span *ngIf="cashAndFLow.currentValue!=0">₹</span>
+                                <span appFormatNumber [value]="cashAndFLow.currentValue"
+                                    *ngIf="cashAndFLow">{{cashAndFLow.currentValue==0?'-':cashAndFLow.currentValue}}</span>
                             </p>
-                            <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(summaryMap[31].percentage),'text-danger': checkNumberPositiveAndNegative(summaryMap[31].percentage)==false,'': checkNumberPositiveAndNegative(summaryMap[31].percentage)==undefined}"
+                            <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(cashAndFLow.percentage),'text-danger': checkNumberPositiveAndNegative(cashAndFLow.percentage)==false,'': checkNumberPositiveAndNegative(cashAndFLow.percentage)==undefined}"
                                 class=" m-0 roboto">
-                                <span
-                                    *ngIf="summaryMap">{{summaryMap[31].percentage==0?'-':summaryMap[31].percentage}}<span
-                                        *ngIf="summaryMap[6].currentValue!=0">%</span></span>
+                                <span *ngIf="cashAndFLow">{{cashAndFLow.percentage==0?'-':cashAndFLow.percentage}}<span
+                                        *ngIf="cashAndFLow.currentValue!=0">%</span></span>
                             </p>
                         </div>
                     </div>
@@ -278,14 +274,16 @@
 
                                 <div class="row">
                                     <div class="col-md-6 p-0 border-right-1 pt-8 pb-8 pr-4">
-                                        <mat-checkbox [ngClass]="{'disable-checkbox':filterCashFlow.income.length==0}"
+                                        <mat-checkbox
+                                            [ngClass]="{'disable-checkbox':incomeList.length>0 && expenseList.length==0}"
                                             [disabled]="filterCashFlow.income.length==0"
                                             (change)="filterData($event,'inflow')" [(ngModel)]="inflowFlag"
                                             [checked]="filterCashFlow.income.length>0">
                                             Inflows</mat-checkbox>
                                     </div>
                                     <div class="col-md-6 p-0 pt-8 pb-8 pr-4 pl-16">
-                                        <mat-checkbox [ngClass]="{'disable-checkbox': filterCashFlow.expense.length==0}"
+                                        <mat-checkbox
+                                            [ngClass]="{'disable-checkbox': incomeList.length==0 && expenseList.length>0}"
                                             [disabled]="filterCashFlow.expense.length==0"
                                             (change)="filterData($event,'outflow')" [(ngModel)]="outflowFlag"
                                             [checked]="filterCashFlow.expense.length>0">

@@ -195,9 +195,9 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
     }
   }
 
-  subTaskFormGroup(id = '', taskNo = '', desp = '', tat = '', ownerId = '') {
+  subTaskFormGroup(id = 0, taskNo = '', desp = '', tat = '', ownerId = '') {
     return this.fb.group({
-      id,
+      id: id,
       taskNumber: taskNo,
       description: [(desp), Validators.required],
       turnAroundTime: [tat],

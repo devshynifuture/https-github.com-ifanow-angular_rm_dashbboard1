@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, OnInit } from '@angular/core';
+import { EventService } from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../customer.service';
-import {DatePipe} from '@angular/common';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../customer.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-summary',
@@ -29,17 +29,45 @@ export class SummaryComponent implements OnInit {
   expenseList = [];
   incomeList = [];
   userData: any;
-  filterCashFlow;
+  filterCashFlow = { income: [], expense: [] };
   inflowFlag;
   outflowFlag;
+  mutualFundValue: any = {
+    currentValue: null,
+    percentage: null
+  };
+  fixedIncome: any = {
+    currentValue: null,
+    percentage: null
+  };
+  realEstate: any = {
+    currentValue: null,
+    percentage: null
+  };
+  stocks: any = {
+    currentValue: null,
+    percentage: null
+  };
+  retirement: any = {
+    currentValue: null,
+    percentage: null
+  };
+  smallSavingScheme: any = {
+    currentValue: null,
+    percentage: null
+  };
+  cashAndFLow: any = {
+    currentValue: null,
+    percentage: null
+  };
 
   constructor(public eventService: EventService, private cusService: CustomerService,
-              private datePipe: DatePipe) {
+    private datePipe: DatePipe) {
   }
 
   ngOnInit() {
     this.userData = AuthService.getUserInfo();
-    this.asOnDate = new Date(2020, 3, 1).getTime();
+    this.asOnDate = new Date().getTime();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.calculateTotalSummaryValues();
@@ -61,6 +89,13 @@ export class SummaryComponent implements OnInit {
           this.totalAssets = 0;
           this.summaryTotalValue = Object.assign([], data);
           console.log(this.summaryTotalValue);
+          this.mutualFundValue = data[3];
+          this.fixedIncome = data[0];
+          this.realEstate = data[1];
+          this.stocks = data[2];
+          this.retirement = data[4];
+          this.smallSavingScheme = data[5];
+          this.cashAndFLow = data[6]
           const tempSummaryTotalValue: any = {};
           this.summaryTotalValue.forEach(element => {
             tempSummaryTotalValue[element.assetType] = element;
@@ -93,7 +128,7 @@ export class SummaryComponent implements OnInit {
         this.graphList = [];
         let sortedDateList = [];
         sortedDateList = data;
-        sortedDateList.sort(function(a, b) {
+        sortedDateList.sort(function (a, b) {
           return a.targetDate - b.targetDate;
         });
         this.calculate1DayAnd90Days(sortedDateList);
@@ -106,7 +141,7 @@ export class SummaryComponent implements OnInit {
               sumOf10Days += element.currentValue;
             }
           });
-          this.graphList.push([singleData.targetDate, sumOf10Days]);
+          this.graphList.push([singleData.targetDate, Math.round(sumOf10Days)]);
         }
         this.lineChart('container');
       },
@@ -131,35 +166,36 @@ export class SummaryComponent implements OnInit {
 
   sortDataUsingFlowType(ObjectArray, flag) {
 
-    if (ObjectArray.expense.length > 0 && ObjectArray.income.length > 0) {
-      this.cashFlowViewDataSource = ObjectArray.expense;
-      this.cashFlowViewDataSource = this.cashFlowViewDataSource.concat(ObjectArray.income);
-      ObjectArray.expense.forEach(element => {
-        element.colourFlag = false;
-        this.expenseList.push(-Math.abs(element.currentValue.toFixed(2)));
-        this.expenseList.push(-Math.abs(element.currentValue.toFixed(2)));
-      });
-      ObjectArray.income.forEach(element => {
-        element.colourFlag = true;
-        this.incomeList.push(element.currentValue);
-        this.incomeList.push(element.currentValue);
-
-      });
+    if (ObjectArray['expense'].length > 0 && ObjectArray['income'].length > 0) {
+      this.cashFlowViewDataSource = ObjectArray['expense'];
+      this.cashFlowViewDataSource = this.cashFlowViewDataSource.concat(ObjectArray['income']);
+      ObjectArray['expense'].forEach(element => {
+        element['colourFlag'] = false;
+        this.expenseList.push(-Math.abs(Math.round(element.currentValue)))
+        this.expenseList.push(0);
+      })
+      ObjectArray['income'].forEach(element => {
+        element['colourFlag'] = true;
+        this.incomeList.push(Math.round(element.currentValue));
+        this.incomeList.push(0);
+      })
       this.inflowFlag = true;
       this.outflowFlag = true;
-    } else if (ObjectArray.expense.length > 0) {
-      this.cashFlowViewDataSource = ObjectArray.expense;
-      ObjectArray.expense.forEach(element => {
-        element.colourFlag = false;
-        this.expenseList.push(-Math.abs(element.currentValue));
-      });
+    }
+    else if (ObjectArray['expense'].length > 0) {
+      this.cashFlowViewDataSource = ObjectArray['expense'];
+      ObjectArray['expense'].forEach(element => {
+        element['colourFlag'] = false;
+        this.expenseList.push(-Math.abs(Math.round(element.currentValue)))
+      })
       this.outflowFlag = true;
-    } else {
-      this.cashFlowViewDataSource = ObjectArray.income;
-      ObjectArray.income.forEach(element => {
-        element.colourFlag = true;
-        this.incomeList.push(element.currentValue);
-      });
+    }
+    else {
+      this.cashFlowViewDataSource = ObjectArray['income'];
+      ObjectArray['income'].forEach(element => {
+        element['colourFlag'] = true;
+        this.incomeList.push(Math.round(element.currentValue))
+      })
       this.inflowFlag = true;
     }
     this.cashFlow('cashFlow', ObjectArray);
@@ -234,7 +270,7 @@ export class SummaryComponent implements OnInit {
         flag: (Math.sign(lastIndexTotalCurrentValue - firstIndexTotalCurrentValue) == -1) ? false : true
       };
       this.oneDay = {
-        value: lastIndexTotalCurrentValue - secondLastIndexTotalCurrentValue,
+        value: Math.abs(lastIndexTotalCurrentValue - secondLastIndexTotalCurrentValue),
         flag: (Math.sign(lastIndexTotalCurrentValue - secondLastIndexTotalCurrentValue) == -1) ? false : true
       };
     }
@@ -261,7 +297,7 @@ export class SummaryComponent implements OnInit {
 
   cashFlow(id, data) {
     console.log(data);
-    const {expense, income} = data;
+    const { expense, income } = data;
     const timeArray = [];
 
     if (income.length > 0) {
