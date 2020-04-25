@@ -1,6 +1,6 @@
-<div class="row pt-130">
+<div class="row pt-150">
     <div class="col-md-12">
-        <h5 class="f-500">
+        <h5 class="f-500 m-0">
             Receivables
         </h5>
         <p class="text-primitive">
@@ -14,8 +14,7 @@
     <div class="col-md-4">
         <div class="example-chip-list">
             <mat-chip-list #chipList aria-label="Filtering Table">
-                <mat-chip *ngFor="let filter of filterBy" [selectable]="selectable" [removable]="removable"
-                    (removed)="remove(filter)">
+                <mat-chip *ngFor="let filter of filterBy" [selectable]="selectable" [removable]="removable" (removed)="remove(filter)">
                     {{filter.name}}
                     <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
@@ -26,15 +25,15 @@
     <div class="col-md-8">
         <div class="row">
             <div class="col-lg-4 pl-0">
-                <div class="form-group mb-0">
-                    <input class="form-control m-0 w-100" placeholder="Search by advisor" [matChipInputFor]="chipList"
-                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                        (matChipInputTokenEnd)="add($event)">
+                <div class="form-group">
+                    <mat-form-field appearance="standard" floatLabel="never">
+                        <input matInput class="form-control m-0 w-100" placeholder="Search by advisor" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                    </mat-form-field>
                 </div>
             </div>
             <div class="col-lg-3 pl-0 pr-0">
-                <div class="form-group mb-0">
-                    <mat-form-field>
+                <div class="form-group">
+                    <mat-form-field appearance="standard" floatLabel="never">
                         <mat-select class="form-control br-0" placeholder="No of Days" (selectionChange)="add($event)">
                             <mat-option>None</mat-option>
                             <mat-option value="30">
@@ -52,7 +51,7 @@
             </div>
 
             <div class="col-lg-5 pr-0">
-                <mat-form-field>
+                <mat-form-field appearance="standard" floatLabel="never">
                     <mat-select class="form-control br-0" (selectionChange)="add($event)">
                         <mat-option>
                             None
@@ -72,8 +71,7 @@
 
 <div class="row pt-12">
     <div class="col-xl-12">
-        <table mat-table id="table-low" [dataSource]="dataSource" class="" appSkeletonLoading
-            [appSkeletonLoading]="isLoading">
+        <table mat-table id="table-low" [dataSource]="dataSource" class="" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="adminName">
                 <th class="br" mat-header-cell *matHeaderCellDef> Admin name </th>
                 <td class="br" mat-cell *matCellDef="let element" class="c-p" (click)="openAdminDetails(element)">

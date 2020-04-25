@@ -48,19 +48,54 @@
 
 #flowCash {
     height: 200px;
-    width:270px;
+    width: 100%;
 }
 
 #flowCash2 {
     height: 200px;
-    width:270px;
+    width: 100%;
 }
 
 #flowCash3 {
     height: 200px;
-    width:270px;
+    width: 100%;
 }
 
-.mt-65{
+.mt-65 {
     margin-top: 65px !important;
+}
+
+::ng-deep .quickBtn {
+    width: 162px;
+    height: 36px;
+    padding: 0px !important;
+    border-radius: 2px;
+}
+
+::ng-deep .quickBtn .mat-button-wrapper {
+    height: 36px;
+    display: flex;
+    width: 162px;
+    justify-content: space-between;
+    padding: 0px 10px;
+}
+
+.usageMetricsBox {
+    width: 107px;
+    height: 60px;
+    border: 1px solid #83959D;
+    border-radius: 2px;
+    padding: 9px;
+}
+
+.p-10 {
+    padding: 10px;
+}
+
+.mappingBox {
+    border: 1px solid #83959D;
+    border-radius: 2px;
+    padding: 7px;
+    width: 80px;
+    height: 57px;
 }

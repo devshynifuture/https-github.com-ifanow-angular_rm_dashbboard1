@@ -24,7 +24,7 @@ export class MyIfasComponent implements OnInit {
   ) { }
 
   dataSource = new MatTableDataSource(ELEMENT_DATA);
-  displayedColumns = ['adminName', 'email', 'mobile', 'usingSince', 'lastLogin', 'accStatus', 'plan', 'nextBilling', 'team', 'arn', 'logout', 'menu']
+  displayedColumns = ['adminName', 'email', 'mobile', 'usingSince', 'lastLogin', 'accStatus', 'team', 'arn', 'logout', 'menu']
 
   ngOnInit() {
     this.getMyIfasList();
@@ -47,8 +47,8 @@ export class MyIfasComponent implements OnInit {
               usingSince: element.using_since_year + "Y " + element.using_since_month + "M",
               lastLogin: element.last_login ? element.last_login : ' - ',
               accStatus: element.account_status ? element.account_status : ' - ',
-              plan: element.plan ? element.plan : ' - ',
-              nextBilling: element.next_billing ? element.next_billing : ' - ',
+              // plan: element.plan ? element.plan : ' - ',
+              //nextBilling: element.next_billing ? element.next_billing : ' - ',
               team: element.team_count,
               arn: element.arn_ria_count,
               logout: element.logout ? element.logout : ' - ',
@@ -110,7 +110,7 @@ export class MyIfasComponent implements OnInit {
   }
 }
 const ELEMENT_DATA = [
-  { adminName: '', email: '', mobile: '', usingSince: '', lastLogin: '', accStatus: '', plan: '', nextBilling: '', team: '', arn: '', logout: '', menu: '' },
-  { adminName: '', email: '', mobile: '', usingSince: '', lastLogin: '', accStatus: '', plan: '', nextBilling: '', team: '', arn: '', logout: '', menu: '' },
-  { adminName: '', email: '', mobile: '', usingSince: '', lastLogin: '', accStatus: '', plan: '', nextBilling: '', team: '', arn: '', logout: '', menu: '' },
+  { adminName: '', email: '', mobile: '', usingSince: '', lastLogin: '', accStatus: '', team: '', arn: '', logout: '', menu: '' },
+  { adminName: '', email: '', mobile: '', usingSince: '', lastLogin: '', accStatus: '', team: '', arn: '', logout: '', menu: '' },
+  { adminName: '', email: '', mobile: '', usingSince: '', lastLogin: '', accStatus: '', team: '', arn: '', logout: '', menu: '' },
 ]; 
