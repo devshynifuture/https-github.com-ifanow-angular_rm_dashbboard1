@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, OnInit} from '@angular/core';
+import {EventService} from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../customer.service';
-import { DatePipe } from '@angular/common';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../customer.service';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-summary',
@@ -15,7 +15,7 @@ export class SummaryComponent implements OnInit {
   advisorId: any;
   clientId: any;
   summaryTotalValue: any;
-  isLoading: true;
+  isLoading = true;
   totalAssets: number;
   asOnDate: any;
   summaryMap;
@@ -29,7 +29,7 @@ export class SummaryComponent implements OnInit {
   expenseList = [];
   incomeList = [];
   userData: any;
-  filterCashFlow = { income: [], expense: [] };
+  filterCashFlow = {income: [], expense: []};
   inflowFlag;
   outflowFlag;
   mutualFundValue: any = {
@@ -62,7 +62,7 @@ export class SummaryComponent implements OnInit {
   };
 
   constructor(public eventService: EventService, private cusService: CustomerService,
-    private datePipe: DatePipe) {
+              private datePipe: DatePipe) {
   }
 
   ngOnInit() {
@@ -95,7 +95,7 @@ export class SummaryComponent implements OnInit {
           this.stocks = data[2];
           this.retirement = data[4];
           this.smallSavingScheme = data[5];
-          this.cashAndFLow = data[6]
+          this.cashAndFLow = data[6];
           const tempSummaryTotalValue: any = {};
           this.summaryTotalValue.forEach(element => {
             tempSummaryTotalValue[element.assetType] = element;
@@ -128,7 +128,7 @@ export class SummaryComponent implements OnInit {
         this.graphList = [];
         let sortedDateList = [];
         sortedDateList = data;
-        sortedDateList.sort(function (a, b) {
+        sortedDateList.sort(function(a, b) {
           return a.targetDate - b.targetDate;
         });
         this.calculate1DayAnd90Days(sortedDateList);
@@ -171,31 +171,29 @@ export class SummaryComponent implements OnInit {
       this.cashFlowViewDataSource = this.cashFlowViewDataSource.concat(ObjectArray['income']);
       ObjectArray['expense'].forEach(element => {
         element['colourFlag'] = false;
-        this.expenseList.push(-Math.abs(Math.round(element.currentValue)))
+        this.expenseList.push(-Math.abs(Math.round(element.currentValue)));
         this.expenseList.push(0);
-      })
+      });
       ObjectArray['income'].forEach(element => {
         element['colourFlag'] = true;
         this.incomeList.push(Math.round(element.currentValue));
         this.incomeList.push(0);
-      })
+      });
       this.inflowFlag = true;
       this.outflowFlag = true;
-    }
-    else if (ObjectArray['expense'].length > 0) {
+    } else if (ObjectArray['expense'].length > 0) {
       this.cashFlowViewDataSource = ObjectArray['expense'];
       ObjectArray['expense'].forEach(element => {
         element['colourFlag'] = false;
-        this.expenseList.push(-Math.abs(Math.round(element.currentValue)))
-      })
+        this.expenseList.push(-Math.abs(Math.round(element.currentValue)));
+      });
       this.outflowFlag = true;
-    }
-    else {
+    } else {
       this.cashFlowViewDataSource = ObjectArray['income'];
       ObjectArray['income'].forEach(element => {
         element['colourFlag'] = true;
-        this.incomeList.push(Math.round(element.currentValue))
-      })
+        this.incomeList.push(Math.round(element.currentValue));
+      });
       this.inflowFlag = true;
     }
     this.cashFlow('cashFlow', ObjectArray);
@@ -297,7 +295,7 @@ export class SummaryComponent implements OnInit {
 
   cashFlow(id, data) {
     console.log(data);
-    const { expense, income } = data;
+    const {expense, income} = data;
     const timeArray = [];
 
     if (income.length > 0) {
