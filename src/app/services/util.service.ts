@@ -331,6 +331,18 @@ export class UtilService {
     }
   }
 
+  isArraySame(array1, array2) {
+    if (array1.length === array2.length) {
+      if (JSON.stringify(array1) === JSON.stringify(array2)) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
   loader(increament: number) {
     if (increament === 0)
       this.counter = 0;

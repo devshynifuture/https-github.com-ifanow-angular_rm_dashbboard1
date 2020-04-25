@@ -45,48 +45,53 @@ export class ReportReceivablesComponent implements OnInit {
     const input = event.input;
     const value = event.value;
     this.isLoading = true;
-    if(value == '30'){
-     var date = moment().subtract(30, 'days');
-     this.filterDate = this.datePipe.transform(date, 'yyyy-MM-dd');
-    }else if(value == '60'){
-      var date = moment().subtract(30, 'days');
-      this.filterDate = this.datePipe.transform(date, 'yyyy-MM-dd');
-    }else if(value == '90'){
-      var date = moment().subtract(30, 'days');
-      this.filterDate = this.datePipe.transform(date, 'yyyy-MM-dd');
-    }
-    var currentDate = new Date()
+    // if (value == '30') {
+    //   var date = moment().subtract(30, 'days');
+    //   this.filterDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    // } else if (value == '60') {
+    //   var date = moment().subtract(60, 'days');
+    //   this.filterDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    // } else if (value == '90') {
+    //   var date = moment().subtract(90, 'days');
+    //   this.filterDate = this.datePipe.transform(date, 'yyyy-MM-dd');
+    // }
+    // var currentDate = new Date()
+    // let obj = {
+    //   advisorId: 0,
+    //   dateFrom: this.filterDate,
+    //   dateTill: this.datePipe.transform(currentDate, 'yyyy-MM-dd'),
+    //   ascOrDescByBalance: 0
+    // }
+
     let obj = {
-      advisorId: 0,
-      dateFrom: this.filterDate,
-      dateTill:this.datePipe.transform(currentDate, 'yyyy-MM-dd'),
-      ascOrDescByBalance: 0
-    } 
-    this.supportService.getDayWiseDataRm(obj)
-    .subscribe(res => {
-      if (res) {
-        let tableArray = [];
-        if(res){
-          this.isLoading = false;
-          res.forEach(element => {
-            tableArray.push({
-              adminName: element.name,
-              email: element.email_id,
-              mobile: element.mobile_number,
-              invoice: ELEMENT_DATA[1].invoice,
-              sentDate: ELEMENT_DATA[1].sentDate,
-              dueDate: ELEMENT_DATA[1].dueDate,
-              dueSince: ELEMENT_DATA[1].dueSince,
-              amount: ELEMENT_DATA[1].amount,
-              balance: ELEMENT_DATA[1].balance,
-              adminAdvisorId: element.admin_advisor_id
-            })
-          });
-          this.dataSource.data = tableArray;
-          this.dataSource.sort = this.sort;
+      advisorName: value
+    }
+    // console.log(obj);
+    this.supportService.getReportFilterData(obj)
+      .subscribe(res => {
+        if (res) {
+          let tableArray = [];
+          if (res) {
+            this.isLoading = false;
+            res.forEach(element => {
+              tableArray.push({
+                adminName: element.name,
+                email: element.email_id,
+                mobile: element.mobile_number,
+                invoice: ELEMENT_DATA[1].invoice,
+                sentDate: ELEMENT_DATA[1].sentDate,
+                dueDate: ELEMENT_DATA[1].dueDate,
+                dueSince: ELEMENT_DATA[1].dueSince,
+                amount: ELEMENT_DATA[1].amount,
+                balance: ELEMENT_DATA[1].balance,
+                adminAdvisorId: element.admin_advisor_id
+              })
+            });
+            this.dataSource.data = tableArray;
+            this.dataSource.sort = this.sort;
+          }
         }
-      }
-    });
+      });
     console.log("this some event:::::::", event.value);
 
     // Add our filterBy
@@ -105,6 +110,7 @@ export class ReportReceivablesComponent implements OnInit {
 
     if (index >= 0) {
       this.filterBy.splice(index, 1);
+      this.getMyIfasList();
     }
   }
 

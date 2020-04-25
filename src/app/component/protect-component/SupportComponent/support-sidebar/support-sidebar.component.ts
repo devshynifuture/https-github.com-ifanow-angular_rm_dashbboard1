@@ -36,6 +36,7 @@ export class SupportSidebarComponent extends DialogContainerComponent implements
   logoText = 'Your Logo here';
   isAdmin = AuthService.getAdminStatus();
   rmName = AuthService.getUserInfo().name;
+  ifanowLogo = '/assets/images/svg/ifanow-rm-logo.svg';
   profileImgSrc = AuthService.getUserInfo().profileImageUrl ? AuthService.getUserInfo().profileImageUrl : "https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png";
 
   ngOnInit() {
