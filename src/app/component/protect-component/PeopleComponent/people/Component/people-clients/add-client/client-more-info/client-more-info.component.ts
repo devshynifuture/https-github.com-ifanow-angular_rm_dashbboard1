@@ -109,7 +109,7 @@ export class ClientMoreInfoComponent implements OnInit {
       myNotes: [data.remarks],
       name: [data.name],
       email: [data.email, [Validators.pattern(this.validatorType.EMAIL)]],
-      pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
+      // pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
       gender: ['1'],
       adhharGuardian: [(data.guardianData) ? data.guardianData.aadhaarNumber : '', Validators.pattern(this.validatorType.ADHAAR)]
     });

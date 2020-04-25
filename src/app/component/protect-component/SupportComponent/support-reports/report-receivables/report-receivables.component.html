@@ -70,11 +70,11 @@
 </div>
 
 <div class="row pt-12">
-    <div class="col-xl-12">
+    <div class="col-xl-12 back-office-table">
         <table mat-table id="table-low" [dataSource]="dataSource" class="" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="adminName">
-                <th class="br" mat-header-cell *matHeaderCellDef> Admin name </th>
-                <td class="br" mat-cell *matCellDef="let element" class="c-p" (click)="openAdminDetails(element)">
+                <th class="br b-a" mat-header-cell *matHeaderCellDef> Admin name </th>
+                <td class="br b-a c-p" mat-cell *matCellDef="let element" (click)="openAdminDetails(element)">
                     <div class="bar">
                         {{element.adminName}}
                     </div>
