@@ -412,7 +412,7 @@ removedList:any=[];
         "frequency": this.ppfSchemeForm.get('frquency').value,
         "futureApproxcontribution": parseInt(this.ppfSchemeForm.get('futureContribution').value),
         'nomineeList': this.ppfSchemeForm.value.getNomineeName,
-        "ppfTransactionList": finalTransctList,
+        "transactionList": finalTransctList,
         "id":this.ppfSchemeForm.value.id,
         "agentName":"abc",
         "parentId":0,

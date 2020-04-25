@@ -82,11 +82,10 @@
                         class="br w-20 rightText text-right"> Market value
                     </th>
                     <td mat-cell *matCellDef="let element" class="br w-20 amt text-right">
-                        <div class="bar" appFormatNumber> {{element.marketValue}} </div>
+                        <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.marketValue }}</span> </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br text-right w-20 amt p-8 f-600" appFormatNumber
-                        [value]="sumOfMarketValue">
-                        <div class="bar"> {{sumOfMarketValue}} </div>
+                    <td mat-footer-cell *matFooterCellDef class="br text-right w-20 amt p-8 f-600" >
+                        <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMarketValue" appFormatNumber>{{sumOfMarketValue}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="pvalue">
@@ -95,11 +94,10 @@
                         Purchase value
                     </th>
                     <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
-                        <div class="bar" appFormatNumber> {{element.purchaseValue}} </div>
+                        <div class="bar" *ngIf="element.purchaseValue != 0">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.purchaseValue}}</span> </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br text-right w-15 amt p-8 f-600" appFormatNumber
-                        [value]="sumOfpurchasedValue">
-                        <div class="bar"> {{sumOfpurchasedValue}} </div>
+                    <td mat-footer-cell *matFooterCellDef class="br text-right w-15 amt p-8 f-600" >
+                        <div *ngIf="sumOfpurchasedValue != 0">{{isLoading ? ' ' : '₹'}}<span [value]="sumOfpurchasedValue" appFormatNumber>{{sumOfpurchasedValue}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="desc">

@@ -87,7 +87,7 @@
                     <th mat-sort-header="interestRate" *matHeaderCellDef class="br t-right" mat-header-cell> Rate
                     </th>
                     <td *matCellDef="let element" class="br text-right" mat-cell>
-                        <div class="bar"> {{element.interestRate}} </div>
+                        <div class="bar"> {{element.interestRate}} {{!isLoading? "%" : ""}} </div>
                     </td>
                     <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
                 </ng-container>
@@ -95,12 +95,11 @@
                     <th mat-sort-header="accountBalance" *matHeaderCellDef class="br textRight" mat-header-cell>
                         Balance mentioned
                     </th>
-                    <td *matCellDef="let element" class="br amt text-right" mat-cell>
-                        <div class="bar"> {{element.accountBalance}} </div>
+                    <td mat-cell *matCellDef="let element" class="br text-right">
+                        <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.accountBalance }}</span> </div>
                     </td>
-                    <td *matFooterCellDef class="br f-600 p-8 text-right" mat-footer-cell appFormatNumber
-                        [value]="totalAccountBalance">
-                        <div class="bar"> {{totalAccountBalance || '-'}} </div>
+                    <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
+                        <div >{{isLoading ? ' ' : '₹'}}<span [value]="totalAccountBalance" appFormatNumber>{{totalAccountBalance}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="account">
@@ -219,12 +218,11 @@
                     <th mat-sort-header="cashValue" *matHeaderCellDef class="br textRight" mat-header-cell>
                         Cash balance
                     </th>
-                    <td *matCellDef="let element" class="br amt text-right" mat-cell>
-                        <div class="bar amt" appFormatNumber> {{isLoading ? ' ' : element.cashValue}} </div>
+                    <td mat-cell *matCellDef="let element" class="br text-right">
+                        <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.cashValue }}</span> </div>
                     </td>
-                    <td *matFooterCellDef class="br p-8 amt f-600 text-right" mat-footer-cell appFormatNumber
-                        [value]="sumOfCashValue">
-                        <div class="bar"> {{isLoading ? '' : sumOfCashValue || '-'}} </div>
+                    <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
+                        <div >{{isLoading ? ' ' : '₹'}}<span [value]="sumOfCashValue" appFormatNumber>{{sumOfCashValue}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="bal">
