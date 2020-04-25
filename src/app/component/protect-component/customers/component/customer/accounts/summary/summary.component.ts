@@ -15,7 +15,7 @@ export class SummaryComponent implements OnInit {
   advisorId: any;
   clientId: any;
   summaryTotalValue: any;
-  isLoading: boolean;
+  isLoading: true;
   totalAssets: number;
   asOnDate: any;
   summaryMap;
