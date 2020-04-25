@@ -383,6 +383,11 @@ mat-drawer-content {
 .imgWidth {
     width: 62px !important;
     height: auto;
+    &.rmUserImg {
+        border-radius: 50%;
+        border: 1px solid #ccc;
+        margin-bottom: 20px;
+    }
 }
 
 .logoh5 {
