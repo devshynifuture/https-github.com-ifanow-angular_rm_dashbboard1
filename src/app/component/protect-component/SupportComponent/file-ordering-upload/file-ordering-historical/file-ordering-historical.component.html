@@ -189,6 +189,7 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+        
         <div class="col-md-12 p-0" *ngIf="dataSource.data === null">
             <h4 class="d-flex justify-content-center b-a p-44">
                 No Data Found
