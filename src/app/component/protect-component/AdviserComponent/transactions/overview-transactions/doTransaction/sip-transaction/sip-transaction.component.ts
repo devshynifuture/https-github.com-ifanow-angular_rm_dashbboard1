@@ -48,7 +48,7 @@ export class SipTransactionComponent implements OnInit {
   getDataSummary: any;
   folioList: any;
   folioDetails: any;
-  ExistingOrNew: any;
+  ExistingOrNew: any = 2;
   sipFrequency: any;
   dateDisplay: any;
   sipDate: any;
@@ -117,9 +117,10 @@ export class SipTransactionComponent implements OnInit {
 
   selectExistingOrNew(value) {
     if (value == '2') {
+      this.setMinAmount();
       Object.assign(this.transactionSummary, {folioNumber: ''});
     } else {
-      this.getAmcWiseFolio();
+      this.getFolioList();
     }
     this.ExistingOrNew = value;
   }
@@ -231,12 +232,7 @@ export class SipTransactionComponent implements OnInit {
     console.log('getSchemeDetailsRes == ', data);
     this.maiSchemeList = data;
     this.schemeDetails = data[0];
-    if (this.sipTransaction.get('schemeSelection').value == '2') {
-      this.schemeDetails.minAmount = this.schemeDetails.minimumPurchaseAmount;
-    } else {
-      this.schemeDetails.minAmount = this.schemeDetails.additionalPurchaseAmount;
-    }
-    this.sipTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minAmount)]);
+    this.setMinAmount();
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
     if (data.length > 1) {
       this.reInvestmentOpt = data;
@@ -246,12 +242,24 @@ export class SipTransactionComponent implements OnInit {
       this.reInvestmentOpt = [];
     }
     if (this.sipTransaction.controls.folioSelection.value == '1') {
-      this.getAmcWiseFolio();
+      this.getFolioList();
     }
     if (this.getDataSummary.defaultClient.aggregatorType == 2) {
       this.getMandateDetails();
     }
     this.getFrequency();
+  }
+
+  setMinAmount() {
+    if (this.sipTransaction.get('schemeSelection').value == '2') {
+      this.schemeDetails.minAmount = this.schemeDetails.minimumPurchaseAmount;
+    } else if (this.ExistingOrNew == 1) {
+      this.schemeDetails.minAmount = this.schemeDetails.additionalPurchaseAmount;
+    } else {
+      this.schemeDetails.minAmount = this.schemeDetails.minimumPurchaseAmount;
+    }
+    this.sipTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minAmount)]);
+
   }
 
   getNSEAchmandate() {
@@ -344,10 +352,11 @@ export class SipTransactionComponent implements OnInit {
     this.mandateDetails = data;
   }
 
-  getAmcWiseFolio() {
+  getFolioList() {
     this.showSpinnerFolio = true;
     const obj1 = {
       amcId: this.scheme.amcId,
+      mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
       advisorId: this.getDataSummary.defaultClient.advisorId,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       clientId: this.getDataSummary.defaultClient.clientId,
@@ -355,9 +364,34 @@ export class SipTransactionComponent implements OnInit {
       holdingType: this.getDataSummary.defaultClient.holdingType,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
     };
-    this.onlineTransact.getFoliosAmcWise(obj1).subscribe(
-      data => this.getFoliosAmcWiseRes(data)
-    );
+    if (this.sipTransaction.get('schemeSelection').value == '2') {
+      this.onlineTransact.getFoliosAmcWise(obj1).subscribe(
+        data => {
+          this.getFoliosAmcWiseRes(data);
+          this.setMinAmount();
+        }, (error) => {
+          this.sipTransaction.get('folioSelection').setValue(2);
+          this.ExistingOrNew = 2;
+          this.eventService.showErrorMessage(error);
+          this.setMinAmount();
+
+        }
+      );
+    } else {
+      /**Schemewise folio for addtional purchase*/
+      this.onlineTransact.getSchemeWiseFolios(obj1).subscribe(
+        data => {
+          this.getFoliosAmcWiseRes(data);
+          this.setMinAmount();
+        }, (error) => {
+          this.sipTransaction.get('folioSelection').setValue(2);
+          this.ExistingOrNew = 2;
+          this.eventService.showErrorMessage(error);
+          this.setMinAmount();
+
+        }
+      );
+    }
   }
 
   getFoliosAmcWiseRes(data) {

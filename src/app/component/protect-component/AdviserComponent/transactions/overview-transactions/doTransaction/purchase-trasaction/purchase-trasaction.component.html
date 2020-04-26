@@ -210,10 +210,10 @@
                        maxlength="10" type="text">
                 <mat-hint align="start" class="f-12 text-custom">
                   Min amount:
-                  ₹{{(schemeDetails == undefined) ? '0' : schemeDetails.minimumPurchaseAmount }}
+                  ₹{{(schemeDetails == undefined) ? '0' : schemeDetails.minAmount }}
                 </mat-hint>
                 <mat-error *ngIf="(purchaseTransaction.get('employeeContry').errors?.min)" class="f-12">
-                  Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
+                  Should be greater than or equal to {{schemeDetails.minAmount}}
                 </mat-error>
 
                 <mat-error *ngIf="(purchaseTransaction.get('employeeContry').errors?.required)"
