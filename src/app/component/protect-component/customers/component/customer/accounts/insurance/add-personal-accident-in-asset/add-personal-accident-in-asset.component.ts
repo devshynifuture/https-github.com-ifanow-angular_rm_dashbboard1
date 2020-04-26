@@ -366,12 +366,15 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
     })
     let featureList = [];
     let finalplanFeatureList = this.personalAccidentForm.get('planFeatureForm') as FormArray
+    if(finalplanFeatureList.controls.length > 0)
     finalplanFeatureList.controls.forEach(element => {
-      let obj =
-      {
-        policyFeatureId : element.get('planfeatures').value,
+      if(element.get('planfeatures').value != ""){
+        let obj =
+        {
+          policyFeatureId : element.get('planfeatures').value,
+        }
+        featureList.push(obj)
       }
-      featureList.push(obj)
     })
     if (this.personalAccidentForm.invalid) {
       this.personalAccidentForm.markAllAsTouched();

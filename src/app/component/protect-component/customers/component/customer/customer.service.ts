@@ -15,6 +15,10 @@ export class CustomerService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_LIFE_INSURANCE, data);
   }
 
+  getBankAccount(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.BANK_NAME_GET, data);
+  }
+
   addGeneralInsurance(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_GENERAL_INSURANCE, data);
   }

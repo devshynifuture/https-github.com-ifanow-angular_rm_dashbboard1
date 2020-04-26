@@ -173,7 +173,7 @@
         </div>
         <div class="col-md-5 form-group">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
+                <input matInput type="text" [maxLength]="30"
                 formControlName="insurerName" #insureerName appInputValueValidation autocomplete="off"
                 class="form-control br-0" placeholder="Enter Name of insurer">
                 <mat-error>This field is required
@@ -188,7 +188,7 @@
         </div>
         <div class="col-md-5 form-group">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="text" [maxLength]="10" formControlName="planeName" #planName
+                <input matInput type="text" [maxLength]="30" formControlName="planeName" #planName
                 appInputValueValidation autocomplete="off" class="form-control br-0"placeholder="Enter Plan name">
                 <mat-error>This field is required
                     </mat-error>
@@ -328,7 +328,7 @@
         </div>
         <div class="col-md-5 form-group  ">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
+                <input matInput type="text" [maxLength]="30"
                 formControlName="exclusion" #exclusion appInputValueValidation autocomplete="off"
                 class="form-control br-0">
             </mat-form-field>
@@ -448,7 +448,7 @@
         </div>
     </div>
 
-    <div class="row pt-32">
+    <!-- <div class="row pt-32">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-20 ">Linked bank account</h5>
         </div>
@@ -459,7 +459,22 @@
                 class="form-control br-0">
             </mat-form-field>
         </div>
-    </div>
+    </div> -->
+    <div class="row pt-32">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-20 ">Linked bank account</h5>
+            </div>
+            <div class="col-md-5 form-group">
+                <mat-form-field>
+                    <mat-select matInput formControlName="bankAccount" autocomplete="true" class="form-control br-0">
+                        <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
+                            {{option.policy_type}}</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
 
 </div>
 </div>

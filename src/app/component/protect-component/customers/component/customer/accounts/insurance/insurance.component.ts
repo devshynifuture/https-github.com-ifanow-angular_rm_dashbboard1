@@ -267,6 +267,7 @@ export class InsuranceComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.dataSource.data);
       this.dataSource.sort = this.sort;
       this.lifeInsuranceFilter = this.dataSource.data;
+      this.getCount();
       this.getStatusId(this.dataSource.data)
       this.dataSource.data.forEach(element => {
         this.totalCurrentValue += (element.currentValue == 'Infinity') ? 0 : element.currentValue,

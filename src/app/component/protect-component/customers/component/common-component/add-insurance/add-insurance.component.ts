@@ -370,9 +370,9 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       /***owner***/
   
       /***nominee***/
-      if (this.editInsuranceData.nominees) {
+      if (this.editInsuranceData.nomineeList) {
         this.getNominee.removeAt(0);
-        this.editInsuranceData.nominees.forEach(element => {
+        this.editInsuranceData.nomineeList.forEach(element => {
           this.addNewNominee(element);
         });
       }
@@ -557,25 +557,18 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         "ridersPremiumWaiver": this.ridersForm.get('premiumWaiver').value,
         "ridersFemaleCriticalIllness": this.ridersForm.get('femaleCriticalIlleness').value,
         "insuranceCashflowList": finalCashFlowList,
-        "nominees": this.keyDetailsForm.value.getNomineeName,
+        "nomineeList": this.keyDetailsForm.value.getNomineeName,
 
       }
       this.insuranceFormFilledData.policyStatusId = parseInt(this.insuranceFormFilledData.policyStatusId)
-      if (this.insuranceFormFilledData.nominees.length > 0) {
-        this.insuranceFormFilledData.nominees.forEach((element, index) => {
+      if (this.insuranceFormFilledData.nomineeList.length > 0) {
+        this.insuranceFormFilledData.nomineeList.forEach((element, index) => {
           if (element.name == '') {
             this.removeNewNominee(index);
           }
         });
-        this.insuranceFormFilledData.nominees = this.keyDetailsForm.value.getNomineeName;
-        this.insuranceFormFilledData.nominees.forEach(element => {
-          if(element.sharePercentage){
-            element.sumInsured = element.sharePercentage;
-          }
-           element.insuredOrNominee = 2
-         });
       } else {
-        this.insuranceFormFilledData.nominees = [];
+        this.insuranceFormFilledData.nomineeList = [];
       }
         
       console.log(this.insuranceFormFilledData)

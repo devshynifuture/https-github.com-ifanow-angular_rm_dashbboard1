@@ -514,7 +514,7 @@
     </div>
 
 
-    <div class="row pt-32">
+    <!-- <div class="row pt-32">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-20 "> Linked bank account</h5>
         </div>
@@ -527,7 +527,22 @@
                         </mat-error>
                     </mat-form-field>
         </div>
-    </div>
+    </div> -->
+    <div class="row pt-32">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-20 ">Linked bank account</h5>
+            </div>
+            <div class="col-md-5 form-group">
+                <mat-form-field>
+                    <mat-select matInput formControlName="bankAccount" autocomplete="true" class="form-control br-0">
+                        <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
+                            {{option.policy_type}}</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
 </div>
 
 
