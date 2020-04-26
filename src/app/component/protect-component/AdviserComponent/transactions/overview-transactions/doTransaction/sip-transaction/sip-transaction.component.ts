@@ -129,7 +129,7 @@ export class SipTransactionComponent implements OnInit {
     this.sipTransaction.controls.schemeSip.reset();
     this.folioList = [];
     this.navOfSelectedScheme = 0;
-    this.schemeDetails.minimumPurchaseAmount = 0;
+    this.schemeDetails.minAmount = 0;
     Object.assign(this.transactionSummary, {schemeName: ''}); // to disable scheme name from transaction summary
     Object.assign(this.transactionSummary, {folioNumber: ''}); // to disable folio number from transaction summary
     this.selectScheme = value;
@@ -142,7 +142,7 @@ export class SipTransactionComponent implements OnInit {
       Object.assign(this.transactionSummary, {schemeName: ''});
       Object.assign(this.transactionSummary, {folioNumber: ''});
       // if scheme not present then min amt is 0
-      (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;
+      (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
     }
     const obj = {
       searchQuery: value,
@@ -163,7 +163,7 @@ export class SipTransactionComponent implements OnInit {
             this.showSpinner = false;
             this.sipTransaction.get('schemeSip').setErrors({setValue: error.message});
             this.sipTransaction.get('schemeSip').markAsTouched();
-            (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;
+            (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
             // this.eventService.showErrorMessage(error);
           }
         );
@@ -173,7 +173,7 @@ export class SipTransactionComponent implements OnInit {
             this.showSpinner = false;
             this.sipTransaction.get('schemeSip').setErrors({setValue: error.message});
             this.sipTransaction.get('schemeSip').markAsTouched();
-            (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;
+            (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
             // this.eventService.showErrorMessage(error);
           }
         );
@@ -231,7 +231,12 @@ export class SipTransactionComponent implements OnInit {
     console.log('getSchemeDetailsRes == ', data);
     this.maiSchemeList = data;
     this.schemeDetails = data[0];
-    this.sipTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minimumPurchaseAmount)]);
+    if (this.sipTransaction.get('schemeSelection').value == '2') {
+      this.schemeDetails.minAmount = this.schemeDetails.minimumPurchaseAmount;
+    } else {
+      this.schemeDetails.minAmount = this.schemeDetails.additionalPurchaseAmount;
+    }
+    this.sipTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minAmount)]);
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
     if (data.length > 1) {
       this.reInvestmentOpt = data;
