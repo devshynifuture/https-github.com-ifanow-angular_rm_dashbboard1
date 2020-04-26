@@ -133,11 +133,11 @@
                     <div class="col-md-5 p-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <mat-select class="form-control" formControlName="investmentAccountSelection">
-                                    <mat-option value="option" *ngFor="let flag of reInvestmentOpt"
-                                        (click)="reinvest(flag)">
-                                        {{(flag.dividendReinvestmentFlag == 0)?'Dividend payout':'Dividend reinvestment'}}
-                                    </mat-option>
+                                <mat-select class="form-control" formControlName="reinvest">
+                                  <mat-option value="option" *ngFor="let flag of reInvestmentOpt"
+                                              (click)="reinvest(flag)">
+                                    {{(flag.dividendReinvestmentFlag == 0) ? 'Dividend payout' : 'Dividend reinvestment'}}
+                                  </mat-option>
                                 </mat-select>
                                 <mat-error class="f-12 pt-4">
                                     This field is required
