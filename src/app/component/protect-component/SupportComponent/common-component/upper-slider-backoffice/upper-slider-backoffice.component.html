@@ -292,9 +292,9 @@
                 <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
                     <mat-radio-button value="1" class="example-radio-button d-block mb-5 f-14" (click)="openDeleteDialog()">
                         Delete unmatched folios
-                        <p class="text-primitive ws-normal">
+                        <!-- <p class="text-primitive ws-normal">
                             This will simply delete the unmatched folios. Ensure that you reorder the folio wise data at the earliest. Also, ensure that you have downloaded the unmatched folio details from Summary & setup section as a backup
-                        </p>
+                        </p> -->
                     </mat-radio-button>
 
                     <mat-radio-button [disabled]="isFranklinTab" value="2" class="example-radio-button mb-5 d-block f-14" (click)="openDeleteAndReorderDialog()">
@@ -302,10 +302,10 @@
                         <span class="f-12 bu-primary text-primary">
                             CHOSEN OPTION
                         </span>
-                        <p class="text-primitive ws-normal">
+                        <!-- <p class="text-primitive ws-normal">
                             This will delete the unmatched folios as well as reorder the folio wise files from the respective RTA and automatically upload them for you. Ensure that you have downloaded the unmatched folio details from Summary & setup section as a backup.
                             <a href="#"> Read more</a>
-                        </p>
+                        </p> -->
                     </mat-radio-button>
                 </mat-radio-group>
 
