@@ -80,11 +80,15 @@ export class FileOrderingHistoricalComponent implements OnInit {
 
   ngOnInit() {
     this.getRmMasterDetails();
-
+    this.defaultSelectionInFilter();
     this.fileOrderHistoryListGet({
       days: this.days,
       rtId: this.rtId,
     });
+  }
+
+  defaultSelectionInFilter() {
+
   }
 
   refreshFileOrder() {

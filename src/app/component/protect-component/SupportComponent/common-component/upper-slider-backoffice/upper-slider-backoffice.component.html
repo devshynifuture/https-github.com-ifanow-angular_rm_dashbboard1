@@ -128,9 +128,11 @@
             </mat-tab>
 
 
-            <mat-tab [disabled]="isTabDisabled">
+            <!-- <mat-tab [disabled]="isTabDisabled"> -->
+            <mat-tab>
                 <ng-template mat-tab-label>
-                    <div matTooltip=" Kindly, click on export button" [matTooltipDisabled]="!isTabDisabled">
+                    <!-- <div matTooltip=" Kindly, click on export button" [matTooltipDisabled]="!isTabDisabled"> -->
+                    <div>
                         <h5 [ngClass]="{'text-custom': isTabDisabled}">
                             Manual reconciliation
                         </h5>
@@ -291,10 +293,12 @@
                     </div>
                 </div>
             </mat-tab>
-
-            <mat-tab [disabled]="isTabDisabled">
+            <!-- for vaibhav to work -->
+            <!-- <mat-tab [disabled]="isTabDisabled"> -->
+            <mat-tab>
                 <ng-template mat-tab-label>
-                    <div matTooltip="Kindly, click on export button" [matTooltipDisabled]="!isTabDisabled">
+                    <!-- <div matTooltip="Kindly, click on export button" [matTooltipDisabled]="!isTabDisabled"> -->
+                    <div>
                         <h5 [ngClass]="{'text-custom': isTabDisabled}">
                             Deletion & reordering
                         </h5>
