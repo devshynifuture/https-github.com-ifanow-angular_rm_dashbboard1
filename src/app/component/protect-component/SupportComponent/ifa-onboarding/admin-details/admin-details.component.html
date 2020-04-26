@@ -31,79 +31,82 @@
 
 
             <mat-tab label="Onboarding activity" (click)="getIFAActivity()">
-                <h3 class="f-500">
+                <h3 class="f-500 f-16 mb-4">
                     Stages
                 </h3>
                 <div class="cardList">
-                    <div class="row pt-10 pb-10 bb">
-                        <div class="col-md-8 f-14" *ngFor="let stage of stageList">
-                            <div>
-                                <div class="">
-                                    <!-- *ngIf="stage.isShowComment == false" -->
-                                    <mat-checkbox class="mr-8" [value]="stage.isComplete" [checked]="(stage.isComplete == 1)? true:false" (change)="updateActivityCompleteness(stage,$event)"> </mat-checkbox>
-                                    <span (click)="showComment(stage,true)" class="c-p" [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('firstCall').value == true ? 'line-through': 'initial' }">
-                                        {{isLoading? '': stage.taskName}}
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="bg-grey lter mt-44 p-20 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="stage.isShowComment == true">
-                                <h4 class="f-14 f-500">Comments</h4>
-                                <div class="row pb-20" *ngFor="let activityStage of stageComment">
-                                    <div class="col-md-1 text-center p-0">
-                                        <img src="/assets/images/svg/comment-icon.svg">
-                                    </div>
-                                    <div class="col-md-9 pl-0">
-                                        <div class="relClass">
-                                            <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                <h4 class="f-14">{{activityStage.name}} <span class="text-primitive">a
-                                                        minute
-                                                        ago
-                                                    </span> </h4>
-                                            </div>
-                                        </div>
-                                        <div class="relClass">
-                                            <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                <p *ngIf="activityStage.isEditStage == true">
-                                                    {{activityStage.commentMsg}}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div *ngIf="activityStage.isEditStage == false">
-                                            <mat-form-field>
-                                                <input matInput type="text" maxlength="10" [(ngModel)]="activityStage.commentMsg" class="form-control br-0">
-                                            </mat-form-field>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2 p-0 text-right">
-                                        <p *ngIf="activityStage.isEditStage == true && activityStage.isEditStageRm == true" class="f-12 c-p mr-8 d-inline-block" (click)='activityCommentFunStage(activityStage,false)'> Edit </p>
-                                        <p *ngIf="activityStage.isEditStage == false" class="f-12 c-p mr-8 d-inline-block" (click)='activityCommentFunStage(activityStage,true)'> Save </p>
-                                        <p class="f-12 c-p d-inline-block" *ngIf="activityStage.isEditStageRm == true" (click)="deleteModal('commentStage',stage,activityStage)"> Delete </p>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="row d-flex align-items-center  pt-6 pb-6 bb" *ngFor="let stage of stageList">
+                        <div class="col-md-8 f-14">
 
-                            <div class="bg-grey shadow lter p-20 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="stage.isShowComment == true">
-                                <div class="row">
-                                    <div class="col-md-1 text-center p-0">
-                                        <img src="/assets/images/svg/comment-icon.svg">
-                                    </div>
-                                    <div class="col-md-9 p-0">
-                                        <div class="relClass">
-                                            <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                <mat-form-field>
-                                                    <input matInput type="text" [(ngModel)]="CommentStage" maxlength="60" class="form-control br-0">
-                                                </mat-form-field>
-                                            </div>
+                            <!-- *ngIf="stage.isShowComment == false" -->
+                            <mat-checkbox class="mr-8" [value]="stage.isComplete" [checked]="(stage.isComplete == 1)? true:false" (change)="updateActivityCompleteness(stage,$event)"> </mat-checkbox>
+                            <span class="c-p" [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('firstCall').value == true ? 'line-through': 'initial' }">
+                                {{isLoading? '': stage.taskName}}
+                            </span>
+
+                        </div>
+                        <div class="col-md-4 pr-0 d-flex align-items-center justify-content-end">
+                            <span (click)="showComment(stage,true)" class="material-icons c-p">
+                                keyboard_arrow_right
+                            </span>
+                        </div>
+
+                        <div class="bg-grey lter mt-20 w-100 p-20 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="stage.isShowComment == true">
+                            <h4 class="f-14 f-500">Comments</h4>
+                            <div class="row pb-20" *ngFor="let activityStage of stageComment">
+                                <div class="col-md-1 text-center p-0">
+                                    <img src="/assets/images/svg/comment-icon.svg">
+                                </div>
+                                <div class="col-md-9 pl-0">
+                                    <div class="relClass">
+                                        <div class="bar" [ngClass]="{'height23': isLoading}">
+                                            <h4 class="f-14">{{activityStage.name}} <span class="text-primitive">a
+                                                    minute
+                                                    ago
+                                                </span> </h4>
                                         </div>
                                     </div>
-                                    <div class="col-md-2 p-0 text-right">
-                                        <p class="f-12 c-p mr-8 d-inline-block" (click)='addStageComment(CommentStage,stage)'>
-                                            Comment </p>
+                                    <div class="relClass">
+                                        <div class="bar" [ngClass]="{'height23': isLoading}">
+                                            <p *ngIf="activityStage.isEditStage == true">
+                                                {{activityStage.commentMsg}}
+                                            </p>
+                                        </div>
                                     </div>
+                                    <div *ngIf="activityStage.isEditStage == false">
+                                        <mat-form-field>
+                                            <input matInput type="text" maxlength="10" [(ngModel)]="activityStage.commentMsg" class="form-control br-0">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 p-0 text-right">
+                                    <p *ngIf="activityStage.isEditStage == true && activityStage.isEditStageRm == true" class="f-12 underline c-p mr-8 d-inline-block" (click)='activityCommentFunStage(activityStage,false)'> Edit </p>
+                                    <p *ngIf="activityStage.isEditStage == false" class="f-12 c-p mr-8 d-inline-block underline" (click)='activityCommentFunStage(activityStage,true)'> Save </p>
+                                    <p class="f-12 c-p d-inline-block underline" *ngIf="activityStage.isEditStageRm == true" (click)="deleteModal('commentStage',stage,activityStage)"> Delete </p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4"></div>
+
+                        <div class="bg-grey lter mb-8 w-100 p-20 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="stage.isShowComment == true">
+                            <div class="row">
+                                <div class="col-md-1 text-center p-0">
+                                    <img src="/assets/images/svg/comment-icon.svg">
+                                </div>
+                                <div class="col-md-10 pl-0">
+                                    <div class="relClass">
+                                        <div class="bar" [ngClass]="{'height23': isLoading}">
+                                            <mat-form-field>
+                                                <input matInput type="text" [(ngModel)]="CommentStage" maxlength="60" class="form-control br-0">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 p-0 text-right">
+                                    <button (click)='addStageComment(CommentStage,stage)' mat-button class=" btn-primary">Add</button>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
@@ -124,10 +127,10 @@
                             </div>
                         </div>
                         <div class="col-md-2 p-0 text-right">
-                            <p *ngIf="activity.isEdit == true && activity.isEditRm == true" class="f-12 c-p mr-8 d-inline-block" (click)='activityCommentFun(activity,false)'> Edit
+                            <p *ngIf="activity.isEdit == true && activity.isEditRm == true" class="f-12 underline c-p mr-8 d-inline-block" (click)='activityCommentFun(activity,false)'> Edit
                             </p>
-                            <p *ngIf="activity.isEdit == false" class="f-12 c-p mr-8 d-inline-block" (click)='activityCommentFun(activity,true)'> Save </p>
-                            <p class="f-12 c-p d-inline-block" *ngIf="activity.isEditRm == true" (click)="deleteModal('comment',activity,'')"> Delete </p>
+                            <p *ngIf="activity.isEdit == false" class="f-12 underline c-p mr-8 d-inline-block" (click)='activityCommentFun(activity,true)'> Save </p>
+                            <p class="f-12 underline c-p d-inline-block" *ngIf="activity.isEditRm == true" (click)="deleteModal('comment',activity,'')"> Delete </p>
                         </div>
                     </div>
                 </div>

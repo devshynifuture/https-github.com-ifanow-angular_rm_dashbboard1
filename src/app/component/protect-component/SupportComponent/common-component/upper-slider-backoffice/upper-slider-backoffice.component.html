@@ -29,11 +29,11 @@
 
 
                 <div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-9">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-9 pl-34">
                         <h2 class="f-14 f-600 ml-12 d-inline-block widthBoxUpperSlider text-center border_h2">Unmatched folio count
                         </h2>
-                        <h2 class="f-14 f-600 d-inline-block widthBoxUpperSlider text-center borderleft_none border_h2">
+                        <h2 class="f-14 f-600 d-inline-block widthBoxUpperSlider40 text-center borderleft_none border_h2">
                             Latest data as on
                         </h2>
                     </div>
@@ -45,16 +45,16 @@
                         <table mat-table [dataSource]="dataSource" id="table-low" class="" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
                             <ng-container matColumnDef="doneOne">
-                                <th class="b-a" mat-header-cell *matHeaderCellDef> Done on </th>
-                                <td class="b-a" mat-cell *matCellDef="let element">
+                                <th class="b-a w-11" mat-header-cell *matHeaderCellDef> Done on </th>
+                                <td class="b-a w-11" mat-cell *matCellDef="let element">
                                     <div class="bar"> {{element.doneOne | date }} </div>
                                 </td>
                             </ng-container>
 
                             <!-- Name Column -->
                             <ng-container matColumnDef="totalfolios">
-                                <th class="b-a" mat-header-cell *matHeaderCellDef> Total folios </th>
-                                <td class="b-a" mat-cell *matCellDef="let element">
+                                <th class="b-a w-11" mat-header-cell *matHeaderCellDef> Total folios </th>
+                                <td class="b-a w-11" mat-cell *matCellDef="let element">
                                     <div class="bar">
                                         <!-- {{!isLoading? "₹" : ""}} -->
                                         <span appFormatNumber>
@@ -74,15 +74,15 @@
 
                             <!-- Symbol Column -->
                             <ng-container matColumnDef="after_recon">
-                                <th class="b-a" mat-header-cell *matHeaderCellDef> After recon </th>
-                                <td class="b-a" mat-cell *matCellDef="let element">
+                                <th class="" mat-header-cell *matHeaderCellDef> After recon </th>
+                                <td class=" " mat-cell *matCellDef="let element">
                                     <div class="bar"> {{element.after_recon}} </div>
                                 </td>
                             </ng-container>
 
                             <ng-container matColumnDef="aum_balance">
-                                <th mat-header-cell *matHeaderCellDef> AUM balance</th>
-                                <td mat-cell *matCellDef="let element">
+                                <th class="bl-a" mat-header-cell *matHeaderCellDef> AUM balance</th>
+                                <td class="bl-a" mat-cell *matCellDef="let element">
                                     <div class="bar"> {{element.aum_balance | date }} </div>
                                 </td>
                             </ng-container>
@@ -100,7 +100,7 @@
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> Export unmatched folios </th>
                                 <td class="b-a text-center" mat-cell *matCellDef="let element">
                                     <div class="bar" [matTooltip]="canExportExcelSheet === 'intermediate'? 'Loading...': (canExportExcelSheet == 'false' ? 'No Data Found': (canExportExcelSheet == 'true'? 'Click Now': null))" [matTooltipDisabled]="didAumReportListGot" matTooltipPosition="below">
-                                        <button class="bg-grey lt" mat-button [disabled]="(canExportExcelSheet == 'false')" (click)="exportToExcelSheet('export-folios', element)">Export</button>
+                                        <button class="bg-grey lt classExport " mat-button [disabled]="(canExportExcelSheet == 'false')" (click)="exportToExcelSheet('export-folios', element)">Export</button>
                                     </div>
                                 </td>
                             </ng-container>
@@ -118,9 +118,11 @@
             </mat-tab>
 
 
+            <!-- <mat-tab [disabled]="isTabDisabled"> -->
             <mat-tab>
                 <ng-template mat-tab-label>
-                    <div matTooltip=" Kindly, click on export button" [matTooltipDisabled]="!isTabDisabled">
+                    <!-- <div matTooltip=" Kindly, click on export button" [matTooltipDisabled]="!isTabDisabled"> -->
+                    <div>
                         <h5 [ngClass]="{'text-custom': isTabDisabled}">
                             Manual reconciliation
                         </h5>
@@ -272,10 +274,12 @@
                     </div>
                 </div>
             </mat-tab>
-
+            <!-- for vaibhav to work -->
+            <!-- <mat-tab [disabled]="isTabDisabled"> -->
             <mat-tab>
                 <ng-template mat-tab-label>
-                    <div matTooltip="Kindly, click on export button" [matTooltipDisabled]="!isTabDisabled">
+                    <!-- <div matTooltip="Kindly, click on export button" [matTooltipDisabled]="!isTabDisabled"> -->
+                    <div>
                         <h5 [ngClass]="{'text-custom': isTabDisabled}">
                             Deletion & reordering
                         </h5>
@@ -288,9 +292,9 @@
                 <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
                     <mat-radio-button value="1" class="example-radio-button d-block mb-5 f-14" (click)="openDeleteDialog()">
                         Delete unmatched folios
-                        <p class="text-primitive ws-normal">
+                        <!-- <p class="text-primitive ws-normal">
                             This will simply delete the unmatched folios. Ensure that you reorder the folio wise data at the earliest. Also, ensure that you have downloaded the unmatched folio details from Summary & setup section as a backup
-                        </p>
+                        </p> -->
                     </mat-radio-button>
 
                     <mat-radio-button [disabled]="isFranklinTab" value="2" class="example-radio-button mb-5 d-block f-14" (click)="openDeleteAndReorderDialog()">
@@ -298,10 +302,10 @@
                         <span class="f-12 bu-primary text-primary">
                             CHOSEN OPTION
                         </span>
-                        <p class="text-primitive ws-normal">
+                        <!-- <p class="text-primitive ws-normal">
                             This will delete the unmatched folios as well as reorder the folio wise files from the respective RTA and automatically upload them for you. Ensure that you have downloaded the unmatched folio details from Summary & setup section as a backup.
                             <a href="#"> Read more</a>
-                        </p>
+                        </p> -->
                     </mat-radio-button>
                 </mat-radio-group>
 

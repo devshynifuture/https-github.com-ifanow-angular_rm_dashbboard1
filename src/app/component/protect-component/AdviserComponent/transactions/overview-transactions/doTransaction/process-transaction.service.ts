@@ -161,11 +161,11 @@ export class ProcessTransactionService {
       endDate.setMonth(11);
       endDate.setFullYear(2099);
       obj.endDate = endDate.getTime();
-    } else if (this.frequency == 'MONTHLY' && tenure == 2) {
+    } else if (obj.frequencyType == 'MONTHLY' && tenure == 2) {
       obj.noOfInstallments = obj.noOfInstallments * 12;
-    } else if (this.frequency == 'QUATERLY' && tenure == 2) {
+    } else if (obj.frequencyType == 'QUATERLY' && tenure == 2) {
       obj.noOfInstallments = obj.noOfInstallments * 4;
-    } else if (this.frequency == 'WEEKLY' && tenure == 2) {
+    } else if (obj.frequencyType == 'WEEKLY' && tenure == 2) {
       obj.noOfInstallments = obj.noOfInstallments * 52;
     } else {
       obj.noOfInstallments = installment;
