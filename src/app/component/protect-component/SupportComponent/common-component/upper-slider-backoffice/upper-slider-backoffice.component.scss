@@ -17,8 +17,13 @@
 }
 
 .widthBoxUpperSlider {
-    width: 34%;
+    width: 37%;
     margin-bottom: 0px;
+}
+
+.widthBoxUpperSlider40 {
+    width: 40%;
+    margin: 0px;
 }
 
 .btn-none {
@@ -37,4 +42,9 @@
     height: 28px;
     padding: 0px !important;
     line-height: 24px;
+    color: #000000;
+}
+
+.pl-34 {
+    padding-left: 34px;
 }
