@@ -37,7 +37,7 @@ export class SipTransactionComponent implements OnInit {
   selectedFamilyMember: any;
   isViewInitCalled = false;
   transactionType: any;
-  schemeDetails: any;
+  schemeDetails: any = {};
   transactionSummary: {};
   selectScheme = 2;
   schemeList: any;
@@ -70,7 +70,6 @@ export class SipTransactionComponent implements OnInit {
   editedId: any;
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount', 'icons'];
   umrn: any;
-  endDate: Date;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               private processTransaction: ProcessTransactionService, private fb: FormBuilder,
@@ -130,7 +129,7 @@ export class SipTransactionComponent implements OnInit {
     this.sipTransaction.controls.schemeSip.reset();
     this.folioList = [];
     this.navOfSelectedScheme = 0;
-    this.schemeDetails.minimumPurchaseAmount = 0;
+    this.schemeDetails.minAmount = 0;
     Object.assign(this.transactionSummary, {schemeName: ''}); // to disable scheme name from transaction summary
     Object.assign(this.transactionSummary, {folioNumber: ''}); // to disable folio number from transaction summary
     this.selectScheme = value;
@@ -143,7 +142,7 @@ export class SipTransactionComponent implements OnInit {
       Object.assign(this.transactionSummary, {schemeName: ''});
       Object.assign(this.transactionSummary, {folioNumber: ''});
       // if scheme not present then min amt is 0
-      (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;
+      (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
     }
     const obj = {
       searchQuery: value,
@@ -164,7 +163,7 @@ export class SipTransactionComponent implements OnInit {
             this.showSpinner = false;
             this.sipTransaction.get('schemeSip').setErrors({setValue: error.message});
             this.sipTransaction.get('schemeSip').markAsTouched();
-            (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;
+            (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
             // this.eventService.showErrorMessage(error);
           }
         );
@@ -174,7 +173,7 @@ export class SipTransactionComponent implements OnInit {
             this.showSpinner = false;
             this.sipTransaction.get('schemeSip').setErrors({setValue: error.message});
             this.sipTransaction.get('schemeSip').markAsTouched();
-            (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;
+            (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
             // this.eventService.showErrorMessage(error);
           }
         );
@@ -232,7 +231,12 @@ export class SipTransactionComponent implements OnInit {
     console.log('getSchemeDetailsRes == ', data);
     this.maiSchemeList = data;
     this.schemeDetails = data[0];
-    this.sipTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minimumPurchaseAmount)]);
+    if (this.sipTransaction.get('schemeSelection').value == '2') {
+      this.schemeDetails.minAmount = this.schemeDetails.minimumPurchaseAmount;
+    } else {
+      this.schemeDetails.minAmount = this.schemeDetails.additionalPurchaseAmount;
+    }
+    this.sipTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minAmount)]);
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
     if (data.length > 1) {
       this.reInvestmentOpt = data;
@@ -376,7 +380,8 @@ export class SipTransactionComponent implements OnInit {
   reinvest(scheme) {
     this.schemeDetails = scheme;
     this.transactionSummary = {
-      schemeName: scheme.schemeName
+      ...this.transactionSummary,
+      schemeName: scheme.schemeName,
     };
     console.log('schemeDetails == ', this.schemeDetails);
   }
@@ -402,7 +407,7 @@ export class SipTransactionComponent implements OnInit {
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: ['2'],
       // investor: [(!data) ? '' : data.investor, [Validators.required]],
-      // folioSelection: ['2'],
+      reinvest: [(!data) ? '' : data.reinvest, [Validators.required]],
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
       frequency: [(!data) ? '' : data.frequencyType, [Validators.required]],
       investmentAccountSelection: [(!data) ? '' : data.folioNo, [Validators.required]],
@@ -449,10 +454,7 @@ export class SipTransactionComponent implements OnInit {
       this.sipTransaction.get('frequency').markAsTouched();
       return;
     } else {
-      this.endDate = new Date();
-      this.endDate.setDate(31);
-      this.endDate.setMonth(11);
-      this.endDate.setFullYear(2099);
+
       let obj = {
         productDbId: this.schemeDetails.id,
         clientName: this.selectedFamilyMember,
@@ -468,7 +470,6 @@ export class SipTransactionComponent implements OnInit {
         adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
         clientId: this.getDataSummary.defaultClient.clientId,
         startDate: Number(new Date(this.sipTransaction.controls.date.value.replace(/"/g, ''))),
-        endDate: (this.endDate).getTime(),
         frequencyType: this.frequency,
         noOfInstallments: this.sipTransaction.controls.installment.value,
         orderType: 'SIP', // (this.mandateDetails==undefined)?null:this.mandateDetails[0].mandateType,
@@ -509,7 +510,11 @@ export class SipTransactionComponent implements OnInit {
       }
       this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
-        data => this.sipBSERes(data), (error) => {
+        data => {
+          this.sipBSERes(data);
+        }, (error) => {
+          this.barButtonOptions.active = false;
+
           this.eventService.showErrorMessage(error);
         }
       );

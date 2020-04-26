@@ -1,12 +1,10 @@
 <div class="dialogclose">
     <div class="row popup-header-fix-100">
         <div class="col-md-2 border-right-1 p-0">
-            <img class="imgLogoCLass"
-                src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+            <img class="imgLogoCLass" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
         </div>
         <div class="col-md-8 p-0 d-flex justify-content-center align-items-center " *ngIf="data">
-            <p class="f-16 m-0">ARN-83865
-                {{ data.rtId && data.rtId === 1 ? 'CAMS': (data.rtId && data.rtId === 2) ? 'KARVY' :  (data.rtId && data.rtId === 3) ? 'FRANKLIN': ""  }}
+            <p class="f-16 m-0">ARN-83865 {{ data.rtId && data.rtId === 1 ? 'CAMS': (data.rtId && data.rtId === 2) ? 'KARVY' : (data.rtId && data.rtId === 3) ? 'FRANKLIN': "" }}
             </p>
         </div>
         <div class="col-md-2 text-right">
@@ -27,16 +25,13 @@
                         Summary
                     </h5>
                 </ng-template>
-                <p class=" pt-20 pb-20 f-14 m-0">Below is a summary of current status of reconciliation. At this stage,
-                    it is recommended that you export the list of unmatched folios. Once done, proceed to the next stage
-                    of doing manual reconciliation.</p>
+                <p class=" pt-20 pb-20 f-14 m-0">Below is a summary of current status of reconciliation. At this stage, it is recommended that you export the list of unmatched folios. Once done, proceed to the next stage of doing manual reconciliation.</p>
 
 
                 <div class="row">
                     <div class="col-md-3"></div>
                     <div class="col-md-9">
-                        <h2 class="f-14 f-600 ml-12 d-inline-block widthBoxUpperSlider text-center border_h2">Unmatched
-                            folio count
+                        <h2 class="f-14 f-600 ml-12 d-inline-block widthBoxUpperSlider text-center border_h2">Unmatched folio count
                         </h2>
                         <h2 class="f-14 f-600 d-inline-block widthBoxUpperSlider text-center borderleft_none border_h2">
                             Latest data as on
@@ -47,8 +42,7 @@
                 <div class="row">
                     <div class="col-md-12 p-0 overflow-hidden back-office-table">
                         <!-- summary table -->
-                        <table mat-table [dataSource]="dataSource" id="table-low" class="" appSkeletonLoading
-                            [appSkeletonLoading]="isLoading">
+                        <table mat-table [dataSource]="dataSource" id="table-low" class="" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
                             <ng-container matColumnDef="doneOne">
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> Done on </th>
@@ -87,7 +81,7 @@
                             </ng-container>
 
                             <ng-container matColumnDef="aum_balance">
-                                <th mat-header-cell *matHeaderCellDef> AUM balance as on</th>
+                                <th mat-header-cell *matHeaderCellDef> AUM balance</th>
                                 <td mat-cell *matCellDef="let element">
                                     <div class="bar"> {{element.aum_balance | date }} </div>
                                 </td>
@@ -105,12 +99,8 @@
                             <ng-container matColumnDef="export_folios">
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> Export unmatched folios </th>
                                 <td class="b-a text-center" mat-cell *matCellDef="let element">
-                                    <div class="bar"
-                                        [matTooltip]="canExportExcelSheet === 'intermediate'? 'Loading...': (canExportExcelSheet == 'false' ? 'No Data Found': (canExportExcelSheet == 'true'? 'Click Now': null))"
-                                        [matTooltipDisabled]="didAumReportListGot" matTooltipPosition="below">
-                                        <button class="bg-grey lt" mat-button
-                                            [disabled]="(canExportExcelSheet == 'false')"
-                                            (click)="exportToExcelSheet('export-folios', element)">Export</button>
+                                    <div class="bar" [matTooltip]="canExportExcelSheet === 'intermediate'? 'Loading...': (canExportExcelSheet == 'false' ? 'No Data Found': (canExportExcelSheet == 'true'? 'Click Now': null))" [matTooltipDisabled]="didAumReportListGot" matTooltipPosition="below">
+                                        <button class="bg-grey lt" mat-button [disabled]="(canExportExcelSheet == 'false')" (click)="exportToExcelSheet('export-folios', element)">Export</button>
                                     </div>
                                 </td>
                             </ng-container>
@@ -128,7 +118,7 @@
             </mat-tab>
 
 
-            <mat-tab [disabled]="isTabDisabled">
+            <mat-tab>
                 <ng-template mat-tab-label>
                     <div matTooltip=" Kindly, click on export button" [matTooltipDisabled]="!isTabDisabled">
                         <h5 [ngClass]="{'text-custom': isTabDisabled}">
@@ -137,19 +127,16 @@
                     </div>
                 </ng-template>
                 <p class="m-0 f-14">
-                    Use this section to do manual reconciliation of folios based on available options below. Once done,
-                    proceed to the next stage of deleting and reordering unmatched folios.
+                    Use this section to do manual reconciliation of folios based on available options below. Once done, proceed to the next stage of deleting and reordering unmatched folios.
                 </p>
 
                 <div class="row pt-60 pb-28">
                     <div class="col-md-12 p-0">
-                        <button class="br-0" [ngClass]="subTabState === 1 ?'text-primary':''" mat-button
-                            (click)="setSubTabState(1)">All
+                        <button class="br-0" [ngClass]="subTabState === 1 ?'text-primary':''" mat-button (click)="setSubTabState(1)">All
                             folios
                         </button>
 
-                        <button class="br-0" mat-button [ngClass]="subTabState === 2 ?'text-primary':''"
-                            (click)="setSubTabState(2)">Folios with
+                        <button class="br-0" mat-button [ngClass]="subTabState === 2 ?'text-primary':''" (click)="setSubTabState(2)">Folios with
                             duplicate entries</button>
                     </div>
                 </div>
@@ -167,8 +154,7 @@
                         <!-- manual recon all folio -->
                         <div *ngIf="subTabState == 1">
 
-                            <table mat-table [dataSource]="dataSource1" id="table-low" class=" " appSkeletonLoading
-                                [appSkeletonLoading]="isLoading">
+                            <table mat-table [dataSource]="dataSource1" id="table-low" class=" " appSkeletonLoading [appSkeletonLoading]="isLoading">
 
                                 <ng-container matColumnDef="name">
                                     <th class="b-a" mat-header-cell *matHeaderCellDef> Scheme name </th>
@@ -211,9 +197,7 @@
                                 <ng-container matColumnDef="transactions">
                                     <th mat-header-cell *matHeaderCellDef> Transactions </th>
                                     <td mat-cell *matCellDef="let element; index as i">
-                                        <div class="bar"> {{ element.transactions }} <button
-                                                (click)="openReconciliationDetails('reconciliationDetails', element, 'all-folios', i, element.freezeDate)"
-                                                class="bg-primary text-white" mat-flat-button>View</button> </div>
+                                        <div class="bar"> {{ element.transactions }} <button (click)="openReconciliationDetails('reconciliationDetails', element, 'all-folios', i, element.freezeDate)" class="bg-primary text-white" mat-flat-button>View</button> </div>
                                     </td>
                                 </ng-container>
 
@@ -230,8 +214,7 @@
                         <!-- manual recon duplicate folio -->
 
                         <div *ngIf="subTabState == 2">
-                            <table mat-table [dataSource]="dataSource2" id="table-low" class=" " appSkeletonLoading
-                                [appSkeletonLoading]="isLoadingForDuplicate">
+                            <table mat-table [dataSource]="dataSource2" id="table-low" class=" " appSkeletonLoading [appSkeletonLoading]="isLoadingForDuplicate">
                                 <ng-container matColumnDef="name">
                                     <th class="b-a" mat-header-cell *matHeaderCellDef> Scheme name </th>
                                     <td class="b-a" mat-cell *matCellDef="let element">
@@ -273,9 +256,7 @@
                                 <ng-container matColumnDef="transactions">
                                     <th mat-header-cell *matHeaderCellDef> Transactions </th>
                                     <td mat-cell *matCellDef="let element; index as i">
-                                        <div class="bar"> {{ element.transactions }}<button
-                                                (click)="openReconciliationDetails('reconciliationDetails', element, 'duplicate-folios', i, element.freezeDate)"
-                                                class="bg-primary text-white" mat-flat-button>View</button> </div>
+                                        <div class="bar"> {{ element.transactions }}<button (click)="openReconciliationDetails('reconciliationDetails', element, 'duplicate-folios', i, element.freezeDate)" class="bg-primary text-white" mat-flat-button>View</button> </div>
                                     </td>
                                 </ng-container>
 
@@ -292,7 +273,7 @@
                 </div>
             </mat-tab>
 
-            <mat-tab [disabled]="isTabDisabled">
+            <mat-tab>
                 <ng-template mat-tab-label>
                     <div matTooltip="Kindly, click on export button" [matTooltipDisabled]="!isTabDisabled">
                         <h5 [ngClass]="{'text-custom': isTabDisabled}">
@@ -305,26 +286,20 @@
                 </p>
 
                 <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
-                    <mat-radio-button value="1" class="example-radio-button d-block mb-5 f-14"
-                        (click)="openDeleteDialog()">
+                    <mat-radio-button value="1" class="example-radio-button d-block mb-5 f-14" (click)="openDeleteDialog()">
                         Delete unmatched folios
                         <p class="text-primitive ws-normal">
-                            This will simply delete the unmatched folios. Ensure that you reorder the folio wise
-                            data at the earliest. Also, ensure that you have downloaded the unmatched folio details from
-                            Summary & setup section as a backup
+                            This will simply delete the unmatched folios. Ensure that you reorder the folio wise data at the earliest. Also, ensure that you have downloaded the unmatched folio details from Summary & setup section as a backup
                         </p>
                     </mat-radio-button>
 
-                    <mat-radio-button [disabled]="isFranklinTab" value="2"
-                        class="example-radio-button mb-5 d-block f-14" (click)="openDeleteAndReorderDialog()">
+                    <mat-radio-button [disabled]="isFranklinTab" value="2" class="example-radio-button mb-5 d-block f-14" (click)="openDeleteAndReorderDialog()">
                         Delete and reorder unmatched folios
                         <span class="f-12 bu-primary text-primary">
                             CHOSEN OPTION
                         </span>
                         <p class="text-primitive ws-normal">
-                            This will delete the unmatched folios as well as reorder the folio wise files from the
-                            respective RTA and automatically upload them for you. Ensure that you have downloaded
-                            the unmatched folio details from Summary & setup section as a backup.
+                            This will delete the unmatched folios as well as reorder the folio wise files from the respective RTA and automatically upload them for you. Ensure that you have downloaded the unmatched folio details from Summary & setup section as a backup.
                             <a href="#"> Read more</a>
                         </p>
                     </mat-radio-button>
@@ -356,8 +331,7 @@
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> Folios ordered </th>
                                 <td class="b-a" mat-cell *matCellDef="let element">
                                     <div class="bar">
-                                        <span
-                                            *ngIf="element.folios && element.folios.count && element.folios.file else elseForFolios">
+                                        <span *ngIf="element.folios && element.folios.count && element.folios.file else elseForFolios">
                                             <a href="javascript:void(0)" (click)="saveFile(element.folios.file)">
                                                 {{element.folios.count}}
                                             </a>

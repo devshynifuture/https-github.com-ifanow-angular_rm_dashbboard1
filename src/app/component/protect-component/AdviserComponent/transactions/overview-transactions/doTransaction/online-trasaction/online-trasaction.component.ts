@@ -96,6 +96,7 @@ export class OnlineTrasactionComponent implements OnInit {
       clientId: platform.clientId,
       // aggregatorType: platform
     };
+
     this.onlineTransact.getDefaultDetails(obj).subscribe(
       data => this.getDefaultDetailsRes(data)
     );

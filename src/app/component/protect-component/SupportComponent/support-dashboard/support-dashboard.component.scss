@@ -61,7 +61,7 @@
     width: 100%;
 }
 
-::ng-deep .mat-select-value-text{
+::ng-deep .mat-select-value-text {
     font-size: 12px !important;
 }
 
@@ -102,4 +102,5 @@
     padding: 7px;
     width: 80px;
     height: 57px;
+    cursor: pointer;
 }
