@@ -471,8 +471,8 @@ export class SipTransactionComponent implements OnInit {
 
   sip() {
     if (this.reInvestmentOpt.length > 1) {
-      if (this.sipTransaction.get('investmentAccountSelection').invalid) {
-        this.sipTransaction.get('investmentAccountSelection').markAsTouched();
+      if (this.sipTransaction.get('reinvest').invalid) {
+        this.sipTransaction.get('reinvest').markAsTouched();
         return;
       }
     } else if (this.sipTransaction.get('folioSelection').value == 1 && this.sipTransaction.get('investmentAccountSelection').invalid) {
