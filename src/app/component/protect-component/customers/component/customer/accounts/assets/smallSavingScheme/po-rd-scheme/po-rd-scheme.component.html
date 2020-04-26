@@ -48,19 +48,18 @@
         <ng-container matColumnDef="cvalue">
             <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef class="br t-right">
                 Current value </th>
-            <td mat-cell *matCellDef="let element" class="br amt text-right">
-                <div class="bar" appFormatNumber>{{element.currentValue}}</div>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span> </div>
             </td>
-            <td mat-footer-cell class="br text-right amt f-600" *matFooterCellDef appFormatNumber
-                [value]="sumOfCurrentValue">
-                <div class="bar"> {{sumOfCurrentValue}} </div>
+            <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
+                <div >{{isLoading ? ' ' : '₹'}}<span [value]="sumOfCurrentValue" appFormatNumber>{{sumOfCurrentValue}}</span></div>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="rate">
             <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br t-right"> Rate </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
-                <div class="bar"> {{element.rate}} </div>
+                <div class="bar"> {{element.rate}} {{isLoading ? ' ' : '%'}} </div>
             </td>
             <td mat-footer-cell class="br text-left" *matFooterCellDef> </td>
         </ng-container>
@@ -69,21 +68,21 @@
             <th mat-sort-header="deposit" mat-header-cell *matHeaderCellDef class="br t-right">
                 Monthly deposit
             </th>
-            <td mat-cell *matCellDef="let element" class="br amt text-right">
-                <div class="bar" appFormatNumber> {{element.monthlyContribution}} </div>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.monthlyContribution}}</span> </div>
             </td>
-            <td mat-footer-cell class="br text-right f-600" *matFooterCellDef appFormatNumber
-                [value]="sumOfMonthlyDeposit">{{sumOfMonthlyDeposit}}</td>
+            <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
+                <div >{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMonthlyDeposit" appFormatNumber>{{sumOfMonthlyDeposit}}</span></div>
+            </td>
         </ng-container>
         <ng-container matColumnDef="mvalue">
             <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef class="br t-right">
                 Maturity value </th>
-            <td mat-cell *matCellDef="let element" class="br amt text-right">
-                <div class="bar" appFormatNumber> {{element.maturityValue}} </div>
+            <td mat-cell *matCellDef="let element" class="br text-right">
+                <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.maturityValue}}</span> </div>
             </td>
-            <td mat-footer-cell class="br text-right amt f-600" *matFooterCellDef appFormatNumber
-                [value]="sumOfMaturityValue">
-                <div class="bar"> {{sumOfMaturityValue}} </div>
+            <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
+                <div >{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMaturityValue" appFormatNumber>{{sumOfMaturityValue}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="mdate">

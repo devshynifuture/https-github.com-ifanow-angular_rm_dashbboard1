@@ -363,9 +363,9 @@ export class BondsComponent implements OnInit {
     //   });
     // }
     if (this.bonds.invalid) {
-      this.inputs.find(input => !input.ngControl.valid).focus();
+      // this.inputs.find(input => !input.ngControl.valid).focus();
       this.bonds.markAllAsTouched();
-      return;
+      // return;
     } else {
       let obj = {
         advisorId: this.advisorId,
