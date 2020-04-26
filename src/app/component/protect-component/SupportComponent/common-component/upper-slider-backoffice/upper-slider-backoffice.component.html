@@ -45,16 +45,16 @@
                         <table mat-table [dataSource]="dataSource" id="table-low" class="" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
                             <ng-container matColumnDef="doneOne">
-                                <th class="b-a" mat-header-cell *matHeaderCellDef> Done on </th>
-                                <td class="b-a" mat-cell *matCellDef="let element">
+                                <th class="b-a w-11" mat-header-cell *matHeaderCellDef> Done on </th>
+                                <td class="b-a w-11" mat-cell *matCellDef="let element">
                                     <div class="bar"> {{element.doneOne | date }} </div>
                                 </td>
                             </ng-container>
 
                             <!-- Name Column -->
                             <ng-container matColumnDef="totalfolios">
-                                <th class="b-a" mat-header-cell *matHeaderCellDef> Total folios </th>
-                                <td class="b-a" mat-cell *matCellDef="let element">
+                                <th class="b-a w-11" mat-header-cell *matHeaderCellDef> Total folios </th>
+                                <td class="b-a w-11" mat-cell *matCellDef="let element">
                                     <div class="bar">
                                         <!-- {{!isLoading? "₹" : ""}} -->
                                         <span appFormatNumber>
@@ -74,15 +74,15 @@
 
                             <!-- Symbol Column -->
                             <ng-container matColumnDef="after_recon">
-                                <th class="b-a" mat-header-cell *matHeaderCellDef> After recon </th>
-                                <td class="b-a" mat-cell *matCellDef="let element">
+                                <th class="" mat-header-cell *matHeaderCellDef> After recon </th>
+                                <td class=" " mat-cell *matCellDef="let element">
                                     <div class="bar"> {{element.after_recon}} </div>
                                 </td>
                             </ng-container>
 
                             <ng-container matColumnDef="aum_balance">
-                                <th mat-header-cell *matHeaderCellDef> AUM balance</th>
-                                <td mat-cell *matCellDef="let element">
+                                <th class="bl-a" mat-header-cell *matHeaderCellDef> AUM balance</th>
+                                <td class="bl-a" mat-cell *matCellDef="let element">
                                     <div class="bar"> {{element.aum_balance | date }} </div>
                                 </td>
                             </ng-container>
@@ -100,7 +100,7 @@
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> Export unmatched folios </th>
                                 <td class="b-a text-center" mat-cell *matCellDef="let element">
                                     <div class="bar" [matTooltip]="canExportExcelSheet === 'intermediate'? 'Loading...': (canExportExcelSheet == 'false' ? 'No Data Found': (canExportExcelSheet == 'true'? 'Click Now': null))" [matTooltipDisabled]="didAumReportListGot" matTooltipPosition="below">
-                                        <button class="bg-grey lt" mat-button [disabled]="(canExportExcelSheet == 'false')" (click)="exportToExcelSheet('export-folios', element)">Export</button>
+                                        <button class="bg-grey lt classExport " mat-button [disabled]="(canExportExcelSheet == 'false')" (click)="exportToExcelSheet('export-folios', element)">Export</button>
                                     </div>
                                 </td>
                             </ng-container>

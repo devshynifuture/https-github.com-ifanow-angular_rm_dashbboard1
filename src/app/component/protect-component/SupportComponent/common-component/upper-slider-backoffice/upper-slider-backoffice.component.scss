@@ -21,9 +21,20 @@
     margin-bottom: 0px;
 }
 
-.btn-none{
+.btn-none {
     border: none !important;
     background: transparent !important;
     color: interit !important;
     font-size: inherit !important;
+}
+
+.bl-a {
+    border-left: 1px solid #E8ECEF;
+}
+
+.classExport {
+    width: 76px;
+    height: 28px;
+    padding: 0px !important;
+    line-height: 24px;
 }
