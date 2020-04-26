@@ -100,7 +100,7 @@
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> Export unmatched folios </th>
                                 <td class="b-a text-center" mat-cell *matCellDef="let element">
                                     <div class="bar" [matTooltip]="canExportExcelSheet === 'intermediate'? 'Loading...': (canExportExcelSheet == 'false' ? 'No Data Found': (canExportExcelSheet == 'true'? 'Click Now': null))" [matTooltipDisabled]="didAumReportListGot" matTooltipPosition="below">
-                                        <button class="bg-grey lt text-black" mat-button [disabled]="(canExportExcelSheet == 'false')" (click)="exportToExcelSheet('export-folios', element)">Export</button>
+                                        <button class="bg-grey lt" mat-button [disabled]="(canExportExcelSheet == 'false')" (click)="exportToExcelSheet('export-folios', element)">Export</button>
                                     </div>
                                 </td>
                             </ng-container>
@@ -118,9 +118,11 @@
             </mat-tab>
 
 
+            <!-- <mat-tab [disabled]="isTabDisabled"> -->
             <mat-tab>
                 <ng-template mat-tab-label>
-                    <div matTooltip=" Kindly, click on export button" [matTooltipDisabled]="!isTabDisabled">
+                    <!-- <div matTooltip=" Kindly, click on export button" [matTooltipDisabled]="!isTabDisabled"> -->
+                    <div>
                         <h5 [ngClass]="{'text-custom': isTabDisabled}">
                             Manual reconciliation
                         </h5>
@@ -272,10 +274,12 @@
                     </div>
                 </div>
             </mat-tab>
-
+            <!-- for vaibhav to work -->
+            <!-- <mat-tab [disabled]="isTabDisabled"> -->
             <mat-tab>
                 <ng-template mat-tab-label>
-                    <div matTooltip="Kindly, click on export button" [matTooltipDisabled]="!isTabDisabled">
+                    <!-- <div matTooltip="Kindly, click on export button" [matTooltipDisabled]="!isTabDisabled"> -->
+                    <div>
                         <h5 [ngClass]="{'text-custom': isTabDisabled}">
                             Deletion & reordering
                         </h5>
