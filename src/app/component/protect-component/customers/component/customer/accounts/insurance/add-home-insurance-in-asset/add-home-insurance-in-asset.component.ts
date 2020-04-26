@@ -254,8 +254,8 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
         id: [0]
       })]),
       planFeatureForm: this.fb.array([this.fb.group({
-        planfeatures: [''],
-        sumInsured:['']
+        planfeatures: ['',[Validators.required]],
+        sumInsured:['',[Validators.required]]
       })]),
       addOnForm: this.fb.array([this.fb.group({
         additionalCovers :[''],
@@ -302,10 +302,12 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
       });
     }
     if (this.dataForEdit) {
-      this.planFeatureForm.removeAt(0);
-      this.dataForEdit.policyFeatures.forEach(element => {
-        this.addNewFeature(element);
-      });
+      if( this.dataForEdit.policyFeatures.length > 0){
+        this.planFeatureForm.removeAt(0);
+        this.dataForEdit.policyFeatures.forEach(element => {
+          this.addNewFeature(element);
+        });
+      }
     }
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.homeInsuranceForm }
 
