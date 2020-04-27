@@ -6,7 +6,7 @@
     </div>
 </div>
 
-<div class="row pt-20">
+<div class="row pt-20" [formGroup]="filterForm">
     <div class="col-md-4">
         <div class="example-chip-list">
             <mat-chip-list #chipList aria-label="Filtering Table">
@@ -22,11 +22,11 @@
     <div class="col-md-8">
         <div class="row">
             <div class="col-lg-3">
-                <div class="form-group ">
+                <div class="form-group">
                     <mat-form-field appearance="standard" floatLabel="never">
                         <input matInput class="form-control m-0" placeholder="Search by advisor"
-                            [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                            [matChipInputAddOnBlur]="addOnBlur"
+                            formControlName="filterByName" [matChipInputFor]="chipList"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
                             (matChipInputTokenEnd)="maniputateEventObjForName($event)" #inputAdvisorNameRef>
                     </mat-form-field>
                 </div>
@@ -34,7 +34,8 @@
             <div class="col-lg-3">
                 <div class="form-group ">
                     <mat-form-field appearance="standard" floatLabel="never">
-                        <mat-select class="form-control br-0" placeholder="Ordered By" (selectionChange)="add($event)">
+                        <mat-select class="form-control br-0" placeholder="Ordered By" formControlName="filterByRmName"
+                            (selectionChange)="add($event)">
                             <mat-option>None</mat-option>
                             <mat-option [value]="rmUser" *ngFor="let rmUser of rmList">
                                 {{ rmUser.name }}
@@ -45,7 +46,8 @@
             </div>
             <div class="col-lg-3">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <mat-select class="form-control br-0" (selectionChange)="add($event)">
+                    <mat-select class="form-control br-0" formControlName="filterByPeriod"
+                        (selectionChange)="add($event)">
                         <mat-option>None</mat-option>
                         <mat-option [value]="period" *ngFor="let period of periodList">
                             {{ period.name }}
@@ -55,7 +57,7 @@
             </div>
             <div class="col-lg-3">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <mat-select class="form-control br-0" (selectionChange)="add($event)">
+                    <mat-select class="form-control br-0" formControlName="filterByRta" (selectionChange)="add($event)">
                         <mat-option>
                             None
                         </mat-option>
@@ -196,7 +198,7 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        
+
         <div class="col-md-12 p-0" *ngIf="dataSource.data === null">
             <h4 class="d-flex justify-content-center b-a p-44">
                 No Data Found

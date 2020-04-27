@@ -186,9 +186,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput type="text" [maxLength]="30"
-                            formControlName="insurerName" #insureerName appInputValueValidation autocomplete="off"
-                            class="form-control br-0">
+                        <input matInput type="text" [maxLength]="30" formControlName="insurerName" #insureerName
+                            appInputValueValidation autocomplete="off" class="form-control br-0">
                         <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>
@@ -373,9 +372,8 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput type="text"  [maxLength]="30"
-                                formControlName="exclusion" #exclusion appInputValueValidation autocomplete="off"
-                                class="form-control br-0">
+                            <input matInput type="text" [maxLength]="30" formControlName="exclusion" #exclusion
+                                appInputValueValidation autocomplete="off" class="form-control br-0">
                         </mat-form-field>
                     </div>
                 </div>
@@ -533,34 +531,35 @@
                 </div>
                 <div class="col-md-5 form-group">
                     <mat-form-field>
-                      <!--                      [data]='ownerData'-->
-                      <mat-select appBankAccount formControlName="bankAccount" matInput>
-                        <mat-option *ngFor="let option of accountList ;index as i" [value]="option.id">
-                          {{option.name}}</mat-option>
-                      </mat-select>
-                      <mat-error>This field is required
-                      </mat-error>
+                        <mat-select appBankAccount formControlName="bankAccount" [data]="bankAccountDetails" (inputChange)='bankAccountList($event)' matInput>
+                            <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id"  >
+                                {{option.bankName}}</mat-option>
+                        </mat-select>
+                        <mat-error>This field is required
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-md-1 p-0 pt-8 d-flex">
                     <i class="material-icons text-primitive c-p float-left" (click)="addNewAccount(undefined)">add</i>
-                    <i class="material-icons text-primitive c-p float-right"
-                        (click)="RemoveNewAccount(pointIndex)">remove</i>
-                </div>
+                   </div>
             </div>
             <div class="row pt-32" formArrayName="addBankAccount">
                 <div class="row pt-36"
-                     *ngFor="let obj of healthInsuranceForm.controls['addBankAccount'].controls; let pointIndex=index"
-                     [formGroupName]="pointIndex">
-                  <div class="row pt-32">
-                    <div class="col-md-5 form-group  ">
-                      <mat-form-field floatLabel="never" appearance="standard">
-                        <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
-                               formControlName="newBankAccount" #bankAccount appInputValueValidation autocomplete="off"
-                               class="form-control br-0">
-                      </mat-form-field>
+                    *ngFor="let obj of healthInsuranceForm.controls['addBankAccount'].controls; let pointIndex=index"
+                    [formGroupName]="pointIndex">
+                    <div class="row pt-32">
+                        <div class="col-md-5 form-group  ">
+                            <mat-form-field floatLabel="never" appearance="standard">
+                                <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC"
+                                    [maxLength]="10" formControlName="newBankAccount" #bankAccount
+                                    appInputValueValidation autocomplete="off" class="form-control br-0">
+                            </mat-form-field>
+                        </div>
                     </div>
-                  </div>
+                    <div class="col-md-1 p-0 pt-8 d-flex">
+                    <i class="material-icons text-primitive c-p float-right"
+                    (click)="RemoveNewAccount(pointIndex)">remove</i>
+            </div>
 
                 </div>
 

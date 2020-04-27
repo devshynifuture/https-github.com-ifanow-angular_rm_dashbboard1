@@ -129,12 +129,8 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.taskTemplate.controls.categoryId.valueChanges.subscribe(value => {
         this.category = value == 1 ? 'Asset' : value == 3 ? 'Insurance' : 'Liability';
-        this.taskTemplate.controls.subcategoryId.setValue('');
-        this.taskTemplate.controls.subSubCategoryId.setValue('');
+        this.taskTemplate.controls.subcategoryId.setValue(0);
         this.dataEdited = true;
-        this.hideSubcategory = true;
-        this.adviceTypeMasterList = this.globalData.system_generated_advice_map_key;
-        this.categoryList = this.globalData.task_template_category_and_subcategory_list.find(data => data.categoryId == value).taskTempSubCategorytoCategoryList;
       })
     );
     this.subscription.add(
@@ -142,8 +138,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
         this.dataEdited = true;
         if (value != '') {
           this.listOfSub = this.categoryList.find(subCategory => subCategory.subcategoryId == value).taskTempSubcattoSubCategories;
-          this.taskTemplate.controls.subSubCategoryId.setValue('');
-          this.taskTemplate.controls.adviceTypeId.setValue('');
+          this.taskTemplate.controls.subSubCategoryId.setValue(0);
           if (this.listOfSub.length == 0) {
             this.hideSubcategory = true;
             this.adviceTypeMasterList = this.globalData.system_generated_advice_map_key;
@@ -151,6 +146,9 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
             this.hideSubcategory = false;
           }
           this.taskTemplate.updateValueAndValidity();
+        } else {
+          this.hideSubcategory = true;
+          this.adviceTypeMasterList = this.globalData.system_generated_advice_map_key;
         }
       })
     );
@@ -159,13 +157,14 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
         if(this.data.id)
           this.dataEdited = true;
         
-        this.taskTemplate.controls.adviceTypeId.setValue('');
+        this.taskTemplate.controls.adviceTypeId.setValue(0);
         if(value) {
           this.adviceTypeMasterList = this.listOfSub.find(subSubCat => subSubCat.subSubCategoryId == value).adviceTypeMasterList || this.globalData.system_generated_advice_map_key;
         }
 
       })
     );
+
     if (this.data.id) {
       this.subscription.add(
         this.taskTemplate.controls.adviceTypeId.valueChanges.subscribe(value => {
