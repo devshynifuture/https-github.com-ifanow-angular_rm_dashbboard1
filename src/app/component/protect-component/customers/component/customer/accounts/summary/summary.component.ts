@@ -60,7 +60,21 @@ export class SummaryComponent implements OnInit {
     currentValue: null,
     percentage: null
   };
-
+  Commodities: any =
+    {
+      currentValue: null,
+      percentage: null
+    }
+  bscData: any;
+  nscDAta: any;
+  nscData: any;
+  summaryFlag: boolean;
+  cashflowFlag: boolean;
+  StockFeedFlag: boolean;
+  letsideBarLoader: boolean;
+  selectedVal: string;
+  goldData: any;
+  silverData: any;
   constructor(public eventService: EventService, private cusService: CustomerService,
     private datePipe: DatePipe) {
   }
@@ -71,17 +85,36 @@ export class SummaryComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.calculateTotalSummaryValues();
-    this.getStockFeeds();
   }
   getStockFeeds() {
+    this.selectedVal = 'Equities';
+    this.StockFeedFlag = true;
     this.cusService.getStockFeeds().subscribe(
       data => {
-        console.log(data)
+        console.log(data);
+        this.getStockFeedsResponse(data)
       }
     )
   }
+  getStockFeedsResponse(data) {
+    this.StockFeedFlag = false;
+    const { bse, nse, gold, silver } = data;
+    bse.date = new Date(bse.date).getTime();
+    bse.change_in_percentage = parseInt(bse.change_in_percentage).toFixed(2);
+    nse.change_in_percentage = parseInt(nse.change_in_percentage).toFixed(2);
+    gold.change_in_percentage = parseInt(gold.change_in_percentage).toFixed(2);
+    silver.change_in_percentage = parseInt(silver.change_in_percentage).toFixed(2);
+    this.bscData = bse;
+    this.nscData = nse;
+    this.goldData = gold;
+    this.silverData = silver;
+  }
   calculateTotalSummaryValues() {
-    this.isLoading = true;
+    this.mutualFundValue = {
+      currentValue: null,
+      percentage: null
+    }
+    this.letsideBarLoader = true;
     console.log(new Date(this.asOnDate).getTime());
     const obj = {
       advisorId: this.advisorId,
@@ -91,7 +124,7 @@ export class SummaryComponent implements OnInit {
     this.cusService.calculateTotalValues(obj).subscribe(
       data => {
         if (data && data.length > 0) {
-          this.isLoading = false;
+          this.letsideBarLoader = false;
           console.log(data);
           this.totalAssets = 0;
           this.summaryTotalValue = Object.assign([], data);
@@ -103,6 +136,7 @@ export class SummaryComponent implements OnInit {
           this.retirement = data[4];
           this.smallSavingScheme = data[5];
           this.cashAndFLow = data[6];
+          this.Commodities = data[7];
           const tempSummaryTotalValue: any = {};
           this.summaryTotalValue.forEach(element => {
             tempSummaryTotalValue[element.assetType] = element;
@@ -118,6 +152,7 @@ export class SummaryComponent implements OnInit {
             this.liabilityTotal = 0;
           });
           this.totalOfLiabilitiesAndTotalAssset(data);
+          this.letsideBarLoader = false;
           this.summaryMap = tempSummaryTotalValue;
           this.pieChart('piechartMutualFund', data);
         }
@@ -126,12 +161,16 @@ export class SummaryComponent implements OnInit {
     );
     this.getSummaryList(obj);
     this.getCashFlowList(obj);
+    this.getStockFeeds();
+
   }
 
   getSummaryList(obj) {
+    this.summaryFlag = true;
     this.cusService.getSUmmaryList(obj).subscribe(
       data => {
         console.log(data);
+        this.summaryFlag = false;
         this.graphList = [];
         let sortedDateList = [];
         sortedDateList = data;
@@ -157,9 +196,11 @@ export class SummaryComponent implements OnInit {
   }
 
   getCashFlowList(obj) {
+    this.cashflowFlag = true;
     this.cashFlowViewDataSource = [{}, {}, {}];
     this.cusService.getCashFlowList(obj).subscribe(
       data => {
+        this.cashflowFlag = false;
         console.log(data);
         this.filterCashFlow = Object.assign({}, data);
         this.cashFlowViewDataSource = [];
@@ -300,6 +341,9 @@ export class SummaryComponent implements OnInit {
     this.calculateTotalSummaryValues();
   }
 
+  onValChange(value) {
+    this.selectedVal = value;
+  }
 
   cashFlow(id, data) {
     console.log(data);
