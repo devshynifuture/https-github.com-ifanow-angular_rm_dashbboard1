@@ -116,7 +116,7 @@
           <div class="col-md-5 p-0">
             <div class="form-group mb-0">
               <mat-form-field>
-                <mat-select class="form-control" formControlName="investmentAccountSelection">
+                <mat-select class="form-control" formControlName="reinvest">
                   <mat-option (click)="reinvest(flag)" *ngFor="let flag of reInvestmentOpt"
                               value="option">
                     {{(flag.dividendReinvestmentFlag == 0) ? 'Dividend payout' : 'Dividend reinvestment'}}
@@ -188,7 +188,9 @@
           <div class="col-md-11 p-0">
             <div class="form-group">
               <mat-form-field appearance="standard" floatLabel="never">
-                <input (keyup)="getSchemeListTranfer($event.target.value)" [matAutocomplete]="auto1" aria-label="Number"
+                <input (changedValue)="getSchemeListTranfer($event)"
+                       [matAutocomplete]="auto1"
+                       appCustomAutoComplete aria-label="Number"
                        class="form-control"
                        formControlName="transferIn" matInput
                        placeholder="Start typing to see transferIn names"
@@ -238,29 +240,31 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="row">
+        <div *ngIf="(switchTransaction.get('switchType').value) != 3" class="row">
           <div class="col-md-12 p-0 text-left">
             <h5 class="m-0 pt-28 text-black pb-12"> Amounts/Units</h5>
           </div>
 
           <div class="col-md-5 p-0 iconRupess">
             <div class="form-group mb-0">
-              <mat-form-field *ngIf="selectScheme == 2">
+              <mat-form-field>
                 <input #employeeContry (change)="enteredAmount($event.target.value)" class="form-control br-0 rupess"
                        formControlName="employeeContry"
                        matInput maxlength="10"
                        type="text">
-                <mat-hint align="start" class="f-12 text-custom">
+                <mat-hint *ngIf="(switchTransaction.get('switchType').value) == 1" align="start"
+                          class="f-12 text-custom">
                   Min amount:
                   ₹{{(schemeDetails == undefined) ? '0' : schemeDetails.minimumPurchaseAmount }}
                 </mat-hint>
                 <mat-hint *ngIf="(switchTransaction.get('switchType').value == 2)" align="start"
                           class="f-12 text-custom">
                   Min units:
-                  ₹{{(schemeDetails == undefined) ? '0' : schemeDetails.minimumRedemptionQty }}
+                  {{(schemeDetails == undefined) ? '0' : schemeDetails.minimumRedemptionQty }}
                 </mat-hint>
                 <mat-error *ngIf="(switchTransaction.get('employeeContry').errors?.min)" class="f-12">
-                  Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
+                  Should be greater than or equal
+                  to {{switchTransaction.get('switchType').value == 1 ? schemeDetails.minimumPurchaseAmount : schemeDetails.minimumRedemptionQty}}
                 </mat-error>
                 <mat-error *ngIf="(switchTransaction.get('employeeContry').errors?.required)"
                            class="f-12">
