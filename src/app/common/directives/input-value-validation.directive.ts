@@ -1,5 +1,5 @@
-import { ValidatorType } from '../../services/util.service';
-import { Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer2 } from '@angular/core';
+import {ValidatorType} from '../../services/util.service';
+import {Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer2} from '@angular/core';
 
 /** A hero's name can't match the given regular expression */
 

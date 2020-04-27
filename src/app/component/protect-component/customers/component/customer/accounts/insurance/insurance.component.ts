@@ -493,7 +493,7 @@ export class InsuranceComponent implements OnInit {
       data: {},
       insuranceTypeId: this.insuranceTypeId,
       insuranceSubTypeId: this.insuranceSubTypeId,
-      state: 'open35',
+      state: 'open',
       componentName: null
     }
     sendData.data = {

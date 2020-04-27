@@ -54,8 +54,14 @@ export class PlanReturnsinflationComponent implements OnInit {
     this.setTableExtensions(data.long_term);
     this.shortTerm = data.short_term;
     this.longTerm = data.long_term;
-    this.longDS = [{class: 'Inflation rate', inflation_rate: data.long_term_inflation_rate}]
-    this.shortDS = [{class: 'Inflation rate', inflation_rate: data.short_term_inflation_rate}]
+    this.longDS = data.long_term_inflation_rate
+    this.shortDS = data.short_term_inflation_rate
+    this.longDS.forEach(data => {
+      data.class = 'Inflation rate';
+    })
+    this.shortDS.forEach(data => {
+      data.class = 'Inflation rate';
+    })
     this.isLoading = false;
   }
 
@@ -121,18 +127,19 @@ export class PlanReturnsinflationComponent implements OnInit {
     })
   }
 
-  checkForMinMax(value, data) {
-    let inflation_rate = parseFloat(data.inflation_rate || 0);
-    if(value > 100) {
+  checkForMinMax(elem, data) {
+    if(parseFloat(elem.value) > 100) {
       this.eventService.openSnackBar("Maximum value is 100", "Dismiss");
-      data.inflation_rate = inflation_rate;
+      data.inflation_rate = '100'
+      elem.value = '100'
       return;
     }
-    if(value < 1) {
+    if(parseFloat(elem.value) < 1) {
       this.eventService.openSnackBar("Minimum value is 1", "Dismiss");
-      data.inflation_rate = 1;
+      data.inflation_rate = '1';
+      elem.value = '1'
       return;
     }
-    data.inflation_rate = value;
+    data.inflation_rate = elem.value;
   }
 }
