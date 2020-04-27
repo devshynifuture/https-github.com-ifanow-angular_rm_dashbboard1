@@ -40,26 +40,10 @@
         <div class="col-md-10 b-a p-0 min-height pt-28">
             <div>
                 <div class="wrapper-8">
-                    <!-- <div class="row">
-                        <div class="col-md-12 right text-right pt-28 pb-28 pr-0">
-                            <button mat-stroked-button [matMenuTriggerFor]="menu" class="ba-black br-0">
-                                Overview Report
-                                <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down
-                                </mat-icon>
-                            </button>
-                            <mat-menu #menu="matMenu">
-                                <button mat-menu-item>Overview Report</button>
-                                <button mat-menu-item>Summary</button>
-                                <button mat-menu-item>All Transactions</button>
-                                <button mat-menu-item>Unrealized Transactions</button>
-                                <button mat-menu-item>Capital Gains</button>
-                                <button mat-menu-item>Goal Linkage</button>
-                            </mat-menu>
-                        </div>
-                    </div> -->
+
                     <div class="row pb-12">
                         <div class="col-md-4 p-0">
-                            <h4 class="m-0 text-black roboto pt-4">{{showInsurance}} insurance</h4>
+                            <h4 class="m-0 text-black roboto pt-4">{{showInsurance}} insurance </h4>
                         </div>
                         <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center" *ngIf="!isLoading">
                             <div class="pdfClass">
@@ -95,7 +79,7 @@
                                     <td mat-cell *matCellDef="let element; let i = index" class="br">
                                         <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                                     </td>
-                                    <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+                                    <td mat-footer-cell *matFooterCellDef class=" p-8 text-left"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="life">
                                     <th mat-sort-header="lifeAssuredName" mat-sort-header *matHeaderCellDef class="br">
@@ -103,14 +87,14 @@
                                     <td mat-cell *matCellDef="let element" class="br">
                                         <div class="bar"> {{element.lifeAssuredName}} </div>
                                     </td>
-                                    <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+                                    <td mat-footer-cell *matFooterCellDef class="p-8 text-left"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="name">
                                     <th mat-sort-header="policyName" *matHeaderCellDef class="br "> Policy name </th>
                                     <td mat-cell *matCellDef="let element" class="br">
                                         <div class="bar"> {{element.policyName}} </div>
                                     </td>
-                                    <td mat-footer-cell *matFooterCellDef class="f-600 pl-4 proximaFont text-left">Total
+                                    <td mat-footer-cell *matFooterCellDef class="f-600 pl-4 proximaFont text-left">
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="number">
@@ -119,7 +103,9 @@
                                     <td mat-cell *matCellDef="let element" class="br">
                                         <div class="bar"> {{element.policyNumber}} </div>
                                     </td>
-                                    <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+                                    <td mat-footer-cell *matFooterCellDef class="f-600 br p-8 proximaFont text-right">
+                                        Total
+                                    </td>
                                 </ng-container>
                                 <ng-container matColumnDef="sum">
                                     <th mat-header-cell mat-sort-header="sumAssured" *matHeaderCellDef class="br text-right"> Sum assured </th>
@@ -224,7 +210,7 @@
                                     <td mat-cell *matCellDef="let element; let i = index" class="br">
                                         <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
                                     </td>
-                                    <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+                                    <td mat-footer-cell *matFooterCellDef class=" p-8 text-left"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="life">
                                     <th mat-sort-header="lifeAssuredName" mat-sort-header *matHeaderCellDef class="br">
@@ -241,7 +227,7 @@
 
                                         <div class="bar" *ngIf="isLoading"> {{''}} </div>
                                     </td>
-                                    <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+                                    <td mat-footer-cell *matFooterCellDef class=" p-8 text-left"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="insurerName">
                                     <th mat-sort-header="name" *matHeaderCellDef class="br ">
@@ -253,7 +239,8 @@
                                         </div>
                                         <div class="bar" *ngIf="isLoading">{{''}}</div>
                                     </td>
-                                    <td mat-footer-cell *matFooterCellDef class="f-600 pl-4 proximaFont text-left">Total
+                                    <td mat-footer-cell *matFooterCellDef class="f-600 br p-8 proximaFont text-right">
+                                        Total
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="sumInsured">

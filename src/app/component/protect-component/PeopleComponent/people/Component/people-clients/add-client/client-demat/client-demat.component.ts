@@ -16,7 +16,7 @@ export class ClientDematComponent implements OnInit {
   mobileData: any;
   holderList: any;
 
-  mobileNumberFlag = 'Broker number';
+  mobileNumberFlag = 'Broker phone';
 
   dematForm;
   userData;
@@ -50,6 +50,7 @@ export class ClientDematComponent implements OnInit {
     this.userData = data;
     (this.userData.dematData) ? this.dematList = this.userData.dematData : '';
     if (this.userData.dematData == undefined && this.fieldFlag) {
+      this.holdingMode = '1';
       this.createDematForm(null);
       this.getDematList(data);
     }
@@ -326,7 +327,7 @@ export class ClientDematComponent implements OnInit {
           });
         });
       }
-      if (this.holderList.length > 0) {
+      if (this.holderList && this.holderList.length > 0) {
         this.holderList.controls.forEach(element => {
           holderList.push({
             // fMDetailTypeId: 1,

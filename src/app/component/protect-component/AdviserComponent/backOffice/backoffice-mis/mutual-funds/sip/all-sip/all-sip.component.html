@@ -8,7 +8,6 @@
         </div>
         <div class="col-md-6 ">
             <div class="right text-right">
-                <button mat-stroked-button class="btn-default addon"><i class="material-icons">add</i>XLS</button>
                 <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
             </div>
         </div>
@@ -21,7 +20,8 @@
     </div>
     <div class="row">
         <div class="col-md-12 overflow-hidden">
-            <table matSort mat-table [dataSource]="dataSource" id="tbs" class=" skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <table matSort mat-table [dataSource]="dataSource" id="tbs" class=" skeletonAnimation" appSkeletonLoading
+                [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no" sticky>
                     <th *matHeaderCellDef class="br" mat-header-cell> Index</th>
                     <td *matCellDef="let element; let i = index;" class="br" mat-cell>
@@ -82,7 +82,8 @@
                     <td *matCellDef="let element" class="br t-14 amt text-right" mat-cell>
                         <div class="bar" appFormatNumber>{{element.amount}}</div>
                     </td>
-                    <td *matFooterCellDef class="br text-right t-10 f-600 p-8" mat-footer-cell appFormatNumber [value]="totalAmount">{{totalAmount}}</td>
+                    <td *matFooterCellDef class="br text-right t-10 f-600 p-8" mat-footer-cell appFormatNumber
+                        [value]="totalAmount">{{totalAmount}}</td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
