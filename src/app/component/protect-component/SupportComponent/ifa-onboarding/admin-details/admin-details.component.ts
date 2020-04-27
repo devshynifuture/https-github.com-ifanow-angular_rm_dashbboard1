@@ -236,7 +236,6 @@ export class AdminDetailsComponent implements OnInit {
     }
     let obj1 = []
     obj1.push(obj)
-    if (event.checked == true) {
       this.supportService.editActivity(obj1).subscribe(
         data => {
           console.log('getOverviewIFAOnbording', data);
@@ -246,7 +245,6 @@ export class AdminDetailsComponent implements OnInit {
         }
         , err => this.eventService.openSnackBar(err, "Dismiss")
       )
-    }
   }
   getIFAActivity() {
     this.isLoading = true
