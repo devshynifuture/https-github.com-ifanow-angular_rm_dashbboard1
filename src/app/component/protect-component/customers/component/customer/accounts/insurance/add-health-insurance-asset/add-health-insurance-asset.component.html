@@ -531,16 +531,13 @@
                 </div>
                 <div class="col-md-5 form-group">
                     <mat-form-field>
-                        <!-- error in data property binding mat-select doesnot support [data] property -->
-
-                        <!-- <mat-select appBankAccount matInput formControlName="bankAccount" [data]='ownerData'>
+                        <!--                      [data]='ownerData'-->
+                        <mat-select appBankAccount formControlName="bankAccount" matInput>
                             <mat-option *ngFor="let option of accountList ;index as i" [value]="option.id">
                                 {{option.name}}</mat-option>
                         </mat-select>
                         <mat-error>This field is required
-                        </mat-error> -->
-
-                        <!-- error end -->
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-md-1 p-0 pt-8 d-flex">
