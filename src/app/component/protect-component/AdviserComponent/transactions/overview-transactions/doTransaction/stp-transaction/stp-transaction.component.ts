@@ -140,6 +140,7 @@ export class StpTransactionComponent implements OnInit {
       const obj = {
         searchQuery: value,
         bseOrderType: 'STP',
+        showOnlyNonZero: true,
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
         advisorId: this.getDataSummary.defaultClient.advisorId,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,

@@ -118,6 +118,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   getSchemeList(value) {
+    this.schemeList = [];
     this.showSpinner = true;
     this.platformType = this.getDataSummary.defaultClient.aggregatorType;
     if (this.purchaseTransaction.get('schemePurchase').invalid) {

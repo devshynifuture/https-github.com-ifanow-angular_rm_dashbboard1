@@ -2,35 +2,35 @@
     <div class="row">
         <div class="col-md-3 pr-24">
             <ul class="d-block myFeedUi">
-                <li class="activeClass">
+                <li (click)="changeTab(1)" [ngClass]="{'activeClass': currentTab == 1}">
                     <a class="f-14 roboto"> All feeds</a>
                 </li>
 
-                <li>
+                <li (click)="changeTab(2)" [ngClass]="{'activeClass': currentTab == 2}">
                     <a class="f-14 roboto"> Portfolio</a>
                 </li>
 
-                <li>
+                <li (click)="changeTab(3)" [ngClass]="{'activeClass': currentTab == 3}">
                     <a class="f-14 roboto"> Plan</a>
                 </li>
 
-                <li>
+                <li (click)="changeTab(4)" [ngClass]="{'activeClass': currentTab == 4}">
                     <a class="f-14 roboto"> Activity</a>
                 </li>
 
-                <li>
+                <li (click)="changeTab(5)" [ngClass]="{'activeClass': currentTab == 5}">
                     <a class="f-14 roboto"> Transactions</a>
                 </li>
 
-                <li>
+                <li (click)="changeTab(6)" [ngClass]="{'activeClass': currentTab == 6}">
                     <a class="f-14 roboto"> Profile</a>
                 </li>
 
-                <li>
+                <li (click)="changeTab(7)" [ngClass]="{'activeClass': currentTab == 7}">
                     <a class="f-14 roboto"> Education</a>
                 </li>
 
-                <li>
+                <li (click)="changeTab(8)" [ngClass]="{'activeClass': currentTab == 8}">
                     <a class="f-14 roboto"> Videos</a>
                 </li>
             </ul>
@@ -47,33 +47,72 @@
                 <div class="scrolling_myFeed">
 
                     <div class="wrapperBox">
-                        <h5 class="roboto m-0">Asset allocation</h5>
-                        <div class="borderChatBox bg-white">
-                            <img src="/assets/images/svg/myfeed-chat.svg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 class="roboto m-0">Asset allocation</h5>
+                                <div class="borderChatBox bg-white">
+                                    <div class="row">
+
+                                        <div class="col-md-4 p-0 b-a">
+                                            <div class="highcharts-figure" id="piechartMutualFund"></div>
+                                        </div>
+                                        <div class="col-md-8 b-a bl-0 p-0">
+                                            <div class="row b-b pt-10 pb-10">
+                                                <div class="col-md-1">
+                                                    <div class="hw-16 mt-2 bg-primary"></div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p class="f-500 text-black mb-0">Equity</p>
+                                                </div>
+                                                <div class="col-md-3 relClass ">
+                                                    <div class="bar height24">
+                                                        <p class="text-black mb-0 ">
+                                                            <!-- <span appFormatNumber
+                                                                *ngIf="this.equityCurrentValue">{{(this.equityCurrentValue)?this.equityCurrentValue:0}}</span><span
+                                                                appFormatNumber *ngIf="!this.equityCurrentValue && !isLoading">0</span> -->
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 relClass ">
+                                                    <div class="bar height24">
+                                                        <p class="text-black mb-0">
+                                                            <!-- <span appFormatNumber
+                                                                *ngIf="this.equityPercentage">{{(this.equityPercentage)?this.equityPercentage:0}}</span><span
+                                                                appFormatNumber *ngIf="!this.equityPercentage && !isLoading">0%</span> -->
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
+                    <!-- portfolio section -->
                     <div class="wrapperBox">
                         <div class="row">
                             <div class="col-md-8 d-flex align-items-center">
                                 <h5 class="roboto m-0">Portfolio</h5>
                             </div>
-                            <div class="col-md-4 text-right">
-                                <a class="viewBtn c-p text-primitive br-2 f-12"> View all </a>
+                            <div class="col-md-4 text-right" *ngIf="feedsData.portfolioData && feedsData.portfolioData.length > 0">
+                                <a class="viewBtn c-p text-primitive br-2 f-12" (click)="changeTab(2)"> View all </a>
                             </div>
                         </div>
 
 
-                        <div class="scrollingDiv d-flex  ">
-                            <div class="fundBox bg-white  ">
+                        <div class="scrollingDiv d-flex">
+                            <!-- portfolio data present -->
+                            <div class="fundBox bg-white" *ngFor="let portData of feedsData.portfolioData">
                                 <div class="row">
                                     <div class="col-md-8  pr-0">
-                                        <h5 class="roboto">Mutual funds</h5>
+                                        <h5 class="roboto">{{portData.className}}</h5>
                                     </div>
                                     <div class="col-md-4 d-flex justify-content-end">
                                         <span
                                             class="bg-primary d-flex align-items-center justify-content-center mfBox text-white">
-                                            MF
+                                            {{portData.type}}
                                         </span>
                                     </div>
                                 </div>
@@ -81,25 +120,26 @@
                                 <div class="row">
                                     <div class="col-md-8">
                                         <p class="m-0 text-primitive f-12">CURRENT VALUE</p>
-                                        <h3 class="mb-20">₹25,35,470</h3>
+                                        <h3 class="mb-20">₹<span appFormatNumber>{{portData.currentValue ? portData.currentValue : 0}}</span></h3>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-6">
                                         <p class="m-0 l-18 text-primitive f-12">AMT INVESTED</p>
-                                        <p class="m-0">₹14,84,563</p>
+                                        <p class="m-0">₹<span appFormatNumber>{{portData.currentValue ? portData.currentValue : 0}}</span></p>
                                     </div>
                                     <div class="col-md-6 text-right">
                                         <p class="m-0 l-18 text-primitive f-12">GAIN/(LOSS)</p>
-                                        <p class="m-0 text-success">₹10,63,257</p>
+                                        <p class="m-0 text-success">₹<span appFormatNumber>{{portData.currentValue ? portData.currentValue : 0}}</span></p>
                                     </div>
                                 </div>
 
 
                             </div>
 
-                            <div class="fundBox bg-white ">
+                            <!-- portfolio data not present -->
+                            <div class="fundBox bg-white" *ngIf="!feedsData.portfolioData || feedsData.portfolioData.length == 0">
                                 <div class="row">
                                     <div class="col-md-8  pr-0">
                                         <h5 class="roboto">Mutual funds</h5>
@@ -107,7 +147,7 @@
                                     <div class="col-md-4 d-flex justify-content-end">
                                         <span
                                             class="bg-primary d-flex align-items-center justify-content-center mfBox text-white">
-                                            MF
+                                            Add
                                         </span>
                                     </div>
                                 </div>
@@ -115,18 +155,18 @@
                                 <div class="row">
                                     <div class="col-md-8">
                                         <p class="m-0 text-primitive f-12">CURRENT VALUE</p>
-                                        <h3 class="mb-20">₹25,35,470</h3>
+                                        <h3 class="mb-20">₹0</h3>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-6">
                                         <p class="m-0 l-18 text-primitive f-12">AMT INVESTED</p>
-                                        <p class="m-0">₹14,84,563</p>
+                                        <p class="m-0">₹0</p>
                                     </div>
                                     <div class="col-md-6 text-right">
                                         <p class="m-0 l-18 text-primitive f-12">GAIN/(LOSS)</p>
-                                        <p class="m-0 text-success">₹10,63,257</p>
+                                        <p class="m-0 text-success">₹0</p>
                                     </div>
                                 </div>
 
@@ -135,19 +175,53 @@
                         </div>
                     </div>
 
+                    <!-- goals section -->
                     <div class="wrapperBox">
                         <div class="row">
                             <div class="col-md-8 d-flex align-items-center">
                                 <h5 class="roboto m-0">Goals</h5>
                             </div>
-                            <div class="col-md-4 text-right">
-                                <a class="viewBtn c-p text-primitive br-2 f-12"> View all </a>
+                            <div class="col-md-4 text-right" *ngIf="feedsData.portfolioData && feedsData.portfolioData.length > 0">
+                                <a class="viewBtn c-p text-primitive br-2 f-12" (click)="changeTab(3)"> 
+                                    View all
+                                </a>
                             </div>
                         </div>
 
 
                         <div class="scrollingDiv d-flex ">
-                            <div class="goalsOverViewBox bg-white p-10 ">
+                            <div class="goalsOverViewBox bg-white p-10" *ngFor="let goalsData of feedsData.goalsDataList">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <img [src]="goalsData.imageSrc">
+                                    </div>
+                                    <div class="col-md-7">
+                                        <h5 class="roboto f-500">Shreya’s higher education</h5>
+                                        <p class="f-14 text-primitive">{{goalsData.startYear}}{{goalsData.endYear ? ' - ' + goalsData.endYear : ''}}</p>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p class="f-12 l-18 text-primitive m-0">GOAL VALUE</p>
+                                                <p>₹<span appFormatNumber>{{goalsData.goalValue}}</span></p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p class="f-12 l-18 text-primitive m-0">ACHIEVED</p>
+                                                <p>₹<span appFormatNumber>{{goalsData.achieved}}</span></p>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- no data present -->
+                            <div class="goalsOverViewBox bg-white p-10" *ngIf="!feedsData.goalsData || feedsData.goalsData.length == 0">
                                 <div class="row">
                                     <div class="col-md-5">
                                         <img src="/assets/images/svg/goals-people.svg">
@@ -179,6 +253,7 @@
                         </div>
                     </div>
 
+                    <!-- activity section -->
                     <div class="wrapperBox">
                         <div class="row">
                             <div class="col-md-12 mb-10 d-flex align-items-center">
@@ -191,7 +266,7 @@
                                 <div class="bg-white activityBox text-center">
                                     <h5 class="m-0 roboto">Advice awaiting your consent</h5>
                                     <p class="f-12 text-primitive">last 30 days</p>
-                                    <h3 class="text-danger m-0 f-22">6</h3>
+                                    <h3 class="text-danger m-0 f-22">{{feedsData.advice?.consent || 0}}</h3>
                                 </div>
                             </div>
 
@@ -199,7 +274,7 @@
                                 <div class="bg-white activityBox text-center">
                                     <h5 class="m-0 roboto">Action plans in process</h5>
                                     <p class="f-12 text-primitive">currently</p>
-                                    <h3 class="text-primary m-0 f-22">5</h3>
+                                    <h3 class="text-primary m-0 f-22">{{feedsData.advice?.progress || 0}}</h3>
                                 </div>
                             </div>
 
@@ -208,12 +283,13 @@
                                     <h5 class="m-0 roboto">Money to be deployed
                                     </h5>
                                     <p class="f-12 text-primitive">current + upcoming</p>
-                                    <h3 class="text-primary m-0 f-22">₹15,40,000</h3>
+                                    <h3 class="text-primary m-0 f-22">₹<span appFormatNumber>{{feedsData.advice?.deployed}}</span></h3>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- document vault -->
                     <div class="wrapperBox">
                         <div class="row">
                             <div class="col-md-12 mb-10 d-flex align-items-center">
@@ -221,7 +297,7 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row" *ngIf="!feedsData.documents || feedsData.documents.length == 0">
                             <div class="col-md-12">
                                 <div class="bg-white vaultbBox">
                                     <div class="row">
@@ -232,24 +308,18 @@
                                             <button class="vaultBtn bg-primary f-16 text-white" mat-flat-button> Add
                                                 documents
                                             </button>
-
                                         </div>
-
                                         <div class="col-md-5 pr-0">
                                             <img src="/assets/images/svg/vault-icon.svg">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
-
-
-
                     </div>
 
-                    <div class="wrapperBox">
+                    <!-- insurance -->
+                    <div class="wrapperBox" *ngIf="feedsData.insurance && feedsData.insurance.length > 0">
                         <div class="row">
                             <div class="col-md-8 d-flex align-items-center">
                                 <h5 class="roboto m-0">Insurance</h5>
@@ -259,40 +329,33 @@
                             </div>
                         </div>
 
-                        <div class="scrollingDiv d-flex">
+                        <div class="scrollingDiv d-flex" *ngFor="let inc of feedsData.insurance">
                             <div class="insuranceListBox bg-white">
-                                <p class="roboto m-0 f-500">Life insurance </p>
-                                <p class="roboto mb-10">Rahul Jain</p>
+                                <p class="roboto m-0 f-500">{{inc.insuranceType}}</p>
+                                <p class="roboto mb-10">{{inc.insuredFamily}}</p>
 
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <img src="/assets/images/svg/spinner-icon.svg">
+                                        <circle-progress [animationDuration]="1000" [animation]="true"
+                                        [innerStrokeColor]="'#e7e8ea'" [innerStrokeWidth]="10"
+                                        [outerStrokeColor]="'#008FFF'" [outerStrokeWidth]="10"
+                                        [percent]="inc.progress" [radius]="20"
+                                        [responsive]="true" [showSubtitle]="false" [space]="-10"
+                                        [startFromZero]="true" [titleFontSize]="35" [unitsFontSize]="35"
+                                        class="progress">
+                                    </circle-progress>
                                     </div>
                                     <div class="col-md-8 d-flex justify-content-center flex-column">
-                                        <p class="m-0 roboto"> <span class="f-500"> Actual: </span> 54,50,000</p>
-                                        <p class="m-0 roboto"> <span class="f-500"> Advice: </span> 1,80,00,000</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="insuranceListBox bg-white">
-                                <p class="roboto m-0 f-500">Life insurance </p>
-                                <p class="roboto mb-10">Rahul Jain</p>
-
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <img src="/assets/images/svg/spinner-icon.svg">
-                                    </div>
-                                    <div class="col-md-8 d-flex justify-content-center flex-column">
-                                        <p class="m-0 roboto"> <span class="f-500"> Actual: </span> 54,50,000</p>
-                                        <p class="m-0 roboto"> <span class="f-500"> Advice: </span> 1,80,00,000</p>
+                                        <p class="m-0 roboto"> <span class="f-500"> Actual: </span> <span appFormatNumber>{{inc.actual}}</span></p>
+                                        <p class="m-0 roboto"> <span class="f-500"> Advice: </span> <span appFormatNumber>{{inc.adviced}}</span></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="wrapperBox">
+                    <!-- recent transactions -->
+                    <div class="wrapperBox" *ngIf="feedsData.recentTransactions && feedsData.recentTransactions.length > 0">
                         <div class="row">
                             <div class="col-md-8 d-flex align-items-center">
                                 <h5 class="roboto m-0">Recent transactions</h5>
@@ -302,64 +365,32 @@
                             </div>
                         </div>
 
-                        <div class="scrollingDiv d-flex">
+                        <div class="scrollingDiv d-flex" *ngFor="let tnx of feedsData.recentTransactions">
                             <div class="transactionsBox bg-white">
                                 <div class="row">
                                     <div class="col-md-8">
                                         <p class="mb-5">PURCHASE</p>
                                     </div>
                                     <div class="col-md-4 text-right">
-                                        <p class="mb-5 text-primitive">BSE</p>
+                                        <p class="mb-5 text-primitive">{{tnx.type}}</p>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-7">
-                                        <h4>₹5,00,000</h4>
+                                        <h4>₹<span appFormatNumber>{{tnx.purchase}}</span></h4>
                                     </div>
                                     <div class="col-md-5 pl-0 text-right">
-                                        <p class="text-primitive mb-10 f-12">31/01 14:25</p>
+                                        <p class="text-primitive mb-10 f-12">{{tnx.date | date:'dd/MM h:mm a'}}</p>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <p class="text-primitive f-12 mb-5 l-18">Aditya Birla Sun Life Equity Savings -
-                                            Growth Option - Regular plan</p>
-                                        <p class="mb-4">Rahul Harish Jain</p>
+                                        <p class="text-primitive f-12 mb-5 l-18">{{tnx.plan}}</p>
+                                        <p class="mb-4">{{tnx.family}}</p>
                                         <span class="f-12 spanClass text-primary">
                                             UNITS ALLOTTED
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="transactionsBox bg-white">
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <p class="mb-5">PURCHASE</p>
-                                    </div>
-                                    <div class="col-md-4 text-right">
-                                        <p class="mb-5 text-primitive">BSE</p>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        <h4>₹5,00,000</h4>
-                                    </div>
-                                    <div class="col-md-5 pl-0 text-right">
-                                        <p class="text-primitive mb-10 f-12">31/01 14:25</p>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <p class="text-primitive f-12 mb-5 l-18">Aditya Birla Sun Life Equity Savings -
-                                            Growth Option - Regular plan</p>
-                                        <p class="mb-4">Rahul Harish Jain</p>
-                                        <span class="f-12 spanClassDanger text-danger">
-                                            PENDING AUTHORISATION
                                         </span>
                                     </div>
                                 </div>
@@ -367,7 +398,7 @@
                         </div>
                     </div>
 
-                    <div class="wrapperBox">
+                    <div class="wrapperBox" *ngIf="feedsData.riskProfile">
                         <div class="row">
                             <div class="col-md-12 mb-10 d-flex align-items-center">
                                 <h5 class="roboto m-0">Risk profile</h5>
@@ -379,21 +410,16 @@
                                 <div class="col-md-4 text-center">
                                     <p class="f-16 roboto mb-8 f-500">Your risk score</p>
                                     <div class="numberBox">
-                                        <h1 class="f-48 mb-12"> 38 </h1>
-                                        <p class="f-12 m-0 text-primitive">Max: 60</p>
+                                        <h1 class="f-48 mb-12"> {{feedsData.riskProfile.score}} </h1>
+                                        <p class="f-12 m-0 text-primitive">Max: {{feedsData.riskProfile.maxScore}}</p>
                                     </div>
                                 </div>
 
                                 <div class="col-md-8 text-center">
                                     <h5 class="roboto f-500">
-                                        Your risk profile: Moderately aggressive
+                                        Your risk profile: {{feedsData.riskProfile.type}}
                                     </h5>
-
-                                    <p>You are an investor who is willing to take moderately high risk for moderately
-                                        high returns
-                                    </p>
-
-
+                                    <p>{{feedsData.riskProfile.description}}</p>
                                 </div>
 
                             </div>
@@ -463,8 +489,5 @@
 
 
         </div>
-
-
-
     </div>
 </div>

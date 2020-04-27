@@ -17,7 +17,6 @@ export class TempserviceService {
         });
         filteredArray.push(totalObj);
       });
-      console.log(filteredArray);
       return filteredArray;
     }
   }
@@ -86,7 +85,6 @@ export class TempserviceService {
         }
       });
     });
-    // console.log(customDataSource)
     return filteredData;
   }
 
@@ -178,7 +176,6 @@ export class TempserviceService {
           primaryObject[key] = value + secondary[key];
         }
       }
-      console.log(key, value);
     }
     return primaryObject;
   }
@@ -269,7 +266,6 @@ export class TempserviceService {
   categoryFilter(data, type) {
     const catObj = {};
     const categoryArray = [];
-    console.log('category filter data: ', data);
     data.forEach(ele => {
       if (ele[type]) {
         const categoryArrayLocal = catObj[ele[type]] ? catObj[ele[type]] : [];
