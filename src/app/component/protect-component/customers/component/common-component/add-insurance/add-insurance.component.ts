@@ -198,7 +198,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       this.lifeInsuranceForm.controls.getCoOwnerName = con.owner;
     }
     if (con.nominee != null && con.nominee) {
-      this.lifeInsuranceForm.controls.getNomineeName = con.nominee;
+      this.keyDetailsForm.controls.getNomineeName = con.nominee;
     }
   }
 

@@ -467,8 +467,8 @@
             <div class="col-md-5 form-group">
                 <mat-form-field>
                     <mat-select matInput formControlName="bankAccount" autocomplete="true" class="form-control br-0">
-                        <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
-                            {{option.policy_type}}</mat-option>
+                        <mat-option>
+                        </mat-option>
                     </mat-select>
                     <mat-error>This field is required
                     </mat-error>
