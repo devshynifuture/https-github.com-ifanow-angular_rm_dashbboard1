@@ -3,6 +3,7 @@ import { Validators, FormBuilder, FormControl, FormArray } from '@angular/forms'
 import { AuthService } from 'src/app/auth-service/authService';
 import { BackOfficeService } from '../../../back-office.service';
 import { MatTableDataSource, MatSort } from '@angular/material';
+import { EventService } from '../../../../../../../Data-service/event.service';
 
 @Component({
   selector: 'app-folios',
@@ -14,11 +15,14 @@ export class FoliosComponent implements OnInit {
   folioDetails: any;
   dataList: any;
   advisorId: any;
-  dataSource = new MatTableDataSource([]);
+  dataSource = new MatTableDataSource([{}, {}, {}]);
   folioList: any;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  constructor(private fb: FormBuilder, private backoffice: BackOfficeService) { }
+  constructor(
+    private fb: FormBuilder, private backoffice: BackOfficeService,
+    private eventService: EventService
+  ) { }
   isLoading = false;
   searchGroupForm = this.fb.group({
     searchGroupHead: [,]
@@ -77,8 +81,7 @@ export class FoliosComponent implements OnInit {
   selectedData(data, value) {//for getting selected option data 
     if (data) {
       this.isLoading = true;
-      let tempData = [{}, {}, {}];
-      this.dataSource = new MatTableDataSource(tempData);
+
       if (value == 'groupyHead') {
         const obj = {
           advisorId: this.advisorId,
@@ -89,9 +92,13 @@ export class FoliosComponent implements OnInit {
         this.backoffice.folioSearchByGroupHead(obj).subscribe(
           data => {
             this.isLoading = false;
-            this.dataSource = new MatTableDataSource(data);
-            this.dataSource.sort = this.sort;
-
+            if (data) {
+              this.dataSource.data = data;
+              this.dataSource.sort = this.sort;
+            } else {
+              this.dataSource.data = null;
+              this.eventService.openSnackBar("No Folio Found", "DISMISS");
+            }
           }
         )
       } else {
@@ -104,9 +111,13 @@ export class FoliosComponent implements OnInit {
         this.backoffice.folioSearchByInvestor(obj).subscribe(
           data => {
             this.isLoading = false;
-            this.dataSource = new MatTableDataSource(data);
-            this.dataSource.sort = this.sort;
-
+            if (data) {
+              this.dataSource.data = data;
+              this.dataSource.sort = this.sort;
+            } else {
+              this.dataSource.data = null;
+              this.eventService.openSnackBar("No Folio Found", "DISMISS");
+            }
           }
         )
       }
@@ -127,9 +138,13 @@ export class FoliosComponent implements OnInit {
         this.backoffice.folioSearchByPan(obj).subscribe(
           data => {
             this.isLoading = false;
-            this.dataSource = new MatTableDataSource(data);
-            this.dataSource.sort = this.sort;
-
+            if (data) {
+              this.dataSource.data = data;
+              this.dataSource.sort = this.sort;
+            } else {
+              this.dataSource.data = null;
+              this.eventService.openSnackBar("No Folio Found", "DISMISS");
+            }
           }
         )
       } else {
@@ -142,9 +157,13 @@ export class FoliosComponent implements OnInit {
         this.backoffice.folioSearchByfolio(obj).subscribe(
           data => {
             this.isLoading = false;
-            this.dataSource = new MatTableDataSource(data);
-            this.dataSource.sort = this.sort;
-
+            if (data) {
+              this.dataSource.data = data;
+              this.dataSource.sort = this.sort;
+            } else {
+              this.dataSource.data = null;
+              this.eventService.openSnackBar("No Folio Found", "DISMISS");
+            }
           }
         )
       }

@@ -49,6 +49,11 @@ export class TransactionsHistoryComponent implements OnInit {
     this.transactionDetails.forEach(element => {
       (element.status <= data.status) ? element.checked = true : element.checked = false
     });
+    if(data.status == 7){
+     this.transactionDetails = this.transactionDetails.filter((item) => item.checked !== false)
+    }else if(data.status == 8){
+      this.transactionDetails = this.transactionDetails.filter((item) => item.checked !== false)
+    }
     this.getTransactionDetail(data);
   }
 
@@ -64,6 +69,9 @@ export class TransactionsHistoryComponent implements OnInit {
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
     )
+  }
+  refresh(data){
+    this.getTransactionDetail(data)
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });

@@ -4,7 +4,9 @@ import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { OnlineTransactionService } from '../../../online-transaction.service';
 import { AuthService } from 'src/app/auth-service/authService';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { MatSort, MatTableDataSource, MatDialog } from '@angular/material';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-sub-broker-team-member',
@@ -19,7 +21,11 @@ export class SubBrokerTeamMemberComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   noData: string;
 
-  constructor(private onlineTransact: OnlineTransactionService, private utilService: UtilService, private subInjectService: SubscriptionInject) { }
+  constructor(private onlineTransact: OnlineTransactionService, 
+    private utilService: UtilService,
+    private event : EventService,
+     private subInjectService: SubscriptionInject,
+     public dialog:MatDialog) { }
   isLoading = false;
 
 
@@ -70,6 +76,7 @@ export class SubBrokerTeamMemberComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
+          this.getBSESubBrokerCredentials()
           if (UtilService.isRefreshRequired(sideBarData)) {
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
           }
@@ -79,6 +86,46 @@ export class SubBrokerTeamMemberComponent implements OnInit {
       }
     );
   }
+  deleteSubCred(singleBillerProfile) {
+    const dialogData = {
+      header: 'DELETE',
+      body: 'Are you sure you want to delete the sub-broker credential?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        const obj = {
+          id: singleBillerProfile.id
+        }
+        this.onlineTransact.deleteSubBroker(obj).subscribe(
+          data => {
+            this.getBSESubBrokerCredentials();
+            dialogRef.close();
+            this.event.openSnackBar("sub-broker credential is deleted", "Dismiss")
+          },
+          error => this.event.showErrorMessage(error)
+        );
+
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
+  
   openAddSubBrokerCredential(data, flag) {
     const fragmentData = {
       flag: 'addNsc',

@@ -19,12 +19,15 @@
         <div class="col-md-7">
             <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard" [formGroup]="searchAdvisorForm">
-                    <input class="form-control" matInput placeholder="Search" aria-label="State" [matAutocomplete]="auto1" #advisorRef formControlName="searchAdvisor" [value]="advisorNameInput">
+                    <input class="form-control" matInput placeholder="Search" aria-label="State"
+                        [matAutocomplete]="auto1" #advisorRef formControlName="searchAdvisor"
+                        [value]="advisorNameInput">
                     <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn">
                         <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...
                         </mat-option>
                         <ng-container *ngIf="!isLoadingForDropDown">
-                            <mat-option *ngFor="let advisor of arrayOfAdvisorName" (click)="setAdvisorId(advisor)" [value]="advisor.name" [matTooltip]="advisor.name" matTooltipPosition="after">
+                            <mat-option *ngFor="let advisor of arrayOfAdvisorName" (click)="setAdvisorId(advisor)"
+                                [value]="advisor.name" [matTooltip]="advisor.name" matTooltipPosition="after">
                                 <span>
                                     <b>
                                         {{advisor.name}}
@@ -33,7 +36,8 @@
                             </mat-option>
                         </ng-container>
                     </mat-autocomplete>
-                    <mat-error *ngIf="searchAdvisorForm.get('searchAdvisor').invalid && searchAdvisorForm.get('searchAdvisor').touched">
+                    <mat-error
+                        *ngIf="searchAdvisorForm.get('searchAdvisor').invalid && searchAdvisorForm.get('searchAdvisor').touched">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -52,15 +56,19 @@
         </div>
         <div class="col-md-7">
             <mat-radio-group formControlName="selectRta" (change)="resetDateAsOnDateAndFormCheckbox()">
-                <mat-radio-button value="1" [ngClass]="orderHistoryFileForm.get('selectRta').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
+                <mat-radio-button value="1"
+                    [ngClass]="orderHistoryFileForm.get('selectRta').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                     CAMS
                 </mat-radio-button>
-                <mat-radio-button value="2" [ngClass]="orderHistoryFileForm.get('selectRta').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
+                <mat-radio-button value="2"
+                    [ngClass]="orderHistoryFileForm.get('selectRta').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                     Karvy </mat-radio-button>
-                <mat-radio-button value="3" [ngClass]="orderHistoryFileForm.get('selectRta').value === '3' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
+                <mat-radio-button value="3"
+                    [ngClass]="orderHistoryFileForm.get('selectRta').value === '3' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                     Franklin </mat-radio-button>
             </mat-radio-group>
-            <mat-error *ngIf="orderHistoryFileForm.get('selectRta').touched && orderHistoryFileForm.get('selectRta').invalid">
+            <mat-error
+                *ngIf="orderHistoryFileForm.get('selectRta').touched && orderHistoryFileForm.get('selectRta').invalid">
                 This field is required
             </mat-error>
         </div>
@@ -70,12 +78,14 @@
         <div class="col-md-5 pr-0">
             <h5 class="text-right pt-12 mb-0">Select ARN/RIA</h5>
         </div>
-
-        <div class="col-md-6" *ngFor="let item of arnRiaDetailsList; index as i" formArrayName="selectArnRia">
-            <div [formGroupName]="i">
-                <mat-checkbox [checked]="false" class="d-block f-14" formControlName="selection" (click)="setArnRiaId(i)">
-                    {{ item.name }}
-                </mat-checkbox>
+        <div class="col-md-6">
+            <div *ngFor="let item of arnRiaDetailsList; index as i" formArrayName="selectArnRia">
+                <div [formGroupName]="i">
+                    <mat-checkbox [checked]="false" class="d-block f-14" formControlName="selection"
+                        (click)="setArnRiaId(i)">
+                        {{ item.name }}
+                    </mat-checkbox>
+                </div>
             </div>
         </div>
 
@@ -109,7 +119,8 @@
                     <div *ngIf="orderHistoryFileForm.get('selectRta').value === '3'">
                         <!-- franklin option -->
                         <div formGroupName="franklin">
-                            <mat-checkbox class="d-block wb ws-normal" formControlName="myTransactionsForAPeriod">My transactions </mat-checkbox>
+                            <mat-checkbox class="d-block wb ws-normal" formControlName="myTransactionsForAPeriod">My
+                                transactions </mat-checkbox>
                         </div>
                     </div>
                 </div>
@@ -159,7 +170,8 @@
                     <div *ngIf="orderHistoryFileForm.get('selectRta').value === '3'">
                         <!-- franklin options -->
                         <div formGroupName="franklin">
-                            <mat-checkbox class="d-block wb ws-normal" formControlName="investorFolioDetails">Investor Folio
+                            <mat-checkbox class="d-block wb ws-normal" formControlName="investorFolioDetails">Investor
+                                Folio
                             </mat-checkbox>
                         </div>
                     </div>
@@ -182,7 +194,8 @@
                     <div *ngIf="orderHistoryFileForm.get('selectRta').value === '3'">
                         <!-- franklin options -->
                         <div formGroupName="franklin">
-                            <mat-checkbox class="d-block wb ws-normal" formControlName="clientsWiseAumOrWhoseBalExceedsN">
+                            <mat-checkbox class="d-block wb ws-normal"
+                                formControlName="clientsWiseAumOrWhoseBalExceedsN">
                                 Clients wise AUM
                             </mat-checkbox>
                         </div>
@@ -206,10 +219,13 @@
                         <h5 class="mb-4 pt-16">From date</h5>
                         <div class="form-group">
                             <mat-form-field class="ba-date">
-                                <input class="form-control b-0" [min]="camsAsOnDatePastMaxDate" [max]="dateYesterday" formControlName="fromDate" (click)="picker1.open()" matInput [matDatepicker]="picker1">
+                                <input class="form-control b-0" [min]="camsAsOnDatePastMaxDate" [max]="dateYesterday"
+                                    formControlName="fromDate" (click)="picker1.open()" matInput
+                                    [matDatepicker]="picker1">
                                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                 <mat-datepicker #picker1></mat-datepicker>
-                                <mat-error *ngIf="orderHistoryFileForm.get('fromDate').touched && orderHistoryFileForm.get('fromDate').invalid">
+                                <mat-error
+                                    *ngIf="orderHistoryFileForm.get('fromDate').touched && orderHistoryFileForm.get('fromDate').invalid">
                                     This field is required
                                 </mat-error>
                             </mat-form-field>
@@ -220,10 +236,12 @@
                         <h5 class="mb-4 pt-16">To date</h5>
                         <div class="form-group">
                             <mat-form-field class="ba-date">
-                                <input class="form-control b-0" [max]="dateToday" [min]="camsAsOnDatePastMaxDate" formControlName="toDate" (focus)="picker.open()" matInput [matDatepicker]="picker">
+                                <input class="form-control b-0" [max]="dateToday" [min]="camsAsOnDatePastMaxDate"
+                                    formControlName="toDate" (focus)="picker.open()" matInput [matDatepicker]="picker">
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
-                                <mat-error *ngIf="orderHistoryFileForm.get('toDate').touched && orderHistoryFileForm.get('toDate').invalid">
+                                <mat-error
+                                    *ngIf="orderHistoryFileForm.get('toDate').touched && orderHistoryFileForm.get('toDate').invalid">
                                     This field is required
                                 </mat-error>
                             </mat-form-field>
@@ -234,10 +252,12 @@
                     <div class="col-md-12 pl-0">
                         <h5 class="mb-4 pt-16">As On Date</h5>
                         <mat-form-field>
-                            <input class="form-control" formControlName="asOnDate" [min]="camsAsOnDatePastMaxDate" [max]="dateToday" (click)="picker2.open()" matInput [matDatepicker]="picker2">
+                            <input class="form-control" formControlName="asOnDate" [min]="camsAsOnDatePastMaxDate"
+                                [max]="dateToday" (click)="picker2.open()" matInput [matDatepicker]="picker2">
                             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                             <mat-datepicker #picker2></mat-datepicker>
-                            <mat-error *ngIf="orderHistoryFileForm.get('asOnDate').touched && orderHistoryFileForm.get('asOnDate').invalid">
+                            <mat-error
+                                *ngIf="orderHistoryFileForm.get('asOnDate').touched && orderHistoryFileForm.get('asOnDate').invalid">
                                 This field is required
                             </mat-error>
                         </mat-form-field>
@@ -261,7 +281,8 @@
                         {{ freq.name }}
                     </mat-option>
                 </mat-select>
-                <mat-error *ngIf="orderHistoryFileForm.get('orderingFreq').touched && orderHistoryFileForm.get('orderingFreq').invalid">
+                <mat-error
+                    *ngIf="orderHistoryFileForm.get('orderingFreq').touched && orderHistoryFileForm.get('orderingFreq').invalid">
                     This field is required
                 </mat-error>
             </mat-form-field>

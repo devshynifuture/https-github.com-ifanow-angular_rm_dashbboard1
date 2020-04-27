@@ -1,19 +1,22 @@
 <div class="row" id="overview-secondhead">
   <div class="col-md-2 d-flex align-items-center">
     <button (click)="goToAdvisorHome()" *ngIf="authService.isAdvisor()" class="btn-warning-outline advisorHomeBtn br-2"
-            mat-stroked-button>
+      mat-stroked-button>
       <i class="material-icons"> keyboard_backspace </i> ADVISOR HOME
     </button>
   </div>
 
   <div class="col-md-8 p-0">
     <nav mat-align-tabs="center" mat-tab-nav-bar>
-      <a [routerLink]="['/customer/detail/overview/myfeed']" mat-tab-link routerLinkActive="active">MY FEED</a>
-      <a [routerLink]="['/customer/detail/overview/profile']" mat-tab-link routerLinkActive="active">PROFILE</a>
-      <a [routerLink]="['/customer/detail/overview/documents']" mat-tab-link routerLinkActive="active">DOCUMENTS</a>
-      <a mat-tab-link routerLinkActive="active">EMAILS</a>
-      <a mat-tab-link routerLinkActive="active">SUBSCRIPTION</a>
-      <a mat-tab-link routerLinkActive="active">SETTINGS</a>
+      <a (click)="value=1" [ngClass]="{'active': value==1}" [routerLink]="['/customer/detail/overview/myfeed']"
+        mat-tab-link routerLinkActive="active">MY FEED</a>
+      <a (click)="value=2" [ngClass]="{'active': value==2}" [routerLink]="['/customer/detail/overview/profile']"
+        mat-tab-link routerLinkActive="active">PROFILE</a>
+      <a (click)="value=3" [ngClass]="{'active': value==3}" [routerLink]="['/customer/detail/overview/documents']"
+        mat-tab-link routerLinkActive="active">DOCUMENTS</a>
+      <a (click)="value=4" [ngClass]="{'active': value==4}" mat-tab-link routerLinkActive="active">EMAILS</a>
+      <a (click)="value=5" [ngClass]="{'active': value==5}" mat-tab-link routerLinkActive="active">SUBSCRIPTION</a>
+      <a (click)="value=6" [ngClass]="{'active': value==6}" mat-tab-link routerLinkActive="active">SETTINGS</a>
     </nav>
   </div>
 

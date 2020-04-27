@@ -138,7 +138,10 @@ export class ArnRiaCredentialsComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.customerService.deleteFixedDeposite(data.id).subscribe(
+        let obj = {
+          id : data.tpUserCredentialId
+        }
+        this.onlineTransact.deleteBroker(obj).subscribe(
           data => {
             this.eventService.openSnackBar('Fixed deposite is deleted', 'Dismiss');
             dialogRef.close();
