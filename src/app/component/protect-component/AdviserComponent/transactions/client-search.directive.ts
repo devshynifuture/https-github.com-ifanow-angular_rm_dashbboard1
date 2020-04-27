@@ -1,6 +1,7 @@
-import { Directive, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { OnlineTransactionService } from './online-transaction.service';
+import {Directive, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {OnlineTransactionService} from './online-transaction.service';
+import {Observable, Subscription} from 'rxjs';
 
 @Directive({
   selector: '[appClientSearch]'
@@ -9,34 +10,58 @@ export class ClientSearchDirective implements OnInit {
   familyMemberData: any;
   advisorId: any;
   clientId: any;
-    nomineesListFM: any = [];
+  nomineesListFM: any = [];
   @Output() valueChange = new EventEmitter();
   @Output() valueChange1 = new EventEmitter();
+  familyOutputSubscription: Subscription;
+  familyOutputObservable: Observable<any> = new Observable<any>();
 
-  constructor(private onlineTransact: OnlineTransactionService) { }
+  constructor(private onlineTransact: OnlineTransactionService) {
+  }
+
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getFamilyList(data);
   }
+
   ngOnInit() {
-    console.log("client search")
+    console.log('client search');
   }
+
   getFamilyList(value) {
+    console.log('getFamilyList value: ', value);
+
     (value == '') ? this.familyMemberData = undefined : '';
-    let obj = {
+    const obj = {
       advisorId: this.advisorId,
       name: value
-    }
+    };
+    // if (this.familyOutputSubscription && !this.familyOutputSubscription.closed) {
+    //   this.familyOutputSubscription.unsubscribe();
+    // }
     if (value.length > 2) {
-      this.onlineTransact.getFamilyMemberList(obj).subscribe(
-        data => this.getFamilyMemberListRes(data)
-      );
+      this.onlineTransact.getFamilyMemberList(obj).subscribe(responseArray => {
+        this.getFamilyMemberListRes(responseArray);
+      }, error => {
+        console.log('getFamilyMemberListRes error : ', error);
+      });
+      /*this.familyOutputSubscription = this.familyOutputObservable.pipe(startWith(''),
+        debounceTime(1000)).subscribe(
+        data => {
+          this.onlineTransact.getFamilyMemberList(obj).subscribe(responseArray => {
+            this.getFamilyMemberListRes(responseArray);
+          }, error => {
+            console.log('getFamilyMemberListRes error : ', error);
+          });
+        }
+      );*/
     }
   }
+
   getFamilyMemberListRes(data) {
-    console.log('getFamilyMemberListRes', data)
-    this.nomineesListFM = (data)?data.familyMembers:null;
-    this.valueChange1.emit(this.nomineesListFM)
+    console.log('getFamilyMemberListRes', data);
+    this.nomineesListFM = (data) ? data.familyMembers : null;
+    this.valueChange1.emit(this.nomineesListFM);
   }
 }

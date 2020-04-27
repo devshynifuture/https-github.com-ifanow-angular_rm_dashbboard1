@@ -20,8 +20,9 @@
         <h5 class="m-0 text-black pb-12">Select an investor from the search box below...</h5>
         <mat-form-field appearance="standard" floatLabel="never">
           <!--                  debounceChangedValue-->
-          <input #searchClient (keyup)="ownerList($event.target.value)" (valueChange1)='lisNominee($event)'
-                 [data]='searchClient.value' [matAutocomplete]="auto1" appClientSearch
+          <input #searchClient (changedValue)="ownerList($event)"
+                 (valueChange1)='lisNominee($event)' [data]='ownerNameQuery'
+                 [matAutocomplete]="auto1" appClientSearch appCustomAutoComplete
                  aria-label="client" class="form-control pl-8" formControlName="ownerName"
                  matInput placeholder="Start typing to see investor names">
           <mat-autocomplete #auto1="matAutocomplete">

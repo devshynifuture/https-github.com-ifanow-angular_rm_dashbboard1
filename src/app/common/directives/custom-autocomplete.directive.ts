@@ -25,7 +25,7 @@ export class CustomAutocompleteDirective {
 
   @HostListener('input', ['$event'])
   onInputChange(event) {
-    if (this.filteredOptionSubscriber) {
+    if (this.filteredOptionSubscriber && !this.filteredOptionSubscriber.closed) {
       this.filteredOptionSubscriber.unsubscribe();
     }
     this.filteredOptionSubscriber = this.filteredOptions.pipe(
