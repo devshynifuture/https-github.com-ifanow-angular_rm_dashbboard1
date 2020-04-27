@@ -18,7 +18,7 @@ import { AuthService } from '../../../../../auth-service/authService';
 export class AdminDetailsComponent implements OnInit {
   getOverview: any;
   inputData: any;
-  overviewDesc = false
+  overviewDesc = true
   stageList: any;
   activityCommentList: any;
   activityComment = true
@@ -87,7 +87,7 @@ export class AdminDetailsComponent implements OnInit {
   })
 
   ngOnInit() {
-    this.overviewDesc = false
+    this.overviewDesc = true
 
   }
   getRTADetails() {
