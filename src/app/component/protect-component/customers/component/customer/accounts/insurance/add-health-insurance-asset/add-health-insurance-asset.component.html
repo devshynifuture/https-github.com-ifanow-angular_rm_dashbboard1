@@ -531,10 +531,9 @@
                 </div>
                 <div class="col-md-5 form-group">
                     <mat-form-field>
-                        <!--                      [data]='ownerData'-->
-                        <mat-select appBankAccount formControlName="bankAccount" matInput>
-                            <mat-option *ngFor="let option of accountList ;index as i" [value]="option.id">
-                                {{option.name}}</mat-option>
+                        <mat-select appBankAccount formControlName="bankAccount" [data]="bankAccountDetails" (inputChange)='bankAccountList($event)' matInput>
+                            <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id"  >
+                                {{option.bankName}}</mat-option>
                         </mat-select>
                         <mat-error>This field is required
                         </mat-error>
@@ -542,9 +541,7 @@
                 </div>
                 <div class="col-md-1 p-0 pt-8 d-flex">
                     <i class="material-icons text-primitive c-p float-left" (click)="addNewAccount(undefined)">add</i>
-                    <i class="material-icons text-primitive c-p float-right"
-                        (click)="RemoveNewAccount(pointIndex)">remove</i>
-                </div>
+                   </div>
             </div>
             <div class="row pt-32" formArrayName="addBankAccount">
                 <div class="row pt-36"
@@ -559,6 +556,10 @@
                             </mat-form-field>
                         </div>
                     </div>
+                    <div class="col-md-1 p-0 pt-8 d-flex">
+                    <i class="material-icons text-primitive c-p float-right"
+                    (click)="RemoveNewAccount(pointIndex)">remove</i>
+            </div>
 
                 </div>
 
