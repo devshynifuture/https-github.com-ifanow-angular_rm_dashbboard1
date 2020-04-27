@@ -1,10 +1,12 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {OnlineTransactionService} from '../online-transaction.service';
-import {TransactionEnumService} from '../transaction-enum.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatSort, MatTableDataSource} from '@angular/material';
-import {EnumServiceService} from '../../../../../services/enum-service.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { OnlineTransactionService } from '../online-transaction.service';
+import { TransactionEnumService } from '../transaction-enum.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatSort, MatTableDataSource } from '@angular/material';
+import { EnumServiceService } from '../../../../../services/enum-service.service';
+import { IinUccCreationComponent } from '../overview-transactions/IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-investors-transactions',
@@ -19,12 +21,12 @@ export class InvestorsTransactionsComponent implements OnInit {
   filterData: any;
   selectedBrokerCode: any;
   selectedPlatform: any;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   noData: string;
 
   // dataSource = ELEMENT_DATA;
   constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService,
-              private enumServiceService: EnumServiceService) {
+    private enumServiceService: EnumServiceService) {
   }
 
   isLoading = false;
@@ -94,7 +96,26 @@ export class InvestorsTransactionsComponent implements OnInit {
       }
     );
   }
+  openNewCustomerIIN() {
+    const fragmentData = {
+      flag: 'addNewCustomer',
+      id: 1,
+      direction: 'top',
+      componentName: IinUccCreationComponent,
+      state: 'open'
+    };
+    // this.router.navigate(['/subscription-upper'])
+    AuthService.setSubscriptionUpperSliderData(fragmentData);
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+        }
+      }
+    );
 
+  }
   // getUnmappedData() {
   //   this.isLoading = true;
   //   this.dataSource = [{}, {}, {}];

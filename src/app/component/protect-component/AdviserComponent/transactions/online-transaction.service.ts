@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {HttpService} from 'src/app/http-service/http-service';
-import {appConfig} from 'src/app/config/component-config';
-import {apiConfig} from 'src/app/config/main-config';
+import { Injectable } from '@angular/core';
+import { HttpService } from 'src/app/http-service/http-service';
+import { appConfig } from 'src/app/config/component-config';
+import { apiConfig } from 'src/app/config/main-config';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,15 @@ export class OnlineTransactionService {
   getBSECredentials(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_BSE_CREDENTIALS, data, 1);
   }
-
+  addSubBroker(data) {
+    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.ADD_SUB_BROKER, data, 1);
+  }
+  deleteBroker(data){
+    return this.http.putEncoded(apiConfig.TRANSACT + appConfig.DELETE_BROKER, data, 1);
+  }
+  deleteSubBroker(data){
+    return this.http.putEncoded(apiConfig.TRANSACT + appConfig.DELETE_SUB_BROKER, data, 1);
+  }
   getBSESubBrokerCredentials(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_BSE_SUB_BROKER_CREDENTIALS, data, 1);
   }
