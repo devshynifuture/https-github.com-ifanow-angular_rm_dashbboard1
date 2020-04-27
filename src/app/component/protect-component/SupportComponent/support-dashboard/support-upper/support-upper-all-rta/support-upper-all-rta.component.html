@@ -1,8 +1,7 @@
 <div class="dialogclose">
     <div class="row popup-header-fix-100">
         <div class="col-md-2 border-right-1 p-0">
-            <img class="imgAdLogo"
-                src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+            <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
         </div>
         <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
             <p class="f-16 mb-0">
@@ -19,9 +18,8 @@
 
 
 <div class="row pt-72">
-    <div class="col-md-12">
-        <table id="table-low" mat-table class="mt-8 skeletonAnimation" [dataSource]="dataSource" appSkeletonLoading
-            [appSkeletonLoading]="isLoading">
+    <div class="col-md-12 back-office-table">
+        <table id="table-low" mat-table class="mt-8 skeletonAnimation" [dataSource]="dataSource" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <!-- Position Column -->
             <ng-container matColumnDef="name">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> NJ name </th>
@@ -45,16 +43,13 @@
             <!-- Weight Column -->
             <ng-container matColumnDef="schemeName">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> Search corresponding scheme name </th>
-                <td class="b-a" mat-cell *matCellDef="let element">
-                    <mat-form-field>
-                        <input matInput placeholder="Search" (focus)="showSuggestionsBasedOnSchemeName(element)"
-                            aria-label="State" [matAutocomplete]="auto" [formControl]="schemeControl">
+                <td class="b-a matInputClass" mat-cell *matCellDef="let element">
+                    <mat-form-field appearance="standard" floatLabel="never">
+                        <input class="form-control" matInput placeholder="Search" (focus)="showSuggestionsBasedOnSchemeName(element)" aria-label="State" [matAutocomplete]="auto" [formControl]="schemeControl">
                         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                             <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...</mat-option>
                             <ng-container *ngIf="!isLoadingForDropDown">
-                                <mat-option *ngFor="let scheme of filteredSchemes"
-                                    (click)="mapSchemeCodeAndOther(element, scheme)" [value]="scheme.schemeName"
-                                    [matTooltip]="scheme.schemeName" matTooltipPosition="after">
+                                <mat-option *ngFor="let scheme of filteredSchemes" (click)="mapSchemeCodeAndOther(element, scheme)" [value]="scheme.schemeName" [matTooltip]="scheme.schemeName" matTooltipPosition="after">
                                     <span><b>{{scheme.schemeName}}</b> </span>
                                 </mat-option>
                             </ng-container>
@@ -120,7 +115,7 @@
                 <th class="b-a" mat-header-cell *matHeaderCellDef> Map </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
                     {{element.map}}
-                    <button mat-stroked-button (click)="mapUnmappedSchemes(element)">
+                    <button class="btn-primary btn-Map" mat-stroked-button (click)="mapUnmappedSchemes(element)">
                         Map
                     </button>
                 </td>

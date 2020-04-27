@@ -1,0 +1,352 @@
+<div class="popup-header-fix-60">
+    <div class="row bb-1">
+        <div class="col-md-10 p-0">
+            <h4 class="mb-0 wrapper-20">LIfe Insurance - Detailed view</h4>
+        </div>
+        <div class="col-md-2 text-left">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-100 pl-8 pb-60 pr-8">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12 p-0">
+                    <h4 class="f-16 roboto f-500">Policy details</h4>
+                    <div class="insurance-ui bt">
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Life assured
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                Rahul Jain
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Proposer
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                Aryan Jain
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Policy name
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                LIC Jeevan Saral
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Policy type
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                Money back
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Policy number
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                9090889898
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Commencement date
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                23/09/2012
+                            </div>
+                        </div>
+
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Sum assured
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                8,00,000
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Premium amount
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                27,000
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Premium frequency
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                Yearly
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Policy tenure
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                20 years
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Premium paying term
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                20 years
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Policy status
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                In force
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Last unpaid premium
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                -
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br" *ngFor="let data of nominee; let i = index">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Current value
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                37,789
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 p-0 mt-24">
+                    <h4 class="f-16 roboto f-500">Loan details</h4>
+                    <div class="insurance-ui bt">
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Loan available
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                3,27,009
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Loan taken
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                -
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Loan taken on
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                -
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="row">
+                <div class="col-md-12 p-0  ">
+                    <h4 class="f-16 roboto f-500">Key details</h4>
+                    <div class="insurance-ui bt">
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Risk cover
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                1,24,000
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Surrender value
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                2,90,345
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Nominee
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                Shilpa Jain
+                            </div>
+                        </div>
+
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Assumed rate
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                7.87%
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 p-0  mt-24">
+                    <h4 class="f-16 roboto f-500">Cash flow</h4>
+                    <div class="insurance-ui bt">
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-6 text-left f-14 f-500 roboto p-0">
+                                Type
+                            </div>
+                            <div class="col-md-3 text-right f-500 f-14 roboto p-0">
+                                Year
+                            </div>
+                            <div class="col-md-3 text-right f-500 f-14 roboto p-0">
+                                Amount
+                            </div>
+                        </div>
+
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-6 text-left f-14 roboto p-0">
+                                Survival benefit
+                            </div>
+                            <div class="col-md-3 text-right f-14 roboto p-0">
+                                2024
+                            </div>
+                            <div class="col-md-3 text-right f-14 roboto p-0">
+                                37,550
+                            </div>
+                        </div>
+
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-6 text-left f-14 roboto p-0">
+                                Survival benefit
+                            </div>
+                            <div class="col-md-3 text-right f-14 roboto p-0">
+                                2029
+                            </div>
+                            <div class="col-md-3 text-right f-14 roboto p-0">
+                                39,000
+                            </div>
+                        </div>
+
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-6 text-left f-14 roboto p-0">
+                                Survival benefit
+                            </div>
+                            <div class="col-md-3 text-right f-14 roboto p-0">
+                                2034
+                            </div>
+                            <div class="col-md-3 text-right f-14 roboto p-0">
+                                43,020
+                            </div>
+                        </div>
+
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-6 text-left f-14 roboto p-0">
+                                Maturity benefit
+                            </div>
+                            <div class="col-md-3 text-right f-14 roboto p-0">
+                                2049
+                            </div>
+                            <div class="col-md-3 text-right f-14 roboto p-0">
+                                58,805
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 p-0 mt-24">
+                    <h4 class="f-16 roboto f-500">Riders</h4>
+                    <div class="insurance-ui bt">
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Accidental benefit
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                5,00,000
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Double accidental benefit
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                -
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Term waiver
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                -
+                            </div>
+                        </div>
+
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Critical illness
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                -
+                            </div>
+                        </div>
+
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Premium waiver
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                3,00,000
+                            </div>
+                        </div>
+
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Female critical illness
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                3,00,000
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

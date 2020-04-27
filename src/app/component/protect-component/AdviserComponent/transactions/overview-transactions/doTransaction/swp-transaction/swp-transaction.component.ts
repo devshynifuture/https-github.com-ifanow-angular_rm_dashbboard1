@@ -67,11 +67,11 @@ export class SwpTransactionComponent implements OnInit {
   childTransactions = [];
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount'];
   advisorId: any;
-  endDate: Date;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               private processTransaction: ProcessTransactionService, private fb: FormBuilder, private eventService: EventService) {
   }
+
   @Output() changedValue = new EventEmitter();
 
   @Input()
@@ -103,13 +103,16 @@ export class SwpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {isMultiTransact: false});
     Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
   }
+
   backToTransact() {
     this.changedValue.emit('step-2');
   }
+
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data);
     this.getDataSummary = data;
   }
+
   getSchemeList(value) {
     this.showSpinner = true;
     if (this.swpTransaction.get('schemeSwp').invalid) {
@@ -122,6 +125,7 @@ export class SwpTransactionComponent implements OnInit {
       const obj = {
         searchQuery: value,
         bseOrderType: 'SWP',
+        showOnlyNonZero: true,
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
         advisorId: this.advisorId,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
@@ -144,10 +148,12 @@ export class SwpTransactionComponent implements OnInit {
 
     }
   }
+
   getbankDetails(value) {
     this.bankDetails = value[0];
     console.log('bank details', value);
   }
+
   getSchemeDetailsRes(data) {
     console.log('getSchemeDetailsRes == ', data);
     this.maiSchemeList = data;
@@ -166,16 +172,19 @@ export class SwpTransactionComponent implements OnInit {
     }
     this.getSchemeWiseFolios();
   }
+
   reinvest(scheme) {
     this.schemeDetails = scheme;
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     console.log('schemeDetails == ', this.schemeDetails);
   }
+
   getExistingSchemesRes(data) {
     this.showSpinner = false;
     console.log('getExistingSchemesRes =', data);
     this.schemeList = data;
   }
+
   selectedScheme(scheme) {
     this.scheme = scheme;
     this.showUnits = true;
@@ -193,6 +202,7 @@ export class SwpTransactionComponent implements OnInit {
       }
     );
   }
+
   getSchemeWiseFolios() {
     this.showSpinnerFolio = true;
     const obj1 = {
@@ -211,6 +221,7 @@ export class SwpTransactionComponent implements OnInit {
       }
     );
   }
+
   getSchemeWiseFoliosRes(data) {
     console.log('res scheme folio', data);
     this.showSpinnerFolio = false;
@@ -219,12 +230,15 @@ export class SwpTransactionComponent implements OnInit {
       Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
     }
   }
+
   enteredAmount(value) {
-    Object.assign(this.transactionSummary, { enteredAmount: value });
+    Object.assign(this.transactionSummary, {enteredAmount: value});
   }
+
   onFolioChange(folio) {
     this.swpTransaction.controls.investmentAccountSelection.reset();
   }
+
   selectedFolio(folio) {
     this.folioDetails = folio;
     this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit);
@@ -234,6 +248,7 @@ export class SwpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId});
     this.transactionSummary = {...this.transactionSummary};
   }
+
   getFrequency() {
     const obj = {
       isin: this.schemeDetails.isin,
@@ -246,6 +261,7 @@ export class SwpTransactionComponent implements OnInit {
       }
     );
   }
+
   getSipFrequencyRes(data) {
     console.log('isin Frequency ----', data);
     this.swpFrequency = data;
@@ -253,6 +269,7 @@ export class SwpTransactionComponent implements OnInit {
       return element.frequency;
     });
   }
+
   selectedFrequency(getFrerq) {
     this.fre = getFrerq;
     this.frequency = getFrerq.frequency;
@@ -263,6 +280,7 @@ export class SwpTransactionComponent implements OnInit {
       this.dateArray(getFrerq.sipDates);
     }
   }
+
   dateArray(sipDates) {
     const currentDate = new Date();
     currentDate.setDate(currentDate.getDate() + 7);
@@ -273,6 +291,7 @@ export class SwpTransactionComponent implements OnInit {
     });
     console.log('dateDisplay = ', this.dateDisplay);
   }
+
   getMandateDetails() {
     const obj1 = {
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -285,13 +304,16 @@ export class SwpTransactionComponent implements OnInit {
       }
     );
   }
+
   getMandateDetailsRes(data) {
     console.log('mandate details :', data);
     this.mandateDetails = data;
   }
+
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
+
   getdataForm(data) {
     if (!data) {
       data = {};
@@ -319,14 +341,12 @@ export class SwpTransactionComponent implements OnInit {
 
     this.ownerData = this.swpTransaction.controls;
   }
+
   getFormControl(): any {
     return this.swpTransaction.controls;
   }
+
   swp() {
-    this.endDate = new Date();
-    this.endDate.setDate(31);
-    this.endDate.setMonth(11);
-    this.endDate.setFullYear(2099);
     if (this.swpTransaction.get('investmentAccountSelection').invalid) {
       this.swpTransaction.get('investmentAccountSelection').markAsTouched();
       return;
@@ -364,7 +384,6 @@ export class SwpTransactionComponent implements OnInit {
         clientCode: this.getDataSummary.defaultClient.clientCode,
         orderVal: this.swpTransaction.controls.employeeContry.value,
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-        endDate: (this.endDate).getTime(),
         orderType: 'SWP',
         amountType: 'Amount',
         bseDPTransType: 'PHYSICAL',
@@ -394,6 +413,7 @@ export class SwpTransactionComponent implements OnInit {
     }
 
   }
+
   swpBSERes(data) {
     this.barButtonOptions.active = false;
     console.log('swp res == ', data);
@@ -404,6 +424,7 @@ export class SwpTransactionComponent implements OnInit {
       Object.assign(this.transactionSummary, {allEdit: false});
     }
   }
+
   AddMultiTransaction() {
     if (this.swpTransaction.get('schemeSwp').invalid) {
       this.swpTransaction.get('schemeSwp').markAsTouched();

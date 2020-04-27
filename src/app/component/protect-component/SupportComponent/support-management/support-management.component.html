@@ -10,12 +10,14 @@
     <div class="col-md-9">
         <div class="row" *ngIf="dataSource.data.length > 0">
             <div class="col-md-12 p-0 overflow-hidden back-office-table">
-                <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonAnimation mt-8" appSkeletonLoading [appSkeletonLoading]="isLoading" matSort>
+                <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonAnimation mt-8"
+                    appSkeletonLoading [appSkeletonLoading]="isLoading" matSort>
                     <!-- admin name Column -->
                     <ng-container matColumnDef="adminName">
                         <th mat-header-cell *matHeaderCellDef class="b-a w-22" mat-sort-header="adminName"> Admin Name
                         </th>
-                        <td mat-cell *matCellDef="let element" class="b-a w-22 c-p" (click)="openAdminDetails(element)">
+                        <td mat-cell *matCellDef="let element" class="b-a w-22">
+                            <!-- (click)="openAdminDetails(element)" -->
                             <div class="bar"> {{element.fullName}} </div>
                         </td>
                     </ng-container>
@@ -50,7 +52,7 @@
                         <th mat-header-cell *matHeaderCellDef class="b-a" mat-sort-header="nextBilling"> Map</th>
                         <td mat-cell *matCellDef="let element" class="b-a">
                             <div class="bar">
-                                <button class="mapBtn btn-primary" (click)="mapToRM(element)">Map</button>
+                                <button mat-button class="mapBtn btn-primary" (click)="mapToRM(element)">Map</button>
                             </div>
                         </td>
                     </ng-container>
@@ -65,7 +67,8 @@
                                     <button mat-menu-item>Merge Scheme Code</button>
                                 </mat-menu>
 
-                                <img [matMenuTriggerFor]="appMenu" class="c-p" *ngIf="!isLoading" src="/assets/images/svg/dot-menu.svg" class="c-p">
+                                <img [matMenuTriggerFor]="appMenu" class="c-p" *ngIf="!isLoading"
+                                    src="/assets/images/svg/dot-menu.svg" class="c-p">
 
                                 <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu">
                                     <mat-icon>more_vert</mat-icon>
@@ -80,7 +83,8 @@
         </div>
         <div class="row pt-20">
             <div class="col-md-4 mb-16 pl-0" *ngFor="let user of rmList">
-                <mat-card class="b-a p-9 br-4" [ngClass]="{'active-class-name': user.isSuspended == 0, 'suspended-class-name': user.isSuspended == 1}">
+                <mat-card class="b-a p-9 br-4"
+                    [ngClass]="{'active-class-name': user.isSuspended == 0, 'suspended-class-name': user.isSuspended == 1}">
                     <div class="row">
                         <div class="col-md-4 p-0">
                             <img [src]="user.profileImage" class="w-100 h-80">
@@ -112,7 +116,9 @@
                     <div class="col-md-12 p-0">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input matInput placeholder="Enter Full name" formControlName="name" class="form-control" [inputValidator]="validatorType.PERSON_NAME" [maxLength]="40" appInputValueValidation>
+                                <input matInput placeholder="Enter Full name" formControlName="name"
+                                    class="form-control" [inputValidator]="validatorType.PERSON_NAME" [maxLength]="40"
+                                    appInputValueValidation>
                                 <mat-hint align="end">{{addRmFG.get('name').value.length}}/40</mat-hint>
                                 <mat-error>This field is required</mat-error>
                             </mat-form-field>
@@ -141,7 +147,9 @@
                     <div class="col-md-12 p-0">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
-                                <input matInput placeholder="Enter Full name" formControlName="mobileNo" class="form-control" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" minlength="10" appInputValueValidation>
+                                <input matInput placeholder="Enter Full name" formControlName="mobileNo"
+                                    class="form-control" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
+                                    minlength="10" appInputValueValidation>
                                 <mat-hint align="end">{{addRmFG.get('mobileNo').value.length}}/10</mat-hint>
                                 <mat-error *ngIf="addRmFG.get('mobileNo').errors?.required">This field is required
                                 </mat-error>
@@ -158,12 +166,16 @@
                     <div class="col-md-12 p-0">
                         <div class="form-group">
                             <mat-form-field appearance="standard" floatLabel="never">
-                                <input (keypress)="enterEvent($event)" [type]="hide ? 'password' : 'text'" class="form-control br-0" formControlName="password" matInput placeholder="Enter password" tabindex="2" type="password">
+                                <input (keypress)="enterEvent($event)" [type]="hide ? 'password' : 'text'"
+                                    class="form-control br-0" formControlName="password" matInput
+                                    placeholder="Enter password" tabindex="2" type="password">
 
-                                <i (click)="hide = !hide" *ngIf="hide" class="material-icons eyesPassword c-p text-primitive">
+                                <i (click)="hide = !hide" *ngIf="hide"
+                                    class="material-icons eyesPassword c-p text-primitive">
                                     visibility
                                 </i>
-                                <i (click)="hide = !hide" *ngIf="hide==false" class="material-icons eyesPassword c-p text-primitive">
+                                <i (click)="hide = !hide" *ngIf="hide==false"
+                                    class="material-icons eyesPassword c-p text-primitive">
                                     visibility_off
                                 </i>
                                 <mat-error *ngIf="addRmFG.get('password').errors?.required">This field is required

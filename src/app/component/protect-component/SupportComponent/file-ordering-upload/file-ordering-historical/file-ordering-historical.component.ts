@@ -1,31 +1,48 @@
-import { SubscriptionInject } from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { OrderHistoricalFileComponent } from './../../order-historical-file/order-historical-file.component';
-import { EventService } from './../../../../../Data-service/event.service';
-import { Component, OnInit } from '@angular/core';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatTableDataSource } from '@angular/material';
-import { UpperSliderBackofficeComponent } from '../../common-component/upper-slider-backoffice/upper-slider-backoffice.component';
-import { AuthService } from 'src/app/auth-service/authService';
-import { UtilService } from 'src/app/services/util.service';
-import { FileOrderingUpperComponent } from '../file-ordering-upper/file-ordering-upper.component';
-import { FileOrderingUploadService } from '../file-ordering-upload.service';
+import { SubscriptionInject } from "./../../../AdviserComponent/Subscriptions/subscription-inject.service";
+import { OrderHistoricalFileComponent } from "./../../order-historical-file/order-historical-file.component";
+import { EventService } from "./../../../../../Data-service/event.service";
+import { Component, OnInit } from "@angular/core";
+import { COMMA, ENTER } from "@angular/cdk/keycodes";
+import { MatTableDataSource } from "@angular/material";
+import { UpperSliderBackofficeComponent } from "../../common-component/upper-slider-backoffice/upper-slider-backoffice.component";
+import { AuthService } from "src/app/auth-service/authService";
+import { UtilService } from "src/app/services/util.service";
+import { FileOrderingUpperComponent } from "../file-ordering-upper/file-ordering-upper.component";
+import { FileOrderingUploadService } from "../file-ordering-upload.service";
+import { FormBuilder } from "@angular/forms";
 
 @Component({
-  selector: 'app-file-ordering-historical',
-  templateUrl: './file-ordering-historical.component.html',
-  styleUrls: ['./file-ordering-historical.component.scss']
+  selector: "app-file-ordering-historical",
+  templateUrl: "./file-ordering-historical.component.html",
+  styleUrls: ["./file-ordering-historical.component.scss"],
 })
 export class FileOrderingHistoricalComponent implements OnInit {
-  searchByName: { value: any; type: string; };
+  searchByName: { value: any; type: string };
 
   constructor(
     private eventService: EventService,
     private subInjectService: SubscriptionInject,
-    private fileOrderingUploadService: FileOrderingUploadService
-  ) { }
+    private fileOrderingUploadService: FileOrderingUploadService,
+    private fb: FormBuilder
+  ) {}
+
+  rmId = AuthService.getRmId() ? AuthService.getRmId() : 2;
 
   isLoading = false;
-  displayedColumns: string[] = ['advisorName', 'rta', 'orderedBy', 'startedOn', 'totalFiles', 'queue', 'ordering', 'ordered', 'failed', 'uploaded', 'refresh', 'empty'];
+  displayedColumns: string[] = [
+    "advisorName",
+    "rta",
+    "orderedBy",
+    "startedOn",
+    "totalFiles",
+    "queue",
+    "ordering",
+    "ordered",
+    "failed",
+    "uploaded",
+    "refresh",
+    "empty",
+  ];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   rmList: any[] = [];
   visible = true;
@@ -34,44 +51,50 @@ export class FileOrderingHistoricalComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   filterBy = [];
+  filterForm = this.fb.group({
+    filterByName: [,],
+    filterByRmName: [,],
+    filterByPeriod: [,],
+    filterByRta: [,],
+  });
   periodList = [
     {
       name: "Last 7 Days",
       value: 7,
-      type: 'period'
+      type: "period",
     },
     {
       name: "Last month",
       value: 30,
-      type: 'period'
+      type: "period",
     },
     {
       name: "Last year",
       value: 365,
-      type: 'period'
-    }
+      type: "period",
+    },
   ];
 
   rtaList = [
     {
-      name: 'ALL RTA',
+      name: "ALL RTA",
       value: 0,
-      type: 'rta'
+      type: "rta",
     },
     {
-      name: 'CAMS',
+      name: "CAMS",
       value: 1,
-      type: 'rta'
+      type: "rta",
     },
     {
-      name: 'KARVY',
+      name: "KARVY",
       value: 2,
-      type: 'rta'
+      type: "rta",
     },
     {
-      name: 'FRANKLIN',
+      name: "FRANKLIN",
       value: 3,
-      type: 'rta'
+      type: "rta",
     },
   ];
 
@@ -80,10 +103,20 @@ export class FileOrderingHistoricalComponent implements OnInit {
 
   ngOnInit() {
     this.getRmMasterDetails();
+  }
+
+  defaultSelectionInFilter() {
+    const defaultRmName = this.rmList.find((c) => c.id === this.rmId);
+    this.filterForm.get("filterByRmName").setValue(defaultRmName);
+    const defaultPeriod = this.periodList.find((c) => c.value === 30);
+    this.filterForm.get("filterByPeriod").setValue(defaultPeriod);
+    const defaultRta = this.rtaList.find((c) => c.value === 0);
+    this.filterForm.get("filterByRta").setValue(defaultRta);
 
     this.fileOrderHistoryListGet({
-      days: this.days,
-      rtId: this.rtId,
+      days: this.filterForm.get("filterByPeriod").value.value,
+      rtId: this.filterForm.get("filterByRta").value.value,
+      rmId: this.filterForm.get("filterByRmName").value.id,
     });
   }
 
@@ -91,54 +124,68 @@ export class FileOrderingHistoricalComponent implements OnInit {
     this.fileOrderHistoryListGet({
       days: this.days,
       rtId: this.rtId,
-    })
+    });
   }
 
   getRmMasterDetails() {
-    this.fileOrderingUploadService.getRmMasterUserData({})
-      .subscribe(data => {
-        if (data && data.length !== 0) {
-          data.forEach(element => {
-            element.type = 'rm';
-          });
-          this.rmList = data;
-        } else {
-          this.eventService.openSnackBar("No Rm Data Found!", "DISMISS");
-        }
-      });
+    this.fileOrderingUploadService.getRmMasterUserData({}).subscribe((data) => {
+      if (data && data.length !== 0) {
+        console.log(data);
+        data.forEach((element) => {
+          element.type = "rm";
+        });
+        this.rmList = data;
+        this.defaultSelectionInFilter();
+      } else {
+        this.eventService.openSnackBar("No Rm Data Found!", "DISMISS");
+      }
+    });
   }
 
   fileOrderHistoryListGet(data) {
     this.isLoading = true;
-    this.fileOrderingUploadService.getFileOrderHistoryListData(data)
-      .subscribe(data => {
+    this.fileOrderingUploadService
+      .getFileOrderHistoryListData(data)
+      .subscribe((data) => {
         if (data) {
           this.isLoading = false;
           let tableData = [];
           console.log("this is what i got:", data);
-          data.forEach(element => {
+          data.forEach((element) => {
             tableData.push({
               advisorName: element.advisorName ? element.advisorName : "-",
-              rta: element.rtId === 0 ? "ALL-RTA" : element.rtId === 1 ? "CAMS" : element.rtId === 2 ? "KARVY" : element.rtId === 3 ? "FRANKLIN" : null,
-              orderedBy: element.rmName ? element.rmName : '-',
-              startedOn: element.fileOrderDateTime ? element.fileOrderDateTime : '-',
-              totalFiles: element.totalFiles ? element.totalFiles : '-',
-              queue: element.inqueue ? element.inqueue : '-',
-              ordering: element.orderingFrequency ? element.orderingFrequency : '-',
-              ordered: element.ordered ? element.ordered : '-',
-              failed: element.skipped ? element.skipped : '-',
-              uploaded: element.uploaded ? element.uploaded : '-',
-              refresh: element.refresh ? element.refresh : '-',
-              empty: element.empty ? element.empty : '-',
+              rta:
+                element.rtId === 0
+                  ? "ALL-RTA"
+                  : element.rtId === 1
+                  ? "CAMS"
+                  : element.rtId === 2
+                  ? "KARVY"
+                  : element.rtId === 3
+                  ? "FRANKLIN"
+                  : null,
+              orderedBy: element.rmName ? element.rmName : "-",
+              startedOn: element.fileOrderDateTime
+                ? element.fileOrderDateTime
+                : "-",
+              totalFiles: element.totalFiles ? element.totalFiles : "-",
+              queue: element.inqueue ? element.inqueue : "-",
+              ordering: element.orderingFrequency
+                ? element.orderingFrequency
+                : "-",
+              ordered: element.ordered ? element.ordered : "-",
+              failed: element.skipped ? element.skipped : "-",
+              uploaded: element.uploaded ? element.uploaded : "-",
+              refresh: element.refresh ? element.refresh : "-",
+              empty: element.empty ? element.empty : "-",
               rtId: element.rtId,
               rmId: element.rmId,
               days: this.days,
               arnRiaDetailId: element.arnRiaDetailId,
-            })
+            });
           });
 
           this.dataSource.data = tableData;
-
         } else {
           this.eventService.openSnackBar("No Data Found", "DISMISS");
           this.dataSource.data = null;
@@ -149,71 +196,70 @@ export class FileOrderingHistoricalComponent implements OnInit {
   maniputateEventObjForName(event) {
     let name = event.value;
     event.value = {
-      type: 'name',
-      name
-    }
+      type: "name",
+      name,
+    };
     this.add(event);
   }
 
   add(event): void {
     const input = event.input;
     let value;
-    if (event.value.hasOwnPropety('name')) {
-      value = event.value['name'];
+    if (event.value.hasOwnPropety("name")) {
+      value = event.value["name"];
     } else {
       value = event.value;
     }
     console.log("add event", event);
 
-    if (event.value['type'] == 'rm') {
+    if (event.value["type"] == "rm") {
       // console.log("yo");
       this.dataSource.data = ELEMENT_DATA;
       this.fileOrderHistoryListGet({
         days: this.days,
         rtId: this.rtId,
-        rmId: event.value['id']
+        rmId: event.value["id"],
       });
-    } else if (event.value['type'] == 'rta') {
+    } else if (event.value["type"] == "rta") {
       // console.log("yo");
-      this.rtId = event.value['value'];
+      this.rtId = event.value["value"];
       this.dataSource.data = ELEMENT_DATA;
 
       this.fileOrderHistoryListGet({
         days: this.days,
-        rtId: event.value['value'],
+        rtId: event.value["value"],
       });
-    } else if (event.value['type'] === 'period') {
+    } else if (event.value["type"] === "period") {
       // console.log("yo");
-      this.days = event.value['value'];
+      this.days = event.value["value"];
       this.dataSource.data = ELEMENT_DATA;
 
       this.fileOrderHistoryListGet({
         days: this.days,
         rtId: this.rtId,
       });
-    }
-    else if (event.value['type'] === 'name') {
+    } else if (event.value["type"] === "name") {
       this.dataSource.data = ELEMENT_DATA;
 
       this.fileOrderHistoryListGet({
         days: this.days ? this.days : 2,
         rtId: this.rtId,
-        advisorName: event.value['name']
-      })
+        advisorName: event.value["name"],
+      });
 
       console.log(event.value);
     }
     // filter get api usng
 
     // Add our filterBy
-    if ((value || '').trim()) {
+    if ((value || "").trim()) {
       this.filterBy = [];
       this.filterBy.push({ name: value.trim() });
     }
 
     // Reset the input value
     if (input) {
-      input.value = '';
+      input.value = "";
     }
   }
 
@@ -227,51 +273,52 @@ export class FileOrderingHistoricalComponent implements OnInit {
       this.fileOrderHistoryListGet({
         days: this.days,
         rtId: this.rtId,
-      })
+      });
     }
   }
 
   openHistoricalFileOrderingSlider(data) {
     const fragmentData = {
-      flag: 'openHistoricalFileOrdering',
+      flag: "openHistoricalFileOrdering",
       data,
       id: 1,
-      state: 'open50',
+      state: "open50",
       componentName: OrderHistoricalFileComponent,
     };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
+    const rightSideDataSub = this.subInjectService
+      .changeNewRightSliderState(fragmentData)
+      .subscribe((sideBarData) => {
+        console.log("this is sidebardata in subs subs : ", sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.dataSource.data = ELEMENT_DATA;
             this.fileOrderHistoryListGet({
               days: this.days,
               rtId: this.rtId,
-            })
+            });
           }
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          console.log("this is sidebardata in subs subs 2: ", sideBarData);
           rightSideDataSub.unsubscribe();
         }
-      }
-    );
+      });
   }
 
   openUpperFileOrdering(flag, data) {
     data.flag = flag;
-    console.log('hello mf button clicked');
+    console.log("hello mf button clicked");
     const fragmentData = {
       flag,
       id: 1,
       data,
-      direction: 'top',
+      direction: "top",
       componentName: FileOrderingUpperComponent,
-      state: 'open'
+      state: "open",
     };
     // this.router.navigate(['/subscription-upper'])
     AuthService.setSubscriptionUpperSliderData(fragmentData);
-    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-      upperSliderData => {
+    const subscription = this.eventService
+      .changeUpperSliderState(fragmentData)
+      .subscribe((upperSliderData) => {
         if (UtilService.isDialogClose(upperSliderData)) {
           if (UtilService.isRefreshRequired(upperSliderData)) {
             this.dataSource.data = ELEMENT_DATA;
@@ -279,15 +326,13 @@ export class FileOrderingHistoricalComponent implements OnInit {
             this.fileOrderHistoryListGet({
               days: this.days,
               rtId: this.rtId,
-            })
+            });
           }
           // this.getClientSubscriptionList();
           subscription.unsubscribe();
         }
-      }
-    );
+      });
   }
-
 }
 
 export interface PeriodicElement {
@@ -303,11 +348,49 @@ export interface PeriodicElement {
   uploaded: string;
   refresh: string;
   empty: string;
-
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { advisorName: '', rta: '', orderedby: '', startedOn: '', totalfiles: '', queue: '', ordering: '', ordered: '', failed: '', uploaded: '', refresh: '', empty: '' },
-  { advisorName: '', rta: '', orderedby: '', startedOn: '', totalfiles: '', queue: '', ordering: '', ordered: '', failed: '', uploaded: '', refresh: '', empty: '' },
-  { advisorName: '', rta: '', orderedby: '', startedOn: '', totalfiles: '', queue: '', ordering: '', ordered: '', failed: '', uploaded: '', refresh: '', empty: '' },
+  {
+    advisorName: "",
+    rta: "",
+    orderedby: "",
+    startedOn: "",
+    totalfiles: "",
+    queue: "",
+    ordering: "",
+    ordered: "",
+    failed: "",
+    uploaded: "",
+    refresh: "",
+    empty: "",
+  },
+  {
+    advisorName: "",
+    rta: "",
+    orderedby: "",
+    startedOn: "",
+    totalfiles: "",
+    queue: "",
+    ordering: "",
+    ordered: "",
+    failed: "",
+    uploaded: "",
+    refresh: "",
+    empty: "",
+  },
+  {
+    advisorName: "",
+    rta: "",
+    orderedby: "",
+    startedOn: "",
+    totalfiles: "",
+    queue: "",
+    ordering: "",
+    ordered: "",
+    failed: "",
+    uploaded: "",
+    refresh: "",
+    empty: "",
+  },
 ];

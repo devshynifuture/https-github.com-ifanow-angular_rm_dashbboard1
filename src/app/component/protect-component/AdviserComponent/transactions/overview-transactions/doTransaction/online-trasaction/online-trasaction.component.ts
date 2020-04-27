@@ -54,6 +54,7 @@ export class OnlineTrasactionComponent implements OnInit {
   credentialList: any;
   getPlatformCount: any;
   showSpinnerOwner = false;
+  ownerNameQuery = '';
   familyMemberData: any;
   noSubBroker = false;
   noMapping = false;
@@ -96,6 +97,7 @@ export class OnlineTrasactionComponent implements OnInit {
       clientId: platform.clientId,
       // aggregatorType: platform
     };
+
     this.onlineTransact.getDefaultDetails(obj).subscribe(
       data => this.getDefaultDetailsRes(data)
     );
@@ -193,8 +195,10 @@ export class OnlineTrasactionComponent implements OnInit {
 
   ownerList(value) {
     if (value == '') {
+      this.ownerNameQuery = '';
       this.showSpinnerOwner = false;
     } else {
+      this.ownerNameQuery = value;
       this.showSpinnerOwner = true;
     }
   }
