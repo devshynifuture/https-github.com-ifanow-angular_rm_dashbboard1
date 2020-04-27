@@ -50,6 +50,7 @@ export class ClientDematComponent implements OnInit {
     this.userData = data;
     (this.userData.dematData) ? this.dematList = this.userData.dematData : '';
     if (this.userData.dematData == undefined && this.fieldFlag) {
+      this.holdingMode = '1';
       this.createDematForm(null);
       this.getDematList(data);
     }

@@ -75,6 +75,7 @@ export class SummaryComponent implements OnInit {
   selectedVal: string;
   goldData: any;
   silverData: any;
+  nifty500Data: any;
   constructor(public eventService: EventService, private cusService: CustomerService,
     private datePipe: DatePipe) {
   }
@@ -100,14 +101,25 @@ export class SummaryComponent implements OnInit {
     this.StockFeedFlag = false;
     const { bse, nse, gold, silver } = data;
     bse.date = new Date(bse.date).getTime();
-    bse.change_in_percentage = parseInt(bse.change_in_percentage).toFixed(2);
-    nse.change_in_percentage = parseInt(nse.change_in_percentage).toFixed(2);
-    gold.change_in_percentage = parseInt(gold.change_in_percentage).toFixed(2);
-    silver.change_in_percentage = parseInt(silver.change_in_percentage).toFixed(2);
+    bse.change_in_percentage = parseFloat(bse.change_in_percentage).toFixed(2);
+    nse.change_in_percentage = parseFloat(nse.change_in_percentage).toFixed(2);
+    if (gold) {
+      gold.carat_22.change_in_percentage = parseFloat(gold.carat_22.change_in_percentage).toFixed(2);
+      gold.carat_24.change_in_percentage = parseFloat(gold.carat_24.change_in_percentage).toFixed(2);
+    }
+    silver.change_in_percentage = parseFloat(silver.change_in_percentage).toFixed(2);
     this.bscData = bse;
     this.nscData = nse;
     this.goldData = gold;
     this.silverData = silver;
+  }
+  getNifty500Data() {
+    this.cusService.getNiftyData().subscribe(
+      data => {
+        console.log(data);
+        this.nifty500Data = data;
+      }
+    )
   }
   calculateTotalSummaryValues() {
     this.mutualFundValue = {
@@ -162,6 +174,7 @@ export class SummaryComponent implements OnInit {
     this.getSummaryList(obj);
     this.getCashFlowList(obj);
     this.getStockFeeds();
+    this.getNifty500Data();
 
   }
 
