@@ -199,12 +199,12 @@
     </div>
     <div class="row pt-44">
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-20">Liked bank account</h5>
+            <h5 class="m-0 pt-20">Linked bank account</h5>
         </div>
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter Liked bank account" autocomplete="off" #linkedAccNum [maxLength]="16"
+                    <input placeholder="Enter Linked bank account" autocomplete="off" #linkedAccNum [maxLength]="16"
                         appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                         formControlName="linkedBankAccount" matInput class="form-control">
                     <mat-hint align="end" class="f-12">{{linkedAccNum.value.length}}/16</mat-hint>
