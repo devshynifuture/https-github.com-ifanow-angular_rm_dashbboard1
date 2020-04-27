@@ -194,19 +194,16 @@ export class SwitchTransactionComponent implements OnInit {
     console.log('getSchemeDetailsRes == ', data);
     this.maiSchemeList = data;
     this.schemeDetails = data[0];
+    Object.assign(this.transactionSummary, {schemeName: this.schemeDetails.schemeName});
+
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
-    if (data.length > 1) {
-      this.reInvestmentOpt = data;
-      console.log('reinvestment', this.reInvestmentOpt);
-    }
-    if (data.length == 1) {
-      this.reInvestmentOpt = [];
-    }
     this.getSchemeWiseFolios();
   }
 
   reinvest(scheme) {
-    this.schemeDetails = scheme;
+    // this.schemeDetails = scheme;
+    this.schemeDetailsTransfer = scheme;
+
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     console.log('schemeDetails == ', this.schemeDetails);
   }
@@ -265,6 +262,12 @@ export class SwitchTransactionComponent implements OnInit {
     this.showSpinnerTran = false;
     // this.maiSchemeList = data
     this.schemeDetailsTransfer = data[0];
+    if (data.length > 1) {
+      this.reInvestmentOpt = data;
+      console.log('reinvestment', this.reInvestmentOpt);
+    } else if (data.length == 1) {
+      this.reInvestmentOpt = [];
+    }
   }
 
   getSchemeListTranfer(value) {
@@ -298,8 +301,15 @@ export class SwitchTransactionComponent implements OnInit {
     }
   }
 
-  switchType(value) {
-
+  switchType(event) {
+    console.log('switch transaction switchType: ', event.value);
+    if (event.value == '3') {
+      this.switchTransaction.controls.employeeContry.setValidators([]);
+    } else if (event.value == '2') {
+      this.switchTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minimumRedemptionQty)]);
+    } else if (event.value == '1') {
+      this.switchTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minimumPurchaseAmount)]);
+    }
   }
 
   enteredAmount(value) {
@@ -353,16 +363,14 @@ export class SwitchTransactionComponent implements OnInit {
   }
 
   switch() {
-    if (this.reInvestmentOpt.length > 1) {
-      if (this.switchTransaction.get('reinvest').invalid) {
-        this.switchTransaction.get('reinvest').markAsTouched();
-      }
+    if (this.reInvestmentOpt.length > 1 && this.switchTransaction.controls.reinvest.invalid) {
+      this.switchTransaction.get('reinvest').markAsTouched();
     } else if (this.switchTransaction.get('folioSelection').value == 1) {
       if (this.switchTransaction.get('investmentAccountSelection').invalid) {
         this.switchTransaction.get('investmentAccountSelection').markAsTouched();
         return;
       }
-    } else if (this.switchTransaction.get('employeeContry').invalid) {
+    } else if (this.switchTransaction.get('switchType').value != 3 && this.switchTransaction.get('employeeContry').invalid) {
       this.switchTransaction.get('employeeContry').markAsTouched();
       return;
     } else if (this.switchTransaction.get('switchType').invalid) {
