@@ -23,6 +23,7 @@ import { OpenGalleryPlanComponent } from '../setting-plan/setting-plan/plan-gall
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { TaskTemplateTypeComponent } from '../setting-activity/add-task-template/task-template-type/task-template-type.component';
 import { AddTeamMemberComponent } from '../setting-user-roles/setting-users-roles/hierachy/add-team-member/add-team-member.component';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 export const componentList = [AddReportingManagerComponent, AddNewRoleComponent, AddArnRiaDetailsComponent, AddCamsDetailsComponent, AddKarvyDetailsComponent, AddFranklinTempletionDetailsComponent, AddCamsFundsnetComponent, SettingSchemeDetailsComponent, AddModelPortfolioComponent,
   AddPersonalProfileComponent, AddTaskTemplateComponent, SettingPreferenceComponent, NewTeamMemberComponent, OpenEmailVerificationComponent, OrgProfileComponent, OpenGalleryPlanComponent, TaskTemplateTypeComponent, AddTeamMemberComponent]
@@ -36,7 +37,8 @@ export const componentList = [AddReportingManagerComponent, AddNewRoleComponent,
     ReactiveFormsModule,
     CommonComponentModule,
     CustomDirectiveModule,
-    EntryComponentsModule
+    EntryComponentsModule,
+    CustomCommonModule
   ],
   entryComponents: componentList
 })
