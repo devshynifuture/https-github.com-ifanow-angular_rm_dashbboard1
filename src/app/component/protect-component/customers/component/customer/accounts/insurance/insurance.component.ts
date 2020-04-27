@@ -241,7 +241,10 @@ export class InsuranceComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.dataSource.data);
       this.dataSource.sort = this.sort;
       this.getCount();
-      this.getStatusId(this.dataSource.data)
+      this.getStatusId(this.dataSource.data);
+      this.totalCurrentValue = 0;
+      this.totalPremiunAmountLifeIns = 0;
+      this.totalSumAssuredLifeIns = 0;
       this.dataSource.data.forEach(element => {
         this.totalCurrentValue += (element.currentValue == 'Infinity') ? 0 : element.currentValue,
           this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount : 0
@@ -297,7 +300,10 @@ export class InsuranceComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.lifeInsuranceFilter = this.dataSource.data;
       this.getCount();
-      this.getStatusId(this.dataSource.data)
+      this.getStatusId(this.dataSource.data);
+      this.totalCurrentValue = 0;
+      this.totalPremiunAmountLifeIns = 0;
+      this.totalSumAssuredLifeIns = 0;
       this.dataSource.data.forEach(element => {
         this.totalCurrentValue += (element.currentValue == 'Infinity') ? 0 : element.currentValue,
           this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount : 0
@@ -493,7 +499,7 @@ export class InsuranceComponent implements OnInit {
       data: {},
       insuranceTypeId: this.insuranceTypeId,
       insuranceSubTypeId: this.insuranceSubTypeId,
-      state: 'open',
+      state:null,
       componentName: null
     }
     sendData.data = {
@@ -505,8 +511,10 @@ export class InsuranceComponent implements OnInit {
     }
     if (this.insuranceTypeId == 1) {
       sendData.componentName = DetailedViewLifeInsuranceComponent
+      sendData.state = 'open';
     } else {
       sendData.componentName = DetailedViewGeneralInsuranceComponent
+      sendData.state = 'open35';
     }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(sendData).subscribe(
       sideBarData => {

@@ -31,6 +31,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
   flag: string;
   nominees: any[];
   addMoreFlag=false;
+  id: any;
 
   constructor(private fb: FormBuilder,private subInjectService:SubscriptionInject,private customerService:CustomerService,private eventService:EventService) { }
   validatorType = ValidatorType
@@ -201,7 +202,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
       id:[data ? data.id : ''],
       relationshipId:[data ? data.relationshipId : ''],
       familyMemberId:[data ? data.familyMemberId : ''],
-      ttdSumAssured:[data ? data.ttdSumAssured : '']
+      ttdSumInsured:[data ? data.ttdSumInsured : '']
     }));
   }
   removeTransaction(item) {
@@ -238,6 +239,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
     }
     else {
       this.dataForEdit = data.data;
+      this.id = this.dataForEdit.id;
       this.flag = "EDIT";
     }
     this.personalAccidentForm = this.fb.group({
@@ -278,7 +280,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
         id:[0],
         familyMemberId:[''],
         relationshipId:[''],
-        ttdSumAssured:['',[Validators.required]]
+        ttdSumInsured:['',[Validators.required]]
       })]),
       planFeatureForm: this.fb.array([this.fb.group({
         planfeatures: [''],
@@ -360,7 +362,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
         relationshipId: element.get('relationshipId').value,  
         insuredOrNominee: 1,
         id:(element.get('id').value) ? element.get('id').value : null,
-        ttdSumAssured:element.get('id').value
+        ttdSumInsured:element.get('ttdSumInsured').value
       }
       memberList.push(obj)
     })
@@ -399,6 +401,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
         "policyFeatures":featureList,
         "insurerName": this.personalAccidentForm.get('insurerName').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
+        "id":(this.id) ? this.id : null,
         insuredMembers: memberList,
         nominees: this.personalAccidentForm.value.getNomineeName,
       }

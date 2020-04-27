@@ -39,6 +39,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
   policyData: any;
   insuranceSubTypeId: any;
   insuranceTypeId: any;
+  id: any;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
@@ -215,6 +216,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
     }
     else {
       this.dataForEdit = data.data;
+      this.id = this.dataForEdit.id;
       this.flag = "EDIT";
     }
     this.motorInsuranceForm = this.fb.group({
@@ -413,6 +415,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
         "serviceBranch": this.motorInsuranceForm.get('serviceBranch').value,
         "linkedBankAccount": this.motorInsuranceForm.get('bankAccount').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
+        "id":(this.id) ? this.id : null,
         "addOns":addOns,
         nominees: this.motorInsuranceForm.value.getNomineeName,
       }

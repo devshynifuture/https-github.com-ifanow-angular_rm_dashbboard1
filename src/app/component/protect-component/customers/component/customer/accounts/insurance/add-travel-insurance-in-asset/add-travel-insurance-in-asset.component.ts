@@ -32,6 +32,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
   nominees: any[];
   addMoreFlag=false;
   policyList: any;
+  id: any;
 
   constructor(private fb: FormBuilder,private subInjectService:SubscriptionInject,private customerService:CustomerService,private eventService:EventService) { }
   validatorType = ValidatorType
@@ -256,6 +257,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
     }
     else {
       this.dataForEdit = data.data;
+      this.id = this.dataForEdit.id;
       this.flag = "EDIT";
     }
     this.travelInsuranceForm = this.fb.group({
@@ -368,11 +370,13 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
     let featureList = [];
     let finalplanFeatureList = this.travelInsuranceForm.get('planFeatureForm') as FormArray
     finalplanFeatureList.controls.forEach(element => {
-      let obj =
-      {
-        policyFeatureId : element.get('planfeatures').value,
+      if(element.get('planfeatures').value){
+        let obj =
+        {
+          policyFeatureId : element.get('planfeatures').value,
+        }
+        featureList.push(obj)
       }
-      featureList.push(obj)
     })
     if (this.travelInsuranceForm.invalid) {
       this.travelInsuranceForm.markAllAsTouched();
@@ -397,6 +401,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
         "serviceBranch": this.travelInsuranceForm.get('serviceBranch').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
         "policyFeatures":featureList,
+        "id":(this.id) ? this.id : null,
         insuredMembers: memberList,
         nominees: this.travelInsuranceForm.value.getNomineeName,
       }

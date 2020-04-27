@@ -37,6 +37,7 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
   addOns: any;
   dataForEdit: any;
   policyFeature: any;
+  id: any;
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
@@ -214,6 +215,7 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
     }
     else {
       this.dataForEdit = data.data;
+      this.id = this.dataForEdit.id;
       this.flag = "EDIT";
     }
     this.fireInsuranceForm = this.fb.group({
@@ -238,8 +240,8 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
       copayType: [this.dataForEdit ? this.dataForEdit.copayRupeesOrPercent + '' : null],
       cumulativeBonus: [this.dataForEdit ? this.dataForEdit.cumulativeBonus : null],
       bonusType: [this.dataForEdit ? this.dataForEdit.cumulativeBonusRupeesOrPercent + '' : null],
-      additionalCovers: [this.dataForEdit ? this.dataForEdit.addOns[0].addOnId : null],
-      coversAmount: [this.dataForEdit ? this.dataForEdit.addOns[0].addOnSumInsured : null],
+      additionalCovers: [this.dataForEdit ? (this.dataForEdit.addOns > 0 ? this.dataForEdit.addOns[0].addOnId : null ) : null],
+      coversAmount: [this.dataForEdit ? (this.dataForEdit.addOns > 0 ? this.dataForEdit.addOns[0].addOnSumInsured : null) : null],
       exclusion: [this.dataForEdit ? this.dataForEdit.exclusion :null],
       inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : null],
       tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],
@@ -372,22 +374,26 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
     let featureList = [];
     let finalplanFeatureList = this.fireInsuranceForm.get('planFeatureForm') as FormArray
     finalplanFeatureList.controls.forEach(element => {
-      let obj =
-      {
-        policyFeatureId : element.get('planfeatures').value,
-        featureSumInsured : element.get('sumInsured').value,
+      if(element.get('planfeatures').value && element.get('sumInsured').value){
+        let obj =
+        {
+          policyFeatureId : element.get('planfeatures').value,
+          featureSumInsured : element.get('sumInsured').value,
+        }
+        featureList.push(obj)
       }
-      featureList.push(obj)
     })
     let addOns = [];
     let addOnList = this.fireInsuranceForm.get('addOnForm') as FormArray
     addOnList.controls.forEach(element => {
-      let obj =
-      {
-        addOnId : element.get('additionalCovers').value,
-        addOnSumInsured: element.get('sumAddOns').value,
+      if(element.get('additionalCovers').value && element.get('sumAddOns').value){
+        let obj =
+        {
+          addOnId : element.get('additionalCovers').value,
+          addOnSumInsured: element.get('sumAddOns').value,
+        }
+        addOns.push(obj)
       }
-      addOns.push(obj)
     })
     if (this.fireInsuranceForm.invalid) {
       this.fireInsuranceForm.markAllAsTouched();
@@ -409,6 +415,7 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
         "serviceBranch": this.fireInsuranceForm.get('serviceBranch').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
         "policyFeatures":featureList,
+        "id":(this.id) ? this.id : null,
         "addOns": addOns,
         nominees: this.fireInsuranceForm.value.getNomineeName,
       }

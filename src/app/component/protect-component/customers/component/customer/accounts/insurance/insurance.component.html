@@ -170,9 +170,9 @@
                                 </ng-container>
                                 <ng-container matColumnDef="desc">
                                     <th mat-header-cell mat-sort-header="description" *matHeaderCellDef class="br">
-                                        Description </th>
+                                        Plan type </th>
                                     <td mat-cell *matCellDef="let element" class="br">
-                                        <div class="bar"> {{element.description}} </div>
+                                        <div class="bar"> {{(element.insuranceSubTypeId == 1) ? 'Term' : (element.insuranceSubTypeId == 2) ? 'Traditional' : (element.insuranceSubTypeId == 3) ? 'ULIP' : '-'}} </div>
                                     </td>
                                     <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
                                 </ng-container>
@@ -232,7 +232,7 @@
                                     <td mat-cel l *matCellDef="let element" class="br">
                                         <div *ngIf="element.insuredMembers?.length > 0 && !isLoading">
                                             <ng-container *ngFor="let ele of element.insuredMembers">
-                                                <div> {{ele.name+','}} </div>
+                                                <div> {{(element.insuredMembers.length == 1) ? (ele.name) : (ele.name+',')}} </div>
                                             </ng-container>
                                         </div>
                                         <div *ngIf="element.insuredMembers?.length == 0 && !isLoading">

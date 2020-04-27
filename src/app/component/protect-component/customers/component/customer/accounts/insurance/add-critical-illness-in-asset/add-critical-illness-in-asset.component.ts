@@ -34,6 +34,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
   flag: string;
   FamilyMember: any;
   ProposerData: any;
+  id: any;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
@@ -209,6 +210,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
     }
     else {
       this.dataForEdit = data.data;
+      this.id = this.dataForEdit.id;
       this.flag = "EDIT";
     }
     this.critialIllnessForm = this.fb.group({
@@ -401,6 +403,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
         "serviceBranch": this.critialIllnessForm.get('serviceBranch').value,
         "linkedBankAccount": this.critialIllnessForm.get('bankAccount').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
+        "id":(this.id) ? this.id : null,
         insuredMembers: memberList,
         nominees: this.critialIllnessForm.value.getNomineeName,
       }

@@ -512,7 +512,7 @@
                                     <div class="form-group mb-0">
                                         <!-- <label class="f-16 roboto">Cash Flow Type</label> -->
                                         <mat-form-field>
-                                            <input type="text" autocomplete="off" [maxLength]="10"
+                                            <input type="text" autocomplete="off" [maxLength]="30"
                                                 formControlName="cashFlowType" #cashFlowType matInput
                                                 class="form-control br-0">
                                             <mat-hint align="end" class="f-12">{{cashFlowType.value.length}}/10
@@ -688,10 +688,13 @@
                                     <mat-form-field>
                                         <mat-select formControlName="permiumPaymentMode" #frequency autocomplete="off"
                                             class="form-control mt-28 br-0">
-                                            <mat-option value="1">In force</mat-option>
-                                            <mat-option value="2">Lapsed</mat-option>
-                                            <mat-option value="3">Paid up</mat-option>
-                                            <mat-option value="4">Fully paid up</mat-option>
+                                            <mat-option value="1">Cheque</mat-option>
+                                            <mat-option value="2">Cash</mat-option>
+                                            <mat-option value="3">Net banking</mat-option>
+                                            <mat-option value="4">Credit card</mat-option>
+                                            <mat-option value="5">NACH</mat-option>
+                                            <mat-option value="6">ECS</mat-option>
+
                                         </mat-select>
                                         <mat-error
                                             [ngClass]="{'v-h':!(ispolicyStatus && lifeInsuranceForm.get('policyStatus').invalid || (lifeInsuranceForm.get('policyStatus').touched && lifeInsuranceForm.get('policyStatus').invalid))}"

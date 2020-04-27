@@ -39,6 +39,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
   dataForEdit: any;
   bankList:any;
   bankAccountDetails: any;
+  id: any;
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
@@ -220,6 +221,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     }
     else {
       this.dataForEdit = data.data;
+      this.id = this.dataForEdit.id;
       if (this.dataForEdit.addOns.length > 0) {
         this.addOns.addOnId = this.dataForEdit.addOns[0].addOnId;
         this.addOns.addOnSumInsured = this.dataForEdit.addOns[0].addOnSumInsured;
@@ -434,14 +436,15 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         "policyInceptionDate": this.healthInsuranceForm.get('inceptionDate').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
         "premiumAmount": this.healthInsuranceForm.get('premium').value,
-        "addOns": [{
-          "addOnId": this.healthInsuranceForm.get('additionalCovers').value,
-          "addOnSumInsured": this.healthInsuranceForm.get('coversAmount').value
-        }],
+        "id":(this.id) ? this.id : null,
+        "addOns": [],
         insuredMembers: memberList,
         nominees: this.healthInsuranceForm.value.getNomineeName,
       }
-
+      if(this.healthInsuranceForm.get('additionalCovers').value && this.healthInsuranceForm.get('coversAmount').value){
+        obj.addOns =[{"addOnId": (this.healthInsuranceForm.get('additionalCovers').value),
+        "addOnSumInsured": this.healthInsuranceForm.get('coversAmount').value}]
+      }
       if (obj.nominees.length > 0) {
         obj.nominees.forEach((element, index) => {
           if (element.name == '') {

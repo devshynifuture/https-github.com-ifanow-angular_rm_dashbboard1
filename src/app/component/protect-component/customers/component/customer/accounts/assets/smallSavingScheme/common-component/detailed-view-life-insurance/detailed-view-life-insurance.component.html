@@ -23,7 +23,7 @@
                                 Life assured
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                Rahul Jain
+                                {{(_data.lifeAssuredName) ? _data.lifeAssuredName : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -31,15 +31,15 @@
                                 Proposer
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                Aryan Jain
+                                {{(_data.familyMemberName) ? _data.familyMemberName : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Policy name
                             </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                LIC Jeevan Saral
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data.policyName) ? _data.policyName : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -47,7 +47,7 @@
                                 Policy type
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                Money back
+                                {{(_data.familyMemberName) ? _data.familyMemberName : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -55,7 +55,7 @@
                                 Policy number
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                9090889898
+                                {{(_data.policyNumber) ? _data.policyNumber : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -63,7 +63,7 @@
                                 Commencement date
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                23/09/2012
+                                {{(_data.commencementDate ) ?( _data.commencementDate | date:'dd/MM/yyyy')  : '-'}}
                             </div>
                         </div>
 
@@ -71,24 +71,24 @@
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Sum assured
                             </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0">
-                                8,00,000
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                {{(_data.sumAssured) ? _data.sumAssured : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Premium amount
                             </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0">
-                                27,000
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                {{(_data.premiumAmount) ? _data.premiumAmount : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Premium frequency
                             </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                Yearly
+                            <div class="col-md-4 text-right f-14 roboto p-0" >
+                                {{(_data.frequency == 1) ? 'Monthly' : (_data.frequency == 2) ? 'Quarterly' : (_data.frequency == 3) ? 'Half yearly' : (_data.frequency == 4) ? 'Yearly' : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -96,7 +96,7 @@
                                 Policy tenure
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                20 years
+                                {{(_data.policyTenure == 5) ? '5 Years' : (_data.policyTenure == 10) ? '10 Years' : (_data.policyTenure == 15) ? '15 Years' : (_data.policyTenure == 20) ? '20 Years' : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -104,7 +104,7 @@
                                 Premium paying term
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                20 years
+                                {{(_data.premiumPayingTerm) ? _data.premiumPayingTerm : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -112,23 +112,23 @@
                                 Policy status
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                In force
+                                {{(_data.policyStatusId == 1) ? 'In force' : (_data.policyStatusId == 2) ? 'Lapsed' : (_data.policyStatusId == 3) ? 'Paid up' : (_data.policyStatusId == 4) ? 'Fully paid up' :  '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Last unpaid premium
                             </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0">
-                                -
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                {{(_data.lastUnpaidPremium) ? _data.lastUnpaidPremium : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br" *ngFor="let data of nominee; let i = index">
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Current value
                             </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0">
-                                37,789
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                {{(_data.currentValue == 'Infinity') ? 0 : _data.currentValue}}
                             </div>
                         </div>
 
@@ -144,16 +144,16 @@
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Loan available
                             </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0">
-                                3,27,009
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                {{(_data.loanAvailable) ? _data.loanAvailable : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Loan taken
                             </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0">
-                                -
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                {{(_data.loanTaken) ? _data.loanTaken : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -161,7 +161,7 @@
                                 Loan taken on
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                -
+                                {{(_data.loanTakenOn) ? (_data.loanTakenOn | date:'dd/MM/yyyy') : '-'}}
                             </div>
                         </div>
 
@@ -180,24 +180,24 @@
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Risk cover
                             </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0">
-                                1,24,000
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                {{(_data.riskCover) ? _data.riskCover : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Surrender value
                             </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0">
-                                2,90,345
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                {{(_data.surrenderValue) ? _data.surrenderValue : '-'}}
                             </div>
                         </div>
-                        <div class="row bb p-8 b-l br">
+                        <div class="row bb p-8 b-l br" *ngFor="let data of nominee; let i = index">
                             <div class="col-md-8 text-left f-14 roboto p-0">
-                                Nominee
+                                Nominee {{i+1}}
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                Shilpa Jain
+                                {{ data.name }}
                             </div>
                         </div>
 
@@ -206,7 +206,7 @@
                                 Assumed rate
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                7.87%
+                                {{(_data.assumedRate) ? _data.assumedRate : '-'}}
                             </div>
                         </div>
 
@@ -230,15 +230,27 @@
                             </div>
                         </div>
 
-                        <div class="row bb p-8 b-l br">
+                        <div class="row bb p-8 b-l br" *ngFor="let data of cashFlowList; let i = index">
+                            <div class="col-md-6 text-left f-14 roboto p-0">
+                                {{(data.cashFlowType) ? data.cashFlowType : '-'}}
+                            </div>
+                            <div class="col-md-3 text-right f-14 roboto p-0">
+                                {{(data.cashFlowYear) ? data.cashFlowYear : '-'}}
+                            </div>
+                            <div class="col-md-3 text-right f-14 roboto p-0" appFormatNumber>
+                                {{(data.cashFlowApproxAmount) ? data.cashFlowApproxAmount : '-'}}
+                            </div>
+                        </div>
+
+                        <!-- <div class="row bb p-8 b-l br">
                             <div class="col-md-6 text-left f-14 roboto p-0">
                                 Survival benefit
                             </div>
                             <div class="col-md-3 text-right f-14 roboto p-0">
-                                2024
+                                {{(_data.lastUnpaidPremium) ? _data.lastUnpaidPremium : '-'}}
                             </div>
                             <div class="col-md-3 text-right f-14 roboto p-0">
-                                37,550
+                                {{(_data.lastUnpaidPremium) ? _data.lastUnpaidPremium : '-'}}
                             </div>
                         </div>
 
@@ -247,22 +259,10 @@
                                 Survival benefit
                             </div>
                             <div class="col-md-3 text-right f-14 roboto p-0">
-                                2029
+                                {{(_data.lastUnpaidPremium) ? _data.lastUnpaidPremium : '-'}}
                             </div>
                             <div class="col-md-3 text-right f-14 roboto p-0">
-                                39,000
-                            </div>
-                        </div>
-
-                        <div class="row bb p-8 b-l br">
-                            <div class="col-md-6 text-left f-14 roboto p-0">
-                                Survival benefit
-                            </div>
-                            <div class="col-md-3 text-right f-14 roboto p-0">
-                                2034
-                            </div>
-                            <div class="col-md-3 text-right f-14 roboto p-0">
-                                43,020
+                                {{(_data.lastUnpaidPremium) ? _data.lastUnpaidPremium : '-'}}
                             </div>
                         </div>
 
@@ -271,12 +271,12 @@
                                 Maturity benefit
                             </div>
                             <div class="col-md-3 text-right f-14 roboto p-0">
-                                2049
+                                {{(_data.lastUnpaidPremium) ? _data.lastUnpaidPremium : '-'}}
                             </div>
                             <div class="col-md-3 text-right f-14 roboto p-0">
-                                58,805
+                                {{(_data.lastUnpaidPremium) ? _data.lastUnpaidPremium : '-'}}
                             </div>
-                        </div>
+                        </div> -->
 
 
 
@@ -294,16 +294,16 @@
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Accidental benefit
                             </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0">
-                                5,00,000
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                {{(_data.ridersAccidentalBenifits) ? _data.ridersAccidentalBenifits : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Double accidental benefit
                             </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0">
-                                -
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                {{(_data.ridersDoubleAccidentalBenefit) ? _data.ridersDoubleAccidentalBenefit : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -311,7 +311,7 @@
                                 Term waiver
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                -
+                                {{(_data.ridersTermWaiver) ? _data.ridersTermWaiver : '-'}}
                             </div>
                         </div>
 
@@ -320,7 +320,7 @@
                                 Critical illness
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                -
+                                {{(_data.ridersCriticalIllness) ? _data.ridersCriticalIllness : '-'}}
                             </div>
                         </div>
 
@@ -329,7 +329,7 @@
                                 Premium waiver
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                3,00,000
+                                {{(_data.ridersPremiumWaiver) ? _data.ridersPremiumWaiver : '-'}}
                             </div>
                         </div>
 
@@ -338,7 +338,7 @@
                                 Female critical illness
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                3,00,000
+                                {{(_data.ridersFemaleCriticalIllness) ? _data.ridersFemaleCriticalIllness : '-'}}
                             </div>
                         </div>
 
