@@ -533,12 +533,13 @@
                 </div>
                 <div class="col-md-5 form-group">
                     <mat-form-field>
-                            <mat-select appBankAccount matInput formControlName="bankAccount" [data]='ownerData'>
-                            <mat-option *ngFor="let option of accountList ;index as i" [value]="option.id" >
-                                {{option.name}}</mat-option>
-                        </mat-select>
-                        <mat-error>This field is required
-                        </mat-error>
+                      <!--                      [data]='ownerData'-->
+                      <mat-select appBankAccount formControlName="bankAccount" matInput>
+                        <mat-option *ngFor="let option of accountList ;index as i" [value]="option.id">
+                          {{option.name}}</mat-option>
+                      </mat-select>
+                      <mat-error>This field is required
+                      </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-md-1 p-0 pt-8 d-flex">
@@ -549,23 +550,23 @@
             </div>
             <div class="row pt-32" formArrayName="addBankAccount">
                 <div class="row pt-36"
-                    *ngFor="let obj of healthInsuranceForm.controls['addBankAccount'].controls; let pointIndex=index"
-                    [formGroupName]="pointIndex">
-                    <div class="row pt-32">
-                        <div class="col-md-5 form-group  ">
-                            <mat-form-field floatLabel="never" appearance="standard">
-                                <input  matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
-                                formControlName="newBankAccount" #bankAccount appInputValueValidation autocomplete="off"
-                                class="form-control br-0">
-                            </mat-form-field>
-                        </div>
-                    </div> 
-                   
+                     *ngFor="let obj of healthInsuranceForm.controls['addBankAccount'].controls; let pointIndex=index"
+                     [formGroupName]="pointIndex">
+                  <div class="row pt-32">
+                    <div class="col-md-5 form-group  ">
+                      <mat-form-field floatLabel="never" appearance="standard">
+                        <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
+                               formControlName="newBankAccount" #bankAccount appInputValueValidation autocomplete="off"
+                               class="form-control br-0">
+                      </mat-form-field>
+                    </div>
+                  </div>
+
                 </div>
-    
+
             </div>
 
-            
+
         </div>
     </div>
 </div>
