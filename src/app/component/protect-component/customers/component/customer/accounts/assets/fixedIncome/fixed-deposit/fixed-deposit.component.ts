@@ -506,6 +506,7 @@ export class FixedDepositComponent implements OnInit {
       // }
       // }
     } else {
+      
       const obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
@@ -532,6 +533,13 @@ export class FixedDepositComponent implements OnInit {
         id: this.fixedDeposit.controls.id.value
         // isEdit: this.fixedDeposit.controls.id.value?true:false
       };
+
+      obj.nomineeList.forEach((element, index) => {
+        if(element.name == ''){
+          this.removeNewNominee(index);
+        }
+      });
+      obj.nomineeList= this.fixedDeposit.value.getNomineeName;
       console.log("fd log", obj);
       // return;
       this.barButtonOptions.active = true;
