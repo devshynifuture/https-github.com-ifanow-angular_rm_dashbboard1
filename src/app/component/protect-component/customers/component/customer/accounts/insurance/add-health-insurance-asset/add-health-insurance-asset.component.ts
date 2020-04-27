@@ -37,6 +37,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
   policyList: any;
   addOns: any;
   dataForEdit: any;
+  bankList:any;
   bankAccountDetails: any;
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
@@ -55,6 +56,9 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
   }
   get data() {
     return this.inputData;
+  }
+  bankAccountList(value) {
+    this.bankList = value;
   }
   getFormDataNominee(data) {
     console.log(data)
@@ -323,9 +327,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
   }
   ngOnInit() {
   }
-  bankAccountList(value) {
-    this.bankAccountList = value;
-  }
+
   getFamilyData(value, data) {
 
     data.forEach(element => {

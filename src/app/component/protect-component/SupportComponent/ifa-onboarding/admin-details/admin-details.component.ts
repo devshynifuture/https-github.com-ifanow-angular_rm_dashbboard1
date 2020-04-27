@@ -249,7 +249,6 @@ export class AdminDetailsComponent implements OnInit {
     };
     let obj1 = [];
     obj1.push(obj);
-
     this.supportService.editActivity(obj1).subscribe(
       (data) => {
         console.log("getOverviewIFAOnbording", data);

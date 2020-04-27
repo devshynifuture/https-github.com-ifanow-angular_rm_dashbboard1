@@ -102,7 +102,9 @@
           <div class="col-md-11 p-0">
             <div class="form-group">
               <mat-form-field appearance="standard" floatLabel="never">
-                <input (keyup)="getSchemeList($event.target.value)" [matAutocomplete]="auto" aria-label="Number"
+                <!--                (keyup)="getSchemeList($event.target.value)"-->
+                <input (changedValue)="getSchemeList($event)" [matAutocomplete]="auto"
+                       appCustomAutoComplete aria-label="Number"
                        class="form-control" formControlName="schemePurchase" matInput
                        placeholder="Start typing to see scheme names" type="text">
                 <mat-autocomplete #auto="matAutocomplete">
