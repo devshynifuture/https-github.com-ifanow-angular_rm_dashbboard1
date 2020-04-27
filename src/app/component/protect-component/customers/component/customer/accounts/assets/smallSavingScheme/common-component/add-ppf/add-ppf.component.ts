@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-add-ppf',
@@ -95,6 +96,7 @@ export class AddPpfComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getdataForm(this.data);
+    this.calculateDate();
   }
  // ===================owner-nominee directive=====================//
  display(value) {
@@ -243,10 +245,57 @@ addNewNominee(data) {
     console.log(data)
     this.nomineesList = data.controls
   }
-  setCommencementDate(date) {
-    console.log('commencentDAte', date)
-    this.commencementDate = date
+
+  get getExtendMaturity() {
+    return this.ppfSchemeForm.get('extendedGroup') as FormArray;
   }
+
+  addExtendedMaturity(){
+    this.getExtendMaturity.push(this.fb.group({
+      extenMaturity: ['',[Validators.required]]
+    }));
+  }
+  
+  askExtended:boolean= false;
+  invalidExtended:boolean= false;
+  setCommencementDate(extended) {
+    let maturityDate:any = this.ppfSchemeForm.get('maturityDate').value;
+    let arrOfExtend:any = this.ppfSchemeForm.get('extendedGroup').value
+    let startDate =  new Date(this.ppfSchemeForm.value.commencementDate);
+    maturityDate =startDate.setFullYear(startDate.getFullYear() + 16);
+    if(extended == "yes"){
+      arrOfExtend.forEach((element, index) => {
+        maturityDate = new Date(maturityDate).setFullYear(new Date(maturityDate).getFullYear() + 5);
+      });
+    }else{
+      while (this.getExtendMaturity.length !== 0) {
+        this.getExtendMaturity.removeAt(0)
+      }
+      this.addExtendedMaturity();
+      this.askExtended =false;
+    }
+   
+    console.log('commencentDAte',new Date(maturityDate))
+    if(new Date(this.maxDate).getTime() > maturityDate){
+      this.askExtended =true;
+      if(extended == "yes"){
+        this.addExtendedMaturity();
+      }
+    }
+    
+    this.ppfSchemeForm.get('maturityDate').patchValue(new Date(maturityDate));
+  }
+
+  getMaturityDate($event){
+    if($event.value == "1"){
+      this.setCommencementDate('yes')
+      this.invalidExtended = false;
+    }
+    else{
+      this.invalidExtended = true;
+    }
+  }
+
   getdataForm(data) {
     this.flag = data;
     (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
@@ -262,8 +311,10 @@ addNewNominee(data) {
         id: 0,
         isClient:0
       })]),
+      maturityDate:['', [Validators.required]],
+      extenMaturity:['', [Validators.required]],
       // ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
-      accountBalance: [data.accountBalance, [Validators.required, Validators.min(500), Validators.max(150000)]],
+      accountBalance: [data.accountBalance, [Validators.required, Validators.min(500)]],//Validators.max(150000)
       balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],
       commencementDate: [new Date(data.commencementDate), [Validators.required]],
       futureContribution: [data.futureApproxcontribution, [Validators.required]],
@@ -271,6 +322,9 @@ addNewNominee(data) {
       description: [data.description],
       bankName: [data.bankName],
       linkedBankAccount: [data.linkedBankAccount],
+      extendedGroup: this.fb.array([this.fb.group({
+        extenMaturity: ['',[Validators.required]],
+      })]),
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
         sharePercentage: [0],
@@ -327,6 +381,11 @@ removedList:any=[];
       this.transactionData = data.controls
     }
   }
+
+  calculateDate(){
+    let startDate =  new Date(this.ppfSchemeForm.value.commencementDate);
+    let maturityDate =startDate.setFullYear(startDate.getFullYear() + 15);
+  }
   addPPF() {
     let transactionFlag, finalTransctList = []
     this.removedList.forEach(Fg => {
@@ -340,6 +399,13 @@ removedList:any=[];
         }
         finalTransctList.push(obj);
       }
+    });
+
+    this.ppfSchemeForm.get('extendedGroup').value.forEach((element, index) => {
+      if(element.extenMaturity == ""){
+        this.invalidExtended = true;
+      }
+      // maturityDate = new Date(maturityDate).setFullYear(new Date(maturityDate).getFullYear() + 5);
     });
   //   if (this.removedList.value) {
   //   // this.removedList.forEach(element => {
@@ -384,7 +450,7 @@ removedList:any=[];
         this.nominees.push(obj)
       });
     }
-    if (this.ppfSchemeForm.invalid) {
+    if (this.ppfSchemeForm.invalid && this.invalidExtended) {
       for (let element in this.ppfSchemeForm.controls) {
         console.log(element)
         if (this.ppfSchemeForm.get(element).invalid) {
@@ -401,6 +467,7 @@ removedList:any=[];
         "advisorId": this.advisorId,
         "clientId": this.clientId,
         'ownerList': this.ppfSchemeForm.value.getCoOwnerName,
+        'maturityDate': this.ppfSchemeForm.value.maturityDate,
         // "ownerName": (this.ownerName == undefined) ? this.ppfSchemeForm.get('ownerName').value : this.ownerName.userName,
         "familyMemberId": this.familyMemberId,
         "accountBalance":parseInt(this.ppfSchemeForm.get('accountBalance').value),

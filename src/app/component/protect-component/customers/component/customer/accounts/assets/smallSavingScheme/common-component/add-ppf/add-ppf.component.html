@@ -90,15 +90,40 @@
                     <mat-form-field class="ba-date">
                         <input matInput autocomplete="off" (click)="CommencementPicker.open()"
                             [matDatepicker]="CommencementPicker" [max]="maxDate"
-                            (dateChange)="setCommencementDate($event.target.value)" class="form-control br-0 b-0"
+                            (dateChange)="setCommencementDate(null)" class="form-control br-0 b-0"
                             formControlName="commencementDate" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="CommencementPicker"></mat-datepicker-toggle>
                         <mat-datepicker #CommencementPicker></mat-datepicker>
-                        <mat-error class="f-12">This field is required
+                        <mat-error class="f-12" >This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>
             </div>
+        </div>
+        <div formArrayName="extendedGroup" *ngIf="askExtended">
+            <div class="row pt-40"  *ngFor="let obj of ppfSchemeForm.controls['extendedGroup'].controls; let pointIndex=index"
+            [formGroupName]="pointIndex">
+                <div class="col-xl-5  col-lg-5 pr-0 text-right">
+                    <h5 class="m-0 pt-12">Have you extended your maturityDate (block {{pointIndex+1}})?</h5>
+                </div>
+                <div class="col-xl-6 col-lg-7 pr-0 fddate">
+                    <mat-radio-group aria-label="Select an option" (change)="getMaturityDate($event)" id="custom-radio"
+                        formControlName="extenMaturity">
+                        <mat-radio-button value="1" class="b-ua radioBtn text-custom"
+                            [ngClass]="{'b-a-custom': ppfSchemeForm.get('extenMaturity').value==1,'text-primary':ppfSchemeForm.get('extenMaturity').value==1,'borderRadio':ppfSchemeForm.get('extenMaturity').value==2}"
+                            >Yes
+                        </mat-radio-button>
+        
+                        <mat-radio-button class="b-ua radioBtn text-custom" value="2" 
+                            [ngClass]="{'b-a-custom': ppfSchemeForm.get('extenMaturity').value==2,'text-primary':ppfSchemeForm.get('extenMaturity').value==2,'borderRadio text-custom':ppfSchemeForm.get('extenMaturity').value==1}"
+                            >No
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+            <mat-error class="f-12 pt-4" *ngIf="invalidExtended">
+                Cannot add ppf with the following details above. To add, please check the details and rectify wherever necessary
+            </mat-error>
         </div>
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
@@ -118,9 +143,9 @@
                         <mat-error *ngIf="(ppfSchemeForm.get('accountBalance').errors?.min)" class="f-12">
                             Should be greater than or equal to 500
                         </mat-error>
-                        <mat-error *ngIf="(ppfSchemeForm.get('accountBalance').errors?.max)" class="f-12">
+                        <!-- <mat-error *ngIf="(ppfSchemeForm.get('accountBalance').errors?.max)" class="f-12">
                             Should be greater than or equal to 150000
-                        </mat-error>
+                        </mat-error> -->
                         <mat-hint align="end" class="f-12">{{accBal.value.length}}/10</mat-hint>
                     </mat-form-field>
                 </div>
@@ -308,7 +333,7 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <app-progress-button (btnClick)="addPPF()" [options]="barButtonOptions" >
+            <app-progress-button (btnClick)="addPPF()" [disabled]="invalidExtended" [options]="barButtonOptions" >
             </app-progress-button>
         </div>
     </div>
