@@ -32,6 +32,9 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
   nominees: any[];
   addMoreFlag=false;
   id: any;
+  accountList: any = [];
+  bankAccountDetails:any;
+  bankList: any;
 
   constructor(private fb: FormBuilder,private subInjectService:SubscriptionInject,private customerService:CustomerService,private eventService:EventService) { }
   validatorType = ValidatorType
@@ -266,7 +269,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
       tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],
       advisorName: [this.dataForEdit ? this.dataForEdit.advisorName :null],
       serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch :null],
-      bankAccount: [this.dataForEdit ? this.dataForEdit.linkedBankAccount : null],
+      bankAccount: [this.dataForEdit ? parseInt(this.dataForEdit.linkedBankAccount): null],
       nominees: this.nominees,
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
@@ -323,7 +326,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
         this.addNewFeature(element);
       });
     }
-
+    this.bankAccountDetails = { accountList: this.accountList, controleData: this.personalAccidentForm }
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.personalAccidentForm }
 
     // this.finalCashFlowData = [];
@@ -331,6 +334,9 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
     // this.DOB = data.dateOfBirth
     // this.ownerData = this.personalAccidentForm.controls;
     // this.familyMemberId = data.familyMemberId;
+  }
+  bankAccountList(value) {
+    this.bankList = value;
   }
   getFamilyData(value,data){
 

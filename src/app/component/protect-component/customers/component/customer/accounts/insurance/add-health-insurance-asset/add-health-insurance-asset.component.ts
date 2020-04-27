@@ -257,7 +257,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
       tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],
       advisorName: [this.dataForEdit ? this.dataForEdit.advisorName : null],
       serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch : null],
-      bankAccount: [this.dataForEdit ? this.dataForEdit.linkedBankAccount : null],
+      bankAccount: [this.dataForEdit ? parseInt(this.dataForEdit.linkedBankAccount): null],
       additionalCovers: [(this.dataForEdit) ? this.addOns.addOnId : null],
       coversAmount: [(this.dataForEdit) ? this.addOns.addOnSumInsured : null],
       nominees: this.nominees,

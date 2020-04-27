@@ -35,6 +35,9 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
   FamilyMember: any;
   ProposerData: any;
   id: any;
+  bankAccountDetails: { accountList: any; controleData: any; };
+  accountList: any;
+  bankList: any;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
@@ -239,7 +242,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
       tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],
       advisorName: [this.dataForEdit ? this.dataForEdit.advisorName :null],
       serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch :null],
-      bankAccount: [this.dataForEdit ? this.dataForEdit.linkedBankAccount : null],
+      bankAccount: [this.dataForEdit ? parseInt(this.dataForEdit.linkedBankAccount) : null],
       nominees: this.nominees,
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
@@ -296,6 +299,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
 
 
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.critialIllnessForm }
+    this.bankAccountDetails = { accountList: this.accountList, controleData: this.critialIllnessForm }
 
     // this.finalCashFlowData = [];
     // ==============owner-nominee Data ========================\\ 
@@ -304,6 +308,9 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
     // this.familyMemberId = data.familyMemberId;
   }
   ngOnInit() {
+  }
+  bankAccountList(value) {
+    this.bankList = value;
   }
   getFamilyData(value,data){
 

@@ -158,7 +158,8 @@
                                     <th mat-header-cell mat-sort-header="description" *matHeaderCellDef class="br">
                                         Plan type </th>
                                     <td mat-cell *matCellDef="let element" class="br">
-                                        <div class="bar"> {{(element.insuranceSubTypeId == 1) ? 'Term' : (element.insuranceSubTypeId == 2) ? 'Traditional' : (element.insuranceSubTypeId == 3) ? 'ULIP' : '-'}} </div>
+                                        <div *ngIf="!isLoading"> {{(element.insuranceSubTypeId == 1) ? 'Term' : (element.insuranceSubTypeId == 2) ? 'Traditional' : (element.insuranceSubTypeId == 3) ? 'ULIP' : '-'}} </div>
+                                        <div class="bar" *ngIf="isLoading">{{''}}</div>
                                     </td>
                                     <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
                                 </ng-container>
