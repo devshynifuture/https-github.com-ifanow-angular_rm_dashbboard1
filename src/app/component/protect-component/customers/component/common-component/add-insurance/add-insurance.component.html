@@ -39,14 +39,13 @@
             </div>
         </div> -->
         <div formArrayName="getCoOwnerName">
-            <div class="row"
-                *ngFor="let obj of lifeInsuranceForm.controls['getCoOwnerName'].controls; let pointIndex=index"
+            <div class="row"  *ngFor="let obj of getCoOwner.controls; let pointIndex=index"
                 [formGroupName]="pointIndex">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8 ">Life assured</h5>
                 </div>
                 <div class="pr-0"
-                    [ngClass]="lifeInsuranceForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
+                    [ngClass]="getCoOwner.controls.length > 1?'col-md-3' : 'col-md-5'">
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
@@ -65,7 +64,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="col-md-2" *ngIf="lifeInsuranceForm.value.getCoOwnerName.length > 1">
+                <div class="col-md-2" *ngIf="getCoOwner.controls.length > 1">
                     <div class="form-group mb-0 iconPetage">
                         <mat-form-field>
                             <input matInput class="form-control br-0 percentage" type="number" formControlName="share"
@@ -396,12 +395,12 @@
                             </div>
                         </div> -->
                         <div formArrayName="getNomineeName">
-                            <div class="row pt-36" *ngFor="let obj of keyDetailsForm.controls['getNomineeName'].controls; let pointIndex=index"
+                            <div class="row pt-36" *ngFor="let obj of getNominee.controls; let pointIndex=index"
                                 [formGroupName]="pointIndex">
                                 <div class="col-md-5 pr-0 text-right">
                                     <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
                                 </div>
-                                <div [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
+                                <div [ngClass]="getNominee.controls.length > 1?'col-md-3' : 'col-md-5'">
                                     <div class="form-group mb-0">
                                         <mat-form-field>
                                             <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
@@ -419,7 +418,7 @@
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <div class="col-md-2" *ngIf="getNominee.length > 1">
+                                <div class="col-md-2" *ngIf="getNominee.controls.length > 1">
                                     <div class="form-group mb-0 iconPetage">
                                         <mat-form-field>
                                             <input matInput class="form-control br-0 percentage" type="number"

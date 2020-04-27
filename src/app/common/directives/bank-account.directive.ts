@@ -11,7 +11,7 @@ export class BankAccountDirective {
   clientId: any;
 
   constructor(private custumService: CustomerService) { }
-  @Output() valueChange1 = new EventEmitter();
+  @Output() inputChange = new EventEmitter();
 
   get data() {
     return this.bankAccountList;
@@ -36,6 +36,6 @@ export class BankAccountDirective {
   }
   getBankAccountRes(data) {
     console.log('bankAccountDetails--->', data);
-    this.valueChange1.emit(data);
+    this.inputChange.emit(data);
   }
 }

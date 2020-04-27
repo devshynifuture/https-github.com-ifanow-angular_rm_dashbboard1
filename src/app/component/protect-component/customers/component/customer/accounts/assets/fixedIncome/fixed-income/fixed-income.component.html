@@ -342,7 +342,7 @@
                         <div class="bar"> {{isLoading ? '' : element.rdNumber || '-'}} </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br  text-right">
-                        <div *ngIf="reTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMaturityValueS" appFormatNumber>{{sumOfMaturityValue}}</span></div>
+                        <div *ngIf="reTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMaturityValue" appFormatNumber>{{sumOfMaturityValue}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="desc">
