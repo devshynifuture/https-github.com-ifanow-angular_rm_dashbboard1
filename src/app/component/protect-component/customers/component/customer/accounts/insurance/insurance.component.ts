@@ -72,7 +72,7 @@ export class InsuranceComponent implements OnInit {
   showPolicyHolder = 'Name of policy holder';
   generalInsuranceDataFilter: any;
   lifeInsuranceFilter: any[];
-  showAdd=true;
+  showAdd = true;
 
   constructor(private eventService: EventService, public dialog: MatDialog,
     private subInjectService: SubscriptionInject, private cusService: CustomerService, private utils: UtilService, private excelGen: ExcelGenService) {
@@ -181,6 +181,8 @@ export class InsuranceComponent implements OnInit {
         this.dataSourceGeneralInsurance.data = dataFiltered;
         this.dataSourceGeneralInsurance = new MatTableDataSource(this.dataSourceGeneralInsurance.data);
         this.dataSourceGeneralInsurance.sort = this.sort;
+        this.totalSumAssured = 0;
+        this.totalPremiunAmount = 0;
         this.dataSourceGeneralInsurance.data.forEach(element => {
           if (this.dislayList) {
             this.dislayList.policyTypes.forEach(ele => {
@@ -196,12 +198,34 @@ export class InsuranceComponent implements OnInit {
             });
             (element.insuredMembers.length == 0) ? this.showPolicyHolder = 'Name of policy holder' : this.showPolicyHolder = 'Name of insured members';
           }
+          // this.sumAssured = 0;
+          // element.insuredMembers.forEach(ele => {
+          //   this.sumAssured += ele.sumInsured
+          // });
+          // element.sumAssured = this.sumAssured
           this.sumAssured = 0;
-          element.insuredMembers.forEach(ele => {
-            this.sumAssured += ele.sumInsured
-          });
-          element.sumAssured = this.sumAssured
+          if (element.insuredMembers.length > 0) {
+            element.insuredMembers.forEach(ele => {
+              this.sumAssured += ele.sumInsured
+            });
+            element.sumAssured = this.sumAssured
+          } else if (element.policyFeatures.length > 0) {
+            element.policyFeatures.forEach(ele => {
+              this.sumAssured += ele.featureSumInsured
+            });
+            element.sumAssured = this.sumAssured
+          } else {
+            element.sumAssured = element.sumInsuredIdv
+          }
+  
         });
+        this.dataSourceGeneralInsurance.data.forEach(element => {
+          this.totalSumAssured += element.sumAssured,
+            this.totalPremiunAmount += element.premiumAmount
+  
+        });
+        this.isLoading = false;
+          
       } else {
         this.eventService.openSnackBar("No data found", "Dismiss")
       }
@@ -237,6 +261,11 @@ export class InsuranceComponent implements OnInit {
     this.dataSourceGeneralInsurance = new MatTableDataSource([{}, {}, {}]);
     this.insuranceTypeId = 1;
     this.insuranceSubTypeId = 0;
+    if (this.insuranceSubTypeId == 0 && this.insuranceTypeId == 2) {
+      this.showAdd = false;
+    } else {
+      this.showAdd = true;
+    }
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -307,10 +336,20 @@ export class InsuranceComponent implements OnInit {
           (element.insuredMembers.length == 0) ? this.showPolicyHolder = 'Name of policy holder' : this.showPolicyHolder = 'Name of insured members';
         }
         this.sumAssured = 0;
-        element.insuredMembers.forEach(ele => {
-          this.sumAssured += ele.sumInsured
-        });
-        element.sumAssured = this.sumAssured
+        if (element.insuredMembers.length > 0) {
+          element.insuredMembers.forEach(ele => {
+            this.sumAssured += ele.sumInsured
+          });
+          element.sumAssured = this.sumAssured
+        } else if (element.policyFeatures.length > 0) {
+          element.policyFeatures.forEach(ele => {
+            this.sumAssured += ele.featureSumInsured
+          });
+          element.sumAssured = this.sumAssured
+        } else {
+          element.sumAssured = element.sumInsuredIdv
+        }
+
       });
       this.dataSourceGeneralInsurance.data.forEach(element => {
         this.totalSumAssured += element.sumAssured,
@@ -364,9 +403,9 @@ export class InsuranceComponent implements OnInit {
     this.lifeInsuranceFlag = false;
     this.insuranceTypeId = typeId;
     this.insuranceSubTypeId = typeSubId;
-    if(this.insuranceSubTypeId == 0 && this.insuranceTypeId == 2){
-      this.showAdd=false;
-    }else{
+    if (this.insuranceSubTypeId == 0 && this.insuranceTypeId == 2) {
+      this.showAdd = false;
+    } else {
       this.showAdd = true;
     }
     this.getInsuranceSubTypeData(this.advisorId, this.clientId, typeId, typeSubId);
@@ -451,23 +490,23 @@ export class InsuranceComponent implements OnInit {
   open(data) {
     const sendData = {
       flag: 'detailedView',
-      data:{},
+      data: {},
       insuranceTypeId: this.insuranceTypeId,
       insuranceSubTypeId: this.insuranceSubTypeId,
       state: 'open35',
-      componentName:null
+      componentName: null
     }
-    sendData.data={
-      data:data,
-      displayList:this.dislayList,
-      allInsurance:this.allInsurance,
+    sendData.data = {
+      data: data,
+      displayList: this.dislayList,
+      allInsurance: this.allInsurance,
       insuranceTypeId: this.insuranceTypeId,
       insuranceSubTypeId: this.insuranceSubTypeId,
     }
-    if(this.insuranceTypeId == 1){
+    if (this.insuranceTypeId == 1) {
       sendData.componentName = DetailedViewLifeInsuranceComponent
-    }else{
-      sendData.componentName =DetailedViewGeneralInsuranceComponent
+    } else {
+      sendData.componentName = DetailedViewGeneralInsuranceComponent
     }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(sendData).subscribe(
       sideBarData => {
@@ -546,7 +585,6 @@ export class InsuranceComponent implements OnInit {
               this.getCount();
               this.getInsuranceSubTypeData(this.advisorId, this.clientId, this.insuranceTypeId, this.insuranceSubTypeId)
             }
-
           }
 
           rightSideDataSub.unsubscribe();

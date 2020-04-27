@@ -211,14 +211,14 @@
         </div>
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Original loan amount</h5>
+                <h5 class="m-0 pt-8">Premium</h5>
             </div>
             <div class="col-md-3 pr-0">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input type="text" matInput #loanAmountRef class="form-control rupess br-0"
+                        <input type="text" matInput #premium class="form-control rupess br-0"
                             appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                            formControlName="loanAmount">
+                            formControlName="premium">
                         <mat-error class="f-12 pt-4">
                             This field is required
                         </mat-error>
