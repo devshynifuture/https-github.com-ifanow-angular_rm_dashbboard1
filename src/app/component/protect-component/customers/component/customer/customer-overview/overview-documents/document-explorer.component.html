@@ -151,7 +151,7 @@
                                                         Preview
                                                     </button>
                                                     <button *ngIf="element.folderName == undefined && valueTab != 4" (click)="getSharebleLink(element,'share')" class="f-14" mat-menu-item>
-                                                        <img class="mr-20" src="assets/images/svg/share.svg">
+                                                        <img class="mr-20" src="assets/images/svg/share-24px.svg">
                                                         Share
                                                     </button>
                                                     <button *ngIf="element.folderName == undefined && valueTab != 4" class="f-14" mat-menu-item (click)="getSharebleLink(element,'shareLink')">
@@ -199,7 +199,7 @@
                                                     </button>
                                                     <button (click)="deleteModal('file/folder',element)" *ngIf="valueTab == 4" class="f-14" mat-menu-item><img
                                                             class="mr-20"
-                                                            src="assets/images/svg/delete-icon.svg">Recover
+                                                            src="assets/images/svg/replay-24px.svg">Recover
                                                     </button>
                                                 </mat-menu>
                                             </div>
@@ -217,7 +217,7 @@
                                 <p class="selectMoreDetails">
                                     Select a file to see more details
                                 </p>
-                                <ngx-doc-viewer [url]="urlData" viewer="google" style="width:270px;height:350px;">
+                                <ngx-doc-viewer [url]="urlData" viewer="google" style="width:100%;height:350px;">
                                 </ngx-doc-viewer>
                                 <div class="row">
                                     <div class="col-md-6">

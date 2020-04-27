@@ -247,7 +247,6 @@ export class IfasDetailsComponent implements OnInit {
 
   }
 
-
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }

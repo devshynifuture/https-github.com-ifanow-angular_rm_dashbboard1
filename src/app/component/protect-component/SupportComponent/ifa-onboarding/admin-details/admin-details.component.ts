@@ -100,10 +100,14 @@ export class AdminDetailsComponent implements OnInit {
     });
   }
   createDataSource() {
-    this.camsDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 1));
-    this.karvyDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 2));
-    this.frankDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 3));
-    this.fundsDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 4));
+    if (this.rtaDetails) {
+      this.camsDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 1));
+      this.karvyDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 2));
+      this.frankDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 3));
+      this.fundsDS = new MatTableDataSource(this.rtaDetails.filter((data) => data.rtTypeMasterid == 4));
+    } else {
+      this.eventService.openSnackBar('No Rta Details Found', 'DISMISS');
+    }
   }
   activityCommentFun(value, flag) {
     value.isEdit = flag
@@ -174,7 +178,7 @@ export class AdminDetailsComponent implements OnInit {
           if (data) {
             this.stageComment = data;
             this.stageComment.forEach(element => {
-              if(this.rmId == element.rmId){
+              if (this.rmId == element.rmId) {
                 element.isEditStageRm = true
               }
               element.isEditStage = true
@@ -232,7 +236,6 @@ export class AdminDetailsComponent implements OnInit {
     }
     let obj1 = []
     obj1.push(obj)
-    if (event.checked == true) {
       this.supportService.editActivity(obj1).subscribe(
         data => {
           console.log('getOverviewIFAOnbording', data);
@@ -242,7 +245,6 @@ export class AdminDetailsComponent implements OnInit {
         }
         , err => this.eventService.openSnackBar(err, "Dismiss")
       )
-    }
   }
   getIFAActivity() {
     this.isLoading = true
@@ -263,7 +265,7 @@ export class AdminDetailsComponent implements OnInit {
           });
           this.activityCommentList = data.activityCommentList
           this.activityCommentList.forEach(element => {
-            if(this.rmId == element.rmId){
+            if (this.rmId == element.rmId) {
               element.isEditRm = true
             }
             element.isEdit = true

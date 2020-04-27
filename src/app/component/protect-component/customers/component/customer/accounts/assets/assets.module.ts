@@ -59,7 +59,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     PoSavingsComponent,
     PoRdSchemeComponent,
     PoTdSchemeComponent,
-    PoMisSchemeComponent
+    PoMisSchemeComponent,
   ],
   imports: [
     CommonModule,

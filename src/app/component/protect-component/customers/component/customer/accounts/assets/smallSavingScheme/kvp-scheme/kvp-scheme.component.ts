@@ -96,7 +96,7 @@ export class KvpSchemeComponent implements OnInit {
       }
     );
   }
-
+  sumOfmaturityValue:any;
   getKvpSchemedataResponse(data) {
     this.isLoading = false;
     if (data != undefined) {
@@ -107,6 +107,7 @@ export class KvpSchemeComponent implements OnInit {
         UtilService.checkStatusId(this.datasource.filteredData);
         this.sumOfCurrentValue = data.sumOfCurrentValue;
         this.sumOfAmountInvested = data.sumOfAmountInvested;
+        this.sumOfmaturityValue = data.sumOfmaturityValue;
         this.kvpData = data;
       }
     }  else {

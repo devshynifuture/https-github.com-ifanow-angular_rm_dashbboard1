@@ -79,10 +79,16 @@ export const appConfig = {
   /////////////////////////////Accounts///////////////////////////////////
   ADD_FIXEDDEPOSIT: 'account/asset/fixed-income/fixed-deposit/add',
   ADD_LIFE_INSURANCE: 'account/insurance/life-insurance/add',
+  DELETE_LIFE_INSURANCE:'account/insurance/life-insurance/delete',
   GET_LIFE_INSURANCE: 'account/insurance/list/get',
   GET_GLOBAL_INSURANCE: 'account/insurance/global-list/get',
   EDIT_LIFE_INSURANCE: 'account/insurance/life-insurance/edit',
   GET_INSURANCE_GLOBAL_API: 'account/insurance/global/get',
+  ADD_GENERAL_INSURANCE:'account/insurance/general-insurance/add',
+  EDIT_GENERAL_INSURANCE:'account/insurance/general-insurance/edit',
+  GET_GENERAL_INSURANCE:'account/insurance/general-insurance/list/get',
+  DELETE_GENERAL_INSURANCE:'account/insurance/general-insurance/delete',
+  INSURANCE_COUNT_GET:'account/insurance/count/list',
   ADD_LIABILITY: 'account/liability/loan/add',
   GET_LIABILITY: 'account/liability/loan/list/get',
   EDIT_LIABILITY: 'account/liability/loan/edit',
@@ -204,6 +210,7 @@ export const appConfig = {
   FOLIO_MASTER_DETAILS: 'mutual-fund/folioMasterDetails/list/get',
   SIP_DETAILS: 'mutual-fund/sipDetails/list/get',
   UNREALIZED_TRANSACTION_GET: 'mutual-fund/unrealized/transaction/list/get',
+  BANK_NAME_GET:'account/asset/client/family-member/bank-detail/list/get',
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
@@ -544,7 +551,7 @@ export const appConfig = {
   POST_FILE_ORDER_BULK_DATA: 'fileorder/bulk/order',
   PUT_FILE_ORDER_RETRY: 'fileorder/list/retry',
   GET_TICKET: 'rmdashboard/tickets/get',
-  GET_RM_DAY_WISEDATA:'rmdashboard/myifas/dashboard/details/get/filter',
+  GET_REPORT_FILTER_DATA: 'rmdashboard/myifas/dashboard/details/get/filter',
 
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',
