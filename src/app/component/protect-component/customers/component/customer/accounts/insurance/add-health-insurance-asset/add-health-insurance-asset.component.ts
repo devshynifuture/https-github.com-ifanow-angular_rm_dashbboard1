@@ -4,8 +4,9 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { ValidatorType } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../customer.service';
-import { MatInput } from '@angular/material';
+import { MatInput, MatDialog } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
+import { ClientBankComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-bank/client-bank.component';
 
 @Component({
   selector: 'app-add-health-insurance-asset',
@@ -40,7 +41,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
   bankList:any;
   bankAccountDetails: any;
   id: any;
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
+  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService,private dialog: MatDialog) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
@@ -113,9 +114,9 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
   get insuredMembersForm() {
     return this.healthInsuranceForm.get('InsuredMemberForm') as FormArray;
   }
-  get addBankAccount() {
-    return this.healthInsuranceForm.get('addBankAccount') as FormArray;
-  }
+  // get addBankAccount() {
+  //   return this.healthInsuranceForm.get('addBankAccount') as FormArray;
+  // }
 
 
 
@@ -273,16 +274,16 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         familyMemberId: [''],
         relationshipId: ['']
       })]),
-      addBankAccount: this.fb.array([this.fb.group({
-        newBankAccount: [''],
-      })])
+      // addBankAccount: this.fb.array([this.fb.group({
+      //   newBankAccount: [''],
+      // })])
     })
     // ==============owner-nominee Data ========================\\
     /***owner***/
     if (this.healthInsuranceForm.value.getCoOwnerName.length == 1) {
       this.getCoOwner.controls['0'].get('share').setValue('100');
     }
-    this.addBankAccount.removeAt(0);
+    // this.addBankAccount.removeAt(0);
 
     // if (this.dataForEdit && this.dataForEdit.ownerList) {
     //   this.getCoOwner.removeAt(0);
@@ -364,15 +365,15 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
 
     }
   }
-  addNewAccount(data) {
-    this.addBankAccount.push(this.fb.group({
-      newBankAccount: [data ? data.name : ''],
-    }));
-  }
+  // addNewAccount(data) {
+  //   this.addBankAccount.push(this.fb.group({
+  //     newBankAccount: [data ? data.name : ''],
+  //   }));
+  // }
 
-  RemoveNewAccount(item) {
-      this.addBankAccount.removeAt(item);
-  }
+  // RemoveNewAccount(item) {
+  //     this.addBankAccount.removeAt(item);
+  // }
   /***owner***/
 
   openOptionField() {
@@ -494,7 +495,6 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
       }
     }
   }
-
   close(data) {
     this.addMoreFlag = false;
     this.subInjectService.changeNewRightSliderState({ state: 'close', data });

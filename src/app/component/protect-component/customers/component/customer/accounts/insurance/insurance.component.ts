@@ -141,13 +141,26 @@ export class InsuranceComponent implements OnInit {
     if (insuranceId == 1) {
       this.dataSource = new MatTableDataSource([{}, {}, {}]);
       this.cusService.getLifeInsuranceData(obj).subscribe(
-        data => this.getInsuranceDataResponse(data)
+        data =>{
+          this.getInsuranceDataResponse(data)
+        },
+        error => {
+          this.eventService.showErrorMessage(error); 
+          this.dataSource.data = [];
+        } 
       );
     } else {
       delete obj.insuranceTypeId;
       this.dataSourceGeneralInsurance = new MatTableDataSource([{}, {}, {}]);
       this.cusService.getGeneralInsuranceData(obj).subscribe(
-        data => this.getGeneralInsuranceDataRes(data)
+        data =>{
+          this.getGeneralInsuranceDataRes(data);
+        },
+        error => {
+          this.eventService.showErrorMessage(error); ;
+          this.dataSourceGeneralInsurance.data = [];
+
+        }
       );
     }
 
