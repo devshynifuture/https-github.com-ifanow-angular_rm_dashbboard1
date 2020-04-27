@@ -72,7 +72,7 @@ export class InsuranceComponent implements OnInit {
   showPolicyHolder = 'Name of policy holder';
   generalInsuranceDataFilter: any;
   lifeInsuranceFilter: any[];
-  showAdd=true;
+  showAdd = true;
 
   constructor(private eventService: EventService, public dialog: MatDialog,
     private subInjectService: SubscriptionInject, private cusService: CustomerService, private utils: UtilService, private excelGen: ExcelGenService) {
@@ -364,9 +364,9 @@ export class InsuranceComponent implements OnInit {
     this.lifeInsuranceFlag = false;
     this.insuranceTypeId = typeId;
     this.insuranceSubTypeId = typeSubId;
-    if(this.insuranceSubTypeId == 0 && this.insuranceTypeId == 2){
-      this.showAdd=false;
-    }else{
+    if (this.insuranceSubTypeId == 0 && this.insuranceTypeId == 2) {
+      this.showAdd = false;
+    } else {
       this.showAdd = true;
     }
     this.getInsuranceSubTypeData(this.advisorId, this.clientId, typeId, typeSubId);
@@ -451,23 +451,23 @@ export class InsuranceComponent implements OnInit {
   open(data) {
     const sendData = {
       flag: 'detailedView',
-      data:{},
+      data: {},
       insuranceTypeId: this.insuranceTypeId,
       insuranceSubTypeId: this.insuranceSubTypeId,
-      state: 'open35',
-      componentName:null
+      state: 'open',
+      componentName: null
     }
-    sendData.data={
-      data:data,
-      displayList:this.dislayList,
-      allInsurance:this.allInsurance,
+    sendData.data = {
+      data: data,
+      displayList: this.dislayList,
+      allInsurance: this.allInsurance,
       insuranceTypeId: this.insuranceTypeId,
       insuranceSubTypeId: this.insuranceSubTypeId,
     }
-    if(this.insuranceTypeId == 1){
+    if (this.insuranceTypeId == 1) {
       sendData.componentName = DetailedViewLifeInsuranceComponent
-    }else{
-      sendData.componentName =DetailedViewGeneralInsuranceComponent
+    } else {
+      sendData.componentName = DetailedViewGeneralInsuranceComponent
     }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(sendData).subscribe(
       sideBarData => {
