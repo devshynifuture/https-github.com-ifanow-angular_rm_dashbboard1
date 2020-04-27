@@ -30,7 +30,6 @@ export class RoutingState {
 
   prepareRoute(outlet: RouterOutlet) {
     const outPutData = outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
-    // console.log('RoutingState prepareRoute outPutData : ', outPutData);
     return outPutData;
   }
 
@@ -47,11 +46,9 @@ export class RoutingState {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(({urlAfterRedirects}: NavigationEnd) => {
         this.history = [...this.history, urlAfterRedirects];
-        console.log('123456789 loadRouting history : ', this.history);
         gtag('config', 'UA-154885656-1', {page_path: urlAfterRedirects});
         UserTimingService.eventEmitter();
         // if (this.getMainRouter())
-        //   console.log('goToSpecificRoute urlString this.getMainRouter().detach() : ', this.getMainRouter());
 
       });
   }
@@ -65,11 +62,9 @@ export class RoutingState {
   }
 
   public goToSpecificRoute(urlString) {
-    console.log('goToSpecificRoute urlString this.getMainRouter().detach() : ', this.getMainRouter());
     this.ngZone.run(() => {
       this.router.navigate([urlString]).then((status: boolean) => {
         if (status) {
-          console.log('goToSpecificRoute urlString  success : ', urlString);
         } else {
           console.error('goToSpecificRoute urlString failure : ', urlString);
         }

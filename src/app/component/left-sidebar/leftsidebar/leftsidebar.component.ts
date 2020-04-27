@@ -57,7 +57,6 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   }
 
   serachClientData(data) {
-    console.log(data);
     this.getClientSubscriptionList();
   }
 
@@ -71,7 +70,6 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   }
 
   getClientListResponse(data) {
-    console.log(data);
     this.clientList = data;
     this.myControl.setValue(data);
     this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -89,7 +87,6 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
 
   getActiveLink(value) {
     let link = this.router.url.split('/')[2];
-    // console.log("link check", link);
 
     switch (link) {
       case 'subscription':
@@ -104,7 +101,6 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   }
 
   selectClient(singleClientData) {
-    console.log(singleClientData);
     this.ngZone.run(() => {
       this.router.navigate(['customer', 'detail', 'account', 'assets'], {state: {...singleClientData}});
     });
@@ -174,21 +170,18 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     document.getElementById('left').style.transition = '0.2s';
     this.showTabs = true;
     this.arrow = false;
-    //   console.log("i was call left bar 3");
   }
 
   showsmallNavWrapper() {
     document.getElementById('d').classList.remove('width-230');
     document.getElementById('d').classList.add('width-70');
     document.getElementById('left').style.transition = '0.2s';
-    console.log('i was call left bar');
 
     this.showTabs = false;
     this.arrow = true;
   }
 
   onResize() {
-    console.log('i was call left bar 2');
 
     if (window.innerHeight >= 670 || window.innerHeight == 670) {
       this.showSettings = false;

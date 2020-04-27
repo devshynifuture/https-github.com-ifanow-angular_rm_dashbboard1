@@ -67,7 +67,6 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
     // );
     this.upperSliderDataObsSubscription = this.eventService.upperSliderDataObs.subscribe(
       data => {
-        console.log(this.componentName + ' DialogContainerComponent upper slider Subscription data', data);
 
         const tempData: any = data;
         if (tempData.state == 'close') {
@@ -88,7 +87,6 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
         this.openDynamicComponent(data);
       }
       this.fragmentData = data;
-      console.log(this.componentName + 'fragmentData dialog container: ', this.fragmentData);
       this.getFileResponseDataAum(this.fragmentData.flag);
       this.inputData = this.fragmentData.data;
       this.handleChangeOfState(this.fragmentData.state);
@@ -109,7 +107,6 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
   }
 
   getRightSliderData(value) {
-    console.log(this.componentName + 'getRightSliderData dialog container comp currentState', value);
     this.currentState = value;
   }
 
@@ -123,7 +120,6 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
   }
 
   openDynamicComponent(inputData) {
-    console.log(this.componentName + 'dialog container inputData : ', inputData);
 
     switch (inputData.direction) {
       case 'top':
@@ -142,20 +138,16 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
   }
 
   addDynamicComponentService(viewContainerRef, inputData) {
-    console.log(this.componentName + 'dialog container addDynamicComponentService viewContainerRef : ', viewContainerRef);
 
     if (viewContainerRef) {
-      console.log(this.componentName + 'dialog container addDynamicComponentService inputData : ', inputData);
       this.dynamicComponentService.addDynamicComponent(viewContainerRef, inputData.componentName, inputData.data, inputData.popupHeaderText);
       // this.handleChangeOfState(this.tempState);
     }
   }
 
   addUpperDynamicComponentService(viewContainerRef, inputData) {
-    console.log(this.componentName + 'dialog container addUpperDynamicComponentService viewContainerRef : ', viewContainerRef);
 
     if (viewContainerRef) {
-      console.log(this.componentName + 'dialog container addUpperDynamicComponentService inputData : ', inputData);
 
       this.dynamicComponentService.addDynamicComponent(viewContainerRef, inputData.componentName, inputData.data);
       // this._upperSliderCase = this.tempState;
@@ -163,7 +155,6 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
   }
 
   handleChangeOfState(value) {
-    console.log(this.componentName + 'DynamicComponentComponent handleChangeOfState: ', value);
     if (value === 'close') {
       this.currentState = value;
       setTimeout(() => {
