@@ -345,6 +345,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
       if (this.flag == "editNSC") {
         let obj =
         {
+          "clientId": this.clientId,
           "id": this.editApi.id,
           "familyMemberId": this.familyMemberId,
           "ownerList": this.nscFormField.value.getCoOwnerName,
@@ -360,6 +361,12 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
           "nomineeList": this.nscFormField.value.getNomineeName,
           "description": this.nscFormField.get('description').value,
         }
+        obj.nomineeList.forEach((element, index) => {
+          if(element.name == ''){
+            this.removeNewNominee(index);
+          }
+        });
+        obj.nomineeList= this.nscFormField.value.getNomineeName;
         this.cusService.editNSCData(obj).subscribe(
           data => this.addNSCResponse(data),
           error => this.eventService.showErrorMessage(error)
@@ -369,8 +376,8 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
         let obj =
         {
           "clientId": this.clientId,
+          
           "familyMemberId": this.familyMemberId,
-          "advisorId": this.advisorId,
           "ownerList": this.nscFormField.value.getCoOwnerName,
           // "ownerName": (this.ownerName == undefined) ? this.nscFormField.controls.ownerName.value : this.ownerName.userName,
           "amountInvested": this.nscFormField.get('amountInvested').value,
@@ -382,8 +389,15 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
           "ownerTypeId": parseInt(this.nscFormField.get('ownershipType').value),
           "nominees": this.nominees,
           "nomineeList": this.nscFormField.value.getNomineeName,
-          "description": this.nscFormField.get('description').value
+          "description": this.nscFormField.get('description').value,
         }
+
+        obj.nomineeList.forEach((element, index) => {
+          if(element.name == ''){
+            this.removeNewNominee(index);
+          }
+        });
+        obj.nomineeList= this.nscFormField.value.getNomineeName;
         console.log(obj)
         let adviceObj = {
           // advice_id: this.advisorId,
