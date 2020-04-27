@@ -107,6 +107,8 @@ import { AddMotorInsuranceInAssetComponent } from './component/protect-component
 import { AddTravelInsuranceInAssetComponent } from './component/protect-component/customers/component/customer/accounts/insurance/add-travel-insurance-in-asset/add-travel-insurance-in-asset.component';
 import { AddHomeInsuranceInAssetComponent } from './component/protect-component/customers/component/customer/accounts/insurance/add-home-insurance-in-asset/add-home-insurance-in-asset.component';
 import { AddFireAndPerilsInsuranceInAssetComponent } from './component/protect-component/customers/component/customer/accounts/insurance/add-fire-and-perils-insurance-in-asset/add-fire-and-perils-insurance-in-asset.component';
+import { DetailedViewGeneralInsuranceComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/detailed-view-general-insurance/detailed-view-general-insurance.component';
+import { DetailedViewLifeInsuranceComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/detailed-view-life-insurance/detailed-view-life-insurance.component';
 // tslint:disable-next-line:max-line-length
 // import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
@@ -247,7 +249,9 @@ export const componentList = [
   AddMotorInsuranceInAssetComponent,
   AddTravelInsuranceInAssetComponent,
   AddHomeInsuranceInAssetComponent,
-  AddFireAndPerilsInsuranceInAssetComponent
+  AddFireAndPerilsInsuranceInAssetComponent,
+  DetailedViewGeneralInsuranceComponent,
+  DetailedViewLifeInsuranceComponent
   // ComposeEmailComponent
 ];
 

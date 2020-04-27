@@ -193,6 +193,8 @@ totalSum:any
   }
 
   reTotalSum:any
+  sumOfMonthlyContribution:any;
+  sumOfMaturityValue:any;
   getRecurringDepositRes(data) {
     this.reTotalSum = data;
     this.isLoading = false;
@@ -206,7 +208,8 @@ totalSum:any
       this.dataSource.sort = this.recurringDepositTableSort;
       UtilService.checkStatusId(this.dataSource.filteredData);
       this.totalCurrentValue = data.totalCurrentValue;
-      this.totalMarketValue = data.totalMarketValue;
+      this.sumOfMonthlyContribution = data.sumOfMonthlyContribution;
+      this.sumOfMaturityValue = data.sumOfMaturityValue;
     } else {
       this.noData = 'No scheme found';
       this.dataSource.data = [];
@@ -233,18 +236,17 @@ totalSum:any
   getBondsRes(data) {
     this.bondTotalSum = data;
     this.isLoading = false;
-    if (data == undefined) {
-      this.noData = 'No scheme found';
-      this.dataSource.data = [];
-    } else if (data.bondList) {
-      console.log('getBondsRes ******** ', data);
-      this.dataSource.data = data.bondList;
-      this.dataSource.sort = this.bondListTableSort;
-      UtilService.checkStatusId(this.dataSource.filteredData);
-      this.sumAmountInvestedB = data.sumAmountInvested;
-      this.sumCouponAmount = data.sumCouponAmount;
-      this.sumCurrentValueB = data.sumCurrentValue;
-      this.sumMaturityValue = data.sumMaturityValue;
+    if (data != undefined) {
+      if (data.assetList) {
+        console.log('getBondsRes ******** ', data);
+        this.dataSource.data = data.assetList;
+        this.dataSource.sort = this.bondListTableSort;
+        UtilService.checkStatusId(this.dataSource.filteredData);
+        this.sumAmountInvestedB = data.sumOfAmountInvested;
+        this.sumCouponAmount = data.sumOfCouponAmount;
+        this.sumCurrentValueB = data.sumOfCurrentValue;
+        this.sumMaturityValue = data.sumOfMaturityValue;
+      }
     } else {
       this.noData = 'No scheme found';
       this.dataSource.data = [];

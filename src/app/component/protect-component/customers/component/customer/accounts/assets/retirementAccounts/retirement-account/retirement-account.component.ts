@@ -35,6 +35,7 @@ export class RetirementAccountComponent implements OnInit {
   advisorId: any;
   clientId: any;
   sumOfcurrentEpfBalance: any;
+  sumOfcurrentEpsBalance: any;
   sumOfcurrentValue: any;
   sumOfemployeesMonthlyContribution: any;
   sumOfemployersMonthlyContribution: any;
@@ -383,7 +384,7 @@ export class RetirementAccountComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         if (value == 'EPF') {
-          this.custumService.deleteEPF(data.id).subscribe(
+          this.custumService.deleteEPF_EPS(data.id).subscribe(
             data => {
               dialogRef.close();
               this.getListEPF();
@@ -455,27 +456,26 @@ export class RetirementAccountComponent implements OnInit {
   }
   getEPFRes(data) {
     this.isLoading = false;
-    if (data == undefined) {
-      this.noData = "No EPF found";
-      this.dataSource.data = [];
-    }
-    else if (data.listOfEpf) {
-      console.log('getEPFRes =', data);
-      this.sumOfcurrentEpfBalance = data.sumOfcurrentEpfBalance;
-      this.sumOfcurrentValue = data.sumOfcurrentValue;
-      this.sumOfemployeesMonthlyContribution = data.sumOfemployeesMonthlyContribution;
-      this.sumOfemployersMonthlyContribution = data.sumOfemployersMonthlyContribution;
-      this.dataSource.data = data.listOfEpf;
-      this.dataSource.sort = this.epfListTableSort;
-      var d = new Date();
-      const n = d.getFullYear();
-      this.dataSource.filteredData.forEach(element => {
-        if (element.maturityYear < n) {
-          element.statusId = 'MATURED';
-        } else {
-          element.statusId = 'LIVE';
-        }
-      });
+    if (data != undefined) {
+      if (data.assetList) {
+        console.log('getEPFRes =', data);
+        this.sumOfcurrentEpfBalance = data.sumOfEpfBalanceTillToday;
+        this.sumOfcurrentEpsBalance = data.sumOfEpsBalanceTillToday;
+        this.sumOfcurrentValue = data.sumOfcurrentValue;
+        this.sumOfemployeesMonthlyContribution = data.sumOfemployeesMonthlyContribution;
+        this.sumOfemployersMonthlyContribution = data.sumOfemployersMonthlyContribution;
+        this.dataSource.data = data.assetList;
+        this.dataSource.sort = this.epfListTableSort;
+        var d = new Date();
+        const n = d.getFullYear();
+        this.dataSource.filteredData.forEach(element => {
+          if (element.maturityYear < n) {
+            element.statusId = 'MATURED';
+          } else {
+            element.statusId = 'LIVE';
+          }
+        });
+      }
     }
     else {
       this.noData = "No scheme found";

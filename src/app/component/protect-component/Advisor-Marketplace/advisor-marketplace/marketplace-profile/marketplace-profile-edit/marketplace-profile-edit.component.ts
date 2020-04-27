@@ -3,8 +3,9 @@ import { EventService } from '../../../../../../Data-service/event.service';
 
 @Component({
   selector: 'app-marketplace-profile-edit',
- // templateUrl: './marketplace-profile-edit.component.html',
-  templateUrl: './new-advisor-onbording-component.html',
+ templateUrl: './marketplace-profile-edit.component.html',
+ // templateUrl: './new-advisor-onbording-component.html',
+  // templateUrl: './account-summary.html',
   styleUrls: ['./marketplace-profile-edit.component.scss']
 })
 export class MarketplaceProfileEditComponent implements OnInit {

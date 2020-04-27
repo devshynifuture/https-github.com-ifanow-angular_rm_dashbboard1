@@ -17,7 +17,7 @@
                 <th mat-header-cell *matHeaderCellDef class="b-a" mat-sort-header="rtId"> RT </th>
                 <td mat-cell *matCellDef="let element" class="b-a">
                     <div class="bar">
-                        {{element.rtId  === 0 ? "ALL RTA" : (element.rtId === 1 ? "CAMS" : (element.rtId === 2 ? "KARVY" : (element.rtId === 3 ? "FRANKLIN" : '---')))}}
+                        {{element.rtId === 0 ? "ALL RTA" : (element.rtId === 1 ? "CAMS" : (element.rtId === 2 ? "KARVY" : (element.rtId === 3 ? "FRANKLIN" : '---')))}}
                     </div>
                 </td>
             </ng-container>
@@ -93,28 +93,11 @@
                 <th mat-header-cell *matHeaderCellDef class="b-a">Report</th>
                 <td mat-cell *matCellDef="let element" class="b-a">
                     <div class="bar">
-                        <button (click)="openUpperModule('report',element)" mat-stroked-button
-                            class="bg-primary text-white">
+                        <button *ngIf="!isLoading" (click)="openUpperModule('report',element)" mat-stroked-button
+                            class="bg-primary reportBtn text-white">
                             Report
-                        </button> </div>
-            </ng-container>
-            <ng-container matColumnDef="menu">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header="advisorName" class="b-a"> </th>
-                <td mat-cell *matCellDef="let element" class="b-a">
-                    <div class="bar">
-                        <mat-menu #appMenu="matMenu">
-                            <button mat-menu-item>Recalculate Balance Units</button>
-                            <button mat-menu-item>Deactivate Account</button>
-                            <button mat-menu-item>Merge Scheme Code</button>
-                            <button mat-menu-item>Order Historical file</button>
-                        </mat-menu>
-
-                        <button mat-icon-button [matMenuTriggerFor]="appMenu">
-                            <mat-icon>more_vert</mat-icon>
                         </button>
-
                     </div>
-                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns" class="b-a"></tr>

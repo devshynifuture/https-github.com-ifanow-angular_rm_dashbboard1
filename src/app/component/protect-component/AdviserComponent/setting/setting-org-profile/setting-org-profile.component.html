@@ -57,10 +57,11 @@
 
                     <div class="col-md-6 bl-1 pb-28">
                         <p class="f-12 mb-0 text-custom mt-28 pb-16"> PROFILE PIC</p>
-                        <div class="profilePhoto container">
+                        <div class="profilePhoto containerOne">
                             <img [src]="userList.profilePic">
                             <div class="middle">
-                                <button mat-flat-button (click)="OpenpersonalProfile(userList, '',1)">Edit Image</button>
+                                <button mat-flat-button (click)="OpenpersonalProfile(userList, '',1)">Edit
+                                    Image</button>
                             </div>
                         </div>
 
@@ -170,10 +171,11 @@
                     </div>
                     <div class="col-md-6 bl-1 pb-28">
                         <p class="f-12 m-0 text-custom pt-28 pb-16"> WEB APP LOGO</p>
-                        <div class="container">
-                            <img [src]="orgDetails.logoUrl" class="w-65">
-                            <div class="middle">
-                                <button (click)="OpenOrgProfile(orgDetails, '',1)">Edit Image</button>
+                        <div class="containerOne widthwebLogo p-0">
+                            <img [src]="orgDetails.logoUrl" class="w-100">
+                            <div (click)="OpenOrgProfile(orgDetails, '',1)" class="middle">
+                                <h5>Edit Image</h5>
+                                <!-- <button (click)="OpenOrgProfile(orgDetails, '',1)">Edit Image</button> -->
                             </div>
                         </div>
                         <p class="m-0 text-black pt-16">This logo is visible on top left of web login, About section in mobile app etc.</p>
@@ -181,7 +183,7 @@
                         <p class="f-12 m-0 text-custom pt-28 pb-16"> LOGO FOR REPORTS</p>
 
                         <div class="row">
-                            <div class="col-md-4 pl-0 container">
+                            <div class="col-md-4 pl-0 containerOne">
                                 <img [src]="orgDetails.reportLogoUrl" class="w-100">
                                 <div class="middle">
                                     <button (click)="OpenOrgProfile(orgDetails, '',2)">Edit Image</button>

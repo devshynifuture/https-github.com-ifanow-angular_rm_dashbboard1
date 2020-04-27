@@ -1,0 +1,150 @@
+<div class="popup-header-fix-35">
+    <div class="row bb-1">
+        <div class="col-md-10 p-0">
+            <h4 class="mb-0 wrapper-20">LIfe Insurance - Detailed view</h4>
+        </div>
+        <div class="col-md-2 text-left">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="pl-20 pr-20 mt-44 pb-48">
+    <div class="row pt-40">
+        <div class="col-md-12 p-0">
+            <div class="insurance-ui bt">
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Owner Name
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(this._data.ownerName)?this._data.ownerName:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Guardian
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(this._data.guardianName)?this._data.accountBalance:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Account balance
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                        {{(this._data.accountBalance)?this._data.accountBalance:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Balance as on
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(this._data.balanceAsOn)?(this._data.balanceAsOn | date:'dd/MM/yyyy'):'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Amount invested
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                        {{ (this._data.amountInvested)?this._data.amountInvested:'-' }}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Current value
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                        {{(this._data.currentValue)?this._data.currentValue:'-'}}
+                    </div>
+                </div>
+                <!-- <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Maturity value
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                        {{(this._data.maturityValue)?this._data.maturityValue:'-'}}
+                    </div>
+                </div> -->
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Commencement date
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(this._data.commencementDate)?(this._data.commencementDate | date:'dd/MM/yyyy'):'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Maturity date
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(this._data.maturityDate)?(this._data.maturityDate | date:'dd/MM/yyyy'):'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Future approx contribution
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                        {{(this._data.futureApproxContribution)?this._data.futureApproxContribution:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Frequency
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{ (this._data.frequency==1)? 'Monthly':(this._data.frequency==4)?'Quarterly':(this._data.frequency==6)?'Half yearly':(this._data.frequency==12)?'Yearly':'-' }}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Description
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(this._data.description)?this._data.description:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Linked bank account
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(this._data.linkedBankAccount)?this._data.linkedBankAccount:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Bank name
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(this._data.bankName)?this._data.bankName:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br" *ngFor="let data of nominee; let i = index">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Nominee {{i+1}}
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{ data.name }}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Agent name
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(this._data.agentName)?this._data.agentName:'-'}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

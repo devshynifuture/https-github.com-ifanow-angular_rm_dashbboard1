@@ -1,3 +1,19 @@
 .imgAdLogo {
     max-width: 100%;
 }
+
+::ng-deep .matInputClass .mat-form-field-appearance-standard .mat-form-field-flex {
+    padding-top: 0px;
+}
+
+.back-office-table #table-low tr.mat-header-row {
+    height: 40px !important;
+}
+
+.btn-Map {
+    width: 62px;
+    height: 30px;
+    padding: 0px;
+    line-height: 26px;
+    border-radius: 2px !important;
+}

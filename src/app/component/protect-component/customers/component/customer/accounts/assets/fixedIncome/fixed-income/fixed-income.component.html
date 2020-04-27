@@ -313,7 +313,7 @@
                         <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.monthlyContribution }}</span> </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
-                        <div *ngIf="reTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="totalMarketValue" appFormatNumber>{{totalMarketValue}}</span></div>
+                        <div *ngIf="reTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMonthlyContribution" appFormatNumber>{{sumOfMonthlyContribution}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="mvalue">
@@ -321,9 +321,11 @@
                         Maturity value
                     </th>
                     <td mat-cell *matCellDef="let element" class="br  text-right">
-                        <div class="bar" appFormatNumber> {{element.maturityValue}} </div>
+                        <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.maturityValue }}</span> </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br  text-right"></td>
+                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
+                        <div *ngIf="reTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMaturityValue" appFormatNumber>{{sumOfMaturityValue}}</span></div>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="mdate">
                     <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef class="br  text-left">
@@ -339,7 +341,9 @@
                     <td mat-cell *matCellDef="let element" class="br">
                         <div class="bar"> {{isLoading ? '' : element.rdNumber || '-'}} </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br  text-right"></td>
+                    <td mat-footer-cell *matFooterCellDef class="br  text-right">
+                        <div *ngIf="reTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMaturityValueS" appFormatNumber>{{sumOfMaturityValue}}</span></div>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="desc">
                     <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br"> Description
@@ -454,7 +458,7 @@
                             <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span> </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
-                            <div *ngIf="bondTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="bondTotalSum.sumCurrentValue" appFormatNumber>{{bondTotalSum.sumCurrentValue}}</span></div>
+                            <div *ngIf="bondTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumCurrentValueB" appFormatNumber>{{sumCurrentValueB}}</span></div>
                         </td>
                     </ng-container>
 
@@ -471,10 +475,10 @@
                             <div class="bar"> {{ sumCouponAmount }} </div>
                         </td> -->
                         <td mat-cell *matCellDef="let element" class="br amt text-right">
-                            <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.couponAmount }}</span> </div>
+                            <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.couponAmount}}</span> </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
-                            <div *ngIf="bondTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="bondTotalSum.sumCouponAmount" appFormatNumber>{{bondTotalSum.sumCouponAmount}}</span></div>
+                            <div *ngIf="bondTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumCouponAmount" appFormatNumber>{{sumCouponAmount}}</span></div>
                         </td>
                     </ng-container>
 
@@ -493,7 +497,7 @@
                             <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amountInvested }}</span> </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont amt text-right">
-                            <div *ngIf="bondTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="bondTotalSum.sumAmountInvested" appFormatNumber>{{bondTotalSum.sumAmountInvested}}</span></div>
+                            <div *ngIf="bondTotalSum">{{isLoading ? ' ' : '₹'}}<span [value]="sumAmountInvestedB" appFormatNumber>{{sumAmountInvestedB}}</span></div>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="cdate">
@@ -508,7 +512,7 @@
                         <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br text-right">
                             Coupon rate</th>
                         <td mat-cell *matCellDef="let element" class="br amt text-right ">
-                            <div class="bar"> {{element.rateOfReturn}} {{!isLoading? "%" : ""}}</div>
+                            <div class="bar"> {{element.couponRate}} {{!isLoading? "%" : ""}}</div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br text-right"></td>
                     </ng-container>

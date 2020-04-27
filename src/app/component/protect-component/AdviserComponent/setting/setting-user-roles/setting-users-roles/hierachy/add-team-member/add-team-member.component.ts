@@ -22,7 +22,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   @Input() data: any = {};
   advisorId: any;
   teamMember: FormGroup;
-  teamMembers: any;
+  teamMembers: any[];
   selectedMember: any;
   showSpinner = false;
 
@@ -40,16 +40,9 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     this.createForm();
     this.getdataForm('')
     this.getTeamMembers()
-    if (this.data) {
-      this.initializeUserDetails();
-    }
     // this.subscribeValueChange();
   }
 
-  initializeUserDetails() {
-
-  }
-  chooseMember() { }
   createForm() {
     this.usersForm = this.fb.group({
       userInput: [''],
@@ -68,10 +61,15 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     const dataObj = {
       advisorId: this.advisorId
     }
-    this.orgSetting.getTeamMember(dataObj).subscribe((res) => {
+    this.settingsService.getTeamMembers(dataObj).subscribe((res) => {
       console.log('team member details', res)
-      this.showSpinner = false
-      this.teamMembers = res;
+      this.showSpinner = false;
+      if(res && res.length > 0) {
+        this.teamMembers = res;
+        this.teamMembers = this.teamMembers.filter(member => member.adminAdvisorId != this.data.childId);
+      } else {
+        this.teamMembers = [];
+      }
     });
   }
   getFormControl(): any {
@@ -85,6 +83,10 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     this.selectedMember = teamMember
   }
   saveTeamMember(){
+    if(!this.selectedMember) {
+      this.eventService.openSnackBar("Please assign a team member", "Dismiss");
+      return
+    }
     let obj = {
       id: this.data.id,
       ChildId: this.data.childId,

@@ -17,6 +17,7 @@ import { OwnerDirective } from './owner.directive';
 import { ClientSearchDirective } from 'src/app/component/protect-component/AdviserComponent/transactions/client-search.directive';
 import { OwnerNomineeDirective } from './owner-nominee.directive';
 import { FileDragDropDirective } from './file-drag-drop.directive';
+import { BankAccountDirective } from './bank-account.directive';
 
 // import {AppModule} from "../app.module";
 
@@ -36,10 +37,11 @@ import { FileDragDropDirective } from './file-drag-drop.directive';
     OwnerDirective,
     ClientSearchDirective,
     OwnerNomineeDirective,
-    FileDragDropDirective
+    FileDragDropDirective,
+    BankAccountDirective
   ],
   exports: [RadioGroupDirectiveDirective, SkeletonLoadingDirective, FormatNumberDirective, NumberOnlyDirective,
-    AlphaNumericDirective, CodeTextDirective, TextOnlyDirective, Formatter, InputValueValidationDirective, OwnerDirective,OwnerNomineeDirective, ClientSearchDirective],
+    AlphaNumericDirective, CodeTextDirective, TextOnlyDirective, Formatter, InputValueValidationDirective, OwnerDirective,OwnerNomineeDirective, ClientSearchDirective,BankAccountDirective],
   imports: [
 
     // AppModule

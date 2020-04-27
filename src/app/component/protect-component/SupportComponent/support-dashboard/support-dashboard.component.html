@@ -52,12 +52,17 @@
     <div class="col-md-10 pl-0 b-l">
         <div class="row" [formGroup]="dashFG">
             <div class="col-md-9 p-0 br">
-                <div class="row b-b p-12">
+                <div class="row b-b p-12 pr-4">
                     <div class="col-md-9 pl-10 d-flex align-items-center">
-                        <h4 class="f-20 m-0 f-600 roboto">RM Dashboard</h4>
+                        <h4 class="f-20 m-0 f-600 roboto"> Welcome, {{ rmName }}</h4>
                     </div>
-                    <div class="col-md-3">
-                        <button mat-stroked-button [matMenuTriggerFor]="menu">Quick actions</button>
+                    <div class="col-md-3 text-right">
+                        <button class="quickBtn" mat-stroked-button [matMenuTriggerFor]="menu">
+
+                            Quick actions
+                            <img src="assets/images/svg/btn-arrow.svg">
+
+                        </button>
                         <mat-menu #menu="matMenu">
                             <button mat-menu-item (click)="openAddStockMaster('')">Add to stock master</button>
                             <button mat-menu-item (click)="openAddLifeInsuranceMaster('')">Add to LI master</button>
@@ -72,7 +77,7 @@
                             <div class="bg-white">
                                 <div class="row d-flex pt-10 pb-16 align-items-center">
                                     <div class="col-md-6 pl-10 pr-0">
-                                        <h3 class="f-16 roboto">Daily files </h3>
+                                        <h3 class="f-16 f-500 roboto">Daily files </h3>
                                     </div>
                                     <div class="col-md-1 p-0">
                                         <i class="material-icons">
@@ -82,80 +87,33 @@
                                     <div class="col-md-5 pl-10 paddRight10">
                                         <mat-form-field>
                                             <mat-select class="form-control" [(value)]="dailyFileSelected">
-                                                <mat-option value="option1">
+                                                <mat-option value="option1" class="f-12">
                                                     All Files
                                                 </mat-option>
                                             </mat-select>
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <!-- <div class="row">
-                                    <div class="col-md-12 f-14">
-                                        CAMS
-                                    </div>
-                                </div>
-                                <div class="row pb-36">
-                                    <div class="col-md-12 p-0">
-                                        <img class="width200" src="assets/images/svg/backoffice-pie-chart.svg">
-                                    </div>
-                                </div> -->
-                                <!-- <div>
-                                    <table id="container">
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th>Jane</th>
-                                                <th>John</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th>Apples</th>
-                                                <td>3</td>
-                                                <td>4</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Pears</th>
-                                                <td>2</td>
-                                                <td>0</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Plums</th>
-                                                <td>5</td>
-                                                <td>11</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Bananas</th>
-                                                <td>1</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Oranges</th>
-                                                <td>2</td>
-                                                <td>4</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div> -->
+
                                 <div class="row">
-                                    <div class="col-md-12 f-14">
-                                        Cams
+                                    <div class="col-md-12  ">
+                                        <h4 class="f-14 f-500 roboto "> Cams</h4>
                                     </div>
                                 </div>
                                 <div class="chartBox">
                                     <div id="flowCash"></div>
                                 </div>
-                                <div class="row">
+                                <div class="row pt-20">
                                     <div class="col-md-12 f-14">
-                                        Karvy
+                                        <h4 class="f-14 f-500 roboto "> Karvy </h4>
                                     </div>
                                 </div>
                                 <div class="chartBox">
                                     <div id="flowCash2"></div>
                                 </div>
-                                <div class="row">
+                                <div class="row pt-20">
                                     <div class="col-md-12 f-14">
-                                        Franklin
+                                        <h4 class="f-14 f-500 roboto "> Franklin </h4>
                                     </div>
                                 </div>
                                 <div class="chartBox">
@@ -168,7 +126,7 @@
                             <div class="bg-white">
                                 <div class="row d-flex pt-10 pb-16 align-items-center">
                                     <div class="col-md-6 pl-10 pr-0">
-                                        <h3 class="f-16 roboto">Bulk files </h3>
+                                        <h3 class="f-16 f-500 roboto">Bulk files </h3>
                                     </div>
                                     <div class="col-md-1 p-0">
                                         <i class="material-icons" (click)="loadBulkFilesData()">
@@ -178,8 +136,7 @@
                                     <div class="col-md-5 pl-10 paddRight10">
                                         <mat-form-field>
                                             <mat-select class="form-control" formControlName="bulkOptRtId">
-                                                <mat-option *ngFor="let fileFilter of dropDownData"
-                                                    [value]="fileFilter.id">
+                                                <mat-option *ngFor="let fileFilter of dropDownData" [value]="fileFilter.id">
                                                     {{fileFilter.name}}
                                                 </mat-option>
                                             </mat-select>
@@ -189,29 +146,28 @@
                                 <div *ngFor="let singleFile of bulkData" class="pl-10 pb-10 paddRight10">
                                     <div class="row">
                                         <div class="col-md-12 pb-8 p-0 f-14">
-                                            {{getRTCode(singleFile.rtId)}}: {{singleFile.description}} -
-                                            {{singleFile.startedOn | date:'dd/MM h:mm '}}
+                                            {{getRTCode(singleFile.rtId)}}: {{singleFile.description}} - {{singleFile.startedOn | date:'dd/MM h:mm '}}
                                         </div>
                                     </div>
                                     <div class="row b-b">
                                         <div class="col-md-3 pl-0">
                                             <p class="f-12 text-primitive mb-5">Total</p>
-                                            <h3 class="mb-8 text-primary">{{singleFile.totalFiles}}</h3>
+                                            <h3 class="mb-8 f-14 text-primary">{{singleFile.totalFiles}}</h3>
                                         </div>
 
                                         <div class="col-md-3 pl-10">
                                             <p class="f-12 text-primitive mb-5">Ordered</p>
-                                            <h3 class="mb-8 text-primary">{{singleFile.ordered}}</h3>
+                                            <h3 class="mb-8 f-14 text-primary">{{singleFile.ordered}}</h3>
                                         </div>
 
                                         <div class="col-md-3 pl-10">
                                             <p class="f-12 text-primitive mb-5">Failed</p>
-                                            <h3 class="mb-8 orengeColor">{{singleFile.failed}}</h3>
+                                            <h3 class="mb-8 f-14 orengeColor">{{singleFile.failed}}</h3>
                                         </div>
 
                                         <div class="col-md-3 pl-0">
                                             <p class="f-12 text-primitive mb-5">Uploaded</p>
-                                            <h3 class="mb-8 greenColor">{{singleFile.uploaded}}</h3>
+                                            <h3 class="mb-8 f-14 greenColor">{{singleFile.uploaded}}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -223,7 +179,7 @@
                             <div class="bg-white">
                                 <div class="row d-flex pt-10 pb-16 align-items-center">
                                     <div class="col-md-6 pl-10 pr-0">
-                                        <h3 class="f-16 roboto">Historical files </h3>
+                                        <h3 class="f-16 f-500 roboto">Historical files </h3>
                                     </div>
                                     <div class="col-md-1 p-0">
                                         <i class="material-icons">
@@ -233,8 +189,7 @@
                                     <div class="col-md-5 pl-10 paddRight10">
                                         <mat-form-field>
                                             <mat-select formControlName="historicalFileOptId" class="form-control">
-                                                <mat-option *ngFor="let fileFilter of dropDownData"
-                                                    [value]="fileFilter.id">
+                                                <mat-option *ngFor="let fileFilter of dropDownData" [value]="fileFilter.id">
                                                     {{fileFilter.name}}
                                                 </mat-option>
                                             </mat-select>
@@ -250,22 +205,22 @@
                                     <div class="row b-b">
                                         <div class="col-md-3 pl-0">
                                             <p class="f-12 text-primitive mb-5">Total</p>
-                                            <h3 class="mb-8 text-primary">{{singleFile.total_files_orders}}</h3>
+                                            <h3 class="mb-8 f-14 text-primary">{{singleFile.total_files_orders}}</h3>
                                         </div>
 
                                         <div class="col-md-3 pl-10">
                                             <p class="f-12 text-primitive mb-5">Ordered</p>
-                                            <h3 class="mb-8 text-primary">{{singleFile.ordered}}</h3>
+                                            <h3 class="mb-8 f-14 text-primary">{{singleFile.ordered}}</h3>
                                         </div>
 
                                         <div class="col-md-3 pl-10">
                                             <p class="f-12 text-primitive mb-5">Failed</p>
-                                            <h3 class="mb-8 orengeColor">{{singleFile.failed}}</h3>
+                                            <h3 class="mb-8 f-14 orengeColor">{{singleFile.failed}}</h3>
                                         </div>
 
                                         <div class="col-md-3 pl-0">
                                             <p class="f-12 text-primitive mb-5">Uploaded</p>
-                                            <h3 class="mb-8 greenColor">{{singleFile.uploaded}}</h3>
+                                            <h3 class="mb-8 f-14 greenColor">{{singleFile.uploaded}}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -275,66 +230,49 @@
 
                     <div class="row">
                         <div class="col-md-4 p-9">
-                            <div class="bg-white">
-                                <h4 class="f-16">Onboarding status</h4>
+                            <div class="bg-white p-10">
+                                <h4 class="f-16 roboto f-500">Onboarding status</h4>
                             </div>
                         </div>
 
 
                         <div class="col-md-4 p-9">
-                            <div class="bg-white">
-                                <h4 class="f-16"> Usage metrics</h4>
+                            <div class="bg-white p-10">
+                                <h4 class="f-16 roboto f-500"> Usage metrics</h4>
 
-                                <div class="row">
-                                    <div class="col-md-6 pl-10 paddRight10">
-                                        <div class="b-primitive">
-                                            <p class="f-12 mb-4 text-primitive">CLIENTS</p>
-                                            <h4>1280 53%</h4>
-                                        </div>
+                                <div class="d-flex mb-12 justify-content-between">
+                                    <div class="usageMetricsBox">
+                                        <p class="f-12 mb-0 text-primitive">CLIENTS</p>
+                                        <h4 class="mb-0">1280 53%</h4>
                                     </div>
-
-                                    <div class="col-md-6 pl-10 paddRight10">
-                                        <div class="b-primitive">
-                                            <p class="f-12 mb-4 text-primitive">UNIQUE PAN</p>
-                                            <h4>495 53%</h4>
-                                        </div>
+                                    <div class="usageMetricsBox">
+                                        <p class="f-12 mb-0 text-primitive">UNIQUE PAN</p>
+                                        <h4 class="mb-0">495 53%</h4>
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-md-6 pl-10 paddRight10">
-                                        <div class="b-primitive">
-                                            <p class="f-12 mb-4 text-primitive">GOALS</p>
-                                            <h4>1280 53%</h4>
-                                        </div>
+                                <div class="d-flex mb-12 justify-content-between">
+                                    <div class="usageMetricsBox">
+                                        <p class="f-12 mb-0 text-primitive">GOALS</p>
+                                        <h4 class="mb-0">1280 53%</h4>
                                     </div>
-
-                                    <div class="col-md-6 pl-10 paddRight10">
-                                        <div class="b-primitive">
-                                            <p class="f-12 mb-4 text-primitive">TASKS</p>
-                                            <h4>495 53%</h4>
-                                        </div>
+                                    <div class="usageMetricsBox">
+                                        <p class="f-12 mb-0 text-primitive">TASKS</p>
+                                        <h4 class="mb-0">495 53%</h4>
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-md-6 pl-10 paddRight10">
-                                        <div class="b-primitive">
-                                            <p class="f-12 mb-4 text-primitive">NSE</p>
-                                            <h4>1280 53%</h4>
-                                        </div>
+                                <div class="d-flex justify-content-between">
+                                    <div class="usageMetricsBox">
+                                        <p class="f-12 mb-0 text-primitive">NSE</p>
+                                        <h4 class="mb-0">1280 53%</h4>
                                     </div>
 
-                                    <div class="col-md-6 pl-10 paddRight10">
-                                        <div class="b-primitive">
-                                            <p class="f-12 mb-4 text-primitive">BSE</p>
-                                            <h4>495 53%</h4>
-                                        </div>
+                                    <div class="usageMetricsBox">
+                                        <p class="f-12 mb-0 text-primitive">BSE</p>
+                                        <h4 class="mb-0">495 53%</h4>
                                     </div>
                                 </div>
-
-
-
                             </div>
                         </div>
                     </div>
@@ -345,23 +283,19 @@
             <div class="col-md-3 pt-20 pr-0 pl-10">
 
                 <h3 class="f-16 m-0 mb-20 roboto">Running services</h3>
-                <div *ngFor="let singleService of serviceStatusData"
-                    [ngClass]="{'boxColorOrenge': singleService.service_status=='Not Updated'||singleService.service_status=='Not Working'}"
-                    class="boxColorGreen">
+                <div *ngFor="let singleService of serviceStatusData" [ngClass]="{'boxColorOrenge': singleService.service_status=='Not Updated'||singleService.service_status=='Not Working'}" class="boxColorGreen">
                     <div class="row">
                         <div class="col-md-10 p-0">
                             <h4 class="f-14">{{singleService.service_name}}</h4>
                         </div>
                         <div class="col-md-2 p-0">
-                            <i class="material-icons f-30 greenColor"
-                                [ngClass]="{'orengeColor': singleService.service_status=='Not Updated' ||singleService.service_status=='Not Working'}">
+                            <i class="material-icons f-30 greenColor" [ngClass]="{'orengeColor': singleService.service_status=='Not Updated' ||singleService.service_status=='Not Working'}">
                                 check_circle
                             </i>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6 f-12 p-0 greenColor"
-                            [ngClass]="{'orengeColor': singleService.service_status=='Not Updated' ||singleService.service_status=='Not Working'}">
+                        <div class="col-md-6 f-12 p-0 greenColor" [ngClass]="{'orengeColor': singleService.service_status=='Not Updated' ||singleService.service_status=='Not Working'}">
                             {{singleService.service_status}}
                         </div>
                         <div class="col-md-6 p-0 text-primitive text-right f-12">
@@ -451,31 +385,26 @@
                 </div> -->
 
                 <h4 class="f-16 f-600 mt-32">Scheme mapping</h4>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="b-primitive" (click)="openUpperSlider('all-rta')">
-                            <p>ALL RTA</p>
-                            <h3>7</h3>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="b-primitive" (click)="openUpperSlider('nj')">
-                            <p>NJ</p>
-                            <h3>2</h3>
-                        </div>
+                <div class="d-flex justify-content-between">
 
+                    <div class="mappingBox" (click)="openUpperSlider('all-rta')">
+                        <p class="f-12 text-primitive mb-0">ALL RTA</p>
+                        <h3 class="f-20 m-0">7</h3>
                     </div>
-                    <div class="col-md-4">
-                        <div class="b-primitive" (click)="openUpperSlider('prudent')">
-                            <p>PRUDENT</p>
-                            <h3>0</h3>
-                        </div>
 
+
+                    <div class="mappingBox" (click)="openUpperSlider('nj')">
+                        <p class="f-12 text-primitive mb-0">NJ</p>
+                        <h3 class="f-20 m-0">2</h3>
                     </div>
+
+
+                    <div class="mappingBox" (click)="openUpperSlider('prudent')">
+                        <p class="f-12 text-primitive mb-0">PRUDENT</p>
+                        <h3 class="f-20 m-0">0</h3>
+                    </div>
+
                 </div>
-
-
-
 
             </div>
         </div>

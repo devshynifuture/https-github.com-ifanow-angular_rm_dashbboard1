@@ -18,7 +18,7 @@
 
 <div #chnageScrollPosition class="pt-72 pl-24 pr-24 pb-24 mb-48">
     <div class="lifeInsuranceMainBox" [formGroup]="lifeInsuranceForm">
-        <div class="row pt-40">
+        <!-- <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Life assured</h5>
                 <p class="m-0 f-12 text-custom">In whose name is this asset</p>
@@ -37,8 +37,56 @@
                     </mat-form-field>
                 </div>
             </div>
-        </div>
+        </div> -->
+        <div formArrayName="getCoOwnerName">
+            <div class="row"
+                *ngFor="let obj of lifeInsuranceForm.controls['getCoOwnerName'].controls; let pointIndex=index"
+                [formGroupName]="pointIndex">
+                <div class="col-md-5 pr-0 text-right">
+                    <h5 class="m-0 pt-8 ">Life assured</h5>
+                </div>
+                <div class="pr-0"
+                    [ngClass]="lifeInsuranceForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                                (selectionChange)="disabledMember($event.value,'owner')"
+                                (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
+                                class="form-control br-0" [callMethod]='callMethod'>
+                                <mat-option value='' disabled>Select family members</mat-option>
+                                <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
+                                    [value]="f.userName">
+                                    <span>{{f.userName}}</span>
+                                </mat-option>
+                            </mat-select>
+                            <mat-error class="f-12">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-2" *ngIf="lifeInsuranceForm.value.getCoOwnerName.length > 1">
+                    <div class="form-group mb-0 iconPetage">
+                        <mat-form-field>
+                            <input matInput class="form-control br-0 percentage" type="number" formControlName="share"
+                                (focusout)="onChangeJointOwnership('owner')">
+                            <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
+                                This field is required
+                            </mat-error>
+                            <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('incorrect') ">
+                                Total percent should be 100%
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-2 p-0 d-flex align-items-center">
+                    <!-- <i *ngIf="pointIndex==0" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i> -->
+                    <i *ngIf="pointIndex!=0" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                        (click)="removeCoOwner(pointIndex)">remove</i>
+                </div>
 
+            </div>
+        </div>
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Proposer</h5>
@@ -59,7 +107,26 @@
                 </div>
             </div>
         </div>
-
+        <!-- <div class="row pt-40">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Proposer</h5>
+                <p class="m-0 f-12 text-custom">Who has proposed this policy</p>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <mat-select matInput formControlName="proposer" #lifeAssured autocomplete="true"
+                            class="form-control br-0">
+                            <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
+                                    [value]="f.userName">
+                                {{option.userName}}</mat-option>
+                        </mat-select>
+                        <mat-error>This field is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div> -->
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Policy name</h5>
@@ -315,7 +382,7 @@
                             </div>
                         </div>
 
-                        <div class="row pt-40">
+                        <!-- <div class="row pt-40">
                             <div class="col-md-5 pr-0 text-right">
                                 <h5 class="m-0 pt-8">Nominee name</h5>
                             </div>
@@ -326,6 +393,55 @@
                                             class="form-control br-0">
                                     </mat-form-field>
                                 </div>
+                            </div>
+                        </div> -->
+                        <div formArrayName="getNomineeName">
+                            <div class="row pt-36" *ngFor="let obj of keyDetailsForm.controls['getNomineeName'].controls; let pointIndex=index"
+                                [formGroupName]="pointIndex">
+                                <div class="col-md-5 pr-0 text-right">
+                                    <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
+                                </div>
+                                <div [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
+                                    <div class="form-group mb-0">
+                                        <mat-form-field>
+                                            <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                                            (selectionChange)="getFamilyData($event.value,nomineesListFM)" (selectionChange)="disabledMember($event.value,'nominee')"
+                                                (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                                                <mat-option value='' disabled>Select family members</mat-option>
+                                                <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
+                                                    [value]="f.userName">
+                                                    <span>{{f.userName}}</span>
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-error class="f-12">
+                                                This field is required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" *ngIf="getNominee.length > 1">
+                                    <div class="form-group mb-0 iconPetage">
+                                        <mat-form-field>
+                                            <input matInput class="form-control br-0 percentage" type="number"
+                                                formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
+                                            <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('required')">
+                                                This field is required
+                                            </mat-error>
+                                            <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('incorrect') ">
+                                                Total percent should be 100%
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 p-0 d-flex align-items-center">
+                                    <i *ngIf="keyDetailsForm.value.getNomineeName.length < 3"
+                                        class="material-icons text-primitive f-20 c-p float-left"
+                                        (click)="addNewNominee(undefined)">add</i>
+                                    <i *ngIf="keyDetailsForm.value.getNomineeName.length > 1"
+                                        class="material-icons text-primitive f-20 c-p pl-10"
+                                        (click)="removeNewNominee(pointIndex)">remove</i>
+                                </div>
+                
                             </div>
                         </div>
                         <div *ngIf="!(insuranceTypeId==1 && insuranceSubTypeId==3)" class="row pt-40">
@@ -397,7 +513,7 @@
                                     <div class="form-group mb-0">
                                         <!-- <label class="f-16 roboto">Cash Flow Type</label> -->
                                         <mat-form-field>
-                                            <input type="number" autocomplete="off" [maxLength]="10"
+                                            <input type="text" autocomplete="off" [maxLength]="10"
                                                 formControlName="cashFlowType" #cashFlowType matInput
                                                 class="form-control br-0">
                                             <mat-hint align="end" class="f-12">{{cashFlowType.value.length}}/10

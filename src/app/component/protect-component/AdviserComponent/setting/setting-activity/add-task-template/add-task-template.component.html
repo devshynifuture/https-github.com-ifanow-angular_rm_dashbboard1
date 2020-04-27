@@ -55,7 +55,7 @@
         <div class="form-group matFormPadding">
           <mat-form-field appearance="standard" floatLabel="never">
             <mat-select class="form-control" formControlName="subcategoryId">
-              <mat-option disabled value="">Select option</mat-option>
+              <mat-option disabled [value]="0">Select option</mat-option>
               <mat-option *ngFor="let subCategory of categoryList" [value]="subCategory.subcategoryId">
                 {{subCategory.subcategoryType}}
               </mat-option>
@@ -72,7 +72,7 @@
         <div class="form-group matFormPadding">
           <mat-form-field appearance="standard" floatLabel="never">
             <mat-select [required]="!hideSubcategory" class="form-control" formControlName="subSubCategoryId">
-              <mat-option disabled value="">Select option</mat-option>
+              <mat-option disabled [value]="0">Select option</mat-option>
               <mat-option *ngFor="let sub of listOfSub" [value]="sub.subSubCategoryId">
                 {{sub.subcategoryType}}</mat-option>
             </mat-select>
@@ -90,7 +90,7 @@
         <div class="form-group matFormPadding">
           <mat-form-field appearance="standard" floatLabel="never">
             <mat-select class="form-control" formControlName="adviceTypeId">
-              <mat-option disabled value="">Select option</mat-option>
+              <mat-option disabled [value]="0">Select option</mat-option>
               <mat-option *ngFor="let advise of adviceTypeMasterList" [value]="advise.id">
                 {{advise.advice}}
               </mat-option>
@@ -109,9 +109,9 @@
         <div class="form-group matFormPadding">
           <mat-form-field appearance="standard" floatLabel="never">
             <mat-select class="form-control" formControlName="assignedTo">
-              <mat-option disabled value="">Select option</mat-option>
+              <mat-option disabled [value]="0">Select option</mat-option>
               <mat-option *ngFor="let team of teamMemberList" [value]="team.userId">
-                {{team.name}}
+                {{team.fullName}}
               </mat-option>
             </mat-select>
             <mat-hint>Optional</mat-hint>
@@ -123,7 +123,7 @@
         <div class="form-group matFormPadding">
           <mat-form-field appearance="standard" floatLabel="never">
             <mat-select class="form-control" formControlName="turnAroundTime">
-              <mat-option disabled value="">Select option</mat-option>
+              <mat-option disabled [value]="0">Select option</mat-option>
               <mat-option *ngFor="let t of Tat" [value]="t.value">{{t.tat}}</mat-option>
             </mat-select>
             <mat-hint>Optional</mat-hint>
@@ -151,7 +151,7 @@
             <mat-form-field appearance="standard" class="arrowRemoveBox" floatLabel="never">
               <img class="img-pos" src="/assets/images/svg/calander.svg">
               <mat-select class="form-control" formControlName="turnAroundTime">
-                <mat-option disabled value="">Select option</mat-option>
+                <mat-option disabled [value]="0">Select option</mat-option>
                 <mat-option *ngFor="let t of Tat" [value]="t.value">{{t.tat}}
                 </mat-option>
               </mat-select>
@@ -164,7 +164,7 @@
               <img class="img-pos-two" src="/assets/images/svg/people.svg">
               <mat-select class="form-control" formControlName="ownerId">
                 <mat-option *ngFor="let team of teamMemberList" [value]="team.userId">
-                  {{team.name}}</mat-option>
+                  {{team.fullName}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>

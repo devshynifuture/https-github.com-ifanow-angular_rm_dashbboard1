@@ -33,6 +33,7 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
   currentWeekKarvy: any;
 
   rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
+  rmName = AuthService.getUserInfo().name;
 
   subscription = new Subscription();
   bulkData: any[] = [{}, {}, {}];
@@ -218,7 +219,7 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
       id: 1,
       data,
       componentName: AddStockMasterComponent,
-      state: 'open35'
+      state: 'open40'
     }
 
     const subscription = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -236,7 +237,7 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
       id: 1,
       data,
       componentName: AddLifeInsuranceMasterComponent,
-      state: 'open35'
+      state: 'open40'
     }
 
     const subscription = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

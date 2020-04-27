@@ -363,28 +363,31 @@ export class BondsComponent implements OnInit {
     //   });
     // }
     if (this.bonds.invalid) {
-      this.inputs.find(input => !input.ngControl.valid).focus();
+      // this.inputs.find(input => !input.ngControl.valid).focus();
       this.bonds.markAllAsTouched();
-      return;
+      // return;
     } else {
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
         ownerList: this.bonds.value.getCoOwnerName,
-        amountInvested: this.bonds.controls.amountInvest.value,
+        amountInvested: parseInt(this.bonds.controls.amountInvest.value),
         bondName: this.bonds.controls.bondName.value,
         // couponAmount: this.bonds.controls.couponAmount.value,
-        couponPayoutFrequencyId: this.bonds.controls.couponOption.value,
+        couponPayoutFrequencyId: parseInt(this.bonds.controls.couponOption.value),
         couponRate: this.bonds.controls.interestRate.value,
         commencementDate: this.datePipe.transform(this.bonds.controls.commencementDate.value, 'yyyy-MM-dd'),
         // rateOfReturn: this.bonds.controls.rateReturns.value,
+        maturityDate: null,
         linkedBankAccount: this.bonds.controls.linkBankAc.value,
         description: this.bonds.controls.description.value,
         nomineeList: this.bonds.value.getNomineeName,
-        interestPayoutOption: this.bonds.value.couponOption,
-        tenure: this.bonds.controls.tenure.value,
-        type: this.bonds.controls.type.value,
-        compounding: this.bonds.controls.frequency.value,
+        interestPayoutOption: parseInt(this.bonds.value.couponOption),
+        tenure: parseInt(this.bonds.controls.tenure.value),
+        type: parseInt(this.bonds.controls.type.value),
+        compounding: parseInt(this.bonds.controls.frequency.value),
+        rateOfReturn: 0,
+        realOrFictitious: 1,
         id: this.bonds.controls.id.value
       }
       this.barButtonOptions.active = true;

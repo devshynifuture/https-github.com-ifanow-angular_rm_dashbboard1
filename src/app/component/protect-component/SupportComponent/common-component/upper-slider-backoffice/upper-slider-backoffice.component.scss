@@ -17,13 +17,34 @@
 }
 
 .widthBoxUpperSlider {
-    width: 34%;
+    width: 37%;
     margin-bottom: 0px;
 }
 
-.btn-none{
+.widthBoxUpperSlider40 {
+    width: 40%;
+    margin: 0px;
+}
+
+.btn-none {
     border: none !important;
     background: transparent !important;
     color: interit !important;
     font-size: inherit !important;
+}
+
+.bl-a {
+    border-left: 1px solid #E8ECEF;
+}
+
+.classExport {
+    width: 76px;
+    height: 28px;
+    padding: 0px !important;
+    line-height: 24px;
+    color: #000000;
+}
+
+.pl-34 {
+    padding-left: 34px;
 }
