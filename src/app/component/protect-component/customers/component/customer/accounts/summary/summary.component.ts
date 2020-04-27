@@ -71,8 +71,15 @@ export class SummaryComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.calculateTotalSummaryValues();
+    this.getStockFeeds();
   }
-
+  getStockFeeds() {
+    this.cusService.getStockFeeds().subscribe(
+      data => {
+        console.log(data)
+      }
+    )
+  }
   calculateTotalSummaryValues() {
     this.isLoading = true;
     console.log(new Date(this.asOnDate).getTime());
@@ -398,6 +405,7 @@ export class SummaryComponent implements OnInit {
   pieChart(id, data) {
     const dataSeriesList = [];
     data = data.filter(element => element.assetType != 2);
+    data = data.filter(element => element.currentValue != 0);
     data.forEach(element => {
       const totalAssetData = this.totalAssetsWithoutLiability + this.liabilityTotal;
       const dividedValue = element.currentValue / totalAssetData;
