@@ -762,5 +762,11 @@ export class CustomerService {
   getStockFeeds() {
     return this.httpService.get("https://6ewakqcsma.execute-api.us-east-1.amazonaws.com/default/stockfeed");
   }
+
+  // overview - myfeed services
+  // TODO - change urls for below services
+  getAllFeeds(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_CONSENT, data);
+  }
 }
 

@@ -114,9 +114,10 @@ export class PlanReturnsinflationComponent implements OnInit {
     const returnsObj = [ this.getPostDataFormat(this.shortTerm), this.getPostDataFormat(this.longTerm)].flat();
     const infationObj = [this.getPostDataInflationFormat(this.longDS), this.getPostDataInflationFormat(this.shortDS)].flat();
 
-    const obj = {returns: returnsObj, infation: infationObj}
+    const obj = {returns: returnsObj, inflation: infationObj}
     
-    if(obj.returns.length == 0 && obj.infation.length == 0) {
+    if(obj.returns.length == 0 && obj.inflation.length == 0) {
+      this.toggleEditMode();
       return;
     }
     this.orgSetting.updateReturns(obj).subscribe(res => {

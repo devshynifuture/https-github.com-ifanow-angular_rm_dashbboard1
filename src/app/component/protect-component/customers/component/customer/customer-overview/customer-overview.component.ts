@@ -27,18 +27,15 @@ export class CustomerOverviewComponent implements OnInit {
     _value: any;
 
     set value(value: number) {
-        console.log('now value is ->>>>', value);
         this._value = value;
     }
 
     ngOnInit() {
-        console.log('overview is called');
         this.showRouter = true;
         this.selected = 1;
         this._value = 1;
         this.loading = false;
         const routeName = this.router.url.split('/')[3];
-        console.log('CustomerComponent ngOnInit routeName : ', routeName);
         if (routeName == 'overview') {
             this.value = 1;
         } else if (routeName == 'myFeed') {
@@ -60,7 +57,6 @@ export class CustomerOverviewComponent implements OnInit {
     getTabChangeData(data) {
         setTimeout(() => {
             this._value = data;
-            console.log('Document selected == ', data);
             this.loading = false;
         }, 300);
     }
