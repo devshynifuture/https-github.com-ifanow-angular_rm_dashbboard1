@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { DatePipe } from '@angular/common';
-import { UtilService } from 'src/app/services/util.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { OnlineTransactionService } from '../../../../online-transaction.service';
-import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
+import {Component, OnInit} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {DatePipe} from '@angular/common';
+import {UtilService} from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {OnlineTransactionService} from '../../../../online-transaction.service';
+import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
 
 @Component({
   selector: 'app-iin-ucc-creation',
@@ -14,24 +14,26 @@ import { ProcessTransactionService } from '../../../doTransaction/process-transa
   styleUrls: ['./iin-ucc-creation.component.scss']
 })
 export class IinUccCreationComponent implements OnInit {
-    nomineesListFM: any = [];
+  nomineesListFM: any = [];
   showSpinnerOwner = false;
   familyMemberData: any;
   familyMemberId: any;
   generalDetails: any;
 
-  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,private processTrasaction : ProcessTransactionService,
-    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
-    private onlineTransact: OnlineTransactionService, public eventService: EventService) { }
+  constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private processTrasaction: ProcessTransactionService,
+              private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
+              private onlineTransact: OnlineTransactionService, public eventService: EventService) {
+  }
 
   ngOnInit() {
-    this.getIINUCCRegistration()
-    this.getdataForm('')
+    this.getIINUCCRegistration();
+    this.getdataForm('');
   }
 
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
   }
+
   close() {
     const fragmentData = {
       direction: 'top',
@@ -80,9 +82,9 @@ export class IinUccCreationComponent implements OnInit {
     // );
   }
   getIINUCCRegistration() {
-    let obj = {
+    const obj = {
       id: 2,
-    }
+    };
 
     this.onlineTransact.getIINUCCRegistration(obj).subscribe(
       data => this.getIINUCCRegistrationRes(data), (error) => {
@@ -90,39 +92,41 @@ export class IinUccCreationComponent implements OnInit {
     );
   }
   getIINUCCRegistrationRes(data) {
-    console.log('INN UCC CREATION DATA GET', data)
+    console.log('INN UCC CREATION DATA GET', data);
   }
 
   lisNominee(value) {
-    //this.showSpinnerOwner = false
+    // this.showSpinnerOwner = false
     if (value == null) {
       // this.transactionAddForm.get('ownerName').setErrors({ 'setValue': 'family member does not exist' });
       // this.transactionAddForm.get('ownerName').markAsTouched();
     }
-    console.log(value)
+    console.log(value);
     this.nomineesListFM = Object.assign([], value);
   }
   ownerList(value) {
-    if (value == "") {
-      this.showSpinnerOwner = false
+    if (value == '') {
+      this.showSpinnerOwner = false;
     } else {
-      this.showSpinnerOwner = true
+      this.showSpinnerOwner = true;
     }
   }
+
   ownerDetails(value) {
     this.familyMemberData = value;
-    this.familyMemberId = value.familyMemberId
+    this.familyMemberId = value.familyMemberId;
     this.familyMemberId = value.id;
   }
-  saveGeneralDetails(data){
-    let obj = {
+
+  saveGeneralDetails(data) {
+    const obj = {
       ownerName: this.generalDetails.controls.ownerName.value,
       holdingNature: this.generalDetails.controls.holdingNature.value,
-      familyMemberId : this.familyMemberId,
+      familyMemberId: this.familyMemberId,
       clientId: this.familyMemberData.clientId,
       advisorId: this.familyMemberData.advisorId,
       taxStatus: this.generalDetails.controls.taxStatus.value,
-    }
+    };
     this.openPersonalDetails(obj);
   }
 }

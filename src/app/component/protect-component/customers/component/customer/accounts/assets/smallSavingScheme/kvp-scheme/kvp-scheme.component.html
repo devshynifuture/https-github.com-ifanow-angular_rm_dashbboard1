@@ -53,7 +53,7 @@
                 <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue }}</span> </div>
             </td>
             <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-             <div >{{isLoading ? ' ' : '₹'}}<span [value]="sumOfCurrentValue" appFormatNumber>{{SumOfCurrentValue}}</span></div>
+             <div >{{isLoading ? ' ' : '₹'}}<span [value]="sumOfCurrentValue" appFormatNumber>{{sumOfCurrentValue}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="rate">
