@@ -14,10 +14,10 @@
         </div>
         <div class="col-md-4 text-right pt-4" *ngIf="dataSource.filteredData.length > 0">
             <img src="/assets/images/svg/download-black.svg" class="b-a p-5 c-p">
-            <img src="/assets/images/svg/reload.svg" class="b-a p-8 c-p">
+            <img src="/assets/images/svg/reload.svg" class="b-a p-8 c-p" (click)="getMappedData()">
             <button mat-stroked-button class="btn-default addon ml-12 mr-12 v-middle"><i
                     class="material-icons">filter_list</i>FILTERS</button>
-            <button mat-stroked-button class="btn-primary addon v-middle"><i class="material-icons">add</i>ADD
+            <button mat-stroked-button class="btn-primary addon v-middle" (click)="openNewCustomerIIN()"><i class="material-icons">add</i>ADD
                 NEW</button>
         </div>
     </div>

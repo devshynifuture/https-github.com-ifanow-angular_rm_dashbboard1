@@ -384,3 +384,28 @@ export class ValidatorType {
 export function escapeRegExp(s: string): string {
   return s.replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
 }
+
+/**
+ * @description private loader function which tells when all api's have been resolved
+ * You will need to add this to the component's providers to make this function private
+ */
+export class LoaderFunction {
+  private counter = 0;
+  private isLoading = false;
+
+  public get loading(){
+    return this.isLoading;
+  }
+
+  public increaseCounter() {
+    this.isLoading = true;
+    this.counter++;
+  }
+
+  public decreaseCounter() {
+    this.counter --;
+    if(this.counter == 0) {
+      this.isLoading = false;
+    }
+  }
+}

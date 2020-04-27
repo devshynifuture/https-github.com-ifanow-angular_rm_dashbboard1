@@ -38,7 +38,7 @@
                     </mat-select>
                 </div>
             </div>
-            <div class="col-md-3 pr-0">
+            <div class="col-md-2 pr-0">
                 <div class="form-group mb-0">
                     <mat-select [(ngModel)]="selectedBroker" (selectionChange)="sortDateFilter($event)"
                         class="form-control br-0">
@@ -47,7 +47,8 @@
                     </mat-select>
                 </div>
             </div>
-            <div class="col-md-2 pr-0">
+            <div class="col-md-3 text-right pt-4 pr-0">
+                <img src="/assets/images/svg/reload.svg" class="b-a p-8 c-p" (click)="getAllTransactionList()">
                 <button mat-stroked-button class="btn-primary addon v-middle" (click)="openTransaction()"><i
                         class="material-icons">add</i>ADD
                     NEW</button>
@@ -74,12 +75,12 @@
                     <div class="bar"> {{element.platformName}} </div>
                 </td>
             </ng-container>
-            <ng-container matColumnDef="name">
+            <!-- <ng-container matColumnDef="name">
                 <th mat-sort-header="brokerCode" mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar"> {{element.brokerCode}} </div>
                 </td>
-            </ng-container>
+            </ng-container> -->
             <ng-container matColumnDef="weight">
                 <th mat-sort-header="clientName" mat-header-cell *matHeaderCellDef class="br"> Investor name Client code
                 </th>
@@ -107,13 +108,13 @@
             <ng-container matColumnDef="amount">
                 <th mat-sort-header="aggregatorType" mat-header-cell *matHeaderCellDef class="br"> Amount/Units </th>
                 <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"><span appFormatNumber> {{element.amount}}</span> </div>
+                    <div class="bar"><span appFormatNumber> {{element.amount}} {{element.amtUnitType}}</span> </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="order">
-                <th mat-sort-header="orderDate" mat-header-cell *matHeaderCellDef class="br"> Order time </th>
+                <th mat-sort-header="orderDate" mat-header-cell *matHeaderCellDef class="br"> Order date time </th>
                 <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.orderDate | date:'dd/MM/yyyy'}} </div>
+                    <div class="bar"> {{element.orderDate | date:'dd/MM/yyyy h:mm'}} </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="status">
@@ -121,16 +122,16 @@
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar text-warning t-10 f-500 c-p"
                         *ngIf="element.transactionStatus == 'PENDING AUTHORIZATION'">
-                        {{element.transactionStatus}}</div>
+                       <div class="bar"> {{element.transactionStatus}} </div></div>
                     <div class="bar text-danger t-10 f-500 c-p"
                         *ngIf="element.transactionStatus == 'Transaction rejected'">
-                        {{element.transactionStatus}}</div>
+                       <div class="bar"> {{element.transactionStatus}} </div></div>
                     <div class="bar text-primary t-10 f-500 c-p"
                      *ngIf="element.transactionStatus == 'UNKNOWN'">
-                        {{element.transactionStatus}}</div>
+                       <div class="bar"> {{element.transactionStatus}} </div></div>
                     <div class="bar text-success t-10 f-500 c-p"
                         *ngIf="element.transactionStatus == 'Order submitted to AMC'">
-                        {{element.transactionStatus}}
+                       <div class="bar"> {{element.transactionStatus}} </div>
                     </div>
                     <!-- <div class="bar">{{element.transactionStatus}}</div> -->
                 </td>

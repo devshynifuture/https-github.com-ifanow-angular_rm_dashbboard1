@@ -130,6 +130,7 @@ export class SwitchTransactionComponent implements OnInit {
         clientId: this.getDataSummary.defaultClient.clientId,
         userAccountType: this.getDataSummary.defaultCredential.accountType,
         holdingType: this.getDataSummary.defaultClient.holdingType,
+        showOnlyNonZero: true,
         tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
       };
       this.onlineTransact.getExistingSchemes(obj).subscribe(
@@ -276,6 +277,7 @@ export class SwitchTransactionComponent implements OnInit {
       const obj = {
         searchQuery: value,
         bseOrderType: 'SWITCH',
+        amcId: this.scheme.amcId,
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
         advisorId: this.advisorId,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
@@ -326,7 +328,7 @@ export class SwitchTransactionComponent implements OnInit {
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
-      // investor: [(!data) ? '' : data.investor, [Validators.required]],
+      reinvest: [(!data) ? '' : data.reinvest, [Validators.required]],
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
       investmentAccountSelection: [(!data) ? '' : data.folioNo, [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],

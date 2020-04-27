@@ -37,7 +37,7 @@
                     <p class="m-0 roboto text-custom">ARN/RIA and EUIN</p>
                     <h5 class="m-0">{{defaultClient.brokerCode}}
                     </h5>
-                    <h5 class="m-0"> {{allData.euin.euin}} - Ankit Mehta</h5>
+                    <h5 class="m-0"> {{allData.euin.euin}} - {{allData.euin.name}}</h5>
                 </div>
                 <div class="col-md-2"
                     *ngIf="transactionSummary && transactionSummary.allEdit == true && subBrokerCredList.length >1 && transactionSummary.isMultiTransact==false">
