@@ -11,7 +11,7 @@
     <div class="col-md-6">
         <div class="form-group">
             <mat-form-field>
-                <input matInput class="form-control">
+                <input matInput class="form-control" placeholder="Filter By Name" (keyup)="filterTableByName($event)">
             </mat-form-field>
         </div>
     </div>
@@ -26,7 +26,8 @@
 
 <div class="row">
     <div class="col-md-12 overflow-hidden back-office-table">
-        <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonAnimation mt-8" appSkeletonLoading [appSkeletonLoading]="isLoading" matSort>
+        <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonAnimation mt-8" appSkeletonLoading
+            [appSkeletonLoading]="isLoading" matSort>
             <!-- admin name Column -->
             <ng-container matColumnDef="adminName">
                 <th mat-header-cell *matHeaderCellDef class="b-a w-20" mat-sort-header="adminName"> Admin Name </th>
@@ -127,7 +128,8 @@
                             <button mat-menu-item (click)="openOrderHistoricalFile('')">Order Historical file</button>
                         </mat-menu>
 
-                        <img [matMenuTriggerFor]="appMenu" class="c-p" *ngIf="!isLoading" src="/assets/images/svg/dot-menu.svg" class="c-p">
+                        <img [matMenuTriggerFor]="appMenu" class="c-p" *ngIf="!isLoading"
+                            src="/assets/images/svg/dot-menu.svg" class="c-p">
 
                         <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="!isLoading">
                             <mat-icon>more_vert</mat-icon>
