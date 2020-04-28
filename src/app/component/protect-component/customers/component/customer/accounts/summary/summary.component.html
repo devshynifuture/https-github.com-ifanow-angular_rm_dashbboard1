@@ -200,21 +200,19 @@
             </div>
 
         </div>
-        <div class="col-xl-8 col-lg-6 col-md-6 b-l p-0">
+        <div class="col-xl-8 col-lg-6 col-md-6 b-l p-0 bg-grey lter">
             <div class="overflow-y">
                 <div class="w-1024">
 
-                    <div class="row height63 b-b">
-                        <div class="col-md-6">
-                            <h3 class="m-0 roboto wrapper-20 pl-0 pr-0 f-500 text-black">Portfolio Summary</h3>
+                    <div class="row bg-white height63 b-b">
+                        <div class="col-md-6 d-flex align-items-center">
+                            <h3 class="m-0 roboto   f-500 text-black">Portfolio Summary</h3>
                         </div>
-                        <div class="col-md-6">
-                            <button (click)="dobAsPerRecord.open()" class="right text-right b-a mt-12 br-0 width180" mat-button>As on
+                        <div class="col-md-6 d-flex align-items-center justify-content-end">
+                            <button (click)="dobAsPerRecord.open()" class="b-a br-0 width180" mat-button>As on
                                 {{asOnDate | date:'dd/MM/yyyy'}} <i class="material-icons text-custom">
                                     keyboard_arrow_down
                                 </i>
-
-
                                 <mat-form-field class="v-h">
                                     <input (dateChange)="dateChange($event)" [matDatepicker]="dobAsPerRecord"
                                         class="form-control br-0 b-0" matInput readonly>
@@ -231,13 +229,13 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-7 pl-0">
-                            <div class="b-a mt-20">
+                        <div class="col-md-7">
+                            <div class="b-a mt-20 bg-white">
                                 <div class="row">
                                     <div class="col-md-6 p-0">
                                         <h4 class="m-0 wrapper-20">Net worth</h4>
                                     </div>
-                                    <div class="col-md-6 p-0">
+                                    <div class="col-md-6 pl-0">
                                         <h2 *ngIf="letsideBarLoader==false" class="m-0 text-primary text-right f-300 wrapper-20">
                                             ₹<span appFormatNumber [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability-liabilityTotal}}</span>
                                         </h2>
@@ -258,8 +256,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-5 p-0">
-                            <div class="b-a mt-20">
+                        <div class="col-md-5 pl-0">
+                            <div class="b-a mt-20 bg-white">
                                 <h4 class="m-0 wrapper-20 pb-0">Asset allocation</h4>
                                 <div class="highcharts-figure" id="piechartMutualFund"></div>
                             </div>
@@ -267,50 +265,49 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-12">
-                <div class="b-a wrapper-12 overflow-y">
-                    <div class="w-1024">
-                        <div class="row">
-                            <div class="col-md-4 p-0">
-                                <h4 class="m-0 pt-8 pl-8">Net cash flow</h4>
-                            </div>
-                            <div class="col-md-4 b-a">
+            <div class="mtClass">
+                <div class="w-1024 b-a wrapper-12 overflow-y bg-white">
+                    <div class="row">
+                        <div class="col-md-4 p-0">
+                            <h4 class="m-0 pt-8 pl-8">Net cash flow</h4>
+                        </div>
+                        <div class="col-md-4 b-a">
 
-                                <div class="row">
-                                    <div class="col-md-6 p-0 border-right-1 pt-8 pb-8 pr-4">
-                                        <mat-checkbox [ngClass]="{'disable-checkbox':incomeList.length>0 && expenseList.length==0}" [disabled]="filterCashFlow.income.length==0" (change)="filterData($event,'inflow')" [(ngModel)]="inflowFlag" [checked]="filterCashFlow.income.length>0">
-                                            Inflows</mat-checkbox>
-                                    </div>
-                                    <div class="col-md-6 p-0 pt-8 pb-8 pr-4 pl-16">
-                                        <mat-checkbox [ngClass]="{'disable-checkbox': incomeList.length==0 && expenseList.length>0}" [disabled]="filterCashFlow.expense.length==0" (change)="filterData($event,'outflow')" [(ngModel)]="outflowFlag" [checked]="filterCashFlow.expense.length>0">
-                                            Outflows</mat-checkbox>
-                                    </div>
+                            <div class="row">
+                                <div class="col-md-6 p-0 border-right-1 pt-8 pb-8 pr-4">
+                                    <mat-checkbox [ngClass]="{'disable-checkbox':incomeList.length>0 && expenseList.length==0}" [disabled]="filterCashFlow.income.length==0" (change)="filterData($event,'inflow')" [(ngModel)]="inflowFlag" [checked]="filterCashFlow.income.length>0">
+                                        Inflows</mat-checkbox>
+                                </div>
+                                <div class="col-md-6 p-0 pt-8 pb-8 pr-4 pl-16">
+                                    <mat-checkbox [ngClass]="{'disable-checkbox': incomeList.length==0 && expenseList.length>0}" [disabled]="filterCashFlow.expense.length==0" (change)="filterData($event,'outflow')" [(ngModel)]="outflowFlag" [checked]="filterCashFlow.expense.length>0">
+                                        Outflows</mat-checkbox>
                                 </div>
                             </div>
-                            <div class="col-md-2 pt-4">
-                                <!-- <button [matMenuTriggerFor]="menu" class="b-a pr-4 br-0" mat-button>All bank a/c <i
-                                        class="material-icons text-custom">
-                                        keyboard_arrow_down
-                                    </i></button>
-                                <mat-menu #menu="matMenu">
-                                    <button mat-menu-item>Item 1</button>
-                                    <button mat-menu-item>Item 2</button>
-                                </mat-menu> -->
-                            </div>
-                            <div class="col-md-2 pt-4">
-                                <!-- <button [matMenuTriggerFor]="menu" class="b-a pr-4 br-0" mat-button>All family <i
-                                        class="material-icons text-custom">
-                                        keyboard_arrow_down
-                                    </i></button>
-                                <mat-menu #menu="matMenu">
-                                    <button mat-menu-item>Item 1</button>
-                                    <button mat-menu-item>Item 2</button>
-                                </mat-menu> -->
-                            </div>
                         </div>
-                        <div class="row pt-20">
-                            <div class="col-md-7 pl-8">
-                                <!-- <div class="row b-grey">
+                        <div class="col-md-2 pt-4">
+                            <!-- <button [matMenuTriggerFor]="menu" class="b-a pr-4 br-0" mat-button>All bank a/c <i
+                                        class="material-icons text-custom">
+                                        keyboard_arrow_down
+                                    </i></button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item>Item 1</button>
+                                    <button mat-menu-item>Item 2</button>
+                                </mat-menu> -->
+                        </div>
+                        <div class="col-md-2 pt-4">
+                            <!-- <button [matMenuTriggerFor]="menu" class="b-a pr-4 br-0" mat-button>All family <i
+                                        class="material-icons text-custom">
+                                        keyboard_arrow_down
+                                    </i></button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item>Item 1</button>
+                                    <button mat-menu-item>Item 2</button>
+                                </mat-menu> -->
+                        </div>
+                    </div>
+                    <div class="row pt-20">
+                        <div class="col-md-7 pl-8">
+                            <!-- <div class="row b-grey">
                                     <div class="col-md-7 p-0 br-grey">
                                         <h5 class="m-0 roboto pt-8 pl-4 pb-8 text-black f-500 bb-grey">Description</h5>
                                         <p class="m-0 p-4 pb-0">Aditya Birla Sun Life Frontline Equity Fund - Regular -
@@ -373,48 +370,47 @@
                                         <p class="m-0 text-success p-4 bt-grey pt-16">5,000</p>
                                     </div>
                                 </div> -->
-                                <table mat-table [dataSource]="cashFlowViewDataSource" id="table-low" class="mt-8" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-                                    <!-- Name Column -->
-                                    <ng-container matColumnDef="description">
-                                        <th mat-header-cell *matHeaderCellDef> Description </th>
-                                        <td mat-cell *matCellDef="let element">
-                                            <div class="bar"> {{element.ownerName}}</div>
-                                            <span *ngIf="element.assetType==14">RD</span>
-                                            <span *ngIf="element.assetType==13">FD</span>
-                                        </td>
-                                    </ng-container>
+                            <table mat-table [dataSource]="cashFlowViewDataSource" id="table-low" class="mt-8" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="description">
+                                    <th mat-header-cell *matHeaderCellDef> Description </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <div class="bar"> {{element.ownerName}}</div>
+                                        <span *ngIf="element.assetType==14">RD</span>
+                                        <span *ngIf="element.assetType==13">FD</span>
+                                    </td>
+                                </ng-container>
 
-                                    <!-- Weight Column -->
-                                    <ng-container matColumnDef="date">
-                                        <th mat-header-cell *matHeaderCellDef> Date </th>
-                                        <td mat-cell *matCellDef="let element">
-                                            <div class="bar"> {{element.targetDate | date:'dd/MM/yyyy'}}</div>
-                                        </td>
-                                    </ng-container>
+                                <!-- Weight Column -->
+                                <ng-container matColumnDef="date">
+                                    <th mat-header-cell *matHeaderCellDef> Date </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <div class="bar"> {{element.targetDate | date:'dd/MM/yyyy'}}</div>
+                                    </td>
+                                </ng-container>
 
-                                    <!-- Symbol Column -->
-                                    <ng-container matColumnDef="amount">
-                                        <th mat-header-cell *matHeaderCellDef> Amount </th>
-                                        <td mat-cell *matCellDef="let element">
-                                            <span [ngClass]="{'text-success': element.colourFlag,'text-danger':element.colourFlag==false}">
-                                                <span appFormatNumber>
-                                                    <div class="bar">{{element.currentValue}}</div>
-                                                </span>
+                                <!-- Symbol Column -->
+                                <ng-container matColumnDef="amount">
+                                    <th mat-header-cell *matHeaderCellDef> Amount </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <span [ngClass]="{'text-success': element.colourFlag,'text-danger':element.colourFlag==false}">
+                                            <span appFormatNumber>
+                                                <div class="bar">{{element.currentValue}}</div>
                                             </span>
-                                        </td>
-                                    </ng-container>
+                                        </span>
+                                    </td>
+                                </ng-container>
 
-                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                                </table>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
 
-                            </div>
-                            <div class="col-md-5">
-                                <div id="cashFlow"></div>
-                            </div>
                         </div>
-
+                        <div class="col-md-5">
+                            <div id="cashFlow"></div>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
