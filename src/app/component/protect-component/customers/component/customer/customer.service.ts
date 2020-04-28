@@ -766,7 +766,7 @@ export class CustomerService {
     return this.http.getAws("https://fzwxpcsz49.execute-api.us-east-1.amazonaws.com/default/nifty500");
   }
   getDeptData() {
-    return this.http.getAws("https://l9426xyx2h.execute-api.us-east-1.amazonaws.com/default/debtindexfeed");
+    return this.http.getAws("https://qi8t9vk6pf.execute-api.us-east-1.amazonaws.com/default/debtindexfeed");
   }
 
   // overview - myfeed services
