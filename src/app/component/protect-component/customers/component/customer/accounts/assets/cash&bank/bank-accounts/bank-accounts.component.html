@@ -79,6 +79,20 @@
             </div>
         </div>
     </div>
+    <div class="row pt-48">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Linked bank account</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input autocomplete="off" matInput #bankAcNo type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="16" class="form-control br-0" formControlName="bankAcNo">
+                    <mat-hint align="start" class="f-12">Optional</mat-hint>
+                    <mat-hint align="end" class="f-12">{{bankAcNo.value.length}}/16</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
     <div class="row pt-36">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Account type</h5>
@@ -101,7 +115,7 @@
     <div class="row pt-36">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Account balance</h5>
-            <!-- <p class="m-0 text-custom f-12">Leave bank if you want to enter<br> complete transaction history </p> -->
+            <p class="m-0 text-custom f-12">This needs to be updated manually at all times</p>
         </div>
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
@@ -133,22 +147,8 @@
 
         </div>
     </div>
-    <div class="row pt-24">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8">Interest rate</h5>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group mb-0 iconPetage">
-                <mat-form-field>
-                    <input matInput autocomplete="off" type="number" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage" formControlName="interestRate" (keyup)="onChange($event)">
-                    <mat-error class="f-12" [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
-                        This field is required
-                    </mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-    </div>
-    <div class="row pt-40">
+    
+    <!-- <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Compounding frequency</h5>
         </div>
@@ -168,7 +168,7 @@
                 </mat-form-field>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <div class="row pt-24">
         <div class="col-md-5 text-right" *ngIf="showHide == true">
@@ -182,21 +182,22 @@
         </div>
     </div>
     <div *ngIf="showHide == true">
-       
-        <div class="row pt-48">
+        <div class="row pt-24">
             <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">Linked bank account</h5>
+                <h5 class="m-0 pt-8">Interest rate</h5>
             </div>
-            <div class="col-md-5">
-                <div class="form-group mb-0">
+            <div class="col-md-3">
+                <div class="form-group mb-0 iconPetage">
                     <mat-form-field>
-                        <input autocomplete="off" matInput #bankAcNo type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="16" class="form-control br-0" formControlName="bankAcNo">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{bankAcNo.value.length}}/16</mat-hint>
+                        <input matInput autocomplete="off" type="number" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage" formControlName="interestRate" (keyup)="onChange($event)">
+                        <mat-error class="f-12" [ngClass]="{'v-h':!(isInterestRate && getFormControl().interestRate.invalid || getFormControl().interestRate.touched && getFormControl().interestRate.invalid)}">
+                            This field is required
+                        </mat-error>
                     </mat-form-field>
                 </div>
             </div>
         </div>
+        
 
         <div class="row pt-48">
             <div class="col-md-5 pr-0 text-right">

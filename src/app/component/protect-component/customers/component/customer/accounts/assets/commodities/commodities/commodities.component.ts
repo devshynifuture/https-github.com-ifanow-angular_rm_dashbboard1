@@ -24,10 +24,10 @@ export class CommoditiesComponent implements OnInit {
   showRequring: string;
   @ViewChild('tableEl', { static: false }) tableEl;
 
-  displayedColumns9 = ['no', 'owner', 'grams', 'car', 'price', 'mvalue', 'pvalue', 'desc', 'status', 'icons'];
+  displayedColumns9 = ['no', 'owner', 'grams', 'car', 'price', 'mvalue','pvalue', 'desc', 'status', 'icons'];
   datasource9 = ELEMENT_DATA9;
 
-  displayedColumns10 = ['no', 'owner', 'type', 'mvalue', 'pvalue', 'pur', 'rate', 'desc', 'status', 'icons'];
+  displayedColumns10 = ['no', 'owner', 'type', 'mvalue','mvalueDate',  'pvalue', 'pur', 'rate', 'desc', 'status', 'icons'];
   datasource10 = ELEMENT_DATA10;
   advisorId: any;
   isLoading = false;
