@@ -408,15 +408,15 @@ export class HttpService {
     // let httpOptions = {
     //   headers: new HttpHeaders().set('Content-Type', 'application/json')
     // }
-    return this._http.get(url).map((res: any) => {
+    return this._http.get(url).pipe(this.errorObservable)
+    .map((res: any) => {
       if (res) {
         return res;
-      }
-      else {
+      } else {
         // this._router.navigate(['login']);
         throw new Error(res.message);
       }
-    })
+    });
   }
   getBaseUrl() {
     return this.baseUrl;
