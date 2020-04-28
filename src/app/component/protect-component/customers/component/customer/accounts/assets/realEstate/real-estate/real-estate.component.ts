@@ -105,6 +105,7 @@ export class RealEstateComponent implements OnInit {
     if (data == undefined) {
       this.noData = 'No Real estate found';
       this.datasource3.data = [];
+      this.hideFilter = true;
     }
     else if (data.realEstateList.length > 0) {
       console.log('getRealEstateRes', data);
@@ -118,6 +119,7 @@ export class RealEstateComponent implements OnInit {
       //     }
       //   }
       // });
+      this.dataList = data.realEstateList;
       this.datasource3.data = data.realEstateList;
       this.datasource3.sort = this.sort;
       this.sumOfMarketValue = data.sumOfMarketValue;
@@ -188,6 +190,30 @@ export class RealEstateComponent implements OnInit {
 
       }
     );
+  }
+
+  activeFilter:any = 'All';
+  dataList:any;
+  hideFilter:boolean = false;
+  filterData(key: string, value: any) {
+    
+    let dataFiltered = [];
+    this.activeFilter = value;
+    if(value == "All" || value == "LIVE"){ //status is hardcoded not coming from backend
+      dataFiltered = this.dataList;
+    }
+    else{
+      dataFiltered = this.dataList.filter(function (item) {
+        return item[key] === value;
+      });
+      if(dataFiltered.length <= 0){
+        this.hideFilter = false;
+      }
+    }
+    
+    this.datasource3.data = dataFiltered;
+    // this.dataSource = new MatTableDataSource(data);
+    this.datasource3.sort = this.sort;
   }
   detailedViewRealEstate(data) {
     const fragmentData = {

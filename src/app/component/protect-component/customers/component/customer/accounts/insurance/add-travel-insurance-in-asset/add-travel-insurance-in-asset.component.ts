@@ -32,6 +32,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
   nominees: any[];
   addMoreFlag=false;
   policyList: any;
+  id: any;
 
   constructor(private fb: FormBuilder,private subInjectService:SubscriptionInject,private customerService:CustomerService,private eventService:EventService) { }
   validatorType = ValidatorType
@@ -256,6 +257,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
     }
     else {
       this.dataForEdit = data.data;
+      this.id = this.dataForEdit.id;
       this.flag = "EDIT";
     }
     this.travelInsuranceForm = this.fb.group({
@@ -267,21 +269,21 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
         id: 0,
         isClient: 0
       })]),
-      name:[(this.dataForEdit ? this.dataForEdit.name : '')],
-      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId : ''), [Validators.required]],
-      planDetails: [(this.dataForEdit ? this.dataForEdit.policyFeatureId+'' : ''), [Validators.required]],
-      policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : ''), [Validators.required]],
-      insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : ''), [Validators.required]],
-      sumAssuredIdv: [(this.dataForEdit ? this.dataForEdit.sumInsuredIdv : ''), [Validators.required]],
-      planeName: [(this.dataForEdit ? this.dataForEdit.planName :''), [Validators.required]],
-      premium: [(this.dataForEdit ? this.dataForEdit.premiumAmount : ''), [Validators.required]],
-      policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : '', [Validators.required]],
-      policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : '', [Validators.required]],
-      geography: [this.dataForEdit ? this.dataForEdit.geographyId + '' : ''],
-      exclusion: [this.dataForEdit ? this.dataForEdit.exclusion :''],
-      tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : ''],
-      advisorName: [this.dataForEdit ? this.dataForEdit.advisorName :''],
-      serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch :''],
+      name:[(this.dataForEdit ? this.dataForEdit.name : null)],
+      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId : null), [Validators.required]],
+      planDetails: [(this.dataForEdit ? this.dataForEdit.policyFeatureId+'' : null), [Validators.required]],
+      policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
+      insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : null), [Validators.required]],
+      sumAssuredIdv: [(this.dataForEdit ? this.dataForEdit.sumInsuredIdv : null), [Validators.required]],
+      planeName: [(this.dataForEdit ? this.dataForEdit.planName :null), [Validators.required]],
+      premium: [(this.dataForEdit ? this.dataForEdit.premiumAmount : null), [Validators.required]],
+      policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : null, [Validators.required]],
+      policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : null, [Validators.required]],
+      geography: [this.dataForEdit ? this.dataForEdit.geographyId + '' : null],
+      exclusion: [this.dataForEdit ? this.dataForEdit.exclusion :null],
+      tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],
+      advisorName: [this.dataForEdit ? this.dataForEdit.advisorName :null],
+      serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch :null],
       nominees: this.nominees,
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
@@ -368,11 +370,13 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
     let featureList = [];
     let finalplanFeatureList = this.travelInsuranceForm.get('planFeatureForm') as FormArray
     finalplanFeatureList.controls.forEach(element => {
-      let obj =
-      {
-        policyFeatureId : element.get('planfeatures').value,
+      if(element.get('planfeatures').value){
+        let obj =
+        {
+          policyFeatureId : element.get('planfeatures').value,
+        }
+        featureList.push(obj)
       }
-      featureList.push(obj)
     })
     if (this.travelInsuranceForm.invalid) {
       this.travelInsuranceForm.markAllAsTouched();
@@ -397,6 +401,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
         "serviceBranch": this.travelInsuranceForm.get('serviceBranch').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
         "policyFeatures":featureList,
+        "id":(this.id) ? this.id : null,
         insuredMembers: memberList,
         nominees: this.travelInsuranceForm.value.getNomineeName,
       }

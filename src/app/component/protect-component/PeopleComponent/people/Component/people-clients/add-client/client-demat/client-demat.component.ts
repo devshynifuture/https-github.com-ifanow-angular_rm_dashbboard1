@@ -6,6 +6,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-client-demat',
@@ -37,6 +38,7 @@ export class ClientDematComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  clientData: any;
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
     private eventService: EventService) {
@@ -48,8 +50,10 @@ export class ClientDematComponent implements OnInit {
 
   @Input() set data(data) {
     this.userData = data;
+    this.clientData = (AuthService.getClientData()) ? AuthService.getClientData() : AuthService.getUserInfo();
     (this.userData.dematData) ? this.dematList = this.userData.dematData : '';
     if (this.userData.dematData == undefined && this.fieldFlag) {
+      this.holdingMode = '1';
       this.createDematForm(null);
       this.getDematList(data);
     }

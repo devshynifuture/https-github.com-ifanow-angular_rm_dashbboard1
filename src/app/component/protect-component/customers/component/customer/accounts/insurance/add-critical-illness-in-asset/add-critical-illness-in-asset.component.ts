@@ -34,6 +34,10 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
   flag: string;
   FamilyMember: any;
   ProposerData: any;
+  id: any;
+  bankAccountDetails: { accountList: any; controleData: any; };
+  accountList: any;
+  bankList: any;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
@@ -209,6 +213,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
     }
     else {
       this.dataForEdit = data.data;
+      this.id = this.dataForEdit.id;
       this.flag = "EDIT";
     }
     this.critialIllnessForm = this.fb.group({
@@ -220,24 +225,24 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
         id: 0,
         isClient: 0
       })]),
-      name:[(this.dataForEdit ? this.dataForEdit.name : '')],
-      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId : ''), [Validators.required]],
-      policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : ''), [Validators.required]],
-      insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : ''), [Validators.required]],
-      planeName: [(this.dataForEdit ? this.dataForEdit.planName :''), [Validators.required]],
-      premium: [(this.dataForEdit ? this.dataForEdit.premiumAmount :''), [Validators.required]],
-      policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : '', [Validators.required]],
-      policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : '', [Validators.required]],
-      cumulativeBonus: [this.dataForEdit ? this.dataForEdit.cumulativeBonus : ''],
-      bonusType: [this.dataForEdit ? this.dataForEdit.cumulativeBonusRupeesOrPercent + '' : ''],
-      additionalCovers: [this.dataForEdit ? this.dataForEdit.addOns[0].addOnId : ''],
-      coversAmount: [this.dataForEdit ? this.dataForEdit.addOns[0].addOnSumInsured : ''],
-      exclusion: [this.dataForEdit ? this.dataForEdit.exclusion :''],
-      inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : ''],
-      tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : ''],
-      advisorName: [this.dataForEdit ? this.dataForEdit.advisorName :''],
-      serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch :''],
-      bankAccount: [this.dataForEdit ? this.dataForEdit.linkedBankAccount : ''],
+      name:[(this.dataForEdit ? this.dataForEdit.name : null)],
+      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId : null), [Validators.required]],
+      policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
+      insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : null), [Validators.required]],
+      planeName: [(this.dataForEdit ? this.dataForEdit.planName :null), [Validators.required]],
+      premium: [(this.dataForEdit ? this.dataForEdit.premiumAmount :null), [Validators.required]],
+      policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : null, [Validators.required]],
+      policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : null, [Validators.required]],
+      cumulativeBonus: [this.dataForEdit ? this.dataForEdit.cumulativeBonus : null],
+      bonusType: [this.dataForEdit ? this.dataForEdit.cumulativeBonusRupeesOrPercent + '' : null],
+      additionalCovers: [this.dataForEdit ? this.dataForEdit.addOns[0].addOnId : null],
+      coversAmount: [this.dataForEdit ? this.dataForEdit.addOns[0].addOnSumInsured : null],
+      exclusion: [this.dataForEdit ? this.dataForEdit.exclusion :null],
+      inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : null],
+      tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],
+      advisorName: [this.dataForEdit ? this.dataForEdit.advisorName :null],
+      serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch :null],
+      bankAccount: [this.dataForEdit ? parseInt(this.dataForEdit.linkedBankAccount) : null],
       nominees: this.nominees,
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
@@ -294,6 +299,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
 
 
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.critialIllnessForm }
+    this.bankAccountDetails = { accountList: this.accountList, controleData: this.critialIllnessForm }
 
     // this.finalCashFlowData = [];
     // ==============owner-nominee Data ========================\\ 
@@ -302,6 +308,9 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
     // this.familyMemberId = data.familyMemberId;
   }
   ngOnInit() {
+  }
+  bankAccountList(value) {
+    this.bankList = value;
   }
   getFamilyData(value,data){
 
@@ -401,6 +410,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
         "serviceBranch": this.critialIllnessForm.get('serviceBranch').value,
         "linkedBankAccount": this.critialIllnessForm.get('bankAccount').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
+        "id":(this.id) ? this.id : null,
         insuredMembers: memberList,
         nominees: this.critialIllnessForm.value.getNomineeName,
       }

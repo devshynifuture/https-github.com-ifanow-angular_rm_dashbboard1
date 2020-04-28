@@ -762,6 +762,12 @@ export class CustomerService {
   getStockFeeds() {
     return this.httpService.get("https://6ewakqcsma.execute-api.us-east-1.amazonaws.com/default/stockfeed");
   }
+  getNiftyData() {
+    return this.httpService.get("https://fzwxpcsz49.execute-api.us-east-1.amazonaws.com/default/nifty500");
+  }
+  getDeptData() {
+    return this.httpService.get("https://l9426xyx2h.execute-api.us-east-1.amazonaws.com/default/debtindexfeed");
+  }
 
   // overview - myfeed services
   // TODO - change urls for below services

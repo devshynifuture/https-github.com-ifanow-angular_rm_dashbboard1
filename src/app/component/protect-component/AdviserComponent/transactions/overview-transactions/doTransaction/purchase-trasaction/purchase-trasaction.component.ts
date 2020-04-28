@@ -246,7 +246,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       this.schemeDetails.minAmount = this.schemeDetails.minimumPurchaseAmount;
     }
     this.purchaseTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minAmount)]);
-
+    // this.purchaseTransaction.updateValueAndValidity();
   }
 
   getFolioList() {

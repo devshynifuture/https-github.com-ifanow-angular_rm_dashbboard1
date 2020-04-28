@@ -87,7 +87,27 @@ export class AddSsyComponent implements OnInit {
   }
   setCommencementDate(date) {
     this.commencementDate = date
+   console.log(this.age(this.selectOwner[0].dateOfBirth), "owner age");
+    if(this.age(this.selectOwner[0].dateOfBirth) > 21){
+      this.ssySchemeForm.get('commDate').setErrors({ incorrect: true });
+    }
+    else{
+      this.ssySchemeForm.get('commDate').setErrors({ incorrect: false });
+      this.ssySchemeForm.get('commDate').updateValueAndValidity();
+    }
   }
+
+  age(birthday)
+{
+  birthday = new Date(birthday).getTime();
+  // let startDate = new Date(this.ssySchemeForm.value.commDate).getTime();
+  // return new Number((new Date().getTime() - birthday.getTime()) / startDate).toFixed(0);
+   let dt2 = new Date(this.ssySchemeForm.value.commDate).getTime();
+
+  var diff =(dt2 - birthday) / 1000;
+   diff /= (60 * 60 * 24);
+  return Math.abs(Math.round(diff/365.25));
+}
 
   // ===================owner-nominee directive=====================//
  display(value) {
@@ -110,8 +130,9 @@ disabledMember(value, type) {
   setTimeout(() => {
     this.selectOwner = this.nomineesListFM.filter((m)=> m.id == this.ssySchemeForm.value.getCoOwnerName[0].familyMemberId)
    }, 1000);
-  
-
+  if(value == "owner"){
+    this.ssySchemeForm.get('commDate').reset();
+  }
 }
 
 displayControler(con) {
@@ -355,6 +376,8 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ssySchemeForm}
         }
       });
     }
+
+
     // this.nominees = []
     // if (this.nomineesList) {
 
