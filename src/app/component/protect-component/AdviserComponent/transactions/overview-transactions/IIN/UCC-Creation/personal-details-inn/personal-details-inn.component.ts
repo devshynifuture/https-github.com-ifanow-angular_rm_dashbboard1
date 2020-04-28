@@ -96,12 +96,12 @@ export class PersonalDetailsInnComponent implements OnInit {
       fatherName: [!data ? '' : data.fatherName, [Validators.required]],
       motherName: [!data ? '' : data.motherName, [Validators.required]],
       dateOfBirth: [!data ? '' : data.dateOfBirth, [Validators.required]],
-      gender: [!data ? '' : data.gender, [Validators.required]],
+      gender: [!data ? '1' : data.gender, [Validators.required]],
       email: [!data ? '' : data.email],
       aadharNumber: [!data ? '' : data.aadharNumber],
       mobileNo: [!data ? '' : data.mobileNo],
       phoneNo: [!data ? '' : data.phoneNo],
-      maritalStatus: [!data ? '' : data.maritalStatus, [Validators.required]],
+      maritalStatus: [!data ? '1' : data.maritalStatus, [Validators.required]],
       addressLine1: [!data.address ? '' : data.address.addressLine1],
       addressLine2: [!data.address ? '' : data.address.addressLine2],
       pinCode: [!data.address ? '' : data.address.pinCode],
@@ -110,6 +110,10 @@ export class PersonalDetailsInnComponent implements OnInit {
       state: [!data.address ? '' : data.address.state],
       country: [!data.address ? '' : data.address.country],
     });
+    if(data.gender == undefined && data.maritalStatus == undefined){
+      this.personalDetails.controls.gender.setValue('1')
+      this.personalDetails.controls.maritalStatus.setValue('1')
+    }
   }
   getFormControl(): any {
     return this.personalDetails.controls;
