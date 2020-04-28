@@ -765,8 +765,8 @@ export class CustomerService {
 
   // overview - myfeed services
   // TODO - change urls for below services
-  getAllFeeds(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_CONSENT, data);
+  getAllFeedsPortFolio(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CUSTOMER_PORTFOLIO_SUMMARY, data);
   }
 }
 
