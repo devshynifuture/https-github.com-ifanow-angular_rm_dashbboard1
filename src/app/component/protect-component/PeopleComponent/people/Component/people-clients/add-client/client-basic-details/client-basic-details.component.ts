@@ -119,7 +119,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   }
 
   createIndividualForm(data) {
-    // this.selectedClientOwner = '1';
+    this.selectedClientOwner = '';
     (data == undefined) ? data = {} : '';
     this.basicDetails = this.fb.group({
       fullName: [data.name, [Validators.required]],

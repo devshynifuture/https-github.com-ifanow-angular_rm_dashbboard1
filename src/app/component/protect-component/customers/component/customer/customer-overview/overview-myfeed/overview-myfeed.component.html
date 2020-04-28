@@ -309,6 +309,27 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row" *ngIf="feedsData.documents && feedsData.documents.length > 0">
+                            <div class="col-md-12" *ngFor="let docs of feedsData.documents">
+                                <div class="bg-white vaultbBox">
+                                    <div class="row">
+                                        <div class="col-md-7 pr-0">
+                                            <h5 class="roboto f-500">Your secure online vault!</h5>
+                                            <p>{{docs.filesCount}} item(s) in your vault. {{docs.totalBytes/1024 | number : '0.0-2'}} space used.</p>
+                                            <button class="vaultBtn bg-primary f-16 text-white" mat-flat-button> 
+                                                Access your vault
+                                            </button>
+                                        </div>
+                                        <div class="col-md-5 pr-0">
+                                            <img src="/assets/images/svg/vault-icon.svg">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
 
                     <!-- insurance -->
@@ -358,11 +379,11 @@
                             </div>
                         </div>
 
-                        <div class="scrollingDiv d-flex" *ngFor="let tnx of feedsData.recentTransactions">
-                            <div class="transactionsBox bg-white">
+                        <div class="scrollingDiv d-flex">
+                            <div class="transactionsBox bg-white col-md-8" *ngFor="let tnx of feedsData.recentTransactions">
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <p class="mb-5">PURCHASE</p>
+                                        <p class="mb-5">{{tnx.fwTransactionType}}</p>
                                     </div>
                                     <div class="col-md-4 text-right">
                                         <p class="mb-5 text-primitive">{{tnx.type}}</p>
@@ -371,17 +392,17 @@
 
                                 <div class="row">
                                     <div class="col-md-7">
-                                        <h4>₹<span appFormatNumber>{{tnx.purchase}}</span></h4>
+                                        <h4>₹<span appFormatNumber>{{tnx.amount | number : '0.0-2'}}</span></h4>
                                     </div>
                                     <div class="col-md-5 pl-0 text-right">
-                                        <p class="text-primitive mb-10 f-12">{{tnx.date | date:'dd/MM h:mm a'}}</p>
+                                        <p class="text-primitive mb-10 f-12">{{tnx.transactionDate | date:'dd/MM h:mm a'}}</p>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <p class="text-primitive f-12 mb-5 l-18">{{tnx.plan}}</p>
-                                        <p class="mb-4">{{tnx.family}}</p>
+                                        <p class="text-primitive f-12 mb-5 l-18">{{tnx.schemeName}}</p>
+                                        <p class="mb-4">{{tnx.investorName}}</p>
                                         <span class="f-12 spanClass text-primary">
                                             UNITS ALLOTTED
                                         </span>
@@ -431,11 +452,11 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="advi_name">
-                            <img src="http://localhost:4200/assets/images/img1.jpg">
+                            <img [src]="orgDetails.reportLogoUrl">
                         </div>
                     </div>
                     <div class="col-md-9 p-0 text-left">
-                        <p class="text-black m-0">Acme Financial Advisors</p>
+                        <p class="text-black m-0">{{orgDetails.companyDisplayName}}</p>
                         <p class="text-custom m-0">Contact</p>
                     </div>
                 </div>
