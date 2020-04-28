@@ -76,6 +76,7 @@ export class SummaryComponent implements OnInit {
   goldData: any;
   silverData: any;
   nifty500Data: any;
+  deptData;
   constructor(public eventService: EventService, private cusService: CustomerService,
     private datePipe: DatePipe) {
   }
@@ -97,6 +98,18 @@ export class SummaryComponent implements OnInit {
       }
     )
   }
+
+  getDeptData() {
+    this.cusService.getDeptData().subscribe(
+      data => {
+        console.log(data);
+        this.deptData = data;
+        this.deptData.change_in_percentage = parseFloat(this.deptData.change_in_percentage)
+
+      }
+    )
+  }
+
   getStockFeedsResponse(data) {
     this.StockFeedFlag = false;
     const { bse, nse, gold, silver } = data;
@@ -175,6 +188,7 @@ export class SummaryComponent implements OnInit {
     this.getCashFlowList(obj);
     this.getStockFeeds();
     this.getNifty500Data();
+    this.getDeptData();
 
   }
 

@@ -532,6 +532,19 @@
                         <p *ngIf="nifty500Data" class="m-0 text-black f-500">{{nifty500Data.current_value}}</p>
                     </div>
                 </div>
+                <div *ngIf="selectedVal=='Debt'" class="row b-b pb-20 pt-12">
+                    <div class="col-md-6 p-0">
+                        <p class="text-black m-0 pl-16 pb-8 f-300">Dept</p>
+                    </div>
+                    <div class="col-md-3 p-0">
+                        <p *ngIf="deptData" class="m-0 "
+                            [ngClass]="{'text-success': checkNumberPositiveAndNegative(deptData.change_in_percentage),'text-danger': checkNumberPositiveAndNegative(deptData.change_in_percentage)==false}">
+                            {{deptData.change_in_percentage}}%</p>
+                    </div>
+                    <div class="col-md-3 p-0">
+                        <p *ngIf="deptData" class="m-0 text-black f-500">{{deptData.current_value}}</p>
+                    </div>
+                </div>
                 <div *ngIf="selectedVal=='C&M'" class="row b-b pb-20 pt-12">
                     <div class="col-md-6 p-0">
                         <p class="text-black m-0 pl-16 pb-8 f-300">Gold (22 CARAT)</p>
