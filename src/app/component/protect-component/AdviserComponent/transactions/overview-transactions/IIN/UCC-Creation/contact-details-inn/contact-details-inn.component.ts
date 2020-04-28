@@ -38,13 +38,16 @@ export class ContactDetailsInnComponent implements OnInit {
   generalDetails: any;
   doneData: any;
   isdCodes: Array<any> = [];
+  isLoading = false
 
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  clientData: any;
+  addressList: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
     private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
     public eventService: EventService, private ProcessTransactionService: ProcessTransactionService,
-    private peopleService : PeopleService) { }
+    private peopleService: PeopleService) { }
 
   @ViewChild('dynamic', {
     read: ViewContainerRef,
@@ -53,6 +56,7 @@ export class ContactDetailsInnComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
+    this.clientData = data.clientData
     console.log('all data in contact', this.inputData)
     this.doneData = {}
     this.list = data
@@ -81,8 +85,15 @@ export class ContactDetailsInnComponent implements OnInit {
     let value = {}
     if (this.firstHolderContact) {
       this.getdataForm(this.firstHolderContact)
+      if (this.clientData) {
+        this.getAddressList(this.clientData)
+      }
+
     } else {
       this.getdataForm('')
+      if (this.clientData) {
+        this.getAddressList(this.clientData)
+      }
     }
     this.obj1 = []
     this.sendObj = []
@@ -99,7 +110,7 @@ export class ContactDetailsInnComponent implements OnInit {
     this.eventService.changeUpperSliderState(fragmentData);
   }
   getIsdCodesData() {
-    
+
     this.peopleService.getIsdCode({}).subscribe(
       data => {
         if (data) {
@@ -110,6 +121,26 @@ export class ContactDetailsInnComponent implements OnInit {
         this.eventService.openSnackBar(err, "Dismiss")
       }
     )
+  }
+  getAddressList(data) {
+    this.addressList = {}
+    this.addressList.address = {}
+    const obj = {
+      userId: data.clientId,
+      userType: 2
+    };
+    this.custumService.getAddressList(obj).subscribe(
+      data => {
+        console.log(data);
+        console.log('address stored', data)
+        this.addressList = this.firstHolderContact
+        this.addressList.address = data[0]
+        this.getdataForm(this.addressList);
+      },
+      err => {
+        this.addressList = {};
+      }
+    );
   }
   getdataForm(data) {
     if (!data) {
@@ -130,9 +161,8 @@ export class ContactDetailsInnComponent implements OnInit {
       maritalStatus: [!data ? '' : data.maritalStatus, [Validators.required]],
       isdCodeId: [!data ? '' : data.isdCodeId, [Validators.required]],
       mobileNo: [!data ? '' : data.mobileNo, [Validators.required]],
-      phoneNo: [!data ? '' : data.phoneNo, [Validators.required]],
-      addressLine1: [!data.address ? data.addressLine1 : data.address.addressLine1, [Validators.required]],
-      addressLine2: [!data.address ? data.addressLine2 : data.address.addressLine2, [Validators.required]],
+      addressLine1: [!data.address ? data.addressLine1 : (data.address.address1) ? data.address.address1 : data.address.addressLine1, [Validators.required]],
+      addressLine2: [!data.address ? data.addressLine2 : (data.address.address2) ? data.address.address2 : data.address.addressLine2, [Validators.required]],
       pinCode: [!data.address ? data.pinCode : data.address.pinCode, [Validators.required]],
       city: [!data.address ? data.city : data.address.city, [Validators.required]],
       district: [!data.address ? data.district : data.address.district, [Validators.required]],
@@ -164,6 +194,7 @@ export class ContactDetailsInnComponent implements OnInit {
     );
   }
   getPostalPin(value) {
+    this.isLoading = true
     let obj = {
       zipCode: value
     }
@@ -180,6 +211,8 @@ export class ContactDetailsInnComponent implements OnInit {
   }
 
   PinData(data) {
+    this.isLoading = false
+
     if (data[0].Status == "Error") {
       this.pinInvalid = true;
 
@@ -255,6 +288,7 @@ export class ContactDetailsInnComponent implements OnInit {
       this.sendObj.nomineeList = this.inputData.nomineeList;
       this.sendObj.fatcaDetail = this.inputData.fatcaDetail;
       this.sendObj.generalDetails = this.inputData.generalDetails
+      this.sendObj.clientData = this.clientData
       this.openBankDetails(this.sendObj)
     }
   }

@@ -31,7 +31,7 @@
                         <h3 class="f-16 pt-8 m-0"> IFSC code </h3>
                     </div>
                     <div class="col-md-3">
-                        <mat-form-field>
+                        <!-- <mat-form-field>
                             <input #ifscCode matInput a appInputValueValidation
                                 [inputValidator]="validatorType.ALPHA_NUMERIC" [maxlength]="11"
                                 formControlName="ifscCode" type="text" class="form-control">
@@ -39,6 +39,17 @@
                             <mat-hint align="end" class="f-12 text-custom">
                                 {{ifscCode.value.length}} / 11
                             </mat-hint>
+                        </mat-form-field> -->
+                        <mat-form-field floatLabel="never" appearance="standard">
+                            <input placeholder="Enter IFSC   " autocomplete="off"
+                                (input)="toUpperCase(bankDetails.get('ifscCode'),$event)" appInputValueValidation
+                                [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="ifscCode" #ifcCode
+                                [maxLength]="11" matInput class="form-control">
+                            <mat-hint align="end" class="f-12">{{ifcCode.value.length}}/11</mat-hint>
+                            <mat-error *ngIf="bankDetails.get('ifscCode').errors?.required">This field is required
+                            </mat-error>
+                            <mat-error *ngIf="bankDetails.get('ifscCode').errors?.invalidIfsc">Ifsc code invalid
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -102,7 +113,7 @@
                     <div class="col-md-8">
 
                         <mat-radio-group aria-label="Select an option" formControlName="accountType">
-                            <mat-radio-button [value]="1"class="b-a-custom radioBtn text-primary custom-radio"
+                            <mat-radio-button [value]="1" class="b-a-custom radioBtn text-primary custom-radio"
                                 [ngClass]="bankDetails.get('accountType').value == 1 ? 'text-primary b-a-custom': ' text-primitive'"
                                 checked>
                                 Savings
@@ -118,9 +129,11 @@
 
                     </div>
                 </div>
+                <!-- <app-add-holder-names *ngIf="bankList" [holderListInput]="bankList.holderNameList"
+                    (holderList)="getHolderList($event)">
+                </app-add-holder-names> -->
 
-
-                <div class="row pt-32">
+                <!-- <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0"> First holder name </h3>
                     </div>
@@ -132,10 +145,7 @@
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
-                    <!-- <div class="col-md-3">
-                        + Add more
-                    </div> -->
-                </div>
+                </div> -->
 
 
                 <div class="row pt-32">
@@ -173,7 +183,7 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput maxlength="30" formControlName="branchAdd1" type="text"
+                            <input matInput maxlength="100" formControlName="branchAdd1" type="text"
                                 class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
@@ -186,7 +196,7 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput maxlength="30" formControlName="branchAdd2" type="text"
+                            <input matInput maxlength="100" formControlName="branchAdd2" type="text"
                                 class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
@@ -206,6 +216,9 @@
                                 {{pincode.value.length}} / 6
                             </mat-hint>
                         </mat-form-field>
+                    </div>
+                    <div class="col-md-1 p-0 d-flex align-items-center justify-content-center mt-12">
+                        <mat-spinner *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
                     </div>
                 </div>
                 <div class="row pt-32">
@@ -267,7 +280,7 @@
                     </div>
                     <div class="col-md-5">
                         <mat-radio-group aria-label="Select an option" formControlName="bankMandate">
-                            <mat-radio-button [value]="1"class="b-a-custom radioBtn text-primary custom-radio"
+                            <mat-radio-button [value]="1" class="b-a-custom radioBtn text-primary custom-radio"
                                 [ngClass]="bankDetails.get('bankMandate').value == 1 ? 'text-primary b-a-custom': ' text-primitive'"
                                 checked>
                                 Physical
