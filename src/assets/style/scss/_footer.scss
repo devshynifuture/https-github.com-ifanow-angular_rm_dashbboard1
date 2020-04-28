@@ -2,3 +2,115 @@ footer {
     padding: 0;
     margin: 0;
 }
+@media(max-width: 767px){
+	#mobile-footer-tabs{
+		 height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  background: #E5E5E5;
+
+nav {
+  position: relative;
+  display: block;
+  background-color: #ffffff;
+  padding: 10px 20px;
+
+  width: 100%;
+  overflow: hidden;
+}
+
+nav a {
+  position: relative;
+  text-decoration: none;
+  color: #000000;
+ font-family: CircularStd;
+
+  font-size: 14px;
+  line-height: 1;
+  text-align: center;
+  display: inline-block;
+  
+  padding: 10px;
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+nav a b {
+  position: relative;
+  top: 40px;
+  transition: 0.3s ease top;
+  font-style: normal;
+font-weight: normal;
+text-transform: capitalize;
+left: 5px;
+}
+
+nav a i {
+  position: relative;
+  left: 25%;
+  transition: 0.3s ease left;
+  font-size: 18px;
+}
+
+nav span {
+  position: absolute;
+  min-width: 24%;
+  background-color: #e5eeff;
+  top: 10px;
+  bottom: 10px;
+  left: 20px;
+  border-radius: 50px;
+  z-index: 1;
+  transition: 0.3s ease left;
+}
+
+nav a:hover b {
+  top: 0;
+}
+
+nav a:hover i {
+  left: 0;
+}
+a:nth-child(1) b {
+  top: 0;
+}
+
+a:nth-child(1) i {
+  left: 0;
+}
+
+nav a:nth-child(1):hover ~ span {
+  left: 5%;
+}
+
+nav a:nth-child(2):hover ~ span {
+  left: 25%;
+}
+
+nav a:nth-child(3):hover ~ span {
+  left: 50%;
+}
+
+nav a:nth-child(4):hover ~ span {
+  left: 73%;
+}
+nav a:nth-child(1),nav span:nth-child(1){
+      width: 21.35%;
+
+}
+nav a:nth-child(2),nav span:nth-child(2){
+      width: 25.35%;
+
+}
+nav a:nth-child(3),nav span:nth-child(3){
+     width: 25.35%;
+
+}
+nav a:nth-child(4),nav span:nth-child(4){
+      width: 22.35%;
+
+}
+}
+}
