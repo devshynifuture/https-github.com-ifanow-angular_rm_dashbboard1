@@ -7,6 +7,8 @@ import {UtilService} from 'src/app/services/util.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {OnlineTransactionService} from '../../../../online-transaction.service';
 import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-iin-ucc-creation',
@@ -19,15 +21,20 @@ export class IinUccCreationComponent implements OnInit {
   familyMemberData: any;
   familyMemberId: any;
   generalDetails: any;
+  advisorId: any;
+  clientData: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private processTrasaction: ProcessTransactionService,
               private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
+              private peopleService: PeopleService,
               private onlineTransact: OnlineTransactionService, public eventService: EventService) {
+                this.advisorId = AuthService.getAdvisorId()
   }
 
   ngOnInit() {
     this.getIINUCCRegistration();
     this.getdataForm('');
+    this.getClients()
   }
 
   Close(flag) {
@@ -63,23 +70,18 @@ export class IinUccCreationComponent implements OnInit {
         }
       }
     );
-
-    // const fragmentData = {
-    //   flag: 'app-upper-customer',
-    //   id: 1,
-    //   data,
-    //   direction: 'top',
-    //   componentName: PersonalDetailsInnComponent,
-    //   state: 'open'
-    // };
-    // const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-    //   upperSliderData => {
-    //     if (UtilService.isDialogClose(upperSliderData)) {
-    //       // this.getClientSubscriptionList();
-    //       subscription.unsubscribe();
-    //     }
-    //   }
-    // );
+  }
+  getClients() {
+    const obj = {
+      advisorId: this.advisorId,
+    };
+    this.peopleService.getClientList(obj).subscribe(
+      data => this.getClientListRes(data)
+    );
+  }
+  getClientListRes(data){
+    console.log('client data',data)
+    this.clientData = data[0]
   }
   getIINUCCRegistration() {
     const obj = {
@@ -126,6 +128,7 @@ export class IinUccCreationComponent implements OnInit {
       clientId: this.familyMemberData.clientId,
       advisorId: this.familyMemberData.advisorId,
       taxStatus: this.generalDetails.controls.taxStatus.value,
+      clientData : this.clientData
     };
     this.openPersonalDetails(obj);
   }
