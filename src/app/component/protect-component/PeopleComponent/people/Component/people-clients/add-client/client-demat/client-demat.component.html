@@ -163,7 +163,7 @@
                         <mat-select appOwnerNominee matInput formControlName="name" [clientIdData]="userData.clientId"
                             [data]='ownerData' (selectionChange)="disabledMember($event.value,'nominee')"
                             (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
-                            <mat-option *ngIf="nomineesListFM" value=''>{{userData.name}}</mat-option>
+                            <mat-option *ngIf="nomineesListFM" value=''>{{clientData.name}}</mat-option>
                             <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                 <span>{{f.userName}}</span>
                             </mat-option>
