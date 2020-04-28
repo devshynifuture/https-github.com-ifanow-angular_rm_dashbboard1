@@ -122,7 +122,7 @@
                     </div>
                     <div class="col-md-8">
                         <mat-radio-group aria-label="Select an option" formControlName="maritalStatus">
-                            <mat-radio-button [value]="1" class="b-a-custom radioBtn text-primary custom-radio" [ngClass]="personalDetails.get('maritalStatus').value == 1 ? 'text-primary b-a-custom': ' text-primitive'" checked="true">
+                            <mat-radio-button [value]="1" class="b-ua text-custom radioBtn text-primary custom-radio" [ngClass]="personalDetails.get('maritalStatus').value == 1 ? 'text-primary b-a-custom': ' text-primitive'" checked="true">
                                 Married
                             </mat-radio-button>
                             <mat-radio-button [value]="2" [ngClass]="personalDetails.get('maritalStatus').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
@@ -167,9 +167,9 @@
     </div>
 
     <div class="col-md-5 center_menu">
-        <a class="activeLink" (click)="SendToForm('first',false);"> First holder </a>
-        <a class="activeLink" (click)="SendToForm('second',false);"> Second holder </a>
-        <a class="activeLink" (click)="SendToForm('third',false);"> Third holder </a>
+        <a class="activeLink c-p" (click)="SendToForm('first',false);"> First holder </a>
+        <a class="activeLink c-p" (click)="SendToForm('second',false);"> Second holder </a>
+        <a class="activeLink c-p" (click)="SendToForm('third',false);"> Third holder </a>
     </div>
 
     <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">

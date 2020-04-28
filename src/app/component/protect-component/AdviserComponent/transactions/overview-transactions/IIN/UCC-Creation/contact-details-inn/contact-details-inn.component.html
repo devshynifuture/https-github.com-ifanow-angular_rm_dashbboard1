@@ -1,8 +1,7 @@
 <div class="dialogclose">
     <div class="row popup-header-fix-100">
         <div class="col-md-2 border-right-1 p-0">
-            <img class="imgAdLogo"
-                src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+            <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
         </div>
         <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
 
@@ -24,7 +23,7 @@
         <app-left-side-inn-ucc-list [data]='doneData'></app-left-side-inn-ucc-list>
         <div class="col-md-7 offset-2 p-0 bl-1 ">
             <div class="p-20">
-                <h3 class="f-18 mb-12 mt-44 f-600"> Contact person details </h3>
+                <h3 class="f-18 mb-12  f-600"> Contact person details </h3>
 
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
@@ -44,9 +43,7 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input #aadharNumber matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="11"
-                                appInputValueValidation formControlName="aadharNumber" type="number"
-                                class="form-control">
+                            <input #aadharNumber matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="11" appInputValueValidation formControlName="aadharNumber" type="number" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                             <mat-hint align="end" class="f-12 text-custom">
                                 {{aadharNumber.value.length}} / 11
@@ -62,11 +59,11 @@
                         <div class="row">
                             <div class="col-md-3 pr-0">
                                 <div class="form-group">
-                                    <mat-form-field appearance="standard">
+                                    <mat-form-field appearance="standard" floatLabel="never">
                                         <mat-select formControlName="isdCodeId" class="form-control">
                                             <mat-option value="" selected disabled>Select Country Code</mat-option>
-                                            <mat-option [value]="code.id" *ngFor="let code of isdCodes"
-                                                >{{code.code}}({{code.countryName}})
+                                            <mat-option [value]="code.id" *ngFor="let code of isdCodes">
+                                                {{code.code}}({{code.countryName}})
                                             </mat-option>
                                         </mat-select>
                                         <mat-error>This field is required</mat-error>
@@ -74,10 +71,8 @@
                                 </div>
                             </div>
                             <div class="col-md-7 p-0">
-                                <mat-form-field>
-                                    <input #mobileNo matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
-                                        appInputValueValidation maxlength="10" type="number" formControlName="mobileNo"
-                                        placeholder="Enter Mobile number" class="form-control">
+                                <mat-form-field appearance="standard" floatLabel="never">
+                                    <input #mobileNo matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation maxlength="10" type="number" formControlName="mobileNo" placeholder="Enter Mobile number" class="form-control">
                                     <mat-error class="f-12">This field is required</mat-error>
                                     <mat-hint align="end">{{mobileNo.value.length}}/10</mat-hint>
                                 </mat-form-field>
@@ -101,9 +96,7 @@
                             </div>
                             <div class="col-md-7 p-0">
                                 <mat-form-field>
-                                    <input matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
-                                        appInputValueValidation maxlength="10" type="number" formControlName="phoneNo"
-                                        class="form-control">
+                                    <input matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation maxlength="10" type="number" formControlName="phoneNo" class="form-control">
                                     <mat-error class="f-12">This field is required</mat-error>
 
                                 </mat-form-field>
@@ -147,9 +140,7 @@
                     </div>
                     <div class="col-md-3">
                         <mat-form-field>
-                            <input #pincode matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
-                                (focusout)="getPostalPin($event.target.value)" appInputValueValidation
-                                formControlName="pinCode" type="text" class="form-control">
+                            <input #pincode matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" (focusout)="getPostalPin($event.target.value)" appInputValueValidation formControlName="pinCode" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                             <mat-hint align="end" class="f-12 text-custom">
                                 {{pincode.value.length}} / 6
@@ -246,8 +237,7 @@
             PREVIOUS
         </button>
 
-        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4"
-            (click)="SendToForm(holder.type,true);">SAVE</button>
+        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" (click)="SendToForm(holder.type,true);">SAVE</button>
         <button mat-button class="greenBtn  p-0 mw-40 br-left-white " [matMenuTriggerFor]="menu">
             <i class="material-icons">
                 keyboard_arrow_up
