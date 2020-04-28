@@ -4,11 +4,11 @@ footer {
 }
 @media(max-width: 767px){
 	#mobile-footer-tabs{
-		 height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
+		//  height: 100vh;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // margin: 0;
   background: #E5E5E5;
 
 nav {
@@ -21,7 +21,7 @@ nav {
   overflow: hidden;
 }
 
-nav a {
+nav p {
   position: relative;
   text-decoration: none;
   color: #000000;
@@ -29,15 +29,17 @@ nav a {
 
   font-size: 14px;
   line-height: 1;
-  text-align: center;
+  text-align: right;
   display: inline-block;
-  
-  padding: 10px;
+  padding-top: 8px;
+  // padding-left: 15px;
+  height: 36px;
   box-sizing: border-box;
   z-index: 2;
+  margin: 0;
 }
 
-nav a b {
+nav p b {
   position: relative;
   top: 40px;
   transition: 0.3s ease top;
@@ -47,9 +49,9 @@ text-transform: capitalize;
 left: 5px;
 }
 
-nav a i {
+nav p i {
   position: relative;
-  left: 25%;
+  left: 55%;
   transition: 0.3s ease left;
   font-size: 18px;
 }
@@ -66,51 +68,53 @@ nav span {
   transition: 0.3s ease left;
 }
 
-nav a:hover b {
+nav p:hover b {
   top: 0;
 }
 
-nav a:hover i {
+nav p:hover i {
   left: 0;
 }
-a:nth-child(1) b {
+p:nth-child(1) b {
   top: 0;
 }
 
-a:nth-child(1) i {
+p:nth-child(1) i {
   left: 0;
 }
 
-nav a:nth-child(1):hover ~ span {
+nav p:nth-child(1):hover ~ span {
   left: 5%;
 }
 
-nav a:nth-child(2):hover ~ span {
+nav p:nth-child(2):hover ~ span {
   left: 25%;
 }
 
-nav a:nth-child(3):hover ~ span {
+nav p:nth-child(3):hover ~ span {
   left: 50%;
 }
 
-nav a:nth-child(4):hover ~ span {
+nav p:nth-child(4):hover ~ span {
   left: 73%;
 }
-nav a:nth-child(1),nav span:nth-child(1){
+nav p:nth-child(1),nav span:nth-child(1){
       width: 21.35%;
 
 }
-nav a:nth-child(2),nav span:nth-child(2){
+nav p:nth-child(2),nav span:nth-child(2){
       width: 25.35%;
 
 }
-nav a:nth-child(3),nav span:nth-child(3){
+nav p:nth-child(3),nav span:nth-child(3){
      width: 25.35%;
 
 }
-nav a:nth-child(4),nav span:nth-child(4){
+nav p:nth-child(4),nav span:nth-child(4){
       width: 22.35%;
 
 }
 }
 }
+
+
