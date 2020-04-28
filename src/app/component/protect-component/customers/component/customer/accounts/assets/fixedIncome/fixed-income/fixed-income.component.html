@@ -24,7 +24,7 @@
             <div class="col-md-6 p-0 text-left">
                 <h2 class="f-18 m-0 proximaFont ">Fixed deposit</h2>
             </div>
-            <div class="col-md-6 p-0 text-right right" *ngIf="dataSource.filteredData.length > 0">
+            <div class="col-md-6 p-0 text-right right" *ngIf="!hideFilter">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button (click)="pdf('Fixed deposit')" mat-menu-item>PDF</button>
@@ -42,19 +42,22 @@
                 </button>
 
                 <mat-menu #filterFixedIncomeTable>
-                    <button mat-menu-item (click)="filterFixedIncome('ownerName', 'Vinayak Nerlekar')">
+                    <!-- <button mat-menu-item (click)="filterFixedIncome('ownerName', 'Vinayak Nerlekar')">
                         Vinayak Nerlekar
                     </button>
                     <button mat-menu-item (click)="filterFixedIncome('fdType', 1)">
                         BANK FD
-                    </button>
+                    </button> -->
                     <!-- <button mat-menu-item (click)="filterFixedIncome('fdType', '2')">
                 CORPORATE FD
               </button> -->
-                    <button mat-menu-item (click)="filterFixedIncome('statusId', 'LIVE')">
+                    <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''" (click)="filterFixedIncome(null, 'All')">
+                        All
+                    </button>
+                    <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''" (click)="filterFixedIncome('statusId', 'LIVE')">
                         STATUS - LIVE
                     </button>
-                    <button mat-menu-item (click)="filterFixedIncome('statusId', 'PENDING')">
+                    <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''" (click)="filterFixedIncome('statusId', 'PENDING')">
                         STATUS - PENDING
                     </button>
                 </mat-menu>
@@ -224,7 +227,7 @@
                     Recurring deposits
                 </h2>
             </div>
-            <div class="col-md-6 p-0 text-right right " *ngIf="dataSource.filteredData.length > 0">
+            <div class="col-md-6 p-0 text-right right " *ngIf="!hideFilter">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button (click)="pdf('Recurring deposit')" mat-menu-item>PDF</button>
@@ -241,17 +244,14 @@
                     class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
                 </button>
                 <mat-menu #filterRecurring>
-                    <button mat-menu-item (click)="changeRecurringFilterMode('m')">
-                        m
+                    <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''" (click)="filterFixedIncome(null, 'All')">
+                        All
                     </button>
-                    <button mat-menu-item (click)="changeRecurringFilterMode('c')">
-                        C
+                    <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''" (click)="filterFixedIncome('statusId', 'LIVE')">
+                        STATUS - LIVE
                     </button>
-                    <button mat-menu-item (click)="changeRecurringFilterMode('s')">
-                        S
-                    </button>
-                    <button mat-menu-item (click)="changeRecurringFilterMode('status pending')">
-                        STATUS - PENDING
+                    <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''" (click)="filterFixedIncome('statusId', 'MATURED')">
+                        STATUS - MATURED
                     </button>
                 </mat-menu>
                 <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddRecurringDeposit(null)">
@@ -398,7 +398,7 @@
             <div class="col-md-6 p-0 text-left">
                 <h2 class="f-18 m-0 proximaFont">Bonds</h2>
             </div>
-            <div class="col-md-6 p-0 text-right right " *ngIf="dataSource.filteredData.length > 0">
+            <div class="col-md-6 p-0 text-right right " *ngIf="!hideFilter">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
                 <mat-menu #menu5="matMenu">
                     <button (click)="pdf('Bonds')" mat-menu-item>PDF</button>
@@ -411,9 +411,21 @@
                     <button mat-menu-item>Option 2</button>
                     <button mat-menu-item>Option 3</button>
                 </mat-menu>
-                <button mat-stroked-button class="btn-default addon mr-8 ml-8 v-middle"><i
-                        class="material-icons">filter_list</i>FILTERS
+                
+                <button mat-stroked-button [matMenuTriggerFor]="filterRecurring"
+                    class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
                 </button>
+                <mat-menu #filterRecurring>
+                    <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''" (click)="filterFixedIncome(null, 'All')">
+                        All
+                    </button>
+                    <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''" (click)="filterFixedIncome('statusId', 'LIVE')">
+                        STATUS - LIVE
+                    </button>
+                    <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''" (click)="filterFixedIncome('statusId', 'MATURED')">
+                        STATUS - MATURED
+                    </button>
+                </mat-menu>
                 <button mat-stroked-button class="btn-primary addon v-middle" (click)="openBonds(null)"> ADD NEW
                 </button>
             </div>

@@ -760,7 +760,13 @@ export class CustomerService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CASHFLOW_LIST, httpParams);
   }
   getStockFeeds() {
-    return this.httpService.get("https://6ewakqcsma.execute-api.us-east-1.amazonaws.com/default/stockfeed");
+    return this.http.getAws("https://6ewakqcsma.execute-api.us-east-1.amazonaws.com/default/stockfeed");
+  }
+  getNiftyData() {
+    return this.http.getAws("https://fzwxpcsz49.execute-api.us-east-1.amazonaws.com/default/nifty500");
+  }
+  getDeptData() {
+    return this.http.getAws("https://l9426xyx2h.execute-api.us-east-1.amazonaws.com/default/debtindexfeed");
   }
 
   // overview - myfeed services

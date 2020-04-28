@@ -54,12 +54,12 @@ export class OverviewTransactionsComponent implements OnInit {
   //     console.log('The dialog was closed');
   //   });
   // }
-   openMobileErrorCopyTransactionPopup() {
+  openMobileErrorCopyTransactionPopup() {
     const dialogRef = this.dialog.open(TransactionMobileViewComponent, {
 
-     maxWidth: '100vw',
-     width:'90%',
-     // panelClass: 'custom-modalbox-error'
+      maxWidth: '100vw',
+      width: '90%',
+      // panelClass: 'custom-modalbox-error'
       panelClass: 'custom-modalbox'
     });
 
@@ -208,16 +208,13 @@ export class OverviewTransactionsComponent implements OnInit {
       .set('RefNo', '8000504');
 
     const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Access-Control-Allow-Origin': "*",
-        // 'Access-Control-Allow-Methods': "POST, GET, OPTIONS, DELETE, PUT",
-        // 'Access-Control-Allow-Headers': "append,delete,entries,foreach,get,has,keys,set,values,Authorization"
-      }),
+      headers: new HttpHeaders()
+        .set('Access-Control-Allow-Origin', '*'),
+       
       params: params,
       body: file
-    };
 
+    };
     this.http.post(fileuploadurl, fileName, httpOptions).subscribe((responseData) => {
       console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
 

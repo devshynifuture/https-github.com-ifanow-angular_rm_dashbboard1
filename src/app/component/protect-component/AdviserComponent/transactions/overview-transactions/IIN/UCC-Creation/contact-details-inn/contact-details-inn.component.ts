@@ -8,6 +8,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
 import { PostalService } from 'src/app/services/postal.service';
 import { MatInput } from '@angular/material';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-contact-details-inn',
@@ -36,11 +37,14 @@ export class ContactDetailsInnComponent implements OnInit {
   changedValue: string;
   generalDetails: any;
   doneData: any;
+  isdCodes: Array<any> = [];
+
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
     private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
-    public eventService: EventService, private ProcessTransactionService: ProcessTransactionService) { }
+    public eventService: EventService, private ProcessTransactionService: ProcessTransactionService,
+    private peopleService : PeopleService) { }
 
   @ViewChild('dynamic', {
     read: ViewContainerRef,
@@ -73,7 +77,8 @@ export class ContactDetailsInnComponent implements OnInit {
   }
 
   ngOnInit() {
-   let value = {}
+    this.getIsdCodesData();
+    let value = {}
     if (this.firstHolderContact) {
       this.getdataForm(this.firstHolderContact)
     } else {
@@ -93,6 +98,19 @@ export class ContactDetailsInnComponent implements OnInit {
 
     this.eventService.changeUpperSliderState(fragmentData);
   }
+  getIsdCodesData() {
+    
+    this.peopleService.getIsdCode({}).subscribe(
+      data => {
+        if (data) {
+          this.isdCodes = data;
+        }
+      },
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+      }
+    )
+  }
   getdataForm(data) {
     if (!data) {
       data = {
@@ -110,6 +128,7 @@ export class ContactDetailsInnComponent implements OnInit {
       email: [(!data) ? '' : data.email, [Validators.required]],
       aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required]],
       maritalStatus: [!data ? '' : data.maritalStatus, [Validators.required]],
+      isdCodeId: [!data ? '' : data.isdCodeId, [Validators.required]],
       mobileNo: [!data ? '' : data.mobileNo, [Validators.required]],
       phoneNo: [!data ? '' : data.phoneNo, [Validators.required]],
       addressLine1: [!data.address ? data.addressLine1 : data.address.addressLine1, [Validators.required]],
@@ -119,7 +138,7 @@ export class ContactDetailsInnComponent implements OnInit {
       district: [!data.address ? data.district : data.address.district, [Validators.required]],
       state: [!data.address ? data.state : data.address.state, [Validators.required]],
       country: [!data.address ? data.country : data.address.country, [Validators.required]],
-      address:[!data.address ? data.address : data.address],
+      address: [!data.address ? data.address : data.address],
     });
   }
   getFormControl(): any {
@@ -192,7 +211,7 @@ export class ContactDetailsInnComponent implements OnInit {
         this.holder.type = value;
         this.contactDetails.setValue(this.firstHolderContact);
       } else {
-       return;
+        return;
       }
     }
     else if (value == 'second') {
@@ -232,10 +251,10 @@ export class ContactDetailsInnComponent implements OnInit {
       this.sendObj.secondHolder = Object.assign({}, this.list.secondHolder, this.contacts[1]);
       this.sendObj.thirdHolder = Object.assign({}, this.list.thirdHolder, this.contacts[2]);
       this.sendObj.holderList = this.inputData.holderList
-       this.sendObj.bankDetailList = this.inputData.bankDetailList
-       this.sendObj.nomineeList = this.inputData.nomineeList;
-       this.sendObj.fatcaDetail = this.inputData.fatcaDetail;
-       this.sendObj.generalDetails = this.inputData.generalDetails
+      this.sendObj.bankDetailList = this.inputData.bankDetailList
+      this.sendObj.nomineeList = this.inputData.nomineeList;
+      this.sendObj.fatcaDetail = this.inputData.fatcaDetail;
+      this.sendObj.generalDetails = this.inputData.generalDetails
       this.openBankDetails(this.sendObj)
     }
   }

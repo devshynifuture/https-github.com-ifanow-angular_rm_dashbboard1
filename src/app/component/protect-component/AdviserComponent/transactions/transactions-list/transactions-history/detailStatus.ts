@@ -7,6 +7,7 @@ export const detailStatusObj = {
             { name: 'Pending submission to AMC', checked: false, isShow: false, status: 4 },
             { name: 'Order submitted to AMC', checked: false, isShow: false, status: 5 },
             { name: 'Order processed', checked: false, isShow: false, status: 6 },
+            { name: 'Transaction rejected', checked: false, isShow: false, status: 7 },
             { name: 'Units alloted', checked: false, isShow: false, status: 8 },
         ],
         REDEMPTION: [
@@ -15,6 +16,7 @@ export const detailStatusObj = {
             { name: 'Pending submission to AMC', checked: false, status: 4 },
             { name: 'Order submitted to AMC', checked: false, status: 5 },
             { name: 'Order processed', checked: false, status: 6 },
+            { name: 'Transaction rejected', checked: false, isShow: false, status: 7 },
             { name: 'Units redeemed', checked: false, status: 8 },
         ],
         SWP: [
@@ -23,6 +25,7 @@ export const detailStatusObj = {
             { name: 'Pending submission to AMC', checked: false, status: 4 },
             { name: 'Order submitted to AMC', checked: false, status: 5 },
             { name: 'Order processed', checked: false, status: 6 },
+            { name: 'Transaction rejected', checked: false, isShow: false, status: 7 },
         ],
         SWITCH: [
             { name: 'Pending authorization', checked: false, status: 2 },
@@ -30,6 +33,7 @@ export const detailStatusObj = {
             { name: 'Pending submission to AMC', checked: false, status: 4 },
             { name: 'Order submitted to AMC', checked: false, status: 5 },
             { name: 'Order processed', checked: false, status: 6 },
+            { name: 'Transaction rejected', checked: false, isShow: false, status: 7 },
             { name: 'Units transferred', checked: false, status: 8 },
         ],
         STP: [
@@ -38,6 +42,7 @@ export const detailStatusObj = {
             { name: 'Pending submission to AMC', checked: false, status: 4 },
             { name: 'Order submitted to AMC', checked: false, status: 5 },
             { name: 'Order processed', checked: false, status: 6 },
+            { name: 'Transaction rejected', checked: false, isShow: false, status: 7 },
             { name: 'Units redeemed', checked: false, status: 8 },
         ],
 

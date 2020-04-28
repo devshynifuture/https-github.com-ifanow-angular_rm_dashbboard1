@@ -5,6 +5,7 @@ import {OnlineTransactionService} from '../../../online-transaction.service';
 import {ProcessTransactionService} from '../process-transaction.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {UtilService} from '../../../../../../../services/util.service';
 
 @Component({
   selector: 'app-stp-transaction',
@@ -64,12 +65,12 @@ export class StpTransactionComponent implements OnInit {
   multiTransact = false;
   childTransactions = [];
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount'];
-  endDate: Date;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               private processTransaction: ProcessTransactionService, private eventService: EventService,
               private fb: FormBuilder) {
   }
+
   @Output() changedValue = new EventEmitter();
 
   @Input()
@@ -99,9 +100,11 @@ export class StpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
     Object.assign(this.transactionSummary, {isMultiTransact: false});
   }
+
   backToTransact() {
     this.changedValue.emit('step-2');
   }
+
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data);
     this.getDataSummary = data;
@@ -111,9 +114,11 @@ export class StpTransactionComponent implements OnInit {
 
     this.stpTransaction.controls.transferIn.reset();
   }
+
   onFolioChange(folio) {
     this.stpTransaction.controls.folioSelection.reset();
   }
+
   getMandateDetails() {
     const obj1 = {
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -126,10 +131,12 @@ export class StpTransactionComponent implements OnInit {
       }
     );
   }
+
   getMandateDetailsRes(data) {
     console.log('mandate details :', data);
     this.mandateDetails = data;
   }
+
   getSchemeListTranfer(value) {
     this.showSpinnerTrans = true;
     if (this.stpTransaction.get('transferIn').invalid) {
@@ -161,11 +168,13 @@ export class StpTransactionComponent implements OnInit {
       );
     }
   }
+
   getNewSchemesRes(data) {
     this.showSpinnerTrans = false;
     console.log('new schemes', data);
     this.schemeListTransfer = data;
   }
+
   getSchemeList(value) {
     this.showSpinner = true;
     if (this.stpTransaction.get('schemeStp').invalid) {
@@ -178,6 +187,7 @@ export class StpTransactionComponent implements OnInit {
       const obj = {
         searchQuery: value,
         bseOrderType: 'STP',
+        showOnlyNonZero: true,
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
         advisorId: this.getDataSummary.defaultClient.advisorId,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
@@ -201,6 +211,7 @@ export class StpTransactionComponent implements OnInit {
 
     }
   }
+
   getExistingSchemesRes(data) {
     this.showSpinner = false;
     this.schemeList = data;
@@ -215,6 +226,7 @@ export class StpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {mutualFundId: folio.id});
     this.transactionSummary = {...this.transactionSummary};
   }
+
   selectedSchemeTransfer(schemeTransfer) {
     this.showSpinnerTrans = true;
     this.schemeTransfer = schemeTransfer;
@@ -223,7 +235,7 @@ export class StpTransactionComponent implements OnInit {
     const obj1 = {
       mutualFundSchemeMasterId: schemeTransfer.mutualFundSchemeMasterId,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-      orderType: 'ORDER',
+      orderType: 'STP',
       userAccountType: this.getDataSummary.defaultCredential.accountType,
     };
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
@@ -232,10 +244,13 @@ export class StpTransactionComponent implements OnInit {
       }
     );
   }
+
   getSchemeDetailsTranferRes(data) {
     // this.maiSchemeList = data
     this.showSpinnerTrans = false;
     this.schemeDetailsTransfer = data[0];
+    this.stpTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetailsTransfer.sipMinimumInstallmentAmount)]);
+
     if (data.length > 1) {
       this.reInvestmentOpt = data;
       console.log('reinvestment', this.reInvestmentOpt);
@@ -247,11 +262,14 @@ export class StpTransactionComponent implements OnInit {
       this.getMandateDetails();
     }
   }
+
   reinvest(scheme) {
-    this.schemeDetails = scheme;
+    this.schemeDetailsTransfer = scheme;
+    this.stpTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetailsTransfer.sipMinimumInstallmentAmount)]);
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     console.log('schemeDetails == ', this.schemeDetails);
   }
+
   selectedScheme(scheme) {
     this.scheme = scheme;
     this.showUnits = true;
@@ -261,7 +279,7 @@ export class StpTransactionComponent implements OnInit {
     const obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-      orderType: 'ORDER',
+      orderType: 'STP',
       userAccountType: this.getDataSummary.defaultCredential.accountType,
     };
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
@@ -270,6 +288,7 @@ export class StpTransactionComponent implements OnInit {
       }
     );
   }
+
   getSchemeDetailsRes(data) {
     this.showSpinner = false;
     console.log('getSchemeDetailsRes == ', data);
@@ -279,6 +298,7 @@ export class StpTransactionComponent implements OnInit {
     this.getSchemeWiseFolios();
     this.getFrequency();
   }
+
   getSchemeWiseFolios() {
     this.showSpinnerFolio = true;
     const obj1 = {
@@ -295,6 +315,7 @@ export class StpTransactionComponent implements OnInit {
       data => this.getSchemeWiseFoliosRes(data)
     );
   }
+
   getSchemeWiseFoliosRes(data) {
     this.showSpinnerFolio = false;
     console.log('res scheme folio', data);
@@ -303,6 +324,7 @@ export class StpTransactionComponent implements OnInit {
       Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
     }
   }
+
   getFrequency() {
     const obj = {
       isin: this.schemeDetails.isin,
@@ -315,13 +337,15 @@ export class StpTransactionComponent implements OnInit {
       }
     );
   }
+
   getSipFrequencyRes(data) {
     console.log('isin Frequency ----', data);
     this.switchFrequency = data;
-    this.switchFrequency = data.filter(function(element) {
+    this.switchFrequency = data.filter((element) => {
       return element.frequency;
     });
   }
+
   selectedFrequency(getFrerq) {
     // this.fre = getFrerq
     this.frequency = getFrerq.frequency;
@@ -331,10 +355,10 @@ export class StpTransactionComponent implements OnInit {
     } else {
       this.dateArray(getFrerq.sipDates);
     }
-
   }
+
   dateArray(sipDates) {
-    const currentDate = new Date();
+    const currentDate = UtilService.getEndOfDay(new Date());
     currentDate.setDate(currentDate.getDate() + 7);
 
     this.dates = sipDates.split(',');
@@ -344,19 +368,24 @@ export class StpTransactionComponent implements OnInit {
     });
     console.log('dateDisplay = ', this.dateDisplay);
   }
+
   stpType(value) {
 
   }
+
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
+
   enteredAmount(value) {
-    Object.assign(this.transactionSummary, { enteredAmount: value });
+    Object.assign(this.transactionSummary, {enteredAmount: value});
   }
+
   getbankDetails(value) {
     this.bankDetails = value[0];
     console.log('bank details', value);
   }
+
   getdataForm(data) {
     if (!data) {
       data = {};
@@ -369,7 +398,7 @@ export class StpTransactionComponent implements OnInit {
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
-      // investor: [(!data) ? '' : data.investor, [Validators.required]],
+      reinvest: [(!data) ? '' : data.reinvest, [Validators.required]],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
       frequency: [(!data) ? '' : data.employeeContry, [Validators.required]],
       investmentAccountSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
@@ -390,15 +419,10 @@ export class StpTransactionComponent implements OnInit {
   getFormControl(): any {
     return this.stpTransaction.controls;
   }
+
   stp() {
-    this.endDate = new Date();
-    this.endDate.setDate(31);
-    this.endDate.setMonth(11);
-    this.endDate.setFullYear(2099);
-    if (this.reInvestmentOpt.length > 1) {
-      if (this.stpTransaction.get('reinvest').invalid) {
-        this.stpTransaction.get('reinvest').markAsTouched();
-      }
+    if (this.reInvestmentOpt.length > 1 && this.stpTransaction.get('reinvest').invalid) {
+      this.stpTransaction.get('reinvest').markAsTouched();
     } else if (this.stpTransaction.get('investmentAccountSelection').invalid) {
       this.stpTransaction.get('investmentAccountSelection').markAsTouched();
       return;
@@ -411,11 +435,11 @@ export class StpTransactionComponent implements OnInit {
     } else if (this.stpTransaction.get('date').invalid) {
       this.stpTransaction.get('date').markAsTouched();
       return;
-    } else if (this.stpTransaction.get('installment').invalid) {
-      this.stpTransaction.get('installment').markAsTouched();
-      return;
     } else if (this.stpTransaction.get('tenure').invalid) {
       this.stpTransaction.get('tenure').markAsTouched();
+      return;
+    } else if (this.stpTransaction.get('tenure').value != '3' && this.stpTransaction.get('installment').invalid) {
+      this.stpTransaction.get('installment').markAsTouched();
       return;
     } else {
       let obj = {
@@ -434,16 +458,15 @@ export class StpTransactionComponent implements OnInit {
         familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
         adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
         clientId: this.getDataSummary.defaultClient.clientId,
-        startDate: Number(new Date(this.stpTransaction.controls.date.value.replace(/"/g, ''))),
+        startDate: Number(UtilService.getEndOfDay(new Date(this.stpTransaction.controls.date.value.replace(/"/g, '')))),
         toIsin: this.schemeDetailsTransfer.isin,
         schemeCd: this.schemeDetails.schemeCode,
         euin: this.getDataSummary.euin.euin,
-        endDate: (this.endDate).getTime(),
         orderType: 'STP',
         buySell: 'PURCHASE',
         transCode: 'NEW',
         buySellType: 'FRESH',
-        dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
+        dividendReinvestmentFlag: this.schemeDetailsTransfer.dividendReinvestmentFlag,
         amountType: 'Amount',
         noOfInstallments: this.stpTransaction.controls.installment.value,
         frequencyType: this.frequency,
@@ -473,11 +496,13 @@ export class StpTransactionComponent implements OnInit {
       this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => this.stpBSERes(data), (error) => {
+          this.barButtonOptions.active = false;
           this.eventService.showErrorMessage(error);
         }
       );
     }
   }
+
   stpBSERes(data) {
     this.barButtonOptions.active = false;
     console.log('stp res == ', data);
@@ -488,11 +513,10 @@ export class StpTransactionComponent implements OnInit {
       Object.assign(this.transactionSummary, {allEdit: false});
     }
   }
+
   AddMultiTransaction() {
-    if (this.reInvestmentOpt.length > 1) {
-      if (this.stpTransaction.get('reinvest').invalid) {
-        this.stpTransaction.get('reinvest').markAsTouched();
-      }
+    if (this.reInvestmentOpt.length > 1 && this.stpTransaction.get('reinvest').invalid) {
+      this.stpTransaction.get('reinvest').markAsTouched();
     } else if (this.stpTransaction.get('schemeStp').invalid) {
       this.stpTransaction.get('schemeStp').markAsTouched();
       return;
@@ -532,7 +556,7 @@ export class StpTransactionComponent implements OnInit {
           mandateId: (this.achMandateNSE) ? this.achMandateNSE.id : null,
           productDbId: this.schemeDetails.id,
           frequencyType: this.frequency,
-          startDate: Number(new Date(this.stpTransaction.controls.date.value.replace(/"/g, ''))),
+          startDate: Number(UtilService.getEndOfDay(new Date(this.stpTransaction.controls.date.value.replace(/"/g, '')))),
         };
         const tenure = this.stpTransaction.controls.tenure.value;
         const installment = this.stpTransaction.controls.installment.value;

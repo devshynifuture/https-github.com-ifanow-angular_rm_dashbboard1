@@ -109,26 +109,6 @@
             <mat-spinner class="mt-8"></mat-spinner>
           </div>
         </div>
-        <div *ngIf="reInvestmentOpt.length > 1" class="row pt-28 ">
-          <div class="col-md-12 p-0 text-left">
-            <h5 class="m-0 text-black pb-8">Select re-investment</h5>
-          </div>
-          <div class="col-md-5 p-0">
-            <div class="form-group mb-0">
-              <mat-form-field>
-                <mat-select class="form-control" formControlName="reinvest">
-                  <mat-option (click)="reinvest(flag)" *ngFor="let flag of reInvestmentOpt"
-                              value="option">
-                    {{(flag.dividendReinvestmentFlag == 0) ? 'Dividend payout' : 'Dividend reinvestment'}}
-                  </mat-option>
-                </mat-select>
-                <mat-error class="f-12 pt-4">
-                  This field is required
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </div>
-        </div>
         <div class="row">
           <div class="col-md-6 p-0 text-left">
             <h5 class="m-0 pt-28 text-black pb-8">Select scheme folio</h5>
@@ -218,7 +198,26 @@
             <mat-spinner class="mt-8"></mat-spinner>
           </div>
         </div>
-
+        <div *ngIf="reInvestmentOpt.length > 1" class="row pt-28 ">
+          <div class="col-md-12 p-0 text-left">
+            <h5 class="m-0 text-black pb-8">Select re-investment</h5>
+          </div>
+          <div class="col-md-5 p-0">
+            <div class="form-group mb-0">
+              <mat-form-field>
+                <mat-select class="form-control" formControlName="reinvest">
+                  <mat-option (click)="reinvest(flag)" *ngFor="let flag of reInvestmentOpt"
+                              value="option">
+                    {{(flag.dividendReinvestmentFlag == 0) ? 'Dividend payout' : 'Dividend reinvestment'}}
+                  </mat-option>
+                </mat-select>
+                <mat-error class="f-12 pt-4">
+                  This field is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
         <div class="row pt-28 ">
           <div class="col-md-12 p-0 text-left">
             <h5 class="m-0 pt-28 text-black pb-12">Switch type</h5>

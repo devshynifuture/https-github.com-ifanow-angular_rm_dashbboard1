@@ -43,6 +43,14 @@ Description description: "this is futurewise Tech" -->
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
+                        Type of FD
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{fixedDeposit.fdType == 1?"Bank FD":"Corporate FD"}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Amount invested
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
@@ -110,10 +118,18 @@ Description description: "this is futurewise Tech" -->
                 </div>
                 <div *ngIf="fixedDeposit.interestPayoutOption == 2" class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Frequency of payout per year
+                        Frequency of payout
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{(fixedDeposit.frequencyOfPayoutPerYear == 2)?'Monthly':(fixedDeposit.frequencyOfPayoutPerYear == 3)?'Quarterly':(fixedDeposit.frequencyOfPayoutPerYear == 4)?'Half yearly':'Yearly'}}
+                    </div>
+                </div>
+                <div *ngIf="fixedDeposit.interestPayoutOption == 2" class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        {{(fixedDeposit.frequencyOfPayoutPerYear == 2)?'Monthly':(fixedDeposit.frequencyOfPayoutPerYear == 3)?'Quarterly':(fixedDeposit.frequencyOfPayoutPerYear == 4)?'Half yearly':'Yearly'}} payout
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        ₹{{fixedDeposit.payoutAmount?utils.formatter(fixedDeposit.payoutAmount):'-'}}
                     </div>
                 </div>
                 <div *ngIf="fixedDeposit.interestPayoutOption == 2" class="row bb p-8 b-l br">

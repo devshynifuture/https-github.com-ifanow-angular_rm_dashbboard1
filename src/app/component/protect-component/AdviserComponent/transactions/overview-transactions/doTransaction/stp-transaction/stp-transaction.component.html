@@ -180,7 +180,7 @@
           <div class="col-md-5 p-0">
             <div class="form-group mb-0">
               <mat-form-field>
-                <mat-select class="form-control" formControlName="investmentAccountSelection">
+                <mat-select class="form-control" formControlName="reinvest">
                   <mat-option (click)="reinvest(flag)" *ngFor="let flag of reInvestmentOpt"
                               value="option">
                     {{(flag.dividendReinvestmentFlag == 0) ? 'Dividend payout' : 'Dividend reinvestment'}}
@@ -226,10 +226,10 @@
                        type="text">
                 <mat-hint align="start" class="f-12 text-custom">
                   Min amount:
-                  ₹{{(schemeDetails == undefined) ? '0' : schemeDetails.minimumPurchaseAmount }}
+                  ₹{{(schemeDetailsTransfer == undefined) ? '0' : schemeDetailsTransfer.minimumPurchaseAmount }}
                 </mat-hint>
                 <mat-error *ngIf="(stpTransaction.get('employeeContry').errors?.min)" class="f-12">
-                  Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
+                  Should be greater than or equal to {{schemeDetailsTransfer.minimumPurchaseAmount}}
                 </mat-error>
                 <mat-error *ngIf="(stpTransaction.get('employeeContry').errors?.required)" class="f-12">
                   This field is requied
@@ -275,7 +275,7 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="row">
+        <div *ngIf="(stpTransaction.get('tenure').value) != 3" class="row">
           <div class="col-md-12 p-0 text-left">
             <h5 class="m-0 pt-40 pb-12 text-black">Enter installment</h5>
           </div>

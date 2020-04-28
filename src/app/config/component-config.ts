@@ -420,7 +420,10 @@ export const appConfig = {
   ////////////////////////////////////OnlineTransaction///////////////////////////////////////
   ADD_BSE_CREDENTIALS: 'user/save',
   GET_BSE_CREDENTIALS: 'user/view',
-  GET_BSE_SUB_BROKER_CREDENTIALS: 'user/sub-broker/view',
+  ADD_SUB_BROKER:'user/sub-broker/save',
+  DELETE_BROKER:'user/delete',
+  DELETE_SUB_BROKER:'user/sub-broker/delete',
+  GET_BSE_SUB_BROKER_CREDENTIALS: 'user/sub-broker/view/details',
   GET_NEW_SCHEMES: 'mutual-fund/search',
   GET_EXISTING_SCHEMES: 'mutual-fund/existing/search',
   GET_SCHEME_DETAILS: 'mutual-fund/product-limit/get',

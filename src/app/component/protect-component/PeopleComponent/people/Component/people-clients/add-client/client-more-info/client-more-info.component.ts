@@ -54,23 +54,21 @@ export class ClientMoreInfoComponent implements OnInit {
     this.moreInfoData = data;
     console.log('ClientMoreInfoComponent data : ', data);
     if (this.fieldFlag == 'familyMember') {
+      this.occupationList = [
+        { name: "Goverment", value: 1 },
+        { name: "Service", value: 2 },
+        { name: "Private", value: 3 },
+        { name: "Business", value: 4 },
+        { name: "Self-Occupied", value: 5 },
+        { name: "Home maker", value: 6 },
+        { name: "Student", value: 7 },
+        { name: "Retired", value: 8 }
+      ]
       if (this.moreInfoData.familyMemberType == 0 || this.moreInfoData.familyMemberType == 1) {
         this.moreInfoData.categoryTypeflag = 'Individual';
-        this.occupationList = [
-          { name: "Goverment", value: 1 },
-          { name: "Service", value: 2 },
-          { name: "Private", value: 3 },
-          { name: "Business", value: 4 },
-          { name: "Self-Occupied", value: 5 },
-        ]
       }
       else {
         this.moreInfoData.categoryTypeflag = 'familyMinor';
-        this.occupationList = [
-          { name: "Home maker", value: 1 },
-          { name: "Student", value: 2 },
-          { name: "Retired", value: 3 },
-        ]
       }
       this.createMoreInfoForm(data);
     } else {
