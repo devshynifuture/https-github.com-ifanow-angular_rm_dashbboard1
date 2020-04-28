@@ -409,12 +409,10 @@ export class HttpService {
     //   headers: new HttpHeaders().set('Content-Type', 'application/json')
     // }
     return this._http.get(url).map((res: any) => {
-      if (res.status === 200) {
-        return res
+      if (res) {
+        return res;
       }
-      else if (res.status === 204) {
-        return null;
-      } else {
+      else {
         // this._router.navigate(['login']);
         throw new Error(res.message);
       }

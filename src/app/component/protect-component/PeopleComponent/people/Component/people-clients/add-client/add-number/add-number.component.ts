@@ -49,6 +49,9 @@ export class AddNumberComponent implements OnInit {
   }
 
   getIsdCodesData(taxStatusObj) {
+    if (taxStatusObj.length == 0) {
+      return;
+    }
     let obj = {};
     this.peopleService.getIsdCode(obj).subscribe(
       data => {
