@@ -69,8 +69,8 @@ export class HttpService {
 
           const resData = this.changeBase64ToString(res);
           return resData;
-          } else if (res.status === 304 || 204) {
-            return res.message;
+        } else if (res.status === 304 || 204) {
+          return res.message;
         } else if (res.status == 'active') {
           return res
         } else {
@@ -404,7 +404,22 @@ export class HttpService {
   //        .post(${environment.userLogin} , body, httpOptions)
   //        .map((res: ArrayBuffer) => res);
   //    }
-
+  getAws(url) {
+    // let httpOptions = {
+    //   headers: new HttpHeaders().set('Content-Type', 'application/json')
+    // }
+    return this._http.get(url).map((res: any) => {
+      if (res.status === 200) {
+        return res
+      }
+      else if (res.status === 204) {
+        return null;
+      } else {
+        // this._router.navigate(['login']);
+        throw new Error(res.message);
+      }
+    })
+  }
   getBaseUrl() {
     return this.baseUrl;
   }
