@@ -776,5 +776,8 @@ export class CustomerService {
   getMFData(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FEEDS_MF_DATA, data);
   }
+  getDocumentsFeed(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENTS_FEED, data);
+  }
 }
 

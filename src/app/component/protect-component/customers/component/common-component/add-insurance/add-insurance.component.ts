@@ -50,6 +50,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.insuranceSubTypeId = data.insuranceSubTypeId;
     this.getFamilyMemberList();
     this.setInsuranceDataFormField(data);
     console.log(data);
@@ -475,7 +476,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   selectPolicy(policy) {
     this.policyData = policy;
     this.insuranceTypeId = policy.insuranceTypeId;
-    this.insuranceSubTypeId = policy.insuranceSubTypeId;
+    // this.insuranceSubTypeId = policy.insuranceSubTypeId;
   }
 
   openOptionField() {

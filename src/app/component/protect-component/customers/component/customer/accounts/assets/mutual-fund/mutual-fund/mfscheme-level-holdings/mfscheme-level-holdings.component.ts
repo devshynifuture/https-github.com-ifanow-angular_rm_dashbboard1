@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatInput } from '@angular/material';
+import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-mfscheme-level-holdings',
@@ -16,6 +17,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   selectedFamilyData: any;
     nomineesListFM: any = [];
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  validatorType = ValidatorType
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder) { }
   @Input()

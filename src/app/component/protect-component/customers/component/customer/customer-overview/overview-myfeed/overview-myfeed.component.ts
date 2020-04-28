@@ -15,6 +15,7 @@ import { AppConstants } from 'src/app/services/app-constants';
 export class OverviewMyfeedComponent implements OnInit {
   clientData: any;
   advisorId: any;
+  orgDetails:any;
   chart: Chart;
 
   chartData:any[] = [
@@ -60,9 +61,11 @@ export class OverviewMyfeedComponent implements OnInit {
   constructor(
     private customerService: CustomerService,
     private loaderFn: LoaderFunction,
-    private eventService: EventService
+    private eventService: EventService,
+    private authService: AuthService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
+    this.orgDetails = authService.orgData;
   }
 
   tabsLoaded = {
@@ -165,7 +168,9 @@ export class OverviewMyfeedComponent implements OnInit {
     switch (index) {
       case 1:
         if (!this.tabsLoaded.allFeeds.dataLoaded) {
-          this.loadAllFeedsMF();
+          this.loadAllFeedsPortFolio();
+          this.loadFeedsTransactions();
+          this.loadDocumentValutData();
         }
         break;
       case 2:
@@ -211,9 +216,9 @@ export class OverviewMyfeedComponent implements OnInit {
     }
   }
 
-  loadAllFeedsMF(){
+  loadAllFeedsPortFolio(){
     const obj = {
-      clientId: 53004, 
+      clientId: this.clientData.id, 
       advisorId: this.advisorId,
       targetDate: new Date().getTime()
     }
@@ -324,10 +329,37 @@ export class OverviewMyfeedComponent implements OnInit {
     })
   }
 
-  loadTransactions(){
-    const obj = {clientId: this.clientData.clientId, advisorId: this.advisorId}
+  loadFeedsTransactions(){
+    const obj = {
+      clientId: this.clientData.id, 
+      advisorId: this.advisorId,
+      limit: 5
+    }
     this.loaderFn.increaseCounter();
-    this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
+    this.customerService.getMFData(obj).subscribe(res => {
+      if(res == null) {
+        this.feedsData.recentTransactions = null;
+      } else {
+        this.tabsLoaded.allFeeds.hasData = true;
+        this.feedsData.recentTransactions = res;
+      }
+      this.tabsLoaded.allFeeds.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
+  }
+
+  loadTransactions(){
+    const obj = {
+      clientId: this.clientData.id, 
+      advisorId: this.advisorId,
+      limit: -1
+    }
+    this.loaderFn.increaseCounter();
+    this.customerService.getMFData(obj).subscribe(res => {
       if(res == null) {
         this.transactionsData = {};
       } else {
@@ -335,6 +367,29 @@ export class OverviewMyfeedComponent implements OnInit {
         this.transactionsData = res;
       }
       this.tabsLoaded.transactions.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
+  }
+
+  loadDocumentValutData(){
+    const obj = {
+      clientId: this.clientData.id, 
+      advisorId: this.advisorId,
+      limit: -1
+    }
+    this.loaderFn.increaseCounter();
+    this.customerService.getDocumentsFeed(obj).subscribe(res => {
+      if(res == null) {
+        this.feedsData.documents = [];
+      } else {
+        this.tabsLoaded.transactions.hasData = true;
+        this.feedsData.documents = res;
+      }
+      this.tabsLoaded.allFeeds.dataLoaded = true;
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
