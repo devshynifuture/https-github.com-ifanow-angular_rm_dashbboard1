@@ -20,13 +20,13 @@ export class ReconciliationService {
 
     getBrokerListValues(data) {
         const subject = new BehaviorSubject<any>('');
+        let brokerListArr = [];
         this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_ADV_GET_BROKER_LIST, data)
             .subscribe(res => {
                 if (res) {
                     res.forEach(item => {
                         const { id } = item;
                         let brokerCode = item.arnOrRia === 1 ? 'ARN - ' + item.number : item.arnOrRia === 2 ? 'RIA - ' + item.number : null;
-                        let brokerListArr = [];
                         brokerListArr.push({
                             id,
                             brokerCode

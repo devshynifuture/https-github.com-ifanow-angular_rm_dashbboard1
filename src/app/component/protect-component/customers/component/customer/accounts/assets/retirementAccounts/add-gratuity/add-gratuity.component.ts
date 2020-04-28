@@ -254,6 +254,7 @@ addNewNominee(data) {
       bankAcNo: [(data == undefined) ? '' : data.bankAccountNumber,],
       description: [(data == undefined) ? '' : data.description,],
       id: [(data == undefined) ? '' : data.id,],
+      
       // familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],],
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],

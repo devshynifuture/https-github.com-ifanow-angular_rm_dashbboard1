@@ -185,13 +185,15 @@
             </div>
         </div>
         <div class="row pt-40">
-            <div class="col-md-4 pr-0 text-right">
-                <h5 class="m-0 pt-8">Original loan amount</h5>
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8">Premium</h5>
             </div>
             <div class="col-md-3 pr-0">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input type="text" matInput #loanAmountRef class="form-control rupess br-0" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="loanAmount">
+                        <input type="text" matInput #premium class="form-control rupess br-0"
+                            appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                            formControlName="premium">
                         <mat-error class="f-12 pt-4">
                             This field is required
                         </mat-error>
@@ -350,8 +352,6 @@
                             <input matInput formControlName="inceptionDate" [max]="maxDate" class="form-control br-0 b-0" [matDatepicker]="inceptionDatePicker" (focus)="inceptionDatePicker.open()" (input)="preventDefault($event)">
                             <mat-datepicker-toggle matSuffix [for]="inceptionDatePicker"></mat-datepicker-toggle>
                             <mat-datepicker #inceptionDatePicker></mat-datepicker>
-                            <mat-error>This field is required
-                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -474,7 +474,7 @@
                 </div>
                 <div class="col-md-5 form-group">
                     <mat-form-field>
-                        <mat-select class="form-control" appBankAccount formControlName="bankAccount" [data]="bankAccountDetails" (inputChange)='bankAccountList($event)' matInput>
+                        <mat-select class="form-control"  formControlName="bankAccount"  matInput>
                             <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
                                 {{option.bankName}}</mat-option>
                         </mat-select>
@@ -483,26 +483,8 @@
                     </mat-form-field>
                 </div>
                 <div class="col-md-1 p-0 pt-8 d-flex">
-                    <i class="material-icons text-primitive c-p float-left" (click)="addNewAccount(undefined)">add</i>
+                    <i class="material-icons text-primitive c-p float-left" appBankAccount [data]="bankAccountDetails" (inputChange)='bankAccountList($event)'>add</i>
                 </div>
-            </div>
-            <div formArrayName="addBankAccount">
-                <div *ngFor="let obj of healthInsuranceForm.controls['addBankAccount'].controls; let pointIndex=index" [formGroupName]="pointIndex">
-                    <div class="row pt-28">
-                        <div class="col-md-4"></div>
-                        <div class="col-md-5 form-group">
-                            <mat-form-field>
-                                <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="newBankAccount" #bankAccount appInputValueValidation autocomplete="off" class="form-control br-0">
-                            </mat-form-field>
-                        </div>
-                        <div class="col-md-1 p-0 pt-8 d-flex">
-                            <i class="material-icons text-primitive c-p float-right" (click)="RemoveNewAccount(pointIndex)">remove</i>
-                        </div>
-                    </div>
-
-
-                </div>
-
             </div>
 
 

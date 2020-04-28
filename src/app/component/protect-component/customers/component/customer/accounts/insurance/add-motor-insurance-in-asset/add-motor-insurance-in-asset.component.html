@@ -232,6 +232,7 @@
         <div (click)="openOptionField()" class="col-md-5 text-right">
             <p class="m-0 text-primitive f-16 c-p">Show less</p>
         </div>
+
         <div class="row pt-28">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-20 ">Vehicle registration number</h5>
@@ -370,6 +371,7 @@
                 </mat-form-field>
             </div>
         </div>
+
         <div formArrayName="getNomineeName">
             <div class="row pt-36" *ngFor="let obj of motorInsuranceForm.controls['getNomineeName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
                 <div class="col-md-5 pr-0 text-right">
@@ -436,35 +438,27 @@
         </div>
 
 
-        <!-- <div class="row pt-32">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-20 "> Linked bank account</h5>
-        </div>
-        <div class="col-md-5 form-group ">
-                <mat-form-field>
-                        <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
-                            formControlName="bankAccount" #bankAccount appInputValueValidation autocomplete="off"
-                            class="form-control br-0">
-                        <mat-error>This field is required
-                        </mat-error>
-                    </mat-form-field>
-        </div>
-    </div> -->
+
         <div class="row pt-32">
             <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-10 ">Linked bank account</h5>
+                <h5 class="m-0 pt-20 ">Linked bank account</h5>
             </div>
             <div class="col-md-5 form-group">
                 <mat-form-field>
-                    <mat-select matInput formControlName="bankAccount" autocomplete="true" class="form-control br-0">
-                        <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
-                            {{option.policy_type}}</mat-option>
+                    <mat-select class="form-control" formControlName="bankAccount" matInput>
+                        <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
+                            {{option.bankName}}</mat-option>
                     </mat-select>
                     <mat-error>This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
+            <div class="col-md-1 p-0 pt-8 d-flex">
+                <i class="material-icons text-primitive c-p float-left" appBankAccount [data]="bankAccountDetails" (inputChange)='bankAccountList($event)'>add</i>
+            </div>
         </div>
+
+
     </div>
 
 
