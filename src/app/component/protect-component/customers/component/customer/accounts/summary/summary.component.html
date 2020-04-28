@@ -61,7 +61,7 @@
                                 class="m-0 roboto relClass">
                                 <span *ngIf="letsideBarLoader==false"
                                     class="bar">{{mutualFundValue.percentage==0?'-':mutualFundValue.percentage}}<span
-                                        *ngIf="mutualFundValue.currentValue!=0" class="bar">%</span></span>
+                                        *ngIf="mutualFundValue.percentage!=0" class="bar">%</span></span>
                             </p>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                                 class="m-0 roboto relClass">
                                 <span *ngIf="letsideBarLoader==false"
                                     class="bar">{{stocks.percentage==0?'-':stocks.percentage}}<span
-                                        *ngIf="stocks.currentValue!=0" class="bar">%</span></span>
+                                        *ngIf="stocks.percentage!=0" class="bar">%</span></span>
                             </p>
 
                         </div>
@@ -108,7 +108,7 @@
                                     class=" m-0 roboto relClass">
                                     <span *ngIf="letsideBarLoader==false" class="bar">
                                         {{fixedIncome.percentage==0?'-':fixedIncome.percentage}}
-                                        <span *ngIf="fixedIncome.currentValue!=0" class="bar">%</span></span>
+                                        <span *ngIf="fixedIncome.percentage!=0" class="bar">%</span></span>
                                 </p>
                             </div>
                         </div>
@@ -132,7 +132,7 @@
                                 class=" m-0 roboto pr-8 relClass">
                                 <span *ngIf="letsideBarLoader==false"
                                     class="bar">{{realEstate.percentage==0?'-':realEstate.percentage}}<span
-                                        *ngIf="realEstate.currentValue!=0" class="bar">%</span></span>
+                                        *ngIf="realEstate.percentage!=0" class="bar">%</span></span>
                             </p>
                         </div>
                     </div>
@@ -154,7 +154,7 @@
                                 class=" m-0 roboto pr-8 relClass">
                                 <span *ngIf="letsideBarLoader==false"
                                     class="bar">{{retirement.percentage==0?'-':retirement.percentage}}<span
-                                        *ngIf="retirement.currentValue!=0" class="bar">%</span></span>
+                                        *ngIf="retirement.percentage!=0" class="bar">%</span></span>
                             </p>
 
                         </div>
@@ -177,7 +177,7 @@
                                 class=" m-0 roboto relClass">
                                 <span *ngIf="letsideBarLoader==false"
                                     class="bar">{{smallSavingScheme.percentage==0?'-':smallSavingScheme.percentage}}<span
-                                        *ngIf="smallSavingScheme.currentValue!=0" class="bar">%</span></span>
+                                        *ngIf="smallSavingScheme.percentage!=0" class="bar">%</span></span>
                             </p>
 
                         </div>
@@ -200,7 +200,7 @@
                                     class=" m-0 roboto relClass">
                                     <span *ngIf="letsideBarLoader==false"
                                         class="bar">{{cashAndFLow.percentage==0?'-':cashAndFLow.percentage}}<span
-                                            *ngIf="cashAndFLow.currentValue!=0" class="bar">%</span></span>
+                                            *ngIf="cashAndFLow.percentage!=0" class="bar">%</span></span>
                                 </p>
                             </div>
                         </div>
@@ -215,7 +215,7 @@
                         </div>
                         <div class="col-md-6 pl-0 text-right">
                             <div class="bar height24">
-                                <p *ngIf="letsideBarLoader==false" class="text-black m-0 roboto relClass">
+                                <p *ngIf="letsideBarLoader==false" class="m-0 roboto relClass">
                                     <span *ngIf="Commodities.currentValue!=0">₹</span>
                                     <span appFormatNumber [value]="Commodities.currentValue" *ngIf="Commodities"
                                         class="bar">{{Commodities.currentValue==0?'-':Commodities.currentValue}}</span>
@@ -224,7 +224,7 @@
                                     class=" m-0 roboto relClass">
                                     <span *ngIf="letsideBarLoader==false"
                                         class="bar">{{Commodities.percentage==0?'-':Commodities.percentage}}<span
-                                            *ngIf="Commodities.currentValue!=0" class="bar">%</span></span>
+                                            *ngIf="Commodities.percentage!=0" class="bar">%</span></span>
                                 </p>
                             </div>
                         </div>
@@ -233,20 +233,22 @@
             </div>
 
         </div>
-        <div class="col-xl-8 col-lg-6 col-md-6 b-l">
+        <div class="col-xl-8 col-lg-6 col-md-6 b-l p-0">
             <div class="overflow-y">
                 <div class="w-1024">
-                    <div class="row b-b">
-                        <div class="col-md-6 p-0">
+
+                    <div class="row height63 b-b">
+                        <div class="col-md-6">
                             <h3 class="m-0 roboto wrapper-20 pl-0 pr-0 f-500 text-black">Portfolio Summary</h3>
                         </div>
-                        <div class="col-md-6 pl-0">
-                            <button (click)="dobAsPerRecord.open()" class="right text-right b-a mt-12 br-0"
+                        <div class="col-md-6">
+                            <button (click)="dobAsPerRecord.open()" class="right text-right b-a mt-12 br-0 width180"
                                 mat-button>As on
                                 {{asOnDate | date:'dd/MM/yyyy'}} <i class="material-icons text-custom">
                                     keyboard_arrow_down
-                                </i></button>
-                            <div class="form-group mb-0">
+                                </i>
+
+
                                 <mat-form-field class="v-h">
                                     <input (dateChange)="dateChange($event)" [matDatepicker]="dobAsPerRecord"
                                         class="form-control br-0 b-0" matInput readonly>
@@ -254,9 +256,14 @@
                                     </mat-datepicker-toggle>
                                     <mat-datepicker #dobAsPerRecord></mat-datepicker>
                                 </mat-form-field>
+
+                            </button>
+                            <div class="form-group mb-0">
+
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-md-7 pl-0">
                             <div class="b-a mt-20">
@@ -509,7 +516,7 @@
                             {{bscData.change_in_percentage}}%</p>
                     </div>
                     <div class="col-md-3 p-0">
-                        <p *ngIf="bscData" class="m-0 text-black f-500">{{bscData.current_value}}</p>
+                        <p *ngIf="bscData" class="m-0 text-black f-500">₹{{bscData.current_value}}</p>
                     </div>
                     <div class="col-md-6 p-0">
                         <p class="text-black m-0 pl-16 pb-8 f-300">Nifty 50</p>
@@ -520,7 +527,7 @@
                             {{nscData.change_in_percentage}}%</p>
                     </div>
                     <div class="col-md-3 p-0">
-                        <p *ngIf="nscData" class="m-0 text-black f-500">{{nscData.current_value}}</p>
+                        <p *ngIf="nscData" class="m-0 text-black f-500">₹{{nscData.current_value}}</p>
                     </div>
                     <div class="col-md-6 p-0">
                         <p class="text-black m-0 pl-16 pb-8 f-300">Nifty 500</p>
@@ -529,7 +536,20 @@
                         <p *ngIf="nifty500Data" class="m-0 text-success">{{nifty500Data.change_in_percentage}}</p>
                     </div>
                     <div class="col-md-3 p-0">
-                        <p *ngIf="nifty500Data" class="m-0 text-black f-500">{{nifty500Data.current_value}}</p>
+                        <p *ngIf="nifty500Data" class="m-0 text-black f-500">₹{{nifty500Data.current_value}}</p>
+                    </div>
+                </div>
+                <div *ngIf="selectedVal=='Debt'" class="row b-b pb-20 pt-12">
+                    <div class="col-md-6 p-0">
+                        <p class="text-black m-0 pl-16 pb-8 f-300">Dept</p>
+                    </div>
+                    <div class="col-md-3 p-0">
+                        <p *ngIf="deptData" class="m-0 "
+                            [ngClass]="{'text-success': checkNumberPositiveAndNegative(deptData.change_in_percentage),'text-danger': checkNumberPositiveAndNegative(deptData.change_in_percentage)==false}">
+                            {{deptData.change_in_percentage}}%</p>
+                    </div>
+                    <div class="col-md-3 p-0">
+                        <p *ngIf="deptData" class="m-0 text-black f-500">{{deptData.current_value}}</p>
                     </div>
                 </div>
                 <div *ngIf="selectedVal=='C&M'" class="row b-b pb-20 pt-12">

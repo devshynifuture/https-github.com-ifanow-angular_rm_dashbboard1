@@ -126,7 +126,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     }
     this.settingsService.getOrgProfile(obj).subscribe(
       data => {
-        AuthService.setAppPic(data.logoUrl);
+        AuthService.setOrgDetails(data);
         // this.utilService.loader(-1);
       },
       err => {

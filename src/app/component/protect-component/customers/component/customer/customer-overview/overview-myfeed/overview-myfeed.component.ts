@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
 import { LoaderFunction } from 'src/app/services/util.service';
-import * as Highcharts from 'highcharts';
+import { EventService } from 'src/app/Data-service/event.service';
+import { Chart } from 'angular-highcharts';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-overview-myfeed',
@@ -12,11 +14,56 @@ import * as Highcharts from 'highcharts';
 })
 export class OverviewMyfeedComponent implements OnInit {
   clientData: any;
+  advisorId: any;
+  chart: Chart;
+
+  chartData:any[] = [
+    {
+      name: 'Equity',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[0],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'Fixed income',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[1],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'Commodities',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[2],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'Real estate',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[3],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'Others',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[4],
+      dataLabels: {
+        enabled: false
+      }
+    }]
+
+  chartTotal = 100;
 
   constructor(
     private customerService: CustomerService,
-    private loaderFn: LoaderFunction
-  ) { }
+    private loaderFn: LoaderFunction,
+    private eventService: EventService
+  ) {
+    this.advisorId = AuthService.getAdvisorId();
+  }
 
   tabsLoaded = {
     allFeeds:{
@@ -69,196 +116,8 @@ export class OverviewMyfeedComponent implements OnInit {
 
   ngOnInit() {
     this.clientData = AuthService.getClientData();
-    this.changeTab(1);
-    this.pieChart();
-  }
 
-  changeTab(index) {
-    this.currentTab = index;
-
-    switch (index) {
-      case 1:
-        if (!this.tabsLoaded.allFeeds.dataLoaded) {
-          this.loadAllFeeds();
-        }
-        break;
-      case 2:
-        if (!this.tabsLoaded.allFeeds.dataLoaded) {
-          this.loadAllFeeds();
-        }
-        break;
-      case 3:
-        if (!this.tabsLoaded.allFeeds.dataLoaded) {
-          this.loadAllFeeds();
-        }
-        break;
-      case 4:
-        if (!this.tabsLoaded.allFeeds.dataLoaded) {
-          this.loadAllFeeds();
-        }
-        break;
-      case 5:
-        if (!this.tabsLoaded.allFeeds.dataLoaded) {
-          this.loadAllFeeds();
-        }
-        break;
-      case 6:
-        if (!this.tabsLoaded.allFeeds.dataLoaded) {
-          this.loadAllFeeds();
-        }
-        break;
-      case 7:
-        if (!this.tabsLoaded.allFeeds.dataLoaded) {
-          this.loadAllFeeds();
-        }
-        break;
-      case 8:
-        if (!this.tabsLoaded.allFeeds.dataLoaded) {
-          this.loadAllFeeds();
-        }
-        break;
-      default:
-        break;
-    }
-  }
-
-  loadAllFeeds(){
-    const obj = {clientId: this.clientData.clientId, advisorId: this.clientData.advisorId}
-    this.loaderFn.increaseCounter();
-    this.hasError = false;
-    this.customerService.getAllFeeds(obj).subscribe(res => {
-      if(res == null) {
-        this.feedsData = {};
-      } else {
-        this.tabsLoaded.allFeeds.hasData = true;
-        this.feedsData = res;
-      }
-      this.tabsLoaded.allFeeds.dataLoaded = true;
-      this.loaderFn.decreaseCounter();
-    }, err => {
-      this.hasError = true;
-      this.loaderFn.decreaseCounter();
-    })
-  }
-
-  loadPortfolio(){
-    const obj = {clientId: this.clientData.clientId, advisorId: this.clientData.advisorId}
-    this.loaderFn.increaseCounter();
-    this.hasError = false;
-    this.customerService.getAllFeeds(obj).subscribe(res => {
-      if(res == null) {
-        this.profileData = {};
-      } else {
-        this.tabsLoaded.portfolio.hasData = true;
-        this.profileData = res;
-      }
-      this.tabsLoaded.portfolio.dataLoaded = true;
-      this.loaderFn.decreaseCounter();
-    }, err => {
-      this.hasError = true;
-      this.loaderFn.decreaseCounter();
-    })
-  }
-
-  loadPlan(){
-    const obj = {clientId: this.clientData.clientId, advisorId: this.clientData.advisorId}
-    this.loaderFn.increaseCounter();
-    this.hasError = false;
-    this.customerService.getAllFeeds(obj).subscribe(res => {
-      if(res == null) {
-        this.planData = {};
-      } else {
-        this.tabsLoaded.plan.hasData = true;
-        this.planData = res;
-      }
-      this.tabsLoaded.plan.dataLoaded = true;
-      this.loaderFn.decreaseCounter();
-    }, err => {
-      this.hasError = true;
-      this.loaderFn.decreaseCounter();
-    })
-  }
-
-  loadActivity(){
-    const obj = {clientId: this.clientData.clientId, advisorId: this.clientData.advisorId}
-    this.loaderFn.increaseCounter();
-    this.hasError = false;
-    this.customerService.getAllFeeds(obj).subscribe(res => {
-      if(res == null) {
-        this.activityData = {};
-      } else {
-        this.tabsLoaded.activity.hasData = true;
-        this.activityData = res;
-      }
-      this.tabsLoaded.activity.dataLoaded = true;
-      this.loaderFn.decreaseCounter();
-    }, err => {
-      this.hasError = true;
-      this.loaderFn.decreaseCounter();
-    })
-  }
-
-  loadTransactions(){
-    const obj = {clientId: this.clientData.clientId, advisorId: this.clientData.advisorId}
-    this.loaderFn.increaseCounter();
-    this.hasError = false;
-    this.customerService.getAllFeeds(obj).subscribe(res => {
-      if(res == null) {
-        this.transactionsData = {};
-      } else {
-        this.tabsLoaded.transactions.hasData = true;
-        this.transactionsData = res;
-      }
-      this.tabsLoaded.transactions.dataLoaded = true;
-      this.loaderFn.decreaseCounter();
-    }, err => {
-      this.hasError = true;
-      this.loaderFn.decreaseCounter();
-    })
-  }
-
-  loadProfile(){
-    const obj = {clientId: this.clientData.clientId, advisorId: this.clientData.advisorId}
-    this.loaderFn.increaseCounter();
-    this.hasError = false;
-    this.customerService.getAllFeeds(obj).subscribe(res => {
-      if(res == null) {
-        this.profileData = {};
-      } else {
-        this.tabsLoaded.profile.hasData = true;
-        this.profileData = res;
-      }
-      this.tabsLoaded.profile.dataLoaded = true;
-      this.loaderFn.decreaseCounter();
-    }, err => {
-      this.hasError = true;
-      this.loaderFn.decreaseCounter();
-    })
-  }
-
-  loadEducation(){
-    const obj = {clientId: this.clientData.clientId, advisorId: this.clientData.advisorId}
-    this.loaderFn.increaseCounter();
-    this.hasError = false;
-    this.customerService.getAllFeeds(obj).subscribe(res => {
-      if(res == null) {
-        this.educationData = {};
-      } else {
-        this.tabsLoaded.education.hasData = true;
-        this.educationData = res;
-      }
-      this.tabsLoaded.education.dataLoaded = true;
-      this.loaderFn.decreaseCounter();
-    }, err => {
-      this.hasError = true;
-      this.loaderFn.decreaseCounter();
-    })
-  }
-
-
-  
-  pieChart() {
-    Highcharts.chart('piechartMutualFund', {
+    this.chart = new Chart({
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: 0,
@@ -291,52 +150,263 @@ export class OverviewMyfeedComponent implements OnInit {
       },
       series: [{
         type: 'pie',
-        name: 'Browser share',
+        name: 'Asset allocation',
         innerSize: '60%',
-        data: [
-          {
-            name: 'Equity',
-            // y:20,
-            y: 10,
-            color: '#008FFF',
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Fixed income',
-            // y:20,
-            y: 10,
-            color: '#5DC644',
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Commodities',
-            // y:20,
-            y: 10,
-            color: '#FFC100',
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Real estate',
-            // y:20,
-            y: 10,
-            color: '#A0AEB4',
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Others',
-            // y:20,
-            y: 10,
-            color: '#FF7272',
-            dataLabels: {
-              enabled: false
-            }
-          }
-        ]
+        data: this.chartData
       }]
     });
+    this.changeTab(1);
+  }
+
+  changeTab(index) {
+    this.currentTab = index;
+    this.hasError = false;
+
+    switch (index) {
+      case 1:
+        if (!this.tabsLoaded.allFeeds.dataLoaded) {
+          this.loadAllFeedsMF();
+        }
+        break;
+      case 2:
+        if (!this.tabsLoaded.allFeeds.dataLoaded) {
+          this.loadPortfolio();
+        }
+        break;
+      case 3:
+        if (!this.tabsLoaded.allFeeds.dataLoaded) {
+          this.loadPlan();
+        }
+        break;
+      case 4:
+        if (!this.tabsLoaded.allFeeds.dataLoaded) {
+          this.loadActivity();
+        }
+        break;
+      case 5:
+        if (!this.tabsLoaded.allFeeds.dataLoaded) {
+          this.loadTransactions();
+        }
+        break;
+      case 6:
+        if (!this.tabsLoaded.allFeeds.dataLoaded) {
+          this.loadProfile();
+        }
+        break;
+      case 7:
+        if (!this.tabsLoaded.allFeeds.dataLoaded) {
+          this.loadEducation();
+        }
+        break;
+      case 8:
+        if (!this.tabsLoaded.allFeeds.dataLoaded) {
+          this.loadVideos();
+        }
+        break;
+      default:
+        console.error("Incorrect switch accessed");
+        this.eventService.showErrorMessage("Error occured");
+        this.hasError = true;
+        break;
+    }
+  }
+
+  loadAllFeedsMF(){
+    const obj = {
+      clientId: 53004, 
+      advisorId: this.advisorId,
+      targetDate: new Date().getTime()
+    }
+
+    // ?advisorId=2808&clientId=53004&targetDate=1587965868704
+    this.loaderFn.increaseCounter();
+    this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
+      if(res == null) {
+        this.feedsData.portfolioData = null;
+      } else {
+        this.tabsLoaded.allFeeds.hasData = true;
+        this.feedsData.portfolioData = res;
+
+        this.chartData = [];
+        let counter = 0;
+        let othersData = {
+          y: 0,
+          name: 'Others',
+          color: AppConstants.DONUT_CHART_COLORS[4],
+          dataLabels: {
+            enabled: false
+          }
+        }
+        this.chartTotal = 1;
+        res.forEach(element => {
+          this.chartTotal += element.investedAmount;
+          if(counter < 4) {
+            this.chartData.push({
+              y: element.investedAmount,
+              name: element.assetTypeString,
+              color: AppConstants.DONUT_CHART_COLORS[counter],
+              dataLabels: {
+                enabled: false
+              }
+            })
+          } else {
+            othersData.y += element.investedAmount; 
+          }
+          counter ++;
+        });
+        this.chartTotal -=1;
+        this.chartData.push(othersData);
+        this.pieChart(this.chartData);
+      }
+      this.tabsLoaded.allFeeds.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
+  }
+
+  loadPortfolio(){
+    const obj = {clientId: this.clientData.clientId, advisorId: this.advisorId}
+    this.loaderFn.increaseCounter();
+    this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
+      if(res == null) {
+        this.profileData = {};
+      } else {
+        this.tabsLoaded.portfolio.hasData = true;
+        this.profileData = res;
+      }
+      this.tabsLoaded.portfolio.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
+  }
+
+  loadPlan(){
+    const obj = {clientId: this.clientData.clientId, advisorId: this.advisorId}
+    this.loaderFn.increaseCounter();
+    this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
+      if(res == null) {
+        this.planData = {};
+      } else {
+        this.tabsLoaded.plan.hasData = true;
+        this.planData = res;
+      }
+      this.tabsLoaded.plan.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
+  }
+
+  loadActivity(){
+    const obj = {clientId: this.clientData.clientId, advisorId: this.advisorId}
+    this.loaderFn.increaseCounter();
+    this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
+      if(res == null) {
+        this.activityData = {};
+      } else {
+        this.tabsLoaded.activity.hasData = true;
+        this.activityData = res;
+      }
+      this.tabsLoaded.activity.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
+  }
+
+  loadTransactions(){
+    const obj = {clientId: this.clientData.clientId, advisorId: this.advisorId}
+    this.loaderFn.increaseCounter();
+    this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
+      if(res == null) {
+        this.transactionsData = {};
+      } else {
+        this.tabsLoaded.transactions.hasData = true;
+        this.transactionsData = res;
+      }
+      this.tabsLoaded.transactions.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
+  }
+
+  loadProfile(){
+    const obj = {clientId: this.clientData.clientId, advisorId: this.advisorId}
+    this.loaderFn.increaseCounter();
+    this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
+      if(res == null) {
+        this.profileData = {};
+      } else {
+        this.tabsLoaded.profile.hasData = true;
+        this.profileData = res;
+      }
+      this.tabsLoaded.profile.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
+  }
+
+  loadEducation(){
+    const obj = {clientId: this.clientData.clientId, advisorId: this.advisorId}
+    this.loaderFn.increaseCounter();
+    this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
+      if(res == null) {
+        this.educationData = {};
+      } else {
+        this.tabsLoaded.education.hasData = true;
+        this.educationData = res;
+      }
+      this.tabsLoaded.education.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
+  }
+
+  loadVideos(){
+    const obj = {clientId: this.clientData.clientId, advisorId: this.advisorId}
+    this.loaderFn.increaseCounter();
+    this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
+      if(res == null) {
+        this.educationData = {};
+      } else {
+        this.tabsLoaded.education.hasData = true;
+        this.educationData = res;
+      }
+      this.tabsLoaded.education.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
+  }
+  
+  pieChart(data) {
+    this.chart.removeSeries(0);
+    this.chart.addSeries({
+      type: 'pie',
+      name: 'Asset allocation',
+      innerSize: '60%',
+      data: data,
+    }, true, true);
   }
 }

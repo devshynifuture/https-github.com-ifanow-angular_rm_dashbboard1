@@ -69,8 +69,12 @@ export class AuthService {
     localStorage.setItem('profilePic', pic);
   }
 
-  static setAppPic(pic) {
-    localStorage.setItem('webLogo', pic);
+  static setOrgDetails(data) {
+    localStorage.setItem('orgData', JSON.stringify(data));
+  }
+
+  get orgData(){
+    return JSON.parse(localStorage.getItem('orgData'));
   }
 
   get profilePic() {
@@ -78,7 +82,8 @@ export class AuthService {
   }
 
   get appPic() {
-    return localStorage.getItem('webLogo');
+    const orgData = JSON.parse(localStorage.getItem('orgData'));
+    return orgData.logoUrl;
   }
 
   setToken(token: string) {
@@ -108,7 +113,7 @@ export class AuthService {
     localStorage.removeItem('clientData');
     sessionStorage.removeItem('clientData');
     localStorage.removeItem('profilePic');
-    localStorage.removeItem('webLogo');
+    localStorage.removeItem('orgData');
 
     // this.myRoute.navigate(['login']);
   }
