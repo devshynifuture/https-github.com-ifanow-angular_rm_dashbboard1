@@ -53,7 +53,7 @@
                             </p>
                             <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(mutualFundValue.percentage),'text-danger': checkNumberPositiveAndNegative(mutualFundValue.percentage)==false,'': checkNumberPositiveAndNegative(mutualFundValue.percentage)==undefined}" class="m-0 roboto relClass">
                                 <span *ngIf="letsideBarLoader==false" class="bar">{{mutualFundValue.percentage==0?'-':mutualFundValue.percentage}}<span
-                                        *ngIf="mutualFundValue.currentValue!=0" class="bar">%</span></span>
+                                        *ngIf="mutualFundValue.percentage!=0" class="bar">%</span></span>
                             </p>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                             </p>
                             <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(stocks.percentage),'text-danger': checkNumberPositiveAndNegative(stocks.percentage)==false,'': checkNumberPositiveAndNegative(stocks.percentage)==undefined}" class="m-0 roboto relClass">
                                 <span *ngIf="letsideBarLoader==false" class="bar">{{stocks.percentage==0?'-':stocks.percentage}}<span
-                                        *ngIf="stocks.currentValue!=0" class="bar">%</span></span>
+                                        *ngIf="stocks.percentage!=0" class="bar">%</span></span>
                             </p>
 
                         </div>
@@ -93,7 +93,7 @@
                                 <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(fixedIncome.percentage),'text-danger': checkNumberPositiveAndNegative(fixedIncome.percentage)==false}" class=" m-0 roboto relClass">
                                     <span *ngIf="letsideBarLoader==false" class="bar">
                                         {{fixedIncome.percentage==0?'-':fixedIncome.percentage}}
-                                        <span *ngIf="fixedIncome.currentValue!=0" class="bar">%</span></span>
+                                        <span *ngIf="fixedIncome.percentage!=0" class="bar">%</span></span>
                                 </p>
                             </div>
                         </div>
@@ -113,7 +113,7 @@
                             </p>
                             <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(realEstate.percentage),'text-danger': checkNumberPositiveAndNegative(realEstate.percentage)==false,'': checkNumberPositiveAndNegative(realEstate.percentage)==undefined}" class=" m-0 roboto pr-8 relClass">
                                 <span *ngIf="letsideBarLoader==false" class="bar">{{realEstate.percentage==0?'-':realEstate.percentage}}<span
-                                        *ngIf="realEstate.currentValue!=0" class="bar">%</span></span>
+                                        *ngIf="realEstate.percentage!=0" class="bar">%</span></span>
                             </p>
                         </div>
                     </div>
@@ -132,7 +132,7 @@
                             </p>
                             <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(retirement.percentage),'text-danger': checkNumberPositiveAndNegative(retirement.percentage)==false,'': checkNumberPositiveAndNegative(retirement.percentage)==undefined}" class=" m-0 roboto pr-8 relClass">
                                 <span *ngIf="letsideBarLoader==false" class="bar">{{retirement.percentage==0?'-':retirement.percentage}}<span
-                                        *ngIf="retirement.currentValue!=0" class="bar">%</span></span>
+                                        *ngIf="retirement.percentage!=0" class="bar">%</span></span>
                             </p>
 
                         </div>
@@ -152,7 +152,7 @@
                             <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(smallSavingScheme.percentage),'text-danger': checkNumberPositiveAndNegative(smallSavingScheme.percentage)==false,'': checkNumberPositiveAndNegative(smallSavingScheme.percentage)==undefined}"
                                 class=" m-0 roboto relClass">
                                 <span *ngIf="letsideBarLoader==false" class="bar">{{smallSavingScheme.percentage==0?'-':smallSavingScheme.percentage}}<span
-                                        *ngIf="smallSavingScheme.currentValue!=0" class="bar">%</span></span>
+                                        *ngIf="smallSavingScheme.percentage!=0" class="bar">%</span></span>
                             </p>
 
                         </div>
@@ -171,7 +171,7 @@
                                 </p>
                                 <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(cashAndFLow.percentage),'text-danger': checkNumberPositiveAndNegative(cashAndFLow.percentage)==false,'': checkNumberPositiveAndNegative(cashAndFLow.percentage)==undefined}" class=" m-0 roboto relClass">
                                     <span *ngIf="letsideBarLoader==false" class="bar">{{cashAndFLow.percentage==0?'-':cashAndFLow.percentage}}<span
-                                            *ngIf="cashAndFLow.currentValue!=0" class="bar">%</span></span>
+                                            *ngIf="cashAndFLow.percentage!=0" class="bar">%</span></span>
                                 </p>
                             </div>
                         </div>
@@ -185,13 +185,13 @@
                         </div>
                         <div class="col-md-6 pl-0 text-right">
                             <div class="bar height24">
-                                <p *ngIf="letsideBarLoader==false" class="text-black m-0 roboto relClass">
+                                <p *ngIf="letsideBarLoader==false" class="m-0 roboto relClass">
                                     <span *ngIf="Commodities.currentValue!=0">₹</span>
                                     <span appFormatNumber [value]="Commodities.currentValue" *ngIf="Commodities" class="bar">{{Commodities.currentValue==0?'-':Commodities.currentValue}}</span>
                                 </p>
                                 <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(Commodities.percentage),'text-danger': checkNumberPositiveAndNegative(Commodities.percentage)==false,'': checkNumberPositiveAndNegative(Commodities.percentage)==undefined}" class=" m-0 roboto relClass">
                                     <span *ngIf="letsideBarLoader==false" class="bar">{{Commodities.percentage==0?'-':Commodities.percentage}}<span
-                                            *ngIf="Commodities.currentValue!=0" class="bar">%</span></span>
+                                            *ngIf="Commodities.percentage!=0" class="bar">%</span></span>
                                 </p>
                             </div>
                         </div>
@@ -457,7 +457,7 @@
                             {{bscData.change_in_percentage}}%</p>
                     </div>
                     <div class="col-md-3 p-0">
-                        <p *ngIf="bscData" class="m-0 text-black f-500">{{bscData.current_value}}</p>
+                        <p *ngIf="bscData" class="m-0 text-black f-500">₹{{bscData.current_value}}</p>
                     </div>
                     <div class="col-md-6 p-0">
                         <p class="text-black m-0 pl-16 pb-8 f-300">Nifty 50</p>
@@ -467,7 +467,7 @@
                             {{nscData.change_in_percentage}}%</p>
                     </div>
                     <div class="col-md-3 p-0">
-                        <p *ngIf="nscData" class="m-0 text-black f-500">{{nscData.current_value}}</p>
+                        <p *ngIf="nscData" class="m-0 text-black f-500">₹{{nscData.current_value}}</p>
                     </div>
                     <div class="col-md-6 p-0">
                         <p class="text-black m-0 pl-16 pb-8 f-300">Nifty 500</p>
@@ -476,7 +476,7 @@
                         <p *ngIf="nifty500Data" class="m-0 text-success">{{nifty500Data.change_in_percentage}}</p>
                     </div>
                     <div class="col-md-3 p-0">
-                        <p *ngIf="nifty500Data" class="m-0 text-black f-500">{{nifty500Data.current_value}}</p>
+                        <p *ngIf="nifty500Data" class="m-0 text-black f-500">₹{{nifty500Data.current_value}}</p>
                     </div>
                 </div>
                 <div *ngIf="selectedVal=='Debt'" class="row b-b pb-20 pt-12">
