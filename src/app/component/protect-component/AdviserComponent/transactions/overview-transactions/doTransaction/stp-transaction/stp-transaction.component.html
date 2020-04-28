@@ -180,7 +180,7 @@
           <div class="col-md-5 p-0">
             <div class="form-group mb-0">
               <mat-form-field>
-                <mat-select class="form-control" formControlName="investmentAccountSelection">
+                <mat-select class="form-control" formControlName="reinvest">
                   <mat-option (click)="reinvest(flag)" *ngFor="let flag of reInvestmentOpt"
                               value="option">
                     {{(flag.dividendReinvestmentFlag == 0) ? 'Dividend payout' : 'Dividend reinvestment'}}
