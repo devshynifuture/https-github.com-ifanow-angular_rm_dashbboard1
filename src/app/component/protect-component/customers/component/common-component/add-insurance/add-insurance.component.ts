@@ -476,6 +476,9 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   selectPolicy(policy) {
     this.policyData = policy;
     this.insuranceTypeId = policy.insuranceTypeId;
+    if(this.insuranceSubTypeId == 0){
+      this.insuranceSubTypeId = policy.insuranceSubTypeId;
+    }
     // this.insuranceSubTypeId = policy.insuranceSubTypeId;
   }
 

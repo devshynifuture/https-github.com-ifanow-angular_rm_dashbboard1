@@ -217,7 +217,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
   }
   addNewFeature(data) {
     this.planFeatureForm.push(this.fb.group({
-      planfeatures: [data ? data.policyFeatureId : ''],
+      planfeatures: [data ? data.policyFeatureId + '' : ''],
     }));
   }
   removeNewFeature(item) {
@@ -263,7 +263,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
       policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : null, [Validators.required]],
       cumulativeBonus: [this.dataForEdit ? this.dataForEdit.cumulativeBonus : null],
       bonusType: [this.dataForEdit ? this.dataForEdit.cumulativeBonusRupeesOrPercent + '' : null],
-      planfeatures: [(this.dataForEdit ? this.dataForEdit.policyFeatureId : null)],
+      planfeatures: [(this.dataForEdit ? this.dataForEdit.policyFeatureId + '': null)],
       exclusion: [this.dataForEdit ? this.dataForEdit.exclusion :null],
       inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : null],
       tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],

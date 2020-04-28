@@ -65,8 +65,10 @@
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
                         <mat-select matInput formControlName="PlanType" autocomplete="true" class="form-control br-0">
-                            <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
-                                {{option.policy_type}}</mat-option>
+                            <!-- <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
+                                {{option.policy_type}}</mat-option> -->
+                                <mat-option value='7'>Individual health</mat-option>
+                                <mat-option value='8'>Family floater</mat-option>
                         </mat-select>
                         <mat-error>This field is required
                         </mat-error>
@@ -311,8 +313,10 @@
                     <div class="form-group mb-0 iconRupess">
                         <mat-form-field>
                             <mat-select matInput formControlName="additionalCovers" autocomplete="true" class="form-control br-0">
-                                <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
-                                    {{option.add_on}}</mat-option>
+                                <!-- <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
+                                    {{option.add_on}}</mat-option> -->
+                                    <mat-option value='11'>Critical illness</mat-option>
+                                    <mat-option value='12'>Personal accident </mat-option>
                             </mat-select>
                             <mat-error>This field is required
                             </mat-error>
@@ -342,7 +346,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row pt-40">
+            <!-- <div class="row pt-40">
                 <div class="col-md-4 pr-0 text-right">
                     <h5 class="m-0 pt-8">Policy inception date</h5>
                 </div>
@@ -355,7 +359,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div formArrayName="getNomineeName">
                 <div class="row pt-36" *ngFor="let obj of healthInsuranceForm.controls['getNomineeName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
                     <div class="col-md-4 pr-0 text-right">

@@ -236,8 +236,18 @@
                 <div class="col-md-5 form-group">
                     <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select matInput formControlName="planfeatures" autocomplete="true" class="form-control br-0">
-                            <mat-option *ngFor="let option of policyFeature ;index as i" [value]="option.id">
-                                {{option.type}}</mat-option>
+                            <!-- <mat-option *ngFor="let option of policyFeature ;index as i" [value]="option.id">
+                                {{option.type}}</mat-option> -->
+                                <mat-option value='4'>Accidental death benefit</mat-option>
+                                <mat-option value='5'>Permanent total disability </mat-option>
+                                <mat-option value='6'>Permanent partial disability </mat-option>
+                                <mat-option value='7'>Transportation benefit </mat-option>
+                                <mat-option value='8'>Education benefits </mat-option>
+                                <mat-option value='9'>Funeral expense benefit </mat-option>
+                                <mat-option value='10'>Reimbursement of medical expenses</mat-option>
+                                <mat-option value='11'>Accidental medical expenses </mat-option>
+                                <mat-option value='12'>Legal expenses </mat-option>
+                                <mat-option value='13'>Double indemnity for death </mat-option>
                         </mat-select>
                         <mat-error>This field is required
                         </mat-error>
@@ -371,8 +381,7 @@
                 </mat-form-field>
             </div>
             <div class="col-md-1 p-0 pt-8 d-flex">
-                <!--  prod build [data]="bankAccountDetails" appBankAccount -->
-                <i class="material-icons text-primitive c-p float-left"  (inputChange)='bankAccountList($event)'>add</i>
+                <i class="material-icons text-primitive c-p float-left" [data]="bankAccountDetails" appBankAccount (inputChange)='bankAccountList($event)'>add</i>
             </div>
         </div>
     </div>

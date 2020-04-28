@@ -239,7 +239,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         isClient: 0
       })]),
       name: [(this.dataForEdit ? this.dataForEdit.name : null)],
-      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId : null), [Validators.required]],
+      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId + '' : null), [Validators.required]],
       planDetails: [(this.dataForEdit ? this.dataForEdit.policyFeatureId + '' : null), [Validators.required]],
       deductibleAmt: [(this.dataForEdit ? this.dataForEdit.deductibleSumInsured : null), [Validators.required]],
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
@@ -258,7 +258,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
       advisorName: [this.dataForEdit ? this.dataForEdit.advisorName : null],
       serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch : null],
       bankAccount: [this.dataForEdit ? parseInt(this.dataForEdit.linkedBankAccount): null],
-      additionalCovers: [(this.dataForEdit) ? this.addOns.addOnId : null],
+      additionalCovers: [(this.dataForEdit) ? this.addOns.addOnId + '' : null],
       coversAmount: [(this.dataForEdit) ? this.addOns.addOnSumInsured : null],
       nominees: this.nominees,
       getNomineeName: this.fb.array([this.fb.group({
