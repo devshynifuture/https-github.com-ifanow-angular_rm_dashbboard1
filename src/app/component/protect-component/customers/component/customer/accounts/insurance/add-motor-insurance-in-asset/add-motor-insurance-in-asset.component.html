@@ -119,7 +119,7 @@
         </div>
         <div class="col-md-5 form-group">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="insurerName" #insureerName appInputValueValidation autocomplete="off" class="form-control br-0" placeholder="Enter Name of insurer">
+                <input matInput type="text"  [maxLength]="30" formControlName="insurerName" #insureerName appInputValueValidation autocomplete="off" class="form-control br-0" placeholder="Enter Name of insurer">
                 <mat-error>This field is required
                 </mat-error>
             </mat-form-field>
@@ -454,7 +454,8 @@
                 </mat-form-field>
             </div>
             <div class="col-md-1 p-0 pt-8 d-flex">
-                <i class="material-icons text-primitive c-p float-left" appBankAccount [data]="bankAccountDetails" (inputChange)='bankAccountList($event)'>add</i>
+                <!--  prod build appBankAccount [data]="bankAccountDetails" -->
+                <i class="material-icons text-primitive c-p float-left"   (inputChange)='bankAccountList($event)'>add</i>
             </div>
         </div>
 

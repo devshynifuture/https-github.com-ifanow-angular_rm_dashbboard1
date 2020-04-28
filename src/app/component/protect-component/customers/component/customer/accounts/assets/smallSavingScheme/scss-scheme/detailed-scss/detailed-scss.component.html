@@ -53,7 +53,7 @@
                         Tenure
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(data.tenure)?data.tenure:'-'}}
+                        5 Years
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -69,7 +69,7 @@
                         Current value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{(data.currentValue)?data.currentValue:'-'}}
+                        {{(data.amountInvested)?data.amountInvested:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -80,14 +80,14 @@
                         {{(data.maturityValue)?data.maturityValue:'-'}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br">
+                <!-- <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Total Interest earned
                     </div>
                     <div [value]="data.maturityValue - data.amountInvested" class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
                         ₹{{data.maturityValue - data.amountInvested}}
                     </div>
-                </div>
+                </div> -->
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         PO branch
