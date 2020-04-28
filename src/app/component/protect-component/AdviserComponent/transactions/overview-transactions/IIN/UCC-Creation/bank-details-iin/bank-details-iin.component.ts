@@ -106,7 +106,7 @@ export class BankDetailsIINComponent implements OnInit {
       bankName: [!data ? '' : data.bankName, [Validators.required]],
       micrCode: [!data ? '' : data.micrCode, [Validators.required]],
       accountNumber: [!data ? '' : data.accountNumber, [Validators.required]],
-      accountType: [!data ? '' : data.accountType, [Validators.required]],
+      accountType: [!data ? '1' : data.accountType, [Validators.required]],
       branchCode: [!data ? '' : data.branchCode, [Validators.required]],
       firstHolder: [!data ? '' : data.firstHolder, [Validators.required]],
       branchName: [!data ? '' : data.branchName, [Validators.required]],
@@ -117,10 +117,15 @@ export class BankDetailsIINComponent implements OnInit {
       state: [!data.address ? '' : data.address.state, [Validators.required]],
       country: [!data.address ? '' : data.address.country, [Validators.required]],
       branchProof: [!data.address ? '' : data.address.branchProof, [Validators.required]],
-      bankMandate: [!data.address ? '' : data.address.bankMandate, [Validators.required]],
+      bankMandate: [!data.address ? '1' : data.address.bankMandate, [Validators.required]],
       mandateDate: [!data.address ? '' : data.address.mandateDate, [Validators.required]],
       mandateAmount: [!data.address ? '' : data.address.mandateAmount, [Validators.required]],
     });
+    if (data.bankMandate == undefined && data.accountType == undefined) {
+
+      this.bankDetails.controls.accountType.setValue('1')
+      this.bankDetails.controls.bankMandate.setValue('1')
+    }
   }
   getFormControl(): any {
     return this.bankDetails.controls;
@@ -253,8 +258,8 @@ export class BankDetailsIINComponent implements OnInit {
         advisorId: this.genralDetails.advisorId,
         holderList: this.temp,
         bankDetailList: this.bank,
-        nomineeList:this.inputData.nomineeList,
-        fatcaDetail:this.inputData.fatcaDetail,
+        nomineeList: this.inputData.nomineeList,
+        fatcaDetail: this.inputData.fatcaDetail,
         generalDetails: this.genralDetails
       }
       console.log('##### bank ######', this.sendObj)
