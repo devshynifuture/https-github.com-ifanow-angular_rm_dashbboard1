@@ -164,6 +164,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
 
       })
     );
+
     if (this.data.id) {
       this.subscription.add(
         this.taskTemplate.controls.adviceTypeId.valueChanges.subscribe(value => {

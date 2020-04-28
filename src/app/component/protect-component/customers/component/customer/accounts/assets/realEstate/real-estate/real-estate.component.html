@@ -22,7 +22,7 @@
         <div class="col-md-6 p-0">
             <h4 class="m-0 text-black roboto">Real estate </h4>
         </div>
-        <div class="col-md-6 p-0 text-right right " *ngIf="datasource3.filteredData.length > 0">
+        <div class="col-md-6 p-0 text-right right " *ngIf="!hideFilter">
 
             <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p">
             <mat-menu #menu5="matMenu">
@@ -38,8 +38,20 @@
             </mat-menu>
 
 
-            <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
-                    class="material-icons">filter_list</i>FILTERS</button>
+            <button mat-stroked-button [matMenuTriggerFor]="filterRecurring"
+                    class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
+                </button>
+                <mat-menu #filterRecurring>
+                    <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''" (click)="filterData(null, 'All')">
+                        All
+                    </button>
+                    <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''" (click)="filterData('statusId', 'LIVE')">
+                        STATUS - LIVE
+                    </button>
+                    <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''" (click)="filterData('statusId', 'PENDING')">
+                        STATUS - PENDING
+                    </button>
+                </mat-menu>
             <button mat-stroked-button class="btn-primary addon v-middle" (click)="open('realEstate','')"> ADD
                 NEW</button>
 

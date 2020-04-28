@@ -32,7 +32,6 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
     private authService: AuthService) {
     super(eventService, subinject, dynamicComponentService);
-    console.log(router.getCurrentNavigation().extras.state);
     if (router.getCurrentNavigation().extras.state && router.getCurrentNavigation().extras.state.id) {
       this.authService.setClientData(router.getCurrentNavigation().extras.state);
     }
@@ -58,7 +57,6 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
   }
 
   set value(value: number) {
-    console.log('now value is ->>>>', value);
     this._value = value;
   }
 
@@ -66,7 +64,6 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     setTimeout(() => {
 
       this.value = data;
-      console.log('CustomerComponent getTabChangeData value : ', this.value);
 
     }, 300);
   }
@@ -82,7 +79,6 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     this._value = 1;
     this.loading = false;
     const routeName = this.router.url.split('/')[3];
-    console.log('CustomerComponent ngOnInit routeName : ', routeName);
     if (routeName == 'overview') {
       this.value = 1;
     } else if (routeName == 'account') {
@@ -98,10 +94,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     this.selected = 2;
     const passedParameter = history.state;
     this.clientId = passedParameter ? passedParameter.id : undefined;
-    console.log('passedParameter: ', passedParameter);
-    console.log('session storage clientData', AuthService.getClientData());
     this.clientId = AuthService.getClientId();
-    console.log('CustomerComponent ngOnInit value : ', this.value);
 
   }
 

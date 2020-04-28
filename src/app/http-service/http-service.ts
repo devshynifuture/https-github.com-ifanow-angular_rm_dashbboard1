@@ -58,25 +58,19 @@ export class HttpService {
         httpOptions.headers = httpOptions.headers.set('authToken', this._userService.getToken());
       }
     }
-    console.log('HttpService post url : ', url);
 
-    console.log('HttpService post httpOptions : ', httpOptions);
 
-    console.log('HttpService post body : ', body);
 
     return this._http
       .post(this.baseUrl + url, body, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
-        // console.log('resData: undecoded ', res);
 
         if (res.status === 200 || res.status === 201) {
-          // console.log('resData: decoded ', res);
 
           const resData = this.changeBase64ToString(res);
-          // console.log('resData: decoded ', resData);
           return resData;
-          // } else if (res.status === 304 || 204) {
-          //   return res.message;
+          } else if (res.status === 304 || 204) {
+            return res.message;
         } else if (res.status == 'active') {
           return res
         } else {
@@ -106,7 +100,6 @@ export class HttpService {
     return this._http
       .post(this.baseUrl + url, inputData, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
-        // console.log('resData: undecoded ', res);
 
         if (res.status === 200 || res.status === 201) {
           const resData = this.changeBase64ToString(res);
@@ -138,13 +131,10 @@ export class HttpService {
     return this._http
       .put(this.baseUrl + url, inputData, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
-        // console.log('resData: undecoded ', res);
 
         if (res.status === 200 || res.status === 201) {
-          // console.log('resData: decoded ', res);
 
           const resData = this.changeBase64ToString(res);
-          // console.log('resData: decoded ', resData);
           return resData;
         } else {
 
@@ -162,9 +152,6 @@ export class HttpService {
     if (options != undefined) {
       httpOptions = options;
     }
-    // console.log('HttpService put request httpOptions... ', httpOptions);
-    // console.log('HttpService put request body... ', body);
-    // console.log('HttpService put request url... ', url);
 
     return this._http
       .put(this.baseUrl + url, body, httpOptions).pipe(this.errorObservable)
@@ -191,9 +178,6 @@ export class HttpService {
     if (options != undefined) {
       httpOptions = options;
     }
-    // console.log('HttpService put request httpOptions... ', httpOptions);
-    // console.log('HttpService put request body... ', body);
-    console.log('HttpService put request url...', this._http);
 
     return this._http
       .put(this.baseUrl + url, body, httpOptions).pipe(this.errorObservable);
@@ -208,16 +192,12 @@ export class HttpService {
     if (options != undefined) {
       httpOptions = options;
     }
-    console.log('HttpService put request httpOptions... ', httpOptions);
-    console.log('HttpService put request body... ', body);
-    console.log('HttpService put request url... ', url);
 
     return this._http
       .request('delete', url, { body }).pipe(this.errorObservable)
       .map((res: any) => {
         if (res.status === 200) {
           const resData = this.changeBase64ToString(res);
-          // console.log(resData);
           return resData;
         } else {
           const err = new Error(res.message);
@@ -251,7 +231,6 @@ export class HttpService {
         return Observable.of((entry.response));
       }
     }
-    console.log(objJson64);
     let httpParams = new HttpParams();
     httpParams = httpParams.append('query', objJson64);
     let httpHeader: HttpHeaders;
@@ -271,7 +250,6 @@ export class HttpService {
       .map((res: any) => {
         if ([200, 201, 202, 204].includes(res.status)) {
           const resData = this.changeBase64ToString(res);
-          // console.log('decoded resData', resData);
           return resData;
         } else {
           // this._router.navigate(['login']);
@@ -314,7 +292,6 @@ export class HttpService {
       .map((res: any) => {
         if (res.status === 200) {
           const resData = this.changeBase64ToString(res);
-          // console.log('decoded resData', resData);
           return resData;
         } else if (res.status === 204) {
           return null;
@@ -334,7 +311,6 @@ export class HttpService {
 
   changeBase64Data(params): string {
     const objJsonStr = JSON.stringify(params);
-    console.log(objJsonStr);
     const objJsonB64 = Buffer.from(objJsonStr).toString('base64');
     return objJsonB64;
   }
@@ -343,14 +319,11 @@ export class HttpService {
     const encodedata = res.payLoad;
     try {
       const datavalue = (Buffer.from(encodedata, 'base64').toString('utf-8'));
-      // console.log('datavalue helo: ', datavalue);
-      // console.log('encodedata: ', encodedata);
 
       try {
         const responseData = JSON.parse(datavalue);
         return responseData;
       } catch (e) {
-        console.log('changeBase64ToString exception in parsing e: ', e);
         return JSON.parse(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(encodedata));
       }
     } catch (e) {
@@ -368,13 +341,11 @@ export class HttpService {
     if (options != undefined) {
       httpOptions = options;
     }
-    console.log('HttpService postExternal options : ', httpOptions);
     return this._http
       .post(url, body, httpOptions).pipe(
         catchError(err => of([]))
 
         // catchError(err => {
-        //   console.log('Handling error locally and rethrowing it...', err);
         //
         //   // return throwError(err);
         // })
@@ -389,13 +360,11 @@ export class HttpService {
     if (options != undefined) {
       httpOptions = options;
     }
-    console.log('HttpService postExternal options : ', httpOptions);
     return this._http
       .get(url, httpOptions).pipe(
         catchError(err => of([]))
 
         // catchError(err => {
-        //   console.log('Handling error locally and rethrowing it...', err);
         //
         //   // return throwError(err);
         // })

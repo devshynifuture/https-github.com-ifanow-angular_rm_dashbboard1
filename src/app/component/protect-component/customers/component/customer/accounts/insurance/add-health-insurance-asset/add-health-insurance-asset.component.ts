@@ -4,8 +4,9 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { ValidatorType } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../customer.service';
-import { MatInput } from '@angular/material';
+import { MatInput, MatDialog } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
+import { ClientBankComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-bank/client-bank.component';
 
 @Component({
   selector: 'app-add-health-insurance-asset',
@@ -37,8 +38,10 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
   policyList: any;
   addOns: any;
   dataForEdit: any;
+  bankList:any;
   bankAccountDetails: any;
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
+  id: any;
+  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService,private dialog: MatDialog) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
@@ -55,6 +58,9 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
   }
   get data() {
     return this.inputData;
+  }
+  bankAccountList(value) {
+    this.bankList = value;
   }
   getFormDataNominee(data) {
     console.log(data)
@@ -108,9 +114,9 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
   get insuredMembersForm() {
     return this.healthInsuranceForm.get('InsuredMemberForm') as FormArray;
   }
-  get addBankAccount() {
-    return this.healthInsuranceForm.get('addBankAccount') as FormArray;
-  }
+  // get addBankAccount() {
+  //   return this.healthInsuranceForm.get('addBankAccount') as FormArray;
+  // }
 
 
 
@@ -216,6 +222,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     }
     else {
       this.dataForEdit = data.data;
+      this.id = this.dataForEdit.id;
       if (this.dataForEdit.addOns.length > 0) {
         this.addOns.addOnId = this.dataForEdit.addOns[0].addOnId;
         this.addOns.addOnSumInsured = this.dataForEdit.addOns[0].addOnSumInsured;
@@ -231,28 +238,28 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         id: 0,
         isClient: 0
       })]),
-      name: [(this.dataForEdit ? this.dataForEdit.name : '')],
-      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId : ''), [Validators.required]],
-      planDetails: [(this.dataForEdit ? this.dataForEdit.policyFeatureId + '' : ''), [Validators.required]],
-      deductibleAmt: [(this.dataForEdit ? this.dataForEdit.deductibleSumInsured : ''), [Validators.required]],
-      policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : ''), [Validators.required]],
-      insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : ''), [Validators.required]],
-      planeName: [(this.dataForEdit ? this.dataForEdit.planName : ''), [Validators.required]],
-      loanAmount: [(this.dataForEdit ? this.dataForEdit.loanAmount : ''), [Validators.required]],
-      policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : '', [Validators.required]],
-      policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : '', [Validators.required]],
-      copay: [(this.dataForEdit ? this.dataForEdit.copay : '')],
-      copayType: [this.dataForEdit ? this.dataForEdit.copayRupeesOrPercent + '' : ''],
-      cumulativeBonus: [this.dataForEdit ? this.dataForEdit.cumulativeBonus : ''],
-      bonusType: [this.dataForEdit ? this.dataForEdit.cumulativeBonusRupeesOrPercent + '' : ''],
-      exclusion: [this.dataForEdit ? this.dataForEdit.exclusion : ''],
-      inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : ''],
-      tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : ''],
-      advisorName: [this.dataForEdit ? this.dataForEdit.advisorName : ''],
-      serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch : ''],
-      bankAccount: [this.dataForEdit ? this.dataForEdit.linkedBankAccount : ''],
-      additionalCovers: [(this.dataForEdit) ? this.addOns.addOnId : ''],
-      coversAmount: [(this.dataForEdit) ? this.addOns.addOnSumInsured : ''],
+      name: [(this.dataForEdit ? this.dataForEdit.name : null)],
+      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId : null), [Validators.required]],
+      planDetails: [(this.dataForEdit ? this.dataForEdit.policyFeatureId + '' : null), [Validators.required]],
+      deductibleAmt: [(this.dataForEdit ? this.dataForEdit.deductibleSumInsured : null), [Validators.required]],
+      policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
+      insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : null), [Validators.required]],
+      planeName: [(this.dataForEdit ? this.dataForEdit.planName : null), [Validators.required]],
+      premium: [(this.dataForEdit ? this.dataForEdit.premiumAmount : null), [Validators.required]],
+      policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : null, [Validators.required]],
+      policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : null, [Validators.required]],
+      copay: [(this.dataForEdit ? this.dataForEdit.copay : null)],
+      copayType: [this.dataForEdit ? this.dataForEdit.copayRupeesOrPercent + '' : null],
+      cumulativeBonus: [this.dataForEdit ? this.dataForEdit.cumulativeBonus : null],
+      bonusType: [this.dataForEdit ? this.dataForEdit.cumulativeBonusRupeesOrPercent + '' : null],
+      exclusion: [this.dataForEdit ? this.dataForEdit.exclusion : null],
+      inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : null],
+      tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],
+      advisorName: [this.dataForEdit ? this.dataForEdit.advisorName : null],
+      serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch : null],
+      bankAccount: [this.dataForEdit ? parseInt(this.dataForEdit.linkedBankAccount): null],
+      additionalCovers: [(this.dataForEdit) ? this.addOns.addOnId : null],
+      coversAmount: [(this.dataForEdit) ? this.addOns.addOnSumInsured : null],
       nominees: this.nominees,
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
@@ -267,16 +274,16 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         familyMemberId: [''],
         relationshipId: ['']
       })]),
-      addBankAccount: this.fb.array([this.fb.group({
-        newBankAccount: [''],
-      })])
+      // addBankAccount: this.fb.array([this.fb.group({
+      //   newBankAccount: [''],
+      // })])
     })
     // ==============owner-nominee Data ========================\\
     /***owner***/
     if (this.healthInsuranceForm.value.getCoOwnerName.length == 1) {
       this.getCoOwner.controls['0'].get('share').setValue('100');
     }
-    this.addBankAccount.removeAt(0);
+    // this.addBankAccount.removeAt(0);
 
     // if (this.dataForEdit && this.dataForEdit.ownerList) {
     //   this.getCoOwner.removeAt(0);
@@ -323,9 +330,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
   }
   ngOnInit() {
   }
-  bankAccountList(value) {
-    this.bankAccountList = value;
-  }
+
   getFamilyData(value, data) {
 
     data.forEach(element => {
@@ -360,15 +365,15 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
 
     }
   }
-  addNewAccount(data) {
-    this.addBankAccount.push(this.fb.group({
-      newBankAccount: [data ? data.name : ''],
-    }));
-  }
+  // addNewAccount(data) {
+  //   this.addBankAccount.push(this.fb.group({
+  //     newBankAccount: [data ? data.name : ''],
+  //   }));
+  // }
 
-  RemoveNewAccount(item) {
-      this.addBankAccount.removeAt(item);
-  }
+  // RemoveNewAccount(item) {
+  //     this.addBankAccount.removeAt(item);
+  // }
   /***owner***/
 
   openOptionField() {
@@ -431,15 +436,16 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         "insurerName": this.healthInsuranceForm.get('insurerName').value,
         "policyInceptionDate": this.healthInsuranceForm.get('inceptionDate').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
-        "loanAmount": this.healthInsuranceForm.get('loanAmount').value,
-        "addOns": [{
-          "addOnId": this.healthInsuranceForm.get('additionalCovers').value,
-          "addOnSumInsured": this.healthInsuranceForm.get('coversAmount').value
-        }],
+        "premiumAmount": this.healthInsuranceForm.get('premium').value,
+        "id":(this.id) ? this.id : null,
+        "addOns": [],
         insuredMembers: memberList,
         nominees: this.healthInsuranceForm.value.getNomineeName,
       }
-
+      if(this.healthInsuranceForm.get('additionalCovers').value && this.healthInsuranceForm.get('coversAmount').value){
+        obj.addOns =[{"addOnId": (this.healthInsuranceForm.get('additionalCovers').value),
+        "addOnSumInsured": this.healthInsuranceForm.get('coversAmount').value}]
+      }
       if (obj.nominees.length > 0) {
         obj.nominees.forEach((element, index) => {
           if (element.name == '') {
@@ -489,7 +495,6 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
       }
     }
   }
-
   close(data) {
     this.addMoreFlag = false;
     this.subInjectService.changeNewRightSliderState({ state: 'close', data });

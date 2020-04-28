@@ -31,6 +31,10 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
   flag: string;
   nominees: any[];
   addMoreFlag=false;
+  id: any;
+  accountList: any = [];
+  bankAccountDetails:any;
+  bankList: any;
 
   constructor(private fb: FormBuilder,private subInjectService:SubscriptionInject,private customerService:CustomerService,private eventService:EventService) { }
   validatorType = ValidatorType
@@ -201,7 +205,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
       id:[data ? data.id : ''],
       relationshipId:[data ? data.relationshipId : ''],
       familyMemberId:[data ? data.familyMemberId : ''],
-      ttdSumAssured:[data ? data.ttdSumAssured : '']
+      ttdSumInsured:[data ? data.ttdSumInsured : '']
     }));
   }
   removeTransaction(item) {
@@ -238,6 +242,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
     }
     else {
       this.dataForEdit = data.data;
+      this.id = this.dataForEdit.id;
       this.flag = "EDIT";
     }
     this.personalAccidentForm = this.fb.group({
@@ -249,22 +254,22 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
         id: 0,
         isClient: 0
       })]),
-      name:[(this.dataForEdit ? this.dataForEdit.name : '')],
-      policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : ''), [Validators.required]],
-      insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : ''), [Validators.required]],
-      planeName: [(this.dataForEdit ? this.dataForEdit.planName :''), [Validators.required]],
-      premium: [(this.dataForEdit ? this.dataForEdit.premiumAmount : ''), [Validators.required]],
-      policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : '', [Validators.required]],
-      policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : '', [Validators.required]],
-      cumulativeBonus: [this.dataForEdit ? this.dataForEdit.cumulativeBonus : ''],
-      bonusType: [this.dataForEdit ? this.dataForEdit.cumulativeBonusRupeesOrPercent + '' : ''],
-      planfeatures: [(this.dataForEdit ? this.dataForEdit.policyFeatureId : '')],
-      exclusion: [this.dataForEdit ? this.dataForEdit.exclusion :''],
-      inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : ''],
-      tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : ''],
-      advisorName: [this.dataForEdit ? this.dataForEdit.advisorName :''],
-      serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch :''],
-      bankAccount: [this.dataForEdit ? this.dataForEdit.linkedBankAccount : ''],
+      name:[(this.dataForEdit ? this.dataForEdit.name : null)],
+      policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
+      insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : null), [Validators.required]],
+      planeName: [(this.dataForEdit ? this.dataForEdit.planName :null), [Validators.required]],
+      premium: [(this.dataForEdit ? this.dataForEdit.premiumAmount : null), [Validators.required]],
+      policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : null, [Validators.required]],
+      policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : null, [Validators.required]],
+      cumulativeBonus: [this.dataForEdit ? this.dataForEdit.cumulativeBonus : null],
+      bonusType: [this.dataForEdit ? this.dataForEdit.cumulativeBonusRupeesOrPercent + '' : null],
+      planfeatures: [(this.dataForEdit ? this.dataForEdit.policyFeatureId : null)],
+      exclusion: [this.dataForEdit ? this.dataForEdit.exclusion :null],
+      inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : null],
+      tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],
+      advisorName: [this.dataForEdit ? this.dataForEdit.advisorName :null],
+      serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch :null],
+      bankAccount: [this.dataForEdit ? parseInt(this.dataForEdit.linkedBankAccount): null],
       nominees: this.nominees,
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
@@ -278,7 +283,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
         id:[0],
         familyMemberId:[''],
         relationshipId:[''],
-        ttdSumAssured:['',[Validators.required]]
+        ttdSumInsured:['',[Validators.required]]
       })]),
       planFeatureForm: this.fb.array([this.fb.group({
         planfeatures: [''],
@@ -321,7 +326,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
         this.addNewFeature(element);
       });
     }
-
+    this.bankAccountDetails = { accountList: this.accountList, controleData: this.personalAccidentForm }
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.personalAccidentForm }
 
     // this.finalCashFlowData = [];
@@ -329,6 +334,9 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
     // this.DOB = data.dateOfBirth
     // this.ownerData = this.personalAccidentForm.controls;
     // this.familyMemberId = data.familyMemberId;
+  }
+  bankAccountList(value) {
+    this.bankList = value;
   }
   getFamilyData(value,data){
 
@@ -360,7 +368,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
         relationshipId: element.get('relationshipId').value,  
         insuredOrNominee: 1,
         id:(element.get('id').value) ? element.get('id').value : null,
-        ttdSumAssured:element.get('id').value
+        ttdSumInsured:element.get('ttdSumInsured').value
       }
       memberList.push(obj)
     })
@@ -399,6 +407,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
         "policyFeatures":featureList,
         "insurerName": this.personalAccidentForm.get('insurerName').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
+        "id":(this.id) ? this.id : null,
         insuredMembers: memberList,
         nominees: this.personalAccidentForm.value.getNomineeName,
       }

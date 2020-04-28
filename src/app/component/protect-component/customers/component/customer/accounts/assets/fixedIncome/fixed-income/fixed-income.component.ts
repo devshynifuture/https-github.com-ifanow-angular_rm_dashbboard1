@@ -38,7 +38,7 @@ export class FixedIncomeComponent implements OnInit {
   sumAmountInvestedB: any;
   sumCouponAmount: any;
   sumCurrentValueB: any;
-
+  hideFilter:boolean = false;
   @ViewChild('fixedIncomeTableSort', { static: false }) fixedIncomeTableSort: MatSort;
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild('recurringDepositTable', { static: false }) recurringDepositTableSort: MatSort;
@@ -49,7 +49,7 @@ export class FixedIncomeComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   hidePdf: boolean;
   noData: string;
-  fixedDepositList: any;
+  dataList: any;
 
 
   constructor(private excelSer: ExcelService, private subInjectService: SubscriptionInject,
@@ -89,19 +89,7 @@ export class FixedIncomeComponent implements OnInit {
     this.pdfGen.generatePdf(rows, tableTitle);
   }
 
-
-  filterFixedIncome(key: string, value: any) {
-    let dataFiltered;
-    dataFiltered = this.fixedDepositList.filter(function (item) {
-      return item[key] === value;
-    });
-
-    this.isFixedIncomeFiltered = true;
-    this.dataSource.data = dataFiltered;
-    // this.dataSource = new MatTableDataSource(data);
-    this.dataSource.sort = this.fixedIncomeTableSort;
-   
-  }
+  
 
   changeRecurringFilterMode(value) {
     console.log('this is filter data', value);
@@ -152,8 +140,9 @@ totalSum:any
     if (data == undefined) {
       this.noData = "No scheme found";
       this.dataSource.data = [];
+      this.hideFilter = true;
     } else if (data.assetList) {
-      this.fixedDepositList = data.assetList;
+      this.dataList = data.assetList;
       this.dataSource.data = data.assetList;
       this.dataSource.sort = this.fixedIncomeTableSort;
       console.log('soted &&&&&&&&&', this.dataSource);
@@ -204,6 +193,8 @@ totalSum:any
     }
     else if (data.recurringDeposits) {
       console.log('FixedIncomeComponent getRecuringDepositRes data *** ', data);
+      this.dataList = data.recurringDeposits;
+
       this.dataSource.data = data.recurringDeposits;
       this.dataSource.sort = this.recurringDepositTableSort;
       UtilService.checkStatusId(this.dataSource.filteredData);
@@ -239,6 +230,8 @@ totalSum:any
     if (data != undefined) {
       if (data.assetList) {
         console.log('getBondsRes ******** ', data);
+      this.dataList = data.assetList;
+
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.bondListTableSort;
         UtilService.checkStatusId(this.dataSource.filteredData);
@@ -251,6 +244,29 @@ totalSum:any
       this.noData = 'No scheme found';
       this.dataSource.data = [];
     }
+  }
+
+  activeFilter:any = 'All';
+  filterFixedIncome(key: string, value: any) {
+    
+    let dataFiltered = [];
+    this.activeFilter = value;
+    if(value == "All"){
+      dataFiltered = this.dataList;
+    }
+    else{
+      dataFiltered = this.dataList.filter(function (item) {
+        return item[key] === value;
+      });
+      if(dataFiltered.length <= 0){
+        this.hideFilter = false;
+      }
+    }
+    
+    this.isFixedIncomeFiltered = true;
+    this.dataSource.data = dataFiltered;
+    // this.dataSource = new MatTableDataSource(data);
+    this.dataSource.sort = this.fixedIncomeTableSort;
   }
 
   deleteModal(value, data) {

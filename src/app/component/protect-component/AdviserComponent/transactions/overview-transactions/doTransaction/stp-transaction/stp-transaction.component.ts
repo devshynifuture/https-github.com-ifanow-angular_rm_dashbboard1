@@ -70,6 +70,7 @@ export class StpTransactionComponent implements OnInit {
               private processTransaction: ProcessTransactionService, private eventService: EventService,
               private fb: FormBuilder) {
   }
+
   @Output() changedValue = new EventEmitter();
 
   @Input()
@@ -99,9 +100,11 @@ export class StpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
     Object.assign(this.transactionSummary, {isMultiTransact: false});
   }
+
   backToTransact() {
     this.changedValue.emit('step-2');
   }
+
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data);
     this.getDataSummary = data;
@@ -111,9 +114,11 @@ export class StpTransactionComponent implements OnInit {
 
     this.stpTransaction.controls.transferIn.reset();
   }
+
   onFolioChange(folio) {
     this.stpTransaction.controls.folioSelection.reset();
   }
+
   getMandateDetails() {
     const obj1 = {
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -126,10 +131,12 @@ export class StpTransactionComponent implements OnInit {
       }
     );
   }
+
   getMandateDetailsRes(data) {
     console.log('mandate details :', data);
     this.mandateDetails = data;
   }
+
   getSchemeListTranfer(value) {
     this.showSpinnerTrans = true;
     if (this.stpTransaction.get('transferIn').invalid) {
@@ -140,6 +147,7 @@ export class StpTransactionComponent implements OnInit {
       const obj = {
         searchQuery: value,
         bseOrderType: 'STP',
+        showOnlyNonZero: true,
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
         advisorId: this.getDataSummary.defaultClient.advisorId,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
@@ -160,11 +168,13 @@ export class StpTransactionComponent implements OnInit {
       );
     }
   }
+
   getNewSchemesRes(data) {
     this.showSpinnerTrans = false;
     console.log('new schemes', data);
     this.schemeListTransfer = data;
   }
+
   getSchemeList(value) {
     this.showSpinner = true;
     if (this.stpTransaction.get('schemeStp').invalid) {
@@ -200,6 +210,7 @@ export class StpTransactionComponent implements OnInit {
 
     }
   }
+
   getExistingSchemesRes(data) {
     this.showSpinner = false;
     this.schemeList = data;
@@ -214,6 +225,7 @@ export class StpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {mutualFundId: folio.id});
     this.transactionSummary = {...this.transactionSummary};
   }
+
   selectedSchemeTransfer(schemeTransfer) {
     this.showSpinnerTrans = true;
     this.schemeTransfer = schemeTransfer;
@@ -231,6 +243,7 @@ export class StpTransactionComponent implements OnInit {
       }
     );
   }
+
   getSchemeDetailsTranferRes(data) {
     // this.maiSchemeList = data
     this.showSpinnerTrans = false;
@@ -246,11 +259,13 @@ export class StpTransactionComponent implements OnInit {
       this.getMandateDetails();
     }
   }
+
   reinvest(scheme) {
     this.schemeDetails = scheme;
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
     console.log('schemeDetails == ', this.schemeDetails);
   }
+
   selectedScheme(scheme) {
     this.scheme = scheme;
     this.showUnits = true;
@@ -269,6 +284,7 @@ export class StpTransactionComponent implements OnInit {
       }
     );
   }
+
   getSchemeDetailsRes(data) {
     this.showSpinner = false;
     console.log('getSchemeDetailsRes == ', data);
@@ -278,6 +294,7 @@ export class StpTransactionComponent implements OnInit {
     this.getSchemeWiseFolios();
     this.getFrequency();
   }
+
   getSchemeWiseFolios() {
     this.showSpinnerFolio = true;
     const obj1 = {
@@ -294,6 +311,7 @@ export class StpTransactionComponent implements OnInit {
       data => this.getSchemeWiseFoliosRes(data)
     );
   }
+
   getSchemeWiseFoliosRes(data) {
     this.showSpinnerFolio = false;
     console.log('res scheme folio', data);
@@ -302,6 +320,7 @@ export class StpTransactionComponent implements OnInit {
       Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
     }
   }
+
   getFrequency() {
     const obj = {
       isin: this.schemeDetails.isin,
@@ -314,13 +333,15 @@ export class StpTransactionComponent implements OnInit {
       }
     );
   }
+
   getSipFrequencyRes(data) {
     console.log('isin Frequency ----', data);
     this.switchFrequency = data;
-    this.switchFrequency = data.filter(function(element) {
+    this.switchFrequency = data.filter((element) => {
       return element.frequency;
     });
   }
+
   selectedFrequency(getFrerq) {
     // this.fre = getFrerq
     this.frequency = getFrerq.frequency;
@@ -332,6 +353,7 @@ export class StpTransactionComponent implements OnInit {
     }
 
   }
+
   dateArray(sipDates) {
     const currentDate = new Date();
     currentDate.setDate(currentDate.getDate() + 7);
@@ -343,19 +365,24 @@ export class StpTransactionComponent implements OnInit {
     });
     console.log('dateDisplay = ', this.dateDisplay);
   }
+
   stpType(value) {
 
   }
+
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
+
   enteredAmount(value) {
-    Object.assign(this.transactionSummary, { enteredAmount: value });
+    Object.assign(this.transactionSummary, {enteredAmount: value});
   }
+
   getbankDetails(value) {
     this.bankDetails = value[0];
     console.log('bank details', value);
   }
+
   getdataForm(data) {
     if (!data) {
       data = {};
@@ -389,6 +416,7 @@ export class StpTransactionComponent implements OnInit {
   getFormControl(): any {
     return this.stpTransaction.controls;
   }
+
   stp() {
     this.endDate = new Date();
     this.endDate.setDate(31);
@@ -477,6 +505,7 @@ export class StpTransactionComponent implements OnInit {
       );
     }
   }
+
   stpBSERes(data) {
     this.barButtonOptions.active = false;
     console.log('stp res == ', data);
@@ -487,6 +516,7 @@ export class StpTransactionComponent implements OnInit {
       Object.assign(this.transactionSummary, {allEdit: false});
     }
   }
+
   AddMultiTransaction() {
     if (this.reInvestmentOpt.length > 1) {
       if (this.stpTransaction.get('reinvest').invalid) {

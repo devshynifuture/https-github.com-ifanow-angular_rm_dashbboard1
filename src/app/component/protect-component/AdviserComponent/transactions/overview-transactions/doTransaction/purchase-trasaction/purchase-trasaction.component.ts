@@ -118,6 +118,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   getSchemeList(value) {
+    this.schemeList = [];
     this.showSpinner = true;
     this.platformType = this.getDataSummary.defaultClient.aggregatorType;
     if (this.purchaseTransaction.get('schemePurchase').invalid) {
@@ -245,7 +246,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       this.schemeDetails.minAmount = this.schemeDetails.minimumPurchaseAmount;
     }
     this.purchaseTransaction.controls.employeeContry.setValidators([Validators.min(this.schemeDetails.minAmount)]);
-
+    // this.purchaseTransaction.updateValueAndValidity();
   }
 
   getFolioList() {

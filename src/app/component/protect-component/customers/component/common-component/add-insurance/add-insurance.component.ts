@@ -198,7 +198,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       this.lifeInsuranceForm.controls.getCoOwnerName = con.owner;
     }
     if (con.nominee != null && con.nominee) {
-      this.lifeInsuranceForm.controls.getNomineeName = con.nominee;
+      this.keyDetailsForm.controls.getNomineeName = con.nominee;
     }
   }
 
@@ -283,7 +283,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
 
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? data.sumInsured : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -370,9 +370,9 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       /***owner***/
   
       /***nominee***/
-      if (this.editInsuranceData.nomineeList) {
+      if (this.editInsuranceData.nominees) {
         this.getNominee.removeAt(0);
-        this.editInsuranceData.nomineeList.forEach(element => {
+        this.editInsuranceData.nominees.forEach(element => {
           this.addNewNominee(element);
         });
       }
@@ -557,18 +557,18 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         "ridersPremiumWaiver": this.ridersForm.get('premiumWaiver').value,
         "ridersFemaleCriticalIllness": this.ridersForm.get('femaleCriticalIlleness').value,
         "insuranceCashflowList": finalCashFlowList,
-        "nomineeList": this.keyDetailsForm.value.getNomineeName,
+        "nominees": this.keyDetailsForm.value.getNomineeName,
 
       }
       this.insuranceFormFilledData.policyStatusId = parseInt(this.insuranceFormFilledData.policyStatusId)
-      if (this.insuranceFormFilledData.nomineeList.length > 0) {
-        this.insuranceFormFilledData.nomineeList.forEach((element, index) => {
+      if (this.insuranceFormFilledData.nominees.length > 0) {
+        this.insuranceFormFilledData.nominees.forEach((element, index) => {
           if (element.name == '') {
             this.removeNewNominee(index);
           }
         });
       } else {
-        this.insuranceFormFilledData.nomineeList = [];
+        this.insuranceFormFilledData.nominees = [];
       }
         
       console.log(this.insuranceFormFilledData)

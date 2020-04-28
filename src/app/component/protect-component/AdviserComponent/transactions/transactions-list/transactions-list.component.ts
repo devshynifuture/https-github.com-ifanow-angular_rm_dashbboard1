@@ -15,7 +15,7 @@ import {MatSort, MatTableDataSource} from '@angular/material';
   styleUrls: ['./transactions-list.component.scss']
 })
 export class TransactionsListComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'type', 'amount', 'order', 'status', 'icons'];
+  displayedColumns: string[] = ['position', 'weight', 'symbol', 'type', 'amount', 'order', 'status', 'icons'];
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   advisorId: any;
@@ -118,6 +118,7 @@ export class TransactionsListComponent implements OnInit {
   sortDateFilter(data) {
     console.log(this.selectedPreviousToShowDate);
     this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * data.value).getTime();
+    this.finalEndDate = new Date().getTime();
     (data.value == 'custom') ? '' : this.getAllTransactionList();
   }
 

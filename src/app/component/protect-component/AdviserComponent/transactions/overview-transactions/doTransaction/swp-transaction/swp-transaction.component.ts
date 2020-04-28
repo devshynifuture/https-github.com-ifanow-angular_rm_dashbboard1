@@ -125,6 +125,7 @@ export class SwpTransactionComponent implements OnInit {
       const obj = {
         searchQuery: value,
         bseOrderType: 'SWP',
+        showOnlyNonZero: true,
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
         advisorId: this.advisorId,
         tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
