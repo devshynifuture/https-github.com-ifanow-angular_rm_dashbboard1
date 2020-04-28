@@ -12,7 +12,7 @@
         </div>
         <!-- (click)="dialogClose()" for prod build  -->
         <div class="col-md-2 text-right">
-            <i class="material-icons pt-16 c-p pr-16"  (click)="close()">
+            <i class="material-icons pt-16 c-p pr-16" (click)="close()">
                 clear
             </i>
         </div>
@@ -32,9 +32,10 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput maxlength="30"  appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="nomineeName" type="text"
+                            <input matInput maxlength="30" appInputValueValidation
+                                [inputValidator]="validatorType.TEXT_ONLY" formControlName="nomineeName" type="text"
                                 class="form-control">
-                                <mat-error class="f-12">This field is required</mat-error>
+                            <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -102,9 +103,9 @@
                     </div>
                     <div class="col-md-3">
                         <mat-form-field>
-                        <input matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
-                        appInputValueValidation maxlength="3" formControlName="nomineePercentage" type="text"
-                            class="form-control percentage">
+                            <input matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
+                                appInputValueValidation maxlength="3" formControlName="nomineePercentage" type="text"
+                                class="form-control percentage">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
@@ -165,7 +166,9 @@
                                 appInputValueValidation matInput formControlName="pinCode"
                                 (focusout)="getPostalPin($event.target.value)" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
-
+                            <mat-hint align="end" class="f-12 text-custom">
+                                {{pincode.value.length}} / 6
+                            </mat-hint>
                         </mat-form-field>
                     </div>
                 </div>

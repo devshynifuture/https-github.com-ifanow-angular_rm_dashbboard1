@@ -50,7 +50,7 @@
                                 placeholder="XXXXX0000X" maxlength="10" type="text" formControlName="panNumber"
                                 class="form-control">
                             <mat-hint align="end" class="f-12 text-custom">
-                                0 / 10
+                                {{panNumber.value.length}} / 10
                             </mat-hint>
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
