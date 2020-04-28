@@ -770,9 +770,11 @@ export class CustomerService {
   }
 
   // overview - myfeed services
-  // TODO - change urls for below services
   getAllFeedsPortFolio(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CUSTOMER_PORTFOLIO_SUMMARY, data);
+  }
+  getMFData(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FEEDS_MF_DATA, data);
   }
 }
 

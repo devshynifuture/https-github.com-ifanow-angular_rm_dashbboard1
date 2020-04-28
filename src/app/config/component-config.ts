@@ -705,5 +705,6 @@ export const appConfig = {
   //////////////////////////////////customer-overview-profile//////////////////////
 
   //////////////////////////////////customer-overview-myfeeds-profile//////////////////////
-  GET_CUSTOMER_PORTFOLIO_SUMMARY: 'account/asset/summary'
+  GET_CUSTOMER_PORTFOLIO_SUMMARY: 'account/asset/summary',
+  GET_FEEDS_MF_DATA: 'mutual-fund/latest/transaction/list/'
 };

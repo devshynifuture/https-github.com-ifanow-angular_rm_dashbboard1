@@ -17,7 +17,7 @@ export class MfServiceService {
    this.settingService.getProfileDetails(obj).subscribe(
       data => {
         console.log(data)
-        AuthService.setAppPic(data);
+        AuthService.setProfilePic(data.profilePic);
         this.advisorData = data;
       }
     );
