@@ -75,7 +75,7 @@
                         Upload AOF <i class="material-icons">
                             arrow_upward
                         </i>
-                        <input (change)="getFileDetails($event)" class="inputfile inputfile-3" id="file-3" multiple
+                        <input (change)="uploadFormImageUpload($event)" class="inputfile inputfile-3" id="file-3" multiple
                             type="file">
                     </button>
                 </div>
@@ -126,7 +126,10 @@
                     <p class="f-12 text-primitive">Upload relevant forms to complete the process</p>
                     <button class="btnConfirm bg-primary text-white" mat-button>Upload AOF <i class="material-icons">
                             arrow_upward
-                        </i> </button>
+                        </i> 
+                        <input (change)="uploadFormImageUpload($event)" class="inputfile inputfile-3" id="file-3" multiple
+                                type="file">
+                    </button>
                 </div>
 
             </div>
