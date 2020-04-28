@@ -73,7 +73,7 @@ export class OwnerNomineeDirective {
   }
   getListFamilyMem(): any {
     let obj;
-    if (this.clientIdData.familyMemberId) {
+    if (this.clientId==undefined) {
       obj = {
         advisorId: this.advisorId,
         familyMemberId: this.clientIdData.familyMemberId
