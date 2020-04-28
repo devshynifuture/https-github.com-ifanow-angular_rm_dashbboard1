@@ -44,11 +44,13 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="11"
+                            <input #aadharNumber matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="11"
                                 appInputValueValidation formControlName="aadharNumber" type="number"
                                 class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
-
+                            <mat-hint align="end" class="f-12 text-custom">
+                                {{aadharNumber.value.length}} / 11
+                            </mat-hint>
                         </mat-form-field>
                     </div>
                 </div>
@@ -58,21 +60,26 @@
                     </div>
                     <div class="col-md-5">
                         <div class="row">
-                            <div class="col-md-3 p-0">
-                                <mat-form-field>
-                                    <mat-select class="form-control" placeholder="+91">
-                                        <mat-option>+91</mat-option>
-                                    </mat-select>
-
-                                </mat-form-field>
+                            <div class="col-md-3 pr-0">
+                                <div class="form-group">
+                                    <mat-form-field appearance="standard">
+                                        <mat-select formControlName="isdCodeId" class="form-control">
+                                            <mat-option value="" selected disabled>Select Country Code</mat-option>
+                                            <mat-option [value]="code.id" *ngFor="let code of isdCodes"
+                                                >{{code.code}}({{code.countryName}})
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error>This field is required</mat-error>
+                                    </mat-form-field>
+                                </div>
                             </div>
                             <div class="col-md-7 p-0">
                                 <mat-form-field>
-                                    <input matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
+                                    <input #mobileNo matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
                                         appInputValueValidation maxlength="10" type="number" formControlName="mobileNo"
-                                        class="form-control">
+                                        placeholder="Enter Mobile number" class="form-control">
                                     <mat-error class="f-12">This field is required</mat-error>
-
+                                    <mat-hint align="end">{{mobileNo.value.length}}/10</mat-hint>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -142,8 +149,7 @@
                         <mat-form-field>
                             <input #pincode matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
                                 (focusout)="getPostalPin($event.target.value)" appInputValueValidation
-                                formControlName="pinCode" type="text"
-                                class="form-control">
+                                formControlName="pinCode" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                             <mat-hint align="end" class="f-12 text-custom">
                                 {{pincode.value.length}} / 6

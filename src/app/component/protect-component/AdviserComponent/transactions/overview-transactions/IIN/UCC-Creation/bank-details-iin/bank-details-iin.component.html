@@ -102,13 +102,16 @@
                     <div class="col-md-8">
 
                         <mat-radio-group aria-label="Select an option" formControlName="accountType">
-                            <mat-radio-button value="1"
-                                class="b-a-custom bor_top_tb_left radioBtnSmall  text-primary custom-radio">
+                            <mat-radio-button [value]="1"class="b-a-custom radioBtn text-primary custom-radio"
+                                [ngClass]="bankDetails.get('accountType').value == 1 ? 'text-primary b-a-custom': ' text-primitive'"
+                                checked>
                                 Savings
                             </mat-radio-button>
-                            <mat-radio-button value="2" class="radioBtnSmall radio-border custom-radio">
+                            <mat-radio-button [value]="2"
+                                [ngClass]="bankDetails.get('accountType').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
                                 Current </mat-radio-button>
-                            <mat-radio-button value="3" class="radioBtnSmall radio-border pr-12 custom-radio">
+                            <mat-radio-button [value]="3"
+                                [ngClass]="bankDetails.get('accountType').value == 3 ? 'text-primary b-a-custom': ' text-primitive'">
                                 Cash credit </mat-radio-button>
 
                         </mat-radio-group>
@@ -264,11 +267,13 @@
                     </div>
                     <div class="col-md-5">
                         <mat-radio-group aria-label="Select an option" formControlName="bankMandate">
-                            <mat-radio-button value="1"
-                                class="b-a-custom bor_top_tb_left pr-12 radioBtnSmall  text-primary custom-radio">
+                            <mat-radio-button [value]="1"class="b-a-custom radioBtn text-primary custom-radio"
+                                [ngClass]="bankDetails.get('bankMandate').value == 1 ? 'text-primary b-a-custom': ' text-primitive'"
+                                checked>
                                 Physical
                             </mat-radio-button>
-                            <mat-radio-button value="2" class="radioBtnSmall radio-border custom-radio">
+                            <mat-radio-button [value]="2"
+                                [ngClass]="bankDetails.get('bankMandate').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
                                 Biler </mat-radio-button>
                         </mat-radio-group>
                     </div>

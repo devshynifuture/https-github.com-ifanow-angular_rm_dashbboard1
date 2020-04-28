@@ -94,7 +94,7 @@ export class NomineeDetailsIinComponent implements OnInit {
     this.nomineeDetails = this.fb.group({
       nomineeName: [(!data) ? '' : data.nomineeName, [Validators.required]],
       relationType: [!data ? '' : data.relationType, [Validators.required]],
-      nomineeType: [!data ? '' : data.nomineeType, [Validators.required]],
+      nomineeType: [!data ? '1' : data.nomineeType, [Validators.required]],
       nominneDOB: [!data ? '' : data.nominneDOB, [Validators.required]],
       nomineePercentage: [!data ? '' : data.nomineePercentage, [Validators.required]],
       addressType: [!data.address ? '' : data.address.addressType, [Validators.required]],
@@ -106,6 +106,9 @@ export class NomineeDetailsIinComponent implements OnInit {
       state: [!data.address ? '' : data.address.state, [Validators.required]],
       country: [!data.address ? '' : data.address.country, [Validators.required]],
     });
+    if(data.nomineeType == undefined ){
+      this.nomineeDetails.controls.nomineeType.setValue('1')
+    }
   }
   getFormControl(): any {
     return this.nomineeDetails.controls;
