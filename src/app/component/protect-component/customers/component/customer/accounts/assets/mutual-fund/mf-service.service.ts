@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 })
 export class MfServiceService {
   advisorData: any;
-  constructor(private settingService:SettingsService) {
+  constructor(private settingService:SettingsService,private authService : AuthService) {
   }
 
   getPersonalDetails(data){
@@ -17,7 +17,7 @@ export class MfServiceService {
    this.settingService.getProfileDetails(obj).subscribe(
       data => {
         console.log(data)
-        AuthService.setAppPic(data);
+        this.authService.setProfileDetails(data);
         this.advisorData = data;
       }
     );
