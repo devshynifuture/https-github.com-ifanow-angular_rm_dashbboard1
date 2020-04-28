@@ -50,7 +50,7 @@ export class ClientDematComponent implements OnInit {
 
   @Input() set data(data) {
     this.userData = data;
-    this.clientData = AuthService.getClientData();
+    this.clientData = (AuthService.getClientData()) ? AuthService.getClientData() : AuthService.getUserInfo();
     (this.userData.dematData) ? this.dematList = this.userData.dematData : '';
     if (this.userData.dematData == undefined && this.fieldFlag) {
       this.holdingMode = '1';
