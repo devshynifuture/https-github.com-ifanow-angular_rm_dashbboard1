@@ -404,7 +404,7 @@ export class SwitchTransactionComponent implements OnInit {
         transCode: 'NEW',
         buySellType: 'FRESH',
         amountType: (this.switchTransaction.controls.switchType.value == 1) ? 'Amount' : 'Unit',
-        dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
+        dividendReinvestmentFlag: this.schemeDetailsTransfer.dividendReinvestmentFlag,
         clientCode: this.getDataSummary.defaultClient.clientCode,
         orderVal: this.switchTransaction.controls.employeeContry.value,
         bseDPTransType: 'PHYSICAL',
