@@ -72,10 +72,19 @@ export class OwnerNomineeDirective {
     }
   }
   getListFamilyMem(): any {
-    const obj = {
-      advisorId: this.advisorId,
-      clientId: (this.clientId) ? this.clientId : this.clientIdData.clientId
-    };
+    let obj;
+    if (this.clientIdData.familyMemberId) {
+      obj = {
+        advisorId: this.advisorId,
+        familyMemberId: this.clientIdData.familyMemberId
+      };
+    }
+    else {
+      obj = {
+        advisorId: this.advisorId,
+        clientId: (this.clientId) ? this.clientId : this.clientIdData.clientId
+      };
+    }
     if (this.sendData.length <= 0) {
       this.custumService.getListOfFamilyByClient(obj).subscribe(
         data => this.getListOfFamilyByClientRes(data)
