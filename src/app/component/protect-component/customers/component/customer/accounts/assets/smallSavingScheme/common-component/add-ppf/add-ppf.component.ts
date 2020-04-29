@@ -252,7 +252,7 @@ addNewNominee(data) {
 
   addExtendedMaturity(){
     this.getExtendMaturity.push(this.fb.group({
-      extenMaturity: ['',[Validators.required]]
+      extenMaturity: ['']
     }));
   }
   
@@ -312,10 +312,10 @@ addNewNominee(data) {
         isClient:0
       })]),
       maturityDate:['', [Validators.required]],
-      extenMaturity:['', [Validators.required]],
+      // extenMaturity:['', [Validators.required]],
       // ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
-      accountBalance: [data.accountBalance, [Validators.required, Validators.min(500)]],//Validators.max(150000)
-      balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],
+      accountBalance: [data.accountBalance, [ Validators.min(500)]],//Validators.max(150000)
+      balanceAsOn: [new Date(data.balanceAsOn)],
       commencementDate: [new Date(data.commencementDate), [Validators.required]],
       futureContribution: [data.futureApproxcontribution, [Validators.required]],
       frquency: [(data.frequency == undefined) ? "1" : String(data.frequency), [Validators.required]],
@@ -323,7 +323,7 @@ addNewNominee(data) {
       bankName: [data.bankName],
       linkedBankAccount: [data.linkedBankAccount],
       extendedGroup: this.fb.array([this.fb.group({
-        extenMaturity: ['',[Validators.required]],
+        extenMaturity: [''],
       })]),
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
@@ -400,13 +400,15 @@ removedList:any=[];
         finalTransctList.push(obj);
       }
     });
-
-    this.ppfSchemeForm.get('extendedGroup').value.forEach((element, index) => {
-      if(element.extenMaturity == ""){
-        this.invalidExtended = true;
-      }
+    if(new Date(this.maxDate).getTime() < new Date(this.ppfSchemeForm.get('commencementDate')).getTime()){
+      this.invalidExtended = true;
+    }
+    // this.ppfSchemeForm.get('extendedGroup').value.forEach((element, index) => {
+    //   if(element.extenMaturity == ""){
+    //     this.invalidExtended = true;
+    //   }
       // maturityDate = new Date(maturityDate).setFullYear(new Date(maturityDate).getFullYear() + 5);
-    });
+    // });
   //   if (this.removedList.value) {
   //   // this.removedList.forEach(element => {
   //     // if (element.valid) {
@@ -422,6 +424,10 @@ removedList:any=[];
   //   // });
   // }
     if (this.transactionData.length > 0) {
+      this.ppfSchemeForm.get('accountBalance').setValidators("");
+      this.ppfSchemeForm.get('accountBalance').updateValueAndValidity()
+      this.ppfSchemeForm.get('balanceAsOn').setValidators(""),
+      this.ppfSchemeForm.get('balanceAsOn').updateValueAndValidity()
       this.transactionData.forEach(element => {
         if (element.valid) {
           let obj = {
@@ -438,6 +444,12 @@ removedList:any=[];
         }
       });
     }
+    else{
+      this.ppfSchemeForm.get('accountBalance').setValidators([Validators.required, Validators.min(500)]);
+      this.ppfSchemeForm.get('accountBalance').updateValueAndValidity();
+      this.ppfSchemeForm.get('balanceAsOn').setValidators([Validators.required]);
+      // this.ppfSchemeForm.get('balanceAsOn').updateValueAndValidity();
+    }
     // this.nominees = []
     if (this.nomineesList) {
       this.nomineesList.forEach(element => {
@@ -450,7 +462,7 @@ removedList:any=[];
         this.nominees.push(obj)
       });
     }
-    if (this.ppfSchemeForm.invalid && this.invalidExtended) {
+    if (this.ppfSchemeForm.invalid || this.invalidExtended) {
       for (let element in this.ppfSchemeForm.controls) {
         console.log(element)
         if (this.ppfSchemeForm.get(element).invalid) {
