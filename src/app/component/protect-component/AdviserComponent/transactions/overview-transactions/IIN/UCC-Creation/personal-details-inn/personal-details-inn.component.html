@@ -114,16 +114,16 @@
                     <div class="col-md-8">
                         <mat-radio-group aria-label="Select an option" formControlName="gender">
                             <mat-radio-button [value]="1"class="b-a-custom radioBtn text-primary custom-radio"
-                                [ngClass]="personalDetails.get('gender').value == 1 ? 'text-primary b-a-custom': 'text-primitive'"
+                                [ngClass]="personalDetails.get('gender').value == '1' ? 'text-primary b-a-custom': 'text-primitive'"
                                 checked>
                                 Male
                             </mat-radio-button>
                             <mat-radio-button [value]="2"
-                                [ngClass]="personalDetails.get('gender').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
+                                [ngClass]="personalDetails.get('gender').value == '2' ? 'text-primary b-a-custom': ' text-primitive'">
                                 Female </mat-radio-button>
 
                             <mat-radio-button [value]="3"
-                                [ngClass]="personalDetails.get('gender').value == 3 ? 'text-primary b-a-custom': ' text-primitive'">
+                                [ngClass]="personalDetails.get('gender').value == '3' ? 'text-primary b-a-custom': ' text-primitive'">
                                 Other </mat-radio-button>
                         </mat-radio-group>
                     </div>
@@ -136,16 +136,16 @@
                     <div class="col-md-8">
                         <mat-radio-group aria-label="Select an option" formControlName="maritalStatus">
                             <mat-radio-button [value]="1" class="b-a-custom radioBtn text-primary custom-radio"
-                                [ngClass]="personalDetails.get('maritalStatus').value == 1 ? 'text-primary b-a-custom': ' text-primitive'"
+                                [ngClass]="personalDetails.get('maritalStatus').value == '1' ? 'text-primary b-a-custom': ' text-primitive'"
                                 checked="true">
                                 Married
                             </mat-radio-button>
                             <mat-radio-button [value]="2"
-                                [ngClass]="personalDetails.get('maritalStatus').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
+                                [ngClass]="personalDetails.get('maritalStatus').value == '2' ? 'text-primary b-a-custom': ' text-primitive'">
                                 Unmarried </mat-radio-button>
 
                             <mat-radio-button [value]="3"
-                                [ngClass]="personalDetails.get('maritalStatus').value == 3 ? 'text-primary b-a-custom': ' text-primitive'">
+                                [ngClass]="personalDetails.get('maritalStatus').value == '3' ? 'text-primary b-a-custom': ' text-primitive'">
                                 Other </mat-radio-button>
                         </mat-radio-group>
                     </div>
@@ -191,9 +191,9 @@
 
     <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
 
-        <button class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button>
+        <!-- <button class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button>
             PREVIOUS
-        </button>
+        </button> -->
 
         <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4"
             (click)="SendToForm(holder.type,true)">SAVE</button>
