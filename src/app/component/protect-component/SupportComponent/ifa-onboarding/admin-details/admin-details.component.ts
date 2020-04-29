@@ -118,8 +118,6 @@ export class AdminDetailsComponent implements OnInit {
       this.fundsDS = new MatTableDataSource(
         this.rtaDetails.filter((data) => data.rtTypeMasterid == 4)
       );
-    } else {
-      this.eventService.openSnackBar("No MF RTA List Found", "DISMISS");
     }
   }
   activityCommentFun(value, flag) {
@@ -355,7 +353,7 @@ export class AdminDetailsComponent implements OnInit {
 
         this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
       },
-      negativeMethod: () => {},
+      negativeMethod: () => { },
     };
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: "400px",
@@ -363,7 +361,7 @@ export class AdminDetailsComponent implements OnInit {
       autoFocus: false,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => { });
   }
 
   changeTab(index) {
@@ -392,21 +390,29 @@ export class AdminDetailsComponent implements OnInit {
     this.rtaAPIError = false;
     this.settingsService.getMFRTAList(jsonData).subscribe(
       (res) => {
-        let mfRTAlist = res || [];
-        this.camsDS = new MatTableDataSource(
-          mfRTAlist.filter((data) => data.rtTypeMasterid == 1)
-        );
-        this.karvyDS = new MatTableDataSource(
-          mfRTAlist.filter((data) => data.rtTypeMasterid == 2)
-        );
-        this.frankDS = new MatTableDataSource(
-          mfRTAlist.filter((data) => data.rtTypeMasterid == 3)
-        );
-        this.fundsDS = new MatTableDataSource(
-          mfRTAlist.filter((data) => data.rtTypeMasterid == 4)
-        );
-        this.isRTALoaded = true;
-        this.utilservice.loader(-1);
+        if (res) {
+          let mfRTAlist = res || [];
+          this.camsDS = new MatTableDataSource(
+            mfRTAlist.filter((data) => data.rtTypeMasterid == 1)
+          );
+          this.karvyDS = new MatTableDataSource(
+            mfRTAlist.filter((data) => data.rtTypeMasterid == 2)
+          );
+          this.frankDS = new MatTableDataSource(
+            mfRTAlist.filter((data) => data.rtTypeMasterid == 3)
+          );
+          this.fundsDS = new MatTableDataSource(
+            mfRTAlist.filter((data) => data.rtTypeMasterid == 4)
+          );
+          this.isRTALoaded = true;
+          this.utilservice.loader(-1);
+        } else {
+          this.camsDS.data = null;
+          this.karvyDS.data = null;
+          this.frankDS.data = null;
+          this.fundsDS.data = null;
+        }
+
       },
       (err) => {
         this.eventService.openSnackBar(err, "Dismiss");
@@ -423,9 +429,13 @@ export class AdminDetailsComponent implements OnInit {
     this.teamAPIError = false;
     this.settingsService.getTeamMembers(dataObj).subscribe(
       (res) => {
-        this.userList = new MatTableDataSource(res);
-        this.utilservice.loader(-1);
-        this.isTeamLoaded = true;
+        if (res) {
+          this.userList = new MatTableDataSource(res);
+          this.utilservice.loader(-1);
+          this.isTeamLoaded = true;
+        } else {
+          this.userList.data = null;
+        }
       },
       (err) => {
         this.eventService.openSnackBar(err, "Dismiss");

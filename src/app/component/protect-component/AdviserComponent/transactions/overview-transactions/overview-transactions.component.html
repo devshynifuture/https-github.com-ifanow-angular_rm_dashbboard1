@@ -5,7 +5,7 @@
                 <div class="col-md-8 p-0">
                     <div class="row ">
                         <div class="col-md-6 mb-16 pl-0">
-                            <div class="bg-white bPrimitive p-9">
+                            <!-- <div class="bg-white bPrimitive p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
                                         <h5 class="f-500 roboto">KYC</h5>
@@ -37,7 +37,7 @@
                                     </div>
                                 </div>
 
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="col-md-6 mb-16 pl-0" [appSkeletonLoading]="isLoading" appSkeletonLoading
@@ -56,25 +56,25 @@
                                     <p class="f-12 mb-8 roboto">TOTAL TRANSACTIONS DONE</p>
                                     <h4 class="f-30 f-300 text-primary mb-4 relClass">
                                         <div [ngClass]="{'height23': isLoading}" class="bar">
-                                            {{transactionCount}} <span class="f-14 text-black">97%</span>
+                                            {{transactionCount}} <span class="f-14 text-black"></span>
                                         </div>
                                     </h4>
                                 </div>
                                 <div class="borderTransactions">
                                     <p class="f-12 mb-8 roboto">SUCCESSFUL TRANSACTIONS</p>
                                     <h4 class="f-30 f-300 text-success mb-4">230 <span
-                                            class="f-14 text-black">97%</span>
+                                            class="f-14 text-black">{{percentageTrasact}}|0%</span>
                                     </h4>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-6 br-primitive">
                                         <p class="f-12 roboto">PENDING</p>
-                                        <h4 class="roboto f-300 f-30">25</h4>
+                                        <h4 class="roboto f-300 f-30">{{pendingTransaction}}</h4>
                                     </div>
                                     <div class="col-md-6">
                                         <p class="f-12 roboto">REJECTIONS</p>
-                                        <h4 class="roboto f-300 f-30">12</h4>
+                                        <h4 class="roboto f-300 f-30">{{rejectionTransaction}}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +128,10 @@
                                 </div>
                                 <div class="borderTransactions">
                                     <p class="f-12 mb-8 roboto">TOTAL MANDATES REGISTERED</p>
-                                    <h4 class="f-30 text-primary mb-4">267 </h4>
+                                    <h4 class="f-30 text-primary mb-4 relClass">
+                                        <div [ngClass]="{'height23': isLoading}" class="bar">{{acceptCount}}
+                                        </div>
+                                    </h4>
                                 </div>
                                 <div class="borderTransactions">
                                     <p class="f-12 mb-8 roboto">INVESTORS WITHOUT MANDATES</p>
@@ -142,11 +145,19 @@
                                 <div class="row">
                                     <div class="col-md-6 br-primitive">
                                         <p class="f-12 roboto">PENDING</p>
-                                        <h4 class="roboto f-300 f-30">25</h4>
+                                        <h4 class="roboto f-300 f-30 relClass">
+                                            <div [ngClass]="{'height23': isLoading}" class="bar">
+                                                {{pendingCount}}
+                                            </div>
+                                        </h4>
                                     </div>
                                     <div class="col-md-6">
                                         <p class="f-12 roboto">REJECTIONS</p>
-                                        <h4 class="roboto f-300 f-30">12</h4>
+                                        <h4 class="roboto f-300 f-30 relClass">
+                                            <div [ngClass]="{'height23': isLoading}" class="bar">
+                                                {{rejectCount}}
+                                            </div>
+                                        </h4>
                                     </div>
                                 </div>
                             </div>
@@ -162,120 +173,42 @@
                                 <mat-tab-group class="overviewTab" animationDuration="0ms">
                                     <mat-tab label="Recent">
 
-                                        <div class="detailsRecent">
+                                        <div class="detailsRecent" *ngFor="let transact of transactionList">
                                             <div class="row">
                                                 <div class="col-md-6 p-0">
-                                                    <p class="f-12 mb-10"> PURCHASE </p>
+                                                    <p class="f-12 mb-10"> {{transact.transactionType}} </p>
                                                 </div>
                                                 <div class="col-md-6 p-0">
-                                                    <p class="text-primitive mb-10 text-right f-12"> BSE</p>
+                                                    <p class="text-primitive mb-10 text-right f-12">
+                                                        {{(transact.aggregatorType ==1)?'NSE':'BSE'}}</p>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6 p-0">
-                                                    <p class="f-16  mb-10 f-500"> 5,00,000 </p>
+                                                    <p class="f-16  mb-10 f-500"> {{transact.amount}} </p>
                                                 </div>
                                                 <div class="col-md-6 p-0">
-                                                    <p class="text-primitive text-right mb-10 f-12"> 31/01 14:25</p>
+                                                    <p class="text-primitive text-right mb-10 f-12">
+                                                        {{transact.orderDate | date:'dd/MM/yyyy'}}</p>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12 p-0">
-                                                    <p class="f-12 text-primitive mb-10"> Aditya Birla Sun Life Equity
-                                                        Savings Fund - Monthly Divdend Option</p>
+                                                    <p class="f-12 text-primitive mb-10"> {{transact.schemeName}}</p>
                                                 </div>
-                                                <!--    <div (click)="openMobileTransactionPopup()" class="col-md-12 p-0">
-                                                    <p class="f-14 mb-8 f-500">Rahul Jain</p>
-                                                </div> -->
-                                                <!-- <div (click)="openMobileErrroTransactionPopup()" class="col-md-12 p-0">
-                                                    <p class="f-14 mb-8 f-500">Rahul Jain</p>
-                                                </div> -->
                                                 <div (click)="openMobileErrorCopyTransactionPopup()"
                                                     class="col-md-12 p-0">
                                                     <p class="f-14 mb-8 f-500">Rahul Jain</p>
                                                 </div>
                                             </div>
+  
                                             <span class="text-primary p-2 br-1 b-a-custom f-12">
-                                                UNITS ALLOTTED
+                                                {{(transact.status == 2)?'PENDING AUTHERIZATION':(transact.status == 3)?'Payment successful':(transact.status == 6)?'Order processed':(transact.status ==7)?'Transaction rejected':'UNKNOWN'}}
                                             </span>
                                         </div>
-
-                                        <div class="detailsRecent">
-                                            <div class="row">
-                                                <div class="col-md-6 p-0">
-                                                    <p class="f-12 mb-10"> REDEMPTION </p>
-                                                </div>
-                                                <div class="col-md-6 p-0">
-                                                    <p class="text-primitive mb-10 text-right f-12"> NSE </p>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-6 p-0">
-                                                    <p class="f-16  mb-10 f-500"> 253.93 units </p>
-                                                </div>
-                                                <div class="col-md-6 p-0">
-                                                    <p class="text-primitive text-right mb-10 f-12"> 31/01 14:25</p>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="row">
-                                                <div class="col-md-12 p-0">
-                                                    <p class="f-12 text-primitive mb-10"> ICICI Prudential Balance
-                                                        Advantage Fund - Regular Plan - Growth </p>
-                                                </div>
-                                                <div class="col-md-12 p-0">
-                                                    <p class="f-14 mb-8 f-500"> Shreya Jain </p>
-                                                </div>
-
-                                            </div>
-
-                                            <span class="text-danger p-2 br-1 b-a-danger f-12">
-                                                REJECTED
-                                            </span>
-
-                                        </div>
-
-                                        <div class="detailsRecent">
-                                            <div class="row">
-                                                <div class="col-md-6 p-0">
-                                                    <p class="f-12 mb-10"> SIP </p>
-                                                </div>
-                                                <div class="col-md-6 p-0">
-                                                    <p class="text-primitive mb-10 text-right f-12"> NSE</p>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-6 p-0">
-                                                    <p class="f-16  mb-10 f-500"> 8,000 </p>
-                                                </div>
-                                                <div class="col-md-6 p-0">
-                                                    <p class="text-primitive text-right mb-10 f-12"> 31/01 14:25</p>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-12 p-0">
-                                                    <p class="f-12 text-primitive mb-10">
-                                                        Aditya Birla Sun Life Equity Savings Fund - Monthly Divdend
-                                                        Option
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-12 p-0">
-                                                    <p class="f-14 mb-8 f-500">Rahul Jain</p>
-                                                </div>
-                                            </div>
-
-                                            <span class="text-success p-2 br-1 b-a-success f-12">
-                                                SUCCESS
-                                            </span>
-                                        </div>
-
                                     </mat-tab>
 
-                                    <mat-tab label="Upcoming">
+                                    <!-- <mat-tab label="Upcoming">
 
                                         <div class="detailsRecent">
                                             <div class="row">
@@ -380,7 +313,7 @@
                                                 SUCCESS
                                             </span>
                                         </div>
-                                    </mat-tab>
+                                    </mat-tab> -->
 
                                 </mat-tab-group>
 

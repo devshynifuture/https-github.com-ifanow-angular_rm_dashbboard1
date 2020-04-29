@@ -6,7 +6,7 @@
         </div>
         <div class="col-md-8 p-0 d-flex justify-content-center align-items-center " *ngIf="data">
             <p class="f-16 m-0">ARN-83865
-                {{ getRtName(data.rtId) }}
+                {{ upperHeaderName ? upperHeaderName: '' }}
             </p>
         </div>
         <div class="col-md-2 text-right">
@@ -109,7 +109,7 @@
                                     <div class="bar"
                                         [matTooltip]="canExportExcelSheet === 'intermediate'? 'Loading...': (canExportExcelSheet == 'false' ? 'No Data Found': (canExportExcelSheet == 'true'? 'Click Now': null))"
                                         [matTooltipDisabled]="didAumReportListGot" matTooltipPosition="below">
-                                        <button class="bg-grey lt classExport " mat-button
+                                        <button class="bg-grey lt classExport " mat-button *ngIf="!isLoading"
                                             [disabled]="(canExportExcelSheet == 'false')"
                                             (click)="exportToExcelSheet('export-folios', element)">Export</button>
                                     </div>
@@ -212,7 +212,7 @@
                                 <ng-container matColumnDef="transactions">
                                     <th mat-header-cell *matHeaderCellDef> Transactions </th>
                                     <td mat-cell *matCellDef="let element; index as i">
-                                        <div class="bar"> {{ element.transactions }} <button
+                                        <div class="bar"> {{ element.transactions }} <button *ngIf="!isLoading"
                                                 (click)="openReconciliationDetails('reconciliationDetails', element, 'all-folios', i, element.freezeDate)"
                                                 class="bg-primary text-white" mat-flat-button>View</button> </div>
                                     </td>
@@ -275,6 +275,7 @@
                                     <th mat-header-cell *matHeaderCellDef> Transactions </th>
                                     <td mat-cell *matCellDef="let element; index as i">
                                         <div class="bar"> {{ element.transactions }}<button
+                                                *ngIf="!isLoadingForDuplicate"
                                                 (click)="openReconciliationDetails('reconciliationDetails', element, 'duplicate-folios', i, element.freezeDate)"
                                                 class="bg-primary text-white" mat-flat-button>View</button> </div>
                                     </td>
