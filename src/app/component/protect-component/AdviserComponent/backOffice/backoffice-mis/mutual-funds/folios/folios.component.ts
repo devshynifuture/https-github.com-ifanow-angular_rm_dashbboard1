@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { BackOfficeService } from '../../../back-office.service';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { EventService } from '../../../../../../../Data-service/event.service';
+import { ExcelService } from '../../../../../customers/component/customer/excel.service';
 
 @Component({
   selector: 'app-folios',
@@ -15,7 +16,7 @@ export class FoliosComponent implements OnInit {
   folioDetails: any;
   dataList: any;
   advisorId: any;
-  dataSource = new MatTableDataSource([{}, {}, {}]);
+  dataSource;
   folioList: any;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
@@ -50,7 +51,6 @@ export class FoliosComponent implements OnInit {
   }
 
   getList(data, value) {//for seraching and dropdown of pan and folio
-
     if (value == 'groupyHead') {
       const obj = {
         advisorId: this.advisorId,
@@ -81,7 +81,7 @@ export class FoliosComponent implements OnInit {
   selectedData(data, value) {//for getting selected option data 
     if (data) {
       this.isLoading = true;
-
+      this.dataSource = new MatTableDataSource([{}, {}, {}]);
       if (value == 'groupyHead') {
         const obj = {
           advisorId: this.advisorId,
@@ -139,6 +139,7 @@ export class FoliosComponent implements OnInit {
           data => {
             this.isLoading = false;
             if (data) {
+              console.log(data);
               this.dataSource.data = data;
               this.dataSource.sort = this.sort;
             } else {
@@ -158,6 +159,7 @@ export class FoliosComponent implements OnInit {
           data => {
             this.isLoading = false;
             if (data) {
+              console.log(data);
               this.dataSource.data = data;
               this.dataSource.sort = this.sort;
             } else {
@@ -167,6 +169,38 @@ export class FoliosComponent implements OnInit {
           }
         )
       }
+    }
+  }
+
+
+  exportToExcelSheet(value) {
+    if (this.dataSource && this.dataSource.data) {
+      let excelData = [];
+      let footer = [];
+      let headerStyle = [
+        { width: 20, key: 'Folio Number' },
+        { width: 80, key: 'Scheme Name' },
+        { width: 30, key: 'Investor Name' },
+        { width: 18, key: 'Broker Code' },
+      ];
+      let header = [
+        'Folio Number',
+        'Scheme Name',
+        'Investor Name',
+        'Broker Code',
+      ];
+
+
+      this.dataSource.data.forEach(element => {
+        let tableData = [
+          element.folioNumber,
+          element.schemeName,
+          element.investorName,
+          element.brokerCode
+        ]
+        excelData.push(Object.assign(tableData));
+      });
+      ExcelService.exportExcel(headerStyle, header, excelData, footer, value);
     }
   }
 }

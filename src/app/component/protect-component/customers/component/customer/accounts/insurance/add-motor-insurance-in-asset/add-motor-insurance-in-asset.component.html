@@ -65,8 +65,11 @@
         <div class="col-md-5 pr-0 form-group">
             <mat-form-field>
                 <mat-select matInput formControlName="PlanType" autocomplete="true" class="form-control br-0">
-                    <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
-                        {{option.policy_type}}</mat-option>
+                    <!-- <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
+                        {{option.policy_type}}</mat-option> -->
+                        <mat-option value='4'>Third party</mat-option>
+                        <mat-option value='5'>Comprehensive</mat-option>
+                        <mat-option value='6'>Comprehensive - Zero depreciation</mat-option>
                 </mat-select>
                 <mat-error>This field is required
                 </mat-error>
@@ -85,8 +88,19 @@
             <div class="col-md-5 pr-0 form-group">
                 <mat-form-field>
                     <mat-select matInput formControlName="additionalCovers" autocomplete="true" class="form-control br-0">
-                        <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
-                            {{option.add_on}}</mat-option>
+                        <!-- <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
+                            {{option.add_on}}</mat-option> -->
+                            <mat-option value='1'>Zero depreciation</mat-option>
+                            <mat-option value='2'>Engine and gearbox protector</mat-option>
+                            <mat-option value='3'>Return to invoice</mat-option>
+                            <mat-option value='4'>No claim bonus protection</mat-option>
+                            <mat-option value='5'>Emergency and roadside assistance</mat-option>
+                            <mat-option value='6'>Accident coverage for car passengers</mat-option>
+                            <mat-option value='7'>Daily allowance</mat-option>
+                            <mat-option value='8'>Key replacement compensation</mat-option>
+                            <mat-option value='9'>Consumables cover</mat-option>
+                            <mat-option value='10'>Others</mat-option>
+
                     </mat-select>
                     <mat-error>This field is required
                     </mat-error>
@@ -119,7 +133,7 @@
         </div>
         <div class="col-md-5 form-group">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="insurerName" #insureerName appInputValueValidation autocomplete="off" class="form-control br-0" placeholder="Enter Name of insurer">
+                <input matInput type="text"  [maxLength]="30" formControlName="insurerName" #insureerName appInputValueValidation autocomplete="off" class="form-control br-0" placeholder="Enter Name of insurer">
                 <mat-error>This field is required
                 </mat-error>
             </mat-form-field>
@@ -454,7 +468,8 @@
                 </mat-form-field>
             </div>
             <div class="col-md-1 p-0 pt-8 d-flex">
-                <i class="material-icons text-primitive c-p float-left" appBankAccount [data]="bankAccountDetails" (inputChange)='bankAccountList($event)'>add</i>
+                <!--  prod build appBankAccount [data]="bankAccountDetails" -->
+                <i class="material-icons text-primitive c-p float-left" appBankAccount [data]="bankAccountDetails"   (inputChange)='bankAccountList($event)'>add</i>
             </div>
         </div>
 

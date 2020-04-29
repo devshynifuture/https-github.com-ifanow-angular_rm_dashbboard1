@@ -310,9 +310,11 @@ export class ClientDematComponent implements OnInit {
 
   saveNext(flag) {
     if (this.dematForm.invalid) {
-      this.holderList.markAllAsTouched();
       this.dematForm.markAllAsTouched();
       return;
+    }
+    else if (this.holderList) {
+      this.holderList.markAllAsTouched();
     }
     else if (this.mobileData.invalid) {
       this.mobileData.markAllAsTouched();

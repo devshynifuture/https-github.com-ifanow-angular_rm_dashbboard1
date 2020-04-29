@@ -11,15 +11,23 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-8"></div>
+                <div ng-init="schemeFilter=''" class="col-md-4 pr-0 mt-12 mb-12">
+                    <input type="text" class="form-control" placeholder="Search AMC Name" [(ngModel)]="amcFilter"
+                        (keyup)="filterArray()">
+                </div>
+            </div>
+
 
             <div class="row">
                 <div class="col-md-12 p-0 cat-wise overflow-hidden">
                     <table class="skeletonAnimation mt-16" appSkeletonLoading [appSkeletonLoading]="isLoading"
-                        id="table-low" *ngIf="amcList.length>0">
+                        id="table-low" *ngIf="filteredArray.length>0">
                         <thead class="text-dark">
                             <tr class="h-40">
                                 <th class="w-10">Sr No.</th>
-                                <th class="w-40 c-p" (click)="sortBy(amcList,'amcName')">
+                                <th class="w-40 c-p" (click)="sortBy(filteredArray,'amcName')">
                                     <span class="d-flex align-items-center">
                                         Amc Name
                                         <i class="material-icons ml-4 f-14 text-primitive"
@@ -29,7 +37,7 @@
                                             *ngIf="propertyName=='amcName' && reverse">arrow_downward</i>
                                     </span>
                                 </th>
-                                <th (click)="sortBy(amcList,'sipAmount')" class="c-p">
+                                <th (click)="sortBy(filteredArray,'sipAmount')" class="c-p">
                                     <span class="d-flex align-items-center">SIP Amount
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='sipAmount' && !reverse">
@@ -38,7 +46,7 @@
                                             *ngIf="propertyName=='sipAmount' && reverse">arrow_downward</i>
                                     </span>
                                 </th>
-                                <th (click)="sortBy(amcList,'sipCount')" class="c-p">
+                                <th (click)="sortBy(filteredArray,'sipCount')" class="c-p">
                                     <span class="d-flex align-items-center">SIP Count
                                         <i class="material-icons  ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='sipCount' && !reverse">
@@ -51,7 +59,7 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody *ngFor="let category of amcList; let i = index">
+                        <tbody *ngFor="let category of filteredArray; let i = index">
                             <tr>
                                 <td>
                                     <div class="bar">
@@ -379,7 +387,7 @@
                                 </td>
                             </tr>
                         </tbody>
-                        <tbody *ngIf="!isLoading && amcList.length>0">
+                        <tbody *ngIf="!isLoading && filteredArray.length>0">
                             <tr>
                                 <td class="p-table">&nbsp;</td>
                                 <td class="p-table"><strong>Total</strong></td>
@@ -393,7 +401,7 @@
                     </table>
 
 
-                    <div *ngIf="amcList.length==0" class="d-flex flex-column align-items-center">
+                    <div *ngIf="filteredArray.length==0" class="d-flex flex-column align-items-center">
                         <img class="width300" src="assets/images/svg/noDataFound.svg">
                         <h4 class="text-center pt-12">No data Found</h4>
                     </div>

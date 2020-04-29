@@ -345,6 +345,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
       if (this.flag == "editNSC") {
         let obj =
         {
+          "advisorId":this.advisorId,
           "clientId": this.clientId,
           "id": this.editApi.id,
           "familyMemberId": this.familyMemberId,
@@ -376,7 +377,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.nscFormField}
         let obj =
         {
           "clientId": this.clientId,
-          
+          "advisorId":this.advisorId,
           "familyMemberId": this.familyMemberId,
           "ownerList": this.nscFormField.value.getCoOwnerName,
           // "ownerName": (this.ownerName == undefined) ? this.nscFormField.controls.ownerName.value : this.ownerName.userName,

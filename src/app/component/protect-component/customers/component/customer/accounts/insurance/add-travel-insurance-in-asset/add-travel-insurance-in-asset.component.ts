@@ -216,7 +216,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
   }
   addNewFeature(data) {
     this.planFeatureForm.push(this.fb.group({
-      planfeatures: [data ? data.policyFeatureId : ''],
+      planfeatures: [data ? data.policyFeatureId +'' : ''],
     }));
   }
   removeNewFeature(item) {
@@ -270,12 +270,12 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
         isClient: 0
       })]),
       name:[(this.dataForEdit ? this.dataForEdit.name : null)],
-      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId : null), [Validators.required]],
+      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId + '': null), [Validators.required]],
       planDetails: [(this.dataForEdit ? this.dataForEdit.policyFeatureId+'' : null), [Validators.required]],
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
       insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : null), [Validators.required]],
-      sumAssuredIdv: [(this.dataForEdit ? this.dataForEdit.sumInsuredIdv : null), [Validators.required]],
-      planeName: [(this.dataForEdit ? this.dataForEdit.planName :null), [Validators.required]],
+      sumAssuredIdv: [(this.dataForEdit ? this.dataForEdit.sumInsuredIdv : null)],
+      planeName: [(this.dataForEdit ? this.dataForEdit.planName :null)],
       premium: [(this.dataForEdit ? this.dataForEdit.premiumAmount : null), [Validators.required]],
       policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : null, [Validators.required]],
       policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : null, [Validators.required]],
@@ -379,6 +379,9 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
       }
     })
     if (this.travelInsuranceForm.invalid) {
+      if(this.travelInsuranceForm.get('planDetails').value == '1'){
+        this.travelInsuranceForm.controls['sumAssuredIdv'].setErrors({'required': true});
+      }
       this.travelInsuranceForm.markAllAsTouched();
     } else {
       const obj = {

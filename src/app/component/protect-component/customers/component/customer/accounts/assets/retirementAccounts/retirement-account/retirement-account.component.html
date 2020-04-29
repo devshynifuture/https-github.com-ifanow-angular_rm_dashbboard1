@@ -5,7 +5,7 @@
             <button (click)="getfixedIncomeData('1')"
                 [ngClass]="{'mat-stroked-button': showRecurring == '1','text-primary':showRecurring == '1'}"
                 class="br-0 text-custom" mat-button>
-                EPF/VPF/EPS
+                EPF
             </button>
             <button (click)="getfixedIncomeData('2')"
                 [ngClass]="{'mat-stroked-button': showRecurring == '2','text-primary':showRecurring == '2'}"
@@ -35,7 +35,7 @@
     <div *ngIf="showRecurring == '1'">
         <div class="row">
             <div class="col-md-6 p-0">
-                <h4 class="m-0 text-black roboto pt-8">EPF/VPF/EPS</h4>
+                <h4 class="m-0 text-black roboto pt-8">Employees Provident Fund (EPF)</h4>
             </div>
             <div class="col-md-6 p-0 right text-right" *ngIf="dataSource.filteredData.length > 0">
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
@@ -597,7 +597,7 @@
                     </td>
                     <td *matFooterCellDef class="br  text-right" mat-footer-cell></td>
                 </ng-container>
-                <ng-container matColumnDef="year">
+                <!-- <ng-container matColumnDef="year">
                     <th *matHeaderCellDef class="br text-right  textRight " mat-header-cell
                         mat-sort-header="yearReceipt">
                         Year of <br> receipt
@@ -606,7 +606,7 @@
                         <div class="bar"> {{element.yearOfReceipt}} </div>
                     </td>
                     <td *matFooterCellDef class="br   text-right" mat-footer-cell></td>
-                </ng-container>
+                </ng-container> -->
                 <ng-container matColumnDef="amt">
                     <th *matHeaderCellDef class="br textRight text-right  textRight " mat-header-cell
                         mat-sort-header="amountReceived">

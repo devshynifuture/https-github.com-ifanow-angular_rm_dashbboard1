@@ -234,7 +234,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
       name:[(this.dataForEdit ? this.dataForEdit.name : null)],
       // additionalCovers: [this.dataForEdit ? this.dataForEdit.addOns[0].addOnId : null],
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
-      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId : null), [Validators.required]],
+      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId + '' : null), [Validators.required]],
       insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : null), [Validators.required]],
       policyName: [(this.dataForEdit ? this.dataForEdit.policyName : null), [Validators.required]],
       policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : null, [Validators.required]],
@@ -333,7 +333,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
   }
   addNewAddOns(data) {
     this.addOnForm.push(this.fb.group({
-      additionalCovers :[data ? data.addOnId : ''],
+      additionalCovers :[data ? data.addOnId + '' : ''],
       addOnSumInsured:null
     }));
   }

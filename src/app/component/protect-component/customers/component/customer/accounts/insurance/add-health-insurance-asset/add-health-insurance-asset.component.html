@@ -65,8 +65,10 @@
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
                         <mat-select matInput formControlName="PlanType" autocomplete="true" class="form-control br-0">
-                            <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
-                                {{option.policy_type}}</mat-option>
+                            <!-- <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
+                                {{option.policy_type}}</mat-option> -->
+                                <mat-option value='7'>Individual health</mat-option>
+                                <mat-option value='8'>Family floater</mat-option>
                         </mat-select>
                         <mat-error>This field is required
                         </mat-error>
@@ -111,10 +113,12 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="form-group mb-0">
+                        <div class="form-group mb-0 iconRupess">
                             <label class="f-16 roboto">Sum insured</label>
                             <mat-form-field>
-                                <input matInput type="number" formControlName="sumAssured" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #premiumdetails autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
+                                <input matInput type="number" formControlName="sumAssured" [inputValidator]="validatorType.NUMBER_ONLY"
+                                appInputValueValidation  #sumAssured autocomplete="true" [maxLength]="8" class="form-control rupess br-0">
+                                <mat-hint align="end" class="f-12">{{sumAssured.value.length}}/8</mat-hint>
                                 <mat-error>This field is required
                                 </mat-error>
                             </mat-form-field>
@@ -132,10 +136,11 @@
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8">Deductible sum insured</h5>
             </div>
-            <div class="col-md-5">
-                <div class="form-group mb-0">
+            <div class="col-md-5"> 
+                <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input matInput type="number" formControlName="deductibleAmt" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #premiumdetails autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
+                        <input matInput type="number" formControlName="deductibleAmt" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #deductibleAmt autocomplete="true" [maxLength]="8" class="form-control rupess br-0">
+                        <mat-hint align="end" class="f-12">{{deductibleAmt.value.length}}/8</mat-hint>
                         <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>
@@ -149,7 +154,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="20" formControlName="policyNum" #policynumber appInputValueValidation autocomplete="off" class="form-control br-0">
+                        <input matInput type="text" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="20" formControlName="policyNum" #policyNum appInputValueValidation autocomplete="off" class="form-control br-0">
+                        <mat-hint align="end" class="f-12">{{policyNum.value.length}}/20</mat-hint>
                         <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>
@@ -163,7 +169,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput type="text" [maxLength]="30" formControlName="insurerName" #insureerName appInputValueValidation autocomplete="off" class="form-control br-0">
+                        <input matInput type="text" [maxLength]="40" formControlName="insurerName" #insurerName appInputValueValidation autocomplete="off" class="form-control br-0">
+                        <mat-hint align="end" class="f-12">{{insurerName.value.length}}/40</mat-hint>
                         <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>
@@ -177,7 +184,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput type="text" [maxLength]="30" formControlName="planeName" #planName appInputValueValidation autocomplete="off" class="form-control br-0">
+                        <input matInput type="text" [maxLength]="40" formControlName="planeName" #planeName appInputValueValidation autocomplete="off" class="form-control br-0">
+                        <mat-hint align="end" class="f-12">{{planeName.value.length}}/40</mat-hint>
                         <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>
@@ -192,8 +200,9 @@
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
                         <input type="text" matInput #premium class="form-control rupess br-0"
-                            appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                            appInputValueValidation  [maxLength]="8" [inputValidator]="validatorType.NUMBER_ONLY"
                             formControlName="premium">
+                            <mat-hint align="end" class="f-12">{{premium.value.length}}/8</mat-hint>
                         <mat-error class="f-12 pt-4">
                             This field is required
                         </mat-error>
@@ -244,7 +253,7 @@
         <div *ngIf="addMoreFlag" class="pt-40">
             <div class="row">
                 <div (click)="openOptionField()" class="col-md-5 text-right">
-                    <p class="m-0 text-primitive f-16 c-p"> - Show less</p>
+                    <p class="m-0 text-primitive f-16 c-p">  Show less</p>
                 </div>
                 <div class="col-md-3">
                 </div>
@@ -255,9 +264,10 @@
                     <h5 class="m-0 pt-8">Copay</h5>
                 </div>
                 <div class="col-md-3">
-                    <div class="form-group mb-0 iconRupess">
+                    <div class="form-group mb-0" [ngClass]="healthInsuranceForm.controls.copayType.value == '1' ? 'iconRupess': 'iconPetage'">
                         <mat-form-field>
-                            <input matInput type="number" formControlName="copay" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #premiumdetails autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
+                            <input matInput type="number" formControlName="copay" (keyup)="changeTheInput(copayType.value,'copay',$event)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #copay autocomplete="true" [maxLength]="8" class="form-control  br-0" [ngClass]="healthInsuranceForm.controls.copayType.value == '1' ? 'rupess': 'percentage'">
+                            <mat-hint *ngIf="healthInsuranceForm.controls.copayType.value == '1'" align="end" class="f-12">{{copay.value.length}}/8</mat-hint>
                             <mat-error>This field is required
                             </mat-error>
                         </mat-form-field>
@@ -266,7 +276,8 @@
                 <div class="col-md-3">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <mat-select matInput formControlName="copayType" #frequency autocomplete="off" class="form-control br-0">
+                            <mat-select matInput formControlName="copayType" (selectionChange)="changeSign($event.value,'copay',copay.value)" #copayType autocomplete="off" class="form-control br-0">
+                               <!-- <mat-option value=''>Select option</mat-option> -->
                                 <mat-option value='1'>Rupees</mat-option>
                                 <mat-option value='2'>Percentage</mat-option>
                             </mat-select>
@@ -281,9 +292,11 @@
                     <h5 class="m-0 pt-8">Cumulative bonus</h5>
                 </div>
                 <div class="col-md-3">
-                    <div class="form-group mb-0 iconRupess">
+                    <div class="form-group mb-0" [ngClass]="healthInsuranceForm.controls.bonusType.value == '1' ? 'iconRupess': 'iconPetage'">
                         <mat-form-field>
-                            <input matInput type="number" formControlName="cumulativeBonus" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #premiumdetails autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
+                            <input matInput type="number" formControlName="cumulativeBonus" (keyup)="changeTheInput(bonusType.value,'cumulativeBonus',$event)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #cumulativeBonus autocomplete="true" [maxLength]="8" class="form-control br-0" 
+                            [ngClass]="healthInsuranceForm.controls.bonusType.value == '1' ? 'rupess': 'percentage'">
+                            <mat-hint align="end" *ngIf="healthInsuranceForm.controls.bonusType.value == '1'" class="f-12">{{cumulativeBonus.value.length}}/8</mat-hint>
                             <mat-error>This field is required
                             </mat-error>
                         </mat-form-field>
@@ -293,7 +306,8 @@
                     <div class="form-group mb-0">
                         <!-- <label class="f-14 roboto">Rupees</label> -->
                         <mat-form-field>
-                            <mat-select matInput formControlName="bonusType" #bonusType autocomplete="off" class="form-control br-0">
+                            <mat-select matInput formControlName="bonusType"  (selectionChange)="changeSign($event.value,'cumulativeBonus',cumulativeBonus.value)" #bonusType autocomplete="off" class="form-control br-0">
+                                <!-- <mat-option value=''>Select option</mat-option> -->
                                 <mat-option value='1'>Rupees</mat-option>
                                 <mat-option value='2'>Percentage</mat-option>
                             </mat-select>
@@ -311,8 +325,10 @@
                     <div class="form-group mb-0 iconRupess">
                         <mat-form-field>
                             <mat-select matInput formControlName="additionalCovers" autocomplete="true" class="form-control br-0">
-                                <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
-                                    {{option.add_on}}</mat-option>
+                                <!-- <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
+                                    {{option.add_on}}</mat-option> -->
+                                    <mat-option value='11'>Critical illness</mat-option>
+                                    <mat-option value='12'>Personal accident </mat-option>
                             </mat-select>
                             <mat-error>This field is required
                             </mat-error>
@@ -321,9 +337,10 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="form-group mb-0">
+                    <div class="form-group mb-0 iconRupess">
                         <mat-form-field>
-                            <input matInput type="number" formControlName="coversAmount" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #premiumdetails autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
+                            <input matInput type="number" formControlName="coversAmount" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #coversAmount autocomplete="true" [maxLength]="8" class="form-control rupess br-0">
+                            <mat-hint align="end" class="f-12">{{coversAmount.value.length}}/8</mat-hint>
                             <mat-error>This field is required
                             </mat-error>
                         </mat-form-field>
@@ -337,12 +354,13 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput type="text" [maxLength]="30" formControlName="exclusion" #exclusion appInputValueValidation autocomplete="off" class="form-control br-0">
+                            <input matInput type="text" [maxLength]="40" formControlName="exclusion" #exclusion appInputValueValidation autocomplete="off" class="form-control br-0">
+                            <mat-hint align="end" class="f-12">{{exclusion.value.length}}/40</mat-hint>
                         </mat-form-field>
                     </div>
                 </div>
             </div>
-            <div class="row pt-40">
+            <!-- <div class="row pt-40">
                 <div class="col-md-4 pr-0 text-right">
                     <h5 class="m-0 pt-8">Policy inception date</h5>
                 </div>
@@ -355,7 +373,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div formArrayName="getNomineeName">
                 <div class="row pt-36" *ngFor="let obj of healthInsuranceForm.controls['getNomineeName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
                     <div class="col-md-4 pr-0 text-right">
@@ -419,7 +437,9 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="tpaName" #tpaName appInputValueValidation autocomplete="off" class="form-control br-0">
+                            <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="40" formControlName="tpaName" #tpaName appInputValueValidation autocomplete="off" class="form-control br-0">
+                            <mat-hint align="end" class="f-12">{{tpaName.value.length}}/40</mat-hint>
+
                         </mat-form-field>
                     </div>
                 </div>
@@ -431,7 +451,9 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="advisorName" #advisorName appInputValueValidation autocomplete="off" class="form-control br-0">
+                            <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="40" formControlName="advisorName" #advisorName appInputValueValidation autocomplete="off" class="form-control br-0">
+                            <mat-hint align="end" class="f-12">{{advisorName.value.length}}/40</mat-hint>
+
                             <mat-error>This field is required
                             </mat-error>
                         </mat-form-field>
@@ -445,7 +467,8 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="serviceBranch" #serviceBranch appInputValueValidation autocomplete="off" class="form-control br-0">
+                            <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="40" formControlName="serviceBranch" #serviceBranch appInputValueValidation autocomplete="off" class="form-control br-0">
+                            <mat-hint align="end" class="f-12">{{serviceBranch.value.length}}/40</mat-hint>
                             <mat-error>This field is required
                             </mat-error>
                         </mat-form-field>
@@ -483,7 +506,8 @@
                     </mat-form-field>
                 </div>
                 <div class="col-md-1 p-0 pt-8 d-flex">
-                    <i class="material-icons text-primitive c-p float-left" appBankAccount [data]="bankAccountDetails" (inputChange)='bankAccountList($event)'>add</i>
+                    <!-- [data]="bankAccountDetails" appBankAccount prod build -->
+                    <i class="material-icons text-primitive c-p float-left"  (inputChange)='bankAccountList($event)'>add</i>
                 </div>
             </div>
 
