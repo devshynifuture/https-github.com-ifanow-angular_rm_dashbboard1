@@ -48,6 +48,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   editData: any;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   familyMemberId: any;
+  loanAmount: any;
   constructor(public utils: UtilService, private subInjectService: SubscriptionInject, private fb: FormBuilder,
     public custumService: CustomerService, public eventService: EventService) {
   }
@@ -139,6 +140,22 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     this.transactionData = data.controls
     return;
   }
+  Validations(value,form){
+    if(form == 'loanTenure'){
+      if(parseInt(value) > 40){
+        this.addLiabilityForm.get('loanTenure').markAsTouched();
+      }
+    }else{
+     (this.addLiabilityForm.controls.loanAmount.value) ? this.loanAmount = this.addLiabilityForm.controls.loanAmount.value : null
+     let formValue = parseInt(this.addLiabilityForm.controls.loanAmount.value)
+     let emi=parseInt(value) 
+      if(emi > formValue){
+        this.addLiabilityForm.get('emi').setErrors({ max: formValue });
+        this.addLiabilityForm.get('emi').markAsTouched();
+      }
+    }
+    }
+   
   getLiability(data) {
     if (data == 'tab1') {
       data = {};
@@ -151,14 +168,14 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       ownerName: [data.ownerName, [Validators.required]],
       loanType: [(data.loanTypeId == undefined) ? '' : (data.loanTypeId) + '', [Validators.required]],
       loanAmount: [data.loanAmount, [Validators.required]],
-      loanTenure: [data.loanTenure, [Validators.required]],
+      loanTenure: [data.loanTenure, [Validators.required,Validators.max(40)]],
       outstandingCheck: [data.principalOutstanding],
       poDate: [(data.principalOutstandingAsOn) ? new Date(data.principalOutstandingAsOn) : ''],
       outstandingAmt: [data.principalOutStandingAmount,],
       CommencementDate: [new Date(data.commencementDate), [Validators.required]],
       emiFrequency: [(data.frequencyOfPayments == undefined) ? '' : (data.frequencyOfPayments) + '', [Validators.required]],
       interest: [data.annualInterestRate, [Validators.required]],
-      emi: [data.emi],
+      emi: [data.emi,[Validators.max((this.loanAmount) ? this.loanAmount : null)]],
       finInstitution: [data.financialInstitution],
       collateral: [],
     });

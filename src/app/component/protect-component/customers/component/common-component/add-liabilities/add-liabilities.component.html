@@ -65,11 +65,11 @@
                 <mat-form-field>
                     <input type="text" matInput #loanAmountRef class="form-control rupess br-0" appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" formControlName="loanAmount"
-                        maxlength="{{getFormControl().loanAmount.maxLength}}">
+                        [maxLength]="8">
                     <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
-                    <mat-hint align="end" class="f-12">{{loanAmountRef.value.length}}/20</mat-hint>
+                    <mat-hint align="end" class="f-12">{{loanAmountRef.value.length}}/8</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -83,12 +83,15 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input type="text" matInput #loanTenure class="form-control br-0" appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" formControlName="loanTenure"
+                        [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="Validations($event.target.value,'loanTenure')" formControlName="loanTenure"
                         maxlength="{{getFormControl().loanTenure.maxLength}}">
-                    <mat-error class="f-12 pt-4">
+                    <mat-error class="f-12 pt-4"  *ngIf="(addLiabilityForm.get('loanTenure').errors?.required)">
                         This field is required
                     </mat-error>
-                    <mat-hint align="end" class="f-12">{{loanTenure.value.length}}/20</mat-hint>
+                    <mat-error class="f-12 pt-4" *ngIf="(addLiabilityForm.get('loanTenure').errors?.max)" >
+                        Should not be greater than 40
+                    </mat-error>
+                    <!-- <mat-hint align="end" class="f-12">{{loanTenure.value.length}}/20</mat-hint> -->
                 </mat-form-field>
             </div>
         </div>
@@ -131,11 +134,11 @@
                 <mat-form-field>
                     <input type="text" matInput #loanTenure class="form-control rupess br-0" appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" formControlName="outstandingAmt"
-                        maxlength="{{getFormControl().outstandingAmt.maxLength}}">
+                        [maxLength]="8">
                     <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
-                    <mat-hint align="end" class="f-12">{{loanTenure.value.length}}/20</mat-hint>
+                    <mat-hint align="end" class="f-12">{{loanTenure.value.length}}/8</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -228,10 +231,13 @@
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
                         <input type="text" appInputValueValidation matInput #emi class="form-control br-0 rupess"
-                            appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="emi"
-                            maxlength="20">
+                            appInputValueValidation (keyup)="Validations($event.target.value,'EMI')" [inputValidator]="validatorType.NUMBER_ONLY" formControlName="emi"
+                            [maxLength]="8">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{emi.value.length}}/20</mat-hint>
+                        <mat-hint align="end" class="f-12">{{emi.value.length}}/8</mat-hint>
+                        <mat-error *ngIf="(addLiabilityForm.get('emi').errors?.max)" class="f-12">
+                            Should not be greater than loan amount
+                        </mat-error>
                     </mat-form-field>
                 </div>
 
@@ -262,9 +268,9 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input type="text" matInput #collateral class="form-control br-0" formControlName="collateral"
-                            maxlength="20">
+                        [maxLength]="40">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{collateral.value.length}}/20</mat-hint>
+                        <mat-hint align="end" class="f-12">{{collateral.value.length}}/40</mat-hint>
                     </mat-form-field>
                 </div>
             </div>

@@ -321,7 +321,13 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
   
   ngOnInit() {
   }
-
+  onChange(value,event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = '100';
+        this.motorInsuranceForm.get(value).setValue(event.target.value);
+      
+    }
+  }
   bankAccountList(value) {
     this.bankList = value;
   }
