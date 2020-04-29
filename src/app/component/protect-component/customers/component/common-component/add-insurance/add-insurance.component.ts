@@ -35,6 +35,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   familyMemberId: any;
   ownerData: any;
   callMethod:any;
+  showInsurance: any;
+  flag = 'ADD';
   /*_data;
   @Input()
   set data(inputData) {
@@ -51,6 +53,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.insuranceSubTypeId = data.insuranceSubTypeId;
+    this.showInsurance = data.showInsurance;
     this.getFamilyMemberList();
     this.setInsuranceDataFormField(data);
     console.log(data);
@@ -188,6 +191,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   lisNominee(value) {
     this.ownerData.Fmember = value;
     this.nomineesListFM = Object.assign([], value);
+    this.ProposerData = Object.assign([],value);
   }
   getFamilyMember(data, index) {
     this.familyMemberLifeData = data;
@@ -370,6 +374,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       this.ownerData = { Fmember: this.nomineesListFM, controleData: this.lifeInsuranceForm }
       return;
     } else {
+      (this.editInsuranceData.id) ? this.flag = 'EDIT' : this.flag = 'ADD';
       // requiredFields
       this.insuranceId = this.editInsuranceData.id
       // this.lifeInsuranceForm.controls.lifeAssured.setValue(this.editInsuranceData.lifeAssuredName)

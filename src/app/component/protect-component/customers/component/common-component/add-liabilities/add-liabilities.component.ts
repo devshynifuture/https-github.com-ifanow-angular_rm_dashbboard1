@@ -174,8 +174,8 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       outstandingAmt: [data.principalOutStandingAmount,],
       CommencementDate: [new Date(data.commencementDate), [Validators.required]],
       emiFrequency: [(data.frequencyOfPayments == undefined) ? '' : (data.frequencyOfPayments) + '', [Validators.required]],
-      interest: [data.annualInterestRate, [Validators.required]],
-      emi: [data.emi,[Validators.max((this.loanAmount) ? this.loanAmount : null)]],
+      interest: [data.annualInterestRate, [Validators.required,Validators.required]],
+      emi: [data.emi,[Validators.required,Validators.max((this.loanAmount) ? this.loanAmount : null)]],
       finInstitution: [data.financialInstitution],
       collateral: [],
     });

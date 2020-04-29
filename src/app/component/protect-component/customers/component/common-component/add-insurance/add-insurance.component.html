@@ -2,7 +2,7 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-6 p-0">
-            <h4 class="mb-0 wrapper-20 pr-0"> ADD LIFE INSURANCE</h4>
+            <h4 class="mb-0 wrapper-20 pr-0"> {{flag}} {{showInsurance | uppercase}} INSURANCE</h4>
         </div>
         <div class="col-md-6 text-right">
             <div class="wrapper-12">
@@ -97,7 +97,7 @@
                         <mat-select matInput formControlName="proposer" #lifeAssured autocomplete="true"
                             class="form-control br-0">
                             <mat-option (click)="getProposerData(option,i)"
-                                *ngFor="let option of ProposerData;index as i" [value]="option.userName">
+                                *ngFor="let option of nomineesListFM;index as i" [value]="option.userName">
                                 {{option.userName}}</mat-option>
                         </mat-select>
                         <mat-error>This field is required
@@ -517,7 +517,6 @@
                                             <label class="f-16 roboto">Option</label>
                                             <mat-form-field>
                                                 <mat-select matInput formControlName="option" #option autocomplete="true" class="form-control br-0" >
-                                                    <mat-option value='' disabled>Select options</mat-option>
                                                     <mat-option value='1'>Enter NAV and Units</mat-option>
                                                     <mat-option value='2'>Enter Fund value</mat-option>
                                                 </mat-select>

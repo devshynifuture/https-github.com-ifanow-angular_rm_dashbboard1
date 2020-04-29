@@ -186,6 +186,29 @@
             </div>
         </div>
     </div>
+    <div class="row pt-40">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">EMI</h5>
+        </div>
+        <div class="col-md-3 pr-0">
+            <div class="form-group mb-0 iconRupess">
+                <mat-form-field>
+                    <input type="text" appInputValueValidation matInput #emi class="form-control br-0 rupess"
+                        appInputValueValidation (keyup)="Validations($event.target.value,'EMI')" [inputValidator]="validatorType.NUMBER_ONLY" formControlName="emi"
+                        [maxLength]="8">
+                    <!-- <mat-hint align="start" class="f-12">Optional</mat-hint> -->
+                    <mat-hint align="end" class="f-12">{{emi.value.length}}/8</mat-hint>
+                    <mat-error *ngIf="(addLiabilityForm.get('emi').errors?.max)" class="f-12">
+                        Should not be greater than loan amount
+                    </mat-error>
+                    <mat-error class="f-12 pt-4" *ngIf="(addLiabilityForm.get('emi').errors?.required)">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+        </div>
+    </div>
     <div class="row pt-48">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Annual interest rate</h5>
@@ -223,26 +246,7 @@
             </div>
         </div>
 
-        <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">EMI</h5>
-            </div>
-            <div class="col-md-3 pr-0">
-                <div class="form-group mb-0 iconRupess">
-                    <mat-form-field>
-                        <input type="text" appInputValueValidation matInput #emi class="form-control br-0 rupess"
-                            appInputValueValidation (keyup)="Validations($event.target.value,'EMI')" [inputValidator]="validatorType.NUMBER_ONLY" formControlName="emi"
-                            [maxLength]="8">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{emi.value.length}}/8</mat-hint>
-                        <mat-error *ngIf="(addLiabilityForm.get('emi').errors?.max)" class="f-12">
-                            Should not be greater than loan amount
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-
-            </div>
-        </div>
+       
 
         <div class="row pt-48">
             <div class="col-md-5 pr-0 text-right">
