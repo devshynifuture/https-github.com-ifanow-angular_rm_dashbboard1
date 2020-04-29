@@ -70,13 +70,7 @@ export class CustomerService {
   }
 
   getListOfFamilyByClient(data) {
-    let httpParams;
-    if (data.familyMemberId) {
-      httpParams = new HttpParams().set('advisorId', data.advisorId).set('familyMemberId', data.familyMemberId);
-    }
-    else {
-      httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
-    }
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIST_FAMILY_MEMBER, httpParams);
   }
 

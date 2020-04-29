@@ -102,6 +102,7 @@ export class PeopleService {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_ISD_CODES, data, 1);
   }
   getClientFamilyMembers(data) {
-    return this.http.getEncoded(apiConfig.USER + appConfig.GET_CLIENT_FAMILY_MEMBERS, data, 1);
+    const httpParams = new HttpParams().set('userId', data.userId).set('userType', data.userType);
+    return this.http.get(apiConfig.USER + appConfig.GET_CLIENT_FAMILY_MEMBERS, httpParams);
   }
 }

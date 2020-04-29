@@ -641,7 +641,7 @@ export const appConfig = {
   SEND_WELCOME_EMAIL: 'user/advisor/welcome/email/send',
   CREATE_TEAM_MEMBER: 'user/advisor/team-member/sign-up',
   GET_ISD_CODES: 'user/isd-code/list/get',
-  GET_CLIENT_FAMILY_MEMBERS: 'user/family-member/list/get',
+  GET_CLIENT_FAMILY_MEMBERS: 'user/family-member/nominee/list/get',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
