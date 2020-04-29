@@ -4,10 +4,12 @@ import {AuthService} from 'src/app/auth-service/authService';
 import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
 import {SettingsService} from '../../settings.service';
 import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-personal-profile',
@@ -26,6 +28,11 @@ export class AddPersonalProfileComponent implements OnInit {
   inputData: any;
   isLoading = false;
   isdCodes: Array<any> = [];
+  /** control for the MatSelect filter keyword */
+  filterCtrl: FormControl = new FormControl();
+  filteredIsdCodes:Array<any> = [];
+  /** Subject that emits when the component has been destroyed. */
+  protected _onDestroy = new Subject<void>();
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -57,6 +64,13 @@ export class AddPersonalProfileComponent implements OnInit {
     this.getdataForm(this.inputData);
     this.getPersonalInfo();
     this.getIsdCodesData();
+
+    // listen for search field value changes
+    this.filterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterCodes();
+      });
   }
 
 
@@ -65,6 +79,7 @@ export class AddPersonalProfileComponent implements OnInit {
       data => {
         if (data) {
           this.isdCodes = data;
+          this.filteredIsdCodes = this.isdCodes.slice();
         }
       }, err => {
         this.event.showErrorMessage('Error');
@@ -171,5 +186,21 @@ export class AddPersonalProfileComponent implements OnInit {
 
   Close(flag: boolean) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+  }
+
+  protected filterCodes() {
+    if (!this.isdCodes) {
+      return;
+    }
+    // get the search keyword
+    let search = this.filterCtrl.value;
+    if (!search) {
+      this.filteredIsdCodes = this.isdCodes.slice();
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    // filter the codes
+    this.filteredIsdCodes = this.isdCodes.filter(code => (code.code + code.countryCode).toLowerCase().indexOf(search) > -1)
   }
 }

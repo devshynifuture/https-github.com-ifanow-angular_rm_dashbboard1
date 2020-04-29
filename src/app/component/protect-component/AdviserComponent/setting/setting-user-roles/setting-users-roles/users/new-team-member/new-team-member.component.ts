@@ -38,6 +38,12 @@ export class NewTeamMemberComponent implements OnInit {
   };
   isdCodes: Array<any> = [];
 
+  /** control for the MatSelect filter keyword */
+  filterCtrl: FormControl = new FormControl();
+  filteredIsdCodes:Array<any> = [];
+  /** Subject that emits when the component has been destroyed. */
+  protected _onDestroy = new Subject<void>();
+
   constructor(
     private fb: FormBuilder,
     private settingsService: SettingsService,
@@ -51,6 +57,12 @@ export class NewTeamMemberComponent implements OnInit {
   ngOnInit() {
     this.getIsdCodesData();
     this.loadRoles();
+    // listen for search field value changes
+    this.filterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterCodes();
+      });
   }
 
   getIsdCodesData() {
@@ -59,6 +71,7 @@ export class NewTeamMemberComponent implements OnInit {
       data => {
         if (data) {
           this.isdCodes = data;
+          this.filteredIsdCodes = this.isdCodes.slice();
         }
         this.loader(-1);
       },
@@ -170,5 +183,20 @@ export class NewTeamMemberComponent implements OnInit {
       teamMemberRoleId.setValue('');
       this.teamMemberFG.updateValueAndValidity();
     }
+  }
+  protected filterCodes() {
+    if (!this.isdCodes) {
+      return;
+    }
+    // get the search keyword
+    let search = this.filterCtrl.value;
+    if (!search) {
+      this.filteredIsdCodes = this.isdCodes.slice();
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    // filter the codes
+    this.filteredIsdCodes = this.isdCodes.filter(code => (code.code + code.countryCode).toLowerCase().indexOf(search) > -1)
   }
 }
