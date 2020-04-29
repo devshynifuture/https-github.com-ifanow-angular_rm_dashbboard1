@@ -44,12 +44,12 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input #aadharNumber matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="11"
+                            <input #aadharNumber matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="12"
                                 appInputValueValidation formControlName="aadharNumber" type="number"
                                 class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                             <mat-hint align="end" class="f-12 text-custom">
-                                {{aadharNumber.value.length}} / 11
+                                {{aadharNumber.value.length}} / 12
                             </mat-hint>
                         </mat-form-field>
                     </div>
