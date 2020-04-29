@@ -31,7 +31,7 @@
                     <div class="col-md-3 form-group">
                         <mat-form-field appearance="standard" floatLabel="never">
                             <input #panNumber matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" maxlength="10" type="text" formControlName="panNumber" class="form-control">
-                            <mat-hint align="end" class="f-12 text-custom">
+                            <mat-hint align="end" class=" text-custom">
                                 {{panNumber.value.length}} / 10
                             </mat-hint>
                             <mat-error>This field is required</mat-error>

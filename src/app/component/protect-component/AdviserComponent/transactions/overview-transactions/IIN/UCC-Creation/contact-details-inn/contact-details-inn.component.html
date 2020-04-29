@@ -32,7 +32,7 @@
                     <div class="col-md-5 form-group">
                         <mat-form-field>
                             <input matInput maxlength="30" formControlName="email" type="text" class="form-control">
-                            <mat-error class="f-12">This field is required</mat-error>
+                            <mat-error class="">This field is required</mat-error>
 
                         </mat-form-field>
                     </div>
@@ -44,8 +44,8 @@
                     <div class="col-md-5 form-group">
                         <mat-form-field>
                             <input #aadharNumber matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="11" appInputValueValidation formControlName="aadharNumber" type="number" class="form-control">
-                            <mat-error class="f-12">This field is required</mat-error>
-                            <mat-hint align="end" class="f-12 text-custom">
+                            <mat-error class="">This field is required</mat-error>
+                            <mat-hint align="end" class=" text-custom">
                                 {{aadharNumber.value.length}} / 11
                             </mat-hint>
                         </mat-form-field>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="col-md-5">
                         <div class="row">
-                            <div class="col-md-3 pr-0">
+                            <div class="col-md-5 pr-0">
                                 <div class="form-group">
                                     <mat-form-field appearance="standard" floatLabel="never">
                                         <mat-select formControlName="isdCodeId" class="form-control">
@@ -73,7 +73,7 @@
                             <div class="col-md-7 p-0">
                                 <mat-form-field appearance="standard" floatLabel="never">
                                     <input #mobileNo matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation maxlength="10" type="number" formControlName="mobileNo" placeholder="Enter Mobile number" class="form-control">
-                                    <mat-error class="f-12">This field is required</mat-error>
+                                    <mat-error class="">This field is required</mat-error>
                                     <mat-hint align="end">{{mobileNo.value.length}}/10</mat-hint>
                                 </mat-form-field>
                             </div>
@@ -97,7 +97,7 @@
                             <div class="col-md-7 p-0">
                                 <mat-form-field>
                                     <input matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation maxlength="10" type="number" formControlName="phoneNo" class="form-control">
-                                    <mat-error class="f-12">This field is required</mat-error>
+                                    <mat-error class="">This field is required</mat-error>
 
                                 </mat-form-field>
                             </div>
@@ -117,7 +117,7 @@
                     <div class="col-md-5 form-group">
                         <mat-form-field>
                             <input matInput formControlName="addressLine1" type="text" class="form-control">
-                            <mat-error class="f-12">This field is required</mat-error>
+                            <mat-error class="">This field is required</mat-error>
 
                         </mat-form-field>
                     </div>
@@ -129,7 +129,7 @@
                     <div class="col-md-5 form-group">
                         <mat-form-field>
                             <input matInput formControlName="addressLine2" type="text" class="form-control">
-                            <mat-error class="f-12">This field is required</mat-error>
+                            <mat-error class="">This field is required</mat-error>
 
                         </mat-form-field>
                     </div>
@@ -141,14 +141,14 @@
                     <div class="col-md-3 form-group">
                         <mat-form-field>
                             <input #pincode matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" (focusout)="getPostalPin($event.target.value)" appInputValueValidation formControlName="pinCode" type="text" class="form-control">
-                            <mat-error class="f-12">This field is required</mat-error>
-                            <mat-hint align="end" class="f-12 text-custom">
+                            <mat-error class="">This field is required</mat-error>
+                            <mat-hint align="end" class=" text-custom">
                                 {{pincode.value.length}} / 6
                             </mat-hint>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-1 p-0 d-flex align-items-center justify-content-center mt-12">
-                        <mat-spinner *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
+                    <div class="col-md-1 p-0 mt-12">
+                        <mat-spinner class="mt-4" *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
                     </div>
                 </div>
                 <div class="row pt-32">
@@ -158,7 +158,7 @@
                     <div class="col-md-5 form-group">
                         <mat-form-field>
                             <input matInput formControlName="city" type="text" class="form-control">
-                            <mat-error class="f-12">This field is required</mat-error>
+                            <mat-error class="">This field is required</mat-error>
 
                         </mat-form-field>
                     </div>
@@ -170,7 +170,7 @@
                     <div class="col-md-5 form-group">
                         <mat-form-field>
                             <input matInput formControlName="district" type="text" class="form-control">
-                            <mat-error class="f-12">This field is required</mat-error>
+                            <mat-error class="">This field is required</mat-error>
 
                         </mat-form-field>
                     </div>
@@ -182,7 +182,7 @@
                     <div class="col-md-5 form-group">
                         <mat-form-field>
                             <input matInput formControlName="state" type="text" class="form-control">
-                            <mat-error class="f-12">This field is required</mat-error>
+                            <mat-error class="">This field is required</mat-error>
 
                         </mat-form-field>
                     </div>
@@ -194,7 +194,7 @@
                     <div class="col-md-5 form-group">
                         <mat-form-field>
                             <input matInput formControlName="country" type="text" class="form-control">
-                            <mat-error class="f-12">This field is required</mat-error>
+                            <mat-error class="">This field is required</mat-error>
 
                         </mat-form-field>
                     </div>
