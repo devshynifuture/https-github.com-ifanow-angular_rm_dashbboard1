@@ -40,7 +40,8 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 mb-16 pl-0">
+                        <div class="col-md-6 mb-16 pl-0" [appSkeletonLoading]="isLoading" appSkeletonLoading
+                            class="col-md-6 p-0 skeletonAnimation">
                             <div class="bg-white bPrimitive p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
@@ -53,8 +54,10 @@
                                 </div>
                                 <div class="borderTransactions">
                                     <p class="f-12 mb-8 roboto">TOTAL TRANSACTIONS DONE</p>
-                                    <h4 class="f-30 f-300 text-primary mb-4">230 <span
-                                            class="f-14 text-black">97%</span>
+                                    <h4 class="f-30 f-300 text-primary mb-4 relClass">
+                                        <div [ngClass]="{'height23': isLoading}" class="bar">
+                                            {{transactionCount}} <span class="f-14 text-black">97%</span>
+                                        </div>
                                     </h4>
                                 </div>
                                 <div class="borderTransactions">
@@ -78,7 +81,8 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" [appSkeletonLoading]="isLoading" appSkeletonLoading
+                        class="col-md-6 p-0 skeletonAnimation">
                         <div class="col-md-6 mb-16 pl-0">
                             <div class="bg-white bPrimitive p-9">
                                 <div class="row">
@@ -89,7 +93,10 @@
                                 </div>
                                 <div class="borderTransactions">
                                     <p class="f-12 mb-8 roboto">TOTAL IIN/UCC REGISTERED</p>
-                                    <h4 class="f-30 mb-4 f-300 text-success"> 289
+                                    <h4 class="f-30 mb-4 f-300 text-success relClass">
+                                        <div [ngClass]="{'height23': isLoading}" class="bar">
+                                            {{totalUccCount}}
+                                        </div>
                                     </h4>
                                 </div>
                                 <div class="borderTransactions">
@@ -125,7 +132,11 @@
                                 </div>
                                 <div class="borderTransactions">
                                     <p class="f-12 mb-8 roboto">INVESTORS WITHOUT MANDATES</p>
-                                    <h4 class="f-30 f-300 text-success mb-4">27 </h4>
+                                    <h4 class="f-30 f-300 text-success mb-4 relClass">
+                                        <div [ngClass]="{'height23': isLoading}" class="bar">
+                                            {{totalInvestorWithoutMandate}}
+                                        </div>
+                                    </h4>
                                 </div>
 
                                 <div class="row">
@@ -173,13 +184,14 @@
                                                     <p class="f-12 text-primitive mb-10"> Aditya Birla Sun Life Equity
                                                         Savings Fund - Monthly Divdend Option</p>
                                                 </div>
-                                             <!--    <div (click)="openMobileTransactionPopup()" class="col-md-12 p-0">
+                                                <!--    <div (click)="openMobileTransactionPopup()" class="col-md-12 p-0">
                                                     <p class="f-14 mb-8 f-500">Rahul Jain</p>
                                                 </div> -->
-                                                   <!-- <div (click)="openMobileErrroTransactionPopup()" class="col-md-12 p-0">
+                                                <!-- <div (click)="openMobileErrroTransactionPopup()" class="col-md-12 p-0">
                                                     <p class="f-14 mb-8 f-500">Rahul Jain</p>
                                                 </div> -->
-                                                <div (click)="openMobileErrorCopyTransactionPopup()" class="col-md-12 p-0">
+                                                <div (click)="openMobileErrorCopyTransactionPopup()"
+                                                    class="col-md-12 p-0">
                                                     <p class="f-14 mb-8 f-500">Rahul Jain</p>
                                                 </div>
                                             </div>

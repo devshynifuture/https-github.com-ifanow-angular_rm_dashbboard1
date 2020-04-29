@@ -70,54 +70,36 @@ export class AllFeedsComponent implements OnInit {
   }
 
   tabsLoaded = {
-    allFeeds:{
+    portfolioSummary:{
       dataLoaded: false,
       hasData: false,
     },
-    portfolio: {
+    mfData:{
       dataLoaded: false,
       hasData: false,
     },
-    plan: {
+    recentTransactions:{
       dataLoaded: false,
       hasData: false,
     },
-    activity: {
+    documentsVault:{
       dataLoaded: false,
       hasData: false,
     },
-    transactions: {
+    riskProfile:{
       dataLoaded: false,
       hasData: false,
     },
-    profile: {
-      dataLoaded: false,
-      hasData: false,
-    },
-    education: {
-      dataLoaded: false,
-      hasData: false,
-    },
-    videos: {
-      dataLoaded: false,
-      hasData: false,
-    },
-    riskProfile: {
-      dataLoaded: false,
-      hasData: false,
-    }
   };
   hasError:boolean = false;
 
-  feedsData:any = {};
   portFolioData:any[] = [];
-  planData:any = {};
-  activityData:any = {};
-  transactionsData:any = {};
-  profileData:any = {};
-  educationData:any = {};
-  videosData:any[] = [];
-  riskProfileData:any=null;
+  mfData:any[] = [];
+  recentTransactions:any[] = [];
+  riskProfile:any[] = [];
+  documentVault:any[] = [];
+  adviseData:any = null;
+  goalsData:any[] = [];
 
 
   ngOnInit() {
@@ -161,14 +143,15 @@ export class AllFeedsComponent implements OnInit {
       }]
     });
 
-    this.loadAllFeedsPortFolio();
-    this.loadFeedsTransactions();
+    this.loadPortfolioSummary();
+    this.loadMFTransactions();
+    this.loadRecentTransactions();
     this.loadDocumentValutData();
     this.loadRiskProfile();
   }
 
 
-  loadAllFeedsPortFolio(){
+  loadPortfolioSummary(){
     const obj = {
       clientId: this.clientData.id, 
       advisorId: this.advisorId,
@@ -179,10 +162,10 @@ export class AllFeedsComponent implements OnInit {
     this.loaderFn.increaseCounter();
     this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
       if(res == null) {
-        this.feedsData.portfolioData = null;
+        this.portFolioData = null;
       } else {
-        this.tabsLoaded.allFeeds.hasData = true;
-        this.feedsData.portfolioData = res;
+        this.tabsLoaded.portfolioSummary.hasData = true;
+        this.portFolioData = res;
 
         this.chartData = [];
         let counter = 0;
@@ -215,7 +198,7 @@ export class AllFeedsComponent implements OnInit {
         this.chartData.push(othersData);
         this.pieChart(this.chartData);
       }
-      this.tabsLoaded.allFeeds.dataLoaded = true;
+      this.tabsLoaded.portfolioSummary.dataLoaded = true;
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
@@ -224,7 +207,7 @@ export class AllFeedsComponent implements OnInit {
     })
   }
 
-  loadFeedsTransactions(){
+  loadMFTransactions(){
     const obj = {
       clientId: this.clientData.id, 
       advisorId: this.advisorId,
@@ -233,12 +216,12 @@ export class AllFeedsComponent implements OnInit {
     this.loaderFn.increaseCounter();
     this.customerService.getMFData(obj).subscribe(res => {
       if(res == null) {
-        this.feedsData.recentTransactions = null;
+        this.mfData = null;
       } else {
-        this.tabsLoaded.allFeeds.hasData = true;
-        this.feedsData.recentTransactions = res;
+        this.tabsLoaded.mfData.hasData = true;
+        this.mfData = res;
       }
-      this.tabsLoaded.allFeeds.dataLoaded = true;
+      this.tabsLoaded.mfData.dataLoaded = true;
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
@@ -251,17 +234,17 @@ export class AllFeedsComponent implements OnInit {
     const obj = {
       clientId: this.clientData.id, 
       advisorId: this.advisorId,
-      limit: -1
+      limit: 5
     }
     this.loaderFn.increaseCounter();
     this.customerService.getDocumentsFeed(obj).subscribe(res => {
       if(res == null) {
-        this.feedsData.documents = [];
+        this.documentVault = [];
       } else {
-        this.tabsLoaded.transactions.hasData = true;
-        this.feedsData.documents = res;
+        this.tabsLoaded.documentsVault.hasData = true;
+        this.documentVault = res;
       }
-      this.tabsLoaded.allFeeds.dataLoaded = true;
+      this.tabsLoaded.documentsVault.dataLoaded = true;
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
@@ -277,12 +260,33 @@ export class AllFeedsComponent implements OnInit {
     }
     this.customerService.getRiskProfile(obj).subscribe(res => {
       if(res == null) {
-        this.riskProfileData = null;
+        this.riskProfile = null;
       } else {
-        this.tabsLoaded.education.hasData = true;
-        this.riskProfileData = res[0];
+        this.tabsLoaded.riskProfile.hasData = true;
+        this.riskProfile = res[0];
       }
-      this.tabsLoaded.education.dataLoaded = true;
+      this.tabsLoaded.riskProfile.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
+  }
+
+  loadRecentTransactions(){
+    const obj = {
+      clientId: this.clientData.id,
+      advisorId: this.advisorId
+    }
+    this.customerService.getRecentTransactions(obj).subscribe(res => {
+      if(res == null) {
+        this.recentTransactions = [];
+      } else {
+        this.tabsLoaded.recentTransactions.hasData = true;
+        this.recentTransactions = res;
+      }
+      this.tabsLoaded.recentTransactions.dataLoaded = true;
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
@@ -298,6 +302,6 @@ export class AllFeedsComponent implements OnInit {
       name: 'Asset allocation',
       innerSize: '60%',
       data: data,
-    }, true, true);
+    }, false, true);
   }
 }

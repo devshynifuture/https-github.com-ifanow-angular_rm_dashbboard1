@@ -35,8 +35,7 @@
       </div>
       <div class="col-md-8 text-center">
         <mat-form-field appearance="standard" floatLabel="never">
-          <input #searchClient (keyup)="ownerList($event.target.value)" (valueChange1)='lisNominee($event)'
-                 [data]='searchClient.value' [matAutocomplete]="auto1"
+          <input #searchClient (keyup)="getClientAndFamilyMember($event.target.value)" [matAutocomplete]="auto1"
                  appClientSearch aria-label="client" class="form-control pl-8" formControlName="ownerName"
                  matInput placeholder="Start typing to see investor names">
           <mat-autocomplete #auto1="matAutocomplete">

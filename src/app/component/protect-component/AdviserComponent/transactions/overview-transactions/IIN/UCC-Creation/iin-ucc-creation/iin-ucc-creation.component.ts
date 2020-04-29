@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {DatePipe} from '@angular/common';
-import {UtilService} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {OnlineTransactionService} from '../../../../online-transaction.service';
-import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
+import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { DatePipe } from '@angular/common';
+import { UtilService } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { OnlineTransactionService } from '../../../../online-transaction.service';
+import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { AuthService } from 'src/app/auth-service/authService';
 
@@ -25,10 +25,10 @@ export class IinUccCreationComponent implements OnInit {
   clientData: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private processTrasaction: ProcessTransactionService,
-              private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
-              private peopleService: PeopleService,
-              private onlineTransact: OnlineTransactionService, public eventService: EventService) {
-                this.advisorId = AuthService.getAdvisorId()
+    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
+    private peopleService: PeopleService,
+    private onlineTransact: OnlineTransactionService, public eventService: EventService) {
+    this.advisorId = AuthService.getAdvisorId()
   }
 
   ngOnInit() {
@@ -38,7 +38,7 @@ export class IinUccCreationComponent implements OnInit {
   }
 
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
   close() {
@@ -79,8 +79,8 @@ export class IinUccCreationComponent implements OnInit {
       data => this.getClientListRes(data)
     );
   }
-  getClientListRes(data){
-    console.log('client data',data)
+  getClientListRes(data) {
+    console.log('client data', data)
     this.clientData = data[0]
   }
   getIINUCCRegistration() {
@@ -96,7 +96,21 @@ export class IinUccCreationComponent implements OnInit {
   getIINUCCRegistrationRes(data) {
     console.log('INN UCC CREATION DATA GET', data);
   }
+  getClientAndFamilyMember(data) {
+    const obj = {
+      advisorId:this.advisorId,
+      displayName:data
+    };
 
+    this.onlineTransact.getClientAndFmList(obj).subscribe(
+      data => this.getClientAndFmListRes(data), (error) => {
+      }
+    );
+  }
+  getClientAndFmListRes(data){
+    this.nomineesListFM = data
+    console.log('getClientAndFmListRes data',this.nomineesListFM)
+  }
   lisNominee(value) {
     // this.showSpinnerOwner = false
     if (value == null) {
@@ -118,6 +132,7 @@ export class IinUccCreationComponent implements OnInit {
     this.familyMemberData = value;
     this.familyMemberId = value.familyMemberId;
     this.familyMemberId = value.id;
+    this.clientData = value
   }
 
   saveGeneralDetails(data) {
@@ -128,7 +143,7 @@ export class IinUccCreationComponent implements OnInit {
       clientId: this.familyMemberData.clientId,
       advisorId: this.familyMemberData.advisorId,
       taxStatus: this.generalDetails.controls.taxStatus.value,
-      clientData : this.clientData
+      clientData: this.clientData
     };
     this.openPersonalDetails(obj);
   }
