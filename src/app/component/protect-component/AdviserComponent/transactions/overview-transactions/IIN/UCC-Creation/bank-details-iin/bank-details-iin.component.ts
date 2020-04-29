@@ -51,18 +51,19 @@ export class BankDetailsIINComponent implements OnInit {
   isIfsc: boolean = false;
   clientData: any;
   holderList: any;
+  formId: any;
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
     private processTransaction: ProcessTransactionService,
-    private cusService : CustomerService,
-    private subService : SubscriptionService,
-    private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { 
-      this.clientId = AuthService.getClientId()
-    }
+    private cusService: CustomerService,
+    private subService: SubscriptionService,
+    private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
+    this.clientId = AuthService.getClientId()
+  }
   @Input()
   set data(data) {
     this.inputData = data;
     this.clientData = data.clientData
-    if(this.clientData){
+    if (this.clientData) {
       this.getBankList(this.clientData)
     }
     console.log('all data in bank', this.inputData)
@@ -102,7 +103,7 @@ export class BankDetailsIINComponent implements OnInit {
       this.temp.push(this.holdingList.secondHolder)
       this.temp.push(this.holdingList.thirdHolder)
     }
-    if(this.clientData){
+    if (this.clientData) {
       this.getBankList(this.clientData)
     }
   }
@@ -118,16 +119,19 @@ export class BankDetailsIINComponent implements OnInit {
   getBankList(data) {
     let obj =
     {
-     userId : data.clientId,
-     userType : 2
+      userId: (data.userType == 2) ? data.clientId : (data.userType == 3) ? data.familyMemberId : data.clientId,
+      userType: data.userType
     }
     this.cusService.getBankList(obj).subscribe(
       data => {
         console.log(data);
         if (data && data.length > 0) {
-          this.bankList = data[0];
-          console.log('bank == ',this.bankList)
-          this.getdataForm(this.bankList)
+          this.bankList = data;
+          console.log('bank == ', this.bankList)
+          this.firstHolderBank = (this.bankList[0]) ? this.bankList[0] : []
+          this.secondHolderBank = (this.bankList[1]) ? this.bankList[1] : []
+          this.thirdHolderBank = (this.bankList[2]) ? this.bankList[2] : []
+          this.getdataForm(this.firstHolderBank)
         }
       },
       err => {
@@ -151,18 +155,44 @@ export class BankDetailsIINComponent implements OnInit {
       ifsc
     };
     console.log('ifsc 121221', obj);
-
     if (ifsc != '') {
       this.isIfsc = true;
       this.subService.getBankAddress(obj).subscribe(data => {
         console.log('postal 121221', data);
-
+       this.bankData(data)
       },
         err => {
           console.log(err, 'error internet');
           this.isIfsc = false;
         });
     }
+  }
+  bankData(data) {
+    console.log(data, 'bank data');
+    this.isIfsc = false;
+    let address1, address2, pincode, adderessData;
+    if (data.address) {
+      adderessData = data.address.trim();
+      pincode = adderessData.match(/\d/g);
+      pincode = pincode.join("");
+      pincode = pincode.substring(pincode.length - 6, pincode.length)
+      adderessData = adderessData.replace(pincode, '');
+      let addressMidLength = adderessData.length / 2;
+      address1 = adderessData.substring(0, addressMidLength);
+      address2 = adderessData.substring(addressMidLength, adderessData.length);
+      address1 = address1.concat(address2.substr(0, address2.indexOf(' ')));
+      address2 = address2.concat(address2.substr(address2.indexOf(' '), address2.length))
+      // pincode = pincode.join("");
+    }
+    (data == undefined) ? data = {} : '';
+    this.bankDetails.get('bankName').setValue(data.bank);
+    this.bankDetails.get('city').setValue(data.city);
+    this.bankDetails.get('state').setValue(data.state);
+    this.bankDetails.get('branchName').setValue(data.centre);
+    this.bankDetails.get('country').setValue('India');
+    this.bankDetails.get('branchAdd1').setValue(adderessData);
+    this.bankDetails.get('branchAdd2').setValue(address2);
+    this.bankDetails.get('pinCode').setValue(pincode)
   }
   getdataForm(data) {
     if (!data) {
@@ -185,12 +215,12 @@ export class BankDetailsIINComponent implements OnInit {
       micrCode: [!data ? '' : data.micrCode, [Validators.required]],
       accountNumber: [!data ? '' : data.accountNumber, [Validators.required]],
       accountType: [!data ? '1' : parseInt(data.accountType), [Validators.required]],
-      branchCode: [!data ? '' : (data.branchCode)?data.branchCode:data.bankId, [Validators.required]],
+      branchCode: [!data ? '' : (data.branchCode) ? data.branchCode : data.bankId, [Validators.required]],
       branchName: [!data ? '' : data.branchName, [Validators.required]],
       branchAdd1: [!data.address ? '' : data.address.address1, [Validators.required]],
       branchAdd2: [!data.address ? '' : data.address.address2, [Validators.required]],
       pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],
-      holderNameList: holderList,
+      firstHolder: [!data ? '' : (this.clientData.name)?this.clientData.name:'', [Validators.required]],
       city: [!data.address ? '' : data.address.city, [Validators.required]],
       state: [!data.address ? '' : data.address.state, [Validators.required]],
       country: [!data.address ? '' : data.address.country, [Validators.required]],
@@ -286,11 +316,12 @@ export class BankDetailsIINComponent implements OnInit {
     this.bankDetails.reset();
   }
   SendToForm(value, flag) {
+    this.formId = value
     if (value == 'first') {
       this.saveBankDetails(value);
       if (this.firstHolderBank) {
         this.holder.type = value;
-        this.bankDetails.setValue(this.firstHolderBank);
+        this.getdataForm(this.firstHolderBank)
       } else {
         return;
       }
@@ -299,7 +330,7 @@ export class BankDetailsIINComponent implements OnInit {
       this.saveBankDetails(value);
       if (this.secondHolderBank) {
         this.holder.type = value;
-        this.bankDetails.setValue(this.secondHolderBank);
+        this.getdataForm(this.secondHolderBank)
       } else {
         this.reset();
       }
@@ -308,7 +339,7 @@ export class BankDetailsIINComponent implements OnInit {
       this.saveBankDetails(value);
       if (this.thirdHolderBank) {
         this.holder.type = value;
-        this.bankDetails.setValue(this.thirdHolderBank);
+        this.getdataForm(this.thirdHolderBank)
       } else {
         this.reset();
       };
@@ -316,6 +347,9 @@ export class BankDetailsIINComponent implements OnInit {
       this.saveBankDetails(value);
     }
     this.obj1 = []
+    this.firstHolderBank = (this.firstHolderBank) ? this.firstHolderBank : []
+    this.secondHolderBank = (this.secondHolderBank) ? this.secondHolderBank : []
+    this.thirdHolderBank = (this.thirdHolderBank) ? this.thirdHolderBank : []
     this.obj1.push(this.firstHolderBank)
     this.obj1.push(this.secondHolderBank)
     this.obj1.push(this.thirdHolderBank)
@@ -324,9 +358,11 @@ export class BankDetailsIINComponent implements OnInit {
       console.log('contact details', this.obj1)
       const value = {}
       this.obj1.forEach(element => {
-        if (element) {
+        if (!element.address) {
           this.getObj = this.setObj(element, value)
           this.bank.push(this.getObj)
+        }else{
+          this.bank.push(element)
         }
       });
       var temp1 = this.holdingList.generalDetails;
@@ -341,7 +377,8 @@ export class BankDetailsIINComponent implements OnInit {
         bankDetailList: this.bank,
         nomineeList: this.inputData.nomineeList,
         fatcaDetail: this.inputData.fatcaDetail,
-        generalDetails: this.genralDetails
+        generalDetails: this.genralDetails,
+        clientData: this.clientData
       }
       console.log('##### bank ######', this.sendObj)
       this.openNomineeDetails(this.sendObj)
@@ -388,17 +425,20 @@ export class BankDetailsIINComponent implements OnInit {
   setEditHolder(type, value) {
     switch (type) {
       case "first":
-        this.firstHolderBank = this.bankDetails.value;
+        this.getObj = this.setObj(this.bankDetails.value, value)
+        this.firstHolderBank = this.getObj;
         this.holder.type = value;
         break;
 
       case "second":
-        this.secondHolderBank = this.bankDetails.value;
+        this.getObj = this.setObj(this.bankDetails.value, value)
+        this.secondHolderBank = this.getObj;
         this.holder.type = value;
         break;
 
       case "third":
-        this.thirdHolderBank = this.bankDetails.value;
+        this.getObj = this.setObj(this.bankDetails.value, value)
+        this.thirdHolderBank =  this.getObj;
         this.holder.type = value;
         break;
 

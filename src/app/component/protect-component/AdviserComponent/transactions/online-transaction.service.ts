@@ -146,6 +146,9 @@ export class OnlineTransactionService {
   getIINUCCRegistration(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_REGISTRATION_UCC_IIN, data, 1);
   }
+  getClientAndFmList(data){
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_CLIENT_FM_LIST, data, 1);
+  }
   imageFileUpload(data){
     return this.http.post(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE, data, 1);
   }
