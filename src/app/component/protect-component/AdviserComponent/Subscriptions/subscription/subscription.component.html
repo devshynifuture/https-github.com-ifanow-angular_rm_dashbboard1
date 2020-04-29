@@ -6,20 +6,22 @@
     <div class="col-md-10 p-0">
       <div class="subnav-fixed">
         <nav (selectedTabChange)="tabClick($event)" mat-tab-nav-bar>
+          <!--          <input (change)="getFileDetails($event)" class="inputfile inputfile-3" id="file-3" multiple-->
+          <!--                 type="file">-->
           <a (click)="value=1" [ngClass]="_value == 1 ? 'active': ''" [routerLink]="'./dashboard'" mat-tab-link
-            routerLinkActive="active">DASHBOARD</a>
+             routerLinkActive="active">DASHBOARD</a>
           <a (click)="value=2" [ngClass]="_value == 2 ? 'active': ''" [routerLink]="'./clients'" mat-tab-link
-            routerLinkActive="active">CLIENTS</a>
+             routerLinkActive="active">CLIENTS</a>
           <a (click)="value=3" [ngClass]="_value == 3 ? 'active': ''" [routerLink]="'./subscriptions'" mat-tab-link
-            routerLinkActive="active">SUBSCRIPTIONS</a>
+             routerLinkActive="active">SUBSCRIPTIONS</a>
           <a (click)="value=4" [ngClass]="_value == 4 ? 'active': ''" [routerLink]="'./quotations'" mat-tab-link
-            routerLinkActive="active">QUOTATIONS</a>
+             routerLinkActive="active">QUOTATIONS</a>
           <a (click)="value=5" [ngClass]="_value == 5 ? 'active': ''" [routerLink]="'./invoices'" mat-tab-link
-            routerLinkActive="active">INVOICES</a>
+             routerLinkActive="active">INVOICES</a>
           <a (click)="value=6" [ngClass]="_value == 6 ? 'active': ''" [routerLink]="'./documents'" mat-tab-link
-            routerLinkActive="active">DOCUMENTS</a>
+             routerLinkActive="active">DOCUMENTS</a>
           <a [ngClass]="isLinkActive() ? 'active': ''" [routerLink]="  ['./settings',label]" [state]="{ example: 0 }"
-            mat-tab-link>SETTINGS</a>
+             mat-tab-link>SETTINGS</a>
         </nav>
       </div>
 
@@ -32,4 +34,4 @@
   <div class="col-md-12 p-0">
     <router-outlet></router-outlet>
   </div>
-</div> 
+</div>
