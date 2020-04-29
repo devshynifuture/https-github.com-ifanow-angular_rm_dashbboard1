@@ -6,30 +6,31 @@
                     <div (click)="getInsuranceData(1)" class="row">
                         <div class="col-md-11 p-0 f-700">LIFE INSURANCE</div>
                         <div class="col-md-1 p-0 text-custom text-left">
-                            {{(lifeInsuranceCount) ? lifeInsuranceCount : 0}}</div>
+                            {{(lifeInsuranceCount) ? lifeInsuranceCount : ''}}</div>
                     </div>
                 </li>
                 <li (click)="getInsuranceTypeData(1,item.id)" *ngFor="let item of lifeInsuranceList" [ngClass]="{'bg-grey lt':item.id==insuranceSubTypeId}" class="c-p pb-8">
                     <div>
                         <div class="row">
                             <div class="col-md-11 p-0">{{item.name}}</div>
-                            <div class="col-md-1 p-0 text-custom text-left">{{item.count}}</div>
+                            <div class="col-md-1 p-0 text-custom text-left">{{(item.count) ? item.count : ''}}</div>
                         </div>
                     </div>
                 </li>
             </ul>
+            <!-- toggle('generalInsurance'); -->
             <ul class="d-block">
                 <li class="pb-8 c-p" [ngClass]="{'bg-grey lt':generalInsuranceFlag}">
-                    <div (click)="toggle('generalInsurance');getInsuranceTypeData(2,0)" class="row">
+                    <div (click)="getInsuranceTypeData(2,0)" class="row">
                         <div class="col-md-11 p-0 f-700">GENERAL INSURANCE</div>
                         <div class="col-md-1 p-0 text-custom text-center">
-                            {{(generalInsuranceCount) ? generalInsuranceCount : 0}}</div>
+                            {{(generalInsuranceCount) ? generalInsuranceCount : ''}}</div>
                     </div>
                 </li>
                 <li (click)="getInsuranceTypeData(2,item1.id)" *ngFor="let item1 of generalLifeInsuranceList" [ngClass]="{'bg-grey lt':item1.id==insuranceSubTypeId}" class="pb-8 c-p">
                     <div class="row">
                         <div class="col-md-11 p-0">{{item1.name}}</div>
-                        <div class="col-md-1 p-0 text-custom text-left">{{item1.count}}</div>
+                        <div class="col-md-1 p-0 text-custom text-left">{{(item1.count) ? item1.count : ''}}</div>
                     </div>
                 </li>
             </ul>

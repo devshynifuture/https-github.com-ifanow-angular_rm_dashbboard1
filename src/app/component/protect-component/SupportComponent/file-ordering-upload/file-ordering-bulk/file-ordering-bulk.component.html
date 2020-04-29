@@ -115,7 +115,9 @@
                 <td class="br" mat-cell *matCellDef="let element" class="c-p"
                     (click)="openUpperFileOrdering('bulk', element)">
                     <div class="bar">
-                        {{element.totalFiles}}
+                        <a href="#">
+                            {{element.totalFiles}}
+                        </a>
                     </div>
                 </td>
             </ng-container>

@@ -282,7 +282,7 @@ addNewNominee(data) {
       })]),
       currentValue: [(data == undefined) ? '' : data.currentValuation, [Validators.required]],
       valueAsOn: [(data == undefined) ? '' : new Date(data.valueAsOn), [Validators.required]],
-      schemeChoice: [(data == undefined) ? '' : (data.schemeChoice) + "",],
+      schemeChoice: [(data == undefined) ? '' : (data.schemeChoice) + "", [Validators.required]],
       pran: [(data == undefined) ? '' : data.pran,],
       totalContry: [(data == undefined) ? '' : data.contributionAmount, [Validators.required]],
       description: [(data == undefined) ? '' : data.description,],

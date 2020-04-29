@@ -50,8 +50,10 @@
                     <div class="form-group">
                         <mat-form-field appearance="standard">
                             <mat-select formControlName="isdCodeId" class="form-control">
-                                <mat-option value="" selected disabled>Select Country Code</mat-option>
-                                <mat-option [value]="code.id" *ngFor="let code of isdCodes">
+                                <mat-option>
+                                  <ngx-mat-select-search [formControl]="filterCtrl" placeholderLabel="ISD code..."></ngx-mat-select-search>
+                                </mat-option>
+                                <mat-option [value]="code.id" *ngFor="let code of filteredIsdCodes | async">
                                     {{code.code}}({{code.countryCode}})</mat-option>
                             </mat-select>
                             <mat-error>This field is required</mat-error>

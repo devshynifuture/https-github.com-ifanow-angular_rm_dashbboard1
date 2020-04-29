@@ -15,7 +15,7 @@
 
     <div class="row">
       <div class="col-md-5 pr-0 text-right">
-        <h5 class="m-0 pt-8">Owner</h5>
+        <h5 class="m-0 pt-12">Owner</h5>
       </div>
       <div class="col-md-5">
         <div class="form-group">
@@ -37,7 +37,7 @@
 
     <div class="row pt-24">
       <div class="col-md-5 pr-0 text-right">
-        <h5 class="m-0 pt-8">Scheme name</h5>
+        <h5 class="m-0 pt-12">Scheme name</h5>
         <p class="m-0 text-custom f-12 text-right">Last closing NAV: 390.27</p>
       </div>
       <div class="col-md-5">
@@ -55,7 +55,7 @@
 
     <div class="row pt-24">
       <div class="col-md-5 pr-0 text-right">
-        <h5 class="m-0 pt-8">Folio number</h5>
+        <h5 class="m-0 pt-12">Folio number</h5>
       </div>
       <div class="col-md-3">
         <div class="form-group">
@@ -72,12 +72,12 @@
 
     <div class="row pt-24">
       <div class="col-md-5 pr-0 text-right">
-        <h5 class="m-0 pt-8"> SIP</h5>
+        <h5 class="m-0 pt-12"> SIP</h5>
       </div>
       <div class="col-md-3">
         <div class="form-group">
           <mat-form-field>
-            <input matInput #sip type="text"  [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SLASH" appInputValueValidation class="form-control br-0" formControlName="sip">
+            <input matInput #sip type="text" appInputValueValidation  [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SLASH" class="form-control br-0" formControlName="sip">
             <mat-error class="f-12">
               This field is required
             </mat-error>
@@ -87,9 +87,9 @@
     </div>
 
 
-    <div class="row pt-24">
+    <div class="row pt-16">
       <div class="col-md-5 pr-0 text-right">
-        <h5 class="m-0 pt-12">Tag <img class="c-p ml-4 right" src="/assets/images/svg/toggle.svg"
+        <h5 class="m-0 pt-20">Tag <img class="c-p ml-4 right" src="/assets/images/svg/toggle.svg"
             matTooltip="You can add tag to a scheme to better classify it. Tags are open ended, so you can use whatever tags you want. FYI, tag wise reports can be generated as well.">
         </h5>
       </div>

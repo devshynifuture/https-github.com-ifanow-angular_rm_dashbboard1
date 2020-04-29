@@ -21,10 +21,10 @@ export class OnlineTransactionService {
   addSubBroker(data) {
     return this.http.postEncoded(apiConfig.TRANSACT + appConfig.ADD_SUB_BROKER, data, 1);
   }
-  deleteBroker(data){
+  deleteBroker(data) {
     return this.http.putEncoded(apiConfig.TRANSACT + appConfig.DELETE_BROKER, data, 1);
   }
-  deleteSubBroker(data){
+  deleteSubBroker(data) {
     return this.http.putEncoded(apiConfig.TRANSACT + appConfig.DELETE_SUB_BROKER, data, 1);
   }
   getBSESubBrokerCredentials(data) {
@@ -138,7 +138,13 @@ export class OnlineTransactionService {
   getTransactionDetail(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_TRANSACTION_DETAILS, data, 1);
   }
+  getOverviewMandate(data) {
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_OVERVIEW_MANDATE, data, 1);
 
+  }
+  getIINUCCOverview(data){
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_MANDATE_LIST, data, 1);
+  }
   getMandateList(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_MANDATE_LIST, data, 1);
   }
@@ -146,7 +152,10 @@ export class OnlineTransactionService {
   getIINUCCRegistration(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_REGISTRATION_UCC_IIN, data, 1);
   }
-  imageFileUpload(data){
+  getClientAndFmList(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_CLIENT_FM_LIST, data, 1);
+  }
+  imageFileUpload(data) {
     return this.http.post(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE, data, 1);
   }
   createIINUCC(data) {

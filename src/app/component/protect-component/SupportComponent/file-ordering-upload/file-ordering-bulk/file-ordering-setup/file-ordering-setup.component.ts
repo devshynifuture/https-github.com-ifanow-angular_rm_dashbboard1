@@ -6,6 +6,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { SupportService } from '../../../support.service';
 import { EventService } from '../../../../../../Data-service/event.service';
 import { FileOrderingUploadService } from '../../file-ordering-upload.service';
+import { ReconciliationService } from '../../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 
 @Component({
   selector: 'app-file-ordering-setup',
@@ -20,7 +21,8 @@ export class FileOrderingSetupComponent implements OnInit {
     private utilService: UtilService,
     private supportService: SupportService,
     private eventService: EventService,
-    private fileOrderingService: FileOrderingUploadService
+    private fileOrderingService: FileOrderingUploadService,
+    private reconService: ReconciliationService
   ) { }
 
   data;
@@ -36,20 +38,7 @@ export class FileOrderingSetupComponent implements OnInit {
     toDate: [, Validators.required]
   });
 
-  rtaList = [
-    {
-      id: 1,
-      name: 'CAMS'
-    },
-    {
-      id: 2,
-      name: 'KARVY'
-    },
-    {
-      id: 3,
-      name: 'FRANKLIN'
-    },
-  ]
+  rtaList = []
 
   setDateValidation() {
     this.historicalFileBulkOrderingForm.get('rtId').value === '1' ?
@@ -57,8 +46,28 @@ export class FileOrderingSetupComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("sent data::::", this.data)
-    this.getFileTypeName();
+    console.log("sent data::::", this.data);
+    this.getRtaList();
+  }
+
+  getRtaList() {
+    this.reconService.getRTListValues({})
+      .subscribe(res => {
+        if (res && res.length !== 0) {
+          res.forEach(element => {
+            if (element.name !== 'SUNDARAM' && element.name !== 'PRUDENT' && element.name !== 'NJ_NEW' && element.name !== 'NJ') {
+              this.rtaList.push({
+                name: element.name == 'FRANKLIN_TEMPLETON' ? 'FRANKLIN' : element.name,
+                value: element.id,
+                type: 'rta'
+              });
+            }
+          });
+          this.getFileTypeName();
+        } else {
+          this.eventService.openSnackBar("Error In Fetching RTA List", "DISMISS");
+        }
+      });
   }
 
   getFileTypeName() {

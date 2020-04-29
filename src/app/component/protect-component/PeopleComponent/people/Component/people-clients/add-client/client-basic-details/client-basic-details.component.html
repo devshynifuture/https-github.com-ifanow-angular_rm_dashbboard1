@@ -46,7 +46,7 @@
         <div class="individualBox">
             <div class="row pt-20">
                 <div class="col-md-4 text-right">
-                    <h5 class="mb-0 mt-20">Full name</h5>
+                    <h5 class="mb-0 pt-20">Full name</h5>
                 </div>
                 <div class="col-md-6 p-0">
                     <div class="form-group mb-0">
@@ -161,7 +161,7 @@
             </div>
             <div *ngIf="fieldFlag=='client' && basicDetailsData.userId==null" class="row pt-44">
                 <div class="col-md-4 text-right">
-                    <h5 class="m-0 pt-12">Client owner</h5>
+                    <h5 class="m-0 pt-8">Client owner</h5>
                     <p class="m-0 f-12 text-custom">Team Owner</p>
                 </div>
                 <div class="col-md-5 p-0">
@@ -173,7 +173,7 @@
                                 </mat-option>
                                 <mat-option value='' disabled>Select owner</mat-option>
                                 <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
-                                    {{singleClient.name}}
+                                    {{singleClient.fullName}}
                                 </mat-option>
                             </mat-select>
                             <mat-error class="f-12">This field is required
@@ -257,7 +257,7 @@
                                 </mat-option>
                                 <mat-option value='' disabled>Select owner</mat-option>
                                 <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
-                                    {{singleClient.name}}
+                                    {{singleClient.fullName}}
                                 </mat-option>
                             </mat-select>
                             <mat-error>This Field is required</mat-error>
@@ -745,7 +745,7 @@
                                 </mat-option>
                                 <mat-option value='' disabled>Select owner</mat-option>
                                 <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
-                                    {{singleClient.name}}
+                                    {{singleClient.fullName}}
                                 </mat-option>
                             </mat-select>
                             <mat-error>This field is required</mat-error>
@@ -767,7 +767,7 @@
                                 </mat-option>
                                 <mat-option value='' disabled>Select owner</mat-option>
                                 <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
-                                    {{singleClient.name}}
+                                    {{singleClient.fullName}}
                                 </mat-option>
                             </mat-select>
                             <mat-error>This field is required</mat-error>

@@ -72,6 +72,9 @@ export class ContactDetailsInnComponent implements OnInit {
       this.secondHolderContact = data.holderList[1]
       this.thirdHolderContact = data.holderList[2]
     }
+    if (this.firstHolderContact.address == undefined) {
+      this.getAddressList(this.clientData)
+    }
     this.generalDetails = data.generalDetails
     console.log('################## = ', this.list)
   }
@@ -85,10 +88,6 @@ export class ContactDetailsInnComponent implements OnInit {
     let value = {}
     if (this.firstHolderContact) {
       this.getdataForm(this.firstHolderContact)
-      if (this.clientData) {
-        this.getAddressList(this.clientData)
-      }
-
     } else {
       this.getdataForm('')
       if (this.clientData) {
@@ -126,8 +125,8 @@ export class ContactDetailsInnComponent implements OnInit {
     this.addressList = {}
     this.addressList.address = {}
     const obj = {
-      userId: data.clientId,
-      userType: 2
+      userId: (data.userType == 2) ? data.clientId : (data.userType == 3) ? data.familyMemberId : data.clientId,
+      userType: data.userType
     };
     this.custumService.getAddressList(obj).subscribe(
       data => {
@@ -159,7 +158,7 @@ export class ContactDetailsInnComponent implements OnInit {
       email: [(!data) ? '' : data.email, [Validators.required]],
       aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required]],
       maritalStatus: [!data ? '' : data.maritalStatus, [Validators.required]],
-      isdCodeId: [!data ? '' : data.isdCodeId, [Validators.required]],
+      isdCodeId: [!data ? '' : (data.isdCodeId) + "", [Validators.required]],
       mobileNo: [!data ? '' : data.mobileNo, [Validators.required]],
       addressLine1: [!data.address ? data.addressLine1 : (data.address.address1) ? data.address.address1 : data.address.addressLine1, [Validators.required]],
       addressLine2: [!data.address ? data.addressLine2 : (data.address.address2) ? data.address.address2 : data.address.addressLine2, [Validators.required]],
@@ -269,15 +268,20 @@ export class ContactDetailsInnComponent implements OnInit {
     }
 
     this.obj1 = []
+    this.firstHolderContact = (this.firstHolderContact) ? this.firstHolderContact : []
+    this.secondHolderContact = (this.secondHolderContact) ? this.secondHolderContact : []
+    this.thirdHolderContact = (this.thirdHolderContact) ? this.thirdHolderContact : []
     this.obj1.push(this.firstHolderContact)
     this.obj1.push(this.secondHolderContact)
     this.obj1.push(this.thirdHolderContact)
     if (flag == true) {
       const value = {}
       this.obj1.forEach(element => {
-        if (element) {
+        if (!element.address) {
           this.getObj = this.setObj(element, value)
           this.contacts.push(this.getObj)
+        }else{
+          this.contacts.push(element)
         }
       });
       this.sendObj.firstHolder = Object.assign({}, this.list.firstHolder, this.contacts[0]);

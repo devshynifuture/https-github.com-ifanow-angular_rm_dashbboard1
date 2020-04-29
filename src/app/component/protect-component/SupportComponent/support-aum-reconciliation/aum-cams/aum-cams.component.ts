@@ -18,6 +18,7 @@ export class AumCamsComponent implements OnInit {
   dataSource = new MatTableDataSource<AumCamsI>(ELEMENT_DATA);
   rtId;
   rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
+  rtaList = [];
 
   constructor(
     public eventService: EventService,
@@ -25,12 +26,19 @@ export class AumCamsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.reconService.getRTListValues({})
       .subscribe(res => {
         if (res) {
           res.forEach(element => {
             if (element.name === "CAMS") {
               this.rtId = element.id;
+            }
+            if (element.name !== 'SUNDARAM' && element.name !== 'PRUDENT' && element.name !== 'NJ_NEW' && element.name !== 'NJ') {
+              this.rtaList.push({
+                name: element.name == 'FRANKLIN_TEMPLETON' ? 'FRANKLIN' : element.name,
+                value: element.id
+              });
             }
           });
           this.getAumHistoryData();
@@ -54,8 +62,12 @@ export class AumCamsComponent implements OnInit {
 
   }
 
+  getRtName(id) {
+    let obj = this.rtaList.find(c => c.value === id);
+    return obj.name;
+  }
+
   getAumHistoryData() {
-    this.isLoading = true;
     const data = {
       rtId: this.rtId,
       rmId: this.rmId
@@ -90,7 +102,8 @@ export class AumCamsComponent implements OnInit {
               reordered: element.reordered,
               deleted: element.deleted,
               startRecon: false,
-              flag: "report"
+              flag: "report",
+              rtName: this.getRtName(element.rtId)
             })
           });
 
@@ -121,6 +134,7 @@ export class AumCamsComponent implements OnInit {
         if (UtilService.isDialogClose(upperSliderData)) {
           // this.getClientSubscriptionList();
           if (UtilService.isRefreshRequired(upperSliderData)) {
+            this.isLoading = true;
             this.dataSource.data = ELEMENT_DATA;
             this.getAumHistoryData();
           }

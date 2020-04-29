@@ -35,6 +35,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   familyMemberId: any;
   ownerData: any;
   callMethod:any;
+  showInsurance: any;
+  flag = 'ADD';
   /*_data;
   @Input()
   set data(inputData) {
@@ -51,6 +53,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.insuranceSubTypeId = data.insuranceSubTypeId;
+    this.showInsurance = data.showInsurance;
     this.getFamilyMemberList();
     this.setInsuranceDataFormField(data);
     console.log(data);
@@ -111,12 +114,12 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     policyNum: [, [Validators.required]],
     commencementDate: [, [Validators.required]],
     sumAssured: [, [Validators.required]],
-    premiumDetailsAmount: [, [Validators.required]],
+    premiumDetailsAmount: [, [Validators.required, Validators.min(100)]],
     premiumDetailsFrequency: [, [Validators.required]],
     tenureDetailsPolicy: [, [Validators.required]],
     premiumPayingTerm: [, [Validators.required]],
     policyStatus: [, [Validators.required]],
-    policyStatusLastUnpaid: [, [Validators.required]],
+    policyStatusLastUnpaid: [''],
     getCoOwnerName: this.fb.array([this.fb.group({
       name: ['', [Validators.required]],
       share: [0,],
@@ -131,12 +134,22 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     nomineeName: [, [Validators.required]],
     vestedBonus: [, [Validators.required]],
     assumedRate: [, [Validators.required]],
-    fundValue: [],
+    // fundValue: [],
     getNomineeName: this.fb.array([this.fb.group({
       name: [''],
       sharePercentage: [0],
       familyMemberId: [0],
       id: [0]
+    })]),
+    fundValueForm: this.fb.array([this.fb.group({
+      fundName: [''],
+      debtPer: [''],
+      equityPer: [''],
+      option: ['2'],
+      units:[null],
+      nav:[null],
+      id:[0],
+      fundValue:['']
     })]),
   });
   cashFlowForm = this.fb.group({
@@ -178,6 +191,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   lisNominee(value) {
     this.ownerData.Fmember = value;
     this.nomineesListFM = Object.assign([], value);
+    this.ProposerData = Object.assign([],value);
   }
   getFamilyMember(data, index) {
     this.familyMemberLifeData = data;
@@ -212,6 +226,9 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   /***owner***/
   get getCoOwner() {
     return this.lifeInsuranceForm.get('getCoOwnerName') as FormArray;
+  }
+  get getFundValues() {
+    return this.keyDetailsForm.get('fundValueForm') as FormArray;
   }
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
@@ -306,10 +323,34 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
 
 
   }
+  addFund(data) {
+    this.getFundValues.push(this.fb.group({
+      fundName: [data ? data.name :null],
+      debtPer: [data ? data.debtPer : null],
+      equityPer:[data ? data.equityPer : null],
+      option:[data ? data.option+'' : null],
+      units:[data ? data.units : null],
+      nav:[data ? data.nav : null],
+      id:[data ? data.id : null],
+      fundValue:[data ? data.fundValue : null]
+    }));
+  }
+  removeFund(item) {
+    let finalMemberList = this.keyDetailsForm.get('fundValueForm') as FormArray 
+    if(finalMemberList.length > 1){
+    this.getFundValues.removeAt(item);
+
+    }
+  }
   ngOnInit() {
     this.addMoreFlag = false;
   }
-
+  onChange(form,value,event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = '100';
+      form.get(value).setValue(event.target.value);
+    }
+  }
   addTransaction() {
     this.cashFlowEntries.push(this.fb.group({
       cashFlowType: null,
@@ -333,6 +374,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       this.ownerData = { Fmember: this.nomineesListFM, controleData: this.lifeInsuranceForm }
       return;
     } else {
+      (this.editInsuranceData.id) ? this.flag = 'EDIT' : this.flag = 'ADD';
       // requiredFields
       this.insuranceId = this.editInsuranceData.id
       // this.lifeInsuranceForm.controls.lifeAssured.setValue(this.editInsuranceData.lifeAssuredName)
@@ -343,7 +385,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       this.lifeInsuranceForm.controls.sumAssured.setValue(this.editInsuranceData.sumAssured)
       this.lifeInsuranceForm.controls.premiumDetailsAmount.setValue(this.editInsuranceData.premiumAmount)
       this.lifeInsuranceForm.controls.premiumDetailsFrequency.setValue(String(this.editInsuranceData.frequency))
-      this.lifeInsuranceForm.controls.tenureDetailsPolicy.setValue(String(this.editInsuranceData.policyTenure))
+      this.lifeInsuranceForm.controls.tenureDetailsPolicy.setValue(this.editInsuranceData.policyTenure)
       this.lifeInsuranceForm.controls.premiumPayingTerm.setValue(this.editInsuranceData.premiumPayingTerm)
       this.lifeInsuranceForm.controls.policyStatus.setValue(String(this.editInsuranceData.policyStatusId))
       this.lifeInsuranceForm.controls.policyStatusLastUnpaid.setValue(this.editInsuranceData.lastUnpaidPremium)
@@ -384,7 +426,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       if (this.editInsuranceData.insuranceCashflowList != undefined) {
         this.editInsuranceData.insuranceCashflowList.forEach(element => {
           (this.cashFlowForm.controls.cashFlow as FormArray).push(this.fb.group({
-            cashFlowType: [element.cashFlowType, [Validators.required]],
+            cashFlowType: [element.cashFlowType + '', [Validators.required]],
             year: [element.cashFlowYear, Validators.required],
             approxAmt: [(element.cashFlowApproxAmount + ''), Validators.required]
           }));
@@ -476,7 +518,10 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   selectPolicy(policy) {
     this.policyData = policy;
     this.insuranceTypeId = policy.insuranceTypeId;
-    // this.insuranceSubTypeId = policy.insuranceSubTypeId;
+    // if(this.insuranceSubTypeId == 0){
+    //   this.insuranceSubTypeId = policy.insuranceSubTypeId;
+    // }
+    this.insuranceSubTypeId = policy.insuranceSubTypeId;
   }
 
   openOptionField() {

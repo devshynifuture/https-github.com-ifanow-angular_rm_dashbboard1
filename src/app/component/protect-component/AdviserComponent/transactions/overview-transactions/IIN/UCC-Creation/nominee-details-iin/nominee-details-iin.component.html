@@ -31,7 +31,12 @@
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field>
-                            <input matInput maxlength="30" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="nomineeName" type="text" class="form-control">
+                            <mat-select class="form-control" formControlName="relationType">
+                                <mat-option [value]="fm.name" (click)="selectedNominee(fm)" *ngFor="let fm of nomineeFmList"> {{fm.name}} </mat-option>
+                            </mat-select>
+                            <!-- <input matInput maxlength="30" appInputValueValidation
+                                [inputValidator]="validatorType.TEXT_ONLY" formControlName="nomineeName" type="text"
+                                class="form-control"> -->
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
