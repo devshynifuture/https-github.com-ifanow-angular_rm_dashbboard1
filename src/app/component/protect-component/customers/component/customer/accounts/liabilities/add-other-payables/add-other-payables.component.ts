@@ -7,12 +7,14 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { CustomerService } from '../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatInput } from '@angular/material';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-other-payables',
   templateUrl: './add-other-payables.component.html',
   styleUrls: ['./add-other-payables.component.scss'],
   providers: [
+    [DatePipe],
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
@@ -35,9 +37,11 @@ export class AddOtherPayablesComponent implements OnInit {
   interestRate: number;
   showError: boolean;
     nomineesListFM: any = [];
+    maxDate = new Date();
+
     @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
-  constructor(private fb: FormBuilder, public subInjectService: SubscriptionInject, public custumService: CustomerService, public eventService: EventService) {
+  constructor(private datePipe: DatePipe,private fb: FormBuilder, public subInjectService: SubscriptionInject, public custumService: CustomerService, public eventService: EventService) {
   }
 
   @Input()
@@ -57,7 +61,29 @@ export class AddOtherPayablesComponent implements OnInit {
 
     this.show = false;
   }
+  dateChange(value,form,formValue){
+    if(form=='dateOfRepayment' && formValue){
+      let dateOfReceipt = this.datePipe.transform(this.otherLiabilityForm.controls.dateOfReceipt.value, 'dd/MM/yyyy')
+      if(value <= dateOfReceipt){
+        this.otherLiabilityForm.get('dateOfRepayment').setErrors({ max: 'Date of repayment' });
+        this.otherLiabilityForm.get('dateOfRepayment').markAsTouched();
+      }else{
+        this.otherLiabilityForm.get('dateOfRepayment').setErrors();
+      }
+    }else{
+      if(formValue){
+        let dateOfRepayment = this.datePipe.transform(this.otherLiabilityForm.controls.dateOfRepayment.value, 'dd/MM/yyyy')
+        if(value >= dateOfRepayment){
+          this.otherLiabilityForm.get('dateOfRepayment').setErrors({ max: 'Date of repayment' });
+          this.otherLiabilityForm.get('dateOfRepayment').markAsTouched();
+        }else{
+          this.otherLiabilityForm.get('dateOfRepayment').setErrors();
 
+        }
+      }
+    }
+  
+  }
   showMore() {
     this.show = true;
   }

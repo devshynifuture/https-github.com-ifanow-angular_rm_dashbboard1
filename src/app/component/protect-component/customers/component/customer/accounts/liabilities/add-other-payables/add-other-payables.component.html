@@ -40,7 +40,7 @@
         <div class="col-md-3 pl-0">
             <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
-                    <input class="form-control b-0 br-0" matInput [matDatepicker]="picker"
+                    <input class="form-control b-0 br-0" #dateOfReceipt (ngModelChange)="dateChange(dateOfReceipt.value,'dateOfReceipt',dateOfRepayment.value)" matInput [max]="maxDate" [matDatepicker]="picker"
                         formControlName="dateOfReceipt" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
@@ -114,11 +114,13 @@
         <div class="col-md-3 pl-0">
             <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
-                    <input [matDatepicker]="picker2" class="form-control b-0 br-0" formControlName="dateOfRepayment"
+                    <input [matDatepicker]="picker2" (ngModelChange)="dateChange(dateOfRepayment.value,'dateOfRepayment',dateOfReceipt.value)" #dateOfRepayment class="form-control b-0 br-0" formControlName="dateOfRepayment"
                         matInput readonly>
                     <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
-                    <mat-error class="f-12">This field is required
+                    <mat-error class="f-12"  *ngIf="(otherLiabilityForm.get('dateOfRepayment').errors?.required)">This field is required
+                    </mat-error>
+                    <mat-error class="f-12" *ngIf="(otherLiabilityForm.get('dateOfRepayment').errors?.max)">Date cannot be less than or equal to date of receipt
 
                     </mat-error>
                 </mat-form-field>

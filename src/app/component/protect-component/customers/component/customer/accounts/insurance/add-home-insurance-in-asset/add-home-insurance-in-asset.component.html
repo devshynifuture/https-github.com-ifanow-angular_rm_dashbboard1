@@ -64,7 +64,8 @@
         </div>
         <div class="col-md-5 pr-0 form-group">
             <mat-form-field>
-                <input matInput type="text" [maxLength]="30" formControlName="insurerName" #insureerName appInputValueValidation autocomplete="off" class="form-control br-0">
+                <input matInput type="text" [maxLength]="30" formControlName="insurerName" #insurerName appInputValueValidation autocomplete="off" class="form-control br-0">
+                <mat-hint align="end" class="f-12">{{insurerName.value.length}}/40</mat-hint>
                 <mat-error>This field is required
                 </mat-error>
             </mat-form-field>
@@ -80,7 +81,8 @@
         </div>
         <div class="col-md-3 form-group">
             <mat-form-field>
-                <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="20" formControlName="policyNum" #policynumber appInputValueValidation autocomplete="off" class="form-control br-0">
+                <input matInput type="text" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="20" formControlName="policyNum" #policyNum appInputValueValidation autocomplete="off" class="form-control br-0">
+                <mat-hint align="end" class="f-12">{{policyNum.value.length}}/40</mat-hint>
                 <mat-error>This field is required
                 </mat-error>
             </mat-form-field>
@@ -111,7 +113,8 @@
         </div>
         <div class="col-md-5 form-group">
             <mat-form-field>
-                <input matInput type="text" [maxLength]="30" formControlName="planeName" #planName appInputValueValidation autocomplete="off" class="form-control br-0">
+                <input matInput type="text" [maxLength]="30" formControlName="planeName" #planeName appInputValueValidation autocomplete="off" class="form-control br-0">
+                <mat-hint align="end" class="f-12">{{planeName.value.length}}/40</mat-hint>
                 <mat-error>This field is required
                 </mat-error>
             </mat-form-field>
@@ -148,7 +151,8 @@
             <div class="col-md-3 form-group">
                 <h5 class="m-0 ">Sum insured</h5>
                 <mat-form-field class="iconRupess">
-                    <input type="text" matInput #loanAmountRef class="form-control rupess br-0" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="sumInsured">
+                    <input type="text" matInput #sumInsured class="form-control rupess br-0" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="sumInsured">
+                    <mat-hint align="end" class="f-12">{{sumInsured.value.length}}/8</mat-hint>
                     <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
@@ -168,7 +172,8 @@
         </div>
         <div class="col-md-3 form-group iconRupess">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="number" formControlName="premium" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #premiumdetails autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
+                <input matInput type="number" formControlName="premium" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #premium autocomplete="true" [maxLength]="8" class="form-control rupess br-0">
+                <mat-hint align="end" class="f-12">{{premium.value.length}}/8</mat-hint>
                 <mat-error>This field is required
                 </mat-error>
             </mat-form-field>
@@ -247,7 +252,8 @@
                 <div class="col-md-3 form-group">
                     <h5 class="m-0  ">Sum insured</h5>
                     <mat-form-field class="iconRupess">
-                        <input matInput type="number" formControlName="sumAddOns" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #premiumdetails autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
+                        <input matInput type="number" formControlName="sumAddOns" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #sumAddOns autocomplete="true" [maxLength]="8" class="form-control rupess br-0">
+                        <mat-hint align="end" class="f-12">{{sumAddOns.value.length}}/8</mat-hint>
                         <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>
@@ -266,7 +272,8 @@
             </div>
             <div class="col-md-5 form-group ">
                 <mat-form-field>
-                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="exclusion" #exclusion appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="10" formControlName="exclusion" #exclusion appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <mat-hint align="end" class="f-12">{{exclusion.value.length}}/40</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -277,7 +284,8 @@
             </div>
             <div class="col-md-5 form-group  ">
                 <mat-form-field>
-                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="financierName" #exclusion appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="10" formControlName="financierName" #financierName appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <mat-hint align="end" class="f-12">{{financierName.value.length}}/40</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -288,7 +296,8 @@
             </div>
             <div class="col-md-5 form-group  ">
                 <mat-form-field>
-                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="advisorName" #advisorName appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40" formControlName="advisorName" #advisorName appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <mat-hint align="end" class="f-12">{{advisorName.value.length}}/40</mat-hint>
                     <mat-error>This field is required
                     </mat-error>
                 </mat-form-field>
@@ -302,7 +311,8 @@
             </div>
             <div class="col-md-5 form-group  ">
                 <mat-form-field>
-                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="serviceBranch" #serviceBranch appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40" formControlName="serviceBranch" #serviceBranch appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <mat-hint align="end" class="f-12">{{serviceBranch.value.length}}/40</mat-hint>
                     <mat-error>This field is required
                     </mat-error>
                 </mat-form-field>

@@ -103,8 +103,8 @@
                         <div class="form-group mb-0">
                             <label class="f-16 roboto">Name</label>
                             <mat-form-field>
-                                <mat-select matInput formControlName="insuredMembers" autocomplete="true" class="form-control br-0" (selectionChange)="getFamilyData($event.value,FamilyMember)">
-                                    <mat-option (click)="getFamilyMember(option,i)" *ngFor="let option of FamilyMember;index as i" [value]="option.userName">
+                                <mat-select matInput formControlName="insuredMembers" autocomplete="true" class="form-control br-0" (selectionChange)="getFamilyData($event.value,nomineesListFM)">
+                                    <mat-option (click)="getFamilyMember(option,i)" *ngFor="let option of nomineesListFM;index as i" [value]="option.userName">
                                         {{option.userName}}</mat-option>
                                 </mat-select>
                                 <mat-error>This field is required
@@ -421,7 +421,7 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
+                            <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="10"
                                 formControlName="nomineeRelation" #nomineeRelation appInputValueValidation
                                 autocomplete="off" class="form-control br-0">
                             <mat-error>This field is required
@@ -437,7 +437,7 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="40" formControlName="tpaName" #tpaName appInputValueValidation autocomplete="off" class="form-control br-0">
+                            <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40" formControlName="tpaName" #tpaName appInputValueValidation autocomplete="off" class="form-control br-0">
                             <mat-hint align="end" class="f-12">{{tpaName.value.length}}/40</mat-hint>
 
                         </mat-form-field>
@@ -451,7 +451,7 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="40" formControlName="advisorName" #advisorName appInputValueValidation autocomplete="off" class="form-control br-0">
+                            <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40" formControlName="advisorName" #advisorName appInputValueValidation autocomplete="off" class="form-control br-0">
                             <mat-hint align="end" class="f-12">{{advisorName.value.length}}/40</mat-hint>
 
                             <mat-error>This field is required
@@ -467,7 +467,7 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="40" formControlName="serviceBranch" #serviceBranch appInputValueValidation autocomplete="off" class="form-control br-0">
+                            <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40" formControlName="serviceBranch" #serviceBranch appInputValueValidation autocomplete="off" class="form-control br-0">
                             <mat-hint align="end" class="f-12">{{serviceBranch.value.length}}/40</mat-hint>
                             <mat-error>This field is required
                             </mat-error>
@@ -482,7 +482,7 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
+                            <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="10"
                                 formControlName="bankAccount" #bankAccount appInputValueValidation autocomplete="off"
                                 class="form-control br-0">
                             <mat-error>This field is required
