@@ -161,11 +161,11 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select appOwnerNominee matInput formControlName="name" [userTypeFlag]="fieldFlag"
-                            [clientIdData]="userData" [data]='ownerData'
+                            [clientIdData]="idData" [data]='ownerData'
                             (selectionChange)="disabledMember($event.value,'nominee')"
                             (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                             <mat-option value='' disabled>Select family members</mat-option>
-                            <mat-option *ngIf="nomineesListFM.legnth==0" value='clientData.name'>{{clientData.name}}
+                            <mat-option *ngIf="nomineesListFM==undefined" value='clientData.name'>{{clientData.name}}
                             </mat-option>
                             <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                 <span>{{f.userName}}</span>

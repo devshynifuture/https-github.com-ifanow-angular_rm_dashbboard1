@@ -75,7 +75,7 @@ export class OwnerNomineeDirective {
   }
   getListFamilyMem(): any {
     const obj = {
-      userId: (this.clientId) ? this.clientId : (this.userTypeFlag == 'client' || this.userTypeFlag == undefined) ? this.clientIdData.clientId : (this.userTypeFlag == 'familyMember') ? this.clientIdData.familyMemberId : this.clientId,
+      userId: (this.clientId) ? this.clientId : this.clientIdData,
       userType: (this.clientId) ? 2 : (this.userTypeFlag == 'client' || this.userTypeFlag == undefined) ? 2 : 3
     };
 

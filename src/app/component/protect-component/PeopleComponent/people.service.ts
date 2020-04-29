@@ -105,4 +105,8 @@ export class PeopleService {
     const httpParams = new HttpParams().set('userId', data.userId).set('userType', data.userType);
     return this.http.get(apiConfig.USER + appConfig.GET_CLIENT_FAMILY_MEMBERS, httpParams);
   }
+
+  getClientFamilyMemberList(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_CLIENT_FAMILY_MEMBER_LIST, data, 1);
+  }
 }
