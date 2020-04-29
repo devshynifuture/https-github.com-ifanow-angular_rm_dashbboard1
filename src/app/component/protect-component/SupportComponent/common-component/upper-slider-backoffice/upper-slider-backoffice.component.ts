@@ -48,6 +48,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   isLoadingForDuplicate: boolean = false;
   canExportExcelSheet = 'false';
   rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
+  upperHeaderName;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -79,6 +80,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
               });
             }
           });
+
+          this.upperHeaderName = this.getRtName(this.data.rtId);
           this.teamMemberListGet();
         } else {
           this.eventService.openSnackBar("Error In Fetching RTA List", "DISMISS");

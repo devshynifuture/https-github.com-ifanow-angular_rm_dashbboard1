@@ -242,7 +242,10 @@
                                             <div class="bar" appFormatNumber>
                                                 {{(isLoading ? '' : ((element.emi) ? element.emi : 0))}} </div>
                                         </td>
-                                        <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
+                                        <td mat-footer-cell *matFooterCellDef class="br text-right pr-8 f-600"
+                                        [value]="totalEmi" appFormatNumber>
+                                        <div *ngIf="totalEmi"><span>{{totalEmi}}</span></div>
+                                    </td>
                                     </ng-container>
                                     <ng-container matColumnDef="fin">
                                         <th mat-sort-header="financialInstitution" mat-header-cell *matHeaderCellDef
@@ -253,7 +256,10 @@
                                                 {{(isLoading ? '' : ((element.financialInstitution) ? element.financialInstitution : '-'))}}
                                             </div>
                                         </td>
-                                        <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
+                                       
+                                        <td mat-footer-cell *matFooterCellDef class="br text-right pr-8 f-600"
+                                       >
+                                    </td>
                                     </ng-container>
                                     <ng-container matColumnDef="status">
                                         <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br">
@@ -439,7 +445,7 @@
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                </td>
             <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber [value]="totalEmi">totalEmi
                 </td>
                 <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">

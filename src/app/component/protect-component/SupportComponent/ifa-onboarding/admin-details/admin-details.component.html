@@ -218,6 +218,11 @@
                             <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
                         </table>
+                        <div class="col-md-12 p-0 b-a" *ngIf="camsDS.data === null">
+                            <h5 class="text-center p-44">
+                                No Data Found
+                            </h5>
+                        </div>
                     </div>
                 </div>
 
@@ -266,6 +271,11 @@
                             <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
                         </table>
+                        <div class="col-md-12 p-0 b-a" *ngIf="karvyDS.data === null">
+                            <h5 class="text-center p-44">
+                                No Data Found
+                            </h5>
+                        </div>
                     </div>
                 </div>
 
@@ -304,6 +314,11 @@
                             <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
                         </table>
+                        <div class="col-md-12 p-0 b-a" *ngIf="frankDS.data === null">
+                            <h5 class="text-center p-44">
+                                No Data Found
+                            </h5>
+                        </div>
                     </div>
                 </div>
 
@@ -333,6 +348,11 @@
                             <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
                         </table>
+                        <div class="col-md-12 p-0 b-a" *ngIf="fundsDS.data === null">
+                            <h5 class="text-center p-44">
+                                No Data Found
+                            </h5>
+                        </div>
                     </div>
                 </div>
 
@@ -379,6 +399,11 @@
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                         </table>
+                        <div class="col-md-12 p-0 b-a" *ngIf="userList.data === null">
+                            <h5 class="text-center p-44">
+                                No Data Found
+                            </h5>
+                        </div>
 
 
                     </div>

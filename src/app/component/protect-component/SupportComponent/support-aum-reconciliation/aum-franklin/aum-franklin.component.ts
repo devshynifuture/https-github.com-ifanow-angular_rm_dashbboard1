@@ -134,6 +134,7 @@ export class AumFranklinComponent implements OnInit {
         if (UtilService.isDialogClose(upperSliderData)) {
           // this.getClientSubscriptionList();
           if (UtilService.isRefreshRequired(upperSliderData)) {
+            this.isLoading = true;
             this.dataSource.data = ELEMENT_DATA;
             this.getAumHistoryData();
           }

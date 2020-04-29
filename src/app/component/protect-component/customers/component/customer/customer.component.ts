@@ -6,14 +6,15 @@ import { EventService } from '../../../../../Data-service/event.service';
 import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { DynamicComponentService } from '../../../../../services/dynamic-component.service';
 import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from '../../../../../animation/animation';
+import { PeopleService } from '../../../PeopleComponent/people.service';
 
 @Component({
   selector: 'app-customer',
- templateUrl: './customer.component.html',
-   //templateUrl: './mobile-bottom-nav.html',
+  templateUrl: './customer.component.html',
+  //templateUrl: './mobile-bottom-nav.html',
   //templateUrl: './customer.mobile.component.html',
   //  templateUrl: './goal.mobile.component.html',
- //templateUrl: './transactions-mob.component.html',
+  //templateUrl: './transactions-mob.component.html',
   styleUrls: ['./customer.component.scss'],
   animations: [
     dialogContainerOpacity,
@@ -30,10 +31,11 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
 
   constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
     protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
-    private authService: AuthService) {
+    private authService: AuthService, private peopleService: PeopleService) {
     super(eventService, subinject, dynamicComponentService);
-    if (router.getCurrentNavigation().extras.state && router.getCurrentNavigation().extras.state.id) {
-      this.authService.setClientData(router.getCurrentNavigation().extras.state);
+    if (router.getCurrentNavigation().extras.state && router.getCurrentNavigation().extras.state.clientId) {
+      console.log(router.getCurrentNavigation().extras.state);
+      this.getClientData(router.getCurrentNavigation().extras.state);
     }
     this.eventService.tabChangeData.subscribe(
       data => this.getTabChangeData(data)
@@ -97,7 +99,24 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     this.clientId = AuthService.getClientId();
 
   }
-
+  getClientData(data) {
+    const obj = {
+      clientId: data.clientId
+    };
+    this.peopleService.getClientOrLeadData(obj).subscribe(
+      data => {
+        console.log('ClientBasicDetailsComponent getClientOrLeadData data: ', data);
+        if (data == undefined) {
+          return;
+        } else {
+          this.authService.setClientData(data);
+        }
+      },
+      err => {
+        console.error(err)
+      }
+    );
+  }
   clickEvent(value) {
     this.value = value;
   }

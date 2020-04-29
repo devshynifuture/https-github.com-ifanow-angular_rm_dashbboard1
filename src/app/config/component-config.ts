@@ -454,7 +454,9 @@ export const appConfig = {
   DELETE_HIDDEN_AMC: 'mutual-fund/hidden-amc/delete',
   SEARCH_SCHEME: 'report/transaction/list/get',
   GET_TRANSACTION_DETAILS: 'report/transaction/detail/get',
-  GET_MANDATE_LIST: 'report/ach-mandate/get',
+  GET_OVERVIEW_MANDATE:'mandate/summary',
+  GET_IIN_UCC_OVERVIEW:' report/client-code/count/get',
+    GET_MANDATE_LIST: 'report/ach-mandate/get',
   GET_REGISTRATION_UCC_IIN: 'user/register/detail/get',
   GET_CLIENT_FM_LIST:'user/client/family/filter/get',
   CREATE_IIN_UCC: 'user/register/create',
@@ -713,4 +715,5 @@ export const appConfig = {
   GET_FEEDS_MF_DATA: 'mutual-fund/latest/transaction/list/get',
   GET_DOCUMENTS_FEED: 'document/account/document/total-count-and-size/get',
   GET_FEED_RISK_PROFILE: 'risk/profile/get',
+  GET_FEED_RECENT_TRANSACTIONS: 'report/transaction/list/get',
 };
