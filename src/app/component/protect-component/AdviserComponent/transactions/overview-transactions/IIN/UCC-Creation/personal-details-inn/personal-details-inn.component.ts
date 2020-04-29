@@ -39,11 +39,12 @@ export class PersonalDetailsInnComponent implements OnInit {
   addressList: any;
   clientId: any;
   clientData: any;
+  sendObj: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private processTransaction: ProcessTransactionService,
     private onlineTransact: OnlineTransactionService, private datePipe: DatePipe,
-    private peopleService: PeopleService,
+    private peopleService: PeopleService,private custumService: CustomerService,
     public utils: UtilService,
     public eventService: EventService) {
     this.clientId = AuthService.getClientId()
@@ -78,7 +79,7 @@ export class PersonalDetailsInnComponent implements OnInit {
       this.getdataForm(this.firstHolder)
     } else {
       this.getdataForm('')
-      if(this.clientData){
+      if (this.clientData) {
         this.getAddressList(this.clientData)
       }
     }
@@ -95,22 +96,46 @@ export class PersonalDetailsInnComponent implements OnInit {
     this.eventService.changeUpperSliderState(fragmentData);
   }
   getAddressList(data) {
-    const obj = {
-      clientId: data.clientId
-    };
-    this.peopleService.getClientOrLeadData(obj).subscribe(
-      data => {
-        console.log(data);
-        this.addressList = data;
-        console.log('adrress', this.addressList)
-        this.addressList.email = this.addressList.emailList[0].email
-        this.addressList.mobileNo = this.addressList.mobileList[0].mobileNo
-        this.getdataForm(this.addressList)
-      },
-      err => {
-        this.addressList = {};
+    if(data.userType ==2){
+      this.sendObj = {
+        clientId: data.clientId,
+      };
+      this.peopleService.getClientOrLeadData(this.sendObj).subscribe(
+        data => {
+          console.log(data);
+          this.addressList = data;
+          console.log('adrress', this.addressList)
+          if (this.addressList.emailList.length > 0) {
+            this.addressList.email = this.addressList.emailList[0].email
+          } else if (this.addressList.mobileList.length > 0) {
+            this.addressList.mobileNo = this.addressList.mobileList[0].mobileNo
+          }
+          this.getdataForm(this.addressList)
+        },
+        err => {
+          this.addressList = {};
+        }
+      );
+    }else{
+      this.sendObj = {
+        familyMemberId: data.familyMemberId,
       }
-    );
+        this.custumService.getFamilyMembers(this.sendObj).subscribe(
+          data => {
+            this.addressList = data[0];
+            console.log('adrress', this.addressList)
+            if (this.addressList.emailList.length > 0) {
+              this.addressList.email = this.addressList.emailList[0].email
+            } else if (this.addressList.mobileList.length > 0) {
+              this.addressList.mobileNo = this.addressList.mobileList[0].mobileNo
+            }
+            this.getdataForm(this.addressList)
+          },
+          err => {
+            console.error(err)
+          }
+        );
+      }
   }
   getdataForm(data) {
     if (!data) {
@@ -128,12 +153,12 @@ export class PersonalDetailsInnComponent implements OnInit {
       fatherName: [!data ? '' : data.fatherName, [Validators.required]],
       motherName: [!data ? '' : data.motherName, [Validators.required]],
       dateOfBirth: [!data ? '' : new Date(data.dateOfBirth), [Validators.required]],
-      gender: [!data ? '1' : parseInt(data.genderId), [Validators.required]],
+      gender: [!data ? '1' : data.gender ? data.gender : (data.genderId) + "", [Validators.required]],
       email: [!data ? '' : data.email],
       aadharNumber: [!data ? '' : (data.aadharNumber) ? data.aadharNumber : data.aadhaarNumber],
       mobileNo: [!data ? '' : data.mobileNo],
       phoneNo: [!data ? '' : data.phoneNo],
-      maritalStatus: [!data ? '1' : parseInt(data.martialStatusId), [Validators.required]],
+      maritalStatus: [!data ? '1' : data.maritalStatus ? data.maritalStatus : (data.martialStatusId) + "", [Validators.required]],
       addressLine1: [!data.address ? '' : data.address.addressLine1],
       addressLine2: [!data.address ? '' : data.address.addressLine2],
       pinCode: [!data.address ? '' : data.address.pinCode],

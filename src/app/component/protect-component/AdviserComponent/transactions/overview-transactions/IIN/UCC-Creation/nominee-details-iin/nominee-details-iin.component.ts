@@ -10,6 +10,8 @@ import { PostalService } from 'src/app/services/postal.service';
 import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
 import { FatcaDetailsInnComponent } from '../fatca-details-inn/fatca-details-inn.component';
 import { MatInput } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-nominee-details-iin',
@@ -39,13 +41,22 @@ export class NomineeDetailsIinComponent implements OnInit {
   nominee: any;
   changedValue: string;
   doneData: any;
+  familyMemberList: any;
+  clientData: any;
+  advisorId: any;
+  nomineeFmList: any;
+  addressList: any;
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private onlineTransact: OnlineTransactionService, private postalService: PostalService,
-    private processTransaction: ProcessTransactionService
-    , private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
+    private processTransaction: ProcessTransactionService, private custumService: CustomerService,
+    private peopleService: PeopleService,
+    private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
+    this.advisorId = AuthService.getAdvisorId()
+  }
   @Input()
   set data(data) {
     this.inputData = data;
+    this.clientData = data.clientData
     console.log('all data in nominee', this.inputData)
     this.allData = data
     this.doneData = {}
@@ -71,6 +82,10 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.getdataForm(this.firstHolderNominee)
     } else {
       this.getdataForm('')
+      if (this.clientData) {
+        this.getFamilyMembersList(this.clientData)
+        this.getNomineeList(this.clientData)
+      }
     }
 
     this.holdingList = []
@@ -85,6 +100,62 @@ export class NomineeDetailsIinComponent implements OnInit {
 
     this.eventService.changeUpperSliderState(fragmentData);
   }
+  getNomineeList(data) {
+    const obj = {
+      userId: data.clientId,
+      userType: 2
+    };
+    this.peopleService.getClientFamilyMembers(obj).subscribe(
+      data => this.getListOfFamilyByClientRes(data)
+    );
+  }
+  getListOfFamilyByClientRes(data) {
+    console.log('getListOfFamilyByClientRes', data)
+    this.nomineeFmList = data
+  }
+  selectedNominee(value) {
+    this.getAddressList(value)
+  }
+  getAddressList(data) {
+    this.addressList = {}
+    this.addressList.address = {}
+    const obj = {
+      userId: data.clientId,//to do,
+      userType: 2//to do
+    };
+    this.custumService.getAddressList(obj).subscribe(
+      data => {
+        console.log(data);
+        console.log('address stored', data)
+        //  this.addressList = this.firstHolderContact
+        this.addressList.address = data[0]
+        this.getdataForm(this.addressList);
+      },
+      err => {
+        this.addressList = {};
+      }
+    );
+  }
+  getFamilyMembersList(data) {
+    const obj = {
+      clientId: data.clientId,
+      id: 0
+    };
+    this.custumService.getFamilyMembers(obj).subscribe(
+      data => {
+        this.familyMemberList = data;
+        this.familyMemberList = this.utils.calculateAgeFromCurrentDate(data);
+        console.log(this.familyMemberList);
+        this.firstHolderNominee = this.familyMemberList[1]
+        this.secondHolderNominee = this.familyMemberList[2]
+        this.getdataForm(this.firstHolderNominee)
+      },
+      err => {
+        console.error(err)
+      }
+    );
+  }
+
   getdataForm(data) {
     if (!data) {
       data = {
@@ -92,10 +163,10 @@ export class NomineeDetailsIinComponent implements OnInit {
       }
     }
     this.nomineeDetails = this.fb.group({
-      nomineeName: [(!data) ? '' : data.nomineeName, [Validators.required]],
-      relationType: [!data ? '' : data.relationType, [Validators.required]],
-      nomineeType: [!data ? '1' : data.nomineeType, [Validators.required]],
-      nominneDOB: [!data ? '' : data.nominneDOB, [Validators.required]],
+      nomineeName: [(!data) ? '' : (data.nomineeName) ? data.nomineeName : data.name, [Validators.required]],
+      relationType: [!data ? '' : (data.relationType) ? data.relationType : data.relationshipId + "", [Validators.required]],
+      nomineeType: [!data ? '1' : (data.nomineeType), [Validators.required]],
+      nominneDOB: [!data ? '' : (data.nominneDOB) ? new Date(data.nominneDOB) : new Date(data.dateOfBirth), [Validators.required]],
       nomineePercentage: [!data ? '' : data.nomineePercentage, [Validators.required]],
       addressType: [!data.address ? '' : data.address.addressType, [Validators.required]],
       addressLine1: [!data.address ? '' : data.address.addressLine1, [Validators.required]],
@@ -106,7 +177,7 @@ export class NomineeDetailsIinComponent implements OnInit {
       state: [!data.address ? '' : data.address.state, [Validators.required]],
       country: [!data.address ? '' : data.address.country, [Validators.required]],
     });
-    if(data.nomineeType == undefined ){
+    if (data.nomineeType == undefined) {
       this.nomineeDetails.controls.nomineeType.setValue('1')
     }
   }
@@ -183,7 +254,7 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.saveNomineeDetails(value);
       if (this.firstHolderNominee) {
         this.holder.type = value;
-        this.nomineeDetails.setValue(this.firstHolderNominee);
+        this.getdataForm(this.firstHolderNominee)
       } else {
         return;
       }
@@ -192,7 +263,7 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.saveNomineeDetails(value);
       if (this.secondHolderNominee) {
         this.holder.type = value;
-        this.nomineeDetails.setValue(this.secondHolderNominee);
+        this.getdataForm(this.secondHolderNominee)
       } else {
         this.reset();
       }
@@ -201,7 +272,7 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.saveNomineeDetails(value);
       if (this.thirdHolderNominee) {
         this.holder.type = value;
-        this.nomineeDetails.setValue(this.thirdHolderNominee);
+        this.getdataForm(this.thirdHolderNominee)
       } else {
         this.reset();
       };
@@ -235,12 +306,13 @@ export class NomineeDetailsIinComponent implements OnInit {
         familyMemberId: this.allData.familyMemberId,
         clientId: this.allData.clientId,
         advisorId: this.allData.advisorId,
-        generalDetails : this.allData.generalDetails,
-        fatcaDetail:this.inputData.fatcaDetail,
+        generalDetails: this.allData.generalDetails,
+        fatcaDetail: this.inputData.fatcaDetail,
         commMode: 1,
         confirmationFlag: 1,
-        allData : this.inputData,
+        allData: this.inputData,
         tpUserSubRequestClientId1: 2,
+        clientData: this.clientData
       }
       console.log('##### ALLL DATA ####', obj)
       this.openFatcaDetails(obj)
