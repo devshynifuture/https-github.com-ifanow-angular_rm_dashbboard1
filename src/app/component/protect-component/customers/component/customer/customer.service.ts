@@ -139,7 +139,7 @@ export class CustomerService {
   }
 
   getSmallSavingSchemePORDData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('requiredDate', data.requiredDate);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_PO_RD, httpParams);
   }
 

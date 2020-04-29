@@ -1,15 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-upload.service';
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { SettingsService } from '../../../settings.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PostalService } from 'src/app/services/postal.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-org-profile',
@@ -34,6 +35,11 @@ export class OrgProfileComponent implements OnInit {
   validatorType = ValidatorType
   subscription = new Subscription();
   isdCodes: Array<any> = [];
+  /** control for the MatSelect filter keyword */
+  filterCtrl: FormControl = new FormControl();
+  filteredIsdCodes:Array<any> = [];
+  /** Subject that emits when the component has been destroyed. */
+  protected _onDestroy = new Subject<void>();
 
   constructor(
     public utils: UtilService, 
@@ -62,18 +68,27 @@ export class OrgProfileComponent implements OnInit {
     this.getIsdCodesData();
     this.getOrgProfiles();
     this.getdataForm(this.inputData);
+    // listen for search field value changes
+    this.filterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterCodes();
+      });
   }
 
   getIsdCodesData() {
     this.peopleService.getIsdCode({}).subscribe(
       data => {
         if (data) {
-          console.log(data);
           this.isdCodes = data;
+          this.filteredIsdCodes = this.isdCodes.slice();
         }
+      }, err => {
+        this.event.showErrorMessage('Error');
       }
     )
   }
+
 
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
@@ -304,6 +319,22 @@ export class OrgProfileComponent implements OnInit {
     this.showCropper = false;
     this.cropImage = false;
     this.imageUploadEvent = '';
-    this.finalImage = '';
+    this.finalImage =
+     '';
+  }
+  protected filterCodes() {
+    if (!this.isdCodes) {
+      return;
+    }
+    // get the search keyword
+    let search = this.filterCtrl.value;
+    if (!search) {
+      this.filteredIsdCodes = this.isdCodes.slice();
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    // filter the codes
+    this.filteredIsdCodes = this.isdCodes.filter(code => (code.code + code.countryCode).toLowerCase().indexOf(search) > -1)
   }
 }

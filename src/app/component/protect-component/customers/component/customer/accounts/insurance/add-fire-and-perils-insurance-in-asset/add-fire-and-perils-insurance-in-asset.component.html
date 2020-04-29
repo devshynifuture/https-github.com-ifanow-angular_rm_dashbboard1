@@ -92,8 +92,12 @@
         <div class="col-md-5 form-group">
             <mat-form-field>
                 <mat-select matInput formControlName="PlanType" autocomplete="true" class="form-control br-0">
-                    <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
-                        {{option.policy_type}}</mat-option>
+                    <!-- <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
+                        {{option.policy_type}}</mat-option> -->
+                        <mat-option value='13'>Building only</mat-option>
+                        <mat-option value='14'>Contents only</mat-option>
+                        <mat-option value='15'>Building and contents</mat-option>
+                        
                 </mat-select>
                 <mat-error>This field is required
                 </mat-error>
@@ -127,8 +131,12 @@
                 <h5 class="m-0 ">Plan features</h5>
                 <mat-form-field>
                     <mat-select matInput formControlName="planfeatures" autocomplete="true" class="form-control br-0">
-                        <mat-option *ngFor="let option of policyFeature ;index as i" [value]="option.id">
-                            {{option.type}}</mat-option>
+                        <!-- <mat-option *ngFor="let option of policyFeature ;index as i" [value]="option.id">
+                            {{option.type}}</mat-option> -->
+                            <mat-option value='39'>Building</mat-option>
+                        <mat-option value='40'>Content - Furniture/Fixture/Fittings</mat-option>
+                        <mat-option value='41'>Content - Electrical installations</mat-option>
+                        
                     </mat-select>
                     <mat-error>This field is required
                     </mat-error>
@@ -217,8 +225,15 @@
                     <h5 class="m-0  ">Cover</h5>
                     <mat-form-field>
                         <mat-select matInput formControlName="additionalCovers" autocomplete="true" class="form-control br-0">
-                            <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
-                                {{option.add_on}}</mat-option>
+                            <!-- <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
+                                {{option.add_on}}</mat-option> -->
+                                <mat-option value='15'>Earthquake</mat-option>
+                                <mat-option value='16'>Terrorism</mat-option>
+                                <mat-option value='23'>Impact damage cover</mat-option>
+                                <mat-option value='24'>Loss of rent</mat-option>
+                                <mat-option value='25'>Removal of debris</mat-option>
+                                <mat-option value='26'>Architect, Surveyor, Engineers fees</mat-option>
+                                <mat-option value='27'>Omission to insured addition, Alteration or extension </mat-option>
                         </mat-select>
                         <mat-error>This field is required
                         </mat-error>
