@@ -311,13 +311,14 @@ addNewNominee(data) {
         id: 0,
         isClient:0
       })]),
-      maturityDate:['', [Validators.required]],
+      maturityDate:[data.maturityDate, [Validators.required]],
       // extenMaturity:['', [Validators.required]],
       // ownerName: [!data.ownerName ? '' : data.ownerName, [Validators.required]],
       accountBalance: [data.accountBalance, [ Validators.min(500)]],//Validators.max(150000)
       balanceAsOn: [new Date(data.balanceAsOn)],
       commencementDate: [new Date(data.commencementDate), [Validators.required]],
       futureContribution: [data.futureApproxcontribution, [Validators.required]],
+      extenMaturity: [''],
       frquency: [(data.frequency == undefined) ? "1" : String(data.frequency), [Validators.required]],
       description: [data.description],
       bankName: [data.bankName],
