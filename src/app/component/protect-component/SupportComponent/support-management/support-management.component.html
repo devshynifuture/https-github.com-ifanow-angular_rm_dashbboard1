@@ -8,7 +8,7 @@
 
 <div class="row pt-125 mb-2" *ngIf="!hasError && !isLoading">
     <div class="col-md-9">
-        <div class="row" *ngIf="dataSource.data.length > 0">
+        <div class="row">
             <div class="col-md-12 p-0 overflow-hidden back-office-table">
                 <table mat-table id="table-low" [dataSource]="dataSource" class="skeletonAnimation mt-8"
                     appSkeletonLoading [appSkeletonLoading]="isLoading" matSort>
@@ -79,6 +79,11 @@
                     <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
                     <tr *matRowDef=" let row; columns: displayedColumns;" mat-row></tr>
                 </table>
+                <div class="col-md-12 p-0 b-a" *ngIf="dataSource.data == null">
+                    <h5 class="text-center p-44">
+                        No Data Found
+                    </h5>
+                </div>
             </div>
         </div>
         <div class="row pt-20">
@@ -200,6 +205,6 @@
     <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
 </div>
 
-<!-- <div class="row" *ngIf="!isMainLoading">
+<div class="row" *ngIf="isMainLoading">
     <mat-spinner class="loader" [diameter]="30"></mat-spinner>
-</div>   -->
+</div>

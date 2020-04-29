@@ -94,12 +94,20 @@ export class SupportManagementComponent implements OnInit, OnDestroy {
   }
 
   getUnmappedAdvisors() {
+    this.isMainLoading = true;
     this.utilsService.loader(1);
     this.supportService.getUnmappedAdvisors().subscribe(
       data => {
-        this.dataSource.data = data || [];
-        this.utilsService.loader(-1);
-        this.isMainLoading = true;
+        this.isMainLoading = false;
+        if (data) {
+          this.dataSource.data = data || [];
+          this.utilsService.loader(-1);
+          this.hasError = false;
+          this.isLoading = false;
+        } else {
+          this.dataSource.data = null;
+          this.eventService.openSnackBar("No Unmapped Advisors Found", "DISMISS");
+        }
       },
       err => {
         this.utilsService.loader(-1);
@@ -170,9 +178,10 @@ export class SupportManagementComponent implements OnInit, OnDestroy {
         console.log(mapObj);
         this.supportService.mapAdvisors(mapObj).subscribe(res => {
           this.eventService.openSnackBar('Advisor mapped to RM successfully', "Dismiss");
-          this.getRMList();
+          // this.getRMList();
+          this.dataSource.data = [{}, {}, {}];
           this.getUnmappedAdvisors();
-          this.utilsService.loader(-1);
+          // this.utilsService.loader(-1);
         }, err => {
           this.utilsService.loader(-1);
           this.eventService.openSnackBar(err, "Dismiss");
