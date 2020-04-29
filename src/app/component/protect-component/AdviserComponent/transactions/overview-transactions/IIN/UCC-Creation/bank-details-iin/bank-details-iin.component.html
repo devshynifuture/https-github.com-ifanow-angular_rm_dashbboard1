@@ -313,8 +313,8 @@
                     </div>
                     <div class="col-md-3 iconRupess">
                         <mat-form-field>
-                            <input matInput maxlength="10" formControlName="mandateAmount" type="text"
-                                class="form-control rupess">
+                            <input matInput [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
+                                [maxlength]="10" formControlName="mandateAmount" type="number" class="form-control rupess">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>

@@ -160,11 +160,11 @@
             <div class="p-0" [ngClass]="getNominee.length > 1?'col-md-4' : 'col-md-6'">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select appOwnerNominee matInput formControlName="name" [clientIdData]="userData.clientId"
+                        <mat-select appOwnerNominee matInput formControlName="name" [clientIdData]="userData"
                             [data]='ownerData' (selectionChange)="disabledMember($event.value,'nominee')"
                             (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                             <mat-option value='' disabled>Select family members</mat-option>
-                            <mat-option value='clientData.name'>{{clientData.name}}
+                            <mat-option *ngIf="nomineesListFM.legnth==0" value='clientData.name'>{{clientData.name}}
                             </mat-option>
                             <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                 <span>{{f.userName}}</span>

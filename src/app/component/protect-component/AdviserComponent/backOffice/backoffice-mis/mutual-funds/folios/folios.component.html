@@ -3,7 +3,8 @@
         <h3 class="m-0  ">Folio Details</h3>
     </div>
     <div class="col-md-6 text-right">
-        <button mat-stroked-button class="btn-primary">Export folio</button>
+        <button mat-stroked-button class="btn-primary" (click)="exportToExcelSheet('export-folios')">Export
+            folio</button>
     </div>
 </div>
 
@@ -93,7 +94,7 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <div *ngIf="dataSource.data==null" class="d-flex flex-column align-items-center">
+        <div *ngIf="(dataSource && dataSource.data==null )|| !dataSource" class="d-flex flex-column align-items-center">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
             <h4 class="text-center pt-12">No data found</h4>
         </div>
