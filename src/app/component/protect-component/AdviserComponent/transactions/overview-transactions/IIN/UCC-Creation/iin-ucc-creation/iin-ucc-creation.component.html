@@ -31,9 +31,9 @@
     <div class="centerBox">
         <div class="row">
             <div class="col-md-3 pr-0">
-                <h5 class="m-0 text-right pt-8">Enter name</h5>
+                <h5 class="m-0 text-right pt-20">Enter name</h5>
             </div>
-            <div class="col-md-8 form-group text-center">
+            <div class="col-md-7 form-group text-center">
                 <mat-form-field appearance="standard" floatLabel="never">
                     <input #searchClient (keyup)="getClientAndFamilyMember($event.target.value)" [matAutocomplete]="auto1" appClientSearch aria-label="client" class="form-control pl-8" formControlName="ownerName" matInput placeholder="Start typing to see investor names">
                     <mat-autocomplete #auto1="matAutocomplete">
