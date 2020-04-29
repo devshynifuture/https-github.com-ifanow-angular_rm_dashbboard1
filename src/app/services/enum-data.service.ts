@@ -65,10 +65,8 @@ export class EnumDataService {
 
   public getDataForSubscriptionEnumService() {
     const obj = {};
-    console.log('getOtherAssetData EnumDataService getDataForSubscriptionEnumService ', this.enumService.getOtherAssetData());
     this.subService.getDataForCreateService(obj).subscribe(
       data => {
-        console.log('data getDataForCreateService ', data);
         const newJsonForConsumption = {
           billingMode: [],
           assetTypes: [],
@@ -84,10 +82,8 @@ export class EnumDataService {
         newJsonForConsumption.assetTypes = UtilService.convertObjectToArray(data.assetTypes);
         newJsonForConsumption.billingMode = UtilService.convertObjectToArray(data.billingMode);
         newJsonForConsumption.feeCollectionMode = UtilService.convertObjectToArray(data.paymentModes);
-        console.log('data newJsonForConsumption ', newJsonForConsumption);
 
         this.enumService.addToGlobalEnumData(newJsonForConsumption);
-        console.log(' post getOtherAssetData EnumDataService getDataForSubscriptionEnumService ', this.enumService.getOtherAssetData());
 
       }
     );
@@ -97,7 +93,6 @@ export class EnumDataService {
     const obj = {bseUserId: 192};
     this.onlineTransactionService.getTaxMasterData(obj).subscribe(
       data => {
-        console.log('getDataForTaxMasterService data : ', data);
 
         if (data) {
           const taxStatusMap: any = {};
@@ -122,7 +117,6 @@ export class EnumDataService {
             individualTaxList,
             minorTaxList
           };
-          console.log('getDataForTaxMasterService output : ', output);
           this.enumService.addToGlobalEnumData(output);
 
         }

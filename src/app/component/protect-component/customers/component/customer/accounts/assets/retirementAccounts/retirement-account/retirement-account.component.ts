@@ -198,7 +198,7 @@ export class RetirementAccountComponent implements OnInit {
   datasource11;
   displayedColumns12 = ['no', 'owner', 'cvalue', 'total', 'scheme', 'pran', 'desc', 'status', 'icons'];
   datasource12;
-  displayedColumns13 = ['no', 'owner', 'name', 'joint', 'number', 'year', 'amt', 'reason', 'desc', 'status', 'icons'];
+  displayedColumns13 = ['no', 'owner', 'name', 'joint', 'number', 'amt', 'reason', 'desc', 'status', 'icons'];
   datasource13;
   displayedColumns14 = ['no', 'owner', 'aemp', 'aempe', 'rate', 'date', 'desc', 'status', 'icons'];
   datasource14;

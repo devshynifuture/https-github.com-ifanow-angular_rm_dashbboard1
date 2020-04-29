@@ -44,6 +44,8 @@ import { SubmitReviewInnComponent } from './overview-transactions/IIN/UCC-Creati
 import { MandateCreationComponent } from './overview-transactions/MandateCreation/mandate-creation/mandate-creation.component';
 import { VerifyMemberComponent } from './overview-transactions/MandateCreation/verify-member/verify-member.component';
 import { DetailedViewMandateComponent } from './mandates-transactions/detailed-view-mandate/detailed-view-mandate.component';
+import { AddHolderNamesComponent } from '../../PeopleComponent/people/Component/people-clients/add-client/add-holder-names/add-holder-names.component';
+import { PeopleEntryModule } from '../../PeopleComponent/people/people-entry-module';
 export const componentList = [
     TransactionAddComponent,
     OnlineTrasactionComponent,
@@ -84,7 +86,8 @@ export const componentList = [
     SubmitReviewInnComponent,
     MandateCreationComponent,
     VerifyMemberComponent,
-    DetailedViewMandateComponent
+    DetailedViewMandateComponent,
+
     // VideoKycComponent
 
 
@@ -100,6 +103,7 @@ export const componentList = [
         CustomDirectiveModule,
         CustomCommonModule,
         ScrollingModule,
+        PeopleEntryModule
     ],
     exports: [
         FormsModule,

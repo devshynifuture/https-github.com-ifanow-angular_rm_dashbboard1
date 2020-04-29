@@ -45,7 +45,7 @@
                         <div class="col-md-4 p-0">
                             <h4 class="m-0 text-black roboto pt-4">{{showInsurance}} insurance </h4>
                         </div>
-                        <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center" *ngIf="!isLoading">
+                        <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center" *ngIf="!isLoading && dataSource.data.length > 0 &&  dataSourceGeneralInsurance.data.length > 0">
                             <div class="pdfClass">
                                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1" class="c-p" *ngIf="!fragmentData.isSpinner">
                                 <mat-menu #menu1="matMenu">
@@ -72,7 +72,7 @@
                     </div>
 
                     <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 liabilities overflow-hidden">
-                        <div #lifeInsurance id="template">
+                        <div>
                             <table #tableEl matSort mat-table [dataSource]="dataSource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation" *ngIf="insuranceTypeId == 1 && dataSource && dataSource.data.length > 0">
                                 <ng-container matColumnDef="no" sticky>
                                     <th mat-header-cell *matHeaderCellDef class="br"> No.</th>
@@ -82,7 +82,7 @@
                                     <td mat-footer-cell *matFooterCellDef class=" p-8 text-left"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="life">
-                                    <th mat-sort-header="lifeAssuredName" mat-sort-header *matHeaderCellDef class="br">
+                                    <th mat-sort-header="lifeAssuredName"  *matHeaderCellDef class="br">
                                         Life assured </th>
                                     <td mat-cell *matCellDef="let element" class="br">
                                         <div class="bar"> {{element.lifeAssuredName}} </div>
@@ -147,7 +147,7 @@
                                     <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="pterm">
-                                    <th mat-header-cell mat-sort-header="term" *matHeaderCellDef class="br"> Policy term
+                                    <th mat-header-cell mat-sort-header="policyTenure" *matHeaderCellDef class="br"> Policy term
                                     </th>
                                     <td mat-cell *matCellDef="let element" class="br">
                                         <div class="bar"> {{element.policyTenure}} </div>
@@ -155,7 +155,7 @@
                                     <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="desc">
-                                    <th mat-header-cell mat-sort-header="description" *matHeaderCellDef class="br">
+                                    <th mat-header-cell mat-sort-header="insuranceSubTypeId" *matHeaderCellDef class="br">
                                         Plan type </th>
                                     <td mat-cell *matCellDef="let element" class="br">
                                         <div *ngIf="!isLoading"> {{(element.insuranceSubTypeId == 1) ? 'Term' : (element.insuranceSubTypeId == 2) ? 'Traditional' : (element.insuranceSubTypeId == 3) ? 'ULIP' : '-'}} </div>
@@ -197,15 +197,15 @@
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                                 <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
                             </table>
-                            <div *ngIf="dataSource.data.length == 0" class="w-100 d-flex flex-column align-items-center">
+                            <div *ngIf="insuranceTypeId == 1 && dataSource.data.length == 0" class="w-100 d-flex flex-column align-items-center">
                                 <img class="width400" src="assets/images/svg/noDataFound.svg">
                                 <h4 class="text-center pt-12">No Data Found</h4>
-                                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)"> ADD NEW</button>
+                                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button>
                             </div>
                         </div>
                         <!----------------------------------------------------------GENERAL INSURANCE TABLE------------------------------------------------------------------>
-                        <div #generalInsurance id="template2">
-                            <table #tableEl2 matSort mat-table [dataSource]="dataSourceGeneralInsurance" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation" *ngIf="insuranceTypeId == 2 && dataSourceGeneralInsurance && dataSourceGeneralInsurance.data.length > 0">
+                        <div  *ngIf="insuranceTypeId == 2">
+                            <table #tableEl2 matSort mat-table [dataSource]="dataSourceGeneralInsurance" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation" *ngIf="dataSourceGeneralInsurance.data.length > 0">
                                 <ng-container matColumnDef="no" sticky>
                                     <th mat-header-cell *matHeaderCellDef class="br"> No. </th>
                                     <td mat-cell *matCellDef="let element; let i = index" class="br">
@@ -214,9 +214,9 @@
                                     <td mat-footer-cell *matFooterCellDef class=" p-8 text-left"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="life">
-                                    <th mat-sort-header="lifeAssuredName" mat-sort-header *matHeaderCellDef class="br">
+                                    <th mat-sort-header="policyHolderName" *matHeaderCellDef class="br">
                                         {{showPolicyHolder}}</th>
-                                    <td mat-cel l *matCellDef="let element" class="br">
+                                    <td mat-cell *matCellDef="let element" class="br">
                                         <div *ngIf="element.insuredMembers?.length > 0 && !isLoading">
                                             <ng-container *ngFor="let ele of element.insuredMembers">
                                                 <div> {{(element.insuredMembers.length == 1) ? (ele.name) : (ele.name+',')}} </div>
@@ -231,7 +231,7 @@
                                     <td mat-footer-cell *matFooterCellDef class=" p-8 text-left"> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="insurerName">
-                                    <th mat-sort-header="name" *matHeaderCellDef class="br ">
+                                    <th mat-sort-header="insurerName" *matHeaderCellDef class="br ">
                                         {{(insuranceSubTypeId == 7) ? 'Name of insurer' : 'Name of insurer & Plan'}}
                                     </th>
                                     <td mat-cell *matCellDef="let element" class="br">
@@ -264,7 +264,7 @@
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="policyExpiryDate">
-                                    <th mat-header-cell mat-sort-header="policyExpiryDate" *matHeaderCellDef class="br text-right">Pilicy expiry date
+                                    <th mat-header-cell mat-sort-header="policyExpiryDate" *matHeaderCellDef class="br text-right">Policy expiry date
                                     </th>
                                     <td mat-cell *matCellDef="let element" class="br text-right">
                                         <div class="bar"> {{element.policyExpiryDate | date:'dd/MM/yyyy'}} </div>
@@ -332,10 +332,10 @@
                                 <tr mat-footer-row *matFooterRowDef="displayedColumns2;sticky: true" [hidden]="isLoading"></tr>
                             </table>
 
-                            <div *ngIf="dataSourceGeneralInsurance.data.length == 0" class="w-100 d-flex flex-column align-items-center">
+                            <div *ngIf="insuranceTypeId == 2 && dataSourceGeneralInsurance.data.length == 0" class="w-100 d-flex flex-column align-items-center">
                                 <img class="width400" src="assets/images/svg/noDataFound.svg">
                                 <h4 class="text-center pt-12">No Data Found</h4>
-                                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)"> ADD NEW</button>
+                                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button>
                             </div>
                         </div>
                     </div>
@@ -345,4 +345,236 @@
             </div>
         </div>
     </div>
+</div>
+<!-- -------------------- pdf life ---------------------------- -->
+
+<div  #lifeInsurance id="template" class="hide">
+    <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
+        <tr>
+            <td colspan="9"
+                style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
+                <div class="col-md-4 d-flex align-items-center p-0">
+                    <h4 class="m-0 text-black roboto" >{{showInsurance}} insurance</h4>
+                    
+                </div>
+            </td>
+        </tr>
+        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                No. </td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Life assured</td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Policy name </td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Policy number</td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Sum assured</td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Current value</td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+               Premium</td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Premium paying term</td>
+                <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+               Policy term </td>  
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+               Plan type  </td>
+            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Status </td>
+
+        </tr>
+        <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
+            *ngFor="let item of dataSource.data ;index as i">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                {{i + 1}}</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                {{item.lifeAssuredName}}</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
+                appFormatNumber>
+                {{(item.policyName) ? item.policyName : '-'}}
+            </td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                >{{(item.policyNumber)?item.policyNumber:'-'}}</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber>{{(item.sumAssured)?(item.sumAssured ):0}}</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber>{{(item.currentValue =='Infinity' ? 0 : item.currentValue)}}</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>
+                {{(item.premiumAmount)?(item.premiumAmount):0}}</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" >
+                {{(item.premiumPayingTerm)?(item.premiumPayingTerm):'-'}}</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" >
+                {{(item.policyTenure) ? item.policyTenure : '-'}}</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{(item.insuranceSubTypeId == 1) ? 'Term' : (item.insuranceSubTypeId == 2) ? 'Traditional' : (item.insuranceSubTypeId == 3) ? 'ULIP' : '-'}} </td>
+                <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                <span class="text-primary" *ngIf="item.statusId == 'LIVE'">
+                        {{'LIVE'}} </span>
+                    <span class="text-success" *ngIf="item.statusId == 'MATURED'">
+                        {{'MATURED'}} </span>
+            </td>
+               
+        </tr>
+        <tr
+            style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"></td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
+                appFormatNumber></td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber></td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                >Total</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber [value]="totalSumAssuredLifeIns"></td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber [value]="totalCurrentValue" ></td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" [value]="totalPremiunAmountLifeIns" appFormatNumber>
+            </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+               </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                </td>
+                <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                </td>
+                <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                </td>
+        </tr>
+    </table>
+</div>
+<!-- -------------------- pdf General insurance ---------------------------- -->
+
+<div #generalInsurance id="template2" class="hide">
+    <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
+        <tr>
+            <td colspan="9"
+                style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
+                <div class="col-md-4 d-flex align-items-center p-0">
+                    <h4 class="m-0 text-black roboto">{{showInsurance}} insurance</h4>
+                   
+                </div>
+            </td>
+        </tr>
+        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                No. </td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                {{showPolicyHolder}}</td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                {{(insuranceSubTypeId == 7) ? 'Name of insurer' : 'Name of insurer & Plan'}} </td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Sum insured </td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Premium</td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Policy expiry date </td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Duration remaining</td>
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                {{showType}}</td>
+                <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Policy number </td>  
+          
+            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                Status </td>
+
+        </tr>
+        <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
+            *ngFor="let item of dataSourceGeneralInsurance.data ;index as i">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                {{i + 1}}</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" *ngFor="let ele  of item.insuredMembers" colspan="1">
+                {{(item.insuredMembers.length == 1) ? (ele.name) : (ele.name+',')}}</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
+                >
+                {{((insuranceSubTypeId == 7) ? item.insurerName : (((item.planName) ? item.insurerName+'-'+item.planName : item.insurerName)) )}}
+            </td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber>{{item.sumAssured}}</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber>{{item.premiumAmount}}</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber> {{item.policyExpiryDate | date:'dd/MM/yyyy'}}</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{item.durationRemaining}} </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                {{(item.policyType) ? item.policyType : item.planName}}</td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>
+                {{item.policyNumber}}</td>
+                <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                <span class="text-primary" *ngIf="item.statusId == 'LIVE'">
+                        {{'LIVE'}} </span>
+                    <span class="text-success" *ngIf="item.statusId == 'MATURED'">
+                        {{'MATURED'}} </span>
+            </td>
+               
+        </tr>
+        <tr
+            style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"></td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
+                appFormatNumber></td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber>Total</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+             [value]="totalSumAssured" appFormatNumber></td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber [value]="totalPremiunAmount"></td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                ></td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"></td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+               </td>
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                </td>
+                <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                </td>
+                <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+                </td>
+        </tr>
+    </table>
 </div>

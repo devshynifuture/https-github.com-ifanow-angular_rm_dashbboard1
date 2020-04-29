@@ -54,6 +54,11 @@ export class AuthService {
     let clientDataString = localStorage.getItem('clientData');
     return clientDataString ? JSON.parse(clientDataString) : undefined;
   }
+  static getProfileDetails() {
+    let clientDataString = localStorage.getItem('profileData');
+    return clientDataString ? JSON.parse(clientDataString) : undefined;
+  }
+
 
   static getClientId() {
     const clientData = this.getClientData();
@@ -64,8 +69,12 @@ export class AuthService {
     localStorage.setItem('profilePic', pic);
   }
 
-  static setAppPic(pic) {
-    localStorage.setItem('webLogo', pic);
+  static setOrgDetails(data) {
+    localStorage.setItem('orgData', JSON.stringify(data));
+  }
+
+  get orgData(){
+    return JSON.parse(localStorage.getItem('orgData'));
   }
 
   get profilePic() {
@@ -73,7 +82,8 @@ export class AuthService {
   }
 
   get appPic() {
-    return localStorage.getItem('webLogo');
+    const orgData = JSON.parse(localStorage.getItem('orgData'));
+    return orgData.logoUrl;
   }
 
   setToken(token: string) {
@@ -103,7 +113,7 @@ export class AuthService {
     localStorage.removeItem('clientData');
     sessionStorage.removeItem('clientData');
     localStorage.removeItem('profilePic');
-    localStorage.removeItem('webLogo');
+    localStorage.removeItem('orgData');
 
     // this.myRoute.navigate(['login']);
   }
@@ -117,6 +127,12 @@ export class AuthService {
     localStorage.setItem('clientData', JSON.stringify(clientData));
 
     console.log('setClientData : ', clientData);
+  }
+  setProfileDetails(profileData) {
+    sessionStorage.setItem('profileData', JSON.stringify(profileData));
+    localStorage.setItem('profileData', JSON.stringify(profileData));
+
+    console.log('setClientData : ', profileData);
   }
 
   static setSubscriptionUpperSliderData(data) {

@@ -5,6 +5,8 @@ import { OverviewMyfeedRoutingModule } from './overview-myfeed-routing.module';
 import { OverviewMyfeedComponent } from './overview-myfeed.component';
 import { MaterialModule } from 'src/app/material/material';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { HighchartsChartModule } from 'highcharts-angular';
+import { ChartModule } from 'angular-highcharts';
 
 
 @NgModule({
@@ -13,7 +15,9 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     CommonModule,
     OverviewMyfeedRoutingModule,
     MaterialModule,
-    NgCircleProgressModule
+    NgCircleProgressModule,
+    HighchartsChartModule,
+    ChartModule,
   ]
 })
 export class OverviewMyfeedModule { }

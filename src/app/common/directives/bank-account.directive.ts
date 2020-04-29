@@ -4,6 +4,7 @@ import { CustomerService } from 'src/app/component/protect-component/customers/c
 import { ClientBankComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-bank/client-bank.component';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Directive({
   selector: '[appBankAccount]'
@@ -12,8 +13,9 @@ export class BankAccountDirective {
   bankAccountList: any;
   advisorId: any;
   clientId: any;
+  clientData: any;
 
-  constructor(private custumService: CustomerService,private el: ElementRef, private renderer: Renderer2,private subInjectService :SubscriptionInject,private UtilService:UtilService) { }
+  constructor(private custumService: CustomerService,private el: ElementRef, private renderer: Renderer2,private subInjectService :SubscriptionInject,private UtilService:UtilService,private eventService:EventService) { }
   @Output() inputChange = new EventEmitter();
 
   get data() {
@@ -24,11 +26,13 @@ export class BankAccountDirective {
     this.bankAccountList = data.controleData;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.clientData = AuthService.getClientData()
     console.log('1111121212121212121212 OwnerColumnComponent data : ', data);
     this.getAccountList();
   }
   @HostListener('click', ['$event.target']) onClick() {
-    this.openBankForm('');
+    this.clientData['clientId'] = this.clientData['id']
+    this.openBankForm(this.clientData);
   }
 
   getAccountList() {
@@ -58,6 +62,7 @@ export class BankAccountDirective {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           console.log(sideBarData)
+          this.eventService.openSnackBar('Bank added successfully', 'Ok');
           this.getAccountList();
           rightSideDataSub.unsubscribe();
         }

@@ -57,10 +57,7 @@ export class AumCamsComponent implements OnInit {
   getAumHistoryData() {
     this.isLoading = true;
     const data = {
-      advisorId: 0,
-      brokerId: 0,
       rtId: this.rtId,
-      // need to work on this after completing rm login to fetch rmId form localStorage
       rmId: this.rmId
     }
 

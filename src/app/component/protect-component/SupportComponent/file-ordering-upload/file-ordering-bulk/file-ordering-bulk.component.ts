@@ -24,8 +24,9 @@ export class FileOrderingBulkComponent implements OnInit {
     private eventService: EventService,
     private subInjectService: SubscriptionInject,
     private fileOrderingUploadService: FileOrderingUploadService,
-    private fb: FormBuilder
-  ) {}
+    private fb: FormBuilder,
+    private utilService: UtilService
+  ) { }
   displayedColumns: string[] = [
     "rta",
     "description",
@@ -101,15 +102,52 @@ export class FileOrderingBulkComponent implements OnInit {
 
   ngOnInit() {
     this.getRmMasterDetails();
+    this.filterForm.valueChanges
+      .subscribe(res => {
+        if (res) {
+          let obj = {};
+          for (const key in res) {
+            if (res.hasOwnProperty(key)) {
+              const element = res[key];
+              if (element) {
+                if (typeof (element) === 'string') {
+                  obj['advisorName'] = element;
+                }
+                if (typeof (element) === 'object' && element.type == 'rm') {
+                  obj['rmId'] = element.id;
+                }
+                if (typeof (element) === 'object' && element.type == 'period') {
+                  obj['days'] = element.value;
+                }
+                if (typeof (element) === 'object' && element.type == 'rta') {
+                  obj['rtId'] = element.value;
+                }
+              }
+            }
+          }
+
+          if (!this.utilService.isEmptyObj(obj)) {
+            this.dataSource.data = ELEMENT_DATA;
+            this.fileOrderBulkHistoryListGet(obj);
+          } else {
+            this.eventService.openSnackBar("Please Select atleast one filter", "DISMISS");
+          }
+        }
+      });
   }
 
   defaultSelectionInFilter() {
     const defaultRmName = this.rmList.find((c) => c.id === this.rmId);
     this.filterForm.get("filterByRmName").setValue(defaultRmName);
+    this.filterBy.push({ name: defaultRmName.name, type: 'rm' });
+
     const defaultPeriod = this.periodList.find((c) => c.value === 30);
     this.filterForm.get("filterByPeriod").setValue(defaultPeriod);
+    this.filterBy.push({ name: defaultPeriod.name, type: 'period' });
+
     const defaultRta = this.rtaList.find((c) => c.value === 0);
     this.filterForm.get("filterByRta").setValue(defaultRta);
+    this.filterBy.push({ name: defaultRta.name, type: 'rta' });
 
     this.fileOrderBulkHistoryListGet({
       days: this.filterForm.get("filterByPeriod").value.value,
@@ -147,12 +185,12 @@ export class FileOrderingBulkComponent implements OnInit {
                 element.rtId === 0
                   ? "ALL-RTA"
                   : element.rtId === 1
-                  ? "CAMS"
-                  : element.rtId === 2
-                  ? "KARVY"
-                  : element.rtId === 3
-                  ? "FRANKLIN"
-                  : null,
+                    ? "CAMS"
+                    : element.rtId === 2
+                      ? "KARVY"
+                      : element.rtId === 3
+                        ? "FRANKLIN"
+                        : null,
               orderedBy: element.rmName ? element.rmName : "-",
               startedOn: element.startedOn ? element.startedOn : "-",
               totalFiles: element.totalFiles ? element.totalFiles : "-",
@@ -191,7 +229,7 @@ export class FileOrderingBulkComponent implements OnInit {
       type: "name",
       name,
     };
-    this.add(event);
+    this.add(event, 'name');
   }
 
   openUpperFileOrdering(flag, data) {
@@ -252,54 +290,23 @@ export class FileOrderingBulkComponent implements OnInit {
       });
   }
 
-  add(event): void {
-    const input = event.input;
+  add(event, type): void {
+    let input;
     let value;
+    if (event.hasOwnProperty('input')) {
+      input = event.input;
+    }
     if (event.value !== "") {
       value = event.value["name"];
     }
-    console.log("add event", event);
-
-    if (event.value["type"] == "rm") {
-      // console.log("yo");
-      this.dataSource.data = ELEMENT_DATA;
-      this.fileOrderBulkHistoryListGet({
-        days: this.days,
-        rtId: this.rtId,
-        rmId: event.value["id"],
-      });
-    } else if (event.value["type"] == "rta") {
-      // console.log("yo");
-      this.dataSource.data = ELEMENT_DATA;
-      this.rtId = event.value["value"];
-      this.fileOrderBulkHistoryListGet({
-        days: this.days,
-        rtId: event.value["value"],
-      });
-    } else if (event.value["type"] === "period") {
-      // console.log("yo");
-      this.dataSource.data = ELEMENT_DATA;
-      this.days = event.value["value"];
-      this.fileOrderBulkHistoryListGet({
-        days: this.days,
-        rtId: this.rtId,
-      });
-    } else if (event.value["type"] === "name") {
-      this.dataSource.data = ELEMENT_DATA;
-      this.fileOrderBulkHistoryListGet({
-        days: this.days ? this.days : 2,
-        rtId: this.rtId,
-        advisorName: event.value["name"],
-      });
-
-      console.log(event.value);
-    }
-    // filter get api usng
+    // removing item pf same filter type
+    this.filterBy = this.filterBy.filter(item => {
+      return item.type !== type;
+    })
 
     // Add our filterBy
     if ((value || "").trim()) {
-      this.filterBy = [];
-      this.filterBy.push({ name: value.trim() });
+      this.filterBy.push({ name: value.trim(), type });
     }
 
     // Reset the input value
@@ -331,13 +338,20 @@ export class FileOrderingBulkComponent implements OnInit {
   remove(filterBy): void {
     const index = this.filterBy.indexOf(filterBy);
 
+    if (filterBy.type === 'name') {
+      this.filterForm.patchValue({ filterByName: undefined });
+    }
+    if (filterBy.type === 'rm') {
+      this.filterForm.patchValue({ filterByRmName: undefined });
+    }
+    if (filterBy.type === 'period') {
+      this.filterForm.patchValue({ filterByPeriod: undefined });
+    }
+    if (filterBy.type === 'rta') {
+      this.filterForm.patchValue({ filterByRta: undefined });
+    }
     if (index >= 0) {
       this.filterBy.splice(index, 1);
-      this.dataSource.data = ELEMENT_DATA;
-      this.fileOrderBulkHistoryListGet({
-        days: this.days,
-        rtId: this.rtId,
-      });
     }
   }
 }

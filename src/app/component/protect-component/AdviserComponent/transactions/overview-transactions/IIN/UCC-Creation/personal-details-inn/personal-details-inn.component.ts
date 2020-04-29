@@ -8,6 +8,8 @@ import { ProcessTransactionService } from '../../../doTransaction/process-transa
 import { OnlineTransactionService } from '../../../../online-transaction.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { MatInput } from '@angular/material';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-personal-details-inn',
@@ -34,14 +36,22 @@ export class PersonalDetailsInnComponent implements OnInit {
   doneData: any;
   advisorId: any;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  addressList: any;
+  clientId: any;
+  clientData: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private processTransaction: ProcessTransactionService,
-    private onlineTransact: OnlineTransactionService, private datePipe: DatePipe, public utils: UtilService,
-    public eventService: EventService) { }
+    private onlineTransact: OnlineTransactionService, private datePipe: DatePipe,
+    private peopleService: PeopleService,
+    public utils: UtilService,
+    public eventService: EventService) {
+    this.clientId = AuthService.getClientId()
+  }
   @Input()
   set data(data) {
     this.inputData = data;
+    this.clientData = data.clientData
     console.log('all data in per', this.inputData)
     if (data && data.holderList) {
       this.getdataForm(data.holderList[0])
@@ -68,6 +78,9 @@ export class PersonalDetailsInnComponent implements OnInit {
       this.getdataForm(this.firstHolder)
     } else {
       this.getdataForm('')
+      if(this.clientData){
+        this.getAddressList(this.clientData)
+      }
     }
     this.holdingList = []
     this.obj1 = []
@@ -81,6 +94,24 @@ export class PersonalDetailsInnComponent implements OnInit {
 
     this.eventService.changeUpperSliderState(fragmentData);
   }
+  getAddressList(data) {
+    const obj = {
+      clientId: data.clientId
+    };
+    this.peopleService.getClientOrLeadData(obj).subscribe(
+      data => {
+        console.log(data);
+        this.addressList = data;
+        console.log('adrress', this.addressList)
+        this.addressList.email = this.addressList.emailList[0].email
+        this.addressList.mobileNo = this.addressList.mobileList[0].mobileNo
+        this.getdataForm(this.addressList)
+      },
+      err => {
+        this.addressList = {};
+      }
+    );
+  }
   getdataForm(data) {
     if (!data) {
       data = {
@@ -89,19 +120,20 @@ export class PersonalDetailsInnComponent implements OnInit {
     } else if (!data.address) {
       data.address = null
     }
+
     this.personalDetails = this.fb.group({
-      panNumber: [!data ? '' : data.panNumber, [Validators.required]],
-      clientName: [!data ? '' : data.clientName, [Validators.required]],
+      panNumber: [!data ? '' : (data.pan) ? data.pan : data.panNumber, [Validators.required]],
+      clientName: [!data ? '' : (data.name) ? data.name : data.clientName, [Validators.required]],
       madianName: [!data ? '' : data.madianName, [Validators.required]],
       fatherName: [!data ? '' : data.fatherName, [Validators.required]],
       motherName: [!data ? '' : data.motherName, [Validators.required]],
-      dateOfBirth: [!data ? '' : data.dateOfBirth, [Validators.required]],
-      gender: [!data ? '1' : data.gender, [Validators.required]],
+      dateOfBirth: [!data ? '' : new Date(data.dateOfBirth), [Validators.required]],
+      gender: [!data ? '1' : parseInt(data.genderId), [Validators.required]],
       email: [!data ? '' : data.email],
-      aadharNumber: [!data ? '' : data.aadharNumber],
+      aadharNumber: [!data ? '' : (data.aadharNumber) ? data.aadharNumber : data.aadhaarNumber],
       mobileNo: [!data ? '' : data.mobileNo],
       phoneNo: [!data ? '' : data.phoneNo],
-      maritalStatus: [!data ? '1' : data.maritalStatus, [Validators.required]],
+      maritalStatus: [!data ? '1' : parseInt(data.martialStatusId), [Validators.required]],
       addressLine1: [!data.address ? '' : data.address.addressLine1],
       addressLine2: [!data.address ? '' : data.address.addressLine2],
       pinCode: [!data.address ? '' : data.address.pinCode],
@@ -110,7 +142,7 @@ export class PersonalDetailsInnComponent implements OnInit {
       state: [!data.address ? '' : data.address.state],
       country: [!data.address ? '' : data.address.country],
     });
-    if(data.gender == undefined && data.maritalStatus == undefined){
+    if (data.gender == undefined && data.maritalStatus == undefined) {
       this.personalDetails.controls.gender.setValue('1')
       this.personalDetails.controls.maritalStatus.setValue('1')
     }
@@ -173,6 +205,7 @@ export class PersonalDetailsInnComponent implements OnInit {
     this.obj1.bankDetailList = this.inputData.bankDetailList
     this.obj1.nomineeList = this.inputData.nomineeList
     this.obj1.fatcaDetail = this.inputData.fatcaDetail;
+    this.obj1.clientData = this.clientData
     if (flag == true) {
       this.openContactDetails(this.obj1);
     }

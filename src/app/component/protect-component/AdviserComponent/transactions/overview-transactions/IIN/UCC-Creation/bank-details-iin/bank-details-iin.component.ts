@@ -11,6 +11,8 @@ import { ProcessTransactionService } from '../../../doTransaction/process-transa
 import { ContactDetailsInnComponent } from '../contact-details-inn/contact-details-inn.component';
 import { LeftSideInnUccListComponent } from '../left-side-inn-ucc-list/left-side-inn-ucc-list.component';
 import { MatInput } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
 
 @Component({
   selector: 'app-bank-details-iin',
@@ -42,12 +44,27 @@ export class BankDetailsIINComponent implements OnInit {
   genralDetails: any;
   doneData: any;
   allData: any;
+  fieldFlag = 'client';
+  clientId: any;
+  bankList: any;
+  isLoading = false
+  isIfsc: boolean = false;
+  clientData: any;
+  holderList: any;
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
     private processTransaction: ProcessTransactionService,
-    private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
+    private cusService : CustomerService,
+    private subService : SubscriptionService,
+    private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { 
+      this.clientId = AuthService.getClientId()
+    }
   @Input()
   set data(data) {
     this.inputData = data;
+    this.clientData = data.clientData
+    if(this.clientData){
+      this.getBankList(this.clientData)
+    }
     console.log('all data in bank', this.inputData)
     this.allData = data
     this.holdingList = data
@@ -85,6 +102,9 @@ export class BankDetailsIINComponent implements OnInit {
       this.temp.push(this.holdingList.secondHolder)
       this.temp.push(this.holdingList.thirdHolder)
     }
+    if(this.clientData){
+      this.getBankList(this.clientData)
+    }
   }
   close() {
     this.changedValue = 'close'
@@ -95,24 +115,82 @@ export class BankDetailsIINComponent implements OnInit {
 
     this.eventService.changeUpperSliderState(fragmentData);
   }
+  getBankList(data) {
+    let obj =
+    {
+     userId : data.clientId,
+     userType : 2
+    }
+    this.cusService.getBankList(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data && data.length > 0) {
+          this.bankList = data[0];
+          console.log('bank == ',this.bankList)
+          this.getdataForm(this.bankList)
+        }
+      },
+      err => {
+        this.bankList = {};
+      }
+    )
+  }
+  getHolderList(data) {
+    console.log(data);
+    this.holderList = data;
+  }
+  toUpperCase(formControl, event) {
+    this.utils.toUpperCase(formControl, event);
+    if (event.target.value.length == 11) {
+      this.getBankAddress(event.target.value);
+      return;
+    }
+  }
+  getBankAddress(ifsc) {
+    const obj = {
+      ifsc
+    };
+    console.log('ifsc 121221', obj);
+
+    if (ifsc != '') {
+      this.isIfsc = true;
+      this.subService.getBankAddress(obj).subscribe(data => {
+        console.log('postal 121221', data);
+
+      },
+        err => {
+          console.log(err, 'error internet');
+          this.isIfsc = false;
+        });
+    }
+  }
   getdataForm(data) {
     if (!data) {
       data = {
         address: {}
       }
     }
+    const holderList = [];
+    if (this.holderList) {
+      this.holderList.controls.forEach(element => {
+        holderList.push({
+          name: element.get('name').value,
+          id: element.get('id').value,
+        });
+      });
+    }
     this.bankDetails = this.fb.group({
       ifscCode: [(!data) ? '' : data.ifscCode, [Validators.required]],
       bankName: [!data ? '' : data.bankName, [Validators.required]],
       micrCode: [!data ? '' : data.micrCode, [Validators.required]],
       accountNumber: [!data ? '' : data.accountNumber, [Validators.required]],
-      accountType: [!data ? '1' : data.accountType, [Validators.required]],
-      branchCode: [!data ? '' : data.branchCode, [Validators.required]],
-      firstHolder: [!data ? '' : data.firstHolder, [Validators.required]],
+      accountType: [!data ? '1' : parseInt(data.accountType), [Validators.required]],
+      branchCode: [!data ? '' : (data.branchCode)?data.branchCode:data.bankId, [Validators.required]],
       branchName: [!data ? '' : data.branchName, [Validators.required]],
       branchAdd1: [!data.address ? '' : data.address.address1, [Validators.required]],
       branchAdd2: [!data.address ? '' : data.address.address2, [Validators.required]],
       pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],
+      holderNameList: holderList,
       city: [!data.address ? '' : data.address.city, [Validators.required]],
       state: [!data.address ? '' : data.address.state, [Validators.required]],
       country: [!data.address ? '' : data.address.country, [Validators.required]],
@@ -169,6 +247,7 @@ export class BankDetailsIINComponent implements OnInit {
     );
   }
   getPostalPin(value) {
+    this.isLoading = true
     let obj = {
       zipCode: value
     }
@@ -185,6 +264,8 @@ export class BankDetailsIINComponent implements OnInit {
   }
 
   PinData(data) {
+    this.isLoading = false
+
     if (data[0].Status == "Error") {
       this.pinInvalid = true;
 

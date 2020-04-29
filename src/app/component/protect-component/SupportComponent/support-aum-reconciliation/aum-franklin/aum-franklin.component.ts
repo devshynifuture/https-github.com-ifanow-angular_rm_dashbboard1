@@ -56,10 +56,7 @@ export class AumFranklinComponent implements OnInit {
   getAumHistoryData() {
     this.isLoading = true;
     const data = {
-      advisorId: 0,
-      brokerId: 0,
       rtId: this.rtId,
-      // rtId: 0,
       rmId: this.rmId
     }
 

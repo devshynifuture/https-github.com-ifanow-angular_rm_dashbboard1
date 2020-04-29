@@ -154,6 +154,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
         let objArr = [];
         console.log("this is summary values::::", res);
         if (res && res['aumList']) {
+          this.canExportExcelSheet = 'true';
           this.aumList = res['aumList'];
           let arrayValue = [];
 
@@ -216,6 +217,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
             this.mutualFundIds.push(element.mutualFundId);
           });
         } else {
+          this.canExportExcelSheet = 'false';
           this.dataSource1.data = null;
           objArr = null;
         }

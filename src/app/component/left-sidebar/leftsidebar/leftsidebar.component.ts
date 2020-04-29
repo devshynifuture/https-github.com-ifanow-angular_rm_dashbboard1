@@ -1,15 +1,15 @@
-import {Component, ElementRef, NgZone, OnInit} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from '../../../Data-service/event.service';
-import {SubscriptionInject} from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormControl} from '@angular/forms';
-import {SubscriptionService} from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
-import {Router} from '@angular/router';
-import {map, startWith} from 'rxjs/operators';
-import {DialogContainerComponent} from '../../../common/dialog-container/dialog-container.component';
-import {DynamicComponentService} from '../../../services/dynamic-component.service';
-import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from '../../../animation/animation';
-import {EnumDataService} from '../../../services/enum-data.service';
+import { Component, ElementRef, NgZone, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from '../../../Data-service/event.service';
+import { SubscriptionInject } from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormControl } from '@angular/forms';
+import { SubscriptionService } from '../../protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { Router } from '@angular/router';
+import { map, startWith } from 'rxjs/operators';
+import { DialogContainerComponent } from '../../../common/dialog-container/dialog-container.component';
+import { DynamicComponentService } from '../../../services/dynamic-component.service';
+import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from '../../../animation/animation';
+import { EnumDataService } from '../../../services/enum-data.service';
 import { SettingsService } from '../../protect-component/AdviserComponent/setting/settings.service';
 import { UtilService } from 'src/app/services/util.service';
 
@@ -44,12 +44,12 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   logoText = 'Your Logo here';
 
   constructor(public authService: AuthService, private _eref: ElementRef,
-              protected eventService: EventService, protected subinject: SubscriptionInject,
-              private subService: SubscriptionService, private router: Router, private ngZone: NgZone,
-              protected dynamicComponentService: DynamicComponentService,
-              private enumDataService: EnumDataService,
-              private settingsService: SettingsService,
-              private utilService: UtilService) {
+    protected eventService: EventService, protected subinject: SubscriptionInject,
+    private subService: SubscriptionService, private router: Router, private ngZone: NgZone,
+    protected dynamicComponentService: DynamicComponentService,
+    private enumDataService: EnumDataService,
+    private settingsService: SettingsService,
+    private utilService: UtilService) {
     /*constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
       protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
       private authService: AuthService) {*/
@@ -102,7 +102,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
 
   selectClient(singleClientData) {
     this.ngZone.run(() => {
-      this.router.navigate(['customer', 'detail', 'account', 'assets'], {state: {...singleClientData}});
+      this.router.navigate(['customer', 'detail', 'account', 'assets'], { state: { ...singleClientData } });
     });
   }
 
@@ -126,7 +126,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     }
     this.settingsService.getOrgProfile(obj).subscribe(
       data => {
-        AuthService.setAppPic(data.logoUrl);
+        AuthService.setOrgDetails(data);
         // this.utilService.loader(-1);
       },
       err => {
@@ -143,7 +143,11 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     }
     this.settingsService.getPersonalProfile(obj).subscribe(
       data => {
-        AuthService.setProfilePic(data.profilePic);
+        if (data && data.hasOwnProperty('profilePic')) {
+          AuthService.setProfilePic(data.profilePic);
+        } else {
+          AuthService.setProfilePic('/assets/images/svg/comment-icon.svg')
+        }
       },
       err => {
         this.eventService.openSnackBar(err, "Dismiss");
