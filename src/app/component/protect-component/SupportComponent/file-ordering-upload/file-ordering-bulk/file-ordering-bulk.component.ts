@@ -10,6 +10,7 @@ import { FileOrderingUpperComponent } from "../file-ordering-upper/file-ordering
 import { FileOrderingSetupComponent } from "./file-ordering-setup/file-ordering-setup.component";
 import { FileOrderingUploadService } from "../file-ordering-upload.service";
 import { FormBuilder } from "@angular/forms";
+import { ReconciliationService } from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 
 @Component({
   selector: "app-file-ordering-bulk",
@@ -25,7 +26,8 @@ export class FileOrderingBulkComponent implements OnInit {
     private subInjectService: SubscriptionInject,
     private fileOrderingUploadService: FileOrderingUploadService,
     private fb: FormBuilder,
-    private utilService: UtilService
+    private utilService: UtilService,
+    private reconService: ReconciliationService
   ) { }
   displayedColumns: string[] = [
     "rta",
@@ -74,34 +76,36 @@ export class FileOrderingBulkComponent implements OnInit {
     },
   ];
 
-  rtaList = [
-    {
-      name: "ALL RTA",
-      value: 0,
-      type: "rta",
-    },
-    {
-      name: "CAMS",
-      value: 1,
-      type: "rta",
-    },
-    {
-      name: "KARVY",
-      value: 2,
-      type: "rta",
-    },
-    {
-      name: "FRANKLIN",
-      value: 3,
-      type: "rta",
-    },
-  ];
+  rtaList = [];
 
   days = 2;
-  rtId = 0;
+  rtId;
 
-  ngOnInit() {
-    this.getRmMasterDetails();
+  getRtaList() {
+    this.reconService.getRTListValues({})
+      .subscribe(res => {
+        if (res && res.length !== 0) {
+          res.forEach(element => {
+            if (element.name === 'All') {
+              this.rtId = element.id;
+            }
+            if (element.name !== 'SUNDARAM' && element.name !== 'PRUDENT' && element.name !== 'NJ_NEW' && element.name !== 'NJ') {
+              this.rtaList.push({
+                name: element.name == 'FRANKLIN_TEMPLETON' ? 'FRANKLIN' : element.name,
+                value: element.id,
+                type: 'rta'
+              });
+            }
+          });
+          this.getRmMasterDetails();
+          this.setFilterFormValueChanges();
+        } else {
+          this.eventService.openSnackBar("Error In Fetching RTA List", "DISMISS");
+        }
+      });
+  }
+
+  setFilterFormValueChanges() {
     this.filterForm.valueChanges
       .subscribe(res => {
         if (res) {
@@ -134,6 +138,11 @@ export class FileOrderingBulkComponent implements OnInit {
           }
         }
       });
+  }
+
+  ngOnInit() {
+    this.isLoading = true;
+    this.getRtaList();
   }
 
   defaultSelectionInFilter() {
@@ -169,6 +178,11 @@ export class FileOrderingBulkComponent implements OnInit {
     });
   }
 
+  getRtName(id) {
+    let obj = this.rtaList.find(c => c.value === id);
+    return obj.name;
+  }
+
   fileOrderBulkHistoryListGet(data) {
     this.isLoading = true;
     this.fileOrderingUploadService
@@ -181,16 +195,7 @@ export class FileOrderingBulkComponent implements OnInit {
           data.forEach((element) => {
             tableData.push({
               advisorName: element.advisorName ? element.advisorName : "-",
-              rta:
-                element.rtId === 0
-                  ? "ALL-RTA"
-                  : element.rtId === 1
-                    ? "CAMS"
-                    : element.rtId === 2
-                      ? "KARVY"
-                      : element.rtId === 3
-                        ? "FRANKLIN"
-                        : null,
+              rta: this.getRtName(element.rtId),
               orderedBy: element.rmName ? element.rmName : "-",
               startedOn: element.startedOn ? element.startedOn : "-",
               totalFiles: element.totalFiles ? element.totalFiles : "-",

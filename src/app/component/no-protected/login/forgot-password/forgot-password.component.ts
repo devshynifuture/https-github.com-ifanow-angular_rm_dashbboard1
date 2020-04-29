@@ -202,7 +202,7 @@ export class ForgotPasswordComponent implements OnInit {
   verifyWithOtpResponse(flag) {  ///// check user filled otp is correct or not
     const otpString = this.otpData.toString().replace(/,/g, '');
     if (otpString == '') {
-      this.eventService.openSnackBar("Please enter Otp", "Dismiss");
+      this.eventService.openSnackBar("Please enter OTP", "Dismiss");
       return;
     }
     if (flag == 'Email' && this.otpData.length == 4 && this.otpResponse == otpString) {
@@ -214,7 +214,7 @@ export class ForgotPasswordComponent implements OnInit {
       this.otpData = [];
       this.saveAfterVerifyCredential(obj);
       this.signUpBarList[1].flag = true;
-      this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
+      this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
       if (this.userNameVerifyResponse != undefined) {
         this.router.navigate(['/login/setpassword'],
           { state: { userData: this.saveVerifyData.userData } });
@@ -233,14 +233,14 @@ export class ForgotPasswordComponent implements OnInit {
       };
       this.loginService.saveAfterVerification(obj).subscribe(
         data => {
-          this.eventService.openSnackBar('Otp matches sucessfully', 'Dismiss');
+          this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
           this.router.navigate(['/login/setpassword'], { state: { userData: this.saveVerifyData.userData } });
         },
         err => this.eventService.openSnackBar(err, 'Dismiss')
       );
     } else {
       // err => this.eventService.openSnackBar(err, 'Dismiss');
-      (this.resendOtpFlag) ? this.eventService.openSnackBar('OTP has expired', 'Dismiss') : this.eventService.openSnackBar('Otp is incorrect', 'Dismiss');
+      (this.resendOtpFlag) ? this.eventService.openSnackBar('OTP has expired', 'Dismiss') : this.eventService.openSnackBar('OTP is incorrect', 'Dismiss');
     }
   }
 

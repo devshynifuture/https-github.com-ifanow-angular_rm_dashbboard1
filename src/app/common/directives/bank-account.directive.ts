@@ -18,9 +18,7 @@ export class BankAccountDirective {
   constructor(private custumService: CustomerService,private el: ElementRef, private renderer: Renderer2,private subInjectService :SubscriptionInject,private UtilService:UtilService,private eventService:EventService) { }
   @Output() inputChange = new EventEmitter();
 
-  get data() {
-    return this.bankAccountList;
-  }
+ 
 
   @Input() set data(data) {
     this.bankAccountList = data.controleData;
@@ -29,6 +27,9 @@ export class BankAccountDirective {
     this.clientData = AuthService.getClientData()
     console.log('1111121212121212121212 OwnerColumnComponent data : ', data);
     this.getAccountList();
+  }
+  get data() {
+    return this.bankAccountList;
   }
   @HostListener('click', ['$event.target']) onClick() {
     this.clientData['clientId'] = this.clientData['id']

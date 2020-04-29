@@ -20,6 +20,7 @@ export class PlanReturnsinflationComponent implements OnInit {
   shortTerm: any[] = [{},{},{}];
   isLoading:boolean = false;
   editMode: boolean = false;
+  saveError:boolean = false;
   validatorType = ValidatorType;
   postHasError = false;
   constructor(private orgSetting: OrgSettingServiceService, private eventService: EventService) { 
@@ -87,6 +88,9 @@ export class PlanReturnsinflationComponent implements OnInit {
   getPostDataFormat(arr:any[]){
     let editedData = arr.filter(obj => obj.edited);
     return editedData.map(data => {
+      if(isNaN(parseFloat(data.inflation_rate))) {
+        this.postHasError = true;
+      }
       return {
         id: data.id,
         advisorId: this.advisorId,
@@ -100,6 +104,9 @@ export class PlanReturnsinflationComponent implements OnInit {
   getPostDataInflationFormat(arr:any[]){
     let editedData = arr.filter(obj => obj.edited);
     return editedData.map(data => {
+      if(isNaN(parseFloat(data.inflation_rate))) {
+        this.postHasError = true;
+      }
       return {
         id: data.id,
         advisorId: this.advisorId,
@@ -116,6 +123,10 @@ export class PlanReturnsinflationComponent implements OnInit {
 
     const obj = {returns: returnsObj, inflation: infationObj}
     
+    if(this.postHasError) {
+      this.eventService.openSnackBar("Please enter value in all fields", "Dismiss");
+      return;
+    }
     if(obj.returns.length == 0 && obj.inflation.length == 0) {
       this.toggleEditMode();
       return;

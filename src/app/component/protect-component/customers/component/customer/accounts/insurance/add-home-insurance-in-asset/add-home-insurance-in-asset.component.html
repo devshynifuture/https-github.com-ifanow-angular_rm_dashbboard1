@@ -94,8 +94,10 @@
         <div class="col-md-5 form-group">
             <mat-form-field>
                 <mat-select matInput formControlName="PlanType" autocomplete="true" class="form-control br-0">
-                    <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
-                        {{option.policy_type}}</mat-option>
+                    <!-- <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
+                        {{option.policy_type}}</mat-option> -->
+                        <mat-option value='13'>Building only</mat-option>
+                        <mat-option value='14'>Building & content</mat-option>
                 </mat-select>
                 <mat-error>This field is required
                 </mat-error>
@@ -127,8 +129,17 @@
                 <h5 class="m-0  ">Plan features</h5>
                 <mat-form-field>
                     <mat-select matInput formControlName="planfeatures" autocomplete="true" class="form-control br-0">
-                        <mat-option *ngFor="let option of policyFeature ;index as i" [value]="option.id">
-                            {{option.type}}</mat-option>
+                        <!-- <mat-option *ngFor="let option of policyFeature ;index as i" [value]="option.id">
+                            {{option.type}}</mat-option> -->
+                            <mat-option value='31'>Building</mat-option>
+                            <mat-option value='32'>Content - Furniture/Fixture/Fittings</mat-option>
+                            <mat-option value='33'>Content - Kitchen appliances</mat-option>
+                            <mat-option value='34'>Content - Apparrel/Footwear</mat-option>
+                            <mat-option value='35'>Content - Electrical appliances</mat-option>
+                            <mat-option value='36'>Content - Electronic equipment</mat-option>
+                            <mat-option value='37'>Content - Jewellery & valuables</mat-option>
+                            <mat-option value='38'>Content - Paintings, Curios, & work of art </mat-option>
+
                     </mat-select>
                     <mat-error>This field is required
                     </mat-error>
@@ -218,8 +229,15 @@
                     <h5 class="m-0 ">Cover</h5>
                     <mat-form-field>
                         <mat-select matInput formControlName="additionalCovers" autocomplete="true" class="form-control br-0">
-                            <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
-                                {{option.add_on}}</mat-option>
+                            <!-- <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
+                                {{option.add_on}}</mat-option> -->
+                                <mat-option value='15'>Earthquake</mat-option>
+                                <mat-option value='16'>Terrorism</mat-option>
+                                <mat-option value='17'>Rent for alternative accomodation</mat-option>
+                                <mat-option value='18'>Loss of rent</mat-option>
+                                <mat-option value='19'>Emergency purchases</mat-option>
+                                <mat-option value='20'>Keys & locks replacement cover</mat-option>
+                                <mat-option value='21'>Public liability</mat-option>
                         </mat-select>
                         <mat-error>This field is required
                         </mat-error>

@@ -60,7 +60,35 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId() ? AuthService.getAdvisorId() : this.data.advisorId;
-    this.teamMemberListGet();
+    this.getRtaList();
+
+  }
+
+  rtaList = [];
+
+  getRtaList() {
+    this.reconService.getRTListValues({})
+      .subscribe(res => {
+        if (res && res.length !== 0) {
+          res.forEach(element => {
+            if (element.name !== 'SUNDARAM' && element.name !== 'PRUDENT' && element.name !== 'NJ_NEW' && element.name !== 'NJ') {
+              this.rtaList.push({
+                name: element.name == 'FRANKLIN_TEMPLETON' ? 'FRANKLIN' : element.name,
+                value: element.id,
+                type: 'rta'
+              });
+            }
+          });
+          this.teamMemberListGet();
+        } else {
+          this.eventService.openSnackBar("Error In Fetching RTA List", "DISMISS");
+        }
+      });
+  }
+
+  getRtName(id) {
+    let obj = this.rtaList.find(c => c.value == id);
+    return obj.name;
   }
 
   handlingDataVariable() {
@@ -71,7 +99,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
     if (this.data.startRecon) {
       this.rtId = this.data.rtId;
-      this.isFranklinTab = (this.data.rtId === 3) ? true : false;
+      this.isFranklinTab = (this.getRtName(this.rtId) === "FRANKLIN_TEMPLETON") ? true : false;
 
       console.log('start recon is true::::');
       this.isLoading = true;
@@ -387,10 +415,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   exportToExcelSheet(value, element) {
     this.isTabDisabled = false;
+    this.isFranklinTab = this.getRtName(this.data.rtId) === 'FRANKLIN_TEMPLETON' ? true : false;
 
-    if (this.data.rtId === 3) {
-      this.isFranklinTab = true;
-    }
 
     // creation of excel sheet 
     let headerData = [
@@ -422,6 +448,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       'Amount Difference'
     ];
     if (this.aumList) {
+      let rtName = this.getRtName(this.data.rtId);
       this.aumList.forEach(element => {
         let data = [
           element.investorName ? element.investorName : '-',
@@ -429,7 +456,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           element.shemeName ? element.shemeName : '-',
           element.schemeCode ? element.schemeCode : '-',
           element.folioNumber ? element.folioNumber : '-',
-          (this.data.rtId === 1 ? 'cams' : (this.data.rtId === 2 ? 'karvy' : (this.data.rtId === 3 ? 'franklin' : ''))),
+          rtName,
           element.calculatedUnits ? element.calculatedUnits : '-',
           element.aumUnits ? element.aumUnits : '-',
           element.aumDate ? this.datePipe.transform(element.aumDate) : '-',
@@ -442,6 +469,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       ExcelService.exportExcel(headerData, header, excelData, footer, value);
     } else {
       if (this.didAumReportListGot && this.aumListReportValue.length !== 0) {
+        let rtName = this.getRtName(this.data.rtId);
         this.aumListReportValue.forEach(element => {
           let data = [
             element.investorName ? element.investorName : '-',
@@ -449,7 +477,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
             element.shemeName ? element.shemeName : '-',
             element.schemeCode ? element.schemeCode : '-',
             element.folioNumber ? element.folioNumber : '-',
-            (this.data.rtId === 1 ? 'cams' : (this.data.rtId === 2 ? 'karvy' : (this.data.rtId === 3 ? 'franklin' : ''))),
+            rtName,
             element.calculatedUnits ? element.calculatedUnits : '-',
             element.aumUnits ? element.aumUnits : '-',
             element.aumDate ? this.datePipe.transform(element.aumDate) : '-',

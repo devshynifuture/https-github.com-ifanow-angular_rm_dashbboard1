@@ -220,7 +220,6 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     );
   }
   updatePortFolioRes(data) {
-    console.log('updatePortFolio', data)
   }
   selectPlan(event, value) {
     this.planSection.forEach(element => {
@@ -229,7 +228,6 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       }
       element.advisorId = this.advisorId;
     });
-    console.log(this.planSection)
     var obj = this.planSection
     this.orgSetting.updatePlanSection(obj).subscribe(
       data => this.updatePlanSectionRes(data),
@@ -237,7 +235,6 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     );
   }
   updatePlanSectionRes(data) {
-    console.log('updatePlanSectionRes ==', data)
   }
   verifyEmail(value) {
     const dialogRef = this.dialog.open(OpenEmailVerificationComponent, {
@@ -262,7 +259,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     });
   }
   addEmailVerfifyRes(data) {
-    console.log(data)
+    this.eventService.openSnackBar("An email has been sent to your registered email address", "Dismiss")
     this.getEmailVerification()
   }
   deleteEmailModal(value, data) {
@@ -288,7 +285,6 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
         );
       },
       negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
       }
     };
 
@@ -352,7 +348,6 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   }
   getEmailTempalatRes(data) {
     if (data) {
-      console.log('emailTemplate', data)
       this.emailTemplateList = data
     } else {
       this.emailTemplateList = []
@@ -385,11 +380,9 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getEmailTemplate();
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
             this.getEmailTemplate()
           }
           rightSideDataSub.unsubscribe();

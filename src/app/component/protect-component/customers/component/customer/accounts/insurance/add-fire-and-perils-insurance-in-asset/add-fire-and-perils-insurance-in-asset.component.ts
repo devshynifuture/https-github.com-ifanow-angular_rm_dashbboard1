@@ -228,7 +228,7 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
         isClient: 0
       })]),
       name:[(this.dataForEdit ? this.dataForEdit.name : null)],
-      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId : null), [Validators.required]],
+      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId+'' : null), [Validators.required]],
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
       premium: [(this.dataForEdit ? this.dataForEdit.premiumAmount : null), [Validators.required]],
       insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : null), [Validators.required]],
@@ -323,7 +323,7 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
   }
   addNewAddOns(data) {
     this.addOnForm.push(this.fb.group({
-      additionalCovers :[data ? data.addOnId : ''],
+      additionalCovers :[data ? data.addOnId +'' : ''],
       sumAddOns:[data ? data.addOnSumInsured : ''] 
     }));
   }
@@ -338,7 +338,7 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
   /***owner***/
   addNewFeature(data) {
     this.planFeatureForm.push(this.fb.group({
-      planfeatures: [data ? data.policyFeatureId : ''],
+      planfeatures: [data ? data.policyFeatureId+'' : ''],
       sumInsured:[data ? data.featureSumInsured : '']
     }));
   }
