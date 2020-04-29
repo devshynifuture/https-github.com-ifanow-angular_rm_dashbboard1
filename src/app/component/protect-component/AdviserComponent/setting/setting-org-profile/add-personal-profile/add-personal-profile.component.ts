@@ -8,7 +8,7 @@ import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { Subject } from 'rxjs';
+import { Subject, ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -30,7 +30,7 @@ export class AddPersonalProfileComponent implements OnInit {
   isdCodes: Array<any> = [];
   /** control for the MatSelect filter keyword */
   filterCtrl: FormControl = new FormControl();
-  filteredIsdCodes:Array<any> = [];
+  filteredIsdCodes: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();
 
@@ -79,7 +79,7 @@ export class AddPersonalProfileComponent implements OnInit {
       data => {
         if (data) {
           this.isdCodes = data;
-          this.filteredIsdCodes = this.isdCodes.slice();
+          this.filteredIsdCodes.next(this.isdCodes.slice());
         }
       }, err => {
         this.event.showErrorMessage('Error');
@@ -195,12 +195,12 @@ export class AddPersonalProfileComponent implements OnInit {
     // get the search keyword
     let search = this.filterCtrl.value;
     if (!search) {
-      this.filteredIsdCodes = this.isdCodes.slice();
+      this.filteredIsdCodes.next(this.isdCodes.slice());
       return;
     } else {
       search = search.toLowerCase();
     }
     // filter the codes
-    this.filteredIsdCodes = this.isdCodes.filter(code => (code.code + code.countryCode).toLowerCase().indexOf(search) > -1)
+    this.filteredIsdCodes.next(this.isdCodes.filter(code => (code.code + code.countryCode).toLowerCase().indexOf(search) > -1))
   }
 }

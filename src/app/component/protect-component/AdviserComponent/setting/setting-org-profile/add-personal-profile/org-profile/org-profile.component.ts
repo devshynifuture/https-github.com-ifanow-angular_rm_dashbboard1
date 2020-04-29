@@ -8,7 +8,7 @@ import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { SettingsService } from '../../../settings.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PostalService } from 'src/app/services/postal.service';
-import { Subscription, Subject } from 'rxjs';
+import { Subscription, Subject, ReplaySubject } from 'rxjs';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { takeUntil } from 'rxjs/operators';
 
@@ -37,7 +37,9 @@ export class OrgProfileComponent implements OnInit {
   isdCodes: Array<any> = [];
   /** control for the MatSelect filter keyword */
   filterCtrl: FormControl = new FormControl();
-  filteredIsdCodes:Array<any> = [];
+  filterCountryCtrl: FormControl = new FormControl();
+  filteredIsdCodes: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
+  filteredCountryCodes: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();
 
@@ -70,6 +72,11 @@ export class OrgProfileComponent implements OnInit {
     this.getdataForm(this.inputData);
     // listen for search field value changes
     this.filterCtrl.valueChanges
+    .pipe(takeUntil(this._onDestroy))
+    .subscribe(() => {
+      this.filterCodes();
+    });
+    this.filterCountryCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
         this.filterCodes();
@@ -81,7 +88,8 @@ export class OrgProfileComponent implements OnInit {
       data => {
         if (data) {
           this.isdCodes = data;
-          this.filteredIsdCodes = this.isdCodes.slice();
+          this.filteredIsdCodes.next(this.isdCodes.slice());
+          this.filteredCountryCodes.next(this.isdCodes.slice());
         }
       }, err => {
         this.event.showErrorMessage('Error');
@@ -329,12 +337,27 @@ export class OrgProfileComponent implements OnInit {
     // get the search keyword
     let search = this.filterCtrl.value;
     if (!search) {
-      this.filteredIsdCodes = this.isdCodes.slice();
+      this.filteredIsdCodes.next(this.isdCodes.slice());
       return;
     } else {
       search = search.toLowerCase();
     }
     // filter the codes
-    this.filteredIsdCodes = this.isdCodes.filter(code => (code.code + code.countryCode).toLowerCase().indexOf(search) > -1)
+    this.filteredIsdCodes.next(this.isdCodes.filter(code => (code.code + code.countryCode).toLowerCase().indexOf(search) > -1))
+  }
+  protected filterCountryCodes() {
+    if (!this.isdCodes) {
+      return;
+    }
+    // get the search keyword
+    let search = this.filterCountryCtrl.value;
+    if (!search) {
+      this.filteredCountryCodes.next(this.isdCodes.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    // filter the codes
+    this.filteredCountryCodes.next(this.isdCodes.filter(code => (code.countryName).toLowerCase().indexOf(search) > -1))
   }
 }
