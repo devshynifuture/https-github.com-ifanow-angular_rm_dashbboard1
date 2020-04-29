@@ -58,6 +58,10 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   }
 
   getClientList(data) {
+    if (this.myControl.value.length == 0) {
+      this.showDefaultDropDownOnSearch = false;
+      return;
+    }
     if (this.myControl.value.length < 3) {
       return;
     }
