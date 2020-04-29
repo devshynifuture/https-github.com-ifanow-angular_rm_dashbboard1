@@ -191,7 +191,7 @@
                                 </mat-option>
                                 <mat-option value='' disabled>Select owner</mat-option>
                                 <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
-                                    {{singleClient.name}}
+                                    {{singleClient.fullName}}
                                 </mat-option>
                             </mat-select>
                             <mat-error class="f-12">This field is required
@@ -276,7 +276,7 @@
                                 </mat-option>
                                 <mat-option value='' disabled>Select owner</mat-option>
                                 <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
-                                    {{singleClient.name}}
+                                    {{singleClient.fullName}}
                                 </mat-option>
                             </mat-select>
                             <mat-error>This Field is required</mat-error>
@@ -789,7 +789,7 @@
                                 </mat-option>
                                 <mat-option value='' disabled>Select owner</mat-option>
                                 <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
-                                    {{singleClient.name}}
+                                    {{singleClient.fullName}}
                                 </mat-option>
                             </mat-select>
                             <mat-error>This field is required</mat-error>
@@ -812,7 +812,7 @@
                                 </mat-option>
                                 <mat-option value='' disabled>Select owner</mat-option>
                                 <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
-                                    {{singleClient.name}}
+                                    {{singleClient.fullName}}
                                 </mat-option>
                             </mat-select>
                             <mat-error>This field is required</mat-error>

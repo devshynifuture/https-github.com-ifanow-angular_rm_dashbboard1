@@ -9,6 +9,7 @@ import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.s
 export class DetailedViewMandateComponent implements OnInit {
   data;
   details: any;
+  transactionData:any;
   statusData = [
     {
       name: 'Pending authorization', checked: false, status: 1
@@ -38,6 +39,9 @@ export class DetailedViewMandateComponent implements OnInit {
     this.statusDetails.forEach(element => {
       (element.status <= data.status) ? element.checked = true : element.checked = false
     });
+  }
+  refresh(value){
+    console.log(value);
   }
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
