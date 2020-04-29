@@ -107,7 +107,7 @@ export class RealEstateComponent implements OnInit {
       this.datasource3.data = [];
       this.hideFilter = true;
     }
-    else if (data.realEstateList.length > 0) {
+    else if (data.assetList.length > 0) {
       console.log('getRealEstateRes', data);
       // data.realEstateList.forEach(element => {
       //   if (element.ownerList.length != 0) {
@@ -119,11 +119,11 @@ export class RealEstateComponent implements OnInit {
       //     }
       //   }
       // });
-      this.dataList = data.realEstateList;
-      this.datasource3.data = data.realEstateList;
+      this.dataList = data.assetList;
+      this.datasource3.data = data.assetList;
       this.datasource3.sort = this.sort;
       this.sumOfMarketValue = data.sumOfMarketValue;
-      this.sumOfpurchasedValue = data.sumOfpurchasedValue;
+      this.sumOfpurchasedValue = data.sumOfPurchaseValue;
     } else {
       this.noData = 'No schemes found';
       this.datasource3.data = [];
