@@ -53,15 +53,15 @@
                             <h5 class="roboto m-0">Portfolio</h5>
                         </div>
                         <div class="col-md-4 text-right"
-                            *ngIf="feedsData.portfolioData && feedsData.portfolioData.length > 0">
-                            <a class="viewBtn c-p text-primitive br-2 f-12" (click)="changeTab(2)"> View all </a>
+                            *ngIf="portFolioData && portFolioData.length > 0">
+                            <a class="viewBtn c-p text-primitive br-2 f-12" > View all </a>
                         </div>
                     </div>
     
     
                     <div class="scrollingDiv d-flex">
                         <!-- portfolio data present -->
-                        <div class="fundBox bg-white" *ngFor="let portData of feedsData.portfolioData">
+                        <div class="fundBox bg-white" *ngFor="let portData of portFolioData">
                             <div class="row">
                                 <div class="col-md-8  pr-0">
                                     <h5 class="roboto">{{portData.assetTypeString}}</h5>
@@ -101,7 +101,7 @@
     
                         <!-- portfolio data not present -->
                         <div class="fundBox bg-white"
-                            *ngIf="!feedsData.portfolioData || feedsData.portfolioData.length == 0">
+                            *ngIf="!portFolioData || portFolioData.length == 0">
                             <div class="row">
                                 <div class="col-md-8  pr-0">
                                     <h5 class="roboto">Mutual funds</h5>
@@ -144,8 +144,8 @@
                             <h5 class="roboto m-0">Goals</h5>
                         </div>
                         <div class="col-md-4 text-right"
-                            *ngIf="feedsData.portfolioData && feedsData.portfolioData.length > 0">
-                            <a class="viewBtn c-p text-primitive br-2 f-12" (click)="changeTab(3)">
+                            *ngIf="portFolioData && portFolioData.length > 0">
+                            <a class="viewBtn c-p text-primitive br-2 f-12" >
                                 View all
                             </a>
                         </div>
@@ -153,24 +153,24 @@
     
     
                     <div class="scrollingDiv d-flex ">
-                        <div class="goalsOverViewBox bg-white p-10" *ngFor="let goalsData of feedsData.goalsDataList">
+                        <div class="goalsOverViewBox bg-white p-10" *ngFor="let goal of goalsData">
                             <div class="row">
                                 <div class="col-md-5">
-                                    <img [src]="goalsData.imageSrc">
+                                    <img [src]="goal.imageSrc">
                                 </div>
                                 <div class="col-md-7">
                                     <h5 class="roboto f-500">Shreya’s higher education</h5>
                                     <p class="f-14 text-primitive">
-                                        {{goalsData.startYear}}{{goalsData.endYear ? ' - ' + goalsData.endYear : ''}}</p>
+                                        {{goal.startYear}}{{goal.endYear ? ' - ' + goal.endYear : ''}}</p>
     
                                     <div class="row">
                                         <div class="col-md-6">
                                             <p class="f-12 l-18 text-primitive m-0">GOAL VALUE</p>
-                                            <p>₹<span appFormatNumber>{{goalsData.goalValue}}</span></p>
+                                            <p>₹<span appFormatNumber>{{goal.goalValue}}</span></p>
                                         </div>
                                         <div class="col-md-6">
                                             <p class="f-12 l-18 text-primitive m-0">ACHIEVED</p>
-                                            <p>₹<span appFormatNumber>{{goalsData.achieved}}</span></p>
+                                            <p>₹<span appFormatNumber>{{goal.achieved}}</span></p>
                                         </div>
                                     </div>
     
@@ -185,11 +185,10 @@
                         </div>
     
                         <!-- no data present -->
-                        <div class="goalsOverViewBox bg-white p-10"
-                            *ngIf="!feedsData.goalsData || feedsData.goalsData.length == 0">
+                        <div class="goalsOverViewBox bg-white p-10">
                             <div class="row">
                                 <div class="col-md-5">
-                                    <img src="/assets/images/svg/goals-people.svg">
+                                    <img [src]="goal.imageSrc">
                                 </div>
                                 <div class="col-md-7">
                                     <h5 class="roboto f-500">Shreya’s higher education</h5>
@@ -198,11 +197,11 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <p class="f-12 l-18 text-primitive m-0">GOAL VALUE</p>
-                                            <p>₹48,13,000</p>
+                                            <p>₹<span appFormatNumber>{{goal.goalValue | number : '0.0-2'}}</span></p>
                                         </div>
                                         <div class="col-md-6">
                                             <p class="f-12 l-18 text-primitive m-0">ACHIEVED</p>
-                                            <p>₹14,25,000</p>
+                                            <p>₹<span appFormatNumber>{{goal.goalValue | number : '0.0-2'}}</span></p>
                                         </div>
                                     </div>
     
@@ -211,7 +210,6 @@
     
                                         </div>
                                     </div>
-    
                                 </div>
                             </div>
                         </div>
@@ -231,7 +229,7 @@
                             <div class="bg-white activityBox text-center">
                                 <h5 class="m-0 roboto">Advice awaiting your consent</h5>
                                 <p class="f-12 text-primitive">last 30 days</p>
-                                <h3 class="text-danger m-0 f-22">{{feedsData.advice?.consent || 0}}</h3>
+                                <h3 class="text-danger m-0 f-22">{{adviseData?.consent || 0}}</h3>
                             </div>
                         </div>
     
@@ -239,7 +237,7 @@
                             <div class="bg-white activityBox text-center">
                                 <h5 class="m-0 roboto">Action plans in process</h5>
                                 <p class="f-12 text-primitive">currently</p>
-                                <h3 class="text-primary m-0 f-22">{{feedsData.advice?.progress || 0}}</h3>
+                                <h3 class="text-primary m-0 f-22">{{adviseData?.progress || 0}}</h3>
                             </div>
                         </div>
     
@@ -249,7 +247,7 @@
                                 </h5>
                                 <p class="f-12 text-primitive">current + upcoming</p>
                                 <h3 class="text-primary m-0 f-22">₹<span
-                                        appFormatNumber>{{feedsData.advice?.deployed}}</span></h3>
+                                        appFormatNumber>{{adviseData?.deployed}}</span></h3>
                             </div>
                         </div>
                     </div>
@@ -263,7 +261,7 @@
                         </div>
                     </div>
     
-                    <div class="row" *ngIf="!feedsData.documents || feedsData.documents.length == 0">
+                    <div class="row" *ngIf="!documentVault || documentVault.length == 0">
                         <div class="col-md-12">
                             <div class="bg-white vaultbBox">
                                 <div class="row">
@@ -283,8 +281,8 @@
                         </div>
                     </div>
     
-                    <div class="row" *ngIf="feedsData.documents && feedsData.documents.length > 0">
-                        <div class="col-md-12" *ngFor="let docs of feedsData.documents">
+                    <div class="row" *ngIf="documentVault && documentVault.length > 0">
+                        <div class="col-md-12" *ngFor="let docs of documentVault">
                             <div class="bg-white vaultbBox">
                                 <div class="row">
                                     <div class="col-md-7 pr-0">
@@ -307,7 +305,7 @@
                 </div>
     
                 <!-- insurance -->
-                <div class="wrapperBox" *ngIf="feedsData.insurance && feedsData.insurance.length > 0">
+                <div class="wrapperBox" *ngIf="recentTransactions.length > 0">
                     <div class="row">
                         <div class="col-md-8 d-flex align-items-center">
                             <h5 class="roboto m-0">Insurance</h5>
@@ -317,7 +315,7 @@
                         </div>
                     </div>
     
-                    <div class="scrollingDiv d-flex" *ngFor="let inc of feedsData.insurance">
+                    <div class="scrollingDiv d-flex" *ngFor="let inc of recentTransactions">
                         <div class="insuranceListBox bg-white">
                             <p class="roboto m-0 f-500">{{inc.insuranceType}}</p>
                             <p class="roboto mb-10">{{inc.insuredFamily}}</p>
@@ -343,7 +341,7 @@
                 </div>
     
                 <!-- recent transactions -->
-                <div class="wrapperBox" *ngIf="feedsData.recentTransactions && feedsData.recentTransactions.length > 0">
+                <div class="wrapperBox" *ngIf="mfData.length > 0">
                     <div class="row">
                         <div class="col-md-8 d-flex align-items-center">
                             <h5 class="roboto m-0">Recent transactions</h5>
@@ -354,7 +352,7 @@
                     </div>
     
                     <div class="scrollingDiv d-flex">
-                        <div class="transactionsBox bg-white col-md-8" *ngFor="let tnx of feedsData.recentTransactions">
+                        <div class="transactionsBox bg-white col-md-8" *ngFor="let tnx of mfData">
                             <div class="row">
                                 <div class="col-md-8">
                                     <p class="mb-5">{{tnx.fwTransactionType}}</p>
@@ -386,14 +384,15 @@
                     </div>
                 </div>
     
-                <div class="wrapperBox" *ngIf="riskProfileData">
+                <!-- risk profile -->
+                <div class="wrapperBox" *ngIf="riskProfile.length > 0">
                     <div class="row">
                         <div class="col-md-12 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0">Risk profile</h5>
                         </div>
                     </div>
     
-                    <div class="riskProfileBox bg-white">
+                    <div class="riskProfileBox bg-white" *ngFor="let riskProfileData of riskProfile">
                         <div class="row">
                             <div class="col-md-4 text-center">
                                 <p class="f-16 roboto mb-8 f-500">Your risk score</p>
