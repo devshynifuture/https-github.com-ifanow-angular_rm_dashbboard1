@@ -412,7 +412,7 @@
                         </div>
                     </div>
 
-                    <div class="wrapperBox" *ngIf="feedsData.riskProfile">
+                    <div class="wrapperBox" *ngIf="riskProfileData">
                         <div class="row">
                             <div class="col-md-12 mb-10 d-flex align-items-center">
                                 <h5 class="roboto m-0">Risk profile</h5>
@@ -424,16 +424,16 @@
                                 <div class="col-md-4 text-center">
                                     <p class="f-16 roboto mb-8 f-500">Your risk score</p>
                                     <div class="numberBox">
-                                        <h1 class="f-48 mb-12"> {{feedsData.riskProfile.score}} </h1>
-                                        <p class="f-12 m-0 text-primitive">Max: {{feedsData.riskProfile.maxScore}}</p>
+                                        <h1 class="f-48 mb-12"> {{riskProfileData.riskAssessmentScore}} </h1>
+                                        <p class="f-12 m-0 text-primitive">Max: {{riskProfileData.maxScore}}</p>
                                     </div>
                                 </div>
 
                                 <div class="col-md-8 text-center">
                                     <h5 class="roboto f-500">
-                                        Your risk profile: {{feedsData.riskProfile.type}}
+                                        Your risk profile: {{riskProfileData.type}}
                                     </h5>
-                                    <p>{{feedsData.riskProfile.description}}</p>
+                                    <p>{{riskProfileData.description}}</p>
                                 </div>
 
                             </div>

@@ -132,8 +132,10 @@
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                                 <mat-select formControlName="country" class="form-control br-0" id="sel1">
-                                    <mat-option value="" disabled>Select Country</mat-option>
-                                    <mat-option [value]="code.countryName" *ngFor="let code of isdCodes">
+                                    <mat-option>
+                                      <ngx-mat-select-search [formControl]="filterCtrl"></ngx-mat-select-search>
+                                    </mat-option>
+                                    <mat-option [value]="code.countryName" *ngFor="let code of filteredIsdCodes">
                                         {{code.countryName}}</mat-option>
                                 </mat-select>
                                 <mat-error class=" pt-4">
