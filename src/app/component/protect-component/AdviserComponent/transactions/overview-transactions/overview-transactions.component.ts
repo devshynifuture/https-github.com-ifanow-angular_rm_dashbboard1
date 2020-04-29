@@ -28,6 +28,9 @@ export class OverviewTransactionsComponent implements OnInit {
   totalUccCount: any;
   totalInvestorWithoutMandate: any;
   isLoading = false
+  pendingCount: any;
+  rejectCount: any;
+  acceptCount: any;
 
 
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject,
@@ -155,6 +158,15 @@ export class OverviewTransactionsComponent implements OnInit {
         this.isLoading = false
         console.log('getOverviewMandate data',data);
         this.totalInvestorWithoutMandate = data.totalInvestorWithoutMandate
+        data.statusList.forEach(element => {
+          if(element.status == 1){
+            this.pendingCount = element.count
+          }else if(element.status == 2){
+            this.acceptCount = element.count
+          }else if(element.status == 3){
+            this.rejectCount = element.count
+          }
+        });
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');

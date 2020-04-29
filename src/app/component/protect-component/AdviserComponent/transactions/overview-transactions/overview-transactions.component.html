@@ -5,7 +5,7 @@
                 <div class="col-md-8 p-0">
                     <div class="row ">
                         <div class="col-md-6 mb-16 pl-0">
-                            <div class="bg-white bPrimitive p-9">
+                            <!-- <div class="bg-white bPrimitive p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
                                         <h5 class="f-500 roboto">KYC</h5>
@@ -37,7 +37,7 @@
                                     </div>
                                 </div>
 
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="col-md-6 mb-16 pl-0" [appSkeletonLoading]="isLoading" appSkeletonLoading
@@ -128,7 +128,10 @@
                                 </div>
                                 <div class="borderTransactions">
                                     <p class="f-12 mb-8 roboto">TOTAL MANDATES REGISTERED</p>
-                                    <h4 class="f-30 text-primary mb-4">267 </h4>
+                                    <h4 class="f-30 text-primary mb-4 relClass">
+                                        <div [ngClass]="{'height23': isLoading}" class="bar">{{acceptCount}}
+                                        </div>
+                                    </h4>
                                 </div>
                                 <div class="borderTransactions">
                                     <p class="f-12 mb-8 roboto">INVESTORS WITHOUT MANDATES</p>
@@ -142,11 +145,19 @@
                                 <div class="row">
                                     <div class="col-md-6 br-primitive">
                                         <p class="f-12 roboto">PENDING</p>
-                                        <h4 class="roboto f-300 f-30">25</h4>
+                                        <h4 class="roboto f-300 f-30 relClass">
+                                            <div [ngClass]="{'height23': isLoading}" class="bar">
+                                                {{pendingCount}}
+                                            </div>
+                                        </h4>
                                     </div>
                                     <div class="col-md-6">
                                         <p class="f-12 roboto">REJECTIONS</p>
-                                        <h4 class="roboto f-300 f-30">12</h4>
+                                        <h4 class="roboto f-300 f-30 relClass">
+                                            <div [ngClass]="{'height23': isLoading}" class="bar">
+                                                {{rejectCount}}
+                                            </div>
+                                        </h4>
                                     </div>
                                 </div>
                             </div>
