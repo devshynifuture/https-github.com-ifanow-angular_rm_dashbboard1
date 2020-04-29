@@ -262,7 +262,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
       policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : null, [Validators.required]],
       policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : null, [Validators.required]],
       cumulativeBonus: [this.dataForEdit ? this.dataForEdit.cumulativeBonus : null],
-      bonusType: [this.dataForEdit ? this.dataForEdit.cumulativeBonusRupeesOrPercent + '' : null],
+      bonusType: [this.dataForEdit ? this.dataForEdit.cumulativeBonusRupeesOrPercent  + '' : '1'],
       planfeatures: [(this.dataForEdit ? this.dataForEdit.policyFeatureId + '': null)],
       exclusion: [this.dataForEdit ? this.dataForEdit.exclusion :null],
       inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : null],
@@ -356,7 +356,24 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
   }
   ngOnInit() {
   }
-
+  changeSign(event,value,formValue) {
+    this.personalAccidentForm.get(value).setValue('');
+    if(event == '2'){
+      if(parseInt(formValue) > 100){
+        this.personalAccidentForm.get(value).setValue('');
+      }
+    }
+}
+changeTheInput(form1,form2,event) {
+  if(form1 == '2'){
+    if (parseInt(event.target.value) > 100) {
+        this.personalAccidentForm.get(form2).setValue('100');
+    }
+  }else{
+    this.personalAccidentForm.get(form2).setValue(event.target.value);
+  }
+ 
+}
   savePersonalAccident() {
     let memberList = [];
     let finalMemberList = this.personalAccidentForm.get('InsuredMemberForm') as FormArray

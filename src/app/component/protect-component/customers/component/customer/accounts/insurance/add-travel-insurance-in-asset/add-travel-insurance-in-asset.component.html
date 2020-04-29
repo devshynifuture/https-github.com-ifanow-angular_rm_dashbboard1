@@ -64,9 +64,13 @@
         </div>
         <div class="col-md-4 pr-0 form-group">
             <mat-form-field>
-                <mat-select matInput formControlName="PlanType" autocomplete="true" class="form-control br-0">
-                    <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
-                        {{option.policy_type}}</mat-option>
+                <mat-select matInput formControlName="PlanType" autocomplete="true" #planTypeRef class="form-control br-0">
+                    <!-- <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
+                        {{option.policy_type}}</mat-option> -->
+                    <mat-option value='9'> Single Trip Travel Insurance Plan </mat-option>
+                    <mat-option value='10'>Multi-trip Travel Insurance Plan</mat-option>
+                    <mat-option value='11'>Family Floater Travel Insurance Plan</mat-option> 
+                    <mat-option value='12'>Student Travel Insurance Plan</mat-option> 
                 </mat-select>
                 <mat-error>This field is required
                 </mat-error>
@@ -74,10 +78,10 @@
         </div>
         <div class="col-md-3 form-group">
             <mat-form-field>
-                <mat-select matInput formControlName="planDetails" #frequency autocomplete="off" class="form-control br-0">
-                    <mat-option value='0'>Standard</mat-option>
-                    <mat-option value='1'>Top up</mat-option>
-                    <mat-option value='2'>Super top up</mat-option>
+                <mat-select matInput formControlName="planDetails" #planDetails autocomplete="off" class="form-control br-0">
+                    <mat-option value='0'>Individual</mat-option>
+                    <mat-option value='1'>Family floater</mat-option>
+                    <!-- <mat-option value='2'>Super top up</mat-option> -->
                 </mat-select>
                 <mat-error>This field is required
                 </mat-error>
@@ -153,7 +157,7 @@
         </div>
     </div>
 
-    <div class="row pt-32">
+    <div class="row pt-32" >
         <div class="col-md-4 pr-0 text-right">
             <h5 class="m-0 pt-20 ">Plan name</h5>
         </div>
@@ -166,7 +170,7 @@
         </div>
     </div>
 
-    <div class="row pt-32">
+    <div class="row pt-32" *ngIf="planDetails.value == '1'">
         <div class="col-md-4 pr-0 text-right">
             <h5 class="m-0 pt-20 ">Sum insured</h5>
         </div>
@@ -247,8 +251,25 @@
                 <div class="col-md-5 form-group">
                     <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select matInput formControlName="planfeatures" autocomplete="true" class="form-control br-0">
-                            <mat-option *ngFor="let option of policyFeature ;index as i" [value]="option.id">
-                                {{option.type}}</mat-option>
+                            <!-- <mat-option *ngFor="let option of policyFeature ;index as i" [value]="option.id">
+                                {{option.type}}</mat-option> -->
+                    <mat-option value='15'>Emergency Medical Benefits</mat-option>
+                    <mat-option value='16'>Accidental Death & Permanent Disablement </mat-option>
+                    <mat-option value='17'>Emergency Dental Treatment</mat-option>
+                    <mat-option value='18'>Hospital Cash</mat-option>
+                    <mat-option value='19'>Loss of Baggage & Personal Documents</mat-option>
+                    <mat-option value='20'>Medical Evacuation</mat-option>
+                    <mat-option value='21'>Repatriation</mat-option>
+                    <mat-option value='22'>Loss of Checked Baggage</mat-option>
+                    <mat-option value='23'>Delay of Checked Baggage</mat-option>
+                    <mat-option value='24'>Accidental Death</mat-option>
+                    <mat-option value='25'>Financial Emergency Assistance</mat-option>
+                    <mat-option value='26'>Personal Liability</mat-option>
+                    <mat-option value='27'> Flight Delay</mat-option>
+                    <mat-option value='28'>Hijack Distress Allowance</mat-option>
+                    <mat-option value='29'>Hotel Accommodation</mat-option>
+                    <mat-option value='14'>Trip cancellation and interruptions</mat-option>
+                    <mat-option value='30'>Others</mat-option>
                         </mat-select>
                         <mat-error>This field is required
                         </mat-error>

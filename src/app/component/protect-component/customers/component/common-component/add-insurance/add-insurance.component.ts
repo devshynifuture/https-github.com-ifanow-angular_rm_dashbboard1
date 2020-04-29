@@ -111,12 +111,12 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     policyNum: [, [Validators.required]],
     commencementDate: [, [Validators.required]],
     sumAssured: [, [Validators.required]],
-    premiumDetailsAmount: [, [Validators.required]],
+    premiumDetailsAmount: [, [Validators.required, Validators.min(100)]],
     premiumDetailsFrequency: [, [Validators.required]],
     tenureDetailsPolicy: [, [Validators.required]],
     premiumPayingTerm: [, [Validators.required]],
     policyStatus: [, [Validators.required]],
-    policyStatusLastUnpaid: [, [Validators.required]],
+    policyStatusLastUnpaid: [''],
     getCoOwnerName: this.fb.array([this.fb.group({
       name: ['', [Validators.required]],
       share: [0,],
@@ -309,7 +309,16 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   ngOnInit() {
     this.addMoreFlag = false;
   }
-
+  onChange(value,event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = '100';
+      if(value == 'assumedRate'){
+        this.keyDetailsForm.get(value).setValue(event.target.value);
+      }else{
+        this.lifeInsuranceForm.get(value).setValue(event.target.value);
+      }
+    }
+  }
   addTransaction() {
     this.cashFlowEntries.push(this.fb.group({
       cashFlowType: null,
@@ -343,7 +352,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       this.lifeInsuranceForm.controls.sumAssured.setValue(this.editInsuranceData.sumAssured)
       this.lifeInsuranceForm.controls.premiumDetailsAmount.setValue(this.editInsuranceData.premiumAmount)
       this.lifeInsuranceForm.controls.premiumDetailsFrequency.setValue(String(this.editInsuranceData.frequency))
-      this.lifeInsuranceForm.controls.tenureDetailsPolicy.setValue(String(this.editInsuranceData.policyTenure))
+      this.lifeInsuranceForm.controls.tenureDetailsPolicy.setValue(this.editInsuranceData.policyTenure)
       this.lifeInsuranceForm.controls.premiumPayingTerm.setValue(this.editInsuranceData.premiumPayingTerm)
       this.lifeInsuranceForm.controls.policyStatus.setValue(String(this.editInsuranceData.policyStatusId))
       this.lifeInsuranceForm.controls.policyStatusLastUnpaid.setValue(this.editInsuranceData.lastUnpaidPremium)

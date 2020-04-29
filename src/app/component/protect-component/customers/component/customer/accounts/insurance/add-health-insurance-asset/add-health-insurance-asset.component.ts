@@ -249,9 +249,9 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
       policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : null, [Validators.required]],
       policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : null, [Validators.required]],
       copay: [(this.dataForEdit ? this.dataForEdit.copay : null)],
-      copayType: [this.dataForEdit ? this.dataForEdit.copayRupeesOrPercent + '' : null],
+      copayType: [this.dataForEdit ? this.dataForEdit.copayRupeesOrPercent + '' : '1'],
       cumulativeBonus: [this.dataForEdit ? this.dataForEdit.cumulativeBonus : null],
-      bonusType: [this.dataForEdit ? this.dataForEdit.cumulativeBonusRupeesOrPercent + '' : null],
+      bonusType: [this.dataForEdit ? this.dataForEdit.cumulativeBonusRupeesOrPercent + '' : '1'],
       exclusion: [this.dataForEdit ? this.dataForEdit.exclusion : null],
       inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : null],
       tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],
@@ -330,7 +330,24 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
   }
   ngOnInit() {
   }
-
+  changeSign(event,value,formValue) {
+      this.healthInsuranceForm.get(value).setValue('');
+      if(event == '2'){
+        if(parseInt(formValue) > 100){
+          this.healthInsuranceForm.get(value).setValue('');
+        }
+      }
+  }
+  changeTheInput(form1,form2,event) {
+    if(form1 == '2'){
+      if (parseInt(event.target.value) > 100) {
+          this.healthInsuranceForm.get(form2).setValue('100');
+      }
+    }else{
+      this.healthInsuranceForm.get(form2).setValue(event.target.value);
+    }
+   
+  }
   getFamilyData(value, data) {
 
     data.forEach(element => {
