@@ -21,7 +21,7 @@
     "bundlewatch": "bundlewatch",
     "compress": "npx gzipper --verbose ./dist/myplanner ./gzipped",
     "stats": "webpack-bundle-analyzer dist/myplanner/stats-es2015.json",
-    "hmr": "ng serve --port 4200 --poll=2000 --configuration hmr"
+    "hmr": "ng serve --port 4201 --poll=2000 --configuration hmr"
   },
   "private": true,
   "dependencies": {

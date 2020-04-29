@@ -12,6 +12,7 @@ import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } fr
 import { EnumDataService } from '../../../services/enum-data.service';
 import { SettingsService } from '../../protect-component/AdviserComponent/setting/settings.service';
 import { UtilService } from 'src/app/services/util.service';
+import { PeopleService } from '../../protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-leftsidebar',
@@ -49,38 +50,32 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     protected dynamicComponentService: DynamicComponentService,
     private enumDataService: EnumDataService,
     private settingsService: SettingsService,
-    private utilService: UtilService) {
+    private utilService: UtilService, private peopleService: PeopleService) {
     /*constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
       protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
       private authService: AuthService) {*/
     super(eventService, subinject, dynamicComponentService);
   }
 
-  serachClientData(data) {
-    this.getClientSubscriptionList();
-  }
-
-  getClientSubscriptionList() {
+  getClientList(data) {
+    if (this.myControl.value.length < 3) {
+      return;
+    }
     const obj = {
-      id: this.advisorId
+      advisorId: this.advisorId,
+      displayName: this.myControl.value
     };
-    this.subService.getSubscriptionClientsList(obj).subscribe(
+    this.peopleService.getClientFamilyMemberList(obj).subscribe(
       data => this.getClientListResponse(data)
     );
   }
 
   getClientListResponse(data) {
-    this.clientList = data;
-    this.myControl.setValue(data);
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => typeof value == 'string' ? value : value.name),
-      map(name => name ? this._filter(name) : this.clientList.slice())
-    );
-
     if (data) {
-      this.showDefaultDropDownOnSearch = false;
-    } else {
+      this.clientList = data;
+      this.showDefaultDropDownOnSearch = false
+    }
+    else {
       this.showDefaultDropDownOnSearch = true;
     }
   }
@@ -101,6 +96,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   }
 
   selectClient(singleClientData) {
+    this.myControl.setValue(singleClientData.displayName)
     this.ngZone.run(() => {
       this.router.navigate(['customer', 'detail', 'account', 'assets'], { state: { ...singleClientData } });
     });
@@ -112,7 +108,6 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     this.onResize();
     this.userInfo = AuthService.getUserInfo();
     this.myControl = new FormControl();
-    this.getClientSubscriptionList();
     this.enumDataService.getDataForTaxMasterService();
     this.getOrgProfiles();
     this.getPersonalProfiles();
@@ -154,16 +149,6 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
         // this.utilService.loader(-1);
       }
     );
-  }
-
-  private _filter(name: string): Client[] {
-    const filterValue = name.toLowerCase();
-
-    return this.clientList.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
-  }
-
-  displayFn(client?: Client): string | undefined {
-    return client ? client.name : undefined;
   }
 
   showMainNavWrapper() {
