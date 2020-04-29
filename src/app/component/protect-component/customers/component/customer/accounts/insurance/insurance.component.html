@@ -18,9 +18,10 @@
                     </div>
                 </li>
             </ul>
+            <!-- toggle('generalInsurance'); -->
             <ul class="d-block">
                 <li class="pb-8 c-p" [ngClass]="{'bg-grey lt':generalInsuranceFlag}">
-                    <div (click)="toggle('generalInsurance');getInsuranceTypeData(2,0)" class="row">
+                    <div (click)="getInsuranceTypeData(2,0)" class="row">
                         <div class="col-md-11 p-0 f-700">GENERAL INSURANCE</div>
                         <div class="col-md-1 p-0 text-custom text-center">
                             {{(generalInsuranceCount) ? generalInsuranceCount : 0}}</div>

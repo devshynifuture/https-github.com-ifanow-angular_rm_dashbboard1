@@ -214,6 +214,10 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
     else {
       this.dataForEdit = data.data;
       this.id = this.dataForEdit.id;
+      if (this.dataForEdit.addOns.length > 0) {
+        this.addOns.addOnId = this.dataForEdit.addOns[0].addOnId;
+        this.addOns.addOnSumInsured = this.dataForEdit.addOns[0].addOnSumInsured;
+      }
       this.flag = "EDIT";
     }
     this.critialIllnessForm = this.fb.group({
@@ -226,7 +230,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
         isClient: 0
       })]),
       name:[(this.dataForEdit ? this.dataForEdit.name : null)],
-      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId : null), [Validators.required]],
+      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId +'' : null), [Validators.required]],
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
       insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : null), [Validators.required]],
       planeName: [(this.dataForEdit ? this.dataForEdit.planName :null), [Validators.required]],
@@ -234,9 +238,9 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
       policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : null, [Validators.required]],
       policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : null, [Validators.required]],
       cumulativeBonus: [this.dataForEdit ? this.dataForEdit.cumulativeBonus : null],
-      bonusType: [this.dataForEdit ? this.dataForEdit.cumulativeBonusRupeesOrPercent + '' : null],
-      additionalCovers: [this.dataForEdit ? this.dataForEdit.addOns[0].addOnId : null],
-      coversAmount: [this.dataForEdit ? this.dataForEdit.addOns[0].addOnSumInsured : null],
+      bonusType: [this.dataForEdit ? this.dataForEdit.cumulativeBonusRupeesOrPercent + '' : '1'],
+      additionalCovers: [this.dataForEdit ?  this.addOns.addOnId + '' : null],
+      coversAmount: [this.dataForEdit ? this.addOns.addOnSumInsured + '' : null],
       exclusion: [this.dataForEdit ? this.dataForEdit.exclusion :null],
       inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : null],
       tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],
@@ -351,6 +355,24 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
   openOptionField() {
     (this.addMoreFlag) ? this.addMoreFlag = false : this.addMoreFlag = true;
   }
+  changeSign(event,value,formValue) {
+    this.critialIllnessForm.get(value).setValue('');
+    if(event == '2'){
+      if(parseInt(formValue) > 100){
+        this.critialIllnessForm.get(value).setValue('');
+      }
+    }
+}
+changeTheInput(form1,form2,event) {
+  if(form1 == '2'){
+    if (parseInt(event.target.value) > 100) {
+        this.critialIllnessForm.get(form2).setValue('100');
+    }
+  }else{
+    this.critialIllnessForm.get(form2).setValue(event.target.value);
+  }
+ 
+}
   getFamilyMemberList() {
     const obj = {
       advisorId: this.advisorId,
