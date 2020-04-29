@@ -782,5 +782,8 @@ export class CustomerService {
   getRiskProfile(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FEED_RISK_PROFILE, data);
   }
+  getRecentTransactions(data) {
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_FEED_RECENT_TRANSACTIONS, data, 1);
+  }
 }
 
