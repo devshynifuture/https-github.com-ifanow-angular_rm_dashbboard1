@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
+import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-detailed-view-mandate',
@@ -9,6 +9,21 @@ import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.ser
 export class DetailedViewMandateComponent implements OnInit {
   data;
   details: any;
+  statusData = [
+    {
+      name: 'Pending authorization', checked: false, status: 1
+    },
+    {
+      name: 'Form uploaded', checked: false, status: 4
+    },
+    {
+      name: 'Accpted authorization', checked: false, status: 2
+    },
+    {
+      name: 'Rejected authorization', checked: false, status: 3
+    }
+  ]
+  statusDetails: any;
 
   constructor(private subInjectService: SubscriptionInject) {
   }
@@ -16,9 +31,16 @@ export class DetailedViewMandateComponent implements OnInit {
   ngOnInit() {
     this.details = this.data;
     console.log('mandateDetails', this.data);
+    this.getDataStatus(this.statusData)
+  }
+  getDataStatus(data) {
+    this.statusDetails = data
+    this.statusDetails.forEach(element => {
+      (element.status <= data.status) ? element.checked = true : element.checked = false
+    });
   }
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
 }

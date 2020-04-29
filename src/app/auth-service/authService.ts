@@ -54,6 +54,11 @@ export class AuthService {
     let clientDataString = localStorage.getItem('clientData');
     return clientDataString ? JSON.parse(clientDataString) : undefined;
   }
+  static getProfileDetails() {
+    let clientDataString = localStorage.getItem('profileData');
+    return clientDataString ? JSON.parse(clientDataString) : undefined;
+  }
+
 
   static getClientId() {
     const clientData = this.getClientData();
@@ -122,6 +127,12 @@ export class AuthService {
     localStorage.setItem('clientData', JSON.stringify(clientData));
 
     console.log('setClientData : ', clientData);
+  }
+  setProfileDetails(profileData) {
+    sessionStorage.setItem('profileData', JSON.stringify(profileData));
+    localStorage.setItem('profileData', JSON.stringify(profileData));
+
+    console.log('setClientData : ', profileData);
   }
 
   static setSubscriptionUpperSliderData(data) {

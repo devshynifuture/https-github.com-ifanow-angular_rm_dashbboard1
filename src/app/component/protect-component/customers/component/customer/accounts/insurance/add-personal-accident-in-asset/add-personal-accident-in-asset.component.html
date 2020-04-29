@@ -81,7 +81,8 @@
                     <div class="form-group mb-0">
                         <label class="f-16 roboto">Sum insured</label>
                         <mat-form-field class="iconRupess">
-                            <input matInput type="number" formControlName="sumAssured" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
+                            <input matInput type="number" formControlName="sumAssured" #sumAssured [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="true" [maxLength]="8" class="form-control rupess br-0">
+                            <mat-hint align="end" class="f-12">{{sumAssured.value.length}}/8</mat-hint>
                             <mat-error>This field is required
                             </mat-error>
                         </mat-form-field>
@@ -92,8 +93,9 @@
                         <label class="f-16 roboto">TTD sum insured</label>
                         <mat-form-field>
                             <input matInput type="number" formControlName="ttdSumInsured"
-                                [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #ttdAssured
-                                autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
+                                [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #ttdSumInsured
+                                autocomplete="true" [maxLength]="8" class="form-control rupess br-0">
+                                <mat-hint align="end" class="f-12">{{ttdSumInsured.value.length}}/8</mat-hint>
                             <mat-error>This field is required
                             </mat-error>
                         </mat-form-field>
@@ -113,7 +115,8 @@
         </div>
         <div class="col-md-3 form-group">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input class="form-control" matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="policyNum" #policynumber appInputValueValidation autocomplete="off" class="form-control br-0" placeholder="Enter Policy number">
+                <input class="form-control" matInput type="text" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="20" formControlName="policyNum" #policyNum appInputValueValidation autocomplete="off" class="form-control br-0" placeholder="Enter Policy number">
+                <mat-hint align="end" class="f-12">{{policyNum.value.length}}/20</mat-hint>
                 <mat-error>This field is required
                 </mat-error>
             </mat-form-field>
@@ -126,7 +129,8 @@
         </div>
         <div class="col-md-5 form-group">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="text" [maxLength]="30" formControlName="insurerName" #insureerName appInputValueValidation autocomplete="off" class="form-control br-0" placeholder="Enter Name of insurer">
+                <input matInput type="text" [maxLength]="40" formControlName="insurerName" #insurerName appInputValueValidation autocomplete="off" class="form-control br-0" placeholder="Enter Name of insurer">
+                <mat-hint align="end" class="f-12">{{insurerName.value.length}}/40</mat-hint>
                 <mat-error>This field is required
                 </mat-error>
             </mat-form-field>
@@ -139,7 +143,8 @@
         </div>
         <div class="col-md-5 form-group">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="text" [maxLength]="30" formControlName="planeName" #planName appInputValueValidation autocomplete="off" class="form-control br-0" placeholder="Enter Plan name">
+                <input matInput type="text" [maxLength]="40" formControlName="planeName" #planName appInputValueValidation autocomplete="off" class="form-control br-0" placeholder="Enter Plan name">
+                <mat-hint align="end" class="f-12">{{planName.value.length}}/40</mat-hint>
                 <mat-error>This field is required
                 </mat-error>
             </mat-form-field>
@@ -153,7 +158,8 @@
         </div>
         <div class="col-md-3 form-group iconRupess">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="number" formControlName="premium" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #premiumdetails autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
+                <input matInput type="number" formControlName="premium" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #premium autocomplete="true" [maxLength]="8" class="form-control rupess br-0">
+                <mat-hint align="end" class="f-12">{{premium.value.length}}/8</mat-hint>
                 <mat-error>This field is required
                 </mat-error>
             </mat-form-field>
@@ -207,9 +213,11 @@
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-20 ">Cumulative bonus</h5>
             </div>
-            <div class="col-md-3 form-group ">
+            <div class="col-md-3 form-group " [ngClass]="personalAccidentForm.controls.bonusType.value == '1' ? 'iconRupess': 'iconPetage'">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput type="number" formControlName="cumulativeBonus" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #premiumdetails autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
+                    <input matInput type="number" formControlName="cumulativeBonus" (keyup)="changeTheInput(bonusType.value,'cumulativeBonus',$event)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #cumulativeBonus autocomplete="true" [maxLength]="8" class="form-control br-0" 
+                    [ngClass]="personalAccidentForm.controls.bonusType.value == '1' ? 'rupess': 'percentage'">
+                    <mat-hint align="end" *ngIf="personalAccidentForm.controls.bonusType.value == '1'" class="f-12">{{cumulativeBonus.value.length}}/8</mat-hint>
                     <mat-error>This field is required
                     </mat-error>
                 </mat-form-field>
@@ -217,7 +225,7 @@
 
             <div class="col-md-3 form-group  ">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <mat-select matInput formControlName="bonusType" #bonusType autocomplete="off" class="form-control br-0">
+                    <mat-select matInput formControlName="bonusType" #bonusType  (selectionChange)="changeSign($event.value,'cumulativeBonus',cumulativeBonus.value)" autocomplete="off" class="form-control br-0">
                         <mat-option value='1'>Rupees</mat-option>
                         <mat-option value='2'>Percentage</mat-option>
                     </mat-select>
@@ -236,8 +244,18 @@
                 <div class="col-md-5 form-group">
                     <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select matInput formControlName="planfeatures" autocomplete="true" class="form-control br-0">
-                            <mat-option *ngFor="let option of policyFeature ;index as i" [value]="option.id">
-                                {{option.type}}</mat-option>
+                            <!-- <mat-option *ngFor="let option of policyFeature ;index as i" [value]="option.id">
+                                {{option.type}}</mat-option> -->
+                                <mat-option value='4'>Accidental death benefit</mat-option>
+                                <mat-option value='5'>Permanent total disability </mat-option>
+                                <mat-option value='6'>Permanent partial disability </mat-option>
+                                <mat-option value='7'>Transportation benefit </mat-option>
+                                <mat-option value='8'>Education benefits </mat-option>
+                                <mat-option value='9'>Funeral expense benefit </mat-option>
+                                <mat-option value='10'>Reimbursement of medical expenses</mat-option>
+                                <mat-option value='11'>Accidental medical expenses </mat-option>
+                                <mat-option value='12'>Legal expenses </mat-option>
+                                <mat-option value='13'>Double indemnity for death </mat-option>
                         </mat-select>
                         <mat-error>This field is required
                         </mat-error>
@@ -256,12 +274,13 @@
             </div>
             <div class="col-md-5 form-group  ">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput type="text" [maxLength]="10" formControlName="exclusion" #exclusion autocomplete="off" class="form-control br-0">
+                    <input matInput type="text" [maxLength]="40" formControlName="exclusion" #exclusion autocomplete="off" class="form-control br-0">
+                    <mat-hint align="end" class="f-12">{{exclusion.value.length}}/40</mat-hint>
                 </mat-form-field>
             </div>
         </div>
 
-
+<!-- 
         <div class="row pt-32">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-20 ">Policy inception date</h5>
@@ -273,7 +292,7 @@
                     <mat-datepicker #inceptionDatePicker></mat-datepicker>
                 </mat-form-field>
             </div>
-        </div>
+        </div> -->
 
         <div formArrayName="getNomineeName">
             <div class="row pt-36" *ngFor="let obj of personalAccidentForm.controls['getNomineeName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
@@ -325,7 +344,8 @@
             </div>
             <div class="col-md-5 form-group  ">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="tpaName" #tpaName appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="40" formControlName="tpaName" #tpaName appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <mat-hint align="end" class="f-12">{{tpaName.value.length}}/40</mat-hint>
                     <mat-error>This field is required
                     </mat-error>
                 </mat-form-field>
@@ -339,7 +359,8 @@
             </div>
             <div class="col-md-5 form-group  ">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="advisorName" #advisorName appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="40" formControlName="advisorName" #advisorName appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <mat-hint align="end" class="f-12">{{advisorName.value.length}}/40</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -350,7 +371,8 @@
             </div>
             <div class="col-md-5 form-group  ">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="serviceBranch" #serviceBranch appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="40" formControlName="serviceBranch" #serviceBranch appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <mat-hint align="end" class="f-12">{{serviceBranch.value.length}}/40</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -371,8 +393,7 @@
                 </mat-form-field>
             </div>
             <div class="col-md-1 p-0 pt-8 d-flex">
-                <!--  prod build [data]="bankAccountDetails" appBankAccount -->
-                <i class="material-icons text-primitive c-p float-left"  (inputChange)='bankAccountList($event)'>add</i>
+                <i class="material-icons text-primitive c-p float-left" [data]="bankAccountDetails" appBankAccount (inputChange)='bankAccountList($event)'>add</i>
             </div>
         </div>
     </div>

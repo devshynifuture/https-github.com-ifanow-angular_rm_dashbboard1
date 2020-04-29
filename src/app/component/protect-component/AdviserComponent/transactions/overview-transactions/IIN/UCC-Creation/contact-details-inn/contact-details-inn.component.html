@@ -85,7 +85,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row pt-32">
+                <!-- <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0"> Phone number </h3>
                     </div>
@@ -111,7 +111,7 @@
                         </div>
 
                     </div>
-                </div>
+                </div> -->
 
 
                 <h3 class="f-18 mb-12 mt-44 f-600">(i) Current/Permanent/Overseas address details </h3>
@@ -155,6 +155,9 @@
                                 {{pincode.value.length}} / 6
                             </mat-hint>
                         </mat-form-field>
+                    </div>
+                    <div class="col-md-1 p-0 d-flex align-items-center justify-content-center mt-12">
+                        <mat-spinner *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
                     </div>
                 </div>
                 <div class="row pt-32">

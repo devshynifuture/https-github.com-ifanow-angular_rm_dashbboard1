@@ -239,7 +239,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         isClient: 0
       })]),
       name: [(this.dataForEdit ? this.dataForEdit.name : null)],
-      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId : null), [Validators.required]],
+      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId + '' : null), [Validators.required]],
       planDetails: [(this.dataForEdit ? this.dataForEdit.policyFeatureId + '' : null), [Validators.required]],
       deductibleAmt: [(this.dataForEdit ? this.dataForEdit.deductibleSumInsured : null), [Validators.required]],
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
@@ -249,16 +249,16 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
       policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : null, [Validators.required]],
       policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : null, [Validators.required]],
       copay: [(this.dataForEdit ? this.dataForEdit.copay : null)],
-      copayType: [this.dataForEdit ? this.dataForEdit.copayRupeesOrPercent + '' : null],
+      copayType: [this.dataForEdit ? this.dataForEdit.copayRupeesOrPercent + '' : '1'],
       cumulativeBonus: [this.dataForEdit ? this.dataForEdit.cumulativeBonus : null],
-      bonusType: [this.dataForEdit ? this.dataForEdit.cumulativeBonusRupeesOrPercent + '' : null],
+      bonusType: [this.dataForEdit ? this.dataForEdit.cumulativeBonusRupeesOrPercent + '' : '1'],
       exclusion: [this.dataForEdit ? this.dataForEdit.exclusion : null],
       inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : null],
       tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],
       advisorName: [this.dataForEdit ? this.dataForEdit.advisorName : null],
       serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch : null],
       bankAccount: [this.dataForEdit ? parseInt(this.dataForEdit.linkedBankAccount): null],
-      additionalCovers: [(this.dataForEdit) ? this.addOns.addOnId : null],
+      additionalCovers: [(this.dataForEdit) ? this.addOns.addOnId + '' : null],
       coversAmount: [(this.dataForEdit) ? this.addOns.addOnSumInsured : null],
       nominees: this.nominees,
       getNomineeName: this.fb.array([this.fb.group({
@@ -330,7 +330,24 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
   }
   ngOnInit() {
   }
-
+  changeSign(event,value,formValue) {
+      this.healthInsuranceForm.get(value).setValue('');
+      if(event == '2'){
+        if(parseInt(formValue) > 100){
+          this.healthInsuranceForm.get(value).setValue('');
+        }
+      }
+  }
+  changeTheInput(form1,form2,event) {
+    if(form1 == '2'){
+      if (parseInt(event.target.value) > 100) {
+          this.healthInsuranceForm.get(form2).setValue('100');
+      }
+    }else{
+      this.healthInsuranceForm.get(form2).setValue(event.target.value);
+    }
+   
+  }
   getFamilyData(value, data) {
 
     data.forEach(element => {

@@ -30,6 +30,7 @@ export class SubmitReviewInnComponent implements OnInit {
   fileName: string;
   file: any;
   byte: any;
+  uploadSttus: any;
 
   constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
     private eventService: EventService) { }
@@ -72,6 +73,22 @@ export class SubmitReviewInnComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId()
     this.getdataForm('');
     this.matValue = false
+  }
+  uploadFormImageUpload(file){
+    let obj = {
+      tpUserCredentialId : this.selectedBrokerBse.id,
+      file: file.target.files[0],
+      documentType : 1,
+    }
+    this.onlineTransact.imageFileUpload(obj).subscribe(
+      data => {
+        this.uploadSttus = data;
+        console.log('uploadSttus', this.uploadSttus)
+      },
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss')
+      }
+    );
   }
   getBSECredentials() {
     let obj = {
