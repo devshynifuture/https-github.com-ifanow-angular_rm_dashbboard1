@@ -343,6 +343,15 @@ export class UtilService {
     }
   }
 
+  isEmptyObj(obj) {
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   loader(increament: number) {
     if (increament === 0)
       this.counter = 0;
@@ -393,7 +402,7 @@ export class LoaderFunction {
   private counter = 0;
   private isLoading = false;
 
-  public get loading(){
+  public get loading() {
     return this.isLoading;
   }
 
@@ -403,8 +412,8 @@ export class LoaderFunction {
   }
 
   public decreaseCounter() {
-    this.counter --;
-    if(this.counter == 0) {
+    this.counter--;
+    if (this.counter == 0) {
       this.isLoading = false;
     }
   }

@@ -35,7 +35,7 @@
                 <div class="form-group ">
                     <mat-form-field appearance="standard" floatLabel="never">
                         <mat-select class="form-control br-0" placeholder="Ordered By" formControlName="filterByRmName"
-                            (selectionChange)="add($event)">
+                            (selectionChange)="add($event, 'rm')">
                             <mat-option>None</mat-option>
                             <mat-option [value]="rmUser" *ngFor="let rmUser of rmList">
                                 {{ rmUser.name }}
@@ -47,7 +47,7 @@
             <div class="col-lg-3">
                 <mat-form-field appearance="standard" floatLabel="never">
                     <mat-select class="form-control br-0" formControlName="filterByPeriod"
-                        (selectionChange)="add($event)">
+                        (selectionChange)="add($event, 'period')">
                         <mat-option>None</mat-option>
                         <mat-option [value]="period" *ngFor="let period of periodList">
                             {{ period.name }}
@@ -57,7 +57,8 @@
             </div>
             <div class="col-lg-3">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <mat-select class="form-control br-0" formControlName="filterByRta" (selectionChange)="add($event)">
+                    <mat-select class="form-control br-0" formControlName="filterByRta"
+                        (selectionChange)="add($event, 'rta')">
                         <mat-option>
                             None
                         </mat-option>
