@@ -83,7 +83,7 @@ export class AuthService {
 
   get appPic() {
     const orgData = JSON.parse(localStorage.getItem('orgData'));
-    return orgData.logoUrl;
+    return orgData ? orgData.logoUrl : '';
   }
 
   setToken(token: string) {
