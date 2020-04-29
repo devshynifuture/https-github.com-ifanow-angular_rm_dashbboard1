@@ -12,7 +12,7 @@ export class DetailedViewMandateComponent implements OnInit {
   transactionData:any;
   statusData = [
     {
-      name: 'Pending authorization', checked: false, status: 1
+      name: 'Pending authorization', checked: false, status: 0
     },
     {
       name: 'Form uploaded', checked: false, status: 4
@@ -32,10 +32,16 @@ export class DetailedViewMandateComponent implements OnInit {
   ngOnInit() {
     this.details = this.data;
     console.log('mandateDetails', this.data);
-    this.getDataStatus(this.statusData)
+    this.getDataStatus(this.details)
+  }
+  uploadFormFile(){
+
+  }
+  uploadFormImageUpload(){
+    
   }
   getDataStatus(data) {
-    this.statusDetails = data
+    this.statusDetails = this.statusData
     this.statusDetails.forEach(element => {
       (element.status <= data.status) ? element.checked = true : element.checked = false
     });
