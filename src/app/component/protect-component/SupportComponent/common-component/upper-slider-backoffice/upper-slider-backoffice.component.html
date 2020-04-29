@@ -6,7 +6,7 @@
         </div>
         <div class="col-md-8 p-0 d-flex justify-content-center align-items-center " *ngIf="data">
             <p class="f-16 m-0">ARN-83865
-                {{ data.rtId && data.rtId === 1 ? 'CAMS': (data.rtId && data.rtId === 2) ? 'KARVY' : (data.rtId && data.rtId === 3) ? 'FRANKLIN': "" }}
+                {{ getRtName(data.rtId) }}
             </p>
         </div>
         <div class="col-md-2 text-right">
