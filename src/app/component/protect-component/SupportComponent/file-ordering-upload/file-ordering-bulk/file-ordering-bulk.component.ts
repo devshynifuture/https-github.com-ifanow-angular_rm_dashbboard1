@@ -98,7 +98,6 @@ export class FileOrderingBulkComponent implements OnInit {
             }
           });
           this.getRmMasterDetails();
-          this.setFilterFormValueChanges();
         } else {
           this.eventService.openSnackBar("Error In Fetching RTA List", "DISMISS");
         }
@@ -143,6 +142,7 @@ export class FileOrderingBulkComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     this.getRtaList();
+
   }
 
   defaultSelectionInFilter() {
@@ -157,6 +157,7 @@ export class FileOrderingBulkComponent implements OnInit {
     const defaultRta = this.rtaList.find((c) => c.value === 0);
     this.filterForm.get("filterByRta").setValue(defaultRta);
     this.filterBy.push({ name: defaultRta.name, type: 'rta' });
+    this.setFilterFormValueChanges();
 
     this.fileOrderBulkHistoryListGet({
       days: this.filterForm.get("filterByPeriod").value.value,

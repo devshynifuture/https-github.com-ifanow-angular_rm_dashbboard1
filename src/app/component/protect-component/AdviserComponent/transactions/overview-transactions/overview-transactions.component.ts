@@ -28,6 +28,14 @@ export class OverviewTransactionsComponent implements OnInit {
   totalUccCount: any;
   totalInvestorWithoutMandate: any;
   isLoading = false
+  pendingCount: any;
+  rejectCount: any;
+  acceptCount: any;
+  pendingTransaction: any;
+  rejectionTransaction: any;
+  doneTrasaction: any;
+  percentageTrasact: number;
+  transactionList: any;
 
 
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject,
@@ -123,6 +131,7 @@ export class OverviewTransactionsComponent implements OnInit {
       }
     );
   }
+  
   getAllTransactionList() {
     this.isLoading = true
     const obj = {
@@ -136,7 +145,19 @@ export class OverviewTransactionsComponent implements OnInit {
         console.log(data);
         this.isLoading = false
         console.log('transaction data',data);
+        this.transactionList = data
         this.transactionCount = data.length
+        this.pendingTransaction = data.filter(data=> data.status == 2);
+        this.rejectionTransaction = data.filter(data=> data.status == 7);
+        this.doneTrasaction = data.filter(data=> data.status == 6 || data.status == 8);
+        if(this.doneTrasaction == undefined){
+          this.doneTrasaction = []
+        }else{
+          this.percentageTrasact = (this.doneTrasaction/this.transactionCount)*100
+        }
+        this.pendingTransaction  = this.rejectionTransaction.length
+        this.rejectionTransaction = this.rejectionTransaction.length
+
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
@@ -155,6 +176,15 @@ export class OverviewTransactionsComponent implements OnInit {
         this.isLoading = false
         console.log('getOverviewMandate data',data);
         this.totalInvestorWithoutMandate = data.totalInvestorWithoutMandate
+        data.statusList.forEach(element => {
+          if(element.status == 1){
+            this.pendingCount = element.count
+          }else if(element.status == 2){
+            this.acceptCount = element.count
+          }else if(element.status == 3){
+            this.rejectCount = element.count
+          }
+        });
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
