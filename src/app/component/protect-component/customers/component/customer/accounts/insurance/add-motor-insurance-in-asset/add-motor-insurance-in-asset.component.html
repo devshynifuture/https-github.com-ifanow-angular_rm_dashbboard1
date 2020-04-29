@@ -15,162 +15,126 @@
 </div>
 
 
-<div class=" mt-100 pl-24 pr-24 pb-24 mb-48"  [formGroup]="motorInsuranceForm">
+<div class=" mt-100 pl-24 pr-24 pb-24 mb-48" [formGroup]="motorInsuranceForm">
 
-        <div formArrayName="getCoOwnerName">
-                <div class="row"
-                    *ngFor="let obj of motorInsuranceForm.controls['getCoOwnerName'].controls; let pointIndex=index"
-                    [formGroupName]="pointIndex">
-                    <div class="col-md-5 pr-0 text-right">
-                        <h5 class="m-0 pt-8 ">Name of policy holder</h5>
-                    </div>
-                    <div class="pr-0"
-                        [ngClass]="motorInsuranceForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
-                                    (selectionChange)="disabledMember($event.value,'owner')"
-                                    (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
-                                    class="form-control br-0" [callMethod]='callMethod'>
-                                    <mat-option value='' disabled>Select family members</mat-option>
-                                    <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
-                                        [value]="f.userName">
-                                        <span>{{f.userName}}</span>
-                                    </mat-option>
-                                </mat-select>
-                                <mat-error class="f-12">
-                                    This field is required
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="col-md-2" *ngIf="motorInsuranceForm.value.getCoOwnerName.length > 1">
-                        <div class="form-group mb-0 iconPetage">
-                            <mat-form-field>
-                                <input matInput class="form-control br-0 percentage" type="number" formControlName="share"
-                                    (focusout)="onChangeJointOwnership('owner')">
-                                <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
-                                    This field is required
-                                </mat-error>
-                                <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('incorrect') ">
-                                    Total percent should be 100%
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="col-md-2 p-0 d-flex align-items-center">
-                        <!-- <i *ngIf="pointIndex==0" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i> -->
-                        <i *ngIf="pointIndex!=0" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
-                            (click)="removeCoOwner(pointIndex)">remove</i>
-                    </div>
-    
+    <div formArrayName="getCoOwnerName">
+        <div class="row" *ngFor="let obj of motorInsuranceForm.controls['getCoOwnerName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8 ">Name of policy holder</h5>
+            </div>
+            <div class="pr-0" [ngClass]="motorInsuranceForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
+                <div class="form-group ">
+                    <mat-form-field>
+                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                            <mat-option value='' disabled>Select family members</mat-option>
+                            <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
+                                <span>{{f.userName}}</span>
+                            </mat-option>
+                        </mat-select>
+                        <mat-error class="f-12">
+                            This field is required
+                        </mat-error>
+                    </mat-form-field>
                 </div>
             </div>
+            <div class="col-md-2" *ngIf="motorInsuranceForm.value.getCoOwnerName.length > 1">
+                <div class="form-group  iconPetage">
+                    <mat-form-field>
+                        <input matInput class="form-control br-0 percentage" type="number" formControlName="share" (focusout)="onChangeJointOwnership('owner')">
+                        <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
+                            This field is required
+                        </mat-error>
+                        <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('incorrect') ">
+                            Total percent should be 100%
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-2 p-0 d-flex align-items-center">
+                <!-- <i *ngIf="pointIndex==0" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i> -->
+                <i *ngIf="pointIndex!=0" class="material-icons text-primitive f-20 c-p pl-10 pt-8" (click)="removeCoOwner(pointIndex)">remove</i>
+            </div>
+
+        </div>
+    </div>
 
     <div class="row pt-32">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-20 ">Plan type</h5>
+            <h5 class="m-0 pt-10 ">Plan type</h5>
         </div>
-        <div class="col-md-5 form-group">
+        <div class="col-md-5 pr-0 form-group">
+            <mat-form-field>
+                <mat-select matInput formControlName="PlanType" autocomplete="true" class="form-control br-0">
+                    <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
+                        {{option.policy_type}}</mat-option>
+                </mat-select>
+                <mat-error>This field is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+
+
+    <div formArrayName="addOnForm">
+        <div class="row pt-32" *ngFor="let obj of motorInsuranceForm.controls['addOnForm'].controls; let pointIndex=index" [formGroupName]="pointIndex">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-10 ">Add ons</h5>
+            </div>
+
+            <div class="col-md-5 pr-0 form-group">
                 <mat-form-field>
-                        <mat-select matInput formControlName="PlanType" autocomplete="true" class="form-control br-0">
-                            <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
-                                {{option.policy_type}}</mat-option>
-                        </mat-select>
-                        <mat-error>This field is required
-                        </mat-error>
-                    </mat-form-field>
+                    <mat-select matInput formControlName="additionalCovers" autocomplete="true" class="form-control br-0">
+                        <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
+                            {{option.add_on}}</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-1 pr-0 pt-8 d-flex">
+                <i class="material-icons text-primitive c-p float-left" (click)="addNewAddOns(undefined)">add</i>
+                <i class="material-icons text-primitive c-p float-right" (click)="removeNewAddOns(pointIndex)">remove</i>
+            </div>
         </div>
+
     </div>
 
-    <!-- <div class="row pt-32">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-20 ">Add ons</h5>
-        </div>
-        <div class="col-md-5 form-group">
-                <mat-form-field>
-                        <mat-select matInput formControlName="additionalCovers" autocomplete="true" class="form-control br-0">
-                            <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
-                                {{option.add_on}}</mat-option>
-                        </mat-select>
-                        <mat-error>This field is required
-                        </mat-error>
-                    </mat-form-field>
-        </div>
-
-        <div class="col-md-1 pr-0 d-flex align-items-center">
-            <i class="material-icons text-primitive f-20 c-p float-left">add</i>
-        </div>
-
-    </div> -->
-
-    <div class="row pt-32"  formArrayName="addOnForm">
-        <div class="row pt-36" *ngFor="let obj of motorInsuranceForm.controls['addOnForm'].controls; let pointIndex=index"
-        [formGroupName]="pointIndex">
-    <div class="col-md-5 pr-0 text-right">
-        <h5 class="m-0 pt-20 ">Add ons</h5>
-    </div>
-
-    <div class="col-md-5 form-group">
-        <mat-form-field>
-            <mat-select matInput formControlName="additionalCovers" autocomplete="true" class="form-control br-0">
-                <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
-                    {{option.add_on}}</mat-option>
-            </mat-select>
-            <mat-error>This field is required
-            </mat-error>
-        </mat-form-field>
-    </div>
-    <div class="col-md-1 p-0 pt-8 d-flex">
-            <i class="material-icons text-primitive c-p float-left"
-            (click)="addNewAddOns(undefined)">add</i>
-            <i class="material-icons text-primitive c-p float-right"
-            (click)="removeNewAddOns(pointIndex)">remove</i>
-        </div>
-</div>
-
-</div>
-    <div class="row pt-32">
+    <div class="row pt-20">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-20 ">Policy number</h5>
         </div>
         <div class="col-md-3 form-group">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
-                formControlName="policyNum" #policynumber appInputValueValidation autocomplete="off"
-                class="form-control br-0" placeholder="Enter Policy number">
+                <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="policyNum" #policynumber appInputValueValidation autocomplete="off" class="form-control br-0" placeholder="Enter Policy number">
                 <mat-error>This field is required
-                    </mat-error>
+                </mat-error>
             </mat-form-field>
         </div>
     </div>
 
-    <div class="row pt-32">
+    <div class="row pt-24">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-20 ">Name of insurer</h5>
         </div>
         <div class="col-md-5 form-group">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input  matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
-                formControlName="insurerName" #insureerName appInputValueValidation autocomplete="off"
-                class="form-control br-0" placeholder="Enter Name of insurer">
+                <input matInput type="text"  [maxLength]="30" formControlName="insurerName" #insureerName appInputValueValidation autocomplete="off" class="form-control br-0" placeholder="Enter Name of insurer">
                 <mat-error>This field is required
-                    </mat-error>
+                </mat-error>
             </mat-form-field>
         </div>
     </div>
 
-    <div class="row pt-32">
+    <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-20 ">Policy name</h5>
+            <h5 class="m-0 pt-10 ">Policy name</h5>
         </div>
         <div class="col-md-5 form-group">
             <mat-form-field class="example-full-width">
-                <input matInput class="form-control br-0" type="text" (keyup)="findPolicyName($event)"
-                    formControlName="policyName" aria-label="Number" matInput [matAutocomplete]="auto">
+                <input matInput class="form-control br-0" type="text" (keyup)="findPolicyName($event)" formControlName="policyName" aria-label="Number" matInput [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option (click)="selectPolicy(option)" *ngFor="let option of options"
-                        [value]="option.policyName">
+                    <mat-option (click)="selectPolicy(option)" *ngFor="let option of options" [value]="option.policyName">
                         {{option.policyName}}
                     </mat-option>
                 </mat-autocomplete>
@@ -186,15 +150,13 @@
             <h5 class="m-0 pt-8">Policy start date</h5>
         </div>
         <div class="col-md-3 form-group mb-0">
-                <mat-form-field class="ba-date">
-                        <input matInput formControlName="policyStartDate" [max]="maxDate" class="form-control br-0 b-0"
-                            [matDatepicker]="policyStartDatePicker" (focus)="policyStartDatePicker.open()"
-                            (input)="preventDefault($event)">
-                        <mat-datepicker-toggle matSuffix [for]="policyStartDatePicker"></mat-datepicker-toggle>
-                        <mat-datepicker #policyStartDatePicker></mat-datepicker>
-                        <mat-error>This field is required
-                        </mat-error>
-                    </mat-form-field>
+            <mat-form-field class="ba-date">
+                <input matInput formControlName="policyStartDate" [max]="maxDate" class="form-control br-0 b-0" [matDatepicker]="policyStartDatePicker" (focus)="policyStartDatePicker.open()" (input)="preventDefault($event)">
+                <mat-datepicker-toggle matSuffix [for]="policyStartDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #policyStartDatePicker></mat-datepicker>
+                <mat-error>This field is required
+                </mat-error>
+            </mat-form-field>
         </div>
     </div>
 
@@ -204,15 +166,13 @@
             <h5 class="m-0 pt-8 ">Policy expiry date</h5>
         </div>
         <div class="col-md-3 form-group mb-0">
-                <mat-form-field class="ba-date">
-                        <input matInput formControlName="policyExpiryDate" class="form-control br-0 b-0"
-                            [matDatepicker]="policyExpiryDatePicker" (focus)="policyExpiryDatePicker.open()"
-                            (input)="preventDefault($event)">
-                        <mat-datepicker-toggle matSuffix [for]="policyExpiryDatePicker"></mat-datepicker-toggle>
-                        <mat-datepicker #policyExpiryDatePicker></mat-datepicker>
-                        <mat-error>This field is required
-                        </mat-error>
-                    </mat-form-field>
+            <mat-form-field class="ba-date">
+                <input matInput formControlName="policyExpiryDate" class="form-control br-0 b-0" [matDatepicker]="policyExpiryDatePicker" (focus)="policyExpiryDatePicker.open()" (input)="preventDefault($event)">
+                <mat-datepicker-toggle matSuffix [for]="policyExpiryDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #policyExpiryDatePicker></mat-datepicker>
+                <mat-error>This field is required
+                </mat-error>
+            </mat-form-field>
         </div>
     </div>
 
@@ -221,13 +181,11 @@
             <h5 class="m-0 pt-20 ">Insured declared value </h5>
         </div>
         <div class="col-md-3 form-group iconRupess">
-                <mat-form-field floatLabel="never" appearance="standard">
-                        <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
-                        formControlName="declaredValue"  appInputValueValidation autocomplete="off"
-                        class="form-control br-0" placeholder="Enter declared value">
-                        <mat-error>This field is required
-                            </mat-error>
-                    </mat-form-field>
+            <mat-form-field floatLabel="never" appearance="standard">
+                <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="declaredValue" appInputValueValidation autocomplete="off" class="form-control br-0" placeholder="Enter declared value">
+                <mat-error>This field is required
+                </mat-error>
+            </mat-form-field>
         </div>
     </div>
 
@@ -236,13 +194,11 @@
             <h5 class="m-0 pt-20 "> Premium </h5>
         </div>
         <div class="col-md-3 form-group iconRupess">
-                        <mat-form-field floatLabel="never" appearance="standard">
-                                <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
-                                formControlName="premium" #policynumber appInputValueValidation autocomplete="off"
-                                class="form-control br-0">
-                                <mat-error>This field is required
-                                    </mat-error>
-                            </mat-form-field>
+            <mat-form-field floatLabel="never" appearance="standard">
+                <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="premium" #policynumber appInputValueValidation autocomplete="off" class="form-control br-0">
+                <mat-error>This field is required
+                </mat-error>
+            </mat-form-field>
         </div>
     </div>
 
@@ -252,204 +208,181 @@
             <h5 class="m-0 pt-20 ">Vehicle type</h5>
         </div>
         <div class="col-md-5 form-group">
-                <mat-form-field>
-                        <mat-select matInput formControlName="vehicleType" #frequency autocomplete="off"
-                        class="form-control br-0">
-                        <mat-option value='1'>Two wheeler</mat-option>
-                        <mat-option value='2'>Four wheeler</mat-option>
-                    </mat-select>
-                    <mat-error>This field is required
-                    </mat-error>
-                    </mat-form-field>
+            <mat-form-field>
+                <mat-select matInput formControlName="vehicleType" #frequency autocomplete="off" class="form-control br-0">
+                    <mat-option value='1'>Two wheeler</mat-option>
+                    <mat-option value='2'>Four wheeler</mat-option>
+                </mat-select>
+                <mat-error>This field is required
+                </mat-error>
+            </mat-form-field>
         </div>
     </div>
 
 
     <div *ngIf="addMoreFlag==false" class="row pt-40 pb-48">
-            <div (click)="openOptionField()" class="col-md-5 text-right">
-                <p class="m-0 text-primitive f-16 c-p"> + Add more [optional data] </p>
-            </div>
-            <div class="col-md-3">
-            </div>
-        </div>
-
-<div *ngIf="addMoreFlag">
         <div (click)="openOptionField()" class="col-md-5 text-right">
-                <p class="m-0 text-primitive f-16 c-p">Show less</p>
-            </div>
-    <div class="row pt-28">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-20 ">Vehicle registration number</h5>
+            <p class="m-0 text-primitive f-16 c-p"> + Add more [optional data] </p>
         </div>
-        <div class="col-md-3 form-group ">
-            <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
-                formControlName="registrationNumber" #bankAccount appInputValueValidation autocomplete="off"
-                class="form-control br-0">
-            </mat-form-field>
+        <div class="col-md-3">
         </div>
     </div>
 
-
-    <div class="row pt-36">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8 ">Vehicle registration date</h5>
+    <div *ngIf="addMoreFlag" class="pt-40 pb-48">
+        <div (click)="openOptionField()" class="col-md-5 text-right">
+            <p class="m-0 text-primitive f-16 c-p">Show less</p>
         </div>
-        <div class="col-md-3 form-group mb-0">
-            <mat-form-field class="ba-date">
-                    <input matInput formControlName="registrationDate" [max]="maxDate" class="form-control br-0 b-0"
-                        [matDatepicker]="registrationDatepicker" (focus)="registrationDatepicker.open()"
-                        (input)="preventDefault($event)">
+
+        <div class="row pt-28">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-20 ">Vehicle registration number</h5>
+            </div>
+            <div class="col-md-3 form-group ">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="registrationNumber" #bankAccount appInputValueValidation autocomplete="off" class="form-control br-0">
+                </mat-form-field>
+            </div>
+        </div>
+
+
+        <div class="row pt-36">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8 ">Vehicle registration date</h5>
+            </div>
+            <div class="col-md-3 form-group mb-0">
+                <mat-form-field class="ba-date">
+                    <input matInput formControlName="registrationDate" [max]="maxDate" class="form-control br-0 b-0" [matDatepicker]="registrationDatepicker" (focus)="registrationDatepicker.open()" (input)="preventDefault($event)">
                     <mat-datepicker-toggle matSuffix [for]="registrationDatepicker"></mat-datepicker-toggle>
                     <mat-datepicker #registrationDatepicker></mat-datepicker>
                 </mat-form-field>
+            </div>
         </div>
-    </div>
 
 
 
-    <div class="row pt-36">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-20 ">Make/Model of vehicle</h5>
+        <div class="row pt-36">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-20 ">Make/Model of vehicle</h5>
+            </div>
+            <div class="col-md-3 form-group  ">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input matInput type="text" [maxLength]="10" formControlName="modelName" #planName appInputValueValidation autocomplete="off" class="form-control br-0">
+                </mat-form-field>
+            </div>
         </div>
-        <div class="col-md-3 form-group  ">
-            <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="text" [maxLength]="10" formControlName="modelName" #planName
-                appInputValueValidation autocomplete="off" class="form-control br-0" >
-            </mat-form-field>
-        </div>
-    </div>
 
 
-    <div class="row pt-36">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-20 ">Engine number</h5>
+        <div class="row pt-36">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-20 ">Engine number</h5>
+            </div>
+            <div class="col-md-3 form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input matInput type="number" formControlName="engineNumber" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #premiumdetails autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
+                </mat-form-field>
+            </div>
         </div>
-        <div class="col-md-3 form-group mb-0">
-            <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="number" formControlName="engineNumber"
-                [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #premiumdetails
-                autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
-            </mat-form-field>
-        </div>
-    </div>
 
 
-    <div class="row pt-36">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-20 "> Chassis number </h5>
+        <div class="row pt-36">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-20 "> Chassis number </h5>
+            </div>
+            <div class="col-md-3 form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input matInput type="number" formControlName="chassisNumber" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #premiumdetails autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
+                </mat-form-field>
+            </div>
         </div>
-        <div class="col-md-3 form-group mb-0">
-            <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="number" formControlName="chassisNumber"
-                [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #premiumdetails
-                autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
-            </mat-form-field>
-        </div>
-    </div>
 
 
-    <div class="row pt-36">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-20 "> Fuel type </h5>
+        <div class="row pt-36">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-20 "> Fuel type </h5>
+            </div>
+            <div class="col-md-3 form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <mat-select matInput formControlName="fuelType" #frequency autocomplete="off" class="form-control br-0">
+                        <mat-option value='1'>Petrol</mat-option>
+                        <mat-option value='2'>Petrol + CNG/LPG company fitted</mat-option>
+                        <mat-option value='3'>Petrol + CNG/LPG fitted after the purchase</mat-option>
+                        <mat-option value='4'>Diesel</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
         </div>
-        <div class="col-md-3 form-group mb-0">
-            <mat-form-field floatLabel="never" appearance="standard">
-                    <mat-select matInput formControlName="fuelType" #frequency autocomplete="off"
-                    class="form-control br-0">
-                    <mat-option value='1'>Petrol</mat-option>
-                    <mat-option value='2'>Petrol + CNG/LPG company fitted</mat-option>
-                    <mat-option value='3'>Petrol + CNG/LPG fitted after the purchase</mat-option>
-                    <mat-option value='4'>Diesel</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-    </div>
 
-    <div class="row pt-36">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-20 "> CC/GVW</h5>
-        </div>
-        <div class="col-md-3 form-group mb-0">
-            <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
-                formControlName="cgGvw"  appInputValueValidation autocomplete="off"
-                class="form-control br-0">
-            </mat-form-field>
+        <div class="row pt-36">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-20 "> CC/GVW</h5>
+            </div>
+            <div class="col-md-3 form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="cgGvw" appInputValueValidation autocomplete="off" class="form-control br-0">
+                </mat-form-field>
 
+            </div>
         </div>
-    </div>
 
 
-    <div class="row pt-48">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8 "> No claim bonus</h5>
+        <div class="row pt-48">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8 "> No claim bonus</h5>
+            </div>
+            <div class="col-md-3 form-group iconPetage">
+                <mat-form-field>
+                    <input class="form-control percentage" matInput type="text" formControlName="claimBonus" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #premiumdetails autocomplete="true" [maxLength]="10">
+                </mat-form-field>
+            </div>
         </div>
-        <div class="col-md-3 form-group iconPetage">
-            <mat-form-field>
-                <input class="form-control percentage" matInput type="text" formControlName="claimBonus"
-                [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #premiumdetails
-                autocomplete="true" [maxLength]="10" >
-            </mat-form-field>
-        </div>
-    </div>
 
 
-    <div class="row pt-32">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-8 "> Special discount</h5>
+        <div class="row pt-32">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-8 "> Special discount</h5>
+            </div>
+            <div class="col-md-3 iconPetage form-group  ">
+                <mat-form-field>
+                    <input class="form-control percentage" matInput type="text" formControlName="discount" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #premiumdetails autocomplete="true" [maxLength]="10">
+                </mat-form-field>
+            </div>
         </div>
-        <div class="col-md-3 iconPetage form-group  ">
-            <mat-form-field>
-                <input class="form-control percentage" matInput type="text" formControlName="discount"
-                [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #premiumdetails
-                autocomplete="true" [maxLength]="10" >
-            </mat-form-field>
-        </div>
-    </div>
 
 
-    <div class="row pt-32">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-20 "> Exclusions/Special conditions</h5>
+        <div class="row pt-32">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-20 "> Exclusions/Special conditions</h5>
+            </div>
+            <div class="col-md-5 form-group ">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="exclusion" #exclusion appInputValueValidation autocomplete="off" class="form-control br-0">
+                </mat-form-field>
+            </div>
         </div>
-        <div class="col-md-5 form-group ">
-            <mat-form-field floatLabel="never" appearance="standard">
-                <input  matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
-                formControlName="exclusion" #exclusion appInputValueValidation autocomplete="off"
-                class="form-control br-0">
-            </mat-form-field>
-        </div>
-    </div>
 
 
-    <div class="row pt-32">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-20 "> Hypothecation/Financier name</h5>
+        <div class="row pt-32">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-20 "> Hypothecation/Financier name</h5>
+            </div>
+            <div class="col-md-5 form-group ">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="financierName" #exclusion appInputValueValidation autocomplete="off" class="form-control br-0">
+                </mat-form-field>
+            </div>
         </div>
-        <div class="col-md-5 form-group ">
-            <mat-form-field floatLabel="never" appearance="standard">
-                <input  matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
-                formControlName="financierName" #exclusion appInputValueValidation autocomplete="off"
-                class="form-control br-0">
-            </mat-form-field>
-        </div>
-    </div>
-    <div formArrayName="getNomineeName">
-            <div class="row pt-36" *ngFor="let obj of motorInsuranceForm.controls['getNomineeName'].controls; let pointIndex=index"
-                [formGroupName]="pointIndex">
+
+        <div formArrayName="getNomineeName">
+            <div class="row pt-36" *ngFor="let obj of motorInsuranceForm.controls['getNomineeName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
                 </div>
                 <div [ngClass]="getNominee.length > 1?'col-md-3' : 'col-md-5'">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
-                                (selectionChange)="disabledMember($event.value,'nominee')"
-                                (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                            <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'nominee')" (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                                 <mat-option value='' disabled>Select family members</mat-option>
-                                <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
-                                    [value]="f.userName">
+                                <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                     <span>{{f.userName}}</span>
                                 </mat-option>
                             </mat-select>
@@ -462,8 +395,7 @@
                 <div class="col-md-2" *ngIf="getNominee.length > 1">
                     <div class="form-group mb-0 iconPetage">
                         <mat-form-field>
-                            <input matInput class="form-control br-0 percentage" type="number"
-                                formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
+                            <input matInput class="form-control br-0 percentage" type="number" formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
                             <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('required')">
                                 This field is required
                             </mat-error>
@@ -474,79 +406,61 @@
                     </div>
                 </div>
                 <div class="col-md-2 p-0 d-flex align-items-center">
-                    <i *ngIf="motorInsuranceForm.value.getNomineeName.length < 3"
-                        class="material-icons text-primitive f-20 c-p float-left"
-                        (click)="addNewNominee(undefined)">add</i>
-                    <i *ngIf="motorInsuranceForm.value.getNomineeName.length > 1"
-                        class="material-icons text-primitive f-20 c-p pl-10"
-                        (click)="removeNewNominee(pointIndex)">remove</i>
+                    <i *ngIf="motorInsuranceForm.value.getNomineeName.length < 3" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewNominee(undefined)">add</i>
+                    <i *ngIf="motorInsuranceForm.value.getNomineeName.length > 1" class="material-icons text-primitive f-20 c-p pl-10" (click)="removeNewNominee(pointIndex)">remove</i>
                 </div>
 
             </div>
         </div>
 
-    <div class="row pt-32">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-20 "> Advisor name</h5>
+        <div class="row pt-32">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-20 "> Advisor name</h5>
+            </div>
+            <div class="col-md-5 form-group ">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="advisorName" #advisorName appInputValueValidation autocomplete="off" class="form-control br-0">
+                </mat-form-field>
+            </div>
         </div>
-        <div class="col-md-5 form-group ">
-            <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
-                formControlName="advisorName" #advisorName appInputValueValidation autocomplete="off"
-                class="form-control br-0">
-            </mat-form-field>
-        </div>
-    </div>
 
-    <div class="row pt-32">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-20 "> Service branch</h5>
-        </div>
-        <div class="col-md-5 form-group ">
+        <div class="row pt-32">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-10 "> Service branch</h5>
+            </div>
+            <div class="col-md-5 form-group ">
                 <mat-form-field>
-                        <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
-                            formControlName="serviceBranch" #serviceBranch appInputValueValidation
-                            autocomplete="off" class="form-control br-0">
-                        <mat-error>This field is required
-                        </mat-error>
-                    </mat-form-field>
+                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10" formControlName="serviceBranch" #serviceBranch appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <mat-error>This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
         </div>
-    </div>
 
 
-    <!-- <div class="row pt-32">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-20 "> Linked bank account</h5>
-        </div>
-        <div class="col-md-5 form-group ">
+
+        <div class="row pt-32">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-20 ">Linked bank account</h5>
+            </div>
+            <div class="col-md-5 form-group">
                 <mat-form-field>
-                        <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="10"
-                            formControlName="bankAccount" #bankAccount appInputValueValidation autocomplete="off"
-                            class="form-control br-0">
-                        <mat-error>This field is required
-                        </mat-error>
-                    </mat-form-field>
+                    <mat-select class="form-control" formControlName="bankAccount" matInput>
+                        <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
+                            {{option.bankName}}</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-1 p-0 pt-8 d-flex">
+                <!--  prod build appBankAccount [data]="bankAccountDetails" -->
+                <i class="material-icons text-primitive c-p float-left"   (inputChange)='bankAccountList($event)'>add</i>
+            </div>
         </div>
-    </div> -->
-    <div class="row pt-32">
-        <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-20 ">Linked bank account</h5>
-        </div>
-        <div class="col-md-5 form-group">
-            <mat-form-field>
-                <mat-select class="form-control"  formControlName="bankAccount"  matInput>
-                    <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
-                        {{option.bankName}}</mat-option>
-                </mat-select>
-                <mat-error>This field is required
-                </mat-error>
-            </mat-form-field>
-        </div>
-        <div class="col-md-1 p-0 pt-8 d-flex">
-            <i class="material-icons text-primitive c-p float-left" appBankAccount [data]="bankAccountDetails" (inputChange)='bankAccountList($event)'>add</i>
-        </div>
+
+
     </div>
-</div>
 
 
 

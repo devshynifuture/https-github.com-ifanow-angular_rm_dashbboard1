@@ -442,6 +442,7 @@ export const appConfig = {
   GET_FREQUENCY: 'bse/scheme/sip/view',
   SIP_BSE: 'bse/order/create',
   BSE_TRANSACTION: 'bse/order/create',
+  UPLOAD_FILE_IMAGE:'user/register/image/upload',
   //  NSE_ACHMANDATE: 'nse/ach-mandate/report/get',
   BANK_DETAILS_NSE: 'nse/iin/bank-detail/get',
   GETIIN_DETAILS: 'nse/iin/detail/get',
@@ -703,4 +704,9 @@ export const appConfig = {
 
   ////////////////////////////// settings////////////////////////////////////////////
   //////////////////////////////////customer-overview-profile//////////////////////
+
+  //////////////////////////////////customer-overview-myfeeds-profile//////////////////////
+  GET_CUSTOMER_PORTFOLIO_SUMMARY: 'account/asset/summary',
+  GET_FEEDS_MF_DATA: 'mutual-fund/latest/transaction/list/get',
+  GET_DOCUMENTS_FEED: 'document/account/document/total-count-and-size/get'
 };

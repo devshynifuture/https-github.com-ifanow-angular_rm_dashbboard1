@@ -49,7 +49,7 @@
                 <mat-form-field appearance="standard">
                     <mat-select formControlName="isdCodeId" class="form-control">
                         <mat-option value="" selected disabled>Select Country Code</mat-option>
-                        <mat-option [value]="code.id" *ngFor="let code of isdCodes" [disabled]="!data.is_add_call">{{code.code}}({{code.countryName}})</mat-option>
+                        <mat-option [value]="code.id" *ngFor="let code of isdCodes" >{{code.code}}({{code.countryName}})</mat-option>
                     </mat-select>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>

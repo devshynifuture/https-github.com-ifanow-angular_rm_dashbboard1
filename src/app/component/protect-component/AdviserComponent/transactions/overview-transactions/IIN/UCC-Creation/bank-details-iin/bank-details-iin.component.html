@@ -31,13 +31,25 @@
                         <h3 class="f-16 pt-8 m-0"> IFSC code </h3>
                     </div>
                     <div class="col-md-3">
-                        <mat-form-field>
-                            <input matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC"
-                                formControlName="ifscCode" maxlength="11" type="number" class="form-control">
+                        <!-- <mat-form-field>
+                            <input #ifscCode matInput a appInputValueValidation
+                                [inputValidator]="validatorType.ALPHA_NUMERIC" [maxlength]="11"
+                                formControlName="ifscCode" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                             <mat-hint align="end" class="f-12 text-custom">
-                                0 / 11
+                                {{ifscCode.value.length}} / 11
                             </mat-hint>
+                        </mat-form-field> -->
+                        <mat-form-field floatLabel="never" appearance="standard">
+                            <input placeholder="Enter IFSC   " autocomplete="off"
+                                (input)="toUpperCase(bankDetails.get('ifscCode'),$event)" appInputValueValidation
+                                [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="ifscCode" #ifcCode
+                                [maxLength]="11" matInput class="form-control">
+                            <mat-hint align="end" class="f-12">{{ifcCode.value.length}}/11</mat-hint>
+                            <mat-error *ngIf="bankDetails.get('ifscCode').errors?.required">This field is required
+                            </mat-error>
+                            <mat-error *ngIf="bankDetails.get('ifscCode').errors?.invalidIfsc">Ifsc code invalid
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -50,7 +62,7 @@
                     <div class="col-md-5">
                         <mat-form-field>
                             <input appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" matInput
-                                formControlName="bankName" maxlength="10" type="text" class="form-control">
+                                formControlName="bankName" [maxlength]="30" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
@@ -63,11 +75,12 @@
                     </div>
                     <div class="col-md-3">
                         <mat-form-field>
-                            <input matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC"
-                                maxlength="10" formControlName="micrCode" type="text" class="form-control">
+                            <input #micrCode matInput appInputValueValidation
+                                [inputValidator]="validatorType.ALPHA_NUMERIC" [maxlength]="9"
+                                formControlName="micrCode" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                             <mat-hint align="end" class="f-12 text-custom">
-                                0 / 10
+                                {{micrCode.value.length}} / 9
                             </mat-hint>
                         </mat-form-field>
                     </div>
@@ -81,10 +94,13 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="16" appInputValueValidation
-                                matInput maxlength="10" formControlName="accountNumber" type="text"
-                                class="form-control">
+                            <input #accountNumber [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="16"
+                                appInputValueValidation matInput [maxlength]="16" formControlName="accountNumber"
+                                type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
+                            <mat-hint align="end" class="f-12 text-custom">
+                                {{accountNumber.value.length}} / 16
+                            </mat-hint>
                         </mat-form-field>
                     </div>
                 </div>
@@ -97,22 +113,27 @@
                     <div class="col-md-8">
 
                         <mat-radio-group aria-label="Select an option" formControlName="accountType">
-                            <mat-radio-button value="1"
-                                class="b-a-custom bor_top_tb_left radioBtnSmall  text-primary custom-radio">
+                            <mat-radio-button [value]="1" class="b-a-custom radioBtn text-primary custom-radio"
+                                [ngClass]="bankDetails.get('accountType').value == 1 ? 'text-primary b-a-custom': ' text-primitive'"
+                                checked>
                                 Savings
                             </mat-radio-button>
-                            <mat-radio-button value="2" class="radioBtnSmall radio-border custom-radio">
+                            <mat-radio-button [value]="2"
+                                [ngClass]="bankDetails.get('accountType').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
                                 Current </mat-radio-button>
-                            <mat-radio-button value="3" class="radioBtnSmall radio-border pr-12 custom-radio">
+                            <mat-radio-button [value]="3"
+                                [ngClass]="bankDetails.get('accountType').value == 3 ? 'text-primary b-a-custom': ' text-primitive'">
                                 Cash credit </mat-radio-button>
 
                         </mat-radio-group>
 
                     </div>
                 </div>
+                <!-- <app-add-holder-names *ngIf="bankList" [holderListInput]="bankList.holderNameList"
+                    (holderList)="getHolderList($event)">
+                </app-add-holder-names> -->
 
-
-                <div class="row pt-32">
+                <!-- <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0"> First holder name </h3>
                     </div>
@@ -124,10 +145,7 @@
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-3">
-                        + Add more
-                    </div>
-                </div>
+                </div> -->
 
 
                 <div class="row pt-32">
@@ -136,7 +154,7 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput maxlength="30" appInputValueValidation
+                            <input matInput [maxlength]="30" appInputValueValidation
                                 [inputValidator]="validatorType.TEXT_ONLY" formControlName="branchName" type="text"
                                 class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
@@ -150,7 +168,7 @@
                     <div class="col-md-5">
                         <mat-form-field>
                             <input matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC"
-                                formControlName="branchCode" maxlength="10" type="text" class="form-control">
+                                formControlName="branchCode" [maxlength]="10" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
@@ -165,7 +183,7 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput maxlength="30" formControlName="branchAdd1" type="text"
+                            <input matInput maxlength="100" formControlName="branchAdd1" type="text"
                                 class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
@@ -178,7 +196,7 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput maxlength="30" formControlName="branchAdd2" type="text"
+                            <input matInput maxlength="100" formControlName="branchAdd2" type="text"
                                 class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
@@ -194,7 +212,13 @@
                                 (focusout)="getPostalPin($event.target.value)" appInputValueValidation matInput
                                 maxlength="10" formControlName="pinCode" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
+                            <mat-hint align="end" class="f-12 text-custom">
+                                {{pincode.value.length}} / 6
+                            </mat-hint>
                         </mat-form-field>
+                    </div>
+                    <div class="col-md-1 p-0 d-flex align-items-center justify-content-center mt-12">
+                        <mat-spinner *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
                     </div>
                 </div>
                 <div class="row pt-32">
@@ -256,11 +280,13 @@
                     </div>
                     <div class="col-md-5">
                         <mat-radio-group aria-label="Select an option" formControlName="bankMandate">
-                            <mat-radio-button value="1"
-                                class="b-a-custom bor_top_tb_left pr-12 radioBtnSmall  text-primary custom-radio">
+                            <mat-radio-button [value]="1" class="b-a-custom radioBtn text-primary custom-radio"
+                                [ngClass]="bankDetails.get('bankMandate').value == 1 ? 'text-primary b-a-custom': ' text-primitive'"
+                                checked>
                                 Physical
                             </mat-radio-button>
-                            <mat-radio-button value="2" class="radioBtnSmall radio-border custom-radio">
+                            <mat-radio-button [value]="2"
+                                [ngClass]="bankDetails.get('bankMandate').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
                                 Biler </mat-radio-button>
                         </mat-radio-group>
                     </div>
@@ -287,8 +313,8 @@
                     </div>
                     <div class="col-md-3 iconRupess">
                         <mat-form-field>
-                            <input matInput maxlength="10" formControlName="mandateAmount" type="text"
-                                class="form-control rupess">
+                            <input matInput [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
+                                [maxlength]="10" formControlName="mandateAmount" type="number" class="form-control rupess">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>

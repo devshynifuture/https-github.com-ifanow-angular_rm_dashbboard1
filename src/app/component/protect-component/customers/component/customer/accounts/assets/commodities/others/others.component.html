@@ -106,7 +106,20 @@
             </div>
         </div>
     </div>
-
+    <div class="row pt-48">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">Market value as on date</h5>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field class="ba-date">
+                <input autocomplete="off" matInput formControlName="marketValueAsOnDate" class="form-control br-0 b-0"
+                    [matDatepicker]="picker2" readonly>
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+                <mat-hint align="start" class="f-12">Optional</mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
     <div class="row pt-40">
         <div class="col-md-5 text-right" *ngIf="showHide == true">
             <h5 class="m-0 pt-8 text-custom c-p" (click)="showLess(showHide)">Show less</h5>

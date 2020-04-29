@@ -382,7 +382,7 @@ export class ValidatorType {
   static COMPULSORY_ALPHA_NUMERIC = new RegExp(/^[a-zA-Z]+[a-zA-Z0-9/-]*$/);
   static ALPHA_NUMERIC_WITH_SPACE = new RegExp(/^[a-zA-Z0-9 /-]*$/);
   static EMAIL = new RegExp(/^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$/);
-  static ALPHA_NUMERIC_WITH_SLASH = new RegExp(/^[A-Z0-9//]+$/);
+  static ALPHA_NUMERIC_WITH_SLASH = new RegExp(/^[A-Z0-9//-]+$/);
   static TEN_DIGITS = new RegExp(/^\d{10}$/);
   static PAN = new RegExp(/[A-Za-z]{5}\d{4}[A-Za-z]{1}/);
   static ADHAAR = new RegExp(/^[0-9]{12,}$/);

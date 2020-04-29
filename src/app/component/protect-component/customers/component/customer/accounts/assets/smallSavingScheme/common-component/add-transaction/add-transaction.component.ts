@@ -44,7 +44,7 @@ export class AddTransactionComponent implements OnInit {
         isActive:1
       }));
     });
-   }else{
+   }else if(data.loanPartPayments){
     data.loanPartPayments;
     data.loanPartPayments.forEach(element => {
       this.getTransFormList.push(this.fb.group({

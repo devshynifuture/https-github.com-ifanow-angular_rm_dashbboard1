@@ -70,7 +70,13 @@ export class CustomerService {
   }
 
   getListOfFamilyByClient(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    let httpParams;
+    if (data.familyMemberId) {
+      httpParams = new HttpParams().set('advisorId', data.advisorId).set('familyMemberId', data.familyMemberId);
+    }
+    else {
+      httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    }
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIST_FAMILY_MEMBER, httpParams);
   }
 
@@ -760,17 +766,24 @@ export class CustomerService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CASHFLOW_LIST, httpParams);
   }
   getStockFeeds() {
-    return this.httpService.get("https://6ewakqcsma.execute-api.us-east-1.amazonaws.com/default/stockfeed");
+    return this.http.getAws("https://6ewakqcsma.execute-api.us-east-1.amazonaws.com/default/stockfeed");
   }
   getNiftyData() {
-    return this.httpService.get("https://fzwxpcsz49.execute-api.us-east-1.amazonaws.com/default/nifty500");
+    return this.http.getAws("https://fzwxpcsz49.execute-api.us-east-1.amazonaws.com/default/nifty500");
+  }
+  getDeptData() {
+    return this.http.getAws("https://qi8t9vk6pf.execute-api.us-east-1.amazonaws.com/default/debtindexfeed");
   }
 
-
   // overview - myfeed services
-  // TODO - change urls for below services
-  getAllFeeds(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_CONSENT, data);
+  getAllFeedsPortFolio(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CUSTOMER_PORTFOLIO_SUMMARY, data);
+  }
+  getMFData(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FEEDS_MF_DATA, data);
+  }
+  getDocumentsFeed(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENTS_FEED, data);
   }
 }
 

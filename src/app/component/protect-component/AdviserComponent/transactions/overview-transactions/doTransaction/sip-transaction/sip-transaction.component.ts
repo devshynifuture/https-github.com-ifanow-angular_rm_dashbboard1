@@ -5,6 +5,7 @@ import {OnlineTransactionService} from '../../../online-transaction.service';
 import {ProcessTransactionService} from '../process-transaction.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {UtilService} from '../../../../../../../services/util.service';
 
 @Component({
   selector: 'app-sip-transaction',
@@ -314,7 +315,7 @@ export class SipTransactionComponent implements OnInit {
   }
 
   dateArray(sipDates) {
-    const currentDate = new Date();
+    const currentDate = UtilService.getEndOfDay(new Date());
     currentDate.setDate(currentDate.getDate() + 7);
 
     this.dates = sipDates.split(',');
@@ -503,7 +504,7 @@ export class SipTransactionComponent implements OnInit {
         familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
         adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
         clientId: this.getDataSummary.defaultClient.clientId,
-        startDate: Number(new Date(this.sipTransaction.controls.date.value.replace(/"/g, ''))),
+        startDate: Number(UtilService.getEndOfDay(UtilService.getEndOfDay(new Date(this.sipTransaction.controls.date.value.replace(/"/g, ''))))),
         frequencyType: this.frequency,
         noOfInstallments: this.sipTransaction.controls.installment.value,
         orderType: 'SIP', // (this.mandateDetails==undefined)?null:this.mandateDetails[0].mandateType,
@@ -613,7 +614,7 @@ export class SipTransactionComponent implements OnInit {
           noOfInstallments: this.sipTransaction.controls.installment.value,
           productDbId: this.schemeDetails.id,
           frequencyType: this.frequency,
-          startDate: Number(new Date(this.sipTransaction.controls.date.value.replace(/"/g, ''))),
+          startDate: Number(UtilService.getEndOfDay(new Date(this.sipTransaction.controls.date.value.replace(/"/g, '')))),
           schemeSelection: this.sipTransaction.get('schemeSelection').value,
           folioSelection: this.sipTransaction.get('folioSelection').value,
           modeOfPaymentSelection: this.sipTransaction.get('modeOfPaymentSelection').value,

@@ -483,7 +483,8 @@
                     </mat-form-field>
                 </div>
                 <div class="col-md-1 p-0 pt-8 d-flex">
-                    <i class="material-icons text-primitive c-p float-left" appBankAccount [data]="bankAccountDetails" (inputChange)='bankAccountList($event)'>add</i>
+                    <!-- [data]="bankAccountDetails" appBankAccount prod build -->
+                    <i class="material-icons text-primitive c-p float-left"  (inputChange)='bankAccountList($event)'>add</i>
                 </div>
             </div>
 

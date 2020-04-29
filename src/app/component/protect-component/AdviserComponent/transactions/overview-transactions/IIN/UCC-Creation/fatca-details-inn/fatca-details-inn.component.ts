@@ -74,16 +74,21 @@ export class FatcaDetailsInnComponent implements OnInit {
   getdataForm(data) {
 
     this.fatcaDetails = this.fb.group({
-      nationality: [(!data) ? '' : data.nationality, [Validators.required]],
+      nationality: [(!data) ? '1' : data.nationality, [Validators.required]],
       annualIncome: [(!data) ? '' : data.annualIncome, [Validators.required]],
       cityOfBirth: [(!data) ? '' : data.cityOfBirth, [Validators.required]],
       countryOfBirth: [!data ? '' : data.countryOfBirth, [Validators.required]],
       sourceOfWealth: [!data ? '' : data.sourceOfWealth, [Validators.required]],
       occupation: [!data ? '' : data.occupation, [Validators.required]],
-      politically: [!data ? '' : data.politically, [Validators.required]],
-      taxResidency: [!data ? '' : data.taxResidency, [Validators.required]],
+      politically: [!data ? '1' : data.politically, [Validators.required]],
+      taxResidency: [!data ? '1' : data.taxResidency, [Validators.required]],
 
     });
+    if(!data){
+      this.fatcaDetails.controls.nationality.setValue('1')
+      this.fatcaDetails.controls.politically.setValue('1')
+      this.fatcaDetails.controls.taxResidency.setValue('1')
+    }
   }
   getFormControl(): any {
     return this.fatcaDetails.controls;
@@ -97,7 +102,7 @@ export class FatcaDetailsInnComponent implements OnInit {
           this.fatcaDetails.controls[element].markAsTouched();
         }
       }
-    }else {
+    } else {
 
       let obj = {
         nationality: this.fatcaDetails.controls.nationality.value,
@@ -106,7 +111,7 @@ export class FatcaDetailsInnComponent implements OnInit {
         countryOfBirth: this.fatcaDetails.controls.countryOfBirth.value,
         sourceOfWealth: this.fatcaDetails.controls.sourceOfWealth.value,
         occupation: this.fatcaDetails.controls.occupation.value,
-        politically: this.fatcaDetails.controls.politically.value,
+        politically: (this.fatcaDetails.controls.politically.value == 1) ? 'Y' : (this.fatcaDetails.controls.politically.value == 2) ? 'N' : 'R',
         taxResidency: this.fatcaDetails.controls.taxResidency.value,
       }
 
