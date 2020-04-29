@@ -193,7 +193,7 @@ export class SwpTransactionComponent implements OnInit {
     const obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-      orderType: 'ORDER',
+      orderType: 'STP',
       userAccountType: this.getDataSummary.defaultCredential.accountType,
     };
     this.onlineTransact.getSchemeDetails(obj1).subscribe(

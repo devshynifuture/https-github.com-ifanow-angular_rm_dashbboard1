@@ -8,6 +8,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
 import { PostalService } from 'src/app/services/postal.service';
 import { MatInput } from '@angular/material';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-contact-details-inn',
@@ -36,11 +37,17 @@ export class ContactDetailsInnComponent implements OnInit {
   changedValue: string;
   generalDetails: any;
   doneData: any;
+  isdCodes: Array<any> = [];
+  isLoading = false
+
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  clientData: any;
+  addressList: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
     private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
-    public eventService: EventService, private ProcessTransactionService: ProcessTransactionService) { }
+    public eventService: EventService, private ProcessTransactionService: ProcessTransactionService,
+    private peopleService: PeopleService) { }
 
   @ViewChild('dynamic', {
     read: ViewContainerRef,
@@ -49,6 +56,7 @@ export class ContactDetailsInnComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
+    this.clientData = data.clientData
     console.log('all data in contact', this.inputData)
     this.doneData = {}
     this.list = data
@@ -73,11 +81,19 @@ export class ContactDetailsInnComponent implements OnInit {
   }
 
   ngOnInit() {
-   let value = {}
+    this.getIsdCodesData();
+    let value = {}
     if (this.firstHolderContact) {
       this.getdataForm(this.firstHolderContact)
+      if (this.clientData) {
+        this.getAddressList(this.clientData)
+      }
+
     } else {
       this.getdataForm('')
+      if (this.clientData) {
+        this.getAddressList(this.clientData)
+      }
     }
     this.obj1 = []
     this.sendObj = []
@@ -92,6 +108,39 @@ export class ContactDetailsInnComponent implements OnInit {
     };
 
     this.eventService.changeUpperSliderState(fragmentData);
+  }
+  getIsdCodesData() {
+
+    this.peopleService.getIsdCode({}).subscribe(
+      data => {
+        if (data) {
+          this.isdCodes = data;
+        }
+      },
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+      }
+    )
+  }
+  getAddressList(data) {
+    this.addressList = {}
+    this.addressList.address = {}
+    const obj = {
+      userId: data.clientId,
+      userType: 2
+    };
+    this.custumService.getAddressList(obj).subscribe(
+      data => {
+        console.log(data);
+        console.log('address stored', data)
+        this.addressList = this.firstHolderContact
+        this.addressList.address = data[0]
+        this.getdataForm(this.addressList);
+      },
+      err => {
+        this.addressList = {};
+      }
+    );
   }
   getdataForm(data) {
     if (!data) {
@@ -110,16 +159,16 @@ export class ContactDetailsInnComponent implements OnInit {
       email: [(!data) ? '' : data.email, [Validators.required]],
       aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required]],
       maritalStatus: [!data ? '' : data.maritalStatus, [Validators.required]],
+      isdCodeId: [!data ? '' : data.isdCodeId, [Validators.required]],
       mobileNo: [!data ? '' : data.mobileNo, [Validators.required]],
-      phoneNo: [!data ? '' : data.phoneNo, [Validators.required]],
-      addressLine1: [!data.address ? data.addressLine1 : data.address.addressLine1, [Validators.required]],
-      addressLine2: [!data.address ? data.addressLine2 : data.address.addressLine2, [Validators.required]],
+      addressLine1: [!data.address ? data.addressLine1 : (data.address.address1) ? data.address.address1 : data.address.addressLine1, [Validators.required]],
+      addressLine2: [!data.address ? data.addressLine2 : (data.address.address2) ? data.address.address2 : data.address.addressLine2, [Validators.required]],
       pinCode: [!data.address ? data.pinCode : data.address.pinCode, [Validators.required]],
       city: [!data.address ? data.city : data.address.city, [Validators.required]],
       district: [!data.address ? data.district : data.address.district, [Validators.required]],
       state: [!data.address ? data.state : data.address.state, [Validators.required]],
       country: [!data.address ? data.country : data.address.country, [Validators.required]],
-      address:[!data.address ? data.address : data.address],
+      address: [!data.address ? data.address : data.address],
     });
   }
   getFormControl(): any {
@@ -145,6 +194,7 @@ export class ContactDetailsInnComponent implements OnInit {
     );
   }
   getPostalPin(value) {
+    this.isLoading = true
     let obj = {
       zipCode: value
     }
@@ -161,6 +211,8 @@ export class ContactDetailsInnComponent implements OnInit {
   }
 
   PinData(data) {
+    this.isLoading = false
+
     if (data[0].Status == "Error") {
       this.pinInvalid = true;
 
@@ -192,7 +244,7 @@ export class ContactDetailsInnComponent implements OnInit {
         this.holder.type = value;
         this.contactDetails.setValue(this.firstHolderContact);
       } else {
-       return;
+        return;
       }
     }
     else if (value == 'second') {
@@ -232,10 +284,11 @@ export class ContactDetailsInnComponent implements OnInit {
       this.sendObj.secondHolder = Object.assign({}, this.list.secondHolder, this.contacts[1]);
       this.sendObj.thirdHolder = Object.assign({}, this.list.thirdHolder, this.contacts[2]);
       this.sendObj.holderList = this.inputData.holderList
-       this.sendObj.bankDetailList = this.inputData.bankDetailList
-       this.sendObj.nomineeList = this.inputData.nomineeList;
-       this.sendObj.fatcaDetail = this.inputData.fatcaDetail;
-       this.sendObj.generalDetails = this.inputData.generalDetails
+      this.sendObj.bankDetailList = this.inputData.bankDetailList
+      this.sendObj.nomineeList = this.inputData.nomineeList;
+      this.sendObj.fatcaDetail = this.inputData.fatcaDetail;
+      this.sendObj.generalDetails = this.inputData.generalDetails
+      this.sendObj.clientData = this.clientData
       this.openBankDetails(this.sendObj)
     }
   }

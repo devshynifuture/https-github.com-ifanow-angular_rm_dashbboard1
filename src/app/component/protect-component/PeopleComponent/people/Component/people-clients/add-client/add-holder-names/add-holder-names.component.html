@@ -5,12 +5,12 @@
                 <span *ngIf="i==0">First</span>
                 <span *ngIf="i==1">Second</span>
                 <span *ngIf="i==2">Third</span>
-                Holder Name</h5>
+                holder name</h5>
         </div>
         <div class="col-md-6 p-0">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Enter Holder Name" autocomplete="off" #name appInputValueValidation
+                    <input placeholder="Enter holder name" autocomplete="off" #name appInputValueValidation
                         [inputValidator]="validatorType.PERSON_NAME" [maxLength]="50" formControlName="name" matInput
                         class="form-control">
                     <mat-hint align="end" class="f-12">{{name.value.length}}/50</mat-hint>

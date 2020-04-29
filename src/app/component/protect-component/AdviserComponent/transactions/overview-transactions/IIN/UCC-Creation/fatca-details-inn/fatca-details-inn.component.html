@@ -34,14 +34,17 @@
                     </div>
                     <div class="col-md-8">
                         <mat-radio-group aria-label="Select an option" formControlName="nationality">
-                            <mat-radio-button value="1"
-                                class="b-a-custom bor_top_tb_left radioBtnSmall  text-primary custom-radio">
+                            <mat-radio-button [value]="1"class="b-a-custom radioBtn text-primary custom-radio"
+                                [ngClass]="fatcaDetails.get('nationality').value == 1 ? 'text-primary b-a-custom': ' text-primitive'"
+                                checked>
                                 India
                             </mat-radio-button>
-                            <mat-radio-button value="2" class="radioBtnSmall radio-border custom-radio pr-12">
+                            <mat-radio-button [value]="2"
+                                [ngClass]="fatcaDetails.get('nationality').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
                                 USA/Canada </mat-radio-button>
 
-                            <mat-radio-button value="2" class="radioBtnSmall radio-border custom-radio">
+                            <mat-radio-button [value]="3"
+                                [ngClass]="fatcaDetails.get('nationality').value == 3 ? 'text-primary b-a-custom': ' text-primitive'">
                                 Others </mat-radio-button>
                         </mat-radio-group>
                     </div>
@@ -57,7 +60,8 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput maxlength="10" formControlName="cityOfBirth" type="text" class="form-control">
+                            <input matInput maxlength="10" formControlName="cityOfBirth" type="text"
+                                class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
@@ -70,7 +74,8 @@
                     </div>
                     <div class="col-md-5">
                         <mat-form-field>
-                            <input matInput maxlength="10" formControlName="countryOfBirth" type="text" class="form-control">
+                            <input matInput maxlength="10" formControlName="countryOfBirth" type="text"
+                                class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
@@ -84,8 +89,8 @@
                     </div>
                     <div class="col-md-3">
                         <mat-form-field>
-                            <input matInput formControlName="annualIncome"maxlength="10" type="text"
-                            class="form-control">
+                            <input matInput formControlName="annualIncome" maxlength="10" type="text"
+                                class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
@@ -150,14 +155,17 @@
                     </div>
                     <div class="col-md-8">
                         <mat-radio-group aria-label="Select an option" formControlName="politically">
-                            <mat-radio-button value="Y"
-                                class="b-a-custom bor_top_tb_left radioBtnSmall  text-primary custom-radio">
+                            <mat-radio-button [value]="1"class="b-a-custom radioBtn text-primary custom-radio"
+                                [ngClass]="fatcaDetails.get('politically').value == '1' ? 'text-primary b-a-custom': ' text-primitive'"
+                                checked>
                                 Yes
                             </mat-radio-button>
-                            <mat-radio-button value="N" class="radioBtnSmall radio-border custom-radio">
+                            <mat-radio-button [value]="2"
+                                [ngClass]="fatcaDetails.get('politically').value == '2' ? 'text-primary b-a-custom': ' text-primitive'">
                                 No </mat-radio-button>
 
-                            <mat-radio-button value="R" class="radioBtnSmall radio-border pr-12 custom-radio">
+                            <mat-radio-button [value]="3"
+                                [ngClass]="fatcaDetails.get('politically').value == '3' ? 'text-primary b-a-custom': ' text-primitive'">
                                 Related to PEP </mat-radio-button>
                         </mat-radio-group>
                     </div>
@@ -172,11 +180,13 @@
 
                     <div class="col-md-5">
                         <mat-radio-group aria-label="Select an option" formControlName="taxResidency">
-                            <mat-radio-button value="1"
-                                class="b-a-custom bor_top_tb_left radioBtnSmall  text-primary custom-radio">
+                            <mat-radio-button value="1"class="b-a-custom radioBtn text-primary custom-radio"
+                                [ngClass]="fatcaDetails.get('taxResidency').value == 1 ? 'text-primary b-a-custom': ' text-primitive'"
+                                checked>
                                 Yes
                             </mat-radio-button>
-                            <mat-radio-button value="2" class="radioBtnSmall radio-border custom-radio">
+                            <mat-radio-button value="2"
+                                [ngClass]="fatcaDetails.get('taxResidency').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
                                 No </mat-radio-button>
 
                         </mat-radio-group>
@@ -274,7 +284,8 @@
             PREVIOUS
         </button>
 
-        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" (click)="SendToForm()">SAVE</button>
+        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4"
+            (click)="SendToForm()">SAVE</button>
         <button mat-button class="greenBtn  p-0 mw-40 br-left-white " [matMenuTriggerFor]="menu">
             <i class="material-icons">
                 keyboard_arrow_up

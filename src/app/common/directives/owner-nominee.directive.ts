@@ -2,6 +2,7 @@ import { Directive, EventEmitter, Input, Output } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { FormArray, FormBuilder } from '@angular/forms';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { element } from 'protractor';
 
 @Directive({
   selector: '[appOwnerNominee]'
@@ -71,10 +72,19 @@ export class OwnerNomineeDirective {
     }
   }
   getListFamilyMem(): any {
-    const obj = {
-      advisorId: this.advisorId,
-      clientId: (this.clientId) ? this.clientId : this.clientIdData
-    };
+    let obj;
+    if (this.clientId==undefined) {
+      obj = {
+        advisorId: this.advisorId,
+        familyMemberId: this.clientIdData.familyMemberId
+      };
+    }
+    else {
+      obj = {
+        advisorId: this.advisorId,
+        clientId: (this.clientId) ? this.clientId : this.clientIdData.clientId
+      };
+    }
     if (this.sendData.length <= 0) {
       this.custumService.getListOfFamilyByClient(obj).subscribe(
         data => this.getListOfFamilyByClientRes(data)
@@ -84,7 +94,22 @@ export class OwnerNomineeDirective {
 
   getListOfFamilyByClientRes(data) {
     console.log('family Memebers', data);
-    if (data.familyMembersList && data.familyMembersList.length > 0) {
+    if (this.clientId && data.familyMembersList && data.familyMembersList.length > 0) {
+      data.familyMembersList.forEach((singleData) => {
+        setTimeout(() => {
+          singleData.disable = false;
+        }, 100);
+      });
+    }
+    if (this.clientIdData.relationshipId == 3 || this.clientIdData.relationshipId == 4 && data.familyMembersList && data.familyMembersList.length > 0) {
+      data.familyMembersList = data.familyMembersList.filter(element => element.relationshipId != this.clientIdData.relationshipId);
+      data.familyMembersList.forEach((singleData) => {
+        setTimeout(() => {
+          singleData.disable = false;
+        }, 100);
+      });
+    }
+    else {
       data.familyMembersList.forEach((singleData) => {
         setTimeout(() => {
           singleData.disable = false;

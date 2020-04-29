@@ -49,6 +49,9 @@ export class AddNumberComponent implements OnInit {
   }
 
   getIsdCodesData(taxStatusObj) {
+    if (taxStatusObj.length == 0) {
+      return;
+    }
     let obj = {};
     this.peopleService.getIsdCode(obj).subscribe(
       data => {
@@ -107,7 +110,7 @@ export class AddNumberComponent implements OnInit {
       if (this.compulsionCount < this.minimumCompulsary) {
         this.compulsionCount++;
         this.getMobileNumList.push(this.fb.group({
-          code: [data.isdCodeId],
+          code: [data.isdCodeId, [Validators.required]],
           number: [data.mobileNo, [Validators.pattern(this.validatorType.TEN_DIGITS), Validators.required]]
         }));
       } else {
@@ -121,7 +124,7 @@ export class AddNumberComponent implements OnInit {
   }
   checkUniqueNumber() {
     if (this.getMobileNumList.length == 2) {
-      if (this.getMobileNumList.controls[0].value.number === this.getMobileNumList.controls[1].value.number) {
+      if (this.getMobileNumList.controls[0].value.number == this.getMobileNumList.controls[1].value.number) {
         this.getMobileNumList.controls[0].get('number').setErrors({ notUnique: true });
       }
       else {

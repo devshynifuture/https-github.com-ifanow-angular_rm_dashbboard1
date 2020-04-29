@@ -43,6 +43,7 @@ export class OrgProfileComponent implements OnInit {
     private settingsService: SettingsService,
     private postalService: PostalService,
     private peopleService: PeopleService,
+    private authService: AuthService
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -258,7 +259,9 @@ export class OrgProfileComponent implements OnInit {
         this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
         this.anyDetailsChanged = true;
         this.profileImg = jsonDataObj.logoUrl;
-        AuthService.setAppPic(jsonDataObj.logoUrl);
+        const orgDetails = this.authService.orgData;
+        orgDetails.logoUrl = jsonDataObj.logoUrl;
+        AuthService.setOrgDetails(orgDetails);
         this.switchToTab(++this.selectedTab);
       });
     } else {
