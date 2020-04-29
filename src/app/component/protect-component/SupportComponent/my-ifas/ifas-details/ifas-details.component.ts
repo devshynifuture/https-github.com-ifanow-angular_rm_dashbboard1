@@ -108,6 +108,7 @@ export class IfasDetailsComponent implements OnInit {
           this.franklineData.data = null;
           this.camsData.data = null
           this.karvyData.data = null;
+          this.eventService.openSnackBar("My IFA Recon Summary Not Found", "Dismiss")
         }
       }
       , err => {
@@ -142,23 +143,37 @@ export class IfasDetailsComponent implements OnInit {
           this.brokerList = res;
           console.log('broker list values:::', res);
         }
+      }, err => {
+        this.eventService.openSnackBar(err, "DISMISS");
       });
   }
 
   getBrokerList(value) {
     this.rtId = value;
     if (value === this.franklinId) {
-      this.franklineData['rmId'] = this.rtId;
+      this.franklineData['rmId'] = this.rmId;
       this.franklineData['advisorId'] = this.ifasData.adminAdvisorId;
-      this.openSelectArnRiaDialog(this.brokerList, this.franklineData, this.rtId)
+      if (this.brokerList && this.brokerList.length !== 0) {
+        this.openSelectArnRiaDialog(this.brokerList, this.franklineData, this.rtId)
+      } else {
+        this.eventService.openSnackBar('No Broker List Found For This User', "DISMISS");
+      }
     } else if (value === this.camsId) {
-      this.camsData['rmId'] = this.rtId;
+      this.camsData['rmId'] = this.rmId;
       this.camsData['advisorId'] = this.ifasData.adminAdvisorId;
-      this.openSelectArnRiaDialog(this.brokerList, this.camsData, this.rtId)
+      if (this.brokerList && this.brokerList.length !== 0) {
+        this.openSelectArnRiaDialog(this.brokerList, this.camsData, this.rtId)
+      } else {
+        this.eventService.openSnackBar('No Broker List Found For This User', "DISMISS");
+      }
     } else if (value === this.karvyId) {
-      this.karvyData['rmId'] = this.rtId;
+      this.karvyData['rmId'] = this.rmId;
       this.karvyData['advisorId'] = this.ifasData.adminAdvisorId;
-      this.openSelectArnRiaDialog(this.brokerList, this.karvyData, this.rtId)
+      if (this.brokerList && this.brokerList.length !== 0) {
+        this.openSelectArnRiaDialog(this.brokerList, this.karvyData, this.rtId);
+      } else {
+        this.eventService.openSnackBar('No Broker List Found For This User', "DISMISS");
+      }
 
     }
   }
@@ -233,7 +248,7 @@ export class IfasDetailsComponent implements OnInit {
     const Fragmentdata = {
       brokerCodeValue: data,
       mainData: value,
-      rtId: rtId
+      rtId,
     };
     const dialogRef = this.dialog.open(MyIfaSelectArnRiaComponent, {
       width: '30%',
