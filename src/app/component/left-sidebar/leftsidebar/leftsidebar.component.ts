@@ -80,6 +80,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
       this.showDefaultDropDownOnSearch = false
     }
     else {
+      this.clientList = undefined;
       this.showDefaultDropDownOnSearch = true;
     }
   }
