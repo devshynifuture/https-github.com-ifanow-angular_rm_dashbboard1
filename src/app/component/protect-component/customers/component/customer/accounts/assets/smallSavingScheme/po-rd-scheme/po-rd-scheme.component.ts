@@ -12,6 +12,7 @@ import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../excel.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-po-rd-scheme',
@@ -35,7 +36,7 @@ export class PoRdSchemeComponent implements OnInit {
   @ViewChildren(FormatNumberDirective) formatNumber;
   excelData: any[];
 
-  constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, public dialog: MatDialog, private eventService: EventService,
+  constructor(private excel:ExcelGenService, private datePipe: DatePipe,  private pdfGen:PdfGenService, public dialog: MatDialog, private eventService: EventService,
     private cusService: CustomerService, private subInjectService: SubscriptionInject) {
   }
 
@@ -93,6 +94,7 @@ export class PoRdSchemeComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
+      requiredDate: this.datePipe.transform(new Date(), 'yyyy-MM-dd')
     };
     this.cusService.getSmallSavingSchemePORDData(obj).subscribe(
       data => this.getPoRdSchemedataResponse(data), (error) => {
@@ -105,18 +107,17 @@ export class PoRdSchemeComponent implements OnInit {
 
   getPoRdSchemedataResponse(data) {
     this.isLoading = false;
-    if (data == undefined) {
-      this.noData = 'No scheme found';
-      this.dataSource.data = [];
-    } else if (data && data.postOfficeRDList.length != 0) {
-      console.log('getPoRdSchemedataResponse :::::::::::::::', data);
-      this.dataSource.data = data.postOfficeRDList;
-      this.dataSource.sort = this.sort;
-      UtilService.checkStatusId(this.dataSource.filteredData);
-      this.sumOfCurrentValue = data.sumOfCurrentValue;
-      this.sumOfMonthlyDeposit = data.sumOfMonthlyDeposit;
-      this.sumOfMaturityValue = data.sumOfMaturityValue;
-      this.pordData = data;
+    if (data != undefined) {
+      if (data.assetList) {
+        console.log('getPoRdSchemedataResponse :::::::::::::::', data);
+        this.dataSource.data = data.assetList;
+        this.dataSource.sort = this.sort;
+        UtilService.checkStatusId(this.dataSource.filteredData);
+        this.sumOfCurrentValue = data.sumOfCurrentValue;
+        this.sumOfMonthlyDeposit = data.sumOfMonthlyDeposit;
+        this.sumOfMaturityValue = data.sumOfMaturityValue;
+        this.pordData = data;
+    } 
     } else {
       this.dataSource.data = [];
       this.noData = 'No scheme found';
