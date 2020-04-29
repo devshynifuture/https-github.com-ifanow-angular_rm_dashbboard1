@@ -11,6 +11,7 @@ import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { HttpService } from 'src/app/http-service/http-service';
 import { TransactionMobileViewComponent } from '../transaction-mobile-view/transaction-mobile-view.component';
 import { MatDialog } from '@angular/material';
+import { OnlineTransactionService } from '../online-transaction.service';
 
 @Component({
   selector: 'app-overview-transactions',
@@ -19,41 +20,34 @@ import { MatDialog } from '@angular/material';
 })
 export class OverviewTransactionsComponent implements OnInit {
   file: void;
+  advisorId: any;
+  finalStartDate: any;
+  finalEndDate: any;
+  errMessage: any;
+  transactionCount: any;
+  totalUccCount: any;
+  totalInvestorWithoutMandate: any;
+  isLoading = false
 
 
-  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, public eventService: EventService, private http: HttpService, ) { }
+  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject,
+     public eventService: EventService, private http: HttpService, 
+     private tranService : OnlineTransactionService) {
+       this.advisorId = AuthService.getAdvisorId()
+      }
 
   ngOnInit() {
+    this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7).getTime();
+      this.finalEndDate = new Date().getTime();
+      this.getAllTransactionList()
+      this.getMandate()
+      this.getIInData()
   }
 
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
-  // openMobileTransactionPopup() {
-  //   const dialogRef = this.dialog.open(TransactionMobileViewComponent, {
 
-  //    maxWidth: '100vw',
-  //    width:'90%',
-  //    height:'466px',
-  //    panelClass: 'custom-modalbox'
-  //   });
-
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     console.log('The dialog was closed');
-  //   });
-  // }
-  // openMobileErrroTransactionPopup() {
-  //   const dialogRef = this.dialog.open(TransactionMobileViewComponent, {
-
-  //    maxWidth: '100vw',
-  //    width:'90%',
-  //    panelClass: 'custom-modalbox-error'
-  //   });
-
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     console.log('The dialog was closed');
-  //   });
-  // }
   openMobileErrorCopyTransactionPopup() {
     const dialogRef = this.dialog.open(TransactionMobileViewComponent, {
 
@@ -126,6 +120,70 @@ export class OverviewTransactionsComponent implements OnInit {
 
         }
         rightSideDataSub.unsubscribe();
+      }
+    );
+  }
+  getAllTransactionList() {
+    this.isLoading = true
+    const obj = {
+      advisorId: this.advisorId,
+      tpUserCredentialId: null,
+      startDate: this.finalStartDate,
+      endDate: this.finalEndDate
+    };
+    this.tranService.getSearchScheme(obj).subscribe(
+      data => {
+        console.log(data);
+        this.isLoading = false
+        console.log('transaction data',data);
+        this.transactionCount = data.length
+      },
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+        this.errMessage = err.error.message;
+      }
+    );
+  }
+  getMandate(){
+    this.isLoading = true
+    const obj = {
+      advisorId: this.advisorId,
+    };
+    this.tranService.getOverviewMandate(obj).subscribe(
+      data => {
+        console.log(data);
+        this.isLoading = false
+        console.log('getOverviewMandate data',data);
+        this.totalInvestorWithoutMandate = data.totalInvestorWithoutMandate
+      },
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+        this.errMessage = err.error.message;
+      }
+    );
+  }
+//     totalInvestorWithoutMandate: 589
+// statusList: Array(4)
+// 0: {count: 4, status: 0}
+// 1: {count: 38, status: 1}
+// 2: {count: 1, status: 2}
+// 3: {count: 1, status: 3}
+//   }
+  getIInData(){
+    this.isLoading = true
+    const obj = {
+      advisorId: this.advisorId,
+    };
+    this.tranService.getIINUCCOverview(obj).subscribe(
+      data => {
+        console.log(data);
+        this.isLoading = false
+        this.totalUccCount = data.length
+        console.log('getIINUCCOverview data',data);
+      },
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+        this.errMessage = err.error.message;
       }
     );
   }

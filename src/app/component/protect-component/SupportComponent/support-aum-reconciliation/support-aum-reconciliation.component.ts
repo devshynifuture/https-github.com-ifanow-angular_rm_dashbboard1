@@ -13,7 +13,6 @@ export class SupportAumReconciliationComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private reconService: ReconciliationService
   ) { }
 
   ngOnInit() {
