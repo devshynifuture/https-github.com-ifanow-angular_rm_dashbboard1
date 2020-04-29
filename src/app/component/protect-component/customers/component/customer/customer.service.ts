@@ -779,5 +779,8 @@ export class CustomerService {
   getDocumentsFeed(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENTS_FEED, data);
   }
+  getRiskProfile(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FEED_RISK_PROFILE, data);
+  }
 }
 

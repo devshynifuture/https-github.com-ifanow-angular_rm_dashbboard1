@@ -100,6 +100,10 @@ export class OverviewMyfeedComponent implements OnInit {
     videos: {
       dataLoaded: false,
       hasData: false,
+    },
+    riskProfile: {
+      dataLoaded: false,
+      hasData: false,
     }
   };
 
@@ -108,13 +112,14 @@ export class OverviewMyfeedComponent implements OnInit {
   hasNoData:boolean = false;
 
   feedsData:any = {};
-  portFolioData:any = {};
+  portFolioData:any[] = [];
   planData:any = {};
   activityData:any = {};
   transactionsData:any = {};
   profileData:any = {};
   educationData:any = {};
-  videosData:any = {};
+  videosData:any[] = [];
+  riskProfileData:any=null;
 
 
   ngOnInit() {
@@ -171,6 +176,7 @@ export class OverviewMyfeedComponent implements OnInit {
           this.loadAllFeedsPortFolio();
           this.loadFeedsTransactions();
           this.loadDocumentValutData();
+          this.loadRiskProfile();
         }
         break;
       case 2:
@@ -445,6 +451,27 @@ export class OverviewMyfeedComponent implements OnInit {
       } else {
         this.tabsLoaded.education.hasData = true;
         this.educationData = res;
+      }
+      this.tabsLoaded.education.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
+  }
+
+  loadRiskProfile(){
+    const obj = {
+      clientId: this.clientData.id,
+      advisorId: this.advisorId
+    }
+    this.customerService.getRiskProfile(obj).subscribe(res => {
+      if(res == null) {
+        this.riskProfileData = null;
+      } else {
+        this.tabsLoaded.education.hasData = true;
+        this.riskProfileData = res[0];
       }
       this.tabsLoaded.education.dataLoaded = true;
       this.loaderFn.decreaseCounter();
