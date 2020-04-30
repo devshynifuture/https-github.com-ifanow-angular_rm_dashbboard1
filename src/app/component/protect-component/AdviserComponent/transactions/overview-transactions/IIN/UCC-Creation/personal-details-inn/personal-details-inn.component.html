@@ -98,37 +98,36 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row pt-32">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Gender</h3>
-                    </div>
-                    <div class="col-md-8 ">
-                        <mat-radio-group aria-label="Select an option" formControlName="gender">
-                            <mat-radio-button [value]="1" class="b-a-custom radioBtn text-primary custom-radio" [ngClass]="personalDetails.get('gender').value == '1' ? 'text-primary b-a-custom': 'text-primitive'" checked>
-                                Male
-                            </mat-radio-button>
-                            <mat-radio-button [value]="2" [ngClass]="personalDetails.get('gender').value == '2' ? 'text-primary b-a-custom': ' text-primitive'">
-                                Female </mat-radio-button>
-
-                            <mat-radio-button [value]="3" [ngClass]="personalDetails.get('gender').value == '3' ? 'text-primary b-a-custom': ' text-primitive'">
-                                Other </mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                </div>
-
+                    <div class="row pt-32">
+                            <div class="col-md-4 text-right pr-0">
+                                <h3 class="f-16 pt-8 m-0"> Gender{{personalDetails.get('gender').value}}</h3>
+                            </div>
+                            <div class="col-md-8 ">
+                                <mat-radio-group aria-label="Select an option" formControlName="gender">
+                                    <mat-radio-button value="1"  [ngClass]="personalDetails.get('gender').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'" >
+                                        Male
+                                    </mat-radio-button>
+                                    <mat-radio-button value="2"  [ngClass]="personalDetails.get('gender').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'" >
+                                        Female </mat-radio-button>
+        
+                                    <mat-radio-button value="3"  [ngClass]="personalDetails.get('gender').value === '3' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'" >
+                                        Other </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div> 
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0"> Marital status</h3>
                     </div>
                     <div class="col-md-8">
                         <mat-radio-group aria-label="Select an option" formControlName="maritalStatus">
-                            <mat-radio-button [value]="1" class="b-a-custom radioBtn text-primary custom-radio" [ngClass]="personalDetails.get('maritalStatus').value == '1' ? 'text-primary b-a-custom': ' text-primitive'" checked="true">
+                            <mat-radio-button value="1"  [ngClass]="personalDetails.get('maritalStatus').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                                 Married
                             </mat-radio-button>
-                            <mat-radio-button [value]="2" [ngClass]="personalDetails.get('maritalStatus').value == '2' ? 'text-primary b-a-custom': ' text-primitive'">
+                            <mat-radio-button value="2"  [ngClass]="personalDetails.get('maritalStatus').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                                 Unmarried </mat-radio-button>
 
-                            <mat-radio-button [value]="3" [ngClass]="personalDetails.get('maritalStatus').value == '3' ? 'text-primary b-a-custom': ' text-primitive'">
+                            <mat-radio-button value="3"  [ngClass]="personalDetails.get('maritalStatus').value === '3' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                                 Other </mat-radio-button>
                         </mat-radio-group>
                     </div>
