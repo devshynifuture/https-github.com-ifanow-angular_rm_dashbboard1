@@ -18,6 +18,7 @@ import { AddNumberComponent } from '../PeopleComponent/people/Component/people-c
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { CustomCommonModule } from 'src/app/common/custom.common.module';
     CommonModule,
     ImageCropperModule,
     FormsModule,
+    NgxMatSelectSearchModule,
     CustomCommonModule,
     ReactiveFormsModule,
     FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),
