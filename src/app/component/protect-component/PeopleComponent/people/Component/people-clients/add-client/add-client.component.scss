@@ -10,17 +10,17 @@
     min-width: 50px;
 }
 
-::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
-    width: 1.5em !important;
-}
+// ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+//     width: 1.5em !important;
+// }
 
-::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
-    padding: 0px;
-}
+// ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+//     padding: 0px;
+// }
 
-::ng-deep .mat-form-field-suffix {
-    position: inherit !important;
-}
+// ::ng-deep .mat-form-field-suffix {
+//     position: inherit !important;
+// }
 
 .pr-7 {
     padding-right: 7px;
@@ -33,5 +33,10 @@
 ::ng-deep .tabHeaderPadding {
     .mat-tab-header {
         padding-left: 40px !important;
+    }
+}
+@media(max-width: 767px){
+    ::ng-deep .tabHeaderPadding .mat-tab-header{
+        padding-left:0px !important;
     }
 }
