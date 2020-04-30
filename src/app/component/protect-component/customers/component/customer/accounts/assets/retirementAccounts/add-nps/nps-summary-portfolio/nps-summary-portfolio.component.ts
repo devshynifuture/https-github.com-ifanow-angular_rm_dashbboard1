@@ -88,6 +88,8 @@ export class NpsSummaryPortfolioComponent implements OnInit {
     } else {
       this.adviceShowHeaderAndFooter = true;
     }
+
+    this.getSchemeList();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
   }
@@ -268,6 +270,17 @@ addNewNominee(data) {
       this.showError = false
     }
   }
+  schemeList:any = [];
+  getSchemeList(){
+    this.custumService.getSchemeChoice().subscribe(
+      data =>{
+        this.schemeList=data.npsSchemeList;
+      },
+      err =>{
+        
+      }
+    );
+  }
   getdataForm(data) {
     this.flag = data;
 
@@ -282,7 +295,7 @@ addNewNominee(data) {
       })]),
       currentValue: [(data == undefined) ? '' : data.currentValuation, [Validators.required]],
       valueAsOn: [(data == undefined) ? '' : new Date(data.valueAsOn), [Validators.required]],
-      schemeChoice: [(data == undefined) ? '' : (data.schemeChoice) + "", [Validators.required]],
+      schemeChoice: [data.schemeChoice ?parseInt(data.schemeChoice) : '', [Validators.required]],
       pran: [(data == undefined) ? '' : data.pran,],
       totalContry: [(data == undefined) ? '' : data.contributionAmount, [Validators.required]],
       description: [(data == undefined) ? '' : data.description,],
