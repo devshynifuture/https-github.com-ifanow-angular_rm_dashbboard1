@@ -5,6 +5,7 @@ import { LoaderFunction } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { Chart } from 'angular-highcharts';
+import { PlanService } from '../../../plan/plan.service';
 
 @Component({
   selector: 'app-all-feeds',
@@ -63,6 +64,7 @@ export class AllFeedsComponent implements OnInit {
     private loaderFn: LoaderFunction,
     private eventService: EventService,
     private authService: AuthService,
+    private plansService: PlanService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.orgDetails = authService.orgData;
@@ -74,7 +76,7 @@ export class AllFeedsComponent implements OnInit {
       dataLoaded: false,
       hasData: false,
     },
-    mfData:{
+    rtaFeeds:{
       dataLoaded: false,
       hasData: false,
     },
@@ -94,11 +96,15 @@ export class AllFeedsComponent implements OnInit {
       dataLoaded: false,
       hasData: false,
     },
+    goalsData:{
+      dataLoaded: false,
+      hasData: false,
+    }
   };
   hasError:boolean = false;
 
   portFolioData:any[] = [];
-  mfData:any[] = [];
+  rtaFeedsData:any[] = [];
   recentTransactions:any[] = [];
   riskProfile:any[] = [];
   globalRiskProfile:any[] = [];
@@ -108,7 +114,17 @@ export class AllFeedsComponent implements OnInit {
 
 
   ngOnInit() {
+    this.initializePieChart();
+    this.loadPortfolioSummary();
+    this.loadRTAFeedsTransactions();
+    this.loadRecentTransactions();
+    this.loadDocumentValutData();
+    this.loadRiskProfile();
+    this.loadGlobalRiskProfile();
+    this.loadGoalsData();
+  }
 
+  initializePieChart(){
     this.chart = new Chart({
       chart: {
         plotBackgroundColor: null,
@@ -147,15 +163,7 @@ export class AllFeedsComponent implements OnInit {
         data: this.chartData
       }]
     });
-
-    this.loadPortfolioSummary();
-    this.loadMFTransactions();
-    this.loadRecentTransactions();
-    this.loadDocumentValutData();
-    this.loadRiskProfile();
-    this.loadGlobalRiskProfile();
   }
-
 
   loadPortfolioSummary(){
     const obj = {
@@ -213,21 +221,21 @@ export class AllFeedsComponent implements OnInit {
     })
   }
 
-  loadMFTransactions(){
+  loadRTAFeedsTransactions(){
     const obj = {
       clientId: this.clientData.clientId, 
       advisorId: this.advisorId,
       limit: 5
     }
     this.loaderFn.increaseCounter();
-    this.customerService.getMFData(obj).subscribe(res => {
+    this.customerService.getRTAFeeds(obj).subscribe(res => {
       if(res == null) {
-        this.mfData = [];
+        this.rtaFeedsData = [];
       } else {
-        this.tabsLoaded.mfData.hasData = true;
-        this.mfData = res;
+        this.tabsLoaded.rtaFeeds.hasData = true;
+        this.rtaFeedsData = res;
       }
-      this.tabsLoaded.mfData.dataLoaded = true;
+      this.tabsLoaded.rtaFeeds.dataLoaded = true;
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
@@ -266,7 +274,7 @@ export class AllFeedsComponent implements OnInit {
     }
     this.customerService.getRiskProfile(obj).subscribe(res => {
       if(res == null) {
-        this.riskProfile = null;
+        this.riskProfile = [];
       } else {
         this.tabsLoaded.globalRiskProfile.hasData = true;
         this.riskProfile = res[0];
@@ -303,11 +311,12 @@ export class AllFeedsComponent implements OnInit {
     endDate.setDate(endDate.getDate() - 1);
     
     const obj = {
-      tpUserCredentialId: this.clientData.clientId,
+      clientId: this.clientData.clientId,
       advisorId: this.advisorId,
       startDate: startDate.getTime(),
       endDate: endDate.getTime()
     }
+    this.loaderFn.increaseCounter();
 
     this.customerService.getRecentTransactions(obj).subscribe(res => {
       if(res == null) {
@@ -322,6 +331,29 @@ export class AllFeedsComponent implements OnInit {
       this.hasError = true;
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
+    })
+  }
+
+  loadGoalsData() {
+    const obj = {
+      clientId: this.clientData.clientId,
+      advisorId: this.advisorId
+    }
+
+    this.loaderFn.increaseCounter();
+    this.plansService.getAllGoals(obj).subscribe((res)=>{
+      if(res == null) {
+        this.goalsData = [];
+      } else {
+        this.tabsLoaded.goalsData.hasData = true;
+        this.goalsData = res;
+      }
+      this.tabsLoaded.goalsData.dataLoaded = true;
+    }, err => {
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.tabsLoaded.goalsData.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+      this.hasError = true;
     })
   }
   

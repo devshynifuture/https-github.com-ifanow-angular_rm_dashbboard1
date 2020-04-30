@@ -92,8 +92,8 @@ export class MfRtaDetailsComponent implements OnInit {
   }
 
   createDataSource() {
-    this.camsDS = new MatTableDataSource(this.mfRTAlist.filter((data) => data.rtTypeMasterid == 1));
-    this.karvyDS = new MatTableDataSource(this.mfRTAlist.filter((data) => data.rtTypeMasterid == 2));
+    this.karvyDS = new MatTableDataSource(this.mfRTAlist.filter((data) => data.rtTypeMasterid == 1));
+    this.camsDS = new MatTableDataSource(this.mfRTAlist.filter((data) => data.rtTypeMasterid == 2));
     this.frankDS = new MatTableDataSource(this.mfRTAlist.filter((data) => data.rtTypeMasterid == 3));
     this.fundsDS = new MatTableDataSource(this.mfRTAlist.filter((data) => data.rtTypeMasterid == 4));
     this.isLoading = false;
@@ -121,10 +121,10 @@ export class MfRtaDetailsComponent implements OnInit {
     };
 
     switch (componentID) {
-      case 1: // CAMS
+      case 2: // Karvy
         fragmentData.componentName = AddCamsDetailsComponent;
         break;
-      case 2: // Karvy
+      case 1: // CAMS
         fragmentData.componentName = AddKarvyDetailsComponent;
         break;
       case 3: // Franklin
