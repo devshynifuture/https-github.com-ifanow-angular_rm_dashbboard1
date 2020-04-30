@@ -17,7 +17,6 @@ import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { CompanyMoreInfoComponent } from './Component/people-clients/add-client/company-more-info/company-more-info.component';
 import { CommonComponentModule } from '../../common-component/common-component.module';
 
-
 export const componentList = [CompanyMoreInfoComponent, AddClientComponent, LeadsClientsComponent, ClientBasicDetailsComponent, ClientMoreInfoComponent, ClientAddressComponent, ClientBankComponent, ClientDematComponent, ClientUploadComponent, AddHolderNamesComponent]
 @NgModule({
   declarations: [componentList],
