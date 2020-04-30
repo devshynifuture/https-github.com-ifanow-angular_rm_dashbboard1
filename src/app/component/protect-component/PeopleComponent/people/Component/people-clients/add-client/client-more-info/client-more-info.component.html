@@ -116,11 +116,11 @@
     </div> -->
     <div *ngIf="moreInfoData.categoryTypeflag=='Individual' || moreInfoData.categoryTypeflag=='familyMinor'"
         class="row pt-44">
-        <div class="col-md-4 text-right">
+        <div class="col-md-4 text-right mob-text-left mob-pl-10">
             <h5 class="m-0 pt-20">Display name</h5>
             <p class="m-0 f-12 text-custom">This will display everwhere</p>
         </div>
-        <div class="col-md-6 p-0">
+        <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input autocomplete="off" placeholder="Enter Name" #displayName appInputValueValidation
@@ -165,10 +165,10 @@
         </div>
     </div>
     <div *ngIf="moreInfoData.categoryTypeflag=='Individual'" class="row pt-32">
-        <div class="col-md-4 text-right">
+        <div class="col-md-4 text-right mob-pl-10 mob-text-left">
             <h5 class="m-0 pt-20">Aadhaar number</h5>
         </div>
-        <div class="col-md-4 p-0">
+        <div class="col-md-4 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input autocomplete="off" placeholder="Enter Aadhaar number" [maxLength]="12"
@@ -198,10 +198,10 @@
     </div> -->
     <div *ngIf="moreInfoData.categoryTypeflag=='Individual' || moreInfoData.categoryTypeflag=='familyMinor'"
         class=" row pt-44">
-        <div class="col-md-4 text-right">
+        <div class="col-md-4 text-right mob-pl-10 mob-text-left">
             <h5 class="m-0 pt-8">Occupation</h5>
         </div>
-        <div class="col-md-6 p-0">
+        <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group">
                 <mat-form-field>
                     <mat-select formControlName="occupation" class="form-control">
@@ -220,10 +220,10 @@
         </div>
     </div>
     <div class="row pt-32">
-        <div class="col-md-4 text-right">
+        <div class="col-md-4 text-right mob-pl-10 mob-text-left">
             <h5 class="m-0 pt-8">Marital status</h5>
         </div>
-        <div class="col-md-8 p-0 marital-status">
+        <div class="col-md-8 p-0 marital-status mob-pl-10 mob-pl-10">
             <mat-radio-group formControlName="maritalStatus" aria-label="Select an option">
                 <mat-radio-button value="1"
                     [ngClass]="{'bu-primary': moreInfoForm.get('maritalStatus').value=='1','borderRadio':moreInfoForm.get('maritalStatus').value!='1','text-primary': moreInfoForm.get('maritalStatus').value=='1','text-custom':moreInfoForm.get('maritalStatus').value!='1'}"
@@ -261,12 +261,12 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right">
+        <div class="col-md-4 text-right mob-pl-10 mob-text-left">
             <h5 class="m-0 pt-8">Bio</h5>
             <p class="text-custom m-0 roboto l-18 f-12">This will be visible on the Key details page
             </p>
         </div>
-        <div class="col-md-5 p-0">
+        <div class="col-md-5 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field>
                     <textarea autocomplete="off" formControlName="bio" maxlength="200" #bio matInput
@@ -278,11 +278,11 @@
         </div>
     </div>
     <div class="row pt-80">
-        <div class="col-md-4 text-right">
+        <div class="col-md-4 text-right mob-pl-10 mob-text-left">
             <h5 class="m-0 pt-8">My notes</h5>
             <p class="text-custom m-0 roboto f-12">This will be visible to the client</p>
         </div>
-        <div class="col-md-5 p-0">
+        <div class="col-md-5 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group">
                 <mat-form-field>
                     <textarea #myNotes formControlName="myNotes" maxlength="100" autocomplete="off" matInput
