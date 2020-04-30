@@ -269,7 +269,8 @@ export class ClientMoreInfoComponent implements OnInit {
   }
 
   close(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
+    (data == 'close') ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :
+      this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
   }
 
 }
