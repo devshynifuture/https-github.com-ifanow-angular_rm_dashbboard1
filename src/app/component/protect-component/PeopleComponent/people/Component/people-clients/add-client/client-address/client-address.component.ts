@@ -120,8 +120,8 @@ export class ClientAddressComponent implements OnInit {
 
   getAddressList(data) {
     const obj = {
-      userId: this.userData.clientId,
-      userType: 2
+      userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
+      userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
     };
     this.cusService.getAddressList(obj).subscribe(
       data => {
