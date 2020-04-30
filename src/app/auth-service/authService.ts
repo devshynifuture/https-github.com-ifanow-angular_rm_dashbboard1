@@ -62,7 +62,7 @@ export class AuthService {
 
   static getClientId() {
     const clientData = this.getClientData();
-    return clientData ? clientData.id : undefined;
+    return clientData ? clientData.clientId : undefined;
   }
 
   static setProfilePic(pic) {
