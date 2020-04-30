@@ -372,7 +372,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
             "partPaymentDate": (element.controls.date.value._d) ? element.controls.date.value._d : element.controls.date.value,
             "partPayment": element.controls.amount.value,
             "option": element.controls.type.value,
-            "id": (this.editData) ? this.editData.id : null
+            "id":(element.value.id) ? element.value.id : null
           }
           finalTransctList.push(obj)
         }
@@ -399,7 +399,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
           loanTenure: this.addLiabilityForm.controls.loanTenure.value,
           commencementDate: this.addLiabilityForm.controls.CommencementDate.value,
           principalOutstandingAsOn: (this.addLiabilityForm.controls.poDate.value) ? this.addLiabilityForm.controls.poDate.value : null,
-          principalOutstanding: this.addLiabilityForm.controls.outstandingCheck.value,
+          principalOutstanding: (this.addLiabilityForm.controls.outstandingCheck.value) ? this.addLiabilityForm.controls.outstandingCheck.value : false,
           frequencyOfPayments: this.addLiabilityForm.controls.emiFrequency.value,
           annualInterestRate: this.addLiabilityForm.controls.interest.value,
           financialInstitution: this.addLiabilityForm.controls.finInstitution.value,
@@ -421,6 +421,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
           principalOutstandingAsOn: (this.addLiabilityForm.controls.poDate.value) ? this.addLiabilityForm.controls.poDate.value : null,
           frequencyOfPayments: this.addLiabilityForm.controls.emiFrequency.value,
           annualInterestRate: this.addLiabilityForm.controls.interest.value,
+          principalOutstanding: (this.addLiabilityForm.controls.outstandingCheck.value) ? this.addLiabilityForm.controls.outstandingCheck.value : false,
           emi: this.addLiabilityForm.controls.emi.value,
           financialInstitution: this.addLiabilityForm.controls.finInstitution.value,
           loanPartPayments: finalTransctList
