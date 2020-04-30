@@ -216,3 +216,26 @@
     color: #FFC100;
     margin-left: 20px;
 }
+@media(max-width: 767px){
+    .popup-header-fix-35,.popup-header-fix-50,.popup-header-fix-45,
+    .popup-header-fix-70,
+    .popup-header-fix-60,
+    .popup-header-fix-100,.popup-header-fix{
+        border-left:0px !important;
+        width:100% !important;
+
+        h4,p{
+            font-family: "Roboto" !important;
+        }
+    }
+    // .right_sidenav{
+    //     width: 100% !important;
+    //     left: 0% !important;
+    // }
+    .bottom-fixed{
+        width: 100% !important;
+    }
+    .mob.align-items-normal{
+        justify-content: normal !important;
+    }
+}

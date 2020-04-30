@@ -117,7 +117,7 @@ export class NomineeDetailsIinComponent implements OnInit {
     this.getAddressList(value)
   }
   getAddressList(data) {
-    this.addressList = {}
+    this.addressList = data
     this.addressList.address = {}
     const obj = {
       userId: data.clientId,//to do,

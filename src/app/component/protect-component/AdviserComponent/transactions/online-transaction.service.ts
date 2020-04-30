@@ -143,7 +143,7 @@ export class OnlineTransactionService {
 
   }
   getIINUCCOverview(data){
-    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_MANDATE_LIST, data, 1);
+  return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_IIN_UCC_OVERVIEW, data, 1);
   }
   getMandateList(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_MANDATE_LIST, data, 1);

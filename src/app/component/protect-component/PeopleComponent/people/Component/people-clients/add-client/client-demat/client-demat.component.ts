@@ -1,12 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormArray, FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {ValidatorType} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {AuthService} from 'src/app/auth-service/authService';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { ValidatorType } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-client-demat',
@@ -222,6 +222,7 @@ export class ClientDematComponent implements OnInit {
   // ===================owner-nominee directive=====================//
 
   createDematForm(data) {
+    (data == undefined) ? data = {} : data;
     this.dematForm = this.fb.group({
       modeOfHolding: [(data.modeOfHolding) ? String(data.modeOfHolding) : '1'],
       holderName: [(data.modeOfHolding == '1') ? (data.holderNameList && data.holderNameList.length > 0) ? data.holderNameList[0].name : '' : ''],
@@ -388,7 +389,7 @@ export class ClientDematComponent implements OnInit {
         data => {
           console.log(data);
           this.barButtonOptions.active = false;
-          (flag == 'Next') ? this.tabChange.emit(1) : this.close();
+          (flag == 'Next') ? this.tabChange.emit(1) : this.close('save');
         },
         err => {
           this.eventService.openSnackBar(err, 'Dismiss')
@@ -399,7 +400,8 @@ export class ClientDematComponent implements OnInit {
     }
   }
 
-  close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  close(data) {
+    (data == 'close') ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :
+      this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
   }
 }

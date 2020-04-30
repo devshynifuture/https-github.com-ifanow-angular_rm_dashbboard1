@@ -90,6 +90,10 @@ export class AllFeedsComponent implements OnInit {
       dataLoaded: false,
       hasData: false,
     },
+    globalRiskProfile:{
+      dataLoaded: false,
+      hasData: false,
+    },
   };
   hasError:boolean = false;
 
@@ -97,6 +101,7 @@ export class AllFeedsComponent implements OnInit {
   mfData:any[] = [];
   recentTransactions:any[] = [];
   riskProfile:any[] = [];
+  globalRiskProfile:any[] = [];
   documentVault:any[] = [];
   adviseData:any = null;
   goalsData:any[] = [];
@@ -148,12 +153,13 @@ export class AllFeedsComponent implements OnInit {
     this.loadRecentTransactions();
     this.loadDocumentValutData();
     this.loadRiskProfile();
+    this.loadGlobalRiskProfile();
   }
 
 
   loadPortfolioSummary(){
     const obj = {
-      clientId: this.clientData.id, 
+      clientId: this.clientData.clientId, 
       advisorId: this.advisorId,
       targetDate: new Date().getTime()
     }
@@ -209,14 +215,14 @@ export class AllFeedsComponent implements OnInit {
 
   loadMFTransactions(){
     const obj = {
-      clientId: this.clientData.id, 
+      clientId: this.clientData.clientId, 
       advisorId: this.advisorId,
       limit: 5
     }
     this.loaderFn.increaseCounter();
     this.customerService.getMFData(obj).subscribe(res => {
       if(res == null) {
-        this.mfData = null;
+        this.mfData = [];
       } else {
         this.tabsLoaded.mfData.hasData = true;
         this.mfData = res;
@@ -232,7 +238,7 @@ export class AllFeedsComponent implements OnInit {
 
   loadDocumentValutData(){
     const obj = {
-      clientId: this.clientData.id, 
+      clientId: this.clientData.clientId, 
       advisorId: this.advisorId,
       limit: 5
     }
@@ -255,15 +261,32 @@ export class AllFeedsComponent implements OnInit {
 
   loadRiskProfile(){
     const obj = {
-      clientId: this.clientData.id,
+      clientId: this.clientData.clientId,
       advisorId: this.advisorId
     }
     this.customerService.getRiskProfile(obj).subscribe(res => {
       if(res == null) {
         this.riskProfile = null;
       } else {
-        this.tabsLoaded.riskProfile.hasData = true;
+        this.tabsLoaded.globalRiskProfile.hasData = true;
         this.riskProfile = res[0];
+      }
+      this.tabsLoaded.globalRiskProfile.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
+  }
+
+  loadGlobalRiskProfile(){
+    this.customerService.getRiskProfile({}).subscribe(res => {
+      if(res == null) {
+        this.globalRiskProfile = null;
+      } else {
+        this.tabsLoaded.riskProfile.hasData = true;
+        this.globalRiskProfile = res;
       }
       this.tabsLoaded.riskProfile.dataLoaded = true;
       this.loaderFn.decreaseCounter();
@@ -275,10 +298,17 @@ export class AllFeedsComponent implements OnInit {
   }
 
   loadRecentTransactions(){
+    const startDate = new Date();
+    const endDate = new Date();
+    endDate.setDate(endDate.getDate() - 1);
+    
     const obj = {
-      clientId: this.clientData.id,
-      advisorId: this.advisorId
+      tpUserCredentialId: this.clientData.clientId,
+      advisorId: this.advisorId,
+      startDate: startDate.getTime(),
+      endDate: endDate.getTime()
     }
+
     this.customerService.getRecentTransactions(obj).subscribe(res => {
       if(res == null) {
         this.recentTransactions = [];

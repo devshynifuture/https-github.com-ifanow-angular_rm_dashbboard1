@@ -152,7 +152,7 @@
         </div>
         <div class="col-md-5 form-group">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE_WITH_SPACE" [maxLength]="40" formControlName="insurerName" #insurerName appInputValueValidation autocomplete="off" class="form-control br-0" placeholder="Enter Name of insurer">
+                <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR" [maxLength]="40" formControlName="insurerName" #insurerName appInputValueValidation autocomplete="off" class="form-control br-0" placeholder="Enter Name of insurer">
                 <mat-hint align="end" class="f-12">{{insurerName.value.length}}/40</mat-hint>
                 <mat-error>This field is required
                 </mat-error>
