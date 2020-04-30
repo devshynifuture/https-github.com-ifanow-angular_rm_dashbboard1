@@ -13,28 +13,28 @@
                     class="c-p">
                     <div class="row">
                         <div class="col-md-10 p-0">Home</div>
-                        <div class="col-md-2 p-0 text-custom">{{this.home.length}}</div>
+                        <div class="col-md-2 p-0 text-custom" *ngIf="!isLoading">{{(this.home) ? this.home.length :''}}</div>
                     </div>
                 </li>
                 <li (click)="viewMode ='tab1'" (click)="sortTable('2')" [ngClass]="{'activeColor':showFilter =='2'}"
                     class="c-p">
                     <div class="row">
                         <div class="col-md-10 p-0">Vehicle</div>
-                        <div class="col-md-2 p-0 text-custom">{{this.vehicle.length}}</div>
+                        <div class="col-md-2 p-0 text-custom" *ngIf="!isLoading">{{(this.vehicle) ? this.vehicle.length : ''}}</div>
                     </div>
                 </li>
                 <li (click)="viewMode ='tab1'" (click)="sortTable('3')" [ngClass]="{'activeColor':showFilter  =='3'}"
                     class=" c-p">
                     <div class="row">
                         <div class="col-md-10 p-0">Education</div>
-                        <div class="col-md-2 p-0 text-custom">{{this.education.length}}</div>
+                        <div class="col-md-2 p-0 text-custom" *ngIf="!isLoading">{{(this.education) ? this.education.length : ''}}</div>
                     </div>
                 </li>
                 <li (click)="viewMode ='tab1'" (click)="sortTable('5')" [ngClass]="{'activeColor':showFilter =='5'}"
                     class=" c-p">
                     <div class="row">
                         <div class="col-md-10 p-0">Personal</div>
-                        <div class="col-md-2 p-0 text-custom">{{this.personal.length}}</div>
+                        <div class="col-md-2 p-0 text-custom" *ngIf="!isLoading">{{(this.personal) ? this.personal.length :''}}</div>
                     </div>
                 </li>
                 <!-- <li (click)="viewMode ='tab1'" (click)="sortTable('7')" [ngClass]="{'activeColor':showFilter =='7'}"
@@ -48,7 +48,7 @@
                     class=" c-p">
                     <div class="row">
                         <div class="col-md-10 p-0">Credit card</div>
-                        <div class="col-md-2 p-0 text-custom">{{this.creditCard.length}}</div>
+                        <div class="col-md-2 p-0 text-custom" *ngIf="!isLoading">{{(this.creditCard) ? this.creditCard.length :''}}</div>
 
                     </div>
                 </li>
@@ -56,13 +56,13 @@
                     class=" c-p">
                     <div class="row">
                         <div class="col-md-10 p-0">Mortgage</div>
-                        <div class="col-md-2 p-0 text-custom">{{this.mortgage.length}}</div>
+                        <div class="col-md-2 p-0 text-custom" *ngIf="!isLoading">{{(this.mortgage) ? this.mortgage.length : ''}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab2'" [ngClass]="{'activeColor':viewMode =='tab2'}" class=" c-p">
+                <li (click)="viewMode ='tab2'" (click)="sortTable('tab2')" [ngClass]="{'activeColor':viewMode =='tab2'}" class=" c-p">
                     <div class="row">
                         <div class="col-md-10 p-0 f-700">OTHERS</div>
-                        <div class="col-md-2 p-0 text-custom">{{OtherData}}</div>
+                        <div class="col-md-2 p-0 text-custom" *ngIf="!isLoading">{{OtherData}}</div>
                     </div>
                 </li>
             </ul>

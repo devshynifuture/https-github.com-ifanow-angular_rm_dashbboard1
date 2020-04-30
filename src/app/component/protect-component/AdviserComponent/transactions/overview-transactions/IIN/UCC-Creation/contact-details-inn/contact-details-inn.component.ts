@@ -125,8 +125,8 @@ export class ContactDetailsInnComponent implements OnInit {
     this.addressList = {}
     this.addressList.address = {}
     const obj = {
-      userId: (data.userType == 2) ? data.clientId : (data.userType == 3) ? data.familyMemberId : data.clientId,
-      userType: data.userType
+      userId:  data.clientId,
+      userType: 2
     };
     this.custumService.getAddressList(obj).subscribe(
       data => {
@@ -158,7 +158,7 @@ export class ContactDetailsInnComponent implements OnInit {
       email: [(!data) ? '' : data.email, [Validators.required]],
       aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required]],
       maritalStatus: [!data ? '' : data.maritalStatus, [Validators.required]],
-      isdCodeId: [!data ? '' : (data.isdCodeId) + "", [Validators.required]],
+      // isdCodeId: [!data ? '' : (data.isdCodeId) + "", [Validators.required]],
       mobileNo: [!data ? '' : data.mobileNo, [Validators.required]],
       addressLine1: [!data.address ? data.addressLine1 : (data.address.address1) ? data.address.address1 : data.address.addressLine1, [Validators.required]],
       addressLine2: [!data.address ? data.addressLine2 : (data.address.address2) ? data.address.address2 : data.address.addressLine2, [Validators.required]],

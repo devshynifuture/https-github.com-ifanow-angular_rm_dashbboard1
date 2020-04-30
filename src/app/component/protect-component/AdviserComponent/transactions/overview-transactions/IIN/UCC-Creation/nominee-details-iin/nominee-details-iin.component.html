@@ -30,11 +30,11 @@
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0"> Nominee name </h3>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-5 form-group">
                         <mat-form-field>
-                            <mat-select class="form-control" formControlName="relationType">
-                                <mat-option [value]="fm.name"(click)="selectedNominee(fm)"
-                                 *ngFor="let fm of nomineeFmList"> {{fm.name}} </mat-option>
+                            <mat-select class="form-control" formControlName="nomineeName">
+                                <mat-option [value]="fm.name" (click)="selectedNominee(fm)"
+                                    *ngFor="let fm of nomineeFmList"> {{fm.name}} </mat-option>
                             </mat-select>
                             <!-- <input matInput maxlength="30" appInputValueValidation
                                 [inputValidator]="validatorType.TEXT_ONLY" formControlName="nomineeName" type="text"
@@ -43,24 +43,25 @@
                         </mat-form-field>
                     </div>
                 </div>
-
-
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0"> Nominee relation </h3>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-5 form-group">
                         <mat-form-field>
                             <mat-select class="form-control" formControlName="relationType">
-                                <mat-option value="Wife"> Wife </mat-option>
-                                <mat-option value="Husband"> Husband </mat-option>
-                                <mat-option value="Daughter"> Daughter </mat-option>
-                                <mat-option value="Son"> Son </mat-option>
-                                <mat-option value="Father"> Father </mat-option>
-                                <mat-option value="Mother"> Mother </mat-option>
-                                <mat-option value="Brother"> Brother </mat-option>
-                                <mat-option value="Sister"> Sister </mat-option>
-                                <mat-option value="Other"> Other </mat-option>
+                                <mat-option value="1"> Self </mat-option>
+                                <mat-option value="3"> Wife </mat-option>
+                                <mat-option value="2"> Husband </mat-option>
+                                <mat-option value="5"> Daughter </mat-option>
+                                <mat-option value="4"> Son </mat-option>
+                                <mat-option value="6"> Father </mat-option>
+                                <mat-option value="7"> Mother </mat-option>
+                                <mat-option value="8"> Brother </mat-option>
+                                <mat-option value="9"> Sister </mat-option>
+                                <mat-option value="10"> Other </mat-option>
+                                <mat-option value="11"> Daughter_In_Law </mat-option>
+                                <mat-option value="12"> Sister_In_Law </mat-option>
                             </mat-select>
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
@@ -72,9 +73,9 @@
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-10 m-0">Nominee type</h3>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-5 form-group">
                         <mat-radio-group aria-label="Select an option" formControlName="nomineeType">
-                            <mat-radio-button [value]="1"class="b-a-custom radioBtn text-primary custom-radio"
+                            <mat-radio-button [value]="1" class="b-a-custom radioBtn text-primary custom-radio"
                                 [ngClass]="nomineeDetails.get('nomineeType').value == 1 ? 'text-primary b-a-custom': ' text-primitive'"
                                 checked>
                                 Major
@@ -92,9 +93,10 @@
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0"> Nominee date of birth </h3>
                     </div>
-                    <div class="col-md-3">
-                        <mat-form-field>
-                            <input matInput class="form-control" formControlName="nominneDOB" [matDatepicker]="picker">
+                    <div class="col-md-3 form-group">
+                        <mat-form-field class="ba-date">
+                            <input matInput class="form-control b-0" formControlName="nominneDOB"
+                                [matDatepicker]="picker">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                             <mat-error class="f-12">This field is required</mat-error>
@@ -107,7 +109,7 @@
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0"> Nominee percentage </h3>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 form-group">
                         <mat-form-field>
                             <input matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
                                 appInputValueValidation maxlength="3" formControlName="nomineePercentage" type="text"
@@ -124,7 +126,7 @@
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0">Address type</h3>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-5 form-group">
                         <mat-form-field>
                             <mat-select class="form-control" formControlName="addressType">
                                 <mat-option value="Residential/Business"> Residential/Business </mat-option>
@@ -142,7 +144,7 @@
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0">Address line 1</h3>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-5 form-group">
                         <mat-form-field>
                             <input matInput formControlName="addressLine1" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
@@ -154,7 +156,7 @@
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0">Address line 2</h3>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-5 form-group">
                         <mat-form-field>
                             <input matInput formControlName="addressLine2" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
@@ -166,7 +168,7 @@
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0">Pin code </h3>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 form-group">
                         <mat-form-field>
                             <input #pincode [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
                                 appInputValueValidation matInput formControlName="pinCode"
@@ -182,7 +184,7 @@
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0">City</h3>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-5 form-group">
                         <mat-form-field>
                             <input matInput formControlName="city" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
@@ -194,7 +196,7 @@
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0">District</h3>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-5 form-group">
                         <mat-form-field>
                             <input matInput formControlName="district" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
@@ -206,7 +208,7 @@
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0">State</h3>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-5 form-group">
                         <mat-form-field>
                             <input matInput formControlName="state" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
@@ -218,7 +220,7 @@
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0">Country</h3>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-5 form-group">
                         <mat-form-field>
                             <input matInput formControlName="country" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>

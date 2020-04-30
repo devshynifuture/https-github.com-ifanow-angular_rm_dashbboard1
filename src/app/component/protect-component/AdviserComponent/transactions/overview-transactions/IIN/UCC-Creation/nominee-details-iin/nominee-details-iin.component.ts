@@ -112,12 +112,14 @@ export class NomineeDetailsIinComponent implements OnInit {
   getListOfFamilyByClientRes(data) {
     console.log('getListOfFamilyByClientRes', data)
     this.nomineeFmList = data
+    this.nomineeFmList = this.nomineeFmList.filter(element => element.familyMemberId != this.clientData.familyMemberId);
+    console.log('nomineeList',this.nomineeFmList)
   }
   selectedNominee(value) {
     this.getAddressList(value)
   }
   getAddressList(data) {
-    this.addressList = {}
+    this.addressList = data
     this.addressList.address = {}
     const obj = {
       userId: data.clientId,//to do,

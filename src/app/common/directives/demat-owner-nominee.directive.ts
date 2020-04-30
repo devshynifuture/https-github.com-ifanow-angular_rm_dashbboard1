@@ -1,15 +1,16 @@
-import { Directive, EventEmitter, Input, Output } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { FormArray, FormBuilder } from '@angular/forms';
+import { Directive, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormArray } from '@angular/forms';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { element } from 'protractor';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Directive({
-  selector: '[appOwnerNominee]'
+  selector: '[appDematOwnerNominee]'
 })
-export class OwnerNomineeDirective {
+export class DematOwnerNomineeDirective {
 
+  constructor(private fb: FormBuilder, private custumService: CustomerService, private peopleService: PeopleService) {
+  }
   advisorId: any;
   ownerData: any;
   clientId: any;
@@ -19,9 +20,6 @@ export class OwnerNomineeDirective {
   ownerPer: any;
   NomineePer: any;
   showErrorOwner = false;
-
-  constructor(private fb: FormBuilder, private custumService: CustomerService, private peopleService: PeopleService) {
-  }
 
   @Input() set callMethod(callMethod: any) {
     if (callMethod) {
@@ -43,6 +41,7 @@ export class OwnerNomineeDirective {
       }
     }
   }
+
   @Input() clientIdData;
   @Input() userTypeFlag;
   @Output() valueChange3 = new EventEmitter();
@@ -75,8 +74,8 @@ export class OwnerNomineeDirective {
   }
   getListFamilyMem(): any {
     const obj = {
-      userId: this.clientId,
-      userType: 2
+      userId: this.clientIdData,
+      userType: (this.userTypeFlag == 'client' || this.userTypeFlag == undefined) ? 2 : 3
     };
 
     if (this.sendData.length <= 0) {

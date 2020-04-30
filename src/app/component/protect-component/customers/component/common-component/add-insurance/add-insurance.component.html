@@ -503,11 +503,11 @@
                                         <div class="form-group mb-0 iconPetage">
                                             <label class="f-16 roboto">Equity/Debt ratio</label>
                                             <mat-form-field>
-                                                <input matInput type="number" formControlName="debtPer" #debtPer (keyup)="onChange(keyDetailsForm,'debtPer',$event)"  [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="true" [maxLength]="8" class="form-control percentage br-0">
+                                                <input matInput type="number" formControlName="debtPer" #debtPer (keyup)="onChange(obj,'debtPer',$event)"  [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="true" [maxLength]="8" class="form-control percentage br-0">
                                                 <!-- <mat-hint align="end" class="f-12">{{sumAssured.value.length}}/8</mat-hint> -->
                                             </mat-form-field>
                                             <mat-form-field>
-                                                <input matInput type="number" formControlName="equityPer" #equityPer (keyup)="onChange(keyDetailsForm,'equityPer',$event)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="true" [maxLength]="8" class="form-control percentage br-0">
+                                                <input matInput type="number" formControlName="equityPer" #equityPer (keyup)="onChange(obj,'equityPer',$event)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="true" [maxLength]="8" class="form-control percentage br-0">
                                                 <!-- <mat-hint align="end" class="f-12">{{sumAssured.value.length}}/8</mat-hint> -->
                                             </mat-form-field>
                                         </div>
@@ -523,7 +523,7 @@
                                             </mat-form-field>
                                         </div>
                                     </div>
-                                    <div class="col-md-2" *ngIf="option.value == '1' &&  obj.controls['option'].value == '1'">
+                                    <div class="col-md-2" *ngIf="obj.controls['option'].value == '1'">
                                         <div class="form-group mb-0">
                                             <label class="f-16 roboto">Units</label>
                                             <mat-form-field>
@@ -534,7 +534,7 @@
                                             </mat-form-field>
                                         </div>
                                     </div>
-                                    <div class="col-md-2" *ngIf="option.value == '1'  &&  obj.controls['option'].value == '1'">
+                                    <div class="col-md-2" *ngIf="obj.controls['option'].value == '1'">
                                         <div class="form-group mb-0">
                                             <label class="f-16 roboto">NAV</label>
                                             <mat-form-field>
@@ -544,7 +544,7 @@
                                             </mat-form-field>
                                         </div>
                                     </div>
-                                    <div class="col-md-2" *ngIf="option.value == '2'  ||  obj.controls['option'].value == '2'">
+                                    <div class="col-md-2" *ngIf="obj.controls['option'].value == '2'">
                                         <div class="form-group mb-0 iconRupess">
                                             <label class="f-16 roboto">Fund value</label>
                                             <mat-form-field>

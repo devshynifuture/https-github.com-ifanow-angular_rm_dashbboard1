@@ -64,7 +64,7 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
   display(value) {
     console.log('value selected', value)
     this.ownerName = value.userName;
-    this.familyMemberId = value.id
+    this.familyMemberId = value.familyMemberId
   }
 
   lisNominee(value) {

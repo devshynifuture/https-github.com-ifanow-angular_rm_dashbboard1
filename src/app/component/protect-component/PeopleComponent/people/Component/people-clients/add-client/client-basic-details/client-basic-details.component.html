@@ -1,12 +1,12 @@
 <div class="pb-12">
     <div class="row pt-28">
-        <div class="col-md-4 d-flex align-items-center justify-content-end ">
-            <h5 class="m-0">Investor type</h5>
+        <div class="col-md-4 d-flex align-items-center justify-content-end mob align-items-normal mob-pl-10">
+            <h5 class="m-0 mob-pb-10">Investor type</h5>
         </div>
         <div class="col-md-6 p-0">
             <div class="row">
-                <div class="col-md-6 pl-0 pr-8">
-                    <p class="m-0 roboto">Category</p>
+                <div class="col-md-6 col-6 pl-0 pr-8 mob-pl-10">
+                    <p class="m-0 roboto mob-pb-5">Category</p>
                     <div *ngIf="fieldFlag=='client' || fieldFlag=='lead'" class="form-group">
                         <mat-form-field>
                             <mat-select [(ngModel)]="invTypeCategory" (selectionChange)="changeInvestorType($event)"
@@ -26,8 +26,8 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="col-md-6 pr-0 pl-8">
-                    <p class="m-0 roboto">Tax status</p>
+                <div class="col-md-6 col-6 pr-0 pl-8 mob-pr-10">
+                    <p class="m-0 roboto mob-pb-5">Tax status</p>
                     <div class="form-group">
                         <mat-form-field>
                             <mat-select (selectionChange)="changeTaxStatus($event)" [(ngModel)]="invTaxStatus"
@@ -49,10 +49,10 @@
     <div *ngIf="invTypeCategory=='1'" [formGroup]="basicDetails">
         <div class="individualBox">
             <div class="row pt-20">
-                <div class="col-md-4 text-right">
+                <div class="col-md-4 text-right mob-text-left mob-pl-10">
                     <h5 class="mb-0 pt-20">Full name</h5>
                 </div>
-                <div class="col-md-6 p-0">
+                <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
                     <div class="form-group mb-0">
                         <mat-form-field floatLabel="never" appearance="standard">
                             <input #fullName [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50"
@@ -65,10 +65,10 @@
                 </div>
             </div>
             <div class="row pt-44">
-                <div class="col-md-4 text-right">
+                <div class="col-md-4 text-right mob-text-left mob-pl-10">
                     <h5 class="m-0 pt-20">Email</h5>
                 </div>
-                <div class="col-md-6 p-0">
+                <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
                     <div class="form-group mb-0">
                         <mat-form-field floatLabel="never" appearance="standard">
                             <input autocomplete="off" class="form-control" formControlName="email" matInput
@@ -85,10 +85,10 @@
                 (numberArray)="getNumberDetails($event)" [isResidential]="invTaxStatus">
             </app-add-number>
             <div class=" row pt-44">
-                <div class="col-md-4 text-right">
+                <div class="col-md-4 text-right mob-text-left mob-pl-10">
                     <h5 class="m-0 pt-20">PAN</h5>
                 </div>
-                <div class="col-md-3 p-0">
+                <div class="col-md-3 p-0 mob-pl-10 mob-pr-10">
                     <div class="form-group mb-0">
                         <mat-form-field floatLabel="never" appearance="standard">
                             <input #pan placeholder="Enter PAN" (input)="toUpperCase(basicDetails.get('pan'),$event)"
@@ -126,11 +126,11 @@
                 </div>
             </div>
             <div class="row pt-44">
-                <div class="col-md-4 text-right">
-                    <h5 class="m-0 pt-32">Date of birth</h5>
+                <div class="col-md-4 text-right mob-text-left mob-pl-10">
+                    <h5 class="m-0 pt-32 mob-pt-0">Date of birth</h5>
                 </div>
-                <div class="col-md-6 pr-7 pl-0">
-                    <p class="m-0 roboto">As per records</p>
+                <div class="col-md-6 pr-7 pl-0 mob-pl-10 mob-pr-10">
+                    <p class="m-0 roboto mob-pt-10 mob-pb-5">As per records</p>
                     <div class="form-group mb-0">
                         <mat-form-field class="ba-date">
                             <input (click)="dobAsPerRecord.open()" [matDatepicker]="dobAsPerRecord"
@@ -156,11 +156,11 @@
       </div> -->
             </div>
             <div class="row pt-60">
-                <div class="col-md-4 text-right">
-                    <h5 class="m-0 pt-8">Gender</h5>
+                <div class="col-md-4 text-right mob-text-left mob-pl-10">
+                    <h5 class="m-0 pt-8 mob-pb-5">Gender</h5>
                 </div>
-                <div class="col-md-7 p-0">
-                    <mat-radio-group formControlName="gender" aria-label="Select an option" class="d-block">
+                <div class="col-md-7 p-0 mob-pr-10 mob-text-center">
+                    <mat-radio-group formControlName="gender" aria-label="Select an option" class="d-block mob-mr-8">
                         <mat-radio-button value="1"
                             [ngClass]="{'bu-primary': basicDetails.get('gender').value=='1','borderRadio':basicDetails.get('gender').value!='1','text-primary':basicDetails.get('gender').value=='1','text-custom':basicDetails.get('gender').value!='1'}"
                             class="bu-primary">Male
@@ -177,21 +177,21 @@
                 </div>
             </div>
             <div *ngIf="fieldFlag=='client' && basicDetailsData.userId==null" class="row pt-44">
-                <div class="col-md-4 text-right">
+                <div class="col-md-4 text-right mob-text-left mob-pl-10">
                     <h5 class="m-0 pt-8">Client owner</h5>
-                    <p class="m-0 f-12 text-custom">Team Owner</p>
+                    <p class="m-0 f-12 text-custom mob-pt-10 mob-pb-5">Team Owner</p>
                 </div>
-                <div class="col-md-5 p-0">
+                <div class="col-md-5 p-0 mob-pr-10 mob-pl-10">
                     <div class="form-group m-0">
                         <mat-form-field>
                             <mat-select [(ngModel)]="selectedClientOwner" class="form-control"
                                 formControlName="clientOwner">
-                                <mat-option *ngIf="clientOwnerList==undefined" value="1">
-                                    {{advisorData.name}}
-                                </mat-option>
                                 <mat-option value='' disabled>Select owner</mat-option>
                                 <mat-option *ngFor="let singleClient of clientOwnerList" [value]="singleClient">
                                     {{singleClient.fullName}}
+                                </mat-option>
+                                <mat-option *ngIf="clientOwnerList==undefined" value="1">
+                                    {{advisorData.name}}
                                 </mat-option>
                             </mat-select>
                             <mat-error class="f-12">This field is required
@@ -285,12 +285,13 @@
                 </div>
             </div>
             <div *ngIf="fieldFlag!='familyMember'" class="row pt-44 pb-60">
-                <div class="col-md-4 text-right">
+                <div class="col-md-4 text-right mob-text-left mob-pl-10">
                     <h5 class="m-0 pt-4">Role</h5>
-                    <p class="m-0 f-12 text-custom">The selected role decides<br> what access the client has
+                    <p class="m-0 f-12 text-custom mob-pt-10 mob-pb-5">The selected role decides<br class="mobile-none">
+                        what access the client has
                     </p>
                 </div>
-                <div class="col-md-5 p-0">
+                <div class="col-md-5 p-0 mob-pl-10 mob-pr-10">
                     <div class="form-group m-0">
                         <mat-form-field>
                             <mat-select formControlName="role" class="form-control">
@@ -311,10 +312,10 @@
     <div *ngIf="fieldFlag=='familyMember'">
         <div *ngIf="invTypeCategory=='2'" [formGroup]="minorForm" class="minorBox">
             <div class=" row pt-20">
-                <div class="col-md-4 text-right">
+                <div class="col-md-4 text-right mob-pl-10">
                     <h5 class="m-0 pt-20">Minor’s full name</h5>
                 </div>
-                <div class="col-md-6 p-0">
+                <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
                     <div class="form-group mb-0">
                         <mat-form-field floatLabel="never" appearance="standard">
                             <input matInput appInputValueValidation [maxLength]="50" #mFullName
@@ -329,9 +330,9 @@
 
             <div class="row pt-32">
                 <div class="col-md-4 text-right">
-                    <h5 class="m-0 pt-32">Minor’s date of birth</h5>
+                    <h5 class="m-0 pt-32 ">Minor’s date of birth</h5>
                 </div>
-                <div class="col-md-6 p-0">
+                <div class="col-md-3 p-0">
                     <p class="m-0 roboto">As per records</p>
                     <div class="form-group mb-0">
                         <mat-form-field class="ba-date">
@@ -363,16 +364,19 @@
                 </div>
                 <div class="col-md-7 p-0">
                     <mat-radio-group aria-label="Select an option" formControlName="gender" class="d-block">
-                        <mat-radio-button [ngClass]="{'bu-primary':minorForm.get('gender').value=='1'}"
-                            class="borderRadio" value="1">
+                        <mat-radio-button
+                            [ngClass]="{'bu-primary':minorForm.get('gender').value=='1','borderRadio':minorForm.get('gender').value!='1','text-primary': minorForm.get('gender').value=='1','text-custom': minorForm.get('gender').value!='1'}"
+                            value="1">
                             Male
                         </mat-radio-button>
-                        <mat-radio-button [ngClass]="{'bu-primary':minorForm.get('gender').value=='2'}"
-                            class="borderRadio" value="2">
+                        <mat-radio-button
+                            [ngClass]="{'bu-primary':minorForm.get('gender').value=='2','borderRadio':minorForm.get('gender').value!='2','text-primary': minorForm.get('gender').value=='2','text-custom': minorForm.get('gender').value!='2'}"
+                            value="2">
                             Female
                         </mat-radio-button>
-                        <mat-radio-button [ngClass]="{'bu-primary':minorForm.get('gender').value=='3'}"
-                            class="borderRadio" value="3">
+                        <mat-radio-button
+                            [ngClass]="{'bu-primary':minorForm.get('gender').value=='3','borderRadio':minorForm.get('gender').value!='3','text-primary': minorForm.get('gender').value=='3','text-custom': minorForm.get('gender').value!='3'}"
+                            value="3">
                             Other
                         </mat-radio-button>
                     </mat-radio-group>
@@ -400,7 +404,7 @@
                 <div class="col-md-4 text-right">
                     <h5 class="m-0 pt-32">Guardian’s date of birth</h5>
                 </div>
-                <div class="col-md-6 p-0">
+                <div class="col-md-3 p-0">
                     <p class="m-0 roboto">As per records</p>
                     <div class="form-group mb-0">
                         <mat-form-field class="ba-date">
@@ -435,14 +439,17 @@
                 </div>
                 <div class="col-md-7 p-0">
                     <mat-radio-group formControlName="gGender" aria-label="Select an option" class="d-block">
-                        <mat-radio-button value="1" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='1'}"
-                            class="borderRadio">Male
+                        <mat-radio-button value="1"
+                            [ngClass]="{'bu-primary':minorForm.get('gGender').value=='1','borderRadio':minorForm.get('gGender').value!='1','text-primary': minorForm.get('gGender').value=='1','text-custom': minorForm.get('gGender').value!='1'}">
+                            Male
                         </mat-radio-button>
-                        <mat-radio-button value="2" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='2'}"
-                            class="borderRadio">Female
+                        <mat-radio-button value="2"
+                            [ngClass]="{'bu-primary':minorForm.get('gGender').value=='2','borderRadio':minorForm.get('gGender').value!='2','text-primary': minorForm.get('gGender').value=='2','text-custom': minorForm.get('gGender').value!='2'}">
+                            Female
                         </mat-radio-button>
-                        <mat-radio-button value="3" [ngClass]="{'bu-primary':minorForm.get('gGender').value=='3'}"
-                            class="borderRadio">Other
+                        <mat-radio-button value="3"
+                            [ngClass]="{'bu-primary':minorForm.get('gGender').value=='3','borderRadio':minorForm.get('gGender').value!='3','text-primary': minorForm.get('gGender').value=='3','text-custom': minorForm.get('gGender').value!='3'}">
+                            Other
                         </mat-radio-button>
                     </mat-radio-group>
                 </div>
@@ -848,11 +855,11 @@
 
 <div class="bottom-fixed wrapper-12 w-50 ">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 col-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close('close')">Cancel</h5>
         </div>
         <div *ngIf="fieldFlag=='client' || fieldFlag=='lead'"
-            class="col-md-8 d-flex align-items-end justify-content-end">
+            class="col-md-8 col-8 d-flex align-items-end justify-content-end">
 
             <button mat-stroked-button (click)="saveNextClient('Next')" class=" br-0 bg-white text-inherit">SAVE & NEXT
             </button>
@@ -870,7 +877,7 @@
           CLOSE
       </button> -->
         </div>
-        <div *ngIf="fieldFlag=='familyMember'" class="col-md-8 d-flex align-items-end justify-content-end">
+        <div *ngIf="fieldFlag=='familyMember'" class="col-md-8 col-8 d-flex align-items-end justify-content-end">
             <!-- <button mat-raised-button (click)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
       </button> -->
             <button mat-stroked-button (click)="saveNextFamilyMember('Next')" class=" br-0 bg-white text-inherit">SAVE &

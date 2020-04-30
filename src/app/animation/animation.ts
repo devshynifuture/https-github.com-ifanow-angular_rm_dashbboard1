@@ -95,6 +95,10 @@ export const upperSliderAnimation = trigger('upperSliderOpenClose', [
 ]);
 
 export const rightSliderAnimation = trigger('openClose', [
+  state('open100', style({
+    left: '{{from}}%',
+    width: '100%'
+  }), { params: { from: (0) } }),
   state('open', style({
     left: '{{from}}%',
     width: '60%'
