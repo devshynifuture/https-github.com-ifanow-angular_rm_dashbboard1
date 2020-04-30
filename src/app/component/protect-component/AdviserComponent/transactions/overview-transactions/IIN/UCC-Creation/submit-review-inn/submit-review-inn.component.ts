@@ -166,7 +166,7 @@ export class SubmitReviewInnComponent implements OnInit {
   }
 
   selectArnNse(value) {
-    this.selectedBrokerNse = value;
+    this.selectedBrokerBse = value;
   }
 
   addNse(value) {
@@ -181,6 +181,21 @@ export class SubmitReviewInnComponent implements OnInit {
 
   submit() {
     this.doneData = true;
+    this.allData.holderList.forEach(element => {
+      if(!element.address){
+        element = []
+      }
+    });
+    this.allData.bankDetailList.forEach(element => {
+      if(!element.address){
+       element = []
+      }
+    });
+    this.allData.nomineeList.forEach(element => {
+      if(!element.address){
+       element = []
+      }
+    });
     if (this.addedBse == true) {
       const obj1 = {
         ownerName: this.allData.ownerName,
@@ -216,7 +231,7 @@ export class SubmitReviewInnComponent implements OnInit {
         nomineeList: this.allData.nomineeList,
         fatcaDetail: this.allData.fatcaDetail,
         id: 2,
-        aggregatorType: this.selectedBrokerNse.aggregatorType,
+        aggregatorType: this.selectedBrokerBse.aggregatorType,
         familyMemberId: this.allData.familyMemberId,
         clientId: this.allData.clientId,
         advisorId: this.allData.advisorId,
@@ -264,8 +279,6 @@ export class SubmitReviewInnComponent implements OnInit {
       tpUserRequestId: 1,
       documentType: 1
     };
-    // this.byte = this.file.arrayBuffer();
-    // console.log('array byte', this.byte);
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
         console.log('getFileDetails uploadFileToServer callback item : ', item);
@@ -278,11 +291,7 @@ export class SubmitReviewInnComponent implements OnInit {
           console.log('onChange file upload success response url : ', responseObject.url);
 
         }
-
       });
-    // this.byte = this.file.arrayBuffer();
-    // console.log('array byte', this.byte);
-    // FileUploadService.uploadFileToServer();
   }
 
 

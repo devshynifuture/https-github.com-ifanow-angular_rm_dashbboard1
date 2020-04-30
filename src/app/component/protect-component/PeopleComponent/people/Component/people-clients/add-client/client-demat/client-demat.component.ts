@@ -314,7 +314,7 @@ export class ClientDematComponent implements OnInit {
       this.dematForm.markAllAsTouched();
       return;
     }
-    else if (this.holderList) {
+    else if (this.dematForm.value.modeOfHolding == '2' && this.holderList.invalid) {
       this.holderList.markAllAsTouched();
     }
     else if (this.mobileData.invalid) {
@@ -389,7 +389,7 @@ export class ClientDematComponent implements OnInit {
         data => {
           console.log(data);
           this.barButtonOptions.active = false;
-          (flag == 'Next') ? this.tabChange.emit(1) : this.close();
+          (flag == 'Next') ? this.tabChange.emit(1) : this.close('save');
         },
         err => {
           this.eventService.openSnackBar(err, 'Dismiss')
@@ -400,7 +400,8 @@ export class ClientDematComponent implements OnInit {
     }
   }
 
-  close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  close(data) {
+    (data == 'close') ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :
+      this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
   }
 }
