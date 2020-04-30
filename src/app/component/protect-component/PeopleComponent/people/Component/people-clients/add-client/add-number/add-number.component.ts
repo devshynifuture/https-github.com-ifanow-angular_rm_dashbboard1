@@ -26,9 +26,9 @@ export class AddNumberComponent implements OnInit {
   @Input() classObj = {
     topPadding: 'pt-44',
     label: 'col-md-4',
-    code: 'col-md-3 pl-0',
-    mobile: 'col-md-3 p-0',
-    addRemove: 'col-md-1',
+    code: 'col-md-3 pl-0 col-4 mob-pl-10',
+    mobile: 'col-md-3 p-0 col-6',
+    addRemove: 'col-md-1 col-2 mob-pr-10',
   }
   placeHolderObj = ['Enter Primary Number', 'Enter Secondary Number']
   isdCodes: any;

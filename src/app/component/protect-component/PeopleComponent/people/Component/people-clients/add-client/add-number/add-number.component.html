@@ -1,7 +1,7 @@
 <div *ngIf="mobileListResponse" [formGroup]="numberFormGroup">
     <div *ngFor="let numberForm of getMobileNumList.controls;index as i" [formGroup]="numberForm" class="row"
         [ngClass]="classObj.topPadding">
-        <div class="text-right" [ngClass]="classObj.label">
+        <div class="text-right mob-text-left mob-pl-10" [ngClass]="classObj.label">
             <h5 *ngIf="i==0" class="m-0 pt-20">{{flag}}</h5>
         </div>
 
@@ -9,7 +9,9 @@
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <mat-select placeholder="Select Country Code" formControlName="code" class="form-control">
-                        <mat-option value="" disabled>Select Country Code</mat-option>
+                        <mat-option>
+                          <ngx-mat-select-search [formControl]="filterCtrl" placeholderLabel="ISD code..."></ngx-mat-select-search>
+                        </mat-option>
                         <mat-option [value]="singleCode.id" *ngFor="let singleCode of filteredIsdCodes | async">
                             ({{singleCode.countryCode}}) {{singleCode.code}}
                         </mat-option>
