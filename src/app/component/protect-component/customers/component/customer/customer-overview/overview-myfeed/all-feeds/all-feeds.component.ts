@@ -159,7 +159,7 @@ export class AllFeedsComponent implements OnInit {
 
   loadPortfolioSummary(){
     const obj = {
-      clientId: this.clientData.id, 
+      clientId: this.clientData.clientId, 
       advisorId: this.advisorId,
       targetDate: new Date().getTime()
     }
@@ -215,14 +215,14 @@ export class AllFeedsComponent implements OnInit {
 
   loadMFTransactions(){
     const obj = {
-      clientId: this.clientData.id, 
+      clientId: this.clientData.clientId, 
       advisorId: this.advisorId,
       limit: 5
     }
     this.loaderFn.increaseCounter();
     this.customerService.getMFData(obj).subscribe(res => {
       if(res == null) {
-        this.mfData = null;
+        this.mfData = [];
       } else {
         this.tabsLoaded.mfData.hasData = true;
         this.mfData = res;
@@ -238,7 +238,7 @@ export class AllFeedsComponent implements OnInit {
 
   loadDocumentValutData(){
     const obj = {
-      clientId: this.clientData.id, 
+      clientId: this.clientData.clientId, 
       advisorId: this.advisorId,
       limit: 5
     }
@@ -261,7 +261,7 @@ export class AllFeedsComponent implements OnInit {
 
   loadRiskProfile(){
     const obj = {
-      clientId: this.clientData.id,
+      clientId: this.clientData.clientId,
       advisorId: this.advisorId
     }
     this.customerService.getRiskProfile(obj).subscribe(res => {
@@ -299,7 +299,7 @@ export class AllFeedsComponent implements OnInit {
 
   loadRecentTransactions(){
     const obj = {
-      clientId: this.clientData.id,
+      clientId: this.clientData.clientId,
       advisorId: this.advisorId
     }
     this.customerService.getRecentTransactions(obj).subscribe(res => {
