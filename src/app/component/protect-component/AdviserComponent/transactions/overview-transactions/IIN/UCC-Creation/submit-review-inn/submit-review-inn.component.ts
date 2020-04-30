@@ -182,8 +182,18 @@ export class SubmitReviewInnComponent implements OnInit {
   submit() {
     this.doneData = true;
     this.allData.holderList.forEach(element => {
-      if(!element.email){
-
+      if(!element.address){
+        element = []
+      }
+    });
+    this.allData.bankDetailList.forEach(element => {
+      if(!element.address){
+       element = []
+      }
+    });
+    this.allData.nomineeList.forEach(element => {
+      if(!element.address){
+       element = []
       }
     });
     if (this.addedBse == true) {
