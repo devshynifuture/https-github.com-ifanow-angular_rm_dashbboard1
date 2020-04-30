@@ -298,10 +298,17 @@ export class AllFeedsComponent implements OnInit {
   }
 
   loadRecentTransactions(){
+    const startDate = new Date();
+    const endDate = new Date();
+    endDate.setDate(endDate.getDate() - 1);
+    
     const obj = {
-      clientId: this.clientData.clientId,
-      advisorId: this.advisorId
+      tpUserCredentialId: this.clientData.clientId,
+      advisorId: this.advisorId,
+      startDate: startDate.getTime(),
+      endDate: endDate.getTime()
     }
+
     this.customerService.getRecentTransactions(obj).subscribe(res => {
       if(res == null) {
         this.recentTransactions = [];

@@ -17,6 +17,7 @@ import { MarketSummaryComponent } from './market-summary/market-summary.componen
     SummaryRoutingModule,
     MaterialModule,
     CustomDirectiveModule
-  ]
+  ],
+  exports: [MarketSummaryComponent]
 })
 export class SummaryModule { }
