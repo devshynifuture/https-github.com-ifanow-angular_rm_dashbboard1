@@ -130,8 +130,6 @@ export class BankDetailsIINComponent implements OnInit {
           this.bankList = data;
           console.log('bank == ', this.bankList)
           this.firstHolderBank = (this.bankList[0]) ? this.bankList[0] : []
-          this.secondHolderBank = (this.bankList[1]) ? this.bankList[1] : []
-          this.thirdHolderBank = (this.bankList[2]) ? this.bankList[2] : []
           this.getdataForm(this.firstHolderBank)
         }
       },
@@ -331,6 +329,7 @@ export class BankDetailsIINComponent implements OnInit {
       this.saveBankDetails(value);
       if (this.secondHolderBank) {
         this.holder.type = value;
+        this.secondHolderBank = (this.bankList[1]) ? this.bankList[1] : []
         this.getdataForm(this.secondHolderBank)
       } else {
         this.reset();
@@ -340,6 +339,7 @@ export class BankDetailsIINComponent implements OnInit {
       this.saveBankDetails(value);
       if (this.thirdHolderBank) {
         this.holder.type = value;
+        this.thirdHolderBank = (this.bankList[2]) ? this.bankList[2] : []
         this.getdataForm(this.thirdHolderBank)
       } else {
         this.reset();
