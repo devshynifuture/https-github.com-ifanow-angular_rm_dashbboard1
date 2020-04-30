@@ -75,13 +75,10 @@
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-radio-group aria-label="Select an option" formControlName="nomineeType">
-                            <mat-radio-button [value]="1" class="b-a-custom radioBtn text-primary custom-radio"
-                                [ngClass]="nomineeDetails.get('nomineeType').value == 1 ? 'text-primary b-a-custom': ' text-primitive'"
-                                checked>
+                            <mat-radio-button value="1" [ngClass]="nomineeDetails.get('nomineeType').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                                 Major
                             </mat-radio-button>
-                            <mat-radio-button [value]="2"
-                                [ngClass]="nomineeDetails.get('nomineeType').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
+                            <mat-radio-button value="2" [ngClass]="nomineeDetails.get('nomineeType').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                                 Minor </mat-radio-button>
                         </mat-radio-group>
                     </div>
