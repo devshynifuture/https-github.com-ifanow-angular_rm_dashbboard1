@@ -34,9 +34,11 @@ export class MyIfaSelectArnRiaComponent implements OnInit {
     console.log('fragmentData', this.fragmentData);
     this.dataToSend = this.fragmentData.mainData;
     this.options = this.fragmentData.brokerCodeValue;
-    this.options.forEach(element => {
-      element.selected = false
-    });
+    if (this.options && this.options.length !== 0) {
+      this.options.forEach(element => {
+        element.selected = false
+      });
+    }
     this.rtId = this.fragmentData.rtId
   }
 

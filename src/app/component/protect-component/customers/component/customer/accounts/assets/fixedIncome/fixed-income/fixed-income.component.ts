@@ -187,21 +187,20 @@ totalSum:any
   getRecurringDepositRes(data) {
     this.reTotalSum = data;
     this.isLoading = false;
-    if (data == undefined) {
-      this.noData = 'No scheme found';
-      this.dataSource.data = [];
+    if (data != undefined) {
+      if (data.assetList) {
+        console.log('FixedIncomeComponent getRecuringDepositRes data *** ', data);
+        this.dataList = data.assetList;
+  
+        this.dataSource.data = data.assetList;
+        this.dataSource.sort = this.recurringDepositTableSort;
+        UtilService.checkStatusId(this.dataSource.filteredData);
+        this.totalCurrentValue = data.totalCurrentValue;
+        this.sumOfMonthlyContribution = data.sumOfMonthlyContribution;
+        this.sumOfMaturityValue = data.sumOfMaturityValue;
+      }
     }
-    else if (data.recurringDeposits) {
-      console.log('FixedIncomeComponent getRecuringDepositRes data *** ', data);
-      this.dataList = data.recurringDeposits;
-
-      this.dataSource.data = data.recurringDeposits;
-      this.dataSource.sort = this.recurringDepositTableSort;
-      UtilService.checkStatusId(this.dataSource.filteredData);
-      this.totalCurrentValue = data.totalCurrentValue;
-      this.sumOfMonthlyContribution = data.sumOfMonthlyContribution;
-      this.sumOfMaturityValue = data.sumOfMaturityValue;
-    } else {
+     else {
       this.noData = 'No scheme found';
       this.dataSource.data = [];
     }

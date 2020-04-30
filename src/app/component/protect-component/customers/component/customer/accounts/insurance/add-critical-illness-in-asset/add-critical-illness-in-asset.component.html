@@ -87,8 +87,8 @@
                     <div class="form-group mb-0">
                         <label class="f-16 roboto">Name</label>
                         <mat-form-field>
-                            <mat-select matInput formControlName="insuredMembers" autocomplete="true" class="form-control br-0" (selectionChange)="getFamilyData($event.value,FamilyMember)">
-                                <mat-option (click)="getFamilyMember(option,i)" *ngFor="let option of FamilyMember;index as i" [value]="option.userName">
+                            <mat-select matInput formControlName="insuredMembers" autocomplete="true" class="form-control br-0" (selectionChange)="getFamilyData($event.value,nomineesListFM)">
+                                <mat-option (click)="getFamilyMember(option,i)" *ngFor="let option of nomineesListFM;index as i" [value]="option.userName">
                                     {{option.userName}}</mat-option>
                             </mat-select>
                             <mat-error>This field is required
@@ -420,8 +420,8 @@
                 </mat-form-field>
             </div>
             <div class="col-md-1 p-0 pt-8 d-flex">
-                <!--[data]="bankAccountDetails" appBankAccount prod build -->
-                <i class="material-icons text-primitive c-p float-left" [data]="bankAccountDetails" appBankAccount  (inputChange)='bankAccountList($event)'>add</i>
+                <!--[data]="bankAccountDetails" appBankAccount prod build (inputChange)='bankAccountList($event.value)'-->
+                <i class="material-icons text-primitive c-p float-left" >add</i>
             </div>
         </div>
 

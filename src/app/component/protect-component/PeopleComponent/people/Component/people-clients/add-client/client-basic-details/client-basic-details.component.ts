@@ -267,8 +267,8 @@ export class ClientBasicDetailsComponent implements OnInit {
         });
       }
       let advisorId;
-      if (this.selectedClientOwner && this.selectedClientOwner.advisorId) {
-        advisorId = this.selectedClientOwner.advisorId;
+      if (this.selectedClientOwner && this.selectedClientOwner.adminAdvisorId) {
+        advisorId = this.selectedClientOwner.adminAdvisorId;
       } else if (this.basicDetailsData && this.basicDetailsData.advisorId) {
         advisorId = this.basicDetailsData.advisorId;
       } else {

@@ -34,6 +34,8 @@ export class PlanAssetallocationComponent implements OnInit {
   obj4: any;
   isLoading = true;
   staticAllocation: any;
+
+  inputHasError:boolean = false;
   validatorType = ValidatorType;
   constructor(
     private orgSetting: OrgSettingServiceService,
@@ -50,7 +52,6 @@ export class PlanAssetallocationComponent implements OnInit {
 
   toggleEditMode() {
     this.editMode = !this.editMode;
-    console.log('hgdsfhg ==', this.editMode)
   }
   changeTableTdValue(value, field, field2, ele, index) {
     console.log(value, field, index);
@@ -70,8 +71,10 @@ export class PlanAssetallocationComponent implements OnInit {
       this.eventService.openSnackBar("This input only takes numbers", "Dismiss");
     }
   }
+
   save() {
     this.staticAllocation = []
+    this.inputHasError = false;
     this.staticAllocationData.forEach(element => {
       this.obj = {
         advisorId: this.advisorId,
@@ -113,8 +116,16 @@ export class PlanAssetallocationComponent implements OnInit {
       this.staticAllocation.push(this.obj2)
       this.staticAllocation.push(this.obj3)
       this.staticAllocation.push(this.obj4)
-
     });
+    this.staticAllocation.forEach(element => {
+      if(isNaN(parseFloat(element.equityAllocation)) || isNaN(parseFloat(element.debtAllocation))) {
+        this.inputHasError = true;
+      }
+    });
+    if(this.inputHasError) {
+      this.eventService.openSnackBar("Please enter value in all fields", "Dismiss");
+      return;
+    }
     console.log('sgdfg == ', this.staticAllocation)
     this.orgSetting.updateAssetAllocation(this.staticAllocation).subscribe(
       data => this.updateAssetAllocationRes(data),
@@ -122,7 +133,8 @@ export class PlanAssetallocationComponent implements OnInit {
     );
   }
   updateAssetAllocationRes(data) {
-    console.log('updateAssetAllocationRes', data)
+    console.log('updateAssetAllocationRes', data);
+    this.toggleEditMode();
   }
   getAssetAllocation() {
     this.isLoading = true

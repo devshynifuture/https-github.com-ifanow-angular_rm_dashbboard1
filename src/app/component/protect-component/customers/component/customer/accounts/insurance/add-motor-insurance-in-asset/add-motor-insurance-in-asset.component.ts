@@ -69,7 +69,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
   display(value) {
     console.log('value selected', value)
     this.ownerName = value.userName;
-    this.familyMemberId = value.id
+    this.familyMemberId = value.familyMemberId
   }
 
   lisNominee(value) {
@@ -321,7 +321,13 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
   
   ngOnInit() {
   }
-
+  onChange(value,event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = '100';
+        this.motorInsuranceForm.get(value).setValue(event.target.value);
+      
+    }
+  }
   bankAccountList(value) {
     this.bankList = value;
   }

@@ -109,7 +109,7 @@ export class EmailOnlyComponent implements OnInit {
 
   getAllEmails(){
     let obj = {
-      userId: this.userId,
+      userId: this.advisorId,
       // advisorId: this.advisorId
     }
     this.orgSetting.getEmailVerification(obj).subscribe(

@@ -3,11 +3,13 @@
         <h4 class="m-0 text-black">Static asset allocation</h4>
     </div>
     <div class="col-md-4 text-right p-0" *ngIf="!hasError">
-        <button mat-stroked-button class="greryColorBg" class="btn-primary " (click)="toggleEditMode()">
-            <span class="tableValue" *ngIf="!editMode">
+        <button mat-stroked-button class="greryColorBg" class="btn-primary" *ngIf="!editMode" (click)="toggleEditMode()">
+            <span class="tableValue">
                 EDIT MODE
             </span>
-            <span class="inputValue" *ngIf="editMode" (click)="save()">
+        </button>
+        <button mat-stroked-button class="greryColorBg" class="btn-primary" *ngIf="editMode" (click)="save()">
+            <span class="inputValue">
                 SAVE
             </span>
         </button>
@@ -44,7 +46,7 @@
         <!-- Name Column -->
         <ng-container matColumnDef="debt1">
             <th mat-header-cell class="text-right" *matHeaderCellDef> Debt </th>
-            <td mat-cell class="text-right" *matCellDef="let element; let i = index">
+            <td mat-cell class="text-right" *matCellDef="let element; let i = index" (dblclick)="editMode = true">
                 <div class="bar"> {{editMode ? '':element.debt1}}</div>
                 <input class="form-control" *ngIf="editMode" #debt1 type="text" (input)="changeTableTdValue(debt1.value, 'debt1','equity1',element, i)" [value]="element.debt1" [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="100" appInputValueValidation>
             </td>
@@ -53,7 +55,7 @@
         <!-- Weight Column -->
         <ng-container matColumnDef="equity1">
             <th mat-header-cell *matHeaderCellDef class="br text-right"> Equity </th>
-            <td mat-cell *matCellDef="let element; let i = index" class="br text-right" appCashflowTableEdit>
+            <td mat-cell *matCellDef="let element; let i = index" class="br text-right" appCashflowTableEdit (dblclick)="editMode = true">
                 <div class="bar"> {{editMode ? '':element.equity1}}</div>
                 <input class="form-control" type="text" *ngIf="editMode" #equity1 (input)="changeTableTdValue(equity1.value, 'equity1','debt1',element, i)" [value]="element.equity1" [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="100" appInputValueValidation>
             </td>
@@ -62,7 +64,7 @@
         <!-- Symbol Column -->
         <ng-container matColumnDef="debt2">
             <th mat-header-cell class="text-right" *matHeaderCellDef> Debt </th>
-            <td mat-cell class="text-right" *matCellDef="let element; let i = index" appCashflowTableEdit>
+            <td mat-cell class="text-right" *matCellDef="let element; let i = index" appCashflowTableEdit (dblclick)="editMode = true">
                 <div class="bar"> {{editMode ? '':element.debt2}}</div>
                 <input class="form-control" type="text" *ngIf="editMode" #debt2 (input)="changeTableTdValue(debt2.value, 'debt2','equity2',element, i)" [value]="element.debt2" [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="100" appInputValueValidation>
             </td>
@@ -90,7 +92,7 @@
         </ng-container>
         <ng-container matColumnDef="debt4">
             <th mat-header-cell class="text-right" *matHeaderCellDef> Debt </th>
-            <td mat-cell class="text-right" *matCellDef="let element; let i = index" appCashflowTableEdit>
+            <td mat-cell class="text-right" *matCellDef="let element; let i = index" appCashflowTableEdit (dblclick)="editMode = true">
                 <div class="bar"> {{editMode ? '':element.debt4}}</div>
 
                 <input class="form-control" type="text" *ngIf="editMode" #debt4 (input)="changeTableTdValue(debt4.value, 'debt4','equity4',element, i)" [value]="element.debt4" [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="100" appInputValueValidation>
@@ -105,7 +107,7 @@
         </ng-container>
         <ng-container matColumnDef="debt5">
             <th mat-header-cell class="text-right" *matHeaderCellDef> Debt </th>
-            <td mat-cell class="text-right" *matCellDef="let element; let i = index" appCashflowTableEdit>
+            <td mat-cell class="text-right" *matCellDef="let element; let i = index" appCashflowTableEdit (dblclick)="editMode = true">
                 <div class="bar"> {{editMode ? '':element.debt5}}</div>
                 <input class="form-control" type="text" *ngIf="editMode" #debt5 (input)="changeTableTdValue(debt5.value, 'debt5','equity5',element, i)" [value]="element.debt5" [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="100" appInputValueValidation>
             </td>

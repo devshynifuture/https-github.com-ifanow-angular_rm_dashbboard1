@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { ValidatorType } from 'src/app/services/util.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormArray, FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {ValidatorType} from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {AuthService} from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-client-demat',
@@ -47,10 +47,11 @@ export class ClientDematComponent implements OnInit {
   validatorType = ValidatorType;
   @Output() tabChange = new EventEmitter();
   @Input() fieldFlag;
-
+  idData;
   @Input() set data(data) {
     this.userData = data;
     this.clientData = (AuthService.getClientData()) ? AuthService.getClientData() : AuthService.getUserInfo();
+    this.idData = (this.fieldFlag == 'client' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId;
     (this.userData.dematData) ? this.dematList = this.userData.dematData : '';
     if (this.userData.dematData == undefined && this.fieldFlag) {
       this.holdingMode = '1';
@@ -221,7 +222,6 @@ export class ClientDematComponent implements OnInit {
   // ===================owner-nominee directive=====================//
 
   createDematForm(data) {
-    (data == undefined) ? data = {} : data;
     this.dematForm = this.fb.group({
       modeOfHolding: [(data.modeOfHolding) ? String(data.modeOfHolding) : '1'],
       holderName: [(data.modeOfHolding == '1') ? (data.holderNameList && data.holderNameList.length > 0) ? data.holderNameList[0].name : '' : ''],

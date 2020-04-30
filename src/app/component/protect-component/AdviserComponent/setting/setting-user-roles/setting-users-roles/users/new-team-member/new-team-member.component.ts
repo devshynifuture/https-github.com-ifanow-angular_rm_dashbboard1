@@ -7,6 +7,8 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {MatProgressButtonOptions} from '../../../../../../../../common/progress-button/progress-button.component';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { Subject, ReplaySubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-new-team-member',
@@ -38,6 +40,12 @@ export class NewTeamMemberComponent implements OnInit {
   };
   isdCodes: Array<any> = [];
 
+  /** control for the MatSelect filter keyword */
+  filterCtrl: FormControl = new FormControl();
+  filteredIsdCodes: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
+  /** Subject that emits when the component has been destroyed. */
+  protected _onDestroy = new Subject<void>();
+
   constructor(
     private fb: FormBuilder,
     private settingsService: SettingsService,
@@ -51,6 +59,12 @@ export class NewTeamMemberComponent implements OnInit {
   ngOnInit() {
     this.getIsdCodesData();
     this.loadRoles();
+    // listen for search field value changes
+    this.filterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterCodes();
+      });
   }
 
   getIsdCodesData() {
@@ -59,6 +73,7 @@ export class NewTeamMemberComponent implements OnInit {
       data => {
         if (data) {
           this.isdCodes = data;
+          this.filteredIsdCodes.next(this.isdCodes.slice());
         }
         this.loader(-1);
       },
@@ -170,5 +185,20 @@ export class NewTeamMemberComponent implements OnInit {
       teamMemberRoleId.setValue('');
       this.teamMemberFG.updateValueAndValidity();
     }
+  }
+  protected filterCodes() {
+    if (!this.isdCodes) {
+      return;
+    }
+    // get the search keyword
+    let search = this.filterCtrl.value;
+    if (!search) {
+      this.filteredIsdCodes.next(this.isdCodes.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    // filter the codes
+    this.filteredIsdCodes.next(this.isdCodes.filter(code => (code.code + code.countryCode).toLowerCase().indexOf(search) > -1))
   }
 }

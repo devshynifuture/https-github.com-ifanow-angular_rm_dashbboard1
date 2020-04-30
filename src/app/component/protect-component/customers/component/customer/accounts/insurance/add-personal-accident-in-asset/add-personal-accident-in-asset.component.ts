@@ -59,7 +59,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
   display(value) {
     console.log('value selected', value)
     this.ownerName = value.userName;
-    this.familyMemberId = value.id
+    this.familyMemberId = value.familyMemberId
   }
 
   lisNominee(value) {
@@ -345,7 +345,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
         let name = this.insuredMembersForm.controls[e].get('insuredMembers')
         if(element.userName == name.value){
           this.insuredMembersForm.controls[e].get('insuredMembers').setValue(element.userName);
-          this.insuredMembersForm.controls[e].get('familyMemberId').setValue(element.id);
+          this.insuredMembersForm.controls[e].get('familyMemberId').setValue(element.familyMemberId);
           this.insuredMembersForm.controls[e].get('relationshipId').setValue(element.relationshipId);
         }
       }

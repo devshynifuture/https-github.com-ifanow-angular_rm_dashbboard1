@@ -184,18 +184,18 @@
 
             <mat-form-field class="widthSerachBox serachbox ml-16">
                 <div class="form-group searchBoxHeader">
-                    <input #inputSearch [formControl]="myControl" [matAutocomplete]="auto" class="form-control pl-40"
-                        matInput type="text">
+                    <input #inputSearch [formControl]="myControl" (input)="getClientList($event)"
+                        [matAutocomplete]="auto" class="form-control pl-40" matInput type="text">
                     <i class="material-icons searchIcon"> search </i>
-                    <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete">
-                        <mat-option (click)="selectClient(singleClient)"
-                            *ngFor="let singleClient of filteredOptions | async" [value]="singleClient">
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option (click)="selectClient(singleClient)" *ngFor="let singleClient of clientList"
+                            [value]="singleClient">
                             <div class="row">
                                 <div class="col-md-1 d-flex align-items-center">
                                     <i class="material-icons"> person </i>
                                 </div>
                                 <div class="col-md-7 d-flex align-items-center">
-                                    <p class="t-left m-0">{{singleClient.name}}</p>
+                                    <p class="t-left m-0">{{singleClient.displayName}}</p>
                                 </div>
                                 <div class="col-md-4 text-right">
                                     <button class="small-primitive" mat-stroked-button>FAMILY MEMBER</button>

@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { FormArray, FormBuilder } from '@angular/forms';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { element } from 'protractor';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Directive({
   selector: '[appOwnerNominee]'
@@ -19,7 +20,7 @@ export class OwnerNomineeDirective {
   NomineePer: any;
   showErrorOwner = false;
 
-  constructor(private fb: FormBuilder, private custumService: CustomerService) {
+  constructor(private fb: FormBuilder, private custumService: CustomerService, private peopleService: PeopleService) {
   }
 
   @Input() set callMethod(callMethod: any) {
@@ -43,6 +44,7 @@ export class OwnerNomineeDirective {
     }
   }
   @Input() clientIdData;
+  @Input() userTypeFlag;
   @Output() valueChange3 = new EventEmitter();
   @Output() valueChange1 = new EventEmitter();
 
@@ -72,21 +74,13 @@ export class OwnerNomineeDirective {
     }
   }
   getListFamilyMem(): any {
-    let obj;
-    if (this.clientId==undefined) {
-      obj = {
-        advisorId: this.advisorId,
-        familyMemberId: this.clientIdData.familyMemberId
-      };
-    }
-    else {
-      obj = {
-        advisorId: this.advisorId,
-        clientId: (this.clientId) ? this.clientId : this.clientIdData.clientId
-      };
-    }
+    const obj = {
+      userId: (this.clientId) ? this.clientId : this.clientIdData,
+      userType: (this.clientId) ? 2 : (this.userTypeFlag == 'client' || this.userTypeFlag == undefined) ? 2 : 3
+    };
+
     if (this.sendData.length <= 0) {
-      this.custumService.getListOfFamilyByClient(obj).subscribe(
+      this.peopleService.getClientFamilyMembers(obj).subscribe(
         data => this.getListOfFamilyByClientRes(data)
       );
     }
@@ -94,29 +88,13 @@ export class OwnerNomineeDirective {
 
   getListOfFamilyByClientRes(data) {
     console.log('family Memebers', data);
-    if (this.clientId && data.familyMembersList && data.familyMembersList.length > 0) {
-      data.familyMembersList.forEach((singleData) => {
-        setTimeout(() => {
-          singleData.disable = false;
-        }, 100);
-      });
-    }
-    if (this.clientIdData.relationshipId == 3 || this.clientIdData.relationshipId == 4 && data.familyMembersList && data.familyMembersList.length > 0) {
-      data.familyMembersList = data.familyMembersList.filter(element => element.relationshipId != this.clientIdData.relationshipId);
-      data.familyMembersList.forEach((singleData) => {
-        setTimeout(() => {
-          singleData.disable = false;
-        }, 100);
-      });
-    }
-    else {
-      data.familyMembersList.forEach((singleData) => {
-        setTimeout(() => {
-          singleData.disable = false;
-        }, 100);
-      });
-    }
-    this.sendData = data.familyMembersList;
+    data.forEach((singleData) => {
+      singleData['userName'] = singleData.displayName;
+      setTimeout(() => {
+        singleData.disable = false;
+      }, 100);
+    });
+    this.sendData = data;
     this.disabledMember(null);
     this.valueChange1.emit(this.sendData);
     console.log(this.sendData, 'sendData 123');
@@ -153,10 +131,10 @@ export class OwnerNomineeDirective {
         if (e.data.name != '') {
           if (element.userName == e.data.name) {
             if (e.type == 'owner') {
-              this.getCoOwner.controls[e.index].get('familyMemberId').setValue(element.id);
+              this.getCoOwner.controls[e.index].get('familyMemberId').setValue(element.familyMemberId);
               this.getCoOwner.controls[e.index].get('isClient').setValue(element.relationshipId == 0 ? 1 : 0);
             } else {
-              this.getNominee.controls[e.index].get('familyMemberId').setValue(element.id);
+              this.getNominee.controls[e.index].get('familyMemberId').setValue(element.familyMemberId);
             }
             element.disable = true;
             return;
