@@ -93,6 +93,6 @@ export class EnumServiceService {
     individualTaxData = this.globalEnumData.individualTaxList.filter(element => element.taxStatusCode == taxStatusId);
     minorTaxData = this.globalEnumData.minorTaxList.filter(element => element.taxStatusCode == taxStatusId)
     corporateTaxData = this.globalEnumData.corporateTaxList.filter(element => element.taxStatusCode == taxStatusId)
-    return (individualTaxData) ? individualTaxData : (minorTaxData) ? minorTaxData : corporateTaxData;
+    return (individualTaxData.length > 0) ? individualTaxData : (minorTaxData.length > 0) ? minorTaxData : corporateTaxData;
   }
 }

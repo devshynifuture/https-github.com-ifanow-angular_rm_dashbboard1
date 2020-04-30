@@ -456,7 +456,10 @@ export class InsuranceComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
+        let subTypeId = (data) ? data.insuranceSubTypeId :this.insuranceSubTypeId
+        this.insuranceSubTypeId = 0;
         if (this.insuranceTypeId == 1) {
+          ( this.showInsurance == 'Life') ? this.insuranceSubTypeId = 0  : this.insuranceSubTypeId =subTypeId;
           this.cusService.deleteInsurance(data.id).subscribe(
             data => {
               this.eventService.openSnackBar('Insurance is deleted', 'Dismiss');
@@ -472,6 +475,7 @@ export class InsuranceComponent implements OnInit {
             error => this.eventService.showErrorMessage(error)
           );
         } else {
+          ( this.showInsurance == 'General') ? this.insuranceSubTypeId = 0  : this.insuranceSubTypeId =subTypeId;
           this.cusService.deleteGeneralInsurance(data.id).subscribe(
             data => {
               this.eventService.openSnackBar('Insurance is deleted', 'Dismiss');
@@ -565,7 +569,7 @@ export class InsuranceComponent implements OnInit {
 
   openAddInsurance(data) {
 
-
+    this.insuranceSubTypeId = (data) ? data.insuranceSubTypeId : this.insuranceSubTypeId;
     const inputData = {
       data,
       insuranceTypeId: this.insuranceTypeId,
@@ -582,11 +586,14 @@ export class InsuranceComponent implements OnInit {
     switch (this.insuranceSubTypeId) {
       case 1:
         fragmentData.componentName = AddInsuranceComponent;
+        inputData.showInsurance = 'TERM ';
         break;
       case 2:
+          inputData.showInsurance = 'TRADITIONAL ';
         fragmentData.componentName = AddInsuranceComponent;
         break;
       case 3:
+          inputData.showInsurance = 'ULIP ';
         fragmentData.componentName = AddInsuranceComponent;
         break;
       case 5:
@@ -618,6 +625,8 @@ export class InsuranceComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
+        let subTypeId = (sideBarData.data) ? sideBarData.data.insuranceSubTypeId :this.insuranceSubTypeId
+        this.insuranceSubTypeId = 0;
         if (UtilService.isDialogClose(sideBarData)) {
           if (sideBarData.data) {
             this.lifeInsuranceFlag = true
@@ -625,6 +634,7 @@ export class InsuranceComponent implements OnInit {
               // this.insuranceSubTypeId = 0;
               this.getCount();
               // this.getInsuranceData(this.insuranceTypeId )
+            ( this.showInsurance == 'Life') ? this.insuranceSubTypeId = 0  : this.insuranceSubTypeId =subTypeId;
               if (this.insuranceTypeId == 1 && this.insuranceSubTypeId == 0) {
                 this.getInsuranceData(this.insuranceTypeId)
               } else {
@@ -632,6 +642,7 @@ export class InsuranceComponent implements OnInit {
               }
               console.log('this is sidebardata in subs subs 2: ', sideBarData);
             } else {
+              (  this.showInsurance == 'General') ? this.insuranceSubTypeId = 0  : this.insuranceSubTypeId =subTypeId;
               this.getCount();
               this.getInsuranceSubTypeData(this.advisorId, this.clientId, this.insuranceTypeId, this.insuranceSubTypeId)
             }

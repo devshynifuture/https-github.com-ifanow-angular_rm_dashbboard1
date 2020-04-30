@@ -319,7 +319,7 @@
                                                 more_vert
                                             </i>
                                             <mat-menu #menu4="matMenu">
-                                                <button *ngIf="showAdd" (click)="openAddInsurance(element)" mat-menu-item>Edit</button>
+                                                <button  (click)="openAddInsurance(element)" mat-menu-item>Edit</button>
                                                 <button (click)="open(element)" mat-menu-item>Detailed view</button>
                                                 <button mat-menu-item>Activity</button>
                                                 <button mat-menu-item (click)="deleteModal('INSURANCE',element)">Delete</button>
@@ -336,7 +336,7 @@
                             <div *ngIf="insuranceTypeId == 2 && dataSourceGeneralInsurance.data.length == 0" class="w-100 d-flex flex-column align-items-center">
                                 <img class="width400" src="assets/images/svg/noDataFound.svg">
                                 <h4 class="text-center pt-12">No Data Found</h4>
-                                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button>
+                                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)" *ngIf="showAdd">ADD NEW</button>
                             </div>
                         </div>
                     </div>
@@ -518,8 +518,14 @@
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{i + 1}}</td>
             <td
-                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;" *ngFor="let ele  of item.insuredMembers" colspan="1">
-                {{(item.insuredMembers.length == 1) ? (ele.name) : (ele.name+',')}}</td>
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+                <span  *ngFor="let ele  of item.insuredMembers">
+                        {{(item.insuredMembers.length == 1) ? (ele.name) : (ele.name+',')}}
+                </span>
+                <span *ngIf="item.insuredMembers?.length == 0 && !isLoading">
+                        {{item.policyHolderName}}
+                </span>
+                </td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
                 >
                 {{((insuranceSubTypeId == 7) ? item.insurerName : (((item.planName) ? item.insurerName+'-'+item.planName : item.insurerName)) )}}
