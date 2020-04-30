@@ -29,26 +29,6 @@ export class AppComponent implements AfterViewInit {
     // routingState.changeDetector = changeDetector;
     routingState.router = _router;
     routingState.loadRouting();
-    // location.
-    /*location.onPopState((event: LocationChangeEvent) => {
-      console.log('pressed back in add!!!!! ', event);
-      history.go(1);
-
-      // location.replaceState(null, null, '/admin/subscription/dashboard');
-// this.router.navigateByUrl(‘/multicomponent’);
-//       history.forward();
-//       history.replaceState();
-    });*/
-    /* window.onpopstate = function () {
-       history.go(1);
-     };*/
-    /*   window.onbeforeunload = ((windowEventHandlers: WindowEventHandlers, ev: BeforeUnloadEvent) => {
-         console.log(' window.onbeforeunload  ', ev);
-         console.log(' window.onbeforeunload windowEventHandlers  ', windowEventHandlers);
-
-       });*/
-    // window.onunload = null;
-
     this._router.events.subscribe((event: Event) => {
       // console.log(event);
       this.loadingBarInterceptor(event);

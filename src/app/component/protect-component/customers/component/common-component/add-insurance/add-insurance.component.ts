@@ -325,10 +325,10 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   }
   addFund(data) {
     this.getFundValues.push(this.fb.group({
-      fundName: [data ? data.name :null],
-      debtPer: [data ? data.debtPer : null],
-      equityPer:[data ? data.equityPer : null],
-      option:[data ? data.option+'' : null],
+      fundName: [data ? data.fundName :null],
+      debtPer: [data ? data.debtRatio : null],
+      equityPer:[data ? data.equityRatio : null],
+      option:[data ? data.fundValueOrNav + '' : null],
       units:[data ? data.units : null],
       nav:[data ? data.nav : null],
       id:[data ? data.id : null],
@@ -417,6 +417,12 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         this.getNominee.removeAt(0);
         this.editInsuranceData.nominees.forEach(element => {
           this.addNewNominee(element);
+        });
+      }
+      if (this.editInsuranceData.ulipFundDetails) {
+        this.getFundValues.removeAt(0);
+        this.editInsuranceData.ulipFundDetails.forEach(element => {
+          this.addFund(element);
         });
       }
       // this.cashFlowForm.controls.cashFlowType.setValue(this.editInsuranceData.cashFlowType)
@@ -542,16 +548,35 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
 
   saveAddInsurance() {
     this.getFamilyMemberIdSelectedData(this.lifeInsuranceForm.get('proposer').value);
+    let ulipFundDetails = [];
+    let ulipFundVal = this.keyDetailsForm.get('fundValueForm') as FormArray
+    ulipFundVal.controls.forEach(element => {
+      let obj =
+      {
+        id:(element.get('id').value) ? element.get('id').value : null,
+        insuranceId:(this.editInsuranceData) ? this.editInsuranceData.id :null,
+        equityRatio: (element.get('equityPer').value) ? element.get('equityPer').value :null,
+        debtRatio: (element.get('debtPer').value) ? element.get('debtPer').value : null,
+        fundValue: (element.get('fundValue').value) ? element.get('fundValue').value : null,
+        nav:(element.get('nav').value) ?  element.get('nav').value :null,
+        units: (element.get('units').value) ? element.get('units').value :null,
+        fundValueOrNav: (element.get('option').value) ? element.get('option').value : null,
+        fundName: (element.get('fundName').value) ? element.get('fundName').value : null
+      }
+      ulipFundDetails.push(obj)
+    })
     let finalCashFlowList = [];
     let cashFlowArray = this.cashFlowForm.get('cashFlow') as FormArray
     cashFlowArray.controls.forEach(element => {
-      let obj =
-      {
-        cashFlowType: element.get('cashFlowType').value,
-        cashFlowYear: element.get('year').value,
-        cashFlowApproxAmount: element.get('approxAmt').value
+      if(element.get('cashFlowType').value || element.get('year').value || element.get('approxAmt').value){
+        let obj =
+        {
+          cashFlowType: element.get('cashFlowType').value,
+          cashFlowYear: element.get('year').value,
+          cashFlowApproxAmount: element.get('approxAmt').value
+        }
+        finalCashFlowList.push(obj)
       }
-      finalCashFlowList.push(obj)
     })
     this.lifeInsuranceForm.get('policyName').value;
 
@@ -566,7 +591,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       {
         "familyMemberIdLifeAssured":this.lifeInsuranceForm.value.getCoOwnerName[0].familyMemberId,
         // "familyMemberIdLifeAssured": this.familyMemberLifeData.id,
-        "familyMemberIdProposer": (this.selectedProposerData) ? this.selectedProposerData.id : null,
+        "familyMemberIdProposer": (this.selectedProposerData) ? this.selectedProposerData.familyMemberId : null,
         "clientId": this.clientId,
         "advisorId": this.advisorId,
         "ownerName": "",
@@ -604,6 +629,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         "ridersFemaleCriticalIllness": this.ridersForm.get('femaleCriticalIlleness').value,
         "insuranceCashflowList": finalCashFlowList,
         "nominees": this.keyDetailsForm.value.getNomineeName,
+        "ulipFundDetails":ulipFundDetails
 
       }
       this.insuranceFormFilledData.policyStatusId = parseInt(this.insuranceFormFilledData.policyStatusId)
@@ -611,6 +637,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         this.insuranceFormFilledData.nominees.forEach((element, index) => {
           if (element.name == '') {
             this.removeNewNominee(index);
+            this.insuranceFormFilledData.nominees = [];
           }
         });
       } else {

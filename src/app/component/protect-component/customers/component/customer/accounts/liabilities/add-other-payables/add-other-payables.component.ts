@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -33,6 +33,7 @@ export class AddOtherPayablesComponent implements OnInit {
   isBalance: boolean;
   advisorId: any;
   clientId: number;
+  nomineesList: any[] = [];
   _data: any;
   interestRate: number;
   showError: boolean;
@@ -40,6 +41,8 @@ export class AddOtherPayablesComponent implements OnInit {
     maxDate = new Date();
 
     @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  familyMemberId: any;
+  callMethod: any;
 
   constructor(private datePipe: DatePipe,private fb: FormBuilder, public subInjectService: SubscriptionInject, public custumService: CustomerService, public eventService: EventService) {
   }
@@ -61,6 +64,155 @@ export class AddOtherPayablesComponent implements OnInit {
 
     this.show = false;
   }
+  getFormDataNominee(data) {
+    console.log(data)
+    this.nomineesList = data.controls
+  }
+   // ===================owner-nominee directive=====================//
+ display(value) {
+  console.log('value selected', value)
+  this.ownerName = value.userName;
+  this.familyMemberId = value.familyMemberId
+  this.selectedFamilyData = value;
+}
+
+lisNominee(value) {
+  this.ownerData.Fmember = value;
+  this.nomineesListFM = Object.assign([], value);
+}
+selectOwner:any;
+disabledMember(value, type) {
+  this.callMethod = {
+    methodName : "disabledMember",
+    ParamValue : value,
+    disControl : type
+  }
+  setTimeout(() => {
+    this.selectOwner = this.nomineesListFM.filter((m)=> m.id == this.otherLiabilityForm.value.getCoOwnerName[0].familyMemberId)
+   }, 1000);
+  if(value == "owner"){
+    this.otherLiabilityForm.get('commDate').reset();
+  }
+}
+
+displayControler(con) {
+  console.log('value selected', con);
+  if(con.owner != null && con.owner){
+    this.otherLiabilityForm.controls.getCoOwnerName = con.owner;
+  }
+  if(con.nominee != null && con.nominee){
+    this.otherLiabilityForm.controls.getNomineeName = con.nominee;
+  }
+}
+
+onChangeJointOwnership(data) {
+  this.callMethod = {
+    methodName : "onChangeJointOwnership",
+    ParamValue : data
+  }
+}
+
+/***owner***/ 
+
+get getCoOwner() {
+  return this.otherLiabilityForm.get('getCoOwnerName') as FormArray;
+}
+
+addNewCoOwner(data) {
+  this.getCoOwner.push(this.fb.group({
+    name: [data ? data.ownerName : '', [Validators.required]], share: [data ? data.share : ''], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
+  }));
+  if (data) {
+    setTimeout(() => {
+     this.disabledMember(null,null);
+    }, 1300);
+  }
+
+  if(this.getCoOwner.value.length > 1 && !data){
+   let share = 100/this.getCoOwner.value.length;
+   for (let e in this.getCoOwner.controls) {
+    if(!Number.isInteger(share) && e == "0"){
+      this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+    }
+    else{
+      this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+    }
+   }
+  }
+  
+}
+
+removeCoOwner(item) {
+  this.getCoOwner.removeAt(item);
+  if (this.otherLiabilityForm.value.getCoOwnerName.length == 1) {
+    this.getCoOwner.controls['0'].get('share').setValue('100');
+  } else {
+    let share = 100/this.getCoOwner.value.length;
+    for (let e in this.getCoOwner.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getCoOwner.controls[e].get('share').setValue(Math.round(share));
+      }
+    }
+  }
+  this.disabledMember(null, null);
+}
+/***owner***/ 
+
+/***nominee***/ 
+
+get getNominee() {
+  return this.otherLiabilityForm.get('getNomineeName') as FormArray;
+}
+
+removeNewNominee(item) {
+  this.disabledMember(null, null);
+  this.getNominee.removeAt(item);
+  if (this.otherLiabilityForm.value.getNomineeName.length == 1) {
+    this.getNominee.controls['0'].get('sharePercentage').setValue('100');
+  } else {
+    let share = 100/this.getNominee.value.length;
+    for (let e in this.getNominee.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+      }
+    }
+  }
+}
+
+
+
+addNewNominee(data) {
+  this.getNominee.push(this.fb.group({
+    name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
+  }));
+  if (!data || this.getNominee.value.length < 1) {
+    for (let e in this.getNominee.controls) {
+      this.getNominee.controls[e].get('sharePercentage').setValue(0);
+    }
+  }
+
+  if(this.getNominee.value.length > 1 && !data){
+    let share = 100/this.getNominee.value.length;
+    for (let e in this.getNominee.controls) {
+      if(!Number.isInteger(share) && e == "0"){
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share) + 1);
+      }
+      else{
+        this.getNominee.controls[e].get('sharePercentage').setValue(Math.round(share));
+      }
+    }
+   }
+   
+  
+}
+/***nominee***/ 
+// ===================owner-nominee directive=====================//
   dateChange(value,form,formValue){
     if(form=='dateOfRepayment' && formValue){
       let dateOfReceipt = this.datePipe.transform(this.otherLiabilityForm.controls.dateOfReceipt.value, 'dd/MM/yyyy')
@@ -102,7 +254,14 @@ export class AddOtherPayablesComponent implements OnInit {
       data = {};
     }
     this.otherLiabilityForm = this.fb.group({
-      ownerName: [data.ownerName, [Validators.required]],
+      getCoOwnerName: this.fb.array([this.fb.group({
+        name: ['',[Validators.required]],
+        share: [0,[Validators.required]],
+        familyMemberId: 0,
+        id: 0,
+        isClient:0
+      })]),
+      ownerName: [data.ownerName],
       dateOfReceipt: [new Date(data.dateOfReceived), [Validators.required]],
       creditorName: [data.creditorName, [Validators.required]],
       amtBorrowed: [data.amountBorrowed, [Validators.required]],
@@ -112,14 +271,36 @@ export class AddOtherPayablesComponent implements OnInit {
       balance: [data.outstandingBalance, [Validators.required]],
       collateral: [data.collateral],
     });
+    // ==============owner-nominee Data ========================\\
+  /***owner***/ 
+  if(this.otherLiabilityForm.value.getCoOwnerName.length == 1){
+    this.getCoOwner.controls['0'].get('share').setValue('100');
+  }
 
+  if (data) {
+    this.getCoOwner.removeAt(0);
+      this.addNewCoOwner(data);
+  }
+  
+/***owner***/ 
+
+/***nominee***/ 
+if(data.nomineeList){
+  this.getNominee.removeAt(0);
+  data.nomineeList.forEach(element => {
+    this.addNewNominee(element);
+  });
+}
+/***nominee***/ 
+
+this.ownerData = {Fmember: this.nomineesListFM, controleData:this.otherLiabilityForm}
     this.getFormControl().creditorName.maxLength = 20;
     this.getFormControl().amtBorrowed.maxLength = 20;
     this.getFormControl().interest.maxLength = 20;
     this.getFormControl().balance.maxLength = 20;
     this.getFormControl().collateral.maxLength = 20;
     this.getFormControl().description.maxLength = 20
-    this.ownerData = this.otherLiabilityForm.controls;
+    // this.ownerData = this.otherLiabilityForm.controls;
 
   }
 
@@ -139,15 +320,15 @@ export class AddOtherPayablesComponent implements OnInit {
     return this.otherLiabilityForm.controls;
   }
 
-  display(value) {
-    console.log('value selected', value);
-    this.ownerName = value.userName;
-    this.selectedFamilyData = value;
-  }
-  lisNominee(value) {
-    console.log(value)
-    this.nomineesListFM = Object.assign([], value.familyMembersList);
-  }
+  // display(value) {
+  //   console.log('value selected', value);
+  //   this.ownerName = value.userName;
+  //   this.selectedFamilyData = value;
+  // }
+  // lisNominee(value) {
+  //   console.log(value)
+  //   this.nomineesListFM = Object.assign([], value.familyMembersList);
+  // }
   keyPress(event: any) {
     const pattern = /[0-9\+\-\ ]/;
 
@@ -187,7 +368,9 @@ export class AddOtherPayablesComponent implements OnInit {
       this.inputs.find(input => !input.ngControl.valid).focus();
     } else {
       const obj = {
-        ownerName: (this.ownerName == null) ? this.otherLiabilityForm.controls.ownerName.value : this.ownerName,
+        // ownerName: (this.ownerName == null) ? this.otherLiabilityForm.controls.ownerName.value : this.ownerName,
+        ownerName:this.otherLiabilityForm.value.getCoOwnerName[0].name,
+
         dateOfReceipt: this.otherLiabilityForm.controls.dateOfReceipt.value,
         creditorName: this.otherLiabilityForm.controls.creditorName.value,
         amtBorrowed: this.otherLiabilityForm.controls.amtBorrowed.value,
@@ -207,7 +390,8 @@ export class AddOtherPayablesComponent implements OnInit {
         const objToSend = {
           advisorId: this.advisorId,
           clientId: this.clientId,
-          familyMemberId: this.selectedFamilyData.id,
+          // familyMemberId: this.selectedFamilyData.familyMemberId,
+          familyMemberId: this.otherLiabilityForm.value.getCoOwnerName[0].familyMemberId,
           ownerName: obj.ownerName,
           creditorName: obj.creditorName,
           collateral: obj.collateral,

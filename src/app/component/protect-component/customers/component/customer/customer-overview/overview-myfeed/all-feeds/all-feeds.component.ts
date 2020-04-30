@@ -90,6 +90,10 @@ export class AllFeedsComponent implements OnInit {
       dataLoaded: false,
       hasData: false,
     },
+    globalRiskProfile:{
+      dataLoaded: false,
+      hasData: false,
+    },
   };
   hasError:boolean = false;
 
@@ -97,6 +101,7 @@ export class AllFeedsComponent implements OnInit {
   mfData:any[] = [];
   recentTransactions:any[] = [];
   riskProfile:any[] = [];
+  globalRiskProfile:any[] = [];
   documentVault:any[] = [];
   adviseData:any = null;
   goalsData:any[] = [];
@@ -148,6 +153,7 @@ export class AllFeedsComponent implements OnInit {
     this.loadRecentTransactions();
     this.loadDocumentValutData();
     this.loadRiskProfile();
+    this.loadGlobalRiskProfile();
   }
 
 
@@ -262,8 +268,25 @@ export class AllFeedsComponent implements OnInit {
       if(res == null) {
         this.riskProfile = null;
       } else {
-        this.tabsLoaded.riskProfile.hasData = true;
+        this.tabsLoaded.globalRiskProfile.hasData = true;
         this.riskProfile = res[0];
+      }
+      this.tabsLoaded.globalRiskProfile.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
+  }
+
+  loadGlobalRiskProfile(){
+    this.customerService.getRiskProfile({}).subscribe(res => {
+      if(res == null) {
+        this.globalRiskProfile = null;
+      } else {
+        this.tabsLoaded.riskProfile.hasData = true;
+        this.globalRiskProfile = res;
       }
       this.tabsLoaded.riskProfile.dataLoaded = true;
       this.loaderFn.decreaseCounter();
