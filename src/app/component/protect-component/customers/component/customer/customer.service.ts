@@ -675,6 +675,11 @@ export class CustomerService {
   getAdviceNps(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_NPS, data)
   }
+  getSchemeChoice() {
+    let httpParams; 
+    // = new HttpParams().set('clientId', data.clientId).set("advisorId", data.advisorId).set("familyMemberId", data.familyMemberId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.SCHEME_CHOICE, httpParams)
+  }
   getAdviceGratuity(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_GRATUITY, data)
   }
