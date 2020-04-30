@@ -157,10 +157,11 @@ export class OverviewTransactionsComponent implements OnInit {
         this.pendingTransaction = data.filter(data => data.status == 2);
         this.rejectionTransaction = data.filter(data => data.status == 7);
         this.doneTrasaction = data.filter(data => data.status == 6 || data.status == 8);
+        this.doneTrasaction = this.doneTrasaction.length
         if (this.doneTrasaction == undefined) {
           this.doneTrasaction = []
         } else {
-          this.percentageTrasact = (this.doneTrasaction.length / this.transactionCount) * 100
+          this.percentageTrasact = (this.doneTrasaction / this.transactionCount) * 100
         }
         this.pendingTransaction = this.rejectionTransaction.length
         this.rejectionTransaction = this.rejectionTransaction.length
