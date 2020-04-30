@@ -776,7 +776,7 @@ export class CustomerService {
 
   // overview - myfeed services
   getAllFeedsPortFolio(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CUSTOMER_PORTFOLIO_SUMMARY, data);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.CALCULATE_TOTAL_VALUES, data);
   }
   getRTAFeeds(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FEEDS_MF_DATA, data);
