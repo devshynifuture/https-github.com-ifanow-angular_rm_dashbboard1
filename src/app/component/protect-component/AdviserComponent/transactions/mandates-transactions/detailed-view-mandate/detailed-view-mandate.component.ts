@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
+import { FileUploadService } from 'src/app/services/file-upload.service';
+import { apiConfig } from 'src/app/config/main-config';
+import { appConfig } from 'src/app/config/component-config';
+import { ParsedResponseHeaders, FileItem } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-detailed-view-mandate',
@@ -25,6 +29,7 @@ export class DetailedViewMandateComponent implements OnInit {
     }
   ]
   statusDetails: any;
+  file: any;
 
   constructor(private subInjectService: SubscriptionInject) {
   }
@@ -52,5 +57,27 @@ export class DetailedViewMandateComponent implements OnInit {
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
+  getFileDetails(e) {
+    console.log('file', e);
+    this.file = e.target.files[0];
+    console.log('file', e);
+    const file = e.target.files[0];
+    const requestMap = {
+      tpUserRequestId: 1,
+      documentType: 1
+    };
+    FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
+      file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+        console.log('getFileDetails uploadFileToServer callback item : ', item);
+        console.log('getFileDetails uploadFileToServer callback status : ', status);
+        console.log('getFileDetails uploadFileToServer callback headers : ', headers);
+        console.log('getFileDetails uploadFileToServer callback response : ', response);
 
+        if (status == 200) {
+          const responseObject = JSON.parse(response);
+          console.log('onChange file upload success response url : ', responseObject.url);
+
+        }
+      });
+  }
 }
