@@ -166,7 +166,7 @@ export class SubmitReviewInnComponent implements OnInit {
   }
 
   selectArnNse(value) {
-    this.selectedBrokerNse = value;
+    this.selectedBrokerBse = value;
   }
 
   addNse(value) {
@@ -231,7 +231,7 @@ export class SubmitReviewInnComponent implements OnInit {
         nomineeList: this.allData.nomineeList,
         fatcaDetail: this.allData.fatcaDetail,
         id: 2,
-        aggregatorType: this.selectedBrokerNse.aggregatorType,
+        aggregatorType: this.selectedBrokerBse.aggregatorType,
         familyMemberId: this.allData.familyMemberId,
         clientId: this.allData.clientId,
         advisorId: this.allData.advisorId,

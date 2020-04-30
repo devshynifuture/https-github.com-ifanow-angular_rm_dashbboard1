@@ -215,7 +215,7 @@ export class BankDetailsIINComponent implements OnInit {
       bankName: [!data ? '' : data.bankName, [Validators.required]],
       micrCode: [!data ? '' : data.micrCode, [Validators.required]],
       accountNumber: [!data ? '' : data.accountNumber, [Validators.required]],
-      accountType: [!data ? '1' : parseInt(data.accountType), [Validators.required]],
+      accountType: [!data ? '1' : (data.accountType == 'SB')?'1':'2', [Validators.required]],
       branchCode: [!data ? '' : (data.branchCode) ? data.branchCode : data.bankId, [Validators.required]],
       branchName: [!data ? '' : data.branchName, [Validators.required]],
       branchAdd1: [!data.address ? '' : data.address.address1, [Validators.required]],
@@ -389,7 +389,7 @@ export class BankDetailsIINComponent implements OnInit {
     value = {
       ifscCode: holder.ifscCode,
       accountNumber: holder.accountNumber,
-      accountType: holder.accountType,
+      accountType: (holder.accountType == '1')?'SB':'CA',
       bankName: holder.bankName,
       branchName: holder.branchName,
       branchCode: holder.branchCode,
