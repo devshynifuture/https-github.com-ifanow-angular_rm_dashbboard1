@@ -53,6 +53,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   familyMemberLifeData: any;
   callMethod:any;
   loanTypeDetails: any;
+  showFilter: any;
   constructor(public utils: UtilService, private subInjectService: SubscriptionInject, private fb: FormBuilder,
     public custumService: CustomerService, public eventService: EventService) {
   }
@@ -60,8 +61,9 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   @Input()
   set data(inputData) {
     this._data = inputData;
+    this.showFilter = (inputData.showFilter) ? inputData.showFilter :inputData
     if(this._data.id == undefined){
-      this.loanTypeDetails=inputData
+      (inputData == 'tab1') ? this.loanTypeDetails='' :this.loanTypeDetails=inputData;
     }
     console.log('AddLiabilitiesComponent Input data : ', this._data);
   }
@@ -244,12 +246,12 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   close(flag) {
     if (this.data) {
       if (this._data.loanTypeId == undefined) {
-        // const data = this._data;
-        const data = this.addLiabilityForm.get('loanType').value;
+         const data = this.showFilter;
+        // const data = this.addLiabilityForm.get('loanType').value;
         this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
       } else {
-        // const data = this._data.showFilter;
-        const data = this.addLiabilityForm.get('loanType').value;
+         const data = this.showFilter;
+        // const data = this.addLiabilityForm.get('loanType').value;
         this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
       }
     } else {
