@@ -78,21 +78,21 @@ export class FatcaDetailsInnComponent implements OnInit {
   getdataForm(data) {
 
     this.fatcaDetails = this.fb.group({
-      nationality: [(!data) ? '1' : data.nationality, [Validators.required]],
+      nationality: [(!data) ? '1' : (data.nationality) ? data.nationality +'' : '1', [Validators.required]],
       annualIncome: [(!data) ? '' : data.annualIncome, [Validators.required]],
       cityOfBirth: [(!data) ? '' : data.cityOfBirth, [Validators.required]],
       countryOfBirth: [!data ? '' : data.countryOfBirth, [Validators.required]],
       sourceOfWealth: [!data ? '' : data.sourceOfWealth, [Validators.required]],
       occupation: [!data ? '' : data.occupation, [Validators.required]],
-      politically: [!data ? '1' : data.politically, [Validators.required]],
-      taxResidency: [!data ? '1' : data.taxResidency, [Validators.required]],
+      politically: [!data ? '1' : (data.politically) ? data.politically +'' : '1', [Validators.required]],
+      taxResidency: [!data ? '1' : (data.taxResidency) ? data.taxResidency +'' : '1', [Validators.required]],
 
     });
-    if(!data){
-      this.fatcaDetails.controls.nationality.setValue('1')
-      this.fatcaDetails.controls.politically.setValue('1')
-      this.fatcaDetails.controls.taxResidency.setValue('1')
-    }
+    // if(!data){
+    //   this.fatcaDetails.controls.nationality.setValue('1')
+    //   this.fatcaDetails.controls.politically.setValue('1')
+    //   this.fatcaDetails.controls.taxResidency.setValue('1')
+    // }
   }
   getFormControl(): any {
     return this.fatcaDetails.controls;

@@ -153,12 +153,12 @@ export class PersonalDetailsInnComponent implements OnInit {
       fatherName: [!data ? '' : data.fatherName, [Validators.required]],
       motherName: [!data ? '' : data.motherName, [Validators.required]],
       dateOfBirth: [!data ? '' : new Date(data.dateOfBirth), [Validators.required]],
-      gender: [!data ? '1' : data.gender ? data.gender : (data.genderId) + "", [Validators.required]],
+      gender: [!data ? '1' : data.genderId ? data.genderId + '' : '1', [Validators.required]],
       email: [!data ? '' : data.email],
       aadharNumber: [!data ? '' : (data.aadharNumber) ? data.aadharNumber : data.aadhaarNumber],
       mobileNo: [!data ? '' : data.mobileNo],
       phoneNo: [!data ? '' : data.phoneNo],
-      maritalStatus: [!data ? '1' : data.maritalStatus ? data.maritalStatus : (data.martialStatusId) + "", [Validators.required]],
+      maritalStatus: [!data ? '1' : data.martialStatusId ? data.martialStatusId + '': "1", [Validators.required]],
       addressLine1: [!data.address ? '' : data.address.addressLine1],
       addressLine2: [!data.address ? '' : data.address.addressLine2],
       pinCode: [!data.address ? '' : data.address.pinCode],
@@ -167,10 +167,10 @@ export class PersonalDetailsInnComponent implements OnInit {
       state: [!data.address ? '' : data.address.state],
       country: [!data.address ? '' : data.address.country],
     });
-    if (data.gender == undefined && data.maritalStatus == undefined) {
-      this.personalDetails.controls.gender.setValue('1')
-      this.personalDetails.controls.maritalStatus.setValue('1')
-    }
+    // if (data.gender == undefined && data.maritalStatus == undefined) {
+    //   this.personalDetails.controls.gender.setValue('1')
+    //   this.personalDetails.controls.maritalStatus.setValue('1')
+    // }
   }
   getFormControl(): any {
     return this.personalDetails.controls;

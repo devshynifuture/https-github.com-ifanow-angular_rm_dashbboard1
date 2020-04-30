@@ -9,7 +9,7 @@
 
 
                 <!-- your account intro -->
-                <div class="wrapperBox mb-20">
+                <div class="wrapperBox mb-20" [hidden]="true">
                     <div class="row">
                         <div class="col-md-12 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0 ">Your account</h5>
@@ -87,7 +87,7 @@
                         <div class="col-md-8 d-flex align-items-center">
                             <h5 class="roboto m-0">Portfolio</h5>
                         </div>
-                        <div class="col-md-4 text-right" *ngIf="portFolioData && portFolioData.length > 0">
+                        <div class="col-md-4 text-right">
                             <a class="viewBtn c-p text-primitive br-2 f-12"> View all </a>
                         </div>
                     </div>
@@ -130,7 +130,7 @@
                         </div>
 
                         <!-- portfolio data not present -->
-                        <div class="fundBox bg-white" *ngIf="!portFolioData || portFolioData.length == 0">
+                        <div class="fundBox bg-white" *ngIf="tabsLoaded.portfolioSummary.dataLoaded && portFolioData.length == 0">
                             <div class="row">
                                 <div class="col-md-8  pr-0">
                                     <h5 class="roboto">Mutual funds</h5>
@@ -166,7 +166,7 @@
                 </div>
 
                 <!-- complete your profile -->
-                <div class="wrapperBox mb-20">
+                <div class="wrapperBox mb-20" [hidden]="true">
                     <div class="row">
                         <div class="col-md-12 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0 ">Complete your profile</h5>
@@ -206,7 +206,7 @@
                 </div>
 
 
-                <div class="wrapperBox mb-20">
+                <div class="wrapperBox mb-20" [hidden]="true">
                     <div class="row">
                         <div class="col-md-12 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0 ">Family members</h5>
@@ -243,7 +243,7 @@
 
                 </div>
 
-                <div class="wrapperBox mb-20">
+                <div class="wrapperBox mb-20" [hidden]="true">
                     <div class="row">
                         <div class="col-md-12 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0 ">Mutual found protfolio</h5>
@@ -280,12 +280,13 @@
                 </div>
 
                 <!-- goals section -->
-                <div class="wrapperBox">
+                <!-- goals not to be integrated for now -->
+                <div class="wrapperBox" [hidden]="true">
                     <div class="row">
                         <div class="col-md-8 d-flex align-items-center">
                             <h5 class="roboto m-0">Goals</h5>
                         </div>
-                        <div class="col-md-4 text-right" *ngIf="portFolioData && portFolioData.length > 0">
+                        <div class="col-md-4 text-right">
                             <a class="viewBtn c-p text-primitive br-2 f-12">
                                 View all
                             </a>
@@ -487,7 +488,7 @@
                 </div>
 
                 <!-- Recent transactions as per rta -->
-                <div class="wrapperBox" *ngIf="tabsLoaded.rtaFeeds.dataLoaded && tabsLoaded.rtaFeeds.hasData">>
+                <div class="wrapperBox" *ngIf="tabsLoaded.rtaFeeds.dataLoaded && tabsLoaded.rtaFeeds.hasData">
                     <div class="row">
                         <div class="col-md-8 d-flex align-items-center">
                             <h5 class="roboto m-0">Recent transactions (As per RTA feeds)</h5>
@@ -529,7 +530,7 @@
                 </div>
 
                 <!-- recent transactions-->
-                <div class="wrapperBox" *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">>
+                <div class="wrapperBox" *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">
                     <div class="row">
                         <div class="col-md-8 d-flex align-items-center">
                             <h5 class="roboto m-0">Recent transactions</h5>
@@ -581,23 +582,22 @@
                         </div>
                     </div>
 
-                    <div class="riskProfileBox bg-white" *ngFor="let riskProfileData of riskProfile">
-                        <div class="row">
+                    <div class="riskProfileBox bg-white">
+                        <div class="row" *ngFor="let risk of riskProfile">
                             <div class="col-md-4 text-center">
                                 <p class="f-16 roboto mb-8 f-500">Your risk score</p>
                                 <div class="numberBox">
-                                    <h1 class="f-48 mb-12"> {{riskProfileData.riskAssessmentScore}} </h1>
-                                    <p class="f-12 m-0 text-primitive">Max: {{riskProfileData.maxScore}}</p>
+                                    <h1 class="f-48 mb-12"> {{risk.riskAssessmentScore}} </h1>
+                                    <p class="f-12 m-0 text-primitive">Max: {{riskProfileMaxScore(risk.riskProfileId)}}</p>
                                 </div>
                             </div>
 
                             <div class="col-md-8 text-center">
                                 <h5 class="roboto f-500">
-                                    Your risk profile: {{riskProfileData.type}}
+                                    Your risk profile: {{risk.riskProfileStatus}}
                                 </h5>
-                                <p>{{riskProfileData.description}}</p>
+                                <p>{{riskProfileDesc(risk.riskProfileId)}}</p>
                             </div>
-
                         </div>
                     </div>
                     <div class="row" *ngIf="tabsLoaded.riskProfile.dataLoaded && !tabsLoaded.riskProfile.hasData">

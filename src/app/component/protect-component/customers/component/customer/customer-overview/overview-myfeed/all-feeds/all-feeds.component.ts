@@ -121,7 +121,7 @@ export class AllFeedsComponent implements OnInit {
     this.loadDocumentValutData();
     this.loadRiskProfile();
     this.loadGlobalRiskProfile();
-    this.loadGoalsData();
+    // this.loadGoalsData();
   }
 
   initializePieChart(){
@@ -176,7 +176,7 @@ export class AllFeedsComponent implements OnInit {
     this.loaderFn.increaseCounter();
     this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
       if(res == null) {
-        this.portFolioData = null;
+        this.portFolioData = [];
       } else {
         this.tabsLoaded.portfolioSummary.hasData = true;
         this.portFolioData = res;
@@ -277,7 +277,7 @@ export class AllFeedsComponent implements OnInit {
         this.riskProfile = [];
       } else {
         this.tabsLoaded.globalRiskProfile.hasData = true;
-        this.riskProfile = res[0];
+        this.riskProfile = res;
       }
       this.tabsLoaded.globalRiskProfile.dataLoaded = true;
       this.loaderFn.decreaseCounter();
@@ -289,9 +289,9 @@ export class AllFeedsComponent implements OnInit {
   }
 
   loadGlobalRiskProfile(){
-    this.customerService.getRiskProfile({}).subscribe(res => {
+    this.customerService.getGlobalRiskProfile({}).subscribe(res => {
       if(res == null) {
-        this.globalRiskProfile = null;
+        this.globalRiskProfile = [];
       } else {
         this.tabsLoaded.riskProfile.hasData = true;
         this.globalRiskProfile = res;
@@ -351,7 +351,6 @@ export class AllFeedsComponent implements OnInit {
       this.tabsLoaded.goalsData.dataLoaded = true;
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss")
-      this.tabsLoaded.goalsData.dataLoaded = true;
       this.loaderFn.decreaseCounter();
       this.hasError = true;
     })
@@ -365,5 +364,21 @@ export class AllFeedsComponent implements OnInit {
       innerSize: '60%',
       data: data,
     }, false, true);
+  }
+
+  riskProfileMaxScore(id) {
+    if(this.globalRiskProfile.length > 0) {
+      return this.globalRiskProfile.find(data => data.id == id).scoreUpperLimit;
+    } else {
+      return 1;
+    }
+  }
+
+  riskProfileDesc(id) {
+    if(this.globalRiskProfile.length > 0) {
+      return this.globalRiskProfile.find(data => data.id == id).id;
+    } else {
+      return 'Dummy risk profile description';
+    }
   }
 }
