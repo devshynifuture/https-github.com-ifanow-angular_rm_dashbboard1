@@ -53,6 +53,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   familyMemberLifeData: any;
   callMethod:any;
   loanTypeDetails: any;
+  showFilter: any;
   constructor(public utils: UtilService, private subInjectService: SubscriptionInject, private fb: FormBuilder,
     public custumService: CustomerService, public eventService: EventService) {
   }
@@ -60,8 +61,9 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   @Input()
   set data(inputData) {
     this._data = inputData;
+    this.showFilter = (inputData.showFilter) ? inputData.showFilter :inputData
     if(this._data.id == undefined){
-      this.loanTypeDetails=inputData
+      (inputData == 'tab1') ? this.loanTypeDetails='' :this.loanTypeDetails=inputData;
     }
     console.log('AddLiabilitiesComponent Input data : ', this._data);
   }
@@ -244,12 +246,12 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   close(flag) {
     if (this.data) {
       if (this._data.loanTypeId == undefined) {
-        // const data = this._data;
-        const data = this.addLiabilityForm.get('loanType').value;
+         const data = this.showFilter;
+        // const data = this.addLiabilityForm.get('loanType').value;
         this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
       } else {
-        // const data = this._data.showFilter;
-        const data = this.addLiabilityForm.get('loanType').value;
+         const data = this.showFilter;
+        // const data = this.addLiabilityForm.get('loanType').value;
         this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
       }
     } else {
@@ -372,7 +374,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
             "partPaymentDate": (element.controls.date.value._d) ? element.controls.date.value._d : element.controls.date.value,
             "partPayment": element.controls.amount.value,
             "option": element.controls.type.value,
-            "id": (this.editData) ? this.editData.id : null
+            "id":(element.value.id) ? element.value.id : null
           }
           finalTransctList.push(obj)
         }
@@ -399,7 +401,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
           loanTenure: this.addLiabilityForm.controls.loanTenure.value,
           commencementDate: this.addLiabilityForm.controls.CommencementDate.value,
           principalOutstandingAsOn: (this.addLiabilityForm.controls.poDate.value) ? this.addLiabilityForm.controls.poDate.value : null,
-          principalOutstanding: this.addLiabilityForm.controls.outstandingCheck.value,
+          principalOutstanding: (this.addLiabilityForm.controls.outstandingCheck.value) ? this.addLiabilityForm.controls.outstandingCheck.value : false,
           frequencyOfPayments: this.addLiabilityForm.controls.emiFrequency.value,
           annualInterestRate: this.addLiabilityForm.controls.interest.value,
           financialInstitution: this.addLiabilityForm.controls.finInstitution.value,
@@ -421,6 +423,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
           principalOutstandingAsOn: (this.addLiabilityForm.controls.poDate.value) ? this.addLiabilityForm.controls.poDate.value : null,
           frequencyOfPayments: this.addLiabilityForm.controls.emiFrequency.value,
           annualInterestRate: this.addLiabilityForm.controls.interest.value,
+          principalOutstanding: (this.addLiabilityForm.controls.outstandingCheck.value) ? this.addLiabilityForm.controls.outstandingCheck.value : false,
           emi: this.addLiabilityForm.controls.emi.value,
           financialInstitution: this.addLiabilityForm.controls.finInstitution.value,
           loanPartPayments: finalTransctList

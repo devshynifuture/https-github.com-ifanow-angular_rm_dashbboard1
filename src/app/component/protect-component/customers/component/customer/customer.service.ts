@@ -778,7 +778,7 @@ export class CustomerService {
   getAllFeedsPortFolio(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CUSTOMER_PORTFOLIO_SUMMARY, data);
   }
-  getMFData(data) {
+  getRTAFeeds(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FEEDS_MF_DATA, data);
   }
   getDocumentsFeed(data) {
@@ -791,7 +791,7 @@ export class CustomerService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GLOBAL_RISK_PROFILE, data);
   }
   getRecentTransactions(data) {
-    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_FEED_RECENT_TRANSACTIONS, data, 1);
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_FEED_RECENT_TRANSACTIONS, data, null);
   }
 }
 

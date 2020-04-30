@@ -93,7 +93,12 @@ export class OverviewProfileComponent implements OnInit {
     this.cusService.getAddressList(obj).subscribe(
       data => {
         console.log(data);
-        this.addressList = data;
+        if (data && data.length > 0) {
+          this.addressList = data;
+        }
+        else {
+          this.addressList == undefined;
+        }
       },
       err => {
         console.error(err)
