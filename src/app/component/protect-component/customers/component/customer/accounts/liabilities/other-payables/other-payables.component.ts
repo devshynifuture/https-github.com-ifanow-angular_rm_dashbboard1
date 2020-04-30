@@ -55,7 +55,7 @@ export class OtherPayablesComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     if (!this.payableData) {
       this.noData = 'No Data Found';
-      this.dataSource.filteredData = [];
+      this.dataSource.data = [];
     } else {
       this.dataSource = this.payableData;
       this.dataSource = new MatTableDataSource(this.payableData);
@@ -163,7 +163,7 @@ export class OtherPayablesComponent implements OnInit {
     this.custmService.getOtherPayables(obj).subscribe(
       data => this.getOtherPayablesRes(data), (error) => {
         this.eventService.openSnackBar('Something went wrong!', 'Dismiss');
-        this.dataSource.filteredData = [];
+        this.dataSource.data = [];
         this.isLoading = false;
       }
     );

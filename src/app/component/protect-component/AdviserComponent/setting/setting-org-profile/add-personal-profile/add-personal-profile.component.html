@@ -51,7 +51,8 @@
                         <mat-form-field appearance="standard">
                             <mat-select formControlName="isdCodeId" class="form-control">
                                 <mat-option>
-                                  <ngx-mat-select-search [formControl]="filterCtrl" placeholderLabel="ISD code..."></ngx-mat-select-search>
+                                    <ngx-mat-select-search [formControl]="filterCtrl" placeholderLabel="ISD code...">
+                                    </ngx-mat-select-search>
                                 </mat-option>
                                 <mat-option [value]="code.id" *ngFor="let code of filteredIsdCodes | async">
                                     {{code.code}}({{code.countryCode}})</mat-option>
@@ -89,15 +90,15 @@
         </mat-tab>
         <mat-tab label="Profile picture">
             <div class="row pt-40">
-                <div class="col-md-12">
-                    <h5 class="m-0 pt-8" *ngIf="!cropImage">Your profile picture</h5>
-                    <div>
+                <div class="col-md-5 pr-0 text-right" *ngIf="!cropImage">
+                    <h5 class="m-0 f-14 pt-8">Your profile picture</h5>
+                    <p class="f-12 text-primitive">
                         This picture is visible on the top right of web login
-                    </div>
+                    </p>
                 </div>
-                <div class="col-md-12" *ngIf="cropImage">
+                <div class="col-md-5 pr-0 text-right" *ngIf="cropImage">
                     <div *ngIf="!showCropper">
-                        <h5 class="m-0 pt-8">Upload a photo to edit and upload.</h5>
+                        <h5 class="m-0 f-14 pt-8">Upload a photo to edit and upload.</h5>
                     </div>
                     <div class="image-cropper">
                         <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)"></app-image-cropper>
@@ -108,13 +109,13 @@
                     <div class="row pt-24">
                     </div>
                 </div>
-                <div class="col-md-12 pl-0" *ngIf="cropImage">
+                <div class="col-md-7" *ngIf="cropImage">
                     <button mat-stroked-button class="btn-primary" (click)="chooseImage.click()">CHOOSE IMAGE</button>
                     <button mat-stroked-button class="bg-white text-inherit ml-12" (click)="resetPageVariables()">CANCEL
                         EDIT</button>
                     <input type="file" #chooseImage (change)="uploadImageForCorping($event)" hidden>
                 </div>
-                <div class="col-md-12" *ngIf="!cropImage">
+                <div class="col-md-7" *ngIf="!cropImage">
                     <div class="profile-img">
                         <img [src]="imgURL">
                     </div>
