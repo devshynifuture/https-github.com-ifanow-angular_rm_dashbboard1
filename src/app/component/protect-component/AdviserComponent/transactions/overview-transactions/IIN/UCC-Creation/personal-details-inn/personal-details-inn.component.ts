@@ -222,7 +222,8 @@ export class PersonalDetailsInnComponent implements OnInit {
       this.savePersonalDetails(value);
     }
 
-    this.obj1.firstHolder = this.firstHolder;
+    this.obj1.firstHolder = this.firstHolder
+    this.obj1.firstHolder.dateOfBirth = new Date(this.firstHolder.dateOfBirth).getTime();
     this.obj1.secondHolder = this.secondHolder;
     this.obj1.thirdHolder = this.thirdHolder;
     this.obj1.generalDetails = this.generalDetails;

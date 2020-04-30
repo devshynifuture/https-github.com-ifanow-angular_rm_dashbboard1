@@ -49,19 +49,19 @@
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field>
-                            <mat-select class="form-control" formControlName="relationType">
-                                <mat-option value="1"> Self </mat-option>
-                                <mat-option value="3"> Wife </mat-option>
-                                <mat-option value="2"> Husband </mat-option>
-                                <mat-option value="5"> Daughter </mat-option>
-                                <mat-option value="4"> Son </mat-option>
-                                <mat-option value="6"> Father </mat-option>
-                                <mat-option value="7"> Mother </mat-option>
-                                <mat-option value="8"> Brother </mat-option>
-                                <mat-option value="9"> Sister </mat-option>
-                                <mat-option value="10"> Other </mat-option>
-                                <mat-option value="11"> Daughter_In_Law </mat-option>
-                                <mat-option value="12"> Sister_In_Law </mat-option>
+                            <mat-select class="form-control" formControlName="relationShip">
+                                <mat-option value="Self"> Self </mat-option>
+                                <mat-option value="Wife"> Wife </mat-option>
+                                <mat-option value="Husband"> Husband </mat-option>
+                                <mat-option value="Daughter"> Daughter </mat-option>
+                                <mat-option value="Son"> Son </mat-option>
+                                <mat-option value="Father"> Father </mat-option>
+                                <mat-option value="Mother"> Mother </mat-option>
+                                <mat-option value="Brother"> Brother </mat-option>
+                                <mat-option value="Sister"> Sister </mat-option>
+                                <mat-option value="1Other"> Other </mat-option>
+                                <mat-option value="1Daughter_In_Law"> Daughter_In_Law </mat-option>
+                                <mat-option value="1Sister_In_Law"> Sister_In_Law </mat-option>
                             </mat-select>
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
@@ -74,11 +74,11 @@
                         <h3 class="f-16 pt-10 m-0">Nominee type</h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-radio-group aria-label="Select an option" formControlName="nomineeType">
-                            <mat-radio-button value="1" [ngClass]="nomineeDetails.get('nomineeType').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
+                        <mat-radio-group aria-label="Select an option" formControlName="type">
+                            <mat-radio-button value="1" [ngClass]="nomineeDetails.get('type').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                                 Major
                             </mat-radio-button>
-                            <mat-radio-button value="2" [ngClass]="nomineeDetails.get('nomineeType').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
+                            <mat-radio-button value="2" [ngClass]="nomineeDetails.get('type').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                                 Minor </mat-radio-button>
                         </mat-radio-group>
                     </div>
@@ -92,7 +92,7 @@
                     </div>
                     <div class="col-md-3 form-group">
                         <mat-form-field class="ba-date">
-                            <input matInput class="form-control b-0" formControlName="nominneDOB"
+                            <input matInput class="form-control b-0" formControlName="dob"
                                 [matDatepicker]="picker">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
@@ -109,9 +109,9 @@
                     <div class="col-md-3 form-group">
                         <mat-form-field>
                             <input matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
-                                appInputValueValidation maxlength="3" formControlName="nomineePercentage" type="number"
+                                appInputValueValidation maxlength="3" formControlName="percent" type="number"
                                 class="form-control percentage">
-                                <mat-error *ngIf="(nomineeDetails.get('nomineePercentage').errors)" class="f-12 ml-8">
+                                <mat-error *ngIf="(nomineeDetails.get('percent').errors)" class="f-12 ml-8">
                                     Should be between than 0.01 to 99
                                 </mat-error>
                         </mat-form-field>

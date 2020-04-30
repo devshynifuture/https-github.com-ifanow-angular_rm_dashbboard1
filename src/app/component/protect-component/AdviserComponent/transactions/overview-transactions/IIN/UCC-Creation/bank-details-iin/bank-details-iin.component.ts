@@ -364,6 +364,7 @@ export class BankDetailsIINComponent implements OnInit {
           this.getObj = this.setObj(element, value)
           this.bank.push(this.getObj)
         }else{
+          element.accountType = (element.accountType == '1')?'SB':'CA';
           this.bank.push(element)
         }
       });

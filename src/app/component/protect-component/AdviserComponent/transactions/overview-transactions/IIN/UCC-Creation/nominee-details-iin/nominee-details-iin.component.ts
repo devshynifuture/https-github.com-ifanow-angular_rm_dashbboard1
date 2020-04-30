@@ -166,10 +166,10 @@ export class NomineeDetailsIinComponent implements OnInit {
     }
     this.nomineeDetails = this.fb.group({
       nomineeName: [(!data) ? '' : (data.nomineeName) ? data.nomineeName : data.name, [Validators.required]],
-      relationType: [!data ? '' : (data.relationType) ? data.relationType : data.relationshipId + "", [Validators.required]],
-      nomineeType: [!data ? '1' : (data.nomineeType) ? data.nomineeType +'' : '1', [Validators.required]],
-      nominneDOB: [!data ? '' : (data.nominneDOB) ? new Date(data.nominneDOB) : new Date(data.dateOfBirth), [Validators.required]],
-      nomineePercentage: [!data ? '' : data.nomineePercentage, [Validators.required, Validators.min(0), Validators.max(100)]],
+      relationShip: [!data ? '' : (data.relationShip) ? data.relationShip : data.relationshipId + "", [Validators.required]],
+      type: [!data ? '1' : (data.type) ? data.type +'' : '1', [Validators.required]],
+      dob: [!data ? '' : (data.dob) ? new Date(data.dob) : new Date(data.dateOfBirth), [Validators.required]],
+      percent: [!data ? '' : data.percent, [Validators.required, Validators.min(0), Validators.max(100)]],
       addressType: [!data.address ? '' : data.address.addressType, [Validators.required]],
       address1: [!data.address ? '' : data.address.address1, [Validators.required]],
       address2: [!data.address ? '' : data.address.address2, [Validators.required]],
@@ -328,10 +328,10 @@ export class NomineeDetailsIinComponent implements OnInit {
 
     value = {
       nomineeName: holder.nomineeName,
-      relationType: holder.relationType,
-      nomineeType: holder.nomineeType,
-      nominneDOB: holder.nominneDOB,
-      nomineePercentage: holder.nomineePercentage,
+      relationShip: holder.relationShip,
+      type: holder.type,
+      dob: new Date(holder.dob).getTime(),
+      percent: holder.percent,
       idNumber: holder.idNumber,
     }
     value.address = {
