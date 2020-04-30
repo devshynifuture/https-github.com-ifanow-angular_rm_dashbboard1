@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ValidatorType, UtilService } from 'src/app/services/util.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { ReplaySubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-number',
@@ -33,7 +35,19 @@ export class AddNumberComponent implements OnInit {
   countryCode: any;
   lengthControl: number;
 
+  /** control for the MatSelect filter keyword */
+  filterCtrl: FormControl = new FormControl();
+  filteredIsdCodes: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
+  /** Subject that emits when the component has been destroyed. */
+  protected _onDestroy = new Subject<void>();
+
   ngOnInit() {
+    // listen for search field value changes
+    this.filterCtrl.valueChanges
+    .pipe(takeUntil(this._onDestroy))
+    .subscribe(() => {
+      this.filterCodes();
+    });
   }
 
   constructor(private fb: FormBuilder, private utilService: UtilService, private peopleService: PeopleService, private enumService: EnumServiceService) {
@@ -66,6 +80,7 @@ export class AddNumberComponent implements OnInit {
           } else {
             this.isdCodes = this.isdCodes.filter(element => element.code != '+91');
           }
+          this.filteredIsdCodes.next(this.isdCodes);
         }
       }
     )
@@ -131,5 +146,21 @@ export class AddNumberComponent implements OnInit {
         this.getMobileNumList.controls[0].get('number').setErrors(null);
       };
     }
+  }
+
+  protected filterCodes() {
+    if (!this.isdCodes) {
+      return;
+    }
+    // get the search keyword
+    let search = this.filterCtrl.value;
+    if (!search) {
+      this.filteredIsdCodes.next(this.isdCodes.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    // filter the codes
+    this.filteredIsdCodes.next(this.isdCodes.filter(code => (code.code + code.countryCode).toLowerCase().indexOf(search) > -1))
   }
 }
