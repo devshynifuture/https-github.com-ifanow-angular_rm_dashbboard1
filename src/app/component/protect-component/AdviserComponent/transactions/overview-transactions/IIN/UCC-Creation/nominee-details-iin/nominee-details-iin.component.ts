@@ -171,8 +171,8 @@ export class NomineeDetailsIinComponent implements OnInit {
       nominneDOB: [!data ? '' : (data.nominneDOB) ? new Date(data.nominneDOB) : new Date(data.dateOfBirth), [Validators.required]],
       nomineePercentage: [!data ? '' : data.nomineePercentage, [Validators.required, Validators.min(0), Validators.max(100)]],
       addressType: [!data.address ? '' : data.address.addressType, [Validators.required]],
-      addressLine1: [!data.address ? '' : data.address.addressLine1, [Validators.required]],
-      addressLine2: [!data.address ? '' : data.address.addressLine2, [Validators.required]],
+      address1: [!data.address ? '' : data.address.address1, [Validators.required]],
+      address2: [!data.address ? '' : data.address.address2, [Validators.required]],
       pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],
       city: [!data.address ? '' : data.address.city, [Validators.required]],
       district: [!data.address ? '' : data.address.district, [Validators.required]],
@@ -336,8 +336,8 @@ export class NomineeDetailsIinComponent implements OnInit {
     }
     value.address = {
       addressType: holder.addressType,
-      addressLine1: holder.addressLine1,
-      addressLine2: holder.addressLine2,
+      address1: holder.address1,
+      address2: holder.address2,
       pinCode: holder.pinCode,
       city: holder.city,
       district: holder.district,
