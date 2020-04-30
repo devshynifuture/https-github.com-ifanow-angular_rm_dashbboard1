@@ -129,7 +129,7 @@ export class InsuranceComponent implements OnInit {
         this.showInsurance = element.name;
       } else if (insuranceId == 2 && insuranceSubTypeId == 0) {
         this.showInsurance = 'General';
-      } else if(insuranceId == 1 && insuranceSubTypeId == 0){
+      } else if (insuranceId == 1 && insuranceSubTypeId == 0) {
         this.showInsurance = 'Life';
       }
     });
@@ -412,7 +412,7 @@ export class InsuranceComponent implements OnInit {
 
   }
   Excel(tableTitle) {
-    tableTitle = this.showInsurance +'_'+ 'Insurance';
+    tableTitle = this.showInsurance + '_' + 'Insurance';
     this.fragmentData.isSpinner = true;
     if (this.insuranceTypeId == 1) {
       let rows = this.tableEl._elementRef.nativeElement.rows;
@@ -431,6 +431,12 @@ export class InsuranceComponent implements OnInit {
   }
   getInsuranceTypeData(typeId, typeSubId) {
     this.lifeInsuranceFlag = false;
+    this.generalInsuranceFlag = false;
+    if (typeId == 2 && typeSubId == 0) {
+     this.generalInsuranceFlag = true;
+    }else{
+      this.generalInsuranceFlag = false;
+    }
     this.insuranceTypeId = typeId;
     this.insuranceSubTypeId = typeSubId;
     if (this.insuranceSubTypeId == 0 && this.insuranceTypeId == 2) {
@@ -456,12 +462,12 @@ export class InsuranceComponent implements OnInit {
               this.eventService.openSnackBar('Insurance is deleted', 'Dismiss');
               dialogRef.close();
               // this.getInsuranceData(this.insuranceTypeId)\
-              if(this.insuranceTypeId == 1 && this.insuranceSubTypeId==0){
+              if (this.insuranceTypeId == 1 && this.insuranceSubTypeId == 0) {
                 this.getInsuranceData(this.insuranceTypeId)
-              }else{
+              } else {
                 this.getInsuranceSubTypeData(this.advisorId, this.clientId, this.insuranceTypeId, this.insuranceSubTypeId)
               }
-             
+
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -565,6 +571,7 @@ export class InsuranceComponent implements OnInit {
       insuranceTypeId: this.insuranceTypeId,
       insuranceSubTypeId: this.insuranceSubTypeId,
       displayList: this.dislayList,
+      showInsurance: this.showInsurance
     };
     const fragmentData = {
       flag: 'addInsurance',
@@ -618,9 +625,9 @@ export class InsuranceComponent implements OnInit {
               // this.insuranceSubTypeId = 0;
               this.getCount();
               // this.getInsuranceData(this.insuranceTypeId )
-              if(this.insuranceTypeId == 1 && this.insuranceSubTypeId == 0){
-                this.getInsuranceData(this.insuranceTypeId )
-              }else{
+              if (this.insuranceTypeId == 1 && this.insuranceSubTypeId == 0) {
+                this.getInsuranceData(this.insuranceTypeId)
+              } else {
                 this.getInsuranceSubTypeData(this.advisorId, this.clientId, this.insuranceTypeId, this.insuranceSubTypeId)
               }
               console.log('this is sidebardata in subs subs 2: ', sideBarData);

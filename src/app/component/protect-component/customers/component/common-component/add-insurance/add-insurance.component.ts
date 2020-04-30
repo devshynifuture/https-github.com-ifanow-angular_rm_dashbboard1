@@ -35,6 +35,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   familyMemberId: any;
   ownerData: any;
   callMethod:any;
+  showInsurance: any;
+  flag = 'ADD';
   /*_data;
   @Input()
   set data(inputData) {
@@ -51,6 +53,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.insuranceSubTypeId = data.insuranceSubTypeId;
+    this.showInsurance = data.showInsurance;
     this.getFamilyMemberList();
     this.setInsuranceDataFormField(data);
     console.log(data);
@@ -131,12 +134,22 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     nomineeName: [, [Validators.required]],
     vestedBonus: [, [Validators.required]],
     assumedRate: [, [Validators.required]],
-    fundValue: [],
+    // fundValue: [],
     getNomineeName: this.fb.array([this.fb.group({
       name: [''],
       sharePercentage: [0],
       familyMemberId: [0],
       id: [0]
+    })]),
+    fundValueForm: this.fb.array([this.fb.group({
+      fundName: [''],
+      debtPer: [''],
+      equityPer: [''],
+      option: ['2'],
+      units:[null],
+      nav:[null],
+      id:[0],
+      fundValue:['']
     })]),
   });
   cashFlowForm = this.fb.group({
@@ -178,6 +191,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   lisNominee(value) {
     this.ownerData.Fmember = value;
     this.nomineesListFM = Object.assign([], value);
+    this.ProposerData = Object.assign([],value);
   }
   getFamilyMember(data, index) {
     this.familyMemberLifeData = data;
@@ -212,6 +226,9 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   /***owner***/
   get getCoOwner() {
     return this.lifeInsuranceForm.get('getCoOwnerName') as FormArray;
+  }
+  get getFundValues() {
+    return this.keyDetailsForm.get('fundValueForm') as FormArray;
   }
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
@@ -306,17 +323,32 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
 
 
   }
+  addFund(data) {
+    this.getFundValues.push(this.fb.group({
+      fundName: [data ? data.fundName :null],
+      debtPer: [data ? data.debtRatio : null],
+      equityPer:[data ? data.equityRatio : null],
+      option:[data ? data.fundValueOrNav + '' : null],
+      units:[data ? data.units : null],
+      nav:[data ? data.nav : null],
+      id:[data ? data.id : null],
+      fundValue:[data ? data.fundValue : null]
+    }));
+  }
+  removeFund(item) {
+    let finalMemberList = this.keyDetailsForm.get('fundValueForm') as FormArray 
+    if(finalMemberList.length > 1){
+    this.getFundValues.removeAt(item);
+
+    }
+  }
   ngOnInit() {
     this.addMoreFlag = false;
   }
-  onChange(value,event) {
+  onChange(form,value,event) {
     if (parseInt(event.target.value) > 100) {
       event.target.value = '100';
-      if(value == 'assumedRate'){
-        this.keyDetailsForm.get(value).setValue(event.target.value);
-      }else{
-        this.lifeInsuranceForm.get(value).setValue(event.target.value);
-      }
+      form.get(value).setValue(event.target.value);
     }
   }
   addTransaction() {
@@ -342,6 +374,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       this.ownerData = { Fmember: this.nomineesListFM, controleData: this.lifeInsuranceForm }
       return;
     } else {
+      (this.editInsuranceData.id) ? this.flag = 'EDIT' : this.flag = 'ADD';
       // requiredFields
       this.insuranceId = this.editInsuranceData.id
       // this.lifeInsuranceForm.controls.lifeAssured.setValue(this.editInsuranceData.lifeAssuredName)
@@ -386,6 +419,12 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
           this.addNewNominee(element);
         });
       }
+      if (this.editInsuranceData.ulipFundDetails) {
+        this.getFundValues.removeAt(0);
+        this.editInsuranceData.ulipFundDetails.forEach(element => {
+          this.addFund(element);
+        });
+      }
       // this.cashFlowForm.controls.cashFlowType.setValue(this.editInsuranceData.cashFlowType)
       // this.cashFlowForm.controls.year.setValue(this.editInsuranceData.year)
       // this.cashFlowForm.controls.approxAmt.setValue(this.editInsuranceData.approxAmt)
@@ -393,7 +432,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       if (this.editInsuranceData.insuranceCashflowList != undefined) {
         this.editInsuranceData.insuranceCashflowList.forEach(element => {
           (this.cashFlowForm.controls.cashFlow as FormArray).push(this.fb.group({
-            cashFlowType: [element.cashFlowType, [Validators.required]],
+            cashFlowType: [element.cashFlowType + '', [Validators.required]],
             year: [element.cashFlowYear, Validators.required],
             approxAmt: [(element.cashFlowApproxAmount + ''), Validators.required]
           }));
@@ -485,10 +524,10 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   selectPolicy(policy) {
     this.policyData = policy;
     this.insuranceTypeId = policy.insuranceTypeId;
-    if(this.insuranceSubTypeId == 0){
-      this.insuranceSubTypeId = policy.insuranceSubTypeId;
-    }
-    // this.insuranceSubTypeId = policy.insuranceSubTypeId;
+    // if(this.insuranceSubTypeId == 0){
+    //   this.insuranceSubTypeId = policy.insuranceSubTypeId;
+    // }
+    this.insuranceSubTypeId = policy.insuranceSubTypeId;
   }
 
   openOptionField() {
@@ -509,16 +548,35 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
 
   saveAddInsurance() {
     this.getFamilyMemberIdSelectedData(this.lifeInsuranceForm.get('proposer').value);
+    let ulipFundDetails = [];
+    let ulipFundVal = this.keyDetailsForm.get('fundValueForm') as FormArray
+    ulipFundVal.controls.forEach(element => {
+      let obj =
+      {
+        id:(element.get('id').value) ? element.get('id').value : null,
+        insuranceId:(this.editInsuranceData) ? this.editInsuranceData.id :null,
+        equityRatio: (element.get('equityPer').value) ? element.get('equityPer').value :null,
+        debtRatio: (element.get('debtPer').value) ? element.get('debtPer').value : null,
+        fundValue: (element.get('fundValue').value) ? element.get('fundValue').value : null,
+        nav:(element.get('nav').value) ?  element.get('nav').value :null,
+        units: (element.get('units').value) ? element.get('units').value :null,
+        fundValueOrNav: (element.get('option').value) ? element.get('option').value : null,
+        fundName: (element.get('fundName').value) ? element.get('fundName').value : null
+      }
+      ulipFundDetails.push(obj)
+    })
     let finalCashFlowList = [];
     let cashFlowArray = this.cashFlowForm.get('cashFlow') as FormArray
     cashFlowArray.controls.forEach(element => {
-      let obj =
-      {
-        cashFlowType: element.get('cashFlowType').value,
-        cashFlowYear: element.get('year').value,
-        cashFlowApproxAmount: element.get('approxAmt').value
+      if(element.get('cashFlowType').value || element.get('year').value || element.get('approxAmt').value){
+        let obj =
+        {
+          cashFlowType: element.get('cashFlowType').value,
+          cashFlowYear: element.get('year').value,
+          cashFlowApproxAmount: element.get('approxAmt').value
+        }
+        finalCashFlowList.push(obj)
       }
-      finalCashFlowList.push(obj)
     })
     this.lifeInsuranceForm.get('policyName').value;
 
@@ -533,7 +591,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       {
         "familyMemberIdLifeAssured":this.lifeInsuranceForm.value.getCoOwnerName[0].familyMemberId,
         // "familyMemberIdLifeAssured": this.familyMemberLifeData.id,
-        "familyMemberIdProposer": (this.selectedProposerData) ? this.selectedProposerData.id : null,
+        "familyMemberIdProposer": (this.selectedProposerData) ? this.selectedProposerData.familyMemberId : null,
         "clientId": this.clientId,
         "advisorId": this.advisorId,
         "ownerName": "",
@@ -571,6 +629,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         "ridersFemaleCriticalIllness": this.ridersForm.get('femaleCriticalIlleness').value,
         "insuranceCashflowList": finalCashFlowList,
         "nominees": this.keyDetailsForm.value.getNomineeName,
+        "ulipFundDetails":ulipFundDetails
 
       }
       this.insuranceFormFilledData.policyStatusId = parseInt(this.insuranceFormFilledData.policyStatusId)
@@ -578,6 +637,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         this.insuranceFormFilledData.nominees.forEach((element, index) => {
           if (element.name == '') {
             this.removeNewNominee(index);
+            this.insuranceFormFilledData.nominees = [];
           }
         });
       } else {

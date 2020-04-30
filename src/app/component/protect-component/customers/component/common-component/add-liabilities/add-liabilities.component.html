@@ -2,8 +2,8 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20" *ngIf="!_data|| _data.id==undefined">Add Liabilities</h4>
-            <h4 class="mb-0 wrapper-20" *ngIf="_data&&_data.id!=undefined">Edit Liabilities</h4>
+            <h4 class="mb-0 wrapper-20" *ngIf="!_data|| _data.id==undefined">ADD LIABILITIS</h4>
+            <h4 class="mb-0 wrapper-20" *ngIf="_data&&_data.id!=undefined">EDIT LIABILITIES</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -13,7 +13,7 @@
     </div>
 </div>
 <div class="pt-100 pl-24 pr-24 pb-48 mb-48" [formGroup]="addLiabilityForm">
-    <div class="row">
+    <!-- <div class="row">
             <div class="col-md-5 text-right">
                 <h5 class="m-0 pt-8">Owner</h5>
             </div>
@@ -30,6 +30,51 @@
                         This field is required
                     </mat-error>
                 </mat-form-field>
+            </div>
+        </div> -->
+        <div formArrayName="getCoOwnerName">
+            <div class="row" *ngFor="let obj of addLiabilityForm.controls['getCoOwnerName'].controls; let pointIndex=index"
+                [formGroupName]="pointIndex">
+                <div class="col-md-5 pr-0 text-right">
+                    <h5 class="m-0 pt-8 ">Owner</h5>
+                </div>
+                <div class="pr-0" [ngClass]="addLiabilityForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' 
+                                (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
+                                class="form-control br-0" [callMethod]='callMethod'>
+                                <mat-option value='' disabled>Select family members</mat-option>
+                                <mat-option *ngFor="let f of nomineesListFM"  [value]="f.userName">
+                                    <span>{{f.userName}}</span>
+                                </mat-option>
+                            </mat-select>
+                            <mat-error class="f-12">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-2" *ngIf="addLiabilityForm.value.getCoOwnerName.length > 1">
+                    <div class="form-group mb-0 iconPetage">
+                        <mat-form-field>
+                            <input matInput class="form-control br-0 percentage" type="number" formControlName="share"
+                                (focusout)="onChangeJointOwnership('owner')">
+                            <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
+                                This field is required
+                            </mat-error>
+                            <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('incorrect') ">
+                                Total percent should be 100%
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-2 p-0 d-flex align-items-center">
+                    <!-- <i *ngIf="pointIndex==0" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i> -->
+                    <i *ngIf="pointIndex!=0" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                        (click)="removeCoOwner(pointIndex)">remove</i>
+                </div>
+    
             </div>
         </div>
     <div class="row pt-40">
@@ -65,11 +110,11 @@
                 <mat-form-field>
                     <input type="text" matInput #loanAmountRef class="form-control rupess br-0" appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" formControlName="loanAmount"
-                        maxlength="{{getFormControl().loanAmount.maxLength}}">
+                        [maxLength]="8">
                     <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
-                    <mat-hint align="end" class="f-12">{{loanAmountRef.value.length}}/20</mat-hint>
+                    <mat-hint align="end" class="f-12">{{loanAmountRef.value.length}}/8</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -83,12 +128,15 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input type="text" matInput #loanTenure class="form-control br-0" appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" formControlName="loanTenure"
+                        [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="Validations($event.target.value,'loanTenure')" formControlName="loanTenure"
                         maxlength="{{getFormControl().loanTenure.maxLength}}">
-                    <mat-error class="f-12 pt-4">
+                    <mat-error class="f-12 pt-4"  *ngIf="(addLiabilityForm.get('loanTenure').errors?.required)">
                         This field is required
                     </mat-error>
-                    <mat-hint align="end" class="f-12">{{loanTenure.value.length}}/20</mat-hint>
+                    <mat-error class="f-12 pt-4" *ngIf="(addLiabilityForm.get('loanTenure').errors?.max)" >
+                        Should not be greater than 40
+                    </mat-error>
+                    <!-- <mat-hint align="end" class="f-12">{{loanTenure.value.length}}/20</mat-hint> -->
                 </mat-form-field>
             </div>
         </div>
@@ -131,11 +179,11 @@
                 <mat-form-field>
                     <input type="text" matInput #loanTenure class="form-control rupess br-0" appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" formControlName="outstandingAmt"
-                        maxlength="{{getFormControl().outstandingAmt.maxLength}}">
+                        [maxLength]="8">
                     <mat-error class="f-12 pt-4">
                         This field is required
                     </mat-error>
-                    <mat-hint align="end" class="f-12">{{loanTenure.value.length}}/20</mat-hint>
+                    <mat-hint align="end" class="f-12">{{loanTenure.value.length}}/8</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -183,6 +231,29 @@
             </div>
         </div>
     </div>
+    <div class="row pt-40">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-8">EMI</h5>
+        </div>
+        <div class="col-md-3 pr-0">
+            <div class="form-group mb-0 iconRupess">
+                <mat-form-field>
+                    <input type="text" appInputValueValidation matInput #emi class="form-control br-0 rupess"
+                        appInputValueValidation (keyup)="Validations($event.target.value,'EMI')" [inputValidator]="validatorType.NUMBER_ONLY" formControlName="emi"
+                        [maxLength]="8">
+                    <!-- <mat-hint align="start" class="f-12">Optional</mat-hint> -->
+                    <mat-hint align="end" class="f-12">{{emi.value.length}}/8</mat-hint>
+                    <mat-error *ngIf="(addLiabilityForm.get('emi').errors?.max)" class="f-12">
+                        Should not be greater than loan amount
+                    </mat-error>
+                    <mat-error class="f-12 pt-4" *ngIf="(addLiabilityForm.get('emi').errors?.required)">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+        </div>
+    </div>
     <div class="row pt-48">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Annual interest rate</h5>
@@ -220,23 +291,7 @@
             </div>
         </div>
 
-        <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8">EMI</h5>
-            </div>
-            <div class="col-md-3 pr-0">
-                <div class="form-group mb-0 iconRupess">
-                    <mat-form-field>
-                        <input type="text" appInputValueValidation matInput #emi class="form-control br-0 rupess"
-                            appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="emi"
-                            maxlength="20">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{emi.value.length}}/20</mat-hint>
-                    </mat-form-field>
-                </div>
-
-            </div>
-        </div>
+       
 
         <div class="row pt-48">
             <div class="col-md-5 pr-0 text-right">
@@ -262,9 +317,9 @@
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input type="text" matInput #collateral class="form-control br-0" formControlName="collateral"
-                            maxlength="20">
+                        [maxLength]="40">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
-                        <mat-hint align="end" class="f-12">{{collateral.value.length}}/20</mat-hint>
+                        <mat-hint align="end" class="f-12">{{collateral.value.length}}/40</mat-hint>
                     </mat-form-field>
                 </div>
             </div>

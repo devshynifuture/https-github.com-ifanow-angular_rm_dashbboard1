@@ -273,8 +273,8 @@ addNewNominee(data) {
         isClient:0
       })]),
       guardian: [data.guardianName?data.guardianName:'', [Validators.required]],
-      accBalance: [data.accountBalance, [Validators.required, Validators.min(250), Validators.max(150000)]],
-      balanceAsOn: [new Date(data.balanceAsOn), [Validators.required]],
+      accBalance: [data.accountBalance, [ Validators.min(250), Validators.max(150000)]],
+      balanceAsOn: [new Date(data.balanceAsOn)],
       commDate: [new Date(data.commencementDate), [Validators.required]],
       futureAppx: [data.futureApproxContribution, [Validators.required]],
       frquency: [data.frequency ? data.frequency: '', [Validators.required]],
@@ -360,6 +360,10 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ssySchemeForm}
     });
 
     if (this.transactionData.length > 0) {
+      this.ssySchemeForm.get('accBalance').setValidators("");
+      this.ssySchemeForm.get('accBalance').updateValueAndValidity()
+      this.ssySchemeForm.get('balanceAsOn').setValidators(""),
+      this.ssySchemeForm.get('balanceAsOn').updateValueAndValidity()
       this.transactionData.forEach(element => {
         if (element.valid) {
           let obj = {
@@ -376,7 +380,12 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ssySchemeForm}
         }
       });
     }
-
+    else{
+      this.ssySchemeForm.get('accBalance').setValidators([Validators.required, Validators.min(250), Validators.max(150000)]);
+      this.ssySchemeForm.get('accBalance').updateValueAndValidity();
+      this.ssySchemeForm.get('balanceAsOn').setValidators([Validators.required]);
+      // this.ssySchemeForm.get('balanceAsOn').updateValueAndValidity();
+    }
 
     // this.nominees = []
     // if (this.nomineesList) {

@@ -117,7 +117,9 @@
                                         <td mat-cell *matCellDef="let element" class="br" (click)="getEmailVerification()">
                                             <div class="bar" [ngClass]="{'text-danger': element.emailVerificationStatus == 3, 'text-warning': element.emailVerificationStatus == 2, 'text-success': element.emailVerificationStatus == 1}">
                                                 {{isLoading ? '' : (element.emailVerificationStatus == 2)?'Verification pending':(element.emailVerificationStatus == 1)?'Verified':'Verification failed'}}
-                                                <span *ngIf="element.emailVerificationStatus != 1 && !isLoading"><mat-icon>refresh</mat-icon></span>
+                                                <span *ngIf="element.emailVerificationStatus != 1 && !isLoading">
+                                                    <mat-icon>refresh</mat-icon>
+                                                </span>
                                             </div>
                                         </td>
                                     </ng-container>
@@ -361,41 +363,44 @@
                         </div>
 
                         <div class="col-md-12 p-0">
-                            <h5 class="m-0 pb-20">Select an option below to add a task template...</h5>
+                            <!-- <h5 class="m-0 pb-20">Select an option below to add a task template...</h5> -->
                             <div class="row pb-20">
                                 <div class="col-md-3 text-right d-flex align-items-center justify-content-end">
                                     <h5 class="m-0 f-14"> Portfolio </h5>
                                 </div>
                                 <div class="col-md-8 pl-0">
-                                    <mat-button-toggle-group class="w-80" [(ngModel)]="appearancePortfolio" (change)="changeAppearanceSettings()"
-                                        aria-label="Select an option">
-                                        <mat-button-toggle class="w-50" [value]="1">Advisor Details</mat-button-toggle>
-                                        <mat-button-toggle class="w-50" [value]="2">Company details</mat-button-toggle>
+                                    <mat-button-toggle-group class="w-80" [(ngModel)]="appearancePortfolio" (change)="changeAppearanceSettings()" aria-label="Select an option">
+                                        <mat-button-toggle class="w-50 f-14" [value]="1">Advisor details
+                                        </mat-button-toggle>
+                                        <mat-button-toggle class="w-50 f-14" [value]="2">Company details
+                                        </mat-button-toggle>
                                     </mat-button-toggle-group>
                                 </div>
                             </div>
                             <div class="row pb-20">
                                 <div class="col-md-3 text-right d-flex align-items-center justify-content-end">
-                                    <h5 class="m-0 f-14">Financial Plan</h5>
+                                    <h5 class="m-0 f-14">Financial plan</h5>
                                 </div>
                                 <div class="col-md-8 pl-0">
-                                    <mat-button-toggle-group class="w-80" [(ngModel)]="appearanceFinancial" (change)="changeAppearanceSettings()"
-                                        aria-label="Select an option">
-                                        <mat-button-toggle class="w-50" [value]="1">Advisor Details</mat-button-toggle>
-                                        <mat-button-toggle class="w-50" [value]="2">Company details</mat-button-toggle>
+                                    <mat-button-toggle-group class="w-80" [(ngModel)]="appearanceFinancial" (change)="changeAppearanceSettings()" aria-label="Select an option">
+                                        <mat-button-toggle class="w-50 f-14" [value]="1">Advisor details
+                                        </mat-button-toggle>
+                                        <mat-button-toggle class="w-50 f-14" [value]="2">Company details
+                                        </mat-button-toggle>
                                     </mat-button-toggle-group>
                                 </div>
 
                             </div>
                             <div class="row pb-20">
                                 <div class="col-md-3 text-right d-flex align-items-center justify-content-end">
-                                    <h5 class="m-0 f-14"> Client Dashboard</h5>
+                                    <h5 class="m-0 f-14"> Client dashboard</h5>
                                 </div>
                                 <div class="col-md-8 pl-0">
-                                    <mat-button-toggle-group class="w-80" [(ngModel)]="appearanceClient" (change)="changeAppearanceSettings()"
-                                        aria-label="Select an option">
-                                        <mat-button-toggle class="w-50" [value]="1">Advisor Details</mat-button-toggle>
-                                        <mat-button-toggle class="w-50" [value]="2">Company details</mat-button-toggle>
+                                    <mat-button-toggle-group class="w-80" [(ngModel)]="appearanceClient" (change)="changeAppearanceSettings()" aria-label="Select an option">
+                                        <mat-button-toggle class="w-50 f-14" [value]="1">Advisor details
+                                        </mat-button-toggle>
+                                        <mat-button-toggle class="w-50 f-14" [value]="2">Company details
+                                        </mat-button-toggle>
                                     </mat-button-toggle-group>
                                 </div>
 

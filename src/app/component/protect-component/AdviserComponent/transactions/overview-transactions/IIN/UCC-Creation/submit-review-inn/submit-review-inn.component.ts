@@ -1,10 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { OnlineTransactionService } from '../../../../online-transaction.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { Validators, FormBuilder } from '@angular/forms';
-import { EventService } from 'src/app/Data-service/event.service';
-import { FatcaDetailsInnComponent } from '../fatca-details-inn/fatca-details-inn.component';
-import { UtilService } from 'src/app/services/util.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {OnlineTransactionService} from '../../../../online-transaction.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {FormBuilder, Validators} from '@angular/forms';
+import {EventService} from 'src/app/Data-service/event.service';
+import {FatcaDetailsInnComponent} from '../fatca-details-inn/fatca-details-inn.component';
+import {UtilService} from 'src/app/services/util.service';
+import {FileUploadService} from '../../../../../../../../services/file-upload.service';
+import {apiConfig} from '../../../../../../../../config/main-config';
+import {appConfig} from '../../../../../../../../config/component-config';
+import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
 
 @Component({
   selector: 'app-submit-review-inn',
@@ -33,18 +37,20 @@ export class SubmitReviewInnComponent implements OnInit {
   uploadSttus: any;
 
   constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
-    private eventService: EventService) { }
+              private eventService: EventService) {
+  }
+
   @Input()
   set data(data) {
-    this.doneData = {}
+    this.doneData = {};
     this.inputData = data;
-    this.allData = data
-    this.doneData.nominee = true
-    this.doneData.bank = true
-    this.doneData.contact = true
-    this.doneData.personal = true
-    this.doneData.fatca = true
-    this.doneData.submit = false
+    this.allData = data;
+    this.doneData.nominee = true;
+    this.doneData.bank = true;
+    this.doneData.contact = true;
+    this.doneData.personal = true;
+    this.doneData.fatca = true;
+    this.doneData.submit = false;
     if (data && data.firstHolder) {
       // this.getdataForm(data.firstHolder)
       // this.firstHolder = data.firstHolder
@@ -54,6 +60,7 @@ export class SubmitReviewInnComponent implements OnInit {
     }
     // this.generalDetails = data
   }
+
   close() {
     const fragmentData = {
       direction: 'top',
@@ -61,54 +68,60 @@ export class SubmitReviewInnComponent implements OnInit {
     };
 
     this.eventService.changeUpperSliderState(fragmentData);
-    this.changedValue = 'close'
+    this.changedValue = 'close';
   }
+
   get data() {
     return this.inputData;
   }
+
   ngOnInit() {
-    this.changedValue = ''
+    this.changedValue = '';
     this.advisorId = AuthService.getAdvisorId();
-    this.getBSECredentials()
-    this.advisorId = AuthService.getAdvisorId()
+    this.getBSECredentials();
+    this.advisorId = AuthService.getAdvisorId();
     this.getdataForm('');
-    this.matValue = false
+    this.matValue = false;
   }
-  uploadFormImageUpload(file){
-    let obj = {
-      tpUserCredentialId : this.selectedBrokerBse.id,
+
+  uploadFormImageUpload(file) {
+    const obj = {
+      tpUserCredentialId: this.selectedBrokerBse.id,
       file: file.target.files[0],
-      documentType : 1,
-    }
+      documentType: 1,
+    };
     this.onlineTransact.imageFileUpload(obj).subscribe(
       data => {
         this.uploadSttus = data;
-        console.log('uploadSttus', this.uploadSttus)
+        console.log('uploadSttus', this.uploadSttus);
       },
       err => {
-        this.eventService.openSnackBar(err, 'Dismiss')
+        this.eventService.openSnackBar(err, 'Dismiss');
       }
     );
   }
+
   getBSECredentials() {
-    let obj = {
+    const obj = {
       advisorId: this.advisorId,
       onlyBrokerCred: true
-    }
-    console.log('encode', obj)
+    };
+    console.log('encode', obj);
     this.onlineTransact.getBSECredentials(obj).subscribe(
       data => this.getBSECredentialsRes(data)
     );
   }
-  getBSECredentialsRes(data) {
-    console.log('getBSECredentialsRes', data)
-    this.brokerCredentials = data
 
-    this.bse = this.brokerCredentials.filter(element => element.aggregatorType == 2)
-    this.nse = this.brokerCredentials.filter(element => element.aggregatorType == 1)
-    console.log('nse', this.nse)
-    console.log('bse', this.bse)
+  getBSECredentialsRes(data) {
+    console.log('getBSECredentialsRes', data);
+    this.brokerCredentials = data;
+
+    this.bse = this.brokerCredentials.filter(element => element.aggregatorType == 2);
+    this.nse = this.brokerCredentials.filter(element => element.aggregatorType == 1);
+    console.log('nse', this.nse);
+    console.log('bse', this.bse);
   }
+
   getdataForm(data) {
 
     this.reviewSubmit = this.fb.group({
@@ -117,16 +130,17 @@ export class SubmitReviewInnComponent implements OnInit {
       nseBroker: [!data ? '' : data.nseBroker, [Validators.required]],
     });
   }
-  openFatcaDetails(){
-    var data = this.inputData
-    var temp = {
+
+  openFatcaDetails() {
+    const data = this.inputData;
+    const temp = {
       flag: 'app-upper-customer',
       id: 1,
       data,
       direction: 'top',
       componentName: FatcaDetailsInnComponent,
       state: 'open'
-    }
+    };
     const subscription = this.eventService.changeUpperSliderState(temp).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
@@ -135,34 +149,40 @@ export class SubmitReviewInnComponent implements OnInit {
       }
     );
   }
+
   getFormControl(): any {
     return this.reviewSubmit.controls;
   }
-  selectArn(value) {
-    this.selectedBrokerBse = value
-    var date =new Date()
-    var date1 =date.getDate()
-    var year =date.getFullYear()
-    var month = date.getMonth()
-    this.fileName = (this.selectedBrokerBse.memberId).toString()+'GAURAVD1'+date1+month+year+'.tiff'
 
-    console.log('fileName',this.fileName)
+  selectArn(value) {
+    this.selectedBrokerBse = value;
+    const date = new Date();
+    const date1 = date.getDate();
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    this.fileName = (this.selectedBrokerBse.memberId).toString() + 'GAURAVD1' + date1 + month + year + '.tiff';
+
+    console.log('fileName', this.fileName);
   }
+
   selectArnNse(value) {
-    this.selectedBrokerNse = value
+    this.selectedBrokerNse = value;
   }
+
   addNse(value) {
-    console.log('mat check', value)
-    this.addedNse = value.checked
+    console.log('mat check', value);
+    this.addedNse = value.checked;
   }
+
   addBse(value) {
-    console.log('mat check', value)
-    this.addedBse = value.checked
+    console.log('mat check', value);
+    this.addedBse = value.checked;
   }
+
   submit() {
-    this.doneData = true
-    if(this.addedBse == true){
-      let obj1 = {
+    this.doneData = true;
+    if (this.addedBse == true) {
+      const obj1 = {
         ownerName: this.allData.ownerName,
         holdingType: this.allData.holdingType,
         taxStatus: this.allData.taxStatus,
@@ -179,15 +199,15 @@ export class SubmitReviewInnComponent implements OnInit {
         commMode: 1,
         confirmationFlag: 1,
         tpUserSubRequestClientId1: 2,
-        
-      }
+
+      };
       this.onlineTransact.createIINUCC(obj1).subscribe(
         data => this.createIINUCCRes(data), (error) => {
           this.eventService.showErrorMessage(error);
         }
       );
-    }else if(this.addedNse == true){
-      let obj1 = {
+    } else if (this.addedNse == true) {
+      const obj1 = {
         ownerName: this.allData.ownerName,
         holdingType: this.allData.holdingType,
         taxStatus: this.allData.taxStatus,
@@ -204,47 +224,74 @@ export class SubmitReviewInnComponent implements OnInit {
         commMode: 1,
         confirmationFlag: 1,
         tpUserSubRequestClientId1: 2,
-        
-      }
+
+      };
       this.onlineTransact.createIINUCC(obj1).subscribe(
         data => this.createIINUCCRes(data), (error) => {
           this.eventService.showErrorMessage(error);
         }
       );
     }
-   
+
   }
+
   createIINUCCRes(data) {
-    console.log('data respose =', data)
+    console.log('data respose =', data);
   }
-  uploadForm(){
-    let obj1 = {
-      tpUserCredentialId : this.selectedBrokerBse.id
-    }
+
+  uploadForm() {
+    const obj1 = {
+      tpUserCredentialId: this.selectedBrokerBse.id
+    };
     this.onlineTransact.getToken(obj1).subscribe(
       data => this.getTokenRes(data), (error) => {
         this.eventService.showErrorMessage(error);
       });
   }
-  getTokenRes(data){
-    console.log('token',data)
-    this.tokenRes = data
-    this.soapCall()
+
+  getTokenRes(data) {
+    console.log('token', data);
+    this.tokenRes = data;
+    this.soapCall();
   }
+
   getFileDetails(e) {
-    console.log('file',e)
-    this.file = e.target.files[0]
-    this.byte =   this.file.arrayBuffer()
-    console.log('array byte',this.byte)
-    this.uploadForm()
+    console.log('file', e);
+    this.file = e.target.files[0];
+    console.log('file', e);
+    const file = e.target.files[0];
+    const requestMap = {
+      tpUserRequestId: 1,
+      documentType: 1
+    };
+    // this.byte = this.file.arrayBuffer();
+    // console.log('array byte', this.byte);
+    FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
+      file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+        console.log('getFileDetails uploadFileToServer callback item : ', item);
+        console.log('getFileDetails uploadFileToServer callback status : ', status);
+        console.log('getFileDetails uploadFileToServer callback headers : ', headers);
+        console.log('getFileDetails uploadFileToServer callback response : ', response);
+
+        if (status == 200) {
+          const responseObject = JSON.parse(response);
+          console.log('onChange file upload success response url : ', responseObject.url);
+
+        }
+
+      });
+    // this.byte = this.file.arrayBuffer();
+    // console.log('array byte', this.byte);
+    // FileUploadService.uploadFileToServer();
   }
+
 
   soapCall() {
-    const xmlhttp = new XMLHttpRequest(); 
-    var headers = xmlhttp.setRequestHeader("Content-Type", "application/soap+xml; charset=utf-8; action=http://tempuri.org/IStarMFFileUploadService/UploadFile")
+    const xmlhttp = new XMLHttpRequest();
+    const headers = xmlhttp.setRequestHeader('Content-Type', 'application/soap+xml; charset=utf-8; action=http://tempuri.org/IStarMFFileUploadService/UploadFile');
 
     xmlhttp.open('POST', 'https://www.bsestarmf.in/StarMFFileUploadService/StarMFFileUploadService.svc/Secure', true);
-    
+
     const sr =
       `<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope">
            <soapenv:Header
@@ -258,10 +305,10 @@ export class SubmitReviewInnComponent implements OnInit {
             xmlns:ns4="http://schemas.microsoft.com/2003/10/Serialization/">
              <soapenv:Body>
               <ns3:data>
-              <ns2:ClientCode>` + 'GAURAVD1'+ `</ns2:ClientCode>
+              <ns2:ClientCode>` + 'GAURAVD1' + `</ns2:ClientCode>
                <ns2:DocumentType>` + 'Nrm' + `</ns2:DocumentType>
                <ns2:EncryptedPassword>` + this.tokenRes.passwordResponseForStarMfFileUpload + `</ns2:EncryptedPassword>
-               <ns2:FileName>` +  this.fileName+ `</ns2:FileName>
+               <ns2:FileName>` + this.fileName + `</ns2:FileName>
                <ns2:Flag>` + 'UCC' + `</ns2:Flag>
                <ns2:MemberCode>` + this.selectedBrokerBse.userId + `</ns2:MemberCode>
                <ns2:UserId>` + this.selectedBrokerBse.memberId + `</ns2:UserId>
@@ -281,7 +328,7 @@ export class SubmitReviewInnComponent implements OnInit {
           console.log(response_number);
         }
       }
-    }
+    };
     // Send the POST request.
     xmlhttp.setRequestHeader('Content-Type', 'text/xml');
     xmlhttp.responseType = 'document';
