@@ -198,7 +198,10 @@
                                     <p class="t-left m-0">{{singleClient.displayName}}</p>
                                 </div>
                                 <div class="col-md-4 text-right">
-                                    <button class="small-primitive" mat-stroked-button>FAMILY MEMBER</button>
+                                    <button class="small-primitive" *ngIf="singleClient.userType==3"
+                                        mat-stroked-button>FAMILY MEMBER</button>
+                                    <button class="small-primitive" *ngIf="singleClient.userType==2"
+                                        mat-stroked-button>CLIENT</button>
                                 </div>
                             </div>
                         </mat-option>
