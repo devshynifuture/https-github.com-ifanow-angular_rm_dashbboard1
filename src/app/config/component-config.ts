@@ -420,6 +420,7 @@ export const appConfig = {
   ////////////////////////////////////OnlineTransaction///////////////////////////////////////
   ADD_BSE_CREDENTIALS: 'user/save',
   GET_BSE_CREDENTIALS: 'user/view',
+  GET_IINUCC_PENDING:'user/register/all/get',
   ADD_SUB_BROKER: 'user/sub-broker/save',
   DELETE_BROKER: 'user/delete',
   DELETE_SUB_BROKER: 'user/sub-broker/delete',

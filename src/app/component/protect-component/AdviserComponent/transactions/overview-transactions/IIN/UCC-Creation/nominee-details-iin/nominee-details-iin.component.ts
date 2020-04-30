@@ -70,6 +70,7 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.thirdHolderNominee = data.nomineeList[2]
       this.getdataForm(this.firstHolderNominee)
     }
+    this.getNomineeList(this.clientData)
 
   }
 
@@ -84,7 +85,6 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.getdataForm('')
       if (this.clientData) {
         this.getFamilyMembersList(this.clientData)
-        this.getNomineeList(this.clientData)
       }
     }
 
@@ -169,7 +169,7 @@ export class NomineeDetailsIinComponent implements OnInit {
       relationType: [!data ? '' : (data.relationType) ? data.relationType : data.relationshipId + "", [Validators.required]],
       nomineeType: [!data ? '1' : (data.nomineeType), [Validators.required]],
       nominneDOB: [!data ? '' : (data.nominneDOB) ? new Date(data.nominneDOB) : new Date(data.dateOfBirth), [Validators.required]],
-      nomineePercentage: [!data ? '' : data.nomineePercentage, [Validators.required]],
+      nomineePercentage: [!data ? '' : data.nomineePercentage, [Validators.required, Validators.min(0), Validators.max(100)]],
       addressType: [!data.address ? '' : data.address.addressType, [Validators.required]],
       addressLine1: [!data.address ? '' : data.address.addressLine1, [Validators.required]],
       addressLine2: [!data.address ? '' : data.address.addressLine2, [Validators.required]],

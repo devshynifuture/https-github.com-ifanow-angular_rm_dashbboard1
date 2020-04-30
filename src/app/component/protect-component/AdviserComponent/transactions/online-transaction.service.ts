@@ -18,6 +18,9 @@ export class OnlineTransactionService {
   getBSECredentials(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_BSE_CREDENTIALS, data, 1);
   }
+  getIINUCCPending(data){
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_IINUCC_PENDING, data, 1);
+  }
   addSubBroker(data) {
     return this.http.postEncoded(apiConfig.TRANSACT + appConfig.ADD_SUB_BROKER, data, 1);
   }

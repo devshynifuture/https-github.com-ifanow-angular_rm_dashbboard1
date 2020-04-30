@@ -221,7 +221,7 @@ export class BankDetailsIINComponent implements OnInit {
       branchAdd1: [!data.address ? '' : data.address.address1, [Validators.required]],
       branchAdd2: [!data.address ? '' : data.address.address2, [Validators.required]],
       pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],
-      firstHolder: [!data ? '' : (this.clientData.name)?this.clientData.name:'', [Validators.required]],
+      // firstHolder: [!data ? '' : (this.clientData.name)?this.clientData.name:'', [Validators.required]],
       city: [!data.address ? '' : data.address.city, [Validators.required]],
       state: [!data.address ? '' : data.address.state, [Validators.required]],
       country: [!data.address ? '' : data.address.country, [Validators.required]],

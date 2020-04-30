@@ -23,6 +23,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   selectedPlatform: any;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   noData: string;
+  innUccPendindList: any;
 
   // dataSource = ELEMENT_DATA;
   constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService,
@@ -58,11 +59,6 @@ export class InvestorsTransactionsComponent implements OnInit {
 
     console.log(data);
     this.filterData = TransactionEnumService.setPlatformEnum(data);
-    // this.type = '1';
-    // this.selectedBrokerCode = data[0];
-    // this.selectedPlatform = data[0];
-    // this.dataSource = [{}, {}, {}];
-    // this.sortDataFilterWise();
   }
 
   // sortDataFilterWise() {
@@ -96,6 +92,26 @@ export class InvestorsTransactionsComponent implements OnInit {
       }
     );
   }
+  getIINUCC(){
+    this.isLoading = true;
+    this.dataSource.data = [{}, {}, {}];
+    const obj = {
+      advisorId: this.advisorId
+    };
+    this.onlineTransact.getIINUCCPending(obj).subscribe(
+      data => {
+        this.isLoading = false;
+        this.innUccPendindList = data || [];
+        this.dataSource.data =TransactionEnumService.setHoldingTypeEnum(data)
+        TransactionEnumService.setTaxStatusDesc(data, this.enumServiceService);
+          this.dataSource.sort = this.sort;
+        console.log('innUccPendindList', this.innUccPendindList)
+      },
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss')
+      }
+    );
+  }
   openNewCustomerIIN() {
     const fragmentData = {
       flag: 'addNewCustomer',
@@ -116,24 +132,7 @@ export class InvestorsTransactionsComponent implements OnInit {
     );
 
   }
-  // getUnmappedData() {
-  //   this.isLoading = true;
-  //   this.dataSource = [{}, {}, {}];
-  //   let obj =
-  //   {
-  //     advisorId: this.advisorId,
-  //     tpUserCredentialId: this.selectedBrokerCode.id,
-  //     aggregatorType: this.selectedPlatform.aggregatorType
-  //   }
-  //   this.onlineTransact.getUnmappedClients(obj).subscribe(
-  //     data => {
-  //       console.log(data);
-  //       this.dataSource = TransactionEnumService.setHoldingTypeEnum(data);
-  //       this.isLoading = false;
-  //     },
-  //     err => this.eventService.openSnackBar(err, 'Dismiss')
-  //   )
-  // }
+
 }
 
 export interface PeriodicElement {

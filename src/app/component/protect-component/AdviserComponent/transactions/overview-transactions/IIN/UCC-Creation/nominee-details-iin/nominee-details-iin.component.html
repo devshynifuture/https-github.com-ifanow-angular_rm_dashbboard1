@@ -112,9 +112,11 @@
                     <div class="col-md-3 form-group">
                         <mat-form-field>
                             <input matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6"
-                                appInputValueValidation maxlength="3" formControlName="nomineePercentage" type="text"
+                                appInputValueValidation maxlength="3" formControlName="nomineePercentage" type="number"
                                 class="form-control percentage">
-                            <mat-error class="f-12">This field is required</mat-error>
+                                <mat-error *ngIf="(nomineeDetails.get('nomineePercentage').errors)" class="f-12 ml-8">
+                                    Should be between than 0.01 to 99
+                                </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
