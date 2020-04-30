@@ -34,10 +34,10 @@ export class DetailedViewMandateComponent implements OnInit {
     console.log('mandateDetails', this.data);
     this.getDataStatus(this.details)
   }
-  uploadFormFile(){
+  uploadFormFile(event){// for pro build param added
 
   }
-  uploadFormImageUpload(){
+  uploadFormImageUpload(event){// for pro build param added
     
   }
   getDataStatus(data) {

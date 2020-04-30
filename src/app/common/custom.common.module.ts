@@ -1,10 +1,10 @@
-import {NgModule} from '@angular/core';
-import {DialogContainerComponent} from './dialog-container/dialog-container.component';
-import {MaterialModule} from '../material/material';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {CommonModule} from '@angular/common';
-import {ProgressButtonComponent} from './progress-button/progress-button.component';
-import {CustomDirectiveModule} from "./directives/common-directive.module";
+import { NgModule } from '@angular/core';
+import { DialogContainerComponent } from './dialog-container/dialog-container.component';
+import { MaterialModule } from '../material/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ProgressButtonComponent } from './progress-button/progress-button.component';
+import { CustomDirectiveModule } from "./directives/common-directive.module";
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 // import {AppModule} from "../app.module";
