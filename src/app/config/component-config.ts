@@ -711,10 +711,9 @@ export const appConfig = {
   //////////////////////////////////customer-overview-profile//////////////////////
 
   //////////////////////////////////customer-overview-myfeeds-profile//////////////////////
-  GET_CUSTOMER_PORTFOLIO_SUMMARY: 'account/asset/summary',
   GET_FEEDS_MF_DATA: 'mutual-fund/latest/transaction/list/get',
   GET_DOCUMENTS_FEED: 'document/account/document/total-count-and-size/get',
-  GET_FEED_RISK_PROFILE: 'risk/profile/get',
-  GET_GLOBAL_RISK_PROFILE: 'risk/profile/global/get',
+  GET_FEED_RISK_PROFILE: 'plan/risk/profile/get',
+  GET_GLOBAL_RISK_PROFILE: 'plan/risk/profile/global/get',
   GET_FEED_RECENT_TRANSACTIONS: 'report/transaction/list/get',
 };
