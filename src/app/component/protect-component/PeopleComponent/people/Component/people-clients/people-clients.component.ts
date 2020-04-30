@@ -96,7 +96,7 @@ export class PeopleClientsComponent implements OnInit {
       flag: 'Add client',
       id: 1,
       data,
-      state: (this.screenSize > 767) ? 'open50' : 'open100',
+      state: 'open50',
       componentName: AddClientComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

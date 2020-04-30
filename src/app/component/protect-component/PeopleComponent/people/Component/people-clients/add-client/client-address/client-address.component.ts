@@ -36,6 +36,7 @@ export class ClientAddressComponent implements OnInit {
     // }
   };
   permanentAddFlag: boolean;
+  userMappingIdFlag: boolean;
 
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private postalService: PostalService,
@@ -120,15 +121,34 @@ export class ClientAddressComponent implements OnInit {
 
   getAddressList(data) {
     const obj = {
-      userId: this.userData.clientId,
-      userType: 2
+      userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
+      userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
     };
     this.cusService.getAddressList(obj).subscribe(
       data => {
         console.log(data);
         if (data && data.length > 0) {
+          this.userMappingIdFlag = true;
           this.addressList = data[0];
           this.createAddressForm(this.addressList);
+        }
+        else {
+          if (this.fieldFlag == 'familyMember') {
+            const obj =
+            {
+              userId: this.userData.clientId,
+              userType: 2
+            }
+            this.cusService.getAddressList(obj).subscribe(
+              data => {
+                if (data && data.length > 0) {
+                  this.userMappingIdFlag = false;
+                  this.addressList = data[0];
+                  this.createAddressForm(this.addressList);
+                }
+              }
+            )
+          }
         }
       },
       err => {
@@ -161,7 +181,7 @@ export class ClientAddressComponent implements OnInit {
         addressType: this.addressForm.get('addressType').value,
         proofType: this.addressForm.get('addProofType').value,
         proofIdNumber: this.addressForm.get('proofIdNum').value,
-        userAddressMappingId: (this.userData.addressData) ? this.userData.addressData.userAddressMappingId : (this.addressList) ? this.addressList.userAddressMappingId : null,
+        userAddressMappingId: (this.userData.addressData) ? this.userData.addressData.userAddressMappingId : (this.addressList && this.userMappingIdFlag) ? this.addressList.userAddressMappingId : null,
         addressId: (this.userData.addressData) ? this.userData.addressData.addressId : (this.addressList) ? this.addressList.addressId : null
       };
 

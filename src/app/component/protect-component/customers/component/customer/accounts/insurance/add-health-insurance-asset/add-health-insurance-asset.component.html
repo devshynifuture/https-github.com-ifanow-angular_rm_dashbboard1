@@ -67,8 +67,8 @@
                         <mat-select matInput formControlName="PlanType" autocomplete="true" class="form-control br-0">
                             <!-- <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
                                 {{option.policy_type}}</mat-option> -->
-                                <mat-option value='7'>Individual health</mat-option>
-                                <mat-option value='8'>Family floater</mat-option>
+                            <mat-option value='7'>Individual health</mat-option>
+                            <mat-option value='8'>Family floater</mat-option>
                         </mat-select>
                         <mat-error>This field is required
                         </mat-error>
@@ -116,8 +116,7 @@
                         <div class="form-group mb-0 iconRupess">
                             <label class="f-16 roboto">Sum insured</label>
                             <mat-form-field>
-                                <input matInput type="number" formControlName="sumAssured" [inputValidator]="validatorType.NUMBER_ONLY"
-                                appInputValueValidation  #sumAssured autocomplete="true" [maxLength]="8" class="form-control rupess br-0">
+                                <input matInput type="number" formControlName="sumAssured" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #sumAssured autocomplete="true" [maxLength]="8" class="form-control rupess br-0">
                                 <mat-hint align="end" class="f-12">{{sumAssured.value.length}}/8</mat-hint>
                                 <mat-error>This field is required
                                 </mat-error>
@@ -136,7 +135,7 @@
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8">Deductible sum insured</h5>
             </div>
-            <div class="col-md-5"> 
+            <div class="col-md-5">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
                         <input matInput type="number" formControlName="deductibleAmt" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #deductibleAmt autocomplete="true" [maxLength]="8" class="form-control rupess br-0">
@@ -192,17 +191,16 @@
                 </div>
             </div>
         </div>
+
         <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
+            <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8">Premium</h5>
             </div>
             <div class="col-md-3 pr-0">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input type="text" matInput #premium class="form-control rupess br-0"
-                            appInputValueValidation  [maxLength]="8" [inputValidator]="validatorType.NUMBER_ONLY"
-                            formControlName="premium">
-                            <mat-hint align="end" class="f-12">{{premium.value.length}}/8</mat-hint>
+                        <input type="text" matInput #premium class="form-control rupess br-0" appInputValueValidation [maxLength]="8" [inputValidator]="validatorType.NUMBER_ONLY" formControlName="premium">
+                        <mat-hint align="end" class="f-12">{{premium.value.length}}/8</mat-hint>
                         <mat-error class="f-12 pt-4">
                             This field is required
                         </mat-error>
@@ -210,6 +208,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row pt-40">
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8">Policy start date</h5>
@@ -253,7 +252,7 @@
         <div *ngIf="addMoreFlag" class="pt-40">
             <div class="row">
                 <div (click)="openOptionField()" class="col-md-5 text-right">
-                    <p class="m-0 text-primitive f-16 c-p">  Show less</p>
+                    <p class="m-0 text-primitive f-16 c-p"> Show less</p>
                 </div>
                 <div class="col-md-3">
                 </div>
@@ -277,7 +276,7 @@
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select matInput formControlName="copayType" (selectionChange)="changeSign($event.value,'copay',copay.value)" #copayType autocomplete="off" class="form-control br-0">
-                               <!-- <mat-option value=''>Select option</mat-option> -->
+                                <!-- <mat-option value=''>Select option</mat-option> -->
                                 <mat-option value='1'>Rupees</mat-option>
                                 <mat-option value='2'>Percentage</mat-option>
                             </mat-select>
@@ -294,8 +293,8 @@
                 <div class="col-md-3">
                     <div class="form-group mb-0" [ngClass]="healthInsuranceForm.controls.bonusType.value == '1' ? 'iconRupess': 'iconPetage'">
                         <mat-form-field>
-                            <input matInput type="number" formControlName="cumulativeBonus" (keyup)="changeTheInput(bonusType.value,'cumulativeBonus',$event)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #cumulativeBonus autocomplete="true" [maxLength]="8" class="form-control br-0" 
-                            [ngClass]="healthInsuranceForm.controls.bonusType.value == '1' ? 'rupess': 'percentage'">
+                            <input matInput type="number" formControlName="cumulativeBonus" (keyup)="changeTheInput(bonusType.value,'cumulativeBonus',$event)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #cumulativeBonus autocomplete="true" [maxLength]="8"
+                                class="form-control br-0" [ngClass]="healthInsuranceForm.controls.bonusType.value == '1' ? 'rupess': 'percentage'">
                             <mat-hint align="end" *ngIf="healthInsuranceForm.controls.bonusType.value == '1'" class="f-12">{{cumulativeBonus.value.length}}/8</mat-hint>
                             <mat-error>This field is required
                             </mat-error>
@@ -306,7 +305,7 @@
                     <div class="form-group mb-0">
                         <!-- <label class="f-14 roboto">Rupees</label> -->
                         <mat-form-field>
-                            <mat-select matInput formControlName="bonusType"  (selectionChange)="changeSign($event.value,'cumulativeBonus',cumulativeBonus.value)" #bonusType autocomplete="off" class="form-control br-0">
+                            <mat-select matInput formControlName="bonusType" (selectionChange)="changeSign($event.value,'cumulativeBonus',cumulativeBonus.value)" #bonusType autocomplete="off" class="form-control br-0">
                                 <!-- <mat-option value=''>Select option</mat-option> -->
                                 <mat-option value='1'>Rupees</mat-option>
                                 <mat-option value='2'>Percentage</mat-option>
@@ -327,8 +326,8 @@
                             <mat-select matInput formControlName="additionalCovers" autocomplete="true" class="form-control br-0">
                                 <!-- <mat-option *ngFor="let option of addOns ;index as i" [value]="option.id">
                                     {{option.add_on}}</mat-option> -->
-                                    <mat-option value='11'>Critical illness</mat-option>
-                                    <mat-option value='12'>Personal accident </mat-option>
+                                <mat-option value='11'>Critical illness</mat-option>
+                                <mat-option value='12'>Personal accident </mat-option>
                             </mat-select>
                             <mat-error>This field is required
                             </mat-error>
@@ -497,7 +496,7 @@
                 </div>
                 <div class="col-md-5 form-group">
                     <mat-form-field>
-                        <mat-select class="form-control"  formControlName="bankAccount"  matInput>
+                        <mat-select class="form-control" formControlName="bankAccount" matInput>
                             <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
                                 {{option.bankName}}</mat-option>
                         </mat-select>
@@ -505,9 +504,9 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-md-1 p-0 pt-8 d-flex"   (inputChange)='bankAccountList($event)'>
+                <div class="col-md-1 p-0 pt-8 d-flex" (inputChange)='bankAccountList($event)'>
                     <!-- [data]="bankAccountDetails" appBankAccount prod build -->
-                    <i class="material-icons text-primitive c-p float-left"  >add</i>
+                    <i class="material-icons text-primitive c-p float-left">add</i>
                 </div>
             </div>
 

@@ -314,7 +314,7 @@ export class ClientDematComponent implements OnInit {
       this.dematForm.markAllAsTouched();
       return;
     }
-    else if (this.holderList) {
+    else if (this.dematForm.value.modeOfHolding == '2' && this.holderList.invalid) {
       this.holderList.markAllAsTouched();
     }
     else if (this.mobileData.invalid) {
