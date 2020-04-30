@@ -36,20 +36,27 @@ export class OverviewTransactionsComponent implements OnInit {
   doneTrasaction: any;
   percentageTrasact: number;
   transactionList: any;
+  totalRejected: any;
+  totalClientCode: any;
+  totalClient: any;
+  totalPending: any;
+  totalPendingClient: any;
+  isLoadingIIN: boolean = false;
+  isLoadingMandate: boolean = false;
 
 
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject,
-     public eventService: EventService, private http: HttpService, 
-     private tranService : OnlineTransactionService) {
-       this.advisorId = AuthService.getAdvisorId()
-      }
+    public eventService: EventService, private http: HttpService,
+    private tranService: OnlineTransactionService) {
+    this.advisorId = AuthService.getAdvisorId()
+  }
 
   ngOnInit() {
     this.finalStartDate = new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7).getTime();
-      this.finalEndDate = new Date().getTime();
-      this.getAllTransactionList()
-      this.getMandate()
-      this.getIInData()
+    this.finalEndDate = new Date().getTime();
+    this.getAllTransactionList()
+    this.getMandate()
+    this.getIInData()
   }
 
   close() {
@@ -131,7 +138,7 @@ export class OverviewTransactionsComponent implements OnInit {
       }
     );
   }
-  
+
   getAllTransactionList() {
     this.isLoading = true
     const obj = {
@@ -144,76 +151,81 @@ export class OverviewTransactionsComponent implements OnInit {
       data => {
         console.log(data);
         this.isLoading = false
-        console.log('transaction data',data);
+        console.log('transaction data', data);
         this.transactionList = data
         this.transactionCount = data.length
-        this.pendingTransaction = data.filter(data=> data.status == 2);
-        this.rejectionTransaction = data.filter(data=> data.status == 7);
-        this.doneTrasaction = data.filter(data=> data.status == 6 || data.status == 8);
-        if(this.doneTrasaction == undefined){
+        this.pendingTransaction = data.filter(data => data.status == 2);
+        this.rejectionTransaction = data.filter(data => data.status == 7);
+        this.doneTrasaction = data.filter(data => data.status == 6 || data.status == 8);
+        if (this.doneTrasaction == undefined) {
           this.doneTrasaction = []
-        }else{
-          this.percentageTrasact = (this.doneTrasaction/this.transactionCount)*100
+        } else {
+          this.percentageTrasact = (this.doneTrasaction / this.transactionCount) * 100
         }
-        this.pendingTransaction  = this.rejectionTransaction.length
+        this.pendingTransaction = this.rejectionTransaction.length
         this.rejectionTransaction = this.rejectionTransaction.length
 
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
-        this.errMessage = err.error.message;
+        //  this.errMessage = err.error.message;
       }
     );
   }
-  getMandate(){
-    this.isLoading = true
+  getMandate() {
+    this.isLoadingMandate = true
     const obj = {
       advisorId: this.advisorId,
     };
     this.tranService.getOverviewMandate(obj).subscribe(
       data => {
         console.log(data);
-        this.isLoading = false
-        console.log('getOverviewMandate data',data);
+        this.isLoadingMandate = false
+        console.log('getOverviewMandate data', data);
         this.totalInvestorWithoutMandate = data.totalInvestorWithoutMandate
         data.statusList.forEach(element => {
-          if(element.status == 1){
+          if (element.status == 1) {
             this.pendingCount = element.count
-          }else if(element.status == 2){
+          } else if (element.status == 2) {
             this.acceptCount = element.count
-          }else if(element.status == 3){
+          } else if (element.status == 3) {
             this.rejectCount = element.count
           }
         });
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
-        this.errMessage = err.error.message;
+        // this.errMessage = err.error.message;
       }
     );
   }
-//     totalInvestorWithoutMandate: 589
-// statusList: Array(4)
-// 0: {count: 4, status: 0}
-// 1: {count: 38, status: 1}
-// 2: {count: 1, status: 2}
-// 3: {count: 1, status: 3}
-//   }
-  getIInData(){
-    this.isLoading = true
+  //     totalInvestorWithoutMandate: 589
+  // statusList: Array(4)
+  // 0: {count: 4, status: 0}
+  // 1: {count: 38, status: 1}
+  // 2: {count: 1, status: 2}
+  // 3: {count: 1, status: 3}
+  //   }
+  getIInData() {
+    this.isLoadingIIN = true
     const obj = {
       advisorId: this.advisorId,
     };
     this.tranService.getIINUCCOverview(obj).subscribe(
       data => {
         console.log(data);
-        this.isLoading = false
+        this.isLoadingIIN = false
         this.totalUccCount = data.length
-        console.log('getIINUCCOverview data',data);
+        console.log('getIINUCCOverview data', data);
+        this.totalPending = data.totalPending
+        this.totalClient = data.totalClient
+        this.totalClientCode = data.totalClientCode
+        this.totalPendingClient = data.totalPendingClient
+        this.totalRejected = data.totalRejected
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
-        this.errMessage = err.error.message;
+        // this.errMessage = err.error.message;
       }
     );
   }
@@ -298,7 +310,7 @@ export class OverviewTransactionsComponent implements OnInit {
     const httpOptions = {
       headers: new HttpHeaders()
         .set('Access-Control-Allow-Origin', '*'),
-       
+
       params: params,
       body: file
 
