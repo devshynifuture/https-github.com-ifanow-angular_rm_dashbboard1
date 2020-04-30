@@ -181,6 +181,11 @@ export class SubmitReviewInnComponent implements OnInit {
 
   submit() {
     this.doneData = true;
+    this.allData.holderList.forEach(element => {
+      if(!element.email){
+
+      }
+    });
     if (this.addedBse == true) {
       const obj1 = {
         ownerName: this.allData.ownerName,
@@ -264,8 +269,6 @@ export class SubmitReviewInnComponent implements OnInit {
       tpUserRequestId: 1,
       documentType: 1
     };
-    // this.byte = this.file.arrayBuffer();
-    // console.log('array byte', this.byte);
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
         console.log('getFileDetails uploadFileToServer callback item : ', item);
@@ -278,11 +281,7 @@ export class SubmitReviewInnComponent implements OnInit {
           console.log('onChange file upload success response url : ', responseObject.url);
 
         }
-
       });
-    // this.byte = this.file.arrayBuffer();
-    // console.log('array byte', this.byte);
-    // FileUploadService.uploadFileToServer();
   }
 
 

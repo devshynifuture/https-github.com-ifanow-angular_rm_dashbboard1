@@ -31,7 +31,7 @@
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field>
-                            <mat-select class="form-control" formControlName="relationType">
+                            <mat-select class="form-control" formControlName="nomineeName">
                                 <mat-option [value]="fm.name" (click)="selectedNominee(fm)" *ngFor="let fm of nomineeFmList"> {{fm.name}} </mat-option>
                             </mat-select>
                             <!-- <input matInput maxlength="30" appInputValueValidation
