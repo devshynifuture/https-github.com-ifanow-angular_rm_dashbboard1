@@ -3,7 +3,7 @@
         <div class="col-md-4 p-0">
             <h4 class="m-0 text-black roboto">Other Payables</h4>
         </div>
-        <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center" *ngIf="dataSource.filteredData.length > 0 && !isLoading">
+        <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center" *ngIf="dataSource.data.length > 0 && !isLoading">
                 <div class="pdfClass">
                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1" class="c-p"
                     *ngIf="!fragmentData.isSpinner">
@@ -41,7 +41,7 @@
     </div>
 
     <div [ngClass]="{'table-scroll':isLoading==false }" class="liabilities overflow-hidden" >
-        <table matSort #tableEl  mat-table [dataSource]="dataSource" id="tbs" *ngIf="dataSource.filteredData.length > 0"
+        <table matSort #tableEl  mat-table [dataSource]="dataSource" id="tbs" *ngIf="dataSource.data.length > 0"
             class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="no" sticky>
                 <th *matHeaderCellDef class="br" mat-header-cell> No.</th>
@@ -153,7 +153,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
         </table>
-        <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
+        <div *ngIf="dataSource.data.length == 0" class="d-flex flex-column align-items-center">
             <img class="width400" src="assets/images/svg/clients-img.svg">
             <h4 class="text-center pt-12">No Data Found</h4>
             <button (click)="open('addLiabilities','Add')" class="btn-primary addon v-middle" mat-stroked-button>ADD NEW
