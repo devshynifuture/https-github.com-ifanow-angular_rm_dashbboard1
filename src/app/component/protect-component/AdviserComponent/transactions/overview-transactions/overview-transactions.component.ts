@@ -160,7 +160,7 @@ export class OverviewTransactionsComponent implements OnInit {
         if (this.doneTrasaction == undefined) {
           this.doneTrasaction = []
         } else {
-          this.percentageTrasact = (this.doneTrasaction / this.transactionCount) * 100
+          this.percentageTrasact = (this.doneTrasaction.length / this.transactionCount) * 100
         }
         this.pendingTransaction = this.rejectionTransaction.length
         this.rejectionTransaction = this.rejectionTransaction.length
