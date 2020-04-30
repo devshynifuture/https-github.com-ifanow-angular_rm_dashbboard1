@@ -131,7 +131,6 @@ export class IinUccCreationComponent implements OnInit {
   ownerDetails(value) {
     this.familyMemberData = value;
     this.familyMemberId = value.familyMemberId;
-    this.familyMemberId = value.id;
     this.clientData = value
   }
 
@@ -141,7 +140,7 @@ export class IinUccCreationComponent implements OnInit {
       holdingNature: this.generalDetails.controls.holdingNature.value,
       familyMemberId: this.familyMemberId,
       clientId: this.familyMemberData.clientId,
-      advisorId: this.familyMemberData.advisorId,
+      advisorId: this.advisorId,
       taxStatus: this.generalDetails.controls.taxStatus.value,
       clientData: this.clientData
     };
