@@ -529,15 +529,14 @@ export class RetirementAccountComponent implements OnInit {
     this.isLoading = false;
     this.totalContribution = data.totalContribution;
     this.totalCurrentValue = data.totalCurrentValue;
-    if (data == undefined) {
-      this.noData = 'No NPS found';
-      this.dataSource.data = []
-    } else if (data.npsList) {
-      console.log('getNPSRes =', data);
-      this.dataSource.data = data.npsList;
-      this.dataSource.sort = this.npsListTableSort;
-      UtilService.checkStatusId(this.dataSource.filteredData);
-    }
+    if (data != undefined) {
+      if (data.npsList) {
+        console.log('getNPSRes =', data);
+        this.dataSource.data = data.npsList;
+        this.dataSource.sort = this.npsListTableSort;
+        UtilService.checkStatusId(this.dataSource.filteredData);
+      }
+    } 
     else {
       this.noData = "No NPS found";
       this.dataSource.data = [];
