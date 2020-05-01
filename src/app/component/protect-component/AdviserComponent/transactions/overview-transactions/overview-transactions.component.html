@@ -4,8 +4,8 @@
             <div class="row">
                 <div class="col-md-8 p-0">
                     <div class="row ">
-                        <div class="col-md-6 mb-16 pl-0">
-                            <!-- <div class="bg-white bPrimitive p-9">
+                        <!-- <div class="col-md-6 mb-16 pl-0">
+                             <div class="bg-white bPrimitive p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
                                         <h5 class="f-500 roboto">KYC</h5>
@@ -37,11 +37,15 @@
                                     </div>
                                 </div>
 
-                            </div> -->
-                        </div>
+                            </div> 
+                        </div> -->
 
-                        <div class="col-md-6 mb-16 pl-0" [appSkeletonLoading]="isLoading" appSkeletonLoading
-                            class="col-md-6 p-0 skeletonAnimation">
+
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-16 pl-0" [appSkeletonLoading]="isLoading" appSkeletonLoading class="col-md-6 p-0 skeletonAnimation">
                             <div class="bg-white bPrimitive p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
@@ -94,11 +98,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-6 mb-16 pl-0" [appSkeletonLoading]="isLoadingIIN" appSkeletonLoading
-                            class="col-md-6 p-0 skeletonAnimation">
+                        <div class="col-md-6 mb-16 pl-0" [appSkeletonLoading]="isLoadingIIN" appSkeletonLoading class="col-md-6 p-0 skeletonAnimation">
                             <div class="bg-white bPrimitive p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
@@ -145,8 +146,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 mb-16 pl-0" [appSkeletonLoading]="isLoadingMandate" appSkeletonLoading
-                            class="col-md-6 p-0 skeletonAnimation">
+                        <div class="col-md-6 mb-16 pl-0" [appSkeletonLoading]="isLoadingMandate" appSkeletonLoading class="col-md-6 p-0 skeletonAnimation">
                             <div class="bg-white bPrimitive p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
@@ -194,8 +194,7 @@
 
                 </div>
 
-                <div class="col-md-4 p-0" [appSkeletonLoading]="isLoading" appSkeletonLoading
-                    class="col-md-6 p-0 skeletonAnimation">
+                <div class="col-md-4 p-0" [appSkeletonLoading]="isLoading" appSkeletonLoading class="col-md-6 p-0 skeletonAnimation">
                     <div class="bg-white bPrimitive p-9">
                         <div class="row pb-12">
                             <div class="col-md-12 p-0">
@@ -225,8 +224,7 @@
                                                 <div class="col-md-12 p-0">
                                                     <p class="f-12 text-primitive mb-10"> {{transact.schemeName}}</p>
                                                 </div>
-                                                <div (click)="openMobileErrorCopyTransactionPopup()"
-                                                    class="col-md-12 p-0">
+                                                <div (click)="openMobileErrorCopyTransactionPopup()" class="col-md-12 p-0">
                                                     <p class="f-14 mb-8 f-500">Rahul Jain</p>
                                                 </div>
                                             </div>
