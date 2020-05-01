@@ -174,6 +174,22 @@ export class AdminDetailsComponent implements OnInit {
       (err) => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
+
+  getStageCommentCount(stage) {
+    const data = {
+      taskLevelChatId: stage.taskLevelId
+    }
+    this.supportService.getCommentCount(data)
+      .subscribe(res => {
+        if (res) {
+          console.log("This is commet counts", res);
+        } else {
+          this.eventService.openSnackBar('No Comment Counts Got', "DISMISS");
+        }
+      }, err => {
+        this.eventService.openSnackBar(err, "DISMISS");
+      })
+  }
   getstageComment(stage, flag) {
     this.isLoading = true;
     let obj = {
@@ -238,6 +254,7 @@ export class AdminDetailsComponent implements OnInit {
       stage.isShowComment = true;
     }
     this.getstageComment(stage, flag);
+    this.getStageCommentCount(stage);
   }
   updateActivityCompleteness(stage, event) {
     let obj = {

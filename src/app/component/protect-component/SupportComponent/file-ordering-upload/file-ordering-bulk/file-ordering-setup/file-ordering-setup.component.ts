@@ -7,11 +7,26 @@ import { SupportService } from '../../../support.service';
 import { EventService } from '../../../../../../Data-service/event.service';
 import { FileOrderingUploadService } from '../../file-ordering-upload.service';
 import { ReconciliationService } from '../../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
+import { MY_FORMATS2 } from '../../../../../../constants/date-format.constant';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
+import { default as _rollupMoment } from 'node_modules/moment/src/moment';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { DateAdapter } from 'saturn-datepicker';
 
+
+const moment = _rollupMoment;
 @Component({
   selector: 'app-file-ordering-setup',
   templateUrl: './file-ordering-setup.component.html',
-  styleUrls: ['./file-ordering-setup.component.scss']
+  styleUrls: ['./file-ordering-setup.component.scss'],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+  ],
 })
 export class FileOrderingSetupComponent implements OnInit {
 
@@ -34,16 +49,16 @@ export class FileOrderingSetupComponent implements OnInit {
   historicalFileBulkOrderingForm = this.fb.group({
     rtId: [, Validators.required],
     fileTypeId: [, Validators.required],
-    fromDate: [, Validators.required],
-    toDate: [, Validators.required]
+    fromDate: [moment(), Validators.required],
+    toDate: [moment(), Validators.required]
   });
 
   rtaList = []
 
-  setDateValidation() {
-    this.historicalFileBulkOrderingForm.get('rtId').value === '1' ?
-      this.lastPastDate = new Date('1 Jan, 1993') : this.lastPastDate = new Date('1 Jan, 1990')
-  }
+  // setDateValidation() {
+  //   this.historicalFileBulkOrderingForm.get('rtId').value === '1' ?
+  //     this.lastPastDate = new Date('1 Jan, 1993') : this.lastPastDate = new Date('1 Jan, 1990')
+  // }
 
   ngOnInit() {
     console.log("sent data::::", this.data);
@@ -93,7 +108,7 @@ export class FileOrderingSetupComponent implements OnInit {
       let values = this.historicalFileBulkOrderingForm.value;
       const data = {
         rmId: this.rmId,
-        rtId: values.rtId,
+        rtId: values.rtId.value,
         fileTypeId: values.fileTypeId,
         fromDate: values.fromDate.getFullYear() + "-" +
           this.utilService.addZeroBeforeNumber((values.fromDate.getMonth() + 1), 2) + '-' +
@@ -104,14 +119,14 @@ export class FileOrderingSetupComponent implements OnInit {
       }
 
 
-      this.fileOrderingService.postFileOrderBulkData(data)
-        .subscribe(res => {
-          if (res) {
-            console.log("this is response::", res);
-            this.dialogClose();
-          }
-        });
-
+      // this.fileOrderingService.postFileOrderBulkData(data)
+      //   .subscribe(res => {
+      //     if (res) {
+      //       console.log("this is response::", res);
+      //       this.dialogClose();
+      //     }
+      //   });
+      console.log(data);
 
     } else {
       console.log('err');

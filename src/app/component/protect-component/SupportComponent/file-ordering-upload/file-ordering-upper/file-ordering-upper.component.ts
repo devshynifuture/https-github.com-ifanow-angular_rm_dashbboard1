@@ -34,7 +34,12 @@ export class FileOrderingUpperComponent implements OnInit {
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
+    let numRows;
+    if (this.dataSource.data) {
+      numRows = this.dataSource.data.length;
+    } else {
+      numRows = 0;
+    }
     return numSelected === numRows;
   }
 
