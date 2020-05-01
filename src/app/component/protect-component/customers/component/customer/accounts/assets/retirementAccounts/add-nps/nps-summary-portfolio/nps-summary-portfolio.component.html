@@ -89,8 +89,8 @@
                 <mat-form-field>
                     <mat-select formControlName="schemeChoice" class="form-control br-0">
                         <mat-option value="" disabled>Select option</mat-option>
-                        <mat-option value="1">Active-choice investment</mat-option>
-                        <mat-option value="2">Auto-choice investment</mat-option>
+                        <mat-option [value]="scheme.id" *ngFor="let scheme of schemeList">{{scheme.name}}</mat-option>
+                        
                     </mat-select>
                     <!-- <mat-hint align="start" class="f-12">Optional</mat-hint> -->
                 </mat-form-field>

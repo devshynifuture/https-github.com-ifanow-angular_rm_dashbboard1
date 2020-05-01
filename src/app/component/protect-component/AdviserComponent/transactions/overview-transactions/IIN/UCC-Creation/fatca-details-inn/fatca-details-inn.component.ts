@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core
 import { EventService } from 'src/app/Data-service/event.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { OnlineTransactionService } from '../../../../online-transaction.service';
@@ -23,6 +23,8 @@ export class FatcaDetailsInnComponent implements OnInit {
   changedValue: string;
   doneData: any;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  validatorType = ValidatorType
+  clientData: any;
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
@@ -32,6 +34,7 @@ export class FatcaDetailsInnComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
+    this.clientData = data.clientData
     console.log('all data in fatca', this.inputData)
     this.allData = data
     this.doneData = {}
@@ -40,6 +43,7 @@ export class FatcaDetailsInnComponent implements OnInit {
     this.doneData.contact = true
     this.doneData.personal = true
     this.doneData.fatca = false
+    this.allData.clientData = this.clientData
     this.getdataForm(data.fatcaDetail)
   }
 
@@ -74,21 +78,21 @@ export class FatcaDetailsInnComponent implements OnInit {
   getdataForm(data) {
 
     this.fatcaDetails = this.fb.group({
-      nationality: [(!data) ? '1' : data.nationality, [Validators.required]],
+      nationality: [(!data) ? '1' : (data.nationality) ? data.nationality +'' : '1', [Validators.required]],
       annualIncome: [(!data) ? '' : data.annualIncome, [Validators.required]],
       cityOfBirth: [(!data) ? '' : data.cityOfBirth, [Validators.required]],
       countryOfBirth: [!data ? '' : data.countryOfBirth, [Validators.required]],
       sourceOfWealth: [!data ? '' : data.sourceOfWealth, [Validators.required]],
       occupation: [!data ? '' : data.occupation, [Validators.required]],
-      politically: [!data ? '1' : data.politically, [Validators.required]],
-      taxResidency: [!data ? '1' : data.taxResidency, [Validators.required]],
+      politically: [!data ? '1' : (data.politically) ? data.politically +'' : '1', [Validators.required]],
+      taxResidency: [!data ? '1' : (data.taxResidency) ? data.taxResidency +'' : '1', [Validators.required]],
 
     });
-    if(!data){
-      this.fatcaDetails.controls.nationality.setValue('1')
-      this.fatcaDetails.controls.politically.setValue('1')
-      this.fatcaDetails.controls.taxResidency.setValue('1')
-    }
+    // if(!data){
+    //   this.fatcaDetails.controls.nationality.setValue('1')
+    //   this.fatcaDetails.controls.politically.setValue('1')
+    //   this.fatcaDetails.controls.taxResidency.setValue('1')
+    // }
   }
   getFormControl(): any {
     return this.fatcaDetails.controls;

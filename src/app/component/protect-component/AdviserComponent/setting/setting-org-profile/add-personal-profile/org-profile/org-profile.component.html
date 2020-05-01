@@ -53,7 +53,7 @@
                             <mat-form-field appearance="standard">
                                 <mat-select formControlName="isdCodeId" class="form-control">
                                     <mat-option>
-                                      <ngx-mat-select-search [formControl]="filterCtrl" placeholderLabel="ISD code..."></ngx-mat-select-search>
+                                        <ngx-mat-select-search [formControl]="filterCtrl" placeholderLabel="ISD code..."></ngx-mat-select-search>
                                     </mat-option>
                                     <mat-option [value]="code.id" *ngFor="let code of filteredIsdCodes | async">
                                         {{code.code}}({{code.countryCode}})</mat-option>
@@ -135,7 +135,7 @@
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                                 <mat-select formControlName="country" class="form-control br-0" id="sel1">
                                     <mat-option>
-                                      <ngx-mat-select-search [formControl]="filterCountryCtrl" placeholderLabel="Country..."></ngx-mat-select-search>
+                                        <ngx-mat-select-search [formControl]="filterCountryCtrl" placeholderLabel="Country..."></ngx-mat-select-search>
                                     </mat-option>
                                     <mat-option [value]="code.countryName" *ngFor="let code of filteredCountryCodes | async">
                                         {{code.countryName}}</mat-option>
@@ -211,13 +211,13 @@
         </mat-tab>
         <mat-tab label="Web app logo">
             <div class="row pt-44" *ngIf="selectedTab == 1">
-                <div class="col-md-12">
-                    <h5 class="m-0">Your logo</h5>
-                    <div>This logo is visible on top left of web login, About section in mobile app etc.</div>
+                <div class="col-md-5 text-right pr-0" *ngIf="!cropImage">
+                    <h5 class="mb-0 mt-8 f-14 ">Your logo</h5>
+                    <p class="f-12 text-primitive m-0"> This logo is visible on top left of web login, About section in mobile app etc.</p>
                 </div>
-                <div class="col-md-12" *ngIf="cropImage">
+                <div class="col-md-5 pr-0 text-right" *ngIf="cropImage">
                     <div *ngIf="!showCropper">
-                        <h5 class="m-0 pt-8">Upload a photo to edit and upload.</h5>
+                        <h5 class="m-0 f-14 pt-8">Upload a photo to edit and upload.</h5>
                     </div>
                     <div class="image-cropper">
                         <app-image-cropper [imageChangedEvent]="imageUploadEvent" [aspectRatio]="256/64" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)"></app-image-cropper>
@@ -228,13 +228,13 @@
                     <div class="row pt-24">
                     </div>
                 </div>
-                <div class="col-md-12" *ngIf="cropImage">
+                <div class="col-md-7" *ngIf="cropImage">
                     <button mat-stroked-button class="btn-primary" (click)="chooseImage.click()">CHOOSE IMAGE</button>
                     <button mat-stroked-button class="bg-white text-inherit ml-12" (click)="resetPageVariables()">CANCEL
                         EDIT</button>
                     <input type="file" #chooseImage (change)="uploadImageForCorping($event)" hidden>
                 </div>
-                <div class="col-md-12" *ngIf="!cropImage">
+                <div class="col-md-5" *ngIf="!cropImage">
                     <div class="profile-web-app-img">
                         <img [src]="profileImg" class="w-100">
                     </div>
@@ -250,13 +250,14 @@
         </mat-tab>
         <mat-tab label="Logo for reports">
             <div class="row pt-44" *ngIf="selectedTab == 2">
-                <div class="col-md-12">
-                    <h5 class="m-0">Your logo</h5>
-                    <div>This logo is visible on various reports (MF, Financial Plan etc.).</div>
+                <div class="col-md-5 pr-0 text-right" *ngIf="!cropImage">
+                    <h5 class="mb-0 mt-8 f-14">Your logo</h5>
+                    <p class="f-12 text-primitive text-primitive">This logo is visible on various reports (MF, Financial Plan etc.).
+                    </p>
                 </div>
-                <div class="col-md-12" *ngIf="cropImage">
+                <div class="col-md-5 pr-0 text-right" *ngIf="cropImage">
                     <div *ngIf="!showCropper">
-                        <h5 class="m-0 pt-8">Upload a photo to edit and upload.</h5>
+                        <h5 class="mb-0 f-14 mt-8">Upload a photo to edit and upload.</h5>
                     </div>
                     <div class="image-cropper">
                         <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper" (croppedImage)="showCroppedImage($event)"></app-image-cropper>
@@ -267,7 +268,7 @@
                     <div class="row pt-24">
                     </div>
                 </div>
-                <div class="col-md-12" *ngIf="cropImage">
+                <div class="col-md-7" *ngIf="cropImage">
                     <button mat-stroked-button class="btn-primary" (click)="chooseImage.click()">CHOOSE IMAGE</button>
                     <button mat-stroked-button class="bg-white text-inherit ml-12" (click)="resetPageVariables()">CANCEL
                         EDIT</button>

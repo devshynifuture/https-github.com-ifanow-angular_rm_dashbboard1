@@ -130,8 +130,6 @@ export class BankDetailsIINComponent implements OnInit {
           this.bankList = data;
           console.log('bank == ', this.bankList)
           this.firstHolderBank = (this.bankList[0]) ? this.bankList[0] : []
-          this.secondHolderBank = (this.bankList[1]) ? this.bankList[1] : []
-          this.thirdHolderBank = (this.bankList[2]) ? this.bankList[2] : []
           this.getdataForm(this.firstHolderBank)
         }
       },
@@ -215,26 +213,27 @@ export class BankDetailsIINComponent implements OnInit {
       bankName: [!data ? '' : data.bankName, [Validators.required]],
       micrCode: [!data ? '' : data.micrCode, [Validators.required]],
       accountNumber: [!data ? '' : data.accountNumber, [Validators.required]],
-      accountType: [!data ? '1' : parseInt(data.accountType), [Validators.required]],
+      // accountType: [!data ? '1' : (data.accountType == 'SB')?'1':'2', [Validators.required]],
+      accountType: [!data ? '1' : (data.accountType == '1' || data.accountType == 'SB') ? '1': '2', [Validators.required]],
       branchCode: [!data ? '' : (data.branchCode) ? data.branchCode : data.bankId, [Validators.required]],
       branchName: [!data ? '' : data.branchName, [Validators.required]],
       branchAdd1: [!data.address ? '' : data.address.address1, [Validators.required]],
       branchAdd2: [!data.address ? '' : data.address.address2, [Validators.required]],
       pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],
-      firstHolder: [!data ? '' : (this.clientData.name)?this.clientData.name:'', [Validators.required]],
+      // firstHolder: [!data ? '' : (this.clientData.name)?this.clientData.name:'', [Validators.required]],
       city: [!data.address ? '' : data.address.city, [Validators.required]],
       state: [!data.address ? '' : data.address.state, [Validators.required]],
       country: [!data.address ? '' : data.address.country, [Validators.required]],
       branchProof: [!data.address ? '' : data.address.branchProof, [Validators.required]],
-      bankMandate: [!data.address ? '1' : data.address.bankMandate, [Validators.required]],
+      bankMandate: [!data.address ? '1' :( data.address.bankMandate) ?  data.address.bankMandate + '' : '1', [Validators.required]],
       mandateDate: [!data.address ? '' : data.address.mandateDate, [Validators.required]],
       mandateAmount: [!data.address ? '' : data.address.mandateAmount, [Validators.required]],
     });
-    if (data.bankMandate == undefined && data.accountType == undefined) {
+    // if (data.bankMandate == undefined && data.accountType == undefined) {
 
-      this.bankDetails.controls.accountType.setValue('1')
-      this.bankDetails.controls.bankMandate.setValue('1')
-    }
+    //   this.bankDetails.controls.accountType.setValue('1')
+    //   this.bankDetails.controls.bankMandate.setValue('1')
+    // }
   }
   getFormControl(): any {
     return this.bankDetails.controls;
@@ -331,6 +330,7 @@ export class BankDetailsIINComponent implements OnInit {
       this.saveBankDetails(value);
       if (this.secondHolderBank) {
         this.holder.type = value;
+        this.secondHolderBank = (this.bankList[1]) ? this.bankList[1] : []
         this.getdataForm(this.secondHolderBank)
       } else {
         this.reset();
@@ -340,6 +340,7 @@ export class BankDetailsIINComponent implements OnInit {
       this.saveBankDetails(value);
       if (this.thirdHolderBank) {
         this.holder.type = value;
+        this.thirdHolderBank = (this.bankList[2]) ? this.bankList[2] : []
         this.getdataForm(this.thirdHolderBank)
       } else {
         this.reset();
@@ -363,6 +364,7 @@ export class BankDetailsIINComponent implements OnInit {
           this.getObj = this.setObj(element, value)
           this.bank.push(this.getObj)
         }else{
+          element.accountType = (element.accountType == '1')?'SB':'CA';
           this.bank.push(element)
         }
       });
@@ -389,7 +391,7 @@ export class BankDetailsIINComponent implements OnInit {
     value = {
       ifscCode: holder.ifscCode,
       accountNumber: holder.accountNumber,
-      accountType: holder.accountType,
+      accountType: (holder.accountType == '1')?'SB':'CA',
       bankName: holder.bankName,
       branchName: holder.branchName,
       branchCode: holder.branchCode,

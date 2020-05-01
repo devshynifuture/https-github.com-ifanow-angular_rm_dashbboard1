@@ -225,7 +225,7 @@ export class LiabilitiesComponent implements OnInit {
   }
 
   deleteModal(value, data) {
-    this.deletedDataId = data.loanTypeId;
+    this.deletedDataId = (this.showFilter ==' tab1') ? this.showFilter: data.loanTypeId;
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -264,8 +264,8 @@ export class LiabilitiesComponent implements OnInit {
   open(flagValue, data) {
     if (data != this.showFilter) {
       data.showFilter = this.showFilter;
-
     }
+    (data.id) ? data.showFilter=this.showFilter : data
     const fragmentData = {
       flag: flagValue,
       componentName: AddLiabilitiesComponent,

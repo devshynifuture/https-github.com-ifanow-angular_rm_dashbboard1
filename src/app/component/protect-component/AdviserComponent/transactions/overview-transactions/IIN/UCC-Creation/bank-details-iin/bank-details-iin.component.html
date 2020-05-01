@@ -96,19 +96,16 @@
                     <div class="col-md-8">
 
                         <mat-radio-group aria-label="Select an option" formControlName="accountType">
-                            <mat-radio-button [value]="1" class="b-a-custom radioBtn text-primary custom-radio" [ngClass]="bankDetails.get('accountType').value == 1 ? 'text-primary b-a-custom': ' text-primitive'" checked>
+                            <mat-radio-button value="1"  [ngClass]="bankDetails.get('accountType').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                                 Savings
                             </mat-radio-button>
-                            <mat-radio-button [value]="2" [ngClass]="bankDetails.get('accountType').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
+                            <mat-radio-button value="2"  [ngClass]="bankDetails.get('accountType').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                                 Current </mat-radio-button>
-                            <mat-radio-button [value]="3" [ngClass]="bankDetails.get('accountType').value == 3 ? 'text-primary b-a-custom': ' text-primitive'">
-                                Cash credit </mat-radio-button>
-
                         </mat-radio-group>
 
                     </div>
                 </div>
-                <div class="row pt-32">
+                <!-- <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0"> First holder name </h3>
                     </div>
@@ -120,7 +117,7 @@
                             <mat-error class="">This field is required</mat-error>
                         </mat-form-field>
                     </div>
-                </div>
+                </div> -->
 
 
                 <div class="row pt-32">
@@ -248,10 +245,10 @@
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-radio-group aria-label="Select an option" formControlName="bankMandate">
-                            <mat-radio-button [value]="1" class="b-a-custom radioBtn text-primary custom-radio" [ngClass]="bankDetails.get('bankMandate').value == 1 ? 'text-primary b-a-custom': ' text-primitive'" checked>
+                            <mat-radio-button value="1"  [ngClass]="bankDetails.get('bankMandate').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                                 Physical
                             </mat-radio-button>
-                            <mat-radio-button [value]="2" [ngClass]="bankDetails.get('bankMandate').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
+                            <mat-radio-button value="2"  [ngClass]="bankDetails.get('bankMandate').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                                 Biler </mat-radio-button>
                         </mat-radio-group>
                     </div>
