@@ -504,8 +504,8 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div class="col-md-1 p-0 pt-8 d-flex" (inputChange)='bankAccountList($event)'>
-                    <!-- [data]="bankAccountDetails" appBankAccount prod build -->
+                <div class="col-md-1 p-0 pt-8 d-flex" [data]="bankAccountDetails" appBankAccount (inputChange)='bankAccountList($event)'>
+                    <!-- prod build -->
                     <i class="material-icons text-primitive c-p float-left">add</i>
                 </div>
             </div>
