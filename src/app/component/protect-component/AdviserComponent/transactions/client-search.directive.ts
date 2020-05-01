@@ -1,7 +1,8 @@
-import {Directive, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {OnlineTransactionService} from './online-transaction.service';
-import {Observable, Subscription} from 'rxjs';
+import { Directive, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { OnlineTransactionService } from './online-transaction.service';
+import { Observable, Subscription } from 'rxjs';
+import { PeopleService } from '../../PeopleComponent/people.service';
 
 @Directive({
   selector: '[appClientSearch]'
@@ -16,7 +17,7 @@ export class ClientSearchDirective implements OnInit {
   familyOutputSubscription: Subscription;
   familyOutputObservable: Observable<any> = new Observable<any>();
 
-  constructor(private onlineTransact: OnlineTransactionService) {
+  constructor(private onlineTransact: OnlineTransactionService, private peopleService: PeopleService) {
   }
 
   @Input() set data(data) {
@@ -35,13 +36,13 @@ export class ClientSearchDirective implements OnInit {
     (value == '') ? this.familyMemberData = undefined : '';
     const obj = {
       advisorId: this.advisorId,
-      name: value
+      displayName: value
     };
     // if (this.familyOutputSubscription && !this.familyOutputSubscription.closed) {
     //   this.familyOutputSubscription.unsubscribe();
     // }
     if (value.length > 2) {
-      this.onlineTransact.getFamilyMemberList(obj).subscribe(responseArray => {
+      this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
         this.getFamilyMemberListRes(responseArray);
       }, error => {
         console.log('getFamilyMemberListRes error : ', error);
@@ -61,7 +62,7 @@ export class ClientSearchDirective implements OnInit {
 
   getFamilyMemberListRes(data) {
     console.log('getFamilyMemberListRes', data);
-    this.nomineesListFM = (data) ? data.familyMembers : null;
+    this.nomineesListFM = (data) ? data : null;
     this.valueChange1.emit(this.nomineesListFM);
   }
 }
