@@ -8,13 +8,13 @@
         </i>
     </div>
 </div>
-<div class="pl-16 pb-12" [formGroup]="dematForm">
+<div class="pl-16 pb-12 mob-pl-0" [formGroup]="dematForm">
     <div class="row pt-44" [ngClass]="{'pt-90': fieldFlag==undefined}">
         <!-- vaibhav -->
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">Mode of holding</h5>
+        <div class="col-md-4 text-right mob-text-left mob-pl-10 mob-pr-10">
+            <h5 class="m-0 pt-8 mob-pb-10">Mode of holding</h5>
         </div>
-        <div class="col-md-7 p-0 mode-holding">
+        <div class="col-md-7 p-0 mode-holding mob-pl-10">
             <mat-radio-group (change)="changeHoldingType($event)" formControlName="modeOfHolding"
                 [(ngModel)]="holdingMode" aria-label="Select an option">
                 <mat-radio-button value="1"
@@ -28,11 +28,11 @@
             </mat-radio-group>
         </div>
     </div>
-    <div *ngIf="holdingMode=='1'" class="row pt-54">
-        <div class="col-md-4 text-right pl-0">
+    <div *ngIf="holdingMode=='1'" class="row pt-54 mob-pt-10">
+        <div class="col-md-4 text-right pl-0 mob-text-left mob-pl-10">
             <h5 class="m-0 pt-20">Holder name</h5>
         </div>
-        <div class="col-md-6 p-0">
+        <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter Holder name" autocomplete="off" formControlName="holderName" #holderName
@@ -48,10 +48,10 @@
         (holderList)="getHolderList($event)">
     </app-add-holder-names>
     <div class="row pt-54">
-        <div class="col-md-4 text-right pl-0">
+        <div class="col-md-4 text-right pl-0 mob-text-left mob-pl-10">
             <h5 class="m-0 pt-20">Depository participant name</h5>
         </div>
-        <div class="col-md-6 p-0">
+        <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter Depository participant name" autocomplete="off"
@@ -64,10 +64,10 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right pl-0">
+        <div class="col-md-4 text-right pl-0 mob-pl-10 mob-text-left">
             <h5 class="m-0 pt-20">Depository participant ID</h5>
         </div>
-        <div class="col-md-3 p-0">
+        <div class="col-md-3 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter Depository ID" autocomplete="off" appInputValueValidation
@@ -79,10 +79,10 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right">
+        <div class="col-md-4 text-right mob-text-left mob-pl-10">
             <h5 class="m-0 pt-20">Demat client ID</h5>
         </div>
-        <div class="col-md-3 p-0">
+        <div class="col-md-3 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter Demat client ID" autocomplete="off" appInputValueValidation
@@ -94,10 +94,10 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right">
+        <div class="col-md-4 text-right mob-text-left mob-pl-10">
             <h5 class="m-0 pt-20">Broker name</h5>
         </div>
-        <div class="col-md-6 p-0">
+        <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input autocomplete="off" placeholder="Enter Broker name " #brokerName appInputValueValidation
@@ -110,10 +110,10 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right">
+        <div class="col-md-4 text-right mob-text-left mob-pl-10">
             <h5 class="m-0 pt-20">Broker address</h5>
         </div>
-        <div class="col-md-6 p-0">
+        <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter Broker address" autocomplete="off" #bAddres
@@ -154,10 +154,10 @@
     <div *ngIf="nomineesListFM" formArrayName="getNomineeName">
         <div class="row pt-36" *ngFor="let obj of dematForm.controls['getNomineeName'].controls; let pointIndex=index"
             [formGroupName]="pointIndex">
-            <div class="col-md-4  text-right">
+            <div class="col-md-4  text-right mob-pl-10 mob-text-left">
                 <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
             </div>
-            <div class="p-0" [ngClass]="getNominee.length > 1?'col-md-4' : 'col-md-6'">
+            <div class="p-0 mob-pl-10 col-10" [ngClass]="getNominee.length > 1?'col-md-4' : 'col-md-6'">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select appDematOwnerNominee matInput formControlName="name" [userTypeFlag]="fieldFlag"
@@ -177,7 +177,7 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-2 pr-0  " *ngIf="getNominee.length > 1">
+            <div class="col-md-2 col-2 pr-0 mob-pr-10 " *ngIf="getNominee.length > 1">
                 <div class="form-group mb-0 iconPetage">
                     <mat-form-field>
                         <input matInput class="form-control br-0 percentage" type="number"
@@ -191,7 +191,7 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-2 pr-0 d-flex align-items-center">
+            <div class="col-md-2 col-2 pr-0 d-flex align-items-center">
                 <i *ngIf="dematForm.value.getNomineeName.length < 3" class="material-icons f-20 c-p"
                     (click)="addNewNominee(undefined)">add</i>
                 <i *ngIf="dematForm.value.getNomineeName.length > 1" class="material-icons f-20 c-p ml-10"
@@ -201,10 +201,10 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right">
+        <div class="col-md-4 text-right mob-text-left mob-pl-10">
             <h5 class="m-0 pt-20">Linked bank account</h5>
         </div>
-        <div class="col-md-6 p-0">
+        <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter Linked bank account" autocomplete="off" #linkedAccNum [maxLength]="16"
@@ -217,10 +217,10 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right">
+        <div class="col-md-4 text-right mob-text-left mob-pl-10">
             <h5 class="m-0 pt-20">Power of attorney name</h5>
         </div>
-        <div class="col-md-6 p-0">
+        <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter Power of attorney name" autocomplete="off" #paName appInputValueValidation
@@ -233,10 +233,10 @@
         </div>
     </div>
     <div class="row pt-44 pb-100">
-        <div class="col-md-4 text-right pl-0">
+        <div class="col-md-4 text-right pl-0 mob-text-left mob-pl-10">
             <h5 class="m-0 pt-20">Power of attorney master ID</h5>
         </div>
-        <div class="col-md-3 p-0">
+        <div class="col-md-3 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input autocomplete="off" placeholder="Enter Power of attorney master ID" #powerOfAttMasId
