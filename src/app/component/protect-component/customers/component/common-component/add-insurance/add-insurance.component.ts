@@ -363,7 +363,12 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   }
 
   removeTransaction(item) {
-    this.cashFlowEntries.removeAt(item);
+    let finalMemberList = this.cashFlowForm.get('cashFlow') as FormArray
+    if (finalMemberList.length > 1) {
+      this.cashFlowEntries.removeAt(item);
+
+    }
+ 
   }
 
   setInsuranceDataFormField(data) {
