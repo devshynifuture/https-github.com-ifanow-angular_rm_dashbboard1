@@ -3,7 +3,7 @@
         <h4 class="mb-0 l-22 wrapper-20">{{userData.headerFlag}} Address</h4>
     </div>
     <div class="col-md-2 text-right">
-        <i (click)="close()" class="material-icons pt-20 c-p pr-16">
+        <i (click)="close('close')" class="material-icons pt-20 c-p pr-16">
             clear
         </i>
     </div>
@@ -32,10 +32,10 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">Address proof type</h5>
+        <div class="col-md-4 text-right mob-text-left mob-pl-10">
+            <h5 class="m-0 pt-8 mob-pb-5">Address proof type</h5>
         </div>
-        <div class="col-md-5 p-0">
+        <div class="col-md-5 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select (selectionChange)="changeAddrProofNumber($event)" formControlName="addProofType"
@@ -54,10 +54,10 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right">
+        <div class="col-md-4 text-right mob-pl-10 mob-text-left">
             <h5 class="m-0 pt-20">Proof ID number</h5>
         </div>
-        <div class="col-md-4 p-0">
+        <div class="col-md-4 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter ID Proof" (input)="toUpperCase(addressForm.get('proofIdNum'),$event)"
@@ -69,10 +69,10 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right">
+        <div class="col-md-4 text-right mob-pl-10 mob-text-left">
             <h5 class="m-0 pt-20">Address line 1</h5>
         </div>
-        <div class="col-md-5 p-0">
+        <div class="col-md-5 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Flat/building/street" autocomplete="off" #add1 maxlength="100" matInput
@@ -84,10 +84,10 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right">
+        <div class="col-md-4 text-right mob-pl-10 mob-text-left">
             <h5 class="m-0 pt-20">Address line 2</h5>
         </div>
-        <div class="col-md-5 p-0">
+        <div class="col-md-5 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Block/locality" autocomplete="off" #add2 matInput maxlength="100"
@@ -99,10 +99,10 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right">
+        <div class="col-md-4 text-right mob-pl-10 mob-text-left">
             <h5 class="m-0 pt-20">Pin code</h5>
         </div>
-        <div class="col-md-2 p-0">
+        <div class="col-md-2 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input autocomplete="off" placeholder="Enter Pin Code" [maxLength]="6" #pinCode
@@ -119,10 +119,10 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right">
+        <div class="col-md-4 text-right mob-pl-10 mob-text-left">
             <h5 class="m-0 pt-20">City</h5>
         </div>
-        <div class="col-md-5 p-0">
+        <div class="col-md-5 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter Your City" autocomplete="off" #city matInput formControlName="city"
@@ -135,10 +135,10 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right">
+        <div class="col-md-4 text-right mob-pl-10 mob-text-left">
             <h5 class="m-0 pt-20">State</h5>
         </div>
-        <div class="col-md-5 p-0">
+        <div class="col-md-5 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Enter Your State" autocomplete="off" #state matInput appInputValueValidation
@@ -151,10 +151,10 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right">
+        <div class="col-md-4 text-right mob-pl-10 mob-text-left">
             <h5 class="m-0 pt-20">Country</h5>
         </div>
-        <div class="col-md-5 p-0">
+        <div class="col-md-5 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input autocomplete="off" placeholder="Enter Your Country" #country matInput
@@ -169,7 +169,7 @@
     <div class="bottom-fixed wrapper-12 w-50">
         <div class="row">
             <div class="col-md-4">
-                <h5 (click)="close()" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+                <h5 (click)="close('close')" class="mb-0 pt-8 text-white c-p">Cancel</h5>
             </div>
             <div class="col-md-8 d-flex align-items-end justify-content-end">
                 <button mat-stroked-button *ngIf="fieldFlag" (click)="saveNext('Next')"

@@ -1,11 +1,46 @@
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-8 mb-20">
         <div class="feedInformation">
             <div class="clientNameBox">
                 <h3 class="m-0 roboto">Good Evening {{clientData.name}}</h3>
                 <p class="m-0 roboto">Your personalized money feed is ready!</p>
             </div>
             <div class="scrolling_myFeed">
+
+
+                <!-- your account intro -->
+                <div class="wrapperBox mb-20" [hidden]="true">
+                    <div class="row">
+                        <div class="col-md-12 mb-10 d-flex align-items-center">
+                            <h5 class="roboto m-0 ">Your account</h5>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="bg-white vaultbBox">
+                                <div class="row">
+                                    <div class="col-md-7 p-0">
+                                        <h5 class="roboto f-500">
+                                            An important note
+                                        </h5>
+                                        <p>
+                                            Document vault is a safe and secure way to manage your important documents. This will help you get better organized!
+                                        </p>
+
+                                        <p class="m-0 text-primary">Read more</p>
+
+
+                                    </div>
+                                    <div class="col-md-5 pr-0">
+                                        <img src="/assets/images/svg/vault-icon.svg">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Portfolio Asset allocation chart -->
                 <div class="wrapperBox">
                     <div class="row">
@@ -45,20 +80,19 @@
                         </div>
                     </div>
                 </div>
-    
+
                 <!-- portfolio section -->
                 <div class="wrapperBox">
                     <div class="row">
                         <div class="col-md-8 d-flex align-items-center">
                             <h5 class="roboto m-0">Portfolio</h5>
                         </div>
-                        <div class="col-md-4 text-right"
-                            *ngIf="portFolioData && portFolioData.length > 0">
-                            <a class="viewBtn c-p text-primitive br-2 f-12" > View all </a>
+                        <div class="col-md-4 text-right">
+                            <a class="viewBtn c-p text-primitive br-2 f-12"> View all </a>
                         </div>
                     </div>
-    
-    
+
+
                     <div class="scrollingDiv d-flex">
                         <!-- portfolio data present -->
                         <div class="fundBox bg-white" *ngFor="let portData of portFolioData">
@@ -67,60 +101,54 @@
                                     <h5 class="roboto">{{portData.assetTypeString}}</h5>
                                 </div>
                                 <div class="col-md-4 d-flex justify-content-end">
-                                    <span
-                                        class="bg-primary d-flex align-items-center justify-content-center mfBox text-white">
+                                    <span class="bg-primary d-flex align-items-center justify-content-center mfBox text-white">
                                         {{portData.type}}
                                     </span>
                                 </div>
                             </div>
-    
+
                             <div class="row">
                                 <div class="col-md-8">
                                     <p class="m-0 text-primitive f-12">CURRENT VALUE</p>
-                                    <h3 class="mb-20">₹<span
-                                            appFormatNumber>{{portData.currentValue | number : '0.0-2'}}</span></h3>
+                                    <h3 class="mb-20">₹<span appFormatNumber>{{portData.currentValue | number : '0.0-2'}}</span></h3>
                                 </div>
                             </div>
-    
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <p class="m-0 l-18 text-primitive f-12">AMT INVESTED</p>
-                                    <p class="m-0">₹<span
-                                            appFormatNumber>{{portData.investedAmount | number : '0.0-2'}}</span></p>
+                                    <p class="m-0">₹<span appFormatNumber>{{portData.investedAmount | number : '0.0-2'}}</span></p>
                                 </div>
                                 <div class="col-md-6 text-right">
                                     <p class="m-0 l-18 text-primitive f-12">GAIN/(LOSS)</p>
-                                    <p class="m-0 text-success">₹<span
-                                            appFormatNumber>{{portData.currentValue ? (portData.currentValue | number : '0.0-2') : 0}}</span>
+                                    <p class="m-0 text-success">₹<span appFormatNumber>{{portData.currentValue ? (portData.currentValue | number : '0.0-2') : 0}}</span>
                                     </p>
                                 </div>
                             </div>
-    
-    
+
+
                         </div>
-    
+
                         <!-- portfolio data not present -->
-                        <div class="fundBox bg-white"
-                            *ngIf="!portFolioData || portFolioData.length == 0">
+                        <div class="fundBox bg-white" *ngIf="tabsLoaded.portfolioSummary.dataLoaded && portFolioData.length == 0">
                             <div class="row">
                                 <div class="col-md-8  pr-0">
                                     <h5 class="roboto">Mutual funds</h5>
                                 </div>
                                 <div class="col-md-4 d-flex justify-content-end">
-                                    <span
-                                        class="bg-primary d-flex align-items-center justify-content-center mfBox text-white">
+                                    <span class="bg-primary d-flex align-items-center justify-content-center mfBox text-white">
                                         Add
                                     </span>
                                 </div>
                             </div>
-    
+
                             <div class="row">
                                 <div class="col-md-8">
                                     <p class="m-0 text-primitive f-12">CURRENT VALUE</p>
                                     <h3 class="mb-20">₹0</h3>
                                 </div>
                             </div>
-    
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <p class="m-0 l-18 text-primitive f-12">AMT INVESTED</p>
@@ -131,28 +159,142 @@
                                     <p class="m-0 text-success">₹0</p>
                                 </div>
                             </div>
-    
-    
+
+
                         </div>
                     </div>
                 </div>
-    
+
+                <!-- complete your profile -->
+                <div class="wrapperBox mb-20" [hidden]="true">
+                    <div class="row">
+                        <div class="col-md-12 mb-10 d-flex align-items-center">
+                            <h5 class="roboto m-0 ">Complete your profile</h5>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="bg-white vaultbBox">
+                                <div class="row">
+                                    <div class="col-md-7 p-0">
+                                        <h5 class="roboto f-500">
+                                            Add missing data in your profile
+                                        </h5>
+                                        <p>
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                                        </p>
+
+                                        <button class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
+                                            Add profile details
+                                        </button>
+
+                                        <mat-checkbox class="text-primitive f-12">Do not show again</mat-checkbox>
+
+
+
+
+                                    </div>
+                                    <div class="col-md-5 pr-0">
+                                        <img src="/assets/images/svg/vault-icon.svg">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="wrapperBox mb-20" [hidden]="true">
+                    <div class="row">
+                        <div class="col-md-12 mb-10 d-flex align-items-center">
+                            <h5 class="roboto m-0 ">Family members</h5>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="bg-white vaultbBox">
+                                <div class="row">
+                                    <div class="col-md-7 p-0">
+                                        <h5 class="roboto f-500">
+                                            Add your family members
+                                        </h5>
+                                        <p>
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                                        </p>
+
+                                        <button class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
+                                            Add family details
+                                        </button>
+
+                                        <mat-checkbox class="text-primitive f-12">Do not show again</mat-checkbox>
+
+
+                                    </div>
+                                    <div class="col-md-5 pr-0">
+                                        <img src="/assets/images/svg/vault-icon.svg">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="wrapperBox mb-20" [hidden]="true">
+                    <div class="row">
+                        <div class="col-md-12 mb-10 d-flex align-items-center">
+                            <h5 class="roboto m-0 ">Mutual found protfolio</h5>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="bg-white vaultbBox">
+                                <div class="row">
+                                    <div class="col-md-7 p-0">
+                                        <h5 class="roboto f-500">
+                                            Upload your CAS statement
+                                        </h5>
+                                        <p>
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                                        </p>
+
+                                        <button class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
+                                            Show me how to do it
+                                        </button>
+
+                                        <mat-checkbox class="text-primitive f-12">Do not show again</mat-checkbox>
+
+
+                                    </div>
+                                    <div class="col-md-5 pr-0">
+                                        <img src="/assets/images/svg/vault-icon.svg">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- goals section -->
-                <div class="wrapperBox">
+                <!-- goals not to be integrated for now -->
+                <div class="wrapperBox" [hidden]="true">
                     <div class="row">
                         <div class="col-md-8 d-flex align-items-center">
                             <h5 class="roboto m-0">Goals</h5>
                         </div>
-                        <div class="col-md-4 text-right"
-                            *ngIf="portFolioData && portFolioData.length > 0">
-                            <a class="viewBtn c-p text-primitive br-2 f-12" >
+                        <div class="col-md-4 text-right">
+                            <a class="viewBtn c-p text-primitive br-2 f-12">
                                 View all
                             </a>
                         </div>
                     </div>
-    
-    
-                    <div class="scrollingDiv d-flex ">
+
+
+                    <div class="scrollingDiv d-flex">
                         <div class="goalsOverViewBox bg-white p-10" *ngFor="let goal of goalsData">
                             <div class="row">
                                 <div class="col-md-5">
@@ -162,7 +304,6 @@
                                     <h5 class="roboto f-500">Shreya’s higher education</h5>
                                     <p class="f-14 text-primitive">
                                         {{goal.startYear}}{{goal.endYear ? ' - ' + goal.endYear : ''}}</p>
-    
                                     <div class="row">
                                         <div class="col-md-6">
                                             <p class="f-12 l-18 text-primitive m-0">GOAL VALUE</p>
@@ -173,41 +314,39 @@
                                             <p>₹<span appFormatNumber>{{goal.achieved}}</span></p>
                                         </div>
                                     </div>
-    
+
                                     <div class="row">
                                         <div class="col-md-12">
-    
+
                                         </div>
                                     </div>
-    
+
                                 </div>
                             </div>
                         </div>
-    
-                        <!-- no data present -->
-                        <div class="goalsOverViewBox bg-white p-10">
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <img [src]="goal.imageSrc">
-                                </div>
-                                <div class="col-md-7">
-                                    <h5 class="roboto f-500">Shreya’s higher education</h5>
-                                    <p class="f-14 text-primitive">2030 - 33</p>
-    
+
+                        <div class="row" *ngIf="tabsLoaded.goalsData.dataLoaded && !tabsLoaded.goalsData.hasData">
+                            <div class="col-md-12">
+                                <div class="bg-white vaultbBox">
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <p class="f-12 l-18 text-primitive m-0">GOAL VALUE</p>
-                                            <p>₹<span appFormatNumber>{{goal.goalValue | number : '0.0-2'}}</span></p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p class="f-12 l-18 text-primitive m-0">ACHIEVED</p>
-                                            <p>₹<span appFormatNumber>{{goal.goalValue | number : '0.0-2'}}</span></p>
-                                        </div>
-                                    </div>
+                                        <div class="col-md-7 p-0">
+                                            <h5 class="roboto f-500">
+                                                Tellus about your goals
+                                            </h5>
+                                            <p>
+                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                                            </p>
     
-                                    <div class="row">
-                                        <div class="col-md-12">
+                                            <button class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
+                                                Add financial goals
+                                            </button>
     
+                                            <mat-checkbox class="text-primitive f-12">Do not show again</mat-checkbox>
+    
+    
+                                        </div>
+                                        <div class="col-md-5 pr-0">
+                                            <img src="/assets/images/svg/vault-icon.svg">
                                         </div>
                                     </div>
                                 </div>
@@ -215,7 +354,7 @@
                         </div>
                     </div>
                 </div>
-    
+
                 <!-- activity section -->
                 <div class="wrapperBox">
                     <div class="row">
@@ -223,7 +362,7 @@
                             <h5 class="roboto m-0">Activity overview</h5>
                         </div>
                     </div>
-    
+
                     <div class="row">
                         <div class="col-md-4">
                             <div class="bg-white activityBox text-center">
@@ -232,7 +371,7 @@
                                 <h3 class="text-danger m-0 f-22">{{adviseData?.consent || 0}}</h3>
                             </div>
                         </div>
-    
+
                         <div class="col-md-4">
                             <div class="bg-white activityBox text-center">
                                 <h5 class="m-0 roboto">Action plans in process</h5>
@@ -240,19 +379,19 @@
                                 <h3 class="text-primary m-0 f-22">{{adviseData?.progress || 0}}</h3>
                             </div>
                         </div>
-    
+
                         <div class="col-md-4">
                             <div class="bg-white activityBox text-center">
                                 <h5 class="m-0 roboto">Money to be deployed
                                 </h5>
                                 <p class="f-12 text-primitive">current + upcoming</p>
-                                <h3 class="text-primary m-0 f-22">₹<span
-                                        appFormatNumber>{{adviseData?.deployed}}</span></h3>
+                                <h3 class="text-primary m-0 f-22">₹<span appFormatNumber>{{adviseData?.deployed}}</span>
+                                </h3>
                             </div>
                         </div>
                     </div>
                 </div>
-    
+
                 <!-- document vault -->
                 <div class="wrapperBox">
                     <div class="row">
@@ -260,37 +399,50 @@
                             <h5 class="roboto m-0 ">Document vault</h5>
                         </div>
                     </div>
-    
+
+
+                    <div class="row">
+                        <div class="col-md-12" *ngIf="documentVault && documentVault.length > 0">
+                            <div class="bg-white vaultbBox" *ngFor="let docs of documentVault">
+                                <div class="row">
+                                    <div class="col-md-7 p-0">
+                                        <h5 class="roboto f-500">
+                                            Your secure online vault
+                                        </h5>
+
+                                        <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
+                                        <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
+                                        <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
+                                        <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
+                                        <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
+
+                                        <p class="mb-0">{{docs.filesCount}} items in your vault {{docs.totalBytes/1024 | number : '0.0-2'}} space used</p>
+
+                                        <button class="vaultBtn mt-12 mb-4 bg-primary f-16 text-white" mat-flat-button>
+                                            Access your vault
+                                        </button>
+
+                                        <mat-checkbox class="text-primitive f-12">Do not show again</mat-checkbox>
+
+
+                                    </div>
+                                    <div class="col-md-5 pr-0">
+                                        <img src="/assets/images/svg/vault-icon.svg">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row" *ngIf="!documentVault || documentVault.length == 0">
                         <div class="col-md-12">
                             <div class="bg-white vaultbBox">
                                 <div class="row">
                                     <div class="col-md-7 pr-0">
                                         <h5 class="roboto f-500">You aren’t using the document vault!</h5>
-                                        <p>Document vault is a safe and secure way to manage your important
-                                            documents. This will help you get better organized!</p>
-                                        <button class="vaultBtn bg-primary f-16 text-white" mat-flat-button> Add
-                                            documents
-                                        </button>
-                                    </div>
-                                    <div class="col-md-5 pr-0">
-                                        <img src="/assets/images/svg/vault-icon.svg">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="row" *ngIf="documentVault && documentVault.length > 0">
-                        <div class="col-md-12" *ngFor="let docs of documentVault">
-                            <div class="bg-white vaultbBox">
-                                <div class="row">
-                                    <div class="col-md-7 pr-0">
-                                        <h5 class="roboto f-500">Your secure online vault!</h5>
-                                        <p>{{docs.filesCount}} item(s) in your vault.
-                                            {{docs.totalBytes/1024 | number : '0.0-2'}} space used.</p>
+                                        <p>Document vault is a safe and secure way to manage your important documents. This will help you get better organized.</p>
                                         <button class="vaultBtn bg-primary f-16 text-white" mat-flat-button>
-                                            Access your vault
+                                            Add documents
                                         </button>
                                     </div>
                                     <div class="col-md-5 pr-0">
@@ -300,12 +452,12 @@
                             </div>
                         </div>
                     </div>
-    
-    
+
+
                 </div>
-    
+
                 <!-- insurance -->
-                <div class="wrapperBox" *ngIf="recentTransactions.length > 0">
+                <div class="wrapperBox" *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">
                     <div class="row">
                         <div class="col-md-8 d-flex align-items-center">
                             <h5 class="roboto m-0">Insurance</h5>
@@ -314,45 +466,40 @@
                             <a class="viewBtn c-p text-primitive br-2 f-12"> View all </a>
                         </div>
                     </div>
-    
+
                     <div class="scrollingDiv d-flex" *ngFor="let inc of recentTransactions">
                         <div class="insuranceListBox bg-white">
                             <p class="roboto m-0 f-500">{{inc.insuranceType}}</p>
                             <p class="roboto mb-10">{{inc.insuredFamily}}</p>
-    
+
                             <div class="row">
                                 <div class="col-md-4">
-                                    <circle-progress [animationDuration]="1000" [animation]="true"
-                                        [innerStrokeColor]="'#e7e8ea'" [innerStrokeWidth]="10"
-                                        [outerStrokeColor]="'#008FFF'" [outerStrokeWidth]="10" [percent]="inc.progress"
-                                        [radius]="20" [responsive]="true" [showSubtitle]="false" [space]="-10"
-                                        [startFromZero]="true" [titleFontSize]="35" [unitsFontSize]="35" class="progress">
+                                    <circle-progress [animationDuration]="1000" [animation]="true" [innerStrokeColor]="'#e7e8ea'" [innerStrokeWidth]="10" [outerStrokeColor]="'#008FFF'" [outerStrokeWidth]="10" [percent]="inc.progress" [radius]="20" [responsive]="true" [showSubtitle]="false"
+                                        [space]="-10" [startFromZero]="true" [titleFontSize]="35" [unitsFontSize]="35" class="progress">
                                     </circle-progress>
                                 </div>
                                 <div class="col-md-8 d-flex justify-content-center flex-column">
-                                    <p class="m-0 roboto"> <span class="f-500"> Actual: </span> <span
-                                            appFormatNumber>{{inc.actual}}</span></p>
-                                    <p class="m-0 roboto"> <span class="f-500"> Advice: </span> <span
-                                            appFormatNumber>{{inc.adviced}}</span></p>
+                                    <p class="m-0 roboto"> <span class="f-500"> Actual: </span> <span appFormatNumber>{{inc.actual}}</span></p>
+                                    <p class="m-0 roboto"> <span class="f-500"> Advice: </span> <span appFormatNumber>{{inc.adviced}}</span></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-    
-                <!-- recent transactions -->
-                <div class="wrapperBox" *ngIf="mfData.length > 0">
+
+                <!-- Recent transactions as per rta -->
+                <div class="wrapperBox" *ngIf="tabsLoaded.rtaFeeds.dataLoaded && tabsLoaded.rtaFeeds.hasData">
                     <div class="row">
                         <div class="col-md-8 d-flex align-items-center">
-                            <h5 class="roboto m-0">Recent transactions</h5>
+                            <h5 class="roboto m-0">Recent transactions (As per RTA feeds)</h5>
                         </div>
                         <div class="col-md-4 text-right">
                             <a class="viewBtn c-p text-primitive br-2 f-12"> View all </a>
                         </div>
                     </div>
-    
+
                     <div class="scrollingDiv d-flex">
-                        <div class="transactionsBox bg-white col-md-8" *ngFor="let tnx of mfData">
+                        <div class="transactionsBox bg-white col-md-8" *ngFor="let tnx of rtaFeedsData">
                             <div class="row">
                                 <div class="col-md-8">
                                     <p class="mb-5">{{tnx.fwTransactionType}}</p>
@@ -361,16 +508,59 @@
                                     <p class="mb-5 text-primitive">{{tnx.type}}</p>
                                 </div>
                             </div>
-    
+
                             <div class="row">
                                 <div class="col-md-7">
                                     <h4>₹<span appFormatNumber>{{tnx.amount | number : '0.0-2'}}</span></h4>
                                 </div>
                                 <div class="col-md-5 pl-0 text-right">
-                                    <p class="text-primitive mb-10 f-12">{{tnx.transactionDate | date:'dd/MM h:mm a'}}</p>
+                                    <p class="text-primitive mb-10 f-12">{{tnx.transactionDate | date:'dd/MM h:mm a'}}
+                                    </p>
                                 </div>
                             </div>
-    
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="text-primitive f-12 mb-5 l-18">{{tnx.schemeName}}</p>
+                                    <p class="mb-4">{{tnx.investorName}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- recent transactions-->
+                <div class="wrapperBox" *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">
+                    <div class="row">
+                        <div class="col-md-8 d-flex align-items-center">
+                            <h5 class="roboto m-0">Recent transactions</h5>
+                        </div>
+                        <div class="col-md-4 text-right">
+                            <a class="viewBtn c-p text-primitive br-2 f-12"> View all </a>
+                        </div>
+                    </div>
+
+                    <div class="scrollingDiv d-flex">
+                        <div class="transactionsBox bg-white col-md-8" *ngFor="let tnx of recentTransactions">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <p class="mb-5">{{tnx.fwTransactionType}}</p>
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <p class="mb-5 text-primitive">{{tnx.type}}</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <h4>₹<span appFormatNumber>{{tnx.amount | number : '0.0-2'}}</span></h4>
+                                </div>
+                                <div class="col-md-5 pl-0 text-right">
+                                    <p class="text-primitive mb-10 f-12">{{tnx.transactionDate | date:'dd/MM h:mm a'}}
+                                    </p>
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <p class="text-primitive f-12 mb-5 l-18">{{tnx.schemeName}}</p>
@@ -383,39 +573,65 @@
                         </div>
                     </div>
                 </div>
-    
+
                 <!-- risk profile -->
-                <div class="wrapperBox" *ngIf="riskProfile.length > 0">
+                <div class="wrapperBox">
                     <div class="row">
                         <div class="col-md-12 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0">Risk profile</h5>
                         </div>
                     </div>
-    
-                    <div class="riskProfileBox bg-white" *ngFor="let riskProfileData of riskProfile">
-                        <div class="row">
+
+                    <div class="riskProfileBox bg-white" *ngIf="tabsLoaded.riskProfile.dataLoaded && tabsLoaded.riskProfile.hasData">
+                        <div class="row" *ngFor="let risk of riskProfile">
                             <div class="col-md-4 text-center">
                                 <p class="f-16 roboto mb-8 f-500">Your risk score</p>
                                 <div class="numberBox">
-                                    <h1 class="f-48 mb-12"> {{riskProfileData.riskAssessmentScore}} </h1>
-                                    <p class="f-12 m-0 text-primitive">Max: {{riskProfileData.maxScore}}</p>
+                                    <h1 class="f-48 mb-12"> {{risk.riskAssessmentScore}} </h1>
+                                    <p class="f-12 m-0 text-primitive">Max: {{riskProfileMaxScore(risk.riskProfileId)}}</p>
                                 </div>
                             </div>
-    
+
                             <div class="col-md-8 text-center">
                                 <h5 class="roboto f-500">
-                                    Your risk profile: {{riskProfileData.type}}
+                                    Your risk profile: {{risk.riskProfileStatus}}
                                 </h5>
-                                <p>{{riskProfileData.description}}</p>
+                                <p>{{riskProfileDesc(risk.riskProfileId)}}</p>
                             </div>
-    
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="tabsLoaded.riskProfile.dataLoaded && !tabsLoaded.riskProfile.hasData">
+                        <div class="col-md-12">
+                            <div class="bg-white vaultbBox">
+                                <div class="row">
+                                    <div class="col-md-7 p-0">
+                                        <h5 class="roboto f-500">
+                                            Do you know you risk profile?
+                                        </h5>
+                                        <p>
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                                        </p>
+
+                                        <button class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
+                                            Take the test
+                                        </button>
+
+                                        <mat-checkbox class="text-primitive f-12">Do not show again</mat-checkbox>
+
+
+                                    </div>
+                                    <div class="col-md-5 pr-0">
+                                        <img src="/assets/images/svg/vault-icon.svg">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-4 pr-0 paddleft30 mt-40">
         <div class="b-b mb-20 pb-20">
             <div class="row">
@@ -430,43 +646,7 @@
                 </div>
             </div>
         </div>
-    
-        <div class="row">
-            <div class="col-md-7">
-                <h5 class="m-0 roboto f-500">Market summary</h5>
-            </div>
-            <div class="col-md-5 text-right">
-                <p class="f-12 m-0 text-primitive">03/12/2019</p>
-            </div>
-        </div>
-    
-        <div class="row">
-            <div class="col-md-12 mb-8">
-                <!-- <button class="markBtn bg-white" mat-flat-button>Equities</button>
-                        <button class="markBtn" mat-flat-button>Debt</button>
-                        <button class="markBtn" mat-flat-button>C&M</button> -->
-    
-                <mat-button-toggle-group class="matToggleToggle" name="fontStyle" aria-label="Font Style">
-                    <mat-button-toggle class="markBtn" value="equities">Equities</mat-button-toggle>
-                    <mat-button-toggle class="markBtn" value="debt">Debt</mat-button-toggle>
-                    <mat-button-toggle class="markBtn" value="cm">C&M</mat-button-toggle>
-                </mat-button-toggle-group>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 mb-8 pr-0 roboto f-14">BSE Sensex</div>
-            <div class="col-md-4 mb-8 roboto text-success text-right f-14">+0.23%</div>
-            <div class="col-md-4 mb-8 roboto f-14 text-right f-500">41,968</div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 mb-8 pr-0 roboto f-14">Nifty 50</div>
-            <div class="col-md-4 mb-8 roboto text-success text-right f-14">+0.28%</div>
-            <div class="col-md-4 mb-8 roboto f-14 text-right f-500">12,241</div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 mb-8 pr-0 roboto f-14">Nifty 500</div>
-            <div class="col-md-4 mb-8 roboto text-success text-right f-14">+0.14%</div>
-            <div class="col-md-4 mb-8 roboto f-14 text-right f-500">10,395</div>
-        </div>
+
+        <app-market-summary class="row"></app-market-summary>
     </div>
 </div>

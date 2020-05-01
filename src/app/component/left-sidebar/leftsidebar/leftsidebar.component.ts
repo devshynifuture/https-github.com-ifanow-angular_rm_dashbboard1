@@ -60,6 +60,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   getClientList(data) {
     if (this.myControl.value.length == 0) {
       this.showDefaultDropDownOnSearch = false;
+      this.clientList = undefined
       return;
     }
     if (this.myControl.value.length < 3) {
@@ -80,6 +81,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
       this.showDefaultDropDownOnSearch = false
     }
     else {
+      this.clientList = undefined;
       this.showDefaultDropDownOnSearch = true;
     }
   }

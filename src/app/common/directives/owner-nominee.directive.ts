@@ -75,8 +75,8 @@ export class OwnerNomineeDirective {
   }
   getListFamilyMem(): any {
     const obj = {
-      userId: (this.clientId) ? this.clientId : this.clientIdData,
-      userType: (this.clientId) ? 2 : (this.userTypeFlag == 'client' || this.userTypeFlag == undefined) ? 2 : 3
+      userId: this.clientId,
+      userType: 2
     };
 
     if (this.sendData.length <= 0) {
@@ -131,10 +131,10 @@ export class OwnerNomineeDirective {
         if (e.data.name != '') {
           if (element.userName == e.data.name) {
             if (e.type == 'owner') {
-              this.getCoOwner.controls[e.index].get('familyMemberId').setValue(element.id);
+              this.getCoOwner.controls[e.index].get('familyMemberId').setValue(element.familyMemberId);
               this.getCoOwner.controls[e.index].get('isClient').setValue(element.relationshipId == 0 ? 1 : 0);
             } else {
-              this.getNominee.controls[e.index].get('familyMemberId').setValue(element.id);
+              this.getNominee.controls[e.index].get('familyMemberId').setValue(element.familyMemberId);
             }
             element.disable = true;
             return;

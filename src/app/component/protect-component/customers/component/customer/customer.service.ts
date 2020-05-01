@@ -675,6 +675,11 @@ export class CustomerService {
   getAdviceNps(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_NPS, data)
   }
+  getSchemeChoice() {
+    let httpParams; 
+    // = new HttpParams().set('clientId', data.clientId).set("advisorId", data.advisorId).set("familyMemberId", data.familyMemberId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.SCHEME_CHOICE, httpParams)
+  }
   getAdviceGratuity(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_GRATUITY, data)
   }
@@ -771,9 +776,9 @@ export class CustomerService {
 
   // overview - myfeed services
   getAllFeedsPortFolio(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CUSTOMER_PORTFOLIO_SUMMARY, data);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.CALCULATE_TOTAL_VALUES, data);
   }
-  getMFData(data) {
+  getRTAFeeds(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FEEDS_MF_DATA, data);
   }
   getDocumentsFeed(data) {
@@ -782,8 +787,11 @@ export class CustomerService {
   getRiskProfile(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FEED_RISK_PROFILE, data);
   }
+  getGlobalRiskProfile(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GLOBAL_RISK_PROFILE, data);
+  }
   getRecentTransactions(data) {
-    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_FEED_RECENT_TRANSACTIONS, data, 1);
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_FEED_RECENT_TRANSACTIONS, data, null);
   }
 }
 

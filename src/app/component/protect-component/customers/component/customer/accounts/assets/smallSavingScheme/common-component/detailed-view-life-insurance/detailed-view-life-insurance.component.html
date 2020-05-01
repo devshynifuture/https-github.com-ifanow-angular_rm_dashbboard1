@@ -209,6 +209,59 @@
                                 {{(_data.assumedRate) ? _data.assumedRate : '-'}}
                             </div>
                         </div>
+                        <div *ngIf="_data.ulipFundDetails.length > 0">
+                                <div class="row bb p-8 b-l br" *ngFor="let data of _data.ulipFundDetails; let i = index">
+                                        <div class="row bb p-8 b-l br">
+                                                <div class="col-md-8 text-left f-14 roboto p-0">
+                                                        Fund name {{i+1}}
+                                                    </div>
+                                                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                                        {{ data.fundName }}
+                                                    </div>
+                                        </div>
+                                        <div class="row bb p-8 b-l br">
+                                                <div class="col-md-8 text-left f-14 roboto p-0">
+                                                        Equity ratio {{i+1}}
+                                                    </div>
+                                                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                                        {{ data.equityRatio }}
+                                                    </div>
+                                        </div>
+                                        <div class="row bb p-8 b-l br">
+                                                <div class="col-md-8 text-left f-14 roboto p-0">
+                                                        Debt ratio {{i+1}}
+                                                    </div>
+                                                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                                        {{ data.debtRatio }}
+                                                    </div>
+                                        </div>
+                                        <div class="row bb p-8 b-l br" *ngIf="data.units">
+                                                <div class="col-md-8 text-left f-14 roboto p-0">
+                                                        Units {{i+1}}
+                                                    </div>
+                                                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                                        {{ data.units }}
+                                                    </div>
+                                        </div>
+                                        <div class="row bb p-8 b-l br" *ngIf="data.nav">
+                                                <div class="col-md-8 text-left f-14 roboto p-0">
+                                                        NAV {{i+1}}
+                                                    </div>
+                                                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                                        {{ data.nav }}
+                                                    </div>
+                                        </div>
+                                        <div class="row bb p-8 b-l br" *ngIf="data.fundValue ">
+                                                <div class="col-md-8 text-left f-14 roboto p-0">
+                                                        Fund value {{i+1}}
+                                                    </div>
+                                                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                                        {{ data.fundValue }}
+                                                    </div>
+                                        </div>
+                                    </div>
+                        </div>
+                        
 
                     </div>
                 </div>

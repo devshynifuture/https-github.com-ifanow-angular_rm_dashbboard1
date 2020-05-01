@@ -70,7 +70,7 @@ export class CompanyMoreInfoComponent implements OnInit {
       email: [data.email, [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
       designation: [(data.occupationId) ? String(data.occupationId) : '1'],
-      gender: [(data.genderId) ? data.genderId : '1'],
+      gender: [(data.genderId) ? String(data.genderId) : '1'],
     });
     console.log(this.moreInfoForm)
   }
@@ -185,7 +185,7 @@ export class CompanyMoreInfoComponent implements OnInit {
   }
 
   close(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
+    (data == 'close') ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) : this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
   }
 
   // ngOnChanges(changes: SimpleChanges): void {

@@ -88,52 +88,7 @@ export class SummaryComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.calculateTotalSummaryValues();
   }
-  getStockFeeds() {
-    this.selectedVal = 'Equities';
-    this.StockFeedFlag = true;
-    this.cusService.getStockFeeds().subscribe(
-      data => {
-        console.log(data);
-        this.getStockFeedsResponse(data)
-      }
-    )
-  }
 
-  getDeptData() {
-    this.cusService.getDeptData().subscribe(
-      data => {
-        console.log(data);
-        this.deptData = data;
-        this.deptData.change_in_percentage = parseFloat(this.deptData.change_in_percentage)
-
-      }
-    )
-  }
-
-  getStockFeedsResponse(data) {
-    this.StockFeedFlag = false;
-    const { bse, nse, gold, silver } = data;
-    bse.date = new Date(bse.date).getTime();
-    bse.change_in_percentage = parseFloat(bse.change_in_percentage).toFixed(2);
-    nse.change_in_percentage = parseFloat(nse.change_in_percentage).toFixed(2);
-    if (gold) {
-      gold.carat_22.change_in_percentage = parseFloat(gold.carat_22.change_in_percentage).toFixed(2);
-      gold.carat_24.change_in_percentage = parseFloat(gold.carat_24.change_in_percentage).toFixed(2);
-    }
-    silver.change_in_percentage = parseFloat(silver.change_in_percentage).toFixed(2);
-    this.bscData = bse;
-    this.nscData = nse;
-    this.goldData = gold;
-    this.silverData = silver;
-  }
-  getNifty500Data() {
-    this.cusService.getNiftyData().subscribe(
-      data => {
-        console.log(data);
-        this.nifty500Data = data;
-      }
-    )
-  }
   calculateTotalSummaryValues() {
     this.mutualFundValue = {
       currentValue: null,
@@ -186,10 +141,6 @@ export class SummaryComponent implements OnInit {
     );
     this.getSummaryList(obj);
     this.getCashFlowList(obj);
-    this.getStockFeeds();
-    this.getNifty500Data();
-    this.getDeptData();
-
   }
 
   getSummaryList(obj) {
@@ -366,10 +317,6 @@ export class SummaryComponent implements OnInit {
   dateChange(event) {
     this.asOnDate = new Date(event.value).getTime();
     this.calculateTotalSummaryValues();
-  }
-
-  onValChange(value) {
-    this.selectedVal = value;
   }
 
   cashFlow(id, data) {

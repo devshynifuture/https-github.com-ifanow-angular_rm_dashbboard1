@@ -26,6 +26,7 @@ export class PeopleClientsComponent implements OnInit {
   isLoading: boolean;
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild('clientTableSort', { static: false }) clientTableSort: MatSort;
+  screenSize: number;
 
   constructor(private authService: AuthService, private ngZone: NgZone, private router: Router,
     private subInjectService: SubscriptionInject, public eventService: EventService,
@@ -34,9 +35,12 @@ export class PeopleClientsComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    console.log(window.innerHeight, window.innerWidth);
     this.getClientList();
   }
-
+  onResize() {
+    this.screenSize = window.innerWidth
+  }
   getClientList() {
     this.clientDatasource.data = [{}, {}, {}];
     this.isLoading = true;

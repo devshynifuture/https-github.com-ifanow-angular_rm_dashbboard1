@@ -45,6 +45,7 @@ export class LiabilitiesComponent implements OnInit {
   noData: string;
   totalLoanAmt = 0;
   outStandingAmt = 0;
+  totalEmi = 0;
   filterData: any;
   excelData: any[];
   footer = [];
@@ -142,8 +143,10 @@ export class LiabilitiesComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.dataSource.data);
       this.totalLoanAmt =0;
       this.outStandingAmt =0;
+      this.totalEmi = 0;
      this.dataSource.data.forEach(element => {
         this.totalLoanAmt += element.loanAmount
+        this.totalEmi += element.emi;
       });
       this.dataSource.data.forEach(element => {
         if (element.outstandingAmount == "NaN") {
@@ -203,11 +206,15 @@ export class LiabilitiesComponent implements OnInit {
       } else {
         this.totalLoanAmt = 0
         this.outStandingAmt = 0
+        this.totalEmi = 0;
         this.totalLoanAmt = filterData.reduce((accumulator, currentElement) =>
           accumulator + currentElement.loanAmount
           , 0)
         this.outStandingAmt = filterData.reduce((accumulator, currentElement) =>
           accumulator + currentElement.outstandingAmount
+          , 0)
+          this.totalEmi = filterData.reduce((accumulator, currentElement) =>
+          accumulator + currentElement.emi
           , 0)
         // this.dataSource = filterData;
         this.dataSource = new MatTableDataSource(filterData);
@@ -218,7 +225,7 @@ export class LiabilitiesComponent implements OnInit {
   }
 
   deleteModal(value, data) {
-    this.deletedDataId = data.loanTypeId;
+    this.deletedDataId = (this.showFilter ==' tab1') ? this.showFilter: data.loanTypeId;
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -257,8 +264,8 @@ export class LiabilitiesComponent implements OnInit {
   open(flagValue, data) {
     if (data != this.showFilter) {
       data.showFilter = this.showFilter;
-
     }
+    (data.id) ? data.showFilter=this.showFilter : data
     const fragmentData = {
       flag: flagValue,
       componentName: AddLiabilitiesComponent,
@@ -360,6 +367,7 @@ export class LiabilitiesComponent implements OnInit {
       // this.outStandingAmt = data.outstandingAmount;
       data.loans.forEach(element => {
         this.totalLoanAmt += element.loanAmount
+        this.totalEmi += element.emi
       });
       data.loans.forEach(element => {
         if (element.outstandingAmount == "NaN") {

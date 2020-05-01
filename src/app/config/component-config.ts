@@ -400,6 +400,7 @@ export const appConfig = {
   ADVICE_ADD_REALESTATE: 'advice/asset/suggest-new-real-estate/add',
   ADVICE_ADD_EPF: 'advice/asset/retirement-account/suggest-new-epf/add',
   ADVICE_ADD_NPS: 'advice/asset/retirement/suggest-new-nps/add',
+  SCHEME_CHOICE: 'account/asset/nps/global-data/get',
   ADVICE_ADD_GRATUITY: 'advice/asset/retirement-account/suggest-new-gratuity/add',
   ADVICE_ADD_SUPERANNUATION: 'advice/asset/retirement/suggest-new-superannuation/add',
   ADVICE_ADD_EPS: 'advice/asset/retirement/eps/add',
@@ -420,6 +421,7 @@ export const appConfig = {
   ////////////////////////////////////OnlineTransaction///////////////////////////////////////
   ADD_BSE_CREDENTIALS: 'user/save',
   GET_BSE_CREDENTIALS: 'user/view',
+  GET_IINUCC_PENDING:'user/register/all/get',
   ADD_SUB_BROKER: 'user/sub-broker/save',
   DELETE_BROKER: 'user/delete',
   DELETE_SUB_BROKER: 'user/sub-broker/delete',
@@ -454,8 +456,13 @@ export const appConfig = {
   DELETE_HIDDEN_AMC: 'mutual-fund/hidden-amc/delete',
   SEARCH_SCHEME: 'report/transaction/list/get',
   GET_TRANSACTION_DETAILS: 'report/transaction/detail/get',
+<<<<<<< HEAD
   GET_OVERVIEW_MANDATE: 'mandate/summary',
   GET_IIN_UCC_OVERVIEW: ' report/client-code/count/get',
+=======
+  GET_OVERVIEW_MANDATE:'mandate/summary',
+  GET_IIN_UCC_OVERVIEW:'report/client-code/count/get',
+>>>>>>> 106a27d4831d158a1b5caa74bf7734c545450554
   GET_MANDATE_LIST: 'report/ach-mandate/get',
   GET_REGISTRATION_UCC_IIN: 'user/register/detail/get',
   GET_CLIENT_FM_LIST: 'user/client/family/filter/get',
@@ -712,9 +719,9 @@ export const appConfig = {
   //////////////////////////////////customer-overview-profile//////////////////////
 
   //////////////////////////////////customer-overview-myfeeds-profile//////////////////////
-  GET_CUSTOMER_PORTFOLIO_SUMMARY: 'account/asset/summary',
   GET_FEEDS_MF_DATA: 'mutual-fund/latest/transaction/list/get',
   GET_DOCUMENTS_FEED: 'document/account/document/total-count-and-size/get',
-  GET_FEED_RISK_PROFILE: 'risk/profile/get',
+  GET_FEED_RISK_PROFILE: 'plan/risk/profile/get',
+  GET_GLOBAL_RISK_PROFILE: 'plan/risk/profile/global/get',
   GET_FEED_RECENT_TRANSACTIONS: 'report/transaction/list/get',
 };

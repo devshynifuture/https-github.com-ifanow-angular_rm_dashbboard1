@@ -13,6 +13,7 @@ import { ClientAddressComponent } from 'src/app/component/protect-component/Peop
 import { ClientDematComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-demat/client-demat.component';
 import { ClientBankComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-bank/client-bank.component';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-overview-profile',
@@ -33,7 +34,7 @@ export class OverviewProfileComponent implements OnInit {
   // clientData;
 
   constructor(private peopleService: PeopleService, private authService: AuthService, public dialog: MatDialog, public subInjectService: SubscriptionInject,
-    private cusService: CustomerService, private eventService: EventService, private utils: UtilService) {
+    private cusService: CustomerService, private eventService: EventService, private utils: UtilService, private enumDataService: EnumDataService) {
   }
 
   ngOnInit() {
@@ -45,6 +46,7 @@ export class OverviewProfileComponent implements OnInit {
     this.getDematList(this.clientData);
     this.getBankList(this.clientData);
     this.getClientData(this.clientData);
+    this.enumDataService.getDataForTaxMasterService()
   }
   getClientData(data) {
     const obj = {
@@ -91,7 +93,12 @@ export class OverviewProfileComponent implements OnInit {
     this.cusService.getAddressList(obj).subscribe(
       data => {
         console.log(data);
-        this.addressList = data;
+        if (data && data.length > 0) {
+          this.addressList = data;
+        }
+        else {
+          this.addressList == undefined;
+        }
       },
       err => {
         console.error(err)

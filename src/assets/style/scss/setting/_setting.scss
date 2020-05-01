@@ -141,8 +141,9 @@
         border: 2px solid rgba(25, 25, 25, 0.32);
         height: 140px;
         width: 140px;
-        display: flex;
-        align-items: center;
+        // display: flex;
+        border-radius: 2px;
+        // align-items: center;
     }
 }
 

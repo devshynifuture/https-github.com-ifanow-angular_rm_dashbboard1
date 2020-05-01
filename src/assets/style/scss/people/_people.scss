@@ -6,7 +6,7 @@
 
 
 
-  #table-low {
+  #tbs{
     tr.mat-row {
       height: 34px !important;
     }
@@ -170,4 +170,21 @@
   }
 
 
+}
+@media(max-width: 767px){
+  #ui-add-client{
+    h5,p{
+      font-family: "Roboto" !important;
+    }
+    p{
+      color: #212121;
+      font-weight: 400 !important;
+    }
+  }
+  .clientmobs .mat-radio-button{
+    min-width: 109px !important;
+  }
+  .marital-status .mat-radio-button{
+    min-width: 100px !important
+  }
 }

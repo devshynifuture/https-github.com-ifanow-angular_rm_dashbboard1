@@ -19,11 +19,9 @@ import { MyIfaSelectArnRiaComponent } from './my-ifas/my-ifa-select-arn-ria/my-i
 import { FileOrderingUpperComponent } from './file-ordering-upload/file-ordering-upper/file-ordering-upper.component';
 import { FileOrderingDetailComponent } from './file-ordering-upload/file-ordering-detail/file-ordering-detail.component';
 import { FileOrderingSetupComponent } from './file-ordering-upload/file-ordering-bulk/file-ordering-setup/file-ordering-setup.component';
-import { DateAdapter } from 'saturn-datepicker';
+import { MAT_DATE_FORMATS, DateAdapter, MAT_DATE_LOCALE } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
-import { MY_FORMATS2 } from '../../../constants/date-format.constant';
-
 
 const componentList = [
     AdminDetailsComponent,
@@ -56,10 +54,8 @@ const componentList = [
     entryComponents: componentList,
     providers: [
         { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-
         { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
-
-    ],
+    ]
 })
 
 export class SupportEntryModule {

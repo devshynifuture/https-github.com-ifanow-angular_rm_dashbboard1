@@ -236,7 +236,7 @@ export class ClientBankComponent implements OnInit {
         data => {
           console.log(data);
           this.barButtonOptions.active = false;
-          (flag == 'Next') ? this.tabChange.emit(1) : this.close();
+          (flag == 'Next') ? this.tabChange.emit(1) : this.close('save');
         },
         err => {
           this.eventService.openSnackBar(err, 'Dismiss');
@@ -246,7 +246,8 @@ export class ClientBankComponent implements OnInit {
     }
   }
 
-  close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  close(data) {
+    (data == 'close') ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :
+      this.subInjectService.changeNewRightSliderState({ state: 'close', clientData: data });
   }
 }

@@ -15,6 +15,7 @@ import { TransactionsComponent } from './transactions/transactions.component';
 import { ProfileComponent } from './profile/profile.component';
 import { EducationComponent } from './education/education.component';
 import { VideosComponent } from './videos/videos.component';
+import { SummaryModule } from '../../accounts/summary/summary.module';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { VideosComponent } from './videos/videos.component';
     NgCircleProgressModule,
     HighchartsChartModule,
     ChartModule,
+    SummaryModule
   ]
 })
 export class OverviewMyfeedModule { }

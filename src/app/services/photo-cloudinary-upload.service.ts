@@ -1,4 +1,4 @@
-import {FileUploader, FileUploaderOptions} from "ng2-file-upload";
+import {FileUploader, FileUploaderOptions} from 'ng2-file-upload';
 
 
 export class PhotoCloudinaryUploadService {
