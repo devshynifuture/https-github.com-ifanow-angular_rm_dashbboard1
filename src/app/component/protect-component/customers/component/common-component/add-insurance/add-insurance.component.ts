@@ -557,6 +557,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     (this.addMoreFlag) ? this.addMoreFlag = false : this.addMoreFlag = true;
     this.eleRef.nativeElement.scrollTop = 200;
     console.log(this.eleRef.nativeElement.scrollTop);
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.keyDetailsForm }
+
   }
   getFamilyMemberIdSelectedData(data){
     this.ProposerData.forEach(element => {
