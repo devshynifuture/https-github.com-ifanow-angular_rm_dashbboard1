@@ -130,7 +130,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     policyNum: [, [Validators.required]],
     commencementDate: [, [Validators.required]],
     sumAssured: [, [Validators.required]],
-    premiumDetailsAmount: [, [Validators.required, Validators.min(100)]],
+    premiumDetailsAmount: [, [Validators.required]],
     premiumDetailsFrequency: [, [Validators.required]],
     tenureDetailsPolicy: [, [Validators.required]],
     premiumPayingTerm: [, [Validators.required]],

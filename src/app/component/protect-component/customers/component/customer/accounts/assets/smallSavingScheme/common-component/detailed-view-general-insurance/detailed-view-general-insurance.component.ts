@@ -36,11 +36,9 @@ export class DetailedViewGeneralInsuranceComponent implements OnInit {
     this._data.addOns = this.filter(this._data.addOns,this.displayList.addOns,'id','addOnId','add_on');
     this._data.policyFeatures = this.filter(this._data.policyFeatures,this.displayList.policyFeature,'id','policyFeatureId','type')
     this.allInsurance.forEach(element => {
-      if (element.id == this.insuranceSubTypeId) {
+      if (element.id == this._data.insuranceSubTypeId) {
         this.showInsurance = element.name;
-      } else if (this.insuranceSubTypeId == 0) {
-        this.showInsurance = 'General';
-      }
+      } 
     });
 
   }

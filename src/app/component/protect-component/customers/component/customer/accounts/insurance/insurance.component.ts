@@ -26,6 +26,8 @@ import { DetailedViewGeneralInsuranceComponent } from '../assets/smallSavingSche
 })
 
 export class InsuranceComponent implements OnInit {
+  personalProfileData: any;
+  [x: string]: any;
   displayedColumns = ['no', 'life', 'name', 'number', 'sum', 'cvalue', 'premium', 'term', 'pterm', 'desc', 'status', 'icons'];
   displayedColumns1 = ['no', 'owner', 'cvalue', 'amt', 'mvalue', 'rate', 'mdate', 'type', 'ppf', 'desc', 'status', 'icons'];
   displayedColumns2 = ['no', 'life', 'insurerName', 'sumInsured', 'premiumAmount', 'policyExpiryDate', 'Duration', 'planName', 'policyNumber', 'status', 'icons'];
@@ -84,7 +86,7 @@ export class InsuranceComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.profileData = AuthService.getProfileDetails();
+    this.personalProfileData = AuthService.getProfileDetails();
     this.insuranceTypeId = 1;
     this.insuranceSubTypeId = 0;
     this.getCount();
