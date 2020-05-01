@@ -548,6 +548,8 @@ export class InsuranceComponent implements OnInit {
       allInsurance: this.allInsurance,
       insuranceTypeId: this.insuranceTypeId,
       insuranceSubTypeId: this.insuranceSubTypeId,
+      showInsurance: this.showInsurance,
+
     }
     if (this.insuranceTypeId == 1) {
       sendData.componentName = DetailedViewLifeInsuranceComponent
@@ -626,15 +628,18 @@ export class InsuranceComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         let subTypeId = (sideBarData.data) ? sideBarData.data.insuranceSubTypeId :this.insuranceSubTypeId
-        this.insuranceSubTypeId = 0;
+        if(this.showInsurance == 'General' || this.showInsurance == 'Life'){
+          this.insuranceSubTypeId = 0  
+        }
         if (UtilService.isDialogClose(sideBarData)) {
+         
           if (sideBarData.data) {
-            this.lifeInsuranceFlag = true
+            // this.lifeInsuranceFlag = true
             if (this.insuranceTypeId == 1) {
               // this.insuranceSubTypeId = 0;
               this.getCount();
               // this.getInsuranceData(this.insuranceTypeId )
-            ( this.showInsurance == 'Life') ? this.insuranceSubTypeId = 0  : this.insuranceSubTypeId =subTypeId;
+            (this.showInsurance == 'Life') ? this.insuranceSubTypeId = 0  : this.insuranceSubTypeId =subTypeId;
               if (this.insuranceTypeId == 1 && this.insuranceSubTypeId == 0) {
                 this.getInsuranceData(this.insuranceTypeId)
               } else {

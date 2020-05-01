@@ -9,6 +9,7 @@ import { MAT_DATE_FORMATS, MatInput } from '@angular/material';
 import { DataComponent } from '../../../../../../interfaces/data.component';
 import { ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-insurance',
@@ -29,6 +30,21 @@ import { EventService } from 'src/app/Data-service/event.service';
   ],
 })
 export class AddInsuranceComponent implements OnInit, DataComponent {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   maxDate = new Date();
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   ownerName: any;
@@ -139,13 +155,14 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       name: [''],
       sharePercentage: [0],
       familyMemberId: [0],
-      id: [0]
+      id: [0],
+      relationshipId:[0]
     })]),
     fundValueForm: this.fb.array([this.fb.group({
       fundName: [''],
       debtPer: [''],
       equityPer: [''],
-      option: ['2'],
+      option: ['1'],
       units:[null],
       nav:[null],
       id:[0],
@@ -301,7 +318,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
 
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : ''], sharePercentage: [data ? data.sharePercentage : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0],relationshipId:[data ? data.relationshipId :0] 
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -328,7 +345,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       fundName: [data ? data.fundName :null],
       debtPer: [data ? data.debtRatio : null],
       equityPer:[data ? data.equityRatio : null],
-      option:[data ? data.fundValueOrNav + '' : null],
+      option:[data ? (data.fundValueOrNav) ? data.fundValueOrNav + '' :'1' : '1'],
       units:[data ? data.units : null],
       nav:[data ? data.nav : null],
       id:[data ? data.id : null],
@@ -418,13 +435,13 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       /***owner***/
   
       /***nominee***/
-      if (this.editInsuranceData.nominees) {
+      if (this.editInsuranceData.nominees.length > 0) {
         this.getNominee.removeAt(0);
         this.editInsuranceData.nominees.forEach(element => {
           this.addNewNominee(element);
         });
       }
-      if (this.editInsuranceData.ulipFundDetails) {
+      if (this.editInsuranceData.ulipFundDetails.length > 0) {
         this.getFundValues.removeAt(0);
         this.editInsuranceData.ulipFundDetails.forEach(element => {
           this.addFund(element);
@@ -434,7 +451,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       // this.cashFlowForm.controls.year.setValue(this.editInsuranceData.year)
       // this.cashFlowForm.controls.approxAmt.setValue(this.editInsuranceData.approxAmt)
       this.finalCashFlowData = [];
-      if (this.editInsuranceData.insuranceCashflowList != undefined) {
+      if (this.editInsuranceData.insuranceCashflowList.length>0) {
         this.editInsuranceData.insuranceCashflowList.forEach(element => {
           (this.cashFlowForm.controls.cashFlow as FormArray).push(this.fb.group({
             cashFlowType: [element.cashFlowType + '', [Validators.required]],
@@ -516,7 +533,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   findPolicyName(data) {
     const inpValue = this.lifeInsuranceForm.get('policyName').value;
     const obj = {
-      policyName: inpValue
+      policyName: inpValue,
+      insuranceSubTypeId:this.insuranceSubTypeId
     };
     this.customerService.getPolicyName(obj).subscribe(
       data => {
@@ -556,19 +574,24 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     let ulipFundDetails = [];
     let ulipFundVal = this.keyDetailsForm.get('fundValueForm') as FormArray
     ulipFundVal.controls.forEach(element => {
-      let obj =
-      {
-        id:(element.get('id').value) ? element.get('id').value : null,
-        insuranceId:(this.editInsuranceData) ? this.editInsuranceData.id :null,
-        equityRatio: (element.get('equityPer').value) ? element.get('equityPer').value :null,
-        debtRatio: (element.get('debtPer').value) ? element.get('debtPer').value : null,
-        fundValue: (element.get('fundValue').value) ? element.get('fundValue').value : null,
-        nav:(element.get('nav').value) ?  element.get('nav').value :null,
-        units: (element.get('units').value) ? element.get('units').value :null,
-        fundValueOrNav: (element.get('option').value) ? element.get('option').value : null,
-        fundName: (element.get('fundName').value) ? element.get('fundName').value : null
+      if(element.get('fundName').value){
+        let obj =
+        {
+          id:(element.get('id').value) ? element.get('id').value : null,
+          insuranceId:(this.editInsuranceData) ? this.editInsuranceData.id :null,
+          equityRatio: (element.get('equityPer').value) ? element.get('equityPer').value :null,
+          debtRatio: (element.get('debtPer').value) ? element.get('debtPer').value : null,
+          fundValue: (element.get('fundValue').value) ? element.get('fundValue').value : null,
+          nav:(element.get('nav').value) ?  element.get('nav').value :null,
+          units: (element.get('units').value) ? element.get('units').value :null,
+          fundValueOrNav: (element.get('option').value) ? element.get('option').value : null,
+          fundName: (element.get('fundName').value) ? element.get('fundName').value : null
+        }
+        ulipFundDetails.push(obj)
+      }else{
+        ulipFundDetails =[];
       }
-      ulipFundDetails.push(obj)
+    
     })
     let finalCashFlowList = [];
     let cashFlowArray = this.cashFlowForm.get('cashFlow') as FormArray
@@ -591,7 +614,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       return
     }
     else {
-
+      this.barButtonOptions.active = true;
       this.insuranceFormFilledData =
       {
         "familyMemberIdLifeAssured":this.lifeInsuranceForm.value.getCoOwnerName[0].familyMemberId,
@@ -605,7 +628,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         "policyName": this.lifeInsuranceForm.get('policyName').value,
         "sumAssured": this.lifeInsuranceForm.get('sumAssured').value,
         "policyStatusId": this.lifeInsuranceForm.get('policyStatus').value,
-        "lastUnpaidPremium": this.lifeInsuranceForm.get('policyStatusLastUnpaid').value,
+        "lastUnpaidPremium": (this.lifeInsuranceForm.get('policyStatusLastUnpaid').value) ? this.lifeInsuranceForm.get('policyStatusLastUnpaid').value : null,
         "premiumAmount": this.lifeInsuranceForm.get('premiumDetailsAmount').value,
         "frequency": this.lifeInsuranceForm.get('premiumDetailsFrequency').value,
         "policyTenure": this.lifeInsuranceForm.get('tenureDetailsPolicy').value,
@@ -660,6 +683,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         this.insuranceFormFilledData['commencementDate'] = this.lifeInsuranceForm.get('commencementDate').value;
         this.customerService.editLifeInsuranceData(this.insuranceFormFilledData).subscribe(
           data => {
+            this.barButtonOptions.active = false;
             console.log(data);
             this.eventService.openSnackBar("Updated successfully!", 'dismiss');
             const insuranceData =
@@ -673,6 +697,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       } else {
         this.customerService.addLifeInsurance(this.insuranceFormFilledData).subscribe(
           data => {
+            this.barButtonOptions.active = false;
             console.log(data);
             this.eventService.openSnackBar("Added successfully!", 'dismiss');
             this.close(insuranceData)
