@@ -421,7 +421,7 @@ export const appConfig = {
   ////////////////////////////////////OnlineTransaction///////////////////////////////////////
   ADD_BSE_CREDENTIALS: 'user/save',
   GET_BSE_CREDENTIALS: 'user/view',
-  GET_IINUCC_PENDING:'user/register/all/get',
+  GET_IINUCC_PENDING: 'user/register/all/get',
   ADD_SUB_BROKER: 'user/sub-broker/save',
   DELETE_BROKER: 'user/delete',
   DELETE_SUB_BROKER: 'user/sub-broker/delete',
@@ -456,13 +456,8 @@ export const appConfig = {
   DELETE_HIDDEN_AMC: 'mutual-fund/hidden-amc/delete',
   SEARCH_SCHEME: 'report/transaction/list/get',
   GET_TRANSACTION_DETAILS: 'report/transaction/detail/get',
-<<<<<<< HEAD
   GET_OVERVIEW_MANDATE: 'mandate/summary',
-  GET_IIN_UCC_OVERVIEW: ' report/client-code/count/get',
-=======
-  GET_OVERVIEW_MANDATE:'mandate/summary',
-  GET_IIN_UCC_OVERVIEW:'report/client-code/count/get',
->>>>>>> 106a27d4831d158a1b5caa74bf7734c545450554
+  GET_IIN_UCC_OVERVIEW: 'report/client-code/count/get',
   GET_MANDATE_LIST: 'report/ach-mandate/get',
   GET_REGISTRATION_UCC_IIN: 'user/register/detail/get',
   GET_CLIENT_FM_LIST: 'user/client/family/filter/get',
