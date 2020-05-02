@@ -3,8 +3,8 @@
         <div class="col-md-9 mt-20 pr-0">
             <div class="row">
                 <div class="col-md-8 p-0">
-                    <div class="row ">
-                        <!-- <div class="col-md-6 mb-16 pl-0">
+                    <!-- <div class="row ">
+                         <div class="col-md-6 mb-16 pl-0">
                              <div class="bg-white bPrimitive p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
@@ -38,14 +38,11 @@
                                 </div>
 
                             </div> 
-                        </div> -->
-
-
-
-                    </div>
+                        </div> 
+                    </div> -->
 
                     <div class="row">
-                        <div class="col-md-6 mb-16 pl-0" [appSkeletonLoading]="isLoading" appSkeletonLoading class="col-md-6 p-0 skeletonAnimation">
+                        <div class="col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading>
                             <div class="bg-white bPrimitive p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
@@ -68,13 +65,11 @@
                                     <p class="f-12 mb-8 roboto">SUCCESSFUL TRANSACTIONS</p>
                                     <h4 class="f-30 f-300 text-success mb-4 relClass">
                                         <div [ngClass]="{'height23': isLoading}" class="bar">
-                                            {{doneTrasaction}}
-                                        </div>
-                                        <span class="f-14 text-black">
-                                            <div [ngClass]="{'height23': isLoading}" class="bar">
+                                            {{doneTrasaction}} <span class="f-14 text-black">
                                                 {{percentageTrasact}}%
-                                            </div>
-                                        </span>
+                                            </span>
+                                        </div>
+
                                     </h4>
                                 </div>
 
@@ -99,7 +94,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 mb-16 pl-0" [appSkeletonLoading]="isLoadingIIN" appSkeletonLoading class="col-md-6 p-0 skeletonAnimation">
+                        <div class="col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoadingIIN" appSkeletonLoading>
                             <div class="bg-white bPrimitive p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
@@ -146,7 +141,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 mb-16 pl-0" [appSkeletonLoading]="isLoadingMandate" appSkeletonLoading class="col-md-6 p-0 skeletonAnimation">
+                        <div class="col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoadingMandate" appSkeletonLoading>
                             <div class="bg-white bPrimitive p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
@@ -194,7 +189,7 @@
 
                 </div>
 
-                <div class="col-md-4 p-0" [appSkeletonLoading]="isLoading" appSkeletonLoading class="col-md-6 p-0 skeletonAnimation">
+                <div class="col-md-4 p-0 skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading>
                     <div class="bg-white bPrimitive p-9">
                         <div class="row pb-12">
                             <div class="col-md-12 p-0">
