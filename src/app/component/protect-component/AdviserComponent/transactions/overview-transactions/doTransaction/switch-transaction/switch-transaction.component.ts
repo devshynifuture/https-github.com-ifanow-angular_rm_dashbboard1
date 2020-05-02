@@ -6,6 +6,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { ProcessTransactionService } from '../process-transaction.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { AuthService } from 'src/app/auth-service/authService';
+import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-switch-transaction',
@@ -64,6 +65,8 @@ export class SwitchTransactionComponent implements OnInit {
   editedId: any;
   id = 0;
   navOfSelectedSchemeSwitchIn: any;
+  validatorType = ValidatorType;
+
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder, private eventService: EventService, private processTransaction: ProcessTransactionService) {
@@ -116,6 +119,10 @@ export class SwitchTransactionComponent implements OnInit {
     if (data.target.value == '') {
       this.scheme = undefined;
       this.schemeList = undefined;
+      this.switchTransaction.controls.employeeContry.setValidators([Validators.min(0)]);
+      this.switchTransaction.controls.employeeContry.setValue();
+      this.schemeDetails.minimumPurchaseAmount = 0;
+      this.showSpinner = false;
       return;
     }
     if (this.switchTransaction.get('schemeSwitch').invalid) {

@@ -84,7 +84,7 @@
           <div class="col-md-11 p-0">
             <div class="form-group ">
               <mat-form-field appearance="standard" floatLabel="never">
-                <input (changedValue)="getSchemeList($event)" [matAutocomplete]="auto" appCustomAutoComplete
+                <input (input)="getSchemeList($event)" [matAutocomplete]="auto" appCustomAutoComplete
                   aria-label="Number" class="form-control" formControlName="schemeRedeem" matInput
                   placeholder="Start typing to see scheme names" type="text">
                 <mat-autocomplete #auto="matAutocomplete">
@@ -205,7 +205,8 @@
           <div class="col-md-5 p-0">
             <div class="form-group mb-0 iconRupess">
               <mat-form-field>
-                <input #employeeContry (change)="enteredAmount($event.target.value)" class="form-control  rupess"
+                <input #employeeContry appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                  (change)="enteredAmount($event.target.value)" class="form-control  rupess"
                   formControlName="employeeContry" matInput maxlength="10" type="text">
                 <mat-hint *ngIf="(redemptionTransaction.get('redeemType').value == 1)" align="start"
                   class="f-12 text-custom">

@@ -203,7 +203,8 @@
           <div class="col-md-5 p-0">
             <div class="form-group iconRupess mb-0">
               <mat-form-field>
-                <input #employeeContry (keyup)="enteredAmount($event.target.value)" class="form-control rupess"
+                <input #employeeContry appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                  (keyup)="enteredAmount($event.target.value)" class="form-control rupess"
                   formControlName="employeeContry" matInput maxlength="10" type="text">
                 <mat-hint align="start" class="f-12 text-custom">
                   Min amount:
