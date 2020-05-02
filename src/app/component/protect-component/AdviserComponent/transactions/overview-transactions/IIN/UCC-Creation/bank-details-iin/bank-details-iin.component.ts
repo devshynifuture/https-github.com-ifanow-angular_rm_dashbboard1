@@ -338,6 +338,7 @@ export class BankDetailsIINComponent implements OnInit {
      this.bankDetails.controls.bankMandate.setValue(value.address.bankMandate);
      this.bankDetails.controls.mandateDate.setValue(value.address.mandateDate);
      this.bankDetails.controls.mandateAmount.setValue(value.address.mandateAmount);
+     
   }
   SendToForm(value, flag) {
     this.formId = value
@@ -388,7 +389,7 @@ export class BankDetailsIINComponent implements OnInit {
           this.getObj = this.setObj(element, value)
           this.bank.push(this.getObj)
         }else{
-          element.accountType = (element.accountType == '1')?'SB':'CA';
+          element.accountType = (element.accountType == '1')?'SB': (element.accountType == '2')? 'CA':'SB';
           element.paymentMode = this.bankDetails.controls.paymentMode.value,
           this.bank.push(element)
         }
@@ -423,7 +424,8 @@ export class BankDetailsIINComponent implements OnInit {
       branchCode: holder.branchCode,
       micrCode: holder.micrCode,
       firstHolder: holder.firstHolder,
-      paymentMode : this.bankDetails.controls.paymentMode.value
+      paymentMode : this.bankDetails.controls.paymentMode.value,
+      defaultFlag: 1
     }
     value.address = {
       address1: holder.address1,
