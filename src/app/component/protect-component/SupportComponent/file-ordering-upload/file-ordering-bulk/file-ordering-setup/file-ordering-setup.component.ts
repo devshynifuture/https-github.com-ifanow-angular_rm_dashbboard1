@@ -110,11 +110,15 @@ export class FileOrderingSetupComponent implements OnInit {
   }
 
   filterFileTypeBasedOnRtId(id) {
-    let filterArray = this.fileTypeListValue;
-    filterArray = filterArray.filter(item => {
-      return item.rtId === id;
-    });
-    this.fileTypeList = filterArray;
+    if (id === 0) {
+      this.fileTypeList = this.fileTypeListValue;
+    } else {
+      let filterArray = this.fileTypeListValue;
+      filterArray = filterArray.filter(item => {
+        return item.rtId === id;
+      });
+      this.fileTypeList = filterArray;
+    }
   }
 
   dialogClose(flag) {
