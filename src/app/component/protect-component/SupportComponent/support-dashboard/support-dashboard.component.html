@@ -202,13 +202,14 @@
                                 <div *ngFor="let singleFile of historicalFileData" class="pl-10 pb-10 paddRight10">
                                     <div class="row">
                                         <div class="col-md-12 pb-8 p-0 f-14">
-                                            {{singleFile.name}} - {{singleFile.created_date | date:'dd/MM h:mm '}}
+                                            {{getRTCode(singleFile.rtId)}} -
+                                            {{singleFile.fileOrderDateTime | date:'dd/MM h:mm '}}
                                         </div>
                                     </div>
                                     <div class="row b-b">
                                         <div class="col-md-3 pl-0">
                                             <p class="f-12 text-primitive mb-5">Total</p>
-                                            <h3 class="mb-8 f-14 text-primary">{{singleFile.total_files_orders}}</h3>
+                                            <h3 class="mb-8 f-14 text-primary">{{singleFile.totalFiles}}</h3>
                                         </div>
 
                                         <div class="col-md-3 pl-10">

@@ -312,8 +312,9 @@ export class FileOrderingHistoricalComponent implements OnInit {
 					if (UtilService.isRefreshRequired(sideBarData)) {
 						this.dataSource.data = ELEMENT_DATA;
 						this.fileOrderHistoryListGet({
-							days: this.days,
-							rtId: this.rtId,
+							days: this.filterForm.get("filterByPeriod").value.value,
+							rtId: this.filterForm.get("filterByRta").value.value,
+							rmId: this.filterForm.get("filterByRmName").value.id,
 						});
 					}
 					console.log("this is sidebardata in subs subs 2: ", sideBarData);
@@ -343,8 +344,9 @@ export class FileOrderingHistoricalComponent implements OnInit {
 						this.dataSource.data = ELEMENT_DATA;
 
 						this.fileOrderHistoryListGet({
-							days: this.days,
-							rtId: this.rtId,
+							days: this.filterForm.get("filterByPeriod").value.value,
+							rtId: this.filterForm.get("filterByRta").value.value,
+							rmId: this.filterForm.get("filterByRmName").value.id,
 						});
 					}
 					// this.getClientSubscriptionList();

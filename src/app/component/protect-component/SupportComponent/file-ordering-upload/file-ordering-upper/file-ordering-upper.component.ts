@@ -230,8 +230,8 @@ export class FileOrderingUpperComponent implements OnInit {
     }
   }
 
-  dialogClose() {
-    this.eventService.changeUpperSliderState({ state: 'close' });
+  dialogClose(flag) {
+    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: flag });
   }
 
   refreshList() {

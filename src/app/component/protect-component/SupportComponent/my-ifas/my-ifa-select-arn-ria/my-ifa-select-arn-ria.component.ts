@@ -26,14 +26,13 @@ export class MyIfaSelectArnRiaComponent implements OnInit {
     private subscriptionInject: SubscriptionInject
   ) { }
 
-  selectArnRiaForm = this.fb.group({
-    arnOrRia: [, Validators.required]
-  });
+  selectArnRiaForm = this.fb.group({ arnOrRia: [,] });
 
   ngOnInit() {
     console.log('fragmentData', this.fragmentData);
     this.dataToSend = this.fragmentData.mainData;
     this.options = this.fragmentData.brokerCodeValue;
+    console.log("this is broker code options:::need to check valueid::", this.options);
     if (this.options && this.options.length !== 0) {
       this.options.forEach(element => {
         element.selected = false
@@ -93,7 +92,7 @@ export class MyIfaSelectArnRiaComponent implements OnInit {
       this.openUpperSliderBackoffice('startRecon', '');
       this.subscriptionInject.changeNewRightSliderState({ state: 'close' });
     } else if (this.selectArnRiaForm.invalid) {
-      this.selectArnRiaForm.get('arnOrRia').markAsTouched();
+      this.selectArnRiaForm.markAsTouched();
     }
 
   }

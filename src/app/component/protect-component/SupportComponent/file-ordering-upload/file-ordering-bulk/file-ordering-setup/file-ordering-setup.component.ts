@@ -55,10 +55,10 @@ export class FileOrderingSetupComponent implements OnInit {
 
   rtaList = []
 
-  // setDateValidation() {
-  //   this.historicalFileBulkOrderingForm.get('rtId').value === '1' ?
-  //     this.lastPastDate = new Date('1 Jan, 1993') : this.lastPastDate = new Date('1 Jan, 1990')
-  // }
+  setDateValidation() {
+    this.historicalFileBulkOrderingForm.get('rtId').value === '1' ?
+      this.lastPastDate = new Date('1 Jan, 1993') : this.lastPastDate = new Date('1 Jan, 1990')
+  }
 
   ngOnInit() {
     console.log("sent data::::", this.data);
@@ -97,8 +97,8 @@ export class FileOrderingSetupComponent implements OnInit {
       })
   }
 
-  dialogClose() {
-    this.subscriptionInject.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+  dialogClose(flag) {
+    this.subscriptionInject.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
   requestForBulkFileOrdering() {
@@ -110,22 +110,22 @@ export class FileOrderingSetupComponent implements OnInit {
         rmId: this.rmId,
         rtId: values.rtId.value,
         fileTypeId: values.fileTypeId,
-        fromDate: values.fromDate.getFullYear() + "-" +
-          this.utilService.addZeroBeforeNumber((values.fromDate.getMonth() + 1), 2) + '-' +
-          this.utilService.addZeroBeforeNumber((values.fromDate.getDate()), 2),
-        toDate: values.toDate.getFullYear() + "-" +
-          this.utilService.addZeroBeforeNumber((values.toDate.getMonth() + 1), 2) + '-' +
-          this.utilService.addZeroBeforeNumber((values.toDate.getDate()), 2),
+        fromDate: values.fromDate._d.getFullYear() + "-" +
+          this.utilService.addZeroBeforeNumber((values.fromDate._d.getMonth() + 1), 2) + '-' +
+          this.utilService.addZeroBeforeNumber((values.fromDate._d.getDate()), 2),
+        toDate: values.toDate._d.getFullYear() + "-" +
+          this.utilService.addZeroBeforeNumber((values.toDate._d.getMonth() + 1), 2) + '-' +
+          this.utilService.addZeroBeforeNumber((values.toDate._d.getDate()), 2),
       }
 
 
-      // this.fileOrderingService.postFileOrderBulkData(data)
-      //   .subscribe(res => {
-      //     if (res) {
-      //       console.log("this is response::", res);
-      //       this.dialogClose();
-      //     }
-      //   });
+      this.fileOrderingService.postFileOrderBulkData(data)
+        .subscribe(res => {
+          if (res) {
+            console.log("this is response::", res);
+            this.dialogClose(true);
+          }
+        });
       console.log(data);
 
     } else {
