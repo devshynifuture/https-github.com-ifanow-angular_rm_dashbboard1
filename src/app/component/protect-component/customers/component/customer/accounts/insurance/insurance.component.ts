@@ -26,6 +26,8 @@ import { DetailedViewGeneralInsuranceComponent } from '../assets/smallSavingSche
 })
 
 export class InsuranceComponent implements OnInit {
+  personalProfileData: any;
+  [x: string]: any;
   displayedColumns = ['no', 'life', 'name', 'number', 'sum', 'cvalue', 'premium', 'term', 'pterm', 'desc', 'status', 'icons'];
   displayedColumns1 = ['no', 'owner', 'cvalue', 'amt', 'mvalue', 'rate', 'mdate', 'type', 'ppf', 'desc', 'status', 'icons'];
   displayedColumns2 = ['no', 'life', 'insurerName', 'sumInsured', 'premiumAmount', 'policyExpiryDate', 'Duration', 'planName', 'policyNumber', 'status', 'icons'];
@@ -84,7 +86,7 @@ export class InsuranceComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.profileData = AuthService.getProfileDetails();
+    this.personalProfileData = AuthService.getProfileDetails();
     this.insuranceTypeId = 1;
     this.insuranceSubTypeId = 0;
     this.getCount();
@@ -548,6 +550,8 @@ export class InsuranceComponent implements OnInit {
       allInsurance: this.allInsurance,
       insuranceTypeId: this.insuranceTypeId,
       insuranceSubTypeId: this.insuranceSubTypeId,
+      showInsurance: this.showInsurance,
+
     }
     if (this.insuranceTypeId == 1) {
       sendData.componentName = DetailedViewLifeInsuranceComponent
@@ -626,15 +630,18 @@ export class InsuranceComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         let subTypeId = (sideBarData.data) ? sideBarData.data.insuranceSubTypeId :this.insuranceSubTypeId
-        this.insuranceSubTypeId = 0;
+        if(this.showInsurance == 'General' || this.showInsurance == 'Life'){
+          this.insuranceSubTypeId = 0  
+        }
         if (UtilService.isDialogClose(sideBarData)) {
+         
           if (sideBarData.data) {
-            this.lifeInsuranceFlag = true
+            // this.lifeInsuranceFlag = true
             if (this.insuranceTypeId == 1) {
               // this.insuranceSubTypeId = 0;
               this.getCount();
               // this.getInsuranceData(this.insuranceTypeId )
-            ( this.showInsurance == 'Life') ? this.insuranceSubTypeId = 0  : this.insuranceSubTypeId =subTypeId;
+            (this.showInsurance == 'Life') ? this.insuranceSubTypeId = 0  : this.insuranceSubTypeId =subTypeId;
               if (this.insuranceTypeId == 1 && this.insuranceSubTypeId == 0) {
                 this.getInsuranceData(this.insuranceTypeId)
               } else {

@@ -184,13 +184,20 @@
                                         <th mat-sort-header="loanAmount" mat-header-cell *matHeaderCellDef
                                             class="br textRight">
                                             Loan amount</th>
-                                        <td *matCellDef="let element" class="br text-right" mat-cell>
+                                        <!-- <td *matCellDef="let element" class="br text-right" mat-cell>
                                             <div class="bar"><span appFormatNumber>{{element.loanAmount}}</span> </div>
                                         </td>
                                         <td mat-footer-cell *matFooterCellDef class="br text-right pr-8 f-600"
                                             [value]="totalLoanAmt" appFormatNumber>
                                             <div class="bar"><span>{{totalLoanAmt}}</span></div>
-                                        </td>
+                                        </td> -->
+
+                                        <td mat-cell *matCellDef="let element" class="br amt text-right">
+                                                <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.loanAmount }}</span> </div>
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
+                                                <div >{{isLoading ? ' ' : '₹'}}<span [value]="totalLoanAmt" appFormatNumber></span></div>
+                                            </td>
 
                                     </ng-container>
                                     <ng-container matColumnDef="ldate">
@@ -207,15 +214,20 @@
                                         <th mat-sort-header="outstandingAmount" mat-header-cell *matHeaderCellDef
                                             class="br textRight"> Outstanding <br> as on today
                                         </th>
-                                        <td *matCellDef="let element" class="br text-right" mat-cell>
+                                        <!-- <td *matCellDef="let element" class="br text-right" mat-cell>
                                             <div class="bar"><span appFormatNumber>{{element.outstandingAmount}}</span>
                                             </div>
                                         </td>
                                         <td mat-footer-cell *matFooterCellDef class="br text-right pr-8 f-600"
                                             [value]="outStandingAmt" appFormatNumber>
                                             <div *ngIf="outStandingAmt"><span>{{outStandingAmt}}</span></div>
-                                        </td>
-
+                                        </td> -->
+                                        <td mat-cell *matCellDef="let element" class="br amt text-right">
+                                                <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.outstandingAmount }}</span> </div>
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"  >
+                                                    <div>{{isLoading ? ' ' : '₹'}}<span [value]="outStandingAmt" appFormatNumber></span></div>
+                                            </td>
                                     </ng-container>
                                     <ng-container matColumnDef="ten">
                                         <th mat-sort-header="loanTenure" mat-header-cell *matHeaderCellDef
@@ -230,7 +242,7 @@
                                         <th mat-sort-header="annualInterestRate" mat-header-cell *matHeaderCellDef
                                             class="br textRight"> Annual <br> interest rate</th>
                                         <td mat-cell *matCellDef="let element" class="br text-right">
-                                            <div class="bar"> {{element.annualInterestRate}}</div>
+                                            <div class="bar"> {{element.annualInterestRate}}{{!isLoading? "%" : ""}}</div>
                                         </td>
                                         <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                     </ng-container>
@@ -238,14 +250,20 @@
                                         <th mat-sort-header="emi" mat-header-cell *matHeaderCellDef
                                             class="br text-right">
                                             EMI</th>
-                                        <td mat-cell *matCellDef="let element" class="br text-right">
+                                        <!-- <td mat-cell *matCellDef="let element" class="br text-right">
                                             <div class="bar" appFormatNumber>
                                                 {{(isLoading ? '' : ((element.emi) ? element.emi : 0))}} </div>
                                         </td>
                                         <td mat-footer-cell *matFooterCellDef class="br text-right pr-8 f-600"
                                         [value]="totalEmi" appFormatNumber>
                                         <div *ngIf="totalEmi"><span>{{totalEmi}}</span></div>
-                                    </td>
+                                    </td> -->
+                                    <td mat-cell *matCellDef="let element" class="br amt text-right">
+                                            <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.emi }}</span> </div>
+                                        </td>
+                                        <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
+                                            <div >{{isLoading ? ' ' : '₹'}}<span [value]="totalEmi" appFormatNumber></span></div>
+                                        </td>
                                     </ng-container>
                                     <ng-container matColumnDef="fin">
                                         <th mat-sort-header="financialInstitution" mat-header-cell *matHeaderCellDef
@@ -331,6 +349,23 @@
 
 <div #liabilitiesTemp id="template" class="hide">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
+            <tr>
+                    <td style="text-align: left;">
+                        <img width="100px" *ngIf="personalProfileData" [src]="personalProfileData.profilePic">
+                    </td>
+                    <td style="text-align: right;">
+                        <p style="margin: 0px; font-weight: 600;" *ngIf="personalProfileData">
+                            {{(personalProfileData.fullName) ? personalProfileData.fullName : '-'}}</p>
+                        <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData">Himachal Pradesh</p>
+                        <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData"> <strong> Number: </strong> {{(personalProfileData.mobileNo) ? personalProfileData.mobileNo : '-'}}</p>
+                        <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData"> <strong> Email : </strong> {{(personalProfileData.emailId) ? personalProfileData.emailId : '-'}}</p>
+                    </td>
+                </tr>
+        
+                <tr>
+                    <td colspan="2" style="padding: 10px;"></td>
+                </tr>
+        
         <tr>
             <td colspan="9"
                 style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
