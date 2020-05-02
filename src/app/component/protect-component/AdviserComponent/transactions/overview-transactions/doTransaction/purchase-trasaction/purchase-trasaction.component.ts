@@ -6,7 +6,7 @@ import { ProcessTransactionService } from '../process-transaction.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-purchase-trasaction',
@@ -69,7 +69,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount', 'icons'];
   dataSource1 = ELEMENT_DATA;
   @Output() changedValue = new EventEmitter();
-
+  validatorType = ValidatorType;
   constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
     private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService,
     private customerService: CustomerService, private UtilService: UtilService) {
@@ -122,7 +122,10 @@ export class PurchaseTrasactionComponent implements OnInit {
   getSchemeList(data) {
     if (data.target.value == '') {
       this.scheme = undefined;
-      this.schemeList = undefined
+      this.schemeList = undefined;
+      this.purchaseTransaction.controls.employeeContry.setValidators([Validators.min(0)]);
+      this.purchaseTransaction.controls.employeeContry.setValue();
+      this.schemeDetails.minAmount = 0;
       return;
     }
     // this.schemeList = [];
