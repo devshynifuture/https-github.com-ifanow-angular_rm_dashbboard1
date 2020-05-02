@@ -1,8 +1,7 @@
 <div class="dialogclose">
     <div class="row popup-header-fix-100">
         <div class="col-md-2 border-right-1 p-0">
-            <img class="imgAdLogo"
-                src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+            <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
         </div>
         <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
 
@@ -25,9 +24,8 @@
     <div class="col-md-7 offset-2 p-0 bl-1 ">
         <div class="p-20">
             <h3 class="f-18 roboto mb-20 f-500">Review & submit</h3>
-            <p class="f-14">Thanks for adding the details. Let’s go ahead and complete the process.</p>
-            <p class="f-14">Please select the platform on whch you’d like to create the investment account. You can
-                select multiple.
+            <p class="f-14 mb-4">Thanks for adding the details. Let’s go ahead and complete the process.</p>
+            <p class="f-14">Please select the platform on whch you’d like to create the investment account. You can select multiple.
             </p>
 
 
@@ -44,8 +42,7 @@
                     <div class="form-group">
                         <mat-form-field>
                             <mat-select class="form-control" formControlName="bseBroker">
-                                <mat-option *ngFor="let bsetype of bse" (click)="selectArn(bsetype)"
-                                    [value]="bsetype.brokerCode">
+                                <mat-option *ngFor="let bsetype of bse" (click)="selectArn(bsetype)" [value]="bsetype.brokerCode">
                                     {{bsetype.brokerCode}}
                                 </mat-option>
                             </mat-select>
@@ -111,8 +108,7 @@
                     <div class="form-group">
                         <mat-form-field>
                             <mat-select class="form-control" formControlName="nseBroker">
-                                <mat-option *ngFor="let nsetype of nse" (click)="selectArnNse(nsetype)"
-                                    [value]="nsetype.brokerCode">
+                                <mat-option *ngFor="let nsetype of nse" (click)="selectArnNse(nsetype)" [value]="nsetype.brokerCode">
                                     {{nsetype.brokerCode}}
                                 </mat-option>
                             </mat-select>

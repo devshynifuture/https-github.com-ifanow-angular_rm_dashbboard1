@@ -7,11 +7,26 @@ import { SupportService } from '../../../support.service';
 import { EventService } from '../../../../../../Data-service/event.service';
 import { FileOrderingUploadService } from '../../file-ordering-upload.service';
 import { ReconciliationService } from '../../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
+import { MY_FORMATS2 } from '../../../../../../constants/date-format.constant';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
+import { default as _rollupMoment } from 'node_modules/moment/src/moment';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { DateAdapter } from 'saturn-datepicker';
 
+
+const moment = _rollupMoment;
 @Component({
   selector: 'app-file-ordering-setup',
   templateUrl: './file-ordering-setup.component.html',
-  styleUrls: ['./file-ordering-setup.component.scss']
+  styleUrls: ['./file-ordering-setup.component.scss'],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+  ],
 })
 export class FileOrderingSetupComponent implements OnInit {
 
@@ -34,8 +49,8 @@ export class FileOrderingSetupComponent implements OnInit {
   historicalFileBulkOrderingForm = this.fb.group({
     rtId: [, Validators.required],
     fileTypeId: [, Validators.required],
-    fromDate: [, Validators.required],
-    toDate: [, Validators.required]
+    fromDate: [moment(), Validators.required],
+    toDate: [moment(), Validators.required]
   });
 
   rtaList = []
@@ -82,8 +97,8 @@ export class FileOrderingSetupComponent implements OnInit {
       })
   }
 
-  dialogClose() {
-    this.subscriptionInject.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+  dialogClose(flag) {
+    this.subscriptionInject.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
   requestForBulkFileOrdering() {
@@ -93,14 +108,14 @@ export class FileOrderingSetupComponent implements OnInit {
       let values = this.historicalFileBulkOrderingForm.value;
       const data = {
         rmId: this.rmId,
-        rtId: values.rtId,
+        rtId: values.rtId.value,
         fileTypeId: values.fileTypeId,
-        fromDate: values.fromDate.getFullYear() + "-" +
-          this.utilService.addZeroBeforeNumber((values.fromDate.getMonth() + 1), 2) + '-' +
-          this.utilService.addZeroBeforeNumber((values.fromDate.getDate()), 2),
-        toDate: values.toDate.getFullYear() + "-" +
-          this.utilService.addZeroBeforeNumber((values.toDate.getMonth() + 1), 2) + '-' +
-          this.utilService.addZeroBeforeNumber((values.toDate.getDate()), 2),
+        fromDate: values.fromDate._d.getFullYear() + "-" +
+          this.utilService.addZeroBeforeNumber((values.fromDate._d.getMonth() + 1), 2) + '-' +
+          this.utilService.addZeroBeforeNumber((values.fromDate._d.getDate()), 2),
+        toDate: values.toDate._d.getFullYear() + "-" +
+          this.utilService.addZeroBeforeNumber((values.toDate._d.getMonth() + 1), 2) + '-' +
+          this.utilService.addZeroBeforeNumber((values.toDate._d.getDate()), 2),
       }
 
 
@@ -108,10 +123,10 @@ export class FileOrderingSetupComponent implements OnInit {
         .subscribe(res => {
           if (res) {
             console.log("this is response::", res);
-            this.dialogClose();
+            this.dialogClose(true);
           }
         });
-
+      console.log(data);
 
     } else {
       console.log('err');

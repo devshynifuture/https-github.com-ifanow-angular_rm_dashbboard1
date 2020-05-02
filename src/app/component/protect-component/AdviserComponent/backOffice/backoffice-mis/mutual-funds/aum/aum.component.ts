@@ -26,7 +26,8 @@ export class AumComponent implements OnInit {
   componentWise;
   advisorId: any;
   arnRiaList: any;
-  aumGraph:any
+  aumGraph: any;
+  parentId = AuthService.getUserInfo().parentId ? AuthService.getUserInfo().parentId : -1;
 
   constructor(private backoffice: BackOfficeService, private dataService: EventService) { }
 
@@ -52,15 +53,20 @@ export class AumComponent implements OnInit {
     this.categoryshow = true;
     this.showMainWrapperFlag = false;
   }
-  getArnRiaList(){
+  getArnRiaList() {
     this.backoffice.getArnRiaList(this.advisorId).subscribe(
-      data =>{
-        this.arnRiaList=data;
-        const obj = {
-          number: 'All'
+      data => {
+        if (data) {
+          this.arnRiaList = data;
+          console.log("arn ria data:::", data);
+
+          const obj = {
+            number: 'All',
+            id: -1
+          }
+          this.arnRiaList.unshift(obj);
         }
-        this.arnRiaList.unshift(obj);
-    },
+      },
     )
   }
   showSubTableList() {
@@ -69,10 +75,10 @@ export class AumComponent implements OnInit {
     this.showAddBtn = false;
     this.showRemoveBtn = true;
   }
-  display(value){
-    this.aumComponent=true;
+  display(value) {
+    this.aumComponent = true;
     setTimeout(() => {
-      this.pieChart('pieChartAum',this.aumGraph);
+      this.pieChart('pieChartAum', this.aumGraph);
     }, 600);
   }
 
@@ -84,10 +90,10 @@ export class AumComponent implements OnInit {
   }
 
   getTotalAum() {
-    const obj={
-      advisorId:this.advisorId,
-      arnRiaDetailsId:-1,
-      parentId:-1
+    const obj = {
+      advisorId: this.advisorId,
+      arnRiaDetailsId: -1,
+      parentId: this.parentId
     }
     this.backoffice.getClientTotalAUM(obj).subscribe(
       data => this.getFileResponseDataAum(data),
@@ -101,10 +107,10 @@ export class AumComponent implements OnInit {
     )
   }
   getSubCatAum() {
-    const obj={
-      advisorId:this.advisorId,
-      arnRiaDetailId:-1,
-      parentId:-1
+    const obj = {
+      advisorId: this.advisorId,
+      arnRiaDetailId: -1,
+      parentId: this.parentId
     }
     this.backoffice.getSubCatAum(obj).subscribe(
       data => this.getFileResponseDataForSub(data),
@@ -145,23 +151,23 @@ export class AumComponent implements OnInit {
     this.componentWise = value;
     this.aumComponent = false;
   }
-  getGraphData(){
-    const obj={
-      advisorId:this.advisorId,
-      arnRiaDetailsId:-1,
-      parentId:-1
+  getGraphData() {
+    const obj = {
+      advisorId: this.advisorId,
+      arnRiaDetailsId: -1,
+      parentId: this.parentId
     }
     this.backoffice.aumGraphGet(obj).subscribe(
       data => {
-        this.aumGraph=data;
+        this.aumGraph = data;
         setTimeout(() => {
-          this.pieChart('pieChartAum',data);
+          this.pieChart('pieChartAum', data);
         }, 1000);
         console.log(data)
       }
     )
   }
-  pieChart(id,obj){
+  pieChart(id, obj) {
     var obj1 = obj[obj.length - 1]
     var obj2 = obj[obj.length - 2]
     var obj3 = obj[obj.length - 3]
@@ -169,34 +175,34 @@ export class AumComponent implements OnInit {
     var months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     Highcharts.chart('pieChartAum', {
       chart: {
-          type: 'column'
+        type: 'column'
       },
       title: {
         text: ''
-      },    
+      },
       xAxis: {
-          categories: [months[obj1.Month]+'-'+obj1.Year,months[obj2.Month]+'-'+obj2.Year,months[obj3.Month]+'-'+obj3.Year,months[obj4.Month]+'-'+obj4.Year]
+        categories: [months[obj1.Month] + '-' + obj1.Year, months[obj2.Month] + '-' + obj2.Year, months[obj3.Month] + '-' + obj3.Year, months[obj4.Month] + '-' + obj4.Year]
       },
       credits: {
-          enabled: false
+        enabled: false
       },
       series: [{
-        type: undefined ,
+        type: undefined,
         name: 'Purchase',
         color: '#70ca86',
-        data: [obj1.GrossSale,obj2.GrossSale,obj3.GrossSale,obj4.GrossSale]
+        data: [obj1.GrossSale, obj2.GrossSale, obj3.GrossSale, obj4.GrossSale]
       }, {
         type: undefined,
-          name: 'Redemption',
-          color: '#f05050',
-          data: [obj1.Redemption,obj2.Redemption,obj3.Redemption,obj4.Redemption]
+        name: 'Redemption',
+        color: '#f05050',
+        data: [obj1.Redemption, obj2.Redemption, obj3.Redemption, obj4.Redemption]
       }, {
         type: undefined,
-          name: 'Net Sales',
-          color:'#55c3e6',
-          data: [obj1.GrossSale + obj1.Redemption,obj2.GrossSale + obj2.Redemption,obj3.GrossSale + obj3.Redemption,obj4.GrossSale + obj4.Redemption]
+        name: 'Net Sales',
+        color: '#55c3e6',
+        data: [obj1.GrossSale + obj1.Redemption, obj2.GrossSale + obj2.Redemption, obj3.GrossSale + obj3.Redemption, obj4.GrossSale + obj4.Redemption]
       }]
-  });
-}
+    });
+  }
 }
 
