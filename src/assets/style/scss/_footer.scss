@@ -10,13 +10,16 @@ footer {
   // align-items: center;
   // margin: 0;
   background: #E5E5E5;
+  position:fixed;
+  width: 100%;
+  bottom:0;
 
 nav {
   position: relative;
   display: block;
   background-color: #ffffff;
   padding: 10px 20px;
-
+  border-top: 1px solid #dee5e7 !important;
   width: 100%;
   overflow: hidden;
 }
@@ -25,7 +28,7 @@ nav p {
   position: relative;
   text-decoration: none;
   color: #000000;
- font-family: CircularStd;
+ font-family: Roboto;
 
   font-size: 14px;
   line-height: 1;
@@ -46,14 +49,16 @@ nav p b {
   font-style: normal;
 font-weight: normal;
 text-transform: capitalize;
-left: 5px;
+left: 8px;
 }
 
-nav p i {
+nav p img {
   position: relative;
   left: 55%;
   transition: 0.3s ease left;
   font-size: 18px;
+  display: initial;
+
 }
 
 nav span {
@@ -69,17 +74,17 @@ nav span {
 }
 
 nav p:hover b {
-  top: 0;
+  top: 2;
 }
 
-nav p:hover i {
+nav p:hover img {
   left: 0;
 }
 p:nth-child(1) b {
   top: 0;
 }
 
-p:nth-child(1) i {
+p:nth-child(1) img {
   left: 0;
 }
 
