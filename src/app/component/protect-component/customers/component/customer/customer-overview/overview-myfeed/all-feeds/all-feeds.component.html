@@ -69,7 +69,7 @@
                                             <div class="col-md-2 relClass ">
                                                 <div class="bar height24">
                                                     <p class="text-black mb-0">
-                                                        <span appFormatNumber>{{(data.y/chartTotal)}}</span>
+                                                        <span appFormatNumber>{{(data.y/chartTotal | number : '0.0-2')}}</span>
                                                     </p>
                                                 </div>
                                             </div>
