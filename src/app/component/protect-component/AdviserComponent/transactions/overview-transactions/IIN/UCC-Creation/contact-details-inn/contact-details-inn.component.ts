@@ -158,7 +158,7 @@ export class ContactDetailsInnComponent implements OnInit {
       email: [(!data) ? '' : data.email, [Validators.required]],
       aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required]],
       maritalStatus: [!data ? '' : data.maritalStatus, [Validators.required]],
-      isdCodeId: [!data ? '' : (data.isdCodeId) + "", [Validators.required]],
+      // isdCodeId: [!data ? '' : (data.isdCodeId) + "", [Validators.required]],
       mobileNo: [!data ? '' : data.mobileNo, [Validators.required]],
       addressLine1: [!data.address ? data.addressLine1 : (data.address.address1) ? data.address.address1 : data.address.addressLine1, [Validators.required]],
       addressLine2: [!data.address ? data.addressLine2 : (data.address.address2) ? data.address.address2 : data.address.addressLine2, [Validators.required]],
