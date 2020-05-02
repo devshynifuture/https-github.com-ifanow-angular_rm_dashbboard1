@@ -45,6 +45,7 @@ export class FileOrderingSetupComponent implements OnInit {
   fileTypeList: any[] = [];
   presentDate = new Date();
   rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
+  fileTypeListValue = [];
 
   historicalFileBulkOrderingForm = this.fb.group({
     rtId: [, Validators.required],
@@ -62,13 +63,14 @@ export class FileOrderingSetupComponent implements OnInit {
 
   ngOnInit() {
     console.log("sent data::::", this.data);
-    this.getRtaList();
+    this.getRtaList()
   }
 
   getRtaList() {
     this.reconService.getRTListValues({})
       .subscribe(res => {
         if (res && res.length !== 0) {
+          console.log(res);
           res.forEach(element => {
             if (element.name !== 'SUNDARAM' && element.name !== 'PRUDENT' && element.name !== 'NJ_NEW' && element.name !== 'NJ') {
               this.rtaList.push({
@@ -91,10 +93,28 @@ export class FileOrderingSetupComponent implements OnInit {
         console.log("file type list:::", res);
         if (res && res.length !== 0) {
           this.fileTypeList = res;
+          this.fileTypeListValue = res;
+          this.setValueChanges();
         } else {
           this.eventService.openSnackBar("No File Type List Found", "DISMISS")
         }
       })
+  }
+
+  setValueChanges() {
+    this.historicalFileBulkOrderingForm.get('rtId').valueChanges
+      .subscribe(res => {
+        console.log(res);
+        this.filterFileTypeBasedOnRtId(res.value);
+      })
+  }
+
+  filterFileTypeBasedOnRtId(id) {
+    let filterArray = this.fileTypeListValue;
+    filterArray = filterArray.filter(item => {
+      return item.rtId === id;
+    });
+    this.fileTypeList = filterArray;
   }
 
   dialogClose(flag) {
