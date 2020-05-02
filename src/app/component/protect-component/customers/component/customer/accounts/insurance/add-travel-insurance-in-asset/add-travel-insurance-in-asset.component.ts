@@ -49,6 +49,8 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
   addMoreFlag=false;
   policyList: any;
   id: any;
+  showinsuredMemberSum = true;
+  showSumAssured = false;
 
   constructor(private fb: FormBuilder,private subInjectService:SubscriptionInject,private customerService:CustomerService,private eventService:EventService) { }
   validatorType = ValidatorType
@@ -290,7 +292,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
       planDetails: [(this.dataForEdit ? this.dataForEdit.policyFeatureId+'' : null), [Validators.required]],
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
       insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : null), [Validators.required]],
-      sumAssuredIdv: [(this.dataForEdit ? this.dataForEdit.sumInsuredIdv : null)],
+      sumAssuredIdv: [(this.dataForEdit) ? this.dataForEdit.sumInsuredIdv : null, [Validators.required]],
       planeName: [(this.dataForEdit ? this.dataForEdit.planName :null)],
       premium: [(this.dataForEdit ? this.dataForEdit.premiumAmount : null), [Validators.required]],
       policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : null, [Validators.required]],
@@ -358,6 +360,19 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
         this.addNewFeature(element);
       });
     }
+    if(this.dataForEdit){
+      this.dataForEdit.insuredMembers.forEach(element => {
+          if(element.sumInsured == 0){
+           this.showinsuredMemberSum = false
+          }
+       });
+  }
+ 
+  if(this.travelInsuranceForm.get('planDetails').value == '1'){
+      this.showSumAssured = true;
+  }else{
+      this.showSumAssured = false;
+  }
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.travelInsuranceForm }
 
     // this.finalCashFlowData = [];
@@ -368,7 +383,31 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
   }
   ngOnInit() {
   }
-
+  onChangeSetErrorsType(value, formName) {
+    if (value == 1) {
+        this.showSumAssured = true
+        this.showinsuredMemberSum = false
+        let list = this.travelInsuranceForm.get('InsuredMemberForm') as FormArray;
+        list.controls.forEach(element => {
+            element.get('sumAssured').setValue('');
+            if (element.get('sumAssured').value == '') {
+                element.get('sumAssured').setErrors(null)
+            }
+        });
+        if (!this.travelInsuranceForm.controls['sumAssuredIdv'].value) {
+            this.travelInsuranceForm.controls['sumAssuredIdv'].setValue(null);
+            this.travelInsuranceForm.get('sumAssuredIdv').setValidators([Validators.required]);
+            this.travelInsuranceForm.get('sumAssuredIdv').updateValueAndValidity();
+            this.travelInsuranceForm.controls['sumAssuredIdv'].setErrors({ 'required': true });
+        }
+    } else {
+        this.showSumAssured = false
+        this.showinsuredMemberSum = true
+        this.travelInsuranceForm.controls['sumAssuredIdv'].setValue(null);
+        this.travelInsuranceForm.controls['sumAssuredIdv'].setErrors(null);
+        this.travelInsuranceForm.controls['sumAssuredIdv'].setValidators(null);
+    }
+}
   saveTravelInsurance() {
     let memberList = [];
     let finalMemberList = this.travelInsuranceForm.get('InsuredMemberForm') as FormArray
@@ -411,7 +450,6 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
         "insurerName": this.travelInsuranceForm.get('insurerName').value,
         "policyNumber": this.travelInsuranceForm.get('policyNum').value,
         "planName": this.travelInsuranceForm.get('planeName').value,
-        "sumInsuredIdv": this.travelInsuranceForm.get('sumAssuredIdv').value,
         "premiumAmount": this.travelInsuranceForm.get('premium').value,
         "policyStartDate": this.travelInsuranceForm.get('policyStartDate').value,
         "policyExpiryDate": this.travelInsuranceForm.get('policyExpiryDate').value,
@@ -421,6 +459,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
         "advisorName": this.travelInsuranceForm.get('advisorName').value,
         "serviceBranch": this.travelInsuranceForm.get('serviceBranch').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
+        'sumInsuredIdv': this.travelInsuranceForm.get('sumAssuredIdv').value,
         "policyFeatures":featureList,
         "id":(this.id) ? this.id : null,
         insuredMembers: memberList,
@@ -443,6 +482,13 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
       } else {
         obj.nominees = [];
       }
+      if (obj.insuredMembers.length > 0) {
+        obj.insuredMembers.forEach(element => {
+            if (element.sumInsured == '') {
+                element.sumInsured = null
+            }
+        });
+    }
       console.log(obj);
 
 

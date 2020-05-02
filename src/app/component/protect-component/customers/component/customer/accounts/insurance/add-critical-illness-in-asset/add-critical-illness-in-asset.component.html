@@ -64,7 +64,7 @@
         </div>
         <div class="col-md-5 form-group">
             <mat-form-field>
-                <mat-select matInput formControlName="PlanType" autocomplete="true" class="form-control br-0">
+                <mat-select matInput formControlName="PlanType"  (selectionChange)="onChangeSetErrorsType($event.value,'planType')"  #planType autocomplete="true" class="form-control br-0">
                     <!-- <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
                         {{option.policy_type}}</mat-option> -->
                         <mat-option value='7'>Individual</mat-option>
@@ -83,7 +83,7 @@
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-32">Insured members</h5>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-5">
                     <div class="form-group mb-0">
                         <label class="f-16 roboto">Name</label>
                         <mat-form-field>
@@ -97,7 +97,7 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="form-group mb-0">
+                    <div class="form-group mb-0"  *ngIf="planType.value == ''  || planType.value !='8' && showinsuredMemberSum">
                         <label class="f-16 roboto">Sum insured</label>
                         <mat-form-field>
                             <input matInput type="number" formControlName="sumAssured" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation #sumAssured autocomplete="true" [maxLength]="8" class="form-control rupess br-0">
@@ -117,7 +117,23 @@
 
     </div>
 
-
+    <div class="row pt-40" *ngIf="planType.value =='8' || showSumAssured">
+        <div class="col-md-4 pr-0 text-right">
+          <h5 class="m-0 pt-8">sum insured</h5>
+        </div>
+        <div class="col-md-5">
+          <div class="form-group mb-0 iconRupess">
+            <mat-form-field>
+              <input #sumAssuredIdv [inputValidator]="validatorType.NUMBER_ONLY"[maxLength]="8" appInputValueValidation
+                     autocomplete="true" class="form-control rupess br-0" formControlName="sumAssuredIdv" matInput
+                     type="number">
+              <mat-hint align="end" class="f-12">{{sumAssuredIdv.value.length}}/8</mat-hint>
+              <mat-error>This field is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
     <div class="row pt-32">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-20 ">Policy number</h5>
@@ -295,7 +311,7 @@
         </div>
 
 
-        <!-- <div class="row pt-32">
+        <div class="row pt-32">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-20 ">Policy inception date</h5>
             </div>
@@ -308,7 +324,7 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-        </div> -->
+        </div>
 
         <div formArrayName="getNomineeName">
             <div class="row pt-36" *ngFor="let obj of critialIllnessForm.controls['getNomineeName'].controls; let pointIndex=index" [formGroupName]="pointIndex">

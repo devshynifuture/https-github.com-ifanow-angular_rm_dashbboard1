@@ -54,6 +54,8 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
   bankAccountDetails: { accountList: any; controleData: any; };
   accountList: any;
   bankList: any;
+  showinsuredMemberSum = true;
+  showSumAssured = false;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
@@ -246,7 +248,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
         isClient: 0
       })]),
       name:[(this.dataForEdit ? this.dataForEdit.name : null)],
-      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId +'' : null), [Validators.required]],
+      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId +'' : ''), [Validators.required]],
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
       insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : null), [Validators.required]],
       planeName: [(this.dataForEdit ? this.dataForEdit.planName :null), [Validators.required]],
@@ -263,6 +265,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
       advisorName: [this.dataForEdit ? this.dataForEdit.advisorName :null],
       serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch :null],
       bankAccount: [this.dataForEdit ? parseInt(this.dataForEdit.linkedBankAccount) : null],
+      sumAssuredIdv: [(this.dataForEdit) ? this.dataForEdit.sumInsuredIdv : null, [Validators.required]],
       nominees: this.nominees,
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
@@ -318,7 +321,18 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
       });
     }
 
-
+    if(this.dataForEdit){
+      this.dataForEdit.insuredMembers.forEach(element => {
+          if(element.sumInsured == 0){
+           this.showinsuredMemberSum = false
+          }
+       });
+  }
+  if(this.critialIllnessForm.get('PlanType').value == '8'){
+    this.showSumAssured = true;
+}else{
+    this.showSumAssured = false;
+}
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.critialIllnessForm }
     this.bankAccountDetails = { accountList: this.accountList, controleData: this.critialIllnessForm }
 
@@ -330,6 +344,31 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
   }
   ngOnInit() {
   }
+  onChangeSetErrorsType(value, formName) {
+    if (value == 8) {
+      this.showSumAssured = true
+      this.showinsuredMemberSum = false
+        let list = this.critialIllnessForm.get('InsuredMemberForm') as FormArray;
+        list.controls.forEach(element => {
+            element.get('sumAssured').setValue('');
+            if (element.get('sumAssured').value == '') {
+                element.get('sumAssured').setErrors(null)
+            }
+        });
+        if (!this.critialIllnessForm.controls['sumAssuredIdv'].value) {
+            this.critialIllnessForm.controls['sumAssuredIdv'].setValue(null);
+            this.critialIllnessForm.get('sumAssuredIdv').setValidators([Validators.required]);
+            this.critialIllnessForm.get('sumAssuredIdv').updateValueAndValidity();
+            this.critialIllnessForm.controls['sumAssuredIdv'].setErrors({ 'required': true });
+        }
+    } else {
+        this.showSumAssured = false
+        this.showinsuredMemberSum = true
+        this.critialIllnessForm.controls['sumAssuredIdv'].setValue(null);
+        this.critialIllnessForm.controls['sumAssuredIdv'].setErrors(null);
+        this.critialIllnessForm.controls['sumAssuredIdv'].setValidators(null);
+    }
+}
   bankAccountList(value) {
     this.bankList = value;
   }
@@ -450,6 +489,7 @@ changeTheInput(form1,form2,event) {
         "serviceBranch": this.critialIllnessForm.get('serviceBranch').value,
         "linkedBankAccount": this.critialIllnessForm.get('bankAccount').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
+        'sumInsuredIdv': this.critialIllnessForm.get('sumAssuredIdv').value,
         "id":(this.id) ? this.id : null,
         insuredMembers: memberList,
         nominees: this.critialIllnessForm.value.getNomineeName,
@@ -471,6 +511,13 @@ changeTheInput(form1,form2,event) {
       } else {
         obj.nominees = [];
       }
+      if (obj.insuredMembers.length > 0) {
+        obj.insuredMembers.forEach(element => {
+            if (element.sumInsured == '') {
+                element.sumInsured = null
+            }
+        });
+    }
       console.log(obj);
 
 

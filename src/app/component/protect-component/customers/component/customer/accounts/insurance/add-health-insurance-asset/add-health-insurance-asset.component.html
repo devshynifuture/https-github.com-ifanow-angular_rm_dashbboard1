@@ -75,7 +75,7 @@
       <div class="col-md-5 pr-0">
         <div class="form-group mb-0 iconRupess">
           <mat-form-field>
-            <mat-select autocomplete="true" class="form-control br-0" formControlName="PlanType" matInput>
+            <mat-select autocomplete="true"  (selectionChange)="onChangeSetErrorsType($event.value,'planType')" class="form-control br-0" #planType formControlName="PlanType" matInput>
               <!-- <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
                   {{option.policy_type}}</mat-option> -->
               <mat-option value='7'>Individual health</mat-option>
@@ -89,7 +89,7 @@
       <div class="col-md-3">
         <div class="form-group mb-0">
           <mat-form-field>
-            <mat-select #planDetails autocomplete="off" class="form-control br-0" formControlName="planDetails" matInput>
+            <mat-select #planDetails autocomplete="off"  (selectionChange)="onChangeSetErrors($event.value,'planDetails')" class="form-control br-0" formControlName="planDetails" matInput>
               <mat-option value='0'>Standard</mat-option>
               <mat-option value='1'>Top up</mat-option>
               <mat-option value='2'>Super top up</mat-option>
@@ -111,7 +111,7 @@
         <div *ngFor="let obj of insuredMembersForm.controls; let pointIndex=index" [formGroupName]="pointIndex"
              [ngClass]="{'pt-36': pointIndex > 0}" class="row pt-4 justify-content-center">
           <div class="col-md-1"></div>
-          <div class="col-md-3">
+          <div class="col-md-5">
             <div class="form-group mb-0">
               <label class="f-16 roboto">Name</label>
               <mat-form-field>
@@ -127,7 +127,8 @@
               </mat-form-field>
             </div>
           </div>
-          <div class="col-md-3">
+          <!-- || -->
+          <div class="col-md-3" *ngIf="planType.value == ''  || planType.value !='8' && showinsuredMemberSum">
             <div class="form-group mb-0 iconRupess">
               <label class="f-16 roboto">Sum insured</label>
               <mat-form-field>
@@ -148,7 +149,24 @@
         </div>
       </div>
     </div>
-    <div class="row pt-40" *ngIf="planDetails.value != 0">
+    <div class="row pt-40" *ngIf="planType.value =='8' || showSumAssured">
+      <div class="col-md-4 pr-0 text-right">
+        <h5 class="m-0 pt-8">sum insured</h5>
+      </div>
+      <div class="col-md-5">
+        <div class="form-group mb-0 iconRupess">
+          <mat-form-field>
+            <input #sumAssuredIdv [inputValidator]="validatorType.NUMBER_ONLY"[maxLength]="8" appInputValueValidation
+                   autocomplete="true" class="form-control rupess br-0" formControlName="sumAssuredIdv" matInput
+                   type="number">
+            <mat-hint align="end" class="f-12">{{sumAssuredIdv.value.length}}/8</mat-hint>
+            <mat-error>This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row pt-40" *ngIf="planDetails.value != 0 && showDeductibleSum">
       <div class="col-md-4 pr-0 text-right">
         <h5 class="m-0 pt-8">Deductible sum insured</h5>
       </div>
@@ -417,7 +435,7 @@
           </div>
         </div>
       </div>
-      <!-- <div class="row pt-40">
+      <div class="row pt-40">
           <div class="col-md-4 pr-0 text-right">
               <h5 class="m-0 pt-8">Policy inception date</h5>
           </div>
@@ -430,7 +448,7 @@
                   </mat-form-field>
               </div>
           </div>
-      </div> -->
+      </div>
       <div formArrayName="getNomineeName">
         <div *ngFor="let obj of healthInsuranceForm.controls['getNomineeName'].controls; let pointIndex=index"
              [formGroupName]="pointIndex"

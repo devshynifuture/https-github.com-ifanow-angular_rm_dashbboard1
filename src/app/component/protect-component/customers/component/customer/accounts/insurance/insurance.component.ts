@@ -365,17 +365,18 @@ export class InsuranceComponent implements OnInit {
           });
           (element.insuredMembers.length == 0) ? this.showPolicyHolder = 'Name of policy holder' : this.showPolicyHolder = 'Name of insured members';
         }
-        this.sumAssured = 0;
-        if (element.insuredMembers.length > 0) {
-          element.insuredMembers.forEach(ele => {
-            this.sumAssured += ele.sumInsured
-          });
-          element.sumAssured = this.sumAssured
-        } else if (element.policyFeatures.length > 0) {
+        // this.sumAssured = 0;
+        // if (element.insuredMembers.length > 0) {
+        //   element.insuredMembers.forEach(ele => {
+        //     this.sumAssured += ele.sumInsured
+        //   });
+        //   element.sumAssured = this.sumAssured
+        // } else 
+        if (element.policyFeatures.length > 0) {
           element.policyFeatures.forEach(ele => {
             this.sumAssured += ele.featureSumInsured
           });
-          element.sumAssured = this.sumAssured
+          // element.sumAssured = this.sumAssured
         } else {
           element.sumAssured = element.sumInsuredIdv
         }
@@ -541,7 +542,7 @@ export class InsuranceComponent implements OnInit {
       data: {},
       insuranceTypeId: this.insuranceTypeId,
       insuranceSubTypeId: this.insuranceSubTypeId,
-      state: null,
+      state: 'open',
       componentName: null
     }
     sendData.data = {
@@ -555,10 +556,8 @@ export class InsuranceComponent implements OnInit {
     }
     if (this.insuranceTypeId == 1) {
       sendData.componentName = DetailedViewLifeInsuranceComponent
-      sendData.state = 'open';
     } else {
       sendData.componentName = DetailedViewGeneralInsuranceComponent
-      sendData.state = 'open35';
     }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(sendData).subscribe(
       sideBarData => {
