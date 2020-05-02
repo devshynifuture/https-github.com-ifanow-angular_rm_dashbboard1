@@ -560,6 +560,7 @@ export const appConfig = {
   PUT_FILE_ORDER_RETRY: 'fileorder/list/retry',
   GET_TICKET: 'rmdashboard/tickets/get',
   GET_REPORT_FILTER_DATA: 'rmdashboard/myifas/dashboard/details/get/filter',
+  GET_COMMENT_COUNT_RM_ADMIN: 'rmdashboard/dashboard/ifa-onboard/task-level-comment/count',
 
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',

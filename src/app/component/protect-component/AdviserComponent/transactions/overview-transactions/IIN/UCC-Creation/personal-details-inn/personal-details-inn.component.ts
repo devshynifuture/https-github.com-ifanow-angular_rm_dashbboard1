@@ -30,7 +30,7 @@ export class PersonalDetailsInnComponent implements OnInit {
     type: 'first',
     data: ''
   }
-  replaceObj: { panNumber: any; clientName: any; madianName: any; fatherName: any; motherName: any; dateOfBirth: any; gender: any; martialStatus: any; };
+  replaceObj: { panNumber: any; clientName: any; maidanName: any; fatherName: any; motherName: any; dateOfBirth: any; gender: any; martialStatus: any; };
   validatorType = ValidatorType
   changedValue: string;
   doneData: any;
@@ -149,10 +149,10 @@ export class PersonalDetailsInnComponent implements OnInit {
     this.personalDetails = this.fb.group({
       panNumber: [!data ? '' : (data.pan) ? data.pan : data.panNumber, [Validators.required]],
       clientName: [!data ? '' : (data.name) ? data.name : data.clientName, [Validators.required]],
-      madianName: [!data ? '' : data.madianName, [Validators.required]],
+      maidanName: [!data ? '' : data.maidanName, [Validators.required]],
       fatherName: [!data ? '' : data.fatherName, [Validators.required]],
       motherName: [!data ? '' : data.motherName, [Validators.required]],
-      dateOfBirth: [!data ? '' : new Date(data.dateOfBirth), [Validators.required]],
+      dob: [!data ? '' : new Date(data.dob), [Validators.required]],
       gender: [!data ? '1' : data.genderId ? data.genderId + '' : '1', [Validators.required]],
       email: [!data ? '' : data.email],
       aadharNumber: [!data ? '' : (data.aadharNumber) ? data.aadharNumber : data.aadhaarNumber],
@@ -223,7 +223,7 @@ export class PersonalDetailsInnComponent implements OnInit {
     }
 
     this.obj1.firstHolder = this.firstHolder
-    this.obj1.firstHolder.dateOfBirth = new Date(this.firstHolder.dateOfBirth).getTime();
+    this.obj1.firstHolder.dob = new Date(this.firstHolder.dob).getTime();
     this.obj1.secondHolder = this.secondHolder;
     this.obj1.thirdHolder = this.thirdHolder;
     this.obj1.generalDetails = this.generalDetails;

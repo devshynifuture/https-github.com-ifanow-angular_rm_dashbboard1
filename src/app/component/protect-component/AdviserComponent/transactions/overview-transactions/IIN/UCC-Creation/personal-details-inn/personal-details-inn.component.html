@@ -57,8 +57,8 @@
                         <h3 class="f-16 pt-20 m-0"> Maidan name</h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field appearance="standard" floatLabel="never">
-                            <input placeholder="Enter Maidan name" #madianName matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="madianName" type="text" class="form-control">
+                        <mat-form-field>
+                            <input #maidanName matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="maidanName" type="text" class="form-control">
                             <mat-error>This field is required</mat-error>
                         </mat-form-field>
                     </div>
@@ -91,7 +91,7 @@
                     </div>
                     <div class="col-md-3 form-group">
                         <mat-form-field class="ba-date">
-                            <input matInput class="form-control b-0" formControlName="dateOfBirth" [matDatepicker]="picker">
+                            <input matInput class="form-control b-0" formControlName="dob" [matDatepicker]="picker">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                             <mat-error>This field is required</mat-error>
