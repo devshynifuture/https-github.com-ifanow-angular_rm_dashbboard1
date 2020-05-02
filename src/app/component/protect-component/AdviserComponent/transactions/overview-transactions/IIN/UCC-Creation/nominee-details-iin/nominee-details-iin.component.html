@@ -34,14 +34,14 @@
                             <mat-select class="form-control" formControlName="nomineeName">
                                 <mat-option [value]="fm.name" (click)="selectedNominee(fm)" *ngFor="let fm of nomineeFmList"> {{fm.name}} </mat-option>
                             </mat-select>
-                            <input matInput maxlength="30" appInputValueValidation
+                            <!-- <input matInput maxlength="30" appInputValueValidation
                                 [inputValidator]="validatorType.TEXT_ONLY" formControlName="nomineeName" type="text"
-                                class="form-control">
+                                class="form-control"> -->
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row pt-32">
+                <div class="row pt-24">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0"> Nominee relation </h3>
                     </div>
@@ -67,7 +67,7 @@
                 </div>
 
 
-                <div class="row pt-32">
+                <div class="row pt-24">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-10 m-0">Nominee type</h3>
                     </div>
@@ -84,7 +84,7 @@
                 </div>
 
 
-                <div class="row pt-32">
+                <div class="row pt-24">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0"> Nominee date of birth </h3>
                     </div>
@@ -134,7 +134,8 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row pt-20">
+
+                <div class="row pt-24">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-20 m-0">Address line 1</h3>
                     </div>
@@ -145,7 +146,8 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row pt-20">
+
+                <div class="row pt-24">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-20 m-0">Address line 2</h3>
                     </div>
@@ -157,7 +159,8 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row pt-20">
+
+                <div class="row pt-24">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-20 m-0">Pin code </h3>
                     </div>
@@ -171,7 +174,8 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row pt-20">
+
+                <div class="row pt-24">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-20 m-0">City</h3>
                     </div>
@@ -183,7 +187,8 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row pt-20">
+
+                <div class="row pt-24">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-20 m-0">District</h3>
                     </div>
@@ -195,19 +200,19 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row pt-32">
+
+                <div class="row pt-24">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0">State</h3>
+                        <h3 class="f-16 pt-20 m-0">State</h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
-                            <input matInput formControlName="state" type="text" class="form-control">
+                        <mat-form-field floatLabel="never" appearance="standard">
+                            <input placeholder="Enter Placeholder" matInput formControlName="state" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
-
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row pt-20">
+                <div class="row pt-24">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-20 m-0">Country</h3>
                     </div>
