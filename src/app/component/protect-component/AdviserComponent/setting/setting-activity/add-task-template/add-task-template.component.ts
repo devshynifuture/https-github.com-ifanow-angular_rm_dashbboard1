@@ -131,6 +131,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
         this.category = value == 1 ? 'Asset' : value == 3 ? 'Insurance' : 'Liability';
         this.taskTemplate.controls.subcategoryId.setValue(0);
         this.dataEdited = true;
+        this.categoryList = this.globalData.task_template_category_and_subcategory_list.find(data => data.categoryId == value).taskTempSubCategorytoCategoryList;
       })
     );
     this.subscription.add(

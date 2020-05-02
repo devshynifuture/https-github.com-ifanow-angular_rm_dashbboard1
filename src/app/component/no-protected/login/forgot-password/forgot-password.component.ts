@@ -139,8 +139,8 @@ export class ForgotPasswordComponent implements OnInit {
       }
       ,
       err => {
-        this.eventService.openSnackBar(err, 'Dismiss');
-        // this.userName.setErrors({ incorrect: true });
+        // this.eventService.openSnackBar(err, 'Dismiss');
+        this.userName.setErrors({ incorrect: true });
         this.barButtonOptions.active = false;
       }
     );
@@ -213,6 +213,8 @@ export class ForgotPasswordComponent implements OnInit {
       };
       this.otpData = [];
       this.saveAfterVerifyCredential(obj);
+      this.otpResendCountDown();
+      this.showTimeRemaing = 30;
       this.signUpBarList[1].flag = true;
       this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
       if (this.userNameVerifyResponse != undefined) {
