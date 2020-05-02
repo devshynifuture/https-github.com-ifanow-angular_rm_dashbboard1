@@ -6,6 +6,7 @@ import {SubscriptionInject} from 'src/app/component/protect-component/AdviserCom
 import {CustomerService} from '../../../customer.service';
 import {MatDialog, MatInput} from '@angular/material';
 import {EventService} from 'src/app/Data-service/event.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
     selector: 'app-add-health-insurance-asset',
@@ -13,6 +14,21 @@ import {EventService} from 'src/app/Data-service/event.service';
     styleUrls: ['./add-health-insurance-asset.component.scss']
 })
 export class AddHealthInsuranceAssetComponent implements OnInit {
+    barButtonOptions: MatProgressButtonOptions = {
+        active: false,
+        text: 'Save',
+        buttonColor: 'accent',
+        barColor: 'accent',
+        raised: true,
+        stroked: false,
+        mode: 'determinate',
+        value: 10,
+        disabled: false,
+        fullWidth: false,
+        // buttonIcon: {
+        //   fontIcon: 'favorite'
+        // }
+      };
     maxDate = new Date();
 
     inputData: any;
@@ -203,7 +219,8 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
             sharePercentage: [data ? data.sumInsured : 0],
             familyMemberId: [data ? data.familyMemberId : 0],
             id: [data ? data.id : 0],
-            isClient: [data ? data.isClient : 0]
+            isClient: [data ? data.isClient : 0],
+            relationshipId:[data ? data.relationshipId :0] 
         }));
         if (!data || this.getNominee.value.length < 1) {
             for (let e in this.getNominee.controls) {
@@ -252,7 +269,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
             name: [(this.dataForEdit ? this.dataForEdit.name : null)],
             PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId + '' : null), [Validators.required]],
             planDetails: [(this.dataForEdit ? this.dataForEdit.policyFeatureId + '' : null), [Validators.required]],
-            deductibleAmt: [(this.dataForEdit ? this.dataForEdit.deductibleSumInsured : null), [Validators.required]],
+            deductibleAmt: [(this.dataForEdit ? this.dataForEdit.deductibleSumInsured : null)],
             policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
             insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : null), [Validators.required]],
             planeName: [(this.dataForEdit ? this.dataForEdit.planName : null), [Validators.required]],
@@ -276,7 +293,8 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
                 name: [''],
                 sharePercentage: [0],
                 familyMemberId: [0],
-                id: [0]
+                id: [0],
+                relationshipId:[0]
             })]),
             InsuredMemberForm: this.fb.array([this.fb.group({
                 insuredMembers: ['', [Validators.required]],
@@ -449,8 +467,12 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
             memberList.push(obj);
         });
         if (this.healthInsuranceForm.invalid) {
+            if(this.healthInsuranceForm.get('planDetails').value == '0'){
+                this.healthInsuranceForm.controls['deductibleAmt'].setErrors({'required': true});
+              }
             this.healthInsuranceForm.markAllAsTouched();
         } else {
+            this.barButtonOptions.active = true;
             const obj = {
                 'clientId': this.clientId,
                 'advisorId': this.advisorId,
@@ -507,6 +529,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
             if (this.dataForEdit) {
                 this.customerService.editGeneralInsuranceData(obj).subscribe(
                     data => {
+                        this.barButtonOptions.active = false;
                         console.log(data);
                         this.eventService.openSnackBar('Updated successfully!', 'dismiss');
                         const insuranceData =
@@ -520,6 +543,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
             } else {
                 this.customerService.addGeneralInsurance(obj).subscribe(
                     data => {
+                        this.barButtonOptions.active = false;
                         console.log(data);
                         this.eventService.openSnackBar('Added successfully!', 'dismiss');
                         const insuranceData =
