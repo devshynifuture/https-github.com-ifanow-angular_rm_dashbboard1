@@ -12,13 +12,13 @@
         </div>
         <div *ngIf="dataSource.filteredData.length > 0&&!isLoading" class="col-md-4 pt-4 text-right pl-0">
             <!--            <img src="/assets/images/svg/download-black.svg" class="b-a p-5">-->
-            <img (click)="getNSEAchmandate()" class="b-a p-8" src="/assets/images/svg/reload.svg">
+            <img (click)="getNSEAchmandate()" class="b-a p-8 mr-8" src="/assets/images/svg/reload.svg">
             <!-- <button mat-stroked-button class="btn-default addon ml-12 mr-12 v-middle"><i
          class="material-icons">filter_list</i>FILTERS
        </button>-->
             <button (click)="openMandateClient(null)" class="btn-primary addon v-middle" mat-stroked-button>
-        ADD NEW
-      </button>
+                ADD NEW
+            </button>
         </div>
     </div>
     <div class="row">
@@ -45,7 +45,8 @@
                 <ng-container matColumnDef="weight">
                     <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="investorName"> Investor name</th>
                     <td *matCellDef="let element" class="br" mat-cell>
-                        <div class="bar"> {{(isLoading) ? '' : (element.investorName) ? element.investorName : '-'}} </div>
+                        <div class="bar"> {{(isLoading) ? '' : (element.investorName) ? element.investorName : '-'}}
+                        </div>
                     </td>
                 </ng-container>
 
@@ -71,13 +72,14 @@
                     <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="amount"> Amount</th>
                     <td *matCellDef="let element" class="br" mat-cell>
                         <div class="bar"> <span appFormatNumber>{{(isLoading) ? '' : (element.amount) ? element.amount : '-'}}
-              </span></div>
+                            </span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="type">
                     <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="mandateType"> Type</th>
                     <td *matCellDef="let element" class="br" mat-cell>
-                        <div class="bar"> {{(isLoading) ? '' : (element.mandateType) ? element.mandateType : '-'}} </div>
+                        <div class="bar"> {{(isLoading) ? '' : (element.mandateType) ? element.mandateType : '-'}}
+                        </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="status">

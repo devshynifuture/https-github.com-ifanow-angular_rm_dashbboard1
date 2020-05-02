@@ -385,7 +385,7 @@
                                 <h5 class="m-0 roboto">Money to be deployed
                                 </h5>
                                 <p class="f-12 text-primitive">current + upcoming</p>
-                                <h3 class="text-primary m-0 f-22">₹<span appFormatNumber>{{adviseData?.deployed}}</span>
+                                <h3 class="text-primary m-0 f-22">₹<span appFormatNumber>{{adviseData?.deployed || 0}}</span>
                                 </h3>
                             </div>
                         </div>
@@ -457,7 +457,7 @@
                 </div>
 
                 <!-- insurance -->
-                <div class="wrapperBox" *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">
+                <div class="wrapperBox" *ngIf="false">
                     <div class="row">
                         <div class="col-md-8 d-flex align-items-center">
                             <h5 class="roboto m-0">Insurance</h5>
@@ -544,7 +544,7 @@
                         <div class="transactionsBox bg-white col-md-8" *ngFor="let tnx of recentTransactions">
                             <div class="row">
                                 <div class="col-md-8">
-                                    <p class="mb-5">{{tnx.fwTransactionType}}</p>
+                                    <p class="mb-5">{{tnx.transactionType}}</p>
                                 </div>
                                 <div class="col-md-4 text-right">
                                     <p class="mb-5 text-primitive">{{tnx.type}}</p>
@@ -556,7 +556,7 @@
                                     <h4>₹<span appFormatNumber>{{tnx.amount | number : '0.0-2'}}</span></h4>
                                 </div>
                                 <div class="col-md-5 pl-0 text-right">
-                                    <p class="text-primitive mb-10 f-12">{{tnx.transactionDate | date:'dd/MM h:mm a'}}
+                                    <p class="text-primitive mb-10 f-12">{{tnx.orderDate | date:'dd/MM h:mm a'}}
                                     </p>
                                 </div>
                             </div>
@@ -564,9 +564,9 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <p class="text-primitive f-12 mb-5 l-18">{{tnx.schemeName}}</p>
-                                    <p class="mb-4">{{tnx.investorName}}</p>
-                                    <span class="f-12 spanClass text-primary">
-                                        UNITS ALLOTTED
+                                    <p class="mb-4">{{clientData.name}}</p>
+                                    <span class="f-12 spanClass text-primary" [class]="tnx.status">
+                                        {{tnx.statusDesc}}
                                     </span>
                                 </div>
                             </div>
@@ -627,6 +627,38 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- cashflow -->
+                <div class="wrapperBox">
+                    <ng-container *ngFor="let flowData of cashflowData">
+                        <table mat-table [dataSource]="flowData" class="mt-8 skeletonAnimation" id="table-low">
+                            <ng-container matColumnDef="position">
+                                <th mat-header-cell *matHeaderCellDef class="br"> Bank A/c </th>
+                                <td valign="top" mat-cell *matCellDef="let element" class="br">
+                                    <div class="bar">  </div>
+                                </td>
+                            </ng-container>
+    
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef class="br"> In-flows </th>
+                                <td valign="top" mat-cell *matCellDef="let element" class="br">
+                                    <div class="bar">  </div>
+                                </td>
+                            </ng-container>
+    
+                            <!-- Weight Column -->
+                            <ng-container matColumnDef="weight">
+                                <th mat-header-cell *matHeaderCellDef class="br"> Out-flows </th>
+                                <td valign="top" mat-cell *matCellDef="let element" class="br">
+                                    <div class="bar">  </div>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['position', 'name', 'weight']"></tr>
+                            <tr mat-row *matRowDef="let row; columns: ['position', 'name', 'weight'];"></tr>
+                        </table>
+                    </ng-container>
                 </div>
             </div>
         </div>
