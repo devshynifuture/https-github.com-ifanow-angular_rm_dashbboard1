@@ -9,6 +9,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { DataComponent } from '../../../../../../interfaces/data.component';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { MatInput } from '@angular/material';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-liabilities',
@@ -20,6 +21,21 @@ import { MatInput } from '@angular/material';
 
 })
 export class AddLiabilitiesComponent implements OnInit, DataComponent {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   validatorType = ValidatorType;
   productForm: FormGroup;
   show: boolean;
@@ -388,6 +404,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       this.inputs.find(input => !input.ngControl.valid).focus();
     }
     else {
+      this.barButtonOptions.active = true;
       if (this._data.id == undefined) {
         const objToSend = {
           advisorId: this.advisorId,
@@ -435,6 +452,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     }
   }
   addEditLiabilityRes(data) {
+    this.barButtonOptions.active = false;
     if (data == 1) {
       console.log(data);
       data = this.loanTypeView;

@@ -1,7 +1,7 @@
 <div class="popup-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-10 p-0">
-            <h4 class="mb-0 wrapper-20">LIfe Insurance - Detailed view</h4>
+            <h4 class="mb-0 wrapper-20">{{showInsurance}} insurance - Detailed view</h4>
         </div>
         <div class="col-md-2 text-right">
             <div class="wrapper-12">
@@ -96,7 +96,7 @@
                                 Policy tenure
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                {{(_data.policyTenure == 5) ? '5 Years' : (_data.policyTenure == 10) ? '10 Years' : (_data.policyTenure == 15) ? '15 Years' : (_data.policyTenure == 20) ? '20 Years' : '-'}}
+                                {{(_data.policyTenure) ? _data.policyTenure : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -123,7 +123,7 @@
                                 {{(_data.lastUnpaidPremium) ? _data.lastUnpaidPremium : '-'}}
                             </div>
                         </div>
-                        <div class="row bb p-8 b-l br" *ngFor="let data of nominee; let i = index">
+                        <div class="row bb p-8 b-l br" >
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Current value
                             </div>
@@ -131,12 +131,20 @@
                                 {{(_data.currentValue == 'Infinity') ? 0 : _data.currentValue}}
                             </div>
                         </div>
-
+                        
+                        <div class="row bb p-8 b-l br" >
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Duration remaining
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                {{(_data.durationRemaining) ? _data.durationRemaining : '-'}}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" *ngIf="insuranceSubTypeId != 1">
                 <div class="col-md-12 p-0 mt-24">
                     <h4 class="f-16 roboto f-500">Loan details</h4>
                     <div class="insurance-ui bt">
@@ -168,6 +176,38 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12 p-0 mt-24">
+                    <h4 class="f-16 roboto f-500">Miscellaneous details</h4>
+                    <div class="insurance-ui bt">
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Premium payment mode
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                {{(_data.premiumPaymentMode == '1') ? 'Cheque' :(_data.premiumPaymentMode == '2') ? 'Cash' : (_data.premiumPaymentMode == '3') ? 'Net banking' : (_data.premiumPaymentMode == '4') ? 'Credit card' : (_data.premiumPaymentMode == '5') ? 'NACH' : (_data.premiumPaymentMode == '6') ? 'ECS' : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Advisor name
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                {{(_data.advisorName) ? _data.advisorName : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Service branch
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                {{(_data.serviceBranch) ? (_data.serviceBranch) : '-'}}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="col-md-6">
@@ -178,13 +218,13 @@
                     <div class="insurance-ui bt">
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
-                                Risk cover
+                                Current risk cover
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
                                 {{(_data.riskCover) ? _data.riskCover : '-'}}
                             </div>
                         </div>
-                        <div class="row bb p-8 b-l br">
+                        <div class="row bb p-8 b-l br" *ngIf="insuranceSubTypeId != 1">
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Surrender value
                             </div>
@@ -192,16 +232,29 @@
                                 {{(_data.surrenderValue) ? _data.surrenderValue : '-'}}
                             </div>
                         </div>
-                        <div class="row bb p-8 b-l br" *ngFor="let data of nominee; let i = index">
-                            <div class="col-md-8 text-left f-14 roboto p-0">
-                                Nominee {{i+1}}
-                            </div>
-                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                {{ data.name }}
+                        <div *ngIf="insuranceSubTypeId != 1">
+                            <div class="row bb p-8 b-l br" *ngFor="let data of nominee; let i = index" >
+                                <div bb p-8>
+                                        <div class="col-md-8 text-left f-14 roboto p-0">
+                                                Nominee {{i+1}}
+                                            </div>
+                                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                                {{ data.name }}
+                                            </div>
+                                </div>
+                                <div bb p-8>
+                                        <div class="col-md-8 text-left f-14 roboto p-0">
+                                                Nominee relation{{i+1}}
+                                            </div>
+                                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                                {{ data.relationName }}
+                                            </div>
+                                </div>
                             </div>
                         </div>
+                   
 
-                        <div class="row bb p-8 b-l br">
+                        <div class="row bb p-8 b-l br" *ngIf="insuranceSubTypeId != 1">
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Assumed rate
                             </div>
@@ -209,7 +262,7 @@
                                 {{(_data.assumedRate) ? _data.assumedRate : '-'}}
                             </div>
                         </div>
-                        <div *ngIf="_data.ulipFundDetails.length > 0">
+                        <div *ngIf="_data.ulipFundDetails.length > 0 || insuranceSubTypeId != 1">
                                 <div class="row bb p-8 b-l br" *ngFor="let data of _data.ulipFundDetails; let i = index">
                                         <div class="row bb p-8 b-l br">
                                                 <div class="col-md-8 text-left f-14 roboto p-0">
@@ -282,17 +335,22 @@
                                 Amount
                             </div>
                         </div>
-
-                        <div class="row bb p-8 b-l br" *ngFor="let data of cashFlowList; let i = index">
-                            <div class="col-md-6 text-left f-14 roboto p-0">
-                                {{(data.cashFlowType) ? data.cashFlowType : '-'}}
+                        <div *ngIf="cashFlowList.length > 0">
+                            <div class="row bb p-8 b-l br" *ngFor="let data of cashFlowList; let i = index">
+                                <div class="col-md-6 text-left f-14 roboto p-0">
+                                    {{(data.cashFlowType) ? data.cashFlowType : '-'}}
+                                </div>
+                                <div class="col-md-3 text-right f-14 roboto p-0">
+                                    {{(data.cashFlowYear) ? data.cashFlowYear : '-'}}
+                                </div>
+                                <div class="col-md-3 text-right f-14 roboto p-0" appFormatNumber>
+                                    {{(data.cashFlowApproxAmount) ? data.cashFlowApproxAmount : '-'}}
+                                </div>
                             </div>
-                            <div class="col-md-3 text-right f-14 roboto p-0">
-                                {{(data.cashFlowYear) ? data.cashFlowYear : '-'}}
-                            </div>
-                            <div class="col-md-3 text-right f-14 roboto p-0" appFormatNumber>
-                                {{(data.cashFlowApproxAmount) ? data.cashFlowApproxAmount : '-'}}
-                            </div>
+                        </div>
+                        
+                        <div *ngIf="cashFlowList.length == 0" class="text-center">
+                            <p>No data found</p>
                         </div>
 
                         <!-- <div class="row bb p-8 b-l br">
@@ -359,14 +417,14 @@
                                 {{(_data.ridersDoubleAccidentalBenefit) ? _data.ridersDoubleAccidentalBenefit : '-'}}
                             </div>
                         </div>
-                        <div class="row bb p-8 b-l br">
+                        <!-- <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Term waiver
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
                                 {{(_data.ridersTermWaiver) ? _data.ridersTermWaiver : '-'}}
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
@@ -376,7 +434,7 @@
                                 {{(_data.ridersCriticalIllness) ? _data.ridersCriticalIllness : '-'}}
                             </div>
                         </div>
-
+<!-- 
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Premium waiver
@@ -393,7 +451,7 @@
                             <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
                                 {{(_data.ridersFemaleCriticalIllness) ? _data.ridersFemaleCriticalIllness : '-'}}
                             </div>
-                        </div>
+                        </div> -->
 
                     </div>
                 </div>

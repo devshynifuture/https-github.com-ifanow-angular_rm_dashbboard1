@@ -415,7 +415,7 @@ export class CustomerService {
   }
 
   getPolicyName(data) {
-    const httpParams = new HttpParams().set('policyName', data.policyName);
+    const httpParams = new HttpParams().set('policyName', data.policyName).set('insuranceSubTypeId', data.insuranceSubTypeId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_POLICY_NAME, httpParams);
   }
 

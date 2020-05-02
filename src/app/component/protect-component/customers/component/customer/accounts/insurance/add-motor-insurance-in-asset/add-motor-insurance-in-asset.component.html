@@ -148,13 +148,19 @@
             <p class="m-0 f-12 text-custom">Start typing to see policy names</p>
         </div>
         <div class="col-md-5 form-group">
-            <mat-form-field class="example-full-width">
+            <!-- <mat-form-field class="example-full-width">
                 <input matInput class="form-control br-0" type="text" (keyup)="findPolicyName($event)" formControlName="policyName" aria-label="Number" matInput [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete">
                     <mat-option (click)="selectPolicy(option)" *ngFor="let option of options" [value]="option.policyName">
                         {{option.policyName}}
                     </mat-option>
                 </mat-autocomplete>
+                <mat-error>This field is required
+                </mat-error>
+            </mat-form-field> -->
+            <mat-form-field floatLabel="never" appearance="standard">
+                <input matInput type="text"  [maxLength]="40" formControlName="policyName" #policyName appInputValueValidation autocomplete="off" class="form-control br-0" placeholder="Enter policy name">
+                <mat-hint align="end" class="f-12">{{policyName.value.length}}/40</mat-hint>
                 <mat-error>This field is required
                 </mat-error>
             </mat-form-field>
@@ -484,7 +490,7 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-            <div class="col-md-1 p-0 pt-8 d-flex">
+            <div class="col-md-1 p-0 pt-8 d-flex"  (outputValue)="bankAccountList($event)" [data]="bankAccountDetails" appBankAccount>
                 <!--  prod build appBankAccount appBankAccount  [data]="bankAccountDetails"  [data]="bankAccountDetails" (inputChange)='bankAccountList($event.value)' -->
                 <i class="material-icons text-primitive c-p float-left"  >add</i>
             </div>
@@ -511,8 +517,9 @@
             <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="close(null)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveMotorInsurance()">SAVE</button>
-
+            <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveMotorInsurance()">SAVE</button> -->
+            <app-progress-button (btnClick)="saveMotorInsurance()"  class="btn-bottom br-0 text-inherit" [options]="barButtonOptions" >
+                </app-progress-button>
         </div>
     </div>
 </div>
