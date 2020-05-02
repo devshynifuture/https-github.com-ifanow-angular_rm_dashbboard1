@@ -83,7 +83,7 @@ export class FatcaDetailsInnComponent implements OnInit {
       cityOfBirth: [(!data) ? '' : data.cityOfBirth, [Validators.required]],
       countryOfBirth: [!data ? '' : data.countryOfBirth, [Validators.required]],
       sourceOfWealth: [!data ? '' : data.sourceOfWealth, [Validators.required]],
-      occupation: [!data ? '' : data.occupation, [Validators.required]],
+      occupationCode: [!data ? '' : data.occupationCode, [Validators.required]],
       politically: [!data ? '1' : (data.politically) ? data.politically +'' : '1', [Validators.required]],
       taxResidency: [!data ? '1' : (data.taxResidency) ? data.taxResidency +'' : '1', [Validators.required]],
 
@@ -114,7 +114,7 @@ export class FatcaDetailsInnComponent implements OnInit {
         cityOfBirth: this.fatcaDetails.controls.cityOfBirth.value,
         countryOfBirth: this.fatcaDetails.controls.countryOfBirth.value,
         sourceOfWealth: this.fatcaDetails.controls.sourceOfWealth.value,
-        occupation: this.fatcaDetails.controls.occupation.value,
+        occupationCode: this.fatcaDetails.controls.occupationCode.value,
         politically: (this.fatcaDetails.controls.politically.value == 1) ? 'Y' : (this.fatcaDetails.controls.politically.value == 2) ? 'N' : 'R',
         taxResidency: this.fatcaDetails.controls.taxResidency.value,
       }

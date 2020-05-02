@@ -40,11 +40,14 @@
                     <h5>1) Select a broker code</h5>
                     <p class="f-12 text-primitive">You can create a/c in multiple codes</p>
                     <div class="form-group">
-                        <mat-select class="form-control" formControlName="bseBroker">
-                            <mat-option *ngFor="let bsetype of bse" (click)="selectArn(bsetype)" [value]="bsetype.brokerCode">
-                                {{bsetype.brokerCode}}
-                            </mat-option>
-                        </mat-select>
+                        <mat-form-field>
+                            <mat-select class="form-control" formControlName="bseBroker">
+                                <mat-option *ngFor="let bsetype of bse" (click)="selectArn(bsetype)" [value]="bsetype.brokerCode">
+                                    {{bsetype.brokerCode}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
                     </div>
                 </div>
 
@@ -52,7 +55,10 @@
                     <h5>2) Provide account number</h5>
                     <p class="f-12 text-primitive">This will be displayed as UCC number</p>
                     <div class="form-group">
-                        <input matInput class="form-control" formControlName="accountNumber">
+                        <mat-form-field>
+                            <input matInput class="form-control" formControlName="accountNumber">
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
                     </div>
                 </div>
 
@@ -100,11 +106,14 @@
                     <h5>1) Select a broker code</h5>
                     <p class="f-12 text-primitive">You can create a/c in multiple codes</p>
                     <div class="form-group">
-                        <mat-select class="form-control" formControlName="nseBroker">
-                            <mat-option *ngFor="let nsetype of nse" (click)="selectArnNse(nsetype)" [value]="nsetype.brokerCode">
-                                {{nsetype.brokerCode}}
-                            </mat-option>
-                        </mat-select>
+                        <mat-form-field>
+                            <mat-select class="form-control" formControlName="nseBroker">
+                                <mat-option *ngFor="let nsetype of nse" (click)="selectArnNse(nsetype)" [value]="nsetype.brokerCode">
+                                    {{nsetype.brokerCode}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
                     </div>
                 </div>
 
