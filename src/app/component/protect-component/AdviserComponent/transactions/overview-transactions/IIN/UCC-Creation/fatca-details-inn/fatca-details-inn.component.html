@@ -117,27 +117,47 @@
                         </mat-form-field>
                     </div>
                 </div>
-
-
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0">Occupation </h3>
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field>
-                            <mat-select class="form-control" formControlName="occupation">
-                                <mat-option value="S">
-                                    Service
+                            <mat-select class="form-control" formControlName="occupationCode">
+                                <mat-option value="41">
+                                    Private Sector
                                 </mat-option>
-                                <mat-option value="B">
+                                <mat-option value="42">
+                                    Public Sector
+                                </mat-option>
+                                <mat-option value="O1">
                                     Business
                                 </mat-option>
-                                <mat-option value="O">
+                                <mat-option value="03">
+                                    Professional
+                                </mat-option>
+                                <mat-option value="05">
+                                    Retired
+                                </mat-option>
+                                <mat-option value="06">
+                                    Housewife
+                                </mat-option>
+                                <mat-option value="07">
+                                    Student
+                                </mat-option>
+                                <mat-option value="44">
+                                    Government Sector
+                                </mat-option>
+                                <mat-option value="08">
                                     Others
                                 </mat-option>
-                                <mat-option value="X">
+                                <mat-option value="0">
+                                    Self Employed
+                                </mat-option>
+                                <mat-option value="0">
                                     Not Categorized
                                 </mat-option>
+                               
                             </mat-select>
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
