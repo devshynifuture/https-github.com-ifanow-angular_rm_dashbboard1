@@ -419,7 +419,7 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-            <div class="col-md-1 p-0 pt-8 d-flex">
+            <div class="col-md-1 p-0 pt-8 d-flex"  (outputValue)="bankAccountList($event)" [data]="bankAccountDetails" appBankAccount>
                 <!--[data]="bankAccountDetails" appBankAccount prod build (inputChange)='bankAccountList($event.value)'-->
                 <i class="material-icons text-primitive c-p float-left" >add</i>
             </div>
@@ -433,8 +433,9 @@
             <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="close(null)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveCriticalIllness()">SAVE</button>
-
+            <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveCriticalIllness()">SAVE</button> -->
+            <app-progress-button (btnClick)="saveCriticalIllness()"  class="btn-bottom br-0 text-inherit" [options]="barButtonOptions" >
+                </app-progress-button>
         </div>
     </div>
 </div>

@@ -1,7 +1,7 @@
 <div class="popup-header-fix-35">
     <div class="row bb-1">
         <div class="col-md-10 p-0">
-            <h4 class="mb-0 wrapper-20">{{showInsurance}} Insurance - Detailed view</h4>
+            <h4 class="mb-0 wrapper-20">{{showInsurance}} insurance - Detailed view</h4>
         </div>
         <div class="col-md-2 text-left">
             <div class="wrapper-12">
@@ -13,6 +13,38 @@
 
 
 <div class="pl-20 pr-20 mt-44 pb-48">
+        <!-- <div class="row" *ngIf="insuranceSubTypeId != 1">
+                <div class="col-md-12 p-0 mt-24">
+                    <h4 class="f-16 roboto f-500">Policy details</h4>
+                    <div class="insurance-ui bt">
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Loan available
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                {{(_data.loanAvailable) ? _data.loanAvailable : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Loan taken
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                {{(_data.loanTaken) ? _data.loanTaken : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Loan taken on
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
+                                {{(_data.loanTakenOn) ? (_data.loanTakenOn | date:'dd/MM/yyyy') : '-'}}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div> -->
     <div class="row pt-40">
         <div class="col-md-12 p-0">
             <div class="insurance-ui bt">

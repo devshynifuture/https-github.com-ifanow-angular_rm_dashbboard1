@@ -43,7 +43,7 @@
                 <th mat-header-cell *matHeaderCellDef class="br w-10"> Edit </th>
                 <td mat-cell *matCellDef="let element" class="br text-center">
                     <div class="bar">
-                        <button mat-stroked-button class="btn-primary-outline classEditBtn btn-sm" (click)="addEditNewRoles(null, false, element)" *ngIf="element.isEditable == 1">EDIT</button>
+                        <button mat-stroked-button class="btn-primary-outline classEditBtn btn-sm" (click)="addEditNewRoles(element.advisorOrClientRole, false, element)" *ngIf="element.isEditable == 1">EDIT</button>
                     </div>
                 </td>
             </ng-container>

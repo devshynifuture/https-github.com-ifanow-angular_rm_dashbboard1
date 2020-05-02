@@ -87,6 +87,20 @@
             </mat-form-field>
         </div>
     </div>
+    
+    <div class="row pt-32">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-10 ">Plan name</h5>
+        </div>
+        <div class="col-md-5 form-group">
+            <mat-form-field>
+                <input matInput type="text" [maxLength]="40" formControlName="planeName" #planeName appInputValueValidation autocomplete="off" class="form-control br-0">
+                <mat-hint align="end" class="f-12">{{planeName.value.length}}/40</mat-hint>  
+                <mat-error>This field is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
 
     <div class="row pt-32">
         <div class="col-md-4 pr-0 text-right">
@@ -108,19 +122,7 @@
         </div>
     </div>
 
-    <div class="row pt-32">
-        <div class="col-md-4 pr-0 text-right">
-            <h5 class="m-0 pt-10 ">Plan name</h5>
-        </div>
-        <div class="col-md-5 form-group">
-            <mat-form-field>
-                <input matInput type="text" [maxLength]="40" formControlName="planeName" #planeName appInputValueValidation autocomplete="off" class="form-control br-0">
-                <mat-hint align="end" class="f-12">{{planeName.value.length}}/40</mat-hint>  
-                <mat-error>This field is required
-                </mat-error>
-            </mat-form-field>
-        </div>
-    </div>
+
 
 
 
@@ -328,8 +330,9 @@
             <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="close(null)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFireInsurance()">SAVE</button>
-
+            <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveFireInsurance()">SAVE</button> -->
+            <app-progress-button (btnClick)="saveFireInsurance()"  class="btn-bottom br-0 text-inherit" [options]="barButtonOptions" >
+                </app-progress-button>
         </div>
     </div>
 </div>

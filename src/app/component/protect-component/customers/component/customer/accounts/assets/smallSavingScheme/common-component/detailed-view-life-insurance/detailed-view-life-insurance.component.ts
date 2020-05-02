@@ -10,12 +10,15 @@ export class DetailedViewLifeInsuranceComponent implements OnInit {
   _data: any;
   nominee: any;
   cashFlowList: any;
-
+  insuranceSubTypeId:any;
+  showInsurance: any;
   constructor(private subInjectService:SubscriptionInject) { }
   @Input()
   set data(inputData) {
     this._data = inputData.data;
-    console.log('AddLiabilitiesComponent Input data : ', this._data);
+    this.insuranceSubTypeId =this._data.insuranceSubTypeId;
+    this.showInsurance =(this._data.insuranceSubTypeId == '1') ? 'Term' : (this._data.insuranceSubTypeId == '2') ? 'Traditional' : (this._data.insuranceSubTypeId == '2') ?'ULIP' : 'Life';
+    console.log('AddLiabilitiesCompon.insuranceSubTypeIdent.insuranceSubTypeId Input data : ', this._data);
     this.nominee = this._data.nominees;
     this.cashFlowList = this._data.insuranceCashflowList
     // this.owners = this._data.realEstateOwners.filter(element => element.ownerName != this.realEstate.ownerName);

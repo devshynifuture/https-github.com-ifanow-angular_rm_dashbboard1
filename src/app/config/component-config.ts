@@ -462,9 +462,8 @@ export const appConfig = {
   GET_REGISTRATION_UCC_IIN: 'user/register/detail/get',
   GET_CLIENT_FM_LIST: 'user/client/family/filter/get',
   CREATE_IIN_UCC: 'user/register/create',
-  MANDATE_VIEW: 'mandate/view',
   GET_TOKEN: 'user/bse/upload/password',
-  BANK_MANDTAE: 'nse/iin/bank-detail/get',
+  BANK_MANDTAE: 'nse/iin/bank/detail/get',
   TAX_MASTER: 'nse/tax-master/get',
 
   ADD_MANDATE: 'mandate/add',

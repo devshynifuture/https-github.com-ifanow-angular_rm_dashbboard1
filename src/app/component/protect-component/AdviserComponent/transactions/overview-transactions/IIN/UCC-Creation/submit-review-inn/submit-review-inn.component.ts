@@ -38,6 +38,7 @@ export class SubmitReviewInnComponent implements OnInit {
   toSendObjHolderList: any;
   toSendObjBankList: any;
   toSendObjNomineeList: any;
+  clientData: any;
 
   constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
               private eventService: EventService) {
@@ -48,6 +49,7 @@ export class SubmitReviewInnComponent implements OnInit {
     this.doneData = {};
     this.inputData = data;
     this.allData = data;
+    this.clientData = this.clientData
     this.doneData.nominee = true;
     this.doneData.bank = true;
     this.doneData.contact = true;
@@ -208,6 +210,7 @@ export class SubmitReviewInnComponent implements OnInit {
     this.allData.holderList = this.toSendObjHolderList
     this.allData.bankDetailList = this.toSendObjBankList
     this.allData.nomineeList = this.toSendObjNomineeList
+    this.inputData.clientData = this.clientData
     if (this.addedBse == true) {
       const obj1 = {
         ownerName: this.allData.ownerName,
@@ -218,6 +221,7 @@ export class SubmitReviewInnComponent implements OnInit {
         nomineeList: this.toSendObjNomineeList,
         fatcaDetail: this.allData.fatcaDetail,
         id: 2,
+        clientCode:this.reviewSubmit.controls.accountNumber.value,
         aggregatorType: this.selectedBrokerBse.aggregatorType,
         familyMemberId: this.allData.familyMemberId,
         clientId: this.allData.clientId,
@@ -243,6 +247,7 @@ export class SubmitReviewInnComponent implements OnInit {
         nomineeList: this.toSendObjNomineeList,
         fatcaDetail: this.allData.fatcaDetail,
         id: 2,
+        clientCode:this.reviewSubmit.controls.accountNumber.value,
         aggregatorType: this.selectedBrokerBse.aggregatorType,
         familyMemberId: this.allData.familyMemberId,
         clientId: this.allData.clientId,
