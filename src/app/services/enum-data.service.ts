@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {UtilService} from './util.service';
-import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import {EnumServiceService} from './enum-service.service';
-import {OnlineTransactionService} from '../component/protect-component/AdviserComponent/transactions/online-transaction.service';
+import { Injectable } from '@angular/core';
+import { UtilService } from './util.service';
+import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { EnumServiceService } from './enum-service.service';
+import { OnlineTransactionService } from '../component/protect-component/AdviserComponent/transactions/online-transaction.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,40 +10,40 @@ import {OnlineTransactionService} from '../component/protect-component/AdviserCo
 export class EnumDataService {
 
   constructor(private enumService: EnumServiceService, private subService: SubscriptionService,
-              private onlineTransactionService: OnlineTransactionService) {
+    private onlineTransactionService: OnlineTransactionService) {
   }
 
   proofType = [
-    {proofId: 1, proofType: 'Personal Pan'},
-    {proofId: 2, proofType: 'Company Pan'},
-    {proofId: 3, proofType: 'Passport'},
-    {proofId: 4, proofType: 'Aadhaar'},
-    {proofId: 5, proofType: 'Driving licence'},
-    {proofId: 6, proofType: 'Voter\'s ID card'},
-    {proofId: 7, proofType: 'NREGA job card'},
-    {proofId: 8, proofType: 'Bank passbook'},
-    {proofId: 9, proofType: 'Bank Statement'},
-    {proofId: 10, proofType: 'cancel cheque'},
-    {proofId: 11, proofType: 'others'},
+    { proofId: 1, proofType: 'Personal Pan' },
+    { proofId: 2, proofType: 'Company Pan' },
+    { proofId: 3, proofType: 'Passport' },
+    { proofId: 4, proofType: 'Aadhaar' },
+    { proofId: 5, proofType: 'Driving licence' },
+    { proofId: 6, proofType: 'Voter\'s ID card' },
+    { proofId: 7, proofType: 'NREGA job card' },
+    { proofId: 8, proofType: 'Bank passbook' },
+    { proofId: 9, proofType: 'Bank Statement' },
+    { proofId: 10, proofType: 'cancel cheque' },
+    { proofId: 11, proofType: 'others' },
   ];
 
   roleList = [
-    {roleTypeId: 1, roleTypeName: 'Admin'},
-    {roleTypeId: 2, roleTypeName: 'Para planner'},
-    {roleTypeId: 3, roleTypeName: 'Relationship manager'},
-    {roleTypeId: 4, roleTypeName: 'Operations'},
+    { roleTypeId: 1, roleTypeName: 'Admin' },
+    { roleTypeId: 2, roleTypeName: 'Para planner' },
+    { roleTypeId: 3, roleTypeName: 'Relationship manager' },
+    { roleTypeId: 4, roleTypeName: 'Operations' },
   ];
 
   clientRoleList = [
-    {clientRoleId: 1, clientRoleName: 'Mutual Fund (MF) only'},
-    {clientRoleId: 2, clientRoleName: 'MF + Multi asset'},
-    {clientRoleId: 3, clientRoleName: 'MF + Multi asset + Basic Plan'},
-    {clientRoleId: 4, clientRoleName: 'MF + Multi asset + Advanced Plan'},
+    { clientRoleId: 1, clientRoleName: 'Mutual Fund (MF) only' },
+    { clientRoleId: 2, clientRoleName: 'MF + Multi asset' },
+    { clientRoleId: 3, clientRoleName: 'MF + Multi asset + Basic Plan' },
+    { clientRoleId: 4, clientRoleName: 'MF + Multi asset + Advanced Plan' },
   ];
 
   bankList = [
-    {bankId: 1, bankName: 'HDFC'},
-    {bankId: 2, bankName: 'SBI'},
+    { bankId: 1, bankName: 'HDFC' },
+    { bankId: 2, bankName: 'SBI' },
   ];
 
   public getProofType() {
@@ -90,7 +90,7 @@ export class EnumDataService {
   }
 
   public getDataForTaxMasterService() {
-    const obj = {bseUserId: 192};
+    const obj = { tpUserCredentialId: 192, bseUserId: 0 };
     this.onlineTransactionService.getTaxMasterData(obj).subscribe(
       data => {
 
