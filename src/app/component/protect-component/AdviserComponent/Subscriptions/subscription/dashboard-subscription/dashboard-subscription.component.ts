@@ -1,21 +1,20 @@
-import { ActivatedRoute, Router } from '@angular/router';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { SubscriptionInject } from '../../subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { MatDialog } from '@angular/material';
-import { DeleteSubscriptionComponent } from '../common-subscription-component/delete-subscription/delete-subscription.component';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { SubscriptionService } from '../../subscription.service';
-import { EnumServiceService } from '../../../../../../services/enum-service.service';
-import { UtilService } from '../../../../../../services/util.service';
-import { AuthService } from '../../../../../../auth-service/authService';
-import { Chart } from 'angular-highcharts';
-import { VariableFeeComponent } from '../common-subscription-component/variable-fee/variable-fee.component';
-import { FixedFeeComponent } from '../common-subscription-component/fixed-fee/fixed-fee.component';
-import { BillerSettingsComponent } from '../common-subscription-component/biller-settings/biller-settings.component';
-import { ChangePayeeComponent } from '../common-subscription-component/change-payee/change-payee.component';
-import { InvoiceHistoryComponent } from '../common-subscription-component/invoice-history/invoice-history.component';
-import { SubscriptionPopupComponent } from '../common-subscription-component/subscription-popup/subscription-popup.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {SubscriptionInject} from '../../subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {MatDialog} from '@angular/material';
+import {DeleteSubscriptionComponent} from '../common-subscription-component/delete-subscription/delete-subscription.component';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {SubscriptionService} from '../../subscription.service';
+import {EnumServiceService} from '../../../../../../services/enum-service.service';
+import {UtilService} from '../../../../../../services/util.service';
+import {AuthService} from '../../../../../../auth-service/authService';
+import {Chart} from 'angular-highcharts';
+import {VariableFeeComponent} from '../common-subscription-component/variable-fee/variable-fee.component';
+import {FixedFeeComponent} from '../common-subscription-component/fixed-fee/fixed-fee.component';
+import {BillerSettingsComponent} from '../common-subscription-component/biller-settings/biller-settings.component';
+import {ChangePayeeComponent} from '../common-subscription-component/change-payee/change-payee.component';
+import {InvoiceHistoryComponent} from '../common-subscription-component/invoice-history/invoice-history.component';
 
 export interface PeriodicElement {
   name: string;
@@ -25,7 +24,7 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'Abhishek Mane', service: 'Financial Planning', amt: 'Rs.1,00,000/Q', billing: '25/08/2019' },
+  {name: 'Abhishek Mane', service: 'Financial Planning', amt: 'Rs.1,00,000/Q', billing: '25/08/2019'},
   { name: 'Ronak Hasmuk Hindocha', service: 'Investment management', amt: 'View Details', billing: '-' },
   { name: 'Aman Jain', service: 'AUM Linked fee', amt: 'View Details', billing: '-' },
 
@@ -88,7 +87,7 @@ export class DashboardSubscriptionComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.advisorName = AuthService.getUserInfo().fullName;
+    this.advisorName = AuthService.getUserInfo().name;
     this.initChart();
     this.getDashboardResponse();
     this.docSentSignedCountData();

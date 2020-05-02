@@ -108,13 +108,12 @@
                 </div>
             </div>
             <div *ngIf="fieldFlag=='client' && basicDetailsData.userId" class="row pt-58">
-                <div class="col-md-4 text-right">
+                <div class="col-md-4 text-right mob-text-left mob-pl-10 mob-pr-10">
                     <h5 class="m-0 pt-12">Username</h5>
-                    <p class="f-12 m-0 l-18 roboto text-custom">This will be the login ID. By default, email is the
-                        username
+                    <p class="f-12 m-0 l-18 roboto text-custom mob-pt-10">This will be the login ID. By default, email is the username
                     </p>
                 </div>
-                <div class="col-md-6 p-0">
+                <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <input #username [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
@@ -159,8 +158,8 @@
                 <div class="col-md-4 text-right mob-text-left mob-pl-10">
                     <h5 class="m-0 pt-8 mob-pb-5">Gender</h5>
                 </div>
-                <div class="col-md-7 p-0 mob-pr-10 mob-text-center">
-                    <mat-radio-group formControlName="gender" aria-label="Select an option" class="d-block mob-mr-8">
+                <div class="col-md-7 p-0 mob-text-center">
+                    <mat-radio-group formControlName="gender" aria-label="Select an option" class="d-block clientmobs">
                         <mat-radio-button value="1"
                             [ngClass]="{'bu-primary': basicDetails.get('gender').value=='1','borderRadio':basicDetails.get('gender').value!='1','text-primary':basicDetails.get('gender').value=='1','text-custom':basicDetails.get('gender').value!='1'}"
                             class="bu-primary">Male

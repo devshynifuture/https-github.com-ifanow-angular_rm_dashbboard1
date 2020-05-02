@@ -9,7 +9,7 @@
 
 
                 <!-- your account intro -->
-                <div class="wrapperBox mb-20">
+                <div class="wrapperBox mb-20" [hidden]="true">
                     <div class="row">
                         <div class="col-md-12 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0 ">Your account</h5>
@@ -69,7 +69,7 @@
                                             <div class="col-md-2 relClass ">
                                                 <div class="bar height24">
                                                     <p class="text-black mb-0">
-                                                        <span appFormatNumber>{{(data.y/chartTotal)}}</span>
+                                                        <span appFormatNumber>{{(data.y/chartTotal | number : '0.0-2')}}</span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -87,7 +87,7 @@
                         <div class="col-md-8 d-flex align-items-center">
                             <h5 class="roboto m-0">Portfolio</h5>
                         </div>
-                        <div class="col-md-4 text-right" *ngIf="portFolioData && portFolioData.length > 0">
+                        <div class="col-md-4 text-right">
                             <a class="viewBtn c-p text-primitive br-2 f-12"> View all </a>
                         </div>
                     </div>
@@ -130,7 +130,7 @@
                         </div>
 
                         <!-- portfolio data not present -->
-                        <div class="fundBox bg-white" *ngIf="!portFolioData || portFolioData.length == 0">
+                        <div class="fundBox bg-white" *ngIf="tabsLoaded.portfolioSummary.dataLoaded && portFolioData.length == 0">
                             <div class="row">
                                 <div class="col-md-8  pr-0">
                                     <h5 class="roboto">Mutual funds</h5>
@@ -166,7 +166,7 @@
                 </div>
 
                 <!-- complete your profile -->
-                <div class="wrapperBox mb-20">
+                <div class="wrapperBox mb-20" [hidden]="true">
                     <div class="row">
                         <div class="col-md-12 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0 ">Complete your profile</h5>
@@ -206,7 +206,7 @@
                 </div>
 
 
-                <div class="wrapperBox mb-20">
+                <div class="wrapperBox mb-20" [hidden]="true">
                     <div class="row">
                         <div class="col-md-12 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0 ">Family members</h5>
@@ -243,7 +243,7 @@
 
                 </div>
 
-                <div class="wrapperBox mb-20">
+                <div class="wrapperBox mb-20" [hidden]="true">
                     <div class="row">
                         <div class="col-md-12 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0 ">Mutual found protfolio</h5>
@@ -280,12 +280,13 @@
                 </div>
 
                 <!-- goals section -->
-                <div class="wrapperBox">
+                <!-- goals not to be integrated for now -->
+                <div class="wrapperBox" [hidden]="true">
                     <div class="row">
                         <div class="col-md-8 d-flex align-items-center">
                             <h5 class="roboto m-0">Goals</h5>
                         </div>
-                        <div class="col-md-4 text-right" *ngIf="portFolioData && portFolioData.length > 0">
+                        <div class="col-md-4 text-right">
                             <a class="viewBtn c-p text-primitive br-2 f-12">
                                 View all
                             </a>
@@ -384,7 +385,7 @@
                                 <h5 class="m-0 roboto">Money to be deployed
                                 </h5>
                                 <p class="f-12 text-primitive">current + upcoming</p>
-                                <h3 class="text-primary m-0 f-22">₹<span appFormatNumber>{{adviseData?.deployed}}</span>
+                                <h3 class="text-primary m-0 f-22">₹<span appFormatNumber>{{adviseData?.deployed || 0}}</span>
                                 </h3>
                             </div>
                         </div>
@@ -456,7 +457,7 @@
                 </div>
 
                 <!-- insurance -->
-                <div class="wrapperBox" *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">
+                <div class="wrapperBox" *ngIf="false">
                     <div class="row">
                         <div class="col-md-8 d-flex align-items-center">
                             <h5 class="roboto m-0">Insurance</h5>
@@ -487,7 +488,7 @@
                 </div>
 
                 <!-- Recent transactions as per rta -->
-                <div class="wrapperBox" *ngIf="tabsLoaded.rtaFeeds.dataLoaded && tabsLoaded.rtaFeeds.hasData">>
+                <div class="wrapperBox" *ngIf="tabsLoaded.rtaFeeds.dataLoaded && tabsLoaded.rtaFeeds.hasData">
                     <div class="row">
                         <div class="col-md-8 d-flex align-items-center">
                             <h5 class="roboto m-0">Recent transactions (As per RTA feeds)</h5>
@@ -529,7 +530,7 @@
                 </div>
 
                 <!-- recent transactions-->
-                <div class="wrapperBox" *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">>
+                <div class="wrapperBox" *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">
                     <div class="row">
                         <div class="col-md-8 d-flex align-items-center">
                             <h5 class="roboto m-0">Recent transactions</h5>
@@ -543,7 +544,7 @@
                         <div class="transactionsBox bg-white col-md-8" *ngFor="let tnx of recentTransactions">
                             <div class="row">
                                 <div class="col-md-8">
-                                    <p class="mb-5">{{tnx.fwTransactionType}}</p>
+                                    <p class="mb-5">{{tnx.transactionType}}</p>
                                 </div>
                                 <div class="col-md-4 text-right">
                                     <p class="mb-5 text-primitive">{{tnx.type}}</p>
@@ -555,7 +556,7 @@
                                     <h4>₹<span appFormatNumber>{{tnx.amount | number : '0.0-2'}}</span></h4>
                                 </div>
                                 <div class="col-md-5 pl-0 text-right">
-                                    <p class="text-primitive mb-10 f-12">{{tnx.transactionDate | date:'dd/MM h:mm a'}}
+                                    <p class="text-primitive mb-10 f-12">{{tnx.orderDate | date:'dd/MM h:mm a'}}
                                     </p>
                                 </div>
                             </div>
@@ -563,9 +564,9 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <p class="text-primitive f-12 mb-5 l-18">{{tnx.schemeName}}</p>
-                                    <p class="mb-4">{{tnx.investorName}}</p>
-                                    <span class="f-12 spanClass text-primary">
-                                        UNITS ALLOTTED
+                                    <p class="mb-4">{{clientData.name}}</p>
+                                    <span class="f-12 spanClass text-primary" [class]="tnx.status">
+                                        {{tnx.statusDesc}}
                                     </span>
                                 </div>
                             </div>
@@ -581,23 +582,22 @@
                         </div>
                     </div>
 
-                    <div class="riskProfileBox bg-white" *ngFor="let riskProfileData of riskProfile">
-                        <div class="row">
+                    <div class="riskProfileBox bg-white" *ngIf="tabsLoaded.riskProfile.dataLoaded && tabsLoaded.riskProfile.hasData">
+                        <div class="row" *ngFor="let risk of riskProfile">
                             <div class="col-md-4 text-center">
                                 <p class="f-16 roboto mb-8 f-500">Your risk score</p>
                                 <div class="numberBox">
-                                    <h1 class="f-48 mb-12"> {{riskProfileData.riskAssessmentScore}} </h1>
-                                    <p class="f-12 m-0 text-primitive">Max: {{riskProfileData.maxScore}}</p>
+                                    <h1 class="f-48 mb-12"> {{risk.riskAssessmentScore}} </h1>
+                                    <p class="f-12 m-0 text-primitive">Max: {{riskProfileMaxScore(risk.riskProfileId)}}</p>
                                 </div>
                             </div>
 
                             <div class="col-md-8 text-center">
                                 <h5 class="roboto f-500">
-                                    Your risk profile: {{riskProfileData.type}}
+                                    Your risk profile: {{risk.riskProfileStatus}}
                                 </h5>
-                                <p>{{riskProfileData.description}}</p>
+                                <p>{{riskProfileDesc(risk.riskProfileId)}}</p>
                             </div>
-
                         </div>
                     </div>
                     <div class="row" *ngIf="tabsLoaded.riskProfile.dataLoaded && !tabsLoaded.riskProfile.hasData">
@@ -627,6 +627,38 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- cashflow -->
+                <div class="wrapperBox">
+                    <ng-container *ngFor="let flowData of cashflowData">
+                        <table mat-table [dataSource]="flowData" class="mt-8 skeletonAnimation" id="table-low">
+                            <ng-container matColumnDef="position">
+                                <th mat-header-cell *matHeaderCellDef class="br"> Bank A/c </th>
+                                <td valign="top" mat-cell *matCellDef="let element" class="br">
+                                    <div class="bar">  </div>
+                                </td>
+                            </ng-container>
+    
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef class="br"> In-flows </th>
+                                <td valign="top" mat-cell *matCellDef="let element" class="br">
+                                    <div class="bar">  </div>
+                                </td>
+                            </ng-container>
+    
+                            <!-- Weight Column -->
+                            <ng-container matColumnDef="weight">
+                                <th mat-header-cell *matHeaderCellDef class="br"> Out-flows </th>
+                                <td valign="top" mat-cell *matCellDef="let element" class="br">
+                                    <div class="bar">  </div>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="['position', 'name', 'weight']"></tr>
+                            <tr mat-row *matRowDef="let row; columns: ['position', 'name', 'weight'];"></tr>
+                        </table>
+                    </ng-container>
                 </div>
             </div>
         </div>

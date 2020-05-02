@@ -25,21 +25,19 @@
         <div class="col-md-7 offset-2 p-0 bl-1 ">
             <div class="p-20">
                 <h3 class="f-18 mb-28 f-600"> FATCA details </h3>
-
-
                 <div class="row">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-10 m-0"> Nationality </h3>
                     </div>
                     <div class="col-md-8">
                         <mat-radio-group aria-label="Select an option" formControlName="nationality">
-                            <mat-radio-button [value]="1" class="b-a-custom radioBtn text-primary custom-radio" [ngClass]="fatcaDetails.get('nationality').value == 1 ? 'text-primary b-a-custom': ' text-primitive'" checked>
+                            <mat-radio-button value="1" [ngClass]="fatcaDetails.get('nationality').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                                 India
                             </mat-radio-button>
-                            <mat-radio-button [value]="2" [ngClass]="fatcaDetails.get('nationality').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
+                            <mat-radio-button value="2" [ngClass]="fatcaDetails.get('nationality').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                                 USA/Canada </mat-radio-button>
 
-                            <mat-radio-button [value]="3" [ngClass]="fatcaDetails.get('nationality').value == 3 ? 'text-primary b-a-custom': ' text-primitive'">
+                            <mat-radio-button value="3" [ngClass]="fatcaDetails.get('nationality').value === '3' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                                 Others </mat-radio-button>
                         </mat-radio-group>
                     </div>
@@ -51,38 +49,38 @@
 
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> City of birth </h3>
+                        <h3 class="f-16 pt-20 m-0"> City of birth </h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
-                            <input matInput maxlength="10" formControlName="cityOfBirth" type="text" class="form-control">
+                        <mat-form-field floatLabel="never" appearance="standard">
+                            <input placeholder="Enter City of birth" matInput maxlength="10" formControlName="cityOfBirth" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
 
 
-                <div class="row pt-32">
+                <div class="row pt-20">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Country of birth </h3>
+                        <h3 class="f-16 pt-20 m-0"> Country of birth </h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
-                            <input matInput maxlength="10" formControlName="countryOfBirth" type="text" class="form-control">
+                        <mat-form-field floatLabel="never" appearance="standard">
+                            <input placeholder="Enter Country of birth" matInput maxlength="10" formControlName="countryOfBirth" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
 
 
-                <div class="row pt-32">
+                <div class="row pt-20">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Gross annual income in Laks </h3>
+                        <h3 class="f-16 pt-20 m-0"> Gross annual income in Laks </h3>
                         <p class="text-custom f-12 m-0">in Indian Rupees</p>
                     </div>
                     <div class="col-md-3 form-group">
-                        <mat-form-field>
-                            <input matInput formControlName="annualIncome" maxlength="10" type="text" class="form-control">
+                        <mat-form-field floatLabel="never" appearance="standard">
+                            <input placeholder="Enter Gross income" matInput [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation [maxLength]="20" formControlName="annualIncome" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
@@ -113,27 +111,47 @@
                         </mat-form-field>
                     </div>
                 </div>
-
-
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0">Occupation </h3>
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field>
-                            <mat-select class="form-control" formControlName="occupation">
-                                <mat-option value="S">
-                                    Service
+                            <mat-select class="form-control" formControlName="occupationCode">
+                                <mat-option value="41">
+                                    Private Sector
                                 </mat-option>
-                                <mat-option value="B">
+                                <mat-option value="42">
+                                    Public Sector
+                                </mat-option>
+                                <mat-option value="O1">
                                     Business
                                 </mat-option>
-                                <mat-option value="O">
+                                <mat-option value="03">
+                                    Professional
+                                </mat-option>
+                                <mat-option value="05">
+                                    Retired
+                                </mat-option>
+                                <mat-option value="06">
+                                    Housewife
+                                </mat-option>
+                                <mat-option value="07">
+                                    Student
+                                </mat-option>
+                                <mat-option value="44">
+                                    Government Sector
+                                </mat-option>
+                                <mat-option value="08">
                                     Others
                                 </mat-option>
-                                <mat-option value="X">
+                                <mat-option value="0">
+                                    Self Employed
+                                </mat-option>
+                                <mat-option value="0">
                                     Not Categorized
                                 </mat-option>
+                               
                             </mat-select>
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
@@ -147,13 +165,13 @@
                     </div>
                     <div class="col-md-8 form-group">
                         <mat-radio-group aria-label="Select an option" formControlName="politically">
-                            <mat-radio-button [value]="1" class="b-a-custom radioBtn text-primary custom-radio" [ngClass]="fatcaDetails.get('politically').value == '1' ? 'text-primary b-a-custom': ' text-primitive'" checked>
+                            <mat-radio-button value="1" [ngClass]="fatcaDetails.get('politically').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                                 Yes
                             </mat-radio-button>
-                            <mat-radio-button [value]="2" [ngClass]="fatcaDetails.get('politically').value == '2' ? 'text-primary b-a-custom': ' text-primitive'">
+                            <mat-radio-button value="2" [ngClass]="fatcaDetails.get('politically').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                                 No </mat-radio-button>
 
-                            <mat-radio-button [value]="3" [ngClass]="fatcaDetails.get('politically').value == '3' ? 'text-primary b-a-custom': ' text-primitive'">
+                            <mat-radio-button value="3" [ngClass]="fatcaDetails.get('politically').value === '3' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                                 Related to PEP </mat-radio-button>
                         </mat-radio-group>
                     </div>
@@ -166,12 +184,12 @@
                         <h3 class="f-16 pt-10 m-0"> Tax residency other than india? </h3>
                     </div>
 
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                         <mat-radio-group aria-label="Select an option" formControlName="taxResidency">
-                            <mat-radio-button value="1" class="b-a-custom radioBtn text-primary custom-radio" [ngClass]="fatcaDetails.get('taxResidency').value == 1 ? 'text-primary b-a-custom': ' text-primitive'" checked>
+                            <mat-radio-button value="1" [ngClass]="fatcaDetails.get('taxResidency').value == '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                                 Yes
                             </mat-radio-button>
-                            <mat-radio-button value="2" [ngClass]="fatcaDetails.get('taxResidency').value == 2 ? 'text-primary b-a-custom': ' text-primitive'">
+                            <mat-radio-button value="2" [ngClass]="fatcaDetails.get('taxResidency').value == '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                                 No </mat-radio-button>
 
                         </mat-radio-group>

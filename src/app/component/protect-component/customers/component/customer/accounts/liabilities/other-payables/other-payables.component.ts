@@ -43,6 +43,7 @@ export class OtherPayablesComponent implements OnInit {
   @ViewChild('otherPayablesTemp', {static: false}) otherPayablesTemp: ElementRef;
   filterData: MatTableDataSource<any>;
   filterForOtherPayables: any;
+  personalProfileData: any;
   constructor(public custmService: CustomerService, public util: UtilService,
     public subInjectService: SubscriptionInject, public eventService: EventService,
     public dialog: MatDialog,private excel :ExcelGenService) {
@@ -53,6 +54,8 @@ export class OtherPayablesComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.personalProfileData = AuthService.getProfileDetails();
+
     if (!this.payableData) {
       this.noData = 'No Data Found';
       this.dataSource.data = [];

@@ -16,7 +16,7 @@
     <div class="row">
       <div class="col-md-12 p-0">
         <h5 class="m-0 text-black"><img (click)="backToTransact()" class="v-initial pr-12"
-                                        src="/assets/images/svg/back-arrow.svg">Investor name: {{selectedFamilyMember}}
+            src="/assets/images/svg/back-arrow.svg">Investor name: {{selectedFamilyMember}}
         </h5>
       </div>
     </div>
@@ -64,13 +64,11 @@
             <div class="form-group">
               <mat-form-field appearance="standard" floatLabel="never">
                 <input (changedValue)="getSchemeList($event)" [matAutocomplete]="auto" appCustomAutoComplete
-                       aria-label="Number"
-                       class="form-control"
-                       formControlName="schemeStp" matInput
-                       placeholder="Start typing to see scheme names" type="text">
+                  aria-label="Number" class="form-control" formControlName="schemeStp" matInput
+                  placeholder="Start typing to see scheme names" type="text">
                 <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option (onSelectionChange)="selectedScheme(scheme)"
-                              *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
+                  <mat-option (onSelectionChange)="selectedScheme(scheme)" *ngFor="let scheme of schemeList"
+                    [value]="scheme.schemeName">
                     {{scheme.schemeName}}
                   </mat-option>
                 </mat-autocomplete>
@@ -80,7 +78,7 @@
                 <mat-error *ngIf="stpTransaction.get('schemeStp').errors?.setValue" class="f-12">
                   Selected scheme does not exist
                 </mat-error>
-                <mat-hint align="start" class="f-12 text-custom">Last closing NAV:
+                <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom">Last closing NAV:
                   {{navOfSelectedScheme}}
                 </mat-hint>
               </mat-form-field>
@@ -98,8 +96,8 @@
             <div class="form-group mb-0">
               <mat-form-field>
                 <mat-select class="form-control" formControlName="investmentAccountSelection">
-                  <mat-option (click)="selectedFolio(folio)" *ngFor="let folio of folioList"
-                              value="option">{{folio.folioNumber}}</mat-option>
+                  <mat-option (click)="selectedFolio(folio)" *ngFor="let folio of folioList" value="option">
+                    {{folio.folioNumber}}</mat-option>
                 </mat-select>
                 <mat-error class="f-12 pt-4">
                   This field is required
@@ -147,13 +145,11 @@
             <div class="form-group">
               <mat-form-field appearance="standard" floatLabel="never">
                 <input (keyup)="getSchemeListTranfer($event.target.value)" [matAutocomplete]="auto1" aria-label="Number"
-                       class="form-control"
-                       formControlName="transferIn" matInput
-                       placeholder="Start typing to see transferIn names"
-                       type="text">
+                  class="form-control" formControlName="transferIn" matInput
+                  placeholder="Start typing to see transferIn names" type="text">
                 <mat-autocomplete #auto1="matAutocomplete">
                   <mat-option (onSelectionChange)="selectedSchemeTransfer(scheme)"
-                              *ngFor="let scheme of schemeListTransfer" [value]="scheme.schemeName">
+                    *ngFor="let scheme of schemeListTransfer" [value]="scheme.schemeName">
                     {{scheme.schemeName}}
                   </mat-option>
                 </mat-autocomplete>
@@ -163,7 +159,7 @@
                 <mat-error *ngIf="stpTransaction.get('transferIn').errors?.setValue" class="f-12">
                   Selected scheme does not exist
                 </mat-error>
-                <mat-hint align="start" class="f-12 text-custom">Last closing NAV:
+                <mat-hint *ngIf="schemeTransfer" align="start" class="f-12 text-custom">Last closing NAV:
                   {{navOfSelectedScheme}}
                 </mat-hint>
               </mat-form-field>
@@ -181,8 +177,7 @@
             <div class="form-group mb-0">
               <mat-form-field>
                 <mat-select class="form-control" formControlName="reinvest">
-                  <mat-option (click)="reinvest(flag)" *ngFor="let flag of reInvestmentOpt"
-                              value="option">
+                  <mat-option (click)="reinvest(flag)" *ngFor="let flag of reInvestmentOpt" value="option">
                     {{(flag.dividendReinvestmentFlag == 0) ? 'Dividend payout' : 'Dividend reinvestment'}}
                   </mat-option>
                 </mat-select>
@@ -202,7 +197,7 @@
               <mat-form-field>
                 <mat-select class="form-control" formControlName="frequency">
                   <mat-option (click)="selectedFrequency(frequency)" *ngFor="let frequency of switchFrequency"
-                              value="option">{{frequency.frequency}}
+                    value="option">{{frequency.frequency}}
                   </mat-option>
                 </mat-select>
                 <mat-error class="f-12 pt-4">
@@ -220,10 +215,9 @@
           <div class="col-md-5 p-0">
             <div class="form-group mb-0">
               <mat-form-field *ngIf="selectScheme == 2">
-                <input #employeeContry (change)="enteredAmount($event.target.value)" class="form-control br-0 rupess"
-                       formControlName="employeeContry"
-                       matInput maxlength="10"
-                       type="text">
+                <input #employeeContry appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                  (change)="enteredAmount($event.target.value)" class="form-control br-0 rupess"
+                  formControlName="employeeContry" matInput maxlength="10" type="text">
                 <mat-hint align="start" class="f-12 text-custom">
                   Min amount:
                   ₹{{(schemeDetailsTransfer == undefined) ? '0' : schemeDetailsTransfer.minimumPurchaseAmount }}
@@ -283,8 +277,7 @@
           <div class="col-md-5 p-0">
             <mat-form-field>
               <input #employeeContry class="form-control br-0 rupess" formControlName="installment" matInput
-                     maxlength="10"
-                     type="text">
+                maxlength="10" type="text">
               <mat-error class="f-12 pt-4">
                 This field is required
               </mat-error>
@@ -295,7 +288,7 @@
       <div class="col-md-4 bg-grey lter p-0">
         <!-- (achmandateDetails)='getAchmandateDetails($event)' for prod build -->
         <app-transaction-summary (bankDetailsSend)='getbankDetails($event)' (defaultDetails)='getDefaultDetails($event)'
-                                 (folioChange)='onFolioChange($event)' [data]="transactionSummary">
+          (folioChange)='onFolioChange($event)' [data]="transactionSummary">
         </app-transaction-summary>
       </div>
     </div>

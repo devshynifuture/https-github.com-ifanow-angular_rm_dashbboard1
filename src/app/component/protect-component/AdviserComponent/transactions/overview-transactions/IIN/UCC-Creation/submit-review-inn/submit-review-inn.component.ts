@@ -35,6 +35,10 @@ export class SubmitReviewInnComponent implements OnInit {
   file: any;
   byte: any;
   uploadSttus: any;
+  toSendObjHolderList: any;
+  toSendObjBankList: any;
+  toSendObjNomineeList: any;
+  clientData: any;
 
   constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
               private eventService: EventService) {
@@ -45,6 +49,7 @@ export class SubmitReviewInnComponent implements OnInit {
     this.doneData = {};
     this.inputData = data;
     this.allData = data;
+    this.clientData = this.clientData
     this.doneData.nominee = true;
     this.doneData.bank = true;
     this.doneData.contact = true;
@@ -181,31 +186,44 @@ export class SubmitReviewInnComponent implements OnInit {
 
   submit() {
     this.doneData = true;
+    this.toSendObjHolderList=[]
+    this.toSendObjBankList = []
+    this.toSendObjNomineeList =[]
     this.allData.holderList.forEach(element => {
-      if(!element.address){
-        element = []
+      if(element.address && element.email){
+        this.toSendObjHolderList.push(element)
       }
+      
     });
     this.allData.bankDetailList.forEach(element => {
-      if(!element.address){
-       element = []
+      if(element.address && element.ifscCode){
+        this.toSendObjBankList.push(element)
       }
+      
     });
     this.allData.nomineeList.forEach(element => {
-      if(!element.address){
-       element = []
+      if(element.address && element.nomineeName){
+        this.toSendObjNomineeList.push(element)
       }
+    
     });
+    this.allData.holderList = this.toSendObjHolderList
+    this.allData.bankDetailList = this.toSendObjBankList
+    this.allData.nomineeList = this.toSendObjNomineeList
+    this.inputData.clientData = this.clientData
     if (this.addedBse == true) {
       const obj1 = {
         ownerName: this.allData.ownerName,
         holdingType: this.allData.holdingType,
         taxStatus: this.allData.taxStatus,
-        holderList: this.allData.holderList,
-        bankDetailList: this.allData.bankDetailList,
-        nomineeList: this.allData.nomineeList,
+        holderList: this.toSendObjHolderList,
+        bankDetailList: this.toSendObjBankList,
+        nomineeList: this.toSendObjNomineeList,
         fatcaDetail: this.allData.fatcaDetail,
         id: 2,
+        divPayMode: this.allData.bankDetailList[0].paymentMode,
+        occupationCode : this.allData.fatcaDetail.occupationCode,
+        clientCode:this.reviewSubmit.controls.accountNumber.value,
         aggregatorType: this.selectedBrokerBse.aggregatorType,
         familyMemberId: this.allData.familyMemberId,
         clientId: this.allData.clientId,
@@ -226,11 +244,14 @@ export class SubmitReviewInnComponent implements OnInit {
         ownerName: this.allData.ownerName,
         holdingType: this.allData.holdingType,
         taxStatus: this.allData.taxStatus,
-        holderList: this.allData.holderList,
-        bankDetailList: this.allData.bankDetailList,
-        nomineeList: this.allData.nomineeList,
+        holderList: this.toSendObjHolderList,
+        bankDetailList: this.toSendObjBankList,
+        nomineeList: this.toSendObjNomineeList,
         fatcaDetail: this.allData.fatcaDetail,
         id: 2,
+        divPayMode: this.allData.bankDetailList[0].paymentMode,
+        occupationCode : this.allData.fatcaDetail.occupationCode,
+        clientCode:this.reviewSubmit.controls.accountNumber.value,
         aggregatorType: this.selectedBrokerBse.aggregatorType,
         familyMemberId: this.allData.familyMemberId,
         clientId: this.allData.clientId,

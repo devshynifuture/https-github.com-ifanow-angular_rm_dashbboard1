@@ -24,13 +24,13 @@
         <div class="col-md-7 offset-2 p-0 bl-1 ">
             <div class="p-20">
                 <h3 class="f-18 mb-28 f-600">Personal details</h3>
-                <div class="row pt-32">
+                <div class="row pt-20">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-20 m-0"> PAN </h3>
                     </div>
                     <div class="col-md-3 form-group">
                         <mat-form-field appearance="standard" floatLabel="never">
-                            <input #panNumber matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" maxlength="10" type="text" formControlName="panNumber" class="form-control">
+                            <input placeholder="Enter Pan Number" #panNumber matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" maxlength="10" type="text" formControlName="panNumber" class="form-control">
                             <mat-hint align="end" class=" text-custom">
                                 {{panNumber.value.length}} / 10
                             </mat-hint>
@@ -40,47 +40,47 @@
                 </div>
 
 
-                <div class="row pt-32">
+                <div class="row pt-20">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Name as per PAN</h3>
+                        <h3 class="f-16 pt-20 m-0"> Name as per PAN</h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
-                            <input #clientName matInput type="text" formControlName="clientName" class="form-control">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input placeholder="Enter Name" #clientName matInput type="text" formControlName="clientName" class="form-control">
                             <mat-error>This field is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
 
-                <div class="row pt-32">
+                <div class="row pt-20">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Maidan name</h3>
+                        <h3 class="f-16 pt-20 m-0"> Maidan name</h3>
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field>
-                            <input #madianName matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="madianName" type="text" class="form-control">
+                            <input #maidanName matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="maidanName" type="text" class="form-control">
                             <mat-error>This field is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row pt-32">
+                <div class="row pt-20">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0">Father/Spouse name</h3>
+                        <h3 class="f-16 pt-20 m-0">Father/Spouse name</h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
-                            <input #fatherName matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="fatherName" type="text" class="form-control">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input placeholder="Enter Father/Spouse name" #fatherName matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="fatherName" type="text" class="form-control">
                             <mat-error>This field is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row pt-32">
+                <div class="row pt-20">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0">Mother name</h3>
+                        <h3 class="f-16 pt-20 m-0">Mother name</h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
-                            <input #motherName matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="motherName" type="text" class="form-control">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input placeholder="Enter Mother name" #motherName matInput appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" formControlName="motherName" type="text" class="form-control">
                             <mat-error>This field is required</mat-error>
                         </mat-form-field>
                     </div>
@@ -91,7 +91,7 @@
                     </div>
                     <div class="col-md-3 form-group">
                         <mat-form-field class="ba-date">
-                            <input matInput class="form-control b-0" formControlName="dateOfBirth" [matDatepicker]="picker">
+                            <input matInput class="form-control b-0" formControlName="dob" [matDatepicker]="picker">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                             <mat-error>This field is required</mat-error>
@@ -104,31 +104,30 @@
                     </div>
                     <div class="col-md-8 ">
                         <mat-radio-group aria-label="Select an option" formControlName="gender">
-                            <mat-radio-button [value]="1" class="b-a-custom radioBtn text-primary custom-radio" [ngClass]="personalDetails.get('gender').value == '1' ? 'text-primary b-a-custom': 'text-primitive'" checked>
+                            <mat-radio-button value="1" [ngClass]="personalDetails.get('gender').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                                 Male
                             </mat-radio-button>
-                            <mat-radio-button [value]="2" [ngClass]="personalDetails.get('gender').value == '2' ? 'text-primary b-a-custom': ' text-primitive'">
+                            <mat-radio-button value="2" [ngClass]="personalDetails.get('gender').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                                 Female </mat-radio-button>
 
-                            <mat-radio-button [value]="3" [ngClass]="personalDetails.get('gender').value == '3' ? 'text-primary b-a-custom': ' text-primitive'">
+                            <mat-radio-button value="3" [ngClass]="personalDetails.get('gender').value === '3' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                                 Other </mat-radio-button>
                         </mat-radio-group>
                     </div>
                 </div>
-
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0"> Marital status</h3>
                     </div>
                     <div class="col-md-8">
                         <mat-radio-group aria-label="Select an option" formControlName="maritalStatus">
-                            <mat-radio-button [value]="1" class="b-a-custom radioBtn text-primary custom-radio" [ngClass]="personalDetails.get('maritalStatus').value == '1' ? 'text-primary b-a-custom': ' text-primitive'" checked="true">
+                            <mat-radio-button value="1" [ngClass]="personalDetails.get('maritalStatus').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                                 Married
                             </mat-radio-button>
-                            <mat-radio-button [value]="2" [ngClass]="personalDetails.get('maritalStatus').value == '2' ? 'text-primary b-a-custom': ' text-primitive'">
+                            <mat-radio-button value="2" [ngClass]="personalDetails.get('maritalStatus').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                                 Unmarried </mat-radio-button>
 
-                            <mat-radio-button [value]="3" [ngClass]="personalDetails.get('maritalStatus').value == '3' ? 'text-primary b-a-custom': ' text-primitive'">
+                            <mat-radio-button value="3" [ngClass]="personalDetails.get('maritalStatus').value === '3' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                                 Other </mat-radio-button>
                         </mat-radio-group>
                     </div>

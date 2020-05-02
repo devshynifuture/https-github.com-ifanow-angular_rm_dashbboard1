@@ -6,6 +6,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { ValidatorType } from 'src/app/services/util.service';
 import { MatInput } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-critical-illness-in-asset',
@@ -13,6 +14,21 @@ import { AuthService } from 'src/app/auth-service/authService';
   styleUrls: ['./add-critical-illness-in-asset.component.scss']
 })
 export class AddCriticalIllnessInAssetComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   maxDate = new Date();
 
   addMoreFlag = false;
@@ -38,6 +54,8 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
   bankAccountDetails: { accountList: any; controleData: any; };
   accountList: any;
   bankList: any;
+  showinsuredMemberSum = true;
+  showSumAssured = false;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
@@ -181,7 +199,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
 
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? data.sumInsured : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : ''], sharePercentage: [data ? data.sumInsured : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0],relationshipId:[data ? data.relationshipId :0] 
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -230,7 +248,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
         isClient: 0
       })]),
       name:[(this.dataForEdit ? this.dataForEdit.name : null)],
-      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId +'' : null), [Validators.required]],
+      PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId +'' : ''), [Validators.required]],
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
       insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : null), [Validators.required]],
       planeName: [(this.dataForEdit ? this.dataForEdit.planName :null), [Validators.required]],
@@ -247,12 +265,14 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
       advisorName: [this.dataForEdit ? this.dataForEdit.advisorName :null],
       serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch :null],
       bankAccount: [this.dataForEdit ? parseInt(this.dataForEdit.linkedBankAccount) : null],
+      sumAssuredIdv: [(this.dataForEdit) ? this.dataForEdit.sumInsuredIdv : null, [Validators.required]],
       nominees: this.nominees,
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
         sharePercentage: [0],
         familyMemberId: [0],
-        id: [0]
+        id: [0],
+        relationshipId:[0]
       })]),
       InsuredMemberForm: this.fb.array([this.fb.group({
         insuredMembers: ['', [Validators.required]],
@@ -301,7 +321,18 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
       });
     }
 
-
+    if(this.dataForEdit){
+      this.dataForEdit.insuredMembers.forEach(element => {
+          if(element.sumInsured == 0){
+           this.showinsuredMemberSum = false
+          }
+       });
+  }
+  if(this.critialIllnessForm.get('PlanType').value == '8'){
+    this.showSumAssured = true;
+}else{
+    this.showSumAssured = false;
+}
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.critialIllnessForm }
     this.bankAccountDetails = { accountList: this.accountList, controleData: this.critialIllnessForm }
 
@@ -313,6 +344,31 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
   }
   ngOnInit() {
   }
+  onChangeSetErrorsType(value, formName) {
+    if (value == 8) {
+      this.showSumAssured = true
+      this.showinsuredMemberSum = false
+        let list = this.critialIllnessForm.get('InsuredMemberForm') as FormArray;
+        list.controls.forEach(element => {
+            element.get('sumAssured').setValue('');
+            if (element.get('sumAssured').value == '') {
+                element.get('sumAssured').setErrors(null)
+            }
+        });
+        if (!this.critialIllnessForm.controls['sumAssuredIdv'].value) {
+            this.critialIllnessForm.controls['sumAssuredIdv'].setValue(null);
+            this.critialIllnessForm.get('sumAssuredIdv').setValidators([Validators.required]);
+            this.critialIllnessForm.get('sumAssuredIdv').updateValueAndValidity();
+            this.critialIllnessForm.controls['sumAssuredIdv'].setErrors({ 'required': true });
+        }
+    } else {
+        this.showSumAssured = false
+        this.showinsuredMemberSum = true
+        this.critialIllnessForm.controls['sumAssuredIdv'].setValue(null);
+        this.critialIllnessForm.controls['sumAssuredIdv'].setErrors(null);
+        this.critialIllnessForm.controls['sumAssuredIdv'].setValidators(null);
+    }
+}
   bankAccountList(value) {
     this.bankList = value;
   }
@@ -408,6 +464,7 @@ changeTheInput(form1,form2,event) {
     if (this.critialIllnessForm.invalid) {
       this.critialIllnessForm.markAllAsTouched();
     } else {
+      this.barButtonOptions.active = true;
       const obj = {
         "clientId": this.clientId,
         "advisorId": this.advisorId,
@@ -432,6 +489,7 @@ changeTheInput(form1,form2,event) {
         "serviceBranch": this.critialIllnessForm.get('serviceBranch').value,
         "linkedBankAccount": this.critialIllnessForm.get('bankAccount').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
+        'sumInsuredIdv': this.critialIllnessForm.get('sumAssuredIdv').value,
         "id":(this.id) ? this.id : null,
         insuredMembers: memberList,
         nominees: this.critialIllnessForm.value.getNomineeName,
@@ -453,6 +511,13 @@ changeTheInput(form1,form2,event) {
       } else {
         obj.nominees = [];
       }
+      if (obj.insuredMembers.length > 0) {
+        obj.insuredMembers.forEach(element => {
+            if (element.sumInsured == '') {
+                element.sumInsured = null
+            }
+        });
+    }
       console.log(obj);
 
 
@@ -460,6 +525,7 @@ changeTheInput(form1,form2,event) {
       if (this.dataForEdit) {
         this.customerService.editGeneralInsuranceData(obj).subscribe(
           data => {
+            this.barButtonOptions.active = false;
             console.log(data);
             this.eventService.openSnackBar("Updated successfully!", 'dismiss');
             const insuranceData =
@@ -473,6 +539,7 @@ changeTheInput(form1,form2,event) {
       } else {
         this.customerService.addGeneralInsurance(obj).subscribe(
           data => {
+            this.barButtonOptions.active = false;
             console.log(data);
             this.eventService.openSnackBar("Added successfully!", 'dismiss');
             const insuranceData =

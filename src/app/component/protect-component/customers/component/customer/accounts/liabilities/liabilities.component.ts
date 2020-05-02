@@ -55,6 +55,7 @@ export class LiabilitiesComponent implements OnInit {
   filteredData: any[];
   filterForliabilities: any;
   advisorData: any;
+  personalProfileData: any;
 
 
   constructor(private excel: ExcelService, private eventService: EventService, private subInjectService: SubscriptionInject,
@@ -73,6 +74,7 @@ export class LiabilitiesComponent implements OnInit {
     //this.showLoader = true;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.personalProfileData = AuthService.getProfileDetails();
     // this.advisorData = AuthService.getProfileInfo();
     this.getLiability('');
     this.getPayables();

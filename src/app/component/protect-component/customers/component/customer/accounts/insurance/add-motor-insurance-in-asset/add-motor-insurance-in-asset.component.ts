@@ -6,6 +6,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { ValidatorType } from 'src/app/services/util.service';
 import { MatInput } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-motor-insurance-in-asset',
@@ -13,6 +14,21 @@ import { AuthService } from 'src/app/auth-service/authService';
   styleUrls: ['./add-motor-insurance-in-asset.component.scss']
 })
 export class AddMotorInsuranceInAssetComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   maxDate = new Date();
   inputData: any;
   ownerName: any;
@@ -187,7 +203,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
 
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? data.sumInsured : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : ''], sharePercentage: [data ? data.sumInsured : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0],relationshipId:[data ? data.relationshipId :0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -261,11 +277,12 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
         name: [''],
         sharePercentage: [0],
         familyMemberId: [0],
-        id: [0]
+        id: [0],
+        relationshipId:[0]
       })]),
       
       addOnForm: this.fb.array([this.fb.group({
-        additionalCovers :['',[Validators.required]],
+        additionalCovers :[''],
         addOnSumInsured:null
       })])
     })
@@ -389,16 +406,22 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
     let addOns = [];
     let addOnList = this.motorInsuranceForm.get('addOnForm') as FormArray
     addOnList.controls.forEach(element => {
-      let obj =
-      {
-        addOnId : element.get('additionalCovers').value,
-        addOnSumInsured:null
+      if( element.get('additionalCovers').value){
+        let obj =
+        {
+          addOnId : element.get('additionalCovers').value,
+          addOnSumInsured:null
+        }
+        addOns.push(obj)
+      } else{
+        addOns =[];
       }
-      addOns.push(obj)
+
     })
     if (this.motorInsuranceForm.invalid) {
       this.motorInsuranceForm.markAllAsTouched();
     } else {
+      this.barButtonOptions.active = true;
       const obj = {
         "clientId": this.clientId,
         "advisorId": this.advisorId,
@@ -455,6 +478,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
       if (this.dataForEdit) {
         this.customerService.editGeneralInsuranceData(obj).subscribe(
           data => {
+            this.barButtonOptions.active = false;
             console.log(data);
             this.eventService.openSnackBar("Updated successfully!", 'dismiss');
             const insuranceData =
@@ -468,6 +492,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
       } else {
         this.customerService.addGeneralInsurance(obj).subscribe(
           data => {
+            this.barButtonOptions.active = false;
             console.log(data);
             this.eventService.openSnackBar("Added successfully!", 'dismiss');
             const insuranceData =

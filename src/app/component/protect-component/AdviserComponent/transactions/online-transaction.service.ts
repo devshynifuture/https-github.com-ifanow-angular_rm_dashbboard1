@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpService } from 'src/app/http-service/http-service';
-import { appConfig } from 'src/app/config/component-config';
-import { apiConfig } from 'src/app/config/main-config';
+import {Injectable} from '@angular/core';
+import {HttpService} from 'src/app/http-service/http-service';
+import {appConfig} from 'src/app/config/component-config';
+import {apiConfig} from 'src/app/config/main-config';
 
 @Injectable({
   providedIn: 'root'
@@ -18,15 +18,23 @@ export class OnlineTransactionService {
   getBSECredentials(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_BSE_CREDENTIALS, data, 1);
   }
+
+  getIINUCCPending(data) {
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_IINUCC_PENDING, data, 1);
+  }
+
   addSubBroker(data) {
     return this.http.postEncoded(apiConfig.TRANSACT + appConfig.ADD_SUB_BROKER, data, 1);
   }
+
   deleteBroker(data) {
     return this.http.putEncoded(apiConfig.TRANSACT + appConfig.DELETE_BROKER, data, 1);
   }
+
   deleteSubBroker(data) {
     return this.http.putEncoded(apiConfig.TRANSACT + appConfig.DELETE_SUB_BROKER, data, 1);
   }
+
   getBSESubBrokerCredentials(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_BSE_SUB_BROKER_CREDENTIALS, data, 1);
   }
@@ -138,13 +146,16 @@ export class OnlineTransactionService {
   getTransactionDetail(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_TRANSACTION_DETAILS, data, 1);
   }
+
   getOverviewMandate(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_OVERVIEW_MANDATE, data, 1);
 
   }
-  getIINUCCOverview(data){
-  return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_IIN_UCC_OVERVIEW, data, 1);
+
+  getIINUCCOverview(data) {
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_IIN_UCC_OVERVIEW, data, 1);
   }
+
   getMandateList(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_MANDATE_LIST, data, 1);
   }
@@ -152,18 +163,17 @@ export class OnlineTransactionService {
   getIINUCCRegistration(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_REGISTRATION_UCC_IIN, data, 1);
   }
+
   getClientAndFmList(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_CLIENT_FM_LIST, data, 1);
   }
+
   imageFileUpload(data) {
     return this.http.post(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE, data, 1);
   }
+
   createIINUCC(data) {
     return this.http.postEncoded(apiConfig.TRANSACT + appConfig.CREATE_IIN_UCC, data, 1);
-  }
-
-  mandateView(data) {
-    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.MANDATE_VIEW, data, 1);
   }
 
   getToken(data) {

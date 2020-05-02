@@ -352,6 +352,15 @@ export class UtilService {
     return true;
   }
 
+  isObjectPresentInArray(obj, list) {
+    for (let i = 0; i < list.length; i++) {
+      if (list[i] === obj) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   loader(increament: number) {
     if (increament === 0)
       this.counter = 0;

@@ -421,6 +421,7 @@ export const appConfig = {
   ////////////////////////////////////OnlineTransaction///////////////////////////////////////
   ADD_BSE_CREDENTIALS: 'user/save',
   GET_BSE_CREDENTIALS: 'user/view',
+  GET_IINUCC_PENDING: 'user/register/all/get',
   ADD_SUB_BROKER: 'user/sub-broker/save',
   DELETE_BROKER: 'user/delete',
   DELETE_SUB_BROKER: 'user/sub-broker/delete',
@@ -455,15 +456,14 @@ export const appConfig = {
   DELETE_HIDDEN_AMC: 'mutual-fund/hidden-amc/delete',
   SEARCH_SCHEME: 'report/transaction/list/get',
   GET_TRANSACTION_DETAILS: 'report/transaction/detail/get',
-  GET_OVERVIEW_MANDATE:'mandate/summary',
-  GET_IIN_UCC_OVERVIEW:'report/client-code/count/get',
+  GET_OVERVIEW_MANDATE: 'mandate/summary',
+  GET_IIN_UCC_OVERVIEW: 'report/client-code/count/get',
   GET_MANDATE_LIST: 'report/ach-mandate/get',
   GET_REGISTRATION_UCC_IIN: 'user/register/detail/get',
-  GET_CLIENT_FM_LIST:'user/client/family/filter/get',
+  GET_CLIENT_FM_LIST: 'user/client/family/filter/get',
   CREATE_IIN_UCC: 'user/register/create',
-  MANDATE_VIEW: 'mandate/view',
   GET_TOKEN: 'user/bse/upload/password',
-  BANK_MANDTAE: 'nse/iin/bank-detail/get',
+  BANK_MANDTAE: 'nse/iin/bank/detail/get',
   TAX_MASTER: 'nse/tax-master/get',
 
   ADD_MANDATE: 'mandate/add',
@@ -560,6 +560,7 @@ export const appConfig = {
   PUT_FILE_ORDER_RETRY: 'fileorder/list/retry',
   GET_TICKET: 'rmdashboard/tickets/get',
   GET_REPORT_FILTER_DATA: 'rmdashboard/myifas/dashboard/details/get/filter',
+  GET_COMMENT_COUNT_RM_ADMIN: 'rmdashboard/dashboard/ifa-onboard/task-level-comment/count',
 
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',
@@ -712,10 +713,9 @@ export const appConfig = {
   //////////////////////////////////customer-overview-profile//////////////////////
 
   //////////////////////////////////customer-overview-myfeeds-profile//////////////////////
-  GET_CUSTOMER_PORTFOLIO_SUMMARY: 'account/asset/summary',
   GET_FEEDS_MF_DATA: 'mutual-fund/latest/transaction/list/get',
   GET_DOCUMENTS_FEED: 'document/account/document/total-count-and-size/get',
-  GET_FEED_RISK_PROFILE: 'risk/profile/get',
-  GET_GLOBAL_RISK_PROFILE: 'risk/profile/global/get',
+  GET_FEED_RISK_PROFILE: 'plan/risk/profile/get',
+  GET_GLOBAL_RISK_PROFILE: 'plan/risk/profile/global/get',
   GET_FEED_RECENT_TRANSACTIONS: 'report/transaction/list/get',
 };

@@ -30,7 +30,7 @@ export class PersonalDetailsInnComponent implements OnInit {
     type: 'first',
     data: ''
   }
-  replaceObj: { panNumber: any; clientName: any; madianName: any; fatherName: any; motherName: any; dateOfBirth: any; gender: any; martialStatus: any; };
+  replaceObj: { panNumber: any; clientName: any; maidanName: any; fatherName: any; motherName: any; dateOfBirth: any; gender: any; martialStatus: any; };
   validatorType = ValidatorType
   changedValue: string;
   doneData: any;
@@ -149,28 +149,28 @@ export class PersonalDetailsInnComponent implements OnInit {
     this.personalDetails = this.fb.group({
       panNumber: [!data ? '' : (data.pan) ? data.pan : data.panNumber, [Validators.required]],
       clientName: [!data ? '' : (data.name) ? data.name : data.clientName, [Validators.required]],
-      madianName: [!data ? '' : data.madianName, [Validators.required]],
+      maidanName: [!data ? '' : data.maidanName, [Validators.required]],
       fatherName: [!data ? '' : data.fatherName, [Validators.required]],
       motherName: [!data ? '' : data.motherName, [Validators.required]],
-      dateOfBirth: [!data ? '' : new Date(data.dateOfBirth), [Validators.required]],
-      gender: [!data ? '1' : data.gender ? data.gender : (data.genderId) + "", [Validators.required]],
+      dob: [!data ? '' : new Date(data.dob), [Validators.required]],
+      gender: [!data ? '1' : data.genderId ? data.genderId + '' : '1', [Validators.required]],
       email: [!data ? '' : data.email],
       aadharNumber: [!data ? '' : (data.aadharNumber) ? data.aadharNumber : data.aadhaarNumber],
       mobileNo: [!data ? '' : data.mobileNo],
       phoneNo: [!data ? '' : data.phoneNo],
-      maritalStatus: [!data ? '1' : data.maritalStatus ? data.maritalStatus : (data.martialStatusId) + "", [Validators.required]],
-      addressLine1: [!data.address ? '' : data.address.addressLine1],
-      addressLine2: [!data.address ? '' : data.address.addressLine2],
-      pinCode: [!data.address ? '' : data.address.pinCode],
-      city: [!data.address ? '' : data.address.city],
-      district: [!data.address ? '' : data.address.district],
-      state: [!data.address ? '' : data.address.state],
-      country: [!data.address ? '' : data.address.country],
+      maritalStatus: [!data ? '1' : data.martialStatusId ? data.martialStatusId + '': "1", [Validators.required]],
+      addressLine1: [!data.address ? '' : ''],
+      addressLine2: [!data.address ? '' : ''],
+      pinCode: [!data.address ? '' : ''],
+      city: [!data.address ? '' : ''],
+      district: [!data.address ? '' : ''],
+      state: [!data.address ? '' : ''],
+      country: [!data.address ? '' : ''],
     });
-    if (data.gender == undefined && data.maritalStatus == undefined) {
-      this.personalDetails.controls.gender.setValue('1')
-      this.personalDetails.controls.maritalStatus.setValue('1')
-    }
+    // if (data.gender == undefined && data.maritalStatus == undefined) {
+    //   this.personalDetails.controls.gender.setValue('1')
+    //   this.personalDetails.controls.maritalStatus.setValue('1')
+    // }
   }
   getFormControl(): any {
     return this.personalDetails.controls;
@@ -222,7 +222,8 @@ export class PersonalDetailsInnComponent implements OnInit {
       this.savePersonalDetails(value);
     }
 
-    this.obj1.firstHolder = this.firstHolder;
+    this.obj1.firstHolder = this.firstHolder
+    this.obj1.firstHolder.dob = new Date(this.firstHolder.dob).getTime();
     this.obj1.secondHolder = this.secondHolder;
     this.obj1.thirdHolder = this.thirdHolder;
     this.obj1.generalDetails = this.generalDetails;

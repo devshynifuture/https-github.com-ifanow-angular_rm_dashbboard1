@@ -6,6 +6,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { CustomerService } from '../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-travel-insurance-in-asset',
@@ -13,6 +14,21 @@ import { AuthService } from 'src/app/auth-service/authService';
   styleUrls: ['./add-travel-insurance-in-asset.component.scss']
 })
 export class AddTravelInsuranceInAssetComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   maxDate = new Date();
   advisorId: any;
   clientId: any;
@@ -33,6 +49,8 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
   addMoreFlag=false;
   policyList: any;
   id: any;
+  showinsuredMemberSum = true;
+  showSumAssured = false;
 
   constructor(private fb: FormBuilder,private subInjectService:SubscriptionInject,private customerService:CustomerService,private eventService:EventService) { }
   validatorType = ValidatorType
@@ -175,7 +193,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
 
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? data.sumInsured : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : ''], sharePercentage: [data ? data.sumInsured : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0],relationshipId:[data ? data.relationshipId :0] 
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -274,7 +292,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
       planDetails: [(this.dataForEdit ? this.dataForEdit.policyFeatureId+'' : null), [Validators.required]],
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
       insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : null), [Validators.required]],
-      sumAssuredIdv: [(this.dataForEdit ? this.dataForEdit.sumInsuredIdv : null)],
+      sumAssuredIdv: [(this.dataForEdit) ? this.dataForEdit.sumInsuredIdv : null, [Validators.required]],
       planeName: [(this.dataForEdit ? this.dataForEdit.planName :null)],
       premium: [(this.dataForEdit ? this.dataForEdit.premiumAmount : null), [Validators.required]],
       policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : null, [Validators.required]],
@@ -289,7 +307,8 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
         name: [''],
         sharePercentage: [0],
         familyMemberId: [0],
-        id: [0]
+        id: [0],
+        relationshipId:[0]
       })]),
       InsuredMemberForm: this.fb.array([this.fb.group({
         insuredMembers: ['', [Validators.required]],
@@ -341,6 +360,19 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
         this.addNewFeature(element);
       });
     }
+    if(this.dataForEdit){
+      this.dataForEdit.insuredMembers.forEach(element => {
+          if(element.sumInsured == 0){
+           this.showinsuredMemberSum = false
+          }
+       });
+  }
+ 
+  if(this.travelInsuranceForm.get('planDetails').value == '1'){
+      this.showSumAssured = true;
+  }else{
+      this.showSumAssured = false;
+  }
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.travelInsuranceForm }
 
     // this.finalCashFlowData = [];
@@ -351,7 +383,31 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
   }
   ngOnInit() {
   }
-
+  onChangeSetErrorsType(value, formName) {
+    if (value == 1) {
+        this.showSumAssured = true
+        this.showinsuredMemberSum = false
+        let list = this.travelInsuranceForm.get('InsuredMemberForm') as FormArray;
+        list.controls.forEach(element => {
+            element.get('sumAssured').setValue('');
+            if (element.get('sumAssured').value == '') {
+                element.get('sumAssured').setErrors(null)
+            }
+        });
+        if (!this.travelInsuranceForm.controls['sumAssuredIdv'].value) {
+            this.travelInsuranceForm.controls['sumAssuredIdv'].setValue(null);
+            this.travelInsuranceForm.get('sumAssuredIdv').setValidators([Validators.required]);
+            this.travelInsuranceForm.get('sumAssuredIdv').updateValueAndValidity();
+            this.travelInsuranceForm.controls['sumAssuredIdv'].setErrors({ 'required': true });
+        }
+    } else {
+        this.showSumAssured = false
+        this.showinsuredMemberSum = true
+        this.travelInsuranceForm.controls['sumAssuredIdv'].setValue(null);
+        this.travelInsuranceForm.controls['sumAssuredIdv'].setErrors(null);
+        this.travelInsuranceForm.controls['sumAssuredIdv'].setValidators(null);
+    }
+}
   saveTravelInsurance() {
     let memberList = [];
     let finalMemberList = this.travelInsuranceForm.get('InsuredMemberForm') as FormArray
@@ -384,6 +440,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
       }
       this.travelInsuranceForm.markAllAsTouched();
     } else {
+      this.barButtonOptions.active = true;
       const obj = {
         "clientId": this.clientId,
         "advisorId": this.advisorId,
@@ -393,7 +450,6 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
         "insurerName": this.travelInsuranceForm.get('insurerName').value,
         "policyNumber": this.travelInsuranceForm.get('policyNum').value,
         "planName": this.travelInsuranceForm.get('planeName').value,
-        "sumInsuredIdv": this.travelInsuranceForm.get('sumAssuredIdv').value,
         "premiumAmount": this.travelInsuranceForm.get('premium').value,
         "policyStartDate": this.travelInsuranceForm.get('policyStartDate').value,
         "policyExpiryDate": this.travelInsuranceForm.get('policyExpiryDate').value,
@@ -403,6 +459,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
         "advisorName": this.travelInsuranceForm.get('advisorName').value,
         "serviceBranch": this.travelInsuranceForm.get('serviceBranch').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
+        'sumInsuredIdv': this.travelInsuranceForm.get('sumAssuredIdv').value,
         "policyFeatures":featureList,
         "id":(this.id) ? this.id : null,
         insuredMembers: memberList,
@@ -425,6 +482,13 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
       } else {
         obj.nominees = [];
       }
+      if (obj.insuredMembers.length > 0) {
+        obj.insuredMembers.forEach(element => {
+            if (element.sumInsured == '') {
+                element.sumInsured = null
+            }
+        });
+    }
       console.log(obj);
 
 
@@ -432,6 +496,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
       if (this.dataForEdit) {
         this.customerService.editGeneralInsuranceData(obj).subscribe(
           data => {
+            this.barButtonOptions.active = false;
             console.log(data);
             this.eventService.openSnackBar("Updated successfully!", 'dismiss');
             const insuranceData =
@@ -445,6 +510,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
       } else {
         this.customerService.addGeneralInsurance(obj).subscribe(
           data => {
+            this.barButtonOptions.active = false;
             console.log(data);
             this.eventService.openSnackBar("Added successfully!", 'dismiss');
             const insuranceData =

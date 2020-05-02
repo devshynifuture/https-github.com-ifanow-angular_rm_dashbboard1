@@ -415,7 +415,7 @@ export class CustomerService {
   }
 
   getPolicyName(data) {
-    const httpParams = new HttpParams().set('policyName', data.policyName);
+    const httpParams = new HttpParams().set('policyName', data.policyName).set('insuranceSubTypeId', data.insuranceSubTypeId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_POLICY_NAME, httpParams);
   }
 
@@ -776,7 +776,7 @@ export class CustomerService {
 
   // overview - myfeed services
   getAllFeedsPortFolio(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CUSTOMER_PORTFOLIO_SUMMARY, data);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.CALCULATE_TOTAL_VALUES, data);
   }
   getRTAFeeds(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FEEDS_MF_DATA, data);
