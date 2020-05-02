@@ -22,7 +22,9 @@ export class MyIfasComponent implements OnInit {
     private subInjectService: SubscriptionInject,
     private supportService: SupportService,
     private eventService: EventService
-  ) {}
+  ) { }
+
+  filterName;
 
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   displayedColumns = [
@@ -139,12 +141,12 @@ export class MyIfasComponent implements OnInit {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.dataSource.data = ELEMENT_DATA;
             this.getMyIfasList();
+            this.filterName = '';
           }
           console.log("this is sidebardata in subs subs 2: ", sideBarData);
           rightSideDataSub.unsubscribe();
         }
       });
-    // event.stopPropagation();
   }
 }
 const ELEMENT_DATA = [

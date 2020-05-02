@@ -221,6 +221,7 @@ export class BankDetailsIINComponent implements OnInit {
       branchAdd2: [!data.address ? '' : data.address.address2, [Validators.required]],
       pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],
       // firstHolder: [!data ? '' : (this.clientData.name)?this.clientData.name:'', [Validators.required]],
+      paymentMode: [!data ? '' : data.paymentMode, [Validators.required]],
       city: [!data.address ? '' : data.address.city, [Validators.required]],
       state: [!data.address ? '' : data.address.state, [Validators.required]],
       country: [!data.address ? '' : data.address.country, [Validators.required]],
@@ -365,6 +366,7 @@ export class BankDetailsIINComponent implements OnInit {
           this.bank.push(this.getObj)
         }else{
           element.accountType = (element.accountType == '1')?'SB':'CA';
+          element.paymentMode = this.bankDetails.controls.paymentMode.value,
           this.bank.push(element)
         }
       });
@@ -397,6 +399,7 @@ export class BankDetailsIINComponent implements OnInit {
       branchCode: holder.branchCode,
       micrCode: holder.micrCode,
       firstHolder: holder.firstHolder,
+      paymentMode : holder.paymentMode
     }
     value.address = {
       address1: holder.branchAdd1,
