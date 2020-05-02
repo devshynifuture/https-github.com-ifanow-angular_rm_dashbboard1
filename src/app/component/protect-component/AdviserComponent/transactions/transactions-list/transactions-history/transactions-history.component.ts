@@ -15,6 +15,7 @@ export class TransactionsHistoryComponent implements OnInit {
   isLinear = false;
   processDetails: any;
   transactionDetails;
+  isLoading: boolean = false;
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService) { }
   
   ngOnInit() {
@@ -58,6 +59,7 @@ export class TransactionsHistoryComponent implements OnInit {
   }
 
   getTransactionDetail(data) {
+    this.isLoading =true
     let obj =
     {
       id: data.id
@@ -65,6 +67,7 @@ export class TransactionsHistoryComponent implements OnInit {
     this.onlineTransact.getTransactionDetail(obj).subscribe(
       data => {
         console.log(data);
+        this.isLoading =false
         this.transactionDetailData = data;
       },
       err => this.eventService.openSnackBar(err, "Dismiss")

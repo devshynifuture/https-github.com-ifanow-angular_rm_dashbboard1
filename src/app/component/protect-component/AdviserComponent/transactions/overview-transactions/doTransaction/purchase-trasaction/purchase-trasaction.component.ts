@@ -1,12 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
-import {OnlineTransactionService} from '../../../online-transaction.service';
-import {ProcessTransactionService} from '../process-transaction.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {UtilService} from 'src/app/services/util.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import { OnlineTransactionService } from '../../../online-transaction.service';
+import { ProcessTransactionService } from '../process-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-purchase-trasaction',
@@ -69,10 +69,10 @@ export class PurchaseTrasactionComponent implements OnInit {
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount', 'icons'];
   dataSource1 = ELEMENT_DATA;
   @Output() changedValue = new EventEmitter();
-
+  validatorType = ValidatorType;
   constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
-              private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService,
-              private customerService: CustomerService, private UtilService: UtilService) {
+    private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService,
+    private customerService: CustomerService, private UtilService: UtilService) {
   }
 
   get data() {
@@ -94,42 +94,52 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.transactionSummary = {};
     this.childTransactions = [];
     this.getdataForm(this.inputData, false);
-    Object.assign(this.transactionSummary, {familyMemberId: this.inputData.familyMemberId});
-    Object.assign(this.transactionSummary, {clientId: this.inputData.clientId});
-    Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
-    Object.assign(this.transactionSummary, {paymentMode: 1});
-    Object.assign(this.transactionSummary, {allEdit: true});
-    Object.assign(this.transactionSummary, {transactType: 'PURCHASE'});
+    Object.assign(this.transactionSummary, { familyMemberId: this.inputData.familyMemberId });
+    Object.assign(this.transactionSummary, { clientId: this.inputData.clientId });
+    Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
+    Object.assign(this.transactionSummary, { paymentMode: 1 });
+    Object.assign(this.transactionSummary, { allEdit: true });
+    Object.assign(this.transactionSummary, { transactType: 'PURCHASE' });
     // when multi transact then disabled edit button in transaction summary
-    Object.assign(this.transactionSummary, {isMultiTransact: false});
+    Object.assign(this.transactionSummary, { isMultiTransact: false });
     console.log('this.transactionSummary', this.transactionSummary);
   }
 
   selectSchemeOption(value) {
+    this.scheme = undefined;
+    this.schemeList = undefined
     console.log('value selction scheme', value);
     this.purchaseTransaction.controls.schemePurchase.reset();
     this.folioList = [];
     this.navOfSelectedScheme = 0;
     this.purchaseTransaction.get('employeeContry').setValue('');
     (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
-    Object.assign(this.transactionSummary, {schemeName: ''}); // to disable scheme name from transaction summary
-    Object.assign(this.transactionSummary, {folioNumber: ''}); // to disable folio number from transaction summary
+    Object.assign(this.transactionSummary, { schemeName: '' }); // to disable scheme name from transaction summary
+    Object.assign(this.transactionSummary, { folioNumber: '' }); // to disable folio number from transaction summary
     this.selectScheme = value;
   }
 
-  getSchemeList(value) {
-    this.schemeList = [];
+  getSchemeList(data) {
+    if (data.target.value == '') {
+      this.scheme = undefined;
+      this.schemeList = undefined;
+      this.purchaseTransaction.controls.employeeContry.setValidators([Validators.min(0)]);
+      this.purchaseTransaction.controls.employeeContry.setValue();
+      this.schemeDetails.minAmount = 0;
+      return;
+    }
+    // this.schemeList = [];
     this.showSpinner = true;
     this.platformType = this.getDataSummary.defaultClient.aggregatorType;
     if (this.purchaseTransaction.get('schemePurchase').invalid) {
       this.showSpinner = false;
       this.folioList = [];
-      Object.assign(this.transactionSummary, {schemeName: ''}); // to disable scheme name from transaction summary
-      Object.assign(this.transactionSummary, {folioNumber: ''}); // to disable folio number from transaction summary
+      Object.assign(this.transactionSummary, { schemeName: '' }); // to disable scheme name from transaction summary
+      Object.assign(this.transactionSummary, { folioNumber: '' }); // to disable folio number from transaction summary
       (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0; // if scheme not present then min amt is 0
     }
     const obj = {
-      searchQuery: value,
+      searchQuery: data.target.value,
       bseOrderType: 'ORDER',
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -140,12 +150,12 @@ export class PurchaseTrasactionComponent implements OnInit {
       holdingType: this.getDataSummary.defaultClient.holdingType,
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     };
-    if (value.length > 2) {
+    if (data.target.value.length > 2) {
       if (this.selectScheme == 2) {
         this.onlineTransact.getNewSchemes(obj).subscribe(
           data => this.getNewSchemesRes(data), (error) => {
             this.showSpinner = false;
-            this.purchaseTransaction.get('schemePurchase').setErrors({setValue: error.message});
+            this.purchaseTransaction.get('schemePurchase').setErrors({ setValue: error });
             this.purchaseTransaction.get('schemePurchase').markAsTouched();
             (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
             // this.eventService.showErrorMessage(error);
@@ -155,7 +165,7 @@ export class PurchaseTrasactionComponent implements OnInit {
         this.onlineTransact.getExistingSchemes(obj).subscribe(
           data => this.getExistingSchemesRes(data), (error) => {
             this.showSpinner = false;
-            this.purchaseTransaction.get('schemePurchase').setErrors({setValue: error.message});
+            this.purchaseTransaction.get('schemePurchase').setErrors({ setValue: error.message });
             this.purchaseTransaction.get('schemePurchase').markAsTouched();
             (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
             // this.eventService.showErrorMessage(error);
@@ -178,7 +188,8 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   reinvest(scheme) {
     this.schemeDetails = scheme;
-    Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
+    this.setMinAmount();
     console.log('schemeDetails == ', this.schemeDetails);
   }
 
@@ -186,7 +197,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.ExistingOrNew = value;
     if (value == '2') {
       this.setMinAmount();
-      Object.assign(this.transactionSummary, {folioNumber: ''});
+      Object.assign(this.transactionSummary, { folioNumber: '' });
     } else {
       this.getFolioList();
     }
@@ -203,7 +214,7 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   selectedScheme(scheme) {
     this.scheme = scheme;
-    Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
@@ -323,7 +334,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     if (data) {
       this.folioList = data;
       if (this.purchaseTransaction.get('investmentAccountSelection').valid) {
-        Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
+        Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
       }
     } else {
       this.purchaseTransaction.get('folioSelection').setValue(2);
@@ -335,28 +346,28 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   selectedFolio(folio) {
     this.folioDetails = folio;
-    Object.assign(this.transactionSummary, {folioNumber: folio.folioNumber});
+    Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
     // Object.assign(this.transactionSummary, {mutualFundId: folio.id});
-    Object.assign(this.transactionSummary, {tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId});
-    this.transactionSummary = {...this.transactionSummary};
+    Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId });
+    this.transactionSummary = { ...this.transactionSummary };
   }
 
   enteredAmount(value) {
-    Object.assign(this.transactionSummary, {enteredAmount: value});
+    Object.assign(this.transactionSummary, { enteredAmount: value });
   }
 
   getDefaultDetails(data) {
     console.log('get defaul here yupeeee', data);
     this.getDataSummary = data;
-    Object.assign(this.transactionSummary, {aggregatorType: this.getDataSummary.defaultClient.aggregatorType});
+    Object.assign(this.transactionSummary, { aggregatorType: this.getDataSummary.defaultClient.aggregatorType });
     this.platformType = this.getDataSummary.defaultClient.aggregatorType;
     //  this.purchaseTransaction.controls.investor.reset();
   }
 
   selectPaymentMode(value) {
-    Object.assign(this.transactionSummary, {paymentMode: value});
+    Object.assign(this.transactionSummary, { paymentMode: value });
     if (value == 2) {
-      Object.assign(this.transactionSummary, {getAch: true});
+      Object.assign(this.transactionSummary, { getAch: true });
       this.getNSEAchmandate();
     }
   }
@@ -368,6 +379,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     };
     this.onlineTransact.getNSEAchmandate(obj1).subscribe(
       data => this.getNSEAchmandateRes(data), (error) => {
+        this.purchaseTransaction.get('modeOfPaymentSelection').setValue('1')
         this.eventService.showErrorMessage(error);
       }
     );
@@ -377,16 +389,16 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.showSpinnerMandate = false;
     console.log('getNSEAchmandateRes', data);
     if (data.length > 1) {
-      Object.assign(this.transactionSummary, {showUmrnEdit: true});
+      Object.assign(this.transactionSummary, { showUmrnEdit: true });
     }
     this.achMandateNSE = data.filter(element => element.statusString == 'ACCEPTED');
     console.log('this.achMandateNSE', this.achMandateNSE);
     this.achMandateNSE = this.achMandateNSE[0];
-    Object.assign(this.transactionSummary, {umrnNo: this.achMandateNSE.umrnNo});
+    Object.assign(this.transactionSummary, { umrnNo: this.achMandateNSE.umrnNo });
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
   getdataForm(data, isEdit) {
@@ -501,12 +513,12 @@ export class PurchaseTrasactionComponent implements OnInit {
 
     } else {
       this.processTransaction.onAddTransaction('confirm', this.transactionSummary);
-      Object.assign(this.transactionSummary, {allEdit: false});
+      Object.assign(this.transactionSummary, { allEdit: false });
     }
   }
 
   AddMultiTransaction() {
-    Object.assign(this.transactionSummary, {isMultiTransact: true});
+    Object.assign(this.transactionSummary, { isMultiTransact: true });
     if (this.isEdit != true) {
       this.id++;
     }

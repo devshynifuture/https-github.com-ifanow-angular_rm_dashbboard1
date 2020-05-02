@@ -46,6 +46,7 @@ export class NomineeDetailsIinComponent implements OnInit {
   advisorId: any;
   nomineeFmList: any;
   addressList: any;
+  isLoading = false;
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private onlineTransact: OnlineTransactionService, private postalService: PostalService,
     private processTransaction: ProcessTransactionService, private custumService: CustomerService,
@@ -70,8 +71,9 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.thirdHolderNominee = data.nomineeList[2]
       this.getdataForm(this.firstHolderNominee)
     }
-    this.getNomineeList(this.clientData)
-
+    if (this.clientData) {
+      this.getNomineeList(this.clientData)
+    }
   }
 
   get data() {
@@ -113,7 +115,7 @@ export class NomineeDetailsIinComponent implements OnInit {
     console.log('getListOfFamilyByClientRes', data)
     this.nomineeFmList = data
     this.nomineeFmList = this.nomineeFmList.filter(element => element.familyMemberId != this.clientData.familyMemberId);
-    console.log('nomineeList',this.nomineeFmList)
+    console.log('nomineeList', this.nomineeFmList)
   }
   selectedNominee(value) {
     this.getAddressList(value)
@@ -167,7 +169,7 @@ export class NomineeDetailsIinComponent implements OnInit {
     this.nomineeDetails = this.fb.group({
       nomineeName: [(!data) ? '' : (data.nomineeName) ? data.nomineeName : data.name, [Validators.required]],
       relationShip: [!data ? '' : (data.relationShip) ? data.relationShip : data.relationshipId + "", [Validators.required]],
-      type: [!data ? '1' : (data.type) ? data.type +'' : '1', [Validators.required]],
+      type: [!data ? '1' : (data.type) ? data.type + '' : '1', [Validators.required]],
       dob: [!data ? '' : (data.dob) ? new Date(data.dob) : new Date(data.dateOfBirth), [Validators.required]],
       percent: [!data ? '' : data.percent, [Validators.required, Validators.min(0), Validators.max(100)]],
       addressType: [!data.address ? '' : data.address.addressType, [Validators.required]],
@@ -214,12 +216,14 @@ export class NomineeDetailsIinComponent implements OnInit {
     );
   }
   getPostalPin(value) {
+    this.isLoading = true
     let obj = {
       zipCode: value
     }
     console.log(value, "check value");
     if (value != "") {
       this.postalService.getPostalPin(value).subscribe(data => {
+        this.isLoading = false
         console.log('postal 121221', data)
         this.PinData(data)
       })
@@ -256,7 +260,7 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.saveNomineeDetails(value);
       if (this.firstHolderNominee) {
         this.holder.type = value;
-        this.getdataForm(this.firstHolderNominee)
+        this.nomineeDetails.setValue(this.firstHolderNominee);
       } else {
         return;
       }
@@ -265,7 +269,7 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.saveNomineeDetails(value);
       if (this.secondHolderNominee) {
         this.holder.type = value;
-        this.getdataForm(this.secondHolderNominee)
+        this.nomineeDetails.setValue(this.secondHolderNominee);
       } else {
         this.reset();
       }
@@ -274,7 +278,7 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.saveNomineeDetails(value);
       if (this.thirdHolderNominee) {
         this.holder.type = value;
-        this.getdataForm(this.thirdHolderNominee)
+        this.nomineeDetails.setValue(this.thirdHolderNominee);
       } else {
         this.reset();
       };

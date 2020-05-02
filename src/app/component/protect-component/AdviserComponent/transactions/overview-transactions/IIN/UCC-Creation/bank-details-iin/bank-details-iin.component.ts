@@ -79,7 +79,7 @@ export class BankDetailsIINComponent implements OnInit {
       this.getdataForm(this.firstHolderBank);
     }else{
       if (this.clientData) {
-        this.getBankList(this.clientData)
+        this.getBankList(this.clientData && !this.firstHolderBank)
       }
     }
     console.log('#######', this.holdingList)
@@ -189,8 +189,8 @@ export class BankDetailsIINComponent implements OnInit {
     this.bankDetails.get('state').setValue(data.state);
     this.bankDetails.get('branchName').setValue(data.centre);
     this.bankDetails.get('country').setValue('India');
-    this.bankDetails.get('branchAdd1').setValue(adderessData);
-    this.bankDetails.get('branchAdd2').setValue(address2);
+    this.bankDetails.get('address1').setValue(adderessData);
+    this.bankDetails.get('address2').setValue(address2);
     this.bankDetails.get('pinCode').setValue(pincode)
   }
   getdataForm(data) {
@@ -217,10 +217,10 @@ export class BankDetailsIINComponent implements OnInit {
       accountType: [!data ? '1' : (data.accountType == '1' || data.accountType == 'SB') ? '1': '2', [Validators.required]],
       branchCode: [!data ? '' : (data.branchCode) ? data.branchCode : data.bankId, [Validators.required]],
       branchName: [!data ? '' : data.branchName, [Validators.required]],
-      branchAdd1: [!data.address ? '' : data.address.address1, [Validators.required]],
-      branchAdd2: [!data.address ? '' : data.address.address2, [Validators.required]],
+      paymentMode: [!data ? '' : data.paymentMode, [Validators.required]],
+      address1: [!data.address ? '' : data.address.address1, [Validators.required]],
+      address2: [!data.address ? '' : data.address.address2, [Validators.required]],
       pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],
-      // firstHolder: [!data ? '' : (this.clientData.name)?this.clientData.name:'', [Validators.required]],
       city: [!data.address ? '' : data.address.city, [Validators.required]],
       state: [!data.address ? '' : data.address.state, [Validators.required]],
       country: [!data.address ? '' : data.address.country, [Validators.required]],
@@ -315,13 +315,38 @@ export class BankDetailsIINComponent implements OnInit {
   reset() {
     this.bankDetails.reset();
   }
+  selectPaymentMode(value){
+    console.log(value)
+  }
+   
+  setValueFun(value){
+    this.bankDetails.controls.ifscCode.setValue(value.ifscCode);
+    this.bankDetails.controls.bankName.setValue(value.bankName);
+    this.bankDetails.controls.micrCode.setValue(value.micrCode);
+    this.bankDetails.controls.accountNumber.setValue(value.accountNumber);
+    this.bankDetails.controls.accountType.setValue(value.accountType);
+    this.bankDetails.controls.branchCode.setValue(value.branchCode);
+    this.bankDetails.controls.branchName.setValue(value.branchName);
+    this.bankDetails.controls.paymentMode.setValue(value.paymentMode);
+    this.bankDetails.controls.address1.setValue(value.address.address1);
+    this.bankDetails.controls.address2.setValue(value.address.address2);
+    this.bankDetails.controls.pinCode.setValue(value.address.pinCode);
+     this.bankDetails.controls.city.setValue(value.address.city);
+     this.bankDetails.controls.state.setValue(value.address.state);
+     this.bankDetails.controls.country.setValue(value.address.country);
+     this.bankDetails.controls.branchProof.setValue(value.address.branchProof);
+     this.bankDetails.controls.bankMandate.setValue(value.address.bankMandate);
+     this.bankDetails.controls.mandateDate.setValue(value.address.mandateDate);
+     this.bankDetails.controls.mandateAmount.setValue(value.address.mandateAmount);
+     
+  }
   SendToForm(value, flag) {
     this.formId = value
     if (value == 'first') {
       this.saveBankDetails(value);
       if (this.firstHolderBank) {
         this.holder.type = value;
-        this.getdataForm(this.firstHolderBank)
+        this.setValueFun(this.firstHolderBank)
       } else {
         return;
       }
@@ -331,7 +356,7 @@ export class BankDetailsIINComponent implements OnInit {
       if (this.secondHolderBank) {
         this.holder.type = value;
         this.secondHolderBank = (this.bankList[1]) ? this.bankList[1] : []
-        this.getdataForm(this.secondHolderBank)
+        this.setValueFun(this.secondHolderBank)
       } else {
         this.reset();
       }
@@ -341,7 +366,7 @@ export class BankDetailsIINComponent implements OnInit {
       if (this.thirdHolderBank) {
         this.holder.type = value;
         this.thirdHolderBank = (this.bankList[2]) ? this.bankList[2] : []
-        this.getdataForm(this.thirdHolderBank)
+        this.setValueFun(this.thirdHolderBank)
       } else {
         this.reset();
       };
@@ -364,7 +389,8 @@ export class BankDetailsIINComponent implements OnInit {
           this.getObj = this.setObj(element, value)
           this.bank.push(this.getObj)
         }else{
-          element.accountType = (element.accountType == '1')?'SB':'CA';
+          element.accountType = (element.accountType == '1')?'SB': (element.accountType == '2')? 'CA':'SB';
+          element.paymentMode = this.bankDetails.controls.paymentMode.value,
           this.bank.push(element)
         }
       });
@@ -376,6 +402,7 @@ export class BankDetailsIINComponent implements OnInit {
         familyMemberId: this.genralDetails.familyMemberId,
         clientId: this.genralDetails.clientId,
         advisorId: this.genralDetails.advisorId,
+        paymentMode:this.bankDetails.controls.paymentMode.value,
         holderList: this.temp,
         bankDetailList: this.bank,
         nomineeList: this.inputData.nomineeList,
@@ -391,16 +418,18 @@ export class BankDetailsIINComponent implements OnInit {
     value = {
       ifscCode: holder.ifscCode,
       accountNumber: holder.accountNumber,
-      accountType: (holder.accountType == '1')?'SB':'CA',
+      accountType: (holder.accountType == '1')?'SB': (holder.accountType == '2')? 'CA':'SB',
       bankName: holder.bankName,
       branchName: holder.branchName,
       branchCode: holder.branchCode,
       micrCode: holder.micrCode,
       firstHolder: holder.firstHolder,
+      paymentMode : this.bankDetails.controls.paymentMode.value,
+      defaultFlag: 1
     }
     value.address = {
-      address1: holder.branchAdd1,
-      address2: holder.branchAdd2,
+      address1: holder.address1,
+      address2: holder.address2,
       pinCode: holder.pinCode,
       state: holder.state,
       city: holder.city,

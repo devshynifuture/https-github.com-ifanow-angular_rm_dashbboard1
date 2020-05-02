@@ -43,7 +43,8 @@
                     Stages
                 </h3>
                 <div class="cardList">
-                    <div class="row d-flex align-items-center  pt-6 pb-6 bb" *ngFor="let stage of stageList">
+                    <div class="row d-flex align-items-center  pt-6 pb-6 bb"
+                        *ngFor="let stage of stageList; index as i">
                         <div class="col-md-8 f-14">
 
                             <!-- *ngIf="stage.isShowComment == false" -->
@@ -53,8 +54,12 @@
                             <span class="c-p" (click)="showComment(stage,true)"
                                 [ngStyle]="{ 'text-decoration': onboardingActivityForm.get('firstCall').value == true ? 'line-through': 'initial' }">
                                 {{isLoading? '': stage.taskName}}
+                                <span>
+                                    <mat-icon *ngIf="stage.stageCommentCount !== '' || stage.stageCommentCount ==null">
+                                        message</mat-icon>
+                                    {{ stage.stageCommentCount }}
+                                </span>
                             </span>
-
                         </div>
                         <div class="col-md-4 pr-0 d-flex align-items-center justify-content-end"
                             (click)="showComment(stage,true)">

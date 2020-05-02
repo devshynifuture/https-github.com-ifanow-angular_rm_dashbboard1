@@ -15,8 +15,8 @@
   <div class="pt-90 pr-20 pl-20 pb-44">
     <div class="row">
       <div class="col-md-12 p-0">
-        <h5 class="m-0 text-black"><img (click)="backToTransact()"
-                                        class="v-initial pr-12" src="/assets/images/svg/back-arrow.svg">Investor
+        <h5 class="m-0 text-black"><img (click)="backToTransact()" class="v-initial pr-12"
+            src="/assets/images/svg/back-arrow.svg">Investor
           name: {{selectedFamilyMember}}
         </h5>
       </div>
@@ -84,26 +84,22 @@
           <div class="col-md-11 p-0">
             <div class="form-group ">
               <mat-form-field appearance="standard" floatLabel="never">
-                <input (changedValue)="getSchemeList($event)" [matAutocomplete]="auto" appCustomAutoComplete
-                       aria-label="Number"
-                       class="form-control"
-                       formControlName="schemeRedeem" matInput
-                       placeholder="Start typing to see scheme names" type="text">
+                <input (input)="getSchemeList($event)" [matAutocomplete]="auto" appCustomAutoComplete
+                  aria-label="Number" class="form-control" formControlName="schemeRedeem" matInput
+                  placeholder="Start typing to see scheme names" type="text">
                 <mat-autocomplete #auto="matAutocomplete">
                   <mat-option (click)="selectedScheme(scheme)" *ngFor="let scheme of schemeList"
-                              [value]="scheme.schemeName">
+                    [value]="scheme.schemeName">
                     {{scheme.schemeName}}
                   </mat-option>
                 </mat-autocomplete>
-                <mat-hint align="start" class="f-12 text-custom  ">
+                <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom  ">
                   Last closing NAV: {{navOfSelectedScheme}}
                 </mat-hint>
-                <mat-error *ngIf="redemptionTransaction.get('schemeRedeem').errors?.required"
-                           class="f-12 pt-4">
+                <mat-error *ngIf="redemptionTransaction.get('schemeRedeem').errors?.required" class="f-12 pt-4">
                   This field is required
                 </mat-error>
-                <mat-error *ngIf="redemptionTransaction.get('schemeRedeem').errors?.setValue"
-                           class="f-12">
+                <mat-error *ngIf="redemptionTransaction.get('schemeRedeem').errors?.setValue" class="f-12">
                   Selected scheme does not exist
                 </mat-error>
               </mat-form-field>
@@ -121,8 +117,7 @@
             <div class="form-group mb-0">
               <mat-form-field>
                 <mat-select class="form-control" formControlName="investmentAccountSelection">
-                  <mat-option (click)="reinvest(flag)" *ngFor="let flag of reInvestmentOpt"
-                              value="option">
+                  <mat-option (click)="reinvest(flag)" *ngFor="let flag of reInvestmentOpt" value="option">
                     {{(flag.dividendReinvestmentFlag == 0) ? 'Dividend payout' : 'Dividend reinvestment'}}
                   </mat-option>
                 </mat-select>
@@ -142,7 +137,7 @@
               <mat-form-field>
                 <mat-select class="form-control" formControlName="investmentAccountSelection">
                   <mat-option (click)="selectedFolio(folio)" *ngFor="let folio of folioList"
-                              [value]="folio.folioNumber">{{folio.folioNumber}}</mat-option>
+                    [value]="folio.folioNumber">{{folio.folioNumber}}</mat-option>
                 </mat-select>
                 <mat-error class="f-12 pt-4">
                   This field is required
@@ -187,7 +182,7 @@
           <div class="col-md-5 p-0">
             <mat-form-field>
               <mat-select (selectionChange)="redemptionType($event)" class="form-control br-0"
-                          formControlName="redeemType">
+                formControlName="redeemType">
                 <mat-option value="1">Amount Rs.
                 </mat-option>
                 <mat-option value="2">No. of units
@@ -210,24 +205,22 @@
           <div class="col-md-5 p-0">
             <div class="form-group mb-0 iconRupess">
               <mat-form-field>
-                <input #employeeContry (change)="enteredAmount($event.target.value)" class="form-control  rupess"
-                       formControlName="employeeContry" matInput
-                       maxlength="10" type="text">
+                <input #employeeContry appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                  (change)="enteredAmount($event.target.value)" class="form-control  rupess"
+                  formControlName="employeeContry" matInput maxlength="10" type="text">
                 <mat-hint *ngIf="(redemptionTransaction.get('redeemType').value == 1)" align="start"
-                          class="f-12 text-custom">
+                  class="f-12 text-custom">
                   Min amount:
                   ₹{{(schemeDetails == undefined) ? '-' : schemeDetails.minimumPurchaseAmount }}
                 </mat-hint>
                 <mat-hint *ngIf="(redemptionTransaction.get('redeemType').value == 2)" align="start"
-                          class="f-12 text-custom">
+                  class="f-12 text-custom">
                   Min unit: ₹{{(schemeDetails == undefined) ? '-' : schemeDetails.minimumRedemptionQty }}
                 </mat-hint>
-                <mat-error *ngIf="(redemptionTransaction.get('employeeContry').errors?.min)"
-                           class="f-12">
+                <mat-error *ngIf="(redemptionTransaction.get('employeeContry').errors?.min)" class="f-12">
                   Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
                 </mat-error>
-                <mat-error *ngIf="(redemptionTransaction.get('employeeContry').errors?.required)"
-                           class="f-12">
+                <mat-error *ngIf="(redemptionTransaction.get('employeeContry').errors?.required)" class="f-12">
                   This field is requied
                 </mat-error>
               </mat-form-field>
@@ -238,7 +231,7 @@
 
       <div class="col-md-4 bg-grey lter p-0">
         <app-transaction-summary (bankDetailsSend)='getbankDetails($event)' (defaultDetails)='getDefaultDetails($event)'
-                                 (folioChange)='onFolioChange($event)' [data]="transactionSummary">
+          (folioChange)='onFolioChange($event)' [data]="transactionSummary">
         </app-transaction-summary>
       </div>
     </div>

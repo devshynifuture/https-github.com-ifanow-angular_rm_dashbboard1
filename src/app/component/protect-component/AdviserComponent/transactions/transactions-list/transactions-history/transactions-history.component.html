@@ -64,11 +64,14 @@
 <div class="p-28 pb-100">
 
     <div class="row">
-        <div class="col-md-6 p-0">
+        <div class="col-md-5 p-0">
             <h5 class="m-0 f-500 text-black">Status</h5>
         </div>
-        <div class="col-md-6 p-0 text-right right">
+        <div class="col-md-5 p-0 text-right right">
             <button mat-stroked-button class="primary-sm" (click)="refresh(transactionData)">REFRESH</button>
+        </div>
+        <div class="col-md-2 p-0 mt-12">
+            <mat-spinner class="mt-4" *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
         </div>
     </div>
     <div *ngIf="!(transactionData.status==0 || transactionData.status==1)">
