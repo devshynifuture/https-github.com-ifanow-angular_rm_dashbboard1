@@ -77,16 +77,16 @@
         <div class="row">
           <div class="col-md-12 p-0 text-left">
             <h5 class="m-0 pb-10 text-black">Select from the following options</h5>
-            <mat-radio-group (ngModelChange)="selectSchemeOption($event)" aria-label="Select an option"
-                             class="bigRadio" formControlName="schemeSelection">
+            <mat-radio-group (ngModelChange)="selectSchemeOption($event)" aria-label="Select an option" class="bigRadio"
+              formControlName="schemeSelection">
               <mat-radio-button value="1"
-                                [ngClass]="{'b-a-custom': purchaseTransaction.get('schemeSelection').value==1,'text-primary':purchaseTransaction.get('schemeSelection').value==1,'radio-border':purchaseTransaction.get('schemeSelection').value==2}"
-                                class="b-a-custom radioBtn text-primary custom-radio bor_top_tb_left ">
+                [ngClass]="{'b-a-custom': purchaseTransaction.get('schemeSelection').value==1,'text-primary':purchaseTransaction.get('schemeSelection').value==1,'radio-border':purchaseTransaction.get('schemeSelection').value==2}"
+                class="b-a-custom radioBtn text-primary custom-radio bor_top_tb_left ">
                 Invest in existing scheme
               </mat-radio-button>
               <mat-radio-button value="2"
-                                [ngClass]="{'b-a-custom': purchaseTransaction.get('schemeSelection').value==2,'text-primary':purchaseTransaction.get('schemeSelection').value==2,'radio-border':purchaseTransaction.get('schemeSelection').value==1}"
-                                class="radio-border radioBtn bor_top_tb_right">
+                [ngClass]="{'b-a-custom': purchaseTransaction.get('schemeSelection').value==2,'text-primary':purchaseTransaction.get('schemeSelection').value==2,'radio-border':purchaseTransaction.get('schemeSelection').value==1}"
+                class="radio-border radioBtn bor_top_tb_right">
                 Select a new scheme
               </mat-radio-button>
             </mat-radio-group>
@@ -103,25 +103,22 @@
             <div class="form-group">
               <mat-form-field appearance="standard" floatLabel="never">
                 <!--                (keyup)="getSchemeList($event.target.value)"-->
-                <input (changedValue)="getSchemeList($event)" [matAutocomplete]="auto"
-                       appCustomAutoComplete aria-label="Number"
-                       class="form-control" formControlName="schemePurchase" matInput
-                       placeholder="Start typing to see scheme names" type="text">
+                <input (input)="getSchemeList($event)" [matAutocomplete]="auto" appCustomAutoComplete
+                  aria-label="Number" class="form-control" formControlName="schemePurchase" matInput
+                  placeholder="Start typing to see scheme names" type="text">
                 <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option (onSelectionChange)="selectedScheme(scheme)"
-                              *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
+                  <mat-option (onSelectionChange)="selectedScheme(scheme)" *ngFor="let scheme of schemeList"
+                    [value]="scheme.schemeName">
                     {{scheme.schemeName}}
                   </mat-option>
                 </mat-autocomplete>
-                <mat-error *ngIf="purchaseTransaction.get('schemePurchase').errors?.required"
-                           class="f-12">
+                <mat-error *ngIf="purchaseTransaction.get('schemePurchase').errors?.required" class="f-12">
                   This field is required
                 </mat-error>
-                <mat-error *ngIf="purchaseTransaction.get('schemePurchase').errors?.setValue"
-                           class="f-12">
+                <mat-error *ngIf="purchaseTransaction.get('schemePurchase').errors?.setValue" class="f-12">
                   Selected scheme does not exist
                 </mat-error>
-                <mat-hint align="start" class="f-12 text-custom">Last closing NAV:
+                <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom">Last closing NAV:
                   {{navOfSelectedScheme}}
                 </mat-hint>
               </mat-form-field>
@@ -140,8 +137,7 @@
             <div class="form-group mb-0">
               <mat-form-field>
                 <mat-select class="form-control" formControlName="reinvest">
-                  <mat-option (click)="reinvest(flag)" *ngFor="let flag of reInvestmentOpt"
-                              value="option">
+                  <mat-option (click)="reinvest(flag)" *ngFor="let flag of reInvestmentOpt" value="option">
                     {{(flag.dividendReinvestmentFlag == 0) ? 'Dividend payout' : 'Dividend reinvestment'}}
                   </mat-option>
                 </mat-select>
@@ -158,15 +154,15 @@
           </div>
           <div>
             <mat-radio-group (ngModelChange)="selectExistingOrNew($event)" aria-label="Select an option"
-                             class="smallRadio" formControlName="folioSelection">
+              class="smallRadio" formControlName="folioSelection">
               <mat-radio-button value="1"
-                                [ngClass]="{'b-a-custom': purchaseTransaction.get('folioSelection').value==1,'text-primary':purchaseTransaction.get('folioSelection').value==1,'radio-border':purchaseTransaction.get('folioSelection').value==2}"
-                                class="b-a-custom radioBtn text-primary custom-radio bor_top_tb_left ">
+                [ngClass]="{'b-a-custom': purchaseTransaction.get('folioSelection').value==1,'text-primary':purchaseTransaction.get('folioSelection').value==1,'radio-border':purchaseTransaction.get('folioSelection').value==2}"
+                class="b-a-custom radioBtn text-primary custom-radio bor_top_tb_left ">
                 Existing
               </mat-radio-button>
               <mat-radio-button value="2"
-                                [ngClass]="{'b-a-custom': purchaseTransaction.get('folioSelection').value==2,'text-primary':purchaseTransaction.get('folioSelection').value==2,'radio-border':purchaseTransaction.get('folioSelection').value==1}"
-                                class="radio-border bor_top_tb_right radioBtn ">
+                [ngClass]="{'b-a-custom': purchaseTransaction.get('folioSelection').value==2,'text-primary':purchaseTransaction.get('folioSelection').value==2,'radio-border':purchaseTransaction.get('folioSelection').value==1}"
+                class="radio-border bor_top_tb_right radioBtn ">
                 New
               </mat-radio-button>
             </mat-radio-group>
@@ -182,7 +178,7 @@
               <mat-form-field>
                 <mat-select class="form-control" formControlName="investmentAccountSelection">
                   <mat-option (click)="selectedFolio(folio)" *ngFor="let folio of folioList"
-                              [value]="folio.folioNumber">{{folio.folioNumber}}</mat-option>
+                    [value]="folio.folioNumber">{{folio.folioNumber}}</mat-option>
                 </mat-select>
                 <mat-error class="f-12 pt-4">
                   This field is required
@@ -208,8 +204,7 @@
             <div class="form-group iconRupess mb-0">
               <mat-form-field>
                 <input #employeeContry (keyup)="enteredAmount($event.target.value)" class="form-control rupess"
-                       formControlName="employeeContry" matInput
-                       maxlength="10" type="text">
+                  formControlName="employeeContry" matInput maxlength="10" type="text">
                 <mat-hint align="start" class="f-12 text-custom">
                   Min amount:
                   ₹{{(schemeDetails == undefined) ? '0' : schemeDetails.minAmount }}
@@ -218,8 +213,7 @@
                   Should be greater than or equal to {{schemeDetails.minAmount}}
                 </mat-error>
 
-                <mat-error *ngIf="(purchaseTransaction.get('employeeContry').errors?.required)"
-                           class="f-12">
+                <mat-error *ngIf="(purchaseTransaction.get('employeeContry').errors?.required)" class="f-12">
                   This field is requied
                 </mat-error>
               </mat-form-field>
@@ -234,15 +228,15 @@
           </div>
           <div class="col-md-12 p-0">
             <mat-radio-group (ngModelChange)="selectPaymentMode($event)" aria-label="Select an option"
-                             class="mediumRadio" formControlName="modeOfPaymentSelection">
+              class="mediumRadio" formControlName="modeOfPaymentSelection">
               <mat-radio-button checked="true" value="1"
-                                [ngClass]="{'b-a-custom': purchaseTransaction.get('modeOfPaymentSelection').value==1,'text-primary':purchaseTransaction.get('modeOfPaymentSelection').value==1,'b-a':purchaseTransaction.get('modeOfPaymentSelection').value==2}"
-                                class="b-a-custom radioBtn text-primary custom-radio bor_top_tb_left">
+                [ngClass]="{'b-a-custom': purchaseTransaction.get('modeOfPaymentSelection').value==1,'text-primary':purchaseTransaction.get('modeOfPaymentSelection').value==1,'b-a':purchaseTransaction.get('modeOfPaymentSelection').value==2}"
+                class="b-a-custom radioBtn text-primary custom-radio bor_top_tb_left">
                 Net banking
               </mat-radio-button>
               <mat-radio-button value="2"
-                                [ngClass]="{'b-a-custom': purchaseTransaction.get('modeOfPaymentSelection').value==2,'text-primary':purchaseTransaction.get('modeOfPaymentSelection').value==2,'b-a':purchaseTransaction.get('modeOfPaymentSelection').value==1}"
-                                class="b-a radioBtn bor_top_tb_right">
+                [ngClass]="{'b-a-custom': purchaseTransaction.get('modeOfPaymentSelection').value==2,'text-primary':purchaseTransaction.get('modeOfPaymentSelection').value==2,'b-a':purchaseTransaction.get('modeOfPaymentSelection').value==1}"
+                class="b-a radioBtn bor_top_tb_right">
                 Debit mandate
               </mat-radio-button>
             </mat-radio-group>
@@ -254,7 +248,7 @@
       </div>
       <div class="col-md-4 bg-grey lter p-0">
         <app-transaction-summary (bankDetailsSend)='getbankDetails($event)' (defaultDetails)='getDefaultDetails($event)'
-                                 (folioChange)='onFolioChange($event)' [data]="transactionSummary">
+          (folioChange)='onFolioChange($event)' [data]="transactionSummary">
         </app-transaction-summary>
       </div>
     </div>
