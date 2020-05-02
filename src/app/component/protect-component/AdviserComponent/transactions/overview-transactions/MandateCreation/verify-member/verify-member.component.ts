@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder } from '@angular/forms';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { ProcessTransactionService } from '../../doTransaction/process-transaction.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { DatePipe } from '@angular/common';
-import { UtilService } from 'src/app/services/util.service';
-import { OnlineTransactionService } from '../../../online-transaction.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { MandateCreationComponent } from '../mandate-creation/mandate-creation.component';
-import { MatTableDataSource } from '@angular/material';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
+import {ProcessTransactionService} from '../../doTransaction/process-transaction.service';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {DatePipe} from '@angular/common';
+import {UtilService} from 'src/app/services/util.service';
+import {OnlineTransactionService} from '../../../online-transaction.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-verify-member',
@@ -20,14 +19,14 @@ export class VerifyMemberComponent implements OnInit {
   displayedColumns: string[] = ['set', 'position', 'name', 'weight', 'ifsc', 'aid', 'euin', 'hold'];
   data1: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource();
-    nomineesListFM: any = [];
+  nomineesListFM: any = [];
   showSpinnerOwner = false;
   familyMemberData: any;
   familyMemberId: any;
   generalDetails: any;
   clientCodeData: any;
   detailsIIN: any;
-  showMandateTable = false
+  showMandateTable = false;
   selectedMandate: any;
   customValue: any;
   Todate: any;
@@ -35,18 +34,19 @@ export class VerifyMemberComponent implements OnInit {
   isLoading;
 
 
-
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private processTrasaction: ProcessTransactionService,
-    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
-    private onlineTransact: OnlineTransactionService, public eventService: EventService) { }
+              private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
+              private onlineTransact: OnlineTransactionService, public eventService: EventService) {
+  }
 
   ngOnInit() {
-    this.getdataForm('')
+    this.getdataForm('');
   }
 
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag })
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
   }
+
   close() {
     const fragmentData = {
       direction: 'top',
@@ -55,14 +55,16 @@ export class VerifyMemberComponent implements OnInit {
 
     this.eventService.changeUpperSliderState(fragmentData);
   }
+
   continuesTill(value) {
-    this.customValue = value
-    this.Todate = new Date()
-    this.Todate.setDate("31");
-    this.Todate.setMonth("11");
-    this.Todate.setFullYear("2099");
-    this.generalDetails.controls.toDate.setValue(this.Todate)
+    this.customValue = value;
+    this.Todate = new Date();
+    this.Todate.setDate('31');
+    this.Todate.setMonth('11');
+    this.Todate.setFullYear('2099');
+    this.generalDetails.controls.toDate.setValue(this.Todate);
   }
+
   getdataForm(data) {
 
     this.generalDetails = this.fb.group({
@@ -75,53 +77,57 @@ export class VerifyMemberComponent implements OnInit {
       selectDateOption: [data ? '' : data.mandateAmount, [Validators.required]],
     });
   }
+
   getFormControl(): any {
     return this.generalDetails.controls;
   }
 
 
-
   lisNominee(value) {
-    //this.showSpinnerOwner = false
+    // this.showSpinnerOwner = false
     if (value == null) {
       // this.transactionAddForm.get('ownerName').setErrors({ 'setValue': 'family member does not exist' });
       // this.transactionAddForm.get('ownerName').markAsTouched();
     }
-    console.log(value)
+    console.log(value);
     this.nomineesListFM = Object.assign([], value);
   }
+
   ownerList(value) {
-    if (value == "") {
-      this.showSpinnerOwner = false
+    if (value == '') {
+      this.showSpinnerOwner = false;
     } else {
-      this.showSpinnerOwner = true
+      this.showSpinnerOwner = true;
     }
   }
+
   ownerDetails(value) {
     this.familyMemberData = value;
-    this.familyMemberId = value.familyMemberId
+    this.familyMemberId = value.familyMemberId;
     this.familyMemberId = value.id;
-    this.ownerDetail()
+    this.ownerDetail();
   }
+
   saveGeneralDetails(data) {
-    let obj = {
+    const obj = {
       ownerName: this.generalDetails.controls.ownerName.value,
       holdingNature: this.generalDetails.controls.holdingNature.value,
       familyMemberId: this.familyMemberId,
       clientId: this.familyMemberData.clientId,
       advisorId: this.familyMemberData.advisorId,
       taxStatus: this.generalDetails.controls.taxStatus.value,
-    }
-    this.openMandate(null)
+    };
+    this.openMandate(null);
   }
+
   ownerDetail() {
 
     const obj = {
       clientId: this.familyMemberData.clientId,
       advisorId: this.familyMemberData.advisorId,
       familyMemberId: this.familyMemberData.familyMemberId,
-      //tpUserCredentialId: 292
-    }
+      // tpUserCredentialId: 292
+    };
     this.onlineTransact.getClientCodes(obj).subscribe(
       data => {
         console.log(data);
@@ -130,53 +136,60 @@ export class VerifyMemberComponent implements OnInit {
       err => this.eventService.openSnackBar(err, 'Dismiss')
     );
   }
+
   selectIINUCC(clientCode) {
 
-    this.detailsIIN = clientCode
-    this.getBankMandate()
+    this.detailsIIN = clientCode;
+    this.getBankMandate();
   }
+
   getBankMandate() {
-    let obj1 = {
+    const obj1 = {
       advisorId: this.detailsIIN.advisorId,
       tpUserCredFamilyMappingId: this.detailsIIN.tpUserCredFamilyMappingId,
       aggregatorType: this.detailsIIN.aggregatorType,
       tpUserCredentialId: this.detailsIIN.tpUserCredentialId,
       clientCode: this.detailsIIN.clientCode,
-    }
-    this.onlineTransact.getBankDetailsMandate(obj1).subscribe(
+    };
+    this.onlineTransact.getMandateDetails(obj1).subscribe(
       data => this.getBankDetailsMandateRes(data), (error) => {
         this.eventService.showErrorMessage(error);
-      })
+      });
   }
+
   getBankDetailsMandateRes(data) {
-    console.log(data)
-    this.openMandate(data)
+    console.log(data);
+    this.openMandate(data);
   }
+
   openMandate(data) {
-    this.inputData = data
-    this.dataSource = data
-    this.showMandateTable = true
+    this.inputData = data;
+    this.dataSource = data;
+    this.showMandateTable = true;
   }
+
   selectMandate(mandate) {
-    this.selectedMandate = mandate
+    this.selectedMandate = mandate;
   }
+
   createMandates() {
-    this.formDate = new Date(this.generalDetails.controls.fromDate.value)
-    this.Todate = new Date(this.generalDetails.controls.toDate.value)
-    Object.assign(this.selectedMandate, { advisorId: this.detailsIIN.advisorId });
-    Object.assign(this.selectedMandate, { amount: this.generalDetails.controls.mandateAmount.value });
-    Object.assign(this.selectedMandate, { toDate: (this.Todate).getTime() });
-    Object.assign(this.selectedMandate, { fromDate: (this.formDate).getTime() });
-    Object.assign(this.selectedMandate, { tpUserCredFamilyMappingId: this.detailsIIN.tpUserCredFamilyMappingId });
-    Object.assign(this.selectedMandate, { tpUserCredentialId: this.detailsIIN.tpUserCredentialId });
-    console.log('selectMandate  == ', this.selectedMandate)
+    this.formDate = new Date(this.generalDetails.controls.fromDate.value);
+    this.Todate = new Date(this.generalDetails.controls.toDate.value);
+    Object.assign(this.selectedMandate, {advisorId: this.detailsIIN.advisorId});
+    Object.assign(this.selectedMandate, {amount: this.generalDetails.controls.mandateAmount.value});
+    Object.assign(this.selectedMandate, {toDate: (this.Todate).getTime()});
+    Object.assign(this.selectedMandate, {fromDate: (this.formDate).getTime()});
+    Object.assign(this.selectedMandate, {tpUserCredFamilyMappingId: this.detailsIIN.tpUserCredFamilyMappingId});
+    Object.assign(this.selectedMandate, {tpUserCredentialId: this.detailsIIN.tpUserCredentialId});
+    console.log('selectMandate  == ', this.selectedMandate);
     this.onlineTransact.addMandate(this.selectedMandate).subscribe(
       data => this.addMandateRes(data)
     );
   }
+
   addMandateRes(data) {
-    console.log('res mandate', data)
+    console.log('res mandate', data);
     this.eventService.openSnackBar('Added successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
+    this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
   }
 }

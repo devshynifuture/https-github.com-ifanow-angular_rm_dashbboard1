@@ -6,6 +6,7 @@ import { CustomerService } from '../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ValidatorType } from 'src/app/services/util.service';
 import { MatInput } from '@angular/material';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-personal-accident-in-asset',
@@ -13,6 +14,21 @@ import { MatInput } from '@angular/material';
   styleUrls: ['./add-personal-accident-in-asset.component.scss']
 })
 export class AddPersonalAccidentInAssetComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   maxDate = new Date();
   advisorId: any;
   clientId: any;
@@ -176,7 +192,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
 
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
-      name: [data ? data.name : ''], sharePercentage: [data ? data.sumInsured : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : ''], sharePercentage: [data ? data.sumInsured : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0],relationshipId:[data ? data.relationshipId :0]
     }));
     if (!data || this.getNominee.value.length < 1) {
       for (let e in this.getNominee.controls) {
@@ -275,7 +291,8 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
         name: [''],
         sharePercentage: [0],
         familyMemberId: [0],
-        id: [0]
+        id: [0],
+        relationshipId:[0]
       })]),
       InsuredMemberForm: this.fb.array([this.fb.group({
         insuredMembers: ['', [Validators.required]],
@@ -404,6 +421,7 @@ changeTheInput(form1,form2,event) {
     if (this.personalAccidentForm.invalid) {
       this.personalAccidentForm.markAllAsTouched();
     } else {
+      this.barButtonOptions.active = true;
       const obj = {
         "clientId": this.clientId,
         "advisorId": this.advisorId,
@@ -452,6 +470,7 @@ changeTheInput(form1,form2,event) {
       if (this.dataForEdit) {
         this.customerService.editGeneralInsuranceData(obj).subscribe(
           data => {
+            this.barButtonOptions.active = false;
             console.log(data);
             this.eventService.openSnackBar("Updated successfully!", 'dismiss');
             const insuranceData =
@@ -465,6 +484,7 @@ changeTheInput(form1,form2,event) {
       } else {
         this.customerService.addGeneralInsurance(obj).subscribe(
           data => {
+            this.barButtonOptions.active = false;
             console.log(data);
             this.eventService.openSnackBar("Added successfully!", 'dismiss');
             const insuranceData =

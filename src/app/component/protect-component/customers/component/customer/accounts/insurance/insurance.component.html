@@ -111,31 +111,37 @@
                                 <ng-container matColumnDef="sum">
                                     <th mat-header-cell mat-sort-header="sumAssured" *matHeaderCellDef class="br text-right"> Sum assured </th>
                                     <td mat-cell *matCellDef="let element" class="br text-right">
-                                        <div class="bar"><span appFormatNumber> {{element.sumAssured}} </span></div>
+                                        <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.sumAssured }}</span> </div>
+
                                     </td>
-                                    <td mat-footer-cell *matFooterCellDef class="br text-right pr-8 f-600" [value]="totalSumAssuredLifeIns" appFormatNumber>
-                                        <div class="bar"><span>{{totalSumAssuredLifeIns}}</span></div>
+                                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"  >
+                                            <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalSumAssuredLifeIns" appFormatNumber></span></div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="cvalue">
                                     <th mat-header-cell mat-sort-header="currentValue" *matHeaderCellDef class="br text-right"> Current value
                                     </th>
                                     <td mat-cell *matCellDef="let element" class="br text-right">
-                                        <div class="bar"> <span appFormatNumber>{{(element.currentValue =='Infinity' ? 0 : element.currentValue)}}
-                                            </span></div>
+                                            <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{(element.currentValue =='Infinity' ? 0 : element.currentValue)}}</span> </div>
+
                                     </td>
-                                    <td mat-footer-cell *matFooterCellDef class="br text-right pr-8 f-600" [value]="totalCurrentValue" appFormatNumber>
-                                        <div class="bar"><span>{{totalCurrentValue}}</span></div>
+                                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"  >
+                                            <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalCurrentValue" appFormatNumber></span></div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="premium">
                                     <th mat-header-cell mat-sort-header="premiumAmount" *matHeaderCellDef class="br text-right">
                                         Premium </th>
                                     <td mat-cell *matCellDef="let element" class="br text-right">
-                                        <div class="bar"> <span appFormatNumber>{{element.premiumAmount}}</span> </div>
+                                        <!-- <div class="bar"> <span appFormatNumber>{{element.premiumAmount}}</span> </div> -->
+                                        <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.premiumAmount }}</span> </div>
+
                                     </td>
-                                    <td mat-footer-cell *matFooterCellDef class="br text-right pr-8 f-600" [value]="totalPremiunAmountLifeIns" appFormatNumber>
+                                    <!-- <td mat-footer-cell *matFooterCellDef class="br text-right pr-8 f-600" [value]="totalPremiunAmountLifeIns" appFormatNumber>
                                         <div class="bar"><span>{{totalPremiunAmountLifeIns}}</span></div>
+                                    </td> -->
+                                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"  >
+                                            <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalPremiunAmountLifeIns" appFormatNumber></span></div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="term">
@@ -249,19 +255,26 @@
                                     <th mat-sort-header="sumAssured" *matHeaderCellDef class="br"> Sum insured
                                     </th>
                                     <td mat-cell *matCellDef="let element" class="br">
-                                        <div class="bar"><span appFormatNumber>{{element.sumAssured}} </span></div>
+                                        <!-- <div class="bar"><span appFormatNumber>{{element.sumAssured}} </span></div> -->
+                                        <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.sumAssured }}</span> </div>
+
                                     </td>
-                                    <td mat-footer-cell *matFooterCellDef class="br text-right pr-8 f-600" [value]="totalSumAssured" appFormatNumber>
+                                    <!-- <td mat-footer-cell *matFooterCellDef class="br text-right pr-8 f-600" [value]="totalSumAssured" appFormatNumber>
                                         <div class="bar"><span>{{totalSumAssured}}</span></div>
+                                    </td> -->
+                                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"  >
+                                            <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalSumAssured" appFormatNumber></span></div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="premiumAmount">
                                     <th mat-header-cell mat-sort-header="premiumAmount" *matHeaderCellDef class="br text-right"> Premium </th>
                                     <td mat-cell *matCellDef="let element" class="br text-right">
-                                        <div class="bar"><span appFormatNumber>{{element.premiumAmount}} </span></div>
+                                        <!-- <div class="bar"><span appFormatNumber>{{element.premiumAmount}} </span></div> -->
+                                        <div class="bar" >{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.premiumAmount }}</span> </div>
+
                                     </td>
-                                    <td mat-footer-cell *matFooterCellDef class="br text-right pr-8 f-600" [value]="totalPremiunAmount" appFormatNumber>
-                                        <div class="bar"><span>{{totalPremiunAmount}}</span></div>
+                                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"  >
+                                            <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalPremiunAmount" appFormatNumber></span></div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="policyExpiryDate">
@@ -351,6 +364,22 @@
 
 <div  #lifeInsurance id="template" class="hide">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
+            <tr>
+                    <td style="text-align: left;">
+                        <img width="100px" *ngIf="personalProfileData" [src]="personalProfileData.profilePic">
+                    </td>
+                    <td style="text-align: right;">
+                        <p style="margin: 0px; font-weight: 600;" *ngIf="personalProfileData">
+                            {{(personalProfileData.fullName) ? personalProfileData.fullName : '-'}}</p>
+                        <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData">Himachal Pradesh</p>
+                        <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData"> <strong> Number: </strong> {{(personalProfileData.mobileNo) ? personalProfileData.mobileNo : '-'}}</p>
+                        <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData"> <strong> Email : </strong> {{(personalProfileData.emailId) ? personalProfileData.emailId : '-'}}</p>
+                    </td>
+                </tr>
+        
+                <tr>
+                    <td colspan="2" style="padding: 10px;"></td>
+                </tr>
         <tr>
             <td colspan="9"
                 style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
@@ -470,6 +499,22 @@
 
 <div #generalInsurance id="template2" class="hide">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
+            <tr>
+                    <td style="text-align: left;">
+                        <img width="100px" *ngIf="personalProfileData" [src]="personalProfileData.profilePic">
+                    </td>
+                    <td style="text-align: right;">
+                        <p style="margin: 0px; font-weight: 600;" *ngIf="personalProfileData">
+                            {{(personalProfileData.fullName) ? personalProfileData.fullName : '-'}}</p>
+                        <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData">Himachal Pradesh</p>
+                        <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData"> <strong> Number: </strong> {{(personalProfileData.mobileNo) ? personalProfileData.mobileNo : '-'}}</p>
+                        <p style="margin: 0px; font-size: 14px;" *ngIf="personalProfileData"> <strong> Email : </strong> {{(personalProfileData.emailId) ? personalProfileData.emailId : '-'}}</p>
+                    </td>
+                </tr>
+        
+                <tr>
+                    <td colspan="2" style="padding: 10px;"></td>
+                </tr>
         <tr>
             <td colspan="9"
                 style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">

@@ -582,7 +582,7 @@
                         </div>
                     </div>
 
-                    <div class="riskProfileBox bg-white">
+                    <div class="riskProfileBox bg-white" *ngIf="tabsLoaded.riskProfile.dataLoaded && tabsLoaded.riskProfile.hasData">
                         <div class="row" *ngFor="let risk of riskProfile">
                             <div class="col-md-4 text-center">
                                 <p class="f-16 roboto mb-8 f-500">Your risk score</p>

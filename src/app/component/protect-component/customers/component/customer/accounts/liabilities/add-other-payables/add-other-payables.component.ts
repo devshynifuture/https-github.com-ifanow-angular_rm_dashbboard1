@@ -8,6 +8,7 @@ import { CustomerService } from '../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatInput } from '@angular/material';
 import { DatePipe } from '@angular/common';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-add-other-payables',
@@ -19,6 +20,21 @@ import { DatePipe } from '@angular/common';
   ],
 })
 export class AddOtherPayablesComponent implements OnInit {
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   otherLiabilityForm: any;
   ownerData: any;
   _inputData: any;
@@ -367,6 +383,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.otherLiability
       this.otherLiabilityForm.markAllAsTouched();
       this.inputs.find(input => !input.ngControl.valid).focus();
     } else {
+      this.barButtonOptions.active = true;
       const obj = {
         // ownerName: (this.ownerName == null) ? this.otherLiabilityForm.controls.ownerName.value : this.ownerName,
         ownerName:this.otherLiabilityForm.value.getCoOwnerName[0].name,
@@ -430,6 +447,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.otherLiability
   }
 
   addOtherPayablesRes(data) {
+    this.barButtonOptions.active = false;
     console.log(data);
     if (data) {
       console.log(data);
@@ -443,6 +461,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.otherLiability
   }
 
   editOtherPayablesRes(data) {
+    this.barButtonOptions.active = false;
     console.log(data);
     if (data) {
       console.log(data);

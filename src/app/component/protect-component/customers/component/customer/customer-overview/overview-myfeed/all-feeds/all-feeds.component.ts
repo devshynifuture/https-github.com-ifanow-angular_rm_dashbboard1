@@ -276,10 +276,10 @@ export class AllFeedsComponent implements OnInit {
       if(res == null) {
         this.riskProfile = [];
       } else {
-        this.tabsLoaded.globalRiskProfile.hasData = true;
+        this.tabsLoaded.riskProfile.hasData = true;
         this.riskProfile = res;
       }
-      this.tabsLoaded.globalRiskProfile.dataLoaded = true;
+      this.tabsLoaded.riskProfile.dataLoaded = true;
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
@@ -293,10 +293,10 @@ export class AllFeedsComponent implements OnInit {
       if(res == null) {
         this.globalRiskProfile = [];
       } else {
-        this.tabsLoaded.riskProfile.hasData = true;
+        this.tabsLoaded.globalRiskProfile.hasData = true;
         this.globalRiskProfile = res;
       }
-      this.tabsLoaded.riskProfile.dataLoaded = true;
+      this.tabsLoaded.globalRiskProfile.dataLoaded = true;
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
