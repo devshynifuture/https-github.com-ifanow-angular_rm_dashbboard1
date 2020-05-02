@@ -1,7 +1,8 @@
 <div class="dialogclose">
     <div class="row popup-header-fix-100">
         <div class="col-md-2 border-right-1 p-0">
-            <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+            <img class="imgAdLogo"
+                src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
         </div>
         <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
 
@@ -31,12 +32,13 @@
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field>
-                            <mat-select class="form-control" formControlName="nomineeName">
-                                <mat-option [value]="fm.name" (click)="selectedNominee(fm)" *ngFor="let fm of nomineeFmList"> {{fm.name}} </mat-option>
-                            </mat-select>
-                            <input matInput maxlength="30" appInputValueValidation
+                            <input [matAutocomplete]="auto1" matInput maxlength="30" appInputValueValidation
                                 [inputValidator]="validatorType.TEXT_ONLY" formControlName="nomineeName" type="text"
                                 class="form-control">
+                            <mat-autocomplete #auto1="matAutocomplete">
+                                <mat-option [value]="fm.name" (click)="selectedNominee(fm)"
+                                    *ngFor="let fm of nomineeFmList"> {{fm.name}} </mat-option>
+                            </mat-autocomplete>
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
@@ -73,10 +75,12 @@
                     </div>
                     <div class="col-md-6 form-group">
                         <mat-radio-group aria-label="Select an option" formControlName="type">
-                            <mat-radio-button value="1" [ngClass]="nomineeDetails.get('type').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
+                            <mat-radio-button value="1"
+                                [ngClass]="nomineeDetails.get('type').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                                 Major
                             </mat-radio-button>
-                            <mat-radio-button value="2" [ngClass]="nomineeDetails.get('type').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
+                            <mat-radio-button value="2"
+                                [ngClass]="nomineeDetails.get('type').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                                 Minor </mat-radio-button>
                         </mat-radio-group>
                     </div>
@@ -105,7 +109,9 @@
                     </div>
                     <div class="col-md-3 form-group iconPetage">
                         <mat-form-field floatLabel="never" appearance="standard">
-                            <input placeholder="Enter Nominee percentage" matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" appInputValueValidation maxlength="3" formControlName="percent" type="number" class="form-control percentage">
+                            <input placeholder="Enter Nominee percentage" matInput
+                                [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" appInputValueValidation
+                                maxlength="3" formControlName="percent" type="number" class="form-control percentage">
                             <mat-error *ngIf="(nomineeDetails.get('percent').errors)" class="f-12 ml-8">
                                 Should be between than 0.01 to 99
                             </mat-error>
@@ -140,7 +146,8 @@
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
-                            <input placeholder="Enter Address line 1" matInput formControlName="address1" type="text" class="form-control">
+                            <input placeholder="Enter Address line 1" matInput formControlName="address1" type="text"
+                                class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
@@ -151,7 +158,8 @@
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
-                            <input matInput placeholder="Enter Address line 2" formControlName="address2" type="text" class="form-control">
+                            <input matInput placeholder="Enter Address line 2" formControlName="address2" type="text"
+                                class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
 
                         </mat-form-field>
@@ -163,12 +171,17 @@
                     </div>
                     <div class="col-md-3 form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
-                            <input placeholder="Enter Pin code" #pincode [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" appInputValueValidation matInput formControlName="pinCode" (focusout)="getPostalPin($event.target.value)" type="text" class="form-control">
+                            <input placeholder="Enter Pin code" #pincode [inputValidator]="validatorType.NUMBER_ONLY"
+                                [maxLength]="6" appInputValueValidation matInput formControlName="pinCode"
+                                (focusout)="getPostalPin($event.target.value)" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                             <mat-hint align="end" class="f-12 text-custom">
                                 {{pincode.value.length}} / 6
                             </mat-hint>
                         </mat-form-field>
+                    </div>
+                    <div class="col-md-1 p-0 d-flex align-items-center justify-content-center mt-12">
+                        <mat-spinner *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
                     </div>
                 </div>
                 <div class="row pt-20">
@@ -177,7 +190,8 @@
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
-                            <input placeholder="Enter City" matInput formControlName="city" type="text" class="form-control">
+                            <input placeholder="Enter City" matInput formControlName="city" type="text"
+                                class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
 
                         </mat-form-field>
@@ -189,7 +203,8 @@
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
-                            <input matInput formControlName="district" type="text" placeholder="Enter District" class="form-control">
+                            <input matInput formControlName="district" type="text" placeholder="Enter District"
+                                class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
 
                         </mat-form-field>
@@ -213,7 +228,8 @@
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
-                            <input matInput formControlName="country" type="text" placeholder="Enter Country" class="form-control">
+                            <input matInput formControlName="country" type="text" placeholder="Enter Country"
+                                class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
 
                         </mat-form-field>
@@ -228,7 +244,9 @@
                 <div class="col-md-12">
                     <h3 class="f-16 f-600 mt-4 mb-10">NOMINATION FAQ</h3>
                     <p class="f-16 m-0 f-600">What is nomination?</p>
-                    <p class="text-primitive mb-12">Nomination is an instruction that you give to the investment provider (mutual fund, in this case) to record the name of the person or persons entitled to receive the investment or its value when you die.</p>
+                    <p class="text-primitive mb-12">Nomination is an instruction that you give to the investment
+                        provider (mutual fund, in this case) to record the name of the person or persons entitled to
+                        receive the investment or its value when you die.</p>
                 </div>
             </div>
 
@@ -236,7 +254,9 @@
                 <div class="col-md-12">
                     <p class="f-16 m-0 f-600">Why is nomination important?</p>
                     <p class="text-primitive mb-12">
-                        When you nominate, you make it easy for your dependants to have access to the investments done by you. They just have to establish your death by providing a death certificate and provide proof of their identity and address as the nominee and the mutual
+                        When you nominate, you make it easy for your dependants to have access to the investments done
+                        by you. They just have to establish your death by providing a death certificate and provide
+                        proof of their identity and address as the nominee and the mutual
                         fund AMC will transmit the investment to the nominee.
                     </p>
                 </div>
@@ -246,7 +266,8 @@
                 <div class="col-md-12">
                     <p class="f-16 m-0 f-600">Who can I appoint as a nominee?</p>
                     <p class="text-primitive mb-12">
-                        You are free to nominate whoever you want. More common examples of nominees are your immediate family members like spouse, children, parents etc.
+                        You are free to nominate whoever you want. More common examples of nominees are your immediate
+                        family members like spouse, children, parents etc.
                     </p>
                 </div>
             </div>
@@ -255,7 +276,9 @@
                 <div class="col-md-12">
                     <p class="f-16 m-0 f-600">Things to note</p>
                     <p class="text-primitive mb-12">
-                        While a nomination is an uncomplicated way for your dependants to receive the proceeds of your investment, don’t confuse it with estate planning. If you have also left a Will, then it supersedes any nomination.
+                        While a nomination is an uncomplicated way for your dependants to receive the proceeds of your
+                        investment, don’t confuse it with estate planning. If you have also left a Will, then it
+                        supersedes any nomination.
                     </p>
                 </div>
             </div>
@@ -264,7 +287,9 @@
                 <div class="col-md-12">
                     <p class="f-16 m-0 f-600">Disclaimer</p>
                     <p class="text-primitive mb-12">
-                        The advice given here is provided for informational purposes only, and should not be construed as legal advice. You should not act or refrain from acting on the basis of any content included here without seeking legal or other professional advice.
+                        The advice given here is provided for informational purposes only, and should not be construed
+                        as legal advice. You should not act or refrain from acting on the basis of any content included
+                        here without seeking legal or other professional advice.
                     </p>
                 </div>
             </div>
@@ -292,7 +317,8 @@
             PREVIOUS
         </button>
 
-        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" (click)="SendToForm(holder.type,true);">SAVE</button>
+        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4"
+            (click)="SendToForm(holder.type,true);">SAVE</button>
         <button mat-button class="greenBtn  p-0 mw-40 br-left-white " [matMenuTriggerFor]="menu">
             <i class="material-icons">
                 keyboard_arrow_up
