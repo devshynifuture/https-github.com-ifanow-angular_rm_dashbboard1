@@ -23,27 +23,27 @@
         <app-left-side-inn-ucc-list [data]='doneData'></app-left-side-inn-ucc-list>
         <div class="col-md-7 offset-2 p-0 bl-1 ">
             <div class="p-20">
-                <h3 class="f-18 mb-12  f-600"> Contact person details </h3>
+                <h3 class="f-18 mb-12 f-600"> Contact person details </h3>
 
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Email </h3>
+                        <h3 class="f-16 pt-20 m-0"> Email </h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
-                            <input matInput maxlength="30" formControlName="email" type="text" class="form-control">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input placeholder="Enter Email" matInput maxlength="30" formControlName="email" type="text" class="form-control">
                             <mat-error class="">This field is required</mat-error>
 
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row pt-32">
+                <div class="row pt-20">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Aadhar number </h3>
+                        <h3 class="f-16 pt-20 m-0"> Aadhar number </h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
-                            <input #aadharNumber matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="12" appInputValueValidation formControlName="aadharNumber" type="number" class="form-control">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input placeholder="Enter Aadhar number" #aadharNumber matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="12" appInputValueValidation formControlName="aadharNumber" type="number" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                             <mat-hint align="end" class="f-12 text-custom">
                                 {{aadharNumber.value.length}} / 12
@@ -51,17 +51,17 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row pt-32">
+                <div class="row pt-20">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-20 m-0"> Mobile number </h3>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-5 pl-0">
                         <div class="row">
                             <div class="col-md-5 pr-0">
                                 <div class="form-group">
                                     <mat-form-field appearance="standard" floatLabel="never">
                                         <mat-select class="form-control">
-                                            <mat-option value=""formControlName="isdCodeId" selected disabled>Select Country Code</mat-option>
+                                            <mat-option value="" formControlName="isdCodeId" selected disabled>Select Country Code</mat-option>
                                             <mat-option [value]="code.id" *ngFor="let code of isdCodes">
                                                 {{code.code}}({{code.countryName}})
                                             </mat-option>
@@ -80,31 +80,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="row pt-32">
-                    <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Phone number </h3>
-                    </div>
-                    <div class="col-md-5">
 
-                        <div class="row">
-                            <div class="col-md-3 p-0">
-                                <mat-form-field>
-                                    <mat-select class="form-control" placeholder="+022">
-                                        <mat-option>+022</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-md-7 p-0">
-                                <mat-form-field>
-                                    <input matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation maxlength="10" type="number" formControlName="phoneNo" class="form-control">
-                                    <mat-error class="">This field is required</mat-error>
-
-                                </mat-form-field>
-                            </div>
-                        </div>
-
-                    </div>
-                </div> -->
 
 
                 <h3 class="f-18 mb-12 mt-44 f-600">(i) Current/Permanent/Overseas address details </h3>
@@ -112,35 +88,35 @@
 
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0">Address line 1</h3>
+                        <h3 class="f-16 pt-20 m-0">Address line 1</h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
-                            <input matInput formControlName="addressLine1" type="text" class="form-control">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input placeholder="Address line 1" matInput formControlName="addressLine1" type="text" class="form-control">
                             <mat-error class="">This field is required</mat-error>
 
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row pt-32">
+                <div class="row pt-20">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0">Address line 2</h3>
+                        <h3 class="f-16 pt-20 m-0">Address line 2</h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
-                            <input matInput formControlName="addressLine2" type="text" class="form-control">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input placeholder="Address line2" matInput formControlName="addressLine2" type="text" class="form-control">
                             <mat-error class="">This field is required</mat-error>
 
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row pt-32">
+                <div class="row pt-20">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0">Pin code </h3>
+                        <h3 class="f-16 pt-20 m-0">Pin code </h3>
                     </div>
                     <div class="col-md-3 form-group">
-                        <mat-form-field>
-                            <input #pincode matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" (focusout)="getPostalPin($event.target.value)" appInputValueValidation formControlName="pinCode" type="text" class="form-control">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input placeholder="Enter Pin code" #pincode matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" (focusout)="getPostalPin($event.target.value)" appInputValueValidation formControlName="pinCode" type="text" class="form-control">
                             <mat-error class="">This field is required</mat-error>
                             <mat-hint align="end" class=" text-custom">
                                 {{pincode.value.length}} / 6
@@ -151,49 +127,49 @@
                         <mat-spinner class="mt-4" *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
                     </div>
                 </div>
-                <div class="row pt-32">
+                <div class="row pt-20">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0">City</h3>
+                        <h3 class="f-16 pt-20 m-0">City</h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
-                            <input matInput formControlName="city" type="text" class="form-control">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input matInput placeholder="Enter City" formControlName="city" type="text" class="form-control">
                             <mat-error class="">This field is required</mat-error>
 
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row pt-32">
+                <div class="row pt-20">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0">District</h3>
+                        <h3 class="f-16 pt-20 m-0">District</h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
-                            <input matInput formControlName="district" type="text" class="form-control">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input matInput placeholder="Enter District" formControlName="district" type="text" class="form-control">
                             <mat-error class="">This field is required</mat-error>
 
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row pt-32">
+                <div class="row pt-20">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0">State</h3>
+                        <h3 class="f-16 pt-20 m-0">State</h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
-                            <input matInput formControlName="state" type="text" class="form-control">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input placeholder="Enter State" matInput formControlName="state" type="text" class="form-control">
                             <mat-error class="">This field is required</mat-error>
 
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row pt-32">
+                <div class="row pt-20">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0">Country</h3>
+                        <h3 class="f-16 pt-20 m-0">Country</h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
-                            <input matInput formControlName="country" type="text" class="form-control">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input matInput placeholder="Enter Country" formControlName="country" type="text" class="form-control">
                             <mat-error class="">This field is required</mat-error>
 
                         </mat-form-field>
