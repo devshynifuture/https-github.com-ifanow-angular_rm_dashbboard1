@@ -104,8 +104,9 @@ export class FileOrderingSetupComponent implements OnInit {
   setValueChanges() {
     this.historicalFileBulkOrderingForm.get('rtId').valueChanges
       .subscribe(res => {
-        console.log(res);
-        this.filterFileTypeBasedOnRtId(res.value);
+        if (res) {
+          this.filterFileTypeBasedOnRtId(res.value);
+        }
       })
   }
 
