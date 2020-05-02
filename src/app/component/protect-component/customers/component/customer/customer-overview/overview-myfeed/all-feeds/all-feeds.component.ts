@@ -99,6 +99,10 @@ export class AllFeedsComponent implements OnInit {
     goalsData:{
       dataLoaded: false,
       hasData: false,
+    },
+    cashflowData:{
+      dataLoaded: false,
+      hasData: false,
     }
   };
   hasError:boolean = false;
@@ -111,6 +115,7 @@ export class AllFeedsComponent implements OnInit {
   documentVault:any[] = [];
   adviseData:any = null;
   goalsData:any[] = [];
+  cashflowData:any = {};
 
 
   ngOnInit() {
@@ -121,7 +126,8 @@ export class AllFeedsComponent implements OnInit {
     this.loadDocumentValutData();
     this.loadRiskProfile();
     this.loadGlobalRiskProfile();
-    // this.loadGoalsData();
+    // this.loadGoalsData(); // Not to be implemented for demo purpose
+    // this.loadCashFlowSummary(); //To be implemented later
   }
 
   initializePieChart(){
@@ -308,14 +314,14 @@ export class AllFeedsComponent implements OnInit {
   loadRecentTransactions(){
     const startDate = new Date();
     const endDate = new Date();
-    endDate.setDate(endDate.getDate() - 1);
+    endDate.setDate(endDate.getDate() - 15);
     
     const obj = {
-      clientId: this.clientData.clientId,
-      advisorId: this.advisorId,
-      startDate: startDate.getTime(),
-      endDate: endDate.getTime()
+      clientId: 53637, //this.clientData.clientId,
+      advisorId: 414, //this.advisorId,
+      familyMemberId: 0
     }
+
     this.loaderFn.increaseCounter();
 
     this.customerService.getRecentTransactions(obj).subscribe(res => {
@@ -355,6 +361,79 @@ export class AllFeedsComponent implements OnInit {
       this.hasError = true;
     })
   }
+
+  loadCashFlowSummary(){
+    const startDate = new Date();
+    const obj = {
+      clientId: 53644, //this.clientData.clientId,
+      advisorId: this.advisorId,
+      targetDate: startDate.getTime()
+    }
+/*
+    this.cashflowData = {
+      cashflowData: [
+        {
+        familyMemberId: 100,
+        familyMemberFullName: 'Sohan Savant',
+        cashflowLedgger: [
+          {
+            bankName: 'ABC Bank / 4421',
+            inflow: 13442,
+            outflow: 0,
+            netflow: 13442,
+            netflowStatus: 'positive',
+            date: 345678965
+          }, {
+            bankName: 'XYZ Bank / 9924',
+            inflow: 0,
+            outflow: 13442,
+            date: 345678965
+          }
+        ]
+      },
+      {
+      familyMemberId: 100,
+      familyMemberFullName: 'Rakesh Mishra',
+      cashflowLedgger: [
+        {
+          bankName: 'TUV Bank / 4421',
+          inflow: 13442,
+          outflow: 0,
+          date: 345678965
+        }, {
+          bankName: 'Axis Bank / 9924',
+          inflow: 0,
+          outflow: 13442,
+          date: 345678965
+        }
+      ]
+    },
+    ],
+
+    total: {
+      inflow: 293939,
+      outflow: 39933,
+
+    }
+  }
+*/
+    this.loaderFn.increaseCounter();
+
+    this.customerService.getCashFlowList(obj).subscribe(res => {
+      if(res == null) {
+        this.cashflowData = [];
+      } else {
+        this.tabsLoaded.cashflowData.hasData = true;
+        this.cashflowData = res;
+      }
+      this.tabsLoaded.cashflowData.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
+  }
   
   pieChart(data) {
     this.chart.removeSeries(0);
@@ -363,7 +442,7 @@ export class AllFeedsComponent implements OnInit {
       name: 'Asset allocation',
       innerSize: '60%',
       data: data,
-    }, false, true);
+    }, true, true);
   }
 
   riskProfileMaxScore(id) {

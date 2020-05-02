@@ -1,6 +1,6 @@
 <div class="p-20 arn-ria">
     <div class="row">
-        <div class="col-md-4 p-0">
+        <div class="col-md-8 p-0">
             <h4 class="m-0 pt-12">Sub broker/Team member</h4>
         </div>
         <!-- <div class="col-md-4 text-right p-0" *ngIf="dataSource.filteredData.length > 0">
@@ -12,15 +12,12 @@
                 </mat-form-field>
             </div>
         </div> -->
-        <div class="col-md-4 text-right  pr-0" *ngIf="dataSource.filteredData.length > 0">
-            <button mat-stroked-button class="btn-primary text-right pl-8" (click)="addSubBroker(null)"><i
-                    class="material-icons text-white pr-8">
-                    add
-                </i>ADD NEW</button>
+        <div class="col-md-4 text-right pr-0" *ngIf="dataSource.filteredData.length > 0">
+            <button mat-stroked-button class="btn-primary text-right pl-8" (click)="addSubBroker(null)">
+                ADD NEW</button>
         </div>
     </div>
-    <table mat-table matSort [dataSource]="dataSource" class="mt-8 skeletonAnimation" id="table-low" appSkeletonLoading
-        *ngIf="dataSource.filteredData.length > 0" [appSkeletonLoading]="isLoading">
+    <table mat-table matSort [dataSource]="dataSource" class="mt-8 skeletonAnimation" id="table-low" appSkeletonLoading *ngIf="dataSource.filteredData.length > 0" [appSkeletonLoading]="isLoading">
         <ng-container matColumnDef="position">
             <th mat-sort-header="aggregatorType" mat-header-cell *matHeaderCellDef class="br"> Platform </th>
             <td mat-cell *matCellDef="let element" class="br">
@@ -66,14 +63,13 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="icons">
-            <th mat-header-cell *matHeaderCellDef>Actions </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element" class="text-center">
                 <div class="bar" *ngIf="isLoading==true">
                     {{''}}
                 </div>
-                <div *ngIf="isLoading==false"> <i class="material-icons c-p" [matMenuTriggerFor]="menu4">
-                        more_vert
-                    </i>
+                <div *ngIf="isLoading==false">
+                    <img src="/assets/images/svg/dot-menu.svg" [matMenuTriggerFor]="menu4" class="c-p">
                     <mat-menu #menu4="matMenu">
                         <!-- ,'edit' prod build -->
                         <button mat-menu-item (click)="addSubBroker(element)">Edit</button>
@@ -86,8 +82,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div *ngIf="dataSource.filteredData.length==0 && isLoading==false"
-        class="d-flex flex-column align-items-center pt-44">{{dataSource.filteredData}}
+    <div *ngIf="dataSource.filteredData.length==0 && isLoading==false" class="d-flex flex-column align-items-center pt-44">{{dataSource.filteredData}}
         <img class="width300" src="assets/images/svg/noDataFound.svg">
         <h4 class="pt-12">No sub-broker credentials found</h4>
         <button mat-stroked-button class="btn-primary pl-8"><i class="material-icons text-white pr-8"

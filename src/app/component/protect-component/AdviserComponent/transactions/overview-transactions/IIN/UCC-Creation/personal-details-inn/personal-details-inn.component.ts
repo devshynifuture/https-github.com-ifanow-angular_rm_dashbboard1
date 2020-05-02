@@ -159,13 +159,13 @@ export class PersonalDetailsInnComponent implements OnInit {
       mobileNo: [!data ? '' : data.mobileNo],
       phoneNo: [!data ? '' : data.phoneNo],
       maritalStatus: [!data ? '1' : data.martialStatusId ? data.martialStatusId + '': "1", [Validators.required]],
-      addressLine1: [!data.address ? '' : data.address.addressLine1],
-      addressLine2: [!data.address ? '' : data.address.addressLine2],
-      pinCode: [!data.address ? '' : data.address.pinCode],
-      city: [!data.address ? '' : data.address.city],
-      district: [!data.address ? '' : data.address.district],
-      state: [!data.address ? '' : data.address.state],
-      country: [!data.address ? '' : data.address.country],
+      addressLine1: [!data.address ? '' : ''],
+      addressLine2: [!data.address ? '' : ''],
+      pinCode: [!data.address ? '' : ''],
+      city: [!data.address ? '' : ''],
+      district: [!data.address ? '' : ''],
+      state: [!data.address ? '' : ''],
+      country: [!data.address ? '' : ''],
     });
     // if (data.gender == undefined && data.maritalStatus == undefined) {
     //   this.personalDetails.controls.gender.setValue('1')
