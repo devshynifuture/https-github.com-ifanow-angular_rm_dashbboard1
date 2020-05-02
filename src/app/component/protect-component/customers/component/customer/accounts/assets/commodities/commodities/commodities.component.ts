@@ -199,11 +199,11 @@ export class CommoditiesComponent implements OnInit {
       this.noData = 'No Gold found';
       this.goldList.data = []
     }
-    else if (data.goldList.length != 0) {
-      this.goldList.data = data.goldList;
+    else if (data.assetList.length != 0) {
+      this.goldList.data = data.assetList;
       this.goldList.sort = this.goldListTableSort;
-      this.sumOfMarketValue = data.sumOfMarketValue
-      this.sumOfPurchaseValue = data.sumOfPurchaseValue
+      this.sumOfMarketValue = data.sumOfMarketValue;
+      this.sumOfPurchaseValue = data.sumOfPurchaseValue;
     } else {
       this.noData = 'No Gold found';
       this.goldList.data = []
@@ -228,7 +228,7 @@ export class CommoditiesComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
         console.log('getOthersRes @@@@', data);
-        this.otherCommodityList.data = data.otherCommodityList;
+        this.otherCommodityList.data = data.assetList;
         this.otherCommodityList.sort = this.otherListTableSort;
         this.sumOfMarketValueOther = data.sumOfMarketValue;
         this.sumOfPurchaseValueOther = data.sumOfPurchaseValue;

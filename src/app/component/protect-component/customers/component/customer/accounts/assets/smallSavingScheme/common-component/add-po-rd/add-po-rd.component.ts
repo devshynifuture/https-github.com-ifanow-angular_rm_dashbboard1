@@ -300,10 +300,13 @@ checkValue(){
 
 /***nominee***/ 
 if(data.nomineeList){
-  this.getNominee.removeAt(0);
-  data.nomineeList.forEach(element => {
-    this.addNewNominee(element);
-  });
+  if(data.nomineeList.length > 0){
+      
+    this.getNominee.removeAt(0);
+    data.nomineeList.forEach(element => {
+      this.addNewNominee(element);
+    });
+  }
 }
 /***nominee***/ 
 

@@ -24,34 +24,37 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Employee's Monthly Contribution
+                        Voluntary contribution
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
+                    <div class="col-md-4 text-right f-14 roboto p-0" >
+                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{epf.employersMonthlyContribution + epf.employeesMonthlyContribution}}</span>
+                    </div>
+                    <!-- <div class="col-md-4 text-right f-14 roboto p-0">
                         {{epf.employeesMonthlyContribution?utils.formatter(epf.employeesMonthlyContribution):'-'}}
-                    </div>
+                    </div> -->
                 </div>
-                <div class="row bb p-8 b-l br">
+                <!-- <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Employer's Monthly Contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{epf.employersMonthlyContribution?utils.formatter(epf.employersMonthlyContribution):'-'}}
                     </div>
+                </div> -->
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Account balance - epf
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="epf.accountBalanceEpf != 0">
+                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{epf.accountBalanceEpf}}</span>
+                    </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Current value
+                        Account balance - eps
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.currentValue?utils.formatter(epf.currentValue):'-'}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Balance mentioned
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.currentEpfBalance?utils.formatter(epf.currentEpfBalance):'-'}}
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="epf.accountBalanceEps != 0">
+                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{epf.accountBalanceEps}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -59,25 +62,42 @@
                         Balance as on
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.balanceAsOnDate | date:'dd/MM/yyyy'}}
+                        {{(epf.balanceAsOn)?(epf.balanceAsOn | date:'dd/MM/yyyy'):'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Current value -epf
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="epf.currentEpfValue != 0">
+                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{epf.currentEpfValue}}</span>
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Current value -eps
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="epf.currentEpsValue != 0">
+                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{epf.currentEpsValue}}</span>
+                    </div>
+                </div>
+                
+                <!-- <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Retirement year
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{epf.maturityYear?epf.maturityYear:'-'}}
                     </div>
-                </div>
-                <div class="row bb p-8 b-l br">
+                </div> -->
+                <!-- <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Annual Salary growth rate
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{epf.annualSalaryGrowthRate?epf.annualSalaryGrowthRate:'-'}}
                     </div>
-                </div>
+                </div> -->
 
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-6 text-left f-14 roboto p-0">

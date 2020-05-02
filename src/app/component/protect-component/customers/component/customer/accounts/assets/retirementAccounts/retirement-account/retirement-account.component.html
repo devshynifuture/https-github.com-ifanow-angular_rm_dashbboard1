@@ -373,7 +373,7 @@
                             Total contribution
                         </th>
                         <td mat-cell *matCellDef="let element" class="br amt text-right">
-                            <div class="bar amt" appFormatNumber> {{element.contributionAmount}} </div>
+                            <div class="bar amt" appFormatNumber> {{element.totalAmountInvested}} </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br amt p-8 f-600   text-right" appFormatNumber
                             [value]="totalContribution">
@@ -419,14 +419,16 @@
                                     more_vert
                                 </i>
                                 <mat-menu #menubank="matMenu">
-                                    <button mat-menu-item class="c-p" *ngIf="element.schemeChoice != undefined"
+                                    <button mat-menu-item class="c-p" *ngIf="element.holdingList.length <= 0"
                                         (click)="addDataFromSideBar(element, 'addSummaryPort')">Edit
                                     </button>
-                                    <button mat-menu-item class="c-p" *ngIf="element.schemeChoice == undefined"
+                                    <button mat-menu-item class="c-p" *ngIf="element.holdingList.length > 0"
                                         (click)="addDataFromSideBar(element, 'addSchemeHolding')">Edit
                                     </button>
-                                    <button mat-menu-item class="c-p"
+                                    <button mat-menu-item class="c-p" *ngIf="element.holdingList.length <= 0"
                                         (click)="openDetailedView(element,'detailedViewNps')">Detailed view</button>
+                                    <button mat-menu-item class="c-p" *ngIf="element.holdingList.length > 0"
+                                    (click)="openDetailedView(element,'detailedViewNpsHolding')">Detailed view</button>
                                     <button mat-menu-item class="c-p">Activity</button>
                                     <button mat-menu-item class="c-p"
                                         (click)="deleteModal('NPS',element)">Delete</button>

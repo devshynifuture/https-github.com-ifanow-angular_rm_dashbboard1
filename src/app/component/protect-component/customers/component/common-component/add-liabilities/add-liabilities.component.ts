@@ -351,10 +351,13 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
         this.addNewCoOwner(data);
     }
     if(data.nomineeList){
-      this.getNominee.removeAt(0);
-      data.nomineeList.forEach(element => {
-        this.addNewNominee(element);
-      });
+      if(data.nomineeList.length > 0){
+      
+        this.getNominee.removeAt(0);
+        data.nomineeList.forEach(element => {
+          this.addNewNominee(element);
+        });
+      }
     }
     this.getFormControl().loanAmount.maxLength = 20;
     this.getFormControl().loanTenure.maxLength = 20;
