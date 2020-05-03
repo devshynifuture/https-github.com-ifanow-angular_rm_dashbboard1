@@ -451,7 +451,8 @@
                 <div class="row" *ngIf="showInsurance!='Health' && showInsurance!='Critical illness' &&  showInsurance!='Motor' ">
                     <div class="col-md-12 p-0  mt-24">
                         <h4 class="f-16 roboto f-500">Plan features</h4>
-                        <div class="row bb p-8 b-l br" *ngIf="_data.policyFeatures?.length > 0 && showInsurance !='Home' && showInsurance !='Fire & special perils'">
+
+                        <div class="bt" *ngIf="_data.policyFeatures?.length > 0 && showInsurance !='Home' && showInsurance !='Fire & special perils'">
                             <div class="row bb p-8 b-l br" *ngFor="let data of _data.policyFeatures; let i = index">
                                 <div class="col-md-8 bb p-8 text-left f-14 roboto p-0">
                                     Plan features {{i+1}}
@@ -467,7 +468,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div *ngIf="_data.policyFeatures?.length > 0 && showInsurance =='Home' || showInsurance =='Fire & special perils'">
+                        <div class="bt" *ngIf="_data.policyFeatures?.length > 0 && showInsurance =='Home' || showInsurance =='Fire & special perils'">
                             <div class="row bb p-8 b-l br" *ngFor="let item of _data.policyFeatures ; let i = index">
                                 <div class="col-md-8 text-left f-14 roboto p-0">
                                     {{(item.type)?item.type:'-'}}

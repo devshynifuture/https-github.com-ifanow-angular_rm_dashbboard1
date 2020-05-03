@@ -233,7 +233,7 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group mb-0">
-                    <label class="f-14 roboto">Policy tenure</label>
+                    <h5 class="mb-0 f-14">Policy tenure </h5>
                     <mat-form-field>
                         <!-- <mat-select matInput formControlName="tenureDetailsPolicy" #frequency autocomplete="off"
                             class="form-control br-0">
@@ -253,7 +253,7 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group mb-0">
-                    <label class="f-14 roboto">Premium paying term</label>
+                    <h5 class="mb-0 f-14">Premium paying term </h5>
                     <mat-form-field>
                         <input matInput type="number" [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="onChange(lifeInsuranceForm,'premiumPayingTerm',$event)" appInputValueValidation formControlName="premiumPayingTerm" [maxLength]="10" #premiumterm autocomplete="off" class="form-control  br-0">
                         <mat-error>This field is required
@@ -513,7 +513,7 @@
                         </div>
                         <div formArrayName="cashFlow">
                             <div [ngClass]="{'pt-36': pointIndex > 0}" class="row pb-16" *ngFor="let obj of cashFlowEntries.controls; let pointIndex=index" [formGroupName]="pointIndex">
-                                <div class="col-md-3">
+                                <div class="col-md-3 pr-0">
                                     <div class="form-group">
                                         <!-- <label class="f-16 roboto">Cash Flow Type</label> -->
                                         <mat-form-field>
@@ -531,7 +531,7 @@
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 pr-0">
                                     <div class="form-group ">
                                         <!-- <label class="f-16 roboto">Year</label> -->
                                         <mat-form-field>
@@ -539,7 +539,7 @@
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 pr-0">
                                     <div class="form-group iconRupess">
                                         <!-- <label class="f-16 roboto">Approx amount</label> -->
                                         <mat-form-field>
@@ -550,7 +550,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-1 p-0 pt-8 d-flex">
+                                <div class="col-md-1 pr-0 pt-8 d-flex">
                                     <i class="material-icons text-primitive c-p float-left" (click)="addTransaction()">add</i>
                                     <i class="material-icons text-primitive c-p float-right" (click)="removeTransaction(pointIndex)">remove</i>
                                 </div>
@@ -563,9 +563,9 @@
                 <mat-tab label="Riders">
                     <div [formGroup]="ridersForm">
                         <div class="row pt-40 pb-20">
-                            <div class="col-md-3">
+                            <div class="col-md-3 pr-0">
                                 <div class="form-group  iconRupess">
-                                    <label class="f-16 roboto">Accidental benefit</label>
+                                    <h5 class="mb-8 f-16 ">Accidental benefit</h5>
                                     <mat-form-field>
                                         <input type="number" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="off" [maxLength]="8" formControlName="accidentalBenefit" #accidentalBenefit matInput class="form-control rupess br-0">
                                         <mat-hint align="end" class="f-12">{{accidentalBenefit.value.length}}/8
@@ -573,9 +573,9 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3 pr-0">
                                 <div class="form-group iconRupess">
-                                    <label class="f-16 roboto">Critical illeness</label>
+                                    <h5 class="mb-8 f-16 ">Critical illeness </h5>
                                     <mat-form-field>
                                         <input type="number" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="off" [maxLength]="8" formControlName="criticalIlleness" #criticalIlleness matInput class="form-control rupess br-0">
                                         <mat-hint align="end" class="f-12">{{criticalIlleness.value.length}}/8
@@ -583,9 +583,9 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3 pr-0">
                                 <div class="form-group  iconRupess">
-                                    <label class="f-16 roboto">Double Accidental</label>
+                                    <h5 class="mb-8 f-16 "> Double Accidental </h5>
                                     <mat-form-field>
                                         <input type="number" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="off" [maxLength]="10" formControlName="doubleAccidental" #doubleAccidental matInput class="form-control rupess br-0">
                                         <mat-hint align="end" class="f-12">{{doubleAccidental.value.length}}/8
@@ -593,68 +593,17 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-                            <!-- <div class="col-md-4">
-                                <div class="form-group mb-0 iconPetage">
-                                    <label class="f-16 roboto">Term waiver</label>
-                                    <mat-form-field>
-                                        <input type="number" [inputValidator]="validatorType.NUMBER_ONLY"
-                                            appInputValueValidation autocomplete="off"  (keyup)="onChange(ridersForm,'termWaiver',$event)" [maxLength]="3"
-                                            formControlName="termWaiver" #termWaiver matInput class="form-control percentage br-0">
-                                        <mat-hint align="end" class="f-12">{{termWaiver.value.length}}/8</mat-hint>
-                                    </mat-form-field>
-                                </div>
-                            </div> -->
+
                         </div>
 
-
-                        <!-- <div class="row pt-40 pb-48"> -->
-                        <!-- <div class="col-md-4">
-                                <div class="form-group mb-0 iconRupess">
-                                    <label class="f-16 roboto">Critical illeness</label>
-                                    <mat-form-field>
-                                        <input type="number" [inputValidator]="validatorType.NUMBER_ONLY"
-                                            appInputValueValidation autocomplete="off" [maxLength]="8"
-                                            formControlName="criticalIlleness" #criticalIlleness matInput
-                                            class="form-control rupess br-0">
-                                        <mat-hint align="end" class="f-12">{{criticalIlleness.value.length}}/8
-                                        </mat-hint>
-                                    </mat-form-field>
-                                </div>
-                            </div> -->
-                        <!-- <div class="col-md-4">
-                                <div class="form-group mb-0 iconPetage">
-                                    <label class="f-16 roboto">Premium waiver</label>
-                                    <mat-form-field>
-                                        <input type="number" [inputValidator]="validatorType.NUMBER_ONLY"
-                                            appInputValueValidation autocomplete="off"   (keyup)="onChange(ridersForm,'premiumWaiver',$event)"  [maxLength]="3"
-                                            formControlName="premiumWaiver" #premiumWaiver matInput
-                                            class="form-control percentage br-0"> -->
-                        <!-- <mat-hint align="end" class="f-12">{{premiumWaiver.value.length}}/8</mat-hint> -->
-                        <!-- </mat-form-field>
-                                </div>
-                            </div> -->
-                        <!-- <div class="col-md-4">
-                                <div class="form-group mb-0 iconRupess">
-                                    <label class="f-16 roboto">Female critical illeness</label>
-                                    <mat-form-field>
-                                        <input type="number" [inputValidator]="validatorType.NUMBER_ONLY"
-                                            appInputValueValidation autocomplete="off" [maxLength]="8"
-                                            formControlName="femaleCriticalIlleness" #femaleCriticalIlleness matInput
-                                            class="form-control rupess br-0">
-                                        <mat-hint align="end" class="f-12">{{femaleCriticalIlleness.value.length}}/8
-                                        </mat-hint>
-                                    </mat-form-field>
-                                </div> -->
-                        <!-- </div>
-                        </div> -->
                     </div>
                 </mat-tab>
 
                 <mat-tab label="Loan details" *ngIf="insuranceSubTypeId != 1">
                     <div [formGroup]="loanDetailsForm" class="row pt-40 pb-48">
-                        <div class="col-md-3">
+                        <div class="col-md-3 pr-0">
                             <div class="form-group mb-0 iconRupess">
-                                <label class="f-16 roboto">loan availble</label>
+                                <h5 class="mb-8 f-16 "> loan availble </h5>
                                 <mat-form-field>
                                     <input type="number" autocomplete="off" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation formControlName="loanAvailable" #loanAvailable matInput class="form-control rupess br-0">
                                     <mat-hint align="end" class="f-12">{{loanAvailable.value.length}}/8
@@ -662,9 +611,9 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 pr-0">
                             <div class="form-group mb-0 iconRupess">
-                                <label class="f-16 roboto">Loan taken</label>
+                                <h5 class="mb-8 f-16 ">Loan taken </h5>
                                 <mat-form-field>
                                     <input type="number" autocomplete="off" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="off" formControlName="loanTaken" #loanTaken matInput class="form-control rupess br-0">
                                     <mat-hint align="end" class="f-12">{{loanTaken.value.length}}/8
@@ -672,9 +621,9 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 pr-0">
                             <div class="form-group mb-0">
-                                <label class="f-16 roboto">Loan taken on</label>
+                                <h5 class="mb-8 f-16 "> Loan taken on </h5>
                                 <mat-form-field class="ba-date">
                                     <input formControlName="loanTakenOn" (input)="preventDefault($event)" (focus)="loanTakenOn.open()" autocomplete="off" [matDatepicker]="loanTakenOn" matInput class="form-control b-0 br-0">
                                     <mat-datepicker-toggle matSuffix [for]="loanTakenOn"></mat-datepicker-toggle>
@@ -693,9 +642,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group ">
-                                    <!-- <mat-form-field>
-                                        <input formControlName="" matInput class="form-control br-0">
-                                    </mat-form-field> -->
+
                                     <mat-form-field>
                                         <mat-select formControlName="permiumPaymentMode" #frequency autocomplete="off" class="form-control mt-28 br-0">
                                             <mat-option value="1">Cheque</mat-option>
