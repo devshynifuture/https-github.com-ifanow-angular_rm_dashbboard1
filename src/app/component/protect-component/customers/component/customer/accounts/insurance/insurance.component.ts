@@ -18,6 +18,7 @@ import { AddFireAndPerilsInsuranceInAssetComponent } from './add-fire-and-perils
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { DetailedViewLifeInsuranceComponent } from '../assets/smallSavingScheme/common-component/detailed-view-life-insurance/detailed-view-life-insurance.component';
 import { DetailedViewGeneralInsuranceComponent } from '../assets/smallSavingScheme/common-component/detailed-view-general-insurance/detailed-view-general-insurance.component';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
 
 @Component({
   selector: 'app-insurance',
@@ -78,7 +79,7 @@ export class InsuranceComponent implements OnInit {
   profileData: any;
 
   constructor(private eventService: EventService, public dialog: MatDialog,
-    private subInjectService: SubscriptionInject, private cusService: CustomerService, private utils: UtilService, private excelGen: ExcelGenService) {
+    private subInjectService: SubscriptionInject, private cusService: CustomerService, private utils: UtilService, private excelGen: ExcelGenService,private pdfGen:PdfGenService) {
   }
 
   insuranceTypeId;
@@ -403,17 +404,7 @@ export class InsuranceComponent implements OnInit {
       }
     );
   }
-  generatePdf() {
-    this.fragmentData.isSpinner = true;
-    if (this.insuranceTypeId == 1) {
-      let para = document.getElementById('template');
-      this.utils.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
-    } else {
-      let para = document.getElementById('template2');
-      this.utils.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
-    }
 
-  }
   Excel(tableTitle) {
     tableTitle = this.showInsurance + '_' + 'Insurance';
     this.fragmentData.isSpinner = true;
@@ -431,6 +422,36 @@ export class InsuranceComponent implements OnInit {
       }
     }
 
+  }
+  // generatePdf() {
+  //   this.fragmentData.isSpinner = true;
+  //   if (this.insuranceTypeId == 1) {
+  //     let para = document.getElementById('template');
+  //     this.utils.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
+  //   } else {
+  //     let para = document.getElementById('template2');
+  //     this.utils.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
+  //   }
+
+  // }
+  generatePdf(tableTitle){
+    // let rows = this.tableEl._elementRef.nativeElement.rows;
+    // this.pdfGen.generatePdf(rows, tableTitle);
+    tableTitle = this.showInsurance + '_' + 'Insurance';
+    // this.fragmentData.isSpinner = true;
+    if (this.insuranceTypeId == 1) {
+      let rows = this.tableEl._elementRef.nativeElement.rows;
+      const data = this.pdfGen.generatePdf(rows, tableTitle);
+      // if (data) {
+      //   this.fragmentData.isSpinner = false;
+      // }
+    } else {
+      let rows = this.tableEl2._elementRef.nativeElement.rows;
+      const data = this.pdfGen.generatePdf(rows, tableTitle);
+      // if (data) {
+      //   this.fragmentData.isSpinner = false;
+      // }
+    }
   }
   getInsuranceTypeData(typeId, typeSubId) {
     this.lifeInsuranceFlag = false;
