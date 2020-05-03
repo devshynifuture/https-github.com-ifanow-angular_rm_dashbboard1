@@ -9,13 +9,14 @@ import {Component, OnInit} from '@angular/core';
 export class DetailedPoTdComponent implements OnInit {
   data;
   nominee: any;
+  isLoading = false;
 
   constructor(private subInjectService: SubscriptionInject) {
   }
 
   ngOnInit() {
     console.log(this.data);
-    this.nominee=this.data.nominees;
+    this.nominee = this.data.nominees;
   }
 
   close() {
