@@ -52,6 +52,8 @@ export class BankDetailsIINComponent implements OnInit {
   clientData: any;
   holderList: any;
   formId: any;
+  maxDate = new Date();
+  
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
     private processTransaction: ProcessTransactionService,
     private cusService: CustomerService,
@@ -422,7 +424,7 @@ export class BankDetailsIINComponent implements OnInit {
       bankName: holder.bankName,
       branchName: holder.branchName,
       branchCode: holder.branchCode,
-      micrCode: holder.micrCode,
+      micrCode: (holder.micrCode)+"",
       firstHolder: holder.firstHolder,
       paymentMode : this.bankDetails.controls.paymentMode.value,
       defaultFlag: 1
