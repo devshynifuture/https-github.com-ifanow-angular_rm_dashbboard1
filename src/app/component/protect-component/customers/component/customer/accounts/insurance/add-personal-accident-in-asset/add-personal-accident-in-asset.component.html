@@ -63,9 +63,9 @@
 
         <div formArrayName="InsuredMemberForm">
             <div [ngClass]="{'pt-36': pointIndex > 0}" class="row pt-4 justify-content-center" *ngFor="let obj of insuredMembersForm.controls; let pointIndex=index" [formGroupName]="pointIndex">
-                <div class="col-md-4">
+                <div class="col-md-4 pr-0">
                     <div class="form-group mb-0">
-                        <label class="f-16 roboto">Name of insured members</label>
+                        <h5 class="mB-8"> Name of insured members </h5>
                         <mat-form-field>
                             <mat-select matInput formControlName="insuredMembers" autocomplete="true" class="form-control br-0" (selectionChange)="getFamilyData($event.value,nomineesListFM)">
                                 <mat-option value='' disabled>Select insured members</mat-option>
@@ -77,9 +77,9 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 pr-0">
                     <div class="form-group mb-0">
-                        <label class="f-16 roboto">Sum insured</label>
+                        <h5 class="mB-8">Sum insured </h5>
                         <mat-form-field class="iconRupess">
                             <input matInput type="number" formControlName="sumAssured" #sumAssured [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="true" [maxLength]="8" class="form-control rupess br-0">
                             <mat-hint align="end" class="f-12">{{sumAssured.value.length}}/8</mat-hint>
@@ -90,19 +90,17 @@
                 </div>
                 <div class="col-md-3">
                     <div class="form-group mb-0">
-                        <label class="f-16 roboto">TTD sum insured</label>
+                        <h5 class="mB-8">TTD sum insured </h5>
                         <mat-form-field>
-                            <input matInput type="number" formControlName="ttdSumInsured"
-                                [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #ttdSumInsured
-                                autocomplete="true" [maxLength]="8" class="form-control rupess br-0">
-                                <mat-hint align="end" class="f-12">{{ttdSumInsured.value.length}}/8</mat-hint>
+                            <input matInput type="number" formControlName="ttdSumInsured" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #ttdSumInsured autocomplete="true" [maxLength]="8" class="form-control rupess br-0">
+                            <mat-hint align="end" class="f-12">{{ttdSumInsured.value.length}}/8</mat-hint>
                             <mat-error>This field is required
                             </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
 
-                <div class="col-md-1 p-0 mt-8 align-items-center d-flex">
+                <div class="col-md-1 p-0 mt-20 align-items-center d-flex">
                     <i class="material-icons text-primitive c-p  " (click)="addTransaction(undefined)">add</i>
                     <i class="material-icons text-primitive c-p  " (click)="removeTransaction(pointIndex)">remove</i>
                 </div>
@@ -213,11 +211,12 @@
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-20 ">Cumulative bonus</h5>
             </div>
-            <div class="col-md-3 form-group " [ngClass]="personalAccidentForm.controls.bonusType.value == '1' ? 'iconRupess': 'iconPetage'">
+            <div class="col-md-3 pr-0 form-group " [ngClass]="personalAccidentForm.controls.bonusType.value == '1' ? 'iconRupess': 'iconPetage'">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput type="number" formControlName="cumulativeBonus" (keyup)="changeTheInput(bonusType.value,'cumulativeBonus',$event)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #cumulativeBonus autocomplete="true" [maxLength]="8" class="form-control br-0" 
-                    [ngClass]="personalAccidentForm.controls.bonusType.value == '1' ? 'rupess': 'percentage'">
-                    <mat-hint align="end" *ngIf="personalAccidentForm.controls.bonusType.value == '1'" class="f-12">{{cumulativeBonus.value.length}}/8</mat-hint>
+                    <input matInput type="number" formControlName="cumulativeBonus" (keyup)="changeTheInput(bonusType.value,'cumulativeBonus',$event)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #cumulativeBonus autocomplete="true" [maxLength]="8"
+                        class="form-control br-0" [ngClass]="personalAccidentForm.controls.bonusType.value == '1' ? 'rupess': 'percentage'">
+                    <mat-hint align="end" *ngIf="personalAccidentForm.controls.bonusType.value == '1'" class="f-12">
+                        {{cumulativeBonus.value.length}}/8</mat-hint>
                     <mat-error>This field is required
                     </mat-error>
                 </mat-form-field>
@@ -225,7 +224,7 @@
 
             <div class="col-md-3 form-group  ">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <mat-select matInput formControlName="bonusType" #bonusType  (selectionChange)="changeSign($event.value,'cumulativeBonus',cumulativeBonus.value)" autocomplete="off" class="form-control br-0">
+                    <mat-select matInput formControlName="bonusType" #bonusType (selectionChange)="changeSign($event.value,'cumulativeBonus',cumulativeBonus.value)" autocomplete="off" class="form-control br-0">
                         <mat-option value='1'>Rupees</mat-option>
                         <mat-option value='2'>Percentage</mat-option>
                     </mat-select>
@@ -246,16 +245,16 @@
                         <mat-select matInput formControlName="planfeatures" autocomplete="true" class="form-control br-0">
                             <!-- <mat-option *ngFor="let option of policyFeature ;index as i" [value]="option.id">
                                 {{option.type}}</mat-option> -->
-                                <mat-option value='4'>Accidental death benefit</mat-option>
-                                <mat-option value='5'>Permanent total disability </mat-option>
-                                <mat-option value='6'>Permanent partial disability </mat-option>
-                                <mat-option value='7'>Transportation benefit </mat-option>
-                                <mat-option value='8'>Education benefits </mat-option>
-                                <mat-option value='9'>Funeral expense benefit </mat-option>
-                                <mat-option value='10'>Reimbursement of medical expenses</mat-option>
-                                <mat-option value='11'>Accidental medical expenses </mat-option>
-                                <mat-option value='12'>Legal expenses </mat-option>
-                                <mat-option value='13'>Double indemnity for death </mat-option>
+                            <mat-option value='4'>Accidental death benefit</mat-option>
+                            <mat-option value='5'>Permanent total disability </mat-option>
+                            <mat-option value='6'>Permanent partial disability </mat-option>
+                            <mat-option value='7'>Transportation benefit </mat-option>
+                            <mat-option value='8'>Education benefits </mat-option>
+                            <mat-option value='9'>Funeral expense benefit </mat-option>
+                            <mat-option value='10'>Reimbursement of medical expenses</mat-option>
+                            <mat-option value='11'>Accidental medical expenses </mat-option>
+                            <mat-option value='12'>Legal expenses </mat-option>
+                            <mat-option value='13'>Double indemnity for death </mat-option>
                         </mat-select>
                         <mat-error>This field is required
                         </mat-error>
@@ -384,7 +383,7 @@
             </div>
             <div class="col-md-5 form-group">
                 <mat-form-field>
-                    <mat-select class="form-control"  formControlName="bankAccount"  matInput>
+                    <mat-select class="form-control" formControlName="bankAccount" matInput>
                         <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
                             {{option.bankName}}</mat-option>
                     </mat-select>
@@ -392,9 +391,9 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-            <div class="col-md-1 p-0 pt-8 d-flex"  (outputValue)="bankAccountList($event)" [data]="bankAccountDetails" appBankAccount>
-                    <!--  [data]="bankAccountDetails" appBankAccount (inputChange)='bankAccountList($event.value)' -->
-                <i class="material-icons text-primitive c-p float-left" >add</i>
+            <div class="col-md-1 p-0 pt-8 d-flex" (outputValue)="bankAccountList($event)" [data]="bankAccountDetails" appBankAccount>
+                <!--  [data]="bankAccountDetails" appBankAccount (inputChange)='bankAccountList($event.value)' -->
+                <i class="material-icons text-primitive c-p float-left">add</i>
             </div>
         </div>
     </div>
@@ -409,8 +408,8 @@
         </div>
         <div class="col-md-8 right text-right">
             <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="savePersonalAccident()">SAVE</button> -->
-            <app-progress-button (btnClick)="savePersonalAccident()"  class="btn-bottom br-0 text-inherit" [options]="barButtonOptions" >
-                </app-progress-button>
+            <app-progress-button (btnClick)="savePersonalAccident()" class="btn-bottom br-0 text-inherit" [options]="barButtonOptions">
+            </app-progress-button>
         </div>
     </div>
 </div>

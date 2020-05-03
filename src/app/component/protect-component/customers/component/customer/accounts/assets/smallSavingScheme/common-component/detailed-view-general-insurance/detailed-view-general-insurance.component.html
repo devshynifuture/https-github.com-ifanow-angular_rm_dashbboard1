@@ -168,72 +168,73 @@
             <div class="row" *ngIf="showInsurance =='Motor'">
                 <div class="col-md-12 p-0  mt-24">
                     <h4 class="f-16 roboto f-500">Vehicle details</h4>
-                    <div class="row bb p-8 b-l br">
-                        <div class="col-md-8 text-left f-14 roboto p-0">
-                            Vehicle type
-                        </div>
-                        <div class="col-md-4 text-right f-14 roboto p-0">
+                    <div class="bt">
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Vehicle type
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
 
-                            {{(_data.vehicleTypeId == 1) ? 'Two wheeler': (_data.vehicleTypeId == 2) ? 'Four wheeler' : '-'}}
+                                {{(_data.vehicleTypeId == 1) ? 'Two wheeler': (_data.vehicleTypeId == 2) ? 'Four wheeler' : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Vehicle registration number
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data.vehicleRegNo) ? _data.vehicleRegNo : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Vehicle registration date
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data.vehicleRegistrationDate) ? (_data.vehicleRegistrationDate | date:'dd/MM/yyyy') : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Make/Model of vehicle
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data.vehicleModel) ? _data.vehicleModel : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Engine number
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data.engineNo) ? _data.engineNo : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Chassis number
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data.chasisNo) ? _data.sumInsuredIdv : '-'}}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                Fuel type
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data.fuelTypeId == 1) ? 'Petrol' : (_data.fuelTypeId == 2) ? 'Petrol + CNG/LPG company fitted' : (_data.fuelTypeId == 3) ? 'Petrol + CNG/LPG fitted after the purchase' : (_data.fuelTypeId == 4) ? 'Diesel' : '-' }}
+                            </div>
+                        </div>
+                        <div class="row bb p-8 b-l br">
+                            <div class="col-md-8 text-left f-14 roboto p-0">
+                                CC/GVW
+                            </div>
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{(_data.ccGvw) ? _data.ccGvw : '-'}}
+                            </div>
                         </div>
                     </div>
-                    <div class="row bb p-8 b-l br">
-                        <div class="col-md-8 text-left f-14 roboto p-0">
-                            Vehicle registration number
-                        </div>
-                        <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{(_data.vehicleRegNo) ? _data.vehicleRegNo : '-'}}
-                        </div>
-                    </div>
-                    <div class="row bb p-8 b-l br">
-                        <div class="col-md-8 text-left f-14 roboto p-0">
-                            Vehicle registration date
-                        </div>
-                        <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{(_data.vehicleRegistrationDate) ? (_data.vehicleRegistrationDate | date:'dd/MM/yyyy') : '-'}}
-                        </div>
-                    </div>
-                    <div class="row bb p-8 b-l br">
-                        <div class="col-md-8 text-left f-14 roboto p-0">
-                            Make/Model of vehicle
-                        </div>
-                        <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{(_data.vehicleModel) ? _data.vehicleModel : '-'}}
-                        </div>
-                    </div>
-                    <div class="row bb p-8 b-l br">
-                        <div class="col-md-8 text-left f-14 roboto p-0">
-                            Engine number
-                        </div>
-                        <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{(_data.engineNo) ? _data.engineNo : '-'}}
-                        </div>
-                    </div>
-                    <div class="row bb p-8 b-l br">
-                        <div class="col-md-8 text-left f-14 roboto p-0">
-                            Chassis number
-                        </div>
-                        <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{(_data.chasisNo) ? _data.sumInsuredIdv : '-'}}
-                        </div>
-                    </div>
-                    <div class="row bb p-8 b-l br">
-                        <div class="col-md-8 text-left f-14 roboto p-0">
-                            Fuel type
-                        </div>
-                        <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{(_data.fuelTypeId == 1) ? 'Petrol' : (_data.fuelTypeId == 2) ? 'Petrol + CNG/LPG company fitted' : (_data.fuelTypeId == 3) ? 'Petrol + CNG/LPG fitted after the purchase' : (_data.fuelTypeId == 4) ? 'Diesel' : '-' }}
-                        </div>
-                    </div>
-                    <div class="row bb p-8 b-l br">
-                        <div class="col-md-8 text-left f-14 roboto p-0">
-                            CC/GVW
-                        </div>
-                        <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{(_data.ccGvw) ? _data.ccGvw : '-'}}
-                        </div>
-                    </div>
-
 
                 </div>
             </div>
@@ -268,18 +269,7 @@
 
                             </div>
                         </div>
-                        <!-- <div *ngIf="showInsurance == 'Travel' && _data.policyFeatureId == 0">
-                            <div class="row bb p-8 b-l br" *ngFor="let item of _data.insuredMembers ; let i = index">
-                                <div class="col-md-8 text-left f-14 roboto p-0">
-                                    {{(item.name)?item.name:'-'}}
-                                </div>
-                                <div class="col-md-4 text-right f-14 roboto p-0">
-                                    {{(item.sumInsured) ? '₹' : ''}}<span
-                                        appFormatNumber>{{(item.sumInsured)?item.sumInsured:'-'}}</span>
-                                </div>
 
-                            </div>
-                        </div> -->
                         <div *ngIf="_data.insuredMembers && _data.policyType=='Family floater'  || (showInsurance == 'Travel' &&  _data.policyFeatureId == 1)">
                             <div class="row bb p-8 b-l br" *ngFor="let item of _data.insuredMembers ; let i = index">
                                 <div class="col-md-8 text-left f-14 roboto p-0">
@@ -290,19 +280,10 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div *ngIf="showInsurance == 'Travel' && _data.policyFeatureId == 1">
-                            <div class="row bb p-8 b-l br" *ngFor="let item of _data.insuredMembers ; let i = index">
-                                <div class="col-md-8 text-left f-14 roboto p-0">
-                                    Insured member{{i+1}}
-                                </div>
-                                <div class="col-md-4  text-right f-14 roboto p-0" appFormatNumber>
-                                    {{(item.name)?item.name:'-'}}
-                                </div>
-                            </div>
-                        </div> -->
+
                         <div *ngIf="_data.insuredMembers && showInsurance == 'Personal accident' ">
-                            <div class="row bb p-8 b-l br" *ngFor="let item of _data.insuredMembers ; let i = index">
-                                <div class=" bb p-8 b-l br">
+                            <div *ngFor="let item of _data.insuredMembers ; let i = index">
+                                <div class="row bb p-8 b-l br">
                                     <div class="col-md-8 text-left f-14 roboto p-0">
                                         Name of insured{{i+1}}
                                     </div>
@@ -310,7 +291,7 @@
                                         {{(item.name)?item.name:'-'}}
                                     </div>
                                 </div>
-                                <div class=" bb p-8 b-l br">
+                                <div class="row bb p-8 b-l br">
                                     <div class="col-md-8 text-left f-14 roboto p-0">
                                         AD sum insured{{i+1}}
                                     </div>
@@ -318,7 +299,7 @@
                                         {{(item.sumInsured) ? '₹' : ''}}<span appFormatNumber>{{(item.sumInsured)?item.sumInsured:'-'}}</span>
                                     </div>
                                 </div>
-                                <div class=" bb p-8 b-l br">
+                                <div class="row bb p-8 b-l br">
                                     <div class="col-md-8 text-left f-14 roboto p-0">
                                         TTD sum insured {{i+1}}
                                     </div>
@@ -354,6 +335,7 @@
             <div class="mt-24">
 
                 <h4 class="f-16 roboto f-500">Miscellaneous details</h4>
+
                 <div class="insurance-ui bt">
                     <div class="row bb p-8 b-l br" *ngFor="let data of nominee; let i = index">
                         <div bb p-8>
@@ -446,8 +428,8 @@
 
                         </div>
 
-                        <div class="row bb p-8 b-l br" *ngIf="_data.addOns?.length > 0 && showInsurance =='Motor'">
-                            <div *ngFor="let data of this._data.addOns; let i = index">
+                        <div *ngIf="_data.addOns?.length > 0 && showInsurance =='Motor'">
+                            <div class="row bb bt p-8 b-l br" *ngFor="let data of this._data.addOns; let i = index">
                                 <div class="col-md-8 text-left f-14 roboto p-0">
                                     Add on {{i+1}}
                                 </div>

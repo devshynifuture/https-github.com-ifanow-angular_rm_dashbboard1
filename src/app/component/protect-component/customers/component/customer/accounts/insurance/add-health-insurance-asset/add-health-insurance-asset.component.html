@@ -279,7 +279,7 @@
                 <div class="col-md-4 pr-0 text-right">
                     <h5 class="m-0 pt-8">Copay</h5>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 pr-0">
                     <div [ngClass]="healthInsuranceForm.controls.copayType.value == '1' ? 'iconRupess': 'iconPetage'" class="form-group mb-0">
                         <mat-form-field>
                             <input #copay (keyup)="changeTheInput(copayType.value,'copay',$event)" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="8" [ngClass]="healthInsuranceForm.controls.copayType.value == '1' ? 'rupess': 'percentage'" appInputValueValidation autocomplete="true"
@@ -310,7 +310,7 @@
                 <div class="col-md-4 pr-0 text-right">
                     <h5 class="m-0 pt-8">Cumulative bonus</h5>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 pr-0">
                     <div [ngClass]="healthInsuranceForm.controls.bonusType.value == '1' ? 'iconRupess': 'iconPetage'" class="form-group mb-0">
                         <mat-form-field>
                             <input #cumulativeBonus (keyup)="changeTheInput(bonusType.value,'cumulativeBonus',$event)" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="8" [ngClass]="healthInsuranceForm.controls.bonusType.value == '1' ? 'rupess': 'percentage'" appInputValueValidation
@@ -342,7 +342,7 @@
                 <div class="col-md-4 pr-0 text-right">
                     <h5 class="m-0 pt-8">Additional covers</h5>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 pr-0">
                     <div class="form-group mb-0 iconRupess">
                         <mat-form-field>
                             <mat-select autocomplete="true" class="form-control br-0" formControlName="additionalCovers" matInput>
