@@ -135,7 +135,9 @@ export class OwnerNomineeDirective {
               this.getCoOwner.controls[e.index].get('isClient').setValue(element.relationshipId == 0 ? 1 : 0);
             } else {
               this.getNominee.controls[e.index].get('familyMemberId').setValue(element.familyMemberId);
-              this.getNominee.controls[e.index].get('relationshipId').setValue(element.relationshipId);
+              if(this.getNominee.controls[e.index].get('relationshipId')){
+                this.getNominee.controls[e.index].get('relationshipId').setValue(element.relationshipId);
+              }
             }
             element.disable = true;
             return;
