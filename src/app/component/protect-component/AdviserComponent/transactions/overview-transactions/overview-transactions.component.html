@@ -42,7 +42,8 @@
                     </div> -->
 
                     <div class="row">
-                        <div class="col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading>
+                        <div class="col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoading"
+                            appSkeletonLoading>
                             <div class="bg-white bPrimitive p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
@@ -94,7 +95,8 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoadingIIN" appSkeletonLoading>
+                        <div class="col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoadingIIN"
+                            appSkeletonLoading>
                             <div class="bg-white bPrimitive p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
@@ -141,7 +143,8 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoadingMandate" appSkeletonLoading>
+                        <div class="col-md-6 mb-16 pl-0 skeletonAnimation" [appSkeletonLoading]="isLoadingMandate"
+                            appSkeletonLoading>
                             <div class="bg-white bPrimitive p-9">
                                 <div class="row">
                                     <div class="col-md-4 p-0">
@@ -219,14 +222,23 @@
                                                 <div class="col-md-12 p-0">
                                                     <p class="f-12 text-primitive mb-10"> {{transact.schemeName}}</p>
                                                 </div>
-                                                <div (click)="openMobileErrorCopyTransactionPopup()" class="col-md-12 p-0">
-                                                    <p class="f-14 mb-8 f-500">Rahul Jain</p>
+                                                <div (click)="openMobileErrorCopyTransactionPopup()"
+                                                    class="col-md-12 p-0">
+                                                    <p class="f-14 mb-8 f-500">{{transact.clientName}}</p>
                                                 </div>
                                             </div>
-
-                                            <span class="text-primary p-2 br-1 b-a-custom f-12">
-                                                {{(transact.status == 2)?'PENDING AUTHERIZATION':(transact.status == 3)?'Payment successful':(transact.status == 6)?'Order processed':(transact.status ==7)?'Transaction rejected':'UNKNOWN'}}
-                                            </span>
+                                            <span *ngIf="transact.status == 2"
+                                                class="text-primary p-2 br-1 b-a-custom f-12">ORDER PROCEED</span>
+                                            <span *ngIf="transact.status == 0"
+                                                class="text-primary p-2 br-1 b-a-custom f-12">UNKNOWN</span>
+                                            <span *ngIf="transact.status == 3"
+                                                class="text-primary p-2 br-1 b-a-custom f-12">PAYMENT SUCCESSFUL</span>
+                                            <span *ngIf="transact.status == 7"
+                                                class="text-primary p-2 br-1 b-a-custom f-12">TRANSACTION
+                                                REJECTED</span>
+                                            <span *ngIf="transact.status == 2"
+                                                class="text-primary p-2 br-1 b-a-custom f-12">PENDING
+                                                AUTHERIZATION</span>
                                         </div>
                                     </mat-tab>
 

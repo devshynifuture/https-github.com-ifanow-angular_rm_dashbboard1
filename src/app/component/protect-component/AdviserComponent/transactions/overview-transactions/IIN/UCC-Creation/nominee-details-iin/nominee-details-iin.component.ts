@@ -47,6 +47,8 @@ export class NomineeDetailsIinComponent implements OnInit {
   nomineeFmList: any;
   addressList: any;
   isLoading = false;
+  maxDate = new Date();
+
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private onlineTransact: OnlineTransactionService, private postalService: PostalService,
     private processTransaction: ProcessTransactionService, private custumService: CustomerService,

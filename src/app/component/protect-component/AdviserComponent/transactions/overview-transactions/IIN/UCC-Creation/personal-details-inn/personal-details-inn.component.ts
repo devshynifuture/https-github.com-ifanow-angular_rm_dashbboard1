@@ -40,6 +40,8 @@ export class PersonalDetailsInnComponent implements OnInit {
   clientId: any;
   clientData: any;
   sendObj: any;
+  maxDate = new Date();
+
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private processTransaction: ProcessTransactionService,
