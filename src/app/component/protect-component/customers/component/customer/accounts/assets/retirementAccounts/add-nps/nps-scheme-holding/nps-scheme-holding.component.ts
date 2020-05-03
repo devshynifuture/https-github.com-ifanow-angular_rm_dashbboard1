@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { CustomerService } from '../../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MAT_DATE_FORMATS } from '@angular/material';
@@ -10,7 +10,9 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { Observable } from 'rxjs';
 
+import {map, startWith} from 'rxjs/operators';
 @Component({
   selector: 'app-nps-scheme-holding',
   templateUrl: './nps-scheme-holding.component.html',
@@ -58,8 +60,11 @@ export class NpsSchemeHoldingComponent implements OnInit {
   showError = false;
   flag: any;
   adviceShowHeaderAndFooter: boolean = true;
-
-  constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { }
+  myControl = new FormControl();
+  filteredOptions: Observable<any[]>;
+  constructor(private event: EventService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService) { 
+    
+  }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -80,11 +85,16 @@ export class NpsSchemeHoldingComponent implements OnInit {
     this.idForscheme1 = []
     this.advisorId = AuthService.getAdvisorId()
     this.clientId = AuthService.getClientId();
-    this.getGlobalList()
-    
-
-
+    this.getGlobalList();
   }
+
+  private _filter(name: any): any[] {
+    const filterValue = name.toLowerCase();
+
+    return this.schemeList.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
+  }
+  
+
 
   
   nomineesList() {
@@ -123,6 +133,16 @@ export class NpsSchemeHoldingComponent implements OnInit {
 
     console.log('getGlobalRes', data)
     this.schemeList = data.npsSchemeList;
+    this.startFilter();
+  }
+
+  startFilter(){
+    
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => typeof value === 'string' ? value : value.name),
+        map(name => name ? this._filter(name) : this.schemeList.slice())
+    );
   }
 
   getdataForm(data) {
@@ -242,6 +262,18 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.schemeHoldings
   }
   get holdings() {
     return this.schemeHoldingsNPS.get('holdingList') as FormArray;
+  }
+
+  setGroupValue(scheme){
+    if(scheme != null){
+      this.schemeHoldingsNPS.controls.holdingList.controls[scheme.index].controls['schemeId'].setValue(scheme.scheme.id)
+    }
+  }
+
+  displayScheme(scheme){
+    // const controls = this.schemeHoldingsNPS.controls.holdingList;
+  // this.setGroupValue(scheme);
+  return scheme? scheme.scheme.name:undefined;
   }
   addHoldings() {
     this.holdings.push(this.fb.group({
