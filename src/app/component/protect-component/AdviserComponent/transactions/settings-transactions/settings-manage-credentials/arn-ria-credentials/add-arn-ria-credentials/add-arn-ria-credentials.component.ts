@@ -129,7 +129,7 @@ export class AddArnRiaCredentialsComponent implements OnInit {
         memberId: (this.addCredential.controls.memberId == undefined)?'':this.addCredential.controls.memberId.value,
         id : (this.addCredential.controls.id== undefined)?this.inputData.id:'',
         orderSerialNo : 0,
-        tpSubBrokerCredentialId : this.inputData.tp_nse_subbroker_mapping_id,
+        tpSubBrokerCredentialId : this.inputData.tpSubBrokerCredentialId,
         password: this.addCredential.controls.pwd.value,
         subBrokerCode :(this.addCredential.controls.subBrokerCode == undefined)?'':this.addCredential.controls.subBrokerCode.value,
         userId:this.addCredential.controls.appId.value,

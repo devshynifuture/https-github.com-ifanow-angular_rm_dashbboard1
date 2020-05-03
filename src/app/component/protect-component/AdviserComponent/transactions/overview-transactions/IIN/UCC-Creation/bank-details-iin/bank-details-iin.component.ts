@@ -78,8 +78,8 @@ export class BankDetailsIINComponent implements OnInit {
       this.genralDetails = data.generalDetails
       this.getdataForm(this.firstHolderBank);
     }else{
-      if (this.clientData) {
-        this.getBankList(this.clientData && !this.firstHolderBank)
+      if (this.clientData && !this.firstHolderBank) {
+        this.getBankList(this.clientData)
       }
     }
     console.log('#######', this.holdingList)
