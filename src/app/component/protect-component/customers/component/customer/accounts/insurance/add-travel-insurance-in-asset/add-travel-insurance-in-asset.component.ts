@@ -217,13 +217,15 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
   }
   addTransaction(data) {
     this.insuredMembersForm.push(this.fb.group({
-      insuredMembers: [data ? data.name : ''],
-      sumAssured: [data ? data.sumInsured : ''],
+      insuredMembers: [data ? data.name : '',[Validators.required]],
+      sumAssured: [data ? data.sumInsured : '',[Validators.required]],
       id:[data ? data.id : ''],
       relationshipId:[data ? data.relationshipId : ''],
       familyMemberId:[data ? data.familyMemberId : ''],
       ttdSumAssured:[data ? data.ttdSumAssured : '']
     }));
+    this.onChangeSetErrorsType(this.travelInsuranceForm.get('planDetails').value,'planDetails')
+
   }
   removeTransaction(item) {
     let finalMemberList = this.travelInsuranceForm.get('InsuredMemberForm') as FormArray 
@@ -293,7 +295,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
       policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
       insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : null), [Validators.required]],
       sumAssuredIdv: [(this.dataForEdit) ? this.dataForEdit.sumInsuredIdv : null, [Validators.required]],
-      planeName: [(this.dataForEdit ? this.dataForEdit.planName :null)],
+      planeName: [(this.dataForEdit ? this.dataForEdit.planName :null),[Validators.required]],
       premium: [(this.dataForEdit ? this.dataForEdit.premiumAmount : null), [Validators.required]],
       policyStartDate: [this.dataForEdit ? new Date(this.dataForEdit.policyStartDate) : null, [Validators.required]],
       policyExpiryDate: [this.dataForEdit ? new Date(this.dataForEdit.policyExpiryDate) : null, [Validators.required]],

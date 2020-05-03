@@ -40,6 +40,8 @@ export class PersonalDetailsInnComponent implements OnInit {
   clientId: any;
   clientData: any;
   sendObj: any;
+  maxDate = new Date();
+
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private processTransaction: ProcessTransactionService,
@@ -152,7 +154,7 @@ export class PersonalDetailsInnComponent implements OnInit {
       maidanName: [!data ? '' : data.maidanName, [Validators.required]],
       fatherName: [!data ? '' : data.fatherName, [Validators.required]],
       motherName: [!data ? '' : data.motherName, [Validators.required]],
-      dob: [!data ? '' : new Date(data.dob), [Validators.required]],
+      dob: [!data ? '' : (data.dob)?new Date(data.dob):new Date(data.dateOfBirth), [Validators.required]],
       gender: [!data ? '1' : data.genderId ? data.genderId + '' : '1', [Validators.required]],
       email: [!data ? '' : data.email],
       aadharNumber: [!data ? '' : (data.aadharNumber) ? data.aadharNumber : data.aadhaarNumber],

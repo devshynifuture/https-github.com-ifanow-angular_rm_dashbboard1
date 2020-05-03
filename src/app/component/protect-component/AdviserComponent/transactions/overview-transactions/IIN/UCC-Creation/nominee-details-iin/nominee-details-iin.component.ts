@@ -47,6 +47,8 @@ export class NomineeDetailsIinComponent implements OnInit {
   nomineeFmList: any;
   addressList: any;
   isLoading = false;
+  maxDate = new Date();
+
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private onlineTransact: OnlineTransactionService, private postalService: PostalService,
     private processTransaction: ProcessTransactionService, private custumService: CustomerService,
@@ -177,7 +179,6 @@ export class NomineeDetailsIinComponent implements OnInit {
       address2: [!data.address ? '' : data.address.address2, [Validators.required]],
       pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],
       city: [!data.address ? '' : data.address.city, [Validators.required]],
-      district: [!data.address ? '' : data.address.district, [Validators.required]],
       state: [!data.address ? '' : data.address.state, [Validators.required]],
       country: [!data.address ? '' : data.address.country, [Validators.required]],
     });
@@ -331,7 +332,7 @@ export class NomineeDetailsIinComponent implements OnInit {
   setObj(holder, value) {
 
     value = {
-      nomineeName: holder.nomineeName,
+      name: holder.nomineeName,
       relationShip: holder.relationShip,
       type: holder.type,
       dob: new Date(holder.dob).getTime(),
@@ -344,7 +345,6 @@ export class NomineeDetailsIinComponent implements OnInit {
       address2: holder.address2,
       pinCode: holder.pinCode,
       city: holder.city,
-      district: holder.district,
       state: holder.state,
       country: holder.country,
     }

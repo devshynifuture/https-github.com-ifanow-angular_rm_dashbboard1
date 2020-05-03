@@ -98,7 +98,7 @@
                                 {{(_data.policyExpiryDate)?(_data.policyExpiryDate | date:'dd/MM/yyyy'):'-'}}
                             </div>
                         </div>
-                        <div class="row bb p-8 b-l br" *ngIf="_data.sumInsuredIdv && showInsurance != 'Travel' ">
+                        <div class="row bb p-8 b-l br" *ngIf="_data.sumInsuredIdv && showInsurance != 'Travel' && showInsurance != 'Health' ">
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Insured declared value
                             </div>

@@ -164,7 +164,6 @@ export class ContactDetailsInnComponent implements OnInit {
       addressLine2: [!data.address ? data.addressLine2 : (data.address.address2) ? data.address.address2 : data.address.addressLine2, [Validators.required]],
       pinCode: [!data.address ? data.pinCode : data.address.pinCode, [Validators.required]],
       city: [!data.address ? data.city : data.address.city, [Validators.required]],
-      district: [!data.address ? data.district : data.address.district, [Validators.required]],
       state: [!data.address ? data.state : data.address.state, [Validators.required]],
       country: [!data.address ? data.country : data.address.country, [Validators.required]],
       address: [!data.address ? data.address : data.address],
@@ -310,7 +309,6 @@ export class ContactDetailsInnComponent implements OnInit {
       addressLine2: holder.addressLine2,
       pinCode: holder.pinCode,
       city: holder.city,
-      district: holder.district,
       state: holder.state,
       country: holder.country,
     }

@@ -8,6 +8,7 @@ import {ConfirmDialogComponent} from 'src/app/component/protect-component/common
 import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
 import {AuthService} from 'src/app/auth-service/authService';
 import {TransactionEnumService} from '../../transaction-enum.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-settings-client-mapping',
@@ -37,6 +38,7 @@ export class SettingsClientMappingComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private onlineTransact: OnlineTransactionService,
               private eventService: EventService, private utilService: UtilService,
+              private enumServiceService: EnumServiceService,
               private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) {
   }
 
@@ -91,6 +93,7 @@ export class SettingsClientMappingComponent implements OnInit {
         console.log(data);
         if (data) {
           this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
+          this.dataSource.data =TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService)
           this.dataSource.sort = this.sort;
         } else {
           this.isLoading = false;
@@ -135,6 +138,7 @@ export class SettingsClientMappingComponent implements OnInit {
         console.log(data);
         if (data) {
           this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
+          this.dataSource.data =TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService)
           this.dataSource.sort = this.sort;
         } else {
           this.dataSource.data = [];
@@ -194,17 +198,6 @@ export class SettingsClientMappingComponent implements OnInit {
     });
   }
 
-  // getDefaultDetails(platform) {
-  //   let obj = {
-  //     advisorId: this.advisorId,
-  //     familyMemberId: 112166,
-  //     clientId: 53637,
-  //     aggregatorType: platform
-  //   }
-  //   this.tranService.getDefaultDetails(obj).subscribe(
-  //     data => this.getDefaultDetailsRes(data)
-  //   );
-  // }
   getDefaultDetailsRes(data) {
     console.log('deault', data);
     this.allData = data;
