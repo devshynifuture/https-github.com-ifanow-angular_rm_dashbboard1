@@ -7,8 +7,8 @@
         <div class="col-md-6 text-right">
             <div class="wrapper-12">
                 <button class="btn-dark-black addon mr-8 " mat-button matTooltip="Have lots of policies?You can bulk upload these policies using excel import option">
-          <img class="c-p mr-8" src="assets/images/svg/insurance-download-icon.svg"> Import policies
-        </button>
+                    <img class="c-p mr-8" src="assets/images/svg/insurance-download-icon.svg"> Import policies
+                </button>
                 <i (click)="close(null)" class="material-icons c-p v-middle"> clear</i>
             </div>
         </div>
@@ -22,7 +22,7 @@
                 <div class="col-md-4 pr-0 text-right">
                     <h5 class="m-0 pt-8 ">Name of policy holder</h5>
                 </div>
-                <div [ngClass]="healthInsuranceForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'" class="pr-0">
+                <div [ngClass]="healthInsuranceForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
                     <div class="form-group mb-0">
                         <mat-form-field>
                             <mat-select (selectionChange)="disabledMember($event.value,'owner')" (valueChange1)='lisNominee($event)' (valueChange3)='displayControler($event)' [callMethod]='callMethod' [data]='ownerData' appOwnerNominee class="form-control br-0" formControlName="name"
@@ -38,7 +38,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div *ngIf="healthInsuranceForm.value.getCoOwnerName.length > 1" class="col-md-2">
+                <div *ngIf="healthInsuranceForm.value.getCoOwnerName.length > 1" class="col-md-2 pl-0">
                     <div class="form-group mb-0 iconPetage">
                         <mat-form-field>
                             <input (focusout)="onChangeJointOwnership('owner')" class="form-control br-0 percentage" formControlName="share" matInput type="number">
@@ -62,7 +62,7 @@
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8">Plan type</h5>
             </div>
-            <div class="col-md-5 pr-0">
+            <div class="col-md-5">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
                         <mat-select autocomplete="true" (selectionChange)="onChangeSetErrorsType($event.value,'planType')" class="form-control br-0" #planType formControlName="PlanType" matInput>
@@ -76,7 +76,7 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select #planDetails autocomplete="off" (selectionChange)="onChangeSetErrors($event.value,'planDetails')" class="form-control br-0" formControlName="planDetails" matInput>
@@ -93,15 +93,15 @@
 
 
         <div formArrayName="InsuredMemberForm">
-            <div *ngFor="let obj of insuredMembersForm.controls; let pointIndex=index" [formGroupName]="pointIndex" [ngClass]="{'pt-36': pointIndex > 0}" class="row pt-4 justify-content-center">
+            <div *ngFor="let obj of insuredMembersForm.controls; let pointIndex=index" [formGroupName]="pointIndex" [ngClass]="{'pt-36': pointIndex > 0}" class="row pt-32">
 
-                <div class="col-md-4">
-                  
+                <div class="col-md-4 pr-0 text-right">
+                    <h5 class="mb-0 mt-32">Insured members</h5>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div class="form-group mb-0">
-                        <label class="f-16 roboto">Name</label>
+                        <h5 class="mb-0">Name </h5>
                         <mat-form-field>
                             <mat-select (selectionChange)="getFamilyData($event.value,nomineesListFM)" autocomplete="true" class="form-control br-0" formControlName="insuredMembers" matInput>
                                 <mat-option (click)="getFamilyMember(option,i)" *ngFor="let option of nomineesListFM;index as i" [value]="option.userName">
@@ -113,9 +113,9 @@
                     </div>
                 </div>
 
-                <div class="col-md-3" *ngIf="planType.value == ''  || planType.value !='8' && showinsuredMemberSum">
+                <div class="col-md-2 pl-0" *ngIf="planType.value == ''  || planType.value !='8' && showinsuredMemberSum">
                     <div class="form-group mb-0 iconRupess">
-                        <label class="f-16 roboto">Sum insured</label>
+                        <h5 class="mb-0 "> Sum insured </h5>
                         <mat-form-field>
                             <input #sumAssured [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="8" appInputValueValidation autocomplete="true" class="form-control rupess br-0" formControlName="sumAssured" matInput type="number">
                             <mat-hint align="end" class="f-12">{{sumAssured.value.length}}/8</mat-hint>
@@ -137,8 +137,8 @@
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8">sum insured</h5>
             </div>
-            <div class="col-md-5">
-                <div class="form-group mb-0 iconRupess">
+            <div class="col-md-3">
+                <div class="form-group  iconRupess">
                     <mat-form-field>
                         <input #sumAssuredIdv [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="8" appInputValueValidation autocomplete="true" class="form-control rupess br-0" formControlName="sumAssuredIdv" matInput type="number">
                         <mat-hint align="end" class="f-12">{{sumAssuredIdv.value.length}}/8</mat-hint>
@@ -152,7 +152,7 @@
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8">Deductible sum insured</h5>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-3">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
                         <input #deductibleAmt [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="8" appInputValueValidation autocomplete="true" class="form-control rupess br-0" formControlName="deductibleAmt" matInput type="number">
@@ -213,7 +213,7 @@
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8">Premium</h5>
             </div>
-            <div class="col-md-3 pr-0">
+            <div class="col-md-3">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
                         <input #premium [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="8" appInputValueValidation class="form-control rupess br-0" formControlName="premium" matInput type="text">
@@ -340,7 +340,7 @@
             </div>
             <div class="row pt-40">
                 <div class="col-md-4 pr-0 text-right">
-                    <h5 class="m-0 pt-28">Additional covers</h5>
+                    <h5 class="m-0 pt-8">Additional covers</h5>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group mb-0 iconRupess">
