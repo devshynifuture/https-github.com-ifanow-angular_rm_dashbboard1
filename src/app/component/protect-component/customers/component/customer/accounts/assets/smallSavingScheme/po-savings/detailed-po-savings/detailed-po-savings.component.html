@@ -21,15 +21,15 @@
                         {{i != 0?'Co-o' : 'O'}}wner {{i != 0?i:''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{owner.name}} sharing {{owner.share}}% ownership
+                        {{owner.name}} <span *ngIf="data.ownerList.length > 1">sharing {{owner.share}}% ownership</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Account balance
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{ (data.accountBalance)?data.accountBalance:'-' }}
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.accountBalance != 0">
+                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{data.accountBalance}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -45,15 +45,15 @@
                         Rate
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ (data.rate)?data.rate:'-' }}
+                        {{ (data.rate)?data.rate:'-' }}%
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Current value
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{ utils.formatter(data.accumalatedValue) }}
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.accumalatedValue != 0">
+                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{data.accumalatedValue}}</span>
                     </div>
                 </div>
                 
@@ -105,7 +105,7 @@
                         Nominee {{i + 1}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{obj.name}} sharing {{obj.sharePercentage}}% Nominee share
+                        {{obj.name}} <span *ngIf="data.nomineeList.length > 1">sharing {{obj.sharePercentage}}% Nominee share</span>
                     </div>
                 </div>
             </div>

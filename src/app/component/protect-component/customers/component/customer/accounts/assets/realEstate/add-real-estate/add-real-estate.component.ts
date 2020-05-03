@@ -29,6 +29,7 @@ export class AddRealEstateComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  maxDate:Date=new Date();
   validatorType = ValidatorType
   addrealEstateForm: any;
   ownerData: any;
@@ -440,10 +441,13 @@ export class AddRealEstateComponent implements OnInit {
 
   /***nominee***/ 
   if(data.nomineeList){
-    this.getNominee.removeAt(0);
-    data.nomineeList.forEach(element => {
-      this.addNewNominee(element);
-    });
+    if(data.nomineeList.length > 0){
+
+      this.getNominee.removeAt(0);
+      data.nomineeList.forEach(element => {
+        this.addNewNominee(element);
+      });
+    }
   }
   /***nominee***/ 
 

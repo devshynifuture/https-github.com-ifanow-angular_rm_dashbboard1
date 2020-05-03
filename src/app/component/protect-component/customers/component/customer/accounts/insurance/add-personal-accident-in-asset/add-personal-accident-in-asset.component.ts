@@ -338,10 +338,12 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
       });
     }
     if (this.dataForEdit) {
-      this.planFeatureForm.removeAt(0);
-      this.dataForEdit.policyFeatures.forEach(element => {
-        this.addNewFeature(element);
-      });
+      if(this.dataForEdit.policyFeatures.length >0){
+        this.planFeatureForm.removeAt(0);
+        this.dataForEdit.policyFeatures.forEach(element => {
+          this.addNewFeature(element);
+        });
+      }
     }
     this.bankAccountDetails = { accountList: this.accountList, controleData: this.personalAccidentForm }
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.personalAccidentForm }

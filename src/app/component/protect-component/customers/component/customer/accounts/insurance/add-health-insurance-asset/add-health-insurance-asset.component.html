@@ -441,11 +441,21 @@
           </div>
           <div class="col-md-3">
               <div class="form-group mb-0">
-                  <mat-form-field class="ba-date">
+                  <!-- <mat-form-field class="ba-date">
                       <input matInput formControlName="inceptionDate" [max]="maxDate" class="form-control br-0 b-0" [matDatepicker]="inceptionDatePicker" (focus)="inceptionDatePicker.open()" (input)="preventDefault($event)">
                       <mat-datepicker-toggle matSuffix [for]="inceptionDatePicker"></mat-datepicker-toggle>
                       <mat-datepicker #inceptionDatePicker></mat-datepicker>
-                  </mat-form-field>
+                  </mat-form-field> -->
+                  <mat-form-field class="ba-date">
+                      <input (focus)="inceptionDatePicker.open()" (input)="preventDefault($event)"
+                             [matDatepicker]="inceptionDatePicker" [max]="maxDate"
+                             class="form-control br-0 b-0" formControlName="inceptionDate"
+                             matInput>
+                      <mat-datepicker-toggle [for]="inceptionDatePicker" matSuffix></mat-datepicker-toggle>
+                      <mat-datepicker #inceptionDatePicker></mat-datepicker>
+                      <mat-error>This field is required
+                      </mat-error>
+                    </mat-form-field>
               </div>
           </div>
       </div>

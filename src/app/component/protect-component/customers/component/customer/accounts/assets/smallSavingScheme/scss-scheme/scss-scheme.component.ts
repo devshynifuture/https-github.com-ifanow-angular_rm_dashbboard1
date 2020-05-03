@@ -140,7 +140,7 @@ export class ScssSchemeComponent implements OnInit {
 
     });
   }
-
+  sumOfMaturityValue:any;
   getKvpSchemedataResponse(data: any) {
     this.isLoading = false;
     if (data != undefined) {
@@ -152,6 +152,7 @@ export class ScssSchemeComponent implements OnInit {
         this.sumOfAmountInvested = data.sumOfAmountInvested;
         this.sumOfTotalAmountReceived = data.sumOfAmountReceived;
         this.sumOfQuarterlyPayout = data.sumOfQuarterlyPayout;
+        this.sumOfMaturityValue = data.sumOfMaturityValue;
         this.scssData = data;
       }
     } else {

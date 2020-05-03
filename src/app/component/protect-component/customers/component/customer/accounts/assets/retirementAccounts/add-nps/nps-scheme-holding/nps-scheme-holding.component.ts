@@ -81,6 +81,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId()
     this.clientId = AuthService.getClientId();
     this.getGlobalList()
+    
 
 
   }
@@ -114,14 +115,14 @@ export class NpsSchemeHoldingComponent implements OnInit {
     }
   }
   getGlobalList() {
-    this.custumService.getGlobal().subscribe(
+    this.custumService.getSchemeChoice().subscribe(
       data => this.getGlobalRes(data)
     );
   }
   getGlobalRes(data) {
 
     console.log('getGlobalRes', data)
-    this.schemeList = data.npsScheme;
+    this.schemeList = data.npsSchemeList;
   }
 
   getdataForm(data) {
@@ -143,7 +144,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
       description: [(data == undefined) ? '' : data.description,],
       id: [(data == undefined) ? '' : data.id,],
       holdingList: this.fb.array([this.fb.group({
-        schemeName: [0, [Validators.required]], holdingAsOn: [null, [Validators.required]],
+        schemeId: ['', [Validators.required]], holdingAsOn: [null, [Validators.required]],
         totalUnits: [null, [Validators.required]], totalNetContribution: [null, [Validators.required]]
       })]),
       futureContributionList: this.fb.array([this.fb.group({
@@ -174,10 +175,13 @@ export class NpsSchemeHoldingComponent implements OnInit {
 
 /***nominee***/ 
 if(data.nomineeList){
-  this.getNominee.removeAt(0);
-  data.nomineeList.forEach(element => {
-    this.addNewNominee(element);
-  });
+  if(data.nomineeList.length > 0){
+      
+    this.getNominee.removeAt(0);
+    data.nomineeList.forEach(element => {
+      this.addNewNominee(element);
+    });
+  }
 }
 /***nominee***/ 
 
@@ -223,10 +227,10 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.schemeHoldings
       // }
       data.holdingList.forEach(element => {
         this.schemeHoldingsNPS.controls.holdingList.push(this.fb.group({
-          schemeName: [(element.schemeId), [Validators.required]],
-          totalUnits: [(element.totalUnits), Validators.required],
-          totalNetContribution: [(element.totalNetContribution), Validators.required],
-          holdingAsOn: [new Date(element.totalNetContribution), Validators.required],
+          schemeId: [element.schemeId, [Validators.required]],
+          totalUnits: [element.totalUnits, Validators.required],
+          totalNetContribution: [element.totalAmountInvested, Validators.required],
+          holdingAsOn: [new Date(element.holdingAsOn), Validators.required],
           id: [element.id, [Validators.required]]
         }))
       })
@@ -241,7 +245,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.schemeHoldings
   }
   addHoldings() {
     this.holdings.push(this.fb.group({
-      schemeName: [null, [Validators.required]], holdingAsOn: [null, [Validators.required]],
+      schemeId: [null, [Validators.required]], holdingAsOn: [null, [Validators.required]],
       totalUnits: [null, [Validators.required]], totalNetContribution: [null, [Validators.required]]
     }));
 
@@ -457,11 +461,11 @@ addNewNominee(data) {
     console.log(this.schemeHoldingsNPS.get('futureContributionList').invalid)
     // console.log(this.schemeHoldingsNPS.get('nominees').invalid)
     if (this.schemeHoldingsNPS.invalid) {
-      this.schemeHoldingsNPS.get('ownerName').markAsTouched();
-      this.schemeHoldingsNPS.get('pran').markAsTouched();
-      this.schemeHoldingsNPS.get('ownerName').markAsTouched();
-      this.schemeHoldingsNPS.get('holdingList').markAsTouched();
-      this.schemeHoldingsNPS.get('futureContributionList').markAsTouched();
+      // this.schemeHoldingsNPS.get('ownerName').markAsTouched();
+      this.schemeHoldingsNPS.markAllAsTouched();
+      // this.schemeHoldingsNPS.get('ownerName').markAsTouched();
+      // this.schemeHoldingsNPS.get('holdingList').markAsTouched();
+      // this.schemeHoldingsNPS.get('futureContributionList').markAsTouched();
     } else {
       let obj = {
         advisorId: this.advisorId,
@@ -475,7 +479,10 @@ addNewNominee(data) {
         // nominees: this.schemeHoldingsNPS.controls.nominees.value,
         nomineeList: this.schemeHoldingsNPS.value.getNomineeName,
         description: this.schemeHoldingsNPS.controls.description.value,
-        id: this.schemeHoldingsNPS.controls.id.value
+        id: this.schemeHoldingsNPS.controls.id.value,
+        // currentValuation: 0,
+        // realOrFictitious: 1,
+        // totalAmountInvested: 0
       }
       this.barButtonOptions.active = true;
       // this.nominee.value.forEach(element => {

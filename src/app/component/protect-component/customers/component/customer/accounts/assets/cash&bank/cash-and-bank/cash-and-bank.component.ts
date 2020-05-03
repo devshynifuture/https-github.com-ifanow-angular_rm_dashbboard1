@@ -216,9 +216,9 @@ export class CashAndBankComponent implements OnInit {
     console.log('getBankAccountsRes ####', data);
     this.isLoading = false;
     if (data != undefined) {
-      this.bankAccountList.data = data.cashInBankAccounts;
+      this.bankAccountList.data = data.assetList;
       this.bankAccountList.sort = this.bankAccountListTableSort;
-      this.totalAccountBalance = data.totalAccountBalance;
+      this.totalAccountBalance = data.sumOfAccountBalance;
     } else {
       this.noData = 'No Bank accounts found';
       this.bankAccountList.data = [];

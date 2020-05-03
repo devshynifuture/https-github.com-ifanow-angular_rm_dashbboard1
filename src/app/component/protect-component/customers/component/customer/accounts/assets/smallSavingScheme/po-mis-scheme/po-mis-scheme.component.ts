@@ -110,9 +110,9 @@ export class PoMisSchemeComponent implements OnInit {
   getPoMisSchemedataResponse(data: any) {
     this.isLoading = false;
     if (data != undefined) {
-      if (data.poMisList) {
+      if (data.assetList) {
         console.log('getPoMisSchemedataResponse', data);
-        this.datasource.data = data.poMisList;
+        this.datasource.data = data.assetList;
         this.datasource.sort = this.sort;
         UtilService.checkStatusId(this.datasource.filteredData);
         this.sumOfMaturityValue = data.sumOfMaturityValue;

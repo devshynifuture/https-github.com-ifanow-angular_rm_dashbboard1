@@ -128,7 +128,7 @@
                 <div class="form-group mb-0">
 
                     <mat-form-field class="ba-date">
-                        <input autocomplete="off" matInput class="form-control br-0 b-0" matInput
+                        <input autocomplete="off" matInput class="form-control br-0 b-0" matInput [max]="maxDate"
                             (focus)="picker.open()" (input)="preventDefault($event)" [matDatepicker]="picker"
                             formControlName="purchasePeriod" readonly>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

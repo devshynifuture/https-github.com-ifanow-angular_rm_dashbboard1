@@ -297,7 +297,7 @@ addNewNominee(data) {
       valueAsOn: [(data == undefined) ? '' : new Date(data.valueAsOn), [Validators.required]],
       schemeChoice: [data.schemeChoice ?parseInt(data.schemeChoice) : '', [Validators.required]],
       pran: [(data == undefined) ? '' : data.pran,],
-      totalContry: [(data == undefined) ? '' : data.contributionAmount, [Validators.required]],
+      totalContry: [(data == undefined) ? '' : data.totalAmountInvested, [Validators.required]],
       description: [(data == undefined) ? '' : data.description,],
       id: [(data == undefined) ? '' : data.id,],
       futureContributionList: this.fb.array([this.fb.group({
@@ -329,10 +329,13 @@ addNewNominee(data) {
 
 /***nominee***/ 
 if(data.nomineeList){
-  this.getNominee.removeAt(0);
-  data.nomineeList.forEach(element => {
-    this.addNewNominee(element);
-  });
+  if(data.nomineeList.length > 0){
+      
+    this.getNominee.removeAt(0);
+    data.nomineeList.forEach(element => {
+      this.addNewNominee(element);
+    });
+  }
 }
 /***nominee***/ 
 
@@ -449,13 +452,15 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.summaryNPS}
         // ownerName: (this.ownerName == undefined) ? this.summaryNPS.controls.ownerName.value : this.ownerName,
         valueAsOn: this.datePipe.transform(this.summaryNPS.controls.valueAsOn.value, 'yyyy-MM-dd'),
         currentValuation: this.summaryNPS.controls.currentValue.value,
-        contributionAmount: this.summaryNPS.controls.totalContry.value,
+        totalAmountInvested: this.summaryNPS.controls.totalContry.value,
         pran: this.summaryNPS.controls.pran.value,
         schemeChoice: this.summaryNPS.controls.schemeChoice.value,
         futureContributionList: this.summaryNPS.controls.futureContributionList.value,
         // nominees: this.summaryNPS.controls.nominees.value,
         description: this.summaryNPS.controls.description.value,
         nomineeList: this.summaryNPS.value.getNomineeName,
+        realOrFictitious: 1,
+        holdingList:[],
         id: this.summaryNPS.controls.id.value
       }
       this.barButtonOptions.active = true;

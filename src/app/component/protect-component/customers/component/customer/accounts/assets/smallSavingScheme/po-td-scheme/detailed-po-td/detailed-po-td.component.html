@@ -1,7 +1,7 @@
 <div class="popup-header-fix-35">
     <div class="row bb-1">
         <div class="col-md-10 p-0">
-            <h4 class="mb-0 wrapper-20">PO Td - Detailed view</h4>
+            <h4 class="mb-0 wrapper-20">Po Td - Detailed view</h4>
         </div>
         <div class="col-md-2 text-left">
             <div class="wrapper-12">
@@ -19,15 +19,15 @@
                         {{i != 0?'Co-o' : 'O'}}wner {{i != 0?i:''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{owner.name}} sharing {{owner.share}}% ownership
+                        {{owner.name}} <span *ngIf="data.ownerList.length > 1">sharing {{owner.share}}% ownership</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Amount invested
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{ (data.amountInvested)?data.amountInvested:'-' }}
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.amountInvested != 0">
+                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{data.amountInvested}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -44,7 +44,7 @@
                     </div>
 
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ (data.rate)?data.rate:'-' }}
+                        {{ (data.rate)?data.rate + '%':'-' }}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -67,16 +67,16 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Current value
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{(data.currentValue)?data.currentValue:'-'}}
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.currentValue != 0">
+                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{data.currentValue}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Maturity value
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{(data.maturityValue)?data.maturityValue:'-'}}
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.maturityValue != 0">
+                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{data.maturityValue}}</span>
                     </div>
                 </div>
                 
@@ -125,7 +125,7 @@
                         Nominee {{i + 1}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{obj.name}} sharing {{obj.sharePercentage}}% Nominee share
+                        {{obj.name}} <span *ngIf="data.nomineeList.length > 1">sharing {{obj.sharePercentage}}% Nominee share</span>
                     </div>
                 </div>
 

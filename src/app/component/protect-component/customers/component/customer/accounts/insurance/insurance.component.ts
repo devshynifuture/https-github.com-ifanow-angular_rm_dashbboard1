@@ -376,7 +376,7 @@ export class InsuranceComponent implements OnInit {
           element.policyFeatures.forEach(ele => {
             this.sumAssured += ele.featureSumInsured
           });
-          // element.sumAssured = this.sumAssured
+           element.sumAssured = this.sumAssured
         } else {
           element.sumAssured = element.sumInsuredIdv
         }

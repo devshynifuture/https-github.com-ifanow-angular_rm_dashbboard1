@@ -1,0 +1,110 @@
+<div class="popup-header-fix-35">
+  <div class="row bb-1">
+      <div class="col-md-10 p-0">
+          <h4 class="mb-0 wrapper-20">NPS - Detailed view</h4>
+      </div>
+      <div class="col-md-2 text-left">
+          <div class="wrapper-12">
+              <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="pl-20 pr-20 mt-44 pb-48">
+  <div class="row pt-40">
+      <div class="col-md-12 p-0">
+          <div class="insurance-ui bt">
+              <div class="row bb p-8 b-l br" *ngFor="let obj of npsData.ownerList; let i = index">
+                  <div class="col-md-8 text-left f-14 roboto p-0" >
+                      {{i != 0?'Co-o' : 'O'}}wner{{i != 0?i:''}}
+                  </div>
+                  <div class="col-md-4 text-right f-14 roboto p-0">
+                      {{obj.name}}
+                  </div>
+              </div>
+              <div class="row bb p-8 b-l br">
+                  <div class="col-md-8 text-left f-14 roboto p-0">
+                      PRAN
+                  </div>
+                  <div class="col-md-4 text-right f-14 roboto p-0">
+                      {{npsData.pran ? npsData.pran:'-'}}
+                  </div>
+              </div>
+              <div class="row bb p-8 b-l br">
+                  <div class="col-md-6 text-left f-14 roboto p-0">
+                      Description
+                  </div>
+                  <div class="col-md-6 text-right f-14 roboto p-0">
+                      {{npsData.description ? npsData.description:'-'}}
+                  </div>
+              </div>
+              <div class="row bb p-8 b-l br" *ngIf="!npsData.nomineeList">
+                  <div class="col-md-8 text-left f-14 roboto p-0" >
+                      Nominee
+                  </div>
+                  <div class="col-md-4 text-right f-14 roboto p-0">
+                      -
+                  </div>
+              </div>
+              <div class="row bb p-8 b-l br" *ngFor="let obj of npsData.nomineeList; let i = index">
+                  <div class="col-md-8 text-left f-14 roboto p-0" >
+                      Nominee {{i + 1}}
+                  </div>
+                  <div class="col-md-4 text-right f-14 roboto p-0">
+                      {{obj.name}}
+                  </div>
+              </div>
+          </div>
+
+          <table *ngIf="dataSource.filteredData.length > 0" matSort #holdingsTableSort="matSort" mat-table
+            [dataSource]="dataSource" id="table-low" class="skeletonAnimation" appSkeletonLoading
+            [appSkeletonLoading]="isLoading">
+            <ng-container matColumnDef="name">
+              <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="name"> Scheme Name</th>
+              <td mat-cell *matCellDef="let element" class="br text-primary">
+                <div [ngSwitch]="element.schemeId">
+                  <div class="bar" *ngFor="let s of schemeList"> 
+                      <span *ngSwitchCase="s.id"> {{s.name}}</span>
+                  </div>
+                </div>
+              </td>
+              <td *matFooterCellDef mat-footer-cell></td>
+          </ng-container>
+          <ng-container matColumnDef="units">
+            <th *matHeaderCellDef class="br  " mat-header-cell mat-sort-header="units"> Units</th>
+            <td mat-cell *matCellDef="let element" class="br text-primary">
+                <div class="bar"> {{element.totalUnits}} </div>
+            </td>
+            <td *matFooterCellDef mat-footer-cell></td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+            <th mat-sort-header="amount" mat-header-cell *matHeaderCellDef
+                class="br w-15 rightText text-right">
+                Amount Invested 
+            </th>
+            <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+                <div class="bar" *ngIf="element.totalAmountInvested != 0">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.totalAmountInvested}}</span> </div>
+            </td>
+            <td *matFooterCellDef mat-footer-cell></td>
+            
+        </ng-container>
+        <ng-container matColumnDef="value">
+            <th mat-sort-header="value" mat-header-cell *matHeaderCellDef
+                class="br w-15 rightText text-right">
+                Current Value 
+            </th>
+            <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+                <div class="bar" *ngIf="element.currentValue != 0">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.currentValue}}</span> </div>
+            </td>
+            <td *matFooterCellDef mat-footer-cell></td>
+           
+        </ng-container>
+            
+            
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
+        </table>
+      </div>
+  </div>
+</div>

@@ -14,36 +14,36 @@
     <div class="row pt-40">
         <div class="col-md-12 p-0">
             <div class="insurance-ui bt">
-                <div class="row bb p-8 b-l br">
+                <div class="row bb p-8 b-l br" *ngFor="let owner of data.ownerList; let i = index">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Owner name
+                        {{i != 0?'Co-o' : 'O'}}wner {{i != 0?i:''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ (data.ownerName)?data.ownerName:'-' }}
+                        {{owner.name}}<span *ngIf="data.ownerList.length > 1">sharing {{owner.share}}% ownership</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Account balance
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{ (data.accountBalance)?data.accountBalance:'-' }}
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.accountBalance != 0">
+                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{data.accountBalance}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Amount invested
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{ (data.amountInvested)?data.amountInvested:'-' }}
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.amountInvested != 0">
+                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{data.amountInvested}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Current value
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{(data.currentValue)?data.currentValue:'-'}}
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.currentValue != 0">
+                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{data.currentValue}}</span>
                     </div>
                 </div>
                 <!-- <div class="row bb p-8 b-l br">
@@ -91,8 +91,8 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Future approx contribution
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{ (data.futureApproxcontribution)?data.futureApproxcontribution:'-' }}
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.futureApproxcontribution != 0">
+                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{data.futureApproxcontribution}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">

@@ -128,7 +128,7 @@
                             <mat-option *ngFor="let s of schemeList" [value]="s.id">{{s.name}}
                             </mat-option>
                         </mat-autocomplete> -->
-                        <mat-select matInput formControlName="schemeName" class="form-control br-0">
+                        <mat-select matInput formControlName="schemeId" class="form-control br-0">
                             <mat-option [value]='0' disabled>Select scheme</mat-option>
                             <mat-option *ngFor="let s of schemeList" [value]="s.id">{{s.name}}
                             </mat-option>
