@@ -355,8 +355,8 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
   /***owner***/
   addNewFeature(data) {
     this.planFeatureForm.push(this.fb.group({
-      planfeatures: [data ? data.policyFeatureId+'' : ''],
-      sumInsured:[data ? data.featureSumInsured : '']
+      planfeatures: [data ? data.policyFeatureId+'' : '',[Validators.required]],
+      sumInsured:[data ? data.featureSumInsured : '',[Validators.required]]
     }));
   }
   removeNewFeature(item) {
