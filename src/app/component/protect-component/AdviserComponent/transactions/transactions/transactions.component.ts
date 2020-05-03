@@ -1,13 +1,11 @@
-import { UtilService } from './../../../../../services/util.service';
-import { SubscriptionInject } from './../../Subscriptions/subscription-inject.service';
-import { Component, OnInit } from '@angular/core';
-import { EventService } from 'src/app/Data-service/event.service';
-import { TransactionAddComponent } from './../transaction-add/transaction-add.component';
-import { Router } from '@angular/router';
+import {SubscriptionInject} from './../../Subscriptions/subscription-inject.service';
+import {Component, OnInit} from '@angular/core';
+import {EventService} from 'src/app/Data-service/event.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-transactions',
- templateUrl: './transactions.component.html',
+  templateUrl: './transactions.component.html',
   styleUrls: ['./transactions.component.scss']
 })
 export class TransactionsComponent implements OnInit {

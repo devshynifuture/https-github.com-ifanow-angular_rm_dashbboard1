@@ -216,12 +216,12 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
   }
   addTransaction(data) {
     this.insuredMembersForm.push(this.fb.group({
-      insuredMembers: [data ? data.name : ''],
-      sumAssured: [data ? data.sumInsured : ''],
+      insuredMembers: [data ? data.name : '',[Validators.required]],
+      sumAssured: [data ? data.sumInsured : '',[Validators.required]],
       id:[data ? data.id : ''],
       relationshipId:[data ? data.relationshipId : ''],
       familyMemberId:[data ? data.familyMemberId : ''],
-      ttdSumInsured:[data ? data.ttdSumInsured : '']
+      ttdSumInsured:[data ? data.ttdSumInsured : '',[Validators.required]]
     }));
   }
   removeTransaction(item) {
@@ -338,10 +338,12 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
       });
     }
     if (this.dataForEdit) {
-      this.planFeatureForm.removeAt(0);
-      this.dataForEdit.policyFeatures.forEach(element => {
-        this.addNewFeature(element);
-      });
+      if(this.dataForEdit.policyFeatures.length >0){
+        this.planFeatureForm.removeAt(0);
+        this.dataForEdit.policyFeatures.forEach(element => {
+          this.addNewFeature(element);
+        });
+      }
     }
     this.bankAccountDetails = { accountList: this.accountList, controleData: this.personalAccidentForm }
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.personalAccidentForm }

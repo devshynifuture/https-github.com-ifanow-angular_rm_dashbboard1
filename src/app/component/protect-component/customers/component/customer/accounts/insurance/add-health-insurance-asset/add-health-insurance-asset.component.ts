@@ -460,12 +460,13 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
 
     addTransaction(data) {
         this.insuredMembersForm.push(this.fb.group({
-            insuredMembers: [data ? data.name : ''],
-            sumAssured: [data ? data.sumInsured : ''],
+            insuredMembers: [data ? data.name : '',[Validators.required]],
+            sumAssured: [data ? data.sumInsured : '',[Validators.required]],
             id: [data ? data.id : ''],
             relationshipId: [data ? data.relationshipId : ''],
             familyMemberId: [data ? data.familyMemberId : '']
         }));
+        this.onChangeSetErrorsType(this.healthInsuranceForm.get('PlanType').value,'planType')
     }
 
     removeTransaction(item) {

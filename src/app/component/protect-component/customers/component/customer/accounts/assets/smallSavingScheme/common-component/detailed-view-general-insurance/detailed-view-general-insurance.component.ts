@@ -14,6 +14,8 @@ export class DetailedViewGeneralInsuranceComponent implements OnInit {
   allInsurance: any;
   showInsurance: any;
   insuranceSubTypeId: any;
+  bankAccountDetails: any;
+  bankList: any;
 
   constructor(private subInjectService:SubscriptionInject) { }
   @Input()
@@ -32,15 +34,35 @@ export class DetailedViewGeneralInsuranceComponent implements OnInit {
   get data() {
     return this._data;
   }
+  bankAccountList(value) {
+    this.bankList = value;
+    this.bankList.forEach(element => {
+      if(element.id == this._data.linkedBankAccount){
+        this._data.bankName = element.bankName
+      }
+    });
+}
+
   ngOnInit() {
+    this.bankAccountDetails ={ accountList: '', controleData: '' };
     this._data.addOns = this.filter(this._data.addOns,this.displayList.addOns,'id','addOnId','add_on');
     this._data.policyFeatures = this.filter(this._data.policyFeatures,this.displayList.policyFeature,'id','policyFeatureId','type')
+    // this._data.policyTypes = this.filter(this._data.policyTypes,this.displayList.policyFeature,'id','policyFeatureId','type')
     this.allInsurance.forEach(element => {
       if (element.id == this._data.insuranceSubTypeId) {
         this.showInsurance = element.name;
       } 
     });
 
+
+    // this.displayList.policyTypes.forEach(ele => {
+    //   if (this._data.policyTypeId) {
+    //     if (ele.id == this._data.policyTypeId) {
+    //       this._data.policyType = ele.policy_type
+    //     }
+    //   } 
+
+    // });
   }
   filter(filter1,filter2,key,key2,key3){
     if(filter1.length > 0){

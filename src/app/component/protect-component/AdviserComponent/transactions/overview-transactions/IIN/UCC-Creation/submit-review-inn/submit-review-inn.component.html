@@ -56,7 +56,7 @@
                     <p class="f-12 text-primitive">This will be displayed as UCC number</p>
                     <div class="form-group">
                         <mat-form-field>
-                            <input matInput class="form-control" formControlName="accountNumber">
+                            <input matInput class="form-control" [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation [maxLength]="9" formControlName="accountNumber">
                             <mat-error>This field is required</mat-error>
                         </mat-form-field>
                     </div>

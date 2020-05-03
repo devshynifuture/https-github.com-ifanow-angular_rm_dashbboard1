@@ -132,6 +132,7 @@ export class VerifyMemberComponent implements OnInit {
       data => {
         console.log(data);
         this.clientCodeData = data;
+        console.log('clientCodeData',this.clientCodeData)
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
     );
