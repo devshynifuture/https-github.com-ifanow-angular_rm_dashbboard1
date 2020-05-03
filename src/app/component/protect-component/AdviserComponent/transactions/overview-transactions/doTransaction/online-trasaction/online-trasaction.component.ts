@@ -65,11 +65,11 @@ export class OnlineTrasactionComponent implements OnInit {
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private eventService: EventService, private fb: FormBuilder,
     private processTransaction: ProcessTransactionService, private router: Router) {
+      this.advisorId = AuthService.getAdvisorId();
   }
 
   @Input()
   set data(data) {
-    this.advisorId = AuthService.getAdvisorId();
     this.inputData = data;
     console.log('This is Input data of Online Transaction Component ', data);
 
@@ -120,26 +120,11 @@ export class OnlineTrasactionComponent implements OnInit {
       }
     }
     this.showData(data);
-    // this.allData = data
-    // this.credentialList = data.credentialList
-    // this.getPlatformCount = data.credentialList.filter(function (ele) {
-    //   return ele.id
-    // })
-    // console.log('platform count', this.getPlatformCount)
-    // this.defaultCredential = data.defaultCredential
-    // this.defaultClient = data.defaultClient
-    // this.selectedPlatform = this.defaultCredential.aggregatorType
   }
 
   showData(value) {
     if (this.nomineesListFM && this.transactionAddForm.get('ownerName').valid) {
-      // this.nomineesListFM.forEach(element => {
-      //   this.checkFamilyMem = element.name.includes(this.transactionAddForm.controls.ownerName.value)
-      // });
       if (this.formStep == 'step-1') {
-        // if (this.allData && this.allData.length > 0) {
-        //   this.formStep = 'step-2';
-        // }
         if (this.noMapping == false && this.noSubBroker == false) {
           this.formStep = 'step-2';
         }
@@ -167,28 +152,7 @@ export class OnlineTrasactionComponent implements OnInit {
 
   }
 
-  // getFamilyList(value) {
-  //   this.showSpinnerOwner = true
-  //   let obj = {
-  //     advisorId: this.advisorId,
-  //     name: value
-  //   }
-  //   if (value.length > 2) {
-  //     this.onlineTransact.getFamilyMemberList(obj).subscribe(
-  //       data => this.getFamilyMemberListRes(data),
-  //       err => this.eventService.openSnackBar(err, 'Dismiss')
-  //     );
-  //   }
-  // }
-  // getFamilyMemberListRes(data) {
-  //   this.showSpinnerOwner = false
-  //   if (data == undefined) {
-
-  //   } else {
-  //     this.nomineesListFM = data.familyMembers
-  //   }
-  //   console.log('getFamilyMemberListRes', data)
-  // }
+ 
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
@@ -214,7 +178,7 @@ export class OnlineTrasactionComponent implements OnInit {
 
     const obj = {
       clientId: this.familyMemberData.clientId,
-      advisorId: this.familyMemberData.advisorId,
+      advisorId: this.advisorId,
       familyMemberId: this.familyMemberData.familyMemberId,
       // tpUserCredentialId: 292
     };
@@ -269,26 +233,7 @@ export class OnlineTrasactionComponent implements OnInit {
   openPurchaseTransaction(value, data) {
     this.transactionType = value;
     this.transactionData = data;
-    // const fragmentData = {
-    //   flag: 'addNsc',
-    //   data,
-    //   id: 1,
-    //   state: 'open65',
-    //   componentName: (value == 'PURCHASE') ? PurchaseTrasactionComponent : (value == 'REDEMPTION') ? RedemptionTransactionComponent : (value == 'SIP') ? SipTransactionComponent : (value == 'SWP') ? SwpTransactionComponent : (value == 'STP') ? StpTransactionComponent : (value == 'SWITCH') ? SwitchTransactionComponent : ''
-    // };
-    // const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-    //   sideBarData => {
-    //     console.log('this is sidebardata in subs subs : ', sideBarData);
-    //     if (UtilService.isDialogClose(sideBarData)) {
-    //       if (UtilService.isRefreshRequired(sideBarData)) {
-    //         // this.getNscSchemedata();
-    //         console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-    //       }
-    //       rightSideDataSub.unsubscribe();
-    //     }
 
-    //   }
-    // );
   }
 
   selectTransactionType(value: string) {

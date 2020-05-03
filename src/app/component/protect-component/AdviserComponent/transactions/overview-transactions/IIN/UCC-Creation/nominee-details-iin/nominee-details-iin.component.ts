@@ -331,7 +331,7 @@ export class NomineeDetailsIinComponent implements OnInit {
   setObj(holder, value) {
 
     value = {
-      nomineeName: holder.nomineeName,
+      name: holder.nomineeName,
       relationShip: holder.relationShip,
       type: holder.type,
       dob: new Date(holder.dob).getTime(),

@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { OnlineTransactionService } from '../../../online-transaction.service';
-import { ProcessTransactionService } from '../process-transaction.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { AuthService } from 'src/app/auth-service/authService';
-import { ValidatorType } from 'src/app/services/util.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
+import {OnlineTransactionService} from '../../../online-transaction.service';
+import {ProcessTransactionService} from '../process-transaction.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {AuthService} from 'src/app/auth-service/authService';
+import {ValidatorType} from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-swp-transaction',
@@ -124,14 +124,15 @@ export class SwpTransactionComponent implements OnInit {
       this.schemeDetails.minimumPurchaseAmount = 0;
       return;
     }
-    this.showSpinner = true;
     if (this.swpTransaction.get('schemeSwp').invalid) {
       this.showSpinner = false;
       Object.assign(this.transactionSummary, { schemeName: '' });
       Object.assign(this.transactionSummary, { folioNumber: '' });
       (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0; // if scheme not present then min amt is 0
     }
+    this.getExistingSchemesRes([]);
     if (this.selectScheme == 2 && data.target.value.length > 2) {
+      this.showSpinner = true;
       const obj = {
         searchQuery: data.target.value,
         bseOrderType: 'SWP',
