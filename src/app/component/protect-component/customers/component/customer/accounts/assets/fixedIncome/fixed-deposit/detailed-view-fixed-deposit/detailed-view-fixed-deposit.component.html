@@ -38,7 +38,7 @@ Description description: "this is futurewise Tech" -->
                         {{i != 0?'Co-o' : 'O'}}wner {{i != 0?i:''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{owner.name}} sharing {{owner.share}}% ownership
+                        {{owner.name}} <span *ngIf="fixedDeposit.ownerList.length > 1">sharing {{owner.share}}% ownership</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -175,10 +175,12 @@ Description description: "this is futurewise Tech" -->
                 </div>
                 <div *ngIf="fixedDeposit.interestPayoutOption == 1" class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Total Interest earned
+                        Total Interest earned 
                     </div>
-                    <div [value]="fixedDeposit.maturityValue - fixedDeposit.amountInvested" class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        ₹{{fixedDeposit.maturityValue - fixedDeposit.amountInvested}}
+                    <div  class="col-md-4 text-right f-14 roboto p-0" >
+                        <!-- ₹{{}} -->
+                        ₹{{utils.formatter(fixedDeposit.currentValue - fixedDeposit.amountInvested)}}
+
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -226,7 +228,7 @@ Description description: "this is futurewise Tech" -->
                         Nominee {{i + 1}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{obj.name}} sharing {{obj.sharePercentage}}% Nominee share
+                        {{obj.name}} <span *ngIf="fixedDeposit.nomineeList.length > 1">sharing {{obj.sharePercentage}}% Nominee share</span>
                     </div>
                 </div>
             </div>

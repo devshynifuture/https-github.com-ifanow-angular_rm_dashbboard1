@@ -107,7 +107,7 @@ export class PoSavingsComponent implements OnInit {
         this.datasource.data = data.assetList;
         this.datasource.sort = this.sort;
         UtilService.checkStatusId(this.datasource.filteredData);
-        this.SumOfCurrentValue = data.SumOfCurrentValue;
+        this.SumOfCurrentValue = data.sumOfCurrentValue;
         this.SumOfBalancementioned = data.SumOfBalancementioned;
         this.posavingdata = data;
       }

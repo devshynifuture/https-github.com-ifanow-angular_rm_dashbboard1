@@ -24,10 +24,28 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
+                        PRAN
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{npsData.pran ? npsData.pran:'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Total contribution
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        <div *ngIf="npsData.totalAmountInvested != 0">{{!isLoading? "₹" : ""}}     <span appFormatNumber>{{npsData.totalAmountInvested}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Current valuation
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{npsData.currentValuation}}
+                        <div *ngIf="npsData.currentValuation != 0">{{!isLoading? "₹" : ""}}     <span appFormatNumber>{{npsData.currentValuation}}</span>
+                        </div>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -38,14 +56,7 @@
                         {{npsData.valueAsOn | date:'dd/MM/yyyy'}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Total contribution
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{npsData.contributionAmount}}
-                    </div>
-                </div>
+                
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-6 text-left f-14 roboto p-0">
                         Scheme choice
@@ -55,14 +66,7 @@
                         <span *ngIf="npsData.schemeChoice=='2'">Auto-choice investment</span>
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        PRAN
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{npsData.pran ? npsData.pran:'-'}}
-                    </div>
-                </div>
+                
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-6 text-left f-14 roboto p-0">
                         Description
