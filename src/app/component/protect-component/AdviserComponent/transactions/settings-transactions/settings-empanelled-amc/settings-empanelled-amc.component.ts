@@ -13,7 +13,7 @@ export class SettingsEmpanelledAmcComponent implements OnInit {
   displayedColumns;
   dataSource;
   advisorId: any;
-  isLoading: any;
+  isLoading = false
   constructor(private tranService: OnlineTransactionService, private eventService: EventService) { }
   columns = [];
   ngOnInit() {
@@ -21,6 +21,7 @@ export class SettingsEmpanelledAmcComponent implements OnInit {
     this.getEmpanelledAmcData();
   }
   getEmpanelledAmcData() {
+    this.isLoading = true
     let obj =
     {
       advisorId: this.advisorId
@@ -36,6 +37,8 @@ export class SettingsEmpanelledAmcComponent implements OnInit {
     )
   }
   getEmpanelledAmcDataRes(data) {
+    this.isLoading = false
+
     this.columns.push("AMC name");
     data.brokerList.forEach(element => {
       this.columns.push(element.brokerCode)
