@@ -314,7 +314,8 @@
     </div>
     <div *ngIf="addMoreFlag" class="row pt-40 h-500">
         <div class="col-md-12 tabView">
-            <mat-tab-group mat-align-tabs="center" animationDuration="0ms">
+            <mat-tab-group mat-align-tabs="center" class="pb-100" animationDuration="0ms">
+
                 <mat-tab label="Key details">
                     <div [formGroup]="keyDetailsForm">
                         <div class="row pt-40">
@@ -516,6 +517,7 @@
                     </div>
 
                 </mat-tab>
+
                 <mat-tab label="Cash Flows">
                     <!-- add btn required -->
                     <div [formGroup]="cashFlowForm">
@@ -531,9 +533,9 @@
                             </div>
                         </div>
                         <div formArrayName="cashFlow">
-                            <div [ngClass]="{'pt-36': pointIndex > 0}" class="row" *ngFor="let obj of cashFlowEntries.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                            <div [ngClass]="{'pt-36': pointIndex > 0}" class="row pb-16" *ngFor="let obj of cashFlowEntries.controls; let pointIndex=index" [formGroupName]="pointIndex">
                                 <div class="col-md-3">
-                                    <div class="form-group mb-0 ">
+                                    <div class="form-group">
                                         <!-- <label class="f-16 roboto">Cash Flow Type</label> -->
                                         <mat-form-field>
                                             <!-- <input type="text" autocomplete="off"  [maxLength]="20"
@@ -551,7 +553,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <div class="form-group mb-0">
+                                    <div class="form-group ">
                                         <!-- <label class="f-16 roboto">Year</label> -->
                                         <mat-form-field>
                                             <input type="number" autocomplete="off" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation [maxLength]="4" formControlName="year" matInput class="form-control br-0">
@@ -559,7 +561,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <div class="form-group mb-0 iconRupess">
+                                    <div class="form-group iconRupess">
                                         <!-- <label class="f-16 roboto">Approx amount</label> -->
                                         <mat-form-field>
                                             <input type="number" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation [maxLength]="8" autocomplete="off" formControlName="approxAmt" #approxAmt matInput class="form-control br-0 rupess">
@@ -581,9 +583,9 @@
 
                 <mat-tab label="Riders">
                     <div [formGroup]="ridersForm">
-                        <div class="row pt-40">
+                        <div class="row pt-40 pb-20">
                             <div class="col-md-3">
-                                <div class="form-group mb-0 iconRupess">
+                                <div class="form-group  iconRupess">
                                     <label class="f-16 roboto">Accidental benefit</label>
                                     <mat-form-field>
                                         <input type="number" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="off" [maxLength]="8" formControlName="accidentalBenefit" #accidentalBenefit matInput class="form-control rupess br-0">
@@ -593,7 +595,7 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group mb-0 iconRupess">
+                                <div class="form-group iconRupess">
                                     <label class="f-16 roboto">Critical illeness</label>
                                     <mat-form-field>
                                         <input type="number" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="off" [maxLength]="8" formControlName="criticalIlleness" #criticalIlleness matInput class="form-control rupess br-0">
@@ -603,7 +605,7 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div class="form-group mb-0 iconRupess">
+                                <div class="form-group  iconRupess">
                                     <label class="f-16 roboto">Double Accidental</label>
                                     <mat-form-field>
                                         <input type="number" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation autocomplete="off" [maxLength]="10" formControlName="doubleAccidental" #doubleAccidental matInput class="form-control rupess br-0">
@@ -668,6 +670,7 @@
                         </div> -->
                     </div>
                 </mat-tab>
+
                 <mat-tab label="Loan details" *ngIf="insuranceSubTypeId != 1">
                     <div [formGroup]="loanDetailsForm" class="row pt-40 pb-48">
                         <div class="col-md-3">
@@ -702,6 +705,7 @@
                         </div>
                     </div>
                 </mat-tab>
+
                 <mat-tab label="Miscellaneous">
                     <div [formGroup]="Miscellaneous">
                         <div class="row pt-40">
@@ -761,6 +765,7 @@
                         </div>
                     </div>
                 </mat-tab>
+
             </mat-tab-group>
         </div>
     </div>
