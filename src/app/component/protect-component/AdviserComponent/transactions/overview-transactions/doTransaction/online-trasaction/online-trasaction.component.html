@@ -43,12 +43,12 @@
     </div>
   </div>
 
-  <div *ngIf="clientCodeData == undefined" class="d-flex flex-column align-items-center">
+  <div *ngIf="!clientCodeData" class="d-flex flex-column align-items-center">
     <h4 class="text-center pt-12">No IIN/UCC found</h4>
     <button (click)="openNewCustomerIIN()" class="btn-green text-white" mat-button>IIN/UCC CREATION</button>
   </div>
   <!-- second click -->
-  <div *ngIf="formStep == 'step-2' &&  transactionType==undefined">
+  <div *ngIf="formStep == 'step-2' &&  !transactionType && clientCodeData">
     <div class="row pt-10 pl-40 pr-40">
       <div class="col-md-12 p-0">
         <h5 class="m-0 text-black">Great! Next, select a transaction type from the below given options...</h5>

@@ -1,18 +1,18 @@
 <div class="row pt-24">
-    <div class="col-md-6 align-items-center d-flex">
+    <div class="col-md-3 align-items-center d-flex">
         <h4 class="m-0 text-black pt-8">Client mapping</h4>
     </div>
-    <div class="col-md-6" *ngIf="dataSource.filteredData.length > 0 ">
+    <div class="col-md-9" *ngIf="dataSource.filteredData.length > 0 ">
         <div class="row">
-            <!-- <div class="col-md-4 text-right pr-0">
+            <div class="col-md-4 text-right pr-0">
                 <div class="form-group mb-0">
                     <mat-form-field floatLabel="never" appearance="standard">
                         <input autocomplete="off" matInput (keyup)="applyFilter($event)"
                             placeholder="type to filter data" class="form-control br-0">
                     </mat-form-field>
                 </div>
-            </div> -->
-            <div class="col-md-5 pl-0">
+            </div>
+            <div class="col-md-3 pl-0">
                 <div class="form-group mb-0">
                     <mat-select [(ngModel)]="type" (selectionChange)="sortDataFilterWise()" class="form-control br-0">
                         <mat-option value="1">Mapped clients</mat-option>
@@ -20,7 +20,8 @@
                     </mat-select>
                 </div>
             </div>
-            <div class="col-md-5 pl-0">
+            
+            <div class="col-md-3 pl-0">
                 <div class="form-group mb-0">
                     <mat-select [(ngModel)]="selectedBrokerCode"
                         (selectionChange)="chnageBrokerCode(selectedBrokerCode)" class="form-control br-0">
