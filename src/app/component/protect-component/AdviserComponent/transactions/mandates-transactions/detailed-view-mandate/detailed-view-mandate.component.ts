@@ -66,14 +66,14 @@ export class DetailedViewMandateComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
-  getFileDetails(e) {
+  getFileDetails(e,flag) {
     console.log('file', e);
     this.file = e.target.files[0];
     console.log('file', e);
     const file = e.target.files[0];
     const requestMap = {
       tpUserRequestId: 1,
-      documentType: 1
+      documentType: flag
     };
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {

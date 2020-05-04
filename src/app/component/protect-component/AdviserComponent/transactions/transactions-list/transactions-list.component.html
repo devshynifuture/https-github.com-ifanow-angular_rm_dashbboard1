@@ -3,7 +3,7 @@
         <h4 class="m-0">All transactions</h4>
     </div>
 
-    <div class="col-md-9" *ngIf="dataSource.data.length > 0">
+    <div class="col-md-9" >
         <div class="row">
             <!-- <div class="col-md-4 text-right pr-0">
                         <div class="form-group mb-0">
@@ -47,7 +47,7 @@
                     </mat-select>
                 </div>
             </div>
-            <div class="col-md-3 text-right pt-4 pr-0">
+            <div class="col-md-3 text-right pt-4 pr-0" *ngIf="dataSource.data.length > 0">
                 <img src="/assets/images/svg/reload.svg" class="b-a p-8 c-p" (click)="getAllTransactionList()">
                 <button mat-stroked-button class="btn-primary addon v-middle" (click)="openTransaction()"><i
                         class="material-icons">add</i>ADD
