@@ -9,15 +9,13 @@
         <nav mat-align-tabs="center" mat-tab-nav-bar>
             <a [routerLink]="['/customer/detail/account/summary']" mat-tab-link routerLinkActive="active">SUMMARY</a>
             <a [routerLink]="['/customer/detail/account/assets']" mat-tab-link routerLinkActive="active">ASSETS</a>
-            <a [routerLink]="['/customer/detail/account/liabilities']" mat-tab-link
-                routerLinkActive="active">LIABILITIES</a>
-            <a [routerLink]="['/customer/detail/account/insurance']" mat-tab-link
-                routerLinkActive="active">INSURANCE</a>
+            <a [routerLink]="['/customer/detail/account/liabilities']" mat-tab-link  routerLinkActive="active">LIABILITIES</a>
+            <a [routerLink]="['/customer/detail/account/insurance']" mat-tab-link routerLinkActive="active">INSURANCE</a>
             <!-- <a [routerLink]="['/customer/detail/account/documents']" mat-tab-link routerLinkActive="active">DOCUMENTS</a> -->
         </nav>
     </div>
     <div class="col-md-2 d-flex align-items-center borderLeft">
-        <p class="m-0 f-14 text-white d-flex align-items-center">{{clientData.name}}
+        <p class="m-0 f-14 text-white d-flex align-items-center">{{(clientData) ? clientData.name : ''}}
         </p>
     </div>
 </div>
