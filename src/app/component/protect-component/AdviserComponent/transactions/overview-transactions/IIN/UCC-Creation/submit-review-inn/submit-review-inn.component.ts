@@ -134,7 +134,7 @@ export class SubmitReviewInnComponent implements OnInit {
       bseBroker: [!data ? '' : data.bseBroker, [Validators.required]],
       accountNumber: [!data ? '' : data.accountNumber, [Validators.required]],
       nseBroker: [!data ? '' : data.nseBroker, [Validators.required]],
-      platform : [!data ? '' : data.platform, [Validators.required]],
+      platform : [!data ? '2' : '2', [Validators.required]],
     });
   }
 
