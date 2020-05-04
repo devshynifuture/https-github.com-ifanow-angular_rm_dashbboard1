@@ -86,9 +86,14 @@ export class ClientMoreInfoComponent implements OnInit {
         if (this.moreInfoData.clientType == 1 || this.moreInfoData.clientType == 0) {
           this.moreInfoData.categoryTypeflag = 'Individual';
           this.moreInfoData.invCategory = '1';
+        }
+        else if (this.moreInfoData.clientType == 2) {
+          this.moreInfoData.categoryTypeflag = 'familyMinor';
+          this.moreInfoData.invCategory = '2';
+
         } else {
           this.moreInfoData.categoryTypeflag = 'clientNonIndividual';
-          this.moreInfoData.invCategory = '2';
+          this.moreInfoData.invCategory = '3';
         }
         this.createMoreInfoForm(data);
       }
@@ -140,37 +145,43 @@ export class ClientMoreInfoComponent implements OnInit {
       return;
     }
     else {
+      if (this.moreInfoData.guardianData) {
+        this.moreInfoData.guardianData['aadhaarNumber'] = this.moreInfoForm.value.adhharGuardian;
+        this.moreInfoData.guardianData['birthDate'] = this.datePipe.transform(this.moreInfoData.guardianData.birthDate, 'dd/MM/yyyy')
+      }
       (flag == 'close') ? this.barButtonOptions.active = true : '';
       const obj = {
-        advisorId: this.moreInfoData.advisorId,
-        emailList: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.emailList : this.moreInfoForm.value.email,
+        taxStatusId: this.moreInfoData.taxStatusId,
+        // advisorId: this.moreInfoData.advisorId,
+        emailList: this.moreInfoData.emailList,
         displayName: (this.moreInfoData.invCategory == '1' || this.moreInfoData.invCategory == '2') ? this.moreInfoForm.controls.displayName.value : null,
         bio: this.moreInfoForm.controls.bio.value,
         martialStatusId: this.moreInfoForm.controls.maritalStatus.value,
         password: null,
         clientType: this.moreInfoData.clientType,
-        occupationId: (this.moreInfoData.invCategory == '1') ? (this.moreInfoForm.controls.occupation.value != '') ? this.moreInfoForm.controls.occupation.value : null : null,
-        id: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.id : null,
-        pan: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.pan : this.moreInfoForm.value.pan,
-        clientId: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.clientId : null,
+        occupationId: (this.moreInfoForm.controls.occupation.value != '') ? this.moreInfoForm.controls.occupation.value : null,
+        id: this.moreInfoData.id,
+        pan: this.moreInfoData.pan,
+        clientId: this.moreInfoData.clientId,
         kycComplaint: 0,
         roleId: this.moreInfoData.roleId,
-        genderId: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.genderId : this.moreInfoForm.value.genderId,
+        genderId: this.moreInfoData.genderId,
         companyStatus: 0,
         aadhaarNumber: this.moreInfoForm.controls.adhaarNo.value,
         dateOfBirth: this.datePipe.transform(this.moreInfoData.dateOfBirth, 'dd/MM/yyyy'),
-        userName: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.userName : null,
+        userName: this.moreInfoData.userName,
         userId: this.moreInfoData.userId,
         mobileList: this.moreInfoData.mobileList,
         referredBy: 0,
         name: (this.moreInfoData.invCategory == '1') ? this.moreInfoData.name : this.moreInfoForm.value.name,
         bioRemarkId: 0,
         userType: 2,
-        remarks: (this.moreInfoData.invCategory == '1') ? this.moreInfoForm.controls.myNotes.value : this.moreInfoForm.value.myNotes,
+        remarks: this.moreInfoForm.controls.myNotes.value,
         status: (this.fieldFlag == 'client') ? 1 : 2,
         leadSource: this.moreInfoData.leadSource,
         leadRating: this.moreInfoData.leadRating,
-        leadStatus: this.moreInfoData.leaadStatus
+        leadStatus: this.moreInfoData.leaadStatus,
+        guardianData: this.moreInfoData.guardianData
       };
       this.peopleService.editClient(obj).subscribe(
         data => {

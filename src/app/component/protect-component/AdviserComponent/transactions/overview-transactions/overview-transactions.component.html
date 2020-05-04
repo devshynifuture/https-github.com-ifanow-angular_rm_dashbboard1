@@ -37,8 +37,8 @@
                                     </div>
                                 </div>
 
-                            </div> 
-                        </div> 
+                            </div>
+                        </div>
                     </div> -->
 
                     <div class="row">
@@ -198,7 +198,7 @@
                                         <div class="detailsRecent skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading *ngFor="let transact of transactionList">
                                             <div class="row">
                                                 <div class="col-md-6 p-0 relClass">
-                                                    <div class="bar" [ngClass]="{'isLoading': height23}">
+                                                    <div class="bar" [ngClass]="{'isLoading': 'height23'}">
                                                         <p class="f-12 mb-10"> {{transact.transactionType}} </p>
                                                     </div>
                                                 </div>
@@ -384,7 +384,7 @@
                 </button>
 
 
-                <h2 class="mt-28 f-500 f-16"> Unmapped items </h2>
+                <!-- <h2 class="mt-28 f-500 f-16"> Unmapped items </h2>
                 <div class="row">
                     <div class="col-md-6 pl-0">
                         <div class="bPrimitive br-2 p-9 ">
@@ -400,7 +400,7 @@
                         </div>
                     </div>
 
-                </div>
+                </div> -->
                 <h5 class="mt-28 f-500 "> Reinvest rejected transactinos </h5>
             </div>
         </div>

@@ -5,8 +5,8 @@
     <div class="col-md-9" *ngIf="dataSource.filteredData.length > 0 ">
         <div class="row">
             <div class="col-md-4 text-right pr-0 ">
-                <div class="form-group mb-0 matInputClass">
-                    <mat-form-field class="mr-8 " floatLabel="never" appearance="standard">
+                <div class="form-group mb-0 mr-16 matInputClass">
+                    <mat-form-field floatLabel="never" appearance="standard">
                         <input autocomplete="off" matInput (keyup)="applyFilter($event)" placeholder="type to filter data" class="form-control br-0">
                     </mat-form-field>
                 </div>
@@ -29,7 +29,7 @@
                     </mat-select>
                 </div>
             </div>
-            <div class="col-md-2 pl-0">
+            <div class="col-md-2 p-0">
                 <div class="form-group mb-0">
                     <mat-select [(ngModel)]="selectedPlatform" (selectionChange)="changePlatform(selectedPlatform)" class="form-control br-0">
                         <mat-option *ngFor="let singlePlatform of filterData" [value]="singlePlatform">

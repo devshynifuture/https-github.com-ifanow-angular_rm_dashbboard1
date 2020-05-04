@@ -3,16 +3,9 @@
         <h4 class="m-0">All transactions</h4>
     </div>
 
-    <div class="col-md-9">
+    <div class="col-md-9" *ngIf="dataSource.filteredData.length > 0 && !isLoading">
         <div class="row">
-            <!-- <div class="col-md-4 text-right pr-0">
-                        <div class="form-group mb-0">
-                            <mat-form-field floatLabel="never" appearance="standard">
-                                <input autocomplete="off" matInput (keyup)="applyFilter($event)"
-                                    placeholder="type to filter data" class="form-control br-0">
-                            </mat-form-field>
-                        </div>
-                    </div> -->
+
             <div class="col-md-4 pl-0" [ngClass]="{'v-h': selectedPreviousToShowDate!='custom'}">
                 <mat-chip-list>
                     <mat-chip-list class="newDateIcon">

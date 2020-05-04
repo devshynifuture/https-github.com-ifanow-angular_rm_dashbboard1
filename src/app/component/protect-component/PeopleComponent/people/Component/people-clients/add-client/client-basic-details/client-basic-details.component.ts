@@ -108,9 +108,10 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.invTypeCategory = (data.clientType == 1 || data.clientType == 0) ? '1' : String(data.clientType);
         this.invTaxStatus = (this.basicDetailsData.taxStatusId == 0) ? '' : (this.basicDetailsData.taxStatusId);
       }
-      (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
+      (this.invTypeCategory == '1') ? this.createIndividualForm(this.basicDetailsData) : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? this.createMinorForm(this.basicDetailsData) : this.createNonIndividualForm(this.basicDetailsData);
+      // (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
       this.getClientOrLeadData(this.basicDetailsData);
-      (this.invTypeCategory == '1') ? this.invTaxStatusList = this.enumService.getIndividualTaxList() : this.invTaxStatusList = this.enumService.getCorporateTaxList();
+      (this.invTypeCategory == '1') ? this.invTaxStatusList = this.enumService.getIndividualTaxList() : (this.invTypeCategory == '2') ? this.invTaxStatusList = this.enumService.getMinorTaxList() : this.invTaxStatusList = this.enumService.getCorporateTaxList();
     }
     console.log(data);
   }
@@ -123,7 +124,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     (data == undefined) ? data = {} : '';
     this.basicDetails = this.fb.group({
       fullName: [data.name, [Validators.required]],
-      email: [{ value: (data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', disabled: this.basicDetailsData.userId ? true : false }, [Validators.pattern(this.validatorType.EMAIL)]],
+      email: [{ value: (data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', disabled: this.basicDetailsData.userId ? true : false }, [Validators.required, Validators.pattern(this.validatorType.EMAIL)]],
       pan: [{ value: data.pan, disabled: this.basicDetailsData.userId ? true : false }, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       username: [{ value: data.userName, disabled: true }],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
@@ -147,7 +148,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       gDobAsPerRecord: [(data.guardianData) ? new Date(data.guardianData.birthDate) : ''],
       gGender: [(data.guardianData) ? String(data.genderId) : '1'],
       relationWithMinor: [(data.guardianData) ? String(data.guardianData.relationshipId) : ''],
-      gEmail: [(data && data.emailList.length > 0) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
+      gEmail: [(data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', [Validators.pattern(this.validatorType.EMAIL)]],
       pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]]
     });
   }
@@ -158,7 +159,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       comName: [data.name, [Validators.required]],
       dateOfIncorporation: [(data.dateOfBirth) ? new Date(data.dateOfBirth) : ''],
       comStatus: [(data.companyStatus) ? String(data.companyStatus) : '', [Validators.required]],
-      comEmail: [{ value: (data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', disabled: this.basicDetailsData.userId ? true : false }, [Validators.pattern(this.validatorType.EMAIL)]],
+      comEmail: [{ value: (data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '', disabled: this.basicDetailsData.userId ? true : false }, [Validators.required, Validators.pattern(this.validatorType.EMAIL)]],
       comPan: [{ value: data.pan, disabled: this.basicDetailsData.userId ? true : false }, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       comOccupation: [(data.occupationId) ? String(data.occupationId) : ''],
       username: [{ value: data.userName, disabled: true }],
@@ -184,9 +185,9 @@ export class ClientBasicDetailsComponent implements OnInit {
         } else {
           this.invTypeCategory = (data.clientType == 0) ? '1' : String(data.clientType);
           // this.invTaxStatus = (data.taxStatusId == 0) ? '1' : String(data.taxStatusId);
-          (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
+          // (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
+          (this.invTypeCategory == '1') ? this.createIndividualForm(data) : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? this.createMinorForm(data) : this.createNonIndividualForm(data);
           this.clientData.emit(data);
-
         }
       },
       err => {
@@ -210,7 +211,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.invTaxStatusList = this.enumService.getIndividualTaxList();
       console.log(this.invTaxStatusList)
     }
-    else if (event.value == '2' && this.fieldFlag == 'familyMember') {
+    else if (event.value == '2' && (this.fieldFlag == 'familyMember' || this.fieldFlag == 'client')) {
       this.invTaxStatus = ''
       this.createMinorForm(this.basicDetailsData);
       this.mobileNumberFlag = 'Mobile number';
@@ -218,7 +219,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       console.log(this.invTaxStatusList)
     } else {
       this.invTaxStatus = ''
-      this.createNonIndividualForm(this.basicDetails);
+      this.createNonIndividualForm(this.basicDetailsData);
       this.mobileNumberFlag = 'Company mobile number';
       this.invTaxStatusList = this.enumService.getCorporateTaxList();
       console.log(this.invTaxStatusList)
@@ -231,19 +232,23 @@ export class ClientBasicDetailsComponent implements OnInit {
   }
 
   saveNextClient(flag) {
-    if (this.invTypeCategory == '1') {
-      this.basicDetails.get('email').setValidators([Validators.required]);
-      this.basicDetails.get('email').updateValueAndValidity();
-    }
-    else {
-      this.nonIndividualForm.get('comEmail').setValidators([Validators.required]);
-      this.nonIndividualForm.get('comEmail').updateValueAndValidity();
-    }
+    // if (this.invTypeCategory == '1') {
+    //   this.basicDetails.get('email').setValidators([Validators.required]);
+    //   this.basicDetails.get('email').updateValueAndValidity();
+    // }
+    // else {
+    //   this.nonIndividualForm.get('comEmail').setValidators([Validators.required]);
+    //   this.nonIndividualForm.get('comEmail').updateValueAndValidity();
+    // }
     if (this.invTypeCategory == '1' && this.basicDetails.invalid) {
       this.basicDetails.markAllAsTouched();
       return;
     }
-    if (this.invTypeCategory == '2' && this.nonIndividualForm.invalid) {
+    if (this.fieldFlag == 'client' && this.invTypeCategory == '2' && this.minorForm.invalid) {
+      this.minorForm.markAllAsTouched();
+      return;
+    }
+    if (((this.fieldFlag == 'client' && this.invTypeCategory == '3') || (this.fieldFlag == 'lead' && this.invTypeCategory == '2')) && this.nonIndividualForm.invalid) {
       this.nonIndividualForm.markAllAsTouched();
       return;
     }
@@ -274,13 +279,38 @@ export class ClientBasicDetailsComponent implements OnInit {
       } else {
         advisorId = this.advisorId;
       }
-      const emailId = (this.invTypeCategory == '1') ? this.basicDetails.controls.email.value : this.nonIndividualForm.controls.comEmail.value;
+      const emailId = (this.invTypeCategory == '1') ? this.basicDetails.controls.email.value : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? this.minorForm.controls.gEmail.value : this.nonIndividualForm.controls.comEmail.value;
       const emailList = [];
       if (emailId) {
         emailList.push({
           userType: 2,
           email: emailId
         });
+      }
+      let gardianObj;
+      if (this.fieldFlag == 'client' && this.invTypeCategory == '2') {
+        gardianObj = {
+          name: this.minorForm.value.gFullName,
+          birthDate: this.datePipe.transform(this.minorForm.value.gDobAsPerRecord, 'dd/MM/yyyy'),
+          pan: 'pan',
+          genderId: this.minorForm.value.gGender,
+          relationshipId: (this.minorForm.value.relationWithMinor == '') ? null : this.minorForm.value.relationWithMinor,
+          aadhaarNumber: null,
+          occupationId: 1,
+          martialStatusId: 1,
+          anniversaryDate: null,
+          mobileList: mobileList,
+          emailList: [
+            {
+              email: this.minorForm.value.gEmail,
+              userType: 4,
+              verificationStatus: 0
+            }
+          ]
+        }
+      }
+      else {
+        gardianObj = {};
       }
       const obj: any = {
         advisorId,
@@ -289,28 +319,29 @@ export class ClientBasicDetailsComponent implements OnInit {
         bio: null,
         martialStatusId: 0,
         clientType: parseInt(this.invTypeCategory),
-        pan: (this.invTypeCategory == '1') ? this.basicDetails.controls.pan.value : this.nonIndividualForm.controls.comPan.value,
+        pan: (this.invTypeCategory == '1') ? this.basicDetails.controls.pan.value : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? this.minorForm.controls.pan.value : this.nonIndividualForm.controls.comPan.value,
         clientId: (this.basicDetailsData == null) ? null : this.basicDetailsData.clientId,
         kycComplaint: 0,
-        roleId: (this.invTypeCategory == '1') ? this.basicDetails.value.role : this.nonIndividualForm.value.role,
-        genderId: (this.invTypeCategory == '1') ? parseInt(this.basicDetails.controls.gender.value) : null,
-        dateOfBirth: this.datePipe.transform((this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value :
-          this.nonIndividualForm.value.dateOfIncorporation, 'dd/MM/yyyy'),
-        userName: (this.invTypeCategory == '1') ? this.basicDetails.controls.username.value : this.nonIndividualForm.value.username,
+        roleId: (this.invTypeCategory == '1') ? this.basicDetails.value.role : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? null : this.nonIndividualForm.value.role,
+        genderId: (this.invTypeCategory == '1') ? parseInt(this.basicDetails.controls.gender.value) : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? this.minorForm.controls.gender.value : null,
+        dateOfBirth: this.datePipe.transform((this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ?
+          this.minorForm.controls.dobAsPerRecord.value : this.nonIndividualForm.value.dateOfIncorporation, 'dd/MM/yyyy'),
+        userName: (this.invTypeCategory == '1') ? this.basicDetails.controls.username.value : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? null : this.nonIndividualForm.value.username,
         userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead') ? this.basicDetailsData.userId : null,
         mobileList,
         referredBy: 0,
-        name: (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : this.nonIndividualForm.value.comName,
-        displayName: (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : this.nonIndividualForm.value.comName,
+        name: (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? this.minorForm.controls.minorFullName.value : this.nonIndividualForm.value.comName,
+        displayName: (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? null : this.nonIndividualForm.value.comName,
         bioRemarkId: 0,
         userType: 2,
         remarks: null,
         status: (this.fieldFlag == 'client') ? 1 : 2,
         leadSource: (this.fieldFlag == 'lead' && this.invTypeCategory == '1' && this.basicDetails.value.leadSource != '') ? this.basicDetails.value.leadSource : (this.fieldFlag == 'lead' && this.invTypeCategory == '2' && this.nonIndividualForm.value.leadSource != '') ? this.nonIndividualForm.value.leadSource : null,
         leadRating: (this.fieldFlag == 'lead' && this.invTypeCategory == '1' && this.basicDetails.value.leadRating != '') ? this.basicDetails.value.leadRating : (this.fieldFlag == 'lead' && this.invTypeCategory == '2' && this.nonIndividualForm.value.leadRating != '') ? this.nonIndividualForm.value.leadRating : null,
-        companyStatus: (this.invTypeCategory == '2') ? this.nonIndividualForm.value.comStatus : null,
+        companyStatus: ((this.fieldFlag == 'client' && this.invTypeCategory == '3') || (this.fieldFlag == 'lead' && this.invTypeCategory == '2')) ? this.nonIndividualForm.value.comStatus : null,
         leadStatus: (this.fieldFlag == 'lead' && this.invTypeCategory == '1' && this.basicDetails.value.leaadStatus != '') ? this.basicDetails.value.leaadStatus : (this.fieldFlag == 'lead' && this.invTypeCategory == '2' && this.nonIndividualForm.value.leadStatus != '') ? this.nonIndividualForm.value.leadStatus : null,
-        occupationId: (this.invTypeCategory == '2' && this.nonIndividualForm.value.comOccupation != '') ? this.nonIndividualForm.value.comOccupation : null
+        occupationId: (((this.fieldFlag == 'client' && this.invTypeCategory == '3') || (this.fieldFlag == 'lead' && this.invTypeCategory == '2')) && this.nonIndividualForm.value.comOccupation != '') ? this.nonIndividualForm.value.comOccupation : null,
+        guardianData: gardianObj
       };
       if (this.basicDetailsData.userId == null) {
         // if (this.invTypeCategory == '2') {
@@ -321,7 +352,7 @@ export class ClientBasicDetailsComponent implements OnInit {
             this.barButtonOptions.active = false;
             console.log(data);
             data.invCategory = this.invTypeCategory;
-            (this.invTypeCategory == '2') ? data.categoryTypeflag = 'Individual' : data.categoryTypeflag = 'clientNonIndividual';
+            data.categoryTypeflag = (this.invTypeCategory == '1') ? 'Individual' : (this.fieldFlag == 'client' && this.invTypeCategory == '2') ? "familyMinor" : 'clientNonIndividual';
             this.eventService.openSnackBar('Added successfully!', 'Dismiss');
             (flag == 'Next') ? this.changeTabAndSendData(data) : this.close(obj);
           },
