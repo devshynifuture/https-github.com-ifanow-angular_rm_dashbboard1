@@ -41,7 +41,7 @@ export class SubmitReviewInnComponent implements OnInit {
   clientData: any;
   validatorType = ValidatorType
   paltform = '2';
-  BSEValue: any;
+  BSEValue = '2';
 
 
   constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
@@ -124,6 +124,7 @@ export class SubmitReviewInnComponent implements OnInit {
   getBSECredentialsRes(data) {
     console.log('getBSECredentialsRes', data);
     this.brokerCredentials = data;
+    this.bse = this.brokerCredentials.filter(element => element.aggregatorType == this.paltform);
     console.log('nse', this.nse);
     console.log('bse', this.bse);
   }
@@ -134,7 +135,7 @@ export class SubmitReviewInnComponent implements OnInit {
       bseBroker: [!data ? '' : data.bseBroker, [Validators.required]],
       accountNumber: [!data ? '' : data.accountNumber, [Validators.required]],
       nseBroker: [!data ? '' : data.nseBroker, [Validators.required]],
-      platform : [!data ? '' : data.platform, [Validators.required]],
+      platform : [!data ? '2' : '2', [Validators.required]],
     });
   }
 
@@ -181,7 +182,6 @@ export class SubmitReviewInnComponent implements OnInit {
     this.paltform = value.value;
     this.BSEValue = value.value
     this.bse = this.brokerCredentials.filter(element => element.aggregatorType == this.paltform);
-    this.nse = this.brokerCredentials.filter(element => element.aggregatorType == this.paltform);
   }
 
 
