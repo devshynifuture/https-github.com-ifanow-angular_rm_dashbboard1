@@ -27,7 +27,7 @@
                         Account balance
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.accountBalance != 0">
-                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{data.accountBalance}}</span>
+                        {{data.accountBalance? "₹" : ""}}<span appFormatNumber>{{data.accountBalance}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -35,7 +35,7 @@
                         Amount invested
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.amountInvested != 0">
-                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{data.amountInvested}}</span>
+                        {{data.amountInvested? "₹" : ""}}<span appFormatNumber>{{data.amountInvested}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -43,7 +43,7 @@
                         Current value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.currentValue != 0">
-                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{data.currentValue}}</span>
+                        {{data.currentValue? "₹" : ""}}<span appFormatNumber>{{data.currentValue}}</span>
                     </div>
                 </div>
                 <!-- <div class="row bb p-8 b-l br">
@@ -92,7 +92,7 @@
                         Future approx contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.futureApproxcontribution != 0">
-                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{data.futureApproxcontribution}}</span>
+                        {{data.futureApproxcontribution? "₹" : ""}}<span appFormatNumber>{{data.futureApproxcontribution}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">

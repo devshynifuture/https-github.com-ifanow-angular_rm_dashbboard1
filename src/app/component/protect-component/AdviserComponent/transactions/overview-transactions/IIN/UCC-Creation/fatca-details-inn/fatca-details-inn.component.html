@@ -151,7 +151,7 @@
                                 <mat-option value="0">
                                     Not Categorized
                                 </mat-option>
-                               
+
                             </mat-select>
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
@@ -165,13 +165,13 @@
                     </div>
                     <div class="col-md-8 form-group">
                         <mat-radio-group aria-label="Select an option" formControlName="politically">
-                            <mat-radio-button value="1" [ngClass]="fatcaDetails.get('politically').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
+                            <mat-radio-button value="1" [ngClass]="fatcaDetails.get('politically').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                                 Yes
                             </mat-radio-button>
-                            <mat-radio-button value="2" [ngClass]="fatcaDetails.get('politically').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
+                            <mat-radio-button value="2" [ngClass]="fatcaDetails.get('politically').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                                 No </mat-radio-button>
 
-                            <mat-radio-button value="3" [ngClass]="fatcaDetails.get('politically').value === '3' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
+                            <mat-radio-button value="3" [ngClass]="fatcaDetails.get('politically').value === '3' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                                 Related to PEP </mat-radio-button>
                         </mat-radio-group>
                     </div>
@@ -186,10 +186,10 @@
 
                     <div class="col-md-6">
                         <mat-radio-group aria-label="Select an option" formControlName="taxResidency">
-                            <mat-radio-button value="1" [ngClass]="fatcaDetails.get('taxResidency').value == '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
+                            <mat-radio-button value="1" [ngClass]="fatcaDetails.get('taxResidency').value == '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                                 Yes
                             </mat-radio-button>
-                            <mat-radio-button value="2" [ngClass]="fatcaDetails.get('taxResidency').value == '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
+                            <mat-radio-button value="2" [ngClass]="fatcaDetails.get('taxResidency').value == '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'borderRadio radioBtn'">
                                 No </mat-radio-button>
 
                         </mat-radio-group>

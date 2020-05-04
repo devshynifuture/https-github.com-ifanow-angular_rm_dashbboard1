@@ -37,7 +37,7 @@
                         Account balance
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.accountBalance != 0">
-                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{data.accountBalance}}</span>
+                        ₹<span appFormatNumber>{{data.accountBalance}}</span>
                     </div>
                    
                 </div>
@@ -54,7 +54,7 @@
                         Amount invested
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.amountInvested != 0">
-                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{data.amountInvested}}</span>
+                        ₹<span appFormatNumber>{{data.amountInvested}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -62,7 +62,7 @@
                         Current value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.currentValue != 0">
-                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{data.currentValue}}</span>
+                        ₹<span appFormatNumber>{{data.currentValue}}</span>
                     </div>
                 </div>
                 <!-- <div class="row bb p-8 b-l br">
