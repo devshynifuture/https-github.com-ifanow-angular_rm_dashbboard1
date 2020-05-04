@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { MatSort } from '@angular/material';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../../excel.service';
+import { CustomerService } from '../../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-mutual-funds-capital',
@@ -23,16 +26,37 @@ export class MutualFundsCapitalComponent implements OnInit {
   footer=[];
   stGain: number;
   indexedGain: number;
+  parentId: any;
+  advisorId: any;
+  clientId: any;
 
-  constructor() { }
+  constructor(private custumService:CustomerService,private eventService:EventService) { }
 
   ngOnInit() {
     this.stGain=875.32;
-    this.indexedGain=125.4
+    this.indexedGain=125.4,
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.parentId = AuthService.getUserInfo().parentId
     this.getCapitalgain();
   }
   getCapitalgain(){
-    
+    // this.isLoading = true;
+    // this.changeInput.emit(true);
+    const obj = {
+      advisorIds:[2929],
+      clientId: 15545,
+      parentId :0
+
+    };
+    this.custumService.capitalGainGet(obj).subscribe(
+      data => this.getCapitalgainRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+    );
+  }
+  getCapitalgainRes(data){
+    console.log(data);
   }
   /**used for excel */
   async ExportTOExcel(value) {
