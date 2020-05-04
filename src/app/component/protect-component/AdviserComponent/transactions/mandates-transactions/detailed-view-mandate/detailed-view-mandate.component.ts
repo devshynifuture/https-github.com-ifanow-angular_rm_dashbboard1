@@ -59,6 +59,7 @@ export class DetailedViewMandateComponent implements OnInit {
 
   refresh(value) {
     console.log(value);
+    this.getDataStatus(value)
   }
 
   close() {

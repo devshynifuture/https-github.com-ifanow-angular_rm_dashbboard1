@@ -29,16 +29,31 @@
             </p>
 
 
-            <div class="row pt-12 pb-12">
+            <!-- <div class="row pt-12 pb-12">
                 <div class="col-md-12 p-0">
-                    <mat-checkbox class="f-500 roboto" (change)="addBse($event)">BSE StAR MF</mat-checkbox>
+                    <mat-checkbox class="f-500 roboto">BSE StAR MF</mat-checkbox>
                 </div>
-            </div>
+            </div> -->
 
             <div class="row">
                 <div class="col-md-3 pl-0">
+                    <h5>1) Select a platform</h5>
+                    <p class="f-12 text-primitive">You create IIN UCC for both platform</p>
+                    <div class="form-group">
+                        <mat-form-field>
+                            <mat-select class="form-control" formControlName="platform"  (selectionChange)="selectPlatform($event)">
+                                <mat-option value="1">NSE
+                                </mat-option>
+                                <mat-option value="2">BSE
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-3 pl-0">
                     <h5>1) Select a broker code</h5>
-                    <p class="f-12 text-primitive">You can create a/c in multiple codes</p>
+                    <p class="f-12 text-primitive">You can multiple select broker code</p>
                     <div class="form-group">
                         <mat-form-field>
                             <mat-select class="form-control" formControlName="bseBroker">
@@ -51,7 +66,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-3 pl-0">
+                <div class="col-md-3 pl-0" *ngIf="BSEValue == '2'">
                     <h5>2) Provide account number</h5>
                     <p class="f-12 text-primitive">This will be displayed as UCC number</p>
                     <div class="form-group">
@@ -85,16 +100,16 @@
 
             </div>
 
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-md-12 p-0">
                     <p class="f-12 text-primitive">+ Add more</p>
                 </div>
-            </div>
+            </div> -->
 
-            <hr>
+            <!-- <hr> -->
 
 
-            <div class="row pt-12 pb-12">
+            <!-- <div class="row pt-12 pb-12">
                 <div class="col-md-12 p-0">
                     <mat-checkbox class="f-500 roboto" (change)="addNse($event)">NSE NMF</mat-checkbox>
                 </div>
@@ -138,7 +153,7 @@
                     </button>
                 </div>
 
-            </div>
+            </div> -->
 
 
 
