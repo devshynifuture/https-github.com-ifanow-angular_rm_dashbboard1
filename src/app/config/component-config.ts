@@ -718,4 +718,6 @@ export const appConfig = {
   GET_FEED_RISK_PROFILE: 'plan/risk/profile/get',
   GET_GLOBAL_RISK_PROFILE: 'plan/risk/profile/global/get',
   GET_FEED_RECENT_TRANSACTIONS: 'report/transaction/list/get',
+  GET_CASHFLOW_FEEDS: 'cashflow/monthly/list/family-member-wise/get',
+  GET_CUSTOMER_FEEDS_PROFILE: 'user/client/profile/completeness/get'
 };
