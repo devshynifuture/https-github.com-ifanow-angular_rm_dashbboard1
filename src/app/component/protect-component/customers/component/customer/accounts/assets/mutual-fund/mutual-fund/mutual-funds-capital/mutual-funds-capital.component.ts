@@ -29,6 +29,10 @@ export class MutualFundsCapitalComponent implements OnInit {
   ngOnInit() {
     this.stGain=875.32;
     this.indexedGain=125.4
+    this.getCapitalgain();
+  }
+  getCapitalgain(){
+    
   }
   /**used for excel */
   async ExportTOExcel(value) {
