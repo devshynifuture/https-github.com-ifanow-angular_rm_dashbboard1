@@ -3,7 +3,7 @@
         <h4 class="m-0">All transactions</h4>
     </div>
 
-    <div class="col-md-9" *ngIf="dataSource.filteredData.length > 0">
+    <div class="col-md-9">
         <div class="row">
             <!-- <div class="col-md-4 text-right pr-0">
                         <div class="form-group mb-0">
@@ -43,10 +43,10 @@
                     </mat-select>
                 </div>
             </div>
-            <div class="col-md-3 text-right pt-4 pr-0">
-                <img src="/assets/images/svg/reload.svg" class="b-a p-8 mr-8 c-p" (click)="getAllTransactionList()">
-                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openTransaction()">
-                    ADD NEW</button>
+            <div class="col-md-3 text-right pt-4 pr-0" *ngIf="dataSource.data.length > 0">
+                <img src="/assets/images/svg/reload.svg" class="b-a p-8 c-p" (click)="getAllTransactionList()">
+                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openTransaction()"> ADD
+                    NEW</button>
             </div>
         </div>
 
@@ -135,11 +135,14 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <div *ngIf="dataSource.filteredData.length==0 && isLoading==false" class="d-flex flex-column align-items-center pt-44">
-            <img class="width300" src="assets/images/svg/noDataFound.svg">
-            <h4 class="pt-12">{{(errMessage)?errMessage:'No transactions found'}}</h4>
-            <button mat-stroked-button class="btn-primary addon v-middle  " (click)="openTransaction()">
-                ADD NEW</button>
-        </div>
+        <<<<<<< HEAD <div *ngIf="dataSource.filteredData.length==0 && isLoading==false" class="d-flex flex-column align-items-center pt-44">
+            =======
+            <div *ngIf="dataSource.data.length==0 && isLoading==false" class="d-flex flex-column align-items-center pt-44">
+                >>>>>>> d39e7f7cf2ef1805fc5754e09c09f4a56e26c60b
+                <img class="width300" src="assets/images/svg/noDataFound.svg">
+                <h4 class="pt-12">{{(errMessage)?errMessage:'No transactions found'}}</h4>
+                <button mat-stroked-button class="btn-primary addon v-middle  " (click)="openTransaction()">
+                    ADD NEW</button>
+            </div>
     </div>
 </div>
