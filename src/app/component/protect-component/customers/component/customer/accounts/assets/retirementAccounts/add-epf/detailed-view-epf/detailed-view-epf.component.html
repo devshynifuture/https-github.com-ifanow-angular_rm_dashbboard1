@@ -27,7 +27,7 @@
                         Voluntary contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" >
-                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{epf.employersMonthlyContribution + epf.employeesMonthlyContribution}}</span>
+                        {{epf.employersMonthlyContribution? "₹" : ""}}<span appFormatNumber>{{epf.employersMonthlyContribution + epf.employeesMonthlyContribution}}</span>
                     </div>
                     <!-- <div class="col-md-4 text-right f-14 roboto p-0">
                         {{epf.employeesMonthlyContribution?utils.formatter(epf.employeesMonthlyContribution):'-'}}
@@ -46,7 +46,7 @@
                         Account balance - epf
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="epf.accountBalanceEpf != 0">
-                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{epf.accountBalanceEpf}}</span>
+                        ₹<span appFormatNumber>{{epf.accountBalanceEpf}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -54,7 +54,7 @@
                         Account balance - eps
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="epf.accountBalanceEps != 0">
-                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{epf.accountBalanceEps}}</span>
+                        ₹<span appFormatNumber>{{epf.accountBalanceEps}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -70,7 +70,7 @@
                         Current value -epf
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="epf.currentEpfValue != 0">
-                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{epf.currentEpfValue}}</span>
+                        ₹<span appFormatNumber>{{epf.currentEpfValue}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -78,7 +78,7 @@
                         Current value -eps
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="epf.currentEpsValue != 0">
-                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{epf.currentEpsValue}}</span>
+                        ₹<span appFormatNumber>{{epf.currentEpsValue}}</span>
                     </div>
                 </div>
                 

@@ -241,13 +241,11 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.getFormControl().pincode.setErrors(this.pinInvalid);
       this.getFormControl().city.setValue("");
       this.getFormControl().country.setValue("");
-      this.getFormControl().district.setValue("");
       this.getFormControl().state.setValue("");
 
     }
     else {
       this.getFormControl().city.setValue(data[0].PostOffice[0].Region);
-      this.getFormControl().district.setValue(data[0].PostOffice[0].District);
       this.getFormControl().country.setValue(data[0].PostOffice[0].Country);
       this.getFormControl().state.setValue(data[0].PostOffice[0].Circle);
       this.pinInvalid = false;

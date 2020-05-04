@@ -29,7 +29,7 @@
                         Amount invested
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.amountInvested != 0">
-                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{data.amountInvested}}</span>
+                        {{data.amountInvested? "₹" : ""}}<span appFormatNumber>{{data.amountInvested}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -61,7 +61,7 @@
                         Current value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.currentValue != 0">
-                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{data.currentValue}}</span>
+                        {{data.currentValue? "₹" : ""}}<span appFormatNumber>{{data.currentValue}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -69,7 +69,7 @@
                         Maturity value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="data.maturityValue != 0">
-                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{data.maturityValue}}</span>
+                        {{data.maturityValue? "₹" : ""}}<span appFormatNumber>{{data.maturityValue}}</span>
                     </div>
                     
                 </div>
@@ -79,7 +79,7 @@
                     </div>
                     <div  class="col-md-4 text-right f-14 roboto p-0" >
                         <!-- ₹{{}} -->
-                        {{!isLoading? "₹" : ""}}<span appFormatNumber>{{data.currentValue - data.amountInvested}}</span>
+                        {{data.currentValue? "₹" : ""}}<span appFormatNumber>{{data.currentValue - data.amountInvested}}</span>
                         <!-- ₹{{utils.formatter(}} -->
 
                     </div>

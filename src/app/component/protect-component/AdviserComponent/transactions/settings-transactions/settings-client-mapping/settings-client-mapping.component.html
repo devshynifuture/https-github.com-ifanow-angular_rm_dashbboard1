@@ -4,11 +4,10 @@
     </div>
     <div class="col-md-9" *ngIf="dataSource.filteredData.length > 0 ">
         <div class="row">
-            <div class="col-md-4 text-right pr-0">
-                <div class="form-group mb-0">
+            <div class="col-md-4 text-right pr-0 ">
+                <div class="form-group mb-0 mr-16 matInputClass">
                     <mat-form-field floatLabel="never" appearance="standard">
-                        <input autocomplete="off" matInput (keyup)="applyFilter($event)"
-                            placeholder="type to filter data" class="form-control br-0">
+                        <input autocomplete="off" matInput (keyup)="applyFilter($event)" placeholder="type to filter data" class="form-control br-0">
                     </mat-form-field>
                 </div>
             </div>
@@ -20,11 +19,10 @@
                     </mat-select>
                 </div>
             </div>
-            
+
             <div class="col-md-3 pl-0">
                 <div class="form-group mb-0">
-                    <mat-select [(ngModel)]="selectedBrokerCode"
-                        (selectionChange)="chnageBrokerCode(selectedBrokerCode)" class="form-control br-0">
+                    <mat-select [(ngModel)]="selectedBrokerCode" (selectionChange)="chnageBrokerCode(selectedBrokerCode)" class="form-control br-0">
                         <mat-option *ngFor="let singleBrokerCode of filterData" [value]="singleBrokerCode">
                             {{singleBrokerCode.brokerCode}}
                         </mat-option>
@@ -33,8 +31,7 @@
             </div>
             <div class="col-md-2 pl-0">
                 <div class="form-group mb-0">
-                    <mat-select [(ngModel)]="selectedPlatform" (selectionChange)="changePlatform(selectedPlatform)"
-                        class="form-control br-0">
+                    <mat-select [(ngModel)]="selectedPlatform" (selectionChange)="changePlatform(selectedPlatform)" class="form-control br-0">
                         <mat-option *ngFor="let singlePlatform of filterData" [value]="singlePlatform">
                             {{singlePlatform.platformName}}</mat-option>
                     </mat-select>
@@ -44,8 +41,7 @@
 
     </div>
     <div class="col-md-12 client-mapping">
-        <table mat-table *ngIf="dataSource.filteredData.length > 0" matSort [appSkeletonLoading]="isLoading"
-            [dataSource]="dataSource" class="mt-8 skeletonAnimation" id="table-low">
+        <table mat-table *ngIf="dataSource.filteredData.length > 0" matSort [appSkeletonLoading]="isLoading" [dataSource]="dataSource" class="mt-8 skeletonAnimation" id="table-low">
             <ng-container matColumnDef="weight">
                 <th mat-sort-header="clientCode" mat-header-cell *matHeaderCellDef class="br"> Client code </th>
                 <td mat-cell *matCellDef="let element" class="br">
@@ -89,12 +85,8 @@
                 <th mat-header-cell *matHeaderCellDef> Map </th>
                 <td mat-cell class="text-center" *matCellDef="let element">
                     <div class="bar">
-                        <button mat-stroked-button *ngIf="type=='1' && element.id"
-                            class="primary-sm text-white bg-primary br-0"
-                            (click)="unmapClient(element,'CLIENT')">UNMAP</button>
-                        <button mat-stroked-button *ngIf="type=='2' && element.id"
-                            class="primary-sm text-white bg-primary br-0"
-                            (click)="openAddMappiing(element,'')">MAP</button>
+                        <button mat-stroked-button *ngIf="type=='1' && element.id" class="primary-sm text-white bg-primary br-0" (click)="unmapClient(element,'CLIENT')">UNMAP</button>
+                        <button mat-stroked-button *ngIf="type=='2' && element.id" class="primary-sm text-white bg-primary br-0" (click)="openAddMappiing(element,'')">MAP</button>
                     </div>
                 </td>
             </ng-container>
@@ -102,8 +94,7 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <div *ngIf="dataSource.filteredData.length==0 && isLoading==false"
-            class="d-flex flex-column align-items-center pt-44">
+        <div *ngIf="dataSource.filteredData.length==0 && isLoading==false" class="d-flex flex-column align-items-center pt-44">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
             <h4 class="pt-12">No credentials found</h4>
         </div>

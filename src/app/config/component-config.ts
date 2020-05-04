@@ -445,7 +445,7 @@ export const appConfig = {
   SIP_BSE: 'bse/order/create',
   BSE_TRANSACTION: 'bse/order/create',
   UPLOAD_FILE_IMAGE: 'user/register/image/upload',
-  //  NSE_ACHMANDATE: 'nse/ach-mandate/report/get',
+  MANDATE_UPLOAD: 'mandate/image/upload',
   BANK_DETAILS_NSE: 'nse/iin/bank-detail/get',
   GETIIN_DETAILS: 'nse/iin/detail/get',
   GET_FOLIO_MAPPED: 'mutual-fund/folios/mapped/get',
@@ -718,4 +718,6 @@ export const appConfig = {
   GET_FEED_RISK_PROFILE: 'plan/risk/profile/get',
   GET_GLOBAL_RISK_PROFILE: 'plan/risk/profile/global/get',
   GET_FEED_RECENT_TRANSACTIONS: 'report/transaction/list/get',
+  GET_CASHFLOW_FEEDS: 'cashflow/monthly/list/family-member-wise/get',
+  GET_CUSTOMER_FEEDS_PROFILE: 'user/client/profile/completeness/get'
 };

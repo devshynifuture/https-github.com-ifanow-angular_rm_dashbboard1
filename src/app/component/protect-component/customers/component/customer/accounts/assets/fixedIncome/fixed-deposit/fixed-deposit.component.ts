@@ -427,6 +427,9 @@ export class FixedDepositComponent implements OnInit {
         id: [0]
       })])
     });
+
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.fixedDeposit }
+
     if (this.fixedDeposit.value.getCoOwnerName.length == 1) {
       this.getCoOwner.controls['0'].get('share').setValue('100');
     }
@@ -438,14 +441,15 @@ export class FixedDepositComponent implements OnInit {
     }
 
     /***nominee***/
-    if (data.nomineeList.length>0) {
-      this.getNominee.removeAt(0);
-      data.nomineeList.forEach(element => {
-        this.addNewNominee(element);
-      });
+    if(data.nomineeList){
+      if (data.nomineeList.length>0) {
+        this.getNominee.removeAt(0);
+        data.nomineeList.forEach(element => {
+          this.addNewNominee(element);
+        });
+      }
     }
     /***nominee***/
-    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.fixedDeposit }
     this.familyMemberId = this.fixedDeposit.controls.familyMemberId.value;
     this.fixedDeposit.controls.maturityDate.setValue(new Date(data.maturityDate));
   }
