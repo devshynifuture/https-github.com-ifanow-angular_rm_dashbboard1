@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { BackOfficeService } from '../../../../back-office.service';
 import { SipComponent } from '../sip.component';
 import { MatSort, MatTableDataSource } from '@angular/material';
+import { EventService } from '../../../../../../../../Data-service/event.service';
 
 @Component({
   selector: 'app-all-sip',
@@ -12,56 +13,60 @@ import { MatSort, MatTableDataSource } from '@angular/material';
 export class AllSipComponent implements OnInit {
   advisorId: any;
   dataSource: any;
-  showLoader=true;
+  showLoader = true;
   displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate',
     'frequency', 'amount'];
-  totalAmount=0;
-  isLoading=false;
+  totalAmount = 0;
+  isLoading = false;
+  parentId = AuthService.getUserInfo().parentId ? AuthService.getUserInfo().parentId : -1;
+
   @Output() changedValue = new EventEmitter();
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  constructor(private backoffice:BackOfficeService,private sip:SipComponent) { }
+  constructor(
+    private backoffice: BackOfficeService,
+    private sip: SipComponent,
+    private eventService: EventService
+  ) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.getAllSip();
-
   }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.dataSource.sort = this.sort;
   }
-  getAllSip()
-  {
-  this.isLoading=true;
-  this.dataSource=new MatTableDataSource([{},{},{}]);
-    const obj={
-      limit:20,
-      offset:0,
-      advisorId:this.advisorId,
-      arnRiaDetailsId:-1,
-      parentId:-1
+  getAllSip() {
+    this.isLoading = true;
+    this.dataSource = new MatTableDataSource([{}, {}, {}]);
+    const obj = {
+      limit: 20,
+      offset: 0,
+      advisorId: this.advisorId,
+      arnRiaDetailsId: -1,
+      parentId: -1
     }
     this.backoffice.allSipGet(obj).subscribe(
-      data =>{
-        this.isLoading=false;
-        this.dataSource=new MatTableDataSource(data);
+      data => {
+        this.isLoading = false;
+        this.dataSource = new MatTableDataSource(data);
         this.dataSource.sort = this.sort;
         this.dataSource.filteredData.forEach(element => {
           this.totalAmount += element.amount;
         });
         console.log(data);
       },
-      err=>{
-        this.isLoading=false;
+      err => {
+        this.isLoading = false;
       }
     )
   }
-  aumReport()
-  {
+  aumReport() {
     this.changedValue.emit(true);
-  //  this.sip.sipComponent=true;
+    //  this.sip.sipComponent=true;
   }
 }
