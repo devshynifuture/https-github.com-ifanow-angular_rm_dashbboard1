@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="col-md-12 mt-20 all-transactions" *ngIf="multiTransact == true && childTransactions.length > 0">
-            <table #tableEl mat-table [dataSource]="childTransactions" id="tbs" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <table #tableEl mat-table [dataSource]="childTransactions" id="tbs" class="skeletonAnimation" appSkeletonLoading >
                 <ng-container matColumnDef="no">
                     <th *matHeaderCellDef class="br" mat-header-cell> No</th>
                     <td *matCellDef="let element let i = index;" class="br w-15 " mat-cell>
