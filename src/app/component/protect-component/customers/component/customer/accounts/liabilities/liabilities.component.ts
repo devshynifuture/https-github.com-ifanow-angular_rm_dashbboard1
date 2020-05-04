@@ -238,7 +238,12 @@ export class LiabilitiesComponent implements OnInit {
   }
 
   deleteModal(value, data) {
-    this.deletedDataId = (this.showFilter ==' tab1') ? this.showFilter: data.loanTypeId;
+    if(this.showFilter =='tab1'){
+      this.deletedDataId = this.showFilter
+    }else{
+      this.deletedDataId =data.loanTypeId;
+    }
+    // this.deletedDataId = (this.showFilter ==' tab1') ? this.deletedDataId = this.showFilter: 
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -414,6 +419,20 @@ export class LiabilitiesComponent implements OnInit {
     } else {
       this.noData = "No Data Found";
       this.dataSource.data = []
+      this.filterForliabilities =[];
+      this.home =[];
+   
+      this.vehicle=[];
+
+      this.education=[];
+  
+      this.creditCard=[];
+
+      this.personal=[];
+    
+      this.mortgage=[];
+      this.dataStore =[];
+      this.storeData = data.loans.length;
     }
   }
   clickHandling() {
