@@ -46,7 +46,7 @@
                         <div class="col-md-4 p-0">
                             <h4 class="m-0 text-black roboto pt-4">{{showInsurance}} insurance </h4>
                         </div>
-                        <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center" *ngIf="!isLoading && dataSource.data.length > 0 &&  dataSourceGeneralInsurance.data.length > 0">
+                        <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center" *ngIf="!isLoading && dataSource.data.length > 0 ||  dataSourceGeneralInsurance.data.length > 0">
                             <div class="pdfClass">
                                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1" class="c-p" *ngIf="!fragmentData.isSpinner">
                                 <mat-menu #menu1="matMenu">
