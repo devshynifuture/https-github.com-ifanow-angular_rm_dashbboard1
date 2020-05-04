@@ -28,39 +28,58 @@ export class SipComponent implements OnInit {
   newSipObj: any;
   ceaseSipObj: any;
   arnRiaList: any;
+  arnRiaId = -1;
   viewMode: string;
-  parentId = AuthService.getUserInfo().parentId ? AuthService.getUserInfo().parentId : -1;
+  parentId;
   constructor(private backoffice: BackOfficeService, private dataService: EventService) { }
 
   ngOnInit() {
+    this.parentId = AuthService.getParentId();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.viewMode = 'Select option';
-    this.getArnRiaList();
+    if (this.parentId !== 0) {
+      this.getArnRiaList();
+    } else {
+      this.initPoint();
+    }
+  }
+
+  initPoint() {
     this.newSip();
     this.sipCountGet();
     this.expiredGet();
     this.expiringGet();
     this.sipRejectionGet();
     this.getSipPanCount();
+  }
 
-
+  changeArnRiaValue(item) {
+    this.arnRiaId = item.number;
+    this.viewMode = item.number;
+    this.initPoint();
   }
   getArnRiaList() {
     this.backoffice.getArnRiaList(this.advisorId).subscribe(
       data => {
-        this.arnRiaList = data;
-        const obj = {
-          number: 'All'
+        if (data) {
+          this.arnRiaList = data;
+          this.advisorId = 0;
+          const obj = {
+            number: 'All'
+          }
+          this.arnRiaList.unshift(obj);
+          this.initPoint();
+        } else {
+          this.dataService.openSnackBar("No Arn Ria List Found", "DISMISS")
         }
-        this.arnRiaList.unshift(obj);
-      },
+      }
     )
   }
   sipCountGet() {
     const obj = {
       advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
+      arnRiaDetailsId: this.arnRiaId,
       parentId: this.parentId
     }
     this.backoffice.getSipcountGet(obj).subscribe(
@@ -89,7 +108,7 @@ export class SipComponent implements OnInit {
       limit: 20,
       offset: 0,
       advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
+      arnRiaDetailsId: this.arnRiaId,
       parentId: this.parentId
     }
     this.backoffice.allSipGet(obj).subscribe(
@@ -101,7 +120,7 @@ export class SipComponent implements OnInit {
   expiredGet() {
     const obj = {
       advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
+      arnRiaDetailsId: this.arnRiaId,
       limit: 10,
       offset: 0,
       parentId: this.parentId
@@ -116,7 +135,7 @@ export class SipComponent implements OnInit {
   expiringGet() {
     const obj = {
       advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
+      arnRiaDetailsId: this.arnRiaId,
       limit: 10,
       offset: 0,
       parentId: this.parentId
@@ -131,7 +150,7 @@ export class SipComponent implements OnInit {
   sipRejectionGet() {
     const obj = {
       advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
+      arnRiaDetailsId: this.arnRiaId,
       limit: 10,
       offset: 0,
       parentId: this.parentId
@@ -146,7 +165,7 @@ export class SipComponent implements OnInit {
   getSipPanCount() {
     const obj = {
       advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
+      arnRiaDetailsId: this.arnRiaId,
       parentId: this.parentId
     }
     this.backoffice.sipSchemePanCount(obj).subscribe(
@@ -160,7 +179,7 @@ export class SipComponent implements OnInit {
   getWbrPanCount() {
     const obj = {
       advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
+      arnRiaDetailsId: this.arnRiaId,
       parentId: this.parentId
     }
     this.backoffice.Wbr9anCount(obj).subscribe(
@@ -183,7 +202,7 @@ export class SipComponent implements OnInit {
   newSip() {
     const obj = {
       advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
+      arnRiaDetailsId: this.arnRiaId,
       parentId: this.parentId
     }
     this.backoffice.newSipGet(obj).subscribe(
@@ -207,7 +226,7 @@ export class SipComponent implements OnInit {
   ceaseSip() {
     const obj = {
       advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
+      arnRiaDetailsId: this.arnRiaId,
       parentId: this.parentId
     }
     this.backoffice.ceaseSipGet(obj).subscribe(
