@@ -135,10 +135,7 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <<<<<<< HEAD <div *ngIf="dataSource.filteredData.length==0 && isLoading==false" class="d-flex flex-column align-items-center pt-44">
-            =======
             <div *ngIf="dataSource.data.length==0 && isLoading==false" class="d-flex flex-column align-items-center pt-44">
-                >>>>>>> d39e7f7cf2ef1805fc5754e09c09f4a56e26c60b
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="pt-12">{{(errMessage)?errMessage:'No transactions found'}}</h4>
                 <button mat-stroked-button class="btn-primary addon v-middle  " (click)="openTransaction()">
