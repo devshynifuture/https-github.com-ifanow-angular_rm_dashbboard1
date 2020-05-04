@@ -234,7 +234,7 @@
                                             class="br textRight">
                                             Tenure <br> remaining</th>
                                         <td mat-cell *matCellDef="let element" class="br text-right">
-                                            <div class="bar"> {{element.loanTenure}} </div>
+                                            <div class="bar"> {{element.remainingMonths}} </div>
                                         </td>
                                         <td mat-footer-cell *matFooterCellDef class="br text-right"> </td>
                                     </ng-container>
@@ -441,7 +441,7 @@
                 appFormatNumber>{{(item.outstandingAmount)?item.outstandingAmount:0}}</td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                {{(item.loanTenure)?(item.loanTenure):0}}</td>
+                {{(item.loanTenure)?(item.remainingMonths):0}}</td>
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(item.annualInterestRate)?(item.annualInterestRate):0}}</td>

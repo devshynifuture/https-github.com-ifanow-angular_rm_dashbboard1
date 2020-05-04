@@ -51,10 +51,12 @@ export class DetailedViewMandateComponent implements OnInit {
   }
 
   getDataStatus(data) {
+    this.isLoading = true
     this.statusDetails = this.statusData;
     this.statusDetails.forEach(element => {
       (element.status <= data.status) ? element.checked = true : element.checked = false;
     });
+    this.isLoading = false
   }
 
   refresh(value) {

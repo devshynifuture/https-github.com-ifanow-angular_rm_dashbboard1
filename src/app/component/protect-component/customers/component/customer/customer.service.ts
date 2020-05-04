@@ -793,5 +793,11 @@ export class CustomerService {
   getRecentTransactions(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_FEED_RECENT_TRANSACTIONS, data, null);
   }
+  getCashFlowFeeds(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CASHFLOW_FEEDS, data);
+  }
+  getCustomerFeedsProfile(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CUSTOMER_FEEDS_PROFILE, data);
+  }
 }
 

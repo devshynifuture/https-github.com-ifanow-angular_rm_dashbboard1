@@ -17,9 +17,9 @@ import { AuthService } from 'src/app/auth-service/authService';
 })
 export class VerifyMemberComponent implements OnInit {
   inputData: any;
-  displayedColumns: string[] = ['set', 'position', 'name', 'weight', 'ifsc', 'aid', 'euin', 'hold'];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'ifsc', 'aid', 'euin', 'hold'];
   data1: Array<any> = [{}, {}, {}];
-  dataSource = new MatTableDataSource();
+  dataSource = [];
   nomineesListFM: any = [];
   showSpinnerOwner = false;
   familyMemberData: any;
@@ -34,6 +34,10 @@ export class VerifyMemberComponent implements OnInit {
   formDate: Date;
   isLoading;
   advisorId: any;
+  bankDetails: any;
+  selectedBank: any;
+  isLoadingUcc: boolean = false;
+  isLoadingBank: boolean = false;
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private processTrasaction: ProcessTransactionService,
@@ -67,12 +71,28 @@ export class VerifyMemberComponent implements OnInit {
     this.Todate.setFullYear('2099');
     this.generalDetails.controls.toDate.setValue(this.Todate);
   }
-
+  getBankDetails() {
+    this.isLoadingBank = true
+    const obj = {
+      tpUserCredFamilyMappingId: this.detailsIIN.tpUserCredFamilyMappingId
+    };
+    this.onlineTransact.getBankDetailsNSE(obj).subscribe(
+      data => this.getBankDetailsNSERes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+    );
+  }
+  getBankDetailsNSERes(data){
+    this.isLoadingBank = false
+    console.log(data)
+    this.bankDetails = data
+  }
   getdataForm(data) {
 
     this.generalDetails = this.fb.group({
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
       holdingNature: [(!data) ? '' : data.ownerName, [Validators.required]],
+      bank: [(!data) ? '' : data.bank, [Validators.required]],
       taxStatus: [data ? '' : data.ownerName, [Validators.required]],
       fromDate: [data ? '' : data.fromDate, [Validators.required]],
       toDate: [data ? '' : data.toDate, [Validators.required]],
@@ -124,7 +144,7 @@ export class VerifyMemberComponent implements OnInit {
   }
 
   ownerDetail() {
-
+      this.isLoadingUcc = true
     const obj = {
       clientId: this.familyMemberData.clientId,
       advisorId: this.advisorId,
@@ -133,6 +153,7 @@ export class VerifyMemberComponent implements OnInit {
     };
     this.onlineTransact.getClientCodes(obj).subscribe(
       data => {
+        this.isLoadingUcc = false
         console.log(data);
         this.clientCodeData = data;
         console.log('clientCodeData',this.clientCodeData)
@@ -142,9 +163,10 @@ export class VerifyMemberComponent implements OnInit {
   }
 
   selectIINUCC(clientCode) {
-
     this.detailsIIN = clientCode;
-    this.getBankMandate();
+    console.log('fg',this.detailsIIN)
+    this.getBankDetails()
+  //  this.getBankMandate();
   }
 
   getBankMandate() {
@@ -169,17 +191,28 @@ export class VerifyMemberComponent implements OnInit {
   openMandate(data) {
     this.inputData = data;
     this.dataSource = data;
-    this.showMandateTable = true;
   }
 
   selectMandate(mandate) {
     this.selectedMandate = mandate;
   }
+  selectBank(bank){
+    this.dataSource = []
+    this.selectedBank = bank
+    this.selectedMandate =bank
+    this.dataSource.push(bank);
+    this.showMandateTable = true;
+    console.log(this.selectedBank)
+  }
 
   createMandates() {
+    if(!this.selectedMandate){
+      this.selectedMandate = {}
+    }
     this.formDate = new Date(this.generalDetails.controls.fromDate.value);
     this.Todate = new Date(this.generalDetails.controls.toDate.value);
     Object.assign(this.selectedMandate, {advisorId: this.detailsIIN.advisorId});
+    Object.assign(this.selectedMandate, {clientCode: this.detailsIIN.clientCode});
     Object.assign(this.selectedMandate, {amount: this.generalDetails.controls.mandateAmount.value});
     Object.assign(this.selectedMandate, {toDate: (this.Todate).getTime()});
     Object.assign(this.selectedMandate, {fromDate: (this.formDate).getTime()});
