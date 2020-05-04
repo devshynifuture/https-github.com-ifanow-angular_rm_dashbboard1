@@ -12,6 +12,7 @@ import { LiabilitiesDetailComponent } from '../../../common-component/liabilitie
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../excel.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
 
 
 @Component({
@@ -59,7 +60,7 @@ export class LiabilitiesComponent implements OnInit {
 
 
   constructor(private excel: ExcelService, private eventService: EventService, private subInjectService: SubscriptionInject,
-    public customerService: CustomerService, public util: UtilService, public dialog: MatDialog, private excelGen: ExcelGenService) {
+    public customerService: CustomerService, public util: UtilService, public dialog: MatDialog, private excelGen: ExcelGenService,private pdfGen :PdfGenService) {
   }
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild('tableEl', { static: false }) tableEl;
@@ -114,6 +115,16 @@ export class LiabilitiesComponent implements OnInit {
     if (data) {
       this.fragmentData.isSpinner = false;
     }
+  }
+  // generatePdf() {
+  //   this.fragmentData.isSpinner = true;
+  
+  //   let para = document.getElementById('template');
+  //   this.util.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
+  // }
+  generatePdf(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.pdfGen.generatePdf(rows, tableTitle);
   }
   getGlobalLiabilities() {
     const obj = {};
@@ -227,7 +238,12 @@ export class LiabilitiesComponent implements OnInit {
   }
 
   deleteModal(value, data) {
-    this.deletedDataId = (this.showFilter ==' tab1') ? this.showFilter: data.loanTypeId;
+    if(this.showFilter =='tab1'){
+      this.deletedDataId = this.showFilter
+    }else{
+      this.deletedDataId =data.loanTypeId;
+    }
+    // this.deletedDataId = (this.showFilter ==' tab1') ? this.deletedDataId = this.showFilter: 
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -345,11 +361,7 @@ export class LiabilitiesComponent implements OnInit {
       }
     );
   }
-  generatePdf() {
-    this.fragmentData.isSpinner = true;
-    let para = document.getElementById('template');
-    this.util.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
-  }
+
   checkStatusId(data) {
     data.forEach(obj => {
       if (obj.maturityDate < new Date()) {
@@ -407,6 +419,20 @@ export class LiabilitiesComponent implements OnInit {
     } else {
       this.noData = "No Data Found";
       this.dataSource.data = []
+      this.filterForliabilities =[];
+      this.home =[];
+   
+      this.vehicle=[];
+
+      this.education=[];
+  
+      this.creditCard=[];
+
+      this.personal=[];
+    
+      this.mortgage=[];
+      this.dataStore =[];
+      this.storeData = data.loans.length;
     }
   }
   clickHandling() {

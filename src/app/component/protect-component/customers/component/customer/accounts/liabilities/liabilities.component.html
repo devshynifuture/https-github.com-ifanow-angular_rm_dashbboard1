@@ -109,7 +109,7 @@
                                 <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1"
                                     class="c-p" *ngIf="!fragmentData.isSpinner">
                                 <mat-menu #menu1="matMenu">
-                                    <button mat-menu-item (click)="generatePdf()">PDF</button>
+                                    <button mat-menu-item (click)="generatePdf('Liabilities')">PDF</button>
                                     <button mat-menu-item (click)="Excel('Liabilities')">XLS</button>
                                 </mat-menu>
                                 <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {Component, OnInit} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-detailed-ppf',
@@ -9,11 +9,14 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 export class DetailedPpfComponent implements OnInit {
   data;
   nominee: any;
-  constructor(private subInjectService: SubscriptionInject) { }
+  isLoading = false;
+
+  constructor(private subInjectService: SubscriptionInject) {
+  }
 
   ngOnInit() {
     console.log(this.data);
-    this.nominee=this.data.nominees;
+    this.nominee = this.data.nominees;
   }
 
   close() {

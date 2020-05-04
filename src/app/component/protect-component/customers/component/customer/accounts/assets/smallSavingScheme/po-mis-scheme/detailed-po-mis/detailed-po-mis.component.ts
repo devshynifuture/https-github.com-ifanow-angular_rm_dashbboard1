@@ -8,6 +8,7 @@ import {Component, OnInit} from '@angular/core';
 })
 export class DetailedPoMisComponent implements OnInit {
   nominee: any;
+  isLoading = false;
 
   constructor(private subInjectService: SubscriptionInject) {
   }
@@ -15,7 +16,7 @@ export class DetailedPoMisComponent implements OnInit {
   data;
 
   ngOnInit() {
-    this.nominee=this.data.nominees
+    this.nominee = this.data.nominees;
 
   }
 

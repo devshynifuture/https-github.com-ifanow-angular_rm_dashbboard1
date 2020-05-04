@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
-import { FileUploadService } from 'src/app/services/file-upload.service';
-import { apiConfig } from 'src/app/config/main-config';
-import { appConfig } from 'src/app/config/component-config';
-import { ParsedResponseHeaders, FileItem } from 'ng2-file-upload';
+import {Component, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
+import {FileUploadService} from 'src/app/services/file-upload.service';
+import {apiConfig} from 'src/app/config/main-config';
+import {appConfig} from 'src/app/config/component-config';
+import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
 
 @Component({
   selector: 'app-detailed-view-mandate',
@@ -13,8 +13,9 @@ import { ParsedResponseHeaders, FileItem } from 'ng2-file-upload';
 export class DetailedViewMandateComponent implements OnInit {
   data;
   details: any;
-  transactionData:any;
-  isLoading:Boolean =false;
+  transactionData: any;
+  isLoading = false;
+
   statusData = [
     {
       name: 'Pending authorization', checked: false, status: 0
@@ -28,7 +29,7 @@ export class DetailedViewMandateComponent implements OnInit {
     {
       name: 'Rejected authorization', checked: false, status: 3
     }
-  ]
+  ];
   statusDetails: any;
   file: any;
 
@@ -38,36 +39,43 @@ export class DetailedViewMandateComponent implements OnInit {
   ngOnInit() {
     this.details = this.data;
     console.log('mandateDetails', this.data);
-    this.getDataStatus(this.details)
+    this.getDataStatus(this.details);
   }
-  uploadFormFile(event){// for pro build param added
+
+  uploadFormFile(event) {// for pro build param added
 
   }
-  uploadFormImageUpload(event){// for pro build param added
-    
+
+  uploadFormImageUpload(event) {// for pro build param added
+
   }
+
   getDataStatus(data) {
-    this.statusDetails = this.statusData
+    this.statusDetails = this.statusData;
     this.statusDetails.forEach(element => {
-      (element.status <= data.status) ? element.checked = true : element.checked = false
+      (element.status <= data.status) ? element.checked = true : element.checked = false;
     });
   }
-  refresh(value){
+
+  refresh(value) {
     console.log(value);
+    this.getDataStatus(value)
   }
+
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
-  getFileDetails(e) {
+
+  getFileDetails(e,flag) {
     console.log('file', e);
     this.file = e.target.files[0];
     console.log('file', e);
     const file = e.target.files[0];
     const requestMap = {
       tpUserRequestId: 1,
-      documentType: 1
+      documentType: flag
     };
-    FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
+    FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.MANDATE_UPLOAD,
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
         console.log('getFileDetails uploadFileToServer callback item : ', item);
         console.log('getFileDetails uploadFileToServer callback status : ', status);

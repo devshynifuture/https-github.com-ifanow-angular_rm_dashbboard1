@@ -98,7 +98,9 @@
 .br-4 {
     border-radius: 4px !important;
 }
-
+.br-40{
+    border-radius:40px !important; 
+}
 .b-s {
     border: 1px solid !important;
 }
@@ -323,4 +325,10 @@
 
 .borderLine {
     border: 1px solid #BCC6CA !important;
+}
+.ba-danger{
+    border: 1px solid #FF6823 !important;
+}
+.ba-success{
+    border: 1px solid #02B875 !important;
 }

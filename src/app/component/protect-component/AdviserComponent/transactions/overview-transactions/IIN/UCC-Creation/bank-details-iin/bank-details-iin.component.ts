@@ -213,7 +213,7 @@ export class BankDetailsIINComponent implements OnInit {
     this.bankDetails = this.fb.group({
       ifscCode: [(!data) ? '' : data.ifscCode, [Validators.required]],
       bankName: [!data ? '' : data.bankName, [Validators.required]],
-      micrCode: [!data ? '' : data.micrCode, [Validators.required]],
+      micrNo: [!data ? '' : data.micrNo, [Validators.required]],
       accountNumber: [!data ? '' : data.accountNumber, [Validators.required]],
       // accountType: [!data ? '1' : (data.accountType == 'SB')?'1':'2', [Validators.required]],
       accountType: [!data ? '1' : (data.accountType == '1' || data.accountType == 'SB') ? '1': '2', [Validators.required]],
@@ -324,7 +324,7 @@ export class BankDetailsIINComponent implements OnInit {
   setValueFun(value){
     this.bankDetails.controls.ifscCode.setValue(value.ifscCode);
     this.bankDetails.controls.bankName.setValue(value.bankName);
-    this.bankDetails.controls.micrCode.setValue(value.micrCode);
+    this.bankDetails.controls.micrNo.setValue(value.micrNo);
     this.bankDetails.controls.accountNumber.setValue(value.accountNumber);
     this.bankDetails.controls.accountType.setValue(value.accountType);
     this.bankDetails.controls.branchCode.setValue(value.branchCode);
@@ -424,7 +424,7 @@ export class BankDetailsIINComponent implements OnInit {
       bankName: holder.bankName,
       branchName: holder.branchName,
       branchCode: holder.branchCode,
-      micrCode: (holder.micrCode)+"",
+      micrNo: (holder.micrNo),
       firstHolder: holder.firstHolder,
       paymentMode : this.bankDetails.controls.paymentMode.value,
       defaultFlag: 1
