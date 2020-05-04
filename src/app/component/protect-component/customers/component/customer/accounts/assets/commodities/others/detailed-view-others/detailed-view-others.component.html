@@ -36,7 +36,7 @@
                         <div class="col-md-8 text-left f-14 roboto p-0">
                                 Market value
                         </div>
-                        <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="others.marketValue != 0">{{!isLoading? "₹" : ""}}     <span appFormatNumber>{{others.marketValue}}</span>
+                        <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="others.marketValue != 0">₹     <span appFormatNumber>{{others.marketValue}}</span>
                         </div>
                     </div>
                     <div class="row bb p-8 b-l br">
@@ -51,7 +51,7 @@
                         <div class="col-md-8 text-left f-14 roboto p-0">
                             Purchase value
                         </div>
-                        <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="others.purchaseValue != 0">{{!isLoading? "₹" : ""}}     <span appFormatNumber>{{others.purchaseValue}}</span>
+                        <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="others.purchaseValue != 0">₹     <span appFormatNumber>{{others.purchaseValue}}</span>
                         </div>
                     </div>
                     <div class="row bb p-8 b-l br">
