@@ -1,45 +1,49 @@
 ::ng-deep .mat-tab-header {
-  border-bottom: transparent;
+    border-bottom: transparent;
 }
 
 ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
-  background-color: #ffffff !important;
-  height: 1.5px !important;
-  transition: none !important;
+    background-color: #ffffff !important;
+    height: 1.5px !important;
+    transition: none !important;
 }
 
 ::ng-deep .tabView .mat-tab-label-active {
-  border: 1px solid rgba(25, 25, 25, 0.32) !important;
+    border: 1px solid rgba(25, 25, 25, 0.32) !important;
 }
 
 ::ng-deep .mat-tab-body-content {
-  transform: none !important;
+    transform: none !important;
 }
 
 ::ng-deep .tabView .mat-tab-label {
-  border-bottom: 1px solid rgba(25, 25, 25, 0.32) !important;
-  height: 48px !important;
+    border-bottom: 1px solid rgba(25, 25, 25, 0.32) !important;
+    height: 48px !important;
 }
 
 ::ng-deep .tabView {
-  .mat-tab-body-content {
-    overflow: hidden;
-  }
+    .mat-tab-body-content {
+        overflow: hidden;
+    }
 }
 
 .miscellaneous_table #table-low th,
 .miscellaneous_table #table-low .mat-header-row {
-  background-color: transparent !important;
+    background-color: transparent !important;
 }
 
 ::ng-deep .mat-form-field {
-  width: 100%;
+    width: 100%;
 }
 
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
-  padding: 0px;
+    padding: 0px;
 }
 
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
-  width: 1.5em !important;
+    width: 1.5em !important;
+}
+
+::ng-deep .nameMatField .mat-form-field-appearance-standard .mat-form-field-flex {
+    padding-top: 0px;
 }

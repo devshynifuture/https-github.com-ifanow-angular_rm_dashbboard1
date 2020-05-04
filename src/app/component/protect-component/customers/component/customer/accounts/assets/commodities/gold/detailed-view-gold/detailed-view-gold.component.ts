@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-detailed-view-gold',
@@ -12,6 +12,7 @@ export class DetailedViewGoldComponent implements OnInit {
   ownerName: any;
   libility: any;
   gold: any;
+  isLoading = false;
 
   constructor(private subInjectService: SubscriptionInject) {
   }
@@ -20,13 +21,14 @@ export class DetailedViewGoldComponent implements OnInit {
   set data(inputData) {
     this._data = inputData;
     console.log('AddLiabilitiesComponent Input data : ', this._data);
-    this.gold = this._data
+    this.gold = this._data;
 
   }
 
   get data() {
     return this._data;
   }
+
   ngOnInit() {
     console.log('AddLiabilitiesComponent ngOnInit : ', this._data);
   }
@@ -36,6 +38,7 @@ export class DetailedViewGoldComponent implements OnInit {
   }
 
 }
+
 export interface PeriodicElement {
   name: string;
   position: string;
