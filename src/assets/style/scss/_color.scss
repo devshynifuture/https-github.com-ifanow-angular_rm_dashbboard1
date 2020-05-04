@@ -378,11 +378,13 @@ button:active {
     border-color: $primary !important;
     background-color: $primary !important;
 }
-.btn-primary-mpc{
-color: $white !important;
+
+.btn-primary-mpc {
+    color: $white !important;
     border-color: #5866ff !important;
     background-color: #5866ff !important;
 }
+
 .btn-black {
     color: #1F1F1F !important;
     border-color: #1F1F1F !important;
@@ -567,9 +569,27 @@ button:focus {
     border: 1px solid $greenColor !important;
     color: $greenColor;
 }
-.text-dark{
+
+.text-dark {
     color: #000000 !important;
 }
-.text-coff{
+
+.text-coff {
     color: #C4C4C4 !important;
+}
+
+.borderWarning {
+    border: 1px solid $warning;
+}
+
+.borderWarning {
+    border: 1px solid $warning;
+}
+
+.borderDanger {
+    border: 1px solid $danger;
+}
+
+.borderSuccess {
+    border: 1px solid $success;
 }
