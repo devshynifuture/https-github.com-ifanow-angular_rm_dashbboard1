@@ -146,7 +146,7 @@ export class AllFeedsComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId,
       clientId:1,
-      userId:4879
+      userId: this.clientData.userId
     }
 
     this.loaderFn.increaseCounter();
@@ -239,23 +239,27 @@ export class AllFeedsComponent implements OnInit {
         }
         this.chartTotal = 1;
         res.forEach(element => {
-          this.chartTotal += element.investedAmount;
-          if(counter < 4) {
-            this.chartData.push({
-              y: element.investedAmount,
-              name: element.assetTypeString,
-              color: AppConstants.DONUT_CHART_COLORS[counter],
-              dataLabels: {
-                enabled: false
-              }
-            })
-          } else {
-            othersData.y += element.investedAmount; 
+          if(element.investedAmount > 0) {
+            this.chartTotal += element.investedAmount;
+            if(counter < 4) {
+              this.chartData.push({
+                y: element.investedAmount,
+                name: element.assetTypeString,
+                color: AppConstants.DONUT_CHART_COLORS[counter],
+                dataLabels: {
+                  enabled: false
+                }
+              })
+            } else {
+              othersData.y += element.investedAmount; 
+            }
+            counter ++;
           }
-          counter ++;
         });
         this.chartTotal -=1;
-        this.chartData.push(othersData);
+        if(counter > 4) {
+          this.chartData.push(othersData);
+        }
         this.pieChart(this.chartData);
       }
       this.tabsLoaded.portfolioSummary.dataLoaded = true;

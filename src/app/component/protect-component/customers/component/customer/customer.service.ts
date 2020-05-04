@@ -797,7 +797,7 @@ export class CustomerService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CASHFLOW_FEEDS, data);
   }
   getCustomerFeedsProfile(data) {
-    return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_CUSTOMER_FEEDS_PROFILE, data, null);
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_CUSTOMER_FEEDS_PROFILE, data, null);
   }
 }
 
