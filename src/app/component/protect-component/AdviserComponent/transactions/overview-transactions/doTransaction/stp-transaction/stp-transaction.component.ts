@@ -5,7 +5,7 @@ import {OnlineTransactionService} from '../../../online-transaction.service';
 import {ProcessTransactionService} from '../process-transaction.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {UtilService} from '../../../../../../../services/util.service';
+import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
 
 @Component({
   selector: 'app-stp-transaction',
@@ -65,6 +65,7 @@ export class StpTransactionComponent implements OnInit {
   multiTransact = false;
   childTransactions = [];
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount'];
+  validatorType = ValidatorType;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               private processTransaction: ProcessTransactionService, private eventService: EventService,
@@ -138,12 +139,13 @@ export class StpTransactionComponent implements OnInit {
   }
 
   getSchemeListTranfer(value) {
-    this.showSpinnerTrans = true;
+    this.getNewSchemesRes([]);
     if (this.stpTransaction.get('transferIn').invalid) {
       this.showSpinnerTrans = false;
       Object.assign(this.transactionSummary, {schemeNameTranfer: ''});
     }
     if (this.selectScheme == 2 && value.length > 2) {
+      this.showSpinnerTrans = true;
       const obj = {
         searchQuery: value,
         bseOrderType: 'STP',
@@ -176,7 +178,7 @@ export class StpTransactionComponent implements OnInit {
   }
 
   getSchemeList(value) {
-    this.showSpinner = true;
+    this.getExistingSchemesRes([]);
     if (this.stpTransaction.get('schemeStp').invalid) {
       this.showSpinner = false;
       Object.assign(this.transactionSummary, {schemeName: ''});
@@ -184,6 +186,7 @@ export class StpTransactionComponent implements OnInit {
       (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0; // if scheme not present then min amt is 0
     }
     if (this.selectScheme == 2 && value.length > 2) {
+      this.showSpinner = true;
       const obj = {
         searchQuery: value,
         bseOrderType: 'STP',

@@ -438,7 +438,7 @@ export class FixedDepositComponent implements OnInit {
     }
 
     /***nominee***/
-    if (data.nomineeList) {
+    if (data.nomineeList.length>0) {
       this.getNominee.removeAt(0);
       data.nomineeList.forEach(element => {
         this.addNewNominee(element);

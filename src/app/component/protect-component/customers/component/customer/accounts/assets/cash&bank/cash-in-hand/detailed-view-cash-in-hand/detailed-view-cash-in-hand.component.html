@@ -21,16 +21,16 @@
                         {{i != 0?'Co-o' : 'O'}}wner {{i != 0?i:''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{owner.name}}
+                        {{owner.name}}<span *ngIf="cashInHand.ownerList.length > 1">sharing {{owner.share}}% ownership</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Cash balance
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{cashInHand.cashValue?cashInHand.cashValue:'-'}}
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="cashInHand.cashValue != 0">{{!isLoading? "₹" : ""}}     <span appFormatNumber>{{cashInHand.cashValue}}</span>
                     </div>
+                    
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
@@ -61,7 +61,7 @@
                         Nominee {{i + 1}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{obj.name}} sharing {{obj.sharePercentage}}% Nominee share
+                        {{obj.name}} <span *ngIf="cashInHand.nomineeList.length > 1">sharing {{obj.sharePercentage}}% Nominee share</span>
                     </div>
                 </div>
             </div>

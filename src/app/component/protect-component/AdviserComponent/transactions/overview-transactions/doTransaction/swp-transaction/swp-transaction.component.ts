@@ -6,6 +6,7 @@ import {ProcessTransactionService} from '../process-transaction.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 import {AuthService} from 'src/app/auth-service/authService';
+import {ValidatorType} from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-swp-transaction',
@@ -67,9 +68,10 @@ export class SwpTransactionComponent implements OnInit {
   childTransactions = [];
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount'];
   advisorId: any;
+  validatorType = ValidatorType;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-              private processTransaction: ProcessTransactionService, private fb: FormBuilder, private eventService: EventService) {
+    private processTransaction: ProcessTransactionService, private fb: FormBuilder, private eventService: EventService) {
   }
 
   @Output() changedValue = new EventEmitter();
@@ -96,12 +98,12 @@ export class SwpTransactionComponent implements OnInit {
     this.childTransactions = [];
     this.getdataForm(this.inputData);
 
-    Object.assign(this.transactionSummary, {familyMemberId: this.inputData.familyMemberId});
-    Object.assign(this.transactionSummary, {clientId: this.inputData.clientId});
-    Object.assign(this.transactionSummary, {transactType: 'SWP'});
-    Object.assign(this.transactionSummary, {allEdit: true});
-    Object.assign(this.transactionSummary, {isMultiTransact: false});
-    Object.assign(this.transactionSummary, {selectedFamilyMember: this.inputData.selectedFamilyMember});
+    Object.assign(this.transactionSummary, { familyMemberId: this.inputData.familyMemberId });
+    Object.assign(this.transactionSummary, { clientId: this.inputData.clientId });
+    Object.assign(this.transactionSummary, { transactType: 'SWP' });
+    Object.assign(this.transactionSummary, { allEdit: true });
+    Object.assign(this.transactionSummary, { isMultiTransact: false });
+    Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
   }
 
   backToTransact() {
@@ -113,17 +115,26 @@ export class SwpTransactionComponent implements OnInit {
     this.getDataSummary = data;
   }
 
-  getSchemeList(value) {
-    this.showSpinner = true;
+  getSchemeList(data) {
+    if (data.target.value == '') {
+      this.scheme = undefined;
+      this.schemeList = undefined;
+      this.swpTransaction.controls.employeeContry.setValidators([Validators.min(0)]);
+      this.swpTransaction.controls.employeeContry.setValue();
+      this.schemeDetails.minimumPurchaseAmount = 0;
+      return;
+    }
     if (this.swpTransaction.get('schemeSwp').invalid) {
       this.showSpinner = false;
-      Object.assign(this.transactionSummary, {schemeName: ''});
-      Object.assign(this.transactionSummary, {folioNumber: ''});
+      Object.assign(this.transactionSummary, { schemeName: '' });
+      Object.assign(this.transactionSummary, { folioNumber: '' });
       (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0; // if scheme not present then min amt is 0
     }
-    if (this.selectScheme == 2 && value.length > 2) {
+    this.getExistingSchemesRes([]);
+    if (this.selectScheme == 2 && data.target.value.length > 2) {
+      this.showSpinner = true;
       const obj = {
-        searchQuery: value,
+        searchQuery: data.target.value,
         bseOrderType: 'SWP',
         showOnlyNonZero: true,
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
@@ -138,7 +149,7 @@ export class SwpTransactionComponent implements OnInit {
       this.onlineTransact.getExistingSchemes(obj).subscribe(
         data => this.getExistingSchemesRes(data), (error) => {
           this.showSpinner = false;
-          this.swpTransaction.get('schemeSwp').setErrors({setValue: error.message});
+          this.swpTransaction.get('schemeSwp').setErrors({ setValue: error.message });
           this.swpTransaction.get('schemeSwp').markAsTouched();
           (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0;
           // this.eventService.showErrorMessage(error);
@@ -175,7 +186,7 @@ export class SwpTransactionComponent implements OnInit {
 
   reinvest(scheme) {
     this.schemeDetails = scheme;
-    Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     console.log('schemeDetails == ', this.schemeDetails);
   }
 
@@ -188,7 +199,7 @@ export class SwpTransactionComponent implements OnInit {
   selectedScheme(scheme) {
     this.scheme = scheme;
     this.showUnits = true;
-    Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
+    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
@@ -227,12 +238,12 @@ export class SwpTransactionComponent implements OnInit {
     this.showSpinnerFolio = false;
     this.folioList = data;
     if (this.swpTransaction.get('investmentAccountSelection').valid) {
-      Object.assign(this.transactionSummary, {folioNumber: this.folioList[0].folioNumber});
+      Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
     }
   }
 
   enteredAmount(value) {
-    Object.assign(this.transactionSummary, {enteredAmount: value});
+    Object.assign(this.transactionSummary, { enteredAmount: value });
   }
 
   onFolioChange(folio) {
@@ -243,10 +254,10 @@ export class SwpTransactionComponent implements OnInit {
     this.folioDetails = folio;
     this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit);
     this.showUnits = true;
-    Object.assign(this.transactionSummary, {folioNumber: folio.folioNumber});
-    Object.assign(this.transactionSummary, {mutualFundId: folio.id});
-    Object.assign(this.transactionSummary, {tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId});
-    this.transactionSummary = {...this.transactionSummary};
+    Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
+    Object.assign(this.transactionSummary, { mutualFundId: folio.id });
+    Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId });
+    this.transactionSummary = { ...this.transactionSummary };
   }
 
   getFrequency() {
@@ -265,7 +276,7 @@ export class SwpTransactionComponent implements OnInit {
   getSipFrequencyRes(data) {
     console.log('isin Frequency ----', data);
     this.swpFrequency = data;
-    this.swpFrequency = data.filter(function(element) {
+    this.swpFrequency = data.filter(function (element) {
       return element.frequency;
     });
   }
@@ -311,7 +322,7 @@ export class SwpTransactionComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
   getdataForm(data) {
@@ -421,7 +432,7 @@ export class SwpTransactionComponent implements OnInit {
 
     } else {
       this.processTransaction.onAddTransaction('confirm', this.transactionSummary);
-      Object.assign(this.transactionSummary, {allEdit: false});
+      Object.assign(this.transactionSummary, { allEdit: false });
     }
   }
 

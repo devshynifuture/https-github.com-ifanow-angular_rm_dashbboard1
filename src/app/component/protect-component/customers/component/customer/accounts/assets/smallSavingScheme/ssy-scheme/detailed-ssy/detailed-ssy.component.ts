@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {Component, OnInit} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-detailed-ssy',
@@ -8,15 +8,19 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 })
 export class DetailedSsyComponent implements OnInit {
   nominee: any;
+  isLoading = false;
 
-  constructor(private subInjectService: SubscriptionInject) { }
+  constructor(private subInjectService: SubscriptionInject) {
+  }
+
   data;
+
   ngOnInit() {
-    console.log('DetailedSsysComponent ngOnInit data : ',this.data)
-    this.nominee=this.data.nominees;
+    console.log('DetailedSsysComponent ngOnInit data : ', this.data);
+    this.nominee = this.data.nominees;
 
   }
-  
+
   close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
   }

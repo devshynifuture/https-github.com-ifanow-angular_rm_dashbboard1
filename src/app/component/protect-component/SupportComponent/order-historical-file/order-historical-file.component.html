@@ -56,16 +56,16 @@
         </div>
         <div class="col-md-7">
             <mat-radio-group formControlName="selectRta" (change)="resetDateAsOnDateAndFormCheckbox()">
-                <mat-radio-button value="1"
-                    [ngClass]="orderHistoryFileForm.get('selectRta').value === '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
-                    CAMS
+                <mat-radio-button #radioBtnRef [value]="item.id" *ngFor="let item of rtList"
+                    [ngClass]="orderHistoryFileForm.get('selectRta') === item.id ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
+                    {{ item.name }}
                 </mat-radio-button>
-                <mat-radio-button value="2"
+                <!--<mat-radio-button value="2"
                     [ngClass]="orderHistoryFileForm.get('selectRta').value === '2' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                     Karvy </mat-radio-button>
                 <mat-radio-button value="3"
                     [ngClass]="orderHistoryFileForm.get('selectRta').value === '3' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
-                    Franklin </mat-radio-button>
+                    Franklin </mat-radio-button> -->
             </mat-radio-group>
             <mat-error
                 *ngIf="orderHistoryFileForm.get('selectRta').touched && orderHistoryFileForm.get('selectRta').invalid">
@@ -81,7 +81,7 @@
         <div class="col-md-6">
             <div *ngFor="let item of arnRiaDetailsList; index as i" formArrayName="selectArnRia">
                 <div [formGroupName]="i">
-                    <mat-checkbox [checked]="false" class="d-block f-14" formControlName="selection"
+                    <mat-checkbox [checked]="item" class="d-block f-14" formControlName="selection"
                         (click)="setArnRiaId(i)">
                         {{ item.name }}
                     </mat-checkbox>
@@ -102,7 +102,7 @@
             <div class="row">
                 <div class="col-md-6 p-0">
                     <h3 class="f-14 m-0 f-600">Transactions</h3>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '1'">
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === camsRtId">
                         <!-- cams option -->
                         <div formGroupName="cams">
                             <mat-checkbox class="d-block" formControlName="wbr2">WBR2
@@ -110,13 +110,13 @@
                             <mat-checkbox class="d-block" formControlName="wbr2a">WBR2A</mat-checkbox>
                         </div>
                     </div>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '2'">
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === karvyRtId">
                         <!-- karvy option -->
                         <div formGroupName="karvy">
                             <mat-checkbox class="d-block" formControlName="mfsd201">201</mat-checkbox>
                         </div>
                     </div>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '3'">
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === franklinRtId">
                         <!-- franklin option -->
                         <div formGroupName="franklin">
                             <mat-checkbox class="d-block wb ws-normal" formControlName="myTransactionsForAPeriod">My
@@ -126,14 +126,14 @@
                 </div>
                 <div class="col-md-6 p-0">
                     <h3 class="f-14 m-0 f-600">SIP/STP</h3>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '1'">
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === camsRtId">
                         <!-- cams options -->
                         <div formGroupName="cams">
                             <mat-checkbox class="d-block" formControlName="wbr49Active">WBR49 Active</mat-checkbox>
                             <mat-checkbox class="d-block" formControlName="wbr49Ceased">WBR49 Ceased</mat-checkbox>
                         </div>
                     </div>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '2'">
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === karvyRtId">
                         <!-- karvy options -->
                         <div formGroupName="karvy">
                             <mat-checkbox class="d-block" formControlName="mfsd243Active">243 Active
@@ -142,7 +142,7 @@
                             </mat-checkbox>
                         </div>
                     </div>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '3'">
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === franklinRtId">
                         <!-- franklin options -->
                         <div formGroupName="franklin">
                             <mat-checkbox class="d-block" formControlName="activeSip">Active SIP</mat-checkbox>
@@ -155,19 +155,19 @@
             <div class="row pt-14">
                 <div class="col-md-6 p-0">
                     <h3 class="f-14 m-0 f-600">Folio master</h3>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '1'">
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === camsRtId">
                         <!-- cams options -->
                         <div formGroupName="cams">
                             <mat-checkbox class="d-block" formControlName="wbr9">WBR9</mat-checkbox>
                         </div>
                     </div>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '2'">
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === karvyRtId">
                         <!-- karvy options -->
                         <div formGroupName="karvy">
                             <mat-checkbox class="d-block" formControlName="mfsd211">211</mat-checkbox>
                         </div>
                     </div>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '3'">
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === franklinRtId">
                         <!-- franklin options -->
                         <div formGroupName="franklin">
                             <mat-checkbox class="d-block wb ws-normal" formControlName="investorFolioDetails">Investor
@@ -178,20 +178,20 @@
                 </div>
                 <div class="col-md-6 p-0">
                     <h3 class="f-14 m-0 f-600">AUM</h3>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '1'">
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === camsRtId">
                         <!-- cams options -->
                         <div formGroupName="cams">
                             <mat-checkbox class="d-block" formControlName="wbr22">WBR22
                             </mat-checkbox>
                         </div>
                     </div>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '2'">
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === karvyRtId">
                         <!-- karvy options -->
                         <div formGroupName="karvy">
                             <mat-checkbox class="d-block" formControlName="mfsd203">203</mat-checkbox>
                         </div>
                     </div>
-                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === '3'">
+                    <div *ngIf="orderHistoryFileForm.get('selectRta').value === franklinRtId">
                         <!-- franklin options -->
                         <div formGroupName="franklin">
                             <mat-checkbox class="d-block wb ws-normal"

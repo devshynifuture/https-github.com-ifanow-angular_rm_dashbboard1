@@ -21,7 +21,7 @@
                         {{i != 0?'Co-o' : 'O'}}wner {{i != 0?i:''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{owner.name}} sharing {{owner.share}}% ownership
+                        {{owner.name}} <span *ngIf="realEstate.ownerList.length > 1">sharing {{owner.share}}% ownership</span>
                     </div>
                 </div>
                 <!-- <div class="row bb p-8 b-l br">
@@ -48,7 +48,7 @@
                         Market value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{realEstate.marketValue?realEstate.marketValue:'-'}}
+                        ₹{{realEstate.marketValue?realEstate.marketValue:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -63,32 +63,32 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Purchase value
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{realEstate.purchaseValue?realEstate.purchaseValue:'-'}}
+                    <div class="col-md-4 text-right f-14 roboto p-0" >
+                        ₹<span appFormatNumber>{{realEstate.purchaseValue?realEstate.purchaseValue:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Stamp duty
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{realEstate.stampDutyCharge?realEstate.stampDutyCharge:'-'}}
+                    <div class="col-md-4 text-right f-14 roboto p-0" >
+                        ₹<span appFormatNumber>{{realEstate.stampDutyCharge?realEstate.stampDutyCharge:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Area
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{realEstate.ratePerUnit?realEstate.ratePerUnit:'-'}} {{realEstate.ratePerUnit?this.unit:''}}
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        ₹<span appFormatNumber>{{realEstate.ratePerUnit?realEstate.ratePerUnit:'-'}}</span> {{realEstate.ratePerUnit?this.unit:''}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Registration
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{realEstate.stampDutyCharge?realEstate.stampDutyCharge:'-'}}
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        ₹<span appFormatNumber>{{realEstate.stampDutyCharge?realEstate.stampDutyCharge:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -128,7 +128,7 @@
                         Nominee {{i + 1}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{obj.name}} sharing {{obj.sharePercentage}}% Nominee share
+                        {{obj.name}} <span *ngIf="realEstate.nomineeList.length > 1">sharing {{obj.sharePercentage}}% Nominee share</span>
                     </div>
                 </div>
             </div>

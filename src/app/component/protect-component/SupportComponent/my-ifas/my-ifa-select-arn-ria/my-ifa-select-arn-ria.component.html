@@ -6,15 +6,14 @@
 
 <div class="row" [formGroup]="selectArnRiaForm">
     <div class="col-md-12 pr-24 pl-24 pt-8" *ngFor="let opt of options">
-        <mat-radio-group aria-label="Select an option" formControlName="arnOrRia">
-            <mat-radio-button class="d-block f-14" (click)='selectedOtp(opt)' [value]="1" [checked]="opt.selected">
+        <mat-radio-group aria-label="Select an option" formControlName="arnOrRia" (change)='selectedOtp(opt)'>
+            <mat-radio-button class="d-block f-14" [value]="opt.id" [checked]="opt.checked">
                 {{opt.brokerCode}} </mat-radio-button>
         </mat-radio-group>
-        <mat-error class="f-12 pt-8 f-500"
-            *ngIf="selectArnRiaForm.get('arnOrRia').touched && selectArnRiaForm.get('arnOrRia').invalid">
-            This field is required
-        </mat-error>
     </div>
+    <mat-error class="f-12 pt-8 f-500" *ngIf="selectArnRiaForm.touched && selectArnRiaForm.invalid">
+        This field is required
+    </mat-error>
 </div>
 
 <div class="row">

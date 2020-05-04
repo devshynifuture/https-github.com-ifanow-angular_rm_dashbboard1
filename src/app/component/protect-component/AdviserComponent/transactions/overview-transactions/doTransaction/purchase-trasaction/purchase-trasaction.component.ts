@@ -6,7 +6,7 @@ import {ProcessTransactionService} from '../process-transaction.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {UtilService} from 'src/app/services/util.service';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-purchase-trasaction',
@@ -69,6 +69,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount', 'icons'];
   dataSource1 = ELEMENT_DATA;
   @Output() changedValue = new EventEmitter();
+  validatorType = ValidatorType;
 
   constructor(private processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
               private subInjectService: SubscriptionInject, private fb: FormBuilder, private eventService: EventService,
@@ -106,6 +107,8 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   selectSchemeOption(value) {
+    this.scheme = undefined;
+    this.schemeList = undefined;
     console.log('value selction scheme', value);
     this.purchaseTransaction.controls.schemePurchase.reset();
     this.folioList = [];
@@ -117,9 +120,16 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.selectScheme = value;
   }
 
-  getSchemeList(value) {
-    this.schemeList = [];
-    this.showSpinner = true;
+  getSchemeList(data) {
+    if (data.target.value == '') {
+      this.scheme = undefined;
+      this.schemeList = undefined;
+      this.purchaseTransaction.controls.employeeContry.setValidators([Validators.min(0)]);
+      this.purchaseTransaction.controls.employeeContry.setValue();
+      this.schemeDetails.minAmount = 0;
+      return;
+    }
+    this.getNewSchemesRes([]);
     this.platformType = this.getDataSummary.defaultClient.aggregatorType;
     if (this.purchaseTransaction.get('schemePurchase').invalid) {
       this.showSpinner = false;
@@ -129,7 +139,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0; // if scheme not present then min amt is 0
     }
     const obj = {
-      searchQuery: value,
+      searchQuery: data.target.value,
       bseOrderType: 'ORDER',
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -140,12 +150,13 @@ export class PurchaseTrasactionComponent implements OnInit {
       holdingType: this.getDataSummary.defaultClient.holdingType,
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     };
-    if (value.length > 2) {
+    if (data.target.value.length > 2) {
+      this.showSpinner = true;
       if (this.selectScheme == 2) {
         this.onlineTransact.getNewSchemes(obj).subscribe(
           data => this.getNewSchemesRes(data), (error) => {
             this.showSpinner = false;
-            this.purchaseTransaction.get('schemePurchase').setErrors({setValue: error.message});
+            this.purchaseTransaction.get('schemePurchase').setErrors({setValue: error});
             this.purchaseTransaction.get('schemePurchase').markAsTouched();
             (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
             // this.eventService.showErrorMessage(error);
@@ -179,6 +190,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   reinvest(scheme) {
     this.schemeDetails = scheme;
     Object.assign(this.transactionSummary, {schemeName: scheme.schemeName});
+    this.setMinAmount();
     console.log('schemeDetails == ', this.schemeDetails);
   }
 
@@ -368,6 +380,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     };
     this.onlineTransact.getNSEAchmandate(obj1).subscribe(
       data => this.getNSEAchmandateRes(data), (error) => {
+        this.purchaseTransaction.get('modeOfPaymentSelection').setValue('1');
         this.eventService.showErrorMessage(error);
       }
     );

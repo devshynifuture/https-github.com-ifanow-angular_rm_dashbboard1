@@ -27,7 +27,7 @@
                         {{i != 0?'Co-o' : 'O'}}wner {{i != 0?i:''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{owner.name}} sharing {{owner.share}}% ownership
+                        {{owner.name}} <span *ngIf="recuringDeposit.ownerList.length > 1">sharing {{owner.share}}% ownership</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -35,7 +35,7 @@
                         Monthly contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{(recuringDeposit.monthlyContribution)?recuringDeposit.monthlyContribution:'-'}}
+                        ₹{{(recuringDeposit.monthlyContribution)?recuringDeposit.monthlyContribution:'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -51,7 +51,7 @@
                         Interest rate
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(recuringDeposit.interestRate)?recuringDeposit.interestRate:'-'}}
+                        {{(recuringDeposit.interestRate)?recuringDeposit.interestRate+'%':'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -82,8 +82,8 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Current value
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{(recuringDeposit.currentValue)?recuringDeposit.currentValue:'-'}}
+                    <div class="col-md-4 text-right f-14 roboto p-0" >
+                        ₹<span appFormatNumber>{{(recuringDeposit.currentValue)?recuringDeposit.currentValue:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -91,7 +91,7 @@
                         Maturity value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{(recuringDeposit.maturityValue)?recuringDeposit.maturityValue:'-'}}
+                        ₹<span appFormatNumber>{{(recuringDeposit.maturityValue)?recuringDeposit.maturityValue:'-'}}</span>
                     </div>
                 </div>
                 
@@ -142,7 +142,7 @@
                         Nominee {{i + 1}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{obj.name}} sharing {{obj.sharePercentage}}% Nominee share
+                        {{obj.name}} <span *ngIf="recuringDeposit.nomineeList.length > 1">sharing {{obj.sharePercentage}}% Nominee share</span>
                     </div>
                 </div>
             </div>

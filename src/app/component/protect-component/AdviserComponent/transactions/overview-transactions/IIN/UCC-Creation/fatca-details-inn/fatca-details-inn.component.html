@@ -1,8 +1,7 @@
 <div class="dialogclose">
     <div class="row popup-header-fix-100">
         <div class="col-md-2 border-right-1 p-0">
-            <img class="imgAdLogo"
-                src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+            <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
         </div>
         <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
 
@@ -26,8 +25,6 @@
         <div class="col-md-7 offset-2 p-0 bl-1 ">
             <div class="p-20">
                 <h3 class="f-18 mb-28 f-600"> FATCA details </h3>
-
-
                 <div class="row">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-10 m-0"> Nationality </h3>
@@ -52,41 +49,38 @@
 
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> City of birth </h3>
+                        <h3 class="f-16 pt-20 m-0"> City of birth </h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
-                            <input matInput maxlength="10" formControlName="cityOfBirth" type="text"
-                                class="form-control">
+                        <mat-form-field floatLabel="never" appearance="standard">
+                            <input placeholder="Enter City of birth" matInput maxlength="10" formControlName="cityOfBirth" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
 
 
-                <div class="row pt-32">
+                <div class="row pt-20">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Country of birth </h3>
+                        <h3 class="f-16 pt-20 m-0"> Country of birth </h3>
                     </div>
                     <div class="col-md-5 form-group">
-                        <mat-form-field>
-                            <input matInput maxlength="10" formControlName="countryOfBirth" type="text"
-                                class="form-control">
+                        <mat-form-field floatLabel="never" appearance="standard">
+                            <input placeholder="Enter Country of birth" matInput maxlength="10" formControlName="countryOfBirth" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
 
 
-                <div class="row pt-32">
+                <div class="row pt-20">
                     <div class="col-md-4 text-right pr-0">
-                        <h3 class="f-16 pt-8 m-0"> Gross annual income in Laks </h3>
+                        <h3 class="f-16 pt-20 m-0"> Gross annual income in Laks </h3>
                         <p class="text-custom f-12 m-0">in Indian Rupees</p>
                     </div>
                     <div class="col-md-3 form-group">
-                        <mat-form-field>
-                            <input matInput [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                                [maxLength]="20" formControlName="annualIncome" type="text" class="form-control">
+                        <mat-form-field floatLabel="never" appearance="standard">
+                            <input placeholder="Enter Gross income" matInput [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation [maxLength]="20" formControlName="annualIncome" type="text" class="form-control">
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
                     </div>
@@ -117,27 +111,47 @@
                         </mat-form-field>
                     </div>
                 </div>
-
-
                 <div class="row pt-32">
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-8 m-0">Occupation </h3>
                     </div>
                     <div class="col-md-5 form-group">
                         <mat-form-field>
-                            <mat-select class="form-control" formControlName="occupation">
-                                <mat-option value="S">
-                                    Service
+                            <mat-select class="form-control" formControlName="occupationCode">
+                                <mat-option value="41">
+                                    Private Sector
                                 </mat-option>
-                                <mat-option value="B">
+                                <mat-option value="42">
+                                    Public Sector
+                                </mat-option>
+                                <mat-option value="01">
                                     Business
                                 </mat-option>
-                                <mat-option value="O">
+                                <mat-option value="03">
+                                    Professional
+                                </mat-option>
+                                <mat-option value="05">
+                                    Retired
+                                </mat-option>
+                                <mat-option value="06">
+                                    Housewife
+                                </mat-option>
+                                <mat-option value="07">
+                                    Student
+                                </mat-option>
+                                <mat-option value="44">
+                                    Government Sector
+                                </mat-option>
+                                <mat-option value="08">
                                     Others
                                 </mat-option>
-                                <mat-option value="X">
+                                <mat-option value="0">
+                                    Self Employed
+                                </mat-option>
+                                <mat-option value="0">
                                     Not Categorized
                                 </mat-option>
+                               
                             </mat-select>
                             <mat-error class="f-12">This field is required</mat-error>
                         </mat-form-field>
@@ -170,7 +184,7 @@
                         <h3 class="f-16 pt-10 m-0"> Tax residency other than india? </h3>
                     </div>
 
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                         <mat-radio-group aria-label="Select an option" formControlName="taxResidency">
                             <mat-radio-button value="1" [ngClass]="fatcaDetails.get('taxResidency').value == '1' ? 'b-a-custom radioBtn text-primary custom-radio': 'b-a radioBtn'">
                                 Yes
@@ -192,32 +206,23 @@
                     <h3 class="f-16 f-600 mt-4 mb-10">FATCA FAQ</h3>
                     <p class="f-16 m-0 f-600">What is FATCA?</p>
                     <p class="text-primitive mb-12">
-                        FATCA is a United States (US) law aimed at prevention of tax evasion by US citizens and
-                        residents through use of offshore accounts. FATCA obligates foreign financial institutions,
-                        including Indian financial institutions to provide the US Internal Revenue
+                        FATCA is a United States (US) law aimed at prevention of tax evasion by US citizens and residents through use of offshore accounts. FATCA obligates foreign financial institutions, including Indian financial institutions to provide the US Internal Revenue
                         Service (IRS) to report these offshore accounts held by specified US Persons. </p>
 
-                    <p> Since domestic laws of sovereign countries, including India, may not permit sharing of
-                        confidential client information by such institutions directly with US IRS, the US has entered
-                        into Inter-Governmental Agreement (IGA) with various
+                    <p> Since domestic laws of sovereign countries, including India, may not permit sharing of confidential client information by such institutions directly with US IRS, the US has entered into Inter-Governmental Agreement (IGA) with various
                         countries. </p>
 
-                    <p> The IGA between India and USA was signed on 9th July, 2015, which provides that the Indian FIs
-                        will provide the necessary information to Indian tax authorities.
+                    <p> The IGA between India and USA was signed on 9th July, 2015, which provides that the Indian FIs will provide the necessary information to Indian tax authorities.
                     </p>
                 </div>
             </div>
 
             <div class="row ">
                 <div class="col-md-12">
-                    <p class="f-16 m-0 f-600"> I am an Indian resident and have nothing to do with US. Why am I being
-                        asked to comply? </p>
+                    <p class="f-16 m-0 f-600"> I am an Indian resident and have nothing to do with US. Why am I being asked to comply? </p>
                     <p class="text-primitive mb-12">
-                        FATCA obligates every Indian financial institutions / mutual fund to provide required tax
-                        related information to Indian Tax authorities of accounts held by specified US Persons. This
-                        rule has been laid as per the SEBI circular CIR/MIRSD/2/2015 dated 26th
-                        August 2015. Therefore, when you open a new account with mutual fund you need to provide
-                        information regarding your tax status.
+                        FATCA obligates every Indian financial institutions / mutual fund to provide required tax related information to Indian Tax authorities of accounts held by specified US Persons. This rule has been laid as per the SEBI circular CIR/MIRSD/2/2015 dated 26th
+                        August 2015. Therefore, when you open a new account with mutual fund you need to provide information regarding your tax status.
                     </p>
                 </div>
             </div>
@@ -226,8 +231,7 @@
                 <div class="col-md-12">
                     <p class="f-16 m-0 f-600">Who can I appoint as a nominee?</p>
                     <p class="text-primitive mb-12">
-                        You are free to nominate whoever you want. More common examples of nominees are your immediate
-                        family members like spouse, children, parents etc.
+                        You are free to nominate whoever you want. More common examples of nominees are your immediate family members like spouse, children, parents etc.
                     </p>
                 </div>
             </div>
@@ -236,9 +240,7 @@
                 <div class="col-md-12">
                     <p class="f-16 m-0 f-600">Things to note</p>
                     <p class="text-primitive mb-12">
-                        While a nomination is an uncomplicated way for your dependants to receive the proceeds of your
-                        investment, don’t confuse it with estate planning. If you have also left a Will, then it
-                        supersedes any nomination.
+                        While a nomination is an uncomplicated way for your dependants to receive the proceeds of your investment, don’t confuse it with estate planning. If you have also left a Will, then it supersedes any nomination.
                     </p>
                 </div>
             </div>
@@ -247,9 +249,7 @@
                 <div class="col-md-12">
                     <p class="f-16 m-0 f-600">Disclaimer</p>
                     <p class="text-primitive mb-12">
-                        The advice given here is provided for informational purposes only, and should not be construed
-                        as legal advice. You should not act or refrain from acting on the basis of any content included
-                        here without seeking legal or other professional advice.
+                        The advice given here is provided for informational purposes only, and should not be construed as legal advice. You should not act or refrain from acting on the basis of any content included here without seeking legal or other professional advice.
                     </p>
                 </div>
             </div>
@@ -273,8 +273,7 @@
             PREVIOUS
         </button>
 
-        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4"
-            (click)="SendToForm()">SAVE</button>
+        <button mat-button class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" (click)="SendToForm()">SAVE</button>
         <button mat-button class="greenBtn  p-0 mw-40 br-left-white " [matMenuTriggerFor]="menu">
             <i class="material-icons">
                 keyboard_arrow_up

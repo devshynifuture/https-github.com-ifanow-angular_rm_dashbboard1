@@ -19,7 +19,7 @@
                         {{i != 0?'Co-o' : 'O'}}wner {{i != 0?i:''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{owner.name}} sharing {{owner.share}}% ownership
+                        {{owner.name}}<span *ngIf="bonds.ownerList.length > 1">sharing {{owner.share}}% ownership</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -43,7 +43,7 @@
                         Amount invested
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{utils.formatter(bonds.amountInvested)}}
+                        ₹{{utils.formatter(bonds.amountInvested)}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -56,7 +56,7 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Tenure(in months)
+                        Tenure(in Years)
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{bonds.tenure}}
@@ -67,7 +67,7 @@
                         Maturity date
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{utils.formatter(bonds.maturityDate)}}
+                        {{(bonds.maturityDate)?(bonds.maturityDate | date:'dd/MM/yyyy'):'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -75,7 +75,7 @@
                         Coupon rate
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{bonds.couponRate}}
+                        {{bonds.couponRate}}<span *ngIf="bonds.couponRate">%</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -109,7 +109,7 @@
                         Current value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{utils.formatter(bonds.currentValue)}}
+                        ₹{{utils.formatter(bonds.currentValue)}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -117,18 +117,20 @@
                         Maturity value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{utils.formatter(bonds.maturityValue)}}
-                    </div>
-                </div>
-                <div *ngIf="bonds.interestPayoutOption==1" class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Total Interest earned
-                    </div>
-                    <div [value]="bonds.maturityValue - bonds.amountInvested" class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        ₹{{bonds.maturityValue - bonds.amountInvested}}
+                        ₹{{utils.formatter(bonds.maturityValue)}}
                     </div>
                 </div>
                 
+                <div *ngIf="bonds.interestPayoutOption == 1" class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Total Interest earned 
+                    </div>
+                    <div  class="col-md-4 text-right f-14 roboto p-0" >
+                        <!-- ₹{{}} -->
+                        ₹{{utils.formatter(bonds.currentValue - bonds.amountInvested)}}
+
+                    </div>
+                </div>
                 
                 <!-- <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
@@ -178,20 +180,22 @@
                         {{bonds.description}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br" *ngIf="bonds.nomineeList.length == 0 ">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
-                        Nominee
+                <div *ngIf="bonds.nomineeList">
+                    <div class="row bb p-8 b-l br" *ngIf="bonds.nomineeList.length == 0 ">
+                        <div class="col-md-8 text-left f-14 roboto p-0" >
+                            Nominee
+                        </div>
+                        <div class="col-md-4 text-right f-14 roboto p-0">
+                            -
+                        </div>
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        -
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br"  *ngFor="let obj of bonds.nomineeList; let i = index">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
-                        Nominee {{i + 1}}
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{obj.name}} sharing {{obj.sharePercentage}}% Nominee share
+                    <div class="row bb p-8 b-l br"  *ngFor="let obj of bonds.nomineeList; let i = index">
+                        <div class="col-md-8 text-left f-14 roboto p-0" >
+                            Nominee {{i + 1}}
+                        </div>
+                        <div class="col-md-4 text-right f-14 roboto p-0">
+                            {{obj.name}} <span *ngIf="bonds.nomineeList.length > 1">sharing {{obj.sharePercentage}}% Nominee share</span>
+                        </div>
                     </div>
                 </div>
             </div>

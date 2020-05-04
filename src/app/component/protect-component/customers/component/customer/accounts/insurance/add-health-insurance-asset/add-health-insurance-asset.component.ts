@@ -1,11 +1,11 @@
-import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {FormArray, FormBuilder, Validators} from '@angular/forms';
-import {AuthService} from 'src/app/auth-service/authService';
-import {ValidatorType} from 'src/app/services/util.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from '../../../customer.service';
-import {MatDialog, MatInput} from '@angular/material';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ValidatorType } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from '../../../customer.service';
+import { MatDialog, MatInput } from '@angular/material';
+import { EventService } from 'src/app/Data-service/event.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
@@ -28,7 +28,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         // buttonIcon: {
         //   fontIcon: 'favorite'
         // }
-      };
+    };
     maxDate = new Date();
 
     inputData: any;
@@ -58,6 +58,9 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     id: any;
     validatorType = ValidatorType;
     @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+    showSumAssured = false;
+    showinsuredMemberSum = true;
+    showDeductibleSum = false;
 
     constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) {
     }
@@ -220,7 +223,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
             familyMemberId: [data ? data.familyMemberId : 0],
             id: [data ? data.id : 0],
             isClient: [data ? data.isClient : 0],
-            relationshipId:[data ? data.relationshipId :0] 
+            relationshipId: [data ? data.relationshipId : 0]
         }));
         if (!data || this.getNominee.value.length < 1) {
             for (let e in this.getNominee.controls) {
@@ -241,7 +244,46 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
 
 
     }
+    onChangeSetErrorsType(value, formName) {
+        if (value == 8) {
+            this.showSumAssured = true
+            this.showinsuredMemberSum = false
+            let list = this.healthInsuranceForm.get('InsuredMemberForm') as FormArray;
+            list.controls.forEach(element => {
+                element.get('sumAssured').setValue('');
+                if (element.get('sumAssured').value == '') {
+                    element.get('sumAssured').setErrors(null)
+                }
+            });
+            if (!this.healthInsuranceForm.controls['sumAssuredIdv'].value) {
+                this.healthInsuranceForm.controls['sumAssuredIdv'].setValue(null);
+                this.healthInsuranceForm.get('sumAssuredIdv').setValidators([Validators.required]);
+                this.healthInsuranceForm.get('sumAssuredIdv').updateValueAndValidity();
+                this.healthInsuranceForm.controls['sumAssuredIdv'].setErrors({ 'required': true });
+            }
+        } else {
+            this.showSumAssured = false
+            this.showinsuredMemberSum = true
+            this.healthInsuranceForm.controls['sumAssuredIdv'].setValue(null);
+            this.healthInsuranceForm.controls['sumAssuredIdv'].setErrors(null);
+            this.healthInsuranceForm.controls['sumAssuredIdv'].setValidators(null);
+        }
+    }
 
+    onChangeSetErrors(value, formName) {
+        if (value != 0 && formName == 'planDetails') {
+            if (!this.healthInsuranceForm.controls['deductibleAmt'].value) {
+                this.healthInsuranceForm.controls['deductibleAmt'].setValue(null);
+                this.healthInsuranceForm.get('deductibleAmt').setValidators([Validators.required]);
+                this.healthInsuranceForm.get('deductibleAmt').updateValueAndValidity();
+                this.healthInsuranceForm.controls['deductibleAmt'].setErrors({ 'required': true });
+            }
+        } else {
+            this.healthInsuranceForm.controls['deductibleAmt'].setValue(null);
+            this.healthInsuranceForm.controls['deductibleAmt'].setErrors(null);
+            this.healthInsuranceForm.get('deductibleAmt').setValidators(null);
+        }
+    }
     getdataForm(data) {
         this.dataForEdit = data.data;
         if (data.data == null) {
@@ -267,9 +309,9 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
                 isClient: 0
             })]),
             name: [(this.dataForEdit ? this.dataForEdit.name : null)],
-            PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId + '' : null), [Validators.required]],
+            PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId + '' : ''), [Validators.required]],
             planDetails: [(this.dataForEdit ? this.dataForEdit.policyFeatureId + '' : null), [Validators.required]],
-            deductibleAmt: [(this.dataForEdit ? this.dataForEdit.deductibleSumInsured : null)],
+            deductibleAmt: [(this.dataForEdit ? this.dataForEdit.deductibleSumInsured : null), [Validators.required]],
             policyNum: [(this.dataForEdit ? this.dataForEdit.policyNumber : null), [Validators.required]],
             insurerName: [(this.dataForEdit ? this.dataForEdit.insurerName : null), [Validators.required]],
             planeName: [(this.dataForEdit ? this.dataForEdit.planName : null), [Validators.required]],
@@ -287,6 +329,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
             serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch : null],
             bankAccount: [this.dataForEdit ? parseInt(this.dataForEdit.linkedBankAccount) : null],
             additionalCovers: [(this.dataForEdit) ? this.addOns.addOnId + '' : null],
+            sumAssuredIdv: [(this.dataForEdit) ? this.dataForEdit.sumInsuredIdv : null, [Validators.required]],
             coversAmount: [(this.dataForEdit) ? this.addOns.addOnSumInsured : null],
             nominees: this.nominees,
             getNomineeName: this.fb.array([this.fb.group({
@@ -294,11 +337,11 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
                 sharePercentage: [0],
                 familyMemberId: [0],
                 id: [0],
-                relationshipId:[0]
+                relationshipId: [0]
             })]),
             InsuredMemberForm: this.fb.array([this.fb.group({
                 insuredMembers: ['', [Validators.required]],
-                sumAssured: [null, [Validators.required]],
+                sumAssured: ['', [Validators.required]],
                 id: null,
                 familyMemberId: [''],
                 relationshipId: ['']
@@ -346,10 +389,27 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
                 this.addTransaction(element);
             });
         }
-
-
-        this.ownerData = {Fmember: this.nomineesListFM, controleData: this.healthInsuranceForm};
-        this.bankAccountDetails = {accountList: this.accountList, controleData: this.healthInsuranceForm};
+        if(this.dataForEdit){
+            this.dataForEdit.insuredMembers.forEach(element => {
+                if(element.sumInsured == 0){
+                 this.showinsuredMemberSum = false
+                }
+             });
+        }
+       
+        if(this.healthInsuranceForm.get('PlanType').value == '8'){
+            this.showSumAssured = true;
+        }else{
+            this.showSumAssured = false;
+        }
+        if(this.healthInsuranceForm.get('planDetails').value != '0'){
+            this.showDeductibleSum = true;
+        }else{
+            this.showDeductibleSum = false;
+        }
+        
+        this.ownerData = { Fmember: this.nomineesListFM, controleData: this.healthInsuranceForm };
+        this.bankAccountDetails = { accountList: this.accountList, controleData: this.healthInsuranceForm };
 
         // this.finalCashFlowData = [];
         // ==============owner-nominee Data ========================\\
@@ -400,12 +460,13 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
 
     addTransaction(data) {
         this.insuredMembersForm.push(this.fb.group({
-            insuredMembers: [data ? data.name : ''],
-            sumAssured: [data ? data.sumInsured : ''],
+            insuredMembers: [data ? data.name : '',[Validators.required]],
+            sumAssured: [data ? data.sumInsured : '',[Validators.required]],
             id: [data ? data.id : ''],
             relationshipId: [data ? data.relationshipId : ''],
             familyMemberId: [data ? data.familyMemberId : '']
         }));
+        this.onChangeSetErrorsType(this.healthInsuranceForm.get('PlanType').value,'planType')
     }
 
     removeTransaction(item) {
@@ -457,19 +518,16 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         let finalMemberList = this.healthInsuranceForm.get('InsuredMemberForm') as FormArray;
         finalMemberList.controls.forEach(element => {
             let obj =
-                {
-                    familyMemberId: element.get('familyMemberId').value,
-                    sumInsured: element.get('sumAssured').value,
-                    relationshipId: element.get('relationshipId').value,
-                    insuredOrNominee: 1,
-                    id: (element.get('id').value) ? element.get('id').value : null
-                };
+            {
+                familyMemberId: element.get('familyMemberId').value,
+                sumInsured: element.get('sumAssured').value,
+                relationshipId: element.get('relationshipId').value,
+                insuredOrNominee: 1,
+                id: (element.get('id').value) ? element.get('id').value : null
+            };
             memberList.push(obj);
         });
         if (this.healthInsuranceForm.invalid) {
-            if(this.healthInsuranceForm.get('planDetails').value == '0'){
-                this.healthInsuranceForm.controls['deductibleAmt'].setErrors({'required': true});
-              }
             this.healthInsuranceForm.markAllAsTouched();
         } else {
             this.barButtonOptions.active = true;
@@ -496,6 +554,8 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
                 'policyInceptionDate': this.healthInsuranceForm.get('inceptionDate').value,
                 'insuranceSubTypeId': this.inputData.insuranceSubTypeId,
                 'premiumAmount': this.healthInsuranceForm.get('premium').value,
+                'policyFeatureId': this.healthInsuranceForm.get('planDetails').value,
+                'sumInsuredIdv': this.healthInsuranceForm.get('sumAssuredIdv').value,
                 'id': (this.id) ? this.id : null,
                 'addOns': [],
                 insuredMembers: memberList,
@@ -506,6 +566,13 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
                     'addOnId': (this.healthInsuranceForm.get('additionalCovers').value),
                     'addOnSumInsured': this.healthInsuranceForm.get('coversAmount').value
                 }];
+            }
+            if (obj.insuredMembers.length > 0) {
+                obj.insuredMembers.forEach(element => {
+                    if (element.sumInsured == '') {
+                        element.sumInsured = null
+                    }
+                });
             }
             if (obj.nominees.length > 0) {
                 obj.nominees.forEach((element, index) => {
@@ -533,10 +600,10 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
                         console.log(data);
                         this.eventService.openSnackBar('Updated successfully!', 'dismiss');
                         const insuranceData =
-                            {
-                                insuranceTypeId: this.inputData.insuranceTypeId,
-                                insuranceSubTypeId: this.inputData.insuranceSubTypeId
-                            };
+                        {
+                            insuranceTypeId: this.inputData.insuranceTypeId,
+                            insuranceSubTypeId: this.inputData.insuranceSubTypeId
+                        };
                         this.close(insuranceData);
                     }
                 );
@@ -547,10 +614,10 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
                         console.log(data);
                         this.eventService.openSnackBar('Added successfully!', 'dismiss');
                         const insuranceData =
-                            {
-                                insuranceTypeId: this.inputData.insuranceTypeId,
-                                insuranceSubTypeId: this.inputData.insuranceSubTypeId
-                            };
+                        {
+                            insuranceTypeId: this.inputData.insuranceTypeId,
+                            insuranceSubTypeId: this.inputData.insuranceSubTypeId
+                        };
                         this.close(insuranceData);
                     }
                 );
@@ -560,7 +627,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
 
     close(data) {
         this.addMoreFlag = false;
-        this.subInjectService.changeNewRightSliderState({state: 'close', data});
+        this.subInjectService.changeNewRightSliderState({ state: 'close', data });
     }
 
 }

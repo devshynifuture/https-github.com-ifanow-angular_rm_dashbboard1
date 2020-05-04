@@ -258,8 +258,9 @@ export class FileOrderingBulkComponent implements OnInit {
           // this.getClientSubscriptionList();
           if (UtilService.isRefreshRequired(upperSliderData)) {
             this.fileOrderBulkHistoryListGet({
-              days: this.days,
-              rtId: this.rtId,
+              days: this.filterForm.get("filterByPeriod").value.value,
+              rtId: this.filterForm.get("filterByRta").value.value,
+              rmId: this.filterForm.get("filterByRmName").value.id,
             });
           }
           subscription.unsubscribe();
@@ -283,8 +284,9 @@ export class FileOrderingBulkComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.fileOrderBulkHistoryListGet({
-              days: this.days,
-              rtId: this.rtId,
+              days: this.filterForm.get("filterByPeriod").value.value,
+              rtId: this.filterForm.get("filterByRta").value.value,
+              rmId: this.filterForm.get("filterByRmName").value.id,
             });
             console.log(
               "this is sidebardata in subs subs 3 ani: ",

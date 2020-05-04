@@ -5,7 +5,7 @@ import {OnlineTransactionService} from '../../../online-transaction.service';
 import {ProcessTransactionService} from '../process-transaction.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {UtilService} from '../../../../../../../services/util.service';
+import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
 
 @Component({
   selector: 'app-sip-transaction',
@@ -71,6 +71,7 @@ export class SipTransactionComponent implements OnInit {
   editedId: any;
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount', 'icons'];
   umrn: any;
+  validatorType = ValidatorType;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               private processTransaction: ProcessTransactionService, private fb: FormBuilder,
@@ -137,8 +138,17 @@ export class SipTransactionComponent implements OnInit {
     this.selectScheme = value;
   }
 
-  getSchemeList(value) {
-    this.showSpinner = true;
+  getSchemeList(data) {
+
+    if (data.target.value == '') {
+      this.scheme = undefined;
+      this.schemeList = undefined;
+      this.sipTransaction.controls.employeeContry.setValidators([Validators.min(0)]);
+      this.sipTransaction.controls.employeeContry.setValue();
+      this.schemeDetails.minAmount = 0;
+      return;
+    }
+    this.getNewSchemesRes([]);
     if (this.sipTransaction.get('schemeSip').invalid) {
       this.showSpinner = false;
       Object.assign(this.transactionSummary, {schemeName: ''});
@@ -147,7 +157,7 @@ export class SipTransactionComponent implements OnInit {
       (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
     }
     const obj = {
-      searchQuery: value,
+      searchQuery: data.target.value,
       bseOrderType: 'SIP',
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       advisorId: this.getDataSummary.defaultClient.advisorId,
@@ -158,10 +168,14 @@ export class SipTransactionComponent implements OnInit {
       holdingType: this.getDataSummary.defaultClient.holdingType,
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     };
-    if (value.length > 2) {
+    if (data.target.value.length > 2) {
+      this.showSpinner = true;
       if (this.selectScheme == 2) {
         this.onlineTransact.getNewSchemes(obj).subscribe(
-          data => this.getNewSchemesRes(data), (error) => {
+          data => {
+            this.getNewSchemesRes(data);
+            this.getNSEAchmandate();
+          }, (error) => {
             this.showSpinner = false;
             this.sipTransaction.get('schemeSip').setErrors({setValue: error.message});
             this.sipTransaction.get('schemeSip').markAsTouched();
@@ -184,7 +198,6 @@ export class SipTransactionComponent implements OnInit {
   }
 
   getNewSchemesRes(data) {
-    this.getNSEAchmandate();
     this.showSpinner = false;
     console.log('new schemes', data);
     this.schemeList = data;

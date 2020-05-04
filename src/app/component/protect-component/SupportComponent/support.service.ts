@@ -101,6 +101,10 @@ export class SupportService {
   getMyIFAReconSummary(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MY_IFA_REC_SUMMARY, data);
   }
+
+  getCommentCount(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_COMMENT_COUNT_RM_ADMIN, data);
+  }
   // observable data sending
 
   sendDataThroughObs(value) {

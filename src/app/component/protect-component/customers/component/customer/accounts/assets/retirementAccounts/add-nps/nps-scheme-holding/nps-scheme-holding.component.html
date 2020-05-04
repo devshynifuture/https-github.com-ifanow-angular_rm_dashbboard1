@@ -121,14 +121,28 @@
             [formGroupName]="i">
             <div class="col-md-4 pl-0">
                 <div class="form-group mb-0">
+                    <!-- <mat-form-field class="example-full-width">
+                        <input 
+                            type="text"
+                            matInput
+                            [formControl]="myControl"
+                            [matAutocomplete]="auto" [formControlName]="schemeId" class="form-control br-0">
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"  [displayWith]="displayScheme">
+                            <mat-option *ngFor="let s of filteredOptions " (click)="setGroupValue({scheme:s, index: i})" [value]="{scheme:s, index: i}">{{s.name}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error class="f-12">
+                            This field is required
+                        </mat-error>
+                      </mat-form-field> -->
                     <mat-form-field>
                         <!-- <input autocomplete="off" matInput aria-label="State" [matAutocomplete]="auto"
-                            class="form-control br-0 pl-8" formControlName="schemeName">
+                            class="form-control br-0 pl-8" formControlName="schemeId">
                         <mat-autocomplete #auto="matAutocomplete">
                             <mat-option *ngFor="let s of schemeList" [value]="s.id">{{s.name}}
                             </mat-option>
                         </mat-autocomplete> -->
-                        <mat-select matInput formControlName="schemeName" class="form-control br-0">
+                        <mat-select matInput formControlName="schemeId" class="form-control br-0">
                             <mat-option [value]='0' disabled>Select scheme</mat-option>
                             <mat-option *ngFor="let s of schemeList" [value]="s.id">{{s.name}}
                             </mat-option>

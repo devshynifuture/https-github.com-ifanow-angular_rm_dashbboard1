@@ -22,6 +22,7 @@ import { ExcelService } from '../../../../excel.service';
 import { DetailedViewNpsComponent } from '../add-nps/detailed-view-nps/detailed-view-nps.component';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { DatailedViewNpsHoldingsComponent } from '../add-nps/datailed-view-nps-holdings/datailed-view-nps-holdings.component';
 
 
 @Component({
@@ -355,7 +356,7 @@ export class RetirementAccountComponent implements OnInit {
   }
 
   openDetailedView(data, flag) {
-    let component = (flag == 'detailedViewEpf') ? DetailedViewEPFComponent : (flag == 'detailedViewNps') ? DetailedViewNpsComponent : (flag == 'detailedViewGratuity') ? DetailedViewGratuityComponent : (flag == 'detailedViewSuperannuation') ? DetaildedViewSuperannuationComponent : DetailedViewEPSComponent;
+    let component = (flag == 'detailedViewEpf') ? DetailedViewEPFComponent : (flag == 'detailedViewNps') ? DetailedViewNpsComponent : (flag == 'detailedViewGratuity') ? DetailedViewGratuityComponent : (flag == 'detailedViewSuperannuation') ? DetaildedViewSuperannuationComponent : flag == 'detailedViewNpsHolding'?DatailedViewNpsHoldingsComponent : DetailedViewEPSComponent;
     const fragmentData = {
       flag: 'addEPF',
       data,
@@ -527,12 +528,12 @@ export class RetirementAccountComponent implements OnInit {
   }
   getNPSRes(data) {
     this.isLoading = false;
-    this.totalContribution = data.totalContribution;
-    this.totalCurrentValue = data.totalCurrentValue;
+    this.totalContribution = data.sumOfAmountInvested;
+    this.totalCurrentValue = data.sumOfCurrentValue;
     if (data != undefined) {
-      if (data.npsList) {
+      if (data.assetList) {
         console.log('getNPSRes =', data);
-        this.dataSource.data = data.npsList;
+        this.dataSource.data = data.assetList;
         this.dataSource.sort = this.npsListTableSort;
         UtilService.checkStatusId(this.dataSource.filteredData);
       }

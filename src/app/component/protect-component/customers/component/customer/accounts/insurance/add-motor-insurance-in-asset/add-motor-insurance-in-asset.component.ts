@@ -282,7 +282,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
       })]),
       
       addOnForm: this.fb.array([this.fb.group({
-        additionalCovers :['',[Validators.required]],
+        additionalCovers :[''],
         addOnSumInsured:null
       })])
     })
@@ -406,12 +406,17 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
     let addOns = [];
     let addOnList = this.motorInsuranceForm.get('addOnForm') as FormArray
     addOnList.controls.forEach(element => {
-      let obj =
-      {
-        addOnId : element.get('additionalCovers').value,
-        addOnSumInsured:null
+      if( element.get('additionalCovers').value){
+        let obj =
+        {
+          addOnId : element.get('additionalCovers').value,
+          addOnSumInsured:null
+        }
+        addOns.push(obj)
+      } else{
+        addOns =[];
       }
-      addOns.push(obj)
+
     })
     if (this.motorInsuranceForm.invalid) {
       this.motorInsuranceForm.markAllAsTouched();

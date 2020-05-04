@@ -109,6 +109,7 @@ import { AddHomeInsuranceInAssetComponent } from './component/protect-component/
 import { AddFireAndPerilsInsuranceInAssetComponent } from './component/protect-component/customers/component/customer/accounts/insurance/add-fire-and-perils-insurance-in-asset/add-fire-and-perils-insurance-in-asset.component';
 import { DetailedViewGeneralInsuranceComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/detailed-view-general-insurance/detailed-view-general-insurance.component';
 import { DetailedViewLifeInsuranceComponent } from './component/protect-component/customers/component/customer/accounts/assets/smallSavingScheme/common-component/detailed-view-life-insurance/detailed-view-life-insurance.component';
+import { DatailedViewNpsHoldingsComponent } from './component/protect-component/customers/component/customer/accounts/assets/retirementAccounts/add-nps/datailed-view-nps-holdings/datailed-view-nps-holdings.component';
 // tslint:disable-next-line:max-line-length
 // import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
@@ -206,6 +207,7 @@ export const componentList = [
   DetailedPoMisComponent,
   DetailedViewRealEstateComponent,
   DetaildedViewSuperannuationComponent,
+  DatailedViewNpsHoldingsComponent,
   CopyDocumentsComponent,
   GetSharebleLinkComponent,
   BottomSheetComponent,

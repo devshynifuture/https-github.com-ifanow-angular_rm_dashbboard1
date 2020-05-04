@@ -8,6 +8,7 @@ import {SubscriptionInject} from 'src/app/component/protect-component/AdviserCom
 })
 export class DetailedNscComponent implements OnInit {
   nominee: any;
+  isLoading = false;
 
   constructor(private subInjectService: SubscriptionInject) {
   }
@@ -15,7 +16,7 @@ export class DetailedNscComponent implements OnInit {
   data;
 
   ngOnInit() {
-    this.nominee=this.data.nominees;
+    this.nominee = this.data.nominees;
   }
 
   close() {

@@ -1,5 +1,5 @@
-import { SubscriptionInject } from './../../../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { Component, OnInit } from '@angular/core';
+import {SubscriptionInject} from './../../../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-detailed-po-rd',
@@ -9,14 +9,17 @@ import { Component, OnInit } from '@angular/core';
 export class DetailedPoRdComponent implements OnInit {
   data;
   nominee: any;
-  constructor(private subInjectService: SubscriptionInject) { }
+  isLoading = false;
+
+  constructor(private subInjectService: SubscriptionInject) {
+  }
 
   ngOnInit() {
-    this.nominee=this.data.nominees
+    this.nominee = this.data.nominees;
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
 

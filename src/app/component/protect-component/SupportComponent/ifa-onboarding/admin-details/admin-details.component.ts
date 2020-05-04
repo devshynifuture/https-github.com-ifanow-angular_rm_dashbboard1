@@ -32,6 +32,7 @@ export class AdminDetailsComponent implements OnInit {
   stage: any;
   isEditRm = false;
   showContent: boolean = true;
+  stageCommentCount = [];
   rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
   @Input()
   set data(data) {
@@ -174,6 +175,13 @@ export class AdminDetailsComponent implements OnInit {
       (err) => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
+
+  getStageCommentCount(id) {
+    const data = {
+      taskLevelChatId: id
+    }
+    return this.supportService.getCommentCount(data)
+  }
   getstageComment(stage, flag) {
     this.isLoading = true;
     let obj = {
@@ -238,6 +246,7 @@ export class AdminDetailsComponent implements OnInit {
       stage.isShowComment = true;
     }
     this.getstageComment(stage, flag);
+    // this.getStageCommentCount(stage);
   }
   updateActivityCompleteness(stage, event) {
     let obj = {
@@ -271,7 +280,7 @@ export class AdminDetailsComponent implements OnInit {
           this.isActivity = true;
           this.stageList = data.stageList;
           this.activityId = data.activityId;
-          this.stageList.forEach((element) => {
+          this.stageList.forEach((element, index) => {
             element.isShowComment = false;
           });
           this.activityCommentList = data.activityCommentList;
@@ -282,6 +291,7 @@ export class AdminDetailsComponent implements OnInit {
             element.isEdit = true;
           });
           this.isSuccess = false;
+          this.getStageCountData();
         } else {
           this.activityCommentList = null;
           this.stageList = null;
@@ -290,6 +300,28 @@ export class AdminDetailsComponent implements OnInit {
       },
       (err) => this.eventService.openSnackBar(err, "Dismiss")
     );
+  }
+
+  getStageCountData() {
+    let arrayOfIds = [];
+    this.stageList.forEach(element => {
+      arrayOfIds.push(element.taskLevelId);
+    });
+    this.getStageCommentCount(arrayOfIds)
+      .subscribe(res => {
+        if (res) {
+          this.stageList.forEach(element => {
+            res.forEach(element1 => {
+              if (element.taskLevelId === element1.id) {
+                element.stageCommentCount = element1.commentCount;
+                if (element.taskLevelId === 0) {
+                  element.stageCommentCount = '';
+                }
+              }
+            });
+          });
+        }
+      });
   }
   updateIFAOnboardingOverview() {
     let obj = {

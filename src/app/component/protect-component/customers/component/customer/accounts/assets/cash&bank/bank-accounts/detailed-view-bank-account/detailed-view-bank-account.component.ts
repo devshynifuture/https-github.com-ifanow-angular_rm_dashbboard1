@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-detailed-view-bank-account',
@@ -11,6 +11,7 @@ export class DetailedViewBankAccountComponent implements OnInit {
   _data: any;
   ownerName: any;
   bankAccount: any;
+  isLoading = false;
 
   constructor(private subInjectService: SubscriptionInject) {
   }
@@ -19,22 +20,24 @@ export class DetailedViewBankAccountComponent implements OnInit {
   set data(inputData) {
     this._data = inputData;
     console.log('AddLiabilitiesComponent Input data : ', this._data);
-    this.bankAccount = this._data
+    this.bankAccount = this._data;
 
   }
 
   get data() {
     return this._data;
   }
+
   ngOnInit() {
     console.log('AddLiabilitiesComponent ngOnInit : ', this._data);
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
 }
+
 export interface PeriodicElement {
   name: string;
   position: string;

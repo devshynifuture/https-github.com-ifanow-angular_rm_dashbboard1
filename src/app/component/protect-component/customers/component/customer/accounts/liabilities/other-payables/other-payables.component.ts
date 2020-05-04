@@ -12,6 +12,7 @@ import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../excel.service';
 import { MathUtilService } from '../../../../../../../../services/math-util.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
 
 @Component({
   selector: 'app-other-payables',
@@ -46,7 +47,7 @@ export class OtherPayablesComponent implements OnInit {
   personalProfileData: any;
   constructor(public custmService: CustomerService, public util: UtilService,
     public subInjectService: SubscriptionInject, public eventService: EventService,
-    public dialog: MatDialog,private excel :ExcelGenService) {
+    public dialog: MatDialog,private excel :ExcelGenService,private pdfGen:PdfGenService) {
   }
   ngAfterViewInit(): void {
       this.dataSource.sort = this.sort;
@@ -120,6 +121,15 @@ export class OtherPayablesComponent implements OnInit {
       this.fragmentData.isSpinner = false;
     }
   }
+  // generatePdf() {
+  //   this.fragmentData.isSpinner = true;
+  //   let para = document.getElementById('template');
+  //   this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
+  // }
+  generatePdf(tableTitle){
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.pdfGen.generatePdf(rows, tableTitle);
+  }
   filterOtherPayable(key: string, value: any) {
     let dataFiltered;
 
@@ -142,11 +152,7 @@ export class OtherPayablesComponent implements OnInit {
     }
    
   }
-  generatePdf() {
-    this.fragmentData.isSpinner = true;
-    let para = document.getElementById('template');
-    this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
-  }
+
   getStatusId(data){
     data.forEach(obj => {
       if (obj.dateOfRepayment < new Date()) {
