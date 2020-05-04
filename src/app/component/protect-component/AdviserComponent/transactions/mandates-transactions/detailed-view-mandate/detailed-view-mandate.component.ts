@@ -14,6 +14,7 @@ export class DetailedViewMandateComponent implements OnInit {
   data;
   details: any;
   transactionData:any;
+  isLoading:Boolean =false;
   statusData = [
     {
       name: 'Pending authorization', checked: false, status: 0

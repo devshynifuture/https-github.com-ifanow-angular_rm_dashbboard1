@@ -35,7 +35,7 @@
                         Total contribution
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        <div *ngIf="npsData.totalAmountInvested != 0">{{!isLoading? "₹" : ""}}     <span appFormatNumber>{{npsData.totalAmountInvested}}</span>
+                        <div *ngIf="npsData.totalAmountInvested != 0">₹<span appFormatNumber>{{npsData.totalAmountInvested}}</span>
                         </div>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                         Current valuation
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        <div *ngIf="npsData.currentValuation != 0">{{!isLoading? "₹" : ""}}     <span appFormatNumber>{{npsData.currentValuation}}</span>
+                        <div *ngIf="npsData.currentValuation != 0">₹<span appFormatNumber>{{npsData.currentValuation}}</span>
                         </div>
                     </div>
                 </div>
