@@ -445,7 +445,7 @@ export const appConfig = {
   SIP_BSE: 'bse/order/create',
   BSE_TRANSACTION: 'bse/order/create',
   UPLOAD_FILE_IMAGE: 'user/register/image/upload',
-  //  NSE_ACHMANDATE: 'nse/ach-mandate/report/get',
+  MANDATE_UPLOAD: 'mandate/image/upload',
   BANK_DETAILS_NSE: 'nse/iin/bank-detail/get',
   GETIIN_DETAILS: 'nse/iin/detail/get',
   GET_FOLIO_MAPPED: 'mutual-fund/folios/mapped/get',

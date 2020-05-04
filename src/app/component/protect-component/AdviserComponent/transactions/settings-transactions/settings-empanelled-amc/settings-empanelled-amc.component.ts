@@ -13,7 +13,7 @@ export class SettingsEmpanelledAmcComponent implements OnInit {
   displayedColumns;
   dataSource;
   advisorId: any;
-  isLoading = false
+  isLoading = false;
   constructor(private tranService: OnlineTransactionService, private eventService: EventService) { }
   columns = [];
   ngOnInit() {

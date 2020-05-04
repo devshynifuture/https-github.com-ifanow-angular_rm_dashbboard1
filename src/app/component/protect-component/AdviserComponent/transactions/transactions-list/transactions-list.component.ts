@@ -89,12 +89,17 @@ export class TransactionsListComponent implements OnInit {
     };
     this.tranService.getSearchScheme(obj).subscribe(
       data => {
-        console.log(data);
-        this.isLoading = false;
-        this.dataSource.data = TransactionEnumService.setPlatformEnum(data);
-        this.dataSource.data = TransactionEnumService.setTransactionStatus(data);
-        this.dataSource.sort = this.sort;
-        console.log(this.dataSource.data);
+        if(data){
+          this.isLoading = false;
+          this.dataSource.data = TransactionEnumService.setPlatformEnum(data);
+          this.dataSource.data = TransactionEnumService.setTransactionStatus(data);
+          this.dataSource.sort = this.sort;
+          console.log(this.dataSource.data);
+        }else{
+          this.isLoading = false;
+          this.eventService.openSnackBar('no transaction found', 'Dismiss');
+          this.dataSource.data = [];
+        }
       },
       err => {
         this.isLoading = false;

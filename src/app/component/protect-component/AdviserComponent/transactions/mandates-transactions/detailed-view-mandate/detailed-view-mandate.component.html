@@ -19,7 +19,7 @@
                         Platform
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{ (details.aggregatorType == 1)? 'NSE' : 'BSE'  || '-' }}
+                        {{ (details.aggregatorType == 1)? 'NSE' : 'BSE' || '-' }}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -111,36 +111,50 @@
 <div class="p-28 pb-100">
 
     <div class="row">
-        <div class="col-md-5 p-0">
+        <div class="col-md-9 p-0">
             <h5 class="m-0 f-500 text-black">Status</h5>
         </div>
-        <div class="col-md-5 p-0 text-right right">
-            <button mat-stroked-button class="primary-sm" (click)="refresh(transactionData)">REFRESH</button>
+        <div class="col-md-1 p-0 ">
+            <mat-spinner class="mr-4 mb-4" *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
         </div>
-        <div class="col-md-2 p-0 mt-12">
-            <mat-spinner class="mt-4" *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
+        <div class="col-md-2 p-0 text-right right">
+            <button mat-stroked-button class="primary-sm" (click)="refresh(details)">REFRESH</button>
         </div>
+
     </div>
     <div class="row" *ngIf="details">
-        <div class="col-md-12 p-0">
-        <button *ngIf="details.chequeUploadFlag == 0">
-            <input (change)="getFileDetails($event)" class="inputfile inputfile-3" id="file-3" multiple
+        <div class="col-md-12 mt-8 p-0">
+
+            <div class="custom-file mb-12" *ngIf="details.chequeUploadFlag == 0">
+                <input (change)="getFileDetails($event)" id="file-3" multiple type="file" class="custom-file-input" lang="pl-Pl">
+                <label class="custom-file-label" for="customFileLang">Upload bank proof</label>
+            </div>
+
+            <div class="custom-file" *ngIf="details.formUploadFlag == 0">
+                <input (change)="getFileDetails($event)" id="file-4" multiple type="file" class="custom-file-input" lang="pl-Pl">
+                <label class="custom-file-label" for="customFileLang">Upload mandate form</label>
+            </div>
+
+            <!-- <button *ngIf="details.chequeUploadFlag == 0">
+            <input (change)="getFileDetails($event,4)" class="inputfile inputfile-3" id="file-3" multiple
             type="file">
             <label class="uploadLabel c-p f-14 c-p" for="file-3">
                 <img class="mr-8" src="assets/images/svg/new-upload.svg">
-                <span>Upload bank proof</span></label>
+                <span>Upload check</span></label>
         </button>
         <button *ngIf="details.formUploadFlag == 0">
-            <input (change)="getFileDetails($event)" class="inputfile inputfile-3" id="file-4" multiple
+            <input (change)="getFileDetails($event,2)" class="inputfile inputfile-3" id="file-4" multiple
             type="file">
             <label class="uploadLabel c-p f-14 c-p" for="file-4">
                 <img class="mr-8" src="assets/images/svg/new-upload.svg">
                 <span>Upload mandate form</span></label>
-        </button>
+        </button> -->
         </div>
     </div>
-    <div>
-        <div class="circleGreen" *ngFor="let singleStep of statusDetails">
+
+
+    <div class="mt-20">
+        <div class="circleGreen " *ngFor="let singleStep of statusDetails">
             <div class="d-flex">
                 <div class="circle1" *ngIf="singleStep.checked == true">
                     <i class="material-icons text-success">
