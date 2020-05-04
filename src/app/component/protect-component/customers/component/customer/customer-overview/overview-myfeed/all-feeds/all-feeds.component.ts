@@ -123,7 +123,10 @@ export class AllFeedsComponent implements OnInit {
   adviseData:any = null;
   goalsData:any[] = [];
   cashflowData:any = {};
-  customerProfile:any = {};
+  customerProfile:any = {
+    familyMemberCount:0,
+    completenessStatus: 0,
+  };
 
 
   ngOnInit() {
@@ -151,7 +154,8 @@ export class AllFeedsComponent implements OnInit {
       res => {
         if(res == null) {
           this.customerProfile = {
-            
+            familyMemberCount:0,
+            completenessStatus: 0,
           }
         } else {
           this.customerProfile = res;
