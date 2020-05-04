@@ -51,30 +51,34 @@ export class DetailedViewMandateComponent implements OnInit {
   }
 
   getDataStatus(data) {
+    this.isLoading = true
     this.statusDetails = this.statusData;
     this.statusDetails.forEach(element => {
       (element.status <= data.status) ? element.checked = true : element.checked = false;
     });
+    this.isLoading = false
   }
 
   refresh(value) {
     console.log(value);
+    this.getDataStatus(value)
   }
 
   close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
-  getFileDetails(e) {
+  getFileDetails(e,flag) {
     console.log('file', e);
     this.file = e.target.files[0];
     console.log('file', e);
     const file = e.target.files[0];
     const requestMap = {
       tpUserRequestId: 1,
-      documentType: 1
+      documentType: flag,
+      tpMandateDetailId:this.details.id
     };
-    FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
+    FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.MANDATE_UPLOAD,
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
         console.log('getFileDetails uploadFileToServer callback item : ', item);
         console.log('getFileDetails uploadFileToServer callback status : ', status);

@@ -271,6 +271,9 @@ export class InsuranceComponent implements OnInit {
         this.totalSumAssuredLifeIns += (element.sumAssured) ? element.sumAssured : 0
       });
     } else {
+      this.getCount();
+
+      
       this.dataSource.data = [];
     }
   }
@@ -337,6 +340,7 @@ export class InsuranceComponent implements OnInit {
       this.isLoading = false;
     } else {
       this.isLoading = false;
+      this.getCount();
       this.dataSource.data = [];
     }
   }
@@ -391,6 +395,7 @@ export class InsuranceComponent implements OnInit {
       this.isLoading = false;
     } else {
       this.isLoading = false;
+      this.getCount();
       this.dataSourceGeneralInsurance.data = [];
 
     }

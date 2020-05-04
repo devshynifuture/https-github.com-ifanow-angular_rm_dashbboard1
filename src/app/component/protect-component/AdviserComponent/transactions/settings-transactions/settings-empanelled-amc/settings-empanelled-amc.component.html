@@ -3,17 +3,15 @@
         <h4 class="m-0 text-black">Empanelled AMCs</h4>
     </div>
     <div class="col-md-6 clientsetting-transactions">
-        <table mat-table [dataSource]="dataSource" appSkeletonLoading [appSkeletonLoading]="isLoading"
-            class="mt-20 skeletonAnimation" id="table-low">
+        <table mat-table [dataSource]="dataSource" appSkeletonLoading [appSkeletonLoading]="isLoading" class="mt-20 skeletonAnimation" id="table-low">
             <ng-container matColumnDef="{{column}}" *ngFor="let column of columns">
                 <th class="br" mat-header-cell *matHeaderCellDef> {{column}} </th>
                 <td class="br" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        <span *ngIf="column=='AMC name'">
-                            <div class="bar">
-                                {{element.amcName}}
-                            </div>
-                        </span>
+                            {{element.amcName}}
+                    </div>
+
+                    <div class="bar">
                         <span *ngFor="let singleBroker of element.data">
                             <span *ngIf="singleBroker.brokerCode==column">
                                 <mat-checkbox *ngIf="column!='AMC name'"
@@ -23,6 +21,7 @@
                             </span>
                         </span>
                     </div>
+
                 </td>
             </ng-container>
 

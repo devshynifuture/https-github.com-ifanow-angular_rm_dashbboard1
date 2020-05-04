@@ -33,13 +33,15 @@ export class MutualFundOverviewComponent implements OnInit {
   hybridCurrentValue: any;
   solution_OrientedCurrentValue: any;
   otherCurrentValue: any;
-  dataSource4: Array<any> = [{}, {}, {}];
+  dataSource4= new MatTableDataSource([{}, {}, {}]);
   filteredArray: any[];
+  dataSource = new MatTableDataSource([{}, {}, {}]);
+  dataSource2 = new MatTableDataSource([{}, {}, {}]);
+  dataSource3 = new MatTableDataSource([{}, {}, {}]);
+  datasource1 =new MatTableDataSource([{}, {}, {}]);
+
   subCategoryArray: any;
-  dataSource2;
-  dataSource;
   isLoading: boolean = false;
-  dataSource3;
   rightFilterData: any;
   showHideTable: any;
   showSummaryBar = true;
@@ -60,7 +62,6 @@ export class MutualFundOverviewComponent implements OnInit {
 
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
   displayedColumns1 = ['data', 'amts'];
-  datasource1 = [{}, {}, {}];
   @ViewChild('mfOverviewTemplate', { static: false }) mfOverviewTemplate: ElementRef;
 
   @Input() mutualFund;
@@ -68,9 +69,7 @@ export class MutualFundOverviewComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.getMutualFundData();
-    this.dataSource = [{}, {}, {}];
-    this.dataSource2 = [{}, {}, {}];
-    this.dataSource3 = [{}, {}, {}];
+  
     this.advisorData = this.MfServiceService.getPersonalDetails(this.advisorId);
     // this.getPersonalDetails(this.advisorId);
   }
@@ -134,7 +133,7 @@ export class MutualFundOverviewComponent implements OnInit {
     this.asyncFilter(filterData.mutualFundList, filterData.mutualFundCategoryMastersList)
     this.mfData = data;
     console.log(data);
-    this.dataSource4 = data.mutualFundCategoryMastersList; // category wise allocation
+    this.dataSource4 =  new MatTableDataSource(data.mutualFundCategoryMastersList); // category wise allocation
     this.getsubCategorywiseAllocation(data); // For subCategoryWiseAllocation
     this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
     this.schemeWiseAllocation(data); // for shemeWiseAllocation
@@ -179,24 +178,29 @@ export class MutualFundOverviewComponent implements OnInit {
   }
   getCashFlowStatus() {
     // Used for cashFlow status
-    this.datasource1 = [
-      { data: 'a. Investment', amts: (this.totalValue.totalTransactionAmt) ? this.totalValue.totalTransactionAmt : 0 },
-      { data: 'b. Switch In', amts: (this.totalValue.switchIn) ? this.totalValue.switchIn : 0 },
-      { data: 'c. Switch Out', amts: (this.totalValue.withdrawals) ? this.totalValue.withdrawals : 0 },
-      { data: 'd. Redemption', amts: (this.totalValue.redemption) ? this.totalValue.redemption : 0 },
-      { data: 'e. Dividend Payout', amts: (this.totalValue.dividendPayout) ? this.totalValue.dividendPayout : 0 },
-      { data: 'f. Net Investment (a+b-c-d-e)', amts: (this.totalValue.netInvestment) ? this.totalValue.netInvestment : 0 },
-      { data: 'g. Market Value', amts: (this.totalValue.marketValue) ? this.totalValue.marketValue : 0 },
-      { data: 'h. Net Gain (g-f)', amts: (this.totalValue.netGain) ? this.totalValue.netGain : 0 },
-      { data: 'i. Realized XIRR (All Transactions)', amts: (this.totalValue.xirr) ? this.totalValue.xirr : 0 },
+    if(this.totalValue.totalTransactionAmt && this.totalValue.switchIn && this.totalValue.withdrawals && this.totalValue.redemption){
+      this.datasource1.data = [
+        { data: 'a. Investment', amts: (this.totalValue.totalTransactionAmt) ? this.totalValue.totalTransactionAmt : 0 },
+        { data: 'b. Switch In', amts: (this.totalValue.switchIn) ? this.totalValue.switchIn : 0 },
+        { data: 'c. Switch Out', amts: (this.totalValue.withdrawals) ? this.totalValue.withdrawals : 0 },
+        { data: 'd. Redemption', amts: (this.totalValue.redemption) ? this.totalValue.redemption : 0 },
+        { data: 'e. Dividend Payout', amts: (this.totalValue.dividendPayout) ? this.totalValue.dividendPayout : 0 },
+        { data: 'f. Net Investment (a+b-c-d-e)', amts: (this.totalValue.netInvestment) ? this.totalValue.netInvestment : 0 },
+        { data: 'g. Market Value', amts: (this.totalValue.marketValue) ? this.totalValue.marketValue : 0 },
+        { data: 'h. Net Gain (g-f)', amts: (this.totalValue.netGain) ? this.totalValue.netGain : 0 },
+        { data: 'i. Realized XIRR (All Transactions)', amts: (this.totalValue.xirr) ? this.totalValue.xirr : 0 },
+  
+      ];
+    }else{
+      this.datasource1.data=[];
+    }
 
-    ];
   }
   getsubCategorywiseAllocation(data) {
     this.isLoading = true;
     this.changeInput.emit(true);
     this.filteredArray = this.MfServiceService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
-    if (this.dataSource3.length > 0) {
+    if (this.dataSource3.data.length > 0) {
       this.dataSource3 = new MatTableDataSource(this.filteredArray);
       this.isLoading = false;
       this.changeInput.emit(false);
@@ -206,7 +210,7 @@ export class MutualFundOverviewComponent implements OnInit {
   getFamilyMemberWiseAllocation(data) {
     this.isLoading = true;
     this.changeInput.emit(true);
-    if (this.dataSource.length > 0) {
+    if (this.dataSource.data.length > 0) {
       this.dataSource = new MatTableDataSource(data.family_member_list);
       this.isLoading = false;
       this.changeInput.emit(false);
@@ -217,7 +221,7 @@ export class MutualFundOverviewComponent implements OnInit {
     this.isLoading = true;
     this.changeInput.emit(true);
     this.filteredArray = this.MfServiceService.filter(this.filteredArray, 'mutualFundSchemeMaster');
-    if (this.dataSource2.length > 0) {
+    if (this.dataSource2.data.length > 0) {
       this.dataSource2 = new MatTableDataSource(this.filteredArray);
       this.isLoading = false;
       this.changeInput.emit(false);
@@ -385,7 +389,7 @@ export class MutualFundOverviewComponent implements OnInit {
           if (sideBarData.data && sideBarData.data != 'Close') {
             this.totalValue = {};
             this.dataSource2.data = [{}, {}, {}]
-            this.dataSource4 = [{}, {}, {}]
+            this.dataSource4.data = [{}, {}, {}]
             this.dataSource.data = [{}, {}, {}]
             this.dataSource3.data = [{}, {}, {}]
             this.isLoading = true;

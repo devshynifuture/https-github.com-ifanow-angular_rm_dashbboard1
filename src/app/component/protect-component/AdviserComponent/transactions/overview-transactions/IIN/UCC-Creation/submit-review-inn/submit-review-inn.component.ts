@@ -1,14 +1,14 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {OnlineTransactionService} from '../../../../online-transaction.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {FormBuilder, Validators} from '@angular/forms';
-import {EventService} from 'src/app/Data-service/event.service';
-import {FatcaDetailsInnComponent} from '../fatca-details-inn/fatca-details-inn.component';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {FileUploadService} from '../../../../../../../../services/file-upload.service';
-import {apiConfig} from '../../../../../../../../config/main-config';
-import {appConfig} from '../../../../../../../../config/component-config';
-import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import { Component, Input, OnInit } from '@angular/core';
+import { OnlineTransactionService } from '../../../../online-transaction.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { FormBuilder, Validators } from '@angular/forms';
+import { EventService } from 'src/app/Data-service/event.service';
+import { FatcaDetailsInnComponent } from '../fatca-details-inn/fatca-details-inn.component';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { FileUploadService } from '../../../../../../../../services/file-upload.service';
+import { apiConfig } from '../../../../../../../../config/main-config';
+import { appConfig } from '../../../../../../../../config/component-config';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-submit-review-inn',
@@ -40,10 +40,12 @@ export class SubmitReviewInnComponent implements OnInit {
   toSendObjNomineeList: any;
   clientData: any;
   validatorType = ValidatorType
+  paltform = '2';
+  BSEValue = '2';
 
 
   constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
-              private eventService: EventService) {
+    private eventService: EventService) {
   }
 
   @Input()
@@ -122,9 +124,7 @@ export class SubmitReviewInnComponent implements OnInit {
   getBSECredentialsRes(data) {
     console.log('getBSECredentialsRes', data);
     this.brokerCredentials = data;
-
-    this.bse = this.brokerCredentials.filter(element => element.aggregatorType == 2);
-    this.nse = this.brokerCredentials.filter(element => element.aggregatorType == 1);
+    this.bse = this.brokerCredentials.filter(element => element.aggregatorType == this.paltform);
     console.log('nse', this.nse);
     console.log('bse', this.bse);
   }
@@ -135,6 +135,7 @@ export class SubmitReviewInnComponent implements OnInit {
       bseBroker: [!data ? '' : data.bseBroker, [Validators.required]],
       accountNumber: [!data ? '' : data.accountNumber, [Validators.required]],
       nseBroker: [!data ? '' : data.nseBroker, [Validators.required]],
+      platform : [!data ? '2' : '2', [Validators.required]],
     });
   }
 
@@ -176,56 +177,55 @@ export class SubmitReviewInnComponent implements OnInit {
     this.selectedBrokerBse = value;
   }
 
-  addNse(value) {
+  selectPlatform(value) {
     console.log('mat check', value);
-    this.addedNse = value.checked;
+    this.paltform = value.value;
+    this.BSEValue = value.value
+    this.bse = this.brokerCredentials.filter(element => element.aggregatorType == this.paltform);
   }
 
-  addBse(value) {
-    console.log('mat check', value);
-    this.addedBse = value.checked;
-  }
+
 
   submit() {
     this.doneData = true;
-    this.toSendObjHolderList=[]
+    this.toSendObjHolderList = []
     this.toSendObjBankList = []
-    this.toSendObjNomineeList =[]
+    this.toSendObjNomineeList = []
     this.allData.holderList.forEach(element => {
-      if(element.address && element.email){
+      if (element.address && element.email) {
         this.toSendObjHolderList.push(element)
       }
-      
+
     });
     this.allData.bankDetailList.forEach(element => {
-      if(element.address && element.ifscCode){
+      if (element.address && element.ifscCode) {
         this.toSendObjBankList.push(element)
       }
-      
+
     });
     this.allData.nomineeList.forEach(element => {
-      if(element.address && element.nomineeName){
+      if (element.address && element.nomineeName) {
         this.toSendObjNomineeList.push(element)
       }
-    
+
     });
     this.allData.holderList = this.toSendObjHolderList
     this.allData.bankDetailList = this.toSendObjBankList
     this.allData.nomineeList = this.toSendObjNomineeList
     this.inputData.clientData = this.clientData
-    if (this.addedBse == true) {
+    if (this.paltform == '2') {
       const obj1 = {
         ownerName: this.allData.ownerName,
         holdingType: this.allData.holdingType,
-        taxStatus: this.allData.taxStatus,
+        taxStatus: (this.allData.taxStatus) ? this.allData.taxStatus : 'SI',
         holderList: this.toSendObjHolderList,
         bankDetailList: this.toSendObjBankList,
         nomineeList: this.toSendObjNomineeList,
         fatcaDetail: this.allData.fatcaDetail,
         id: 2,
         divPayMode: this.allData.bankDetailList[0].paymentMode,
-        occupationCode : this.allData.fatcaDetail.occupationCode,
-        clientCode:this.reviewSubmit.controls.accountNumber.value,
+        occupationCode: this.allData.fatcaDetail.occupationCode,
+        clientCode: this.reviewSubmit.controls.accountNumber.value,
         aggregatorType: this.selectedBrokerBse.aggregatorType,
         familyMemberId: this.allData.familyMemberId,
         clientId: this.allData.clientId,
@@ -241,19 +241,19 @@ export class SubmitReviewInnComponent implements OnInit {
           this.eventService.showErrorMessage(error);
         }
       );
-    } else if (this.addedNse == true) {
+    } else if (this.paltform == '1') {
       const obj1 = {
         ownerName: this.allData.ownerName,
         holdingType: this.allData.holdingType,
-        taxStatus: this.allData.taxStatus,
+        taxStatus: (this.allData.taxStatus) ? this.allData.taxStatus : 'SI',
         holderList: this.toSendObjHolderList,
         bankDetailList: this.toSendObjBankList,
         nomineeList: this.toSendObjNomineeList,
         fatcaDetail: this.allData.fatcaDetail,
         id: 2,
         divPayMode: this.allData.bankDetailList[0].paymentMode,
-        occupationCode : this.allData.fatcaDetail.occupationCode,
-        clientCode:this.reviewSubmit.controls.accountNumber.value,
+        occupationCode: this.allData.fatcaDetail.occupationCode,
+        clientCode: this.reviewSubmit.controls.accountNumber.value,
         aggregatorType: this.selectedBrokerBse.aggregatorType,
         familyMemberId: this.allData.familyMemberId,
         clientId: this.allData.clientId,
@@ -275,6 +275,8 @@ export class SubmitReviewInnComponent implements OnInit {
 
   createIINUCCRes(data) {
     console.log('data respose =', data);
+    this.eventService.showErrorMessage(data.statusString);
+    this.eventService.showErrorMessage(data.responseMessage);
   }
 
   uploadForm() {

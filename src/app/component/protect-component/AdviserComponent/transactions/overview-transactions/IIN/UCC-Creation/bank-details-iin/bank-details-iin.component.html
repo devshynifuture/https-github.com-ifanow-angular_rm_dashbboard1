@@ -60,10 +60,10 @@
                     </div>
                     <div class="col-md-3 form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
-                            <input placeholder="Enter MICR code" #micrCode matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" [maxlength]="9" formControlName="micrCode" type="text" class="form-control">
+                            <input placeholder="Enter MICR code" #micrNo matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" [maxlength]="9" formControlName="micrNo" type="text" class="form-control">
                             <mat-error class="">This field is required</mat-error>
                             <mat-hint align="end" class=" text-custom">
-                                {{micrCode.value.length}} / 9
+                                {{micrNo.value.length}} / 9
                             </mat-hint>
                         </mat-form-field>
                     </div>
@@ -154,7 +154,7 @@
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-20 m-0"> Branch Pin code </h3>
                     </div>
-                    <div class="col-md-3 form-group">
+                    <div class="col-md-3 pr-0 form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
                             <input placeholder="Enter Branch pin code" #pincode [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" (focusout)="getPostalPin($event.target.value)" appInputValueValidation matInput maxlength="10" formControlName="pinCode" type="text" class="form-control">
                             <mat-error class="">This field is required</mat-error>
@@ -163,7 +163,7 @@
                             </mat-hint>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-1 p-0 d-flex align-items-center justify-content-center mt-12">
+                    <div class="col-md-1 p-0 d-flex align-items-center justify-content-center mt-8">
                         <mat-spinner *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
                     </div>
                 </div>
@@ -259,7 +259,7 @@
                     </div>
                     <div class="col-md-3 form-group">
                         <mat-form-field class="ba-date">
-                            <input matInput class="form-control b-0" [min]="maxDate"  formControlName="mandateDate" [matDatepicker]="picker">
+                            <input matInput class="form-control b-0" [min]="maxDate" formControlName="mandateDate" [matDatepicker]="picker">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                             <mat-error class="">This field is required</mat-error>

@@ -6,3 +6,17 @@
     width: 140px;
     height: 40px;
 }
+
+.uploadInput {
+    position: absolute;
+    font-size: 50px;
+    opacity: 0;
+    right: 0;
+    top: 0;
+}
+
+.greenBtn {
+    background: #02B875;
+    color: #ffffff;
+    margin-left: 10px;
+}
