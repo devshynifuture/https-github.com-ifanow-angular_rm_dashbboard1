@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="col-md-12 mt-20 all-transactions" *ngIf="multiTransact == true && childTransactions.length > 0">
-            <table #tableEl mat-table [dataSource]="childTransactions" id="tbs" class="skeletonAnimation" appSkeletonLoading >
+            <table #tableEl mat-table [dataSource]="childTransactions" id="tbs" class="skeletonAnimation" appSkeletonLoading>
                 <ng-container matColumnDef="no">
                     <th *matHeaderCellDef class="br" mat-header-cell> No</th>
                     <td *matCellDef="let element let i = index;" class="br w-15 " mat-cell>
@@ -54,8 +54,8 @@
                     <td *matCellDef="let element" class="t-2" mat-cell>
                         <div>
                             <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
-                more_vert
-              </i>
+                                more_vert
+                            </i>
                             <mat-menu #menubank="matMenu">
                                 <button (click)="getdataForm(element,true)" mat-menu-item>Edit</button>
                                 <button mat-menu-item>Delete</button>
@@ -137,7 +137,7 @@
                 </div>
                 <div class="row pt-28">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 text-black pb-12">Select folio </h5>
+                        <h5 class="mb-8 text-black">Select folio </h5>
                     </div>
                     <div>
                         <mat-radio-group (ngModelChange)="selectExistingOrNew($event)" aria-label="Select an option" class="smallRadio" formControlName="folioSelection">
@@ -153,7 +153,7 @@
 
                 <div *ngIf="ExistingOrNew == 1" class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12">Select scheme folio</h5>
+                        <h5 class="mb-8 pt-28 text-black ">Select scheme folio</h5>
                     </div>
                     <div class="col-md-7 p-0">
                         <div class="form-group mb-0">
@@ -178,7 +178,7 @@
 
                 <div class="row">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black pb-12">Enter amount</h5>
+                        <h5 class="mb-8 pt-28 text-black  ">Enter amount</h5>
                     </div>
 
                     <div class="col-md-5 p-0">
@@ -202,7 +202,7 @@
                 <div *ngIf="platformType == 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               "
                     class="row">
                     <div class="col-md-5 p-0 text-left">
-                        <h5 class="m-0 pt-40 text-black pb-12">Select mode of payment</h5>
+                        <h5 class="mb-8 pt-40 text-black  ">Select mode of payment</h5>
                     </div>
                     <div class="col-md-12 p-0">
                         <mat-radio-group (ngModelChange)="selectPaymentMode($event)" aria-label="Select an option" class="mediumRadio" formControlName="modeOfPaymentSelection">
@@ -240,8 +240,8 @@
         <!-- commented for prod build -->
 
         <button (click)="AddMultiTransaction()" class="br-0 text-success f-14" mat-button mat-raised-button>
-      SAVE & ADD ANOTHER
-    </button>
+            SAVE & ADD ANOTHER
+        </button>
 
         <!-- <button mat-button class="btn-green text-white ml-12" (click)="purchase()">
         SAVE & PROCEED

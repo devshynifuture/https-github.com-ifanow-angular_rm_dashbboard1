@@ -21,7 +21,7 @@
                 <!-- [disabled]="tabData.id==undefined" -->
                 <mat-tab [disabled]="tabData.clientId==undefined&&tabData.familyMemberId==undefined" label=" More info">
                     <app-client-more-info (clientData)="getTabData($event)" (tabChange)="changeTab($event)"
-                        *ngIf="!tabData.clientType || (headingData.fieldFlag=='client' && tabData.clientType!='3')"
+                        *ngIf="!tabData.clientType || ((headingData.fieldFlag=='client' || headingData.fieldFlag=='lead') && tabData.clientType!='3')"
                         [data]="tabData" [fieldFlag]="headingData.fieldFlag">
                     </app-client-more-info>
                     <app-company-more-info (tabChange)="changeTab($event)"
