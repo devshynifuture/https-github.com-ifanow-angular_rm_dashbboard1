@@ -18,10 +18,10 @@
 
     <div formArrayName="getCoOwnerName">
         <div class="row" *ngFor="let obj of otherLiabilityForm.controls['getCoOwnerName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
-            <div class="col-md-5 pr-0 text-right">
+            <div class="col-md-5 text-right">
                 <h5 class="m-0 pt-8 ">Owner</h5>
             </div>
-            <div [ngClass]="otherLiabilityForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
+            <div class="pl-0" [ngClass]="otherLiabilityForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
@@ -191,10 +191,10 @@
             </div>
         </div>
         <div class="row pt-40">
-            <div class="col-md-5 pr-0 text-right">
+            <div class="col-md-5  text-right">
                 <h5 class="m-0 pt-12">Description</h5>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input matInput autocomplete="off" #description maxlength="60" class="form-control br-0" formControlName="description" type="text">
