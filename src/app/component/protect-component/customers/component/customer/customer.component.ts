@@ -16,6 +16,7 @@ import { PeopleService } from '../../../PeopleComponent/people.service';
   //  templateUrl: './goal.mobile.component.html',
   //templateUrl: './transactions-mob.component.html',
     //templateUrl: './profile-mobile.html',
+   // templateUrl: './document-mob.html',
   styleUrls: ['./customer.component.scss'],
   animations: [
     dialogContainerOpacity,

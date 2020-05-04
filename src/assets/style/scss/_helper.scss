@@ -724,7 +724,7 @@ padding-top:18px !important;
 .pl-28 {
     padding-left: $p4*7 !important;
 }
-
+.pl-30{padding-left: 30px !important;}
 .pl-32 {
     padding-left: $p4*8 !important;
 }
@@ -1173,7 +1173,9 @@ padding-top:18px !important;
 .t-cell {
     display: $tcell !important;
 }
-
+.d-initial{
+        display: initial !important;
+}
 .c-p {
     cursor: pointer;
 }
