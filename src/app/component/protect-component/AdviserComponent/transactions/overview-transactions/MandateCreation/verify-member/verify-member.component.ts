@@ -17,9 +17,9 @@ import { AuthService } from 'src/app/auth-service/authService';
 })
 export class VerifyMemberComponent implements OnInit {
   inputData: any;
-  displayedColumns: string[] = ['set', 'position', 'name', 'weight', 'ifsc', 'aid', 'euin', 'hold'];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'ifsc', 'aid', 'euin', 'hold'];
   data1: Array<any> = [{}, {}, {}];
-  dataSource = new MatTableDataSource();
+  dataSource = [];
   nomineesListFM: any = [];
   showSpinnerOwner = false;
   familyMemberData: any;
@@ -86,8 +86,6 @@ export class VerifyMemberComponent implements OnInit {
     this.isLoadingBank = false
     console.log(data)
     this.bankDetails = data
-    this.dataSource = data;
-    this.showMandateTable = true;
   }
   getdataForm(data) {
 
@@ -199,7 +197,11 @@ export class VerifyMemberComponent implements OnInit {
     this.selectedMandate = mandate;
   }
   selectBank(bank){
+    this.dataSource = []
     this.selectedBank = bank
+    this.selectedMandate =bank
+    this.dataSource.push(bank);
+    this.showMandateTable = true;
     console.log(this.selectedBank)
   }
 
