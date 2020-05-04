@@ -124,11 +124,11 @@
     <div class="row" *ngIf="details">
         <div class="col-md-12 p-0">
         <button *ngIf="details.chequeUploadFlag == 0">
-            <input (change)="getFileDetails($event,3)" class="inputfile inputfile-3" id="file-3" multiple
+            <input (change)="getFileDetails($event,4)" class="inputfile inputfile-3" id="file-3" multiple
             type="file">
             <label class="uploadLabel c-p f-14 c-p" for="file-3">
                 <img class="mr-8" src="assets/images/svg/new-upload.svg">
-                <span>Upload bank proof</span></label>
+                <span>Upload check</span></label>
         </button>
         <button *ngIf="details.formUploadFlag == 0">
             <input (change)="getFileDetails($event,2)" class="inputfile inputfile-3" id="file-4" multiple

@@ -75,7 +75,7 @@ export class DetailedViewMandateComponent implements OnInit {
       tpUserRequestId: 1,
       documentType: flag
     };
-    FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
+    FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.MANDATE_UPLOAD,
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
         console.log('getFileDetails uploadFileToServer callback item : ', item);
         console.log('getFileDetails uploadFileToServer callback status : ', status);

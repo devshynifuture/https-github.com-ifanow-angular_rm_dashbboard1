@@ -8,6 +8,7 @@ import {UtilService} from 'src/app/services/util.service';
 import {OnlineTransactionService} from '../../../online-transaction.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MatTableDataSource} from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-verify-member',
@@ -32,11 +33,13 @@ export class VerifyMemberComponent implements OnInit {
   Todate: any;
   formDate: Date;
   isLoading;
+  advisorId: any;
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private processTrasaction: ProcessTransactionService,
               private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
               private onlineTransact: OnlineTransactionService, public eventService: EventService) {
+                this.advisorId = AuthService.getAdvisorId()
   }
 
   ngOnInit() {
@@ -114,7 +117,7 @@ export class VerifyMemberComponent implements OnInit {
       holdingNature: this.generalDetails.controls.holdingNature.value,
       familyMemberId: this.familyMemberId,
       clientId: this.familyMemberData.clientId,
-      advisorId: this.familyMemberData.advisorId,
+      advisorId: this.advisorId,
       taxStatus: this.generalDetails.controls.taxStatus.value,
     };
     this.openMandate(null);
@@ -124,7 +127,7 @@ export class VerifyMemberComponent implements OnInit {
 
     const obj = {
       clientId: this.familyMemberData.clientId,
-      advisorId: this.familyMemberData.advisorId,
+      advisorId: this.advisorId,
       familyMemberId: this.familyMemberData.familyMemberId,
       // tpUserCredentialId: 292
     };
@@ -146,7 +149,7 @@ export class VerifyMemberComponent implements OnInit {
 
   getBankMandate() {
     const obj1 = {
-      advisorId: this.detailsIIN.advisorId,
+      advisorId: this.advisorId,
       tpUserCredFamilyMappingId: this.detailsIIN.tpUserCredFamilyMappingId,
       aggregatorType: this.detailsIIN.aggregatorType,
       tpUserCredentialId: this.detailsIIN.tpUserCredentialId,
