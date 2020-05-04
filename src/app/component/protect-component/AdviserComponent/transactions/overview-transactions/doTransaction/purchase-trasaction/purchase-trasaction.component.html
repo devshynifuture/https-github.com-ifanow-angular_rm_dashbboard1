@@ -21,12 +21,12 @@
                 </h5>
             </div>
         </div>
-        <div *ngIf="multiTransact == true && childTransactions.length>0" class="col-md-12 mt-20 all-transactions">
-            <table [dataSource]="childTransactions" id="table-low" mat-table>
+        <div class="col-md-12 mt-20 all-transactions" *ngIf="multiTransact == true && childTransactions.length > 0">
+            <table #tableEl mat-table [dataSource]="childTransactions" id="tbs" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="no">
                     <th *matHeaderCellDef class="br" mat-header-cell> No</th>
                     <td *matCellDef="let element let i = index;" class="br w-15 " mat-cell>
-                        <div class="bar"> {{i + 1 }} </div>
+                        <div class="bar"> {{i + 1}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="folio">
@@ -52,9 +52,6 @@
                 <ng-container matColumnDef="icons">
                     <th *matHeaderCellDef class="t-2" mat-header-cell></th>
                     <td *matCellDef="let element" class="t-2" mat-cell>
-                        <!-- ng build prod issue isLoading removed -->
-                        <!-- <div *ngIf="!isLoading"> -->
-
                         <div>
                             <i [matMenuTriggerFor]="menubank" class="material-icons c-p text-black">
                 more_vert
