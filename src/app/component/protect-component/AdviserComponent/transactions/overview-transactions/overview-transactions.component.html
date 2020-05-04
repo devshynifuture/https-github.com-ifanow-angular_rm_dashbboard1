@@ -227,17 +227,17 @@
                                                     <p class="f-14 mb-8 f-500">{{transact.clientName}}</p>
                                                 </div>
                                             </div>
-                                            <span *ngIf="transact.status == 2"
+                                            <span *ngIf="transact.status == 6"
                                                 class="text-primary p-2 br-1 b-a-custom f-12">ORDER PROCEED</span>
                                             <span *ngIf="transact.status == 0"
                                                 class="text-primary p-2 br-1 b-a-custom f-12">UNKNOWN</span>
                                             <span *ngIf="transact.status == 3"
-                                                class="text-primary p-2 br-1 b-a-custom f-12">PAYMENT SUCCESSFUL</span>
+                                                class="text-success p-2 br-1 b-a-custom f-12">PAYMENT SUCCESSFUL</span>
                                             <span *ngIf="transact.status == 7"
-                                                class="text-primary p-2 br-1 b-a-custom f-12">TRANSACTION
+                                                class="text-danger p-2 br-1 b-a-custom f-12">TRANSACTION
                                                 REJECTED</span>
                                             <span *ngIf="transact.status == 2"
-                                                class="text-primary p-2 br-1 b-a-custom f-12">PENDING
+                                                class="text-warning p-2 br-1 b-a-custom f-12">PENDING
                                                 AUTHERIZATION</span>
                                         </div>
                                     </mat-tab>
