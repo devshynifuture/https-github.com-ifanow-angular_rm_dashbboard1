@@ -7,26 +7,23 @@
 
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" matInput (keyup)="applyFilter($event)" placeholder="type to filter data"
-                        class="form-control br-0">
+                    <input autocomplete="off" matInput (keyup)="applyFilter($event)" placeholder="type to filter data" class="form-control br-0">
                 </mat-form-field>
             </div>
         </div>
         <div class="col-md-4 text-right pt-4" *ngIf="dataSource.filteredData.length > 0 && !isLoading">
             <img src="/assets/images/svg/download-black.svg" class="b-a p-5 c-p">
             <img src="/assets/images/svg/reload.svg" class="b-a p-8 c-p" (click)="getMappedData()">
-            <button mat-stroked-button class="btn-default addon ml-12 mr-12 v-middle"
-                [matMenuTriggerFor]="IINUCCMenu"><i class="material-icons">filter_list</i>FILTERS</button>
+            <button mat-stroked-button class="btn-default addon ml-12 mr-12 v-middle" [matMenuTriggerFor]="IINUCCMenu"><i class="material-icons">filter_list</i>FILTERS</button>
             <mat-menu #IINUCCMenu>
                 <button mat-menu-item (click)="getIINUCC()">
                     PENDING
                 </button>
                 <button mat-menu-item (click)="getMappedData()">
-                    INVESTMENT READY 
+                    INVESTMENT READY
                 </button>
             </mat-menu>
-            <button mat-stroked-button class="btn-primary addon v-middle" (click)="openNewCustomerIIN()"><i
-                    class="material-icons">add</i>ADD
+            <button mat-stroked-button class="btn-primary addon v-middle" (click)="openNewCustomerIIN()"> ADD
                 NEW</button>
 
         </div>
@@ -34,8 +31,7 @@
 
     <div class="row">
         <div class="col-md-12 ">
-            <table mat-table [dataSource]="dataSource" matSort [appSkeletonLoading]="isLoading" appSkeletonLoading
-                class="skeletonAnimation" class="mt-8" id="table-low" *ngIf="dataSource.filteredData.length > 0">
+            <table mat-table [dataSource]="dataSource" matSort [appSkeletonLoading]="isLoading" appSkeletonLoading class="skeletonAnimation" class="mt-8" id="table-low" *ngIf="dataSource.filteredData.length > 0">
                 <ng-container matColumnDef="position">
                     <th mat-sort-header="aggregatorType" mat-header-cell *matHeaderCellDef class="br"> Platform </th>
                     <td mat-cell *matCellDef="let element" class="br">
@@ -89,8 +85,7 @@
                     <th mat-sort-header="activationStatus" mat-header-cell *matHeaderCellDef class="br"> Status </th>
                     <td mat-cell *matCellDef="let element" class="br">
                         <div class="bar">
-                            <span *ngIf="element.activationStatus=='YES'"
-                                class="text-success t-10 f-500 c-p">{{'Investment ready'}}</span>
+                            <span *ngIf="element.activationStatus=='YES'" class="text-success t-10 f-500 c-p">{{'Investment ready'}}</span>
                         </div>
                     </td>
                 </ng-container>
@@ -109,8 +104,7 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-            <div *ngIf="dataSource.filteredData.length==0 && isLoading==false"
-                class="d-flex flex-column align-items-center pt-44">
+            <div *ngIf="dataSource.filteredData.length==0 && isLoading==false" class="d-flex flex-column align-items-center pt-44">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="pt-12">No investors found</h4>
             </div>
