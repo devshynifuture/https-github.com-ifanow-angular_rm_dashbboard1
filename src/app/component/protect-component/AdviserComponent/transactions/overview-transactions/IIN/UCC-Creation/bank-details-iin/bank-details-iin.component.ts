@@ -424,7 +424,7 @@ export class BankDetailsIINComponent implements OnInit {
       bankName: holder.bankName,
       branchName: holder.branchName,
       branchCode: holder.branchCode,
-      micrCode: (holder.micrCode)+"",
+      micrCode: (holder.micrCode),
       firstHolder: holder.firstHolder,
       paymentMode : this.bankDetails.controls.paymentMode.value,
       defaultFlag: 1
