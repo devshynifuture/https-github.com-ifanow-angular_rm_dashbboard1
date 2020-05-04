@@ -425,6 +425,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
           frequencyOfPayments: this.addLiabilityForm.controls.emiFrequency.value,
           annualInterestRate: this.addLiabilityForm.controls.interest.value,
           financialInstitution: this.addLiabilityForm.controls.finInstitution.value,
+          emi: this.addLiabilityForm.controls.emi.value,
           loanPartPayments: finalTransctList
         };
         this.custumService.addLiability(objToSend).subscribe(

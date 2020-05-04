@@ -60,10 +60,10 @@
                     </div>
                     <div class="col-md-3 form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
-                            <input placeholder="Enter MICR code" #micrCode matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" [maxlength]="9" formControlName="micrCode" type="text" class="form-control">
+                            <input placeholder="Enter MICR code" #micrNo matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" [maxlength]="9" formControlName="micrNo" type="text" class="form-control">
                             <mat-error class="">This field is required</mat-error>
                             <mat-hint align="end" class=" text-custom">
-                                {{micrCode.value.length}} / 9
+                                {{micrNo.value.length}} / 9
                             </mat-hint>
                         </mat-form-field>
                     </div>
