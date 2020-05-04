@@ -126,12 +126,12 @@
         <div class="col-md-12 p-0">
 
             <div class="custom-file mb-12" *ngIf="details.chequeUploadFlag == 0">
-                <input (change)="getFileDetails($event)" id="file-3" multiple type="file" class="custom-file-input" lang="pl-Pl">
-                <label class="custom-file-label" for="customFileLang">Upload bank proof</label>
+                <input (change)="getFileDetails($event,4)" id="file-3" multiple type="file" class="custom-file-input" lang="pl-Pl">
+                <label class="custom-file-label" for="customFileLang">Upload check</label>
             </div>
 
             <div class="custom-file" *ngIf="details.formUploadFlag == 0">
-                <input (change)="getFileDetails($event)" id="file-4" multiple type="file" class="custom-file-input" lang="pl-Pl">
+                <input (change)="getFileDetails($event,2)" id="file-4" multiple type="file" class="custom-file-input" lang="pl-Pl">
                 <label class="custom-file-label" for="customFileLang">Upload mandate form</label>
             </div>
 

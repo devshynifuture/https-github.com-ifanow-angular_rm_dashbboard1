@@ -19,7 +19,9 @@
         </div>
         <div class="col-md-5  form-group">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input appClientSearch [data]='searchClient.value' formControlName="ownerName" placeholder="Start typing to see investor names" (keyup)="ownerList($event.target.value)" (valueChange1)='lisNominee($event)' #searchClient [matAutocomplete]="auto1" aria-label="client"
+                <input appClientSearch [data]='searchClient.value' formControlName="ownerName"
+                    placeholder="Start typing to see investor names" (keyup)="ownerList($event.target.value)"
+                    (valueChange1)='lisNominee($event)' #searchClient [matAutocomplete]="auto1" aria-label="client"
                     class="form-control pl-8" matInput>
                 <mat-autocomplete #auto1="matAutocomplete">
                     <mat-option (onSelectionChange)="ownerDetails(f)" *ngFor="let f of nomineesListFM" [value]="f.name">
@@ -43,7 +45,8 @@
         <div class="col-md-5">
             <mat-form-field>
                 <mat-select class="form-control" formControlName="holdingNature">
-                    <mat-option [value]="clientCode.clientCode" *ngFor="let clientCode of clientCodeData" (click)="selectIINUCC(clientCode)">
+                    <mat-option [value]="clientCode.clientCode" *ngFor="let clientCode of clientCodeData"
+                        (click)="selectIINUCC(clientCode)">
                         {{clientCode.clientCode}} </mat-option>
                 </mat-select>
                 <mat-error class="f-12">This field is required</mat-error>
@@ -56,7 +59,8 @@
         </div>
         <div class="col-md-3">
             <mat-form-field class="ba-date">
-                <input autocomplete="off" (click)="picker.open()" matInput formControlName="fromDate" [matDatepicker]="picker" class="form-control b-0" readonly>
+                <input autocomplete="off" (click)="picker.open()" matInput formControlName="fromDate"
+                    [matDatepicker]="picker" class="form-control b-0" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12 pt-4">
@@ -71,7 +75,8 @@
         </div>
         <div class="col-md-3">
             <mat-form-field>
-                <mat-select class="form-control" formControlName="selectDateOption" (ngModelChange)="continuesTill($event)">
+                <mat-select class="form-control" formControlName="selectDateOption"
+                    (ngModelChange)="continuesTill($event)">
                     <mat-option [value]="1">
                         Custom date </mat-option>
                     <mat-option [value]="2">
@@ -87,7 +92,8 @@
         </div>
         <div class="col-md-3 form-group">
             <mat-form-field class="ba-date">
-                <input autocomplete="off" (click)="picker1.open()" matInput formControlName="toDate" [matDatepicker]="picker1" class="form-control b-0" readonly>
+                <input autocomplete="off" (click)="picker1.open()" matInput formControlName="toDate"
+                    [matDatepicker]="picker1" class="form-control b-0" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                 <mat-datepicker #picker1></mat-datepicker>
                 <mat-error class="f-12 pt-4">
@@ -109,11 +115,27 @@
             </mat-form-field>
         </div>
     </div>
-
+    <!-- <div>
+        <div class="row">
+            <div class="col-md-6 bl-1 mt-28 fixed-top-right ">
+                <h3 class="f-16 mt-4 mb-10">Upload PAN</h3>
+                <div class="dragDropCLass">
+                    Drag & drop file here <br> or <br> Browse
+                </div>
+            </div>
+            <div class="col-md-6 bl-1 mt-28 fixed-top-right ">
+                <h3 class="f-16 mt-4 mb-10">Upload PAN</h3>
+                <div class="dragDropCLass">
+                    Drag & drop file here <br> or <br> Browse
+                </div>
+            </div>
+        </div>
+    </div> -->
 </div>
 <div class="row" *ngIf="showMandateTable == true">
     <div class="col-md-12">
-        <table mat-table [dataSource]="dataSource" matSort class="mt-8 skeletonAnimation" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
+        <table mat-table [dataSource]="dataSource" matSort class="mt-8 skeletonAnimation" id="table-low"
+            appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="set">
                 <th mat-header-cell *matHeaderCellDef class="br"> Set as default </th>
                 <td mat-cell *matCellDef="let element" class="br">
@@ -182,9 +204,6 @@
         <div *ngIf="isLoading==false" class="d-flex flex-column align-items-center pt-44">
             <img class="width300" src="assets/images/svg/noDataFound.svg">
             <h4 class="pt-12">No data found</h4>
-        </div>
-        <div>
-            
         </div>
     </div>
 </div>

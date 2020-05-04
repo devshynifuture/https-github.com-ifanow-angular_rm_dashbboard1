@@ -177,6 +177,9 @@ export class VerifyMemberComponent implements OnInit {
   }
 
   createMandates() {
+    if(!this.selectedMandate){
+      this.selectedMandate = {}
+    }
     this.formDate = new Date(this.generalDetails.controls.fromDate.value);
     this.Todate = new Date(this.generalDetails.controls.toDate.value);
     Object.assign(this.selectedMandate, {advisorId: this.detailsIIN.advisorId});
