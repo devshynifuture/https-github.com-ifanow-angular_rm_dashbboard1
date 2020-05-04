@@ -19,7 +19,7 @@ export class OwnerNomineeDirective {
   ownerPer: any;
   NomineePer: any;
   showErrorOwner = false;
-
+  emitedNOminee:any = [];
   constructor(private fb: FormBuilder, private custumService: CustomerService, private peopleService: PeopleService) {
   }
 
@@ -66,6 +66,7 @@ export class OwnerNomineeDirective {
 
   @Input() set data(data) {
     this.ownerData = data.controleData;
+    this.emitedNOminee = data.Fmember;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     console.log('1111121212121212121212 OwnerColumnComponent data : ', data);
@@ -125,7 +126,9 @@ export class OwnerNomineeDirective {
     }
 
     console.log(controlsArr, 'controlsArr 123');
-
+    if(this.sendData.length <= 0){
+      this.sendData = this.emitedNOminee;
+    }
     this.sendData.forEach(element => {
       for (const e of controlsArr) {
         if (e.data.name != '') {
