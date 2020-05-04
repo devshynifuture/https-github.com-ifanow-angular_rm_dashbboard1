@@ -247,7 +247,8 @@ export class VerifyMemberComponent implements OnInit {
     const file = e.target.files[0];
     const requestMap = {
       tpUserRequestId: 1,
-      documentType: flag
+      documentType: flag,
+      mandateId : this.madateResponse.id
     };
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.MANDATE_UPLOAD,
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
