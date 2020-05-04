@@ -3,6 +3,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { BackOfficeService } from '../../../back-office.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import * as Highcharts from 'highcharts';
+import { FormControl, FormBuilder, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-aum',
@@ -27,15 +28,31 @@ export class AumComponent implements OnInit {
   advisorId: any;
   arnRiaList: any;
   aumGraph: any;
-  parentId = AuthService.getUserInfo().parentId ? AuthService.getUserInfo().parentId : -1;
-
-  constructor(private backoffice: BackOfficeService, private dataService: EventService) { }
+  parentId;
+  constructor(
+    private backoffice: BackOfficeService, private dataService: EventService,
+    private fb: FormBuilder
+  ) { }
 
   teamMemberId = 2929;
+  arnRiaValue = -1;
+
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.parentId = AuthService.getParentId();
     this.viewMode = 'Select option';
-    this.getArnRiaList();
+    if (this.parentId !== 0) {
+      this.getArnRiaList();
+    } else {
+      this.initPoint();
+    }
+
+    // if parentId = 0 arnRiaDetails selection will be disabled 
+    // if parentId present use it and arn Ria deail selection with advisor Id as 0
+  }
+
+  initPoint() {
+
     this.getGraphData();
     this.getTotalAum();
     // this.getSubCatScheme();
@@ -43,6 +60,12 @@ export class AumComponent implements OnInit {
     this.getMisData();
   }
 
+  changeValueOfArnRia(item) {
+    this.viewMode = item.number;
+    this.arnRiaValue = item.number;
+    console.log("this is arnRia value::", item, item.number);
+    this.initPoint();
+  }
 
   showMainWrapper() {
     this.categoryshow = false;
@@ -57,6 +80,7 @@ export class AumComponent implements OnInit {
     this.backoffice.getArnRiaList(this.advisorId).subscribe(
       data => {
         if (data) {
+          this.advisorId = 0;
           this.arnRiaList = data;
           console.log("arn ria data:::", data);
 
@@ -65,8 +89,11 @@ export class AumComponent implements OnInit {
             id: -1
           }
           this.arnRiaList.unshift(obj);
+          this.initPoint();
+        } else {
+          this.dataService.openSnackBar("No Arn Ria List Found", "DISMISS")
         }
-      },
+      }
     )
   }
   showSubTableList() {
@@ -92,7 +119,7 @@ export class AumComponent implements OnInit {
   getTotalAum() {
     const obj = {
       advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
+      arnRiaDetailsId: this.arnRiaValue,
       parentId: this.parentId
     }
     this.backoffice.getClientTotalAUM(obj).subscribe(
@@ -109,7 +136,7 @@ export class AumComponent implements OnInit {
   getSubCatAum() {
     const obj = {
       advisorId: this.advisorId,
-      arnRiaDetailId: -1,
+      arnRiaDetailId: this.arnRiaValue,
       parentId: this.parentId
     }
     this.backoffice.getSubCatAum(obj).subscribe(
@@ -152,9 +179,10 @@ export class AumComponent implements OnInit {
     this.aumComponent = false;
   }
   getGraphData() {
+    this.aumGraph = null;
     const obj = {
       advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
+      arnRiaDetailsId: this.arnRiaValue,
       parentId: this.parentId
     }
     this.backoffice.aumGraphGet(obj).subscribe(

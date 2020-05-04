@@ -11,7 +11,7 @@ import { apiConfig } from 'src/app/config/main-config';
 })
 export class SettingsEmpanelledAmcComponent implements OnInit {
   displayedColumns;
-  dataSource;
+  dataSource = [{}, {}, {}];
   advisorId: any;
   isLoading = false;
   constructor(private tranService: OnlineTransactionService, private eventService: EventService) { }

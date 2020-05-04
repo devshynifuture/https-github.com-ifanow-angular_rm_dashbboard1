@@ -253,7 +253,7 @@
     </div>
     <div class="wrapper-8 pt-0">
         <div class="row pt-12 pb-12 pb-md-20">
-            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise" *ngIf="showSchemeWise">
+            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise" *ngIf="showSchemeWise && dataSource2.data.length > 0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 b-a pt-10 pb-10 bb-0">Scheme wise allocation</h5>
                 </div>
@@ -336,20 +336,20 @@
                         <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
 
                     </table>
-                    <div *ngIf="dataSource2.length == 0" class="d-flex flex-column align-items-center">
+                    <!-- <div *ngIf="dataSource2.length == 0" class="d-flex flex-column align-items-center"> -->
                         <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
-                        <h4 class="text-center pt-12"> No data found</h4>
-                    </div>
+                        <!-- <h4 class="text-center pt-12"> No data found</h4>
+                    </div> -->
                 </div>
             </div>
 
-            <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 cashflow" *ngIf="showCashFlow">
+            <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 cashflow" *ngIf="showCashFlow && datasource1.data.length > 0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 pt-10 pb-10 b-a bb-0">Cashflow status</h5>
                 </div>
                 <div class="example-container" id="table-low">
                     <table mat-table [dataSource]="datasource1" class="skeletonAnimation" appSkeletonLoading
-                        [appSkeletonLoading]="isLoading" *ngIf="datasource1">
+                        [appSkeletonLoading]="isLoading" >
                         <ng-container matColumnDef="data">
                             <th mat-header-cell *matHeaderCellDef class="t-55"> Scheme name </th>
                             <td mat-cell *matCellDef="let element" class="t-55">
@@ -371,14 +371,14 @@
                 </div>
             </div>
 
-            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise" *ngIf="showSubCategory">
+            <div class="col-xl-6 col-lg-12 col-md-12 pr-4 mb-20 pl-0 scheme-wise" *ngIf="showSubCategory && dataSource3.data.length > 0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 b-a pb-10 pt-10 bb-0">Sub category wise allocation
                     </h5>
                 </div>
                 <div class="example-container" id="table-low">
                     <table mat-table [dataSource]="dataSource3" class="skeletonAnimation" appSkeletonLoading
-                        [appSkeletonLoading]="isLoading" *ngIf="showSubCategory">
+                        [appSkeletonLoading]="isLoading" *ngIf="showSubCategory ">
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef class="br"> Sub Category Name</th>
                             <td mat-cell *matCellDef="let element" class="br">
@@ -466,14 +466,14 @@
                         <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
 
                     </table>
-                    <div *ngIf="dataSource3.length == 0" class="d-flex flex-column align-items-center">
+                    <!-- <div *ngIf="dataSource3.length == 0" class="d-flex flex-column align-items-center"> -->
                         <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
-                        <h4 class="text-center pt-12"> No data found</h4>
-                    </div>
+                        <!-- <h4 class="text-center pt-12"> No data found</h4>
+                    </div> -->
                 </div>
             </div>
 
-            <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 familymember-wise" *ngIf="showFamilyMember">
+            <div class="col-xl-6 col-lg-12 col-md-12 pr-0 mb-20 familymember-wise" *ngIf="showFamilyMember && dataSource.data.length > 0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 pt-10 pb-10 b-a bb-0">Family member wise allocation</h5>
                 </div>
@@ -566,14 +566,14 @@
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                         <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
                     </table>
-                    <div *ngIf="dataSource.length == 0" class="d-flex flex-column align-items-center">
+                    <!-- <div *ngIf="dataSource.length == 0" class="d-flex flex-column align-items-center"> -->
                         <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
-                        <h4 class="text-center pt-12"> No data found</h4>
-                    </div>
+                        <!-- <h4 class="text-center pt-12"> No data found</h4>
+                    </div> -->
                 </div>
             </div>
 
-            <div class="col-xl-6 col-lg-12 col-md-12 p-0 mb-20 familymember-wise" *ngIf="showCategory">
+            <div class="col-xl-6 col-lg-12 col-md-12 p-0 mb-20 familymember-wise" *ngIf="showCategory && dataSource4.data.length >0">
                 <div class="bg-grey lter">
                     <h5 class="m-0 wrapper-8 pt-10 pb-10 b-a bb-0">Category wise allocation</h5>
                 </div>
@@ -665,17 +665,17 @@
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                         <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
                     </table>
-                    <div *ngIf="dataSource4.length == 0" class="d-flex flex-column align-items-center">
+                    <!-- <div *ngIf="dataSource4.length == 0" class="d-flex flex-column align-items-center"> -->
                         <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
-                        <h4 class="text-center pt-12"> No data found</h4>
-                    </div>
+                        <!-- <h4 class="text-center pt-12"> No data found</h4>
+                    </div> -->
                 </div>
             </div>
         </div>
     </div>
 
 
-    <div *ngIf="dataSource.length==0 && dataSource2.length==0 && dataSource3.length==0 && dataSource4.length==0"
+    <div *ngIf="dataSource.data?.length == 0 && dataSource2.data?.length==0  && dataSource3.data?.length==0 && dataSource4.data?.length==0 "
         class="d-flex flex-column align-items-center">
         <img class="width300" src="assets/images/svg/noDataFound.svg">
         <h4 class="text-center pt-12">No Data Found</h4>

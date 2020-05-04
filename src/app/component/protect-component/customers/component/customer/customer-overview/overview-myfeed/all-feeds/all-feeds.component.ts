@@ -18,6 +18,9 @@ export class AllFeedsComponent implements OnInit {
   advisorId: any;
   orgDetails:any;
   chart: Chart;
+  cashflowColumns = ['bankName', 'inflow', 'outflow', 'netflow'];
+  displayedColumns: string[] = ['description', 'date', 'amount'];
+  cashFlowViewDataSource = [];
 
   chartData:any[] = [
     {
@@ -103,7 +106,11 @@ export class AllFeedsComponent implements OnInit {
     cashflowData:{
       dataLoaded: false,
       hasData: false,
-    }
+    },
+    customerProfile:{
+      dataLoaded: false,
+      hasData: false,
+    },
   };
   hasError:boolean = false;
 
@@ -116,9 +123,11 @@ export class AllFeedsComponent implements OnInit {
   adviseData:any = null;
   goalsData:any[] = [];
   cashflowData:any = {};
+  customerProfile:any = {};
 
 
   ngOnInit() {
+    this.loadCustomerProfile();
     this.initializePieChart();
     this.loadPortfolioSummary();
     this.loadRTAFeedsTransactions();
@@ -127,7 +136,34 @@ export class AllFeedsComponent implements OnInit {
     this.loadRiskProfile();
     this.loadGlobalRiskProfile();
     // this.loadGoalsData(); // Not to be implemented for demo purpose
-    // this.loadCashFlowSummary(); //To be implemented later
+    this.loadCashFlowSummary(); //To be implemented later
+  }
+
+  loadCustomerProfile(){
+    const obj = {
+      advisorId: this.advisorId,
+      clientId:1,
+      userId:4879
+    }
+
+    this.loaderFn.increaseCounter();
+    this.customerService.getCustomerFeedsProfile(obj).subscribe(
+      res => {
+        if(res == null) {
+          this.customerProfile = {
+            
+          }
+        } else {
+          this.customerProfile = res;
+          this.tabsLoaded.customerProfile.hasData = true;
+        }
+        this.loaderFn.decreaseCounter();
+        this.tabsLoaded.customerProfile.dataLoaded = true;
+      }, err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+        this.loaderFn.decreaseCounter();
+      }
+    )
   }
 
   initializePieChart(){
@@ -369,60 +405,73 @@ export class AllFeedsComponent implements OnInit {
       advisorId: this.advisorId,
       targetDate: startDate.getTime()
     }
-/*
-    this.cashflowData = {
-      cashflowData: [
-        {
-        familyMemberId: 100,
-        familyMemberFullName: 'Sohan Savant',
-        cashflowLedgger: [
-          {
-            bankName: 'ABC Bank / 4421',
-            inflow: 13442,
-            outflow: 0,
-            netflow: 13442,
-            netflowStatus: 'positive',
-            date: 345678965
-          }, {
-            bankName: 'XYZ Bank / 9924',
-            inflow: 0,
-            outflow: 13442,
-            date: 345678965
-          }
-        ]
-      },
-      {
-      familyMemberId: 100,
-      familyMemberFullName: 'Rakesh Mishra',
-      cashflowLedgger: [
-        {
-          bankName: 'TUV Bank / 4421',
-          inflow: 13442,
-          outflow: 0,
-          date: 345678965
-        }, {
-          bankName: 'Axis Bank / 9924',
-          inflow: 0,
-          outflow: 13442,
-          date: 345678965
-        }
-      ]
-    },
-    ],
 
-    total: {
-      inflow: 293939,
-      outflow: 39933,
+    // this.cashflowData = {
+    //   cashflowData: [
+    //     {
+    //       familyMemberId: 100,
+    //       familyMemberFullName: 'Sohan Savant',
+    //       cashflowLedgger: [
+    //         {
+    //           bankName: 'ABC Bank / 4421',
+    //           inflow: 13442,
+    //           outflow: 0,
+    //           netflow: 13442,
+    //           date: 345678965
+    //         }, {
+    //           bankName: 'XYZ Bank / 9924',
+    //           inflow: 0,
+    //           outflow: 13442,
+    //           netflow: -13442,
+    //           date: 345678965
+    //         }
+    //       ]
+    //     },
+    //     {
+    //       familyMemberId: 100,
+    //       familyMemberFullName: 'Rakesh Mishra',
+    //       cashflowLedgger: [
+    //         {
+    //           bankName: 'TUV Bank / 4421',
+    //           inflow: 13442,
+    //           outflow: 0,
+    //           netflow: 13442,
+    //           date: 345678965
+    //         }, {
+    //           bankName: 'Axis Bank / 9924',
+    //           inflow: 0,
+    //           outflow: 13442,
+    //           netflow: -13442,
+    //           date: 345678965
+    //         }
+    //       ]
+    //     },
+    //   ],
 
-    }
-  }
-*/
+    //   total: [{
+    //     bankName: 'All In-flows & Out-flows',
+    //     inflow: 293939,
+    //     outflow: 39933,
+    //     netflow: -13442,
+    //   }]
+    // }
+    // this.tabsLoaded.cashflowData.hasData = true;
+    // this.tabsLoaded.cashflowData.dataLoaded = true;
     this.loaderFn.increaseCounter();
 
     this.customerService.getCashFlowList(obj).subscribe(res => {
       if(res == null) {
-        this.cashflowData = [];
+        this.cashflowData = {
+            // emptyData: [{
+            //   bankName: 'Not enough data to display',
+            //   inflow: 0,
+            //   outflow: 0,
+            //   netflow: 0
+            // }]
+          };
       } else {
+        this.cashFlowViewDataSource = [];
+        this.sortDataUsingFlowType(res, true);
         this.tabsLoaded.cashflowData.hasData = true;
         this.cashflowData = res;
       }
@@ -433,6 +482,20 @@ export class AllFeedsComponent implements OnInit {
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
+  }
+
+
+
+  // copied from summary
+  sortDataUsingFlowType(ObjectArray, flag) {
+    if (ObjectArray['expense'].length > 0 && ObjectArray['income'].length > 0) {
+      this.cashFlowViewDataSource = ObjectArray['expense'];
+      this.cashFlowViewDataSource = this.cashFlowViewDataSource.concat(ObjectArray['income']);
+    } else if (ObjectArray['expense'].length > 0) {
+      this.cashFlowViewDataSource = ObjectArray['expense'];
+    } else {
+      this.cashFlowViewDataSource = ObjectArray['income'];
+    }
   }
   
   pieChart(data) {
