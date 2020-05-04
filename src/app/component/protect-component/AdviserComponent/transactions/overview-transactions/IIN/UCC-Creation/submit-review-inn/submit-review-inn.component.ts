@@ -276,6 +276,7 @@ export class SubmitReviewInnComponent implements OnInit {
   createIINUCCRes(data) {
     console.log('data respose =', data);
     this.eventService.showErrorMessage(data.statusString);
+    this.eventService.showErrorMessage(data.responseMessage);
   }
 
   uploadForm() {
