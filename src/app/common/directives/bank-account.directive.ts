@@ -41,7 +41,6 @@ export class BankAccountDirective {
 
   @HostListener('click', ['$event'])
   public onClick(event: MouseEvent) {
-    this.clientData.clientId = this.clientData.clientId;
     this.openBankForm(this.clientData);
   }
 
