@@ -43,10 +43,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
   @Input() mutualFund;
 
   ngOnInit() {
-    this.isLoading = true;
-    this.changeInput.emit(true);
+  
     console.log('this.mutualFund == ', this.mutualFund);
-    if (this.mutualFund) {
+    if (this.mutualFund.mutualFundList.length>0) {
+      this.isLoading = true;
+      this.changeInput.emit(true);
       this.advisorData = this.mutualFund.advisorData;
 
       // this.getSubCategoryWise(this.mutualFund);
@@ -57,6 +58,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit, OnChanges {
       // for displaying table values as per category
       // this.customDataSource.data = this.subCatArray(this.mutualFundList, '', this.mfService);
       // this.getDataForRightFilter();
+    }else{
+      this.isLoading=false;
+      this.changeInput.emit(false);
+      this.customDataSource.data=[];
     }
 
   }

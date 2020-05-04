@@ -55,9 +55,9 @@
                     <div class="col-md-4 text-right pr-0">
                         <h3 class="f-16 pt-20 m-0"> Mobile number </h3>
                     </div>
-                    <div class="col-md-5 pl-0">
-                        <div class="row">
-                            <!-- <div class="col-md-5 pr-0">
+                    <div class="col-md-5">
+
+                        <!-- <div class="col-md-5 pr-0">
                                 <div class="form-group">
                                     <mat-form-field appearance="standard" floatLabel="never">
                                         <mat-select class="form-control">
@@ -70,14 +70,14 @@
                                     </mat-form-field>
                                 </div>
                             </div> -->
-                            <div class="col-md-7 p-0">
-                                <mat-form-field appearance="standard" floatLabel="never">
-                                    <input #mobileNo matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation maxlength="10" type="number" formControlName="mobileNo" placeholder="Enter Mobile number" class="form-control">
-                                    <mat-error class="">This field is required</mat-error>
-                                    <mat-hint align="end">{{mobileNo.value.length}}/10</mat-hint>
-                                </mat-form-field>
-                            </div>
-                        </div>
+
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input #mobileNo matInput [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation maxlength="10" type="number" formControlName="mobileNo" placeholder="Enter Mobile number" class="form-control">
+                            <mat-error class="">This field is required</mat-error>
+                            <mat-hint align="end">{{mobileNo.value.length}}/10</mat-hint>
+                        </mat-form-field>
+
+
                     </div>
                 </div>
 
