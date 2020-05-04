@@ -228,17 +228,23 @@ export class VerifyMemberComponent implements OnInit {
     Object.assign(this.selectedMandate, {tpUserCredentialId: this.detailsIIN.tpUserCredentialId});
     console.log('selectMandate  == ', this.selectedMandate);
     this.onlineTransact.addMandate(this.selectedMandate).subscribe(
-      data => this.addMandateRes(data)
+      data => this.addMandateRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+        console.log('err',error)
+      }
     );
   }
 
   addMandateRes(data) {
     console.log('res mandate', data);
+    
+   if(data){
     this.madateResponse = data
     this.eventService.openSnackBar('Added successfully!', 'Dismiss');
    // this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
 
    this.showUploadSection = true
+   }
   }
   getFileDetails(e,flag) {
     console.log('file', e);
