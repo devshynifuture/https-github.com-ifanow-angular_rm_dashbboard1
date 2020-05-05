@@ -77,7 +77,8 @@
       <div class="col-md-3">
         <div class="form-group">
           <mat-form-field>
-            <input matInput #sip type="text" appInputValueValidation  [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SLASH" class="form-control br-0" formControlName="sip">
+            <input matInput #sip type="text" appInputValueValidation
+              [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SLASH" class="form-control br-0" formControlName="sip">
             <mat-error class="f-12">
               This field is required
             </mat-error>
