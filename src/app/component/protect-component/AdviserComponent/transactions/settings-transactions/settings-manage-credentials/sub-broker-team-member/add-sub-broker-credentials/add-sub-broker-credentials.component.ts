@@ -26,6 +26,7 @@ export class AddSubBrokerCredentialsComponent implements OnInit {
   selectedTeam: any;
   selectBrokerCred: any;
   inputData: any;
+  isLoadingBroker: boolean = false;
 
   constructor(private eventService: EventService,
     private settingService: SettingsService,
@@ -50,6 +51,7 @@ export class AddSubBrokerCredentialsComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
   getBSECredentials() {
+    this.isLoadingBroker = true
     let obj = {
       advisorId: this.advisorId,
       onlyBrokerCred: true
@@ -60,6 +62,7 @@ export class AddSubBrokerCredentialsComponent implements OnInit {
     );
   }
   getBSECredentialsRes(data) {
+    this.isLoadingBroker = false
     console.log('getBSECredentialsRes', data)
     this.brokerCredentials = data
     this.bse = this.brokerCredentials.filter(element => element.aggregatorType == 2)
