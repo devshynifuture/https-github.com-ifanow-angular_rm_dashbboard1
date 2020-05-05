@@ -139,11 +139,11 @@ export class ArnRiaCredentialsComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         let obj = {
-          id : data.tpUserCredentialId
+          tpUserCredentialId : data.tpUserCredentialId
         }
         this.onlineTransact.deleteBroker(obj).subscribe(
           data => {
-            this.eventService.openSnackBar('Fixed deposite is deleted', 'Dismiss');
+            this.eventService.openSnackBar('Credential is deleted', 'Dismiss');
             dialogRef.close();
             this.getBSECredentials();
           },

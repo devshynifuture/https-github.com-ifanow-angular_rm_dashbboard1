@@ -12,7 +12,7 @@
 </div>
 
 <div class="pt-90 mb-100 pb 90" [formGroup]="generalDetails">
-    <div *ngIf="showUploadSection == false">
+    <div *ngIf="showUploadSection == false && clientCodeDataShow == false">
         <div class="row">
             <div class="col-md-4 pr-0">
                 <h5 class="m-0 text-right pt-20">Select client</h5>
@@ -130,7 +130,10 @@
             </div>
         </div>
     </div>
-
+    <div *ngIf="clientCodeDataShow == true" class="d-flex flex-column align-items-center">
+        <h4 class="text-center pt-12">No IIN/UCC found</h4>
+        <button (click)="openNewCustomerIIN()" class="btn-green text-white" mat-button>IIN/UCC CREATION</button>
+    </div>
     <div *ngIf="showUploadSection == true">
         <div class="row">
             <div class="col-md-12">

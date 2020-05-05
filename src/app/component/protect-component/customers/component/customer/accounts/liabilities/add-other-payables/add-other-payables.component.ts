@@ -231,8 +231,9 @@ addNewNominee(data) {
 // ===================owner-nominee directive=====================//
   dateChange(value,form,formValue){
     if(form=='dateOfRepayment' && formValue){
-      let dateOfReceipt = this.datePipe.transform(this.otherLiabilityForm.controls.dateOfReceipt.value, 'dd/MM/yyyy')
-      if(value <= dateOfReceipt){
+      let dateOfReceipt = this.datePipe.transform(this.otherLiabilityForm.controls.dateOfReceipt.value, 'yyyy/MM/dd')
+      let dateOfRepayment = this.datePipe.transform(this.otherLiabilityForm.controls.dateOfRepayment.value, 'yyyy/MM/dd')
+      if(dateOfRepayment <= dateOfReceipt){
         this.otherLiabilityForm.get('dateOfRepayment').setErrors({ max: 'Date of repayment' });
         this.otherLiabilityForm.get('dateOfRepayment').markAsTouched();
       }else{
@@ -240,8 +241,9 @@ addNewNominee(data) {
       }
     }else{
       if(formValue){
-        let dateOfRepayment = this.datePipe.transform(this.otherLiabilityForm.controls.dateOfRepayment.value, 'dd/MM/yyyy')
-        if(value >= dateOfRepayment){
+        let dateOfRepayment = this.datePipe.transform(this.otherLiabilityForm.controls.dateOfRepayment.value, 'yyyy/MM/dd')
+        let dateOfReceipt = this.datePipe.transform(this.otherLiabilityForm.controls.dateOfReceipt.value, 'yyyy/MM/dd')
+        if(dateOfReceipt >= dateOfRepayment){
           this.otherLiabilityForm.get('dateOfRepayment').setErrors({ max: 'Date of repayment' });
           this.otherLiabilityForm.get('dateOfRepayment').markAsTouched();
         }else{
@@ -314,9 +316,9 @@ if(data.nomineeList){
 
 this.ownerData = {Fmember: this.nomineesListFM, controleData:this.otherLiabilityForm}
     this.getFormControl().creditorName.maxLength = 20;
-    this.getFormControl().amtBorrowed.maxLength = 20;
+    this.getFormControl().amtBorrowed.maxLength = 10;
     this.getFormControl().interest.maxLength = 20;
-    this.getFormControl().balance.maxLength = 20;
+    this.getFormControl().balance.maxLength = 10;
     this.getFormControl().collateral.maxLength = 20;
     this.getFormControl().description.maxLength = 20
     // this.ownerData = this.otherLiabilityForm.controls;
