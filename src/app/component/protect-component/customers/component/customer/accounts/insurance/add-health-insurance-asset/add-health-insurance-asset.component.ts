@@ -4,14 +4,20 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { ValidatorType } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../customer.service';
-import { MatDialog, MatInput } from '@angular/material';
+import { MatDialog, MatInput, MAT_DATE_FORMATS } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-add-health-insurance-asset',
     templateUrl: './add-health-insurance-asset.component.html',
-    styleUrls: ['./add-health-insurance-asset.component.scss']
+    styleUrls: ['./add-health-insurance-asset.component.scss'],
+    providers: [
+        [DatePipe],
+        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+      ],
 })
 export class AddHealthInsuranceAssetComponent implements OnInit {
     barButtonOptions: MatProgressButtonOptions = {
@@ -30,7 +36,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
         // }
     };
     maxDate = new Date();
-
+    minDate = new Date();
     inputData: any;
     ownerName: any;
     nomineesListFM: any = [];
@@ -62,7 +68,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     showinsuredMemberSum = true;
     showDeductibleSum = false;
 
-    constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) {
+    constructor(private datePipe: DatePipe,private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) {
     }
 
     get data() {
@@ -250,9 +256,10 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
             this.showinsuredMemberSum = false
             let list = this.healthInsuranceForm.get('InsuredMemberForm') as FormArray;
             list.controls.forEach(element => {
-                element.get('sumAssured').setValue('');
-                if (element.get('sumAssured').value == '') {
-                    element.get('sumAssured').setErrors(null)
+                element.get('sumAssured').setValue(null);
+                if (element.get('sumAssured').value == '' || element.get('sumAssured').value == null) {
+                    element.get('sumAssured').setErrors(null);
+                    element.get('sumAssured').setValidators(null);
                 }
             });
             if (!this.healthInsuranceForm.controls['sumAssuredIdv'].value) {
@@ -419,8 +426,37 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.minDate.setFullYear(this.minDate.getFullYear() - 100);
     }
+    dateChange(value,form,formValue){
+        if(form=='policyExpiryDate' && formValue){
+        let startDate =  new Date(this.healthInsuranceForm.controls.policyStartDate.value);
+          let policyExpiryDate = this.datePipe.transform(this.healthInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
+          let comparedDate :any = new Date(this.healthInsuranceForm.controls.policyStartDate.value);
+          comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
+          comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
+          if(policyExpiryDate < comparedDate){
+            this.healthInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
+            this.healthInsuranceForm.get('policyExpiryDate').markAsTouched();
+          }else{
+            this.healthInsuranceForm.get('policyExpiryDate').setErrors();
+          }
+        }else{
+          if(formValue){
+            let policyExpiryDate = this.datePipe.transform(this.healthInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
+            let policyStartDate = this.datePipe.transform(this.healthInsuranceForm.controls.policyStartDate.value, 'yyyy/MM/dd')
 
+            if(policyStartDate >= policyExpiryDate){
+              this.healthInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
+              this.healthInsuranceForm.get('policyExpiryDate').markAsTouched();
+            }else{
+              this.healthInsuranceForm.get('policyExpiryDate').setErrors();
+    
+            }
+          }
+        }
+      
+      }
     changeSign(event, value, formValue) {
         this.healthInsuranceForm.get(value).setValue('');
         if (event == '2') {
@@ -527,6 +563,7 @@ export class AddHealthInsuranceAssetComponent implements OnInit {
             };
             memberList.push(obj);
         });
+        this.healthInsuranceForm.get('inceptionDate').setErrors(null);
         if (this.healthInsuranceForm.invalid) {
             this.healthInsuranceForm.markAllAsTouched();
         } else {

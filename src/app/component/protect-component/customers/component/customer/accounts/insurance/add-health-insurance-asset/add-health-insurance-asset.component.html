@@ -117,8 +117,8 @@
                     <div class="form-group mb-0 iconRupess">
                         <h5 class="mb-0 "> Sum insured </h5>
                         <mat-form-field>
-                            <input #sumAssured [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="8" appInputValueValidation autocomplete="true" class="form-control rupess br-0" formControlName="sumAssured" matInput type="number">
-                            <mat-hint align="end" class="f-12">{{sumAssured.value.length}}/8</mat-hint>
+                            <input #sumAssured [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation autocomplete="true" class="form-control rupess br-0" formControlName="sumAssured" matInput type="number">
+                            <mat-hint align="end" class="f-12">{{sumAssured.value.length}}/10</mat-hint>
                             <mat-error>This field is required
                             </mat-error>
                         </mat-form-field>
@@ -140,8 +140,8 @@
             <div class="col-md-3">
                 <div class="form-group  iconRupess">
                     <mat-form-field>
-                        <input #sumAssuredIdv [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="8" appInputValueValidation autocomplete="true" class="form-control rupess br-0" formControlName="sumAssuredIdv" matInput type="number">
-                        <mat-hint align="end" class="f-12">{{sumAssuredIdv.value.length}}/8</mat-hint>
+                        <input #sumAssuredIdv [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation autocomplete="true" class="form-control rupess br-0" formControlName="sumAssuredIdv" matInput type="number">
+                        <mat-hint align="end" class="f-12">{{sumAssuredIdv.value.length}}/10</mat-hint>
                         <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>
@@ -155,8 +155,8 @@
             <div class="col-md-3">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input #deductibleAmt [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="8" appInputValueValidation autocomplete="true" class="form-control rupess br-0" formControlName="deductibleAmt" matInput type="number">
-                        <mat-hint align="end" class="f-12">{{deductibleAmt.value.length}}/8</mat-hint>
+                        <input #deductibleAmt [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation autocomplete="true" class="form-control rupess br-0" formControlName="deductibleAmt" matInput type="number">
+                        <mat-hint align="end" class="f-12">{{deductibleAmt.value.length}}/10</mat-hint>
                         <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>
@@ -185,7 +185,7 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input #insurerName [maxLength]="40" appInputValueValidation autocomplete="off" class="form-control br-0" formControlName="insurerName" matInput type="text">
+                        <input #insurerName [maxLength]="40"  [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation autocomplete="off" class="form-control br-0" formControlName="insurerName" matInput type="text">
                         <mat-hint align="end" class="f-12">{{insurerName.value.length}}/40</mat-hint>
                         <mat-error>This field is required
                         </mat-error>
@@ -216,8 +216,8 @@
             <div class="col-md-3">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input #premium [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="8" appInputValueValidation class="form-control rupess br-0" formControlName="premium" matInput type="text">
-                        <mat-hint align="end" class="f-12">{{premium.value.length}}/8</mat-hint>
+                        <input #premium [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation class="form-control rupess br-0" formControlName="premium" matInput type="text">
+                        <mat-hint align="end" class="f-12">{{premium.value.length}}/10</mat-hint>
                         <mat-error class="f-12 pt-4">
                             This field is required
                         </mat-error>
@@ -233,7 +233,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input (focus)="policyStartDatePicker.open()" (input)="preventDefault($event)" [matDatepicker]="policyStartDatePicker" [max]="maxDate" class="form-control br-0 b-0" formControlName="policyStartDate" matInput>
+                        <input (focus)="policyStartDatePicker.open()"  (ngModelChange)="dateChange(policyStartDate.value,'policyStartDate',policyExpiryDate.value)" (input)="preventDefault($event)" [matDatepicker]="policyStartDatePicker" [min]="minDate" [max]="maxDate" class="form-control br-0 b-0" #policyStartDate formControlName="policyStartDate" matInput>
                         <mat-datepicker-toggle [for]="policyStartDatePicker" matSuffix></mat-datepicker-toggle>
                         <mat-datepicker #policyStartDatePicker></mat-datepicker>
                         <mat-error>This field is required
@@ -249,10 +249,13 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input (focus)="policyExpiryDatePicker.open()" (input)="preventDefault($event)" [matDatepicker]="policyExpiryDatePicker" class="form-control br-0 b-0" formControlName="policyExpiryDate" matInput>
+                        <input (focus)="policyExpiryDatePicker.open()" #policyExpiryDate (ngModelChange)="dateChange(policyExpiryDate.value,'policyExpiryDate',policyStartDate.value)" (input)="preventDefault($event)" [matDatepicker]="policyExpiryDatePicker" class="form-control br-0 b-0" formControlName="policyExpiryDate" matInput>
                         <mat-datepicker-toggle [for]="policyExpiryDatePicker" matSuffix></mat-datepicker-toggle>
                         <mat-datepicker #policyExpiryDatePicker></mat-datepicker>
-                        <mat-error>This field is required
+                        <mat-error class="f-12" *ngIf="(healthInsuranceForm.get('policyExpiryDate').errors?.required)">This field is required
+                        </mat-error>
+                        <mat-error class="f-12" *ngIf="(healthInsuranceForm.get('policyExpiryDate').errors?.max)">Difference between policy start date and policy end date should be atleast a year
+    
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -282,10 +285,10 @@
                 <div class="col-md-3 pr-0">
                     <div [ngClass]="healthInsuranceForm.controls.copayType.value == '1' ? 'iconRupess': 'iconPetage'" class="form-group mb-0">
                         <mat-form-field>
-                            <input #copay (keyup)="changeTheInput(copayType.value,'copay',$event)" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="8" [ngClass]="healthInsuranceForm.controls.copayType.value == '1' ? 'rupess': 'percentage'" appInputValueValidation autocomplete="true"
+                            <input #copay (keyup)="changeTheInput(copayType.value,'copay',$event)" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" [ngClass]="healthInsuranceForm.controls.copayType.value == '1' ? 'rupess': 'percentage'" appInputValueValidation autocomplete="true"
                                 class="form-control  br-0" formControlName="copay" matInput type="number">
                             <mat-hint *ngIf="healthInsuranceForm.controls.copayType.value == '1'" align="end" class="f-12">
-                                {{copay.value.length}}/8
+                                {{copay.value.length}}/10
                             </mat-hint>
                             <mat-error>This field is required
                             </mat-error>
@@ -313,10 +316,10 @@
                 <div class="col-md-3 pr-0">
                     <div [ngClass]="healthInsuranceForm.controls.bonusType.value == '1' ? 'iconRupess': 'iconPetage'" class="form-group mb-0">
                         <mat-form-field>
-                            <input #cumulativeBonus (keyup)="changeTheInput(bonusType.value,'cumulativeBonus',$event)" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="8" [ngClass]="healthInsuranceForm.controls.bonusType.value == '1' ? 'rupess': 'percentage'" appInputValueValidation
+                            <input #cumulativeBonus (keyup)="changeTheInput(bonusType.value,'cumulativeBonus',$event)" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" [ngClass]="healthInsuranceForm.controls.bonusType.value == '1' ? 'rupess': 'percentage'" appInputValueValidation
                                 autocomplete="true" class="form-control br-0" formControlName="cumulativeBonus" matInput type="number">
                             <mat-hint *ngIf="healthInsuranceForm.controls.bonusType.value == '1'" align="end" class="f-12">
-                                {{cumulativeBonus.value.length}}/8
+                                {{cumulativeBonus.value.length}}/10
                             </mat-hint>
                             <mat-error>This field is required
                             </mat-error>
@@ -360,8 +363,8 @@
                 <div class="col-md-3">
                     <div class="form-group mb-0 iconRupess">
                         <mat-form-field>
-                            <input #coversAmount [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="8" appInputValueValidation autocomplete="true" class="form-control rupess br-0" formControlName="coversAmount" matInput type="number">
-                            <mat-hint align="end" class="f-12">{{coversAmount.value.length}}/8</mat-hint>
+                            <input #coversAmount [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation autocomplete="true" class="form-control rupess br-0" formControlName="coversAmount" matInput type="number">
+                            <mat-hint align="end" class="f-12">{{coversAmount.value.length}}/10</mat-hint>
                             <mat-error>This field is required
                             </mat-error>
                         </mat-form-field>
