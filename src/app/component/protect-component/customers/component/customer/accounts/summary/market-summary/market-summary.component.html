@@ -28,7 +28,7 @@
     </div>
     <div class="col-md-3 p-0">
         <p *ngIf="bscData" class="m-0 "
-            [ngClass]="{'text-success': checkNumberPositiveAndNegative(bscData.change_in_percentage),'text-danger': checkNumberPositiveAndNegative(bscData.change_in_percentage)==false}">
+            [ngClass]="{'text-success': bscData.colourFlag,'text-danger': bscData.colourFlag==false}">
             {{bscData.change_in_percentage}}%</p>
     </div>
     <div class="col-md-3 p-0">
@@ -39,7 +39,7 @@
     </div>
     <div class="col-md-3 p-0">
         <p *ngIf="nscData" class="m-0"
-            [ngClass]="{'text-success': checkNumberPositiveAndNegative(nscData.change_in_percentage),'text-danger': checkNumberPositiveAndNegative(nscData.change_in_percentage)==false}">
+            [ngClass]="{'text-success': nscData.colourFlag,'text-danger': nscData.colourFlag==false}">
             {{nscData.change_in_percentage}}%</p>
     </div>
     <div class="col-md-3 p-0">
@@ -49,7 +49,9 @@
         <p class="text-black m-0 pl-16 pb-8 f-300">Nifty 500</p>
     </div>
     <div class="col-md-3 p-0">
-        <p *ngIf="nifty500Data" class="m-0 text-success">{{nifty500Data.change_in_percentage}}</p>
+        <p *ngIf="nifty500Data"
+            [ngClass]="{'text-success': nifty500Data.colourFlag,'text-danger': nifty500Data.colourFlag==false}"
+            class="m-0 ">{{nifty500Data.change_in_percentage}}</p>
     </div>
     <div class="col-md-3 p-0">
         <p *ngIf="nifty500Data" class="m-0 text-black f-500">₹{{nifty500Data.current_value}}</p>
@@ -61,7 +63,7 @@
     </div>
     <div class="col-md-3 p-0">
         <p *ngIf="deptData" class="m-0 "
-            [ngClass]="{'text-success': checkNumberPositiveAndNegative(deptData.change_in_percentage),'text-danger': checkNumberPositiveAndNegative(deptData.change_in_percentage)==false}">
+            [ngClass]="{'text-success': deptData.colourFlag,'text-danger': deptData.colourFlag==false}">
             {{deptData.change_in_percentage}}%</p>
     </div>
     <div class="col-md-3 p-0">
@@ -74,7 +76,7 @@
     </div>
     <div class="col-md-3 p-0">
         <p *ngIf="goldData"
-            [ngClass]="{'text-success': checkNumberPositiveAndNegative(goldData.carat_22.change_in_percentage),'text-danger': checkNumberPositiveAndNegative(goldData.change_in_percentage)==false}"
+            [ngClass]="{'text-success': goldData.carat_22.colourFlag,'text-danger': goldData.carat_22.colourFlag==false}"
             class="m-0 ">{{goldData.carat_22.change_in_percentage}}%</p>
     </div>
     <div class="col-md-3 p-0">
@@ -85,7 +87,7 @@
     </div>
     <div class="col-md-3 p-0">
         <p *ngIf="goldData"
-            [ngClass]="{'text-success': checkNumberPositiveAndNegative(goldData.carat_24.change_in_percentage),'text-danger': checkNumberPositiveAndNegative(goldData.change_in_percentage)==false}"
+            [ngClass]="{'text-success': goldData.carat_24.colourFlag,'text-danger': goldData.carat_24.colourFlag==false}"
             class="m-0 ">{{goldData.carat_24.change_in_percentage}}%</p>
     </div>
     <div class="col-md-3 p-0">
@@ -96,7 +98,7 @@
     </div>
     <div class="col-md-3 p-0">
         <p *ngIf="silverData"
-            [ngClass]="{'text-success': checkNumberPositiveAndNegative(silverData.change_in_percentage),'text-danger': checkNumberPositiveAndNegative(silverData.change_in_percentage)==false}"
+            [ngClass]="{'text-success': silverData.colourFlag,'text-danger': silverData.colourFlag==false}"
             class="m-0 ">{{silverData.change_in_percentage}}%</p>
     </div>
     <div class="col-md-3 p-0">

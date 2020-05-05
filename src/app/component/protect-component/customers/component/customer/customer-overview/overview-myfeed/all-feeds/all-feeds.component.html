@@ -9,7 +9,8 @@
 
 
                 <!-- your account intro -->
-                <div class="wrapperBox mb-20" [hidden]="!loaderFn.loading && tabsLoaded.customerProfile.dataLoaded && customerProfile.completenessStatus">
+                <div class="wrapperBox mb-20"
+                    [hidden]="!loaderFn.loading && tabsLoaded.customerProfile.dataLoaded && customerProfile.completenessStatus">
                     <div class="row">
                         <div class="col-md-12 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0 ">Your account</h5>
@@ -25,7 +26,8 @@
                                             An important note
                                         </h5>
                                         <p>
-                                            Document vault is a safe and secure way to manage your important documents. This will help you get better organized!
+                                            Document vault is a safe and secure way to manage your important documents.
+                                            This will help you get better organized!
                                         </p>
                                         <p class="m-0 text-primary">Read more</p>
                                     </div>
@@ -66,7 +68,8 @@
                                             <div class="col-md-2 relClass ">
                                                 <div class="bar height24">
                                                     <p class="text-black mb-0">
-                                                        <span appFormatNumber>{{(data.y/chartTotal | number : '0.0-2')}}</span>
+                                                        <span
+                                                            appFormatNumber>{{(data.y/chartTotal | number : '0.0-2')}}</span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -85,7 +88,8 @@
                             <h5 class="roboto m-0">Portfolio</h5>
                         </div>
                         <div class="col-md-4 text-right">
-                            <a class="viewBtn c-p text-primitive br-2 f-12"> View all </a>
+                            <a [routerLink]="['/customer/detail/account/summary']"
+                                class="viewBtn c-p text-primitive br-2 f-12"> View all </a>
                         </div>
                     </div>
 
@@ -98,8 +102,11 @@
                                     <h5 class="roboto">{{portData.assetTypeString}}</h5>
                                 </div>
                                 <div class="col-md-4 d-flex justify-content-end">
-                                    <span class="bg-primary d-flex align-items-center justify-content-center mfBox text-white">
-                                        {{portData.type}}
+                                    <span *ngIf="portData.currentValue==0"
+                                        (click)="routeAndAddQueryParams(portData.assetTypeString)"
+                                        class="bg-primary d-flex align-items-center justify-content-center mfBox text-white">
+                                        <!-- {{portData.type}} -->
+                                        Add
                                     </span>
                                 </div>
                             </div>
@@ -107,18 +114,21 @@
                             <div class="row">
                                 <div class="col-md-8">
                                     <p class="m-0 text-primitive f-12">CURRENT VALUE</p>
-                                    <h3 class="mb-20">₹<span appFormatNumber>{{portData.currentValue | number : '0.0-2'}}</span></h3>
+                                    <h3 class="mb-20">₹<span
+                                            appFormatNumber>{{portData.currentValue | number : '0.0-2'}}</span></h3>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6">
                                     <p class="m-0 l-18 text-primitive f-12">AMT INVESTED</p>
-                                    <p class="m-0">₹<span appFormatNumber>{{portData.investedAmount | number : '0.0-2'}}</span></p>
+                                    <p class="m-0">₹<span
+                                            appFormatNumber>{{portData.investedAmount | number : '0.0-2'}}</span></p>
                                 </div>
                                 <div class="col-md-6 text-right">
                                     <p class="m-0 l-18 text-primitive f-12">GAIN/(LOSS)</p>
-                                    <p class="m-0 text-success">₹<span appFormatNumber>{{portData.currentValue ? (portData.currentValue | number : '0.0-2') : 0}}</span>
+                                    <p class="m-0 text-success">₹<span
+                                            appFormatNumber>{{portData.currentValue ? (portData.currentValue | number : '0.0-2') : 0}}</span>
                                     </p>
                                 </div>
                             </div>
@@ -127,13 +137,15 @@
                         </div>
 
                         <!-- portfolio data not present -->
-                        <div class="fundBox bg-white" *ngIf="tabsLoaded.portfolioSummary.dataLoaded && portFolioData.length == 0">
+                        <div class="fundBox bg-white"
+                            *ngIf="tabsLoaded.portfolioSummary.dataLoaded && portFolioData.length == 0">
                             <div class="row">
                                 <div class="col-md-8  pr-0">
                                     <h5 class="roboto">Mutual funds</h5>
                                 </div>
                                 <div class="col-md-4 d-flex justify-content-end">
-                                    <span class="bg-primary d-flex align-items-center justify-content-center mfBox text-white">
+                                    <span
+                                        class="bg-primary d-flex align-items-center justify-content-center mfBox text-white">
                                         Add
                                     </span>
                                 </div>
@@ -163,7 +175,8 @@
                 </div>
 
                 <!-- complete your profile -->
-                <div class="wrapperBox mb-20" [hidden]="tabsLoaded.customerProfile.dataLoaded && customerProfile.completenessStatus">
+                <div class="wrapperBox mb-20"
+                    [hidden]="tabsLoaded.customerProfile.dataLoaded && customerProfile.completenessStatus">
                     <div class="row">
                         <div class="col-md-12 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0 ">Complete your profile</h5>
@@ -179,7 +192,8 @@
                                             Add missing data in your profile
                                         </h5>
                                         <p>
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                            Lorem Ipsum has been the industry's standard dummy
                                         </p>
                                         <button class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
                                             Add profile details
@@ -197,7 +211,8 @@
                 </div>
 
 
-                <div class="wrapperBox mb-20" [hidden]="tabsLoaded.customerProfile.dataLoaded && customerProfile.familyMemberCount > 0">
+                <div class="wrapperBox mb-20"
+                    [hidden]="tabsLoaded.customerProfile.dataLoaded && customerProfile.familyMemberCount > 0">
                     <div class="row">
                         <div class="col-md-12 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0 ">Family members</h5>
@@ -213,10 +228,12 @@
                                             Add your family members
                                         </h5>
                                         <p>
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                            Lorem Ipsum has been the industry's standard dummy
                                         </p>
 
-                                        <button class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
+                                        <button [routerLink]="['/customer/detail/overview/profile']"
+                                            class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
                                             Add family details
                                         </button>
 
@@ -250,7 +267,8 @@
                                             Upload your CAS statement
                                         </h5>
                                         <p>
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                            Lorem Ipsum has been the industry's standard dummy
                                         </p>
 
                                         <button class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
@@ -325,16 +343,17 @@
                                                 Tellus about your goals
                                             </h5>
                                             <p>
-                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                                                Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry. Lorem Ipsum has been the industry's standard dummy
                                             </p>
-    
+
                                             <button class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
                                                 Add financial goals
                                             </button>
-    
+
                                             <mat-checkbox class="text-primitive f-12">Do not show again</mat-checkbox>
-    
-    
+
+
                                         </div>
                                         <div class="col-md-5 pr-0">
                                             <img src="/assets/images/svg/vault-icon.svg">
@@ -376,7 +395,8 @@
                                 <h5 class="m-0 roboto">Money to be deployed
                                 </h5>
                                 <p class="f-12 text-primitive">current + upcoming</p>
-                                <h3 class="text-primary m-0 f-22">₹<span appFormatNumber>{{adviseData?.deployed || 0}}</span>
+                                <h3 class="text-primary m-0 f-22">₹<span
+                                        appFormatNumber>{{adviseData?.deployed || 0}}</span>
                                 </h3>
                             </div>
                         </div>
@@ -401,15 +421,22 @@
                                             Your secure online vault
                                         </h5>
 
-                                        <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
-                                        <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
-                                        <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
-                                        <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
-                                        <img class="documentImg" src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
+                                        <img class="documentImg"
+                                            src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
+                                        <img class="documentImg"
+                                            src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
+                                        <img class="documentImg"
+                                            src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
+                                        <img class="documentImg"
+                                            src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
+                                        <img class="documentImg"
+                                            src="http://res.cloudinary.com/futurewise/image/upload/v1588164562/organizational_report_logo/s899gl3cxbdnjhvqysfl.png">
 
-                                        <p class="mb-0">{{docs.filesCount}} items in your vault {{docs.totalBytes/1024 | number : '0.0-2'}} space used</p>
+                                        <p class="mb-0">{{docs.filesCount}} items in your vault
+                                            {{docs.totalBytes/1024 | number : '0.0-2'}} space used</p>
 
-                                        <button class="vaultBtn mt-12 mb-4 bg-primary f-16 text-white" mat-flat-button>
+                                        <button [routerLink]="['/customer/detail/overview/documents']"
+                                            class="vaultBtn mt-12 mb-4 bg-primary f-16 text-white" mat-flat-button>
                                             Access your vault
                                         </button>
 
@@ -431,7 +458,8 @@
                                 <div class="row">
                                     <div class="col-md-7 pr-0">
                                         <h5 class="roboto f-500">You aren’t using the document vault!</h5>
-                                        <p>Document vault is a safe and secure way to manage your important documents. This will help you get better organized.</p>
+                                        <p>Document vault is a safe and secure way to manage your important documents.
+                                            This will help you get better organized.</p>
                                         <button class="vaultBtn bg-primary f-16 text-white" mat-flat-button>
                                             Add documents
                                         </button>
@@ -465,13 +493,19 @@
 
                             <div class="row">
                                 <div class="col-md-4">
-                                    <circle-progress [animationDuration]="1000" [animation]="true" [innerStrokeColor]="'#e7e8ea'" [innerStrokeWidth]="10" [outerStrokeColor]="'#008FFF'" [outerStrokeWidth]="10" [percent]="inc.progress" [radius]="20" [responsive]="true" [showSubtitle]="false"
-                                        [space]="-10" [startFromZero]="true" [titleFontSize]="35" [unitsFontSize]="35" class="progress">
+                                    <circle-progress [animationDuration]="1000" [animation]="true"
+                                        [innerStrokeColor]="'#e7e8ea'" [innerStrokeWidth]="10"
+                                        [outerStrokeColor]="'#008FFF'" [outerStrokeWidth]="10" [percent]="inc.progress"
+                                        [radius]="20" [responsive]="true" [showSubtitle]="false" [space]="-10"
+                                        [startFromZero]="true" [titleFontSize]="35" [unitsFontSize]="35"
+                                        class="progress">
                                     </circle-progress>
                                 </div>
                                 <div class="col-md-8 d-flex justify-content-center flex-column">
-                                    <p class="m-0 roboto"> <span class="f-500"> Actual: </span> <span appFormatNumber>{{inc.actual}}</span></p>
-                                    <p class="m-0 roboto"> <span class="f-500"> Advice: </span> <span appFormatNumber>{{inc.adviced}}</span></p>
+                                    <p class="m-0 roboto"> <span class="f-500"> Actual: </span> <span
+                                            appFormatNumber>{{inc.actual}}</span></p>
+                                    <p class="m-0 roboto"> <span class="f-500"> Advice: </span> <span
+                                            appFormatNumber>{{inc.adviced}}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -485,7 +519,8 @@
                             <h5 class="roboto m-0">Recent transactions (As per RTA feeds)</h5>
                         </div>
                         <div class="col-md-4 text-right">
-                            <a class="viewBtn c-p text-primitive br-2 f-12"> View all </a>
+                            <a [routerLink]="['/admin/transactions/overview']"
+                                class="viewBtn c-p text-primitive br-2 f-12"> View all </a>
                         </div>
                     </div>
 
@@ -521,7 +556,8 @@
                 </div>
 
                 <!-- recent transactions-->
-                <div class="wrapperBox" *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">
+                <div class="wrapperBox"
+                    *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">
                     <div class="row">
                         <div class="col-md-8 d-flex align-items-center">
                             <h5 class="roboto m-0">Recent transactions</h5>
@@ -573,13 +609,15 @@
                         </div>
                     </div>
 
-                    <div class="riskProfileBox bg-white" *ngIf="tabsLoaded.riskProfile.dataLoaded && tabsLoaded.riskProfile.hasData">
+                    <div class="riskProfileBox bg-white"
+                        *ngIf="tabsLoaded.riskProfile.dataLoaded && tabsLoaded.riskProfile.hasData">
                         <div class="row" *ngFor="let risk of riskProfile">
                             <div class="col-md-4 text-center">
                                 <p class="f-16 roboto mb-8 f-500">Your risk score</p>
                                 <div class="numberBox">
                                     <h1 class="f-48 mb-12"> {{risk.riskAssessmentScore}} </h1>
-                                    <p class="f-12 m-0 text-primitive">Max: {{riskProfileMaxScore(risk.riskProfileId)}}</p>
+                                    <p class="f-12 m-0 text-primitive">Max: {{riskProfileMaxScore(risk.riskProfileId)}}
+                                    </p>
                                 </div>
                             </div>
 
@@ -600,7 +638,8 @@
                                             Do you know you risk profile?
                                         </h5>
                                         <p>
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                            Lorem Ipsum has been the industry's standard dummy
                                         </p>
 
                                         <button class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
@@ -722,7 +761,11 @@
                         </table>
                     </ng-container>
                 </div> -->
-                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="cashFlow"></div>
+                    </div>
+                </div>
                 <div class="wrapperBox">
                     In-flows & Out-flows
                     <table mat-table [dataSource]="cashFlowViewDataSource" class="mt-8" id="table-low">
@@ -747,8 +790,10 @@
                         <ng-container matColumnDef="amount">
                             <th mat-header-cell *matHeaderCellDef> Amount </th>
                             <td mat-cell *matCellDef="let element">
-                                <span [ngClass]="{'text-success': element.colourFlag,'text-danger':element.colourFlag==false}">
-                                    <div class="bar"><span appFormatNumber>{{element.currentValue | number : '0.0-2'}}</span></div>
+                                <span
+                                    [ngClass]="{'text-success': element.colourFlag,'text-danger':element.colourFlag==false}">
+                                    <div class="bar"><span
+                                            appFormatNumber>{{element.currentValue | number : '0.0-2'}}</span></div>
                                 </span>
                             </td>
                         </ng-container>
