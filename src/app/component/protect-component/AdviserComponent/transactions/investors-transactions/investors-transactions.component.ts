@@ -76,8 +76,8 @@ export class InvestorsTransactionsComponent implements OnInit {
       data => {
         console.log(data);
         if (data) {
-          this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
-          TransactionEnumService.setTaxStatusDesc(data, this.enumServiceService);
+         this.dataSource.data =  TransactionEnumService.setHoldingTypeEnum(data);
+         this.dataSource.data = TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService);
           this.dataSource.sort = this.sort;
         } else if (data == undefined) {
           this.noData = 'No scheme found';
@@ -103,7 +103,7 @@ export class InvestorsTransactionsComponent implements OnInit {
         this.isLoading = false;
         this.innUccPendindList = data || [];
         this.dataSource.data =TransactionEnumService.setHoldingTypeEnum(data)
-        TransactionEnumService.setTaxStatusDesc(data, this.enumServiceService);
+        this.dataSource.data = TransactionEnumService.setTaxStatusDesc( this.dataSource.data, this.enumServiceService);
           this.dataSource.sort = this.sort;
         console.log('innUccPendindList', this.innUccPendindList)
       },
