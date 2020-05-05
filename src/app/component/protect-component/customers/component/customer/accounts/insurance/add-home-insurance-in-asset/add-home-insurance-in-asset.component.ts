@@ -4,14 +4,20 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { CustomerService } from '../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ValidatorType } from 'src/app/services/util.service';
-import { MatInput } from '@angular/material';
+import { MatInput, MAT_DATE_FORMATS } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { DatePipe } from '@angular/common';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 
 @Component({
   selector: 'app-add-home-insurance-in-asset',
   templateUrl: './add-home-insurance-in-asset.component.html',
-  styleUrls: ['./add-home-insurance-in-asset.component.scss']
+  styleUrls: ['./add-home-insurance-in-asset.component.scss'],
+  providers: [
+    [DatePipe],
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+  ],
 })
 export class AddHomeInsuranceInAssetComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {
@@ -30,7 +36,7 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
     // }
   };
   maxDate = new Date();
-
+  minDate = new Date();
   inputData: any;
   ownerName: any;
   nomineesListFM: any = [];
@@ -54,7 +60,7 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
   dataForEdit: any;
   policyFeature: any;
   id: any;
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
+  constructor(private datePipe: DatePipe,private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
@@ -337,6 +343,36 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
     // this.familyMemberId = data.familyMemberId;
   }
   ngOnInit() {
+    this.minDate.setFullYear(this.minDate.getFullYear() - 100);
+  }
+  dateChange(value,form,formValue){
+    if(form=='policyExpiryDate' && formValue){
+    let startDate =  new Date(this.homeInsuranceForm.controls.policyStartDate.value);
+      let policyExpiryDate = this.datePipe.transform(this.homeInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
+      let comparedDate :any = new Date(this.homeInsuranceForm.controls.policyStartDate.value);
+      comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
+      comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
+      if(policyExpiryDate < comparedDate){
+        this.homeInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
+        this.homeInsuranceForm.get('policyExpiryDate').markAsTouched();
+      }else{
+        this.homeInsuranceForm.get('policyExpiryDate').setErrors();
+      }
+    }else{
+      if(formValue){
+        let policyExpiryDate = this.datePipe.transform(this.homeInsuranceForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
+        let policyStartDate = this.datePipe.transform(this.homeInsuranceForm.controls.policyStartDate.value, 'yyyy/MM/dd')
+
+        if(policyStartDate >= policyExpiryDate){
+          this.homeInsuranceForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
+          this.homeInsuranceForm.get('policyExpiryDate').markAsTouched();
+        }else{
+          this.homeInsuranceForm.get('policyExpiryDate').setErrors();
+
+        }
+      }
+    }
+  
   }
   addNewAddOns(data) {
     this.addOnForm.push(this.fb.group({
@@ -415,6 +451,7 @@ export class AddHomeInsuranceInAssetComponent implements OnInit {
     if (this.homeInsuranceForm.invalid) {
       this.homeInsuranceForm.markAllAsTouched();
     } else {
+      this.barButtonOptions.active = true;
       const obj = {
         "clientId": this.clientId,
         "advisorId": this.advisorId,

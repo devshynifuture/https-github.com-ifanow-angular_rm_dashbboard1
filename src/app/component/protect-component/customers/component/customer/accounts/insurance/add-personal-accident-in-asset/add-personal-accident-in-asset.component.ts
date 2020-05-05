@@ -5,13 +5,19 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { CustomerService } from '../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ValidatorType } from 'src/app/services/util.service';
-import { MatInput } from '@angular/material';
+import { MatInput, MAT_DATE_FORMATS } from '@angular/material';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-personal-accident-in-asset',
   templateUrl: './add-personal-accident-in-asset.component.html',
-  styleUrls: ['./add-personal-accident-in-asset.component.scss']
+  styleUrls: ['./add-personal-accident-in-asset.component.scss'],
+  providers: [
+    [DatePipe],
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+  ],
 })
 export class AddPersonalAccidentInAssetComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {
@@ -30,6 +36,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
     // }
   };
   maxDate = new Date();
+  minDate = new Date();
   advisorId: any;
   clientId: any;
   inputData: any;
@@ -52,7 +59,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
   bankAccountDetails:any;
   bankList: any;
 
-  constructor(private fb: FormBuilder,private subInjectService:SubscriptionInject,private customerService:CustomerService,private eventService:EventService) { }
+  constructor(private datePipe: DatePipe,private fb: FormBuilder,private subInjectService:SubscriptionInject,private customerService:CustomerService,private eventService:EventService) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   @Input() set data(data) {
@@ -374,6 +381,7 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
 
   }
   ngOnInit() {
+    this.minDate.setFullYear(this.minDate.getFullYear() - 100);
   }
   changeSign(event,value,formValue) {
     this.personalAccidentForm.get(value).setValue('');
@@ -392,6 +400,35 @@ changeTheInput(form1,form2,event) {
     this.personalAccidentForm.get(form2).setValue(event.target.value);
   }
  
+}
+dateChange(value,form,formValue){
+  if(form=='policyExpiryDate' && formValue){
+  let startDate =  new Date(this.personalAccidentForm.controls.policyStartDate.value);
+    let policyExpiryDate = this.datePipe.transform(this.personalAccidentForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
+    let comparedDate :any = new Date(this.personalAccidentForm.controls.policyStartDate.value);
+    comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
+    comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
+    if(policyExpiryDate < comparedDate){
+      this.personalAccidentForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
+      this.personalAccidentForm.get('policyExpiryDate').markAsTouched();
+    }else{
+      this.personalAccidentForm.get('policyExpiryDate').setErrors();
+    }
+  }else{
+    if(formValue){
+      let policyExpiryDate = this.datePipe.transform(this.personalAccidentForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
+      let policyStartDate = this.datePipe.transform(this.personalAccidentForm.controls.policyStartDate.value, 'yyyy/MM/dd')
+
+      if(policyStartDate >= policyExpiryDate){
+        this.personalAccidentForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
+        this.personalAccidentForm.get('policyExpiryDate').markAsTouched();
+      }else{
+        this.personalAccidentForm.get('policyExpiryDate').setErrors();
+
+      }
+    }
+  }
+
 }
   savePersonalAccident() {
     let memberList = [];
@@ -420,6 +457,7 @@ changeTheInput(form1,form2,event) {
         featureList.push(obj)
       }
     })
+    this.personalAccidentForm.get('inceptionDate').setErrors(null);
     if (this.personalAccidentForm.invalid) {
       this.personalAccidentForm.markAllAsTouched();
     } else {

@@ -1,52 +1,46 @@
-<div class="wrapper-20 pl-12 pr-12">
-    <div class="row">
-        <div class="col-md-8 p-0">
-            <h5 class="m-0">Market summary</h5>
-        </div>
-        <div class="col-md-4 p-0">
-            <p *ngIf="bscData" class="f-12 m-0 text-custom pl-4 pt-4">
-                {{bscData.date | date:'dd/MM/yyyy'}}</p>
-        </div>
+<div class="row">
+    <div class="col-md-12 p-0 ">
+        <h5 class=" mb-8 roboto f-500 d-flex justify-content-between">Market summary <span *ngIf="bscData" class="f-12 m-0 text-custom pl-4 pt-4">
+                {{bscData.date | date:'dd/MM/yyyy'}} </span></h5>
     </div>
+
 </div>
+
 <div class="pb-12">
     <div class="row">
         <div class="col-md-12 p-0 text-center">
-            <mat-button-toggle-group [value]="selectedVal" #group="matButtonToggleGroup"
-                (change)="onValChange(group.value)">
-                <mat-button-toggle value="Equities" class="br-0" value="Equities">Equities
+            <mat-button-toggle-group [value]="selectedVal" #group="matButtonToggleGroup" (change)="onValChange(group.value)">
+                <mat-button-toggle value="Equities" class=" width78" value="Equities">Equities
                 </mat-button-toggle>
-                <mat-button-toggle value="Debt" class="br-0" value="Debt">Debt</mat-button-toggle>
-                <mat-button-toggle value="C&M" class="br-0" value="C&M">C&M</mat-button-toggle>
+                <mat-button-toggle value="Debt" class="  width78" value="Debt">Debt</mat-button-toggle>
+                <mat-button-toggle value="C&M" class="  width78" value="C&M">C&M</mat-button-toggle>
             </mat-button-toggle-group>
         </div>
     </div>
 </div>
-<div *ngIf="selectedVal=='Equities'" class="row b-b pb-20 pt-12">
+<div *ngIf="selectedVal=='Equities'" class="row  pb-20 ">
     <div class="col-md-6 p-0">
-        <p class="text-black m-0 pl-16 pb-8 f-300">BSE Sensex</p>
+        <p class="text-black m-0 pl-4 pb-8 f-300">BSE Sensex</p>
     </div>
     <div class="col-md-3 p-0">
-        <p *ngIf="bscData" class="m-0 "
-            [ngClass]="{'text-success': checkNumberPositiveAndNegative(bscData.change_in_percentage),'text-danger': checkNumberPositiveAndNegative(bscData.change_in_percentage)==false}">
+        <p *ngIf="bscData" class="m-0 " [ngClass]="{'text-success': checkNumberPositiveAndNegative(bscData.change_in_percentage),'text-danger': checkNumberPositiveAndNegative(bscData.change_in_percentage)==false}">
             {{bscData.change_in_percentage}}%</p>
     </div>
     <div class="col-md-3 p-0">
         <p *ngIf="bscData" class="m-0 text-black f-500">₹{{bscData.current_value}}</p>
     </div>
     <div class="col-md-6 p-0">
-        <p class="text-black m-0 pl-16 pb-8 f-300">Nifty 50</p>
+        <p class="text-black m-0 pl-4 pb-8 f-300">Nifty 50</p>
     </div>
     <div class="col-md-3 p-0">
-        <p *ngIf="nscData" class="m-0"
-            [ngClass]="{'text-success': checkNumberPositiveAndNegative(nscData.change_in_percentage),'text-danger': checkNumberPositiveAndNegative(nscData.change_in_percentage)==false}">
+        <p *ngIf="nscData" class="m-0" [ngClass]="{'text-success': checkNumberPositiveAndNegative(nscData.change_in_percentage),'text-danger': checkNumberPositiveAndNegative(nscData.change_in_percentage)==false}">
             {{nscData.change_in_percentage}}%</p>
     </div>
     <div class="col-md-3 p-0">
         <p *ngIf="nscData" class="m-0 text-black f-500">₹{{nscData.current_value}}</p>
     </div>
     <div class="col-md-6 p-0">
-        <p class="text-black m-0 pl-16 pb-8 f-300">Nifty 500</p>
+        <p class="text-black m-0 pl-4 pb-8 f-300">Nifty 500</p>
     </div>
     <div class="col-md-3 p-0">
         <p *ngIf="nifty500Data" class="m-0 text-success">{{nifty500Data.change_in_percentage}}</p>
@@ -55,49 +49,42 @@
         <p *ngIf="nifty500Data" class="m-0 text-black f-500">₹{{nifty500Data.current_value}}</p>
     </div>
 </div>
-<div *ngIf="selectedVal=='Debt'" class="row b-b pb-20 pt-12">
+<div *ngIf="selectedVal=='Debt'" class="row  pb-20 ">
     <div class="col-md-6 p-0">
-        <p class="text-black m-0 pl-16 pb-8 f-300">Dept</p>
+        <p class="text-black m-0 pl-4 pb-8 f-300">Dept</p>
     </div>
     <div class="col-md-3 p-0">
-        <p *ngIf="deptData" class="m-0 "
-            [ngClass]="{'text-success': checkNumberPositiveAndNegative(deptData.change_in_percentage),'text-danger': checkNumberPositiveAndNegative(deptData.change_in_percentage)==false}">
+        <p *ngIf="deptData" class="m-0 " [ngClass]="{'text-success': checkNumberPositiveAndNegative(deptData.change_in_percentage),'text-danger': checkNumberPositiveAndNegative(deptData.change_in_percentage)==false}">
             {{deptData.change_in_percentage}}%</p>
     </div>
     <div class="col-md-3 p-0">
         <p *ngIf="deptData" class="m-0 text-black f-500">₹{{deptData.current_value}}</p>
     </div>
 </div>
-<div *ngIf="selectedVal=='C&M'" class="row b-b pb-20 pt-12">
+<div *ngIf="selectedVal=='C&M'" class="row  pb-20 ">
     <div class="col-md-6 p-0">
-        <p class="text-black m-0 pl-16 pb-8 f-300">Gold (22 CARAT)</p>
+        <p class="text-black m-0 pl-4 pb-8 f-300">Gold (22 CARAT)</p>
     </div>
     <div class="col-md-3 p-0">
-        <p *ngIf="goldData"
-            [ngClass]="{'text-success': checkNumberPositiveAndNegative(goldData.carat_22.change_in_percentage),'text-danger': checkNumberPositiveAndNegative(goldData.change_in_percentage)==false}"
-            class="m-0 ">{{goldData.carat_22.change_in_percentage}}%</p>
+        <p *ngIf="goldData" [ngClass]="{'text-success': checkNumberPositiveAndNegative(goldData.carat_22.change_in_percentage),'text-danger': checkNumberPositiveAndNegative(goldData.change_in_percentage)==false}" class="m-0 ">{{goldData.carat_22.change_in_percentage}}%</p>
     </div>
     <div class="col-md-3 p-0">
         <p *ngIf="goldData" class="m-0 text-black f-500">{{goldData.carat_22.current_value}}</p>
     </div>
     <div class="col-md-6 p-0">
-        <p class="text-black m-0 pl-16 pb-8 f-300">Gold (24 CARAT)</p>
+        <p class="text-black m-0 pl-4 pb-8 f-300">Gold (24 CARAT)</p>
     </div>
     <div class="col-md-3 p-0">
-        <p *ngIf="goldData"
-            [ngClass]="{'text-success': checkNumberPositiveAndNegative(goldData.carat_24.change_in_percentage),'text-danger': checkNumberPositiveAndNegative(goldData.change_in_percentage)==false}"
-            class="m-0 ">{{goldData.carat_24.change_in_percentage}}%</p>
+        <p *ngIf="goldData" [ngClass]="{'text-success': checkNumberPositiveAndNegative(goldData.carat_24.change_in_percentage),'text-danger': checkNumberPositiveAndNegative(goldData.change_in_percentage)==false}" class="m-0 ">{{goldData.carat_24.change_in_percentage}}%</p>
     </div>
     <div class="col-md-3 p-0">
         <p *ngIf="goldData" class="m-0 text-black f-500">{{goldData.carat_24.current_value}}</p>
     </div>
     <div class="col-md-6 p-0">
-        <p class="text-black m-0 pl-16 pb-8 f-300">Silver</p>
+        <p class="text-black m-0 pl-4 pb-8 f-300">Silver</p>
     </div>
     <div class="col-md-3 p-0">
-        <p *ngIf="silverData"
-            [ngClass]="{'text-success': checkNumberPositiveAndNegative(silverData.change_in_percentage),'text-danger': checkNumberPositiveAndNegative(silverData.change_in_percentage)==false}"
-            class="m-0 ">{{silverData.change_in_percentage}}%</p>
+        <p *ngIf="silverData" [ngClass]="{'text-success': checkNumberPositiveAndNegative(silverData.change_in_percentage),'text-danger': checkNumberPositiveAndNegative(silverData.change_in_percentage)==false}" class="m-0 ">{{silverData.change_in_percentage}}%</p>
     </div>
     <div class="col-md-3 p-0">
         <p *ngIf="silverData" class="m-0 text-black f-500">{{silverData.current_value}}</p>

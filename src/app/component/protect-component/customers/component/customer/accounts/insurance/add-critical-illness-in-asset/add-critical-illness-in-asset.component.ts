@@ -4,14 +4,20 @@ import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { CustomerService } from '../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ValidatorType } from 'src/app/services/util.service';
-import { MatInput } from '@angular/material';
+import { MatInput, MAT_DATE_FORMATS } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-critical-illness-in-asset',
   templateUrl: './add-critical-illness-in-asset.component.html',
-  styleUrls: ['./add-critical-illness-in-asset.component.scss']
+  styleUrls: ['./add-critical-illness-in-asset.component.scss'],
+  providers: [
+    [DatePipe],
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+  ],
 })
 export class AddCriticalIllnessInAssetComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {
@@ -30,7 +36,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
     // }
   };
   maxDate = new Date();
-
+  minDate = new Date();
   addMoreFlag = false;
   advisorId: any;
   clientId: any;
@@ -57,7 +63,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
   showinsuredMemberSum = true;
   showSumAssured = false;
 
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
+  constructor(private datePipe: DatePipe,private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
@@ -260,7 +266,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
       additionalCovers: [this.dataForEdit ?  this.addOns.addOnId + '' : null],
       coversAmount: [this.dataForEdit ? this.addOns.addOnSumInsured + '' : null],
       exclusion: [this.dataForEdit ? this.dataForEdit.exclusion :null],
-      inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : null],
+      inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : ''],
       tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],
       advisorName: [this.dataForEdit ? this.dataForEdit.advisorName :null],
       serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch :null],
@@ -343,6 +349,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
     // this.familyMemberId = data.familyMemberId;
   }
   ngOnInit() {
+    this.minDate.setFullYear(this.minDate.getFullYear() - 100);
   }
   onChangeSetErrorsType(value, formName) {
     if (value == 8) {
@@ -350,10 +357,11 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
       this.showinsuredMemberSum = false
         let list = this.critialIllnessForm.get('InsuredMemberForm') as FormArray;
         list.controls.forEach(element => {
-            element.get('sumAssured').setValue('');
-            if (element.get('sumAssured').value == '') {
-                element.get('sumAssured').setErrors(null)
-            }
+          element.get('sumAssured').setValue(null);
+          if (element.get('sumAssured').value == '' || element.get('sumAssured').value == null) {
+              element.get('sumAssured').setErrors(null);
+              element.get('sumAssured').setValidators(null);
+          }
         });
         if (!this.critialIllnessForm.controls['sumAssuredIdv'].value) {
             this.critialIllnessForm.controls['sumAssuredIdv'].setValue(null);
@@ -447,7 +455,35 @@ changeTheInput(form1,form2,event) {
   preventDefault(e) {
     e.preventDefault();
   }
+  dateChange(value,form,formValue){
+    if(form=='policyExpiryDate' && formValue){
+    let startDate =  new Date(this.critialIllnessForm.controls.policyStartDate.value);
+      let policyExpiryDate = this.datePipe.transform(this.critialIllnessForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
+      let comparedDate :any = new Date(this.critialIllnessForm.controls.policyStartDate.value);
+      comparedDate = comparedDate.setFullYear(startDate.getFullYear() + 1);
+      comparedDate = this.datePipe.transform(comparedDate, 'yyyy/MM/dd')
+      if(policyExpiryDate < comparedDate){
+        this.critialIllnessForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
+        this.critialIllnessForm.get('policyExpiryDate').markAsTouched();
+      }else{
+        this.critialIllnessForm.get('policyExpiryDate').setErrors();
+      }
+    }else{
+      if(formValue){
+        let policyExpiryDate = this.datePipe.transform(this.critialIllnessForm.controls.policyExpiryDate.value, 'yyyy/MM/dd')
+        let policyStartDate = this.datePipe.transform(this.critialIllnessForm.controls.policyStartDate.value, 'yyyy/MM/dd')
 
+        if(policyStartDate >= policyExpiryDate){
+          this.critialIllnessForm.get('policyExpiryDate').setErrors({ max: 'Date of repayment' });
+          this.critialIllnessForm.get('policyExpiryDate').markAsTouched();
+        }else{
+          this.critialIllnessForm.get('policyExpiryDate').setErrors();
+
+        }
+      }
+    }
+  
+  }
   saveCriticalIllness() {
     let memberList = [];
     let finalMemberList = this.critialIllnessForm.get('InsuredMemberForm') as FormArray
@@ -462,6 +498,7 @@ changeTheInput(form1,form2,event) {
       }
       memberList.push(obj)
     })
+    this.critialIllnessForm.get('inceptionDate').setErrors(null);
     if (this.critialIllnessForm.invalid) {
       this.critialIllnessForm.markAllAsTouched();
     } else {
