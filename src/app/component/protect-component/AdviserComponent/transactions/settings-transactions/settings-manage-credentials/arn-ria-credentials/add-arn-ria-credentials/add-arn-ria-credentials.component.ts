@@ -88,7 +88,7 @@ export class AddArnRiaCredentialsComponent implements OnInit {
       appId: [(!data) ? '' : data.userId, [Validators.required]],
       memberId:[(!data) ? '' : data.memberId, [Validators.required]],
       pwd: [(!data) ? '' : data.password, [Validators.required]],
-      euin: [(!data) ? '' : data.euin, [Validators.required,Validators.max(7),Validators.pattern("/^E/i[0-9]{1,6}$/")]],
+      euin: [(!data) ? '' : data.euin, [Validators.required,Validators.max(7)]],
       setDefault: [(!data) ? '' : (data.defaultLogin), [Validators.required]],
     });
   }
@@ -99,25 +99,8 @@ export class AddArnRiaCredentialsComponent implements OnInit {
 
 
   addBSECredentials() {
-    if (this.addCredential.get('platform').invalid) {
-      this.addCredential.get('platform').markAsTouched();
-      return
-    }
-    else if (this.addCredential.get('accType').invalid) {
-      this.addCredential.get('accType').markAsTouched();
-      return
-    }
-    else if (this.addCredential.get('brokerCode').invalid) {
-      this.addCredential.get('brokerCode').markAsTouched();
-      return
-    }
-    else if (this.addCredential.get('appId').invalid) {
-      this.addCredential.get('appId').markAsTouched();
-      return
-    }
-    else if (this.addCredential.get('pwd').invalid) {
-      this.addCredential.get('pwd').markAsTouched();
-      return
+    if (this.addCredential.invalid) {
+      this.addCredential.markAllAsTouched();
     } else {
       let obj = {
         accountType : this.addCredential.controls.accType.value,
