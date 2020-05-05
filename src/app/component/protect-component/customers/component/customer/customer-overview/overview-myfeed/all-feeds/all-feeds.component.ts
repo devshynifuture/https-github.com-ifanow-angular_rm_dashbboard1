@@ -64,7 +64,7 @@ export class AllFeedsComponent implements OnInit {
 
   constructor(
     private customerService: CustomerService,
-    private loaderFn: LoaderFunction,
+    public loaderFn: LoaderFunction,
     private eventService: EventService,
     private authService: AuthService,
     private plansService: PlanService,
