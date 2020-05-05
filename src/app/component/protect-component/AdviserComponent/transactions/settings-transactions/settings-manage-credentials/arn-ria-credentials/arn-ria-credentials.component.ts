@@ -143,7 +143,7 @@ export class ArnRiaCredentialsComponent implements OnInit {
         }
         this.onlineTransact.deleteBroker(obj).subscribe(
           data => {
-            this.eventService.openSnackBar('Fixed deposite is deleted', 'Dismiss');
+            this.eventService.openSnackBar('Credential is deleted', 'Dismiss');
             dialogRef.close();
             this.getBSECredentials();
           },

@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-confirmation-transaction',
@@ -12,7 +14,8 @@ export class ConfirmationTransactionComponent implements OnInit {
   isViewInitCalled: any;
   confirmData: any;
 
-  constructor(private subInjectService: SubscriptionInject) { }
+  constructor(private subInjectService: SubscriptionInject,
+    public router: Router,) { }
   @Input() set data(data) {
     this.inputData = data;
     console.log('This is Input ConfirmationTransactionComponent@@  ', data);
@@ -21,7 +24,10 @@ export class ConfirmationTransactionComponent implements OnInit {
       // this.getdataForm('');
     }
   }
-
+  redirctTransaction(){
+    this.close()
+    this.router.navigate(['admin', 'transactions', 'transactions']);
+  }
   get data() {
     return this.inputData;
   }
