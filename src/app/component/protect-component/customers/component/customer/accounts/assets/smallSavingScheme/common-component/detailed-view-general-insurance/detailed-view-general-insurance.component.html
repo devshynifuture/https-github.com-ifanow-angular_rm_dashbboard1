@@ -165,6 +165,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="row" *ngIf="showInsurance =='Motor'">
                 <div class="col-md-12 p-0  mt-24">
                     <h4 class="f-16 roboto f-500">Vehicle details</h4>
@@ -238,6 +239,7 @@
 
                 </div>
             </div>
+
             <div class="row" *ngIf="showInsurance !='Motor' && showInsurance !='Home' && showInsurance !='Fire & special perils'">
                 <div class="col-md-12 p-0 mt-24">
                     <h4 class="f-16 roboto f-500">Insured details</h4>
@@ -255,7 +257,7 @@
                                 Plan type
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                                {{(_data.policyFeatureId == 0) ? 'Standard' : (_data.policyFeatureId == 1) ? 'Top up' : (_data.policyFeatureId == 2) ? 'Super top up' : 'N.A.' }},{{( _data.policyType) ?  _data.policyType : 'N.A.'}}
+                                {{(_data.policyFeatureId == 0) ? 'Standard' : (_data.policyFeatureId == 1) ? 'Top up' : (_data.policyFeatureId == 2) ? 'Super top up' : 'N.A.' }},{{( _data.policyType) ? _data.policyType : 'N.A.'}}
                             </div>
                         </div>
                         <div *ngIf="_data.insuredMembers && _data.policyType=='Individual' || (showInsurance == 'Travel' &&  _data.policyFeatureId == 0)">
@@ -332,10 +334,14 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-24">
 
+
+
+        </div>
+
+        <div class="col-md-6">
+            <div class=" ">
                 <h4 class="f-16 roboto f-500">Miscellaneous details</h4>
-
                 <div class="insurance-ui bt">
                     <div class="row bb p-8 b-l br" *ngFor="let data of nominee; let i = index">
                         <div bb p-8>
@@ -489,8 +495,7 @@
                 </div>
 
             </div>
-
-
-
         </div>
+
+
     </div>
