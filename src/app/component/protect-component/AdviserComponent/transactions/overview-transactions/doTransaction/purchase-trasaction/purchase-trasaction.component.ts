@@ -484,6 +484,7 @@ export class PurchaseTrasactionComponent implements OnInit {
         mandateId: null,
         nsePaymentMode: null,
         bankDetailId: null,
+        isException : true,
         childTransactions: []
       };
       if (this.getDataSummary.defaultClient.aggregatorType == 1) {

@@ -338,6 +338,7 @@ export class RedemptionTransactionComponent implements OnInit {
         allRedeem: (this.redemptionTransaction.controls.redeemType.value == 3) ? true : false,
         bankDetailId: null,
         nsePaymentMode: null,
+        isException : true,
         childTransactions: [],
 
         // teamMemberSessionId: redemptionTransaction.localStorage.mm.mainDetail.userDetails.teamMemberSessionId,
