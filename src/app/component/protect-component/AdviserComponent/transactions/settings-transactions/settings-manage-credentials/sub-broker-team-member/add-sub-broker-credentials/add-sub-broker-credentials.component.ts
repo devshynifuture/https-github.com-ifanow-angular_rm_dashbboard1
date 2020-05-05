@@ -90,7 +90,7 @@ export class AddSubBrokerCredentialsComponent implements OnInit {
       data = this.dataSource;
     }
     this.addSubCredential = this.fb.group({
-      platform: [(!data) ? '' : data.aggregatorType + '', [Validators.required]],
+      platform: [(!data) ? '' : (data.aggregatorType)?(data.aggregatorType):'1' + '', [Validators.required]],
       brokerCode: [(!data) ? '' : data.brokerCode, [Validators.required]],
       appId: [(!data) ? '' : data.name, [Validators.required]],
       memberId: [(!data) ? '' : data.subBrokerCode, [Validators.required]],
