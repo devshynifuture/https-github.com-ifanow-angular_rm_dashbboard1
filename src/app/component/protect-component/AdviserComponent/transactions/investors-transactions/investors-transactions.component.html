@@ -70,7 +70,7 @@
                 <ng-container matColumnDef="bank">
                     <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="taxDesc"> Tax status</th>
                     <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar"> {{isLoading ? '' : (element.taxDesc) ? element.taxDesc : '-'}} </div>
+                        <div class="bar"> {{isLoading ? '' : (element.taxDesc) ? element.taxDesc : element.taxStatus}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="bankac">
