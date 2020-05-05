@@ -52,7 +52,7 @@
             </div>
         </div>
         <div class="row pt-12 pl-32 pr-32">
-            <div (click)="selectTransactionType('PURCHASE')" class="col-md-4 pl-8 pr-8 c-p">
+            <div (click)="selectTransactionType('PURCHASE');saveAndNext()" class="col-md-4 pl-8 pr-8 c-p">
                 <mat-checkbox [ngClass]="{'v-h': selectedDiv != 'PURCHASE' }" [ngStyle]="{'pointer-events': (selectedDiv == 'PURCHASE') ? 'all': 'none'}" checked="false" class="checked">
                 </mat-checkbox>
                 <div [ngClass]="{'b-a-custom': selectedDiv == 'PURCHASE'}" class="row pt-20 pb-20 ba-Tr bg-grey lter">
@@ -66,7 +66,7 @@
                     </div>
                 </div>
             </div>
-            <div (click)="selectTransactionType('SWITCH')" class="col-md-4 pl-8 pr-8  c-p">
+            <div (click)="selectTransactionType('SWITCH');saveAndNext()" class="col-md-4 pl-8 pr-8  c-p">
                 <mat-checkbox [ngClass]="{'v-h':selectedDiv != 'SWITCH' }" [ngStyle]=" {'pointer-events': (selectedDiv == 'SWITCH') ? 'all': 'none'}" checked="false" class="checked">
                 </mat-checkbox>
                 <div [ngClass]="{'b-a-custom': selectedDiv == 'SWITCH'}" class="row pt-20 pb-20 ba-Tr bg-grey lter">
@@ -80,7 +80,7 @@
                     </div>
                 </div>
             </div>
-            <div (click)="selectTransactionType('REDEMPTION')" class="col-md-4 pl-8 pr-8  c-p">
+            <div (click)="selectTransactionType('REDEMPTION');saveAndNext()" class="col-md-4 pl-8 pr-8  c-p">
                 <mat-checkbox [ngClass]="{'v-h':selectedDiv != 'REDEMPTION' }" [ngStyle]="{'pointer-events': (selectedDiv == 'REDEMPTION') ? 'all': 'none'}" checked="false" class="checked">
                 </mat-checkbox>
                 <div [ngClass]="{'b-a-custom': selectedDiv == 'REDEMPTION'}" class="row pt-20 pb-20 ba-Tr bg-grey lter">
@@ -98,7 +98,7 @@
 
         </div>
         <div class="row pt-12 pl-32 pr-32">
-            <div (click)="selectTransactionType('SIP')" class="col-md-4 pl-8 pr-8  c-p">
+            <div (click)="selectTransactionType('SIP');saveAndNext()" class="col-md-4 pl-8 pr-8  c-p">
                 <mat-checkbox [ngClass]="{'v-h':selectedDiv != 'SIP' }" [ngStyle]="{'pointer-events': (selectedDiv == 'SIP') ? 'all': 'none'}" checked="false" class="checked">
                 </mat-checkbox>
                 <div [ngClass]="{'b-a-custom': selectedDiv == 'SIP'}" class="row pt-20 pb-20 ba-Tr bg-grey lter">
@@ -111,7 +111,7 @@
                     </div>
                 </div>
             </div>
-            <div (click)="selectTransactionType('STP')" class="col-md-4 pl-8 pr-8  c-p">
+            <div (click)="selectTransactionType('STP');saveAndNext()" class="col-md-4 pl-8 pr-8  c-p">
                 <mat-checkbox [ngClass]="{'v-h':selectedDiv != 'STP' }" [ngStyle]="{'pointer-events':(selectedDiv == 'STP') ? 'all': 'none'}" checked="false" class="checked">
                 </mat-checkbox>
                 <div [ngClass]="{'b-a-custom': selectedDiv == 'STP'}" class="row pt-20 pb-20 ba-Tr bg-grey lter">
@@ -125,7 +125,7 @@
                     </div>
                 </div>
             </div>
-            <div (click)="selectTransactionType('SWP')" class="col-md-4 pl-8 pr-8  c-p">
+            <div (click)="selectTransactionType('SWP');saveAndNext()" class="col-md-4 pl-8 pr-8  c-p">
                 <mat-checkbox [ngClass]="{'v-h':selectedDiv != 'SWP' }" [ngStyle]="{'pointer-events':(selectedDiv == 'SWP') ? 'all': 'none'}" checked="false" class="checked">
                 </mat-checkbox>
                 <div [ngClass]="{'b-a-custom': selectedDiv == 'SWP'}" class="row pt-20 pb-20 ba-Tr bg-grey lter">
@@ -178,9 +178,9 @@
             <h5 (click)="close()" class="mb-0  text-white c-p">Cancel</h5>
         </div>
 
-        <div *ngIf="noSubBroker==false && noMapping==false " class="col-md-8 p-0 d-flex align-item-center justify-content-end">
+        <!-- <div *ngIf="noSubBroker==false && noMapping==false " class="col-md-8 p-0 d-flex align-item-center justify-content-end">
             <button (click)="saveAndNext()" class="btn-green text-white" mat-button>NEXT</button>
-        </div>
+        </div> -->
         <!--
     <div class="col-md-8 p-0 d-flex align-item-center justifly-content-end" *ngIf="formStep == 'step-3' && transactionType!=undefined">
         {{formStep}}

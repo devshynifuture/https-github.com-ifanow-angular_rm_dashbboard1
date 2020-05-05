@@ -17,7 +17,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   displayedColumns: string[] = ['schemeName', 'folioNumber', 'investorName', 'stGain', 'stLoss', 'ltGain', 'indexedGain', 'liloss', 'indexedLoss'];
-  // dataSource = ELEMENT_DATA;
+  // dataSource = ;
   dataSource=new MatTableDataSource([{},{},{}]);
   displayedColumns1: string[] = ['schemeName1', 'folioNumber', 'investorName', 'stGain', 'stLoss', 'ltGain', 'indexedGain', 'liloss', 'indexedLoss'];
   // dataSource1 = ELEMENT_DATA1;
@@ -95,6 +95,10 @@ export class MutualFundsCapitalComponent implements OnInit {
     this.purchaseTransaction=this.MfServiceService.filter(this.mfList, 'purchaseTransactions');
     this.redemptiontransaction =this.MfServiceService.filter(this.mfList, 'redemptionTransactions');
     return this.mfList;
+  }
+
+  ExportTOExcel(data) {
+    console.log(data);
   }
 } 
 

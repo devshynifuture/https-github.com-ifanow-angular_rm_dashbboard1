@@ -25,13 +25,15 @@ export class SubBrokerTeamMemberComponent implements OnInit {
     private utilService: UtilService,
     private event : EventService,
      private subInjectService: SubscriptionInject,
-     public dialog:MatDialog) { }
+     public dialog:MatDialog) {
+      this.advisorId = AuthService.getAdvisorId();
+
+     }
   isLoading = false;
 
 
 
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId();
     this.getBSESubBrokerCredentials()
   }
 

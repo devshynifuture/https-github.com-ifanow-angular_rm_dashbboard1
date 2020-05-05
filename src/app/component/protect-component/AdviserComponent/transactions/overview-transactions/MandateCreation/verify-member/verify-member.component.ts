@@ -13,6 +13,7 @@ import { FileUploadService } from 'src/app/services/file-upload.service';
 import { apiConfig } from 'src/app/config/main-config';
 import { appConfig } from 'src/app/config/component-config';
 import { ParsedResponseHeaders, FileItem } from 'ng2-file-upload';
+import { IinUccCreationComponent } from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
 
 @Component({
   selector: 'app-verify-member',
@@ -45,6 +46,7 @@ export class VerifyMemberComponent implements OnInit {
   showUploadSection: boolean = false;
   madateResponse: any;
   file: any;
+  clientCodeDataShow: boolean = false;
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private processTrasaction: ProcessTransactionService,
@@ -56,6 +58,7 @@ export class VerifyMemberComponent implements OnInit {
   ngOnInit() {
     this.getdataForm('');
     this.showUploadSection = false
+    this.clientCodeDataShow =false
   }
 
   Close(flag) {
@@ -161,13 +164,39 @@ export class VerifyMemberComponent implements OnInit {
     };
     this.onlineTransact.getClientCodes(obj).subscribe(
       data => {
-        this.isLoadingUcc = false
-        console.log(data);
-        this.clientCodeData = data;
-        console.log('clientCodeData',this.clientCodeData)
+        if(data){
+          this.isLoadingUcc = false
+          console.log(data);
+          this.clientCodeData = data;
+          console.log('clientCodeData',this.clientCodeData)
+        }else{
+          this.isLoadingUcc = false
+          this.clientCodeDataShow = true
+        }
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
     );
+  }
+  openNewCustomerIIN() {
+    this.close();
+    const fragmentData = {
+      flag: 'addNewCustomer',
+      id: 1,
+      direction: 'top',
+      componentName: IinUccCreationComponent,
+      state: 'open'
+    };
+    // this.router.navigate(['/subscription-upper'])
+    AuthService.setSubscriptionUpperSliderData(fragmentData);
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+        }
+      }
+    );
+
   }
 
   selectIINUCC(clientCode) {

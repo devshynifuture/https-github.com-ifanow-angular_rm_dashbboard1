@@ -121,10 +121,10 @@ export class SettingsClientMappingComponent implements OnInit {
   }
 
   changePlatform(value) {
-    this.selectedBrokerCode = value;
+    this.selectedBrokerCode.aggregatorType = value;
     this.sortDataFilterWise();
   }
-
+  
   getUnmappedData() {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];

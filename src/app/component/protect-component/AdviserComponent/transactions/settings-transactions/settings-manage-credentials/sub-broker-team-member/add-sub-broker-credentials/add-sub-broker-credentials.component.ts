@@ -109,10 +109,10 @@ export class AddSubBrokerCredentialsComponent implements OnInit {
       this.addSubCredential.markAllAsTouched();
     } else {
       const obj = {
-        id : this.inputData.id,
+        id : (this.inputData)?this.inputData.id:null,
         advisorId: this.advisorId,
         teamMemberSessionId: (this.selectedTeam == undefined) ? this.inputData.teamMemberSessionId : this.selectedTeam.adminAdvisorId,
-        tpUserCredentialId: (this.selectBrokerCred == undefined) ? this.inputData.tpUserCredentialId : this.selectBrokerCred,
+        tpUserCredentialId: (this.selectBrokerCred == undefined) ? this.inputData.tpUserCredentialId : this.selectBrokerCred.tpUserCredentialId,
         euin: this.addSubCredential.controls.euin.value,
         subBrokerCode: this.addSubCredential.controls.memberId.value,
       };
