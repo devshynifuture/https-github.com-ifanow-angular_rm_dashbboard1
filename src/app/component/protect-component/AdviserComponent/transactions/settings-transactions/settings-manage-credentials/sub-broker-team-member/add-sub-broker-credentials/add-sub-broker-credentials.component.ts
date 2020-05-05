@@ -91,7 +91,7 @@ export class AddSubBrokerCredentialsComponent implements OnInit {
       brokerCode: [(!data) ? '' : data.brokerCode, [Validators.required]],
       appId: [(!data) ? '' : data.name, [Validators.required]],
       memberId: [(!data) ? '' : data.subBrokerCode, [Validators.required]],
-      euin: [(!data) ? '' : data.euin, [Validators.required, Validators.max(7)]],
+      euin: [(!data) ? '' : data.euin, [Validators.required, Validators.maxLength(7), Validators.minLength(7),]],
     });
   }
 

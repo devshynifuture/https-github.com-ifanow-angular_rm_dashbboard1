@@ -47,6 +47,7 @@ export class VerifyMemberComponent implements OnInit {
   madateResponse: any;
   file: any;
   clientCodeDataShow: boolean = false;
+  errorMsg: any;
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private processTrasaction: ProcessTransactionService,
@@ -258,8 +259,9 @@ export class VerifyMemberComponent implements OnInit {
     console.log('selectMandate  == ', this.selectedMandate);
     this.onlineTransact.addMandate(this.selectedMandate).subscribe(
       data => this.addMandateRes(data), (error) => {
-        this.eventService.showErrorMessage(error);
+        this.eventService.showErrorMessage(error.message);
         console.log('err',error)
+        this.errorMsg = error
       }
     );
   }

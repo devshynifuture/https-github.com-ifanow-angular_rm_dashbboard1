@@ -428,8 +428,8 @@ export class SwitchTransactionComponent implements OnInit {
         orderVal: this.switchTransaction.controls.employeeContry.value,
         bseDPTransType: 'PHYSICAL',
         aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-        childTransactions: []
-
+        childTransactions: [],
+        isException : true,
       };
 
       console.log('switch', obj);
