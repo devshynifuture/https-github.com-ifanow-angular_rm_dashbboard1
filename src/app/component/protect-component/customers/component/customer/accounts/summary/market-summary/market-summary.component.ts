@@ -37,9 +37,11 @@ export class MarketSummaryComponent implements OnInit {
     this.cusService.getDeptData().subscribe(
       data => {
         console.log(data);
-        this.deptData = data;
-        this.deptData.change_in_percentage = parseFloat(this.deptData.change_in_percentage)
-
+        if (data) {
+          this.deptData = data;
+          this.deptData.change_in_percentage = parseFloat(this.deptData.change_in_percentage)
+          data['colourFlag'] = this.checkNumberPositiveAndNegative(data.change_in_percentage)
+        }
       }
     )
   }
@@ -48,13 +50,24 @@ export class MarketSummaryComponent implements OnInit {
     this.StockFeedFlag = false;
     const { bse, nse, gold, silver } = data;
     bse.date = new Date(bse.date).getTime();
-    bse.change_in_percentage = parseFloat(bse.change_in_percentage).toFixed(2);
-    nse.change_in_percentage = parseFloat(nse.change_in_percentage).toFixed(2);
+    if (bse) {
+      bse.change_in_percentage = parseFloat(bse.change_in_percentage).toFixed(2);
+      bse['colourFlag'] = this.checkNumberPositiveAndNegative(bse.change_in_percentage)
+    }
+    if (nse) {
+      nse.change_in_percentage = parseFloat(nse.change_in_percentage).toFixed(2);
+      nse['colourFlag'] = this.checkNumberPositiveAndNegative(nse.change_in_percentage)
+    }
     if (gold) {
       gold.carat_22.change_in_percentage = parseFloat(gold.carat_22.change_in_percentage).toFixed(2);
+      gold.carat_22['colourFlag'] = this.checkNumberPositiveAndNegative(nse.change_in_percentage)
       gold.carat_24.change_in_percentage = parseFloat(gold.carat_24.change_in_percentage).toFixed(2);
+      gold.carat_24['colourFlag'] = this.checkNumberPositiveAndNegative(nse.change_in_percentage)
     }
-    silver.change_in_percentage = parseFloat(silver.change_in_percentage).toFixed(2);
+    if (silver) {
+      silver.change_in_percentage = parseFloat(silver.change_in_percentage).toFixed(2);
+      silver['colourFlag'] = this.checkNumberPositiveAndNegative(silver.change_in_percentage)
+    }
     this.bscData = bse;
     this.nscData = nse;
     this.goldData = gold;
@@ -64,15 +77,19 @@ export class MarketSummaryComponent implements OnInit {
     this.cusService.getNiftyData().subscribe(
       data => {
         console.log(data);
-        this.nifty500Data = data;
+        if (data) {
+          data['colourFlag'] = this.checkNumberPositiveAndNegative(data.change_in_percentage.replace('%', ''))
+          this.nifty500Data = data;
+        }
       }
     )
   }
-  checkNumberPositiveAndNegative(value: number) {
+  checkNumberPositiveAndNegative(value) {
     if (value == 0) {
       return undefined;
     } else {
-      const result = Math.sign(value);
+      const number = Number(value);
+      const result = Math.sign(number);
       return (result == -1) ? false : true;
     }
   }

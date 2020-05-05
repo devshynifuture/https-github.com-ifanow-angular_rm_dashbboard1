@@ -116,7 +116,7 @@ export class PeopleClientsComponent implements OnInit {
     console.log(singleClientData);
     this.ngZone.run(() => {
       this.authService.setClientData(singleClientData);
-      this.router.navigate(['/customer/detail/overview/profile']);
+      this.router.navigate(['/customer/detail/overview/myfeed/all-feeds'], { state: { ...singleClientData } });
     });
   }
 
