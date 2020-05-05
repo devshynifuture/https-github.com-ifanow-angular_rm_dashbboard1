@@ -42,6 +42,8 @@ export class SubmitReviewInnComponent implements OnInit {
   validatorType = ValidatorType
   paltform = '2';
   BSEValue = '2';
+  responseMessage: any;
+  statusString: any;
 
 
   constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
@@ -217,7 +219,7 @@ export class SubmitReviewInnComponent implements OnInit {
       const obj1 = {
         ownerName: this.allData.ownerName,
         holdingType: this.allData.holdingType,
-        taxStatus: (this.allData.taxStatus) ? this.allData.taxStatus : this.allData.generalDetails.taxStatus,
+        taxStatus: (this.allData.taxStatus) ? this.allData.taxStatus : 'SI',
         holderList: this.toSendObjHolderList,
         bankDetailList: this.toSendObjBankList,
         nomineeList: this.toSendObjNomineeList,
@@ -245,7 +247,7 @@ export class SubmitReviewInnComponent implements OnInit {
       const obj1 = {
         ownerName: this.allData.ownerName,
         holdingType: this.allData.holdingType,
-        taxStatus: (this.allData.taxStatus) ? this.allData.taxStatus : this.allData.generalDetails.taxStatus,
+        taxStatus: (this.allData.taxStatus) ? this.allData.taxStatus : 'SI',
         holderList: this.toSendObjHolderList,
         bankDetailList: this.toSendObjBankList,
         nomineeList: this.toSendObjNomineeList,
@@ -275,6 +277,10 @@ export class SubmitReviewInnComponent implements OnInit {
 
   createIINUCCRes(data) {
     console.log('data respose =', data);
+    this.responseMessage = data.responseMessage
+    this.statusString = data.statusString
+    this.eventService.showErrorMessage(data.statusString);
+    this.eventService.showErrorMessage(data.responseMessage);
   }
 
   uploadForm() {

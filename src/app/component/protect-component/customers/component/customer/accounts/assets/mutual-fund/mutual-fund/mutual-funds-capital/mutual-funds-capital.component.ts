@@ -1,7 +1,12 @@
 import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { MatSort } from '@angular/material';
+import { MatSort, MatTableDataSource } from '@angular/material';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../../excel.service';
+import { CustomerService } from '../../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ReconciliationService } from 'src/app/component/protect-component/AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
+import { MfServiceService } from '../../mf-service.service';
 
 @Component({
   selector: 'app-mutual-funds-capital',
@@ -12,48 +17,84 @@ export class MutualFundsCapitalComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   displayedColumns: string[] = ['schemeName', 'folioNumber', 'investorName', 'stGain', 'stLoss', 'ltGain', 'indexedGain', 'liloss', 'indexedLoss'];
-  dataSource = ELEMENT_DATA;
-
+  // dataSource = ELEMENT_DATA;
+  dataSource=new MatTableDataSource([{},{},{}]);
   displayedColumns1: string[] = ['schemeName1', 'folioNumber', 'investorName', 'stGain', 'stLoss', 'ltGain', 'indexedGain', 'liloss', 'indexedLoss'];
-  dataSource1 = ELEMENT_DATA1;
-
+  // dataSource1 = ELEMENT_DATA1;
+  dataSource1=new MatTableDataSource([{},{},{}]);
   displayedColumns2: string[] = ['schemeName2', 'folioNumber', 'dividendPayoutAmount', 'dividendReInvestmentAmount', 'totalReinvestmentAmount'];
-  dataSource2 = ELEMENT_DATA2;
+  // dataSource2 = ELEMENT_DATA2;
+  dataSource2 =new MatTableDataSource([{},{},{}]);
   excelData: any[];
   footer=[];
   stGain: number;
   indexedGain: number;
+  parentId: any;
+  advisorId: any;
+  clientId: any;
+  adminAdvisorIds: any[] = [];
+  categoryData : any[] =[];
+  mfList: any[];
+  mutualFundTransactions: any[];
+  purchaseTransaction: any[];
+  redemptiontransaction: any[];
+  isLoading :Boolean;
 
-  constructor() { }
+  constructor(private custumService:CustomerService,private eventService:EventService,private reconService:ReconciliationService,private MfServiceService: MfServiceService) { }
 
   ngOnInit() {
     this.stGain=875.32;
-    this.indexedGain=125.4
+    this.indexedGain=125.4,
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.parentId = AuthService.getUserInfo().parentId
+    this.getAdvisorData();
+
   }
-  /**used for excel */
-  async ExportTOExcel(value) {
-    this.excelData = []
-    var data = []
-    var headerData = [{ width: 20, key: 'Scheme name' },
-    { width: 20, key: 'Folio number ' },
-    { width: 20, key: 'Investor name ' },
-    { width: 18, key: 'ST gain' },
-    { width: 18, key: 'ST loss ' },
-    { width: 18, key: 'LT gain' },
-    { width: 25, key: 'Indexed gain' },
-    { width: 18, key: ' LT loss' },
-    { width: 10, key: ' Indexed loss' },]
-    var header = ['Scheme name', 'Folio number','Investor name', 'ST gain',
-      'ST loss', 'LT gain', 'Indexed gain', 'LT loss', 'Indexed loss'];
-    this.dataSource.forEach(element => {
-      data = [element.schemeName,element.folioNumber,element.investorName,element.stGain
-        , element.stLoss,element.ltGain,element.indexedGain,
-      element.liloss,element.indexedLoss]
-      this.excelData.push(Object.assign(data))
+  getAdvisorData(){
+    this.isLoading = true;
+    this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
+    .subscribe(data => {
+      if (data && data.length !== 0) {
+        data.forEach(element => {
+          this.adminAdvisorIds.push(element.adminAdvisorId);
+        });
+        this.getCapitalgain();
+      } else {
+        this.adminAdvisorIds = [...this.advisorId];
+      }
     });
-    var footerData = ['Total','','',this.stGain,'', '', this.indexedGain, '', '']
-    this.footer.push(Object.assign(footerData))
-    ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
+  
+  }
+  getCapitalgain(){
+    const obj = {
+      advisorIds: [2929],
+      clientId: 15545,
+      parentId :0
+
+    };
+    this.custumService.capitalGainGet(obj).subscribe(
+      data => this.getCapitalgainRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+    );
+  }
+  getCapitalgainRes(data){
+    this.isLoading = false;
+    console.log(data);
+    this.categoryData =data;
+    let catObj = this.MfServiceService.categoryFilter(this.categoryData,'category');
+    let debtData = this.filterCategoryWise(catObj['DEBT']);
+    let equityData =  this.filterCategoryWise(catObj['EQUITY']);
+    this.dataSource = new MatTableDataSource(debtData);
+    this.dataSource1 = new MatTableDataSource(equityData);
+  }
+  filterCategoryWise(data){
+    this.mfList =this.MfServiceService.filter(data, 'mutualFund');
+    this.mutualFundTransactions =this.MfServiceService.filter(this.mfList, 'mutualFundTransactions');
+    this.purchaseTransaction=this.MfServiceService.filter(this.mfList, 'purchaseTransactions');
+    this.redemptiontransaction =this.MfServiceService.filter(this.mfList, 'redemptionTransactions');
+    return this.mfList;
   }
 } 
 

@@ -9,6 +9,10 @@ import {OnlineTransactionService} from '../../../online-transaction.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MatTableDataSource} from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
+import { FileUploadService } from 'src/app/services/file-upload.service';
+import { apiConfig } from 'src/app/config/main-config';
+import { appConfig } from 'src/app/config/component-config';
+import { ParsedResponseHeaders, FileItem } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-verify-member',
@@ -38,6 +42,9 @@ export class VerifyMemberComponent implements OnInit {
   selectedBank: any;
   isLoadingUcc: boolean = false;
   isLoadingBank: boolean = false;
+  showUploadSection: boolean = false;
+  madateResponse: any;
+  file: any;
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private processTrasaction: ProcessTransactionService,
@@ -48,6 +55,7 @@ export class VerifyMemberComponent implements OnInit {
 
   ngOnInit() {
     this.getdataForm('');
+    this.showUploadSection = false
   }
 
   Close(flag) {
@@ -220,13 +228,47 @@ export class VerifyMemberComponent implements OnInit {
     Object.assign(this.selectedMandate, {tpUserCredentialId: this.detailsIIN.tpUserCredentialId});
     console.log('selectMandate  == ', this.selectedMandate);
     this.onlineTransact.addMandate(this.selectedMandate).subscribe(
-      data => this.addMandateRes(data)
+      data => this.addMandateRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+        console.log('err',error)
+      }
     );
   }
 
   addMandateRes(data) {
     console.log('res mandate', data);
+    
+   if(data){
+    this.madateResponse = data
     this.eventService.openSnackBar('Added successfully!', 'Dismiss');
-    this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
+   // this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
+
+   this.showUploadSection = true
+   }
+  }
+  getFileDetails(e,flag) {
+    console.log('file', e);
+    this.file = e.target.files[0];
+    console.log('file', e);
+    const file = e.target.files[0];
+    const requestMap = {
+      tpUserRequestId: 1,
+      documentType: flag,
+      tpMandateDetailId : this.madateResponse.id,
+      //clientCode: this.detailsIIN.clientCode
+    };
+    FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.MANDATE_UPLOAD,
+      file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+        console.log('getFileDetails uploadFileToServer callback item : ', item);
+        console.log('getFileDetails uploadFileToServer callback status : ', status);
+        console.log('getFileDetails uploadFileToServer callback headers : ', headers);
+        console.log('getFileDetails uploadFileToServer callback response : ', response);
+
+        if (status == 200) {
+          const responseObject = JSON.parse(response);
+          console.log('onChange file upload success response url : ', responseObject.url);
+
+        }
+      });
   }
 }

@@ -7,12 +7,23 @@
             <div class="row">
                 <div class="col-md-6 col-6 pl-0 pr-8 mob-pl-10">
                     <p class="m-0 roboto mob-pb-5">Category</p>
-                    <div *ngIf="fieldFlag=='client' || fieldFlag=='lead'" class="form-group">
+                    <div *ngIf="fieldFlag=='client'" class="form-group">
+                        <mat-form-field>
+                            <mat-select [(ngModel)]="invTypeCategory" (selectionChange)="changeInvestorType($event)"
+                                class="form-control">
+                                <mat-option value='1'>Individual</mat-option>
+                                <mat-option value='2'>Minor</mat-option>
+                                <mat-option value='3'>Non-individual</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div *ngIf="fieldFlag=='lead'" class="form-group">
                         <mat-form-field>
                             <mat-select [(ngModel)]="invTypeCategory" (selectionChange)="changeInvestorType($event)"
                                 class="form-control">
                                 <mat-option value='1'>Individual</mat-option>
                                 <mat-option value='2'>Non-individual</mat-option>
+                                <!-- <mat-option value='3'>Non-individual</mat-option> -->
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -110,7 +121,8 @@
             <div *ngIf="fieldFlag=='client' && basicDetailsData.userId" class="row pt-58">
                 <div class="col-md-4 text-right mob-text-left mob-pl-10 mob-pr-10">
                     <h5 class="m-0 pt-12">Username</h5>
-                    <p class="f-12 m-0 l-18 roboto text-custom mob-pt-10">This will be the login ID. By default, email is the username
+                    <p class="f-12 m-0 l-18 roboto text-custom mob-pt-10">This will be the login ID. By default, email
+                        is the username
                     </p>
                 </div>
                 <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
@@ -308,7 +320,7 @@
         </div>
     </div>
 
-    <div *ngIf="fieldFlag=='familyMember'">
+    <div *ngIf="fieldFlag=='client' || fieldFlag=='familyMember'">
         <div *ngIf="invTypeCategory=='2'" [formGroup]="minorForm" class="minorBox">
             <div class=" row pt-20">
                 <div class="col-md-4 text-right mob-pl-10">
@@ -576,7 +588,8 @@
         </div>
     </div>
     <div *ngIf="fieldFlag=='client' || fieldFlag=='lead'">
-        <div *ngIf="invTypeCategory=='2'" [formGroup]="nonIndividualForm" class="non-individualBox">
+        <div *ngIf="(fieldFlag=='lead' && invTypeCategory=='2') || (fieldFlag=='client' && invTypeCategory=='3')"
+            [formGroup]="nonIndividualForm" class="non-individualBox">
             <div class="row pt-20">
                 <div class="col-md-4 text-right">
                     <h5 class="m-0 pt-20">Company name</h5>

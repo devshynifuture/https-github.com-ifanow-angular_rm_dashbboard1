@@ -3,16 +3,9 @@
         <h4 class="m-0">All transactions</h4>
     </div>
 
-    <div class="col-md-9">
+    <div class="col-md-9" *ngIf="dataSource.filteredData.length > 0 && !isLoading">
         <div class="row">
-            <!-- <div class="col-md-4 text-right pr-0">
-                        <div class="form-group mb-0">
-                            <mat-form-field floatLabel="never" appearance="standard">
-                                <input autocomplete="off" matInput (keyup)="applyFilter($event)"
-                                    placeholder="type to filter data" class="form-control br-0">
-                            </mat-form-field>
-                        </div>
-                    </div> -->
+
             <div class="col-md-4 pl-0" [ngClass]="{'v-h': selectedPreviousToShowDate!='custom'}">
                 <mat-chip-list>
                     <mat-chip-list class="newDateIcon">
@@ -44,7 +37,7 @@
                 </div>
             </div>
             <div class="col-md-3 text-right pt-4 pr-0" *ngIf="dataSource.data.length > 0">
-                <img src="/assets/images/svg/reload.svg" class="b-a p-8 c-p" (click)="getAllTransactionList()">
+                <img src="/assets/images/svg/reload.svg" class="b-a p-8 mr-8 c-p" (click)="getAllTransactionList()">
                 <button mat-stroked-button class="btn-primary addon v-middle" (click)="openTransaction()"> ADD
                     NEW</button>
             </div>
@@ -135,11 +128,11 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-            <div *ngIf="dataSource.data.length==0 && isLoading==false" class="d-flex flex-column align-items-center pt-44">
-                <img class="width300" src="assets/images/svg/noDataFound.svg">
-                <h4 class="pt-12">{{(errMessage)?errMessage:'No transactions found'}}</h4>
-                <button mat-stroked-button class="btn-primary addon v-middle  " (click)="openTransaction()">
-                    ADD NEW</button>
-            </div>
+        <div *ngIf="dataSource.data.length==0 && isLoading==false" class="d-flex flex-column align-items-center pt-44">
+            <img class="width300" src="assets/images/svg/noDataFound.svg">
+            <h4 class="pt-12">{{(errMessage)?errMessage:'No transactions found'}}</h4>
+            <button mat-stroked-button class="btn-primary addon v-middle  " (click)="openTransaction()">
+                ADD NEW</button>
+        </div>
     </div>
 </div>

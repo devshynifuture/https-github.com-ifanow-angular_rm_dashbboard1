@@ -1,94 +1,89 @@
 <div class="popup-header-fix w-65">
-  <div class="row bb-1">
-    <div class="col-md-8 p-0">
-      <h3 class="mb-0 wrapper-20">{{transactionType}} TRANSACTION</h3>
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h3 class="mb-0 wrapper-20">{{transactionType}} TRANSACTION</h3>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i (click)="close()" class="material-icons c-p pt-8 v-middle"> clear</i>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4 text-right">
-      <div class="wrapper-12">
-        <i (click)="close()" class="material-icons c-p pt-8 v-middle"> clear</i>
-      </div>
-    </div>
-  </div>
 </div>
 <div [formGroup]="swpTransaction">
 
-  <div class="pt-90 pr-20 pl-20 pb-44">
-    <div class="row">
-      <div class="col-md-12 p-0">
-        <h5 class="m-0 text-black"><img (click)="backToTransact()" class="v-initial pr-12"
-            src="/assets/images/svg/back-arrow.svg">Investor name: {{selectedFamilyMember}}
-        </h5>
-      </div>
-    </div>
-    <div *ngIf="multiTransact == true && childTransactions.length>0" class="col-md-12 mt-20 all-transactions">
-      <table [dataSource]="childTransactions" id="table-low" mat-table>
-        <ng-container matColumnDef="no">
-          <th *matHeaderCellDef class="br" mat-header-cell> No</th>
-          <td *matCellDef="let element let i = index;" class="br w-15 " mat-cell>
-            <div class="bar"> {{i + 1 }} </div>
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="folio">
-          <th *matHeaderCellDef class="br w-20" mat-header-cell> Folio</th>
-          <td *matCellDef="let element" class="br" mat-cell>
-            <div class="bar"> {{element.folioNo}} </div>
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="ownerName">
-          <th *matHeaderCellDef class="br w-25" mat-header-cell> Scheme name</th>
-          <td *matCellDef="let element" class="br" mat-cell>
-            <div class="bar">
-              {{element.schemeName}}
-            </div>
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="amount">
-          <th *matHeaderCellDef class="br w-20" mat-header-cell> Amount</th>
-          <td *matCellDef="let element" class="br" mat-cell>
-            <div class="bar"> {{element.orderVal}} </div>
-          </td>
-        </ng-container>
-        <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
-        <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-      </table>
-    </div>
-    <div class="row pt-20 pb-44">
-      <div class="col-md-8 pl-0 pr-20">
+    <div class="pt-90 pr-20 pl-20 pb-44">
         <div class="row">
-          <div class="col-md-12 p-0 text-left">
-            <h5 class="m-0 pt-28 text-black pb-12">Select a scheme to withdraw</h5>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-11 p-0">
-            <div class="form-group">
-              <mat-form-field appearance="standard" floatLabel="never">
-                <input (input)="getSchemeList($event)" [matAutocomplete]="auto" appCustomAutoComplete
-                  aria-label="Number" class="form-control" formControlName="schemeSwp" matInput
-                  placeholder="Start typing to see scheme names" type="text">
-                <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option (onSelectionChange)="selectedScheme(scheme)" *ngFor="let scheme of schemeList"
-                    [value]="scheme.schemeName">
-                    {{scheme.schemeName}}
-                  </mat-option>
-                </mat-autocomplete>
-                <mat-error *ngIf="swpTransaction.get('schemeSwp').errors?.required" class="f-12">
-                  This field is required
-                </mat-error>
-                <mat-error *ngIf="swpTransaction.get('schemeSwp').errors?.setValue" class="f-12">
-                  Selected scheme does not exist
-                </mat-error>
-                <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom">Last closing NAV:
-                  {{navOfSelectedScheme}}
-                </mat-hint>
-              </mat-form-field>
+            <div class="col-md-12 p-0">
+                <h5 class="m-0 text-black"><img (click)="backToTransact()" class="v-initial pr-12" src="/assets/images/svg/back-arrow.svg">Investor name: {{selectedFamilyMember}}
+                </h5>
             </div>
-          </div>
-          <div *ngIf="showSpinner == true" class="col-md-1">
-            <mat-spinner class="mt-8"></mat-spinner>
-          </div>
         </div>
-        <!-- <div class="row pt-28 " *ngIf="reInvestmentOpt.length > 1">
+        <div *ngIf="multiTransact == true && childTransactions.length>0" class="col-md-12 mt-20 all-transactions">
+            <table [dataSource]="childTransactions" id="table-low" mat-table>
+                <ng-container matColumnDef="no">
+                    <th *matHeaderCellDef class="br" mat-header-cell> No</th>
+                    <td *matCellDef="let element let i = index;" class="br w-15 " mat-cell>
+                        <div class="bar"> {{i + 1 }} </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="folio">
+                    <th *matHeaderCellDef class="br w-20" mat-header-cell> Folio</th>
+                    <td *matCellDef="let element" class="br" mat-cell>
+                        <div class="bar"> {{element.folioNo}} </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="ownerName">
+                    <th *matHeaderCellDef class="br w-25" mat-header-cell> Scheme name</th>
+                    <td *matCellDef="let element" class="br" mat-cell>
+                        <div class="bar">
+                            {{element.schemeName}}
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="amount">
+                    <th *matHeaderCellDef class="br w-20" mat-header-cell> Amount</th>
+                    <td *matCellDef="let element" class="br" mat-cell>
+                        <div class="bar"> {{element.orderVal}} </div>
+                    </td>
+                </ng-container>
+                <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+            </table>
+        </div>
+        <div class="row pt-20 pb-44">
+            <div class="col-md-8 pl-0 pr-20">
+                <div class="row">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="m-0 pt-28 text-black ">Select a scheme to withdraw</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-11 p-0">
+                        <div class="form-group">
+                            <mat-form-field appearance="standard" floatLabel="never">
+                                <input (input)="getSchemeList($event)" [matAutocomplete]="auto" appCustomAutoComplete aria-label="Number" class="form-control" formControlName="schemeSwp" matInput placeholder="Start typing to see scheme names" type="text">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                    <mat-option (onSelectionChange)="selectedScheme(scheme)" *ngFor="let scheme of schemeList" [value]="scheme.schemeName">
+                                        {{scheme.schemeName}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                                <mat-error *ngIf="swpTransaction.get('schemeSwp').errors?.required" class="f-12">
+                                    This field is required
+                                </mat-error>
+                                <mat-error *ngIf="swpTransaction.get('schemeSwp').errors?.setValue" class="f-12">
+                                    Selected scheme does not exist
+                                </mat-error>
+                                <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom">Last closing NAV: {{navOfSelectedScheme}}
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div *ngIf="showSpinner == true" class="col-md-1">
+                        <mat-spinner class="mt-8"></mat-spinner>
+                    </div>
+                </div>
+                <!-- <div class="row pt-28 " *ngIf="reInvestmentOpt.length > 1">
             <div class="col-md-12 p-0 text-left">
                 <h5 class="m-0 text-black pb-8">Select re-investment</h5>
             </div>
@@ -104,177 +99,168 @@
                 </div>
             </div>
         </div> -->
-        <div class="row">
-          <div class="col-md-6 p-0 text-left">
-            <h5 class="m-0 pt-28 text-black pb-12">Select scheme folio</h5>
-          </div>
-          <div class="col-md-7 p-0">
-            <div class="form-group mb-0">
-              <mat-form-field>
-                <mat-select class="form-control" formControlName="investmentAccountSelection">
-                  <mat-option (click)="selectedFolio(folio)" *ngFor="let folio of folioList" value="option">
-                    {{folio.folioNumber}}</mat-option>
-                </mat-select>
-                <mat-error class="f-12 pt-4">
-                  This field is required
-                </mat-error>
-                <mat-error *ngIf="folioList == undefined" class="f-12 pt-4">
-                  No existing folios
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </div>
-          <div *ngIf="showSpinnerFolio == true" class="col-md-1 ">
-            <mat-spinner class="mt-8"></mat-spinner>
-          </div>
-        </div>
-        <div *ngIf="showUnits ==true" class="row">
-          <div class="col-md-12 mt-20 pl-0">
-            <div *ngIf="folioDetails" class="bg-grey lter">
-              <div class="row">
-                <div class="col-md-6 p-20 text-left">
-                  <p class="f-14 m-0">Current value</p>
-                  <h3 class="f-18 roboto m-0">Rs: {{currentValue}}</h3>
+                <div class="row">
+                    <div class="col-md-6 p-0 text-left">
+                        <h5 class="mb-8 pt-28 text-black ">Select scheme folio</h5>
+                    </div>
+                    <div class="col-md-7 p-0">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select class="form-control" formControlName="investmentAccountSelection">
+                                    <mat-option (click)="selectedFolio(folio)" *ngFor="let folio of folioList" value="option">
+                                        {{folio.folioNumber}}</mat-option>
+                                </mat-select>
+                                <mat-error class="f-12 pt-4">
+                                    This field is required
+                                </mat-error>
+                                <mat-error *ngIf="folioList == undefined" class="f-12 pt-4">
+                                    No existing folios
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div *ngIf="showSpinnerFolio == true" class="col-md-1 ">
+                        <mat-spinner class="mt-8"></mat-spinner>
+                    </div>
                 </div>
-                <div class="col-md-6 p-20 text-left">
-                  <p class="f-14 m-0">Balance unit</p>
-                  <h3 class="f-18 roboto m-0">{{folioDetails.balanceUnit}}</h3>
+                <div *ngIf="showUnits ==true" class="row">
+                    <div class="col-md-12 mt-20 pl-0">
+                        <div *ngIf="folioDetails" class="bg-grey lter">
+                            <div class="row">
+                                <div class="col-md-6 p-20 text-left">
+                                    <p class="f-14 m-0">Current value</p>
+                                    <h3 class="f-18 roboto m-0">Rs: {{currentValue}}</h3>
+                                </div>
+                                <div class="col-md-6 p-20 text-left">
+                                    <p class="f-14 m-0">Balance unit</p>
+                                    <h3 class="f-18 roboto m-0">{{folioDetails.balanceUnit}}</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 pb-12">
+                                    <p class="f-12 m-0">Note: Note: Units data provided here is as per data uploaded in the system. This data may not be updated in NSE NMF. As a result, some transactions may not go through.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 pb-12">
-                  <p class="f-12 m-0">Note: Note: Units data provided here is as per data uploaded in
-                    the system. This data may not be updated in NSE NMF. As a result, some
-                    transactions may not go through.</p>
+                <div class="row">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="mb-8 pt-28 text-black">Select SWP frequency</h5>
+                    </div>
+                    <div class="col-md-5 p-0">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select class="form-control" formControlName="frequency">
+                                    <mat-option (click)="selectedFrequency(frequency)" *ngFor="let frequency of swpFrequency" value="option">{{frequency.frequency}}</mat-option>
+                                </mat-select>
+                                <mat-error class="f-12 pt-4">
+                                    This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 p-0 text-left">
-            <h5 class="m-0 pt-28 text-black pb-12">Select SWP frequency</h5>
-          </div>
-          <div class="col-md-5 p-0">
-            <div class="form-group mb-0">
-              <mat-form-field>
-                <mat-select class="form-control" formControlName="frequency">
-                  <mat-option (click)="selectedFrequency(frequency)" *ngFor="let frequency of swpFrequency"
-                    value="option">{{frequency.frequency}}</mat-option>
-                </mat-select>
-                <mat-error class="f-12 pt-4">
-                  This field is required
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 p-0 text-left">
-            <h5 class="m-0 pt-28 text-black pb-12">Enter amount</h5>
-          </div>
+                <div class="row">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="mb-8 pt-28 text-black ">Enter amount</h5>
+                    </div>
 
-          <div class="col-md-5 p-0">
-            <div class="form-group mb-0">
-              <mat-form-field *ngIf="selectScheme == 2">
-                <input #employeeContry appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                  (change)="enteredAmount($event.target.value)" class="form-control br-0 rupess"
-                  formControlName="employeeContry" matInput maxlength="10" type="text">
-                <mat-hint align="start" class="f-12 text-custom">
-                  Min amount:
-                  ₹{{(schemeDetails == undefined) ? '0' : schemeDetails.minimumPurchaseAmount }}
-                </mat-hint>
-                <mat-error *ngIf="(swpTransaction.get('employeeContry').errors?.min)" class="f-12">
-                  Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
-                </mat-error>
-                <mat-error *ngIf="(swpTransaction.get('employeeContry').errors?.required)" class="f-12">
-                  This field is requied
-                </mat-error>
-              </mat-form-field>
+                    <div class="col-md-5 p-0">
+                        <div class="form-group mb-0">
+                            <mat-form-field *ngIf="selectScheme == 2">
+                                <input #employeeContry appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (change)="enteredAmount($event.target.value)" class="form-control br-0 rupess" formControlName="employeeContry" matInput maxlength="10" type="text">
+                                <mat-hint align="start" class="f-12 text-custom">
+                                    Min amount: ₹{{(schemeDetails == undefined) ? '0' : schemeDetails.minimumPurchaseAmount }}
+                                </mat-hint>
+                                <mat-error *ngIf="(swpTransaction.get('employeeContry').errors?.min)" class="f-12">
+                                    Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
+                                </mat-error>
+                                <mat-error *ngIf="(swpTransaction.get('employeeContry').errors?.required)" class="f-12">
+                                    This field is requied
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="mb-8 pt-40 text-black ">Select 1st date SWP</h5>
+                    </div>
+                    <div class="col-md-5 p-0">
+                        <mat-form-field>
+                            <mat-select class="form-control" formControlName="date">
+                                <mat-option *ngFor="let date of dateDisplay" value="{{date.dateToDisplay}}">
+                                    {{date.dateToDisplay}}</mat-option>
+                            </mat-select>
+                            <mat-error class="f-12 pt-4">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="mb-8 pt-40  text-black">Select tenure</h5>
+                    </div>
+
+                    <div class="col-md-5 p-0">
+                        <mat-form-field>
+                            <mat-select class="form-control" formControlName="tenure">
+                                <mat-option value="1">No. of installment</mat-option>
+                                <mat-option value="2">No. year</mat-option>
+                                <mat-option *ngIf="getDataSummary && getDataSummary.defaultClient.aggregatorType == 1" value="3">
+                                    Continue until cancelled
+                                </mat-option>
+                            </mat-select>
+                            <mat-error class="f-12 pt-4">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 p-0 text-left">
+                        <h5 class="mb-8 pt-40  text-black">Enter installment</h5>
+                    </div>
+
+                    <div class="col-md-5 p-0">
+                        <mat-form-field>
+                            <input #employeeContry class="form-control br-0 rupess" formControlName="installment" matInput maxlength="10" type="text">
+                            <mat-error class="f-12 pt-4">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
             </div>
-          </div>
+            <div class="col-md-4 bg-grey lter p-0">
+                <app-transaction-summary (bankDetailsSend)='getbankDetails($event)' (defaultDetails)='getDefaultDetails($event)' (folioChange)='onFolioChange($event)' [data]="transactionSummary">
+                </app-transaction-summary>
+            </div>
         </div>
-        <div class="row">
-          <div class="col-md-12 p-0 text-left">
-            <h5 class="m-0 pt-40 text-black pb-12">Select 1st date SWP</h5>
-          </div>
-          <div class="col-md-5 p-0">
-            <mat-form-field>
-              <mat-select class="form-control" formControlName="date">
-                <mat-option *ngFor="let date of dateDisplay" value="{{date.dateToDisplay}}">
-                  {{date.dateToDisplay}}</mat-option>
-              </mat-select>
-              <mat-error class="f-12 pt-4">
-                This field is required
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 p-0 text-left">
-            <h5 class="m-0 pt-40 pb-12 text-black">Select tenure</h5>
-          </div>
-
-          <div class="col-md-5 p-0">
-            <mat-form-field>
-              <mat-select class="form-control" formControlName="tenure">
-                <mat-option value="1">No. of installment</mat-option>
-                <mat-option value="2">No. year</mat-option>
-                <mat-option *ngIf="getDataSummary && getDataSummary.defaultClient.aggregatorType == 1" value="3">
-                  Continue
-                  until cancelled
-                </mat-option>
-              </mat-select>
-              <mat-error class="f-12 pt-4">
-                This field is required
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 p-0 text-left">
-            <h5 class="m-0 pt-40 pb-12 text-black">Enter installment</h5>
-          </div>
-
-          <div class="col-md-5 p-0">
-            <mat-form-field>
-              <input #employeeContry class="form-control br-0 rupess" formControlName="installment" matInput
-                maxlength="10" type="text">
-              <mat-error class="f-12 pt-4">
-                This field is required
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 bg-grey lter p-0">
-        <app-transaction-summary (bankDetailsSend)='getbankDetails($event)' (defaultDetails)='getDefaultDetails($event)'
-          (folioChange)='onFolioChange($event)' [data]="transactionSummary">
-        </app-transaction-summary>
-      </div>
     </div>
-  </div>
 
 </div>
 <div class="bottom-fixed wrapper-12 pt-16 w-65">
-  <div class="row">
-    <div class="col-md-4 pt-8">
-      <h5 (click)="close()" class="mb-0  text-white c-p">Cancel</h5>
-    </div>
-    <!-- <div class="col-md-8 right pt-8" *ngIf="formStep == 'step-1' || formStep == 'step-2'">
+    <div class="row">
+        <div class="col-md-4 pt-8">
+            <h5 (click)="close()" class="mb-0  text-white c-p">Cancel</h5>
+        </div>
+        <!-- <div class="col-md-8 right pt-8" *ngIf="formStep == 'step-1' || formStep == 'step-2'">
 
         <h5 class="mb-0 text-white c-p" (click)="saveAndNext()"> NEXT </h5>
     </div> -->
-    <div class="col-md-8 text-right">
-      <!-- commented for prod build -->
-      <!-- <button mat-raised-button class="br-0 text-success f-14" (click)="AddMultiTransaction()">
+        <div class="col-md-8 text-right">
+            <!-- commented for prod build -->
+            <!-- <button mat-raised-button class="br-0 text-success f-14" (click)="AddMultiTransaction()">
           SAVE & ADD ANOTHER
       </button> -->
-      <!-- <button mat-button  class="btn-green text-white ml-12" (click)="swp()">
+            <!-- <button mat-button  class="btn-green text-white ml-12" (click)="swp()">
           SAVE & PROCEED
       </button> -->
-      <app-progress-button (click)="swp()" [options]="barButtonOptions" class="btn-green text-white ml-12">
-      </app-progress-button>
+            <app-progress-button (click)="swp()" [options]="barButtonOptions" class="btn-green text-white  ">
+            </app-progress-button>
+        </div>
     </div>
-  </div>
 </div>

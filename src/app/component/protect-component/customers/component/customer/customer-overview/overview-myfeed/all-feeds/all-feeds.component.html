@@ -9,7 +9,7 @@
 
 
                 <!-- your account intro -->
-                <div class="wrapperBox mb-20" [hidden]="true">
+                <div class="wrapperBox mb-20" [hidden]="!loaderFn.loading && tabsLoaded.customerProfile.dataLoaded && customerProfile.completenessStatus">
                     <div class="row">
                         <div class="col-md-12 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0 ">Your account</h5>
@@ -27,10 +27,7 @@
                                         <p>
                                             Document vault is a safe and secure way to manage your important documents. This will help you get better organized!
                                         </p>
-
                                         <p class="m-0 text-primary">Read more</p>
-
-
                                     </div>
                                     <div class="col-md-5 pr-0">
                                         <img src="/assets/images/svg/vault-icon.svg">
@@ -166,7 +163,7 @@
                 </div>
 
                 <!-- complete your profile -->
-                <div class="wrapperBox mb-20" [hidden]="true">
+                <div class="wrapperBox mb-20" [hidden]="tabsLoaded.customerProfile.dataLoaded && customerProfile.completenessStatus">
                     <div class="row">
                         <div class="col-md-12 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0 ">Complete your profile</h5>
@@ -184,16 +181,10 @@
                                         <p>
                                             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
                                         </p>
-
                                         <button class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
                                             Add profile details
                                         </button>
-
                                         <mat-checkbox class="text-primitive f-12">Do not show again</mat-checkbox>
-
-
-
-
                                     </div>
                                     <div class="col-md-5 pr-0">
                                         <img src="/assets/images/svg/vault-icon.svg">
@@ -206,7 +197,7 @@
                 </div>
 
 
-                <div class="wrapperBox mb-20" [hidden]="true">
+                <div class="wrapperBox mb-20" [hidden]="tabsLoaded.customerProfile.dataLoaded && customerProfile.familyMemberCount > 0">
                     <div class="row">
                         <div class="col-md-12 mb-10 d-flex align-items-center">
                             <h5 class="roboto m-0 ">Family members</h5>
