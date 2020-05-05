@@ -269,7 +269,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
       additionalCovers: [this.dataForEdit ?  this.addOns.addOnId + '' : null],
       coversAmount: [this.dataForEdit ? this.addOns.addOnSumInsured + '' : null],
       exclusion: [this.dataForEdit ? this.dataForEdit.exclusion :null],
-      inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : ''],
+      inceptionDate: [this.dataForEdit ? new Date(this.dataForEdit.policyInceptionDate) : null],
       tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],
       advisorName: [this.dataForEdit ? this.dataForEdit.advisorName :null],
       serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch :null],
