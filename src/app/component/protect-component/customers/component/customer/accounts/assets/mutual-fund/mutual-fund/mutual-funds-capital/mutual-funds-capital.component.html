@@ -5,7 +5,7 @@
                 <h4 class="m-0 text-black roboto pt-8">Mutual fund capital gains</h4>
             </div>
             <!-- *ngIf="!isLoading" prod -->
-            <div class="col-md-8 p-0 d-flex justify-content-end" >
+            <div class="col-md-8 p-0 d-flex justify-content-end">
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1">
                 <mat-menu #menu1="matMenu">
                     <button mat-menu-item>PDF</button>
@@ -31,70 +31,112 @@
                         EQUITY
                     </h5>
                 </div>
-                <table  mat-table [dataSource]="dataSource" id="table-low" class="mutualfunds-capital-equity">
+                <table mat-table [dataSource]="dataSource" id="table-low"
+                    class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
+                    [appSkeletonLoading]="isLoading" *ngIf="dataSource.data.length>0">
 
                     <!--- Note that these columns can be defined in any order.
                                   The actual rendered columns are set as a property on the row definition" -->
 
                     <!-- Position Column -->
                     <ng-container matColumnDef="schemeName">
-                        <th class="br"  mat-header-cell *matHeaderCellDef> Scheme name </th>
-                        <td class="br" mat-cell *matCellDef="let element"> {{element.schemeName}} </td>
+                        <th class="br" mat-header-cell *matHeaderCellDef> Scheme name </th>
+                        <td class="br" mat-cell *matCellDef="let element">
+                            <div class="bar"> {{element.schemeName}} </div>
+
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left">Total </td>
+
                     </ng-container>
 
                     <!-- Name Column -->
                     <ng-container matColumnDef="folioNumber">
                         <th class="br text-right" mat-header-cell *matHeaderCellDef> Folio
                             number </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.folioNumber}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element">   
+                            <div class="bar"> {{element.folioNumber}} </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+
                     </ng-container>
 
                     <!-- Weight Column -->
                     <ng-container matColumnDef="investorName">
-                        <th class="br text-left"  mat-header-cell *matHeaderCellDef>
+                        <th class="br text-left" mat-header-cell *matHeaderCellDef>
                             Investor name </th>
-                        <td class="br text-left" mat-cell *matCellDef="let element"> {{element.investorName}} </td>
+                        <td class="br text-left" mat-cell *matCellDef="let element">
+                            <div class="bar"> {{element.investorName}}
+                            </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+
                     </ng-container>
 
                     <!-- Symbol Column -->
                     <ng-container matColumnDef="stGain">
-                        <th class="br text-right"  mat-header-cell *matHeaderCellDef> ST gain
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> ST gain
                         </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.stGain}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element">
+                            <div class="bar"> {{element.stGain}}</div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+
                     </ng-container>
 
                     <ng-container matColumnDef="stLoss">
-                        <th class="br text-right"  mat-header-cell *matHeaderCellDef> ST loss
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef> ST loss
                         </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.stLoss}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element">
+                            <div class="bar"> {{element.stLoss}}</div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+
                     </ng-container>
 
                     <ng-container matColumnDef="ltGain">
                         <th class="br text-right" mat-header-cell *matHeaderCellDef> LT gain
                         </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.ltGain}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element">
+                            <div class="bar"> {{element.ltGain}}</div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+
                     </ng-container>
 
                     <ng-container matColumnDef="indexedGain">
                         <th class="br text-right" mat-header-cell *matHeaderCellDef>
                             Indexed gain </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.indexedGain}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                {{element.indexedGain}} </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+
                     </ng-container>
 
                     <ng-container matColumnDef="liloss">
                         <th class="br text-right" mat-header-cell *matHeaderCellDef> LT loss
                         </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.liloss}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element">
+                            <div class="bar"> {{element.liloss}}</div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+
                     </ng-container>
 
                     <ng-container matColumnDef="indexedLoss">
-                        <th class="br text-right"  mat-header-cell *matHeaderCellDef>
+                        <th class="br text-right" mat-header-cell *matHeaderCellDef>
                             Indexed loss </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.indexedLoss}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element">
+                            <div class="bar"> {{element.indexedLoss}}</div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+
                     </ng-container>
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
                 </table>
             </div>
         </div>
@@ -108,7 +150,9 @@
                         DEBT
                     </h5>
                 </div>
-                <table mat-table [dataSource]="dataSource1" id="table-low" class="mutualfunds-capital-debt">
+                <table mat-table [dataSource]="dataSource1" id="table-low"
+                    class="mutualfunds-capital-debt skeletonAnimation" appSkeletonLoading
+                    [appSkeletonLoading]="isLoading" *ngIf="dataSource1.data.length>0">
 
                     <!--- Note that these columns can be defined in any order.
                                       The actual rendered columns are set as a property on the row definition" -->
@@ -116,54 +160,91 @@
                     <!-- Position Column -->
                     <ng-container matColumnDef="schemeName1">
                         <th class="br" mat-header-cell *matHeaderCellDef> Scheme name </th>
-                        <td class="br" mat-cell *matCellDef="let element"> {{element.schemeName1}} </td>
+                        <td class="br" mat-cell *matCellDef="let element">
+                            <div class="bar"> {{element.schemeName}} </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left">Total </td>
+
                     </ng-container>
 
                     <!-- Name Column -->
                     <ng-container matColumnDef="folioNumber">
                         <th class="br text-right" mat-header-cell *matHeaderCellDef> Folio number </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.folioNumber}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element">
+                            <div class="bar"> {{element.folioNumber}} </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+
                     </ng-container>
 
                     <!-- Weight Column -->
                     <ng-container matColumnDef="investorName">
                         <th class="br text-left" mat-header-cell *matHeaderCellDef> Investor name </th>
-                        <td class="br text-left" mat-cell *matCellDef="let element"> {{element.investorName}} </td>
+                        <td class="br text-left" mat-cell *matCellDef="let element">
+                            <div class="bar"> {{element.investorName}}</div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+
                     </ng-container>
 
                     <!-- Symbol Column -->
                     <ng-container matColumnDef="stGain">
                         <th class="br text-right" mat-header-cell *matHeaderCellDef> ST gain </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.stGain}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element">
+                            <div class="bar"> {{element.stGain}}</div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+
                     </ng-container>
 
                     <ng-container matColumnDef="stLoss">
                         <th class="br text-right" mat-header-cell *matHeaderCellDef> ST loss </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.stLoss}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element">
+                            <div class="bar"> {{element.stLoss}} </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+
                     </ng-container>
 
                     <ng-container matColumnDef="ltGain">
                         <th class="br text-right" mat-header-cell *matHeaderCellDef> LT gain </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.ltGain}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element">
+                            <div class="bar"> {{element.ltGain}}</div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+
                     </ng-container>
 
                     <ng-container matColumnDef="indexedGain">
                         <th class="br text-right" mat-header-cell *matHeaderCellDef> Indexed gain </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.indexedGain}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element">
+                            <div class="bar"> {{element.indexedGain}}</div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+
                     </ng-container>
 
                     <ng-container matColumnDef="liloss">
                         <th class="br text-right" mat-header-cell *matHeaderCellDef> LT loss </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.liloss}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element">
+                            <div class="bar"> {{element.liloss}} </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+
                     </ng-container>
 
                     <ng-container matColumnDef="indexedLoss">
                         <th class="br text-right" mat-header-cell *matHeaderCellDef> Indexed loss </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.indexedLoss}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element">
+                            <div class="bar"> {{element.indexedLoss}}</div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+
                     </ng-container>
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                    <tr mat-footer-row *matFooterRowDef="displayedColumns1;sticky: true" [hidden]="isLoading"></tr>
                 </table>
             </div>
         </div>
@@ -176,7 +257,9 @@
                         DIVIDEND SUMMARY
                     </h5>
                 </div>
-                <table mat-table [dataSource]="dataSource2" id="table-low" class="mutualfunds-capital-dividend-summary">
+                <table mat-table [dataSource]="dataSource2" id="table-low"
+                    class="mutualfunds-capital-dividend-summary skeletonAnimation" appSkeletonLoading
+                    [appSkeletonLoading]="isLoading" *ngIf="dataSource2.data.length>0">
 
                     <!--- Note that these columns can be defined in any order.
                                       The actual rendered columns are set as a property on the row definition" -->
@@ -184,37 +267,56 @@
                     <!-- Position Column -->
                     <ng-container matColumnDef="schemeName2">
                         <th class="br" mat-header-cell *matHeaderCellDef> Scheme name </th>
-                        <td class="br" mat-cell *matCellDef="let element"> {{element.schemeName2}} </td>
+                        <td class="br" mat-cell *matCellDef="let element">
+                            <div class="bar"> {{element.schemeName2}} </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left">Total </td>
+
                     </ng-container>
 
                     <!-- Name Column -->
                     <ng-container matColumnDef="folioNumber">
                         <th class="br text-right" mat-header-cell *matHeaderCellDef> Folio number </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.folioNumber}} </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element">
+                            <div class="bar"> {{element.folioNumber}} </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+
                     </ng-container>
 
                     <!-- Weight Column -->
                     <ng-container matColumnDef="dividendPayoutAmount">
                         <th class="br text-right" mat-header-cell *matHeaderCellDef> Dividend payout amount </th>
-                        <td class="br text-right" mat-cell *matCellDef="let element"> {{element.dividendPayoutAmount}}
-                        </td>
+                        <td class="br text-right" mat-cell *matCellDef="let element">
+                            <div class="bar"> {{element.dividendPayoutAmount}}</div>                      
+                          </td>
+
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+
                     </ng-container>
 
                     <!-- Symbol Column -->
                     <ng-container matColumnDef="dividendReInvestmentAmount">
                         <th class="br text-right" mat-header-cell *matHeaderCellDef> Dividend re-investment amount </th>
                         <td class="br text-right" mat-cell *matCellDef="let element">
-                            {{element.dividendReInvestmentAmount}} </td>
+                            <div class="bar"> {{element.dividendReInvestmentAmount}}</div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+
                     </ng-container>
 
                     <ng-container matColumnDef="totalReinvestmentAmount">
                         <th class="br text-right" mat-header-cell *matHeaderCellDef> Total reinvestment amount </th>
                         <td class="br text-right" mat-cell *matCellDef="let element">
-                            {{element.totalReinvestmentAmount}} </td>
+                            <div class="bar">{{element.totalReinvestmentAmount}} </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class="br p-8 text-left"> </td>
+
                     </ng-container>
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                    <tr mat-footer-row *matFooterRowDef="displayedColumns2;sticky: true" [hidden]="isLoading"></tr>
                 </table>
             </div>
         </div>

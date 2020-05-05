@@ -42,6 +42,8 @@ export class SubmitReviewInnComponent implements OnInit {
   validatorType = ValidatorType
   paltform = '2';
   BSEValue = '2';
+  responseMessage: any;
+  statusString: any;
 
 
   constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
@@ -275,7 +277,10 @@ export class SubmitReviewInnComponent implements OnInit {
 
   createIINUCCRes(data) {
     console.log('data respose =', data);
+    this.responseMessage = data.responseMessage
+    this.statusString = data.statusString
     this.eventService.showErrorMessage(data.statusString);
+    this.eventService.showErrorMessage(data.responseMessage);
   }
 
   uploadForm() {

@@ -624,6 +624,9 @@ export class CustomerService {
   getMfUnrealizedTransactions(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.UNREALIZED_TRANSACTION_GET, data);
   }
+  capitalGainGet(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.CAPITAL_GAIN_GET, data);
+  }
   getMfFolioMaster(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_MASTER_DETAILS, data);
   }
