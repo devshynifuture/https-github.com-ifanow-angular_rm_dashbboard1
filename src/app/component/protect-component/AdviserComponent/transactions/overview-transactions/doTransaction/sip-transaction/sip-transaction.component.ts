@@ -467,7 +467,7 @@ export class SipTransactionComponent implements OnInit {
       tenure: [(!data) ? '' : data.tenure, [Validators.required]],
       installment: [(!data) ? '' : data.noOfInstallments, [Validators.required]],
       schemeSip: [(!data) ? '' : data.schemeName, [Validators.required]],
-
+      isException : true,
     });
     this.ownerData = this.sipTransaction.controls;
     if (data.folioNo) {

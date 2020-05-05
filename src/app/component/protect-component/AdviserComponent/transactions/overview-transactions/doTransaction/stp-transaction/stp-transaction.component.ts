@@ -480,6 +480,7 @@ export class StpTransactionComponent implements OnInit {
         mandateId: null,
         bankDetailId: null,
         nsePaymentMode: null,
+        isException : true,
         childTransactions: []
       };
       if (this.getDataSummary.defaultClient.aggregatorType == 1) {

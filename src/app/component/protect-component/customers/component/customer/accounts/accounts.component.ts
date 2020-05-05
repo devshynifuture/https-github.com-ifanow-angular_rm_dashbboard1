@@ -1,9 +1,9 @@
-import {Router} from '@angular/router';
-import {Component, NgZone, OnInit} from '@angular/core';
-import {RoutingState} from '../../../../../../services/routing-state.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {slideInAnimation} from '../../../../../../animation/router.animation';
-import {AuthService} from 'src/app/auth-service/authService';
+import { Router } from '@angular/router';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { RoutingState } from '../../../../../../services/routing-state.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { slideInAnimation } from '../../../../../../animation/router.animation';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-accounts',
@@ -27,7 +27,7 @@ export class AccountsComponent implements OnInit {
   selected;
 
   constructor(private eventService: EventService, private router: Router, private ngZone: NgZone,
-              public routingStateService: RoutingState, public authService: AuthService) {
+    public routingStateService: RoutingState, public authService: AuthService) {
     this.eventService.tabChangeData.subscribe(
       data => this.getTabChangeData(data)
     );
@@ -52,18 +52,18 @@ export class AccountsComponent implements OnInit {
     this.loading = false;
     this.clientData = AuthService.getClientData();
     console.log('this is child url now->>>>>', this.router.url.split('/')[3]);
-    var roterName = this.router.url.split('/')[3];
-    if (roterName === 'summary') {
-      this._value = 1;
-    } else if (roterName === 'assets') {
-      this._value = 2;
-    } else if (roterName === 'liabilities') {
-      this._value = 3;
-    } else if (roterName === 'insurance') {
-      this._value = 4;
-    } else if (roterName === 'documents') {
-      this._value = 5;
-    }
+    // var roterName = this.router.url.split('/')[3];
+    // if (roterName === 'summary') {
+    //   this._value = 1;
+    // } else if (roterName === 'assets') {
+    //   this._value = 2;
+    // } else if (roterName === 'liabilities') {
+    //   this._value = 3;
+    // } else if (roterName === 'insurance') {
+    //   this._value = 4;
+    // } else if (roterName === 'documents') {
+    //   this._value = 5;
+    // }
   }
 
   goToAdvisorHome() {
